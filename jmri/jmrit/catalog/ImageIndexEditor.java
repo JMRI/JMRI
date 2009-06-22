@@ -236,6 +236,7 @@ public class ImageIndexEditor extends JmriJFrame {
                 }
             }
         }
+        invalidate();
     }
 
     void renameNode() {
@@ -255,6 +256,7 @@ public class ImageIndexEditor extends JmriJFrame {
 
             }
         }
+        invalidate();
     }
 
     void deleteNode() {

@@ -75,6 +75,10 @@ public class CatalogTreeFS extends AbstractCatalogTree {
         } else /* leaf */ {
             String ext = jmri.util.FileChooserFilter.getFileExtension(fp);
             if (!filter(ext)) return;
+            int index = filename.indexOf('.');
+            if (index > 0) {
+                filename = filename.substring(0, index);
+            }
             pParent.addLeaf(filename, pPath); 
         }
     }

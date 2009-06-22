@@ -28,6 +28,10 @@ public class CatalogTreeLeaf {
         return _name;
     }
 
+    public void setName(String name) {
+        _name = name;
+    }
+
     public String getPath() {
         return _path;
     }

@@ -317,7 +317,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
     *  Delete a node from the displayed tree.
     */
     public void removeNodeFromModel(CatalogTreeNode node) {
-        //CatalogTreeNode cParent = getCorrespondingNode((CatalogTreeNode)node.getParent());
         AbstractCatalogTree tree = (AbstractCatalogTree)getCorespondingModel(node);
         tree.removeNodeFromParent(getCorrespondingNode(node));
         _model.removeNodeFromParent(node);
@@ -596,6 +595,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
             JLabel label = new JLabel(java.text.MessageFormat.format(rb.getString("scale"),
                                 new Object[] {printDbl(scale,2)}));
             p.add(label);
+            p.add(new JLabel(leaf.getName()));
             if (cellHeight < icon.getIconHeight()) {
                 cellHeight = icon.getIconHeight()+label.getPreferredSize().height;
             }
@@ -688,6 +688,20 @@ public class CatalogPanel extends JPanel implements MouseListener {
         node.deleteLeaf(icon.getName(), icon.getURL());
     }
 
+    void rename(NamedIcon icon) {
+        String name = JOptionPane.showInputDialog(IconAdder.getParentFrame(this), 
+                                              rb.getString("newIconName"), icon.getName(),
+                                              JOptionPane.QUESTION_MESSAGE);
+        if (name != null && name.length() > 0) {
+            CatalogTreeNode node = getSelectedNode();
+            CatalogTreeLeaf leaf = node.getLeaf(icon.getName(), icon.getURL());
+            if (leaf != null) {
+                leaf.setName(name);
+            }
+            IconAdder.getParentFrame(this).invalidate();
+        }
+    }
+
     /**
     *  Return the icon selected in the preview panel
     *  Save this code in case there is a need to use an alternative
@@ -709,6 +723,18 @@ public class CatalogPanel extends JPanel implements MouseListener {
         JPopupMenu popup = new JPopupMenu();                                    
         popup.add(new JMenuItem(icon.getName()));
         popup.add(new JMenuItem(icon.getURL()));
+        popup.add(new javax.swing.JPopupMenu.Separator());
+
+        popup.add(new AbstractAction(rb.getString("RenameIcon")) {
+                NamedIcon icon;    
+                public void actionPerformed(ActionEvent e) {
+                    rename(icon);
+                }
+                AbstractAction init(NamedIcon i) {
+                    icon = i;
+                    return this;
+                }
+            }.init(icon));
         popup.add(new javax.swing.JPopupMenu.Separator());
 
         popup.add(new AbstractAction(rb.getString("DeleteIcon")) {

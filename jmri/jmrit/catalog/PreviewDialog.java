@@ -321,6 +321,10 @@ public class PreviewDialog extends JDialog implements MouseListener {
                         continue;
                     }
                     String name = files[i].getName();
+                    int index = name.indexOf('.');
+                    if (index > 0) {
+                        name = name.substring(0, index);
+                    }
                     String path = files[i].getAbsolutePath();
                     NamedIcon icon = new NamedIcon(path, name);
                     int w = icon.getIconWidth();
@@ -403,6 +407,7 @@ public class PreviewDialog extends JDialog implements MouseListener {
                     JLabel label = new JLabel(java.text.MessageFormat.format(rb.getString("scale"),
                                         new Object[] {CatalogPanel.printDbl(scale,2)}));
                     p.add(label);
+                    p.add(new JLabel(name));
                     if (cellHeight < icon.getIconHeight()) {
                         cellHeight = icon.getIconHeight()+label.getPreferredSize().height;
                     }

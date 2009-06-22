@@ -51,6 +51,15 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
            }
        }
    }
+   public CatalogTreeLeaf getLeaf(String name, String path) {
+       for (int i=0; i<_leaves.size(); i++) {
+           CatalogTreeLeaf leaf = _leaves.get(i);
+           if (name.equals(leaf.getName()) && path.equals(leaf.getPath())) {
+               return leaf;
+           }
+       }
+       return null;
+   }
    public ArrayList <CatalogTreeLeaf> getLeaves() {
        return _leaves;
    }
