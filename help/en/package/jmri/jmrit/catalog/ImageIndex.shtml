@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ImageIndex.shtml,v 1.4 2009-06-22 19:05:14 pete_cressman Exp $ -->
+<!-- $Id: ImageIndex.shtml,v 1.5 2009-06-22 20:42:16 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
@@ -108,15 +108,18 @@ Image Index.  As long the file remains in place, it will be displayed by the Cat
 Image Index and your Panel (if you have installed it there).
 </p>
 
-<H2>Deleting icons fron the Image Index</H2>
+<H2>Deleting and Renaming icons in the Image Index</H2>
 
 <p>Pressing and releasing (clicking) the mouse button over an icon in the preview pane
 of the Image Index activatea a "pop-up" menu.
 Pop-Up menus display the name and reference
-location of the icon.  The pop-up also provides an item that will delete the entry of
-the icon from the Image Index.
-</p>
-
+location of the icon.  The pop-up also provides items to modify icons in the Image Index.</p>
+<UL>
+        <LI><b>Rename Icon</b> opens a dialog box where a new name can be entered.  Note: 
+        <i>the "preview" panel will show the change after leaving and then returning 
+        to the panel.</i></LI>
+        <LI><b>Delete Icon</b> removes the icon from the Image Index.</LI>
+</UL>        
 
 <!--#include virtual="/Footer" -->
 </BODY>
