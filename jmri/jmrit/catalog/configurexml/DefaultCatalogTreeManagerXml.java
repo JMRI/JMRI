@@ -161,6 +161,11 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
     }
 
 
+    /** 
+     * This is invoked as part of the "store all" mechanism,
+     * which is not used for these objects. Hence this is 
+     * implemented to do nothing.
+     */
     public Element store(Object o) {
         return null;
     }
