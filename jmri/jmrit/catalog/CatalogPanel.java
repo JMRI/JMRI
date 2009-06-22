@@ -189,7 +189,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
         String name = tree.getSystemName();
         for (int i=0; i<_branchModel.size(); i++) {
             if (name.equals(_branchModel.get(i).getSystemName())) {
-                log.warn("Branch Node '"+ name+"' already in Catalog");
                 return;
             }
         }
