@@ -19,6 +19,14 @@ public class DefaultCatalogTreeManager extends jmri.implementation.AbstractManag
     }
   
     /**
+     * Override parent method to not register this object to
+     * be stored automatically as part of the general storage mechanism.
+     **/
+    protected void registerSelf() {
+        log.debug("not registering");
+    }
+
+    /**
     * This is a bogus systemLetter.  Naming is inforced in method
     * createNewCatalogTree below.
     */
