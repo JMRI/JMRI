@@ -37,7 +37,7 @@ public class CatalogTreeIndex extends AbstractCatalogTree {
     public void insertNodes(String pName, String pPath, CatalogTreeNode pParent) {
         CatalogTreeNode newNode = null;
         if (pPath == null) {
-            newNode = new CatalogTreeNode("imageIndex");
+            newNode = new CatalogTreeNode("Image Index");
         } else {
             newNode = new CatalogTreeNode(pName);
         }
