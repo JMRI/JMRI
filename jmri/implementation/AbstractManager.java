@@ -17,19 +17,27 @@ import jmri.*;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
 
     public AbstractManager() {
         // register the result for later configuration
-         if (InstanceManager.configureManagerInstance()!=null) {
-            InstanceManager.configureManagerInstance().registerConfig(this);
-            log.debug("register");
-        }
+        registerSelf();
     }
 
+    /**
+     * By default, register this manager to store as configuration
+     * information.  Override to change that.
+     **/
+    protected void registerSelf() {
+         if (InstanceManager.configureManagerInstance()!=null) {
+            InstanceManager.configureManagerInstance().registerConfig(this);
+            log.debug("register for config");
+        }
+    }
+    
     public String makeSystemName(String s) {
         return ""+systemLetter()+typeLetter()+s;
     }
