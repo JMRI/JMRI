@@ -162,7 +162,6 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
 
 
     public Element store(Object o) {
-        log.error("Invalid method store(Object o) called. class= "+o.getClass().getName());
         return null;
     }
 
@@ -186,7 +185,6 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
 	}
 	
     public void load(Element element, Object o) throws Exception {
-        log.error("Invalid method load(Element e, Object o) called");
     }
 
     /**
