@@ -1,6 +1,5 @@
 package jmri.jmrit.display;
 
-import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.Sensor;
 
