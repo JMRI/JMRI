@@ -1,31 +1,32 @@
 // IconAdder.java
 package jmri.jmrit.display;
 
+import jmri.Manager;
 import jmri.NamedBean;
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
-import jmri.util.NamedBeanComparator;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.catalog.CatalogTreeNode;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.catalog.PreviewDialog;
+import jmri.managers.*;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.FlowLayout;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.TreeSet;
 import java.io.IOException;
 import java.io.File;
 
@@ -45,14 +46,14 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import javax.swing.JTree;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
@@ -77,8 +78,10 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     HashMap <String, JButton>   _iconMap;
     ArrayList <String>          _order;
-    ArrayList <NamedBean>       _pickList;
     JScrollPane                 _pickTablePane;
+    PickListModel               _pickListModel;
+    JTextField      _sysNametext;
+    Manager         _manager;
     JTable          _table;
     JButton         _addButton;
     JButton         _changeButton;
@@ -170,15 +173,10 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     * make a pick list table for managed elements.  (Not all
     * Icon Editors use pick lists)
     */
-    public void setPickList(TreeSet <NamedBean> ts) {
-        _pickList = new ArrayList <NamedBean> (ts.size());
-        Iterator <NamedBean> iter = ts.iterator();
-        while(iter.hasNext()) {
-            NamedBean elt = iter.next();
-            _pickList.add(elt);
-        }
-        TableModel pickListModel = new PickListModel();
-        _table = new JTable(pickListModel);
+    public void setPickList(PickListModel tableModel) {
+        tableModel.init();
+        _pickListModel = tableModel;
+        _table = new JTable(tableModel);
 
         _table.setRowSelectionAllowed(true);
         _table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -255,7 +253,13 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _addButton.setToolTipText(null);
             valueChanged(null);
             this.invalidate();
-            return _pickList.get(row);
+            return _pickListModel.getIndexOf(row);
+        } else {
+            String name = _sysNametext.getText();
+            if (name != null && name .length() > 2) {
+                _sysNametext.setText("");
+                return _pickListModel.addBean(name);
+            }
         }
         return null;
     }
@@ -278,11 +282,11 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     * @param changeIconAction - ActionListener that displays sources from
     * which to select an image file.  
     */
-    public void complete(ActionListener addIconAction, ActionListener changeIconAction) {
+    public void complete(ActionListener addIconAction, ActionListener changeIconAction,
+                         boolean addToTable) {
         _addButton = new JButton(rb.getString("ButtonAddIcon"));
         _addButton.addActionListener(addIconAction);
         JPanel p = new JPanel();
-        //p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.setLayout(new FlowLayout());       
         p.add(_addButton);
         if (changeIconAction != null) {
@@ -300,9 +304,30 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
         valueChanged(null);     // set enabled, tool tips etc.
         this.add(p);
-        this.add(Box.createVerticalStrut(STRUT_SIZE));
 
+        if (addToTable) {
+            p = new JPanel();
+            p.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
+            _sysNametext = new JTextField();
+            _sysNametext.setPreferredSize(
+                new Dimension(100, _sysNametext.getPreferredSize().height));
+            p.add(_sysNametext);
+            _sysNametext.addKeyListener(new KeyAdapter() {
+                    public void keyReleased(KeyEvent a){
+                        if (_sysNametext.getText().length() > 2) {
+                            _addButton.setEnabled(true);
+                            _addButton.setToolTipText(null);
+                        }
+                    }
+                });
+
+            p.add(new JLabel(rb.getString("addSysName")));
+            this.add(p);
+        }
+
+        this.add(Box.createVerticalStrut(STRUT_SIZE));
         this.add(new JSeparator());
+
         _catalog = new CatalogPanel("catalog", "selectNode");
         _catalog.init(false);
         makeDefaultCatalog();
@@ -316,32 +341,36 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     * Add panel to change icons 
     */
     public void addCatalog() {
+        if (log.isDebugEnabled()) log.debug("addCatalog called: _catalog= "+_catalog); 
         // add the catalog, so icons can be selected
         if (_catalog != null)  {
             _catalog.setVisible(true);
+        } else {
+            _catalog = new CatalogPanel("catalog", "selectNode");
+            _catalog.init(false);
+            makeDefaultCatalog();
         }
         /*
         this.add(new JSeparator());
-        _catalog = new CatalogPanel("catalog", "selectNode");
-        _catalog.init(false);
-        makeDefaultCatalog();
         */
         if (_changeButton != null) {
             _changeButton.setVisible(false);
             _closeButton.setVisible(true);
         }
         //this.add(_catalog);
-        _pickTablePane.setVisible(false);
+        if (_pickTablePane != null) {
+            _pickTablePane.setVisible(false);
+        }
         this.pack();
     }
 
     void closeCatalog() {
-        //this.remove(_catalog);
-        //_catalog = null;
         _catalog.setVisible(false);
         _changeButton.setVisible(true);
         _closeButton.setVisible(false);
-        _pickTablePane.setVisible(true);
+        if (_pickTablePane != null) {
+            _pickTablePane.setVisible(true);
+        }
         this.pack();
     }
 
@@ -422,6 +451,8 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (log.isDebugEnabled()) log.debug("Bounds: r.x= "+r.x+", r.y= "+r.y+", r.width= "+
                                             r.width+", r.height= "+r.height);
         _waitDialog.repaint(0, r.x, r.y, r.width, r.height);
+//        _waitDialog.invalidate();
+//        _waitDialog.validate();
         _waitDialog.setVisible(false);
         return waitText;
     }
@@ -660,63 +691,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         _iconMap = null;
         _order = null;
         _catalog = null;
-    }
-
-    /**
-     * Table model for pick list
-     */
-    class PickListModel  extends AbstractTableModel implements PropertyChangeListener {
-
-        public static final int SNAME_COLUMN = 0;
-        public static final int UNAME_COLUMN = 1;
-
-        public Class getColumnClass(int c) {
-                return String.class;
-        }
-
-        public int getColumnCount () {
-            return 2;
-        }
-
-        public String getColumnName(int c) {
-            if (c == SNAME_COLUMN) {
-                return rb.getString("SystemName");
-            } else if (c == UNAME_COLUMN) {
-                return rb.getString("UserName");
-            }
-            return "";
-        }
-
-        public boolean isCellEditable(int r,int c) {
-            return ( false );
-        }
-
-        public int getRowCount () {
-            return _pickList.size();
-        }
-        public Object getValueAt (int r,int c) {
-            if (c == SNAME_COLUMN) {
-                return _pickList.get(r).getSystemName();
-            } else if (c == UNAME_COLUMN) {
-                return _pickList.get(r).getUserName();
-            }
-            return null;
-        }
-        public void setValueAt(Object type,int r,int c) {
-        }
-
-
-        public void propertyChange(java.beans.PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("length")) {
-                // a new NamedBean is available in the manager
-                fireTableDataChanged();
-            }
-        }
-
-        public void dispose() {
-            // do this later
-            //InstanceManager.turnoutManagerInstance().removePropertyChangeListener(this);
-        }
     }
 
     class DropButton extends JButton implements DropTargetListener {

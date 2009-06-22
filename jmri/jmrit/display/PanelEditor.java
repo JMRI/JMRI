@@ -7,6 +7,7 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
+import jmri.Manager;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.Reporter;
@@ -17,7 +18,6 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
-import jmri.util.NamedBeanComparator;
 import jmri.jmrit.catalog.CatalogPanel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,10 +26,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.TreeSet;
 
 import java.io.File;
 
@@ -235,6 +233,23 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         _addIconBox.setMinimumSize(new Dimension(75,75));
         _addIconBox.setMaximumSize(new Dimension(200,200));
 
+        // share this PickListModel with both right and left turnouts 
+        class turnoutPickModel extends PickListModel {
+            TurnoutManager manager;
+            turnoutPickModel (TurnoutManager m) {
+                manager = m;
+            }
+            Manager getManager() {
+                return manager;
+            }
+            NamedBean getBySystemName(String name) {
+                return manager.getBySystemName(name);
+            }
+            NamedBean addBean(String name) {
+                return manager.provideTurnout(name);
+            }
+        }
+        PickListModel turnoutTableModel = new turnoutPickModel(InstanceManager.turnoutManagerInstance());
         // Add a turnout indicator for right-hand
         {
             turnoutRIconEditor = new IconAdder();
@@ -247,17 +262,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             turnoutRIconEditor.setIcon(1, rbean.getString("BeanStateUnknown"),
                 "resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif");
 
-            TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
-            TurnoutManager manager = InstanceManager.turnoutManagerInstance();
-            List <String> systemNameList = manager.getSystemNameList();
-            Iterator <String> iter = systemNameList.iterator();
-            while (iter.hasNext()) {
-                ts.add(manager.getBySystemName(iter.next()));
-            }
             turnoutRFrame = makeAddIconFrame("AddRHTOIcon", "addIconsToPanel", "SelectTO", turnoutRIconEditor);
             addHelpMenu(turnoutRFrame, "package.jmri.jmrit.display.IconAdder");
             turnoutRIconEditor.makeIconPanel();
-            turnoutRIconEditor.setPickList(ts);
+            turnoutRIconEditor.setPickList(turnoutTableModel);
 
             ActionListener addIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -270,7 +278,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                         turnoutRFrame.pack();
                     }
             };
-            turnoutRIconEditor.complete(addIconAction, changeIconAction);
+            turnoutRIconEditor.complete(addIconAction, changeIconAction, true);
             _addIconBox.addItem(turnoutRFrame);
         }
 
@@ -286,17 +294,11 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             turnoutLIconEditor.setIcon(1, rbean.getString("BeanStateUnknown"),
                 "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
 
-            TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
-            TurnoutManager manager = InstanceManager.turnoutManagerInstance();
-            List <String> systemNameList = manager.getSystemNameList();
-            Iterator <String> iter = systemNameList.iterator();
-            while (iter.hasNext()) {
-                ts.add(manager.getBySystemName(iter.next()));
-            }
             turnoutLFrame = makeAddIconFrame("AddLHTOIcon", "addIconsToPanel", "SelectTO", turnoutLIconEditor);
             addHelpMenu(turnoutLFrame, "package.jmri.jmrit.display.IconAdder");
             turnoutLIconEditor.makeIconPanel();
-            turnoutLIconEditor.setPickList(ts);
+            TurnoutManager manager = InstanceManager.turnoutManagerInstance();
+            turnoutLIconEditor.setPickList(turnoutTableModel);
 
             ActionListener addIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -309,10 +311,26 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                         turnoutLFrame.pack();
                     }
             };
-            turnoutLIconEditor.complete(addIconAction, changeIconAction);
+            turnoutLIconEditor.complete(addIconAction, changeIconAction, true);
             _addIconBox.addItem(turnoutLFrame);
         }
-
+        // share this PickListModel with Senors and MultiSensors
+        class sensorPickModel extends PickListModel {
+            SensorManager manager;
+            sensorPickModel (SensorManager m) {
+                manager = m;
+            }
+            Manager getManager() {
+                return manager;
+            }
+            NamedBean getBySystemName(String name) {
+                return manager.getBySystemName(name);
+            }
+            NamedBean addBean(String name) {
+                return manager.provideSensor(name);
+            }
+        }
+        PickListModel sensorTableModel = new sensorPickModel(InstanceManager.sensorManagerInstance());
         // Add a sensor indicator
         {
             sensorIconEditor = new IconAdder();
@@ -325,18 +343,11 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             sensorIconEditor.setIcon(1, rbean.getString("BeanStateUnknown"),
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif");
 
-            TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
-            SensorManager manager = InstanceManager.sensorManagerInstance();
-            List <String> systemNameList = manager.getSystemNameList();
-            Iterator <String> iter = systemNameList.iterator();
-            while (iter.hasNext()) {
-                ts.add(manager.getBySystemName(iter.next()));
-            }
             sensorIconFrame = makeAddIconFrame("AddSensorIcon", "addIconsToPanel", 
                                                "SelectSensor", sensorIconEditor);
             addHelpMenu(sensorIconFrame, "package.jmri.jmrit.display.IconAdder");
             sensorIconEditor.makeIconPanel();
-            sensorIconEditor.setPickList(ts);
+            sensorIconEditor.setPickList(sensorTableModel);
 
             ActionListener addIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -349,7 +360,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                         sensorIconFrame.pack();
                     }
             };
-            sensorIconEditor.complete(addIconAction, changeIconAction);
+            sensorIconEditor.complete(addIconAction, changeIconAction, true);
             _addIconBox.addItem(sensorIconFrame);
         }
 
@@ -373,18 +384,27 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             signalIconEditor.setIcon(7, rbean.getString("SignalHeadStateRed"),
                 "resources/icons/smallschematics/searchlights/left-red-marker.gif");
 
-            TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
-            SignalHeadManager manager = InstanceManager.signalHeadManagerInstance();
-            List <String> systemNameList = manager.getSystemNameList();
-            Iterator <String> iter = systemNameList.iterator();
-            while (iter.hasNext()) {
-                ts.add(manager.getBySystemName(iter.next()));
-            }
             signalIconFrame = makeAddIconFrame("AddSignalIcon", "addIconsToPanel", 
                                                "SelectSignal", signalIconEditor);
             addHelpMenu(signalIconFrame, "package.jmri.jmrit.display.IconAdder");
             signalIconEditor.makeIconPanel();
-            signalIconEditor.setPickList(ts);
+
+            class pickModel extends PickListModel {
+                SignalHeadManager manager;
+                pickModel (SignalHeadManager m) {
+                    manager = m;
+                }
+                Manager getManager() {
+                    return manager;
+                }
+                NamedBean getBySystemName(String name) {
+                    return manager.getBySystemName(name);
+                }
+                NamedBean addBean(String name) {
+                    return manager.getSignalHead(name);
+                }
+            }
+            signalIconEditor.setPickList(new pickModel(InstanceManager.signalHeadManagerInstance()));
 
             ActionListener addIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -397,40 +417,42 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                         signalIconFrame.pack();
                     }
             };
-            signalIconEditor.complete(addIconAction, changeIconAction);
+            signalIconEditor.complete(addIconAction, changeIconAction, false);
             _addIconBox.addItem(signalIconFrame);
         }
 
         // add a memory
         {
             memoryIconEditor = new IconAdder();
-            TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
-            MemoryManager manager = InstanceManager.memoryManagerInstance();
-            List <String> systemNameList = manager.getSystemNameList();
-            Iterator <String> iter = systemNameList.iterator();
-            while (iter.hasNext()) {
-                ts.add(manager.getBySystemName(iter.next()));
-            }
             ActionListener addIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     addMemory();
                 }
             };
             _addIconBox.addItem(makeAddIconFrame("AddMemoryValue", "addMemValueToPanel", "SelectMemory", memoryIconEditor));
-            memoryIconEditor.setPickList(ts);
-            memoryIconEditor.complete(addIconAction, null);
+
+            class pickModel extends PickListModel {
+                MemoryManager manager;
+                pickModel (MemoryManager m) {
+                    manager = m;
+                }
+                Manager getManager() {
+                    return manager;
+                }
+                NamedBean getBySystemName(String name) {
+                    return manager.getBySystemName(name);
+                }
+                NamedBean addBean(String name) {
+                    return manager.provideMemory(name);
+                }
+            }
+            memoryIconEditor.setPickList(new pickModel(InstanceManager.memoryManagerInstance()));
+            memoryIconEditor.complete(addIconAction, null, true);
         }
 
         // add a reporter
         {
             reporterIconEditor = new IconAdder();
-            TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
-            ReporterManager manager = InstanceManager.reporterManagerInstance();
-            List <String> systemNameList = manager.getSystemNameList();
-            Iterator <String> iter = systemNameList.iterator();
-            while (iter.hasNext()) {
-                ts.add(manager.getBySystemName(iter.next()));
-            }
             ActionListener addIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     addReporter();
@@ -438,8 +460,23 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             };
             _addIconBox.addItem(makeAddIconFrame("AddReporterValue", "addReportValueToPanel", 
                                                  "SelectReporter", reporterIconEditor));
-            reporterIconEditor.setPickList(ts);
-            reporterIconEditor.complete(addIconAction, null);
+            class pickModel extends PickListModel {
+                ReporterManager manager;
+                pickModel (ReporterManager m) {
+                    manager = m;
+                }
+                Manager getManager() {
+                    return manager;
+                }
+                NamedBean getBySystemName(String name) {
+                    return manager.getBySystemName(name);
+                }
+                NamedBean addBean(String name) {
+                    return manager.provideReporter(name);
+                }
+            }
+            reporterIconEditor.setPickList(new pickModel(InstanceManager.reporterManagerInstance()));
+            reporterIconEditor.complete(addIconAction, null, true);
         }
 
         // add Background
@@ -462,7 +499,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                         bdIconFrame.pack();
                     }
             };
-            bkgrndEditor.complete(addIconAction, changeIconAction);
+            bkgrndEditor.complete(addIconAction, changeIconAction, false);
             _addIconBox.addItem(bdIconFrame);
         }
 
@@ -482,18 +519,11 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             multiSensorEditor.setIcon(5, "foo",
                                       "resources/icons/USS/plate/levers/l-right.gif");
 
-            TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
-            SensorManager manager = InstanceManager.sensorManagerInstance();
-            List <String> systemNameList = manager.getSystemNameList();
-            Iterator <String> iter = systemNameList.iterator();
-            while (iter.hasNext()) {
-                ts.add(manager.getBySystemName(iter.next()));
-            }
             multiSensorFrame = makeAddIconFrame("AddMultiSensor", "addIconsToPanel", 
                                                "SelectSensor", multiSensorEditor);
             addHelpMenu(multiSensorFrame, "package.jmri.jmrit.display.MultiSensorIconAdder");
             multiSensorEditor.makeIconPanel();
-            multiSensorEditor.setPickList(ts);
+            multiSensorEditor.setPickList(sensorTableModel);
 
             ActionListener addIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -506,7 +536,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                         multiSensorFrame.pack();
                     }
             };
-            multiSensorEditor.complete(addIconAction, changeIconAction);
+            multiSensorEditor.complete(addIconAction, changeIconAction, false);
             _addIconBox.addItem(multiSensorFrame);
         }
         // add an RPS reporter
@@ -534,7 +564,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                         iconFrame.pack();
                     }
             };
-            iconEditor.complete(addIconAction, changeIconAction);
+            iconEditor.complete(addIconAction, changeIconAction, false);
             _addIconBox.addItem(iconFrame);
         }
 
