@@ -27,7 +27,7 @@ import javax.comm.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -331,6 +331,8 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
             return;
         }
         
+        if (r==null) return;  // nothing useful
+        
         // forward
         try {
             Distributor.instance().submitReading(r);
@@ -416,18 +418,25 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
                     if (index>=vals.length) { // data for undefined Receiver
                         log.warn("Data from unexpected receiver "+index+", creating receiver");
                         Engine.instance().setMaxReceiverNumber(index+1);
-                        // make vals longer
-                        double[] temp = new double[index+1];
-                        for (int j = 0; j<vals.length; j++) temp[j] = vals[j];
-                        vals = temp;
+                        //
+                        // Originally, we made vals[] longer if we got
+                        // a response from an unexpected receiver.
+                        // This caused terrible trouble at Kesen's layout,
+                        // so was commented-out here.
+                        //
+                        //double[] temp = new double[index+1];
+                        //for (int j = 0; j<vals.length; j++) temp[j] = vals[j];
+                        //vals = temp;
                     } 
-                    vals[index] = Double.valueOf(c.get(2+i*2+1)).doubleValue();
+                    if (index<vals.length)
+                        vals[index] = Double.valueOf(c.get(2+i*2+1)).doubleValue();
                 }
             } catch (Exception e) {
                 log.warn("Exception handling input: "+e);
                 System.out.flush();System.err.flush();
                 e.printStackTrace();
                 System.out.flush();System.err.flush();
+                return null;
             }
             Reading r = new Reading(Engine.instance().getPolledID(), vals, s);
             return r;
