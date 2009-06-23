@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.6.shtml,v 1.3 2009-06-20 01:18:32 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.6.shtml,v 1.4 2009-06-23 06:37:15 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -183,6 +183,9 @@ from the preview panel to the entity's icons and dropping it there.
 <li>An Image Index can be created and a permanet copy saved to organize the icons for import to the Panel.  
 This index is usable globally (i.e. not confined to the Panel under construction)
 </ol>
+See also the 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/catalog/ImageIndex.shtml">Image Index</a>
+help page.
 
 <p>
 Dan Boudreau improved the operations help and updated the images.
@@ -206,6 +209,9 @@ Chris Zurek updated the version number and number of functions for the Digitrax 
 <p>
 Marc Fournier updated the TCS BEMF decoder tooltips.
 
+<p>
+Dan Boudreau added a user prompt if something goes wrong when loading a panel file.
+This will remind people to check their preferences, so they don't lose any contents of the file.
 
 <!--#include virtual="/Footer" -->
 
