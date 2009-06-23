@@ -595,12 +595,16 @@ public class CatalogPanel extends JPanel implements MouseListener {
             JLabel label = new JLabel(java.text.MessageFormat.format(rb.getString("scale"),
                                 new Object[] {printDbl(scale,2)}));
             p.add(label);
-            p.add(new JLabel(leaf.getName()));
+            JLabel nameLabel = new JLabel(leaf.getName());
+            p.add(nameLabel);
             if (cellHeight < icon.getIconHeight()) {
-                cellHeight = icon.getIconHeight()+label.getPreferredSize().height;
+                cellHeight = icon.getIconHeight()
+                                +label.getPreferredSize().height
+                                +nameLabel.getPreferredSize().height;
             }
             if (cellWidth < icon.getIconWidth()) {
-                cellWidth = Math.max(label.getPreferredSize().width, icon.getIconWidth())+10;
+                cellWidth = Math.max(nameLabel.getPreferredSize().width,
+                                Math.max(label.getPreferredSize().width, icon.getIconWidth()))+10;
             }
             if (_noDrag) {
                 p.addMouseListener(this);
