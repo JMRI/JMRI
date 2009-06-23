@@ -9,7 +9,7 @@ import org.jdom.Element;
  * Handle configuration for display.ReporterIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class ReporterIconXml extends PositionableLabelXml {
 
@@ -42,8 +42,9 @@ public class ReporterIconXml extends PositionableLabelXml {
     }
 
 
-    public void load(Element element) {
+    public boolean load(Element element) {
         log.error("Invalid method called");
+        return false;
     }
 
     /**

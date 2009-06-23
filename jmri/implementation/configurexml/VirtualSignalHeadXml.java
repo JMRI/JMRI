@@ -11,7 +11,7 @@ import org.jdom.Element;
  * Handle XML configuration for VirtualSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2005, 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -40,8 +40,9 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
     /**
      * Create a VirtualSignalHead
      * @param element Top level Element to unpack.
+     * @return true if successful
      */
-    public void load(Element element) {
+    public boolean load(Element element) {
         // put it together
         String sys = element.getAttribute("systemName").getValue();
         Attribute a = element.getAttribute("userName");
@@ -54,7 +55,7 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
         loadCommon(h, element);
         
         InstanceManager.signalHeadManagerInstance().register(h);
-        return;
+        return true;
     }
 
     public void load(Element element, Object o) {

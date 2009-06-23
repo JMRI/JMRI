@@ -18,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -306,7 +306,11 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 try {
                     XmlAdapter adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
                     // and do it
-                    adapter.load(item);
+                    boolean loadStatus = adapter.load(item);
+                    log.debug("load status for "+adapterName+" is "+loadStatus);
+                    // if any adaptor load fails, then the entire load has failed
+                    if (!loadStatus)
+                    	result = false;
                 } catch (Exception e) {
                     log.error("Exception while loading "+item.getName()+":"+e);
                     e.printStackTrace();

@@ -11,7 +11,7 @@ import javax.swing.*;
  * Pane to show ECoS status
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class StatusPane extends javax.swing.JPanel implements EcosListener {
 
@@ -50,7 +50,7 @@ public class StatusPane extends javax.swing.JPanel implements EcosListener {
         hrdVersion.setText(hrdString+"<unknown>");
     }
     // to free resources when no longer used
-    public void dispose() throws JmriException {
+    public void dispose(){
         tc.removeEcosListener(this);
         tc = null;
     }

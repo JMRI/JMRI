@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformScriptModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @see apps.PerformScriptPanel
  */
 public class PerformScriptPanelXml implements XmlAdapter {
@@ -40,9 +40,11 @@ public class PerformScriptPanelXml implements XmlAdapter {
     /**
      * Create object from XML file, but this method should never be invoked.
      * @param element Top level Element to unpack.
+     * @return true if successful
       */
-    public void load(Element element) {
+    public boolean load(Element element) {
         log.error("load(Element) should not have been invoked");
+        return false;
     }
 
     /**

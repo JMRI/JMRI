@@ -19,7 +19,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class DefaultConditionalManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -126,12 +126,14 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      * Create a ConditionalManager object of the correct class, then
      * register and fill it.
      * @param conditionals Top level Element to unpack.
+     * @return true if successful
      */
-    public void load(Element conditionals) {
+    public boolean load(Element conditionals) {
         // create the master object
         replaceConditionalManager();
         // load individual logixs
         loadConditionals(conditionals);
+        return true;
     }
 
     /**

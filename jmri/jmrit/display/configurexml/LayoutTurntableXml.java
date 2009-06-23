@@ -15,7 +15,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.LayoutTurntable objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LayoutTurntableXml implements XmlAdapter {
 
@@ -55,8 +55,9 @@ public class LayoutTurntableXml implements XmlAdapter {
         return element;
     }
 
-    public void load(Element element) {
+    public boolean load(Element element) {
         log.error("Invalid method called");
+        return false;
     }
 
     /**

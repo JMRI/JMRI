@@ -196,9 +196,11 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
      * Create a CatalogTreeManager object of the correct class, then
      * register and fill it.
      * @param catalogTrees Top level Element to unpack.
+     * @return true if successful
      */
-    public void load(Element catalogTrees) {
+    public boolean load(Element catalogTrees) {
         loadCatalogTrees(catalogTrees);
+        return true;
     }
 
     /**

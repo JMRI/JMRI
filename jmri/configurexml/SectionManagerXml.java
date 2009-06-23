@@ -17,7 +17,7 @@ import org.jdom.*;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -136,10 +136,12 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * Create a SectionManager object of the correct class, then
      * register and fill it.
      * @param sections Top level Element to unpack.
+     * @return true if successful
      */
-    public void load(Element sections) {
+    public boolean load(Element sections) {
         // load individual Sections
         loadSections(sections);
+        return true;
     }
 
     /**

@@ -20,7 +20,7 @@ import org.jdom.Element;
  * @author Daniel Boudreau Copyright (c) 2007
  * @author Simon Reader Copyright (C) 2008
  *
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -203,12 +203,14 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
      * Create a RouteManager object of the correct class, then
      * register and fill it.
      * @param routes Top level Element to unpack.
+     * @return true if successful
      */
-    public void load(Element routes) {
+    public boolean load(Element routes) {
         // create the master object
         replaceRouteManager();
         // load individual routes
         loadRoutes(routes);
+        return true;
     }
 
 

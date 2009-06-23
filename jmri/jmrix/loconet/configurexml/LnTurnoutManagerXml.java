@@ -10,7 +10,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class LnTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -26,10 +26,10 @@ public class LnTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurn
         log.error("Invalid method called");
     }
 
-    public void load(Element turnouts) {
+    public boolean load(Element turnouts) {
 
         // load individual turnouts
-        loadTurnouts(turnouts);
+        return loadTurnouts(turnouts);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnTurnoutManagerXml.class.getName());

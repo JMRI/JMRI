@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformScriptModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  * @see apps.PerformScriptPanel
  */
 public class PerformScriptModelXml implements XmlAdapter {
@@ -36,8 +36,10 @@ public class PerformScriptModelXml implements XmlAdapter {
     /**
      * Create object from XML file
      * @param e Top level Element to unpack.
+     * @return true if successful
       */
-    public void load(Element e) {
+    public boolean load(Element e) {
+    	boolean result = true;
         String fileName = e.getAttribute("name").getValue();
         log.debug("Run file "+fileName);
 
@@ -48,6 +50,7 @@ public class PerformScriptModelXml implements XmlAdapter {
         PerformScriptModel m = new PerformScriptModel();
         m.setFileName(fileName);
         PerformScriptModel.rememberObject(m);
+        return result;
     }
 
     /**

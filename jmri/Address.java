@@ -39,7 +39,7 @@ public class Address {
 	}
 
 	// to free resources when no longer used
-	public void dispose() throws JmriException {}
+	public void dispose(){}
 	private String _systemName;
 	private String _userName;
 }

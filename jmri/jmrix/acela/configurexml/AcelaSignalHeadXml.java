@@ -51,8 +51,9 @@ public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
     /**
      * Create an AcelaSignalHead
      * @param element Top level Element to unpack.
+     * @return true if successful
      */
-    public void load(Element element) {
+    public boolean load(Element element) {
         String sys = element.getAttribute("systemName").getValue();
         Attribute a = element.getAttribute("userName");
         SignalHead h;
@@ -76,7 +77,7 @@ public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         int rawaddr = AcelaAddress.getBitFromSystemName(sys);
         sh.setOutputSignalHeadTypeString(rawaddr, shtype);
 
-        return;
+        return true;
     }
 
     public void load(Element element, Object o) {

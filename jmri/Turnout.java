@@ -60,7 +60,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.25 $
+ * @version	$Revision: 1.26 $
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
  * @see         jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
@@ -178,7 +178,7 @@ public interface Turnout extends NamedBean {
      * This must be one of the names defined
      * in a previous {@link #getValidFeedbackNames} call.
      */
-    public void setFeedbackMode(String mode);
+    public void setFeedbackMode(String mode) throws IllegalArgumentException;
 
     /**
      * Set the feedback mode from a integer.
@@ -186,7 +186,7 @@ public interface Turnout extends NamedBean {
      * in a previous {@link #getValidFeedbackTypes} call.
      * Having more than one bit set is an error.
      */
-    public void setFeedbackMode(int mode);
+    public void setFeedbackMode(int mode) throws IllegalArgumentException;
     
     /**
      * Get the feedback mode in human readable form.

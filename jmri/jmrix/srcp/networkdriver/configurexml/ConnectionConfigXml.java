@@ -21,7 +21,7 @@ import javax.swing.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -49,7 +49,8 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
      * Port name carries the hostname for the network connection
      * @param e Top level Element to unpack.
       */
-    public void load(Element e) {
+    public boolean load(Element e) {
+    	boolean result = true;
         // configure port name
         String hostName = e.getAttribute("port").getValue();
         String portNumber = e.getAttribute("option1").getValue();
@@ -69,6 +70,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             client.connect(hostName, Integer.parseInt(portNumber));
         } catch (Exception ex) {
             log.error("Error opening connection to "+hostName+" was: "+ex);
+            result = false;
         }
 
         // configure the other instance objects
@@ -79,6 +81,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
         // register, so can be picked up
         register(hostName, portNumber);
+        return result;
     }
 
     protected void register() {

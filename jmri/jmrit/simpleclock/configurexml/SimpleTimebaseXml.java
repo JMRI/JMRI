@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle XML persistance of SimpleTimebase objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class SimpleTimebaseXml implements XmlAdapter {
 
@@ -57,9 +57,10 @@ public class SimpleTimebaseXml implements XmlAdapter {
     /**
      * Update static data from XML file
      * @param element Top level blocks Element to unpack.
+     * @return true if successful
       */
-    public void load(Element element) {
-
+    public boolean load(Element element) {
+    	boolean result = true;
         Timebase clock = InstanceManager.timebaseInstance();
         String val,val2;
         if (element.getAttribute("master")!=null) {
@@ -104,9 +105,11 @@ public class SimpleTimebaseXml implements XmlAdapter {
                     clock.userSetRate(r);
                 } catch (jmri.TimebaseRateException e1) {
                     log.error("Cannot restore rate: "+r+" "+e1);
+                    result = false;
                 }
             } catch (org.jdom.DataConversionException e2) {
                 log.error("Cannot convert rate: "+e2);
+                result = false;
             }
         }		
 		if (element.getAttribute("startsettime")!=null) {
@@ -120,6 +123,7 @@ public class SimpleTimebaseXml implements XmlAdapter {
 					} catch(ParseException e) {
  						// if non-invertable date format, just skip
 						log.warn("Cannot set date using value stored in file: "+val2);
+						result = false;
 					}
 				}
 			}
@@ -131,6 +135,7 @@ public class SimpleTimebaseXml implements XmlAdapter {
 					} catch(ParseException e) {
 						// if non-invertable date format, just skip
 						log.warn("Cannot set date using value stored in file: "+val2);
+						result = false;
 					}
 				}
 			}				
@@ -144,6 +149,7 @@ public class SimpleTimebaseXml implements XmlAdapter {
             } catch (ParseException e) {
                 // if non-invertable date format, just skip
                 log.warn("Cannot set date using value stored in file: "+val2);
+                result = false;
             }
 		}
 		if (element.getAttribute("startclockoption")!=null) {
@@ -152,7 +158,8 @@ public class SimpleTimebaseXml implements XmlAdapter {
 			clock.setStartClockOption(option);
 			clock.initializeClock();
 	    }
-		clock.initializeHardwareClock();					
+		clock.initializeHardwareClock();
+		return result;
     }
 
 	// Conversion format for dates created by Java Date.toString().

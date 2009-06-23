@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformFileModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * @see apps.PerformFilePanel
  */
 public class PerformFileModelXml implements XmlAdapter {
@@ -38,19 +38,22 @@ public class PerformFileModelXml implements XmlAdapter {
     /**
      * Create object from XML file
      * @param e Top level Element to unpack.
+     * @return true if successful
       */
-    public void load(Element e) {
+    public boolean load(Element e) {
+    	boolean result = true;
         String fileName = e.getAttribute("name").getValue();
         log.debug("Load file "+fileName);
 
         // load the file
         File file = new File(fileName);
-        InstanceManager.configureManagerInstance().load(file);
+        result = InstanceManager.configureManagerInstance().load(file);
 
         // leave an updated object around
         PerformFileModel m = new PerformFileModel();
         m.setFileName(fileName);
         PerformFileModel.rememberObject(m);
+        return result;
     }
 
     /**

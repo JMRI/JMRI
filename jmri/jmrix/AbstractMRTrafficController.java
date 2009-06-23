@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
- * @version         $Revision: 1.66 $
+ * @version         $Revision: 1.67 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -652,7 +652,8 @@ abstract public class AbstractMRTrafficController {
      * Dummy routine, to be filled by protocols that
      * have to skip some start-of-message characters.
      */
-    protected void waitForStartOfReply(DataInputStream istream) throws java.io.IOException {}
+    @SuppressWarnings("unused")
+	protected void waitForStartOfReply(DataInputStream istream) throws java.io.IOException {}
     
     /**
      * Read a single byte, protecting against various timeouts, etc.

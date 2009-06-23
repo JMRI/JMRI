@@ -10,7 +10,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @since 2.3.1
  */
 public class CbusTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
@@ -27,9 +27,9 @@ public class CbusTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
         log.error("Invalid method called");
     }
 
-    public void load(Element turnouts) {
+    public boolean load(Element turnouts) {
         // load individual turnouts
-        loadTurnouts(turnouts);
+        return loadTurnouts(turnouts);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusTurnoutManagerXml.class.getName());

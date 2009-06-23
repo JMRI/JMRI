@@ -18,7 +18,7 @@ import org.jdom.Element;
  * specific Reporter or AbstractReporter subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008, 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -73,17 +73,20 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
      * Create a ReporterManager object of the correct class, then
      * register and fill it.
      * @param reporters Top level Element to unpack.
+     * @return true if successful
      */
-    abstract public void load(Element reporters);
+    abstract public boolean load(Element reporters);
 
     /**
      * Utility method to load the individual Reporter objects.
      * If there's no additional info needed for a specific Reporter type,
      * invoke this with the parent of the set of Reporter elements.
      * @param reporters Element containing the Reporter elements to load.
+     * @return true if successful
      */
     @SuppressWarnings("unchecked")
-	public void loadReporters(Element reporters) {
+	public boolean loadReporters(Element reporters) {
+    	boolean result = true;
         List<Element> reporterList = reporters.getChildren("reporter");
         if (log.isDebugEnabled()) log.debug("Found "+reporterList.size()+" reporters");
         ReporterManager tm = InstanceManager.reporterManagerInstance();
@@ -91,6 +94,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         for (int i=0; i<reporterList.size(); i++) {
             if (reporterList.get(i).getAttribute("systemName") == null) {
                 log.warn("unexpected null in systemName "+reporterList.get(i)+" "+reporterList.get(i).getAttributes());
+                result = false;
                 break;
             }
             String sysName = reporterList.get(i).getAttribute("systemName").getValue();
@@ -101,6 +105,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
             Reporter r = tm.newReporter(sysName, userName);
             loadCommon(r, reporterList.get(i));
         }
+        return result;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractReporterManagerConfigXML.class.getName());

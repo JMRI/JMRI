@@ -10,7 +10,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class InternalLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
@@ -26,9 +26,10 @@ public class InternalLightManagerXml extends jmri.managers.configurexml.Abstract
         log.error("Invalid method called");
     }
 
-    public void load(Element lights) {
+    public boolean load(Element lights) {
         // load individual lights
         loadLights(lights);
+        return true;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InternalLightManagerXml.class.getName());

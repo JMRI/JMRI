@@ -11,7 +11,7 @@ import jmri.jmrix.nce.NceTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class NceTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -27,11 +27,11 @@ public class NceTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
         log.error("Invalid method called");
     }
 
-    public void load(Element turnouts) {
+    public boolean load(Element turnouts) {
         // create the master object
         NceTurnoutManager.instance();
         // load individual turnouts
-        loadTurnouts(turnouts);
+        return loadTurnouts(turnouts);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceTurnoutManagerXml.class.getName());

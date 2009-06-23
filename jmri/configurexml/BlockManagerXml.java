@@ -25,7 +25,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  * @since 2.1.2
  *
  */
@@ -147,9 +147,11 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * The BlockManager in the InstanceManager is created automatically.
      * 
      * @param blocks Element containing the block elements to load.
+     * @return true if successful
      */
     @SuppressWarnings("unchecked")
-	public void load(Element blocks) {
+	public boolean load(Element blocks) {
+    	boolean result = true;
         List<Element> list = blocks.getChildren("block");
         if (log.isDebugEnabled()) log.debug("Found "+list.size()+" objects");
         //BlockManager tm = InstanceManager.blockManagerInstance();
@@ -158,6 +160,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             Element block = list.get(i);
             loadBlock(block);
         }
+        return result;
     }
 
     /**

@@ -12,7 +12,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class LnSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -28,13 +28,15 @@ public class LnSensorManagerXml extends jmri.managers.configurexml.AbstractSenso
         log.error("Invalid method called");
     }
 
-    public void load(Element sensors) {
+    public boolean load(Element sensors) {
+    	boolean result = true;
         // create the master object
         LnSensorManager mgr = LnSensorManager.instance();
         // load individual sensors
-        loadSensors(sensors);
+        result = loadSensors(sensors);
 		// Request the status of these sensors from the layout, if appropriate.
 		mgr.updateAll();
+		return result;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensorManagerXml.class.getName());

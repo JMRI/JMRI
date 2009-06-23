@@ -30,18 +30,22 @@ public class TurnoutOperationManagerXml implements XmlAdapter {
     }
 
     @SuppressWarnings("unchecked")
-	public void load(Element operationsElement) {
+	public boolean load(Element operationsElement) {
+    	boolean result = true;
     	TurnoutOperationManager manager = TurnoutOperationManager.getInstance();
         if (operationsElement.getAttribute("automate") != null) {
         	try {
             	manager.setDoOperations(operationsElement.getAttribute("automate").getValue().equals("true"));        		
-        	} catch(NumberFormatException ex) { }
+        	} catch(NumberFormatException ex) {
+        		result = false;
+        	}
         }
     	List<Element> operationsList = operationsElement.getChildren("operation");
     	if (log.isDebugEnabled()) log.debug("Found "+operationsList.size()+" operations");
     	for (int i=0; i<operationsList.size(); i++) {
     		TurnoutOperationXml.loadOperation(operationsList.get(i));
     	}
+    	return result;
     }
 
     public Element store(Object o) {

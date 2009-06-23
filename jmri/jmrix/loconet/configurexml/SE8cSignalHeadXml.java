@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle XML configuration for loconet.SE8cSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -55,9 +55,10 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
     /**
      * Create a SE8cSignalHead
      * @param element Top level Element to unpack.
+     * @return true if successful
      */
     @SuppressWarnings("unchecked")
-	public void load(Element element) {
+	public boolean load(Element element) {
         List<Element> l = element.getChildren();
         int turnout = loadTurnout(l.get(0));
         // put it together
@@ -71,7 +72,7 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         loadCommon(h, element);
         
         InstanceManager.signalHeadManagerInstance().register(h);
-        return;
+        return true;
     }
 
     int loadTurnout(Object o) {

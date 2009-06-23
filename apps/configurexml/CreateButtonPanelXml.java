@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle XML persistance of CreateButtonPanel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @see apps.CreateButtonPanel
  */
 public class CreateButtonPanelXml implements XmlAdapter {
@@ -41,8 +41,9 @@ public class CreateButtonPanelXml implements XmlAdapter {
      * Create object from XML file
      * @param e Top level Element to unpack.
       */
-    public void load(Element e) {
+    public boolean load(Element e) {
         log.error("load(Element) should not have been invoked");
+        return false;
     }
 
     /**

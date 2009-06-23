@@ -18,7 +18,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -46,8 +46,9 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     /**
      * Update static data from XML file
      * @param e Top level Element to unpack.
+     * @return true if successful
       */
-    public void load(Element e) {
+    public boolean load(Element e) {
         // hex file has no options in the XML
 
         // start the "connection"
@@ -64,6 +65,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         // register, so can be picked up
         getInstance();
         register();
+        return true;
     }
 
 

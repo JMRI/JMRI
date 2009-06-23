@@ -11,7 +11,7 @@ import jmri.jmrix.sprog.SprogTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class SprogTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -27,11 +27,11 @@ public class SprogTurnoutManagerXml extends jmri.managers.configurexml.AbstractT
         log.error("Invalid method called");
     }
 
-    public void load(Element turnouts) {
+    public boolean load(Element turnouts) {
         // create the master object
         SprogTurnoutManager.instance();
         // load individual turnouts
-        loadTurnouts(turnouts);
+        return loadTurnouts(turnouts);
     }
 
 	// initialize logging

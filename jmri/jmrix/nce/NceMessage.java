@@ -26,7 +26,7 @@ package jmri.jmrix.nce;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.41 $
+ * @version     $Revision: 1.42 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 	
@@ -56,8 +56,6 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     
     public NceMessage() {
         super();
-        // this doesn't seem to work!
-        super.SHORT_TIMEOUT = 10000;
     }
     
     // create a new one

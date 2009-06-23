@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Based on AbstractTurnoutManagerConfigXML
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -83,13 +83,15 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * Create a SignalHeadManager object of the correct class, then
      * register and fill it.
      * @param signalheads Top level Element to unpack.
+     * @return true if successful
      */
-    public void load(Element signalheads) {
+    public boolean load(Element signalheads) {
         // create the master object
         replaceSignalHeadManager();
 
         // load individual turnouts
         loadSignalHeads(signalheads);
+        return true;
     }
 
     public void load(Element element, Object o) {

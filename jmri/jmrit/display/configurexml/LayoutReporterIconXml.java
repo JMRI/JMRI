@@ -9,7 +9,7 @@ import org.jdom.Element;
  * Handle configuration for display.LayoutReporterIcon objects.
  *
  * @author Dave Duchamp Copyright: Copyright (c) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LayoutReporterIconXml extends LayoutPositionableLabelXml {
 
@@ -42,8 +42,9 @@ public class LayoutReporterIconXml extends LayoutPositionableLabelXml {
     }
 
 
-    public void load(Element element) {
+    public boolean load(Element element) {
         log.error("Invalid method called");
+        return false;
     }
 
     /**

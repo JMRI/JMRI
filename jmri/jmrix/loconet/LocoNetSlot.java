@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Stephen Williams  Copyright (C) 2008
- * @version         $Revision: 1.21 $
+ * @version         $Revision: 1.22 $
  */
 public class LocoNetSlot {
 
@@ -194,6 +194,9 @@ public class LocoNetSlot {
             notifySlotListeners();
             lastUpdateTime = System.currentTimeMillis() ;
             return;
+        }
+        default:{
+        	throw new LocoNetException("message can't be parsed"); 
         }
         }
     }

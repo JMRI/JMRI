@@ -13,7 +13,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -63,8 +63,9 @@ public class MemoryIconXml extends PositionableLabelXml {
     }
 
 
-    public void load(Element element) {
+    public boolean load(Element element) {
         log.error("Invalid method called");
+        return false;
     }
 
     /**

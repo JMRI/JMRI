@@ -12,7 +12,7 @@ import jmri.jmrix.cmri.serial.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class SerialTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -28,11 +28,11 @@ public class SerialTurnoutManagerXml extends jmri.managers.configurexml.Abstract
         log.error("Invalid method called");
     }
 
-    public void load(Element turnouts) {
+    public boolean load(Element turnouts) {
         // create the master object
         SerialTurnoutManager.instance();
         // load individual turnouts
-        loadTurnouts(turnouts);
+        return loadTurnouts(turnouts);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnoutManagerXml.class.getName());

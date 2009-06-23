@@ -17,7 +17,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -48,9 +48,10 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     /**
      * Update static data from XML file
      * @param e Top level Element to unpack.
+     * @return true if successful
       */
-    public void load(Element e) {
-
+    public boolean load(Element e) {
+    	boolean result = true;
         getInstance();
 
         // simulator has fewer options in the XML, so implement
@@ -64,6 +65,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         
         // register, so can be picked up
         register();
+        return result;
     }
 
 

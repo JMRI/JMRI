@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformFileModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @see apps.PerformFilePanel
  */
 public class PerformFilePanelXml implements XmlAdapter {
@@ -40,9 +40,11 @@ public class PerformFilePanelXml implements XmlAdapter {
     /**
      * Create object from XML file
      * @param e Top level Element to unpack.
+     * @return true if successful
       */
-    public void load(Element e) {
+    public boolean load(Element e) {
         log.error("load(Element) should not have been invoked");
+        return false;
     }
 
     /**

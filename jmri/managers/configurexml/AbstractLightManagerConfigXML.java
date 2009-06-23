@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Based on AbstractSensorManagerConfigXML.java
  *
  * @author Dave Duchamp Copyright (c) 2004, 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -106,8 +106,9 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
      * Create a LightManager object of the correct class, then
      * register and fill it.
      * @param lights Top level Element to unpack.
+     * @return true if successful
      */
-    abstract public void load(Element lights);
+    abstract public boolean load(Element lights);
 
     /**
      * Utility method to load the individual Light objects.
@@ -116,7 +117,8 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
      * @param lights Element containing the Light elements to load.
      */
     @SuppressWarnings("unchecked")
-	public void loadLights(Element lights) {
+	public boolean loadLights(Element lights) {
+    	boolean result = true;
         List<Element> lightList = lights.getChildren("light");
         if (log.isDebugEnabled()) log.debug("Found "+lightList.size()+" lights");
         LightManager tm = InstanceManager.lightManagerInstance();
@@ -124,6 +126,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
         for (int i=0; i<lightList.size(); i++) {
             if (lightList.get(i).getAttribute("systemName") == null) {
                 log.warn("unexpected null in systemName "+ lightList.get(i)+" "+ lightList.get(i).getAttributes());
+                result = false;
                 break;
             }
             String sysName = lightList.get(i).getAttribute("systemName").getValue();
@@ -147,6 +150,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
 					if (lgt.getControlSensorName().length()<1) {
 						lgt.setControlType(Light.NO_CONTROL);
 						log.warn ("invalid sensor name when loading light - "+sysName);
+						result = false;
 					}
 					else {
 						lgt.setControlSensorSense( Integer.parseInt(lightList.get(i).
@@ -184,6 +188,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
 					if (lgt.getControlTimedOnSensorName().length()<1) {
 						lgt.setControlType(Light.NO_CONTROL);
 						log.warn ("invalid timed on sensor name when loading light - "+sysName);
+						result = false;
 					}
 					else {
 						lgt.setTimedOnDuration( Integer.parseInt(lightList.get(i).
@@ -214,8 +219,10 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             }
             else {
                 log.error ("failed to create Light: "+sysName);
+                result = false;
             }
         }
+        return result;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractLightManagerConfigXML.class.getName());

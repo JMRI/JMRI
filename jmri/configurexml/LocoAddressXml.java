@@ -8,7 +8,7 @@ import org.jdom.Element;
  * Handle XML configuration for LocoAddress objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2005
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LocoAddressXml implements XmlAdapter {
 
@@ -33,8 +33,9 @@ public class LocoAddressXml implements XmlAdapter {
         return element;
     }
 
-    public void load(Element element) {
+    public boolean load(Element element) {
         log.error("Invalid method called");
+        return false;
     }
     
     public LocoAddress getAddress(Element element) {

@@ -11,7 +11,7 @@ import jmri.jmrix.loconet.LnReporterManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class LnReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
 
@@ -27,12 +27,12 @@ public class LnReporterManagerXml extends jmri.managers.configurexml.AbstractRep
         log.error("Invalid method called");
     }
 
-    public void load(Element reporters) {
+    public boolean load(Element reporters) {
         // create and/or access the master object
        LnReporterManager.instance();
 
         // load individual Reporters
-        loadReporters(reporters);
+        return loadReporters(reporters);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnReporterManagerXml.class.getName());

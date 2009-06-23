@@ -17,7 +17,7 @@ import jmri.TurnoutOperationManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -67,6 +67,13 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
         }
         // did not find a manager, allow it to default to the primary, if there is one
         log.debug("Did not find manager for name "+sName+", assume it's a number");
+        try{
+        	// number?
+        	Integer.parseInt(sName);
+        } catch (NumberFormatException e){
+        	log.debug("Name "+sName+" is not a number");
+        	return null;
+        }
 		if (mgrs.size()>0) {		
 			return ((TurnoutManager)mgrs.get(0)).newTurnout(
                     ((TurnoutManager)mgrs.get(0)).makeSystemName(sName), null);

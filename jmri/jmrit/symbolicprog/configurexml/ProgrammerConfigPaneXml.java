@@ -22,7 +22,7 @@ import org.jdom.Element;
  * CombinedLocoSelPane object.  It is <b>not</b> known why this works!
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class ProgrammerConfigPaneXml implements XmlAdapter {
 
@@ -48,8 +48,10 @@ public class ProgrammerConfigPaneXml implements XmlAdapter {
     /**
      * Update static data from XML file
      * @param element Top level Element to unpack.
+     * @return true if successful
       */
-    public void load(Element element) {
+    public boolean load(Element element) {
+    	boolean result = true;
         if (log.isDebugEnabled()) log.debug("set programmer default file: "+element.getAttribute("defaultFile").getValue());
         jmri.jmrit.symbolicprog.ProgDefault.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
 
@@ -63,6 +65,7 @@ public class ProgrammerConfigPaneXml implements XmlAdapter {
                 PaneProgFrame.setShowEmptyPanes(false);
             else
                 PaneProgFrame.setShowEmptyPanes(true);
+        return result;
     }
 
     /**

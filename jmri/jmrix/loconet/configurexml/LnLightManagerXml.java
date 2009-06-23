@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.*;
  * provides a load method here.
  * <P>
  * @author Dave Duchamp Copyright (c) 2006
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class LnLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
@@ -29,11 +29,11 @@ public class LnLightManagerXml extends jmri.managers.configurexml.AbstractLightM
         log.error("Invalid method called");
     }
 
-    public void load(Element lights) {
+    public boolean load(Element lights) {
         // create the master object
         LnLightManager.instance();
         // load individual lights
-        loadLights(lights);
+        return loadLights(lights);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnLightManagerXml.class.getName());

@@ -18,7 +18,7 @@ import java.awt.Color;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class LayoutBlockManagerXml implements XmlAdapter {
 
@@ -87,12 +87,14 @@ public class LayoutBlockManagerXml implements XmlAdapter {
      * Create a LayoutBlockManager object of the correct class, then
      * register and fill it.
      * @param layoutblocks Top level Element to unpack.
+     * @return true if successful
      */
-    public void load(Element layoutblocks) {
+    public boolean load(Element layoutblocks) {
         // create the master object
         replaceLayoutBlockManager();
         // load individual layoutblocks
         loadLayoutBlocks(layoutblocks);
+        return true;
     }
 
     /**

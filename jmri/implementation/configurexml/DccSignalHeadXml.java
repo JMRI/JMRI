@@ -25,7 +25,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008, 2009
  * @author Petr Koud'a  Copyright: Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -54,8 +54,9 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
     /**
      * Create a LsDecSignalHead
      * @param element Top level Element to unpack.
+     * @return true if successful
      */
-    public void load(Element element) {
+    public boolean load(Element element) {
         // put it together
         String sys = element.getAttribute("systemName").getValue();
         Attribute a = element.getAttribute("userName");
@@ -68,7 +69,7 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
         loadCommon(h, element);
         
         InstanceManager.signalHeadManagerInstance().register(h);
-        return;
+        return true;
     }
 
     public void load(Element element, Object o) {

@@ -9,7 +9,7 @@ import org.jdom.Element;
  * <P>The state of memory objects is not persisted, just their existance.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
 
@@ -30,13 +30,14 @@ public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
      * Create a MemoryManager object of the correct class, then
      * register and fill it.
      * @param memories Top level Element to unpack.
+     * @return true if successful
      */
-    public void load(Element memories) {
+    public boolean load(Element memories) {
         // create the master object
         DefaultMemoryManager.instance();
         // load individual routes
         loadMemories(memories);
-
+        return true;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultMemoryManagerXml.class.getName());

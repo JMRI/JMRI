@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -59,8 +59,9 @@ public class SignalHeadIconXml implements XmlAdapter {
     }
 
 
-    public void load(Element element) {
+    public boolean load(Element element) {
         log.error("Invalid method called");
+        return false;
     }
 
     /**

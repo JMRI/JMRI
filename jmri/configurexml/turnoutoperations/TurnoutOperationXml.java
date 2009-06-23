@@ -22,8 +22,9 @@ public abstract class TurnoutOperationXml implements XmlAdapter {
 	 * inherited methods
 	 * @see jmri.configurexml.XmlAdapter#load(org.jdom.Element)
 	 */
-	public void load(Element e) throws Exception {
+	public boolean load(Element e) throws Exception {
 		loadOne(e);
+		return true;
 	}
 	
 	public abstract TurnoutOperation loadOne(Element e);

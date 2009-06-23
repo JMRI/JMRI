@@ -2,7 +2,6 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.JmriException;
 import jmri.jmrix.loconet.LnConstants;
 
 /**
@@ -15,7 +14,7 @@ import jmri.jmrix.loconet.LnConstants;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class LnMessageManager implements LocoNetListener {
 
@@ -53,7 +52,7 @@ public class LnMessageManager implements LocoNetListener {
     /**
      * Free resources when no longer used
      */
-    public void dispose() throws JmriException {
+    public void dispose(){
         tc.removeLocoNetListener(~0, this);
         tc = null;
     }

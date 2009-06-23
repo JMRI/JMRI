@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformActionModel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * @see apps.PerformActionPanel
  */
 public class PerformActionModelXml implements XmlAdapter {
@@ -39,8 +39,10 @@ public class PerformActionModelXml implements XmlAdapter {
     /**
      * Create object from XML file
      * @param e Top level Element to unpack.
+     * @return true if successful
       */
-    public void load(Element e) {
+    public boolean load(Element e) {
+    	boolean result = true;
         String className = e.getAttribute("name").getValue();
         log.debug("Invoke Action from"+className);
         try {
@@ -48,17 +50,22 @@ public class PerformActionModelXml implements XmlAdapter {
             action.actionPerformed(new ActionEvent("prefs", 0, ""));
         } catch (ClassNotFoundException ex1) {
             log.error("Could not find specified class: "+className);
+            result = false;
         } catch (IllegalAccessException ex2) {
             log.error("Unexpected access exception: "+ex2);
+            result = false;
         } catch (InstantiationException ex3) {
             log.error("Could not instantiate specified class: "+className);
+            result = false;
         } catch (Exception ex4) {
             log.error("Error while performing startup action: "+ex4);
             ex4.printStackTrace();
+            result = false;
         }
         PerformActionModel m = new PerformActionModel();
         m.setClassName(className);
         PerformActionModel.rememberObject(m);
+        return result;
     }
 
     /**

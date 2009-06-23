@@ -12,7 +12,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @since 2.3.1
  */
 public class RpsReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
@@ -29,11 +29,11 @@ public class RpsReporterManagerXml extends jmri.managers.configurexml.AbstractRe
         log.error("Invalid method called");
     }
 
-    public void load(Element reporters) {
+    public boolean load(Element reporters) {
         // create the master object
         RpsReporterManager.instance();
         // load individual sensors
-        loadReporters(reporters);
+        return loadReporters(reporters);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsReporterManagerXml.class.getName());

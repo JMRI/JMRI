@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.LayoutSignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LayoutSignalHeadIconXml implements XmlAdapter {
 
@@ -58,8 +58,9 @@ public class LayoutSignalHeadIconXml implements XmlAdapter {
     }
 
 
-    public void load(Element element) {
+    public boolean load(Element element) {
         log.error("Invalid method called");
+        return false;
     }
 
     /**

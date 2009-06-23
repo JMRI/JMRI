@@ -3,7 +3,7 @@
 package jmri.jmrix.rps;
 
 import java.io.File;
-import java.io.IOException;
+//import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @since 2.1.7
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 
 
@@ -60,7 +60,7 @@ public class Model {
     }
     
     // Store model info
-    public void storeModel(File file) throws org.jdom.JDOMException, IOException {
+    public void storeModel(File file){ //throws org.jdom.JDOMException, IOException {
 /*         PositionFile pf = new PositionFile(); */
 /*         pf.prepare(); */
 /*         pf.setConstants(getVSound(), getOffset()); */
@@ -72,7 +72,7 @@ public class Model {
 /*         pf.store(file); */
     }
     
-    public void loadModel(File file) throws org.jdom.JDOMException, IOException {
+    public void loadModel(File file){ // throws org.jdom.JDOMException, IOException {
 /*         // start by getting the file */
 /*         PositionFile pf = new PositionFile(); */
 /*         pf.loadFile(file); */

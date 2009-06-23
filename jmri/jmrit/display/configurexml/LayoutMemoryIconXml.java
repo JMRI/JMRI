@@ -20,7 +20,7 @@ import java.awt.Color;
  *   loading a saved panel.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class LayoutMemoryIconXml implements XmlAdapter {
 
@@ -76,8 +76,9 @@ public class LayoutMemoryIconXml implements XmlAdapter {
     }
 
 
-    public void load(Element element) {
+    public boolean load(Element element) {
         log.error("Invalid method called");
+        return false;
     }
 
     /**

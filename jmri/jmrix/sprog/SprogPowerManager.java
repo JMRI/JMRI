@@ -9,7 +9,7 @@ import jmri.PowerManager;
  * PowerManager implementation for controlling SPROG layout power.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SprogPowerManager implements PowerManager, SprogListener {
 
@@ -50,7 +50,7 @@ public class SprogPowerManager implements PowerManager, SprogListener {
      * Used to update power state after service mode programming operation
      * without sending a message to the SPROG
      */
-    public void notePowerState(int v) throws JmriException {
+    public void notePowerState(int v){
         power = v;
         firePropertyChange("Power", null, null);
     }

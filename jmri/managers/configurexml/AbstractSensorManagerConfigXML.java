@@ -19,7 +19,7 @@ import org.jdom.Element;
  * specific Sensor or AbstractSensor subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -80,23 +80,26 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
      * register and fill it.
      * @param sensors Top level Element to unpack.
      */
-    abstract public void load(Element sensors);
+    abstract public boolean load(Element sensors);
 
     /**
      * Utility method to load the individual Sensor objects.
      * If there's no additional info needed for a specific sensor type,
      * invoke this with the parent of the set of Sensor elements.
      * @param sensors Element containing the Sensor elements to load.
+     * @return true if succeeded
      */
     @SuppressWarnings("unchecked")
-	public void loadSensors(Element sensors) {
+	public boolean loadSensors(Element sensors) {
+    	boolean result = true;
         List<Element> sensorList = sensors.getChildren("sensor");
         if (log.isDebugEnabled()) log.debug("Found "+sensorList.size()+" sensors");
         SensorManager tm = InstanceManager.sensorManagerInstance();
 
         for (int i=0; i<sensorList.size(); i++) {
             if (sensorList.get(i).getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+sensorList.get(i)+" "+sensorList.get(i).getAttributes());
+                log.error("unexpected null in systemName "+sensorList.get(i)+" "+sensorList.get(i).getAttributes());
+                result = false;
                 break;
             }
             String sysName = sensorList.get(i).getAttribute("systemName").getValue();
@@ -115,6 +118,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             
             if (s==null){
             	log.error("Could not create sensor: '"+sysName+"' user name: '"+(userName==null?"":userName)+"'");
+            	result = false;
             	continue;
             }
 
@@ -123,6 +127,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             
             s.setInverted(inverted);
         }
+        return result;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSensorManagerConfigXML.class.getName());

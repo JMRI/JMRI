@@ -15,7 +15,7 @@ import org.jdom.Element;
  * configuring LnSecurityElementManager.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class LnSecurityElementManagerXml implements XmlAdapter {
 
@@ -95,7 +95,7 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
         log.error("Invalid method called");
     }
 
-    public void load(Element elements) {
+    public boolean load(Element elements) {
         // create the master object
         LnSecurityElementManager mgr = new LnSecurityElementManager();
 
@@ -103,6 +103,7 @@ public class LnSecurityElementManagerXml implements XmlAdapter {
         InstanceManager.configureManagerInstance().registerConfig(mgr);
         // load individual security elements
         loadElements(elements);
+        return true;
     }
 
     /**

@@ -27,7 +27,7 @@ import jmri.*;
  * interface
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -227,7 +227,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 		return _validFeedbackNames;
 	}
 
-	public void setFeedbackMode(String mode) {
+	public void setFeedbackMode(String mode) throws IllegalArgumentException {
 		for (int i = 0; i < _validFeedbackNames.length; i++) {
 			if (mode.equals(_validFeedbackNames[i])) {
 				setFeedbackMode(_validFeedbackModes[i]);
@@ -237,7 +237,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 		throw new IllegalArgumentException("Unexpected mode: " + mode);
 	}
 
-	public void setFeedbackMode(int mode) {
+	public void setFeedbackMode(int mode) throws IllegalArgumentException {
 		// check for error - following removed the low bit from mode
 		int test = mode & (mode - 1);
 		if (test != 0)

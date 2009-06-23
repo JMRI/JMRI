@@ -11,15 +11,13 @@ package jmri.jmrix.ecos;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, 2008
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class EcosMessage extends jmri.jmrix.AbstractMRMessage {
 	
     
     public EcosMessage() {
         super();
-        // this doesn't seem to work!
-        super.SHORT_TIMEOUT = 10000;
     }
     
     // create a new one

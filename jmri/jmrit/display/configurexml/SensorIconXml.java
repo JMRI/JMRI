@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class SensorIconXml implements XmlAdapter {
 
@@ -51,8 +51,9 @@ public class SensorIconXml implements XmlAdapter {
     }
 
 
-    public void load(Element element) {
+    public boolean load(Element element) {
         log.error("Invalid method called");
+        return false;
     }
 
     /**

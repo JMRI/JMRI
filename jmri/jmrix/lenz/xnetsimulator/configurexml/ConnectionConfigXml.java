@@ -19,7 +19,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Paul Bender  Copyright: Copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -47,8 +47,10 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
    /**
      * Update static data from XML file
      * @param e Top level Element to unpack.
+     * @return true if successful
       */
-    public void load(Element e) {
+    public boolean load(Element e) {
+    	boolean result = true;
         // start the "connection"
         jmri.jmrix.lenz.xnetsimulator.XNetSimulatorFrame f
                 = new jmri.jmrix.lenz.xnetsimulator.XNetSimulatorFrame();
@@ -63,6 +65,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         // register, so can be picked up
         getInstance();
         register();
+        return result;
     }
 
 

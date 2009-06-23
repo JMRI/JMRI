@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for rps.RpsPositionIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class RpsPositionIconXml implements XmlAdapter {
 
@@ -57,8 +57,9 @@ public class RpsPositionIconXml implements XmlAdapter {
     }
 
 
-    public void load(Element element) {
+    public boolean load(Element element) {
         log.error("Invalid method called");
+        return false;
     }
 
     /**

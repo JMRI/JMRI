@@ -20,7 +20,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * e.g. jmrix.easydcc.serialdriver.configurexml
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class JmrixConfigPaneXml implements XmlAdapter {
 
@@ -48,8 +48,10 @@ public class JmrixConfigPaneXml implements XmlAdapter {
     /**
      * Update static data from XML file
      * @param e Top level Element to unpack.
+     * @return true if successful
       */
-    public void load(Element e) {
+    public boolean load(Element e) {
+    	boolean result = true;
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
         java.util.Hashtable<String,String> installedLAFs = new java.util.Hashtable<String,String>(plafs.length);
         for (int i = 0; i < plafs.length; i++){
@@ -68,8 +70,10 @@ public class JmrixConfigPaneXml implements XmlAdapter {
                     log.debug("skip updateLAF as already has className=="+className);
             } catch (Exception ex) {
                 log.error("Exception while setting GUI look & feel: "+ex);
+                result = false;
             }
         }
+        return result;
     }
 
     /**

@@ -18,7 +18,7 @@ import org.jdom.*;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -95,10 +95,12 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * Create a TransitManager object of the correct class, then
      * register and fill it.
      * @param transits Top level Element to unpack.
+     * @return true if successful
      */
-    public void load(Element transits) {
+    public boolean load(Element transits) {
         // load individual Transits
         loadTransits(transits);
+        return true;
     }
 
     /**

@@ -13,7 +13,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class LayoutEditorXml implements XmlAdapter {
 
@@ -171,7 +171,8 @@ public class LayoutEditorXml implements XmlAdapter {
      * @param element Top level Element to unpack.
      */
     @SuppressWarnings("unchecked")
-	public void load(Element element) {
+	public boolean load(Element element) {
+    	boolean result = true;
 		Attribute a;
         // find coordinates
         int x = 0;
@@ -212,6 +213,7 @@ public class LayoutEditorXml implements XmlAdapter {
 			sidetrackwidth = element.getAttribute("sidetrackwidth").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
             log.error("failed to convert LayoutEditor's attribute");
+            result = false;
         }
 		double xScale = 1.0;
 		double yScale = 1.0;
@@ -221,6 +223,7 @@ public class LayoutEditorXml implements XmlAdapter {
 				xScale = (Float.parseFloat(a.getValue()));
 			} catch (Exception e) {
 				log.error("failed to convert to float - "+a.getValue());
+				result = false;
 			}
 		}
 		a = element.getAttribute("yscale");
@@ -229,6 +232,7 @@ public class LayoutEditorXml implements XmlAdapter {
 				yScale = (Float.parseFloat(a.getValue()));
 			} catch (Exception e) {
 				log.error("failed to convert to float - "+a.getValue());
+				result = false;
 			}
 		}
        // find the name and default track color
@@ -256,6 +260,7 @@ public class LayoutEditorXml implements XmlAdapter {
 				panel.setTurnoutBX(sz);
 			} catch (Exception e) {
 				log.error("failed to convert to float - "+a.getValue());
+				result = false;
 			}
 		}
 		a = element.getAttribute("turnoutcx");
@@ -265,6 +270,7 @@ public class LayoutEditorXml implements XmlAdapter {
 				panel.setTurnoutCX(sz);
 			} catch (Exception e) {
 				log.error("failed to convert to float - "+a.getValue());
+				result = false;
 			}
 		}
 		a = element.getAttribute("turnoutwid");
@@ -274,6 +280,7 @@ public class LayoutEditorXml implements XmlAdapter {
 				panel.setTurnoutWid(sz);
 			} catch (Exception e) {
 				log.error("failed to convert to float - "+a.getValue());
+				result = false;
 			}
 		}
 		a = element.getAttribute("xoverlong");
@@ -283,6 +290,7 @@ public class LayoutEditorXml implements XmlAdapter {
 				panel.setXOverLong(sz);
 			} catch (Exception e) {
 				log.error("failed to convert to float - "+a.getValue());
+				result = false;
 			}
 		}
 		a = element.getAttribute("xoverhwid");
@@ -292,6 +300,7 @@ public class LayoutEditorXml implements XmlAdapter {
 				panel.setXOverHWid(sz);
 			} catch (Exception e) {
 				log.error("failed to convert to float - "+a.getValue());
+				result = false;
 			}
 		}
 		a = element.getAttribute("xovershort");
@@ -301,6 +310,7 @@ public class LayoutEditorXml implements XmlAdapter {
 				panel.setXOverShort(sz);
 			} catch (Exception e) {
 				log.error("failed to convert to float - "+a.getValue());
+				result = false;
 			}
 		}
  
@@ -317,6 +327,7 @@ public class LayoutEditorXml implements XmlAdapter {
                 adapter.load(item, panel);
             } catch (Exception e) {
                 log.error("Exception while loading "+item.getName()+":"+e);
+                result = false;
                 e.printStackTrace();
             }
         }
@@ -391,6 +402,7 @@ public class LayoutEditorXml implements XmlAdapter {
         // register the resulting panel for later configuration
         InstanceManager.configureManagerInstance().registerUser(panel);
 
+        return result;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutEditorXml.class.getName());

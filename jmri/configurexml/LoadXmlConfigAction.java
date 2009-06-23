@@ -17,7 +17,7 @@ import javax.swing.JFileChooser;
  * types of information stored in configuration files.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2002
- * @version	    $Revision: 1.10 $
+ * @version	    $Revision: 1.11 $
  * @see             jmri.jmrit.XmlFile
  */
 public class LoadXmlConfigAction extends LoadStoreBaseAction {
@@ -34,10 +34,17 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
         loadFile(configFileChooser);
     }
     
-    void loadFile(JFileChooser fileChooser) {
+    /**
+     * 
+     * @param fileChooser
+     * @return true if successful
+     */
+    protected boolean loadFile(JFileChooser fileChooser) {
+    	boolean results = false;
         java.io.File file = getFile(fileChooser);
         if (file!=null)
-            InstanceManager.configureManagerInstance().load(file);
+        	results = InstanceManager.configureManagerInstance().load(file);
+        return results;
     }
     
     java.io.File getFile(JFileChooser fileChooser) {

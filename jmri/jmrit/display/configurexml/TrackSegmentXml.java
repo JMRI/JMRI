@@ -12,7 +12,7 @@ import org.jdom.Element;
  * This module handles configuration for display.TrackSegment objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class TrackSegmentXml implements XmlAdapter {
 
@@ -48,8 +48,9 @@ public class TrackSegmentXml implements XmlAdapter {
         return element;
     }
 
-    public void load(Element element) {
+    public boolean load(Element element) {
         log.error("Invalid method called");
+        return false;
     }
 
     /**

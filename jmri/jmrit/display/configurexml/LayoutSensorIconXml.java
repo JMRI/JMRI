@@ -17,7 +17,7 @@ import org.jdom.Element;
  *   loading a saved panel.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LayoutSensorIconXml implements XmlAdapter {
 
@@ -56,8 +56,9 @@ public class LayoutSensorIconXml implements XmlAdapter {
     }
 
 
-    public void load(Element element) {
+    public boolean load(Element element) {
         log.error("Invalid method called");
+        return false;
     }
 
     /**

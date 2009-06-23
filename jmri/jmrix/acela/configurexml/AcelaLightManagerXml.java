@@ -13,7 +13,7 @@ import jmri.jmrix.acela.*;
  * provides a load method here.
  * <P>
  * @author      Dave Duchamp Copyright (c) 2006
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  *
  * @author      Bob Coleman, Copyright (c) 2007, 2008
  *              Based on Loconet example, modified to establish Acela support. 
@@ -32,11 +32,11 @@ public class AcelaLightManagerXml extends jmri.managers.configurexml.AbstractLig
         log.error("Invalid method called");
     }
 
-    public void load(Element lights) {
+    public boolean load(Element lights) {
         // create the master object
         AcelaLightManager.instance();
         // load individual lights
-        loadLights(lights);
+        return loadLights(lights);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaLightManagerXml.class.getName());

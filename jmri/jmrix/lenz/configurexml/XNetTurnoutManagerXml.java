@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XNetTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 2.5 $
+ * @version $Revision: 2.6 $
  */
 public class XNetTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -28,11 +28,11 @@ public class XNetTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
         log.error("Invalid method called");
     }
 
-    public void load(Element turnouts) {
+    public boolean load(Element turnouts) {
         // create the master object
         XNetTurnoutManager.instance();
         // load individual turnouts
-        loadTurnouts(turnouts);
+        return loadTurnouts(turnouts);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetTurnoutManagerXml.class.getName());

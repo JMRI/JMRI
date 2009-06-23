@@ -16,7 +16,7 @@ import jmri.jmrix.maple.*;
  * Based on SerialTurnoutManagerXml.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
@@ -32,11 +32,11 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
         log.error("Invalid method called");
     }
 
-    public void load(Element lights) {
+    public boolean load(Element lights) {
         // create the master object
         SerialLightManager.instance();
         // load individual lights
-        loadLights(lights);
+        return loadLights(lights);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialLightManagerXml.class.getName());

@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.*;
  * provides a load method here.
  * <P>
  * @author Dave Duchamp Copyright (c) 2006
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class XNetLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
@@ -29,11 +29,11 @@ public class XNetLightManagerXml extends jmri.managers.configurexml.AbstractLigh
         log.error("Invalid method called");
     }
 
-    public void load(Element lights) {
+    public boolean load(Element lights) {
         // create the master object
         XNetLightManager.instance();
         // load individual lights
-        loadLights(lights);
+        return loadLights(lights);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetLightManagerXml.class.getName());

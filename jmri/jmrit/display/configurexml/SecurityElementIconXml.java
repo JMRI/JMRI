@@ -11,7 +11,7 @@ import org.jdom.Element;
  * Handle configuration for display.SecurityElementIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class SecurityElementIconXml implements XmlAdapter {
 
@@ -44,8 +44,9 @@ public class SecurityElementIconXml implements XmlAdapter {
     }
 
 
-    public void load(Element element) {
+    public boolean load(Element element) {
         log.error("Invalid method called");
+        return false;
     }
 
     /**

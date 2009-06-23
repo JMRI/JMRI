@@ -11,7 +11,7 @@ import org.jdom.Element;
  * form created or used.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ProxyTurnoutManagerXml implements XmlAdapter {
 
@@ -28,7 +28,8 @@ public class ProxyTurnoutManagerXml implements XmlAdapter {
         return null;
     }
 
-    public void load(Element element) {
+    public boolean load(Element element) {
+    	return true;
     }
 
     /**

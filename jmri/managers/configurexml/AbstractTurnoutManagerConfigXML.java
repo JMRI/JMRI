@@ -25,7 +25,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -145,19 +145,22 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
      * register and fill it.
      * @param turnouts Top level Element to unpack.
      */
-    abstract public void load(Element turnouts);
+    abstract public boolean load(Element turnouts);
 
     /**
      * Utility method to load the individual Turnout objects.
      * If there's no additional info needed for a specific turnout type,
      * invoke this with the parent of the set of Turnout elements.
      * @param turnouts Element containing the Turnout elements to load.
+     * @return true if succeeded
      */
     @SuppressWarnings("unchecked")
-	public void loadTurnouts(Element turnouts) {
+	public boolean loadTurnouts(Element turnouts) {
+    	boolean result = true;
     	List<Element> operationList = turnouts.getChildren("operations");
     	if (operationList.size()>1) {
     		log.warn("unexpected extra elements found in turnout operations list");
+    		result = false;
     	}
     	if (operationList.size()>0) {
     		TurnoutOperationManagerXml tomx = new TurnoutOperationManagerXml();
@@ -170,7 +173,8 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
         for (int i=0; i<turnoutList.size(); i++) {
             Element elem = turnoutList.get(i);
             if ( elem.getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+elem+" "+elem.getAttributes());
+                log.error("unexpected null in systemName "+elem+" "+elem.getAttributes());
+                result = false;
                 break;
             }
             String sysName = elem.getAttribute("systemName").getValue();
@@ -182,6 +186,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             
             if (t==null){
             	log.error("Could not create turnout: '"+sysName+"' user name: '"+(userName==null?"":userName)+"'");
+            	result = false;
             	continue;
             }
             
@@ -192,7 +197,12 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             Attribute a;
             a = elem.getAttribute("feedback");
             if (a!=null) {
-            	t.setFeedbackMode(a.getValue());
+            	try{
+            		t.setFeedbackMode(a.getValue());
+            	}catch (IllegalArgumentException e){
+            		log.error("Can not set feedback mode: '"+a.getValue()+"' for turnout: '"+sysName+"' user name: '"+(userName==null?"":userName)+"'");
+            		result = false;
+            	}
             }
             a = elem.getAttribute("sensor1");
             if (a!=null) { 
@@ -248,6 +258,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 				else {
 					log.warn("illegal number of output bits for control of turnout "+sysName);
 					t.setNumberOutputBits(1);
+					result = false;
 				}
 			}
 			
@@ -264,6 +275,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 				else {
 					log.warn("illegal control type for control of turnout "+sysName);
 					t.setControlType(0);
+					result = false;
 				}
 			}
 			
@@ -272,6 +284,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             if (myOpList.size()>0) {
             	if (myOpList.size()>1) {
             		log.warn("unexpected extra elements found in turnout-specific operations");
+            		result = false;
             	}
             	TurnoutOperation toper = TurnoutOperationXml.loadOperation(myOpList.get(0));
         		t.setTurnoutOperation(toper);
@@ -292,7 +305,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 			//  set initial state from sensor feedback if appropriate
 			t.setInitialKnownStateFromFeedback();
         }
-       
+       return result;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractTurnoutManagerConfigXML.class.getName());

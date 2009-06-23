@@ -18,7 +18,7 @@ import org.jdom.Element;
  * and the default Locale.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  * @see jmri.GuiLafConfigPane
  */
 public class GuiLafConfigPaneXml implements XmlAdapter {
@@ -49,8 +49,10 @@ public class GuiLafConfigPaneXml implements XmlAdapter {
     /**
      * Update static data from XML file
      * @param e Top level Element to unpack.
+     * @return true if successful
       */
-    public void load(Element e) {
+    public boolean load(Element e) {
+    	boolean result = true;
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
         java.util.Hashtable<String,String> installedLAFs = new java.util.Hashtable<String,String>(plafs.length);
         for (int i = 0; i < plafs.length; i++){
@@ -69,6 +71,7 @@ public class GuiLafConfigPaneXml implements XmlAdapter {
                     log.debug("skip updateLAF as already has className=="+className);
             } catch (Exception ex) {
                 log.error("Exception while setting GUI look & feel: "+ex);
+                result = false;
             }
         }
         Attribute langAttr = e.getAttribute("LocaleLanguage");
@@ -77,6 +80,7 @@ public class GuiLafConfigPaneXml implements XmlAdapter {
         if (countryAttr!=null && langAttr!=null && varAttr!=null)
             Locale.setDefault(new Locale(langAttr.getValue(),countryAttr.getValue(),
                                 varAttr.getValue()));
+        return result;
     }
 
     /**

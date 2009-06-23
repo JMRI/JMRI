@@ -12,7 +12,7 @@ import jmri.jmrix.maple.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -28,11 +28,11 @@ public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractS
         log.error("Invalid method called");
     }
 
-    public void load(Element sensors) {
+    public boolean load(Element sensors) {
         // create the master object
         SerialSensorManager.instance();
         // load individual sensors
-        loadSensors(sensors);
+        return loadSensors(sensors);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSensorManagerXml.class.getName());

@@ -3,6 +3,9 @@
 package jmri.configurexml;
 
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
+
+import javax.swing.JOptionPane;
 
 /**
  * Load configuration information from an XML file.
@@ -14,15 +17,15 @@ import java.awt.event.ActionEvent;
  * types of information stored in configuration files.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2002
- * @version	    $Revision: 1.4 $
+ * @version	    $Revision: 1.5 $
  * @see             jmri.jmrit.XmlFile
  */
 public class LoadXmlUserAction extends LoadXmlConfigAction {
+	
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
     public LoadXmlUserAction() {
-        this(
-            java.util.ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle")
-                .getString("MenuItemLoad"));
+        this(rb.getString("MenuItemLoad"));
     }
 
     public LoadXmlUserAction(String s) {
@@ -30,7 +33,15 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        loadFile(userFileChooser);
+        boolean results = loadFile(userFileChooser);
+        log.debug(results?"load was successful":"load failed");
+        if (!results){
+        	JOptionPane.showMessageDialog(null,
+        			rb.getString("PanelHasErrors")+"\n"
+        			+rb.getString("CheckPreferences")+"\n"
+        			+rb.getString("ConsoleWindowHasInfo"),
+        			rb.getString("PanelLoadError"),	JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     // initialize logging

@@ -20,7 +20,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -46,8 +46,10 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     /**
      * Port name carries the hostname for the RMI connection
      * @param e Top level Element to unpack.
+     * @return true if successful
       */
-    public void load(Element e) {
+    public boolean load(Element e) {
+    	boolean result = true;
         // configure port name
         String hostName = e.getAttribute("port").getValue();
 
@@ -72,6 +74,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             f.getContentPane().add(new JLabel("failed, error was "+ex));
             f.pack();
             connected = false;
+            result = false;
         }
 
         // configure the other instance objects
@@ -84,6 +87,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
         // register, so can be picked up
         register(hostName);
+        return result;
     }
 
     boolean connected = false;

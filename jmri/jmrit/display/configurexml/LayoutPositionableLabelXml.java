@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.LayoutPositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class LayoutPositionableLabelXml implements XmlAdapter {
 
@@ -81,8 +81,9 @@ public class LayoutPositionableLabelXml implements XmlAdapter {
         }
     }
 
-    public void load(Element element) {
+    public boolean load(Element element) {
         log.error("Invalid method called");
+        return false;
     }
 
     /**

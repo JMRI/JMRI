@@ -12,7 +12,7 @@ import java.util.Enumeration;
  * objects (for now).
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class LnSecurityElementManager {
 
@@ -24,7 +24,7 @@ public class LnSecurityElementManager {
 	}
 
 	// to free resources when no longer used
-	public void dispose() throws JmriException {
+	public void dispose(){
         mHashSE.clear();
         mHashAG.clear();
 	}

@@ -13,7 +13,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -72,9 +72,11 @@ public class PanelEditorXml implements XmlAdapter {
      * Create a PanelEditor object, then
      * register and fill it, then pop it in a JFrame
      * @param element Top level Element to unpack.
+     * @return true if successful
      */
     @SuppressWarnings("unchecked")
-	public void load(Element element) {
+	public boolean load(Element element) {
+    	boolean result = true;
         // find coordinates
         int x = 0;
         int y = 0;
@@ -87,6 +89,7 @@ public class PanelEditorXml implements XmlAdapter {
             width = element.getAttribute("width").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
             log.error("failed to convert PanelEditor's attribute");
+            result = false;
         }
         // find the name
         String name = "Panel";
@@ -98,6 +101,7 @@ public class PanelEditorXml implements XmlAdapter {
         // confirm that panel hasn't already been loaded
         if(jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)){
         	log.warn("File contains a panel with the same name (" + name + ") as an existing panel");
+        	result = false;
         }
 		jmri.jmrit.display.PanelMenu.instance().addPanelEditorPanel(panel);
         panel.getFrame().setLocation(x,y);
@@ -118,6 +122,7 @@ public class PanelEditorXml implements XmlAdapter {
                 adapter.load(item, panel);
             } catch (Exception e) {
                 log.error("Exception while loading "+item.getName()+":"+e);
+                result = false;
                 e.printStackTrace();
             }
         }
@@ -178,6 +183,7 @@ public class PanelEditorXml implements XmlAdapter {
         panel.getFrame().setLocation(x,y);
         panel.getFrame().setSize(width,height);
 
+        return result;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PanelEditorXml.class.getName());
