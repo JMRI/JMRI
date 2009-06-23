@@ -407,12 +407,19 @@ public class PreviewDialog extends JDialog implements MouseListener {
                     JLabel label = new JLabel(java.text.MessageFormat.format(rb.getString("scale"),
                                         new Object[] {CatalogPanel.printDbl(scale,2)}));
                     p.add(label);
-                    p.add(new JLabel(name));
+                    if (name.length()>18) {
+                        name = name.substring(0, 18);
+                    }
+                    JLabel nameLabel = new JLabel(name);
+                    p.add(nameLabel);
                     if (cellHeight < icon.getIconHeight()) {
-                        cellHeight = icon.getIconHeight()+label.getPreferredSize().height;
+                        cellHeight = icon.getIconHeight()
+                                        +label.getPreferredSize().height
+                                        +nameLabel.getPreferredSize().height;
                     }
                     if (cellWidth < icon.getIconWidth()) {
-                        cellWidth = Math.max(label.getPreferredSize().width, icon.getIconWidth())+10;
+                        cellWidth = Math.max(nameLabel.getPreferredSize().width, 
+                                        Math.max(label.getPreferredSize().width, icon.getIconWidth()))+10;
                     }
                     p.addMouseListener(this);
                     gridbag.setConstraints(p, c);
