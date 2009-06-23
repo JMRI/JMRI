@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: IconAdder.shtml,v 1.5 2009-06-23 06:33:11 jacobsen Exp $ -->
+<!-- $Id: IconAdder.shtml,v 1.6 2009-06-23 17:00:22 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Icon Editor Help</TITLE>
@@ -86,7 +86,7 @@ help in determining what parts of the icon are opaque and what parts are transpa
 <p>The Catalog pane will always display at least one tree titled "Program Directory".  This is
 the resource directory from the jmri.jar that was built when you installed this current version of JMRI.
 Other trees that you might see are: "pPreferences Directory", if you have created a "resources" 
-directory within your JMRI preferences directory - or possibly, "Image Index" if it has 
+directory within your JMRI preferences directory - or possibly see, "Image Index" if it has 
 been created already (see below for more information).</p>
 
 <H3>Changing the Icon</H3>
@@ -115,8 +115,8 @@ until you are satisfied with the state icons you want to install into the Panel.
         under this directory and when it encounters one with image files, it will open a 
         window and attempt to display all the images it finds there.  Note: <i>This may take
         some time.</i>
-        <p>Depending on how much memory is needed to show all the files,
-        two possible sequences of events that might follow.</p>
+        <p>Depending on how much memory is needed to show all the files, one  of
+        the following two sequences of events will occur.</p>
         <UL>
         <LI>If there sufficient memory to display the files, the window will show
         them along with the radio buttons to adjust their background.  Also, three
@@ -145,8 +145,8 @@ until you are satisfied with the state icons you want to install into the Panel.
         next directory found with image files.</LI>
         <LI>Pressing <b>Cancel</b> will close the window with no further action.</LI>
         </UL>
-        <p>Note that this is the case that generally occurs when you open 
-        a photo album directory.</LI>
+        <p>Note the latter case generally occurs when you open 
+        a sizable photo album directory.</LI>
         </UL>       
         <p>This is a feature to be used sparingly, but many interesting icons can
         be found, particularly those cached by your browser.  You might 
@@ -158,7 +158,7 @@ until you are satisfied with the state icons you want to install into the Panel.
 <P>You can also create your own icons.  There are two ways you can make these permanently
 available to the Panel Editor.</P>
 <UL>
-        <LI>Create an ImageIndex Catalog that is saved to disk and will appear automatically
+        <LI>Create an Image Index Catalog that is saved to disk and will appear automatically
         in the Catalog pane.  Use the <b>Create/Edit an ImageIndex Catalog</b> menu item to 
         create and edit an ImageIndex. The ImageIndex will be preserved unchanged during an 
         upgrade.  See the 
@@ -167,7 +167,7 @@ available to the Panel Editor.</P>
         <LI>Create a new folder named "resources" in
         your JMRI Preferences directory. Add your new icons to that folder. This will prevent any
         possible conflicts or loss of data during an upgrade. These new items will automatically 
-        appear under "preferenceDir" in the icon Catalog.</LI>
+        appear under "Preferences Directory" in the icon Catalog.</LI>
 </UL>
 
 <!--#include virtual="/Footer" -->
