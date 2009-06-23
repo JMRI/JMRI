@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ImageIndex.shtml,v 1.5 2009-06-22 20:42:16 pete_cressman Exp $ -->
+<!-- $Id: ImageIndex.shtml,v 1.6 2009-06-23 16:48:28 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
@@ -73,7 +73,7 @@ menus below.
         <LI><b>Store ImageIndex</b>.  This stores a permanent record of the Image Index
         that will be restored the next time the Panel Editor is opened.  The
         Image Index will be included in the Catalog trees used by the
-        Icon Editors.</LI>
+        Icon Editors.<p></p></LI>
         
         <LI><b>Open a File System Directory</b>.  This opens a file chooser dialog where
         you may open any directory that that has image files.  To open the directory,
@@ -82,7 +82,8 @@ menus below.
         <p>See  
         <a href="../display/IconAdder.shtml">Icon Editors</a> for more details on this
         menu item.</p>
-        <p>The icons displayed in the "preview" panel of this directory window can added 
+        <p>The icons displayed in the "preview" panel of any directory window opened
+        from this menu item can be added 
         to the Image Index.  How to do this is described below.
 </UL>
 <p>The <b>Edit</b> menu has three items:
@@ -91,7 +92,9 @@ menus below.
         menu item to add a sub-node the the selected node.  A "sub-node" is a node that 
         branches from under the selected node.</LI> 
         <LI><b>Delete Node</b>.  First select a node in the Image Index tree.  Then, use this
-        menu item to delete the node.</LI> 
+        menu item to delete the node.  Since this will also delete the nodes and icon
+        references that branch off from under this node, a confirmation dialog is opened
+        with the total of all the items that will be deleted.</LI> 
         <LI><b>Rename Node</b>.  First select a node in the Image Index tree.  Then, use this
         menu item to change the name of the node.</LI> 
 </UL>
@@ -100,7 +103,7 @@ menus below.
 
 <p>Use "Drag and Drop" to copy an icon from either the Catalog pane (left pane) or a File 
 Directory window.  Press the mouse button down on any icon appearing in the "preview"
-panel of either of these window to "drag" the icon to a node of the Image Index tree 
+panel of either of these windows to "drag" the icon to a node of the Image Index tree 
 (right pane).  (Dragging means holding the mouse button down as you move the mouse
 pointer to a node of the Image Index tree.)
 Actually, it is only the reference to the location of the icon that is saved by the 
@@ -115,10 +118,11 @@ of the Image Index activatea a "pop-up" menu.
 Pop-Up menus display the name and reference
 location of the icon.  The pop-up also provides items to modify icons in the Image Index.</p>
 <UL>
-        <LI><b>Rename Icon</b> opens a dialog box where a new name can be entered.  Note: 
-        <i>the "preview" panel will show the change after leaving and then returning 
-        to the panel.</i></LI>
-        <LI><b>Delete Icon</b> removes the icon from the Image Index.</LI>
+        <LI><b>Rename Icon</b> opens a dialog box where a new name can be entered.</LI>
+        <LI><b>Delete Icon</b> removes the icon from the Image Index node.</LI>
+        
+        <p>Note: <i>the "preview" panel will only show these changes
+        after leaving the node and then returning to the node.</i>
 </UL>        
 
 <!--#include virtual="/Footer" -->
