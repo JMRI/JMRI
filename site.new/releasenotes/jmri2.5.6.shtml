@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.6.shtml,v 1.4 2009-06-23 06:37:15 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.6.shtml,v 1.5 2009-06-24 03:29:37 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,7 +29,7 @@
       Release Notes for JMRI 2.5.6 release
       </h2>
 
-	<p>Date: MMM DD, 2009</p>
+	<p>Date: June 23, 2009</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.5.6 of JMRI/DecoderPro is available for download.
 
@@ -48,7 +48,14 @@ It contains
 many new features, including:
 
 <ul>
-<li>
+<li>There's now a 
+<a href="#pe">new and improved Panel Editor</a>, 
+along with the ability to define and save your own
+sets of icons.
+<li>Another round of improvements to the operations feature
+<li>Improved handling of errors when loading a panel, which should
+make it much less likely that people will overwrite their panel files
+with ones that are missing data.
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -69,7 +76,10 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-(None yet)
+The Panel Editor has been greatly improved, but it might take a little
+while for you to get used to it.  If you have trouble figuring out how it
+works, please see the 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/display/PanelEditor.shtml">help pages</a>.
 
 <h3>Warnings from older versions:</h3>
 
@@ -163,7 +173,7 @@ Dan Boudreau updated the operations tools to remove any train icon(s) from the p
 <p>
 Fix an off-by-one error when doing manual reads and writes with the DecoderPro indexed-CV pane.
 
-<p>
+<p><a id="pe">
 Pete Cressman made some significant improvements to the 
 <a href="http://jmri.org/help/en/package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor</a>.
 The textfields that required users to type in the system name of a JMRI entity, e.g. a turnout, sensor, etc, and then press an
@@ -178,8 +188,8 @@ Selecting a row from the table activates an 'Add' button that adds icons for the
 The new version displays all the icons contained in a node of the tree and icons are changed by dragging the image 
 from the preview panel to the entity's icons and dropping it there.
 <li>There are menu items for help and file system searches
-<li>Any directory accessible from the computer can be added to the trees that provide icons to import to the Panel.
-<li>Any drive on the computer can be searched for images.
+<li>Any directory accessible from the computer can be searched for images 
+    and then added to the trees that provide icons for importing to the Panel
 <li>An Image Index can be created and a permanet copy saved to organize the icons for import to the Panel.  
 This index is usable globally (i.e. not confined to the Panel under construction)
 </ol>
