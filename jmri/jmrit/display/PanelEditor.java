@@ -1078,7 +1078,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
      */    
     void addIcon() {
         IconAdder iconEditor = _iconEditorFrame.get("IconEditor").getEditor();
-        PositionableLabel l = new PositionableLabel(iconEditor.getIcon(rb.getString("icon")) );
+        PositionableLabel l = new PositionableLabel(iconEditor.getIcon("plainIcon"));
         setNextLocation(l);
         l.setDisplayLevel(ICONS);
         putLabel(l);
