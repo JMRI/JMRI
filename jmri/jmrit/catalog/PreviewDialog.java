@@ -404,13 +404,13 @@ public class PreviewDialog extends JDialog implements MouseListener {
                     JPanel p = new JPanel();
                     p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
                     p.add(image);
-                    JLabel label = new JLabel(java.text.MessageFormat.format(rb.getString("scale"),
-                                        new Object[] {CatalogPanel.printDbl(scale,2)}));
-                    p.add(label);
                     if (name.length()>18) {
                         name = name.substring(0, 18);
                     }
                     JLabel nameLabel = new JLabel(name);
+                    JLabel label = new JLabel(java.text.MessageFormat.format(rb.getString("scale"),
+                                        new Object[] {CatalogPanel.printDbl(scale,2)}));
+                    p.add(label);
                     p.add(nameLabel);
                     if (cellHeight < icon.getIconHeight()) {
                         cellHeight = icon.getIconHeight()

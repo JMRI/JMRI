@@ -59,6 +59,12 @@ public class MultiSensorIconAdder extends IconAdder {
         _sensorMap = new HashMap <String, Sensor>();
         _lastIndex = 0;
     }
+
+    MultiSensorIconAdder(String type) {
+        super(type);
+        _sensorMap = new HashMap <String, Sensor>();
+        _lastIndex = 0;
+    }
     
     /**
     *  Override.  First three calls MUST be 'inactive', 'inconsistent', 'unknown'.
@@ -67,8 +73,7 @@ public class MultiSensorIconAdder extends IconAdder {
     public void setIcon(int index, String label, String name) {
         if (index > 2) {
             //make a unique name (multisensor has deletes so fix the key)
-            label = java.text.MessageFormat.format(rb.getString("MultiSensorPosition"),
-                                                   new Object[] { new Integer(_lastIndex++) }); 
+            label = "MultiSensorPosition " +_lastIndex++; 
         }
 
         if (log.isDebugEnabled()) {
@@ -172,7 +177,7 @@ public class MultiSensorIconAdder extends IconAdder {
             String key = _order.get(i);
             JPanel p =new JPanel(); 
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            p.add(new JLabel(key));
+            p.add(new JLabel(rbean.getString(key)));
             p.add(_iconMap.get(key));
             rowPanel.add(p);
             rowPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
@@ -391,15 +396,18 @@ public class MultiSensorIconAdder extends IconAdder {
                         if (log.isDebugEnabled()) log.debug("DropPanel.drop COMPLETED for "+
                                                              comp.getName());
                         return;
+                    } else {
+                        if (log.isDebugEnabled()) log.debug("DropPanel.drop REJECTED!");
+                        e.rejectDrop();
                     }
                 }
             } catch(IOException ioe) {
-                ioe.printStackTrace();
+                if (log.isDebugEnabled()) log.debug("DropPanel.drop REJECTED!");
+                e.rejectDrop();
             } catch(UnsupportedFlavorException ufe) {
-                ufe.printStackTrace();
+                if (log.isDebugEnabled()) log.debug("DropPanel.drop REJECTED!");
+                e.rejectDrop();
             }
-            if (log.isDebugEnabled()) log.debug("DropPanel.drop REJECTED!");
-            e.rejectDrop();
         }
     }
     

@@ -254,7 +254,8 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
                 continue;
             }
             String path = attr.getValue();
-            node.addLeaf(name, path);
+            // use the method that maintains the same order
+            node.addLeaf(new CatalogTreeLeaf(name, path, 0));
         }
     }
 

@@ -25,7 +25,17 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
         super(name);
     }
 
-   public void addLeaf(String name, String path) {
+    /**
+    *  Append leaf to the end of the leaves list
+    */
+    public void addLeaf(CatalogTreeLeaf leaf) {
+        _leaves.add(leaf);
+    }
+
+    /**
+    * Insert leaf according to height.
+    */
+    public void addLeaf(String name, String path) {
        // check path
        NamedIcon icon = CatalogPanel.getIconByName(path);
        if (icon == null){

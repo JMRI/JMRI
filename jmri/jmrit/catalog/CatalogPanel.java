@@ -7,30 +7,19 @@ import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-//import javax.swing.DropMode;
-//import javax.swing.JButton;
-//import javax.swing.JComponent;
-//import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-//import javax.swing.JPopupMenu.Separator; 
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-//import javax.swing.JLabel;
 import javax.swing.JRadioButton;
-//import javax.swing.TransferHandler;
-//import javax.swing.event.TreeModelEvent;
-//import javax.swing.event.TreeModelListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-//import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.DefaultTreeModel;
-//import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -163,7 +152,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         });
         jmri.util.JTreeUtil.setExpandsSelectedPaths(_dTree, true);
         _treePane = new JScrollPane(_dTree);
-        _treePane.getViewport().setPreferredSize(new Dimension(250, 100));
+        _treePane.getViewport().setPreferredSize(new Dimension(250, 200));
         add(_treePane, 1);
         setupPanel();
     }
@@ -223,7 +212,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         CatalogTreeNode node = new CatalogTreeNode((String)n.getUserObject());
         node.setLeaves(n.getLeaves());
         parent.add(node);
-        Enumeration<CatalogTreeNode> e =n.children();
+        Enumeration<CatalogTreeNode> e = n.children();
         while (e.hasMoreElements()) {
             CatalogTreeNode nChild = e.nextElement();
             addNode(node, nChild);
@@ -544,7 +533,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
                 scale = Math.min(scale, 100.0/h);
             }
             if (scale < 1) { // make a thumbnail
-                scale = Math.max(scale, 0.25);  // but not too small
+                scale = Math.max(scale, 0.15);  // but not too small
                 AffineTransform t = AffineTransform.getScaleInstance(scale, scale);
                 BufferedImage bufIm = new BufferedImage((int)Math.ceil(scale*w), 
                                                         (int)Math.ceil(scale*h), 
@@ -592,11 +581,11 @@ public class CatalogPanel extends JPanel implements MouseListener {
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             p.add(image);
+            JLabel nameLabel = new JLabel(leaf.getName());
+            p.add(nameLabel);
             JLabel label = new JLabel(java.text.MessageFormat.format(rb.getString("scale"),
                                 new Object[] {printDbl(scale,2)}));
             p.add(label);
-            JLabel nameLabel = new JLabel(leaf.getName());
-            p.add(nameLabel);
             if (cellHeight < icon.getIconHeight()) {
                 cellHeight = icon.getIconHeight()
                                 +label.getPreferredSize().height

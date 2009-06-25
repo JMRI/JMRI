@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: IconAdder.shtml,v 1.6 2009-06-23 17:00:22 pete_cressman Exp $ -->
+<!-- $Id: IconAdder.shtml,v 1.7 2009-06-25 18:49:49 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Icon Editor Help</TITLE>
@@ -98,12 +98,17 @@ to any of the JMRI entity icons at the top of the Icon
 Editor.  Release the mouse button after hovering over the icon you want to change and
 the dragged icon will replace it.  You may go to other nodes and drag any of icons found there
 until you are satisfied with the state icons you want to install into the Panel.</p>
+<p>
+The changes you make to the icons of a JMRI entity can be saved and recalled the next time 
+you use PanelPro by using the menu iten <b>Store Image Index</b> in the <b>File</b>
+menu of the Panel Editor.  The <b>Store Image Index</b> menu item also appears in the 
+<b>File</b> menu of the Image Index Editor.
 
 <H2>Icon Editor Menus</H2>
 
 <p>The <b>Find Icons</b> menu has the following items:
 <UL>
-        <LI><b>Create/Edit an ImageIndex Catalog</b>.  This menu item opens a window where
+        <LI><b>Create/Create/Edit Image Index</b>.  This menu item opens a window where
         you can organize the icons into a scheme that makes them easy to find when you want to
         use an Icon Editor.  See the 
         <a href="../catalog/ImageIndex.shtml">Image Index Editor page</a>

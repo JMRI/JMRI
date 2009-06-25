@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import jmri.CatalogTree;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
@@ -26,6 +27,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -34,6 +36,7 @@ import java.io.File;
 import javax.swing.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items
@@ -93,7 +96,6 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     final public static int SCROLL_VERTICAL   = 3;
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
-    static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     JTextField nextX = new JTextField(rb.getString("DefaultX"),4);
     JTextField nextY = new JTextField(rb.getString("DefaultY"),4);
@@ -112,24 +114,8 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     JTextField nextLabel = new JTextField(10);
 
     JComboBox _addIconBox;
-
-    IconAdder iconEditor;
-    JFrameItem iconFrame;
-    IconAdder turnoutRIconEditor;
-    JFrameItem turnoutRFrame;
-    IconAdder turnoutLIconEditor;
-    JFrameItem turnoutLFrame;
-    IconAdder sensorIconEditor;
-    JFrameItem sensorIconFrame;
-    IconAdder signalIconEditor;
-    JFrameItem signalIconFrame;
-    IconAdder memoryIconEditor;
-    IconAdder reporterIconEditor;
-    IconAdder bkgrndEditor;
-    JFrameItem bdIconFrame;
-    MultiSensorIconAdder multiSensorEditor;
-    JFrameItem multiSensorFrame;
-
+    HashMap <String, JFrameItem> _iconEditorFrame = new HashMap <String, JFrameItem>();
+    
     static boolean showCloseInfoMessage = true;	//display info message when closing panel
     
     public PanelEditor() { this(rb.getString("Title"));}
@@ -154,15 +140,33 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.jmrit.display.NewPanelAction(rb.getString("MenuItemNew")));
-//        fileMenu.add(new jmri.configurexml.LoadXmlConfigAction(rb.getString("MenuItemLoad")));
         fileMenu.add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStore")));
         JMenuItem storeIndexItem = new JMenuItem(rb.getString("MIStoreImageIndex"));
         fileMenu.add(storeIndexItem);
         storeIndexItem.addActionListener(new ActionListener() {
+                PanelEditor panelEd;
                 public void actionPerformed(ActionEvent event) {
-					jmri.jmrit.catalog.ImageIndexEditor.storeImageIndex();
+					jmri.jmrit.catalog.ImageIndexEditor.storeImageIndex(panelEd);
                 }
-            });
+                ActionListener init(PanelEditor pe) {
+                    panelEd = pe;
+                    return this;
+                }
+            }.init(this));
+        JMenuItem editItem = new JMenuItem(rb.getString("editIndexMenu"));
+        editItem.addActionListener(new ActionListener() {
+                PanelEditor panelEd;
+                public void actionPerformed(ActionEvent e) {
+                    ImageIndexEditor ii = ImageIndexEditor.instance(panelEd);
+                    ii.pack();
+                    ii.setVisible(true);
+                }
+                ActionListener init(PanelEditor pe) {
+                    panelEd = pe;
+                    return this;
+                }
+            }.init(this));
+        fileMenu.add(editItem);
         fileMenu.addSeparator();
         JMenuItem deleteItem = new JMenuItem(rb.getString("DeletePanel"));
         fileMenu.add(deleteItem);
@@ -252,17 +256,17 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         PickListModel turnoutTableModel = new turnoutPickModel(InstanceManager.turnoutManagerInstance());
         // Add a turnout indicator for right-hand
         {
-            turnoutRIconEditor = new IconAdder();
-            turnoutRIconEditor.setIcon(3, InstanceManager.turnoutManagerInstance().getClosedText(),
+            IconAdder turnoutRIconEditor = new IconAdder("RightTOEditor");
+            turnoutRIconEditor.setIcon(3, "TurnoutStateClosed",
 				"resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif");
-            turnoutRIconEditor.setIcon(2, InstanceManager.turnoutManagerInstance().getThrownText(), 
+            turnoutRIconEditor.setIcon(2, "TurnoutStateThrown", 
 				"resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif");
-            turnoutRIconEditor.setIcon(0, rbean.getString("BeanStateInconsistent"), 
+            turnoutRIconEditor.setIcon(0, "BeanStateInconsistent", 
                 "resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif");
-            turnoutRIconEditor.setIcon(1, rbean.getString("BeanStateUnknown"),
+            turnoutRIconEditor.setIcon(1, "BeanStateUnknown",
                 "resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif");
 
-            turnoutRFrame = makeAddIconFrame("AddRHTOIcon", "addIconsToPanel", "SelectTO", turnoutRIconEditor);
+            JFrameItem turnoutRFrame = makeAddIconFrame("RightTOEditor", "addIconsToPanel", "SelectTO", turnoutRIconEditor);
             addHelpMenu(turnoutRFrame, "package.jmri.jmrit.display.IconAdder");
             turnoutRIconEditor.makeIconPanel();
             turnoutRIconEditor.setPickList(turnoutTableModel);
@@ -274,8 +278,9 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             };
             ActionListener changeIconAction = new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        turnoutRIconEditor.addCatalog();
-                        turnoutRFrame.pack();
+                        JFrameItem frame = _iconEditorFrame.get("RightTOEditor");
+                        frame.getEditor().addCatalog();
+                        frame.pack();
                     }
             };
             turnoutRIconEditor.complete(addIconAction, changeIconAction, true);
@@ -284,17 +289,17 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
         // Add a turnout indicator for left-hand
         {
-            turnoutLIconEditor = new IconAdder();
-            turnoutLIconEditor.setIcon(3, InstanceManager.turnoutManagerInstance().getClosedText(),
+            IconAdder turnoutLIconEditor = new IconAdder("LeftTOEditor");
+            turnoutLIconEditor.setIcon(3, "TurnoutStateClosed",
 				"resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
-            turnoutLIconEditor.setIcon(2, InstanceManager.turnoutManagerInstance().getThrownText(), 
+            turnoutLIconEditor.setIcon(2, "TurnoutStateThrown", 
 				"resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif");
-            turnoutLIconEditor.setIcon(0, rbean.getString("BeanStateInconsistent"), 
+            turnoutLIconEditor.setIcon(0, "BeanStateInconsistent", 
                 "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif");
-            turnoutLIconEditor.setIcon(1, rbean.getString("BeanStateUnknown"),
+            turnoutLIconEditor.setIcon(1, "BeanStateUnknown",
                 "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
 
-            turnoutLFrame = makeAddIconFrame("AddLHTOIcon", "addIconsToPanel", "SelectTO", turnoutLIconEditor);
+            JFrameItem turnoutLFrame = makeAddIconFrame("LeftTOEditor", "addIconsToPanel", "SelectTO", turnoutLIconEditor);
             addHelpMenu(turnoutLFrame, "package.jmri.jmrit.display.IconAdder");
             turnoutLIconEditor.makeIconPanel();
             TurnoutManager manager = InstanceManager.turnoutManagerInstance();
@@ -307,8 +312,9 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             };
             ActionListener changeIconAction = new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        turnoutLIconEditor.addCatalog();
-                        turnoutLFrame.pack();
+                        JFrameItem frame = _iconEditorFrame.get("LeftTOEditor");
+                        frame.getEditor().addCatalog();
+                        frame.pack();
                     }
             };
             turnoutLIconEditor.complete(addIconAction, changeIconAction, true);
@@ -333,17 +339,17 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         PickListModel sensorTableModel = new sensorPickModel(InstanceManager.sensorManagerInstance());
         // Add a sensor indicator
         {
-            sensorIconEditor = new IconAdder();
-            sensorIconEditor.setIcon(3, rbean.getString("SensorStateActive"),
+            IconAdder sensorIconEditor = new IconAdder("SensorEditor");
+            sensorIconEditor.setIcon(3, "SensorStateActive",
                 "resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
-            sensorIconEditor.setIcon(2, rbean.getString("SensorStateInactive"), 
+            sensorIconEditor.setIcon(2, "SensorStateInactive", 
                 "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
-            sensorIconEditor.setIcon(0, rbean.getString("BeanStateInconsistent"), 
+            sensorIconEditor.setIcon(0, "BeanStateInconsistent", 
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif");
-            sensorIconEditor.setIcon(1, rbean.getString("BeanStateUnknown"),
+            sensorIconEditor.setIcon(1, "BeanStateUnknown",
                 "resources/icons/smallschematics/tracksegments/circuit-error.gif");
 
-            sensorIconFrame = makeAddIconFrame("AddSensorIcon", "addIconsToPanel", 
+            JFrameItem sensorIconFrame = makeAddIconFrame("SensorEditor", "addIconsToPanel", 
                                                "SelectSensor", sensorIconEditor);
             addHelpMenu(sensorIconFrame, "package.jmri.jmrit.display.IconAdder");
             sensorIconEditor.makeIconPanel();
@@ -356,8 +362,9 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             };
             ActionListener changeIconAction = new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        sensorIconEditor.addCatalog();
-                        sensorIconFrame.pack();
+                        JFrameItem frame = _iconEditorFrame.get("SensorEditor");
+                        frame.getEditor().addCatalog();
+                        frame.pack();
                     }
             };
             sensorIconEditor.complete(addIconAction, changeIconAction, true);
@@ -366,25 +373,25 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
         // Add a signal indicator
         {
-            signalIconEditor = new IconAdder();
-            signalIconEditor.setIcon(0, rbean.getString("SignalHeadStateFlashingYellow"), 
+            IconAdder signalIconEditor = new IconAdder("SignalEditor");
+            signalIconEditor.setIcon(0, "SignalHeadStateFlashingYellow", 
                 "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
-            signalIconEditor.setIcon(2, rbean.getString("SignalHeadStateFlashingRed"), 
+            signalIconEditor.setIcon(2, "SignalHeadStateFlashingRed", 
                 "resources/icons/smallschematics/searchlights/left-flashred-marker.gif");
-            signalIconEditor.setIcon(5, rbean.getString("SignalHeadStateYellow"), 
+            signalIconEditor.setIcon(5, "SignalHeadStateYellow", 
                 "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
-            signalIconEditor.setIcon(6, rbean.getString("SignalHeadStateGreen"),
+            signalIconEditor.setIcon(6, "SignalHeadStateGreen",
                 "resources/icons/smallschematics/searchlights/left-green-marker.gif");
-            signalIconEditor.setIcon(1, rbean.getString("SignalHeadStateFlashingGreen"),
+            signalIconEditor.setIcon(1, "SignalHeadStateFlashingGreen",
                 "resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
-            signalIconEditor.setIcon(4, rbean.getString("SignalHeadStateDark"),
+            signalIconEditor.setIcon(4, "SignalHeadStateDark",
                 "resources/icons/smallschematics/searchlights/left-dark-marker.gif");
-            signalIconEditor.setIcon(3, rbean.getString("SIgnalHeadStateHeld"),
+            signalIconEditor.setIcon(3, "SIgnalHeadStateHeld",
                 "resources/icons/smallschematics/searchlights/left-held-marker.gif");
-            signalIconEditor.setIcon(7, rbean.getString("SignalHeadStateRed"),
+            signalIconEditor.setIcon(7, "SignalHeadStateRed",
                 "resources/icons/smallschematics/searchlights/left-red-marker.gif");
 
-            signalIconFrame = makeAddIconFrame("AddSignalIcon", "addIconsToPanel", 
+            JFrameItem signalIconFrame = makeAddIconFrame("SignalEditor", "addIconsToPanel", 
                                                "SelectSignal", signalIconEditor);
             addHelpMenu(signalIconFrame, "package.jmri.jmrit.display.IconAdder");
             signalIconEditor.makeIconPanel();
@@ -413,8 +420,9 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             };
             ActionListener changeIconAction = new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        signalIconEditor.addCatalog();
-                        signalIconFrame.pack();
+                        JFrameItem frame = _iconEditorFrame.get("SignalEditor");
+                        frame.getEditor().addCatalog();
+                        frame.pack();
                     }
             };
             signalIconEditor.complete(addIconAction, changeIconAction, false);
@@ -423,13 +431,14 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
         // add a memory
         {
-            memoryIconEditor = new IconAdder();
+            IconAdder memoryIconEditor = new IconAdder("MemoryEditor");
             ActionListener addIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     addMemory();
                 }
             };
-            _addIconBox.addItem(makeAddIconFrame("AddMemoryValue", "addMemValueToPanel", "SelectMemory", memoryIconEditor));
+            _addIconBox.addItem(makeAddIconFrame("MemoryEditor", "addMemValueToPanel", 
+                                                 "SelectMemory", memoryIconEditor));
 
             class pickModel extends PickListModel {
                 MemoryManager manager;
@@ -452,13 +461,13 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
         // add a reporter
         {
-            reporterIconEditor = new IconAdder();
+            IconAdder reporterIconEditor = new IconAdder("ReporterEditor");
             ActionListener addIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     addReporter();
                 }
             };
-            _addIconBox.addItem(makeAddIconFrame("AddReporterValue", "addReportValueToPanel", 
+            _addIconBox.addItem(makeAddIconFrame("ReporterEditor", "addReportValueToPanel", 
                                                  "SelectReporter", reporterIconEditor));
             class pickModel extends PickListModel {
                 ReporterManager manager;
@@ -481,10 +490,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
         // add Background
         {
-            bkgrndEditor = new IconAdder();
-            bkgrndEditor.setIcon(0, rb.getString("background"),"resources/PanelPro.gif");
+            IconAdder bkgrndEditor = new IconAdder("BackgroundEditor");
+            bkgrndEditor.setIcon(0, "background","resources/PanelPro.gif");
 
-            bdIconFrame = makeAddIconFrame("AddBackground", "addBackgroundToPanel", "pressAdd", bkgrndEditor);
+            JFrameItem bdIconFrame = makeAddIconFrame("BackgroundEditor", "addBackgroundToPanel", "pressAdd", bkgrndEditor);
             addHelpMenu(bdIconFrame, "package.jmri.jmrit.display.IconAdder");
             bkgrndEditor.makeIconPanel();
 
@@ -495,8 +504,9 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             };
             ActionListener changeIconAction = new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        bkgrndEditor.addCatalog();
-                        bdIconFrame.pack();
+                        JFrameItem frame = _iconEditorFrame.get("BackgroundEditor");
+                        frame.getEditor().addCatalog();
+                        frame.pack();
                     }
             };
             bkgrndEditor.complete(addIconAction, changeIconAction, false);
@@ -505,21 +515,21 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
         // Add a MultiSensor indicator
         {
-            multiSensorEditor = new MultiSensorIconAdder();
-            multiSensorEditor.setIcon(0, rbean.getString("BeanStateInconsistent"),
+            MultiSensorIconAdder multiSensorEditor = new MultiSensorIconAdder("MultiSensorEditor");
+            multiSensorEditor.setIcon(0, "BeanStateInconsistent",
                                       "resources/icons/USS/plate/levers/l-inconsistent.gif");
-            multiSensorEditor.setIcon(1, rbean.getString("BeanStateUnknown"),
+            multiSensorEditor.setIcon(1, "BeanStateUnknown",
                                       "resources/icons/USS/plate/levers/l-unknown.gif");
-            multiSensorEditor.setIcon(2, rbean.getString("SensorStateInactive"),
+            multiSensorEditor.setIcon(2, "SensorStateInactive",
                                       "resources/icons/USS/plate/levers/l-inactive.gif");
-            multiSensorEditor.setIcon(3, "foo",
+            multiSensorEditor.setIcon(3, "MultiSensorPosition",
                                       "resources/icons/USS/plate/levers/l-left.gif");
-            multiSensorEditor.setIcon(4, "foo",
+            multiSensorEditor.setIcon(4, "MultiSensorPosition",
                                       "resources/icons/USS/plate/levers/l-vertical.gif");
-            multiSensorEditor.setIcon(5, "foo",
+            multiSensorEditor.setIcon(5, "MultiSensorPosition",
                                       "resources/icons/USS/plate/levers/l-right.gif");
 
-            multiSensorFrame = makeAddIconFrame("AddMultiSensor", "addIconsToPanel", 
+            JFrameItem multiSensorFrame = makeAddIconFrame("MultiSensorEditor", "addIconsToPanel", 
                                                "SelectSensor", multiSensorEditor);
             addHelpMenu(multiSensorFrame, "package.jmri.jmrit.display.MultiSensorIconAdder");
             multiSensorEditor.makeIconPanel();
@@ -532,8 +542,9 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             };
             ActionListener changeIconAction = new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        multiSensorEditor.addCatalog();
-                        multiSensorFrame.pack();
+                        JFrameItem frame = _iconEditorFrame.get("MultiSensorEditor");
+                        frame.getEditor().addCatalog();
+                        frame.pack();
                     }
             };
             multiSensorEditor.complete(addIconAction, changeIconAction, false);
@@ -547,9 +558,9 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
         // Add icon label
         {
-            iconEditor = new IconAdder();
-            iconEditor.setIcon(0, rb.getString("icon"),"resources/jmri48x48.gif");
-            iconFrame = makeAddIconFrame("AddIcon", "addIconToPanel", "pressAdd", iconEditor);
+            IconAdder iconEditor = new IconAdder("IconEditor");
+            iconEditor.setIcon(0, "plainIcon","resources/jmri48x48.gif");
+            JFrameItem iconFrame = makeAddIconFrame("IconEditor", "addIconToPanel", "pressAdd", iconEditor);
             addHelpMenu(iconFrame, "package.jmri.jmrit.display.IconAdder");
             iconEditor.makeIconPanel();
 
@@ -560,8 +571,9 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             };
             ActionListener changeIconAction = new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        iconEditor.addCatalog();
-                        iconFrame.pack();
+                        JFrameItem frame = _iconEditorFrame.get("IconEditor");
+                        frame.getEditor().addCatalog();
+                        frame.pack();
                     }
             };
             iconEditor.complete(addIconAction, changeIconAction, false);
@@ -657,17 +669,23 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
         // when this window closes, set contents of target uneditable
         addWindowListener(new java.awt.event.WindowAdapter() {
+            PanelEditor panelEd;
 				public void windowClosing(java.awt.event.WindowEvent e) {
                     setAllPositionable(false);
-                    jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
+                    jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(panelEd);
                 }
-            });
+                java.awt.event.WindowAdapter init(PanelEditor pe) {
+                    panelEd = pe;
+                    return this;
+                }
+            }.init(this));
         // and don't destroy the window
         setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
     }  // end ctor
 
-    JFrameItem makeAddIconFrame(String title, String select1, String select2, IconAdder editor) {
-        JFrameItem frame = new JFrameItem(rb.getString(title));
+    JFrameItem makeAddIconFrame(String title, String select1, String select2, 
+                                IconAdder editor) {
+        JFrameItem frame = new JFrameItem(rb.getString(title), editor);
         if (editor != null) {
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
@@ -679,31 +697,23 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             JMenuBar menuBar = new JMenuBar();
             JMenu findIcon = new JMenu(rb.getString("findIconMenu"));
             menuBar.add(findIcon);
+
             JMenuItem editItem = new JMenuItem(rb.getString("editIndexMenu"));
             editItem.addActionListener(new ActionListener() {
+                    PanelEditor panelEd;
                     public void actionPerformed(ActionEvent e) {
-                        ImageIndexEditor ii = ImageIndexEditor.instance();
+                        ImageIndexEditor ii = ImageIndexEditor.instance(panelEd);
                         ii.pack();
                         ii.setVisible(true);
                     }
-                });
-            findIcon.add(editItem);
-            findIcon.addSeparator();
-            /*
-            JMenuItem openItem = new JMenuItem(rb.getString("openDirMenu"));
-            ActionListener action = new ActionListener() {
-                    IconAdder myEditor;
-                    public void actionPerformed(ActionEvent e) {
-                        myEditor.openDirectory(true);
-                    }
-                    ActionListener init(IconAdder editor) {
-                        myEditor = editor;
+                    ActionListener init(PanelEditor pe) {
+                        panelEd = pe;
                         return this;
                     }
-            }.init(editor);
-            openItem.addActionListener(action);
-            findIcon.add(openItem);
-            */
+                }.init(this));
+            findIcon.add(editItem);
+            findIcon.addSeparator();
+            
             JMenuItem searchItem = new JMenuItem(rb.getString("searchFSMenu"));
             ActionListener action = new ActionListener() {
                     IconAdder myEditor;
@@ -721,15 +731,45 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             editor.setParent(frame);
             // when this window closes, check for saving 
             frame.addWindowListener(new java.awt.event.WindowAdapter() {
+                    PanelEditor panelEd;
                     public void windowClosing(java.awt.event.WindowEvent e) {
-                        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
+                        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(panelEd);
                     }
-                });
+                    java.awt.event.WindowAdapter init(PanelEditor pe) {
+                        panelEd = pe;
+                        return this;
+                    }
+            }.init(this));
         }
-
+        _iconEditorFrame.put(title, frame);
         frame.pack();
         return frame;
     }
+
+    public List <IconAdder> getIconEditors() {
+        Iterator <JFrameItem> iter = _iconEditorFrame.values().iterator();
+        ArrayList <IconAdder> list = new ArrayList <IconAdder>();
+        while (iter.hasNext()) {
+            JFrameItem frame = iter.next();
+            IconAdder ed = frame.getEditor();
+            if (ed != null){
+                list.add(ed);
+            }
+        }
+        return list;
+    }
+
+    public void addTreeToEditors(CatalogTree tree) {
+        Iterator <JFrameItem> iter = _iconEditorFrame.values().iterator();
+        while (iter.hasNext()) {
+            JFrameItem frame = iter.next();
+            IconAdder ed = frame.getEditor();
+            if (ed != null){
+                ed.addTreeToCatalog(tree);
+            }
+        }
+    }
+
     void addHelpMenu(JFrame frame, String ref) {
         JMenuBar bar = frame.getJMenuBar();
         if (bar == null) bar = new JMenuBar();
@@ -741,9 +781,14 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     }
 
     // Allows these objects to be used as JComboBox items
-    class JFrameItem extends JFrame {
-        JFrameItem (String title) {
+    public class JFrameItem extends JFrame {
+        IconAdder _editor;
+        JFrameItem (String title, IconAdder editor) {
             super(title);
+            _editor = editor;
+        }
+        IconAdder getEditor() {
+            return _editor;
         }
         public String toString() {
             return this.getTitle();
@@ -780,7 +825,8 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
      */
     void addBackground() {
         // most likely the image is scaled.  get full size from URL
-        String url = bkgrndEditor.getIcon(rb.getString("background")).getURL();
+        IconAdder bkgrndEditor = _iconEditorFrame.get("BackgroundEditor").getEditor();
+        String url = bkgrndEditor.getIcon("background").getURL();
         NamedIcon icon = jmri.jmrit.catalog.CatalogPanel.getIconByName(url);
         PositionableLabel l = new PositionableLabel(icon);
         l.setFixed(true);
@@ -798,11 +844,12 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
      */
     void addTurnoutR() {
         TurnoutIcon l = new TurnoutIcon();
-        l.setClosedIcon(turnoutRIconEditor.getIcon(InstanceManager.turnoutManagerInstance().getClosedText()));
-        l.setThrownIcon(turnoutRIconEditor.getIcon(InstanceManager.turnoutManagerInstance().getThrownText()));
-        l.setInconsistentIcon(turnoutRIconEditor.getIcon(rbean.getString("BeanStateInconsistent")));
-        l.setUnknownIcon(turnoutRIconEditor.getIcon(rbean.getString("BeanStateUnknown")));
-        l.setTurnout((Turnout)turnoutRIconEditor.getTableSelection());
+        IconAdder editor = _iconEditorFrame.get("RightTOEditor").getEditor();
+        l.setClosedIcon(editor.getIcon("TurnoutStateClosed"));
+        l.setThrownIcon(editor.getIcon("TurnoutStateThrown"));
+        l.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
+        l.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
+        l.setTurnout((Turnout)editor.getTableSelection());
         setNextLocation(l);
         putTurnout(l);
         // always allow new items to be moved
@@ -811,11 +858,12 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     }
     void addTurnoutL() {
         TurnoutIcon l = new TurnoutIcon();
-        l.setClosedIcon(turnoutLIconEditor.getIcon(InstanceManager.turnoutManagerInstance().getClosedText()));
-        l.setThrownIcon(turnoutLIconEditor.getIcon(InstanceManager.turnoutManagerInstance().getThrownText()));
-        l.setInconsistentIcon(turnoutLIconEditor.getIcon(rbean.getString("BeanStateInconsistent")));
-        l.setUnknownIcon(turnoutLIconEditor.getIcon(rbean.getString("BeanStateUnknown")));
-        l.setTurnout((Turnout)turnoutLIconEditor.getTableSelection());
+        IconAdder editor = _iconEditorFrame.get("LeftTOEditor").getEditor();
+        l.setClosedIcon(editor.getIcon("TurnoutStateClosed"));
+        l.setThrownIcon(editor.getIcon("TurnoutStateThrown"));
+        l.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
+        l.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
+        l.setTurnout((Turnout)editor.getTableSelection());
         setNextLocation(l);
         putTurnout(l);
         // always allow new items to be moved
@@ -858,11 +906,12 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
      */
     void addSensor() {
         SensorIcon l = new SensorIcon();
-        l.setActiveIcon(sensorIconEditor.getIcon(rbean.getString("SensorStateActive")));
-        l.setInactiveIcon(sensorIconEditor.getIcon(rbean.getString("SensorStateInactive")));
-        l.setInconsistentIcon(sensorIconEditor.getIcon(rbean.getString("BeanStateInconsistent")));
-        l.setUnknownIcon(sensorIconEditor.getIcon(rbean.getString("BeanStateUnknown")));
-        l.setSensor((Sensor)sensorIconEditor.getTableSelection());
+        IconAdder editor = _iconEditorFrame.get("SensorEditor").getEditor();
+        l.setActiveIcon(editor.getIcon("SensorStateActive"));
+        l.setInactiveIcon(editor.getIcon("SensorStateInactive"));
+        l.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
+        l.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
+        l.setSensor((Sensor)editor.getTableSelection());
         setNextLocation(l);
         putSensor(l);
         // always allow new items to be moved
@@ -881,16 +930,17 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     // Invoked with window has new sensor ready
     public void addMultiSensor() {
         MultiSensorIcon m = new MultiSensorIcon();
-        m.setUnknownIcon(multiSensorEditor.getIcon(rbean.getString("BeanStateUnknown")));
-        m.setInconsistentIcon(multiSensorEditor.getIcon(rbean.getString("BeanStateInconsistent")));
-        m.setInactiveIcon(multiSensorEditor.getIcon(rbean.getString("SensorStateInactive")));
-        int numPositions = multiSensorEditor.getNumIcons();
+        MultiSensorIconAdder editor = (MultiSensorIconAdder)_iconEditorFrame.get("MultiSensorEditor").getEditor();
+        m.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
+        m.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
+        m.setInactiveIcon(editor.getIcon("SensorStateInactive"));
+        int numPositions = editor.getNumIcons();
         for (int i=3; i<numPositions; i++) {
-            NamedIcon icon = multiSensorEditor.getIcon(i);
-            Sensor sensor = multiSensorEditor.getSensor(i);
+            NamedIcon icon = editor.getIcon(i);
+            Sensor sensor = editor.getSensor(i);
             m.addEntry(sensor, icon);
         }
-        m.setUpDown(multiSensorEditor.getUpDown());
+        m.setUpDown(editor.getUpDown());
         addMultiSensor(m);
     }
 
@@ -917,15 +967,16 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
      */
     void addSignalHead() {
         SignalHeadIcon l = new SignalHeadIcon();
-        l.setRedIcon(signalIconEditor.getIcon(rbean.getString("SignalHeadStateRed")));
-        l.setFlashRedIcon(signalIconEditor.getIcon(rbean.getString("SignalHeadStateFlashingRed")));
-        l.setYellowIcon(signalIconEditor.getIcon(rbean.getString("SignalHeadStateYellow")));
-        l.setFlashYellowIcon(signalIconEditor.getIcon(rbean.getString("SignalHeadStateFlashingYellow")));
-        l.setGreenIcon(signalIconEditor.getIcon(rbean.getString("SignalHeadStateGreen")));
-        l.setFlashGreenIcon(signalIconEditor.getIcon(rbean.getString("SignalHeadStateFlashingGreen")));
-        l.setDarkIcon(signalIconEditor.getIcon(rbean.getString("SignalHeadStateDark")));
-        l.setHeldIcon(signalIconEditor.getIcon(rbean.getString("SIgnalHeadStateHeld")));
-        l.setSignalHead((SignalHead)signalIconEditor.getTableSelection());
+        IconAdder editor = _iconEditorFrame.get("SignalEditor").getEditor();
+        l.setRedIcon(editor.getIcon("SignalHeadStateRed"));
+        l.setFlashRedIcon(editor.getIcon("SignalHeadStateFlashingRed"));
+        l.setYellowIcon(editor.getIcon("SignalHeadStateYellow"));
+        l.setFlashYellowIcon(editor.getIcon("SignalHeadStateFlashingYellow"));
+        l.setGreenIcon(editor.getIcon("SignalHeadStateGreen"));
+        l.setFlashGreenIcon(editor.getIcon("SignalHeadStateFlashingGreen"));
+        l.setDarkIcon(editor.getIcon("SignalHeadStateDark"));
+        l.setHeldIcon(editor.getIcon("SIgnalHeadStateHeld"));
+        l.setSignalHead((SignalHead)editor.getTableSelection());
         setNextLocation(l);
         putSignal(l);
         // always allow new items to be moved
@@ -987,6 +1038,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
     void addMemory() {
         MemoryIcon l = new MemoryIcon();
+        IconAdder memoryIconEditor = _iconEditorFrame.get("MemoryEditor").getEditor();
         l.setMemory((Memory)memoryIconEditor.getTableSelection());
         setNextLocation(l);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
@@ -999,6 +1051,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     
     void addReporter() {
         ReporterIcon l = new ReporterIcon();
+        IconAdder reporterIconEditor = _iconEditorFrame.get("ReporterEditor").getEditor();
         l.setReporter((Reporter)reporterIconEditor.getTableSelection());
         setNextLocation(l);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
@@ -1024,6 +1077,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
      * Add an icon to the target
      */    
     void addIcon() {
+        IconAdder iconEditor = _iconEditorFrame.get("IconEditor").getEditor();
         PositionableLabel l = new PositionableLabel(iconEditor.getIcon(rb.getString("icon")) );
         setNextLocation(l);
         l.setDisplayLevel(ICONS);
@@ -1068,10 +1122,15 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         frame = f;
         // handle target window closes
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    targetWindowClosing(e);
-                }
-            });
+            PanelEditor panelEd;
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                targetWindowClosing(e);
+            }
+            java.awt.event.WindowAdapter init(PanelEditor pe) {
+                panelEd = pe;
+                return this;
+            }
+        }.init(this));
     }
 
     JFrame frame;

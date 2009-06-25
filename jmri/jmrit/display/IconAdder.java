@@ -7,6 +7,7 @@ import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.catalog.CatalogTreeLeaf;
 import jmri.jmrit.catalog.CatalogTreeNode;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
@@ -23,6 +24,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.HashMap;
 import java.util.List;
@@ -75,11 +77,15 @@ import javax.swing.JDialog;
 public class IconAdder extends JPanel implements ListSelectionListener {
 
     public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
+    static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
+
 
     HashMap <String, JButton>   _iconMap;
     ArrayList <String>          _order;
     JScrollPane                 _pickTablePane;
     PickListModel               _pickListModel;
+    String          _type;
+    boolean         _userDefaults;
     JTextField      _sysNametext;
     Manager         _manager;
     JTable          _table;
@@ -90,19 +96,62 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     JFrame          _parent;
 
     public IconAdder() {
+        _userDefaults = false;
         _iconMap = new HashMap <String, JButton>();
         _order = new ArrayList <String>();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
+    public IconAdder(String type) {
+        this();
+        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        CatalogTree defaultIcons = manager.getBySystemName("NXDI");
+        if (defaultIcons != null) {
+           CatalogTreeNode node = (CatalogTreeNode)defaultIcons.getRoot();
+           makeIcons(type, node);
+           _userDefaults = true;
+        }
+        if (log.isDebugEnabled()) log.debug("IconAdder."+type+", defaultIcons= "+defaultIcons);
+        _type = type;
+    }
+
+    @SuppressWarnings("unchecked")
+    public CatalogTreeNode getDefaultIconNode() {
+        CatalogTreeNode node =new CatalogTreeNode(_type);
+        for (int i=0; i<_order.size(); i++) {
+            String key = _order.get(i);
+            NamedIcon icon = (NamedIcon)_iconMap.get(key).getIcon();
+            node.addLeaf(new CatalogTreeLeaf(key, icon.getURL(), i));
+        }
+        return node;
+    }
+
     /**
-    *  install the icons used to represent all the states of the entity being edited
-    *   @param label - the state name to display, Must be unique from all other  
-    *          calls to this method.
-    *   @param name - the resource name of the icon image to displa
-    *   @param order - (reverse) order of display, (0 last, to N first)
+    *  Build iconMap and orderArray from user's choice of defaults
     */
-    public void setIcon(int order, String label, String name) {
+    @SuppressWarnings("unchecked")
+    private void makeIcons(String type, CatalogTreeNode n) {
+        if (log.isDebugEnabled()) log.debug("makeIcons node= "+n.toString());
+        Enumeration<CatalogTreeNode> e = n.children();
+        while (e.hasMoreElements()) {
+            CatalogTreeNode nChild = e.nextElement();
+            if (type.equals(nChild.toString())) {
+                ArrayList <CatalogTreeLeaf> list = nChild.getLeaves();
+                for (int i=0; i<list.size(); i++) {
+                    CatalogTreeLeaf leaf = list.get(i);
+                    makeIcon(i, leaf.getName(), leaf.getPath());
+                }
+               return;
+            }
+        }
+        e = n.children();
+        while (e.hasMoreElements()) {
+            makeIcons(type, e.nextElement());
+        }
+    }
+
+    private void makeIcon(int order, String label, String name) {
+        if (log.isDebugEnabled()) log.debug("makeIcon: order= "+ order+", label= "+label+", name= "+name);
         NamedIcon icon = new NamedIcon(name, name);
         // make a button to change that icon
         JButton button = new IconButton(label, icon);
@@ -118,6 +167,19 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                 _order.remove(order);
             }
             _order.add(order, label);
+        }
+    }
+
+    /**
+    *  install the icons used to represent all the states of the entity being edited
+    *   @param label - the state name to display, Must be unique from all other  
+    *          calls to this method.
+    *   @param name - the resource name of the icon image to displa
+    *   @param order - (reverse) order of display, (0 last, to N first)
+    */
+    public void setIcon(int order, String label, String name) {
+        if (!_userDefaults) {
+            makeIcon(order, label, name);
         }
     }
 
@@ -150,7 +212,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             String key = _order.get(i);
             JPanel p =new JPanel(); 
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            p.add(new JLabel(key));
+            p.add(new JLabel(rbean.getString(key)));
             p.add(_iconMap.get(key));
             panel.add(p);
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));
@@ -390,6 +452,12 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         _catalog.createNewBranch("IFPREF", "Preferences Directory", XmlFile.prefsDir()+"resources");
     }
 
+    public void addTreeToCatalog(CatalogTree tree) {
+        if (_catalog != null) {
+            _catalog.addTree(tree);
+        }
+    }
+
     // For choosing image directories
     static JFileChooser _directoryChooser = null;
 
@@ -474,6 +542,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         File dir = getDirectory("openDirMenu", false);
         if (dir != null) {
             _waitDialog.setVisible(true);
+            _waitDialog.validate();
             if (addDir) {
                 doPreviewDialog(dir, new AActionListener(dir), new MActionListener(dir, true),
                                 null, new CActionListener(), 0);
@@ -487,37 +556,13 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     public void searchFS() {
-        /*
-        File[] roots = File.listRoots();
-        String[] rootName = new String[roots.length];
-        for (int i=0; i<roots.length; i++) {
-            rootName[i] = roots[i].getAbsolutePath();
-        }
-        _waitText = showWaitFrame(_parent, rb.getString("prevMsg")); 
-            //java.text.MessageFormat.format(rb.getString("waitMsg"), new Object[] {root}));
-
-        String root = (String)JOptionPane.showInputDialog(this, 
-                                   rb.getString("selectDrive"), rb.getString("searchFSMenu"),  
-                                   JOptionPane.QUESTION_MESSAGE, null, rootName, 
-                                   rootName[roots.length/2]);
-        if (root == null) {
-            closeWaitFrame();
-            return;
-        }
-        _waitDialog.setVisible(true);
-
-        log.debug("searchFS at root= "+root);
-        _quitLooking = false;
-        getImageDirectory(new File(root), CatalogTreeManager.IMAGE_FILTER);
-        */                           
-
         _waitText = showWaitFrame(_parent, rb.getString("prevMsg"));
         File dir = getDirectory("searchFSMenu", true);
         if (dir == null) {
             closeWaitFrame();
             return;
         }
-        log.debug("searchFS at dir= "+dir.getPath());
+        if (log.isDebugEnabled()) log.debug("searchFS at dir= "+dir.getPath());
         _waitDialog.setVisible(true);
         getImageDirectory(dir, CatalogTreeManager.IMAGE_FILTER);
 
@@ -732,17 +777,21 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                         _iconMap.put(key, button);
                         e.dropComplete(true);
                         checkIconSizes();
+                        ImageIndexEditor._indexChanged = true;
                         if (log.isDebugEnabled()) log.debug("DropJLabel.drop COMPLETED for "+
                                                              newIcon.getURL());
+                    } else {
+                        if (log.isDebugEnabled()) log.debug("DropJLabel.drop REJECTED!");
+                        e.rejectDrop();
                     }
                 }
             } catch(IOException ioe) {
-                ioe.printStackTrace();
+                if (log.isDebugEnabled()) log.debug("DropPanel.drop REJECTED!");
+                e.rejectDrop();
             } catch(UnsupportedFlavorException ufe) {
-                ufe.printStackTrace();
+                if (log.isDebugEnabled()) log.debug("DropJLabel.drop REJECTED!");
+                e.rejectDrop();
             }
-            if (log.isDebugEnabled()) log.debug("DropJLabel.drop REJECTED!");
-            e.rejectDrop();
         }
     }
     
