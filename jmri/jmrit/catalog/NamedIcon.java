@@ -21,7 +21,7 @@ import javax.swing.ImageIcon;
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -70,6 +70,11 @@ public class NamedIcon extends ImageIcon {
      * Return the human-readable name of this icon
      */
     public String getName() { return mName; }
+
+    /**
+    * Actually it is mName that is the URL that loads the icon!
+    */
+    public void setName(String name) { mName = name; }
 
     /**
      * Return the URL of this icon
