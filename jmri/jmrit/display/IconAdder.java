@@ -332,6 +332,11 @@ public class IconAdder extends JPanel implements ListSelectionListener {
      * @return Unique object
      */
     public NamedIcon getIcon(String key) {
+        NamedIcon icon = (NamedIcon)_iconMap.get(key).getIcon();
+        icon.setName(icon.getURL());
+        if (log.isDebugEnabled()) {
+            log.debug("getIcon icon= "+icon.getName()+", URL= "+ icon.getURL());
+        }
         return new NamedIcon((NamedIcon)_iconMap.get(key).getIcon());
     }
 
