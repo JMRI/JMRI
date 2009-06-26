@@ -44,7 +44,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.34 $
+ * @version     $Revision: 1.35 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -943,7 +943,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 		estBox.setVisible(false);		
 		// determine class name of signal head and initialize this class of signal
 		className = curS.getClass().getName();
-		if (className.equals("jmri.TripleTurnoutSignalHead")) {
+		if (className.equals("jmri.implementation.TripleTurnoutSignalHead")) {
 			signalType.setText(tripleTurnout);
             eNameLabel.setText(rb.getString("LabelSystemName"));
 			eSysNameLabel.setText(curS.getSystemName());
@@ -960,7 +960,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             eto3.setVisible(true);
 			eto3.setText(((TripleTurnoutSignalHead)curS).getRed().getSystemName());
 		}
-		else if (className.equals("jmri.DoubleTurnoutSignalHead")) {
+		else if (className.equals("jmri.implementation.DoubleTurnoutSignalHead")) {
 			signalType.setText(doubleTurnout);
             eNameLabel.setText(rb.getString("LabelSystemName"));
 			eSysNameLabel.setText(curS.getSystemName());
@@ -973,12 +973,12 @@ public class SignalHeadTableAction extends AbstractTableAction {
             eto2.setVisible(true);
 			eto2.setText(((DoubleTurnoutSignalHead)curS).getRed().getSystemName());
  		}
-		else if (className.equals("jmri.VirtualSignalHead")) {
+		else if (className.equals("jmri.implementation.VirtualSignalHead")) {
 			signalType.setText(virtualHead);
 			eNameLabel.setText(rb.getString("LabelSystemName"));
 			eSysNameLabel.setText(curS.getSystemName());
 		}
-		else if (className.equals("jmri.LsDecSignalHead")) {
+		else if (className.equals("jmri.implementation.LsDecSignalHead")) {
 			signalType.setText(lsDec);
             eNameLabel.setText(rb.getString("LabelSystemName"));
 			eSysNameLabel.setText(curS.getSystemName());
@@ -1067,10 +1067,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
                         estBox.setVisible(true);
                         setSignalheadTypeInBox(estBox, tNode.getOutputSignalHeadType(headnumber), signalheadTypeValues);
                 }
-		else if (className.equals("jmri.DccSignalHead")) {
+		else if (className.equals("jmri.implementation.DccSignalHead")) {
 			signalType.setText(dccSignalDecoder);
             eNameLabel.setText(rb.getString("LabelSystemName"));
 			eSysNameLabel.setText(curS.getSystemName());
+        else log.error("Cannot edit SignalHead of unrecognized type: "+className);
 		}			
 		// finish up
 		editFrame.pack();
