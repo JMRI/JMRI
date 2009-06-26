@@ -44,7 +44,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.35 $
+ * @version     $Revision: 1.36 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -1071,8 +1071,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
 			signalType.setText(dccSignalDecoder);
             eNameLabel.setText(rb.getString("LabelSystemName"));
 			eSysNameLabel.setText(curS.getSystemName());
-        else log.error("Cannot edit SignalHead of unrecognized type: "+className);
-		}			
+        } 
+        else log.error("Cannot edit SignalHead of unrecognized type: "+className);			
 		// finish up
 		editFrame.pack();
 		editFrame.setVisible(true);
