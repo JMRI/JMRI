@@ -259,7 +259,7 @@ public class MultiSensorIconAdder extends IconAdder {
     private void addIcon() {
         int index = _order.size();
         String name = "resources/icons/USS/plate/levers/l-vertical.gif";
-        setIcon(index, "foop", name);
+        makeIcon(index, "foop", name);
         valueChanged(null);
         makeIconPanel();
         this.invalidate();

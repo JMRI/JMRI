@@ -150,7 +150,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
     }
 
-    private void makeIcon(int order, String label, String name) {
+    protected void makeIcon(int order, String label, String name) {
         if (log.isDebugEnabled()) log.debug("makeIcon: order= "+ order+", label= "+label+", name= "+name);
         NamedIcon icon = new NamedIcon(name, name);
         // make a button to change that icon
@@ -332,11 +332,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
      * @return Unique object
      */
     public NamedIcon getIcon(String key) {
-        NamedIcon icon = (NamedIcon)_iconMap.get(key).getIcon();
-        icon.setName(icon.getURL());
-        if (log.isDebugEnabled()) {
-            log.debug("getIcon icon= "+icon.getName()+", URL= "+ icon.getURL());
-        }
         return new NamedIcon((NamedIcon)_iconMap.get(key).getIcon());
     }
 
