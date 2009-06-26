@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class SensorIconXml implements XmlAdapter {
 
@@ -37,10 +37,10 @@ public class SensorIconXml implements XmlAdapter {
         element.setAttribute("x", ""+p.getX());
         element.setAttribute("y", ""+p.getY());
         element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
-        element.setAttribute("active", p.getActiveIcon().getName());
-        element.setAttribute("inactive", p.getInactiveIcon().getName());
-        element.setAttribute("unknown", p.getUnknownIcon().getName());
-        element.setAttribute("inconsistent", p.getInconsistentIcon().getName());
+        element.setAttribute("active", p.getActiveIcon().getURL());
+        element.setAttribute("inactive", p.getInactiveIcon().getURL());
+        element.setAttribute("unknown", p.getUnknownIcon().getURL());
+        element.setAttribute("inconsistent", p.getInconsistentIcon().getURL());
         element.setAttribute("rotate", String.valueOf(p.getActiveIcon().getRotation()));
         element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
         element.setAttribute("momentary", p.getMomentary()?"true":"false");

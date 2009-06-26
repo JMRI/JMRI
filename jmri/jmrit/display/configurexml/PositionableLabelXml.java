@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -48,7 +48,7 @@ public class PositionableLabelXml implements XmlAdapter {
         
         if (p.isIcon() && p.getIcon()!=null) {
             NamedIcon icon = (NamedIcon)p.getIcon();
-            element.setAttribute("icon", icon.getName());
+            element.setAttribute("icon", icon.getURL());
             element.setAttribute("rotate", String.valueOf(icon.getRotation()));
         }
 

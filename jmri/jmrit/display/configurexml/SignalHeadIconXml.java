@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -40,14 +40,14 @@ public class SignalHeadIconXml implements XmlAdapter {
         element.setAttribute("x", ""+p.getX());
         element.setAttribute("y", ""+p.getY());
         element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
-        element.setAttribute("held", p.getHeldIcon().getName());
-        element.setAttribute("dark", p.getDarkIcon().getName());
-        element.setAttribute("red", p.getRedIcon().getName());
-        element.setAttribute("yellow", p.getYellowIcon().getName());
-        element.setAttribute("flashyellow", p.getFlashYellowIcon().getName());
-        element.setAttribute("green", p.getGreenIcon().getName());
-        element.setAttribute("flashred", p.getFlashRedIcon().getName());
-        element.setAttribute("flashgreen", p.getFlashGreenIcon().getName());
+        element.setAttribute("held", p.getHeldIcon().getURL());
+        element.setAttribute("dark", p.getDarkIcon().getURL());
+        element.setAttribute("red", p.getRedIcon().getURL());
+        element.setAttribute("yellow", p.getYellowIcon().getURL());
+        element.setAttribute("flashyellow", p.getFlashYellowIcon().getURL());
+        element.setAttribute("green", p.getGreenIcon().getURL());
+        element.setAttribute("flashred", p.getFlashRedIcon().getURL());
+        element.setAttribute("flashgreen", p.getFlashGreenIcon().getURL());
         element.setAttribute("rotate", String.valueOf(p.getGreenIcon().getRotation()));
         element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
         element.setAttribute("clickmode", ""+p.getClickMode());

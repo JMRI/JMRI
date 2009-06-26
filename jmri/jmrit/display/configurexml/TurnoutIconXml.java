@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class TurnoutIconXml implements XmlAdapter {
 
@@ -37,10 +37,10 @@ public class TurnoutIconXml implements XmlAdapter {
         element.setAttribute("x", ""+p.getX());
         element.setAttribute("y", ""+p.getY());
         element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
-        element.setAttribute("closed", p.getClosedIcon().getName());
-        element.setAttribute("thrown", p.getThrownIcon().getName());
-        element.setAttribute("unknown", p.getUnknownIcon().getName());
-        element.setAttribute("inconsistent", p.getInconsistentIcon().getName());
+        element.setAttribute("closed", p.getClosedIcon().getURL());
+        element.setAttribute("thrown", p.getThrownIcon().getURL());
+        element.setAttribute("unknown", p.getUnknownIcon().getURL());
+        element.setAttribute("inconsistent", p.getInconsistentIcon().getURL());
         element.setAttribute("rotate", String.valueOf(p.getClosedIcon().getRotation()));
         element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
         element.setAttribute("tristate", p.getTristate()?"true":"false");

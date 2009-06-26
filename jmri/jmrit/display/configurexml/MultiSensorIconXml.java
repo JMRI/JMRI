@@ -15,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class MultiSensorIconXml implements XmlAdapter {
 
@@ -39,9 +39,9 @@ public class MultiSensorIconXml implements XmlAdapter {
         element.setAttribute("x", ""+p.getX());
         element.setAttribute("y", ""+p.getY());
         element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
-        element.setAttribute("inactive", p.getInactiveIcon().getName());
-        element.setAttribute("unknown", p.getUnknownIcon().getName());
-        element.setAttribute("inconsistent", p.getInconsistentIcon().getName());
+        element.setAttribute("inactive", p.getInactiveIcon().getURL());
+        element.setAttribute("unknown", p.getUnknownIcon().getURL());
+        element.setAttribute("inconsistent", p.getInconsistentIcon().getURL());
         element.setAttribute("rotate", String.valueOf(p.getUnknownIcon().getRotation()));
         element.setAttribute("updown", p.getUpDown()?"true":"false");
         element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
@@ -51,7 +51,7 @@ public class MultiSensorIconXml implements XmlAdapter {
         for (int i = 0; i < p.getNumEntries(); i++) {
             Element e = new Element("multisensoriconentry");
             e.setAttribute("sensor", p.getSensorName(i));
-            e.setAttribute("icon", p.getSensorIcon(i).getName());
+            e.setAttribute("icon", p.getSensorIcon(i).getURL());
             element.addContent(e);
         }
         

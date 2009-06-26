@@ -13,7 +13,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -44,7 +44,7 @@ public class MemoryIconXml extends PositionableLabelXml {
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.MemoryIconXml");
         if (p.getDefaultIcon()!=null)
-            element.setAttribute("defaulticon", p.getDefaultIcon().getName());
+            element.setAttribute("defaulticon", p.getDefaultIcon().getURL());
 
 		// include contents
 		java.util.HashMap<String, NamedIcon> map = p.getMap();
