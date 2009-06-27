@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
-<!-- $Id: TD_SMC4.xml,v 1.1 2008-02-18 05:10:54 jacobsen Exp $ -->
+<!-- $Id: TD_SMC4.xml,v 1.2 2009-06-27 21:52:36 ken_c Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,9 +16,10 @@
 <!-- for more details.                                                      -->
 
 <decoder-config showEmptyPanes="no">
-		<version author="td@teamdigital1.com" version="1.0" lastUpdated="20080215"/>
+		<version author="td@teamdigital1.com" version="1.1" lastUpdated="20090622"/>
 					
 		<!-- Version 1 inital release -->
+		<!-- Version 1.1 corrected CV29 2009/06/22 -->
 
 <decoder>
 	<family name="Stationary Decoder" mfg="Team Digital" type="stationary">
@@ -103,6 +104,7 @@
 				<enumChoice choice="Mode 1 - Servos 2 Pos, all outputs unique address"/>
 				<enumChoice choice="Mode 2 - Servos 2 Pos, outputs 5 - 8 have servo address"/>
 				<enumChoice choice="Mode 3 - Servos 3 Pos, all outputs unique address"/>
+				<enumChoice choice="Not used -do not select"/>
 				<enumChoice choice="Mode 4 - Inputs control servos, outputs 5 - 8 have unique address"/>
 				</enumVal>
 			</variable>	
