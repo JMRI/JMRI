@@ -11,14 +11,14 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 
 #define shortcuts to some managers
 import jmri
 turnouts  = jmri.InstanceManager.turnoutManagerInstance()
 sensors   = jmri.InstanceManager.sensorManagerInstance()
 signals   = jmri.InstanceManager.signalHeadManagerInstance()
-lights    = jmri.InstanceMnager.lightManagerInstance()
+lights    = jmri.InstanceManager.lightManagerInstance()
 dcc       = jmri.InstanceManager.commandStationInstance()
 reporters = jmri.InstanceManager.reporterManagerInstance()
 memories  = jmri.InstanceManager.memoryManagerInstance()
