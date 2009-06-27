@@ -13,7 +13,6 @@ import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.catalog.PreviewDialog;
-import jmri.managers.*;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -38,7 +37,6 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.*;
 
-import javax.swing.filechooser.FileFilter;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.Box;
@@ -55,12 +53,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextField;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.tree.DefaultTreeModel;
 import javax.swing.JDialog;
 
 /**
@@ -579,7 +573,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         public void actionPerformed(ActionEvent a) {
             addDirectoryToCatalog(dir);
         }
-    };
+    }
     class MActionListener implements ActionListener {
         File dir;
         boolean oneDir;
@@ -590,17 +584,17 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         public void actionPerformed(ActionEvent a) {
             displayMore(dir, oneDir);
         }
-    };
+    }
     class LActionListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
             keepLooking();
         }
-    };
+    }
     class CActionListener implements ActionListener {
         public void actionPerformed(ActionEvent a) {
             cancelLooking();
         }
-    };
+    }
 
     private void doPreviewDialog(File dir, ActionListener addAction, ActionListener moreAction,
                                  ActionListener lookAction, ActionListener cancelAction,

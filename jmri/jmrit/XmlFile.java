@@ -31,7 +31,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.42 $
+ * @version	$Revision: 1.43 $
  */
 public abstract class XmlFile {
 
@@ -268,7 +268,7 @@ public abstract class XmlFile {
      * @param file File to be created.
      * @param doc Document to be written out. This should never be null.
      */
-    public void writeXML(File file, Document doc) throws org.jdom.JDOMException, java.io.IOException, java.io.FileNotFoundException {
+    public void writeXML(File file, Document doc) throws java.io.IOException, java.io.FileNotFoundException {
         // write the result to selected file
         java.io.FileOutputStream o = new java.io.FileOutputStream(file);
         XMLOutputter fmt = new XMLOutputter();
@@ -456,7 +456,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.42 2009-06-07 19:20:26 dan_boudreau Exp $";
+                        +" $Id: XmlFile.java,v 1.43 2009-06-27 22:25:51 dan_boudreau Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }

@@ -21,7 +21,7 @@ import java.io.InputStream;
  * Uses (creates, modifies, destroys) files in the local preferences directory
  *
  * @author	    Bob Jacobsen  Copyright 2001
- * @version         $Revision: 1.14 $
+ * @version         $Revision: 1.15 $
  */
 public class XmlFileTest extends TestCase {
 
@@ -51,7 +51,7 @@ public class XmlFileTest extends TestCase {
         } catch (java.io.FileNotFoundException e) { /* OK, desired exit */ }
     }
 
-    public void testWriteFile() throws org.jdom.JDOMException, java.io.IOException {
+    public void testWriteFile() throws java.io.IOException {
         XmlFile x = new XmlFile() {
             };
         // create a minimal XML file

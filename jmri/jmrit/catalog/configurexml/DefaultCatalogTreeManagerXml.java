@@ -7,15 +7,12 @@ import jmri.jmrit.catalog.CatalogTreeNode;
 import jmri.jmrit.catalog.CatalogTreeLeaf;
 
 import jmri.jmrit.XmlFile;
-import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Iterator;
 import java.io.File;
 
-import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import org.jdom.Document;
@@ -43,23 +40,24 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
 	/*
 	 *  Writes out tree values to a file in the user's preferences directory
 	 */
-	public void writeCatalogTrees() throws org.jdom.JDOMException, java.io.IOException {
+	@SuppressWarnings("unchecked")
+	public void writeCatalogTrees() throws java.io.IOException {
 		if (log.isDebugEnabled()) log.debug("entered writeCatalogTreeValues");
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
 		List<String> trees = manager.getSystemNameList();
         boolean found = false;
-        Iterator iter = manager.getSystemNameList().iterator();
+        Iterator<String> iter = manager.getSystemNameList().iterator();
         while (iter.hasNext()) {
-            String sname = (String)iter.next();
+            String sname = iter.next();
             CatalogTree tree = manager.getBySystemName(sname);
             if (log.isDebugEnabled()) {
                 log.debug("Tree: sysName= "+sname+", userName= "+tree.getUserName());
                 CatalogTreeNode root = (CatalogTreeNode)tree.getRoot();
                 log.debug("enumerateTree called for root= "+root.toString()+
                               ", has "+root.getChildCount()+" children");
-                Enumeration e =root.depthFirstEnumeration();
+                Enumeration<CatalogTreeNode> e =root.depthFirstEnumeration();
                 while (e.hasMoreElements()) {
-                    CatalogTreeNode n = (CatalogTreeNode)e.nextElement();
+                    CatalogTreeNode n = e.nextElement();
                     log.debug("nodeName= "+n.getUserObject()+" has "+n.getLeaves().size()+
                               " leaves and "+n.getChildCount()+" subnodes.");
                 }
@@ -99,10 +97,6 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
                 log.error("IO Exception "+ioe);
                 throw (ioe);
             }
-            catch (org.jdom.JDOMException jde) {
-                log.error("JDOM Exception "+jde);
-                throw (jde);
-            }
 		}
 	}
 	
@@ -114,10 +108,13 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
     public void store(Element cat, List<String> trees) {
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
         cat.setAttribute("class","jmri.jmrit.catalog.DefaultCatalogTreeManagerConfigXML");
-        Iterator iter = trees.iterator();
+        Iterator<String> iter = trees.iterator();
         while (iter.hasNext()) {
-            String sname = (String)iter.next();
-            if (sname==null) log.error("System name null during store");
+            String sname = iter.next();
+            if (sname==null){
+            	log.error("System name null during store");
+            	continue;
+            }
             if (log.isDebugEnabled()) log.debug("system name is "+sname);
             if (sname.charAt(1) != CatalogTree.XML) {
                 continue;
@@ -139,23 +136,24 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
     /**
      * Recursively store a CatalogTree
      */
-    public void storeNode(Element parent, CatalogTreeNode node) {
+    @SuppressWarnings("unchecked")
+	public void storeNode(Element parent, CatalogTreeNode node) {
         if (log.isDebugEnabled()) log.debug("storeNode "+node.toString()+
                                  ", has "+node.getLeaves().size()+" leaves.");
         Element element = new Element("node");
         element.setAttribute("nodeName", node.toString());                           
-        List leaves = node.getLeaves();
+        List<CatalogTreeLeaf> leaves = node.getLeaves();
         for (int i=0; i<leaves.size(); i++) {
             Element el = new Element("leaf");
-            CatalogTreeLeaf leaf = (CatalogTreeLeaf)leaves.get(i);
+            CatalogTreeLeaf leaf = leaves.get(i);
             el.setAttribute("name", leaf.getName());                           
             el.setAttribute("path", leaf.getPath());                           
             element.addContent(el);
         }
         parent.addContent(element);
-        Enumeration e = node.children();
+        Enumeration<CatalogTreeNode> e = node.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode n = (CatalogTreeNode)e.nextElement();
+            CatalogTreeNode n = e.nextElement();
             storeNode(element, n);
         }
     }
@@ -175,7 +173,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
 	 */
 	public void readCatalogTrees() {
 		if (log.isDebugEnabled()) log.debug("entered readCatalogTrees");
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        //CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
         try {
             // check if file exists
             if (checkFile(defaultFileName)) {
@@ -206,13 +204,14 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
     /**
      * Utility method to load the individual CatalogTree objects.
      */
-    public void loadCatalogTrees(Element catalogTrees) {
-        List catList = catalogTrees.getChildren("catalogTree");
+    @SuppressWarnings("unchecked")
+	public void loadCatalogTrees(Element catalogTrees) {
+        List<Element> catList = catalogTrees.getChildren("catalogTree");
         if (log.isDebugEnabled()) log.debug("loadCatalogTrees: found "+catList.size()+" CatalogTree objects");
         CatalogTreeManager mgr = InstanceManager.catalogTreeManagerInstance();
 
         for (int i=0; i<catList.size(); i++) {
-            Element elem = (Element)catList.get(i);
+            Element elem = catList.get(i);
             Attribute attr = elem.getAttribute("systemName");
             if ( attr == null) {
                 log.warn("unexpected null systemName. elem= "+elem+", attrs= "+elem.getAttributes());
@@ -239,13 +238,15 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
         }
     }
 
-    private void addLeaves(Element element, CatalogTreeNode node) {
-        List leafList = element.getChildren("leaf");
+    @SuppressWarnings("unchecked")
+	private void addLeaves(Element element, CatalogTreeNode node) {
+        List<Element> leafList = element.getChildren("leaf");
         for (int i=0; i<leafList.size(); i++) {
-            Element elem = (Element)leafList.get(i);
+            Element elem = leafList.get(i);
             Attribute attr = elem.getAttribute("name");
             if ( attr == null) {
-                log.warn("unexpected null leaf name. elem= "+elem+", attrs= "+elem.getAttributes());
+                log.error("unexpected null leaf name. elem= "+elem+", attrs= "+elem.getAttributes());
+                continue;
             }
             String name = attr.getValue();
             attr = elem.getAttribute("path");
@@ -262,11 +263,12 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
     /**
     * Recursively load a CatalogTree
     */
-    public void loadNode(Element element, CatalogTreeNode parent, DefaultTreeModel model) {
-        List nodeList = element.getChildren("node");
+    @SuppressWarnings("unchecked")
+	public void loadNode(Element element, CatalogTreeNode parent, DefaultTreeModel model) {
+        List<Element> nodeList = element.getChildren("node");
         if (log.isDebugEnabled()) log.debug("Found "+nodeList.size()+" CatalogTreeNode objects");
         for (int i=0; i<nodeList.size(); i++) {
-            Element elem = (Element)nodeList.get(i);
+            Element elem = nodeList.get(i);
             Attribute attr = elem.getAttribute("nodeName");
             if ( attr == null) {
                 log.warn("unexpected null nodeName. elem= "+elem+", attrs= "+elem.getAttributes());

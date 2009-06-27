@@ -65,7 +65,10 @@ public class DefaultCatalogTreeManager extends jmri.implementation.AbstractManag
     public CatalogTree newCatalogTree(String sysName, String userName) {
         if (log.isDebugEnabled()) log.debug("new CatalogTree: systemName= "+sysName
                                             +", userName= "+userName);
-        if (sysName == null) log.error("SystemName cannot be null. UserName= "+userName);
+        if (sysName == null) {
+        	log.error("SystemName cannot be null. UserName= "+userName);
+        	return null;
+        }
 		String systemName = sysName.toUpperCase();
 
         // return existing if there is one

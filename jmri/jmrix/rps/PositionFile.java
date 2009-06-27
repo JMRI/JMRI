@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Persist RPS configuration information
  * <P>
  * @author  Bob Jacobsen   Copyright 2007, 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class PositionFile extends XmlFile {
 
@@ -138,7 +138,7 @@ public class PositionFile extends XmlFile {
         return e;
     }
     
-    public void store(File file) throws JDOMException, IOException {
+    public void store(File file) throws IOException {
         writeXML(file, doc);
     }
 

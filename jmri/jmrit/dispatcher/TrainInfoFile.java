@@ -33,7 +33,7 @@ import org.jdom.Element;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2009
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 
 public class TrainInfoFile extends jmri.jmrit.XmlFile {
@@ -155,7 +155,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
 	/*
 	 *  Writes out Dispatcher options to a file in the user's preferences directory
 	 */
-	public void writeTrainInfo(TrainInfo tf, String name) throws org.jdom.JDOMException, java.io.IOException {
+	public void writeTrainInfo(TrainInfo tf, String name) throws java.io.IOException {
 		log.debug("entered writeTrainInfo");
 		root = new Element("traininfofile");
 		doc = newDocument(root, dtdLocation+"dispatcher-traininfo.dtd");
@@ -197,10 +197,6 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
 		catch (java.io.IOException ioe) {
 			log.error("IO Exception "+ioe);
 			throw (ioe);
-		}
-		catch (org.jdom.JDOMException jde) {
-			log.error("JDOM Exception "+jde);
-			throw (jde);
 		}
 	}	
 	

@@ -1,6 +1,5 @@
 package jmri.util;
 
-import java.util.Comparator;
 import jmri.NamedBean;
 
 /**

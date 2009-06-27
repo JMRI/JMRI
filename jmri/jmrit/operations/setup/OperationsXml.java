@@ -12,7 +12,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores the operation setup using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class OperationsXml extends XmlFile {
 	
@@ -41,7 +41,7 @@ public class OperationsXml extends XmlFile {
 	}
 	
 
-	void writeFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException, java.io.IOException {
+	void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
 	        if (log.isDebugEnabled()) log.debug("writeFile "+name);
 	        // This is taken in large part from "Java and XML" page 368
 	        File file = findFile(name);

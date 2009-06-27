@@ -37,7 +37,7 @@ import org.jdom.Element;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 
 public class OptionsFile extends jmri.jmrit.XmlFile {
@@ -154,7 +154,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 	/*
 	 *  Writes out Dispatcher options to a file in the user's preferences directory
 	 */
-	public void writeDispatcherOptions(DispatcherFrame f) throws org.jdom.JDOMException, java.io.IOException {
+	public void writeDispatcherOptions(DispatcherFrame f) throws java.io.IOException {
 		log.debug("entered writeDispatcherOptions");
 		dispatcher = f;
 		root = new Element("dispatcheroptions");
@@ -198,10 +198,6 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 		catch (java.io.IOException ioe) {
 			log.error("IO Exception "+ioe);
 			throw (ioe);
-		}
-		catch (org.jdom.JDOMException jde) {
-			log.error("JDOM Exception "+jde);
-			throw (jde);
 		}
 	}
   

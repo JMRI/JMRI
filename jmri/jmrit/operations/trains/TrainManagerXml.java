@@ -17,7 +17,7 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class TrainManagerXml extends XmlFile {
 	
@@ -44,7 +44,7 @@ public class TrainManagerXml extends XmlFile {
 	}
 	
 
-	public void writeFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException, java.io.IOException {
+	public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
 	        if (log.isDebugEnabled()) log.debug("writeFile "+name);
 	        // This is taken in large part from "Java and XML" page 368
 	        File file = findFile(name);

@@ -5,8 +5,6 @@ import jmri.NamedBean;
 import jmri.Manager;
 import jmri.util.NamedBeanComparator;
 
-
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import java.util.ArrayList;
@@ -72,7 +70,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     abstract NamedBean getBySystemName(String name);
     abstract NamedBean addBean(String name);
 
-    public Class getColumnClass(int c) {
+    public Class<?> getColumnClass(int c) {
             return String.class;
     }
 

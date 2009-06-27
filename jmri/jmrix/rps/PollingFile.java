@@ -10,7 +10,7 @@ import jmri.jmrit.XmlFile;
  * Persist RPS polling information
  * <P>
  * @author  Bob Jacobsen   Copyright 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class PollingFile extends XmlFile {
 
@@ -59,7 +59,7 @@ public class PollingFile extends XmlFile {
     }
 
 
-    public void store(File file) throws JDOMException, IOException {
+    public void store(File file) throws IOException {
         writeXML(file, doc);
     }
 

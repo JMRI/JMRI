@@ -21,7 +21,7 @@ import java.io.DataInputStream;
 /**
  * Pane for downloading software updates to PRICOM products
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.15 $
+ * @version	    $Revision: 1.16 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -66,8 +66,8 @@ public class LoaderPane extends javax.swing.JPanel {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     openPortButtonActionPerformed(evt);
-                } catch (jmri.jmrix.SerialConfigException ex) {
-                    log.error("Error while opening port.  Did you select the right one?\n"+ex);
+                //} catch (jmri.jmrix.SerialConfigException ex) {
+                //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
                 }
                 catch (java.lang.UnsatisfiedLinkError ex) {
                     log.error("Error while opening port.  Did you select the right one?\n"+ex);
@@ -100,7 +100,7 @@ public class LoaderPane extends javax.swing.JPanel {
     /**
      * Open button has been pushed, create the actual display connection
      */
-    void openPortButtonActionPerformed(java.awt.event.ActionEvent e) throws jmri.jmrix.SerialConfigException {
+    void openPortButtonActionPerformed(java.awt.event.ActionEvent e){
         log.info("Open button pushed");
         // can't change this anymore
         openPortButton.setEnabled(false);

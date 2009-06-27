@@ -46,7 +46,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase {
             _lRouteTable._outputList.get(3*i+1).setIncluded(true);
         }
         _lRouteTable.createPressed(null);
-        java.util.List l = InstanceManager.logixManagerInstance().getSystemNameList();
+        java.util.List<String> l = InstanceManager.logixManagerInstance().getSystemNameList();
         assertEquals(1, l.size());
 
         _lRouteTable.m.setValueAt(rbx.getString("ButtonEdit"), 0, 

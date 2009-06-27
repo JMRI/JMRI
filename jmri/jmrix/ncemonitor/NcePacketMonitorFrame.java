@@ -20,7 +20,7 @@ import java.io.DataInputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -41,8 +41,8 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     openPortButtonActionPerformed(evt);
-                } catch (jmri.jmrix.SerialConfigException ex) {
-                    log.error("Error while opening port.  Did you select the right one?\n"+ex);
+                //} catch (jmri.jmrix.SerialConfigException ex) {
+                //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
                 }
                 catch (java.lang.UnsatisfiedLinkError ex) {
                     log.error("Error while opening port.  Did you select the right one?\n"+ex);
@@ -323,7 +323,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
     /**
 	 * Open button has been pushed, create the actual display connection
 	 */
-    void openPortButtonActionPerformed(java.awt.event.ActionEvent e) throws jmri.jmrix.SerialConfigException {
+    void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
         log.info("Open button pushed");
         // can't change this anymore
         openPortButton.setEnabled(false);

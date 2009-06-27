@@ -24,7 +24,7 @@ import junit.framework.TestSuite;
  *   Backup, Control, Demo
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class OperationsSetupTest extends TestCase {
 
@@ -425,7 +425,7 @@ public class OperationsSetupTest extends TestCase {
 	// TODO: Add test to read xml file
 
 	@SuppressWarnings("static-access")
-	public static Setup createTestSetup() throws org.jdom.JDOMException, java.io.IOException, java.io.FileNotFoundException {
+	public static Setup createTestSetup() throws java.io.IOException, java.io.FileNotFoundException {
 		// this uses explicit filenames intentionally, to ensure that
 		// the resulting files go into the test tree area.
 

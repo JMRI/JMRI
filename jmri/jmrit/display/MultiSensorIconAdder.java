@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.ResourceBundle;
 import java.io.IOException;
 
 import javax.swing.Box;
@@ -336,9 +335,9 @@ public class MultiSensorIconAdder extends IconAdder {
         if (name == null) {
             name = sensor.getSystemName();
         }
-        Iterator iter = _sensorMap.values().iterator();
+        Iterator<Sensor> iter = _sensorMap.values().iterator();
         while (iter.hasNext()) {
-            Sensor s = (Sensor)iter.next(); 
+            Sensor s = iter.next(); 
             String n = s.getUserName();
             if (n == null) {
                 n = s.getSystemName();

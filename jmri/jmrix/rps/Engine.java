@@ -28,7 +28,7 @@ import java.io.*;
  * class's collection must be present in the Roster.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.29 $
+ * @version   $Revision: 1.30 $
  */
 
 
@@ -188,7 +188,7 @@ public class Engine implements ReadingListener {
     }
     
     // Store alignment info
-    public void storeAlignment(File file) throws org.jdom.JDOMException, IOException {
+    public void storeAlignment(File file) throws IOException {
         PositionFile pf = new PositionFile();
         pf.prepare();
         pf.setConstants(getVSound(), getOffset(), getAlgorithm());
@@ -305,7 +305,7 @@ public class Engine implements ReadingListener {
     }
     
     // Store polling info
-    public void storePollConfig(File file) throws org.jdom.JDOMException, IOException {
+    public void storePollConfig(File file) throws IOException {
         PollingFile pf = new PollingFile();
         pf.prepare();
         pf.setPoll();

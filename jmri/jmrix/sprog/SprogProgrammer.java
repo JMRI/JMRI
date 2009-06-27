@@ -15,7 +15,7 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the Sprog programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
@@ -179,7 +179,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     }
 
     // internal method to create the SprogMessage for programmer task start
-    protected SprogMessage progTaskStart(int mode, int val, int cvnum) throws jmri.ProgrammerException {
+    protected SprogMessage progTaskStart(int mode, int val, int cvnum) {
         // val = -1 for read command; mode is direct, etc
         if (val < 0) {
             return SprogMessage.getReadCV(cvnum, mode);

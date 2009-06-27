@@ -30,7 +30,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -39,11 +38,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
-import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.image.ColorModel;
-import java.awt.image.MemoryImageSource;
-import java.awt.image.PixelGrabber;
 /**
  * Create a Dialog to display the images in a file system directory.
  * <P>
@@ -344,10 +338,10 @@ public class PreviewDialog extends JDialog implements MouseListener {
                     }
                     double scale = 1;
                     if (w > 100) {
-                        scale = 100.0/(double)w;
+                        scale = 100.0/w;
                     }
                     if (h > 100) {
-                        scale = Math.min(scale, 100.0/(double)h);
+                        scale = Math.min(scale, 100.0/h);
                     }
                     if (scale < 1) { // make a thumbnail
                         //scale = Math.max(scale, 0.25);  // but not too small
@@ -468,41 +462,41 @@ public class PreviewDialog extends JDialog implements MouseListener {
         return total;
     }
 
-    private boolean enoughMemory(long bytes) {
-        if (bytes > 500000)  {
-            long total = bytes;
-            int chunk = 0;
-            ArrayList <byte[]> memoryTest = new ArrayList <byte[]>();
-            try {
-                while (total > 0) {
-                    if (total > Integer.MAX_VALUE) {
-                        chunk = Integer.MAX_VALUE;
-                    } else {
-                        chunk = (int)total;
-                    }
-                    memoryTest.add(new byte[chunk]);
-                    total -= chunk;
-                }
-            } catch (OutOfMemoryError me) {
-                for (int i=0; i<memoryTest.size(); i++){
-                    memoryTest.remove(i);
-                }
-                memoryTest = null;
-                log.debug("OutOfMemoryError for "+bytes+" bytes");
-                JOptionPane.showMessageDialog(this, 
-                        java.text.MessageFormat.format(rb.getString("OutOfMemory"), 
-                        new Object[] {new Integer(_cnt)}),
-                        rb.getString("error"), JOptionPane.INFORMATION_MESSAGE);
-                return false;
-            }
-            for (int i=0; i<memoryTest.size(); i++){
-                memoryTest.remove(i);
-            }
-            memoryTest = null;
-            System.gc();        // please take the hint...
-        }
-        return true;
-    }
+    //private boolean enoughMemory(long bytes) {
+    //    if (bytes > 500000)  {
+    //          long total = bytes;
+    //          int chunk = 0;
+    //           ArrayList <byte[]> memoryTest = new ArrayList <byte[]>();
+    //           try {
+    //               while (total > 0) {
+//  if (total > Integer.MAX_VALUE) {
+//  chunk = Integer.MAX_VALUE;
+//  } else {
+//  chunk = (int)total;
+//  }
+//  memoryTest.add(new byte[chunk]);
+//  total -= chunk;
+//  }
+//  } catch (OutOfMemoryError me) {
+//  for (int i=0; i<memoryTest.size(); i++){
+//  memoryTest.remove(i);
+//  }
+//  memoryTest = null;
+//  log.debug("OutOfMemoryError for "+bytes+" bytes");
+//  JOptionPane.showMessageDialog(this, 
+//  java.text.MessageFormat.format(rb.getString("OutOfMemory"), 
+//  new Object[] {new Integer(_cnt)}),
+//  rb.getString("error"), JOptionPane.INFORMATION_MESSAGE);
+//  return false;
+//  }
+//  for (int i=0; i<memoryTest.size(); i++){
+//  memoryTest.remove(i);
+//  }
+//  memoryTest = null;
+//  System.gc();        // please take the hint...
+//  }
+//  return true;
+//  }
 
     public void dispose() {
         if (_preview != null) resetPanel();

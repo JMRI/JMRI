@@ -38,7 +38,7 @@ import java.util.List;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2009
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 
@@ -584,9 +584,9 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 			try {
 				_tiFile.writeTrainInfo(info, fileName);
 			} 
-			catch (org.jdom.JDOMException jde) { 
-				log.error("JDOM exception writing Train Info: "+jde); 
-			}                           
+			//catch (org.jdom.JDOMException jde) { 
+			//	log.error("JDOM exception writing Train Info: "+jde); 
+			//}                           
 			catch (java.io.IOException ioe) { 
 				log.error("IO exception writing Train Info: "+ioe); 
 			}   

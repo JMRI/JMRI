@@ -19,7 +19,6 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
-import jmri.jmrit.catalog.CatalogPanel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,8 +29,6 @@ import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import java.io.File;
 
 import javax.swing.*;
 
@@ -302,7 +299,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             JFrameItem turnoutLFrame = makeAddIconFrame("LeftTOEditor", "addIconsToPanel", "SelectTO", turnoutLIconEditor);
             addHelpMenu(turnoutLFrame, "package.jmri.jmrit.display.IconAdder");
             turnoutLIconEditor.makeIconPanel();
-            TurnoutManager manager = InstanceManager.turnoutManagerInstance();
+            //TurnoutManager manager = InstanceManager.turnoutManagerInstance();
             turnoutLIconEditor.setPickList(turnoutTableModel);
 
             ActionListener addIconAction = new ActionListener() {
@@ -1122,12 +1119,12 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         frame = f;
         // handle target window closes
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
-            PanelEditor panelEd;
+            //PanelEditor panelEd;
             public void windowClosing(java.awt.event.WindowEvent e) {
                 targetWindowClosing(e);
             }
             java.awt.event.WindowAdapter init(PanelEditor pe) {
-                panelEd = pe;
+                //panelEd = pe;
                 return this;
             }
         }.init(this));
@@ -1162,7 +1159,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     public void dispose() {
         // register the result for later configuration
         InstanceManager.configureManagerInstance().deregister(this);
-		jmri.jmrit.display.PanelMenu.instance().deletePanel((Object)self);
+		jmri.jmrit.display.PanelMenu.instance().deletePanel(self);
 		setVisible(false);
 		frame.setVisible(false);
         // clean up local links to push GC
@@ -1420,9 +1417,9 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             }
             public Component add(Component c, int i) {
                 if (log.isDebugEnabled()) log.debug("size was "+w+","+h);
-                int hnew = (int)Math.max(h,
+                int hnew = Math.max(h,
                         c.getLocation().y+c.getSize().height);
-                int wnew = (int)Math.max(w,
+                int wnew = Math.max(w,
                         c.getLocation().x+c.getSize().width);
                 setSize(wnew,hnew);
                 return super.add(c, i);
@@ -1431,9 +1428,9 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                 if (log.isDebugEnabled()) log.debug("adding of "+c.getSize()+" with Object");
                 super.add(c, o);
                 if (log.isDebugEnabled()) log.debug("in Object add, was "+w+","+h);
-                int hnew = (int)Math.max(h,
+                int hnew = Math.max(h,
                         c.getLocation().y+c.getSize().height);
-                int wnew = (int)Math.max(w,
+                int wnew = Math.max(w,
                         c.getLocation().x+c.getSize().width);
                 setSize(wnew,hnew);
             }

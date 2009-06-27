@@ -17,7 +17,7 @@ import org.jdom.Attribute;
  * This class manipulates files conforming to the block_value DTD.
  *
  * @author      Dave Duchamp Copyright (C) 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class BlockValueFile extends jmri.jmrit.XmlFile {
@@ -92,7 +92,7 @@ public class BlockValueFile extends jmri.jmrit.XmlFile {
 	 *  If there are no defined Blocks, no file is written.
 	 *  If none of the defined Blocks have values, no file is written.
 	 */
-	public void writeBlockValues() throws org.jdom.JDOMException, java.io.IOException {
+	public void writeBlockValues() throws java.io.IOException {
 		log.debug("entered writeBlockValues");
 		List<String> blocks = blockManager.getSystemNameList();
 		if (blocks.size()>0) {
@@ -145,10 +145,6 @@ public class BlockValueFile extends jmri.jmrit.XmlFile {
 				catch (java.io.IOException ioe) {
 					log.error("IO Exception "+ioe);
 					throw (ioe);
-				}
-				catch (org.jdom.JDOMException jde) {
-					log.error("JDOM Exception "+jde);
-					throw (jde);
 				}
 			}
 		}

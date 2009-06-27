@@ -3,7 +3,6 @@
 package jmri.jmrix.rps.serial;
 
 import jmri.jmrix.rps.*;
-import jmri.util.JUnitAppender;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -13,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the rps.serial.SerialAdapter class.
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SerialAdapterTest extends TestCase {
 

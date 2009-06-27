@@ -6,23 +6,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.datatransfer.DataFlavor;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
@@ -112,7 +106,7 @@ public class ImageIndexEditor extends JmriJFrame {
             public void actionPerformed(ActionEvent e) {
                 editor.openDirectory(false);
             }
-        };
+        }
         openItem.addActionListener(new AActionListener());
         findIcon.add(openItem);
 
@@ -206,7 +200,7 @@ public class ImageIndexEditor extends JmriJFrame {
                 panelEditor.addTreeToEditors(tree);
             }
         } 
-        catch (org.jdom.JDOMException jde) { log.error("Exception writing CatalogTrees: "+jde); }                           
+        //catch (org.jdom.JDOMException jde) { log.error("Exception writing CatalogTrees: "+jde); }                           
         catch (java.io.IOException ioe) { log.error("Exception writing CatalogTrees: "+ioe); }   
     }
     
@@ -277,7 +271,7 @@ public class ImageIndexEditor extends JmriJFrame {
                                           rb.getString("info"), JOptionPane.INFORMATION_MESSAGE);
         } else {
             String name = JOptionPane.showInputDialog(this, rb.getString("newNameNode"), 
-                                          (String)selectedNode.getUserObject());
+                                          selectedNode.getUserObject());
             if (name != null) {
                 if (!_index.NodeChange(selectedNode, name)){
                     JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
@@ -309,21 +303,23 @@ public class ImageIndexEditor extends JmriJFrame {
         }
     }
 
-    private int countSubNodes(CatalogTreeNode node) {
+    @SuppressWarnings("unchecked")
+	private int countSubNodes(CatalogTreeNode node) {
         int cnt = 0;
-        Enumeration e =node.children();
+        Enumeration<CatalogTreeNode> e =node.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode n = (CatalogTreeNode)e.nextElement();
+            CatalogTreeNode n = e.nextElement();
             cnt += countSubNodes(n) + 1;
         }
         return cnt;
     }
 
-    private int countIcons(CatalogTreeNode node) {
+    @SuppressWarnings("unchecked")
+	private int countIcons(CatalogTreeNode node) {
         int cnt = 0;
-        Enumeration e =node.children();
+        Enumeration<CatalogTreeNode> e =node.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode n = (CatalogTreeNode)e.nextElement();
+            CatalogTreeNode n = e.nextElement();
             cnt += countIcons(n);
         }
         cnt += node.getNumLeaves();

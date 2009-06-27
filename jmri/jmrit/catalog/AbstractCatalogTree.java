@@ -7,8 +7,6 @@ import jmri.CatalogTree;
 import java.beans.PropertyChangeSupport;
 import java.beans.PropertyChangeListener;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreeNode;
 
 /**
  * TreeModel used by CatalogPanel to create a tree of resources.
@@ -22,14 +20,14 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     private String mUserName;
     private String mSystemName;
 
-    private AbstractCatalogTree() {
-        super(new CatalogTreeNode("BAD Ctor!"));
-        mSystemName = null;
-        mUserName = null;
-        log.warn("Unexpected use of null ctor");
-        Exception e = new Exception();
-        e.printStackTrace();
-    }
+  // private AbstractCatalogTree() {
+  //      super(new CatalogTreeNode("BAD Ctor!"));
+  //      mSystemName = null;
+  //      mUserName = null;
+  //      log.warn("Unexpected use of null ctor");
+  //      Exception e = new Exception();
+  //      e.printStackTrace();
+  //  }
 
     public AbstractCatalogTree(String sysname, String username) {
         super(new CatalogTreeNode(username));

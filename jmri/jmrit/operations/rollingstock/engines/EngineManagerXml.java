@@ -16,7 +16,7 @@ import org.jdom.ProcessingInstruction;
  * models, engine types, engine lengths, and engine consist names.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class EngineManagerXml extends XmlFile {
 	
@@ -43,7 +43,7 @@ public class EngineManagerXml extends XmlFile {
 	}
 	
 
-	public void writeFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException, java.io.IOException {
+	public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
 	        if (log.isDebugEnabled()) log.debug("writeFile "+name);
 	        // This is taken in large part from "Java and XML" page 368
 	        File file = findFile(name);

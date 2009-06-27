@@ -2,12 +2,6 @@
 
 package jmri.jmrit.catalog;
 
-import jmri.CatalogTree;
-import jmri.jmrit.XmlFile;
-import java.io.File;
-
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
 
 /**
  * TreeModel used by CatalogPanel to create a tree of resources.

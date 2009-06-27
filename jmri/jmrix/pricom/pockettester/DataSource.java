@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
@@ -77,8 +77,8 @@ public class DataSource extends jmri.util.JmriJFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     openPortButtonActionPerformed(evt);
-                } catch (jmri.jmrix.SerialConfigException ex) {
-                    log.error("Error while opening port.  Did you select the right one?\n"+ex);
+                //} catch (jmri.jmrix.SerialConfigException ex) {
+                //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
                 }
                 catch (java.lang.UnsatisfiedLinkError ex) {
                     log.error("Error while opening port.  Did you select the right one?\n"+ex);
@@ -237,7 +237,7 @@ public class DataSource extends jmri.util.JmriJFrame {
     /**
      * Open button has been pushed, create the actual display connection
      */
-    void openPortButtonActionPerformed(java.awt.event.ActionEvent e) throws jmri.jmrix.SerialConfigException {
+    void openPortButtonActionPerformed(java.awt.event.ActionEvent e) {
         log.info("Open button pushed");
         // can't change this anymore
         openPortButton.setEnabled(false);

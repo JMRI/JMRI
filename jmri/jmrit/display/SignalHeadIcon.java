@@ -2,7 +2,6 @@
 
 package jmri.jmrit.display;
 
-import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
 import java.awt.event.ActionEvent;
@@ -25,7 +24,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {

@@ -16,7 +16,7 @@ import jmri.jmrit.XmlFile;
  * Load and stores locations and schedules for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008 2009
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class LocationManagerXml extends XmlFile {
 	
@@ -42,7 +42,7 @@ public class LocationManagerXml extends XmlFile {
 		return _instance;
 	}
 	
-	public void writeFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException, java.io.IOException {
+	public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
 	        if (log.isDebugEnabled()) log.debug("writeFile "+name);
 	        // This is taken in large part from "Java and XML" page 368
 	        File file = findFile(name);

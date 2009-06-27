@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 
 public class OptionsMenu extends JMenu {
@@ -249,9 +249,9 @@ public class OptionsMenu extends JMenu {
 		try {
 			new OptionsFile().writeDispatcherOptions(dispatcher);
 		} 
-		catch (org.jdom.JDOMException jde) { 
-			log.error("Exception writing Dispatcher options: "+jde); 
-		}                           
+		//catch (org.jdom.JDOMException jde) { 
+		//	log.error("Exception writing Dispatcher options: "+jde); 
+		//}                           
 		catch (java.io.IOException ioe) { 
 			log.error("Exception writing Dispatcher options: "+ioe); 
 		}   

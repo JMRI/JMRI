@@ -19,7 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
  * and car kernels.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class CarManagerXml extends XmlFile {
 	
@@ -46,7 +46,7 @@ public class CarManagerXml extends XmlFile {
 	}
 	
 
-	public void writeFile(String name) throws org.jdom.JDOMException, java.io.FileNotFoundException, java.io.IOException {
+	public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
 	        if (log.isDebugEnabled()) log.debug("writeFile "+name);
 	        // This is taken in large part from "Java and XML" page 368
 	        File file = findFile(name);

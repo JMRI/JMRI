@@ -32,7 +32,7 @@ import java.util.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.37 $
+ * @version			$Revision: 1.38 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -277,9 +277,7 @@ public class DecoderIndexFile extends XmlFile {
             index.writeFile("decoderIndex.xml", _instance, sbox);
         } catch (java.io.IOException ex) {
             log.error("Error writing new decoder index file: "+ex.getMessage());
-        } catch (org.jdom.JDOMException ex) {
-            log.error("Error writing new decoder index file: "+ex.getMessage());
-        }
+        } 
     }
 
     /**
@@ -406,7 +404,7 @@ public class DecoderIndexFile extends XmlFile {
         }
     }
 
-    public void writeFile(String name, DecoderIndexFile oldIndex, String files[]) throws org.jdom.JDOMException, java.io.IOException {
+    public void writeFile(String name, DecoderIndexFile oldIndex, String files[]) throws java.io.IOException {
         if (log.isDebugEnabled()) log.debug("writeFile "+name);
         // This is taken in large part from "Java and XML" page 368
         File file = new File(prefsDir()+name);

@@ -20,7 +20,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author			Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SaveThrottlePreferencesAction extends AbstractAction {
 
@@ -96,9 +96,6 @@ public class SaveThrottlePreferencesAction extends AbstractAction {
 			xf.writeXML(file, doc);
 		}       
 		catch (FileNotFoundException ex){
-			log.warn("Exception in storing throttle xml: "+ex);
-		}
-		catch (org.jdom.JDOMException ex){
 			log.warn("Exception in storing throttle xml: "+ex);
 		}
 		catch (java.io.IOException ex){

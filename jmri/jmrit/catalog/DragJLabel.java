@@ -8,9 +8,8 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.*;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ResourceBundle;
+
 /**
  * Gives a JLabel the capability to Drag and Drop
  * <P>

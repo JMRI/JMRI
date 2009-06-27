@@ -44,7 +44,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.46 $
+ * @version     $Revision: 1.47 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -863,7 +863,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Internal method to create the LocoNetMessage for programmer task start
      */
-    protected LocoNetMessage progTaskStart(int pcmd, int val, int cvnum, boolean write) throws jmri.ProgrammerException {
+    protected LocoNetMessage progTaskStart(int pcmd, int val, int cvnum, boolean write){
 
         int addr = cvnum-1;    // cvnum is in human readable form; addr is what's sent over loconet
 
