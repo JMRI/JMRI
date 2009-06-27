@@ -22,16 +22,20 @@ import jmri.jmrix.lenz.XNetConstants;
  * <LI>Wait for Broadcast Service Mode Entry message -- not happening on elite
  * <LI>Send Request for Service Mode Results request
  * <LI>Wait for results reply, interpret
- * <LI>Send Resume Operations request
- * <LI>Wait for Normal Operations Resumed broadcast
+ * <LI>Send Resume Operations request  -- The Elite does not seem to require this step.
+ * <LI>Wait for Normal Operations Resumed broadcast -- The Elite does not seem to require this step.
  * </UL>
  * @author Paul Bender      Copyright (c) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener {
 
 	static private final int RETURNSENT = 3;
-
+        // Message timeout lengths.  These have been determined by
+        // experimentation, and may need to be adjusted
+        static private final int ELITEMESSAGETIMEOUT = 10000;
+        static private final int EliteXNetProgrammerTimeout = 20000;
+   
 /*	public EliteXNetProgrammer() {
          	// error if more than one constructed?
            	if (self != null)
@@ -62,20 +66,23 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
 
                 try {
                    // start the error timer
-                   restartTimer(XNetProgrammerTimeout);
+                   restartTimer(EliteXNetProgrammerTimeout);
 
                    // format and send message to go to program mode
                    if (_mode == Programmer.PAGEMODE) {
                        XNetMessage msg = XNetMessage.getWritePagedCVMsg(CV,val);
 		       msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+		       msg.setTimeout(ELITEMESSAGETIMEOUT);
                        controller().sendXNetMessage(msg, this);
                    } else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE) {
                        XNetMessage msg = XNetMessage.getWriteDirectCVMsg(CV,val);
 		       msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+		       msg.setTimeout(ELITEMESSAGETIMEOUT);
                        controller().sendXNetMessage(msg, this);
                    } else  { // register mode by elimination
                        XNetMessage msg = XNetMessage.getWriteRegisterMsg(registerFromCV(CV),val);
 		       msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+		       msg.setTimeout(ELITEMESSAGETIMEOUT);
                        controller().sendXNetMessage(msg,this);
                    }
                 } catch (jmri.ProgrammerException e) {
@@ -88,9 +95,11 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
                // the results.
 	       progState = INQUIRESENT;
                //start the error timer
-	       restartTimer(XNetProgrammerTimeout);
-	       controller().sendXNetMessage(XNetMessage.getServiceModeResultsMsg(),
-                                            this);
+	       restartTimer(EliteXNetProgrammerTimeout);
+	       XNetMessage resultMsg=XNetMessage.getServiceModeResultsMsg();
+	       resultMsg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+	       resultMsg.setTimeout(ELITEMESSAGETIMEOUT);
+	       controller().sendXNetMessage(resultMsg,this);
         }
 
 
@@ -114,20 +123,23 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
                 _cv = 0xff & CV;
                 try {
                   // start the error timer
-                   restartTimer(XNetProgrammerTimeout);
+                   restartTimer(EliteXNetProgrammerTimeout);
 
                    // format and send message to go to program mode
                    if (_mode == Programmer.PAGEMODE) {
                        XNetMessage msg=XNetMessage.getReadPagedCVMsg(CV);
 		       msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+		       msg.setTimeout(ELITEMESSAGETIMEOUT);
                        controller().sendXNetMessage(msg, this);
                    } else if (_mode == Programmer.DIRECTBITMODE || _mode == Programmer.DIRECTBYTEMODE) {
                        XNetMessage msg=XNetMessage.getReadDirectCVMsg(CV);
 		       msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+		       msg.setTimeout(ELITEMESSAGETIMEOUT);
                        controller().sendXNetMessage(msg, this);
                    } else { // register mode by elimination
                        XNetMessage msg=XNetMessage.getReadRegisterMsg(registerFromCV(CV));
 		       msg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+		       msg.setTimeout(ELITEMESSAGETIMEOUT);
                        controller().sendXNetMessage(msg, this);
                    }
                 } catch (jmri.ProgrammerException e) {
@@ -140,9 +152,11 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
                // the results.
 	       progState = INQUIRESENT;
                //start the error timer
-	       restartTimer(XNetProgrammerTimeout);
-	       controller().sendXNetMessage(XNetMessage.getServiceModeResultsMsg(),
-                                            this);
+	       restartTimer(EliteXNetProgrammerTimeout);
+	       XNetMessage resultMsg=XNetMessage.getServiceModeResultsMsg();
+	       resultMsg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+	       resultMsg.setTimeout(ELITEMESSAGETIMEOUT);
+	       controller().sendXNetMessage(resultMsg,this);
         }
 
 
@@ -195,19 +209,17 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
 			       // here ready to request the results
 			       progState = INQUIRESENT;
                 	       //start the error timer
-			       restartTimer(XNetProgrammerTimeout);
+			       restartTimer(EliteXNetProgrammerTimeout);
+	                       XNetMessage resultMsg=XNetMessage.getServiceModeResultsMsg();
 
-			       controller().sendXNetMessage(XNetMessage.getServiceModeResultsMsg(),
-                                                            this);
+	                       resultMsg.setNeededMode(jmri.jmrix.AbstractMRTrafficController.NORMALMODE);
+		               resultMsg.setTimeout(ELITEMESSAGETIMEOUT);
+			       controller().sendXNetMessage(resultMsg,this);
                                return;
             		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
                            m.getElement(1)==XNetConstants.CS_NOT_SUPPORTED) {
                            // programming operation not supported by this command station
 			   progState = NOTPROGRAMMING;
-			   // create a request to exit service mode and 
-			   // send the message to the command station
-			   controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),
-                                                            this);
 			   notifyProgListenerEnd(_val, jmri.ProgListener.NotImplemented);
                            return;
             		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
@@ -223,10 +235,6 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
 			   log.error("Short Circuit While Programming Decoder");
 			   progState = NOTPROGRAMMING;
 			   stopTimer();
-			   // create a request to exit service mode and 
-			   // send the message to the command station
-			   controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),
-                                                            this);
 			   notifyProgListenerEnd(_val, jmri.ProgListener.ProgrammingShort);
                         } else if(m.isCommErrorMessage()) {
                            // We experienced a communicatiosn error
@@ -251,12 +259,8 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
 			        // read was in progress - get return value
 				_val = m.getElement(3);
 			    }
-			    progState = RETURNSENT;
+			    progState = NOTPROGRAMMING;
 			    stopTimer();
-			    // create a request to exit service mode and 
-			    // send the message to the command station
-			    //controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),
-                            //                                this);
 			    // if this was a read, we cached the value earlier.  
 			    // If its a write, we're to return the original write value
 			    notifyProgListenerEnd(_val, jmri.ProgListener.OK);
@@ -270,12 +274,8 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
 				// read was in progress - get return value
 				_val = m.getElement(3);
 			    }
-			    progState = RETURNSENT;
+			    progState = NOTPROGRAMMING;
 			    stopTimer();
-			   // create a request to exit service mode and 
-			   // send the message to the command station
-			   controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),
-                                                            this);
 			    // if this was a read, we cached the value earlier.  If its a
 			    // write, we're to return the original write value
 			    notifyProgListenerEnd(_val, jmri.ProgListener.OK);
@@ -283,24 +283,16 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
             		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
 				   m.getElement(1)==XNetConstants.PROG_BYTE_NOT_FOUND) {
                     	   // "data byte not found", e.g. no reply
-		    	   progState = RETURNSENT;
+			   progState = NOTPROGRAMMING;
 		    	   stopTimer();
-			   // create a request to exit service mode and 
-			   // send the message to the command station
-			   controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),
-                                                            this);
 		     	   notifyProgListenerEnd(_val, jmri.ProgListener.NoLocoDetected);
                	    	   return;
             		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
 			   m.getElement(1)==XNetConstants.PROG_SHORT_CIRCUIT) {
 			   // We experienced a short Circuit on the Programming Track
 			   log.error("Short Circuit While Programming Decoder");
-			   	progState = RETURNSENT;
+			    progState = NOTPROGRAMMING;
 			   stopTimer();
-			   // create a request to exit service mode and 
-			   // send the message to the command station
-			   controller().sendXNetMessage(XNetMessage.getExitProgModeMsg(),
-                                                            this);
 			   notifyProgListenerEnd(_val, jmri.ProgListener.ProgrammingShort);
                         } else if(m.isCommErrorMessage()) {
                            // We experienced a communicatiosn error
