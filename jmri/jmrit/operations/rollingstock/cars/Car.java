@@ -16,7 +16,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.18 $
+ * @version             $Revision: 1.19 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -268,6 +268,12 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		// get the car's next load
 		setNextLoad(currentSi.getShip());
 		log.debug("Car ("+getId()+") next load ("+getNextLoad()+")");
+		// is car part of a kernel?
+		if (getKernel()!=null && !getKernel().isLeadCar(this)){
+			log.debug("Car ("+getId()+") is part of kernel "+getKernelName());
+			// not lead car so return
+			return;
+		}
 		// bump and check count
 		track.setScheduleCount(track.getScheduleCount()+1);
 		if (track.getScheduleCount() < currentSi.getCount())
