@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.5.6.shtml,v 1.5 2009-06-24 03:29:37 jacobsen Exp $ -->
+<!-- $Id: jmri2.5.6.shtml,v 1.6 2009-06-28 04:18:12 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -33,7 +33,10 @@
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.5.6 of JMRI/DecoderPro is available for download.
 
-<br><b>This is a draft release note only; the download links do not yet work</b>
+<br><b>JMRI 2.5.6 has been superceded by 
+<a href="jmri2.5.7.shtml">JMRI 2.5.7</a> due to a bug found just after release.
+You should install 
+<a href="jmri2.5.7.shtml">JMRI 2.5.7</a> instead of JMRI 2.5.6</b>
 
 <h3>Notes:</h3>
 
@@ -143,17 +146,10 @@ are using a Linux computer.
 
 <h3>Download links:</h3>
 
-<p>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
-
-<p>MacOS X:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.5.6.dmg?download">http://downloads.sourceforge.net/jmri/JMRI.2.5.6.dmg?download</a>
-
-<p>Windows:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.5.6.exe?download">http://downloads.sourceforge.net/jmri/JMRI.2.5.6.exe?download</a>
-
-<p>Linux:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.5.6.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.2.5.6.tgz?download</a>
-
+<br><b>JMRI 2.5.6 has been superceded by 
+<a href="jmri2.5.7.shtml">JMRI 2.5.7</a> due to a bug found just after release.
+You should install 
+<a href="jmri2.5.7.shtml">JMRI 2.5.7</a> instead of JMRI 2.5.6</b>
 
 <h3>Changes since test version 2.5.5</h3>
 

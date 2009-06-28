@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: jmri2.6.shtml,v 1.1 2009-06-28 04:18:12 jacobsen Exp $ -->
+<html lang="en">
+<head>
+ <title>
+ JMRI: Release Notes for 2.6
+ 
+ </title>
+    <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <meta content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="java model railroad JMRI 2.5.6 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.6 release
+      </h2>
+
+	<p>Date: June NN, 2009</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.6 of JMRI/DecoderPro is available for download.
+
+<br><b>This is a draft release note only; the download links do not yet work</b>
+
+<p>We are very pleased to announce that the 2.5 series of JMRI test releases has resulted in a 
+version that's good enough to be recommended for general use, including by new users. 
+We're therefore making that version, "Production version 2.6" available for download today.
+
+<b><p>
+JMRI is now only available under the 
+<A HREF="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/Copyright.html">copyright and licensing page</a>.</p></b>
+
+<h3>Warnings for this version:</h3>
+
+The Panel Editor has been greatly improved, but it might take a little
+while for you to get used to it.  If you have trouble figuring out how it
+works, please see the 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/display/PanelEditor.shtml">help pages</a>.
+
+<p>
+JMRI version 2.5.5 introduced reorganized definitions for 
+SoundTraxx Tsunami Diesel definitions.  Several definition files have been
+removed, and are replaced by one common file.  
+If you haven't modified your Tsunami XML files, you don't have to read
+the rest of this paragraph.
+If you have modified or replaced the Tsunami definitions in 
+the program directory in a previous
+copy of JMRI, you should back up the modified files before installing
+JMRI 2.5.5. This version removes the old files, so if you have modifications,
+you'll have to put them back manually afterwards.  In general, it's better
+to put local modifications in the preferences directory, not the program directory,
+so you won't have to do this in the future.
+
+<p>
+If you're using a MERG CAN-RS or CAN-USB unit to talk to a MERG CBUS, you should
+check that your preferences are set properly.
+
+<p>
+Starting with version 2.5.3, JMRI uses a new version of the Log4J library, and 
+several additional libraries.  If you've written your own
+Java code using JMRI, or have your own startup scripts, you
+might have to make some changes to adapt to these new libraries.
+If you don't get messages about missing or deprecated methods,
+you don't have to worry about this.
+
+<p>
+The XSLT location was moved back to the web in JMRI 2.5.3.
+
+<p>
+Starting in JMRI 2.5.2, Logix support has a lot of
+new capabilities, but panel files that use these capabilities
+can't be read by previous versions of the program. 
+Please keep backup copies of your panel files in case you
+want to move back to a previous version.
+
+<p>
+Starting in JMRI 2.5.2, 
+there have been extensive changes to the way JMRI installs and starts on Windows.
+If you have custom shortcuts (ones you made), you may have to update them.
+The JMRI-created ones will be updated automatically.  Users of Mac OS X and Linux
+will not be affected by this change.
+
+<p>
+The downloads are significantly larger due to more text and images
+in the help pages, especially the updated manual.
+
+<p>JMRI now requires Java 5 or later. (Java 5 is also called Java 1.5)
+If you are using an older version of Java, please
+<a href="http://www.sun.com/getjava">upgrade your Java installation</a>.  
+To see JMRI's future plans for this and other compatibility issues, please see the JMRI
+<a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/TechRoadMap.shtml">technology roadmap</a>.
+
+<p>
+Starting in JMRI 2.5.1,
+the way you drag things in the Layout Editor has changed if you
+are using a Linux computer. 
+
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
+
+<p>MacOS X:
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.6.dmg?download">http://downloads.sourceforge.net/jmri/JMRI.2.6.dmg?download</a>
+
+<p>Windows:
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.6.exe?download">http://downloads.sourceforge.net/jmri/JMRI.2.6.exe?download</a>
+
+<p>Linux:
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.6.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.2.6.tgz?download</a>
+
+
+<h3>Changes since production version 2.4</h3>
+
+<p>
+Panel Editor users may now change the default icons to be icons of their own choosing.
+
+<p>
+A problem that prevented editing Signal Head definitions
+from the Signal Head Table has been fixed.
+
+<p>
+Added "lights" alias for scripting
+
+<p>
+Improvements to the Hornby DCC support.
+
+<!--#include virtual="/Footer" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+</div> <!-- closes #container -->
+</body>
+</html>
