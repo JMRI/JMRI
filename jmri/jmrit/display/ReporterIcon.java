@@ -2,8 +2,10 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.Reporter;
+import jmri.ReporterManager;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import javax.swing.*;
@@ -12,7 +14,7 @@ import javax.swing.*;
  * An icon to display info from a Reporter, e.g. transponder or RFID reader.<P>
  *
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class ReporterIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -95,6 +97,12 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         popup.add(makeFontStyleMenu());
 
         popup.add(makeFontColorMenu());
+        
+        popup.add(new AbstractAction("Edit") {
+                public void actionPerformed(ActionEvent e) {
+                    edit();
+                }
+            });
 
         popup.add(new AbstractAction("Remove") {
             public void actionPerformed(ActionEvent e) {
@@ -122,6 +130,51 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
 		}
 		updateSize();
         return;
+    }
+
+    class pickModel extends PickListModel {
+        ReporterManager manager;
+        pickModel (ReporterManager m) {
+            manager = m;
+        }
+        ReporterManager getManager() {
+            return manager;
+        }
+        Reporter getBySystemName(String name) {
+            return manager.getBySystemName(name);
+        }
+        Reporter addBean(String name) {
+            return manager.provideReporter(name);
+        }
+    }
+    JFrame editorFrame;
+    IconAdder editor;
+    void edit() {
+        if (editorFrame != null) {
+            editorFrame.setLocationRelativeTo(null);
+            editorFrame.toFront();
+            return;
+        }
+        editor = new IconAdder();
+        ActionListener addIconAction = new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                editReporter();
+            }
+        };
+        editorFrame = makeAddIconFrame("EditReporter", "addReportValueToPanel", 
+                                     "SelectReporter", editor);
+        editor.setPickList(new pickModel(InstanceManager.reporterManagerInstance()));
+        editor.complete(addIconAction, null, true);
+        editor.setSelection(reporter);
+
+    }
+    void editReporter() {
+        setReporter((Reporter)editor.getTableSelection());
+        setSize(getPreferredSize().width, getPreferredSize().height);
+        editorFrame.dispose();
+        editorFrame = null;
+        editor = null;
+        invalidate();
     }
 
     public void dispose() {

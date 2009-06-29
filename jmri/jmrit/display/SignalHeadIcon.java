@@ -2,13 +2,16 @@
 
 package jmri.jmrit.display;
 
+import jmri.InstanceManager;
 import jmri.SignalHead;
+import jmri.SignalHeadManager;
 import jmri.jmrit.catalog.NamedIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -24,7 +27,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -274,13 +277,18 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         litMenu.add(r);
         popup.add(litMenu);
 
-
         popup.add(new AbstractAction("Remove") {
             public void actionPerformed(ActionEvent e) {
                 remove();
                 dispose();
             }
         });
+
+        popup.add(new AbstractAction("Edit Icon") {
+                public void actionPerformed(ActionEvent e) {
+                    edit();
+                }
+            });
 
         popup.add(new AbstractAction("Edit Logic...") {
             public void actionPerformed(ActionEvent e) {
@@ -363,6 +371,73 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
 
         return;
     }
+    class pickModel extends PickListModel {
+        SignalHeadManager manager;
+        pickModel (SignalHeadManager m) {
+            manager = m;
+        }
+        SignalHeadManager getManager() {
+            return manager;
+        }
+        SignalHead getBySystemName(String name) {
+            return manager.getBySystemName(name);
+        }
+        SignalHead addBean(String name) {
+            return manager.getSignalHead(name);
+        }
+    }
+    JFrame editorFrame;
+    IconAdder editor;
+    void edit() {
+        if (editorFrame != null) {
+            editorFrame.setLocationRelativeTo(null);
+            editorFrame.toFront();
+            return;
+        }
+        editor = new IconAdder();
+        editor.setIcon(0, "SignalHeadStateFlashingYellow", flashYellow);
+        editor.setIcon(2, "SignalHeadStateFlashingRed", flashRed);
+        editor.setIcon(5, "SignalHeadStateYellow", yellow);
+        editor.setIcon(6, "SignalHeadStateGreen", green);
+        editor.setIcon(1, "SignalHeadStateFlashingGreen", flashGreen);
+        editor.setIcon(4, "SignalHeadStateDark", dark);
+        editor.setIcon(3, "SIgnalHeadStateHeld", held);
+        editor.setIcon(7, "SignalHeadStateRed", red);
+        editorFrame = makeAddIconFrame("EditSignal", "addIconsToPanel", 
+                                           "SelectSignal", editor);
+        editor.makeIconPanel();
+        editor.setPickList(new pickModel(InstanceManager.signalHeadManagerInstance()));
+
+        ActionListener addIconAction = new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                updateSignal();
+            }
+        };
+        ActionListener changeIconAction = new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    editor.addCatalog();
+                    editorFrame.pack();
+                }
+        };
+        editor.complete(addIconAction, changeIconAction, false);
+        editor.setSelection(mHead);
+    }
+    void updateSignal() {
+        setRedIcon(editor.getIcon("SignalHeadStateRed"));
+        setFlashRedIcon(editor.getIcon("SignalHeadStateFlashingRed"));
+        setYellowIcon(editor.getIcon("SignalHeadStateYellow"));
+        setFlashYellowIcon(editor.getIcon("SignalHeadStateFlashingYellow"));
+        setGreenIcon(editor.getIcon("SignalHeadStateGreen"));
+        setFlashGreenIcon(editor.getIcon("SignalHeadStateFlashingGreen"));
+        setDarkIcon(editor.getIcon("SignalHeadStateDark"));
+        setHeldIcon(editor.getIcon("SIgnalHeadStateHeld"));
+        setSignalHead((SignalHead)editor.getTableSelection());
+        editorFrame.dispose();
+        editorFrame = null;
+        editor = null;
+        invalidate();
+    }
+
 
     /**
      * What to do on click? 0 means 

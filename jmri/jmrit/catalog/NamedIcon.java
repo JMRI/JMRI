@@ -7,6 +7,10 @@ import java.awt.image.ColorModel;
 import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
 import java.net.URL;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.awt.RenderingHints;
+import java.awt.Graphics2D;
 
 import javax.swing.ImageIcon;
 
@@ -21,7 +25,7 @@ import javax.swing.ImageIcon;
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -181,6 +185,38 @@ public class NamedIcon extends ImageIcon {
             mt.waitForAll();
         } catch (InterruptedException ie) {}
         return myImage;
+    }
+
+    public double scale(double limit) {
+        int w = getIconWidth();
+        int h = getIconHeight();
+        double scale = 1.0;
+        if (w > 100) {
+            scale = 100.0/w;
+        }
+        if (h > 100) {
+            scale = Math.min(scale, 100.0/h);
+        }
+        if (scale < 1) { // make a thumbnail
+            if (limit > 0.0){
+                scale = Math.max(scale, limit);  // but not too small
+            }
+            AffineTransform t = AffineTransform.getScaleInstance(scale, scale);
+            BufferedImage bufIm = new BufferedImage((int)Math.ceil(scale*w), 
+                                                    (int)Math.ceil(scale*h), 
+                                                    BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2d = bufIm.createGraphics();
+            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, 
+                                 RenderingHints.VALUE_RENDER_QUALITY); 
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
+                                 RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, 
+                                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g2d.drawImage(getImage(), t, null);
+            setImage(bufIm);
+            g2d.dispose();
+        }
+        return scale;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NamedIcon.class.getName());

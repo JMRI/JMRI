@@ -133,7 +133,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                 ArrayList <CatalogTreeLeaf> list = nChild.getLeaves();
                 for (int i=0; i<list.size(); i++) {
                     CatalogTreeLeaf leaf = list.get(i);
-                    makeIcon(i, leaf.getName(), leaf.getPath());
+                    setIcon(i, leaf.getName(), leaf.getPath());
                 }
                return;
             }
@@ -144,9 +144,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
     }
 
-    protected void makeIcon(int order, String label, String name) {
-        if (log.isDebugEnabled()) log.debug("makeIcon: order= "+ order+", label= "+label+", name= "+name);
-        NamedIcon icon = new NamedIcon(name, name);
+    protected void setIcon(int order, String label, NamedIcon icon) {
         // make a button to change that icon
         JButton button = new IconButton(label, icon);
         button.setToolTipText(icon.getName());
@@ -173,7 +171,9 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     */
     public void setIcon(int order, String label, String name) {
         if (!_userDefaults) {
-            makeIcon(order, label, name);
+            if (log.isDebugEnabled()) log.debug("setIcon: order= "+ order+", label= "+label+", name= "+name);
+            NamedIcon icon = new NamedIcon(name, name);
+            setIcon(order, label, icon);
         }
     }
 
@@ -257,6 +257,11 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         pack();
     }
 
+    public void setSelection(NamedBean bean) {
+        int i = _pickListModel.getIndexOf(bean);
+        _table.addRowSelectionInterval(i, i);
+    }
+
     /**
     *  When a Pick list is installed, table selection controls the Add button
     */
@@ -268,7 +273,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (row >= 0) {
             _addButton.setEnabled(true);
             _addButton.setToolTipText(null);
-            checkIconSizes();
+            //checkIconSizes();
         } else {
             _addButton.setEnabled(false);
             _addButton.setToolTipText(rb.getString("ToolTipPickFromTable"));
@@ -309,7 +314,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _addButton.setToolTipText(null);
             valueChanged(null);
             this.invalidate();
-            return _pickListModel.getIndexOf(row);
+            return _pickListModel.getBeanAt(row);
         } else {
             String name = _sysNametext.getText();
             if (name != null && name .length() > 2) {
@@ -361,7 +366,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         valueChanged(null);     // set enabled, tool tips etc.
         this.add(p);
 
-        if (addToTable) {
+        if (addToTable && _type != null) {
             p = new JPanel();
             p.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
             _sysNametext = new JTextField();
@@ -389,7 +394,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         makeDefaultCatalog();
         _catalog.setVisible(false);
         this.add(_catalog);
-
         pack();
     }
 
@@ -472,6 +476,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         _directoryChooser.rescanCurrentDirectory();
         if (dirsOnly) {
             _directoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            _directoryChooser.setAccessory(null);
         } else {
             _directoryChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             JPanel panel = new JPanel();
@@ -507,7 +512,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         waitText.setBackground(panel.getBackground());
         panel.add(waitText);
         _waitDialog.getContentPane().add(panel);
-        _waitDialog.setLocation(30,50);
+        _waitDialog.setLocation(0,50);
         _waitDialog.pack();
         java.awt.Rectangle r = _waitDialog.getContentPane().getBounds();
         if (log.isDebugEnabled()) log.debug("Bounds: r.x= "+r.x+", r.y= "+r.y+", r.width= "+
@@ -621,10 +626,11 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                     return;
                 }
                 String text = _waitText.getText();
-                if (text.length() > 400) {
-                    text = text.substring(0, 15);
+                if (text.length() > 500) {
+                    _waitText.setText(rb.getString("prevMsg"));
+                } else {
+                    _waitText.setText(text+".");
                 }
-                _waitText.setText(text+".");
                 _waitText.setMinimumSize(_waitText.getPreferredSize());
                 _waitDialog.pack();
             } else {

@@ -2,11 +2,14 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.Memory;
+import jmri.MemoryManager;
 import jmri.jmrit.catalog.NamedIcon;
+import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
@@ -17,7 +20,7 @@ import javax.swing.JSeparator;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -211,6 +214,12 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         } else if (!text && !icon)
             log.warn("showPopUp when neither text nor icon true");
 
+        popup.add(new AbstractAction("Edit") {
+                public void actionPerformed(ActionEvent e) {
+                    edit();
+                }
+            });
+
         if (selectable) {
             popup.add(new JSeparator());
     
@@ -288,6 +297,50 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             icon = true;
     		updateSize();
         }
+    }
+
+    class pickModel extends PickListModel {
+        MemoryManager manager;
+        pickModel (MemoryManager m) {
+            manager = m;
+        }
+        MemoryManager getManager() {
+            return manager;
+        }
+        Memory getBySystemName(String name) {
+            return manager.getBySystemName(name);
+        }
+        Memory addBean(String name) {
+            return manager.provideMemory(name);
+        }
+    }
+    JFrame editorFrame;
+    IconAdder editor;
+    void edit() {
+        if (editorFrame != null) {
+            editorFrame.setLocationRelativeTo(null);
+            editorFrame.toFront();
+            return;
+        }
+        editor = new IconAdder();
+        ActionListener addIconAction = new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                editMemory();
+            }
+        };
+        editorFrame = makeAddIconFrame("EditMemory", "addMemValueToPanel", 
+                                             "SelectMemory", editor);
+        editor.setPickList(new pickModel(InstanceManager.memoryManagerInstance()));
+        editor.complete(addIconAction, null, true);
+        editor.setSelection(memory);
+    }
+    void editMemory() {
+        setMemory((Memory)editor.getTableSelection());
+        setSize(getPreferredSize().width, getPreferredSize().height);
+        editorFrame.dispose();
+        editorFrame = null;
+        editor = null;
+        invalidate();
     }
 
     public void updateSize() {

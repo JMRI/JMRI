@@ -499,56 +499,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
             }
             CatalogTreeLeaf leaf = leaves.get(i);
             NamedIcon icon = new NamedIcon(leaf.getPath(), leaf.getName());
-            int w = icon.getIconWidth();
-            int h = icon.getIconHeight();
-            if (log.isDebugEnabled()) {
-                log.debug("Node= "+node.getUserObject()+", leaf path= "+leaf.getPath()+
-                          ", w= "+w+", h= "+h);
-            }
-            if (3*w*h > 500000)  {
-                //byte[] memoryTest = null;
-                try {
-                	// not sure if we really need to assign the byte array to memoryTest
-                	@SuppressWarnings("unused")
-					byte[] memoryTest = new byte[3*w*h];
-                } catch (OutOfMemoryError me) {
-                     log.debug("OutOfMemoryError for "+3*w*h+" bytes");
-                     //memoryTest = null;
-                     noMemory = true;
-                     JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
-                                                        rb.getString("OutOfMemory"), 
-                                                        new Object[] {new Integer(cnt)}),
-                                                        rb.getString("error"), 
-                                                        JOptionPane.INFORMATION_MESSAGE);
-                     continue;
-                }
-                //memoryTest = null;
-                System.gc();        // please take the hint...
-            }
-            double scale = 1;
-            if (w > 100) {
-                scale = 100.0/w;
-            }
-            if (h > 100) {
-                scale = Math.min(scale, 100.0/h);
-            }
-            if (scale < 1) { // make a thumbnail
-                scale = Math.max(scale, 0.15);  // but not too small
-                AffineTransform t = AffineTransform.getScaleInstance(scale, scale);
-                BufferedImage bufIm = new BufferedImage((int)Math.ceil(scale*w), 
-                                                        (int)Math.ceil(scale*h), 
-                                                        BufferedImage.TYPE_INT_ARGB);
-                Graphics2D g2d = bufIm.createGraphics();
-                g2d.setRenderingHint(RenderingHints.KEY_RENDERING, 
-                                     RenderingHints.VALUE_RENDER_QUALITY); 
-                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-                                     RenderingHints.VALUE_ANTIALIAS_ON);
-                g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, 
-                                     RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-                g2d.drawImage(icon.getImage(), t, null);
-                icon.setImage(bufIm);
-                g2d.dispose();
-            }
+            double scale = icon.scale(0.15);
             if (c.gridx < numCol) {
                 c.gridx++;
             } else if (c.gridy < numRow) { //start next row

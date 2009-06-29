@@ -19,7 +19,7 @@ import javax.swing.table.AbstractTableModel;
 */
 public abstract class PickListModel extends AbstractTableModel implements PropertyChangeListener {
 
-    ArrayList <NamedBean>       _pickList;
+    private ArrayList <NamedBean>       _pickList;
 
     public static final int SNAME_COLUMN = 0;
     public static final int UNAME_COLUMN = 1;
@@ -34,8 +34,17 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         makePickList();
     }
 
-    public NamedBean getIndexOf(int index) {
+    public NamedBean getBeanAt(int index) {
         return _pickList.get(index);
+    }
+
+    public int getIndexOf(NamedBean bean) {
+        for (int i=0; i<_pickList.size(); i++) {
+            if (bean.getSystemName().equals(_pickList.get(i).getSystemName())) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     private void makePickList() {

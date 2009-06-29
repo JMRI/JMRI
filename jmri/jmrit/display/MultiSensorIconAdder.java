@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.io.IOException;
 
 import javax.swing.Box;
@@ -81,8 +82,15 @@ public class MultiSensorIconAdder extends IconAdder {
             }
         }
         super.setIcon(index, label, name);
-        if (log.isDebugEnabled()) {
-            log.debug(label+" inserted at "+index);
+        if (log.isDebugEnabled()) log.debug(label+" inserted at "+index);
+    }
+
+    void setMultiIcon(List <MultiSensorIcon.Entry> icons) {
+        for (int i=0; i<icons.size(); i++) {
+            MultiSensorIcon.Entry entry = icons.get(i);
+            String label = "MultiSensorPosition " +_lastIndex++; 
+            super.setIcon(i+3, label, entry.icon.getURL());
+            _sensorMap.put(label, entry.sensor);
         }
     }
 
@@ -258,7 +266,7 @@ public class MultiSensorIconAdder extends IconAdder {
     private void addIcon() {
         int index = _order.size();
         String name = "resources/icons/USS/plate/levers/l-vertical.gif";
-        makeIcon(index, "foop", name);
+        setIcon(index, "foop", name);
         valueChanged(null);
         makeIconPanel();
         this.invalidate();
@@ -275,7 +283,7 @@ public class MultiSensorIconAdder extends IconAdder {
         if (_sensorMap.size() == (_iconMap.size()-3)) {
             _addButton.setEnabled(true);
             _addButton.setToolTipText(null);
-            checkIconSizes();
+            //checkIconSizes();
         } else {
             _addButton.setEnabled(false);
             _addButton.setToolTipText(rb.getString("ToolTipAssignSensors"));

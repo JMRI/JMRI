@@ -2,11 +2,14 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.TurnoutManager;
 import jmri.jmrit.catalog.NamedIcon;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -22,7 +25,7 @@ import javax.swing.JPopupMenu;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -70,14 +73,14 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     public Turnout getTurnout() { return turnout; }
 
     // display icons
-    NamedIcon closed = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
-                                     "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
-    NamedIcon thrown = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif",
-                                     "resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif");
-    NamedIcon inconsistent = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif",
-                                           "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif");
-    NamedIcon unknown = new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif",
-                                      "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
+    String closedLName = "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif";
+    NamedIcon closed = new NamedIcon(closedLName, closedLName);
+    String thrownLName = "resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif";
+    NamedIcon thrown = new NamedIcon(thrownLName, thrownLName);
+    String inconsistentLName = "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif";
+    NamedIcon inconsistent = new NamedIcon(inconsistentLName, inconsistentLName);
+    String unknownLName = "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif";
+    NamedIcon unknown = new NamedIcon(unknownLName, unknownLName);
 
     public NamedIcon getClosedIcon() { return closed; }
     public void setClosedIcon(NamedIcon i) {
@@ -204,6 +207,11 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 			addTristateEntry(popup);
 		}
 
+        popup.add(new AbstractAction("Edit") {
+                public void actionPerformed(ActionEvent e) {
+                    edit();
+                }
+            });
 		popup.add(new AbstractAction("Remove") {
 			public void actionPerformed(ActionEvent e) {
 				remove();
@@ -241,6 +249,65 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         }
 
         return;
+    }
+
+    class turnoutPickModel extends PickListModel {
+        TurnoutManager manager;
+        turnoutPickModel (TurnoutManager m) {
+            manager = m;
+        }
+        TurnoutManager getManager() {
+            return manager;
+        }
+        Turnout getBySystemName(String name) {
+            return manager.getBySystemName(name);
+        }
+        Turnout addBean(String name) {
+            return manager.provideTurnout(name);
+        }
+    }
+    JFrame editorFrame;
+    IconAdder editor;
+    void edit() {
+        if (editorFrame != null) {
+            editorFrame.setLocationRelativeTo(null);
+            editorFrame.toFront();
+            return;
+        }
+        editor = new IconAdder();
+        editor.setIcon(3, "TurnoutStateClosed", getClosedIcon());
+        editor.setIcon(2, "TurnoutStateThrown", getThrownIcon());
+        editor.setIcon(0, "BeanStateInconsistent", getInconsistentIcon());
+        editor.setIcon(1, "BeanStateUnknown", getUnknownIcon());
+        editorFrame = makeAddIconFrame("EditTO", "addIconsToPanel", 
+                                           "SelectTO", editor);
+        editor.makeIconPanel();
+        editor.setPickList(new turnoutPickModel(InstanceManager.turnoutManagerInstance()));
+
+        ActionListener addIconAction = new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                updateTurnout();
+            }
+        };
+        ActionListener changeIconAction = new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    editor.addCatalog();
+                    editorFrame.pack();
+                }
+        };
+        editor.complete(addIconAction, changeIconAction, true);
+        editor.setSelection(turnout);
+    }
+    void updateTurnout() {
+        setClosedIcon(editor.getIcon("TurnoutStateClosed"));
+        setThrownIcon(editor.getIcon("TurnoutStateThrown"));
+        setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
+        setUnknownIcon(editor.getIcon("BeanStateUnknown"));
+        setTurnout((Turnout)editor.getTableSelection());
+        editorFrame.dispose();
+        editorFrame = null;
+        editor = null;
+        invalidate();
     }
 
     /**

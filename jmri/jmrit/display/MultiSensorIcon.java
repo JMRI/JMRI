@@ -2,11 +2,14 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.jmrit.catalog.NamedIcon;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -22,7 +25,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -170,6 +173,12 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
 
         addDisableMenuEntry(popup);
 
+        popup.add(new AbstractAction("Edit") {
+                public void actionPerformed(ActionEvent e) {
+                    edit();
+                }
+            });
+
         popup.add(new AbstractAction("Remove") {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -224,6 +233,79 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         if (icon) super.setIcon(inactive);     
         return;
     }
+    class sensorPickModel extends PickListModel {
+        SensorManager manager;
+        sensorPickModel (SensorManager m) {
+            manager = m;
+        }
+        SensorManager getManager() {
+            return manager;
+        }
+        Sensor getBySystemName(String name) {
+            return manager.getBySystemName(name);
+        }
+        Sensor addBean(String name) {
+            return manager.provideSensor(name);
+        }
+    }
+    JFrame editorFrame;
+    MultiSensorIconAdder editor;
+    void edit() {
+        if (editorFrame != null) {
+            editorFrame.toFront();
+            return;
+        }
+        editor = new MultiSensorIconAdder();
+        editor.setIcon(2, "SensorStateInactive", inactive);
+        editor.setIcon(0, "BeanStateInconsistent", inconsistent);
+        editor.setIcon(1, "BeanStateUnknown", unknown);
+/*        NamedIcon[] icons = new NamedIcon[entries.size()];
+        for (int i=0; i<entries.size(); i++) {
+            icons[i] = entries.get(i).icon;
+        }*/
+//        editor.setMultiIcon(entries);
+        editor.setMultiIcon(entries);
+        editorFrame = makeAddIconFrame("EditMultiSensor", "addIconsToPanel", 
+                                           "SelectSensor", editor);
+        editor.makeIconPanel();
+        editor.setPickList(new sensorPickModel(InstanceManager.sensorManagerInstance()));
+
+        ActionListener addIconAction = new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                updateSensor();
+            }
+        };
+        ActionListener changeIconAction = new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    editor.addCatalog();
+                    editorFrame.pack();
+                }
+        };
+        editor.complete(addIconAction, changeIconAction, true);
+        Sensor[] sensors = new Sensor[entries.size()];
+ /*       for (int i=0; i<entries.size(); i++) {
+            sensors[i] = entries.get(i).sensor;
+        }
+        editor.setSensors(entries); */
+    }
+    void updateSensor() {
+        setInactiveIcon(editor.getIcon("SensorStateInactive"));
+        setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
+        setUnknownIcon(editor.getIcon("BeanStateUnknown"));
+        int numPositions = editor.getNumIcons();
+        entries = new ArrayList<Entry>(numPositions);
+        for (int i=3; i<numPositions; i++) {
+            NamedIcon icon = editor.getIcon(i);
+            Sensor sensor = editor.getSensor(i);
+            addEntry(sensor, icon);
+        }
+        setUpDown(editor.getUpDown());
+        editorFrame.dispose();
+        editorFrame = null;
+        editor = null;
+        invalidate();
+    }
+
 
     // Use largest size. If icons are not same size, 
     // this can result in drawing artifacts.

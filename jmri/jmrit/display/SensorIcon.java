@@ -2,12 +2,14 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.jmrit.catalog.NamedIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
+import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JCheckBoxMenuItem;
@@ -16,7 +18,7 @@ import javax.swing.JCheckBoxMenuItem;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -173,6 +175,12 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             }
         });
 
+        popup.add(new AbstractAction("Edit") {
+                public void actionPerformed(ActionEvent e) {
+                    edit();
+                }
+            });
+
         popup.add(new AbstractAction("Remove") {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -213,6 +221,67 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         }
 
         return;
+    }
+
+    class sensorPickModel extends PickListModel {
+        SensorManager manager;
+        sensorPickModel (SensorManager m) {
+            manager = m;
+        }
+        SensorManager getManager() {
+            return manager;
+        }
+        Sensor getBySystemName(String name) {
+            return manager.getBySystemName(name);
+        }
+        Sensor addBean(String name) {
+            return manager.provideSensor(name);
+        }
+    }
+    JFrame editFrame;
+    IconAdder editor;
+    void edit() {
+        if (editFrame != null) {
+            editFrame.setLocationRelativeTo(null);
+            editFrame.toFront();
+            return;
+        }
+        editor = new IconAdder();
+        editor.setIcon(3, "SensorStateActive", getActiveIcon());
+        editor.setIcon(2, "SensorStateInactive", getInactiveIcon());
+        editor.setIcon(0, "BeanStateInconsistent", getInconsistentIcon());
+        editor.setIcon(1, "BeanStateUnknown", getUnknownIcon());
+
+        editFrame = makeAddIconFrame("EditSensor", "addIconsToPanel", 
+                                           "SelectSensor", editor);
+        editor.makeIconPanel();
+        editor.setPickList(new sensorPickModel(InstanceManager.sensorManagerInstance()));
+
+
+        ActionListener addIconAction = new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                updateSensor();
+            }
+        };
+        ActionListener changeIconAction = new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    editor.addCatalog();
+                    editFrame.pack();
+                }
+        };
+        editor.complete(addIconAction, changeIconAction, true);
+        editor.setSelection(sensor);
+    }
+    void updateSensor() {
+        setActiveIcon(editor.getIcon("SensorStateActive"));
+        setInactiveIcon(editor.getIcon("SensorStateInactive"));
+        setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
+        setUnknownIcon(editor.getIcon("BeanStateUnknown"));
+        setSensor((Sensor)editor.getTableSelection());
+        editFrame.dispose();
+        editFrame = null;
+        editor = null;
+        invalidate();
     }
 
     protected int maxHeight() {

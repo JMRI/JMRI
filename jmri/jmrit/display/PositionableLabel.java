@@ -1,6 +1,8 @@
 package jmri.jmrit.display;
 
 import jmri.jmrit.catalog.NamedIcon;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
@@ -11,12 +13,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import java.util.ResourceBundle;
+
 import javax.swing.AbstractAction;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
@@ -28,13 +35,15 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 
 public class PositionableLabel extends JLabel
                         implements MouseMotionListener, MouseListener,
                                     Positionable {
 
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
+    
     public PositionableLabel(String s) {
         super(s);
         text = true;
@@ -197,6 +206,12 @@ public class PositionableLabel extends JLabel
             addFixedItem(popup);
             addShowTooltipItem(popup);
             
+            popup.add(new AbstractAction("Edit") {
+                    public void actionPerformed(ActionEvent e) {
+                        edit();
+                    }
+                });
+
             popup.add(new AbstractAction("Remove") {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -227,6 +242,47 @@ public class PositionableLabel extends JLabel
             log.warn("showPopUp when neither text nor icon true");
         // show the result
         if (popup != null) popup.show(e.getComponent(), e.getX(), e.getY());
+    }
+
+    JFrame editorFrame;
+    IconAdder editor;
+    void edit() {
+        if (editorFrame != null) {
+            editorFrame.setLocationRelativeTo(null);
+            editorFrame.toFront();
+            return;
+        }
+        editor = new IconAdder();
+        NamedIcon icon = new NamedIcon(namedIcon);
+        icon.scale(0.15);
+        editor.setIcon(0, "plainIcon", icon);
+        editorFrame = makeAddIconFrame("EditIcon", "addIconToPanel", 
+                                     "pressAdd", editor);
+        editor.makeIconPanel();
+
+        ActionListener addIconAction = new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                editIcon();
+            }
+        };
+        ActionListener changeIconAction = new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    editor.addCatalog();
+                    editorFrame.pack();
+                }
+        };
+        editor.complete(addIconAction, changeIconAction, false);
+
+    }
+    void editIcon() {
+        String url = editor.getIcon("plainIcon").getURL();
+        namedIcon = jmri.jmrit.catalog.CatalogPanel.getIconByName(url);
+        setIcon(namedIcon);
+        updateSize();
+        editorFrame.dispose();
+        editorFrame = null;
+        editor = null;
+        invalidate();
     }
 
     protected JMenu makeFontSizeMenu() {
@@ -513,6 +569,24 @@ public class PositionableLabel extends JLabel
      */
     public boolean isActive() {
         return active;
+    }
+
+    JFrame makeAddIconFrame(String title, String select1, String select2, 
+                                IconAdder editor) {
+        JFrame frame = new JFrame(rb.getString(title));
+        if (editor != null) {
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+            p.add(new JLabel(rb.getString(select1)));
+            p.add(new JLabel(rb.getString(select2)));
+            frame.getContentPane().add(p,BorderLayout.NORTH);
+            frame.getContentPane().add(editor);
+            editor.setParent(frame);
+        }
+        frame.setLocationRelativeTo(this);
+        frame.setVisible(true);
+        frame.pack();
+        return frame;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableLabel.class.getName());
