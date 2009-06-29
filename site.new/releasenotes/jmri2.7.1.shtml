@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.1.shtml,v 1.1 2009-06-28 04:18:12 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.1.shtml,v 1.2 2009-06-29 14:45:51 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -93,6 +93,7 @@ see our
 <h3>Changes since production version 2.6</h3>
 
 <p>
+Fixed a problem when using the invert option on LocoNet sensors.
 
 <!--#include virtual="/Footer" -->
 
