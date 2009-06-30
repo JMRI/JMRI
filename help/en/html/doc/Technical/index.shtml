@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.8 2009-01-27 05:20:09 millerdl Exp $ -->
+<!-- $Id: index.shtml,v 1.9 2009-06-30 22:39:35 plocher Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -41,6 +41,84 @@ built copies via the
 But if you'd like to play with the code, or get a copy of the program
 that contains updates since the last downloadable version was published,
 this section of the web site will help you get started.
+
+<a id="moreinfo">
+<h2>Technical background info on the JMRI project</h2></a>
+<p>JMRI is intended as a
+jumping-off point for hobbyists who want to control their
+layouts from a computer without having to create an entire
+system from scratch.</p>
+
+<p> To do this, we've split the problem into two parts with an
+interface in-between:
+<ul>
+<li>"Above" the interface are the cool tools that people want.
+     We provide programmers for DCC decoders, 
+     layout controls, automation tools, etc.  
+     People are continuously contributing better
+     and better tools that still will work on lots of type of
+     computers, with lots of types of layouts.
+<li>"Below" the interface lies code that connects to specific
+     layout hardware.  We connected to a
+     <a href="hardware">full range of systems</a>:
+     C/MRI, Digitrax, EasyDCC, Lenz, NCE, etc.
+     We are certainly
+     interested in connecting to other systems.
+</ul></p>
+
+<p> The long-term strategy is to:
+<ul>
+<li>Create a set of publicly available common interfaces for
+    model railroad control code, suitable for use with any type
+    of layout, from any type of computer.
+<li>Make these useful by providing quality implementations
+    for as many types of layouts as possible.
+<li>Encourage interoperability of layout hardware and software
+    through the use of common interfaces.
+</ul></p>
+
+<p> In the short term, we've created several programs based on
+the JMRI libraries to move the project along and demonstrate
+its capabilities.
+(<a href="./releasenotes/history.html">Why so many programs?...</a>)
+</p>
+
+<p> The most popular is
+	<a href="apps/DecoderPro">DecoderPro</a>,
+a tool for programming decoders.  It simplifies the job
+of configuring complicated DCC decoders by providing screens on
+which you can select the various options and values you want.
+These screens show the exact contents of each specific decoder
+type. Both the programming screens and decoder information are
+stored in text files, so you can make up new ones as
+desired.</p>
+
+
+
+<h2>How can you change how JMRI does things?</h2></a>
+
+There are several different ways to modify JMRI:
+<ol>
+    <li>You can use the JMRI interfaces to write programs for
+    your own layouts.  Making this easy is an important goal.
+    This can be done via our
+    <A HREF="help/en/html/tools/scripting/index.shtml">scripting language</a>.
+   
+    <li> You can add new Java code to the program or modify the existing
+	code.  Fixing things that annoy you (aka bugs) is an easy place to jump
+	in and contribute.
+
+    <li>You can write new general-purpose tools.  Although this
+    is a little harder than writing automation for your own
+    layout, writing tools that other people use can be very
+    satisfying.
+
+    <li>You can implement the JMRI interfaces for a new system.
+    Having JMRI work with other systems is an important goal.
+    Once an implementation for another system works, the
+    general tools (e.g.  symbolic programmer, automations
+    tools, signaling, etc) can be immediately used.
+    </ol>
 
 <h2>JMRI project information (For people interested in how the software is being written)</h2>
 
