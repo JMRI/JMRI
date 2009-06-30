@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: FAQ.shtml,v 1.5 2009-06-30 22:39:35 plocher Exp $ -->
+<!-- $Id: FAQ.shtml,v 1.6 2009-06-30 22:51:47 plocher Exp $ -->
 <title>JMRI: PanelPro Frequently Asked Questions</title>
 
 <!-- Style -->
@@ -23,8 +23,8 @@
 
 <h1>JMRI: PanelPro Frequently Asked Questions</h1>
 
-<a name="context"><h3>How does PanelPro fit into the rest of my layout?</h3></a>
-<p>Jim Betz provided this overview when asked for an overview:</p>
+<a name="context"><h3>How does JMRI tie into the rest of my layout?</h3></a>
+<p>Jim Betz responded with this on the JMRI User's alias when asked for an overview:</p>
 
 
 <ol>
