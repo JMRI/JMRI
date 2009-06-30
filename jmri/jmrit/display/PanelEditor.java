@@ -235,10 +235,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         _addIconBox.setMaximumSize(new Dimension(200,200));
 
         // share this PickListModel with both right and left turnouts 
-        class turnoutPickModel extends PickListModel {
+        class TurnoutPickModel extends PickListModel {
             TurnoutManager manager;
-            turnoutPickModel (TurnoutManager m) {
-                manager = m;
+            TurnoutPickModel () {
+                manager = InstanceManager.turnoutManagerInstance();
             }
             Manager getManager() {
                 return manager;
@@ -250,7 +250,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                 return manager.provideTurnout(name);
             }
         }
-        PickListModel turnoutTableModel = new turnoutPickModel(InstanceManager.turnoutManagerInstance());
+        PickListModel turnoutTableModel = new TurnoutPickModel();
         // Add a turnout indicator for right-hand
         {
             IconAdder turnoutRIconEditor = new IconAdder("RightTOEditor");
@@ -264,7 +264,6 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                 "resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif");
 
             JFrameItem turnoutRFrame = makeAddIconFrame("RightTOEditor", "addIconsToPanel", "SelectTO", turnoutRIconEditor);
-            //addHelpMenu(turnoutRFrame, "package.jmri.jmrit.display.IconAdder");
             turnoutRFrame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
             turnoutRIconEditor.makeIconPanel();
             turnoutRIconEditor.setPickList(turnoutTableModel);
@@ -298,10 +297,8 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                 "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
 
             JFrameItem turnoutLFrame = makeAddIconFrame("LeftTOEditor", "addIconsToPanel", "SelectTO", turnoutLIconEditor);
-            //addHelpMenu(turnoutLFrame, "package.jmri.jmrit.display.IconAdder");
             turnoutLFrame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
             turnoutLIconEditor.makeIconPanel();
-            //TurnoutManager manager = InstanceManager.turnoutManagerInstance();
             turnoutLIconEditor.setPickList(turnoutTableModel);
 
             ActionListener addIconAction = new ActionListener() {
@@ -350,7 +347,6 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
             JFrameItem sensorIconFrame = makeAddIconFrame("SensorEditor", "addIconsToPanel", 
                                                "SelectSensor", sensorIconEditor);
-            //addHelpMenu(sensorIconFrame, "package.jmri.jmrit.display.IconAdder");
             sensorIconFrame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
             sensorIconEditor.makeIconPanel();
             sensorIconEditor.setPickList(sensorTableModel);
@@ -393,7 +389,6 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
             JFrameItem signalIconFrame = makeAddIconFrame("SignalEditor", "addIconsToPanel", 
                                                "SelectSignal", signalIconEditor);
-            //addHelpMenu(signalIconFrame, "package.jmri.jmrit.display.IconAdder");
             signalIconFrame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
             signalIconEditor.makeIconPanel();
 
@@ -495,7 +490,6 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             bkgrndEditor.setIcon(0, "background","resources/PanelPro.gif");
 
             JFrameItem bdIconFrame = makeAddIconFrame("BackgroundEditor", "addBackgroundToPanel", "pressAdd", bkgrndEditor);
-            //addHelpMenu(bdIconFrame, "package.jmri.jmrit.display.IconAdder");
             bdIconFrame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
             bkgrndEditor.makeIconPanel();
 
@@ -532,8 +526,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                                       "resources/icons/USS/plate/levers/l-right.gif");
 
             JFrameItem multiSensorFrame = makeAddIconFrame("MultiSensorEditor", "addIconsToPanel", 
-                                               "SelectSensor", multiSensorEditor);
-            //addHelpMenu(multiSensorFrame, "package.jmri.jmrit.display.MultiSensorIconAdder");
+                                               "SelectMultiSensor", multiSensorEditor);
             multiSensorFrame.addHelpMenu("package.jmri.jmrit.display.MultiSensorIconAdder", true);
             multiSensorEditor.makeIconPanel();
             multiSensorEditor.setPickList(sensorTableModel);
@@ -564,7 +557,6 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             IconAdder iconEditor = new IconAdder("IconEditor");
             iconEditor.setIcon(0, "plainIcon","resources/jmri48x48.gif");
             JFrameItem iconFrame = makeAddIconFrame("IconEditor", "addIconToPanel", "pressAdd", iconEditor);
-            //addHelpMenu(iconFrame, "package.jmri.jmrit.display.IconAdder");
             iconFrame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
             iconEditor.makeIconPanel();
 
