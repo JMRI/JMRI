@@ -143,15 +143,20 @@ public class MultiSensorIconAdder extends IconAdder {
             p3.add(k);
             p3.setLayout(new BoxLayout(p3, BoxLayout.Y_AXIS));
             p3.add(new JLabel(rb.getString("Sensor")));
+            JPanel p4 = new JPanel();
             Sensor sensor = _sensorMap.get(key);
             String name = rb.getString("notSet");
+            java.awt.Color color = java.awt.Color.RED;
             if (sensor != null) {
                 name = sensor.getUserName();
                 if (name == null)  {
                     name = sensor.getSystemName();
                 }
+                color = java.awt.Color.BLACK;
             }
-            p3.add(new JLabel(name));
+            p4.setBorder(BorderFactory.createLineBorder(color));
+            p4.add(new JLabel(name));
+            p3.add(p4);
 
             JPanel p13 =new JPanel();
             p13.setLayout(new BoxLayout(p13, BoxLayout.X_AXIS));

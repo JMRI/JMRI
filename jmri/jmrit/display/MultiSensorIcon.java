@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -265,7 +265,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
 //        editor.setMultiIcon(entries);
         editor.setMultiIcon(entries);
         makeAddIconFrame("EditMultiSensor", "addIconsToPanel", 
-                                           "SelectSensor", editor);
+                                           "SelectMultiSensor", editor);
         editor.makeIconPanel();
         editor.setPickList(new sensorPickModel(InstanceManager.sensorManagerInstance()));
 
