@@ -18,7 +18,7 @@ import javax.swing.JCheckBoxMenuItem;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -238,24 +238,21 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             return manager.provideSensor(name);
         }
     }
-    JFrame editFrame;
-    IconAdder editor;
     void edit() {
-        if (editFrame != null) {
-            editFrame.setLocationRelativeTo(null);
-            editFrame.toFront();
+        if (_editorFrame != null) {
+            _editorFrame.setLocationRelativeTo(null);
+            _editorFrame.toFront();
             return;
         }
-        editor = new IconAdder();
-        editor.setIcon(3, "SensorStateActive", getActiveIcon());
-        editor.setIcon(2, "SensorStateInactive", getInactiveIcon());
-        editor.setIcon(0, "BeanStateInconsistent", getInconsistentIcon());
-        editor.setIcon(1, "BeanStateUnknown", getUnknownIcon());
+        _editor = new IconAdder();
+        _editor.setIcon(3, "SensorStateActive", getActiveIcon());
+        _editor.setIcon(2, "SensorStateInactive", getInactiveIcon());
+        _editor.setIcon(0, "BeanStateInconsistent", getInconsistentIcon());
+        _editor.setIcon(1, "BeanStateUnknown", getUnknownIcon());
 
-        editFrame = makeAddIconFrame("EditSensor", "addIconsToPanel", 
-                                           "SelectSensor", editor);
-        editor.makeIconPanel();
-        editor.setPickList(new sensorPickModel(InstanceManager.sensorManagerInstance()));
+        makeAddIconFrame("EditSensor", "addIconsToPanel", "SelectSensor", _editor);
+        _editor.makeIconPanel();
+        _editor.setPickList(new sensorPickModel(InstanceManager.sensorManagerInstance()));
 
 
         ActionListener addIconAction = new ActionListener() {
@@ -265,22 +262,22 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         };
         ActionListener changeIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    editor.addCatalog();
-                    editFrame.pack();
+                    _editor.addCatalog();
+                    _editorFrame.pack();
                 }
         };
-        editor.complete(addIconAction, changeIconAction, true);
-        editor.setSelection(sensor);
+        _editor.complete(addIconAction, changeIconAction, true);
+        _editor.setSelection(sensor);
     }
     void updateSensor() {
-        setActiveIcon(editor.getIcon("SensorStateActive"));
-        setInactiveIcon(editor.getIcon("SensorStateInactive"));
-        setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
-        setUnknownIcon(editor.getIcon("BeanStateUnknown"));
-        setSensor((Sensor)editor.getTableSelection());
-        editFrame.dispose();
-        editFrame = null;
-        editor = null;
+        setActiveIcon(_editor.getIcon("SensorStateActive"));
+        setInactiveIcon(_editor.getIcon("SensorStateInactive"));
+        setInconsistentIcon(_editor.getIcon("BeanStateInconsistent"));
+        setUnknownIcon(_editor.getIcon("BeanStateUnknown"));
+        setSensor((Sensor)_editor.getTableSelection());
+        _editorFrame.dispose();
+        _editorFrame = null;
+        _editor = null;
         invalidate();
     }
 

@@ -20,7 +20,7 @@ import javax.swing.JSeparator;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -314,32 +314,30 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             return manager.provideMemory(name);
         }
     }
-    JFrame editorFrame;
-    IconAdder editor;
     void edit() {
-        if (editorFrame != null) {
-            editorFrame.setLocationRelativeTo(null);
-            editorFrame.toFront();
+        if (_editorFrame != null) {
+            _editorFrame.setLocationRelativeTo(null);
+            _editorFrame.toFront();
             return;
         }
-        editor = new IconAdder();
+        _editor = new IconAdder();
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 editMemory();
             }
         };
-        editorFrame = makeAddIconFrame("EditMemory", "addMemValueToPanel", 
-                                             "SelectMemory", editor);
-        editor.setPickList(new pickModel(InstanceManager.memoryManagerInstance()));
-        editor.complete(addIconAction, null, true);
-        editor.setSelection(memory);
+        makeAddIconFrame("EditMemory", "addMemValueToPanel", 
+                                             "SelectMemory", _editor);
+        _editor.setPickList(new pickModel(InstanceManager.memoryManagerInstance()));
+        _editor.complete(addIconAction, null, true);
+        _editor.setSelection(memory);
     }
     void editMemory() {
-        setMemory((Memory)editor.getTableSelection());
+        setMemory((Memory)_editor.getTableSelection());
         setSize(getPreferredSize().width, getPreferredSize().height);
-        editorFrame.dispose();
-        editorFrame = null;
-        editor = null;
+        _editorFrame.dispose();
+        _editorFrame = null;
+        _editor = null;
         invalidate();
     }
 

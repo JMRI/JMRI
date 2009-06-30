@@ -14,7 +14,7 @@ import javax.swing.*;
  * An icon to display info from a Reporter, e.g. transponder or RFID reader.<P>
  *
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class ReporterIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -147,33 +147,31 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
             return manager.provideReporter(name);
         }
     }
-    JFrame editorFrame;
-    IconAdder editor;
     void edit() {
-        if (editorFrame != null) {
-            editorFrame.setLocationRelativeTo(null);
-            editorFrame.toFront();
+        if (_editorFrame != null) {
+            _editorFrame.setLocationRelativeTo(null);
+            _editorFrame.toFront();
             return;
         }
-        editor = new IconAdder();
+        _editor = new IconAdder();
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 editReporter();
             }
         };
-        editorFrame = makeAddIconFrame("EditReporter", "addReportValueToPanel", 
-                                     "SelectReporter", editor);
-        editor.setPickList(new pickModel(InstanceManager.reporterManagerInstance()));
-        editor.complete(addIconAction, null, true);
-        editor.setSelection(reporter);
+        makeAddIconFrame("EditReporter", "addReportValueToPanel", 
+                                     "SelectReporter", _editor);
+        _editor.setPickList(new pickModel(InstanceManager.reporterManagerInstance()));
+        _editor.complete(addIconAction, null, true);
+        _editor.setSelection(reporter);
 
     }
     void editReporter() {
-        setReporter((Reporter)editor.getTableSelection());
+        setReporter((Reporter)_editor.getTableSelection());
         setSize(getPreferredSize().width, getPreferredSize().height);
-        editorFrame.dispose();
-        editorFrame = null;
-        editor = null;
+        _editorFrame.dispose();
+        _editorFrame = null;
+        _editor = null;
         invalidate();
     }
 

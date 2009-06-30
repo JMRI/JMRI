@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -248,11 +248,10 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
             return manager.provideSensor(name);
         }
     }
-    JFrame editorFrame;
     MultiSensorIconAdder editor;
     void edit() {
-        if (editorFrame != null) {
-            editorFrame.toFront();
+        if (_editorFrame != null) {
+            _editorFrame.toFront();
             return;
         }
         editor = new MultiSensorIconAdder();
@@ -265,7 +264,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         }*/
 //        editor.setMultiIcon(entries);
         editor.setMultiIcon(entries);
-        editorFrame = makeAddIconFrame("EditMultiSensor", "addIconsToPanel", 
+        makeAddIconFrame("EditMultiSensor", "addIconsToPanel", 
                                            "SelectSensor", editor);
         editor.makeIconPanel();
         editor.setPickList(new sensorPickModel(InstanceManager.sensorManagerInstance()));
@@ -278,7 +277,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         ActionListener changeIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     editor.addCatalog();
-                    editorFrame.pack();
+                    _editorFrame.pack();
                 }
         };
         editor.complete(addIconAction, changeIconAction, true);
@@ -300,8 +299,8 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
             addEntry(sensor, icon);
         }
         setUpDown(editor.getUpDown());
-        editorFrame.dispose();
-        editorFrame = null;
+        _editorFrame.dispose();
+        _editorFrame = null;
         editor = null;
         invalidate();
     }

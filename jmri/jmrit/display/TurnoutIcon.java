@@ -25,7 +25,7 @@ import javax.swing.JPopupMenu;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -266,23 +266,21 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
             return manager.provideTurnout(name);
         }
     }
-    JFrame editorFrame;
-    IconAdder editor;
     void edit() {
-        if (editorFrame != null) {
-            editorFrame.setLocationRelativeTo(null);
-            editorFrame.toFront();
+        if (_editorFrame != null) {
+            _editorFrame.setLocationRelativeTo(null);
+            _editorFrame.toFront();
             return;
         }
-        editor = new IconAdder();
-        editor.setIcon(3, "TurnoutStateClosed", getClosedIcon());
-        editor.setIcon(2, "TurnoutStateThrown", getThrownIcon());
-        editor.setIcon(0, "BeanStateInconsistent", getInconsistentIcon());
-        editor.setIcon(1, "BeanStateUnknown", getUnknownIcon());
-        editorFrame = makeAddIconFrame("EditTO", "addIconsToPanel", 
-                                           "SelectTO", editor);
-        editor.makeIconPanel();
-        editor.setPickList(new turnoutPickModel(InstanceManager.turnoutManagerInstance()));
+        _editor = new IconAdder();
+        _editor.setIcon(3, "TurnoutStateClosed", getClosedIcon());
+        _editor.setIcon(2, "TurnoutStateThrown", getThrownIcon());
+        _editor.setIcon(0, "BeanStateInconsistent", getInconsistentIcon());
+        _editor.setIcon(1, "BeanStateUnknown", getUnknownIcon());
+        makeAddIconFrame("EditTO", "addIconsToPanel", 
+                                           "SelectTO", _editor);
+        _editor.makeIconPanel();
+        _editor.setPickList(new turnoutPickModel(InstanceManager.turnoutManagerInstance()));
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -291,22 +289,22 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         };
         ActionListener changeIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    editor.addCatalog();
-                    editorFrame.pack();
+                    _editor.addCatalog();
+                    _editorFrame.pack();
                 }
         };
-        editor.complete(addIconAction, changeIconAction, true);
-        editor.setSelection(turnout);
+        _editor.complete(addIconAction, changeIconAction, true);
+        _editor.setSelection(turnout);
     }
     void updateTurnout() {
-        setClosedIcon(editor.getIcon("TurnoutStateClosed"));
-        setThrownIcon(editor.getIcon("TurnoutStateThrown"));
-        setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
-        setUnknownIcon(editor.getIcon("BeanStateUnknown"));
-        setTurnout((Turnout)editor.getTableSelection());
-        editorFrame.dispose();
-        editorFrame = null;
-        editor = null;
+        setClosedIcon(_editor.getIcon("TurnoutStateClosed"));
+        setThrownIcon(_editor.getIcon("TurnoutStateThrown"));
+        setInconsistentIcon(_editor.getIcon("BeanStateInconsistent"));
+        setUnknownIcon(_editor.getIcon("BeanStateUnknown"));
+        setTurnout((Turnout)_editor.getTableSelection());
+        _editorFrame.dispose();
+        _editorFrame = null;
+        _editor = null;
         invalidate();
     }
 

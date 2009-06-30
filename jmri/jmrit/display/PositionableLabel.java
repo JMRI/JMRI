@@ -35,7 +35,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.45 $
+ * @version $Revision: 1.46 $
  */
 
 public class PositionableLabel extends JLabel
@@ -244,21 +244,21 @@ public class PositionableLabel extends JLabel
         if (popup != null) popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
-    JFrame editorFrame;
-    IconAdder editor;
+    JFrame _editorFrame;
+    IconAdder _editor;
     void edit() {
-        if (editorFrame != null) {
-            editorFrame.setLocationRelativeTo(null);
-            editorFrame.toFront();
+        if (_editorFrame != null) {
+            _editorFrame.setLocationRelativeTo(null);
+            _editorFrame.toFront();
             return;
         }
-        editor = new IconAdder();
+        _editor = new IconAdder();
         NamedIcon icon = new NamedIcon(namedIcon);
         icon.scale(0.15);
-        editor.setIcon(0, "plainIcon", icon);
-        editorFrame = makeAddIconFrame("EditIcon", "addIconToPanel", 
-                                     "pressAdd", editor);
-        editor.makeIconPanel();
+        _editor.setIcon(0, "plainIcon", icon);
+        makeAddIconFrame("EditIcon", "addIconToPanel", 
+                                     "pressAdd", _editor);
+        _editor.makeIconPanel();
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -267,21 +267,21 @@ public class PositionableLabel extends JLabel
         };
         ActionListener changeIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    editor.addCatalog();
-                    editorFrame.pack();
+                    _editor.addCatalog();
+                    _editorFrame.pack();
                 }
         };
-        editor.complete(addIconAction, changeIconAction, false);
+        _editor.complete(addIconAction, changeIconAction, false);
 
     }
     void editIcon() {
-        String url = editor.getIcon("plainIcon").getURL();
+        String url = _editor.getIcon("plainIcon").getURL();
         namedIcon = jmri.jmrit.catalog.CatalogPanel.getIconByName(url);
         setIcon(namedIcon);
         updateSize();
-        editorFrame.dispose();
-        editorFrame = null;
-        editor = null;
+        _editorFrame.dispose();
+        _editorFrame = null;
+        _editor = null;
         invalidate();
     }
 
@@ -571,22 +571,29 @@ public class PositionableLabel extends JLabel
         return active;
     }
 
-    JFrame makeAddIconFrame(String title, String select1, String select2, 
+    void makeAddIconFrame(String title, String select1, String select2, 
                                 IconAdder editor) {
-        JFrame frame = new JFrame(rb.getString(title));
+        _editorFrame = new JFrame(rb.getString(title));
         if (editor != null) {
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             p.add(new JLabel(rb.getString(select1)));
             p.add(new JLabel(rb.getString(select2)));
-            frame.getContentPane().add(p,BorderLayout.NORTH);
-            frame.getContentPane().add(editor);
-            editor.setParent(frame);
+            _editorFrame.getContentPane().add(p,BorderLayout.NORTH);
+            _editorFrame.getContentPane().add(editor);
+            editor.setParent(_editorFrame);
         }
-        frame.setLocationRelativeTo(this);
-        frame.setVisible(true);
-        frame.pack();
-        return frame;
+
+        _editorFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+				public void windowClosing(java.awt.event.WindowEvent e) {
+                    log.debug("windowClosing: _editorFrame= "+_editorFrame);
+                    _editorFrame.dispose();
+                    _editorFrame = null;
+                }
+            });
+        _editorFrame.setLocationRelativeTo(this);
+        _editorFrame.setVisible(true);
+        _editorFrame.pack();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableLabel.class.getName());

@@ -27,7 +27,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -386,27 +386,25 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             return manager.getSignalHead(name);
         }
     }
-    JFrame editorFrame;
-    IconAdder editor;
     void edit() {
-        if (editorFrame != null) {
-            editorFrame.setLocationRelativeTo(null);
-            editorFrame.toFront();
+        if (_editorFrame != null) {
+            _editorFrame.setLocationRelativeTo(null);
+            _editorFrame.toFront();
             return;
         }
-        editor = new IconAdder();
-        editor.setIcon(0, "SignalHeadStateFlashingYellow", flashYellow);
-        editor.setIcon(2, "SignalHeadStateFlashingRed", flashRed);
-        editor.setIcon(5, "SignalHeadStateYellow", yellow);
-        editor.setIcon(6, "SignalHeadStateGreen", green);
-        editor.setIcon(1, "SignalHeadStateFlashingGreen", flashGreen);
-        editor.setIcon(4, "SignalHeadStateDark", dark);
-        editor.setIcon(3, "SIgnalHeadStateHeld", held);
-        editor.setIcon(7, "SignalHeadStateRed", red);
-        editorFrame = makeAddIconFrame("EditSignal", "addIconsToPanel", 
-                                           "SelectSignal", editor);
-        editor.makeIconPanel();
-        editor.setPickList(new pickModel(InstanceManager.signalHeadManagerInstance()));
+        _editor = new IconAdder();
+        _editor.setIcon(0, "SignalHeadStateFlashingYellow", flashYellow);
+        _editor.setIcon(2, "SignalHeadStateFlashingRed", flashRed);
+        _editor.setIcon(5, "SignalHeadStateYellow", yellow);
+        _editor.setIcon(6, "SignalHeadStateGreen", green);
+        _editor.setIcon(1, "SignalHeadStateFlashingGreen", flashGreen);
+        _editor.setIcon(4, "SignalHeadStateDark", dark);
+        _editor.setIcon(3, "SIgnalHeadStateHeld", held);
+        _editor.setIcon(7, "SignalHeadStateRed", red);
+        makeAddIconFrame("EditSignal", "addIconsToPanel", 
+                                           "SelectSignal", _editor);
+        _editor.makeIconPanel();
+        _editor.setPickList(new pickModel(InstanceManager.signalHeadManagerInstance()));
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -415,26 +413,26 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         };
         ActionListener changeIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    editor.addCatalog();
-                    editorFrame.pack();
+                    _editor.addCatalog();
+                    _editorFrame.pack();
                 }
         };
-        editor.complete(addIconAction, changeIconAction, false);
-        editor.setSelection(mHead);
+        _editor.complete(addIconAction, changeIconAction, false);
+        _editor.setSelection(mHead);
     }
     void updateSignal() {
-        setRedIcon(editor.getIcon("SignalHeadStateRed"));
-        setFlashRedIcon(editor.getIcon("SignalHeadStateFlashingRed"));
-        setYellowIcon(editor.getIcon("SignalHeadStateYellow"));
-        setFlashYellowIcon(editor.getIcon("SignalHeadStateFlashingYellow"));
-        setGreenIcon(editor.getIcon("SignalHeadStateGreen"));
-        setFlashGreenIcon(editor.getIcon("SignalHeadStateFlashingGreen"));
-        setDarkIcon(editor.getIcon("SignalHeadStateDark"));
-        setHeldIcon(editor.getIcon("SIgnalHeadStateHeld"));
-        setSignalHead((SignalHead)editor.getTableSelection());
-        editorFrame.dispose();
-        editorFrame = null;
-        editor = null;
+        setRedIcon(_editor.getIcon("SignalHeadStateRed"));
+        setFlashRedIcon(_editor.getIcon("SignalHeadStateFlashingRed"));
+        setYellowIcon(_editor.getIcon("SignalHeadStateYellow"));
+        setFlashYellowIcon(_editor.getIcon("SignalHeadStateFlashingYellow"));
+        setGreenIcon(_editor.getIcon("SignalHeadStateGreen"));
+        setFlashGreenIcon(_editor.getIcon("SignalHeadStateFlashingGreen"));
+        setDarkIcon(_editor.getIcon("SignalHeadStateDark"));
+        setHeldIcon(_editor.getIcon("SIgnalHeadStateHeld"));
+        setSignalHead((SignalHead)_editor.getTableSelection());
+        _editorFrame.dispose();
+        _editorFrame = null;
+        _editor = null;
         invalidate();
     }
 
