@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="http://www.jmri.org/xml/XSLT/panelfile.xsl" type="text/xsl"?>
-<!DOCTYPE layout-config SYSTEM "layout-config-2-5-7.dtd">
+<!DOCTYPE layout-config SYSTEM "layout-config-2-6.dtd">
 
 <layout-config>
   <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
@@ -85,6 +85,6 @@
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 2.5.5 on Sat Jun 06 12:27:55 PDT 2009 $Id: LoadFileTest.xml,v 1.5 2009-06-27 04:42:49 jacobsen Exp $-->
+  <!--Written by JMRI version 2.5.5 on Sat Jun 06 12:27:55 PDT 2009 $Id: LoadFileTest.xml,v 1.6 2009-07-01 05:03:44 jacobsen Exp $-->
 </layout-config>
 
