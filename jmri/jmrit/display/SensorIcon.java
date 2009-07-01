@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
-import javax.swing.JFrame;
+//import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JCheckBoxMenuItem;
@@ -18,7 +18,7 @@ import javax.swing.JCheckBoxMenuItem;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
