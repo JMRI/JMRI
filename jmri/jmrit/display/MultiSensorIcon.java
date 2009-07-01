@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.JFrame;
+//import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -258,11 +258,6 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         editor.setIcon(2, "SensorStateInactive", inactive);
         editor.setIcon(0, "BeanStateInconsistent", inconsistent);
         editor.setIcon(1, "BeanStateUnknown", unknown);
-/*        NamedIcon[] icons = new NamedIcon[entries.size()];
-        for (int i=0; i<entries.size(); i++) {
-            icons[i] = entries.get(i).icon;
-        }*/
-//        editor.setMultiIcon(entries);
         editor.setMultiIcon(entries);
         makeAddIconFrame("EditMultiSensor", "addIconsToPanel", 
                                            "SelectMultiSensor", editor);
@@ -281,12 +276,6 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
                 }
         };
         editor.complete(addIconAction, changeIconAction, true);
-        Sensor[] sensors = new Sensor[entries.size()];
- /*       for (int i=0; i<entries.size(); i++) {
-            sensors[i] = entries.get(i).sensor;
-        }
-        editor.setSensors(entries); */
-    }
     void updateSensor() {
         setInactiveIcon(editor.getIcon("SensorStateInactive"));
         setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
