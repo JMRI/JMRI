@@ -14,7 +14,7 @@ import jmri.*;
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
  * @author         Girgio Terdina Copyright (C) 2007
- * @version        $Revision: 2.9 $
+ * @version        $Revision: 2.10 $
 */
 
 public class XNetOpsModeProgrammer implements Programmer,XNetListener 
@@ -40,7 +40,7 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
     /**
      * Send an ops-mode write request to the XPressnet.
      */
-    public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         XNetMessage msg=XNetMessage.getWriteOpsModeCVMsg(mAddressHigh,mAddressLow,CV,val);
 	XNetTrafficController.instance().sendXNetMessage(msg,this);
         /* we need to save the programer and value so we can send messages 
@@ -51,7 +51,7 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
         progState=XNetProgrammer.REQUESTSENT;
     }
 
-    public void readCV(int CV, ProgListener p) throws ProgrammerException {
+    synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
            XNetMessage msg=XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh,mAddressLow,CV,value);
 	   XNetTrafficController.instance().sendXNetMessage(msg,this);
            /* We can trigger a read to an LRC120, but the information is not

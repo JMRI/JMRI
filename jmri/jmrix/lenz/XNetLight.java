@@ -16,7 +16,7 @@ import jmri.Turnout;
  *  Based in part on SerialLight.java
  *
  * @author      Paul Bender Copyright (C) 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class XNetLight extends AbstractLight implements XNetListener {
 
@@ -93,7 +93,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
      *  Set the current state of this Light
      *     This routine requests the hardware to change.
      */
-    public void setState(int newState) {
+    synchronized public void setState(int newState) {
         if(newState!=ON && newState!=OFF) {
 	   // Unsuported state
            log.warn("Unsupported state " +newState + " requested for light " +mSystemName);
@@ -114,7 +114,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
                 int oldState = mState;
                 mState = newState;
             // notify listeners, if any
-            firePropertyChange("KnownState", new Integer(oldState), new Integer(newState));
+            firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(newState));
 	}
         sendOffMessage();
     }

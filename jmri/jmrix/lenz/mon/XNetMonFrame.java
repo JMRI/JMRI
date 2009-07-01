@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * @author			Bob Jacobsen   Copyright (C) 2002
  # @author          Paul Bender Copyright (C) 2004-2009
  * @author          Giorgio Terdina Copyright (C) 2007
- * @version         $Revision: 2.26 $
+ * @version         $Revision: 2.27 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -49,41 +49,41 @@ import jmri.jmrix.lenz.XNetConstants;
 		// First, Decode anything that is sent by the LI10x, and
                 // not the command station
 		if(l.isOkMessage()) {
-		   text=new String("Command Successfully Sent/Normal Operations Resumed after timeout");
+		   text="Command Successfully Sent/Normal Operations Resumed after timeout";
 		} else if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER) {
 		  switch(l.getElement(1)) {
 		  case XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR:
-					text=new String("Error Occurred between the interface and the PC");
+					text="Error Occurred between the interface and the PC";
 					break;
 		  case XNetConstants.LI_MESSAGE_RESPONSE_CS_DATA_ERROR:
-					text=new String("Error Occurred between the interface and the command station");
+					text="Error Occurred between the interface and the command station";
 					break;
 	          case XNetConstants.LI_MESSAGE_RESPONSE_UNKNOWN_DATA_ERROR:
-					text=new String("Unknown Communications Error");
+					text="Unknown Communications Error";
 					break;
 		  case XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR:
-					text=new String("Command Station no longer providing a timeslot for communications");
+					text="Command Station no longer providing a timeslot for communications";
 					break;
 		  case XNetConstants.LI_MESSAGE_RESPONSE_BUFFER_OVERFLOW:
-					text=new String("Buffer Overflow in interface");
+					text="Buffer Overflow in interface";
 					break;
 		  default:
 			text = l.toString();
 		  }
 		} else if(l.getElement(0)==XNetConstants.LI_VERSION_RESPONSE) {
-			text = new String("LI10x hardware Version:  " +
+			text = "LI10x hardware Version:  " +
 					    (l.getElementBCD(1).floatValue())/10 +
 					  " Software Version: " +
-					    l.getElementBCD(2));
+					    l.getElementBCD(2);
 		} else if(l.getElement(0)==XNetConstants.LI101_REQUEST) {
 		  // The request and response for baud rate look the same,
 		  // so we need this for both incoming and outgoing directions
 		  switch(l.getElement(1)) {
 		  case XNetConstants.LI101_REQUEST_ADDRESS:
-				text= new String("RESPONSE LI101 Address " +l.getElement(2));
+				text= "RESPONSE LI101 Address " +l.getElement(2);
 				break;
 		  case XNetConstants.LI101_REQUEST_BAUD:
-				text= new String("RESPONSE LI101 Baud Rate: ");
+				text= "RESPONSE LI101 Baud Rate: ";
 				switch(l.getElement(2)){
 				   case 1: text += "19200bps (default)";
 					break;
@@ -103,47 +103,47 @@ import jmri.jmrix.lenz.XNetConstants;
 		} else if(l.getElement(0)==XNetConstants.CS_INFO) {
 		  switch(l.getElement(1)) {
 		  case XNetConstants.BC_NORMAL_OPERATIONS:
-				text= new String("Broadcast: Normal Operations Resumed");
+				text= "Broadcast: Normal Operations Resumed";
 				break;
 		  case XNetConstants.BC_EVERYTHING_OFF:
-				text= new String("Broadcast: Emergency Off (short circuit)");
+				text= "Broadcast: Emergency Off (short circuit)";
 				break;
 		  case XNetConstants.BC_SERVICE_MODE_ENTRY:
-				text= new String("Broadcast: Service Mode Entry");
+				text= "Broadcast: Service Mode Entry";
 				break;
 		  case XNetConstants.PROG_SHORT_CIRCUIT:
-				text= new String("Service Mode: Short Circuit");
+				text= "Service Mode: Short Circuit";
 				break;
 		  case XNetConstants.PROG_BYTE_NOT_FOUND:
-				text= new String("Service Mode: Data Byte Not Found");
+				text= "Service Mode: Data Byte Not Found";
 				break;
 		  case XNetConstants.PROG_CS_BUSY:
-				text= new String("Service Mode: Command Station Busy");
+				text= "Service Mode: Command Station Busy";
 				break;
 		  case XNetConstants.PROG_CS_READY:
-				text= new String("Service Mode: Command Station Ready");
+				text= "Service Mode: Command Station Ready";
 				break;
 		  case XNetConstants.CS_BUSY:
-				text= new String("Command Station Busy");
+				text= "Command Station Busy";
 				break;
 		  case XNetConstants.CS_NOT_SUPPORTED:
-				text= new String("XPressNet Instruction not supported by Command Station");
+				text= "XPressNet Instruction not supported by Command Station";
 				break;
 		  /* The remaining cases are for a Double Header or MU Error */
 		  case 0x83: 
-			text = new String("XBus V1 and V2 MU+DH error: ") ;
+			text = "XBus V1 and V2 MU+DH error: ";
 			text = text+ "Selected Locomotive has not been operated by this XPressNet device or address 0 selected";
 				break;
 		  case 0x84:
- 			text = new String("XBus V1 and V2 MU+DH error: ") ;
+ 			text = "XBus V1 and V2 MU+DH error: ";
 			text = text+ "Selected Locomotive is being operated by another XPressNet device";
 		        break;
 		  case 0x85: 
- 			text = new String("XBus V1 and V2 MU+DH error: ") ;
+ 			text = "XBus V1 and V2 MU+DH error: " ;
 			text = text+ "Selected Locomotive already in MU or DH";
 		        break;
 		  case 0x86: 
- 			text = new String("XBus V1 and V2 MU+DH error: ") ;
+ 			text = "XBus V1 and V2 MU+DH error: " ;
 			text = text+ "Unit selected for MU or DH has speed setting other than 0";
 		        break;
 		  default:
@@ -151,24 +151,24 @@ import jmri.jmrix.lenz.XNetConstants;
 		  }
 		} else if(l.getElement(0)==XNetConstants.BC_EMERGENCY_STOP &&
 			  l.getElement(1)==XNetConstants.BC_EVERYTHING_STOP) {
-				text= new String("Broadcast: Emergency Stop (track power on)");
+				text= "Broadcast: Emergency Stop (track power on)";
                 /* Followed by Service Mode responses */
 		} else if(l.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE) {
 		  switch(l.getElement(1)) {
 		  case XNetConstants.CS_SERVICE_DIRECT_RESPONSE:
-				text = new String("Service Mode: Direct Programming Response: CV:" +
+				text = "Service Mode: Direct Programming Response: CV:" +
 				       l.getElement(2) +
 				       " Value: " +
-				       l.getElement(3));
+				       l.getElement(3);
 				break;
 		  case XNetConstants.CS_SERVICE_REG_PAGE_RESPONSE:
-				text = new String("Service Mode: Register or Paged Mode Response: CV:" +
+				text = "Service Mode: Register or Paged Mode Response: CV:" +
 				       l.getElement(2) +
 				       " Value: " +
-				       l.getElement(3));
+				       l.getElement(3);
 				break;
 		  case XNetConstants.CS_SOFTWARE_VERSION:
-				text = new String("Command Station Software Version: " + (l.getElementBCD(2).floatValue())/10 + " Type: ") ;
+				text = "Command Station Software Version: " + (l.getElementBCD(2).floatValue())/10 + " Type: ";
 				switch(l.getElement(3)) {
 				    case 0x00: text = text+ "LZ100/LZV100";
 				               break;
@@ -189,7 +189,7 @@ import jmri.jmrix.lenz.XNetConstants;
 		/* We want to look at responses to specific requests made to the Command Station */
 		} else if (l.getElement(0) == XNetConstants.CS_REQUEST_RESPONSE) {
               	    if (l.getElement(1) == XNetConstants.CS_STATUS_RESPONSE) {
-			text = new String("Command Station Status:") ;
+			text = "Command Station Status:";
                         int statusByte=l.getElement(2);
                         if((statusByte&0x01)==0x01) {
                            // Command station is in Emergency Off Mode
@@ -217,12 +217,12 @@ import jmri.jmrix.lenz.XNetConstants;
 		   } else if (l.getElement(1) == XNetConstants.CS_SOFTWARE_VERSION) {
 			/* This is a Software version response for XPressNet
                            Version 1 or 2 */
-				text = new String("Command Station Software Version: " + (l.getElementBCD(2).floatValue())/10 + "Type: Unknown (X-Bus V1 or V2)") ;
+				text = "Command Station Software Version: " + (l.getElementBCD(2).floatValue())/10 + "Type: Unknown (X-Bus V1 or V2)";
 		   } else text = l.toString();
 
 		// MU and Double Header Related Responses
 		} else if (l.getElement(0) == XNetConstants.LOCO_MU_DH_ERROR) {
-			text = new String("XpressNet MU+DH error: ") ;
+			text = "XpressNet MU+DH error: ";
 			switch(l.getElement(1)) {
 			case 0x81: text = text+ "Selected Locomotive has not been operated by this XPressNet device or address 0 selected";
 				break;
@@ -246,14 +246,14 @@ import jmri.jmrix.lenz.XNetConstants;
 		// Loco Information Response Messages
 		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_NORMAL_UNIT) {
                      if(l.getElement(1) == XNetConstants.LOCO_FUNCTION_STATUS_HIGH_MOM) {
-		          text = new String("Locomotive F13-F28 Momentary Status: ");
+		          text = "Locomotive F13-F28 Momentary Status: ";
                           // message byte 3, contains F20,F19,F18,F17,F16,F15,F14,F13
 			  int element3 = l.getElement(2);
                           // message byte 4, contains F28,F27,F26,F25,F24,F23,F22,F21
 			  int element4 = l.getElement(3);
 			  text += parseFunctionHighMomentaryStatus(element3,element4);
                      } else {
-		        text = new String("Locomotive Information Response: Normal Unit ");
+		        text = "Locomotive Information Response: Normal Unit ";
 		        text += parseSpeedandDirection(l.getElement(1),l.getElement(2)) + " ";
                         // message byte 4, contains F0,F1,F2,F3,F4
 	                int element3 = l.getElement(3);
@@ -266,14 +266,14 @@ import jmri.jmrix.lenz.XNetConstants;
                      // This message is a Hornby addition to the protocol
                      // indicating the speed and direction of a locomoitve
                      // controlled by the elite's built in throttles
-		     text = new String("Elite Speed/Direction Information: Locomotive ");
+		     text = "Elite Speed/Direction Information: Locomotive ";
 	             text += calcLocoAddress(l.getElement(2),l.getElement(3));
 		     text += parseSpeedandDirection(l.getElement(4),l.getElement(5)) + " ";
                      } else if(l.getElement(1)==0xF9) {
                      // This message is a Hornby addition to the protocol
                      // indicating the function on/off status of a locomoitve
                      // controlled by the elite's built in throttles
-		     text = new String("Elite Function Information: Locomotive ");
+		     text = "Elite Function Information: Locomotive ";
 	             text += calcLocoAddress(l.getElement(2),l.getElement(3));
                      // message byte 5, contains F0,F1,F2,F3,F4
 	             int element4 = l.getElement(4);
@@ -281,7 +281,7 @@ import jmri.jmrix.lenz.XNetConstants;
 	             int element5 = l.getElement(5);
 	             text += parseFunctionStatus(element4,element5);
                      } else {
-		        text = new String("Locomotive Information Response: Locomotive in Multiple Unit ");
+		        text = "Locomotive Information Response: Locomotive in Multiple Unit ";
 		        text += parseSpeedandDirection(l.getElement(1),l.getElement(2)) + " ";
                         // message byte 4, contains F0,F1,F2,F3,F4
 	                int element3 = l.getElement(3);
@@ -290,10 +290,10 @@ import jmri.jmrix.lenz.XNetConstants;
 	                text += parseFunctionStatus(element3,element4);
                      }
 		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_MU_ADDRESS) {
-		     text = new String("Locomotive Information Response: Multi Unit Base Address");
+		     text = "Locomotive Information Response: Multi Unit Base Address";
 		     text += parseSpeedandDirection(l.getElement(1),l.getElement(2)) + " ";
 		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_DH_UNIT) {
-		     text = new String("Locomotive Information Response: Locomotive in Double Header ");
+		     text = "Locomotive Information Response: Locomotive in Double Header ";
 		     text += parseSpeedandDirection(l.getElement(1),l.getElement(2)) + " ";
                      // message byte 4, contains F0,F1,F2,F3,F4
 	             int element3 = l.getElement(3);
@@ -303,7 +303,7 @@ import jmri.jmrix.lenz.XNetConstants;
 		     text += " Second Locomotive in Double Header is: ";
 	             text += calcLocoAddress(l.getElement(5),l.getElement(6));
 		} else if (l.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
-		    text = new String("Locomotive Information Response: ");
+		    text = "Locomotive Information Response: ";
                     switch(l.getElement(1)) {
                        case XNetConstants.LOCO_SEARCH_RESPONSE_N:
 			  text += "Search Response, Normal Locomotive: ";
@@ -354,7 +354,7 @@ import jmri.jmrix.lenz.XNetConstants;
                    }
 		// Feedback Response Messages
 		} else if (l.isFeedbackBroadcastMessage() ) {
-		    text = new String("Feedback Response:");
+		    text = "Feedback Response:";
 		    int numDataBytes = l.getElement(0)&0x0f;
 		    for( int i=1;i<numDataBytes;i+=2) {
 			switch(l.getFeedbackMessageType(i)) {
@@ -450,14 +450,14 @@ import jmri.jmrix.lenz.XNetConstants;
                 /* Start decoding messages sent by the computer */
 		/* Start with LI101F requests */
 		if(l.getElement(0)==XNetConstants.LI_VERSION_REQUEST) {
-			text = new String("REQUEST LI10x hardware/software version");
+			text = "REQUEST LI10x hardware/software version";
 		} else if(l.getElement(0)==XNetConstants.LI101_REQUEST) {
 		  switch(l.getElement(1)) {
 		  case XNetConstants.LI101_REQUEST_ADDRESS:
-				text= new String("REQUEST LI101 Address " +l.getElement(2));
+				text= "REQUEST LI101 Address " +l.getElement(2);
 				break;
 		  case XNetConstants.LI101_REQUEST_BAUD:
-				text= new String("REQUEST LI101 Baud Rate ");
+				text= "REQUEST LI101 Baud Rate ";
 				switch(l.getElement(2)){
 				   case 1: text += "19200bps (default)";
 					break;
@@ -477,19 +477,19 @@ import jmri.jmrix.lenz.XNetConstants;
 		} else if(l.getElement(0)==XNetConstants.CS_REQUEST) {
 		  switch(l.getElement(1)) {
 		  case XNetConstants.EMERGENCY_OFF:
-				text = new String("REQUEST: Emergency Off");
+				text = "REQUEST: Emergency Off";
 				break;
 		  case XNetConstants.RESUME_OPS:
-				text = new String("REQUEST: Normal Operations Resumed");
+				text = "REQUEST: Normal Operations Resumed";
 				break;
 		  case XNetConstants.SERVICE_MODE_CSRESULT:
-				text = new String("REQUEST: Service Mode Results");
+				text = "REQUEST: Service Mode Results";
 				break;
 		  case XNetConstants.CS_VERSION:
-				text = new String("REQUEST: Command Station Version");
+				text = "REQUEST: Command Station Version";
 				break;
 		  case XNetConstants.CS_STATUS:
-				text = new String("REQUEST: Command Station Status");
+				text = "REQUEST: Command Station Status";
 				break;
 		  default:
 			text = l.toString();
@@ -497,22 +497,22 @@ import jmri.jmrix.lenz.XNetConstants;
 		} else if(l.getElement(0)==XNetConstants.CS_SET_POWERMODE &&
 			  l.getElement(1)==XNetConstants.CS_SET_POWERMODE &&
 			  l.getElement(2)==XNetConstants.CS_POWERMODE_AUTO ) {
-			  text= new String("REQUEST: Set Power-up Mode to Automatic");
+			  text= "REQUEST: Set Power-up Mode to Automatic";
 		} else if(l.getElement(0)==XNetConstants.CS_SET_POWERMODE &&
 			  l.getElement(1)==XNetConstants.CS_SET_POWERMODE &&
 			  l.getElement(2)==XNetConstants.CS_POWERMODE_MANUAL ) {
-			  text= new String("REQUEST: Set Power-up Mode to Manual");
+			  text= "REQUEST: Set Power-up Mode to Manual";
 		/* Next, we have Programming Requests */
 		} else if(l.getElement(0)==XNetConstants.PROG_READ_REQUEST) {
 		  switch(l.getElement(1)) {
 		  case XNetConstants.PROG_READ_MODE_REGISTER:
-				text = new String("Service Mode Request: Read Register " + l.getElement(2));
+				text = "Service Mode Request: Read Register " + l.getElement(2);
 				break;
 		  case XNetConstants.PROG_READ_MODE_CV:
-				text = new String("Service Mode Request: Read CV " + l.getElement(2) + " in Direct Mode");
+				text = "Service Mode Request: Read CV " + l.getElement(2) + " in Direct Mode";
 				break;
 		  case XNetConstants.PROG_READ_MODE_PAGED:
-				text = new String("Service Mode Request: Read CV " + l.getElement(2) + " in Paged Mode");
+				text = "Service Mode Request: Read CV " + l.getElement(2) + " in Paged Mode";
 				break;
 		  default:
 			text = l.toString();
@@ -520,13 +520,13 @@ import jmri.jmrix.lenz.XNetConstants;
 		} else if(l.getElement(0)==XNetConstants.PROG_WRITE_REQUEST) {
 		  switch(l.getElement(1)) {
 		  case XNetConstants.PROG_WRITE_MODE_REGISTER:
-				text = new String("Service Mode Request: Write " + l.getElement(3) +" to Register " + l.getElement(2));
+				text = "Service Mode Request: Write " + l.getElement(3) +" to Register " + l.getElement(2);
 				break;
 		  case XNetConstants.PROG_WRITE_MODE_CV:
-				text = new String("Service Mode Request: Write " + l.getElement(3) +" to CV " + l.getElement(2) + " in Direct Mode");
+				text = "Service Mode Request: Write " + l.getElement(3) +" to CV " + l.getElement(2) + " in Direct Mode";
 				break;
 		  case XNetConstants.PROG_WRITE_MODE_PAGED:
-				text = new String("Service Mode Request: Write " + l.getElement(3) +" to CV " + l.getElement(2) + " in Paged Mode");
+				text = "Service Mode Request: Write " + l.getElement(3) +" to CV " + l.getElement(2) + " in Paged Mode";
 				break;
 		  default:
 			text = l.toString();
@@ -534,14 +534,14 @@ import jmri.jmrix.lenz.XNetConstants;
                 } else if(l.getElement(0)==XNetConstants.OPS_MODE_PROG_REQ) {
 		  switch(l.getElement(1)) {
 		  case XNetConstants.OPS_MODE_PROG_WRITE_REQ:
-				text = new String("Operations Mode Programming Request: ");
+				text = "Operations Mode Programming Request: ";
 				if((l.getElement(4) & 0xEC)==0xEC || (l.getElement(4) & 0xE4)==0xE4) {
 				   if((l.getElement(4) & 0xEC)==0xEC) {
-					text = text + new String("Byte Mode Write: ");
+					text = text + "Byte Mode Write: ";
 				   } else if((l.getElement(4) & 0xE4)==0xE4) {
-					text = text + new String("Byte Mode Verify: ");
+					text = text + "Byte Mode Verify: ";
 				   }
-				   text = text + new String(l.getElement(6)
+				   text = text + new String (l.getElement(6)
 					+" to CV "
 					+ (1+l.getElement(5)+((l.getElement(4)&0x03)<<8))
 					+" For Decoder Address "
@@ -549,9 +549,9 @@ import jmri.jmrix.lenz.XNetConstants;
 				break;
  				} else if((l.getElement(4) & 0xE8)==0xE8) {
 					if((l.getElement(6) & 0x10) == 0x10) {
-					   text = text + new String("Bit Mode Write: ");
+					   text = text + "Bit Mode Write: ";
 					} else {
-					   text = text + new String("Bit Mode Verify: ");
+					   text = text + "Bit Mode Verify: ";
 					}
 					text = text + new String(((l.getElement(6) &0x08)>>3)
 					   +" to CV "
@@ -560,6 +560,7 @@ import jmri.jmrix.lenz.XNetConstants;
 					   + (l.getElement(6)&0x07)
 					   +" For Decoder Address "
 					   +calcLocoAddress(l.getElement(2),l.getElement(3)));
+				break;
 				}
 				//fall through
 		  default:
@@ -572,11 +573,11 @@ import jmri.jmrix.lenz.XNetConstants;
 		  switch(l.getElement(1)) {
 		  case XNetConstants.LOCO_SPEED_14: 
 						text = text 
-						+new String("Set Address: "
+						+"Set Address: "
 						+calcLocoAddress(l.getElement(2),l.getElement(3))
 						+" To Speed Step "
 						+ (l.getElement(4)&0x0f)
-						+ " and direction ");	
+						+ " and direction ";	
 					if((l.getElement(4)&0x80)!=0) 
 						text+="Forward"; 
 					else text+="Reverse";
@@ -584,9 +585,9 @@ import jmri.jmrix.lenz.XNetConstants;
 						break;
 		  case XNetConstants.LOCO_SPEED_27:
 						text = text 
-						+new String("Set Address: "
+						+"Set Address: "
 						+calcLocoAddress(l.getElement(2),l.getElement(3))
-						+" To Speed Step ");
+						+" To Speed Step ";
 					speed=(((l.getElement(4)&0x10)>> 4) + ((l.getElement(4)&0x0F) << 1));
 					if(speed>=3){ speed -=3; }
 					text += speed;
@@ -597,9 +598,9 @@ import jmri.jmrix.lenz.XNetConstants;
 						break;
 		  case XNetConstants.LOCO_SPEED_28:
 						text = text 
-						+new String("Set Address: "
+						+"Set Address: "
 						+calcLocoAddress(l.getElement(2),l.getElement(3))
-						+" To Speed Step ");
+						+" To Speed Step ";
 					speed=(((l.getElement(4)&0x10)>> 4) + ((l.getElement(4)&0x0F) << 1));
 					if(speed>=3){ speed -=3; }
 						text += speed;
@@ -610,11 +611,11 @@ import jmri.jmrix.lenz.XNetConstants;
 						break;
 		  case XNetConstants.LOCO_SPEED_128:
 						text = text 
-						+new String("Set Address: "
+						+"Set Address: "
 						+calcLocoAddress(l.getElement(2),l.getElement(3))
 						+" To Speed Step "
 						+ (l.getElement(4) & 0x7F)
-						+ " and direction ");
+						+ " and direction ";
 					if((l.getElement(4)&0x80)!=0) 
 						text+="Forward"; 
 					else text+="Reverse";
@@ -622,8 +623,8 @@ import jmri.jmrix.lenz.XNetConstants;
 						break;
 		  case XNetConstants.LOCO_SET_FUNC_GROUP1: {
 						text = text 
-						+new String("Set Function Group 1 for address: "
-						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+						+"Set Function Group 1 for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ";
 					int element4 = l.getElement(4);
 					if((element4 & 0x10)!=0) 
 						text += "F0 on ";
@@ -644,8 +645,8 @@ import jmri.jmrix.lenz.XNetConstants;
 					}
 		  case XNetConstants.LOCO_SET_FUNC_GROUP2: {
 						text = text 
-						+new String("Set Function Group 2 for address: "
-						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+						+"Set Function Group 2 for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ";
 					int element4 = l.getElement(4);
 					if((element4 & 0x01)!=0)
 						text += "F5 on ";
@@ -663,8 +664,8 @@ import jmri.jmrix.lenz.XNetConstants;
 					}
 		  case XNetConstants.LOCO_SET_FUNC_GROUP3: {
 						text = text 
-						+new String("Set Function Group 3 for address: "
-						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+						+"Set Function Group 3 for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ";
 					int element4 = l.getElement(4);
 					if((element4 & 0x01)!=0)
 						text += "F9 on ";
@@ -682,8 +683,8 @@ import jmri.jmrix.lenz.XNetConstants;
 					}
 		  case XNetConstants.LOCO_SET_FUNC_GROUP4: {
 						text = text 
-						+new String("Set Function Group 4 for address: "
-						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+						+"Set Function Group 4 for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ";
 					int element4 = l.getElement(4);
 					if((element4 & 0x01)!=0)
 						text += "F13 on ";
@@ -713,8 +714,8 @@ import jmri.jmrix.lenz.XNetConstants;
 					}
 		  case XNetConstants.LOCO_SET_FUNC_GROUP5: {
 						text = text 
-						+new String("Set Function Group 5 for address: "
-						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+						+"Set Function Group 5 for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ";
 					int element4 = l.getElement(4);
 					if((element4 & 0x01)!=0)
 						text += "F21 on ";
@@ -744,8 +745,8 @@ import jmri.jmrix.lenz.XNetConstants;
 					}
 		  case XNetConstants.LOCO_SET_FUNC_Group1: {
 						text = text 
-						+new String("Set Function Group 1 Momentary Status for address: "
-						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+						+"Set Function Group 1 Momentary Status for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ";
 					int element4 = l.getElement(4);
 					if((element4 & 0x10)==0)
 						text += "F0 continuous ";
@@ -766,8 +767,8 @@ import jmri.jmrix.lenz.XNetConstants;
 					}
 		  case XNetConstants.LOCO_SET_FUNC_Group2: {
 						text = text 
-						+new String("Set Function Group 2 Momentary Status for address: "
-						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+						+"Set Function Group 2 Momentary Status for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ";
 					int element4 = l.getElement(4);
 					if((element4 & 0x01)==0)
 						text += "F5 continuous ";
@@ -785,8 +786,8 @@ import jmri.jmrix.lenz.XNetConstants;
 					}
 		  case XNetConstants.LOCO_SET_FUNC_Group3: {
 						text = text 
-						+new String("Set Function Group 3 Momentary Status for address: "
-						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+						+"Set Function Group 3 Momentary Status for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ";
 					int element4 = l.getElement(4);
 					if((element4 & 0x01)==0)
 						text += "F9 continuous ";
@@ -804,8 +805,8 @@ import jmri.jmrix.lenz.XNetConstants;
 					}
 		  case XNetConstants.LOCO_SET_FUNC_Group4: {
 						text = text 
-						+new String("Set Function Group 4 Momentary Status for address: "
-						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+						+"Set Function Group 4 Momentary Status for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ";
 					int element4 = l.getElement(4);
 					if((element4 & 0x01)==0)
 						text += "F13 continuous ";
@@ -835,8 +836,8 @@ import jmri.jmrix.lenz.XNetConstants;
 					}
 		  case XNetConstants.LOCO_SET_FUNC_Group5: {
 						text = text 
-						+new String("Set Function Group 5 Momentary Status for address: "
-						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ");
+						+"Set Function Group 5 Momentary Status for address: "
+						+calcLocoAddress(l.getElement(2),l.getElement(3)) + " ";
 					int element4 = l.getElement(4);
 					if((element4 & 0x01)==0)
 						text += "F21 continuous ";
@@ -865,24 +866,24 @@ import jmri.jmrix.lenz.XNetConstants;
 						break;
 					}
 		  case XNetConstants.LOCO_ADD_MULTI_UNIT_REQ: text = text 
-				+ new String("Add Locomotive:" 
+				+ "Add Locomotive:" 
 					+ calcLocoAddress(l.getElement(2),l.getElement(3))
 					+ " To Multi Unit Consist: "
 					+ l.getElement(4)
-					+ " With Loco Direction Normal");
+					+ " With Loco Direction Normal";
 					break;
 		  case (XNetConstants.LOCO_ADD_MULTI_UNIT_REQ | 0x01): 
-				text = text + new String("Add Locomotive:" 
+				text = text + "Add Locomotive:" 
 					+ calcLocoAddress(l.getElement(2),l.getElement(3))
 					+ " To Multi Unit Consist: "
 					+ l.getElement(4)
-					+ " With Loco Direction Reversed");
+					+ " With Loco Direction Reversed";
 					break;
 		  case (XNetConstants.LOCO_REM_MULTI_UNIT_REQ):
-				text = text + new String("Remove Locomotive:" 
+				text = text + "Remove Locomotive:" 
 					+ calcLocoAddress(l.getElement(2),l.getElement(3))
 					+ " From Multi Unit Consist: "
-					+ l.getElement(4));
+					+ l.getElement(4);
 					break;
 		  default:
 			text = l.toString();
@@ -906,37 +907,37 @@ import jmri.jmrix.lenz.XNetConstants;
                 } else if(l.getElement(0)==XNetConstants.LOCO_STATUS_REQ) {
 		       switch(l.getElement(1)) {
 		          case XNetConstants.LOCO_INFO_REQ_FUNC:
-			      text=new String("Request for Address " +
+			      text="Request for Address " +
                                   calcLocoAddress(l.getElement(2),l.getElement(3)) + 
-				  " function momentary/continuous status.");
+				  " function momentary/continuous status.";
                               break;
 		          case XNetConstants.LOCO_INFO_REQ_FUNC_HI_ON:
-			      text=new String("Request for Address " +
+			      text="Request for Address " +
                                   calcLocoAddress(l.getElement(2),l.getElement(3)) + 
-				  " F13-F28 on/off status.");
+				  " F13-F28 on/off status.";
                               break;
 		          case XNetConstants.LOCO_INFO_REQ_FUNC_HI_MOM:
-			      text=new String("Request for Address " +
+			      text="Request for Address " +
                                   calcLocoAddress(l.getElement(2),l.getElement(3)) + 
-				  " F13-F28 momentary/continuous status.");
+				  " F13-F28 momentary/continuous status.";
                               break;
                           case XNetConstants.LOCO_INFO_REQ_V3:
-			      text=new String("Request for Address " +
+			      text="Request for Address " +
                                   calcLocoAddress(l.getElement(2),l.getElement(3)) + 
-				  " speed/direction/function on/off status.");
+				  " speed/direction/function on/off status.";
 			      break;
                           case XNetConstants.LOCO_STACK_SEARCH_FWD:
-			      text=new String("Search Command Station Stack Forward - Start Address: " +
-                                  calcLocoAddress(l.getElement(2),l.getElement(3)));
+			      text="Search Command Station Stack Forward - Start Address: " +
+                                  calcLocoAddress(l.getElement(2),l.getElement(3));
 			      break;
                           case XNetConstants.LOCO_STACK_SEARCH_BKWD:
-			      text=new String("Search Command Station Stack Backward - Start Address: " +
-                                  calcLocoAddress(l.getElement(2),l.getElement(3)));
+			      text="Search Command Station Stack Backward - Start Address: " +
+                                  calcLocoAddress(l.getElement(2),l.getElement(3));
 			      break;
                           case XNetConstants.LOCO_STACK_DELETE:
-			      text=new String("Delete Address " +
+			      text="Delete Address " +
                                   calcLocoAddress(l.getElement(2),l.getElement(3)) +
-                                  " from Command Station Stack.");
+                                  " from Command Station Stack.";
 			      break;
 		          default: text=l.toString();
                       }
@@ -993,7 +994,7 @@ import jmri.jmrix.lenz.XNetConstants;
          */
 
 	private String parseSpeedandDirection(int element1,int element2){
-		String text = new String("");
+		String text = "";
                 int speedVal = 0;
                 if ((element2 & 0x80)==0x80)
                     text+= "Direction Forward,";
@@ -1049,7 +1050,7 @@ import jmri.jmrix.lenz.XNetConstants;
          */
 
 	private String parseFunctionStatus(int element3,int element4){
-		String text = new String("");
+		String text = "";
 		if((element3 & 0x10)!=0) 
 		   text += "F0 on ";
 		else text += "F0 off ";
@@ -1098,7 +1099,7 @@ import jmri.jmrix.lenz.XNetConstants;
          */
 
 	private String parseFunctionHighStatus(int element3,int element4){
-		String text = new String("");
+		String text = "";
 		if((element3 & 0x01)!=0) 
 		   text += "F13 on ";
 		else text += "F13 off ";
@@ -1155,7 +1156,7 @@ import jmri.jmrix.lenz.XNetConstants;
          */
 
 	private String parseFunctionMomentaryStatus(int element3,int element4){
-		String text = new String("");
+		String text = "";
 		if((element3 & 0x10)!=0) 
 		   text += "F0 Momentary ";
 		else text += "F0 Continuous ";
@@ -1204,7 +1205,7 @@ import jmri.jmrix.lenz.XNetConstants;
          */
 
 	private String parseFunctionHighMomentaryStatus(int element3,int element4){
-		String text = new String("");
+		String text = "";
 		if((element3 & 0x01)!=0) 
 		   text += "F13 Momentary ";
 		else text += "F13 Continuous ";

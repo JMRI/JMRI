@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003-2009
- * @version			$Revision: 2.13 $
+ * @version			$Revision: 2.14 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -24,8 +24,6 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 	   interval of 500 milliseconds durring normal communications */
 	static private final int XNetProgrammingTimeout = 10000;
 	static private final int XNetMessageTimeout = 5000;
-
-	int _nDataChars = 0;
 
 
 	/** Create a new object, representing a specific-length message.

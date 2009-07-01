@@ -27,7 +27,7 @@ import java.beans.PropertyChangeEvent;
  * @author Bob Jacobsen     Copyright (c) 2002, 2007
  * @author Paul Bender      Copyright (c) 2003, 2004, 2005
  * @author Giorgio Terdina  Copyright (c) 2007
- * @version $Revision: 2.22 $
+ * @version $Revision: 2.23 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -36,7 +36,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 	// keep track of whether or not the command station is in service 
         // mode.  Used for determining if "OK" message is an aproriate 
 	// response to a request to a programming request. 
-	static protected boolean _service_mode = false;
+	protected boolean _service_mode = false;
 
 	public XNetProgrammer() {
 	   // error if more than one constructed?
@@ -124,13 +124,13 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		int cnt = v.size();
 		for (int i=0; i < cnt; i++) {
 			PropertyChangeListener client = v.elementAt(i);
-			client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
+			client.propertyChange(new PropertyChangeEvent(this, name,Integer.valueOf(oldval),Integer.valueOf(newval)));
 		}
 	}
 
 	// members for handling the programmer interface
 
-	static protected int progState = 0;
+	protected int progState = 0;
 	static protected final int NOTPROGRAMMING = 0; // is notProgramming
 	static protected final int REQUESTSENT    = 1; // waiting reply to command to go into programming mode
 	static protected final int INQUIRESENT    = 2; // read/write command sent, waiting reply
@@ -400,7 +400,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
          * currently programming before allowing the Traffic Controller 
          * to send a request to exit service mode
 	 */
-	static public boolean programmerBusy() {
+	public boolean programmerBusy() {
 	    return (progState!=NOTPROGRAMMING);
 	} 
 
