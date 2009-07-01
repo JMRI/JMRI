@@ -99,7 +99,7 @@
  * may be necessary to poll for the feedback response data.
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 2.20 $
+ * @version			$Revision: 2.21 $
  */
 
 package jmri.jmrix.lenz;
@@ -117,6 +117,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     /* Static arrays to hold Lenz specific feedback mode information */
     static String[] modeNames = null;
     static int[] modeValues = null;
+
+    protected int _mThrown = jmri.Turnout.THROWN;
+    protected int _mClosed = jmri.Turnout.CLOSED;
 
     public XNetTurnout(int pNumber) {  // a human-readable turnout number must be specified!
         super("XT"+pNumber);
@@ -183,7 +186,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     // Handle a request to change state by sending an XPressNet command
     synchronized protected void forwardCommandChangeToLayout(int s) {
-        if(s!=CLOSED && s!=THROWN) {
+        if(s!=_mClosed && s!=_mThrown) {
              log.warn("Turnout " + mNumber + ": state " + s + " not forwarded to layout.");
              return;
         }
@@ -191,8 +194,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         //LenzCommandStation cs = XNetTrafficController.instance().getCommandStation();
         // get the right packet
         XNetMessage msg = XNetMessage.getTurnoutCommandMsg(mNumber,
-                                                  (s & CLOSED)!=0,
-                                                  (s & THROWN)!=0,
+                                                  (s & _mClosed )!=0,
+                                                  (s & _mThrown )!=0,
                                                   true );
         if(getFeedbackMode()==SIGNAL)
         {  
@@ -224,6 +227,27 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                                  (mNumber%4)<2); 
        XNetTrafficController.instance().sendXNetMessage(msg, null);
     }
+
+        synchronized public void setInverted(boolean inverted) {
+                if(log.isDebugEnabled()) log.debug("Inverting Turnout State for turnout xt"+mNumber);
+                boolean oldInverted = _inverted;
+                _inverted = inverted;
+                if(inverted){
+                            _mThrown=jmri.Turnout.CLOSED;
+                            _mClosed=jmri.Turnout.THROWN;
+                            }
+                else {
+                            _mThrown=jmri.Turnout.THROWN;
+                            _mClosed=jmri.Turnout.CLOSED;
+                     }
+                if (oldInverted != _inverted)
+                        firePropertyChange("inverted", Boolean.valueOf(oldInverted),
+                                        Boolean.valueOf(_inverted));
+        }
+
+    public boolean canInvert() {
+                return true;
+        }
 
 
     /*
@@ -471,10 +495,10 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     protected synchronized void sendOffMessage() {
             // We need to tell the turnout to shut off the output.
 	    if(log.isDebugEnabled()) log.debug("Sending off message for turnout " + mNumber + " commanded state= " +getCommandedState());
-            XNetMessage msg =  XNetMessage.getTurnoutCommandMsg(mNumber,
-                                                  getCommandedState()==CLOSED,
-                                                  getCommandedState()==THROWN,
-                                                  false );
+            XNetMessage msg = XNetMessage.getTurnoutCommandMsg(mNumber,
+                                                  getCommandedState()==_mClosed,
+                                                  getCommandedState()==_mThrown,
+                                                  false ); 
             XNetTrafficController.instance().sendXNetMessage(msg, this);
 	    // Set the known state to the commanded state.
             synchronized(this) {
@@ -506,13 +530,13 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             if (log.isDebugEnabled()) log.debug("Message for turnout " + mNumber);
             if(l.getTurnoutStatus(startByte,1)==THROWN) {
                synchronized(this) {
-                  newCommandedState(THROWN);
+                  newCommandedState(_mThrown);
                   newKnownState(getCommandedState());
                }
 	       return(0);
             } else if(l.getTurnoutStatus(startByte,1)==CLOSED) { 
                synchronized(this) {
-                  newCommandedState(CLOSED);
+                  newCommandedState(_mClosed);
                   newKnownState(getCommandedState());
                }
 	       return(0);
@@ -530,13 +554,13 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             if (log.isDebugEnabled()) log.debug("Message for turnout" + mNumber);
             if(l.getTurnoutStatus(startByte,0)==THROWN) {
                synchronized(this) {
-                  newCommandedState(THROWN);
+                  newCommandedState(_mThrown);
                   newKnownState(getCommandedState());
                }
 	       return(0);
             } else if(l.getTurnoutStatus(startByte,0)==CLOSED) { 
                synchronized(this) {
-                  newCommandedState(CLOSED);
+                  newCommandedState(_mClosed);
                   newKnownState(getCommandedState());
                }
 	       return(0);
