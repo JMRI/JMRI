@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.6.shtml,v 1.2 2009-06-29 15:08:16 jacobsen Exp $ -->
+<!-- $Id: jmri2.6.shtml,v 1.3 2009-07-01 04:39:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -38,6 +38,21 @@
 <p>We are very pleased to announce that the 2.5 series of JMRI test releases has resulted in a 
 version that's good enough to be recommended for general use, including by new users. 
 We're therefore making that version, "Production version 2.6" available for download today.
+
+<p>
+Among the enhancements since the last production release, JMRI 2.4, are:
+<ul>
+<li>Routes and Logix are both more powerful and simpler to configure.
+<li>Many improvements to the operations support.
+<li>The hardware support for Digitrax, NCE, Lenz, CTU Acela, C/MRI, and CBUS systems were all improved.
+<li>Greatly improved icon handling in the Panel Editor, making it
+    much easier to use the specific images you want.
+<li>Many improvements to the <a href="http://jmri.org/help/en/webtoc.shtml">help screens</a>.
+<li>Many decoder definition updates.
+<li>Greatly improved Windows installer.
+<li>More options in the
+    <a href="http://jmri.org/help/en/package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher support</a>.
+</ul>
 
 <b><p>
 JMRI is now only available under the 
@@ -128,7 +143,7 @@ are using a Linux computer.
 <h3>Changes since production version 2.4</h3>
 
 (JMRI 2.6 contains all the changes in the JMRI 2.5.* series of releases; 
-the following is just a preliminary list that hasn't been editted and merged yet)
+the following is just a preliminary list that hasn't been edited and merged yet)
 
 <p>
 Fixed an error with the Digitrax SoundLoader if you cancelled before opening a file.
@@ -138,18 +153,18 @@ Reformatted the DecoderPro speed table to fit better on narrow screens.
 
 <p>
 Update Throttle 
-"<a href="http://jmri.sf.net/help/en/package/jmri/jmrit/throttle/ThrottleFrame.shtml">Edit Throttle Frame</a>" so user is less likely
-to enter a new frame title and not have it appear.
+"<a href="http://jmri.sf.net/help/en/package/jmri/jmrit/throttle/ThrottleFrame.shtml">Edit Throttle Frame</a>" 
+so user is less likely to enter a new frame title and not have it appear.
 
 <p>
 Several technical updates were made. These shouldn't affect users, but
 things don't always go perfectly...
 <ul>
 <li>Standard build for debugging now uses Java 1.5, builds Java 1.5 classes.
-    This required some minor code edits to remove warnings.s
+    This required some minor code edits to remove warnings.
 <li>Removed obsolete methods from Routes, deprecated since JMRI 1.7.6
 <li>Removed varoius Ugly Hacks associated with the JSpinner class not being
-    available in pre-1.5 JVMs.  This changed Thottle, Turnout Operations, LocoNet Over Tcp.
+    available in pre-1.5 JVMs.  This changed Thottle, Turnout Operations, LocoNet Over TCP.
 </ul>
 
 <p>
@@ -261,7 +276,8 @@ This lets JMRI run cleanly on Windows 7.
 Nigel Cliffe and Mark Waters provided new definitions for the
 Zimo MX620 decoder.
 
-<p>Dan Boudreau made several enhancements to the operations program.
+<p>
+Dan Boudreau made several enhancements to the operations program.
 You can now specify car loads, and define the name of the load received
 or shipped for a siding by using the schedule feature. Schedules can now
 be accessed from the Locations menu under Tools. You can now also modify
