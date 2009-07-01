@@ -8,13 +8,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Frame;
-import java.awt.Graphics2D;
+//import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
+//import java.awt.RenderingHints;
+//import java.awt.geom.AffineTransform;
+//import java.awt.image.BufferedImage;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
