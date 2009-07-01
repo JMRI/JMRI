@@ -18,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.52 $
+ * @version $Revision: 1.53 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -219,8 +219,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             log.error("FileNotFound error writing file: "+ex3.getLocalizedMessage());
         } catch (java.io.IOException ex2) {
             log.error("IO error writing file: "+ex2.getLocalizedMessage());
-        } catch (org.jdom.JDOMException ex1) {
-            log.error("IO exception writing file: "+ex1.getLocalizedMessage());
         } 
     }
 
