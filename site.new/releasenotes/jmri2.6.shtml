@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.6.shtml,v 1.4 2009-07-01 14:58:50 jacobsen Exp $ -->
+<!-- $Id: jmri2.6.shtml,v 1.5 2009-07-02 00:01:35 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -128,22 +128,22 @@ are using a Linux computer.
 
 <h3>Download links:</h3>
 
-<p>Please use these links for downloading, including the "?download" at the end. That adds to SourceForge's advertising statistics, which makes them happy to host our stuff.
+<p>Please use these links for downloading:
 
 <p>MacOS X:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.6.dmg?download">http://downloads.sourceforge.net/jmri/JMRI.2.6.dmg?download</a>
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.6.dmg">http://downloads.sourceforge.net/jmri/JMRI.2.6.dmg</a>
 
 <p>Windows:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.6.exe?download">http://downloads.sourceforge.net/jmri/JMRI.2.6.exe?download</a>
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.6.exe">http://downloads.sourceforge.net/jmri/JMRI.2.6.exe</a>
 
 <p>Linux:
-     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.6.tgz?download">http://downloads.sourceforge.net/jmri/JMRI.2.6.tgz?download</a>
+     <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.6.tgz">http://downloads.sourceforge.net/jmri/JMRI.2.6.tgz</a>
 
 
 <h3>Changes since production version 2.4</h3>
 
-(JMRI 2.6 contains all the changes in the JMRI 2.5.* series of releases; 
-the following is just a preliminary list that hasn't been edited and merged yet)
+JMRI 2.6 contains all the changes in the JMRI 2.5.* series of releases; 
+the following is a list of the accumulated changes from those release notes)
 
 <p>
 Fixed an error with the Digitrax SoundLoader if you cancelled before opening a file.
@@ -797,6 +797,8 @@ from the preview panel to the entity's icons and dropping it there.
     and then added to the trees that provide icons for importing to the Panel
 <li>An Image Index can be created and a permanet copy saved to organize the icons for import to the Panel.  
 This index is usable globally (i.e. not confined to the Panel under construction)
+<li>Panel Editor users may now change the default icons to be icons of their own choosing.
+<li>Icons can be edited directly from the Panel by using the dropdown popup item "edit".
 </ol>
 See also the 
 <a href="http://jmri.org/help/en/package/jmri/jmrit/catalog/ImageIndex.shtml">Image Index</a>
@@ -827,16 +829,6 @@ Marc Fournier updated the TCS BEMF decoder tooltips.
 <p>
 Dan Boudreau added a user prompt if something goes wrong when loading a panel file.
 This will remind people to check their preferences, so they don't lose any contents of the file.
-
-<p>
-Panel Editor users may now change the default icons to be icons of their own choosing.
-
-<p>
-Fix to a problem saving custom icons in the Panel Editor that was introduced in 2.5.7.
-
-<p>
-A problem that prevented editing Signal Head definitions
-from the Signal Head Table has been fixed.
 
 <p>
 Added "lights" alias for scripting
