@@ -39,6 +39,7 @@
 	<ul>
 	<li>Production Versions</li>
 	    <UL>
+	        <LI><A href="../releasenotes/jmri2.6.shtml">JMRI 2.6</a>
 	        <LI><A href="../releasenotes/jmri2.4.shtml">JMRI 2.4</a>
             <LI><A href="../releasenotes/jmri2.2.shtml">JMRI 2.2</a>
             <LI><A href="../releasenotes/jmri2.0.shtml">JMRI 2.0</a>
@@ -50,6 +51,11 @@
 	    </UL>
 	<li>Development Versions</li>
 	    <UL>
+	    <LI><A href="../releasenotes/jmri2.5.7.shtml">JMRI 2.5.7</a>
+	    <LI><A href="../releasenotes/jmri2.5.6.shtml">JMRI 2.5.6</a>
+	    <LI><A href="../releasenotes/jmri2.5.5.shtml">JMRI 2.5.5</a>
+	    <LI><A href="../releasenotes/jmri2.5.4.shtml">JMRI 2.5.4</a>
+	    <LI><A href="../releasenotes/jmri2.5.3.shtml">JMRI 2.5.3</a>
 	    <LI><A href="../releasenotes/jmri2.5.2.shtml">JMRI 2.5.2</a>
 	    <LI><A href="../releasenotes/jmri2.5.1.shtml">JMRI 2.5.1</a>
 	    <LI><A href="../releasenotes/jmri2.3.8.shtml">JMRI 2.3.8</a>
@@ -96,7 +102,7 @@
 	    </UL>
 	<li>(Tentative) Next Version</li>
 	    <UL>
-	    <LI><A href="../releasenotes/jmri2.5.3.shtml">JMRI 2.5.3</a>
+	    <LI><A href="../releasenotes/jmri2.7.1.shtml">JMRI 2.7.1</a>
         </ul>
 	</ul>
 
