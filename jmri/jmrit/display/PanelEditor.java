@@ -75,7 +75,7 @@ import java.util.Iterator;
 
 public class PanelEditor extends JmriJFrame implements ItemListener {
 
-    public static Integer BKG       = new Integer(1);
+    final public static Integer BKG       = new Integer(1);
     final public static Integer ICONS     = new Integer(3);
     final public static Integer LABELS    = new Integer(5);
     final public static Integer MEMORIES  = new Integer(5);
@@ -869,6 +869,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     }
     public void putTurnout(TurnoutIcon l) {
         l.invalidate();
+        l.setPanel(this);
         target.add(l, l.getDisplayLevel());
         configureItem(l);
         contents.add(l);
@@ -891,6 +892,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         l.setHorizontalTextPosition(SwingConstants.CENTER);
     	l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.invalidate();
+        l.setPanel(this);
         target.add(l, l.getDisplayLevel());
         configureItem(l);
         contents.add(l);
@@ -917,6 +919,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     }
     public void putSensor(SensorIcon l) {
         l.invalidate();
+        l.setPanel(this);
         target.add(l, l.getDisplayLevel());
         configureItem(l);
         contents.add(l);
@@ -952,6 +955,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     // invoked to install the sensor
     public void putMultiSensor(MultiSensorIcon l) {
         l.invalidate();
+        l.setPanel(this);
         target.add(l, l.getDisplayLevel());
         configureItem(l);
         contents.add(l);
@@ -982,6 +986,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     }
     public void putSignal(SignalHeadIcon l) {
         l.invalidate();
+        l.setPanel(this);
         target.add(l, l.getDisplayLevel());
         configureItem(l);
         contents.add(l);
@@ -1027,6 +1032,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     }
     public void putLabel(PositionableLabel l) {
         l.invalidate();
+        l.setPanel(this);
         target.add(l, l.getDisplayLevel());
         configureItem(l);
         contents.add(l);
@@ -1095,6 +1101,12 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         int x = Integer.parseInt(nextX.getText());
         int y = Integer.parseInt(nextY.getText());
         obj.setLocation(x,y);
+    }
+    
+    public void setDisplayLevel(PositionableLabel l){
+    	target.remove(l);
+    	target.add(l, l.getDisplayLevel());
+    	target.validate();
     }
 
     /**

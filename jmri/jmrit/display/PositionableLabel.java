@@ -35,7 +35,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  */
 
 public class PositionableLabel extends JLabel
@@ -87,6 +87,15 @@ public class PositionableLabel extends JLabel
     protected void setPanel(LayoutEditor panel) {
 		layoutPanel = panel;
     }
+    
+    PanelEditor panelEditor = null;
+    /**
+     * Set panel (called from Panel Editor)
+     * @param panel
+     */
+    protected void setPanel(PanelEditor panel){
+    	panelEditor = panel;
+    }
 
     /**
      * Update the AWT and Swing size information due to change in internal
@@ -105,7 +114,14 @@ public class PositionableLabel extends JLabel
     }
 
     private Integer displayLevel;
-    public void setDisplayLevel(Integer l) { displayLevel = l; }
+    public void setDisplayLevel(Integer l) {
+    	Integer oldDisplayLevel = displayLevel;
+    	displayLevel = l;
+    	if (oldDisplayLevel!=null && oldDisplayLevel!=l && panelEditor!=null){
+    		log.debug("Changing label display level");
+    		panelEditor.setDisplayLevel(this);
+    	}
+    }
     public void setDisplayLevel(int l) { setDisplayLevel(new Integer(l)); }
     public Integer getDisplayLevel() { return displayLevel; }
 
