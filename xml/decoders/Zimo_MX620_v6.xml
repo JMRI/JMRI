@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2008 All rights reserved -->
-<!-- $Id: Zimo_MX620_v6.xml,v 1.3 2009-02-23 02:40:19 jacobsen Exp $ -->
+<!-- $Id: Zimo_MX620_v6.xml,v 1.4 2009-07-03 07:08:49 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,8 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+		<version author="Mark Waters mark16w-jmri@yahoo.co.uk"
+			version="1.03" lastUpdated="20090626" />
 		<version author="Mark Waters mark16w-jmri@yahoo.co.uk"
 			version="1.02" lastUpdated="20090222" />
 		<version author="Mark Waters mark16w-jmri@yahoo.co.uk"
@@ -37,8 +39,9 @@
      variables on the proper pane of the Comprehensive programmer.
 
          <!-- V 1 new file -->
-	   <!-- v 1.01  cv's 116, 129 & 130 deleted as not supported by MX620 -->
-         <!-- V 1.02 corrected minOut in CV38 -->			
+         <!-- v 1.01  cv's 116, 129 & 130 deleted as not supported by MX620 -->
+         <!-- V 1.02 corrected minOut in CV38 -->
+         <!-- V 1.03  CV's 129 & 130 replaced (manual ambiguous)-->	
 
 <decoder>
 	<family name="Zimo MX620" mfg="Zimo">
@@ -1201,6 +1204,66 @@
 				</enumVal>
 			</variable>
 
+		<variable label="Function output 3 effect generated" CV="129" mask="VVVVVVXX" tooltip="CV 129"
+				item="Output 5 effect generated" >
+			<enumVal>
+				<enumChoice choice="Standard on/off function output"/>
+				<enumChoice choice="Mars light"/>
+				<enumChoice choice="Random Flicker"/>
+				<enumChoice choice="Flashing Headlight"/>
+				<enumChoice choice="Single Pulse Strobe"/>
+				<enumChoice choice="Double Pulse Strobe"/>
+				<enumChoice choice="Rotary Beacon"/>
+				<enumChoice choice="Gyralite"/>
+				<enumChoice choice="Ditch Light Type 1, right"/>
+				<enumChoice choice="Ditch Light Type 1, left"/>
+				<enumChoice choice="Ditch Light Type 2, right"/>
+				<enumChoice choice="Ditch Light Type 2, left"/>
+				<enumChoice choice="Uncoupling"/>
+				<enumChoice choice="Soft Start"/>
+				<enumChoice choice="Auto Turn Off when stationary"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Function output 3 behavior" CV="129" mask="XXXXXXVV" tooltip="CV 129"
+				item="Output 5 behavior" >
+			<enumVal>
+				<enumChoice choice="Both directions"/>
+				<enumChoice choice="Only in forward"/>
+				<enumChoice choice="Only in reverse"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Function output 4 effect generated" CV="130" mask="VVVVVVXX" tooltip="CV 130"
+				item="Output 6 effect generated" >
+			<enumVal>
+				<enumChoice choice="Standard on/off function output"/>
+				<enumChoice choice="Mars light"/>
+				<enumChoice choice="Random Flicker"/>
+				<enumChoice choice="Flashing Headlight"/>
+				<enumChoice choice="Single Pulse Strobe"/>
+				<enumChoice choice="Double Pulse Strobe"/>
+				<enumChoice choice="Rotary Beacon"/>
+				<enumChoice choice="Gyralite"/>
+				<enumChoice choice="Ditch Light Type 1, right"/>
+				<enumChoice choice="Ditch Light Type 1, left"/>
+				<enumChoice choice="Ditch Light Type 2, right"/>
+				<enumChoice choice="Ditch Light Type 2, left"/>
+				<enumChoice choice="Uncoupling"/>
+				<enumChoice choice="Soft Start"/>
+				<enumChoice choice="Auto Turn Off when stationary"/>
+				</enumVal>
+			</variable>
+
+		<variable label="Function output 4 behavior" CV="130" mask="XXXXXXVV" tooltip="CV 130"
+				item="Output 6 behavior" >
+			<enumVal>
+				<enumChoice choice="Both directions"/>
+				<enumChoice choice="Only in forward"/>
+				<enumChoice choice="Only in reverse"/>
+				</enumVal>
+			</variable>
+
 		<variable label="Function Output 2 as virtual Cam" CV="133" default="0">
 			<decVal min="0" max="255"/>
 			</variable>
@@ -2038,5 +2101,7 @@
 </pane>
 
 </decoder-config>
+
+ 	  	 
 
  	  	 
