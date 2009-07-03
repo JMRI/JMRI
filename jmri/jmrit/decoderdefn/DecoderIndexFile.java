@@ -32,7 +32,7 @@ import java.util.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.38 $
+ * @version			$Revision: 1.39 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -316,6 +316,8 @@ public class DecoderIndexFile extends XmlFile {
             if (a!=null) nmraListDate = a.getValue();
             a = mfgList.getAttribute("updated");
             if (a!=null) updated = a.getValue();
+            a = mfgList.getAttribute("lastadd");
+            if (a!=null) lastAdd = a.getValue();
             
             List<Element> l = mfgList.getChildren("manufacturer");
             if (log.isDebugEnabled()) log.debug("readMfgSection sees "+l.size()+" children");
@@ -434,6 +436,8 @@ public class DecoderIndexFile extends XmlFile {
             mfgList.setAttribute("nmraListDate", oldIndex.nmraListDate);
         if (oldIndex.updated!=null)
             mfgList.setAttribute("updated", oldIndex.updated);
+        if (oldIndex.lastAdd!=null)
+            mfgList.setAttribute("lastadd", oldIndex.lastAdd);
         
         // We treat "NMRA" special...
         Element mfg = new Element("manufacturer");
@@ -484,6 +488,7 @@ public class DecoderIndexFile extends XmlFile {
 
     String nmraListDate = null;
     String updated = null;
+    String lastAdd = null;
 
     /**
      * Return the filename String for the default decoder index file, including location.
