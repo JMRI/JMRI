@@ -125,7 +125,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     */
     @SuppressWarnings("unchecked")
     private void makeIcons(String type, CatalogTreeNode n) {
-        if (log.isDebugEnabled()) log.debug("makeIcons node= "+n.toString());
+        if (log.isDebugEnabled()) log.debug("makeIcons from node= "+n.toString());
         Enumeration<CatalogTreeNode> e = n.children();
         while (e.hasMoreElements()) {
             CatalogTreeNode nChild = e.nextElement();
@@ -146,6 +146,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     protected void setIcon(int order, String label, NamedIcon icon) {
         // make a button to change that icon
+        if (log.isDebugEnabled()) log.debug("setIcon: order= "+order+", key= "+label);
         JButton button = new IconButton(label, icon);
         button.setToolTipText(icon.getName());
         _iconMap.put(label, button);
@@ -366,7 +367,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         valueChanged(null);     // set enabled, tool tips etc.
         this.add(p);
 
-        if (addToTable && _type != null) {
+        if (addToTable /* && _type != null */) {
             p = new JPanel();
             p.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
             _sysNametext = new JTextField();

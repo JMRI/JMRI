@@ -156,6 +156,7 @@ public class MultiSensorIconAdder extends IconAdder {
             }
             p4.setBorder(BorderFactory.createLineBorder(color));
             p4.add(new JLabel(name));
+            p4.setMaximumSize(p4.getPreferredSize());
             p3.add(p4);
 
             JPanel p13 =new JPanel();
@@ -271,7 +272,7 @@ public class MultiSensorIconAdder extends IconAdder {
     private void addIcon() {
         int index = _order.size();
         String name = "resources/icons/USS/plate/levers/l-vertical.gif";
-        setIcon(index, "foop", name);
+        super.setIcon(index, "MultiSensorPosition " +_lastIndex++, new NamedIcon(name, name));
         valueChanged(null);
         makeIconPanel();
         this.invalidate();
@@ -300,6 +301,8 @@ public class MultiSensorIconAdder extends IconAdder {
     */
     void delete(int index) {
         String key = _order.get(index);
+        if (log.isDebugEnabled()) log.debug("delete("+index+") Sizes: _iconMap= "+_iconMap.size()
+                  +", _sensorMap= "+_sensorMap.size()+", _order= "+_order.size());
         _iconMap.remove(key);
         _sensorMap.remove(key);
         _order.remove(index);
@@ -380,7 +383,7 @@ public class MultiSensorIconAdder extends IconAdder {
                 cnfe.printStackTrace();
             }
             new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
-            if (log.isDebugEnabled()) log.debug("DropPanel ctor");
+            //if (log.isDebugEnabled()) log.debug("DropPanel ctor");
         }
         public void dragExit(DropTargetEvent dte) {
         }
