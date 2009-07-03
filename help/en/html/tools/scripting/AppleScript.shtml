@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: AppleScript.shtml,v 1.1 2008-09-06 01:09:57 jacobsen Exp $ -->
+<!-- $Id: AppleScript.shtml,v 1.2 2009-07-03 15:36:47 jacobsen Exp $ -->
 <title>JMRI: AppleScript</title>
 
 <!-- Style -->
@@ -38,7 +38,7 @@ so that they can work together easily.
 You can write AppleScript commands and programs (scripts) within
 JMRI jython scripts, and then invoke them to have your Mac perform
 functions outside JMRI.  An example of this is in the
-<a href="http://jmri.sf.net/jython/AppleScript.py">AppleScript.py</a> sample script distributed with 
+<a href="http://jmri.org/jython/AppleScript.py">AppleScript.py</a> sample script distributed with 
 JMRI. It executes a very simple AppleScript:
 <code><pre>
   tell application "Finder"
