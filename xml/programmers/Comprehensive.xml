@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.29 2009-05-25 17:32:29 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.30 2009-07-03 06:33:54 jacobsen Exp $ -->
     <version version="11" author="Howard G. Penny" lastUpdated="20050713"/>
     <version version="12" author="Michael Mosher" lastUpdated="20070717"/>
     <version version="13" author="Bruce Shanks" lastUpdated="20080614"/>
@@ -47,7 +47,7 @@
                 <dccaddress/>
                 <label label=" "/>
                 <display item="Short Address" tooltip="Sets the Primary (2 digit) address"/>
-                <display item="Long Address" tooltip="Sets the Extended (4 digit) address"/>
+                <display item="Long Address" tooltip="Sets the extended (4 digit) address"/>
                 <display item="Address Format" tooltip="Determines whether loco will use short or long address"/>
                 <label label=" "/>
                 <display item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward"/>
@@ -327,39 +327,39 @@
                 <display item="Analog Mode Function Status - FL" format="checkbox" tooltip="Sets the status of function FL when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - FL(f)" format="checkbox" tooltip="Sets the status of function FL(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - FL(r)" format="checkbox" tooltip="Sets the status of function FL(r) when the unit is operating in analog power mode"/>
-                
+
                 <display item="Analog Mode Function Status - F0" format="checkbox" tooltip="Sets the status of function F0 when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F0(f)" format="checkbox" tooltip="Sets the status of function F0(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F0(r)" format="checkbox" tooltip="Sets the status of function F0(r) when the unit is operating in analog power mode"/>
-                
+
                 <display item="Analog Mode Function Status - F1" format="checkbox" tooltip="Sets the status of function F1 when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F1(f)" format="checkbox" tooltip="Sets the status of function F1(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F1(r)" format="checkbox" tooltip="Sets the status of function F1(r) when the unit is operating in analog power mode"/>
-                
+
                 <display item="Analog Mode Function Status - F2" format="checkbox" tooltip="Sets the status of function F2 when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F2(f)" format="checkbox" tooltip="Sets the status of function F2(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F2(r)" format="checkbox" tooltip="Sets the status of function F2(r) when the unit is operating in analog power mode"/>
-                
+
                 <display item="Analog Mode Function Status - F3" format="checkbox" tooltip="Sets the status of function F3 when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F3(f)" format="checkbox" tooltip="Sets the status of function F3(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F3(r)" format="checkbox" tooltip="Sets the status of function F3(r) when the unit is operating in analog power mode"/>
-                
+
                 <display item="Analog Mode Function Status - F4" format="checkbox" tooltip="Sets the status of function F4 when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F4(f)" format="checkbox" tooltip="Sets the status of function F4(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F4(r)" format="checkbox" tooltip="Sets the status of function F4(r)) when the unit is operating in analog power mode"/>
-                
+
                 <display item="Analog Mode Function Status - F5" format="checkbox" tooltip="Sets the status of function F5 when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F5(f)" format="checkbox" tooltip="Sets the status of function F5(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F5(r)" format="checkbox" tooltip="Sets the status of function F5(r) when the unit is operating in analog power mode"/>
-                
+
                 <display item="Analog Mode Function Status - F6" format="checkbox" tooltip="Sets the status of function F6 when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F6(f)" format="checkbox" tooltip="Sets the status of function F6(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F6(r)" format="checkbox" tooltip="Sets the status of function F6(r) when the unit is operating in analog power mode"/>
-                
+
                 <display item="Analog Mode Function Status - F7" format="checkbox" tooltip="Sets the status of function F7 when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F7(f)" format="checkbox" tooltip="Sets the status of function F7(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F7(r)" format="checkbox" tooltip="Sets the status of function F7(r) when the unit is operating in analog power mode"/>
-                
+
                 <display item="Analog Mode Function Status - F8" format="checkbox" tooltip="Sets the status of function F8 when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F8(f)" format="checkbox" tooltip="Sets the status of function F8(f) when the unit is operating in analog power mode"/>
                 <display item="Analog Mode Function Status - F8(r)" format="checkbox" tooltip="Sets the status of function F8(r) when the unit is operating in analog power mode"/>
@@ -429,6 +429,9 @@
                 <label label=" "/>
                 <label label="Will decoder respond to function requests at consist address?"/>
                 <label label=" "/>
+                <display item="Consist Function" tooltip=" Sets functions to follow base address or consist address"/>
+                <display item="Consist Function Mode" Tooltip="Lighting mode for consist"/>
+                <label label=" "/>
                 <display item="Consist Address Active For FL in Forward" tooltip="Determines whether the function will respond to the consist address"/>
                 <display item="Consist Address Active For FL in Reverse" tooltip="Determines whether the function will respond to the consist address"/>
                 <display item="Consist Address Active For F0" tooltip="Determines whether the function will respond to the consist address"/>
@@ -458,8 +461,8 @@
                 <display item="Packet Time-out Value" tooltip="The maximum time period that the decoder will maintain its speed without receiving a valid packet addressed to it"/>
             </column>
             <column>
-			<label label="      "/>
-	    </column>
+            <label label="      "/>
+        </column>
             <column>
                 <display item="Advanced Group 1 Option 1"/>
                 <display item="Advanced Group 1 Option 2"/>
@@ -471,8 +474,8 @@
                 <display item="Advanced Group 1 Option 8"/>
             </column>
             <column>
-			<label label="      "/>
-	    </column>
+            <label label="      "/>
+        </column>
             <column>
                 <display item="Advanced Group 2 Option 1"/>
                 <display item="Advanced Group 2 Option 2"/>
@@ -888,6 +891,8 @@
     </programmer>
 </programmer-config>
 
- 	  	 
+
+
+
 
  	  	 
