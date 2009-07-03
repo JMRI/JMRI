@@ -3,9 +3,9 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.5.6 on Fri Jun 19 17:46:14 PDT 2009 $Id: decoderIndex.xml,v 1.143 2009-06-20 00:48:44 jacobsen Exp $-->
-  <decoderIndex version="168">
-    <mfgList nmraListDate="2009-01-15" updated="2009-02-18">
+  <!--Written by JMRI version 2.7.1 on Fri Jul 03 07:55:14 PDT 2009 $Id: decoderIndex.xml,v 1.144 2009-07-03 14:56:45 jacobsen Exp $-->
+  <decoderIndex version="170">
+    <mfgList nmraListDate="2009-05-06" updated="2009-07-03" lastadd="53">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
@@ -64,7 +64,7 @@
       <manufacturer mfg="NAC Services, Inc" mfgID="37" />
       <manufacturer mfg="NMRA Reserved" mfgID="238" />
       <manufacturer mfg="Nagasue System Design Office" mfgID="103" />
-      <manufacturer mfg="New York Byano Limited" mfgID="71" />
+      <manufacturer mfg="New Youk Byano Limited" mfgID="71" />
       <manufacturer mfg="Ngineering" mfgID="43" />
       <manufacturer mfg="North Coast Engineering" mfgID="11" />
       <manufacturer mfg="PSI-Dynatrol" mfgID="14" />
@@ -75,6 +75,7 @@
       <manufacturer mfg="RR-CirKits" mfgID="87" />
       <manufacturer mfg="Railnet Solutions" mfgID="15" />
       <manufacturer mfg="RamFixx Technologies (Wangrow)" mfgID="66" />
+      <manufacturer mfg="Rautenhaus Digital Vertrieb" mfgID="53" />
       <manufacturer mfg="RealRail Effects" mfgID="139" />
       <manufacturer mfg="Regal Way Co. Ltd" mfgID="32" />
       <manufacturer mfg="Rock Junction Controls" mfgID="149" />
@@ -1401,6 +1402,36 @@
           <!-- headlight, F5, F6 -->
         </model>
       </family>
+      <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_Athearn_BigBoy.xml">
+        <model model="Athearn Big Boy and 4-8-4 FEF" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- note All 28 functions are NMRA compatible -->
+        </model>
+      </family>
+      <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_Athearn_BigBoy_N.xml">
+        <model model="Athearn Big Boy and Challenger NScale" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- note All 28 functions are NMRA compatible -->
+        </model>
+      </family>
+      <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_Athearn_Challenger.xml">
+        <model model="Athearn Genesis Challenger" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsNmraF13="yes" extFnsMRC="no" extFnsNmraBSC="no" nmraWarrant="no" connector="unspecified">
+          <!-- note All 28 functions are NMRA compatible -->
+        </model>
+      </family>
+      <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_Athearn_F45.xml">
+        <model model="Athearn Genesis F45/FP45" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- Functions F0 to F28 are NMRA compatible -->
+          <size length="90" width="14" height="4.2" units="mm" />
+        </model>
+      </family>
+      <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_Athearn_F_Unit.xml">
+        <model model="Athearn Genesis F Unit" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes" extFnsMRC="no" extFnsNmraBSC="no" nmraWarrant="no" connector="unspecified" />
+      </family>
+      <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_Athearn_MP15.xml">
+        <model model="Athearn Genesis MP 15" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- Functions F0 to F28 are NMRA compatible -->
+          <size length="90" width="14" height="4.2" units="mm" />
+        </model>
+      </family>
       <family name="Athearn Genesis Challenger" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_Challenger.xml">
         <model model="Athearn Genesis Challenger" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes" extFnsMRC="no" extFnsNmraBSC="no" nmraWarrant="no" connector="unspecified" />
       </family>
@@ -1483,7 +1514,7 @@
         </model>
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45" type="locomotive" file="MRC_soundbrilliance1806.xml">
-        <model model="N Scale Drop in DCC Decoder for KATO SD40-2" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="Synch Diesel Sound 1806 - N Scale KATO SD40-2" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <size length="72" width="9.7" height="3.0" units="mm" />
         </model>
       </family>
