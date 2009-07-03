@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.77 2009-07-02 16:26:56 plocher Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.78 2009-07-03 17:32:01 plocher Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -31,7 +31,7 @@
     <P>
     In addition, a large number of people have donated to the 
     project.  For more information, or to donate, please see
-    <A HREF="/donations.shtml">our donations page</a>.
+    <A href="http://jmri.org/donations.shtml">our donations page</a>.
 <UL>
 
 <a name="A"></A>
@@ -92,7 +92,7 @@
 	and for creating the SPROG web page
 	<LI>Jerry Britton, who acquired and maintained the domain registration 
 	for decoderpro.com, despite Matt Katzer's
-	<a href="/k/UDRP/index.shtml">despicable behavior</a>,
+	<a href="http://jmri.org/k/UDRP/index.shtml">despicable behavior</a>,
 	and wrote a scripting example page
 	<LI>Dick Bronson, who created the great LocoBuffer-II and worked hard
 	to make sure it worked well with JMRI. He also contributed sets
@@ -159,7 +159,7 @@
 	<LI>Wayne Eric, who provided the MRC AD370 decoder definition
 	<li>Max Ettinger, who made JMRI work with the QSI Quantum Programmer
 	on Windows and wrote
-	<a href="/install/qsidriver/">great instructions</a>.
+	<a href="http://jmri.org/install/qsidriver/">great instructions</a>.
 <a name="F"></A>
 	<LI>Dave Falkenburg created the original DecoderPro application (and
 	found the perfect name for it!)
@@ -227,7 +227,7 @@
 	<LI>Tony Koester, who helped with signalling
 	<LI>Ross Kudlick researched options switches on Digitrax command stations
 	<LI>Nick Kulp, who helped test much of the C/MRI and signaling logic, presented
-	<A href="/community/clinics/NickKulpMarch2004/index.html">a nice clinic</a> on
+	<A href="http://jmri.org/community/clinics/NickKulpMarch2004/index.html">a nice clinic</a> on
 	how to start making panels, and contributed numerous icons
 <a name="L"></A>
 	<LI>Al Lautenslager of CVP Products, who loaned some EasyDCC hardware
@@ -262,7 +262,7 @@
 	and Atlas decoders, provided new definitions for TCS, MRC and (lots of!) QSI 
 	and Zimo decoders; a real hero of decoder definition distinction
 	<li>Robert Myers provided 
-	<a href="/install/OLPC_XO.shtml">instructions for installing JMRI on an OLPC XO laptop</a>
+	<a href="http://jmri.org/install/OLPC_XO.shtml">instructions for installing JMRI on an OLPC XO laptop</a>
 <a name="N"></A>
 	<LI>Bill Nanney, who tenaciously worked to help find a bug where certain
 	decoders wouldn't read and write all sheets
@@ -344,7 +344,7 @@
 	<li>Giorgio Terdina, who provided the code for the Roco multiMaus and
         for JMRI to connect to his <a href="http://www.terdina.net/rails/">XnTcp adapter</a>.
         He also wrote the 
-        <a href="/community/connections/XtrkCadReader/">XTrkCadReader</a> tool.
+        <a href="http://jmri.org/community/connections/XtrkCadReader/">XTrkCadReader</a> tool.
     <li>Jim Thompson provided a sample script for handling messages from PM42 power controllers
    	<LI>Walter Thompson, who provided the ID information for the Lionel
 	    Challenger decoder and DS54 accessory decoder,
@@ -353,7 +353,7 @@
     <li>Dale Tripp, who co-wrote the 2009 version of the DecoderPro manual.
 <a name="U"></A>
     <li>Peter Ulvestad, who created some nice 
-    <a href="/community/clinics/">clinic presentations</a>
+    <a href="http://jmri.org/community/clinics/">clinic presentations</a>
     and created the 
     <a href="html/doc/Technical/XmlEditors.shtml">page on XML editors</a>.
 <a name="V"></A>
@@ -389,11 +389,11 @@
 </UL>
 
 <h2>Developer Code Swarm</h2>
-<p>We have created a <a href="/community/codeswarm.shtml">Code Swarm of JMRI 
+<p>We have created a <a href="http://jmri.org/community/codeswarm.shtml">Code Swarm of JMRI 
 development</a> from its inception to January 2009.  A Code Swarm is a fascinating
 and dynamic visual representation of change as developers come and go and make 
 changes to the files that make up a project.  More information is available on
-the <a href="/community/codeswarm.shtml">Code Swarm</a> page.
+the <a href="http://jmri.org/community/codeswarm.shtml">Code Swarm</a> page.
 
 <!--#include virtual="/Footer" -->
 </body>
