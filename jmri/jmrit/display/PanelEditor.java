@@ -840,41 +840,28 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
      * Add a turnout indicator to the target
      */
     void addTurnoutR() {
-        TurnoutIcon l = new TurnoutIcon();
         IconAdder editor = _iconEditorFrame.get("RightTOEditor").getEditor();
-        l.setClosedIcon(editor.getIcon("TurnoutStateClosed"));
-        l.setThrownIcon(editor.getIcon("TurnoutStateThrown"));
-        l.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
-        l.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
-        l.setTurnout((Turnout)editor.getTableSelection());
-        setNextLocation(l);
-        putTurnout(l);
-        // always allow new items to be moved
-        l.setPositionable(true);
-        moveToFront(l);
+        addTurnout(editor);
     }
-    void addTurnoutL() {
-        TurnoutIcon l = new TurnoutIcon();
+    
+    void addTurnoutL() {      
         IconAdder editor = _iconEditorFrame.get("LeftTOEditor").getEditor();
+        addTurnout(editor);
+    }
+    
+    void addTurnout(IconAdder editor){
+    	TurnoutIcon l = new TurnoutIcon();
         l.setClosedIcon(editor.getIcon("TurnoutStateClosed"));
         l.setThrownIcon(editor.getIcon("TurnoutStateThrown"));
         l.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
         l.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
         l.setTurnout((Turnout)editor.getTableSelection());
         setNextLocation(l);
-        putTurnout(l);
+        putLabel(l);
         // always allow new items to be moved
         l.setPositionable(true);
         moveToFront(l);
-    }
-    public void putTurnout(TurnoutIcon l) {
-        l.invalidate();
-        l.setPanel(this);
-        target.add(l, l.getDisplayLevel());
-        configureItem(l);
-        contents.add(l);
-        // reshow the panel
-        target.validate();
+
     }
     
     public LocoIcon addLocoIcon (String name){
@@ -891,13 +878,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     public void putLocoIcon(LocoIcon l) {
         l.setHorizontalTextPosition(SwingConstants.CENTER);
     	l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        l.invalidate();
-        l.setPanel(this);
-        target.add(l, l.getDisplayLevel());
-        configureItem(l);
-        contents.add(l);
-        // reshow the panel
-        target.validate();
+    	putLabel(l);
     }
 
     /**
@@ -912,19 +893,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         l.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
         l.setSensor((Sensor)editor.getTableSelection());
         setNextLocation(l);
-        putSensor(l);
+        putLabel(l);
         // always allow new items to be moved
         l.setPositionable(true);
         moveToFront(l);
-    }
-    public void putSensor(SensorIcon l) {
-        l.invalidate();
-        l.setPanel(this);
-        target.add(l, l.getDisplayLevel());
-        configureItem(l);
-        contents.add(l);
-        // reshow the panel
-        target.validate();
     }
 
     // Invoked with window has new sensor ready
@@ -946,21 +918,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
     public void addMultiSensor(MultiSensorIcon m) {
         setNextLocation(m);
-        putMultiSensor(m);
+        putLabel(m);
         // always allow new items to be moved
         m.setPositionable(true);
         moveToFront(m);
-    }
-
-    // invoked to install the sensor
-    public void putMultiSensor(MultiSensorIcon l) {
-        l.invalidate();
-        l.setPanel(this);
-        target.add(l, l.getDisplayLevel());
-        configureItem(l);
-        contents.add(l);
-        // reshow the panel
-        target.validate();
     }
 
     /**
@@ -979,19 +940,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         l.setHeldIcon(editor.getIcon("SIgnalHeadStateHeld"));
         l.setSignalHead((SignalHead)editor.getTableSelection());
         setNextLocation(l);
-        putSignal(l);
+        putLabel(l);
         // always allow new items to be moved
         l.setPositionable(true);
         moveToFront(l);
-    }
-    public void putSignal(SignalHeadIcon l) {
-        l.invalidate();
-        l.setPanel(this);
-        target.add(l, l.getDisplayLevel());
-        configureItem(l);
-        contents.add(l);
-        // reshow the panel
-        target.validate();
     }
 
     /**

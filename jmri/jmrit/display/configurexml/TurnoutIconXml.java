@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class TurnoutIconXml implements XmlAdapter {
 
@@ -135,7 +135,7 @@ public class TurnoutIconXml implements XmlAdapter {
         }
         l.setDisplayLevel(level);
 
-        p.putTurnout(l);
+        p.putLabel(l);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutIconXml.class.getName());

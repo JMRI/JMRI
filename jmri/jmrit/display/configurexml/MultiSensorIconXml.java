@@ -15,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class MultiSensorIconXml implements XmlAdapter {
 
@@ -165,7 +165,7 @@ public class MultiSensorIconXml implements XmlAdapter {
 		
 		// add multi-sensor to the panel
 		if (pe!=null)
-			pe.putMultiSensor(l);
+			pe.putLabel(l);
 		else if (le!=null)
 			le.putMultiSensor(l);
     }
