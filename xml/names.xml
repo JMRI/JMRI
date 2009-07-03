@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.18 2009-04-20 05:51:41 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.19 2009-07-03 07:43:44 jacobsen Exp $ -->
 <names-config>
 		<version author="Jack Shall jack745@bellsouth.net" 
 			version="10" lastUpdated="20090115"/>
@@ -202,6 +202,9 @@
 		<definition item="Consist Address" CV="19" />
 		<definition item="Consist Direction"/>
 		
+		<definition item="Consist Function"/>
+		<definition item="Consist Function Mode"/>
+
 		<definition item="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" />
 		<definition item="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" />
 
