@@ -1,2 +1,2 @@
 The complete list of changes is in the release note at 
-http://jmri.sf.net/releasenotes/jmri2.5.7.shtml
+http://jmri.sf.net/releasenotes/jmri2.6.shtml
