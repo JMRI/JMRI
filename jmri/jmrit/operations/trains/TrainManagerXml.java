@@ -7,6 +7,7 @@ import java.util.List;
 
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.OperationsXml;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -17,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class TrainManagerXml extends XmlFile {
 	
@@ -356,13 +357,10 @@ public class TrainManagerXml extends XmlFile {
     
     private boolean backupFile = false;		// set to true to create backups during debug
    
-    public static String defaultOperationsFilename() { return XmlFile.prefsDir()+OperationsDirectoryName+File.separator+OperationsFileName;}
-
-    public static void setOperationsDirectoryName(String name) { OperationsDirectoryName = name; }
-    public static String getOperationsDirectoryName(){
-    	return OperationsDirectoryName;
+    // Operation files always use the same directory
+    public static String defaultOperationsFilename() { 
+    	return OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName()+File.separator+getOperationsFileName();
     }
-    private static String OperationsDirectoryName = "operations";
 
     public static void setOperationsFileName(String name) { OperationsFileName = name; }
     public static String getOperationsFileName(){

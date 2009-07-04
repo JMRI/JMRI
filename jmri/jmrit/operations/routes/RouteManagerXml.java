@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.List;
 
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.setup.OperationsXml;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -15,7 +16,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores routes using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class RouteManagerXml extends XmlFile {
 	
@@ -230,14 +231,10 @@ public class RouteManagerXml extends XmlFile {
     public static void setDirty(boolean b) {dirty = b;}
     public static boolean isDirty() {return dirty;}
 
-    
-    public static String defaultOperationsFilename() { return XmlFile.prefsDir()+OperationsDirectoryName+File.separator+OperationsFileName;}
-
-    public static void setOperationsDirectoryName(String name) { OperationsDirectoryName = name; }
-    public static String getOperationsDirectoryName(){
-    	return OperationsDirectoryName;
+    // Operation files always use the same directory
+    public static String defaultOperationsFilename() { 
+    	return OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName()+File.separator+getOperationsFileName();
     }
-    private static String OperationsDirectoryName = "operations";
 
     public static void setOperationsFileName(String name) { OperationsFileName = name; }
     public static String getOperationsFileName(){

@@ -10,13 +10,14 @@ import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
 
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.setup.OperationsXml;
 
 
 /**
  * Load and stores locations and schedules for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008 2009
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class LocationManagerXml extends XmlFile {
 	
@@ -321,13 +322,10 @@ public class LocationManagerXml extends XmlFile {
     boolean isDirty() {return dirty;}
 
 
-    public static String defaultOperationsFilename() { return XmlFile.prefsDir()+OperationsDirectoryName+File.separator+OperationsFileName;}
-
-    public static void setOperationsDirectoryName(String name) { OperationsDirectoryName = name; }
-    public static String getOperationsDirectoryName(){
-    	return OperationsDirectoryName;
+    // Operation files always use the same directory
+    public static String defaultOperationsFilename() { 
+    	return OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName()+File.separator+getOperationsFileName();
     }
-    private static String OperationsDirectoryName = "operations";
 
     public static void setOperationsFileName(String name) { OperationsFileName = name; }
     public static String getOperationsFileName(){

@@ -12,6 +12,7 @@ import org.jdom.ProcessingInstruction;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.setup.OperationsXml;
 
 /**
  * Loads and stores cars using xml files.  Also loads and stores
@@ -19,7 +20,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
  * and car kernels.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class CarManagerXml extends XmlFile {
 	
@@ -315,13 +316,10 @@ public class CarManagerXml extends XmlFile {
     boolean isDirty() {return dirty;}
 
     
-    public static String defaultOperationsFilename() { return XmlFile.prefsDir()+OperationsDirectoryName+File.separator+OperationsFileName;}
-
-    public static void setOperationsDirectoryName(String name) { OperationsDirectoryName = name; }
-    public static String getOperationsDirectoryName(){
-    	return OperationsDirectoryName;
+    // Operation files always use the same directory
+    public static String defaultOperationsFilename() { 
+    	return OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName()+File.separator+getOperationsFileName();
     }
-    private static String OperationsDirectoryName = "operations";
 
     public static void setOperationsFileName(String name) { OperationsFileName = name; }
     public static String getOperationsFileName(){

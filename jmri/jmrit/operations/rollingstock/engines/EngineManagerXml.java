@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.List;
 
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.setup.OperationsXml;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -16,7 +17,7 @@ import org.jdom.ProcessingInstruction;
  * models, engine types, engine lengths, and engine consist names.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class EngineManagerXml extends XmlFile {
 	
@@ -279,13 +280,10 @@ public class EngineManagerXml extends XmlFile {
     boolean isDirty() {return dirty;}
 
     
-    public static String defaultOperationsFilename() { return XmlFile.prefsDir()+OperationsDirectoryName+File.separator+OperationsFileName;}
-
-    public static void setOperationsDirectoryName(String name) { OperationsDirectoryName = name; }
-    public static String getOperationsDirectoryName(){
-    	return OperationsDirectoryName;
+    // Operation files always use the same directory
+    public static String defaultOperationsFilename() { 
+    	return OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName()+File.separator+getOperationsFileName();
     }
-    private static String OperationsDirectoryName = "operations";
 
     public static void setOperationsFileName(String name) { OperationsFileName = name; }
     public static String getOperationsFileName(){

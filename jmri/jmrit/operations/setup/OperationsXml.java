@@ -12,7 +12,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores the operation setup using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class OperationsXml extends XmlFile {
 	
@@ -112,7 +112,7 @@ public class OperationsXml extends XmlFile {
 		}
 	}
 
-	public static String defaultOperationsFilename() { return getFileLocation()+OperationsDirectoryName+File.separator+OperationsFileName;}
+	public static String defaultOperationsFilename() { return getFileLocation()+getOperationsDirectoryName()+File.separator+getOperationsFileName();}
 
 	public static void setOperationsDirectoryName(String name) { OperationsDirectoryName = name; }
 	public static String getOperationsDirectoryName(){
