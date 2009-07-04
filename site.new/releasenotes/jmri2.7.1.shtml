@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.1.shtml,v 1.5 2009-07-03 14:57:48 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.1.shtml,v 1.6 2009-07-04 05:24:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,7 +29,7 @@
       Release Notes for JMRI 2.7.1 release
       </h2>
 
-	<p>Date: June 9NN, 2009</p>
+	<p>Date: July 3, 2009</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.7.1 of JMRI/DecoderPro is available for download.
 
@@ -135,6 +135,14 @@ Mark Waters updated several Zimo decoder definitions to include the right number
 <p>
 Manually add Rautenhaus Digital Vertrieb to the list of decoder manufacturers, which is unfortunately no longer being maintained online by the NMRA.
 
+<p>
+Pete Cressman fixed some problems when defining and deleting icons for a Panel Editor MultiSensor icon.
+
+<p>
+Dan Boudreau made some internal changes to the operations support
+
+<p>
+And some more help page updates...
 
 <!--#include virtual="/Footer" -->
 
