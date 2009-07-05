@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-2.dtd,v 1.1 2009-07-03 14:43:02 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-7-2.dtd,v 1.2 2009-07-05 21:45:37 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.7.2 development.  Do not modify it       -->
 <!-- after version 2.7.2 is released.  For more information,                -->
@@ -570,7 +570,7 @@
 <!ELEMENT LayoutEditor (positionablelabel|sensoricon|layoutblock|
 			positionablepoint | securityelementicon | signalheadicon |
 			levelxing | layoutturnout | reportericon | memoryicon |
-			tracksegment | fastclock)* >
+			tracksegment | fastclock | locoicon )* >
   <!ATTLIST LayoutEditor class			CDATA #REQUIRED>
   <!ATTLIST LayoutEditor name			CDATA #IMPLIED>
   <!ATTLIST LayoutEditor x			CDATA #REQUIRED>
@@ -694,10 +694,24 @@
     <!ATTLIST layoutturntable radius CDATA #REQUIRED>
     <!ATTLIST layoutturntable xcen   CDATA #REQUIRED>
     <!ATTLIST layoutturntable ycen   CDATA #REQUIRED>
+
   <!ELEMENT rayTrack EMPTY>
     <!ATTLIST raytrack connectname  CDATA #IMPLIED>
     <!ATTLIST raytrack angle        CDATA #IMPLIED>
     <!ATTLIST raytrack index        CDATA #IMPLIED>
+
+  <!ELEMENT locoicon EMPTY>
+    <!ATTLIST locoicon class        CDATA #REQUIRED>
+    <!ATTLIST locoicon x	    CDATA #REQUIRED>
+    <!ATTLIST locoicon y	    CDATA #REQUIRED>
+    <!ATTLIST locoicon icon	    CDATA #IMPLIED>
+    <!ATTLIST locoicon text	    CDATA #IMPLIED>
+    <!ATTLIST locoicon level	    CDATA #IMPLIED>
+    <!ATTLIST locoicon size	    CDATA #IMPLIED>
+    <!ATTLIST locoicon style	CDATA #IMPLIED>
+    <!ATTLIST locoicon red  	CDATA #IMPLIED>
+    <!ATTLIST locoicon green	CDATA #IMPLIED>
+    <!ATTLIST locoicon blue	    CDATA #IMPLIED>
     
 
 <!ELEMENT signals EMPTY >
