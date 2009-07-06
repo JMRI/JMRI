@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-2.dtd,v 1.2 2009-07-05 21:45:37 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-7-2.dtd,v 1.3 2009-07-06 19:22:45 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of version 2.7.2 development.  Do not modify it       -->
 <!-- after version 2.7.2 is released.  For more information,                -->
@@ -326,7 +326,7 @@
 <!ELEMENT paneleditor (positionablelabel|sensoricon|turnouticon|
 						securityelementicon | signalheadicon |
 						reportericon | memoryicon | multisensoricon |
-					    fastclock)* >
+					    fastclock | locoicon)* >
   <!ATTLIST paneleditor class		CDATA #REQUIRED>
   <!ATTLIST paneleditor name		CDATA #IMPLIED>
   <!ATTLIST paneleditor x			CDATA #REQUIRED>
