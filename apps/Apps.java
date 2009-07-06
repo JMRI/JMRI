@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.83 $
+ * @version     $Revision: 1.84 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -381,7 +381,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
                                 new Object[]{jmri.Version.name()});
     }
     protected String line2() {
-        return "http://jmri.sf.net/ ";
+        return "http://jmri.org/ ";
     }
     protected String line3() {
         return " ";
