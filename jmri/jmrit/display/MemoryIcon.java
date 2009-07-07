@@ -2,7 +2,6 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.Memory;
-import jmri.MemoryManager;
 import jmri.jmrit.catalog.NamedIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -19,7 +18,7 @@ import javax.swing.JSeparator;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -143,7 +142,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
     String getNameString() {
         String name;
-        if (memory == null) name = "<Not connected>";
+        if (memory == null) name = rb.getString("NotConnected");
         else if (memory.getUserName()!=null)
             name = memory.getUserName()+" ("+memory.getSystemName()+")";
         else
@@ -173,7 +172,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         checkLocationEditable(popup, getNameString());
 		
         if (icon) {
-            popup.add(new AbstractAction("Rotate") {
+            popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
                     // rotate all the icons, a real PITA
                     java.util.Iterator<NamedIcon> iterator = map.values().iterator();
@@ -185,7 +184,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 }
             });
 
-            popup.add(new AbstractAction("Remove") {
+            popup.add(new AbstractAction(rb.getString("Remove")) {
                 public void actionPerformed(ActionEvent e) {
                     remove();
                     dispose();
@@ -203,7 +202,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             addFixedItem(popup);
             addShowTooltipItem(popup);
             
-            popup.add(new AbstractAction("Remove") {
+            popup.add(new AbstractAction(rb.getString("Remove")) {
                 public void actionPerformed(ActionEvent e) {
                     remove();
                     dispose();
@@ -213,7 +212,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         } else if (!text && !icon)
             log.warn("showPopUp when neither text nor icon true");
 
-        popup.add(new AbstractAction("Edit") {
+        popup.add(new AbstractAction(rb.getString("EditIcon")) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
                 }
@@ -298,21 +297,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         }
     }
 
-    class pickModel extends PickListModel {
-        MemoryManager manager;
-        pickModel (MemoryManager m) {
-            manager = m;
-        }
-        MemoryManager getManager() {
-            return manager;
-        }
-        Memory getBySystemName(String name) {
-            return manager.getBySystemName(name);
-        }
-        Memory addBean(String name) {
-            return manager.provideMemory(name);
-        }
-    }
     void edit() {
         if (_editorFrame != null) {
             _editorFrame.setLocationRelativeTo(null);
@@ -327,7 +311,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         };
         makeAddIconFrame("EditMemory", "addMemValueToPanel", 
                                              "SelectMemory", _editor);
-        _editor.setPickList(new pickModel(InstanceManager.memoryManagerInstance()));
+        _editor.setPickList(PickListModel.memoryPickModelInstance());
         _editor.complete(addIconAction, null, true);
         _editor.setSelection(memory);
     }
