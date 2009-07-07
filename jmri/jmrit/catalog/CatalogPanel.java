@@ -101,6 +101,10 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.catalog.CatalogBundle");
 
+    public CatalogPanel() {
+        _model =new DefaultTreeModel(new CatalogTreeNode("mainRoot"));
+        };
+
     public CatalogPanel(String label1, String label2) {
         super(true);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
