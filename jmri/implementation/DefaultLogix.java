@@ -14,7 +14,7 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -304,6 +304,7 @@ public class DefaultLogix extends AbstractNamedBean
                             varListenerType = LISTENER_TYPE_LIGHT;
                             break;
                         case Conditional.TYPE_MEMORY_EQUALS:
+                        case Conditional.TYPE_MEMORY_COMPARE:
                             varListenerType = LISTENER_TYPE_MEMORY;
                             break;
                         case Conditional.TYPE_FAST_CLOCK_RANGE:
@@ -416,6 +417,11 @@ public class DefaultLogix extends AbstractNamedBean
                                                                         varName, varType, conditional, signalAspect);
                                 }
                                 break;
+                            default:
+                                log.error("Unknown (new) Variable Listener type= "+varListenerType+", for varName= "
+                                          +varName+", varType= "+varType+" in Conditional, "+
+                                          _conditionalSystemNames.get(i));
+                                continue;
                         }
                         _listeners.add(listener);
                         //log.debug("Add listener for "+varName);
@@ -446,6 +452,11 @@ public class DefaultLogix extends AbstractNamedBean
                                     mpl.addConditional(conditional);
                                     mpl.setState(signalAspect);
                                 }
+                                break;
+                            default:
+                                log.error("Unknown (old) Variable Listener type= "+varListenerType+", for varName= "
+                                          +varName+", varType= "+varType+" in Conditional, "+
+                                          _conditionalSystemNames.get(i));
                         }
                     }
 				}
