@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Logix.shtml,v 1.5 2009-05-01 01:25:37 pete_cressman Exp $ -->
+<!-- $Id: Logix.shtml,v 1.6 2009-07-07 20:39:15 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -262,7 +262,7 @@
 	example, Set Turnout, Set Signal Appearance, Trigger Route, etc. 
         Available action types are described 
 	<a href="#action">below</a> in detail.  Each action has a 
-	user selectable option of being triggered if: 1) the logical expression
+	user selectable option of being performed if: 1) the logical expression
 	changes to true, 2) the logical expression changes to false, or 3) the
 	logical expression changes.  This means a conditional may actually 
         be three statements.
@@ -317,9 +317,12 @@
         perform its actions when this variable changes.
         Note that the current states of all the variablea are <b>always</b> used in the
         calculation of the Conditional's state.  The "Trigger" setting allows a
-        state variable to be "passive" and not cause an action to be executed.  
+        state variable to be "passive" and not cause the conditional to evaluate its state.   
         That is, such a variable state is a necessary condition, but not a sufficient
         one to cause any actions to take place.</p>
+        <P><b>Note:</b> Disabling state variable triggers should be done with caution. Actions 
+        are perfomed only when the state of the logical expression changes. Disabling a
+        trigger can prevent actions from be executed even when this state has changed.
         <p>Next is a column of <b>Edit</b> button to modify an existing state variable. 
         The last column of the table (<b>Delete</b> buttons) is used to delete a state 
 	variable if you decide it is no longer needed.
@@ -379,7 +382,7 @@
 	in detail <a href="#action">below</a>. If you use user names to specify 
 	your actions, the same caution noted above applies. Be very careful when
 	editing user names that are used to specify actions.</p>
-	<p>For each action, three options are available for when to trigger the
+	<p>For each action, three options are available for when to perform the
 	action: 1) On Change to True, 2) On Change to False, and 3) On Change. These
 	refer to the calculated state of the Conditional, which is equal to
 	the value of the logical expression as specified in the state variable table. 
@@ -510,10 +513,32 @@
 		specified light is on. 
 		<li><b>Light Off</b>: Evaluates to true if the 
 		specified light is off. 
-		<li><b>Memory Equals</b>: Evaluates to true if the value saved in the
-		specified memory is the same as the value specified in the state 
-		variable. Calculation is triggered when the monitored memory value
-		changes to or from the specified value.
+		<li><b>Memory-Value Compare</b>: Compares the value saved in the
+		specified memory to the value specified in the state 
+		variable using a specified comparison operator.  Evaluates to true if 
+                the comparison is true.
+                There are 5 comparison operators that may be used for the evaluation:
+                <ul>
+                <li>"less than"</li>
+                <li>"less than or equal"</li>
+                <li>"equals"</li>
+                <li>"greater than or equal"</li>
+                <li>"greater than"</li>
+                </ul>
+                Calculation is triggered when the monitored memory value
+		changes so that the comparison to the specified value changes.
+		<li><b>Memory-Memory Compare</b>: Compares the value saved in one
+		specified memory to the value saved in a second memory location.  
+                There are 5 comparison operators that may be used for the evaluation:
+                <ul>
+                <li>"less than"</li>
+                <li>"less than or equal"</li>
+                <li>"equals"</li>
+                <li>"greater than or equal"</li>
+                <li>"greater than"</li>
+                </ul>
+                Calculation is triggered when one of the monitored memory values
+		changes so that the comparison value changes.
 		<li><b>Fast Clock Range</b>: Evaluates to true if the current fast clock
 		time is between the begin time and end time specified for the range.  
 		Times must be specified in hh:mm format, where hh is hours and mm is 
@@ -659,8 +684,8 @@
 	<dt class=left><a name=notes><H3>Additional Notes</H3></a></dt>
 	<dd>
 	<p> This section contains questions and answers that normally are not 
-	needed by Logix users, but in some cases may be important or of 
-	interest. 
+	needed by Logix users, but in some cases were important or of 
+	interest for previous versions of Logix. 
 	<ul>
 	<p><li><b> How can an inclusive OR be done without the OR operator?</b>
 	<p>To achieve "logical expression A"  OR  "logical expression B" without 
