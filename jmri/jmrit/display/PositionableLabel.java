@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
@@ -26,6 +27,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JTextField;
 
 /**
  * PositionableLabel is a JLabel that can be dragged around the
@@ -35,7 +37,7 @@ import javax.swing.JRadioButtonMenuItem;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 
 public class PositionableLabel extends JLabel
@@ -62,7 +64,7 @@ public class PositionableLabel extends JLabel
     }
 
     public void setProperToolTip() {
-        setToolTipText("Alt-click to see menu, drag with meta key to move");
+        setToolTipText(rb.getString("IconToolTip"));
     }
 
     public boolean isIcon() { return icon; }
@@ -140,7 +142,7 @@ public class PositionableLabel extends JLabel
         yClick = e.getY();
         // if (debug) log.debug("mousePressed: "+where(e));
         if (e.isPopupTrigger()) {
-            if (debug) log.debug("show popup");
+            //if (debug) log.debug("show popup");
             showPopUp(e);
         }
     }
@@ -153,7 +155,7 @@ public class PositionableLabel extends JLabel
 		}
         // if (debug) log.debug("mouseReleased: "+where(e));
         if (e.isPopupTrigger()) {
-            if (debug) log.debug("show popup");
+            //if (debug) log.debug("show popup");
             showPopUp(e);
         }
     }
@@ -163,7 +165,7 @@ public class PositionableLabel extends JLabel
         if (debug && e.isMetaDown()) log.debug("meta down");
         if (debug && e.isAltDown()) log.debug(" alt down");
         if (e.isPopupTrigger()) {
-            if (debug) log.debug("show popup");
+            //if (debug) log.debug("show popup");
             showPopUp(e);
         }
     }
@@ -211,7 +213,7 @@ public class PositionableLabel extends JLabel
             popup = new JPopupMenu();                                    
             checkLocationEditable(popup, getText());
              
-            popup.add(new AbstractAction("Rotate") {
+            popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
                     namedIcon.setRotation(namedIcon.getRotation()+1, ours);
                     updateSize();
@@ -222,13 +224,13 @@ public class PositionableLabel extends JLabel
             addFixedItem(popup);
             addShowTooltipItem(popup);
             
-            popup.add(new AbstractAction("Edit") {
+            popup.add(new AbstractAction(rb.getString("EditPlainIcon")) {
                     public void actionPerformed(ActionEvent e) {
                         edit();
                     }
                 });
 
-            popup.add(new AbstractAction("Remove") {
+            popup.add(new AbstractAction(rb.getString("Remove")) {
                 public void actionPerformed(ActionEvent e) {
                     remove();
                     dispose();
@@ -247,7 +249,8 @@ public class PositionableLabel extends JLabel
             addFixedItem(popup);
             addShowTooltipItem(popup);
             
-            popup.add(new AbstractAction("Remove") {
+            addTextEditEntry(popup);
+            popup.add(new AbstractAction(rb.getString("Remove")) {
                 public void actionPerformed(ActionEvent e) {
                     remove();
                     dispose();
@@ -290,6 +293,7 @@ public class PositionableLabel extends JLabel
         _editor.complete(addIconAction, changeIconAction, false);
 
     }
+
     void editIcon() {
         String url = _editor.getIcon("plainIcon").getURL();
         namedIcon = jmri.jmrit.catalog.CatalogPanel.getIconByName(url);
@@ -337,24 +341,32 @@ public class PositionableLabel extends JLabel
     }
 
     protected JMenu makeFontStyleMenu() {
-        JMenu styleMenu = new JMenu("Font style");
-        styleMenu.add(italic = newStyleMenuItem(new AbstractAction("Italic") {
+        JMenu styleMenu = new JMenu(rb.getString("FontStyle"));
+        styleMenu.add(italic = newStyleMenuItem(new AbstractAction(rb.getString("Plain")) {
+            public void actionPerformed(ActionEvent e) {
+                setFont(jmri.util.FontUtil.deriveFont(getFont(),Font.PLAIN));
+            }
+          }, Font.ITALIC));
+
+        styleMenu.add(italic = newStyleMenuItem(new AbstractAction(rb.getString("Italic")) {
             public void actionPerformed(ActionEvent e) {
                 if (log.isDebugEnabled())
                     log.debug("When style item selected "+((String)getValue(NAME))
                                 +" italic state is "+italic.isSelected());
-                if (italic.isSelected()) setFontStyle(Font.ITALIC, 0);
-                else setFontStyle(0, Font.ITALIC);
+                //if (italic.isSelected()) setFontStyle(Font.ITALIC, 0);
+                //else setFontStyle(0, Font.ITALIC);
+                setFont(jmri.util.FontUtil.deriveFont(getFont(),Font.ITALIC));
             }
           }, Font.ITALIC));
 
-        styleMenu.add(bold = newStyleMenuItem(new AbstractAction("Bold") {
+        styleMenu.add(bold = newStyleMenuItem(new AbstractAction(rb.getString("Bold")) {
             public void actionPerformed(ActionEvent e) {
                 if (log.isDebugEnabled())
                     log.debug("When style item selected "+((String)getValue(NAME))
                                 +" bold state is "+bold.isSelected());
-                if (bold.isSelected()) setFontStyle(Font.BOLD, 0);
-                else setFontStyle(0, Font.BOLD);
+                //if (bold.isSelected()) setFontStyle(Font.BOLD, 0);
+                //else setFontStyle(0, Font.BOLD);
+                setFont(jmri.util.FontUtil.deriveFont(getFont(),Font.BOLD));
             }
           }, Font.BOLD));
          return styleMenu;     
@@ -391,19 +403,19 @@ public class PositionableLabel extends JLabel
  
     
     protected JMenu makeFontColorMenu() {
-        JMenu colorMenu = new JMenu("Font color");
+        JMenu colorMenu = new JMenu(rb.getString("FontColor"));
         colorButtonGroup = new ButtonGroup();
-        addColorMenuEntry(colorMenu, "Black", Color.black);
-        addColorMenuEntry(colorMenu, "Dark Gray",Color.darkGray);
-        addColorMenuEntry(colorMenu, "Gray",Color.gray);
-        addColorMenuEntry(colorMenu, "Light Gray",Color.lightGray);
-        addColorMenuEntry(colorMenu, "White",Color.white);
-        addColorMenuEntry(colorMenu, "Red",Color.red);
-        addColorMenuEntry(colorMenu, "Orange",Color.orange);
-        addColorMenuEntry(colorMenu, "Yellow",Color.yellow);
-        addColorMenuEntry(colorMenu, "Green",Color.green);
-        addColorMenuEntry(colorMenu, "Blue",Color.blue);
-        addColorMenuEntry(colorMenu, "Magenta",Color.magenta);
+        addColorMenuEntry(colorMenu, rb.getString("Black"), Color.black);
+        addColorMenuEntry(colorMenu, rb.getString("DarkGray"),Color.darkGray);
+        addColorMenuEntry(colorMenu, rb.getString("Gray"),Color.gray);
+        addColorMenuEntry(colorMenu, rb.getString("LightGray"),Color.lightGray);
+        addColorMenuEntry(colorMenu, rb.getString("White"),Color.white);
+        addColorMenuEntry(colorMenu, rb.getString("Red"),Color.red);
+        addColorMenuEntry(colorMenu, rb.getString("Orange"),Color.orange);
+        addColorMenuEntry(colorMenu, rb.getString("Yellow"),Color.yellow);
+        addColorMenuEntry(colorMenu, rb.getString("Green"),Color.green);
+        addColorMenuEntry(colorMenu, rb.getString("Blue"),Color.blue);
+        addColorMenuEntry(colorMenu, rb.getString("Magenta"),Color.magenta);
         return colorMenu;
     }
         
@@ -435,7 +447,7 @@ public class PositionableLabel extends JLabel
         
     JCheckBoxMenuItem showFixedItem = null;
     void addFixedItem(JPopupMenu popup) {
-        showFixedItem = new JCheckBoxMenuItem("Fixed");
+        showFixedItem = new JCheckBoxMenuItem(rb.getString("Fixed"));
         showFixedItem.setSelected(getFixed());
         popup.add(showFixedItem);
         showFixedItem.addActionListener(new ActionListener(){
@@ -447,7 +459,7 @@ public class PositionableLabel extends JLabel
         
     JCheckBoxMenuItem disableItem = null;
     void addDisableMenuEntry(JPopupMenu popup) {
-        disableItem = new JCheckBoxMenuItem("Disable");
+        disableItem = new JCheckBoxMenuItem(rb.getString("Disable"));
         disableItem.setSelected(getForceControlOff());
         popup.add(disableItem);
         disableItem.addActionListener(new ActionListener(){
@@ -459,7 +471,7 @@ public class PositionableLabel extends JLabel
     
     JCheckBoxMenuItem tristateItem = null;
     void addTristateEntry(JPopupMenu popup) {
-    	tristateItem = new JCheckBoxMenuItem("Tristate");
+    	tristateItem = new JCheckBoxMenuItem(rb.getString("Tristate"));
     	tristateItem.setSelected(getTristate());
         popup.add(tristateItem);
         tristateItem.addActionListener(new ActionListener(){
@@ -467,6 +479,25 @@ public class PositionableLabel extends JLabel
                 setTristate(tristateItem.isSelected());
             }
         });
+    }
+
+    void addTextEditEntry(JPopupMenu popup) {
+        JMenu edit = new JMenu(rb.getString("EditText"));
+        popup.add(edit);
+        edit.add(makeFontSizeMenu());
+        edit.add(makeFontStyleMenu());
+        edit.add(makeFontColorMenu());
+        edit.add(new AbstractAction(rb.getString("ChangeText")) {
+                public void actionPerformed(ActionEvent e) {
+                    changeText();
+                }
+            });
+
+    }
+
+    void changeText() {
+        makeAddIconFrame("EditText", null, 
+                                     "pressAdd", null);
     }
         
     public JMenuItem newStyleMenuItem(AbstractAction a, int mask) {
@@ -587,22 +618,39 @@ public class PositionableLabel extends JLabel
         return active;
     }
 
+    JTextField _textBox;
     void makeAddIconFrame(String title, String select1, String select2, 
                                 IconAdder editor) {
         _editorFrame = new JFrame(rb.getString(title));
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        if (select1 != null) p.add(new JLabel(rb.getString(select1)));
+        if (select2 != null) p.add(new JLabel(rb.getString(select2)));
+        _editorFrame.getContentPane().add(p,BorderLayout.NORTH);
         if (editor != null) {
-            JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            p.add(new JLabel(rb.getString(select1)));
-            p.add(new JLabel(rb.getString(select2)));
-            _editorFrame.getContentPane().add(p,BorderLayout.NORTH);
             _editorFrame.getContentPane().add(editor);
             editor.setParent(_editorFrame);
+        } else {
+            p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+            _textBox = new JTextField(getText());
+            p.add(_textBox);
+            JButton button = new JButton("Done");
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    setText(_textBox.getText());
+                    setIconTextGap (-(getWidth()+getPreferredSize().width)/2);
+                    setSize(getPreferredSize().width, getPreferredSize().height);
+                    _editorFrame.dispose();
+                    _editorFrame = null;
+                }
+            });
+            p.add(button);
+            _editorFrame.getContentPane().add(p);
         }
 
         _editorFrame.addWindowListener(new java.awt.event.WindowAdapter() {
 				public void windowClosing(java.awt.event.WindowEvent e) {
-                    log.debug("windowClosing: _editorFrame= "+_editorFrame);
                     _editorFrame.dispose();
                     _editorFrame = null;
                 }
