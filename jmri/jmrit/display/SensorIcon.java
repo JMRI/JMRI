@@ -2,7 +2,6 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
-import jmri.SensorManager;
 import jmri.jmrit.catalog.NamedIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
@@ -18,7 +17,7 @@ import javax.swing.JCheckBoxMenuItem;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -133,7 +132,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 
     public String getNameString() {
         String name;
-        if (sensor == null) name = "<Not connected>";
+        if (sensor == null) name = rb.getString("NotConnected");
         else if (sensor.getUserName()!=null) {
             name = sensor.getUserName();
             if (sensor.getSystemName()!=null) name = name+" ("+sensor.getSystemName()+")";
@@ -154,7 +153,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 
         checkLocationEditable(popup, getNameString());
 
-        if (icon) popup.add(new AbstractAction("Rotate") {
+        if (icon) popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
                     active.setRotation(active.getRotation()+1, ours);
                     inactive.setRotation(inactive.getRotation()+1, ours);
@@ -166,7 +165,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 
         addDisableMenuEntry(popup);
 
-        momentaryItem = new JCheckBoxMenuItem("Momentary");
+        momentaryItem = new JCheckBoxMenuItem(rb.getString("Momentary"));
         popup.add(momentaryItem);
         momentaryItem.setSelected (getMomentary());
         momentaryItem.addActionListener(new ActionListener(){
@@ -175,13 +174,14 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             }
         });
 
-        popup.add(new AbstractAction("Edit") {
+        popup.add(new AbstractAction(rb.getString("EditIcon")) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
                 }
             });
+        addTextEditEntry(popup);
 
-        popup.add(new AbstractAction("Remove") {
+        popup.add(new AbstractAction(rb.getString("Remove")) {
                 public void actionPerformed(ActionEvent e) {
                     remove();
                     dispose();
@@ -203,41 +203,32 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 
         switch (state) {
         case Sensor.UNKNOWN:
-            if (text) super.setText("<unknown>");
+            if (text) super.setText(rb.getString("UnKnown"));
             if (icon) super.setIcon(unknown);
             break;
         case Sensor.ACTIVE:
-            if (text) super.setText("Active");
-            if (icon) super.setIcon(active);
+            if (text) super.setText(rb.getString("Active"));
+            if (icon) {
+                super.setIcon(active);
+            }
             break;
         case Sensor.INACTIVE:
-            if (text) super.setText("Inactive");
-            if (icon) super.setIcon(inactive);
+            if (text) super.setText(rb.getString("Inactive"));
+            if (icon) {
+                super.setIcon(inactive);
+            }
             break;
         default:
-            if (text) super.setText("<inconsistent>");
+            if (text) super.setText(rb.getString("Inconsistent"));
             if (icon) super.setIcon(inconsistent);
             break;
         }
+        setIconTextGap (-(getWidth()+getPreferredSize().width)/2);
+        setSize(getPreferredSize().width, getPreferredSize().height);
 
         return;
     }
 
-    class sensorPickModel extends PickListModel {
-        SensorManager manager;
-        sensorPickModel (SensorManager m) {
-            manager = m;
-        }
-        SensorManager getManager() {
-            return manager;
-        }
-        Sensor getBySystemName(String name) {
-            return manager.getBySystemName(name);
-        }
-        Sensor addBean(String name) {
-            return manager.provideSensor(name);
-        }
-    }
     void edit() {
         if (_editorFrame != null) {
             _editorFrame.setLocationRelativeTo(null);
@@ -252,7 +243,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 
         makeAddIconFrame("EditSensor", "addIconsToPanel", "SelectSensor", _editor);
         _editor.makeIconPanel();
-        _editor.setPickList(new sensorPickModel(InstanceManager.sensorManagerInstance()));
+        _editor.setPickList(PickListModel.sensorPickModelInstance());
 
 
         ActionListener addIconAction = new ActionListener() {
