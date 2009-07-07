@@ -18,7 +18,7 @@ import javax.swing.Timer;
  * break that, which will simplify things.
  *
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 
@@ -390,6 +390,7 @@ public class DefaultConditionalAction implements ConditionalAction {
 		switch (t) {
     		case Conditional.ACTION_SET_TURNOUT:
     		case Conditional.ACTION_DELAYED_TURNOUT:
+    		case Conditional.ACTION_RESET_DELAYED_TURNOUT:
                 if (data == Turnout.CLOSED) {
                     return (rbx.getString("TurnoutClosed"));
                 } else if (data == Turnout.THROWN) {
@@ -474,13 +475,11 @@ public class DefaultConditionalAction implements ConditionalAction {
                     break;
                 case Conditional.ACTION_RESET_DELAYED_TURNOUT:
                 case Conditional.ACTION_RESET_DELAYED_SENSOR:
-                    str = str + " " + rbx.getString("to")+ " "+ _actionString+ ".";
-                    break;
                 case Conditional.ACTION_DELAYED_TURNOUT:
                 case Conditional.ACTION_DELAYED_SENSOR:
                     str = str + rbx.getString("After") + " ";
                     try {
-                        //int t = Integer.parseInt(_actionString);
+                        int t = Integer.parseInt(_actionString);
                         str = str + _actionString + " " + rbx.getString("Seconds")+ ".";
                     } catch (NumberFormatException nfe) { 
                         str = str + _actionString + " " + rbx.getString("ValueInMemory")
