@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.2.shtml,v 1.1 2009-07-04 05:25:30 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.2.shtml,v 1.2 2009-07-07 15:09:52 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -92,6 +92,27 @@ see our
 
 <h3>Changes since test version 2.7.1</h3>
 
+Paul Bender added initial support for connecting to a Lenz LI-USB via the Lenz server.
+
+<p>
+Nigel Cliffe added a SerialPortRFID.py script to allow MERG RFID equipment to be read into JMRI.
+
+<p>
+Pete Cressman made several improvements to the Panel Editor:
+<ul>
+<LI>The icon editor's window title now shows which panel it's associated with
+<LI>The multi-sensor icon editor now has a "reset" button to get back to the original settings
+<LI>Sensor icons now have a text attribute to make them easier to use as buttons
+<LI>Moving all the panel text to a properties file so it can now be translated
+<LI>Having the image index only store non-default icon settings
+</ul>
+
+<p>
+Pete Cressman improved Logix Conditionals by
+<ul>
+<li>adding a memory-to-memory compare operation
+<li>extending the compare-to-integer value for memories
+</ul>
 
 <!--#include virtual="/Footer" -->
 
