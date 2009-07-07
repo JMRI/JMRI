@@ -405,6 +405,9 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             }.init(this));
         }
         _iconEditorFrame.put(title, frame);
+        String name = "";
+        if (getTarget().getTopLevelAncestor()!=null) name=((JFrame)getTarget().getTopLevelAncestor()).getTitle();
+        frame.setTitle(frame.getName()+" ("+name+")");
         frame.pack();
         return frame;
     }
