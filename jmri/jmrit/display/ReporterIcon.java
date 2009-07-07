@@ -2,7 +2,6 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.Reporter;
-import jmri.ReporterManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +13,7 @@ import javax.swing.*;
  * An icon to display info from a Reporter, e.g. transponder or RFID reader.<P>
  *
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class ReporterIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -72,7 +71,7 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
 
     String getNameString() {
         String name;
-        if (reporter == null) name = "<Not connected>";
+        if (reporter == null) name = rb.getString("NotConnected");
         else if (reporter.getUserName()!=null)
             name = reporter.getUserName()+" ("+reporter.getSystemName()+")";
         else
@@ -98,13 +97,13 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
 
         popup.add(makeFontColorMenu());
         
-        popup.add(new AbstractAction("Edit") {
+        popup.add(new AbstractAction(rb.getString("EditIcon")) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
                 }
             });
 
-        popup.add(new AbstractAction("Remove") {
+        popup.add(new AbstractAction(rb.getString("Remove")) {
             public void actionPerformed(ActionEvent e) {
                 remove();
                 dispose();
@@ -122,31 +121,16 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
     void displayState() {
         if (reporter.getCurrentReport()!=null) {
         	if (reporter.getCurrentReport().equals(""))
-        		setText("<blank>");
+        		setText(rb.getString("Blank"));
         	else
         	 	setText(reporter.getCurrentReport().toString());
         } else {
-        	setText("<no report>");
+        	setText(rb.getString("NoReport"));
 		}
 		updateSize();
         return;
     }
 
-    class pickModel extends PickListModel {
-        ReporterManager manager;
-        pickModel (ReporterManager m) {
-            manager = m;
-        }
-        ReporterManager getManager() {
-            return manager;
-        }
-        Reporter getBySystemName(String name) {
-            return manager.getBySystemName(name);
-        }
-        Reporter addBean(String name) {
-            return manager.provideReporter(name);
-        }
-    }
     void edit() {
         if (_editorFrame != null) {
             _editorFrame.setLocationRelativeTo(null);
@@ -161,7 +145,7 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         };
         makeAddIconFrame("EditReporter", "addReportValueToPanel", 
                                      "SelectReporter", _editor);
-        _editor.setPickList(new pickModel(InstanceManager.reporterManagerInstance()));
+        _editor.setPickList(PickListModel.reporterPickModelInstance());
         _editor.complete(addIconAction, null, true);
         _editor.setSelection(reporter);
 

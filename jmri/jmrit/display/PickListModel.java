@@ -1,6 +1,12 @@
 package jmri.jmrit.display;
 
 
+import jmri.InstanceManager;
+import jmri.MemoryManager;
+import jmri.ReporterManager;
+import jmri.SensorManager;
+import jmri.SignalHeadManager;
+import jmri.TurnoutManager;
 import jmri.NamedBean;
 import jmri.Manager;
 import jmri.util.NamedBeanComparator;
@@ -135,6 +141,102 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         getManager().removePropertyChangeListener(this);
     }
 
+    static PickListModel turnoutPickModelInstance() {
+        return new TurnoutPickModel();
+    }
+    static PickListModel sensorPickModelInstance() {
+        return new SensorPickModel();
+    }
+    static PickListModel signalPickModelInstance() {
+        return new SignalPickModel();
+    }
+    static PickListModel memoryPickModelInstance() {
+        return new MemoryPickModel();
+    }
+    static PickListModel reporterPickModelInstance() {
+        return new ReporterPickModel();
+    }
+
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PickListModel.class.getName());
 }
 
+    class TurnoutPickModel extends PickListModel {
+        TurnoutManager manager;
+        TurnoutPickModel () {
+            manager = InstanceManager.turnoutManagerInstance();
+        }
+        Manager getManager() {
+            return manager;
+        }
+        NamedBean getBySystemName(String name) {
+            return manager.getBySystemName(name);
+        }
+        NamedBean addBean(String name) {
+            return manager.provideTurnout(name);
+        }
+    }
+
+    class SensorPickModel extends PickListModel {
+        SensorManager manager;
+        SensorPickModel () {
+            manager = InstanceManager.sensorManagerInstance();
+        }
+        Manager getManager() {
+            return manager;
+        }
+        NamedBean getBySystemName(String name) {
+            return manager.getBySystemName(name);
+        }
+        NamedBean addBean(String name) {
+            return manager.provideSensor(name);
+        }
+    }
+
+    class SignalPickModel extends PickListModel {
+        SignalHeadManager manager;
+        SignalPickModel () {
+            manager = InstanceManager.signalHeadManagerInstance();
+        }
+        Manager getManager() {
+            return manager;
+        }
+        NamedBean getBySystemName(String name) {
+            return manager.getBySystemName(name);
+        }
+        NamedBean addBean(String name) {
+            return manager.getSignalHead(name);
+        }
+    }
+
+
+    class MemoryPickModel extends PickListModel {
+        MemoryManager manager;
+        MemoryPickModel () {
+            manager = InstanceManager.memoryManagerInstance();
+        }
+        Manager getManager() {
+            return manager;
+        }
+        NamedBean getBySystemName(String name) {
+            return manager.getBySystemName(name);
+        }
+        NamedBean addBean(String name) {
+            return manager.provideMemory(name);
+        }
+    }
+
+    class ReporterPickModel extends PickListModel {
+        ReporterManager manager;
+        ReporterPickModel () {
+            manager = InstanceManager.reporterManagerInstance();
+        }
+        Manager getManager() {
+            return manager;
+        }
+        NamedBean getBySystemName(String name) {
+            return manager.getBySystemName(name);
+        }
+        NamedBean addBean(String name) {
+            return manager.provideReporter(name);
+        }
+    }

@@ -2,14 +2,12 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.Turnout;
-import jmri.TurnoutManager;
 import jmri.jmrit.catalog.NamedIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
-//import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -25,7 +23,7 @@ import javax.swing.JPopupMenu;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -166,7 +164,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 
     public String getNameString() {
         String name;
-        if (turnout == null) name = "<Not connected>";
+        if (turnout == null) name = rb.getString("NotConnected");
         else if (turnout.getUserName()!=null)
             name = turnout.getUserName()+" ("+turnout.getSystemName()+")";
         else
@@ -189,7 +187,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 			
             checkLocationEditable(popup, getNameString());
 			
-			popup.add(new AbstractAction("Rotate") {
+			popup.add(new AbstractAction(rb.getString("Rotate")) {
 				public void actionPerformed(ActionEvent e) {
 					closed.setRotation(closed.getRotation() + 1, ours);
 					thrown.setRotation(thrown.getRotation() + 1, ours);
@@ -207,12 +205,12 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 			addTristateEntry(popup);
 		}
 
-        popup.add(new AbstractAction("Edit") {
+        popup.add(new AbstractAction(rb.getString("EditIcon")) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
                 }
             });
-		popup.add(new AbstractAction("Remove") {
+		popup.add(new AbstractAction(rb.getString("Remove")) {
 			public void actionPerformed(ActionEvent e) {
 				remove();
 				dispose();
@@ -231,7 +229,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         updateSize();
         switch (state) {
         case Turnout.UNKNOWN:
-            if (text) super.setText("<unknown>");
+            if (text) super.setText(rb.getString("UnKnown"));
             if (icon) super.setIcon(unknown);
             break;
         case Turnout.CLOSED:
@@ -243,7 +241,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
             if (icon) super.setIcon(thrown);
             break;
         default:
-            if (text) super.setText("<inconsistent>");
+            if (text) super.setText(rb.getString("Inconsistent"));
             if (icon) super.setIcon(inconsistent);
             break;
         }
@@ -251,21 +249,6 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         return;
     }
 
-    class turnoutPickModel extends PickListModel {
-        TurnoutManager manager;
-        turnoutPickModel (TurnoutManager m) {
-            manager = m;
-        }
-        TurnoutManager getManager() {
-            return manager;
-        }
-        Turnout getBySystemName(String name) {
-            return manager.getBySystemName(name);
-        }
-        Turnout addBean(String name) {
-            return manager.provideTurnout(name);
-        }
-    }
     void edit() {
         if (_editorFrame != null) {
             _editorFrame.setLocationRelativeTo(null);
@@ -280,7 +263,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         makeAddIconFrame("EditTO", "addIconsToPanel", 
                                            "SelectTO", _editor);
         _editor.makeIconPanel();
-        _editor.setPickList(new turnoutPickModel(InstanceManager.turnoutManagerInstance()));
+        _editor.setPickList(PickListModel.turnoutPickModelInstance());
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
