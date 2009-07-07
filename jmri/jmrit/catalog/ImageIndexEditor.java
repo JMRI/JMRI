@@ -180,15 +180,32 @@ public class ImageIndexEditor extends JmriJFrame {
         // build a new Default Icons tree
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
         CatalogTree tree = manager.getBySystemName("NXDI");
+        /*
         if (tree != null){
             manager.deregister(tree);
         }
         tree = manager.newCatalogTree("NXDI", "Default Icons");
+        */
+        if (tree == null) {
+            tree = manager.newCatalogTree("NXDI", "Default Icons");
+        }
         Iterator <IconAdder>iter = panelEditor.getIconEditors().iterator();
         CatalogTreeNode root = (CatalogTreeNode)tree.getRoot();
         while (iter.hasNext()) {
             IconAdder ed = iter.next();
-            root.add(ed.getDefaultIconNode());
+            CatalogTreeNode node = ed.getDefaultIconNode();
+            Enumeration<CatalogTreeNode> e = root.children();
+            String name = node.toString();
+            while (e.hasMoreElements()) {
+                CatalogTreeNode nChild = e.nextElement();
+                if (name.equals(nChild.toString())) {
+                    if (log.isDebugEnabled()) log.debug("Remove node "+nChild);
+                    root.remove(nChild);
+                    break;
+                }
+            }
+            root.add(node);
+            if (log.isDebugEnabled()) log.debug("Add node "+node);
         }
 
         if (log.isDebugEnabled()) log.debug("Start writing CatalogTree info");
