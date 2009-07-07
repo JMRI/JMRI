@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -643,8 +643,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	// rolling stock listens for changes in a location name or if a location is deleted
     public void propertyChange(PropertyChangeEvent e) {
     	// if (log.isDebugEnabled()) log.debug("Property change for rolling stock: " + getId()+ " property name: " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-    	// notify if track location name changes
-    	if (e.getPropertyName().equals("name")){
+    	// notify if track or location name changes
+    	if (e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY)){
         	if (log.isDebugEnabled()) log.debug("Property change for rolling stock: " + getId()+ " property name: " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
     		firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
     	}

@@ -59,7 +59,7 @@ import jmri.jmrit.operations.routes.RouteManager;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -1048,8 +1048,8 @@ public class OperationsTrainsTest extends TestCase {
 		// one car dropped and one is picked up at North End, so travel time + two car moves
 		Assert.assertEquals("Train 2 expected North Industries", "1:02:49", train2.getExpectedArrivalTime(rl3));
 
-		// the build first resets which removes cars from the train, c3 load will swap
-		Assert.assertEquals("Car c3 load After Build 4", "L", c3.getLoad());
+		// the build first resets which removes cars from the train, c3 load should NOT swap
+		Assert.assertEquals("Car c3 load After Build 4", "E", c3.getLoad());
 		// c9 has less moves than c3 and c7, and now there's enough room for c9
 		Assert.assertEquals("Car c3 After Build 4 should NOT be assigned to Train 2", null, c3.getTrain());
 		Assert.assertEquals("Car c7 After Build 4 should NOT be assigned to Train 2", null, c7.getTrain());
@@ -1085,10 +1085,10 @@ public class OperationsTrainsTest extends TestCase {
 		
 		// do cars have the right loads?
 		Assert.assertEquals("Car c1 load after Terminate Train 2", "E", c1.getLoad());
-		Assert.assertEquals("Car c2 load after Terminate Train 2", "E", c2.getLoad());
-		Assert.assertEquals("Car c3 load after Terminate Train 2", "L", c3.getLoad());
+		Assert.assertEquals("Car c2 load after Terminate Train 2", "L", c2.getLoad());
+		Assert.assertEquals("Car c3 load after Terminate Train 2", "E", c3.getLoad());
 		Assert.assertEquals("Car c4 load after Terminate Train 2", "E", c4.getLoad());
-		Assert.assertEquals("Car c5 load after Terminate Train 2", "E", c5.getLoad());
+		Assert.assertEquals("Car c5 load after Terminate Train 2", "L", c5.getLoad());
 		Assert.assertEquals("Car c6 load after Terminate Train 2", "E", c6.getLoad());
 		Assert.assertEquals("Car c7 load after Terminate Train 2", "E", c7.getLoad());
 		Assert.assertEquals("Car c8 load after Terminate Train 2", "E", c8.getLoad());

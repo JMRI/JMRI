@@ -16,7 +16,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.20 $
+ * @version             $Revision: 1.21 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -203,8 +203,8 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 			return status;
 		// now check to see if the track has a schedule
 		scheduleNext(track);
-		// update load only when car reaches destination
-		if (destinationName.equals("") || (destination != null && track != null))
+		// update load only when car reaches destination and was in train
+		if (destinationName.equals("") || (destination != null && track != null) || getTrain() == null)
 			return status;
 		// update load when car reaches a siding
 		if (destTrack.getLocType().equals(Track.SIDING)){
@@ -356,8 +356,8 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	// car listens for changes in a location name or if a location is deleted
     public void propertyChange(PropertyChangeEvent e) {
     	// if (log.isDebugEnabled()) log.debug("Property change for car: " + getId()+ " property name: " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-    	// notify if track location name changes
-    	if (e.getPropertyName().equals("name")){
+    	// notify if track or location name changes
+    	if (e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY)){
         	if (log.isDebugEnabled()) log.debug("Property change for car: " + getId()+ " property name: " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
     		firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
     	}
