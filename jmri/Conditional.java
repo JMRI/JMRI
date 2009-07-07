@@ -54,7 +54,7 @@ public interface Conditional extends NamedBean {
 	public static final int MIXED       = 0x03;
 	
 	// state variables definitions
-	public static final int MAX_STATE_VARIABLES = 20;
+	public static final int MAX_STATE_VARIABLES = 21;
 	// note: when state variables are evaluate for calculating
 	//       the state of a Conditional, only NOT is important.
 	//		 AND is assumed.
@@ -65,7 +65,7 @@ public interface Conditional extends NamedBean {
     public static final int OPERATOR_OR = 5;
     public static final int OPERATOR_OR_NOT = 6;
 	// state variable types
-	public static final int NUM_STATE_VARIABLE_TYPES = 19;	
+	public static final int NUM_STATE_VARIABLE_TYPES = 20;	
 	public static final int TYPE_NONE = 0;
 	public static final int TYPE_SENSOR_ACTIVE = 1;
 	public static final int TYPE_SENSOR_INACTIVE = 2;
@@ -88,6 +88,7 @@ public interface Conditional extends NamedBean {
 	public static final int TYPE_SIGNAL_HEAD_FLASHGREEN = 17;
 	public static final int TYPE_SIGNAL_HEAD_LIT = 18;
 	public static final int TYPE_SIGNAL_HEAD_HELD = 19;
+    public static final int TYPE_MEMORY_COMPARE = 20;
 	
 	// action definitions
 	public static final int ACTION_OPTION_ON_CHANGE_TO_TRUE = 1;
