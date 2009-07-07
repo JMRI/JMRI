@@ -26,7 +26,7 @@ import javax.swing.Timer;
  *
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -85,7 +85,7 @@ public class DefaultConditional extends AbstractNamedBean
 	 * information has been validated.
      */
     public void setStateVariables(ArrayList <ConditionalVariable> arrayList) {
-        log.debug("Conditional \""+getUserName()+"\" ("+getSystemName()+
+        if (log.isDebugEnabled()) log.debug("Conditional \""+getUserName()+"\" ("+getSystemName()+
                   ") updated ConditionalVariable list.");
         _variableList = arrayList;
 	}
@@ -196,7 +196,7 @@ public class DefaultConditional extends AbstractNamedBean
                 break;
         }
 		int newState = FALSE;
-        log.debug("Conditional \""+getUserName()+"\" ("+getSystemName()+") has calculated its state to be "+
+        if (log.isDebugEnabled()) log.debug("Conditional \""+getUserName()+"\" ("+getSystemName()+") has calculated its state to be "+
                   result+". current state is "+_currentState+".  enabled= "+enabled);
 		if (result) newState = TRUE;
         if (newState != _currentState) {
@@ -490,7 +490,8 @@ public class DefaultConditional extends AbstractNamedBean
 				Light lgt = null;
                 int value = 0;
                 Timer timer = null;
-				switch (action.getType()) {
+                int type = action.getType(); 
+				switch (type) {
 					case Conditional.ACTION_NONE:
 						break;
 					case Conditional.ACTION_SET_TURNOUT:
@@ -525,7 +526,10 @@ public class DefaultConditional extends AbstractNamedBean
 								timer.setRepeats(false);
 							}
 							// Start the Timer to set the turnout
-                            value = getIntegerValue(action.getActionString());
+                            value = getIntegerValue(action);
+                            if (value<0) {
+                                break;
+                            }
 							timer.setInitialDelay(value*1000);
                             action.setTimer(timer);
                             action.startTimer();
@@ -680,7 +684,10 @@ public class DefaultConditional extends AbstractNamedBean
 								timer.setRepeats(false);
 							}
 							// Start the Timer to set the turnout
-                            value = getIntegerValue(action.getActionString());
+                            value = getIntegerValue(action);
+                            if (value<0) {
+                                break;
+                            }
 							timer.setInitialDelay(value*1000);
                             action.setTimer(timer);
                             action.startTimer();
@@ -736,7 +743,10 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						else {
 							try {
-                                value = getIntegerValue(action.getActionString());
+                                value = getIntegerValue(action);
+                                if (value<0) {
+                                    break;
+                                }
 								lgt.setTargetIntensity((value)/100.0);
                                 actionCount++;
 							}
@@ -753,7 +763,10 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						else {
 							try {
-                                value = getIntegerValue(action.getActionString());
+                                value = getIntegerValue(action);
+                                if (value<0) {
+                                    break;
+                                }
 								lgt.setTransitionTime(value);
                                 actionCount++;
 							}
@@ -846,29 +859,35 @@ public class DefaultConditional extends AbstractNamedBean
 				}
 			}
 		}
-        log.debug("Conditional \""+getUserName()+"\" ("+getSystemName()+") has taken "+actionCount
+        if (log.isDebugEnabled()) log.debug("Conditional \""+getUserName()+"\" ("+getSystemName()+") has taken "+actionCount
                   +" actions of "+actionNeeded+" actions needed on change to "+currentState);
 	}
 
 	/**
 	 * Return int from either literal String or Internal memory reference.
 	 */
-    int getIntegerValue(String sNumber) {
+    int getIntegerValue(ConditionalAction action) {
+        String sNumber = action.getActionString(); 
         int time = 0;
         try {
             time = Integer.valueOf(sNumber).intValue();
         } catch (NumberFormatException e) {
             Memory mem = InstanceManager.memoryManagerInstance().provideMemory(sNumber);
             if (mem == null) {
-                log.error("invalid memory name for action time variable - "+sNumber);
+                log.error("invalid memory name for action time variable - "+sNumber+
+                          ", for Action \""+action.getTypeString()+
+                          "\", in Conditional \""+getUserName()+"\" ("+getSystemName()+")");
+                return -1;
             }
             else {
                 try {
                     time = Integer.valueOf((String)mem.getValue()).intValue();
                 } catch (NumberFormatException ex) {
-                    log.error("invalid action time variable from memory, "
-                              +getUserName()+"("+mem.getSystemName()
-                              +"), value = "+(String)mem.getValue());
+                    log.error("invalid action number variable from memory, \""+
+                        getUserName()+"\" ("+mem.getSystemName()+"), value = "+(String)mem.getValue()
+                        +", for Action \""+action.getTypeString()+
+                        "\", in Conditional \""+getUserName()+"\" ("+getSystemName()+")");
+                    return -1;
                 }
             }
         }
