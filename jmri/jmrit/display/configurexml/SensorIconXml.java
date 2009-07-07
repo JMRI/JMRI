@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class SensorIconXml implements XmlAdapter {
 
@@ -44,6 +44,7 @@ public class SensorIconXml implements XmlAdapter {
         element.setAttribute("rotate", String.valueOf(p.getActiveIcon().getRotation()));
         element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
         element.setAttribute("momentary", p.getMomentary()?"true":"false");
+        if (p.getText() != null) element.setAttribute("text", p.getText());
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.SensorIconXml");
 
@@ -107,6 +108,9 @@ public class SensorIconXml implements XmlAdapter {
         else
             l.setMomentary(false);
             
+        a = element.getAttribute("text");
+        if (a!=null) l.setText(a.getValue());
+
         l.setSensor(element.getAttribute("sensor").getValue());
 
         // find coordinates
