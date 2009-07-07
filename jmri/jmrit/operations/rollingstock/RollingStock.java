@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -326,15 +326,14 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		Track oldTrack = _trackDestination;
 		_trackDestination = track;
 
-		if (oldDestination != (destination) || oldTrack != track) {
+		if (oldDestination != destination || oldTrack != track) {
 			if (oldDestination != null){
 				oldDestination.deleteDropRS();
 				oldDestination.removePropertyChangeListener(this);
 				// delete pickup in case destination is null
-				if(_location != null){
+				if(_location != null && _trackLocation != null){
 					_location.deletePickupRS();
-					if (_trackLocation != null)
-						_trackLocation.deletePickupRS();
+					_trackLocation.deletePickupRS();
 				}
 			}
 			if (oldTrack != null){

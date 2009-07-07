@@ -59,7 +59,7 @@ import jmri.jmrit.operations.routes.RouteManager;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -709,6 +709,26 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Car c4 After Build track", "South End 1", c4.getDestinationTrackName());
 		Assert.assertEquals("Car c8 After Build track", "South End 1", c8.getDestinationTrackName());
 	
+		// Are the location pickup and drop counts correct?
+		Assert.assertEquals("Drop count for North End", 0, l1.getDropRS());  
+		Assert.assertEquals("Drop count for North Industries", 1, l2.getDropRS()); 
+		Assert.assertEquals("Drop count for South End", 5, l3.getDropRS()); 
+		Assert.assertEquals("Pickup count for North End", 5, l1.getPickupRS());  
+		Assert.assertEquals("Pickup count for North Industries", 1, l2.getPickupRS()); 
+		Assert.assertEquals("Pickup count for South End", 0, l3.getPickupRS()); 
+		
+		// Are the track pickup and drop counts correct?
+		Assert.assertEquals("Drop count for North End, track North End 1", 0, l1s1.getDropRS()); 
+		Assert.assertEquals("Drop count for North End, track North End 2", 0, l1s2.getDropRS()); 
+		Assert.assertEquals("Pickup count for North End, track North End 1", 5, l1s1.getPickupRS()); 
+		Assert.assertEquals("Pickup count for North End, track North End 2", 0, l1s2.getPickupRS()); 
+		Assert.assertEquals("Drop count for North Industries, track NI Yard", 1, l2s1.getDropRS()); 
+		Assert.assertEquals("Pickup count for North Industries, track NI Yard", 1, l2s1.getDropRS()); 
+		Assert.assertEquals("Drop count for South End, track South End 1", 5, l3s1.getDropRS()); 
+		Assert.assertEquals("Drop count for South End, track South End 2", 0, l3s2.getDropRS()); 
+		Assert.assertEquals("Pickup count for South End, track South End 1", 0, l3s1.getPickupRS()); 
+		Assert.assertEquals("Pickup count for South End, track South End 2", 0, l3s2.getPickupRS()); 
+
 		// Are the other engines and cars NOT assigned to train 1?
 		Assert.assertEquals("Engine e3 After Build should NOT be assigned to Train 1", null, e3.getTrain());
 		Assert.assertEquals("Engine e4 After Build should NOT be assigned to Train 1", null, e4.getTrain());
@@ -743,6 +763,27 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Car c4 After Reset should NOT be assigned to Train 1", null, c4.getTrain());
 		Assert.assertEquals("Car c8 After Reset should NOT be assigned to Train 1", null, c8.getTrain());
 		
+		// Are the location pickup and drop counts correct?
+		Assert.assertEquals("Reset Drop count for North End", 0, l1.getDropRS());  
+		Assert.assertEquals("Reset Drop count for North Industries", 0, l2.getDropRS()); 
+		Assert.assertEquals("Reset Drop count for South End", 0, l3.getDropRS()); 
+		Assert.assertEquals("Reset Pickup count for North End", 0, l1.getPickupRS());  
+		Assert.assertEquals("Reset Pickup count for North Industries", 0, l2.getPickupRS()); 
+		Assert.assertEquals("Reset Pickup count for South End", 0, l3.getPickupRS()); 
+
+		// Are the track pickup and drop counts correct?
+		Assert.assertEquals("Reset Drop count for North End, track North End 1", 0, l1s1.getDropRS()); 
+		Assert.assertEquals("Reset Drop count for North End, track North End 2", 0, l1s2.getDropRS()); 
+		Assert.assertEquals("Reset Pickup count for North End, track North End 1", 0, l1s1.getPickupRS()); 
+		Assert.assertEquals("Reset Pickup count for North End, track North End 2", 0, l1s2.getPickupRS()); 
+		Assert.assertEquals("Reset Drop count for North Industries, track NI Yard", 0, l2s1.getDropRS()); 
+		Assert.assertEquals("Reset Pickup count for North Industries, track NI Yard", 0, l2s1.getDropRS()); 
+		Assert.assertEquals("Reset Drop count for South End, track South End 1", 0, l3s1.getDropRS()); 
+		Assert.assertEquals("Reset Drop count for South End, track South End 2", 0, l3s2.getDropRS()); 
+		Assert.assertEquals("Reset Pickup count for South End, track South End 1", 0, l3s1.getPickupRS()); 
+		Assert.assertEquals("Reset Pickup count for South End, track South End 2", 0, l3s2.getPickupRS()); 
+
+		
 		//  Build the train again!!  This should change the staging track to Sound End 2
 		train1.build(false);
 		Assert.assertEquals("Train 1 After Build Departs Name", "North End", train1.getTrainDepartsName());
@@ -769,6 +810,26 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Car c4 After After 1st Move", "North Industries", c4.getLocationName());
 		Assert.assertEquals("Car c8 After After 1st Move", "North Industries", c8.getLocationName());
 
+		// Are the location pickup and drop counts correct?
+		Assert.assertEquals("Move 1 Drop count for North End", 0, l1.getDropRS());  
+		Assert.assertEquals("Move 1 Drop count for North Industries", 1, l2.getDropRS()); 
+		Assert.assertEquals("Move 1 Drop count for South End", 5, l3.getDropRS()); 
+		Assert.assertEquals("Move 1 Pickup count for North End", 0, l1.getPickupRS());  
+		Assert.assertEquals("Move 1 Pickup count for North Industries", 1, l2.getPickupRS()); 
+		Assert.assertEquals("Move 1 Pickup count for South End", 0, l3.getPickupRS()); 
+		
+		// Are the track pickup and drop counts correct?
+		Assert.assertEquals("Move 1 Drop count for North End, track North End 1", 0, l1s1.getDropRS()); 
+		Assert.assertEquals("Move 1 Drop count for North End, track North End 2", 0, l1s2.getDropRS()); 
+		Assert.assertEquals("Move 1 Pickup count for North End, track North End 1", 0, l1s1.getPickupRS()); 
+		Assert.assertEquals("Move 1 Pickup count for North End, track North End 2", 0, l1s2.getPickupRS()); 
+		Assert.assertEquals("Move 1 Drop count for North Industries, track NI Yard", 1, l2s1.getDropRS()); 
+		Assert.assertEquals("Move 1 Pickup count for North Industries, track NI Yard", 1, l2s1.getDropRS()); 
+		Assert.assertEquals("Move 1 Drop count for South End, track South End 1", 0, l3s1.getDropRS()); 
+		Assert.assertEquals("Move 1 Drop count for South End, track South End 2", 5, l3s2.getDropRS()); 
+		Assert.assertEquals("Move 1 Pickup count for South End, track South End 1", 0, l3s1.getPickupRS()); 
+		Assert.assertEquals("Move 1 Pickup count for South End, track South End 2", 0, l3s2.getPickupRS()); 
+
 		//  Move the train again!!
 		train1.move();
 		Assert.assertEquals("Train 1 After 2nd Move Current Name", "South End", train1.getCurrentLocationName());
@@ -791,6 +852,26 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Car c3 After 2nd Move", "NI Yard", c3.getTrackName());
 		Assert.assertEquals("Car c3 Moves after drop should be 2", 2, c3.getMoves());
 		
+		// Are the location pickup and drop counts correct?
+		Assert.assertEquals("Move 2 Drop count for North End", 0, l1.getDropRS());  
+		Assert.assertEquals("Move 2 Drop count for North Industries", 0, l2.getDropRS()); 
+		Assert.assertEquals("Move 2 Drop count for South End", 5, l3.getDropRS()); 
+		Assert.assertEquals("Move 2 Pickup count for North End", 0, l1.getPickupRS());  
+		Assert.assertEquals("Move 2 Pickup count for North Industries", 0, l2.getPickupRS()); 
+		Assert.assertEquals("Move 2 Pickup count for South End", 0, l3.getPickupRS()); 
+		
+		// Are the track pickup and drop counts correct?
+		Assert.assertEquals("Move 2 Drop count for North End, track North End 1", 0, l1s1.getDropRS()); 
+		Assert.assertEquals("Move 2 Drop count for North End, track North End 2", 0, l1s2.getDropRS()); 
+		Assert.assertEquals("Move 2 Pickup count for North End, track North End 1", 0, l1s1.getPickupRS()); 
+		Assert.assertEquals("Move 2 Pickup count for North End, track North End 2", 0, l1s2.getPickupRS()); 
+		Assert.assertEquals("Move 2 Drop count for North Industries, track NI Yard", 0, l2s1.getDropRS()); 
+		Assert.assertEquals("Move 2 Pickup count for North Industries, track NI Yard", 0, l2s1.getDropRS()); 
+		Assert.assertEquals("Move 2 Drop count for South End, track South End 1", 0, l3s1.getDropRS()); 
+		Assert.assertEquals("Move 2 Drop count for South End, track South End 2", 5, l3s2.getDropRS()); 
+		Assert.assertEquals("Move 2 Pickup count for South End, track South End 1", 0, l3s1.getPickupRS()); 
+		Assert.assertEquals("Move 2 Pickup count for South End, track South End 2", 0, l3s2.getPickupRS()); 
+
 		//  Move the train again!!
 		train1.move();
 		Assert.assertEquals("Train 1 After 3rd Move Current Name", "South End", train1.getCurrentLocationName());
@@ -826,6 +907,26 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Car c4 Moves after Terminate should be 4446", 4446, c4.getMoves());
 		Assert.assertEquals("Car c8 Moves after Terminate should be 2", 2, c8.getMoves());
 
+		// Are the location pickup and drop counts correct?
+		Assert.assertEquals("Move 3 Drop count for North End", 0, l1.getDropRS());  
+		Assert.assertEquals("Move 3 Drop count for North Industries", 0, l2.getDropRS()); 
+		Assert.assertEquals("Move 3 Drop count for South End", 0, l3.getDropRS()); 
+		Assert.assertEquals("Move 3 Pickup count for North End", 0, l1.getPickupRS());  
+		Assert.assertEquals("Move 3 Pickup count for North Industries", 0, l2.getPickupRS()); 
+		Assert.assertEquals("Move 3 Pickup count for South End", 0, l3.getPickupRS()); 
+		
+		// Are the track pickup and drop counts correct?
+		Assert.assertEquals("Move 3 Drop count for North End, track North End 1", 0, l1s1.getDropRS()); 
+		Assert.assertEquals("Move 3 Drop count for North End, track North End 2", 0, l1s2.getDropRS()); 
+		Assert.assertEquals("Move 3 Pickup count for North End, track North End 1", 0, l1s1.getPickupRS()); 
+		Assert.assertEquals("Move 3 Pickup count for North End, track North End 2", 0, l1s2.getPickupRS()); 
+		Assert.assertEquals("Move 3 Drop count for North Industries, track NI Yard", 0, l2s1.getDropRS()); 
+		Assert.assertEquals("Move 3 Pickup count for North Industries, track NI Yard", 0, l2s1.getDropRS()); 
+		Assert.assertEquals("Move 3 Drop count for South End, track South End 1", 0, l3s1.getDropRS()); 
+		Assert.assertEquals("Move 3 Drop count for South End, track South End 2", 0, l3s2.getDropRS()); 
+		Assert.assertEquals("Move 3 Pickup count for South End, track South End 1", 0, l3s1.getPickupRS()); 
+		Assert.assertEquals("Move 3 Pickup count for South End, track South End 2", 0, l3s2.getPickupRS()); 
+
 		//  Move the train again!! This should terminate the train
 		train1.move();
 		Assert.assertEquals("Train 1 After 4th Move Current Name", "", train1.getCurrentLocationName());
@@ -852,6 +953,26 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Car c8 load after Terminate", "E", c8.getLoad());
 		Assert.assertEquals("Car c9 load after Terminate", "E", c9.getLoad());	
 		
+		// Are the location pickup and drop counts correct?
+		Assert.assertEquals("Terminated Drop count for North End", 0, l1.getDropRS());  
+		Assert.assertEquals("Terminated Drop count for North Industries", 0, l2.getDropRS()); 
+		Assert.assertEquals("Terminated Drop count for South End", 0, l3.getDropRS()); 
+		Assert.assertEquals("Terminated Pickup count for North End", 0, l1.getPickupRS());  
+		Assert.assertEquals("Terminated Pickup count for North Industries", 0, l2.getPickupRS()); 
+		Assert.assertEquals("Terminated Pickup count for South End", 0, l3.getPickupRS()); 
+
+		// Are the track pickup and drop counts correct?
+		Assert.assertEquals("Terminated Drop count for North End, track North End 1", 0, l1s1.getDropRS()); 
+		Assert.assertEquals("Terminated Drop count for North End, track North End 2", 0, l1s2.getDropRS()); 
+		Assert.assertEquals("Terminated Pickup count for North End, track North End 1", 0, l1s1.getPickupRS()); 
+		Assert.assertEquals("Terminated Pickup count for North End, track North End 2", 0, l1s2.getPickupRS()); 
+		Assert.assertEquals("Terminated Drop count for North Industries, track NI Yard", 0, l2s1.getDropRS()); 
+		Assert.assertEquals("Terminated Pickup count for North Industries, track NI Yard", 0, l2s1.getDropRS()); 
+		Assert.assertEquals("Terminated Drop count for South End, track South End 1", 0, l3s1.getDropRS()); 
+		Assert.assertEquals("Terminated Drop count for South End, track South End 2", 0, l3s2.getDropRS()); 
+		Assert.assertEquals("Terminated Pickup count for South End, track South End 1", 0, l3s1.getPickupRS()); 
+		Assert.assertEquals("Terminated Pickup count for South End, track South End 2", 0, l3s2.getPickupRS()); 
+
 		// now build train 2 testing failure modes
 		train2.build(false);
 		// build required 1 engine and there were two
@@ -1642,6 +1763,24 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Car c6 After Build destination", "Westford Interchange 7", c6.getDestinationTrackName());
 		Assert.assertEquals("Car c8 After Build destination", "Westford Interchange 6", c8.getDestinationTrackName());
 		
+		// are the pickup and drop counts correct?
+		Assert.assertEquals("Drop count for Westford", 7, loc1.getDropRS()); 
+		Assert.assertEquals("Drop count for Westford track Westford Yard 1", 0, loc1trk1.getDropRS());
+		Assert.assertEquals("Drop count for Westford track Westford Yard 2", 0, loc1trk2.getDropRS());
+		Assert.assertEquals("Drop count for Westford track Westford Siding 3", 1, loc1trk3.getDropRS());
+		Assert.assertEquals("Drop count for Westford track Westford Siding 4", 1, loc1trk4.getDropRS());
+		Assert.assertEquals("Drop count for Westford track Westford Interchange 5", 2, loc1trk5.getDropRS());
+		Assert.assertEquals("Drop count for Westford track Westford Interchange 6", 1, loc1trk6.getDropRS());
+		Assert.assertEquals("Drop count for Westford track Westford Interchange 7", 2, loc1trk7.getDropRS());
+		Assert.assertEquals("Pickup count for Westford", 7, loc1.getPickupRS());
+		Assert.assertEquals("Pickup count for Westford track Westford Yard 1", 4, loc1trk1.getPickupRS());
+		Assert.assertEquals("Pickup count for Westford track Westford Yard 2", 3, loc1trk2.getPickupRS());
+		Assert.assertEquals("Pickup count for Westford track Westford Siding 3", 0, loc1trk3.getPickupRS());
+		Assert.assertEquals("Pickup count for Westford track Westford Siding 4", 0, loc1trk4.getPickupRS());
+		Assert.assertEquals("Pickup count for Westford track Westford Interchange 5", 0, loc1trk5.getPickupRS());
+		Assert.assertEquals("Pickup count for Westford track Westford Interchange 6", 0, loc1trk6.getPickupRS());
+		Assert.assertEquals("Pickup count for Westford track Westford Interchange 7", 0, loc1trk7.getPickupRS());
+
 		train1.move();
 		// Train should not be in route since there's only one location
 		Assert.assertEquals("Train 1 in route", false, train1.isTrainInRoute());
@@ -1664,6 +1803,24 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Car c7 After Move load should be E", "E", c7.getLoad());
 		Assert.assertEquals("Car c8 After Move load should be E", "E", c8.getLoad());
 		Assert.assertEquals("Car c9 After Move load should be E", "E", c9.getLoad());
+
+		// are the pickup and drop counts correct?
+		Assert.assertEquals("Move 1 Drop count for Westford", 0, loc1.getDropRS()); 
+		Assert.assertEquals("Move 1 Drop count for Westford track Westford Yard 1", 0, loc1trk1.getDropRS());
+		Assert.assertEquals("Move 1 Drop count for Westford track Westford Yard 2", 0, loc1trk2.getDropRS());
+		Assert.assertEquals("Move 1 Drop count for Westford track Westford Siding 3", 0, loc1trk3.getDropRS());
+		Assert.assertEquals("Move 1 Drop count for Westford track Westford Siding 4", 0, loc1trk4.getDropRS());
+		Assert.assertEquals("Move 1 Drop count for Westford track Westford Interchange 5", 0, loc1trk5.getDropRS());
+		Assert.assertEquals("Move 1 Drop count for Westford track Westford Interchange 6", 0, loc1trk6.getDropRS());
+		Assert.assertEquals("Move 1 Drop count for Westford track Westford Interchange 7", 0, loc1trk7.getDropRS());
+		Assert.assertEquals("Move 1 Pickup count for Westford", 0, loc1.getPickupRS());
+		Assert.assertEquals("Move 1 Pickup count for Westford track Westford Yard 1", 0, loc1trk1.getPickupRS());
+		Assert.assertEquals("Move 1 Pickup count for Westford track Westford Yard 2", 0, loc1trk2.getPickupRS());
+		Assert.assertEquals("Move 1 Pickup count for Westford track Westford Siding 3", 0, loc1trk3.getPickupRS());
+		Assert.assertEquals("Move 1 Pickup count for Westford track Westford Siding 4", 0, loc1trk4.getPickupRS());
+		Assert.assertEquals("Move 1 Pickup count for Westford track Westford Interchange 5", 0, loc1trk5.getPickupRS());
+		Assert.assertEquals("Move 1 Pickup count for Westford track Westford Interchange 6", 0, loc1trk6.getPickupRS());
+		Assert.assertEquals("Move 1 Pickup count for Westford track Westford Interchange 7", 0, loc1trk7.getPickupRS());
 
 		// This move should terminate the train.
 		train1.move();
