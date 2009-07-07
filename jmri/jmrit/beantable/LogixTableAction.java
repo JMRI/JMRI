@@ -71,7 +71,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.40 $
+ * @version $Revision: 1.41 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -184,8 +184,7 @@ public class LogixTableAction extends AbstractTableAction {
                         copyPressed(sName);
                     } else if ( rbx.getString("ButtonDelete").equals(value) ) {
                         deletePressed(sName);
-                    } else
-                        log.debug("Logix table setValueAt column "+EDITCOL+" = "+value);
+                    }
 				} else if (col == ENABLECOL) {
 					// alternate
 					Logix x = (Logix) getBySystemName((String) getValueAt(row,
@@ -382,9 +381,11 @@ public class LogixTableAction extends AbstractTableAction {
 	JmriJFrame _editVariableFrame = null;
     JComboBox _variableTypeBox;
 	JTextField _variableNameField;
+	JComboBox _variableCompareBox;
 	JTextField _variableData1Field;
 	JTextField _variableData2Field;
     JPanel _variableNamePanel;
+    JPanel _variableComparePanel;
     JPanel _variableData1Panel;
     JPanel _variableData2Panel;
 
@@ -555,7 +556,7 @@ public class LogixTableAction extends AbstractTableAction {
                     addLogixFrame.setVisible(true);
                     }
                 };
-        log.debug("copyPressed Thread started for " + sName);
+        if (log.isDebugEnabled()) log.debug("copyPressed Thread started for " + sName);
         t.start();
         inCopyMode = true;
         _logixSysName = sName;
@@ -779,7 +780,7 @@ public class LogixTableAction extends AbstractTableAction {
                     makeEditLogixWindow();
                     }
                 };
-        log.debug("editPressed Thread started for " + sName);
+        if (log.isDebugEnabled()) log.debug("editPressed Thread started for " + sName);
         t.start();
 	}
 
@@ -787,7 +788,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 * creates and/or initializes the Edit Logix window
 	 */
 	void makeEditLogixWindow() {
-        //log.debug("makeEditLogixWindow ");
+        //if (log.isDebugEnabled()) log.debug("makeEditLogixWindow ");
 		editUserName.setText(_curLogix.getUserName());
 		// clear conditional table if needed
 		if (conditionalTableModel != null) {
@@ -1322,7 +1323,7 @@ public class LogixTableAction extends AbstractTableAction {
 			variableTable.setRowHeight(_notOperatorBox.getPreferredSize().height);
 			variableTable.setRowSelectionAllowed(false);
             int rowHeight = variableTable.getRowHeight();
-			variableTable.setPreferredScrollableViewportSize(new java.awt.Dimension(700, 7*rowHeight));
+			variableTable.setPreferredScrollableViewportSize(new java.awt.Dimension(720, 7*rowHeight));
 
 			TableColumnModel variableColumnModel = variableTable.getColumnModel();
 
@@ -1434,7 +1435,7 @@ public class LogixTableAction extends AbstractTableAction {
 			JTable actionTable = new JTable(_actionTableModel);
 			actionTable.setRowSelectionAllowed(false);
 			actionTable.setRowHeight(testButton.getPreferredSize().height);
-			actionTable.setPreferredScrollableViewportSize(new java.awt.Dimension(700, 7*rowHeight));
+			actionTable.setPreferredScrollableViewportSize(new java.awt.Dimension(720, 7*rowHeight));
 			JPanel actionPanel = new JPanel();
 			actionPanel.setLayout(new BoxLayout(actionPanel, BoxLayout.Y_AXIS));
 			JPanel actionTitle = new JPanel();
@@ -2010,8 +2011,17 @@ public class LogixTableAction extends AbstractTableAction {
         panel1.add(_variableNamePanel);
         panel1.add(Box.createHorizontalStrut(10));
 
+        _variableCompareBox = new JComboBox();
+        for (int i = 1; i <= ConditionalVariable.NUM_COMPARE_TYPES; i++) {
+            _variableCompareBox.addItem(ConditionalVariable.getCompareTypeString(i));
+        }
+        _variableComparePanel = makeEditPanel(_variableCompareBox, "LabelCompareOp", "CompareHintMemory"); 
+        _variableComparePanel.setVisible(false);
+        panel1.add(_variableComparePanel);
+        panel1.add(Box.createHorizontalStrut(10));
+
         _variableData1Field = new JTextField(30);
-        _variableData1Panel = makeEditPanel(_variableData1Field, "LabelVariableData", null);
+        _variableData1Panel = makeEditPanel(_variableData1Field, "LabelStartTime", "DataHintTime");
         _variableData1Panel.setMaximumSize(
                     new Dimension(45, _variableData1Panel.getPreferredSize().height));
         _variableData1Panel.setVisible(false);
@@ -2019,7 +2029,7 @@ public class LogixTableAction extends AbstractTableAction {
         panel1.add(Box.createHorizontalStrut(10));
 
         _variableData2Field = new JTextField(30);
-        _variableData2Panel = makeEditPanel(_variableData2Field, "LabelVariableData", null);
+        _variableData2Panel = makeEditPanel(_variableData2Field, "LabelEndTime", "DataHintTime");
         _variableData2Panel.setMaximumSize(
                     new Dimension(45, _variableData2Panel.getPreferredSize().height));
         _variableData2Panel.setVisible(false);
@@ -2262,7 +2272,7 @@ public class LogixTableAction extends AbstractTableAction {
         panel.add(p);
         if (hint != null)
         {
-            comp.setToolTipText(rbx.getString(hint));
+            panel.setToolTipText(rbx.getString(hint));
         }
         comp.setMaximumSize(comp.getPreferredSize());  // override for  text fields
         panel.add(comp);
@@ -2429,7 +2439,9 @@ public class LogixTableAction extends AbstractTableAction {
         int type = _curVariable.getType();
         switch (type)  {
             case Conditional.TYPE_MEMORY_EQUALS:
-                _variableData2Field.setText(_curVariable.getDataString());
+            case Conditional.TYPE_MEMORY_COMPARE:
+                _variableCompareBox.setSelectedIndex(_curVariable.getNum1()-1);
+                _variableData1Field.setText(_curVariable.getDataString());
                 // fall through
             case Conditional.TYPE_SENSOR_ACTIVE:
             case Conditional.TYPE_SENSOR_INACTIVE:
@@ -2463,6 +2475,7 @@ public class LogixTableAction extends AbstractTableAction {
 		variableTypeChanged(false);
         // set type after call to variableTypeChanged
 		_variableTypeBox.setSelectedIndex(type - 1);
+        _editVariableFrame.pack();
         _editVariableFrame.transferFocusBackward();
     }
 
@@ -2552,6 +2565,7 @@ public class LogixTableAction extends AbstractTableAction {
 		actionTypeChanged(false);
         // set type after call to actionTypeChanged
 		_actionTypeBox.setSelectedIndex(type - 1);
+        _editActionFrame.pack();
         _editActionFrame.transferFocusBackward();
     }   /* initializeActionVariables */
 
@@ -2643,26 +2657,26 @@ public class LogixTableAction extends AbstractTableAction {
         switch (type)  {
             case Conditional.ACTION_DELAYED_TURNOUT:
             case Conditional.ACTION_RESET_DELAYED_TURNOUT:
-                _actionStringField.setToolTipText(rbx.getString("DataHintDelayedTurnout"));
+                _textPanel.setToolTipText(rbx.getString("DataHintDelayedTurnout"));
                 _textPanel.setVisible(true);
                 // fall through
             case Conditional.ACTION_SET_TURNOUT:
                 _turnoutPanel.setVisible(true);
                 // fall through
             case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
-                _actionNameField.setToolTipText(rbx.getString("NameHintTurnout"));
+                _namePanel.setToolTipText(rbx.getString("NameHintTurnout"));
                 _namePanel.setVisible(true);
                 break;
             case Conditional.ACTION_DELAYED_SENSOR:
             case Conditional.ACTION_RESET_DELAYED_SENSOR:
-                _actionStringField.setToolTipText(rbx.getString("DataHintDelayedSensor"));
+                _textPanel.setToolTipText(rbx.getString("DataHintDelayedSensor"));
                 _textPanel.setVisible(true);
                 // fall through
             case Conditional.ACTION_SET_SENSOR:
                 _sensorPanel.setVisible(true);
                 // fall through
             case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
-                _actionNameField.setToolTipText(rbx.getString("NameHintSensor"));
+                _namePanel.setToolTipText(rbx.getString("NameHintSensor"));
                 _namePanel.setVisible(true);
                 break;
             case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
@@ -2675,54 +2689,54 @@ public class LogixTableAction extends AbstractTableAction {
 			case Conditional.ACTION_TRIGGER_ROUTE:
 			case Conditional.ACTION_ENABLE_LOGIX:
 			case Conditional.ACTION_DISABLE_LOGIX:
-                _actionNameField.setToolTipText(rbx.getString("NameHintSignal"));
+                _namePanel.setToolTipText(rbx.getString("NameHintSignal"));
                 _namePanel.setVisible(true);
                 break;
             case Conditional.ACTION_SET_LIGHT_INTENSITY:
-                _actionStringField.setToolTipText(rbx.getString("DataHintLightIntensity"));
+                _textPanel.setToolTipText(rbx.getString("DataHintLightIntensity"));
                 _textPanel.setVisible(true);
-                _actionNameField.setToolTipText(rbx.getString("NameHintLight"));
+                _namePanel.setToolTipText(rbx.getString("NameHintLight"));
                 _namePanel.setVisible(true);
                 break;
             case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
-                _actionStringField.setToolTipText(rbx.getString("DataHintLightTransitionTime"));
+                _textPanel.setToolTipText(rbx.getString("DataHintLightTransitionTime"));
                 _textPanel.setVisible(true);
-                _actionNameField.setToolTipText(rbx.getString("NameHintLight"));
+                _namePanel.setToolTipText(rbx.getString("NameHintLight"));
                 _namePanel.setVisible(true);
                 break;
             case Conditional.ACTION_SET_LIGHT:
                 _lightPanel.setVisible(true);
-                _actionNameField.setToolTipText(rbx.getString("NameHintLight"));
+                _namePanel.setToolTipText(rbx.getString("NameHintLight"));
                 _namePanel.setVisible(true);
                 break;
             case Conditional.ACTION_LOCK_TURNOUT:
                 _lockPanel.setVisible(true);
-                _actionNameField.setToolTipText(rbx.getString("NameHintTurnout"));
+                _namePanel.setToolTipText(rbx.getString("NameHintTurnout"));
                 _namePanel.setVisible(true);
                 break;
             case Conditional.ACTION_SET_MEMORY:
-                _actionStringField.setToolTipText(rbx.getString("DataHintMemory"));
+                _textPanel.setToolTipText(rbx.getString("DataHintMemory"));
                 _textPanel.setVisible(true);
-                _actionNameField.setToolTipText(rbx.getString("NameHintMemory"));
+                _namePanel.setToolTipText(rbx.getString("NameHintMemory"));
                 _namePanel.setVisible(true);
                 break;
             case Conditional.ACTION_COPY_MEMORY:
-                _actionStringField.setToolTipText(rbx.getString("DataHintToMemory"));
+                _textPanel.setToolTipText(rbx.getString("DataHintToMemory"));
                 _textPanel.setVisible(true);
-                _actionNameField.setToolTipText(rbx.getString("NameHintMemory"));
+                _namePanel.setToolTipText(rbx.getString("NameHintMemory"));
                 _namePanel.setVisible(true);
                 break;
 			case Conditional.ACTION_SET_FAST_CLOCK_TIME:
-                _actionStringField.setToolTipText(rbx.getString("DataHintTime"));
+                _textPanel.setToolTipText(rbx.getString("DataHintTime"));
                 _textPanel.setVisible(true);
                 break;
             case Conditional.ACTION_PLAY_SOUND:
-                _actionStringField.setToolTipText(rbx.getString("SetHintSound"));
+                _textPanel.setToolTipText(rbx.getString("SetHintSound"));
                 _textPanel.setVisible(true);
                 _setPanel.setVisible(true);
                 break;
             case Conditional.ACTION_RUN_SCRIPT:
-                _actionStringField.setToolTipText(rbx.getString("SetHintScript"));
+                _textPanel.setToolTipText(rbx.getString("SetHintScript"));
                 _textPanel.setVisible(true);
                 _setPanel.setVisible(true);
                 break;
@@ -2750,39 +2764,56 @@ public class LogixTableAction extends AbstractTableAction {
 
         }
         _variableNamePanel.setVisible(false);
+        _variableComparePanel.setVisible(false);
         _variableData1Panel.setVisible(false);
         _variableData2Panel.setVisible(false);
 		switch (type) {
             case Conditional.TYPE_SENSOR_ACTIVE:
             case Conditional.TYPE_SENSOR_INACTIVE:
-                _variableNameField.setToolTipText(rbx.getString("NameHintSensor"));
+                _variableNamePanel.setToolTipText(rbx.getString("NameHintSensor"));
                 _variableNamePanel.setVisible(true);
                 break;
             case Conditional.TYPE_TURNOUT_THROWN:
             case Conditional.TYPE_TURNOUT_CLOSED:
-                _variableNameField.setToolTipText(rbx.getString("NameHintTurnout"));
+                _variableNamePanel.setToolTipText(rbx.getString("NameHintTurnout"));
                 _variableNamePanel.setVisible(true);
                 break;
             case Conditional.TYPE_CONDITIONAL_TRUE:
             case Conditional.TYPE_CONDITIONAL_FALSE:
-                _variableNameField.setToolTipText(rbx.getString("NameHintConditional"));
+                _variableNamePanel.setToolTipText(rbx.getString("NameHintConditional"));
                 _variableNamePanel.setVisible(true);
                 break;
             case Conditional.TYPE_LIGHT_ON:
             case Conditional.TYPE_LIGHT_OFF:
-                _variableNameField.setToolTipText(rbx.getString("NameHintLight"));
+                _variableNamePanel.setToolTipText(rbx.getString("NameHintLight"));
+                _variableNamePanel.setVisible(true);
+                break;
+            case Conditional.TYPE_MEMORY_COMPARE:
+                _variableComparePanel.setVisible(true);
+                JPanel p = (JPanel)_variableData1Panel.getComponent(0);
+                JLabel l = (JLabel)p.getComponent(0);
+                l.setText(rbx.getString("LabelActionName"));
+                _variableData1Panel.setToolTipText(rbx.getString("NameHintMemory"));
+                _variableData1Panel.setVisible(true);
+                _variableNamePanel.setToolTipText(rbx.getString("NameHintMemory"));
                 _variableNamePanel.setVisible(true);
                 break;
             case Conditional.TYPE_MEMORY_EQUALS:
-                _variableData1Field.setToolTipText(rbx.getString("DataHintMemory"));
+                _variableComparePanel.setVisible(true);
+                p = (JPanel)_variableData1Panel.getComponent(0);
+                l = (JLabel)p.getComponent(0);
+                l.setText(rbx.getString("LabelMemoryValue"));
+                _variableData1Panel.setToolTipText(rbx.getString("DataHintMemory"));
                 _variableData1Panel.setVisible(true);
-                _variableNameField.setToolTipText(rbx.getString("NameHintMemory"));
+                _variableNamePanel.setToolTipText(rbx.getString("NameHintMemory"));
                 _variableNamePanel.setVisible(true);
                 break;
             case Conditional.TYPE_FAST_CLOCK_RANGE:
-                _variableData1Field.setToolTipText(rbx.getString("DataHintTime"));
+                p = (JPanel)_variableData1Panel.getComponent(0);
+                l = (JLabel)p.getComponent(0);
+                l.setText(rbx.getString("LabelStartTime"));
+                _variableData1Panel.setToolTipText(rbx.getString("DataHintTime"));
                 _variableData1Panel.setVisible(true);
-                _variableData2Field.setToolTipText(rbx.getString("DataHintTime"));
                 _variableData2Panel.setVisible(true);
                 break;
             case Conditional.TYPE_SIGNAL_HEAD_RED:
@@ -2794,7 +2825,7 @@ public class LogixTableAction extends AbstractTableAction {
             case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
             case Conditional.TYPE_SIGNAL_HEAD_LIT:
             case Conditional.TYPE_SIGNAL_HEAD_HELD:
-                _variableNameField.setToolTipText(rbx.getString("NameHintSignal"));
+                _variableNamePanel.setToolTipText(rbx.getString("NameHintSignal"));
                 _variableNamePanel.setVisible(true);
                 break;
         }
@@ -2822,93 +2853,59 @@ public class LogixTableAction extends AbstractTableAction {
         _curVariable.setNum1(0);
         _curVariable.setNum2(0);
 		// validate according to action type
-		Sensor sn = null;
-		Turnout t = null;
-		SignalHead h = null;
-		Conditional c = null;
-		Light lgt = null;
 		Memory m = null;
 		boolean result = false;
 		switch ( type ) {
             case Conditional.TYPE_SENSOR_ACTIVE:
-                name = validateSensorReference(name);
-                if (name == null) {
-                    return false;
-                }
-                _curVariable.setName(name);
-                sn = getSensor(name);
-                if (sn.getState() == Sensor.ACTIVE)
-                    result = true;
-                break;
             case Conditional.TYPE_SENSOR_INACTIVE:
                 name = validateSensorReference(name);
                 if (name == null) {
                     return false;
                 }
                 _curVariable.setName(name);
-                sn = getSensor(name);
-                if (sn.getState() == Sensor.INACTIVE)
-                    result = true;
+                result = _curVariable.evaluate();
                 break;
             case Conditional.TYPE_TURNOUT_THROWN:
-                name = validateTurnoutReference(name);
-                if (name == null) {
-                    return false;
-                }
-                _curVariable.setName(name);
-                t = getTurnout(name);
-                if (t.getState() == Turnout.THROWN)
-                    result = true;
-                break;
             case Conditional.TYPE_TURNOUT_CLOSED:
                 name = validateTurnoutReference(name);
                 if (name == null) {
                     return false;
                 }
                 _curVariable.setName(name);
-                t = getTurnout(name);
-                if (t.getState() == Turnout.CLOSED)
-                    result = true;
+                result = _curVariable.evaluate();
                 break;
             case Conditional.TYPE_CONDITIONAL_TRUE:
-                name = validateConditionalReference(name);
-                if (name == null) {
-                    return false;
-                }
-                _curVariable.setName(name);
-                c = getConditional(name);
-                if (c.getState() == Conditional.TRUE)
-                    result = true;
-                break;
             case Conditional.TYPE_CONDITIONAL_FALSE:
                 name = validateConditionalReference(name);
                 if (name == null) {
                     return false;
                 }
                 _curVariable.setName(name);
-                c = getConditional(name);
-                if (c.getState() == Conditional.FALSE)
-                    result = true;
+                result = _curVariable.evaluate();
                 break;
             case Conditional.TYPE_LIGHT_ON:
-                name = validateLightReference(name);
-                if (name == null) {
-                    return false;
-                }
-                _curVariable.setName(name);
-                lgt = getLight(name);
-                if (lgt.getState() == Light.ON)
-                    result = true;
-                break;
             case Conditional.TYPE_LIGHT_OFF:
                 name = validateLightReference(name);
                 if (name == null) {
                     return false;
                 }
                 _curVariable.setName(name);
-                lgt = getLight(name);
-                if (lgt.getState() == Light.OFF)
-                    result = true;
+                result = _curVariable.evaluate();
+                break;
+            case Conditional.TYPE_MEMORY_COMPARE:
+                name = validateMemoryReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setName(name);
+                String name2 = _variableData1Field.getText();
+                name2 = validateMemoryReference(name2);
+                if (name2 == null) {
+                    return false;
+                }
+                _curVariable.setDataString(name2);
+                _curVariable.setNum1(_variableCompareBox.getSelectedIndex() + 1);
+                result = _curVariable.evaluate();
                 break;
             case Conditional.TYPE_MEMORY_EQUALS:
                 name = validateMemoryReference(name);
@@ -2916,16 +2913,9 @@ public class LogixTableAction extends AbstractTableAction {
                     return false;
                 }
                 _curVariable.setName(name);
-                String str = _variableData1Field.getText();
-                _curVariable.setDataString(str);
-                m = getMemory(name);
-                String s = (String) m.getValue();
-                if (s == null) {
-                    return (true); // result is false, because null doesn't match content
-                }
-                if ( s.equals(str) ) {
-                    result = true;
-                }
+                _curVariable.setDataString(_variableData1Field.getText());
+                _curVariable.setNum1(_variableCompareBox.getSelectedIndex() + 1);
+                result = _curVariable.evaluate();
                 break;
             case Conditional.TYPE_FAST_CLOCK_RANGE:
                 int beginTime = parseTime(_variableData1Field.getText());
@@ -2940,120 +2930,25 @@ public class LogixTableAction extends AbstractTableAction {
                 // set beginning and end time (minutes since midnight)
                 _curVariable.setNum1(beginTime);
                 _curVariable.setNum2(endTime);
-                // get current fast clock time
-                Timebase fastClock = InstanceManager.timebaseInstance();
-                Date currentTime = fastClock.getTime();
-                int currentMinutes = (currentTime.getHours() * 60)
-                        + currentTime.getMinutes();
-                // check if current time is within range specified
-                if (endTime > beginTime) {
-                    // range is entirely within one day
-                    if ((currentMinutes < endTime) && (currentMinutes >= beginTime))
-                        result = true;
-                } else {
-                    // range includes midnight
-                    if (currentMinutes >= beginTime)
-                        result = true;
-                    else if (currentMinutes < endTime)
-                        result = true;
-                }
+                result = _curVariable.evaluate();
                 break;
             case Conditional.TYPE_SIGNAL_HEAD_RED:
-                name = validateSignalHeadReference(name);
-                if (name == null) {
-                    return false;
-                }
-                _curVariable.setName(name);
-                h = getSignalHead(name);
-                if (h.getAppearance() == SignalHead.RED)
-                    result = true;
-                break;
             case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-                name = validateSignalHeadReference(name);
-                if (name == null) {
-                    return false;
-                }
-                _curVariable.setName(name);
-                h = getSignalHead(name);
-                if (h.getAppearance() == SignalHead.YELLOW)
-                    result = true;
-                break;
             case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-                name = validateSignalHeadReference(name);
-                if (name == null) {
-                    return false;
-                }
-                _curVariable.setName(name);
-                h = getSignalHead(name);
-                if (h.getAppearance() == SignalHead.GREEN)
-                    result = true;
-                break;
             case Conditional.TYPE_SIGNAL_HEAD_DARK:
-                name = validateSignalHeadReference(name);
-                if (name == null) {
-                    return false;
-                }
-                _curVariable.setName(name);
-                h = getSignalHead(name);
-                if (h.getAppearance() == SignalHead.DARK)
-                    result = true;
-                break;
             case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-                name = validateSignalHeadReference(name);
-                if (name == null) {
-                    return false;
-                }
-                _curVariable.setName(name);
-                h = getSignalHead(name);
-                if (h.getAppearance() == SignalHead.FLASHRED)
-                    result = true;
-                break;
             case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-                name = validateSignalHeadReference(name);
-                if (name == null) {
-                    return false;
-                }
-                _curVariable.setName(name);
-                h = getSignalHead(name);
-                if (h.getAppearance() == SignalHead.FLASHYELLOW)
-                    result = true;
-                break;
             case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-                name = validateSignalHeadReference(name);
-                if (name == null) {
-                    return false;
-                }
-                _curVariable.setName(name);
-                h = getSignalHead(name);
-                if (h.getAppearance() == SignalHead.FLASHGREEN)
-                    result = true;
-                break;
             case Conditional.TYPE_SIGNAL_HEAD_LIT:
-                name = validateSignalHeadReference(name);
-                if (name == null) {
-                    return false;
-                }
-                _curVariable.setName(name);
-                h = getSignalHead(name);
-                if (h.getLit())
-                    result = true;
-                break;
             case Conditional.TYPE_SIGNAL_HEAD_HELD:
                 name = validateSignalHeadReference(name);
                 if (name == null) {
                     return false;
                 }
                 _curVariable.setName(name);
-                h = getSignalHead(name);
-                if (h.getHeld())
-                    result = true;
+                result = _curVariable.evaluate();
                 break;
 		}
-		// set state variable
-		if (_curVariable.isNegated()) {
-			result = !result;
-        }
-        _curVariable.setState(result);
 		return (true);
 	}   /* validateVariable */
 
@@ -3091,7 +2986,7 @@ public class LogixTableAction extends AbstractTableAction {
                 break;
             case Conditional.ACTION_DELAYED_TURNOUT:
             case Conditional.ACTION_RESET_DELAYED_TURNOUT:
-                if (!validateIntegerReference(Conditional.ACTION_RESET_DELAYED_TURNOUT, actionString)) 
+                if (!validateIntegerReference(type, actionString)) 
                 {
                     return (false);
                 }
@@ -3152,7 +3047,7 @@ public class LogixTableAction extends AbstractTableAction {
                 break;
             case Conditional.ACTION_DELAYED_SENSOR:
             case Conditional.ACTION_RESET_DELAYED_SENSOR:
-                if (!validateIntegerReference(Conditional.ACTION_RESET_DELAYED_TURNOUT, actionString)) 
+                if (!validateIntegerReference(type, actionString)) 
                 {
                     return (false);
                 }
@@ -3189,7 +3084,6 @@ public class LogixTableAction extends AbstractTableAction {
                     _curAction.setActionData(Route.TOGGLE);
                 break;
             case Conditional.ACTION_SET_LIGHT_INTENSITY:
-            case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
                 name = validateLightReference(name);
                 if (name == null) {
                     return false;
@@ -3205,6 +3099,31 @@ public class LogixTableAction extends AbstractTableAction {
                     javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
                             java.text.MessageFormat.format(
                             rbx.getString("Error45"), new Object[] { name }), 
+                            rbx.getString("ErrorTitle"),  javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return (false);				
+                }
+                if (!validateIntegerReference(type, actionString)) 
+                {
+                    return (false);
+                }
+                _curAction.setActionString(actionString);
+                break;
+            case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+                name = validateLightReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _actionNameField.setText(name);
+                _curAction.setDeviceName(name);
+                lgtx = getLight(name);
+                // check if light user name was entered
+                if (lgtx == null) {
+                    return false;
+                }
+                if (!lgtx.isTransitionAvailable()) {
+                    javax.swing.JOptionPane.showMessageDialog(editConditionalFrame,
+                            java.text.MessageFormat.format(
+                            rbx.getString("Error40"), new Object[] { name }), 
                             rbx.getString("ErrorTitle"),  javax.swing.JOptionPane.ERROR_MESSAGE);
                     return (false);				
                 }
@@ -3272,9 +3191,8 @@ public class LogixTableAction extends AbstractTableAction {
     */
     boolean validateIntegerReference(int actionType, String intReference) {
         intReference = intReference.trim();
-        if (intReference == null || intReference.length() == 0)
-        {
-            displayBadIntegerFormat(actionType, intReference);
+        if (intReference == null || intReference.length() == 0) {
+            displayBadIntegerReference(actionType);
             return false;
         }
         try {
@@ -3287,9 +3205,13 @@ public class LogixTableAction extends AbstractTableAction {
                 try {
                     return validateInteger(actionType, Integer.valueOf((String)m.getValue()).intValue());
                 } catch (NumberFormatException ex) {
-                    displayBadIntegerFormat(actionType, intReference);
+                    javax.swing.JOptionPane.showMessageDialog(
+                       editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Error24"),
+                       intReference), rbx.getString("WarnTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                    return true;
                 }
             }
+            displayBadIntegerReference(actionType);
         }
         return false;
     }
@@ -3299,43 +3221,45 @@ public class LogixTableAction extends AbstractTableAction {
     * throws NumberFormatException
     */
     boolean validateInteger(int actionType, int time) {
-        int maxTime = 3600;
+        int maxTime = 3600;     // more than 1 hour
+        int minTime = 1;
         if (actionType == Conditional.ACTION_SET_LIGHT_INTENSITY)
         {
             maxTime = 100;
+            minTime = 0;
 
         }
-        if (time <= 0 || time > maxTime) {
+        if (time < minTime || time > maxTime) {
             String errorNum = " ";
             switch(actionType) {
                 case Conditional.ACTION_DELAYED_TURNOUT:
-                    errorNum = "Error38";
+                    errorNum = "Error39";
                     break;
                 case Conditional.ACTION_RESET_DELAYED_TURNOUT:
-                    errorNum = "Error40";
+                    errorNum = "Error41";
                     break;
                 case Conditional.ACTION_DELAYED_SENSOR:
-                    errorNum = "Error25";
+                    errorNum = "Error23";
                     break;
                 case Conditional.ACTION_RESET_DELAYED_SENSOR:
-                    errorNum = "Error28";
+                    errorNum = "Error27";
                     break;
                 case Conditional.ACTION_SET_LIGHT_INTENSITY:
                     errorNum = "Error42";
                     break;
                 case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
-                    errorNum = "Error44";
+                    errorNum = "Error29";
                     break;
             }
             javax.swing.JOptionPane.showMessageDialog(
-                    editConditionalFrame, java.text.MessageFormat.format(rbx.getString(errorNum),
-                    time), rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                    editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Error38"),
+                    time, rbx.getString(errorNum)), rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
     }
 
-    void displayBadIntegerFormat(int actionType, String intReference)
+    void displayBadIntegerReference(int actionType)
     {
         String errorNum = " ";
         switch(actionType) {
@@ -3352,15 +3276,17 @@ public class LogixTableAction extends AbstractTableAction {
                 errorNum = "Error27";
                 break;
             case Conditional.ACTION_SET_LIGHT_INTENSITY:
-                errorNum = "Error43";
-                break;
+                javax.swing.JOptionPane.showMessageDialog(
+                        editConditionalFrame, rbx.getString("Error43"),
+                        rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
             case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
-                errorNum = "Error45";
+                errorNum = "Error29";
                 break;
         }
         javax.swing.JOptionPane.showMessageDialog(
-                editConditionalFrame, java.text.MessageFormat.format(rbx.getString(errorNum),
-                intReference), rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+                editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Error9"),
+                rbx.getString(errorNum)), rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
     /**
