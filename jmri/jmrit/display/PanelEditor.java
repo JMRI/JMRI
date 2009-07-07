@@ -3,16 +3,11 @@ package jmri.jmrit.display;
 import jmri.CatalogTree;
 import jmri.InstanceManager;
 import jmri.Turnout;
-import jmri.TurnoutManager;
 import jmri.Sensor;
-import jmri.SensorManager;
 import jmri.SignalHead;
-import jmri.SignalHeadManager;
 import jmri.Manager;
 import jmri.Memory;
-import jmri.MemoryManager;
 import jmri.Reporter;
-import jmri.ReporterManager;
 import jmri.NamedBean;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
@@ -233,349 +228,17 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         _addIconBox = new JComboBox();
         _addIconBox.setMinimumSize(new Dimension(75,75));
         _addIconBox.setMaximumSize(new Dimension(200,200));
-
-        // share this PickListModel with both right and left turnouts 
-        class TurnoutPickModel extends PickListModel {
-            TurnoutManager manager;
-            TurnoutPickModel () {
-                manager = InstanceManager.turnoutManagerInstance();
-            }
-            Manager getManager() {
-                return manager;
-            }
-            NamedBean getBySystemName(String name) {
-                return manager.getBySystemName(name);
-            }
-            NamedBean addBean(String name) {
-                return manager.provideTurnout(name);
-            }
-        }
-        PickListModel turnoutTableModel = new TurnoutPickModel();
-        // Add a turnout indicator for right-hand
-        {
-            IconAdder turnoutRIconEditor = new IconAdder("RightTOEditor");
-            turnoutRIconEditor.setIcon(3, "TurnoutStateClosed",
-				"resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif");
-            turnoutRIconEditor.setIcon(2, "TurnoutStateThrown", 
-				"resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif");
-            turnoutRIconEditor.setIcon(0, "BeanStateInconsistent", 
-                "resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif");
-            turnoutRIconEditor.setIcon(1, "BeanStateUnknown",
-                "resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif");
-
-            JFrameItem turnoutRFrame = makeAddIconFrame("RightTOEditor", "addIconsToPanel", "SelectTO", turnoutRIconEditor);
-            turnoutRFrame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
-            turnoutRIconEditor.makeIconPanel();
-            turnoutRIconEditor.setPickList(turnoutTableModel);
-
-            ActionListener addIconAction = new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    addTurnoutR();
-                }
-            };
-            ActionListener changeIconAction = new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        JFrameItem frame = _iconEditorFrame.get("RightTOEditor");
-                        frame.getEditor().addCatalog();
-                        frame.pack();
-                    }
-            };
-            turnoutRIconEditor.complete(addIconAction, changeIconAction, true);
-            _addIconBox.addItem(turnoutRFrame);
-        }
-
-        // Add a turnout indicator for left-hand
-        {
-            IconAdder turnoutLIconEditor = new IconAdder("LeftTOEditor");
-            turnoutLIconEditor.setIcon(3, "TurnoutStateClosed",
-				"resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
-            turnoutLIconEditor.setIcon(2, "TurnoutStateThrown", 
-				"resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif");
-            turnoutLIconEditor.setIcon(0, "BeanStateInconsistent", 
-                "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif");
-            turnoutLIconEditor.setIcon(1, "BeanStateUnknown",
-                "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
-
-            JFrameItem turnoutLFrame = makeAddIconFrame("LeftTOEditor", "addIconsToPanel", "SelectTO", turnoutLIconEditor);
-            turnoutLFrame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
-            turnoutLIconEditor.makeIconPanel();
-            turnoutLIconEditor.setPickList(turnoutTableModel);
-
-            ActionListener addIconAction = new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    addTurnoutL();
-                }
-            };
-            ActionListener changeIconAction = new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        JFrameItem frame = _iconEditorFrame.get("LeftTOEditor");
-                        frame.getEditor().addCatalog();
-                        frame.pack();
-                    }
-            };
-            turnoutLIconEditor.complete(addIconAction, changeIconAction, true);
-            _addIconBox.addItem(turnoutLFrame);
-        }
-        // share this PickListModel with Senors and MultiSensors
-        class sensorPickModel extends PickListModel {
-            SensorManager manager;
-            sensorPickModel (SensorManager m) {
-                manager = m;
-            }
-            Manager getManager() {
-                return manager;
-            }
-            NamedBean getBySystemName(String name) {
-                return manager.getBySystemName(name);
-            }
-            NamedBean addBean(String name) {
-                return manager.provideSensor(name);
-            }
-        }
-        PickListModel sensorTableModel = new sensorPickModel(InstanceManager.sensorManagerInstance());
-        // Add a sensor indicator
-        {
-            IconAdder sensorIconEditor = new IconAdder("SensorEditor");
-            sensorIconEditor.setIcon(3, "SensorStateActive",
-                "resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
-            sensorIconEditor.setIcon(2, "SensorStateInactive", 
-                "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
-            sensorIconEditor.setIcon(0, "BeanStateInconsistent", 
-                "resources/icons/smallschematics/tracksegments/circuit-error.gif");
-            sensorIconEditor.setIcon(1, "BeanStateUnknown",
-                "resources/icons/smallschematics/tracksegments/circuit-error.gif");
-
-            JFrameItem sensorIconFrame = makeAddIconFrame("SensorEditor", "addIconsToPanel", 
-                                               "SelectSensor", sensorIconEditor);
-            sensorIconFrame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
-            sensorIconEditor.makeIconPanel();
-            sensorIconEditor.setPickList(sensorTableModel);
-
-            ActionListener addIconAction = new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    addSensor();
-                }
-            };
-            ActionListener changeIconAction = new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        JFrameItem frame = _iconEditorFrame.get("SensorEditor");
-                        frame.getEditor().addCatalog();
-                        frame.pack();
-                    }
-            };
-            sensorIconEditor.complete(addIconAction, changeIconAction, true);
-            _addIconBox.addItem(sensorIconFrame);
-        }
-
-        // Add a signal indicator
-        {
-            IconAdder signalIconEditor = new IconAdder("SignalEditor");
-            signalIconEditor.setIcon(0, "SignalHeadStateFlashingYellow", 
-                "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
-            signalIconEditor.setIcon(2, "SignalHeadStateFlashingRed", 
-                "resources/icons/smallschematics/searchlights/left-flashred-marker.gif");
-            signalIconEditor.setIcon(5, "SignalHeadStateYellow", 
-                "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
-            signalIconEditor.setIcon(6, "SignalHeadStateGreen",
-                "resources/icons/smallschematics/searchlights/left-green-marker.gif");
-            signalIconEditor.setIcon(1, "SignalHeadStateFlashingGreen",
-                "resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
-            signalIconEditor.setIcon(4, "SignalHeadStateDark",
-                "resources/icons/smallschematics/searchlights/left-dark-marker.gif");
-            signalIconEditor.setIcon(3, "SIgnalHeadStateHeld",
-                "resources/icons/smallschematics/searchlights/left-held-marker.gif");
-            signalIconEditor.setIcon(7, "SignalHeadStateRed",
-                "resources/icons/smallschematics/searchlights/left-red-marker.gif");
-
-            JFrameItem signalIconFrame = makeAddIconFrame("SignalEditor", "addIconsToPanel", 
-                                               "SelectSignal", signalIconEditor);
-            signalIconFrame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
-            signalIconEditor.makeIconPanel();
-
-            class pickModel extends PickListModel {
-                SignalHeadManager manager;
-                pickModel (SignalHeadManager m) {
-                    manager = m;
-                }
-                Manager getManager() {
-                    return manager;
-                }
-                NamedBean getBySystemName(String name) {
-                    return manager.getBySystemName(name);
-                }
-                NamedBean addBean(String name) {
-                    return manager.getSignalHead(name);
-                }
-            }
-            signalIconEditor.setPickList(new pickModel(InstanceManager.signalHeadManagerInstance()));
-
-            ActionListener addIconAction = new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    addSignalHead();
-                }
-            };
-            ActionListener changeIconAction = new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        JFrameItem frame = _iconEditorFrame.get("SignalEditor");
-                        frame.getEditor().addCatalog();
-                        frame.pack();
-                    }
-            };
-            signalIconEditor.complete(addIconAction, changeIconAction, false);
-            _addIconBox.addItem(signalIconFrame);
-        }
-
-        // add a memory
-        {
-            IconAdder memoryIconEditor = new IconAdder("MemoryEditor");
-            ActionListener addIconAction = new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    addMemory();
-                }
-            };
-            _addIconBox.addItem(makeAddIconFrame("MemoryEditor", "addMemValueToPanel", 
-                                                 "SelectMemory", memoryIconEditor));
-
-            class pickModel extends PickListModel {
-                MemoryManager manager;
-                pickModel (MemoryManager m) {
-                    manager = m;
-                }
-                Manager getManager() {
-                    return manager;
-                }
-                NamedBean getBySystemName(String name) {
-                    return manager.getBySystemName(name);
-                }
-                NamedBean addBean(String name) {
-                    return manager.provideMemory(name);
-                }
-            }
-            memoryIconEditor.setPickList(new pickModel(InstanceManager.memoryManagerInstance()));
-            memoryIconEditor.complete(addIconAction, null, true);
-        }
-
-        // add a reporter
-        {
-            IconAdder reporterIconEditor = new IconAdder("ReporterEditor");
-            ActionListener addIconAction = new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    addReporter();
-                }
-            };
-            _addIconBox.addItem(makeAddIconFrame("ReporterEditor", "addReportValueToPanel", 
-                                                 "SelectReporter", reporterIconEditor));
-            class pickModel extends PickListModel {
-                ReporterManager manager;
-                pickModel (ReporterManager m) {
-                    manager = m;
-                }
-                Manager getManager() {
-                    return manager;
-                }
-                NamedBean getBySystemName(String name) {
-                    return manager.getBySystemName(name);
-                }
-                NamedBean addBean(String name) {
-                    return manager.provideReporter(name);
-                }
-            }
-            reporterIconEditor.setPickList(new pickModel(InstanceManager.reporterManagerInstance()));
-            reporterIconEditor.complete(addIconAction, null, true);
-        }
-
-        // add Background
-        {
-            IconAdder bkgrndEditor = new IconAdder("BackgroundEditor");
-            bkgrndEditor.setIcon(0, "background","resources/PanelPro.gif");
-
-            JFrameItem bdIconFrame = makeAddIconFrame("BackgroundEditor", "addBackgroundToPanel", "pressAdd", bkgrndEditor);
-            bdIconFrame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
-            bkgrndEditor.makeIconPanel();
-
-            ActionListener addIconAction = new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    addBackground();
-                }
-            };
-            ActionListener changeIconAction = new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        JFrameItem frame = _iconEditorFrame.get("BackgroundEditor");
-                        frame.getEditor().addCatalog();
-                        frame.pack();
-                    }
-            };
-            bkgrndEditor.complete(addIconAction, changeIconAction, false);
-            _addIconBox.addItem(bdIconFrame);
-        }
-
-        // Add a MultiSensor indicator
-        {
-            MultiSensorIconAdder multiSensorEditor = new MultiSensorIconAdder("MultiSensorEditor");
-            multiSensorEditor.setIcon(0, "BeanStateInconsistent",
-                                      "resources/icons/USS/plate/levers/l-inconsistent.gif");
-            multiSensorEditor.setIcon(1, "BeanStateUnknown",
-                                      "resources/icons/USS/plate/levers/l-unknown.gif");
-            multiSensorEditor.setIcon(2, "SensorStateInactive",
-                                      "resources/icons/USS/plate/levers/l-inactive.gif");
-            multiSensorEditor.setIcon(3, "MultiSensorPosition",
-                                      "resources/icons/USS/plate/levers/l-left.gif");
-            multiSensorEditor.setIcon(4, "MultiSensorPosition",
-                                      "resources/icons/USS/plate/levers/l-vertical.gif");
-            multiSensorEditor.setIcon(5, "MultiSensorPosition",
-                                      "resources/icons/USS/plate/levers/l-right.gif");
-
-            JFrameItem multiSensorFrame = makeAddIconFrame("MultiSensorEditor", "addIconsToPanel", 
-                                               "SelectMultiSensor", multiSensorEditor);
-            multiSensorFrame.addHelpMenu("package.jmri.jmrit.display.MultiSensorIconAdder", true);
-            multiSensorEditor.makeIconPanel();
-            multiSensorEditor.setPickList(sensorTableModel);
-
-            ActionListener addIconAction = new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    addMultiSensor();
-                }
-            };
-            ActionListener changeIconAction = new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        JFrameItem frame = _iconEditorFrame.get("MultiSensorEditor");
-                        frame.getEditor().addCatalog();
-                        frame.pack();
-                    }
-            };
-            multiSensorEditor.complete(addIconAction, changeIconAction, false);
-            _addIconBox.addItem(multiSensorFrame);
-        }
-        // add an RPS reporter
-        _addIconBox.addItem(makeAddIconFrame("AddRPSreporter", null, null, null));
-
-        // add a fast clock indicator
-        _addIconBox.addItem(makeAddIconFrame("AddFastClock", null, null, null));
-
-        // Add icon label
-        {
-            IconAdder iconEditor = new IconAdder("IconEditor");
-            iconEditor.setIcon(0, "plainIcon","resources/jmri48x48.gif");
-            JFrameItem iconFrame = makeAddIconFrame("IconEditor", "addIconToPanel", "pressAdd", iconEditor);
-            iconFrame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
-            iconEditor.makeIconPanel();
-
-            ActionListener addIconAction = new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    addIcon();
-                }
-            };
-            ActionListener changeIconAction = new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        JFrameItem frame = _iconEditorFrame.get("IconEditor");
-                        frame.getEditor().addCatalog();
-                        frame.pack();
-                    }
-            };
-            iconEditor.complete(addIconAction, changeIconAction, false);
-            _addIconBox.addItem(iconFrame);
-        }
-
+        _addIconBox.addItem("RightTOEditor");
+        _addIconBox.addItem("LeftTOEditor");
+        _addIconBox.addItem("SensorEditor");
+        _addIconBox.addItem("SignalEditor");
+        _addIconBox.addItem("MemoryEditor");
+        _addIconBox.addItem("ReporterEditor");
+        _addIconBox.addItem("BackgroundEditor");
+        _addIconBox.addItem("MultiSensorEditor");
+        _addIconBox.addItem("AddRPSreporter");
+        _addIconBox.addItem("AddFastClock");
+        _addIconBox.addItem("IconEditor");
         _addIconBox.setSelectedIndex(-1);
         _addIconBox.addItemListener(this);  // must be AFTER no selection is set
         JPanel p1 = new JPanel();
@@ -586,6 +249,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         p1.add(p2);
         p1.add(_addIconBox);
         this.getContentPane().add(p1);
+
+        // Build resource catalog and load CatalogTree.xml now
+        jmri.jmrit.catalog.CatalogPanel catalog = new jmri.jmrit.catalog.CatalogPanel();
+        catalog.createNewBranch("IFJAR", "Program Directory", "resources");
 
         // edit, position, control controls
         {
@@ -765,18 +432,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             }
         }
     }
-/*
-    void addHelpMenu(JFrame frame, String ref) {
-        JMenuBar bar = frame.getJMenuBar();
-        if (bar == null) bar = new JMenuBar();
-        // add Window menu
-		bar.add(new jmri.util.WindowMenu(frame)); // * GT 28-AUG-2008 Added window menu
-		// add Help menu
-        jmri.util.HelpUtil.helpMenu(bar, frame, ref, true);
-        frame.setJMenuBar(bar);
-    }
-*/
-    // Allows these objects to be used as JComboBox items
+    
     public class JFrameItem extends JmriJFrame {
         IconAdder _editor;
         JFrameItem (String title, IconAdder editor) {
@@ -790,6 +446,12 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         public String toString() {
             return this.getName();
         }
+        public void windowClosing(java.awt.event.WindowEvent e) {
+            setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+            _addIconBox.setSelectedIndex(-1);
+            _editor.reset();
+            if (log.isDebugEnabled()) log.debug("windowClosing: "+toString());
+        }
     }
 
     int locationX = 0;
@@ -801,17 +463,252 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     */
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
-            JFrame frame = (JFrame)e.getItem();
-            if (rb.getString("AddFastClock").equals(frame.getName())) {
-                addClock();
-            } else if (rb.getString("AddRPSreporter").equals(frame.getName())) {
-                addRpsReporter();
-            } else {
-                frame.setLocation(locationX, locationY);
-                locationX += DELTA;
-                locationY += DELTA;
+            String name = (String)e.getItem();
+            JFrameItem frame = _iconEditorFrame.get(name);
+            if (frame != null) {
+                frame.getEditor().reset();
                 frame.setVisible(true);
+                _addIconBox.setSelectedIndex(-1);
+                return;
             }
+            IconAdder editor = null;
+            ActionListener addIconAction = null;
+            ActionListener changeIconAction = null;
+            PickListModel pickList = null;
+            boolean addToTable = true;
+            int which = _addIconBox.getSelectedIndex();
+            _addIconBox.setSelectedIndex(-1);
+            switch (which) {
+                case 0:
+                    editor = new IconAdder("RightTOEditor");
+                    editor.setIcon(3, "TurnoutStateClosed",
+                        "resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif");
+                    editor.setIcon(2, "TurnoutStateThrown", 
+                        "resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif");
+                    editor.setIcon(0, "BeanStateInconsistent", 
+                        "resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif");
+                    editor.setIcon(1, "BeanStateUnknown",
+                        "resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif");
+
+                    frame = makeAddIconFrame("RightTOEditor", "addIconsToPanel", "SelectTO", editor);
+                    pickList = PickListModel.turnoutPickModelInstance();
+
+                    addIconAction = new ActionListener() {
+                        public void actionPerformed(ActionEvent a) {
+                            addTurnoutR();
+                        }
+                    };
+                    changeIconAction = new ActionListener() {
+                            public void actionPerformed(ActionEvent a) {
+                                JFrameItem frame = _iconEditorFrame.get("RightTOEditor");
+                                frame.getEditor().addCatalog();
+                                frame.pack();
+                            }
+                    };
+                    break;
+                case 1:
+                    editor = new IconAdder("LeftTOEditor");
+                    editor.setIcon(3, "TurnoutStateClosed",
+                        "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
+                    editor.setIcon(2, "TurnoutStateThrown", 
+                        "resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif");
+                    editor.setIcon(0, "BeanStateInconsistent", 
+                        "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif");
+                    editor.setIcon(1, "BeanStateUnknown",
+                        "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif");
+
+                    frame = makeAddIconFrame("LeftTOEditor", "addIconsToPanel", "SelectTO", editor);
+                    pickList = PickListModel.turnoutPickModelInstance();
+
+                    addIconAction = new ActionListener() {
+                        public void actionPerformed(ActionEvent a) {
+                            addTurnoutL();
+                        }
+                    };
+                    changeIconAction = new ActionListener() {
+                            public void actionPerformed(ActionEvent a) {
+                                JFrameItem frame = _iconEditorFrame.get("LeftTOEditor");
+                                frame.getEditor().addCatalog();
+                                frame.pack();
+                            }
+                    };
+                    break;
+                case 2:
+                    editor = new IconAdder("SensorEditor");
+                    editor.setIcon(3, "SensorStateActive",
+                        "resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
+                    editor.setIcon(2, "SensorStateInactive", 
+                        "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
+                    editor.setIcon(0, "BeanStateInconsistent", 
+                        "resources/icons/smallschematics/tracksegments/circuit-error.gif");
+                    editor.setIcon(1, "BeanStateUnknown",
+                        "resources/icons/smallschematics/tracksegments/circuit-error.gif");
+
+                    frame = makeAddIconFrame("SensorEditor", "addIconsToPanel", 
+                                                       "SelectSensor", editor);
+                    pickList = PickListModel.sensorPickModelInstance();
+
+                    addIconAction = new ActionListener() {
+                        public void actionPerformed(ActionEvent a) {
+                            addSensor();
+                        }
+                    };
+                    changeIconAction = new ActionListener() {
+                            public void actionPerformed(ActionEvent a) {
+                                JFrameItem frame = _iconEditorFrame.get("SensorEditor");
+                                frame.getEditor().addCatalog();
+                                frame.pack();
+                            }
+                    };
+                    break;
+                case 3:
+                    editor = new IconAdder("SignalEditor");
+                    editor.setIcon(0, "SignalHeadStateFlashingYellow", 
+                        "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
+                    editor.setIcon(2, "SignalHeadStateFlashingRed", 
+                        "resources/icons/smallschematics/searchlights/left-flashred-marker.gif");
+                    editor.setIcon(5, "SignalHeadStateYellow", 
+                        "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
+                    editor.setIcon(6, "SignalHeadStateGreen",
+                        "resources/icons/smallschematics/searchlights/left-green-marker.gif");
+                    editor.setIcon(1, "SignalHeadStateFlashingGreen",
+                        "resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
+                    editor.setIcon(4, "SignalHeadStateDark",
+                        "resources/icons/smallschematics/searchlights/left-dark-marker.gif");
+                    editor.setIcon(3, "SIgnalHeadStateHeld",
+                        "resources/icons/smallschematics/searchlights/left-held-marker.gif");
+                    editor.setIcon(7, "SignalHeadStateRed",
+                        "resources/icons/smallschematics/searchlights/left-red-marker.gif");
+
+                    frame = makeAddIconFrame("SignalEditor", "addIconsToPanel", 
+                                                       "SelectSignal", editor);
+                    pickList = PickListModel.signalPickModelInstance();
+
+                    addIconAction = new ActionListener() {
+                        public void actionPerformed(ActionEvent a) {
+                            addSignalHead();
+                        }
+                    };
+                    changeIconAction = new ActionListener() {
+                            public void actionPerformed(ActionEvent a) {
+                                JFrameItem frame = _iconEditorFrame.get("SignalEditor");
+                                frame.getEditor().addCatalog();
+                                frame.pack();
+                            }
+                    };
+                    addToTable = false;
+                    break;
+                case 4:
+                    editor = new IconAdder("MemoryEditor");
+                    addIconAction = new ActionListener() {
+                        public void actionPerformed(ActionEvent a) {
+                            addMemory();
+                        }
+                    };
+                    frame = makeAddIconFrame("MemoryEditor", "addMemValueToPanel", "SelectMemory", editor);
+                    pickList = PickListModel.memoryPickModelInstance();
+                    break;
+                case 5:
+                    editor = new IconAdder("ReporterEditor");
+                    addIconAction = new ActionListener() {
+                        public void actionPerformed(ActionEvent a) {
+                            addReporter();
+                        }
+                    };
+                    frame = makeAddIconFrame("ReporterEditor", "addReportValueToPanel","SelectReporter", editor);
+                    pickList = PickListModel.reporterPickModelInstance();
+                    break;
+                case 6:
+                    editor = new IconAdder("BackgroundEditor");
+                    editor.setIcon(0, "background","resources/PanelPro.gif");
+
+                    frame = makeAddIconFrame("BackgroundEditor","addBackgroundToPanel", "pressAdd", editor);
+
+                    addIconAction = new ActionListener() {
+                        public void actionPerformed(ActionEvent a) {
+                            addBackground();
+                        }
+                    };
+                    changeIconAction = new ActionListener() {
+                            public void actionPerformed(ActionEvent a) {
+                                JFrameItem frame = _iconEditorFrame.get("BackgroundEditor");
+                                frame.getEditor().addCatalog();
+                                frame.pack();
+                            }
+                    };
+                    addToTable = false;
+                    break;
+                case 7:
+                    editor = new MultiSensorIconAdder("MultiSensorEditor");
+                    editor.setIcon(0, "BeanStateInconsistent",
+                                              "resources/icons/USS/plate/levers/l-inconsistent.gif");
+                    editor.setIcon(1, "BeanStateUnknown",
+                                              "resources/icons/USS/plate/levers/l-unknown.gif");
+                    editor.setIcon(2, "SensorStateInactive",
+                                              "resources/icons/USS/plate/levers/l-inactive.gif");
+                    editor.setIcon(3, "MultiSensorPosition",
+                                              "resources/icons/USS/plate/levers/l-left.gif");
+                    editor.setIcon(4, "MultiSensorPosition",
+                                              "resources/icons/USS/plate/levers/l-vertical.gif");
+                    editor.setIcon(5, "MultiSensorPosition",
+                                              "resources/icons/USS/plate/levers/l-right.gif");
+
+                    frame = makeAddIconFrame("MultiSensorEditor", "addIconsToPanel","SelectMultiSensor", editor);
+                    pickList = PickListModel.sensorPickModelInstance();
+
+                    addIconAction = new ActionListener() {
+                        public void actionPerformed(ActionEvent a) {
+                            addMultiSensor();
+                        }
+                    };
+                    changeIconAction = new ActionListener() {
+                            public void actionPerformed(ActionEvent a) {
+                                JFrameItem frame = _iconEditorFrame.get("MultiSensorEditor");
+                                frame.getEditor().addCatalog();
+                                frame.pack();
+                            }
+                    };
+                    break;
+                case 8:
+                    addRpsReporter();
+                    return;
+                case 9:
+                    addClock();
+                    return;
+                case 10:
+                    editor = new IconAdder("IconEditor");
+                    editor.setIcon(0, "plainIcon","resources/jmri48x48.gif");
+                    frame = makeAddIconFrame("IconEditor", "addIconToPanel", "pressAdd", editor);
+
+                    addIconAction = new ActionListener() {
+                        public void actionPerformed(ActionEvent a) {
+                            addIcon();
+                        }
+                    };
+                    changeIconAction = new ActionListener() {
+                            public void actionPerformed(ActionEvent a) {
+                                JFrameItem frame = _iconEditorFrame.get("IconEditor");
+                                frame.getEditor().addCatalog();
+                                frame.pack();
+                            }
+                    };
+                    addToTable = false;
+                    break;
+            }
+            editor.makeIconPanel();
+            if (pickList != null) {
+                editor.setPickList(pickList);
+            }
+            editor.complete(addIconAction, changeIconAction, addToTable);
+            if (which == 7) {
+                frame.addHelpMenu("package.jmri.jmrit.display.MultiSensorIconAdder", true);
+            } else {
+                frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
+            }
+            frame.setLocation(locationX, locationY);
+            locationX += DELTA;
+            locationY += DELTA;
+            frame.setVisible(true);
             _addIconBox.setSelectedIndex(-1);
         }
     }
