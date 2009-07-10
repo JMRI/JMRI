@@ -434,6 +434,7 @@ public class ConditionalVariable {
 		return (result);
 	}
 
+    @SuppressWarnings("fallthrough")
     boolean compare(String value1, String value2) {
         if (value1==null) {
             if (value2==null) return true;
@@ -447,7 +448,7 @@ public class ConditionalVariable {
             int n1 = Integer.parseInt(value1);
             try {
                 int n2 = Integer.parseInt(value2);
-                log.debug("Compare numbers: n1= "+n1+", to n2= "+n2);
+                if (log.isDebugEnabled()) log.debug("Compare numbers: n1= "+n1+", to n2= "+n2);
                 switch (_num1)  // both are numbers
                 {   // fall through
                     case LESS_THAN:
@@ -467,7 +468,7 @@ public class ConditionalVariable {
             log.error("Compare 'numbers': value1= "+value1+", to value2= "+value2);
         } catch (NumberFormatException nfe) { 
             try {
-                int n2 = Integer.parseInt(value2);
+                Integer.parseInt(value2);
                 return false;     // n1 is not a number, n2 is
             } catch (NumberFormatException ex) { // OK neither a number
             }

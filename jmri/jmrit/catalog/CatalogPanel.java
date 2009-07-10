@@ -103,7 +103,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     public CatalogPanel() {
         _model =new DefaultTreeModel(new CatalogTreeNode("mainRoot"));
-        };
+        }
 
     public CatalogPanel(String label1, String label2) {
         super(true);

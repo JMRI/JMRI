@@ -5,10 +5,10 @@ import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.Sensor;
 import jmri.SignalHead;
-import jmri.Manager;
+//import jmri.Manager;
 import jmri.Memory;
 import jmri.Reporter;
-import jmri.NamedBean;
+//import jmri.NamedBean;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.Roster;
@@ -464,6 +464,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     /*
     *  itemListener for JComboBox
     */
+    @SuppressWarnings("null")
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
             String name = (String)e.getItem();

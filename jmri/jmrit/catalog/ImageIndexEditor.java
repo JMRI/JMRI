@@ -176,6 +176,7 @@ public class ImageIndexEditor extends JmriJFrame {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static void storeImageIndex(PanelEditor panelEditor) {
         // build a new Default Icons tree
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();

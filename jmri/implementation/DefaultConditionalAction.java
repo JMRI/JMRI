@@ -18,7 +18,7 @@ import javax.swing.Timer;
  * break that, which will simplify things.
  *
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 
@@ -479,7 +479,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 case Conditional.ACTION_DELAYED_SENSOR:
                     str = str + rbx.getString("After") + " ";
                     try {
-                        int t = Integer.parseInt(_actionString);
+                        Integer.parseInt(_actionString);
                         str = str + _actionString + " " + rbx.getString("Seconds")+ ".";
                     } catch (NumberFormatException nfe) { 
                         str = str + _actionString + " " + rbx.getString("ValueInMemory")

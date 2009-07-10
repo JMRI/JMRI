@@ -19,7 +19,7 @@ import jmri.SignalHead;
 import jmri.implementation.DefaultSignalHead;
 import jmri.Route;
 import jmri.Memory;
-import jmri.Timebase;
+//import jmri.Timebase;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 
 import java.awt.FlowLayout;
@@ -71,7 +71,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -2853,7 +2853,6 @@ public class LogixTableAction extends AbstractTableAction {
         _curVariable.setNum1(0);
         _curVariable.setNum2(0);
 		// validate according to action type
-		Memory m = null;
 		boolean result = false;
 		switch ( type ) {
             case Conditional.TYPE_SENSOR_ACTIVE:
@@ -2949,6 +2948,9 @@ public class LogixTableAction extends AbstractTableAction {
                 result = _curVariable.evaluate();
                 break;
 		}
+        if (log.isDebugEnabled()) log.debug("State Variable \""+name+"\"of type "+
+                                            _curVariable.getTypeString(type)+
+                                            " state= "+ result);
 		return (true);
 	}   /* validateVariable */
 
