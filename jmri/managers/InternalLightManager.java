@@ -3,14 +3,14 @@
 package jmri.managers;
 
 import jmri.Light;
-import jmri.implementation.AbstractLight;
+import jmri.implementation.AbstractVariableLight;
 import jmri.managers.AbstractLightManager;
 
 /**
  * Implement a light manager for "Internal" (virtual) lights.
  *
  * @author			Bob Jacobsen Copyright (C) 2009
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class InternalLightManager extends AbstractLightManager {
 
@@ -18,8 +18,10 @@ public class InternalLightManager extends AbstractLightManager {
      * Create and return an internal (no layout connection) Light
      */
     protected Light createNewLight(String systemName, String userName) {
-        return new AbstractLight(systemName, userName){
+        return new AbstractVariableLight(systemName, userName){
             //protected void forwardCommandChangeToLayout(int s) {}
+            protected void sendIntensity(double intensity) {}
+            protected void sendOnOffCommand(int newState) {}
         };
     }
     
