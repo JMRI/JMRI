@@ -77,6 +77,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     final public static Integer REPORTERS = new Integer(5);
     final public static Integer SECURITY  = new Integer(6);
     final public static Integer TURNOUTS  = new Integer(7);
+    final public static Integer LIGHTS    = new Integer(8);
     final public static Integer SIGNALS   = new Integer(9);
     final public static Integer SENSORS   = new Integer(10);
     final public static Integer CLOCK     = new Integer(10);
