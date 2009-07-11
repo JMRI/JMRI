@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
  * types of information stored in configuration files.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  * @see         jmri.jmrit.XmlFile
  */
 public class StoreXmlUserAction extends StoreXmlConfigAction {
@@ -33,6 +33,8 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
         java.io.File file = getFileName(userFileChooser);
         if (file==null) return;
         
+        // make a backup file
+        InstanceManager.configureManagerInstance().makeBackup(file);
         // and finally store
         InstanceManager.configureManagerInstance().storeUser(file);
     }

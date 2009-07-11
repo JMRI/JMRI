@@ -1,6 +1,7 @@
 package jmri.configurexml;
 
 import jmri.InstanceManager;
+import jmri.jmrit.XmlFile;
 
 import java.io.File;
 
@@ -18,7 +19,7 @@ import org.jdom.ProcessingInstruction;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -267,6 +268,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         addUserStore(root);
         finalStore(root, file);
     }
+    
+    public boolean makeBackup(File file){
+    	return makeBackupFile(defaultBackupDirectory, file);
+    }
+    
+    String defaultBackupDirectory = XmlFile.prefsDir()+"backupPanels";
 
     static public Element elementFromObject(Object o) {
         String aName = adapterName(o);

@@ -9,6 +9,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.Calendar;
 import java.util.List;
 import org.jdom.Comment;
 import org.jdom.Document;
@@ -31,7 +32,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.43 $
+ * @version	$Revision: 1.44 $
  */
 public abstract class XmlFile {
 
@@ -370,6 +371,47 @@ public abstract class XmlFile {
 				log.error("could not create backup file " + backupName);
 		}
 	}
+    
+    /**
+     * Move original file to backup directory.
+     * @param backupDirectory the backup directory to use.
+     * @param file the file to be backed up.  The file name will have
+     * the current date embedded in the backup name.
+     * @return true if successful.
+     */
+    public boolean makeBackupFile(String directory, File file){
+		if (file == null) {
+			log.info("No file to backup");
+		} else {
+			String backupFullName = directory +File.separator+ createFileNameWithDate(file.getName());
+			if (log.isDebugEnabled()) log.debug("new backup file: "+backupFullName);
+			
+			File backupFile = findFile(backupFullName);
+			if (backupFile != null) {
+				if (backupFile.delete())
+					if (log.isDebugEnabled()) log.debug("deleted backup file " + backupFullName);
+			}else{
+				backupFile = new File(backupFullName);
+			}
+			// create directory if needed
+			File parentDir = backupFile.getParentFile();
+			if (!parentDir.exists()) {
+				if (log.isDebugEnabled()) log.debug("creating backup directory: "+parentDir.getName());
+				if (!parentDir.mkdirs()) {
+					log.error("backup directory not created");
+					return false;
+				}
+			}
+			if (file.renameTo(new File(backupFullName))){
+				if (log.isDebugEnabled()) log.debug("created new backup file " + backupFullName);
+			} else {
+				if (log.isDebugEnabled()) log.debug("could not create backup file " + backupFullName);
+				return false;
+			}
+		}
+		return true;
+	}
+    	
 
     /**
      * Revert to original file from backup. Use this for testing backup files.
@@ -409,9 +451,52 @@ public abstract class XmlFile {
 	 */
     public String backupFileName(String name) {
         String f = name+".bak";
-        if (log.isDebugEnabled()) log.debug("backup file name is "+f);
+        if (log.isDebugEnabled()) log.debug("backup file name is: "+f);
         return f;
     }
+    
+    public String createFileNameWithDate(String name){
+    	// remove .xml extension
+    	String[] fileName = name.split(".xml");
+    	String f = fileName[0] + "_"+getDate()+".xml";
+        if (log.isDebugEnabled()) log.debug("backup file name is: "+f);
+        return f;
+    }
+    
+    /**
+     * @return String based on the current date in the format of year month day hour minute second.
+     * The date is fixed length and always returns a date represented by 14 characters.
+     */
+	private String getDate() {
+		Calendar now = Calendar.getInstance();
+		int month = now.get(Calendar.MONTH) + 1;
+		String m = Integer.toString(month);
+		if (month < 10){
+			m = "0"+Integer.toString(month);
+		}
+		int day = now.get(Calendar.DATE);
+		String d = Integer.toString(day);
+		if (day < 10){
+			d = "0"+Integer.toString(day);
+		}
+		int hour = now.get(Calendar.HOUR);
+		String h = Integer.toString(hour);
+		if (hour < 10){
+			h = "0"+Integer.toString(hour);
+		}
+		int minute = now.get(Calendar.MINUTE);
+		String min = Integer.toString(minute);
+		if (minute < 10){
+			min = "0"+Integer.toString(minute);
+		}
+		int second = now.get(Calendar.SECOND);
+		String sec = Integer.toString(second);
+		if (second < 10){
+			sec = "0"+Integer.toString(second);
+		}
+		String date = "" + now.get(Calendar.YEAR) + m + d + h + min + sec;
+		return date;
+	}
 
     /**
      * Ensure that a subdirectory is present; if not, create it.
@@ -456,7 +541,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.43 2009-06-27 22:25:51 dan_boudreau Exp $";
+                        +" $Id: XmlFile.java,v 1.44 2009-07-11 23:27:55 dan_boudreau Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }

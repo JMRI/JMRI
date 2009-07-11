@@ -44,7 +44,7 @@ import java.io.File;
  * for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  * @see jmri.InstanceManager
  * @see jmri.configurexml.ConfigXmlManager
  */
@@ -115,6 +115,13 @@ public interface ConfigureManager {
      * @return Corresponding File object
      */
     public File find(String filename);
+    
+    /**
+     * Make a backup file.
+     * @param file to be backed up
+     * @return true if successful
+     */
+    public boolean makeBackup(File file);
 
 }
 
