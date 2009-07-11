@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: Ubuntu.shtml,v 1.9 2008-05-19 17:30:52 jacobsen Exp $ -->
+<!-- $Id: Ubuntu.shtml,v 1.10 2009-07-11 19:38:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
 	<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
@@ -58,7 +58,8 @@ supply computers with it pre installed.
 </p>
 
 <p style="margin-left: 0.19cm;">Details on installing Ubuntu can be found below at
-Ubuntu:<br></p><p style="margin-left: 0.19cm;"><a href="http://www.ubuntu.com/getubuntu/download">Ubuntu
+Ubuntu:<br></p><p style="margin-left: 0.19cm;">
+<a href="http://www.ubuntu.com/getubuntu/download">Ubuntu
 Details</a></p>
 <p style="margin-left: 1.34cm;">Follow the Path
 "Download" then I suggest you read up on the help page which is
@@ -119,7 +120,7 @@ repositories does not work with JMRI! RXTX 2.1 uses a different structure than
 RXTX 2.0; JMRI requires the RXTX 2.0 structure.
 The "2.0.7pre2" is known to work well
 and that is what is included in the automated script which can currently be downloaded</p>
-<p><a href="http://downloads.sourceforge.net/jmri/RXTX-install-5.tar.gz?download">Download RXTX-Install</a>
+<p><a href="http://downloads.sourceforge.net/jmri/RXTX-install-5.tar.gz">Download RXTX-Install</a>
 <p>and place it
 in a spare directory. Unpack it by double clicking, and then
 extracting (extract) the file. 
