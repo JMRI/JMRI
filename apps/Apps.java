@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.84 $
+ * @version     $Revision: 1.85 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -727,7 +727,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
     @SuppressWarnings("unchecked")
 	static public String startupInfo(String program) {
-    	log.info(ignore);
+    	log.info(jmriLog);
         Enumeration<org.apache.log4j.Logger> e = org.apache.log4j.Logger.getRootLogger().getAllAppenders();
         while ( e.hasMoreElements() ) {
             org.apache.log4j.Appender a = (org.apache.log4j.Appender)e.nextElement();
@@ -751,7 +751,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         updateLine5b();
     }
     
-    static protected String ignore ="****** Ignore messages above this line *******";
+    static protected String jmriLog ="****** JMRI log *******";
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Apps.class.getName());
     
