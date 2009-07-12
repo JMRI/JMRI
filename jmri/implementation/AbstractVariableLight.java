@@ -4,18 +4,20 @@ package jmri.implementation;
 import java.util.Date;
 import jmri.*;
 
-import jmri.jmrix.powerline.SerialTrafficController;
-
  /**
  * Abstract class providing partial implementation of the logic
  * of the Light interface when the Intensity is variable.
  * <p>
- * Eventually, this class will include transition code, but 
- * it isn't here yet, so the default setTransitionRate()
- * implementation is inherited from AbstractLight
+ * Now it includes the transition code, but 
+ * it only does the steps on the fast minute clock.
+ * Later it may do it's own timing but this was simple to piggy back
+ * on the fast minute listener.
  * <p>
  * The structure is in part dictated by the limitations of the
- * X10 protocol and implementations.  
+ * X10 protocol and implementations. However, it is not limited to X10
+ * devices only. Other interfaces that have a way to provide a dimmable
+ * light should use it.
+ *
  * X10 has on/off commands, and separate commands for setting
  * a variable intensity via "dim" commands.  Some X10
  * implementations use relative dimming, some use absolute dimming.
@@ -34,9 +36,9 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * in separate variables.
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @author	Ken Cameron Copyright (C) 2008
- * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.3 $
+ * @author	Ken Cameron Copyright (C) 2008,2009
+ * @author	Bob Jacobsen Copyright (C) 2008,2009
+ * @version     $Revision: 1.4 $
  */
 public abstract class AbstractVariableLight extends AbstractLight
     implements java.io.Serializable {
