@@ -26,7 +26,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * communicate with an adapter.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -64,7 +64,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      * Provide the maximum number of dimming steps available.
      * @return By default, dimming not available.
      */
-    public int maxX10DimStep() { return 0; }
+    public int getNumberOfIntensitySteps() { return 0; }
     
     /**
      * Get a message of a specific length for filling in.

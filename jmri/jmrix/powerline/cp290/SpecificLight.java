@@ -24,7 +24,7 @@ import jmri.jmrix.powerline.*;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -35,7 +35,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
      */
     public SpecificLight(String systemName) {
         super(systemName);
-        maxDimStep = SerialTrafficController.instance().maxX10DimStep();
+        maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
     }
     /**
      * Create a Light object, with both system and user names.
@@ -44,7 +44,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
      */
     public SpecificLight(String systemName, String userName) {
         super(systemName, userName);
-        maxDimStep = SerialTrafficController.instance().maxX10DimStep();
+        maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
     }
         
     /**
@@ -53,7 +53,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
      * Invoked the first time intensity is set.
      */
     protected void initIntensity(double intensity) {
-        maxDimStep = SerialTrafficController.instance().maxX10DimStep();
+        maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
 
         // Set initial state
             
@@ -105,7 +105,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
     /**
      * Largest X10 dim step number available.
      * <p>
-     * Loaded from SerialTrafficController.maxX10DimStep();
+     * Loaded from SerialTrafficController.getNumberOfIntensitySteps();
      */
      int maxDimStep = 0;
    
@@ -179,7 +179,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
      * maintained in specific SerialTrafficController implementation
      */
     protected int getNumberOfSteps() {
-        return SerialTrafficController.instance().maxX10DimStep();
+        return SerialTrafficController.instance().getNumberOfIntensitySteps();
     }
     
     /**
