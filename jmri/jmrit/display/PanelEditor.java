@@ -229,17 +229,17 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         _addIconBox = new JComboBox();
         _addIconBox.setMinimumSize(new Dimension(75,75));
         _addIconBox.setMaximumSize(new Dimension(200,200));
-        _addIconBox.addItem("RightTOEditor");
-        _addIconBox.addItem("LeftTOEditor");
-        _addIconBox.addItem("SensorEditor");
-        _addIconBox.addItem("SignalEditor");
-        _addIconBox.addItem("MemoryEditor");
-        _addIconBox.addItem("ReporterEditor");
-        _addIconBox.addItem("BackgroundEditor");
-        _addIconBox.addItem("MultiSensorEditor");
-        _addIconBox.addItem("AddRPSreporter");
-        _addIconBox.addItem("AddFastClock");
-        _addIconBox.addItem("IconEditor");
+        _addIconBox.addItem(rb.getString("RightTOEditor"));
+        _addIconBox.addItem(rb.getString("LeftTOEditor"));
+        _addIconBox.addItem(rb.getString("SensorEditor"));
+        _addIconBox.addItem(rb.getString("SignalEditor"));
+        _addIconBox.addItem(rb.getString("MemoryEditor"));
+        _addIconBox.addItem(rb.getString("ReporterEditor"));
+        _addIconBox.addItem(rb.getString("BackgroundEditor"));
+        _addIconBox.addItem(rb.getString("MultiSensorEditor"));
+        _addIconBox.addItem(rb.getString("AddRPSreporter"));
+        _addIconBox.addItem(rb.getString("AddFastClock"));
+        _addIconBox.addItem(rb.getString("IconEditor"));
         _addIconBox.setSelectedIndex(-1);
         _addIconBox.addItemListener(this);  // must be AFTER no selection is set
         JPanel p1 = new JPanel();
