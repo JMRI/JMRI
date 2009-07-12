@@ -36,7 +36,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.34 $
+ * @version     $Revision: 1.34.2.1 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -124,13 +124,13 @@ public class LightTableAction extends AbstractTableAction {
     		public void setValueAt(Object value, int row, int col) {
     			if (col==EDITCOL) {
                     // Use separate Thread so window is created on top
-                    class WindowMaker extends Thread {
+                    class WindowMaker implements Runnable {
                         int row;
                         WindowMaker(int r){
                             row = r;
                         }
                         public void run() {
-                            Thread.yield();
+                            //Thread.yield();
                             // set up to edit
                             addPressed(null);
                             systemName.setText((String)getValueAt(row, SYSNAMECOL));
@@ -138,7 +138,7 @@ public class LightTableAction extends AbstractTableAction {
                             }
                         }
                     WindowMaker t = new WindowMaker(row);
-                    t.start();
+                    javax.swing.SwingUtilities.invokeLater(t);
     			} else if (col==INTENSITYCOL) {
                     // alternate
                     Light l = (Light)getBySystemName((String)getValueAt(row, SYSNAMECOL));

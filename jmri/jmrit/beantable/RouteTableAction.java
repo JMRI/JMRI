@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.50 $
+ * @version     $Revision: 1.50.2.1 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -136,20 +136,20 @@ public class RouteTableAction extends AbstractTableAction {
     		public void setValueAt(Object value, int row, int col) {
     			if (col==SETCOL) {
                     // set up to edit. Use separate Thread so window is created on top
-                    class WindowMaker extends Thread {
+                    class WindowMaker implements Runnable {
                         int row;
                         WindowMaker(int r){
                             row = r;
                         }
                         public void run() {
-                                Thread.yield();
+                                //Thread.yield();
                                 addPressed(null);
                                 _systemName.setText((String)getValueAt(row, SYSNAMECOL));
                                 editPressed(null); // don't really want to stop Route w/o user action
                             }
                         }
                     WindowMaker t = new WindowMaker(row);
-					t.start();
+					javax.swing.SwingUtilities.invokeLater(t);
                     /*
                     addPressed(null);
                     _systemName.setText((String)getValueAt(row, SYSNAMECOL));
