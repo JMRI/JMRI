@@ -32,7 +32,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.44 $
+ * @version	$Revision: 1.45 $
  */
 public abstract class XmlFile {
 
@@ -374,7 +374,7 @@ public abstract class XmlFile {
     
     /**
      * Move original file to backup directory.
-     * @param backupDirectory the backup directory to use.
+     * @param directory the backup directory to use.
      * @param file the file to be backed up.  The file name will have
      * the current date embedded in the backup name.
      * @return true if successful.
@@ -541,7 +541,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.44 2009-07-11 23:27:55 dan_boudreau Exp $";
+                        +" $Id: XmlFile.java,v 1.45 2009-07-12 13:12:29 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
