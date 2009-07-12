@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.8 2009-05-03 18:08:52 pete_cressman Exp $ -->
+<!-- $Id: index.shtml,v 1.9 2009-07-12 03:40:14 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -126,8 +126,21 @@
 		    locomotives.  You can use this while setting them up,
 		    to catch speeders, or for whatever you'd like.
 		</dd>
-
-
+					
+		<dt><h3><a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></h3></dt>
+		<dd>The dispatcher tool provides functions and organizes information
+		relating to dispatching trains on a model railroad layout. It's main
+		function is allocation of sections of track to various trains running
+		around the layout.
+		</dd>
+		
+		
+		<dt><h3><a href="../../package/jmri/jmrit/operations/Operations.shtml">Operations</a></h3></dt>
+		<dd>
+		The operations tool allows you to produce computer generated
+		manifests and switch lists for your railroad.
+		</dd>
+		
 	<h2><a href="../apps/LocoTools/index.shtml">LocoNet-specific Tools</a></h2>
 	A set of Digitrax LocoNet-specific tools:
 		    <UL>
