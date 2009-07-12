@@ -36,7 +36,7 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public abstract class AbstractVariableLight extends AbstractLight
     implements java.io.Serializable {
@@ -223,32 +223,35 @@ public abstract class AbstractVariableLight extends AbstractLight
         }
         minuteChangeListener = new java.beans.PropertyChangeListener() {
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    //process change to new minute
                     newInternalMinute();
                 }
             } ;
         internalClock.addMinuteChangeListener(minuteChangeListener);
     }
     
+    /**
+     * Layout time has changed to a new minute.
+     * Process effect that might be having on
+     * intensity.
+     * Currently, this implementation assumes there's a 
+     * fixed number of steps between min and max brightness.
+     */
     @SuppressWarnings("deprecation")
-    private void newInternalMinute() {
+    protected void newInternalMinute() {
     	double origCurrent = mCurrentIntensity;
     	int origState = mState;
     	if ((Math.abs(mCurrentIntensity - mTransitionTargetIntensity) > 0.001) && (mTransitionDuration > 0)) {
     		if (log.isDebugEnabled()) {
     			log.debug("before Target: " + mTransitionTargetIntensity + " Current: " + mCurrentIntensity);
     		}
-    		//Date now = internalClock.getTime();
-    		int steps = SerialTrafficController.instance().maxX10DimStep();
+
+    		int steps = getNumberOfSteps();
+    		
         	double stepsPerMinute = steps / mTransitionDuration;
-        	//double minutesPerStep = 1 / stepsPerMinute;
-        	//double timeUntilMinute = now.getSeconds() / 60.0;
-        	//double absIntensityDiff = Math.abs(mTransitionTargetIntensity - mCurrentIntensity);
         	double stepSize = 1 / (double)steps;
-        	//double stepsNeeded = absIntensityDiff / stepSize;
         	double intensityDiffPerMinute = stepSize * stepsPerMinute;
-//        	if (log.isDebugEnabled()) {
-//        		log.debug("step/min " + stepsPerMinute + " min/step " + minutesPerStep + " absDiff " + absIntensityDiff + " step " + stepSize + " steps " + stepsNeeded + " diff/min " + intensityDiffPerMinute);
-//        	}
+
 			if (mTransitionTargetIntensity > mCurrentIntensity) {
 				mCurrentIntensity = mCurrentIntensity + intensityDiffPerMinute;
 				if (mCurrentIntensity >= mTransitionTargetIntensity) {
@@ -292,6 +295,12 @@ public abstract class AbstractVariableLight extends AbstractLight
     		}
     	}
     }
+    
+    /**
+     * Provide the number of steps available 
+     * between min and max intensity
+     */
+    abstract protected int getNumberOfSteps();
     
     /**
      * Change the stored target intensity value and do notification, but don't

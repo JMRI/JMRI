@@ -25,7 +25,7 @@ import jmri.jmrix.powerline.*;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
  * @author      Ken Cameron Copyright (C) 2009
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -181,6 +181,14 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
         }
     }
 
+    /** 
+     * Number of steps from dim to bright is 
+     * maintained in specific SerialTrafficController implementation
+     */
+    protected int getNumberOfSteps() {
+        return SerialTrafficController.instance().maxX10DimStep();
+    }
+    
     /**
      *  Send a On/Off Command to the hardware
      */
