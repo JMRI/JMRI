@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ThrottleFrame.shtml,v 1.6 2008-12-23 16:31:56 jacobsen Exp $ -->
+<!-- $Id: ThrottleFrame.shtml,v 1.7 2009-07-12 14:51:27 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -32,7 +32,7 @@ For more information, please go to the
 
 
 <h2>Hints</h2>
-The "Program" button in the lower left opens an
+The "Program" button in the lower right opens an
 ops-mode (programming on the main) DecoderPro programmer 
 for the selected locomotive. It's only active when
 a roster entry has been selected on the throttle.
