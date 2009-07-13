@@ -387,6 +387,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _addButton.setEnabled(false);
             _addButton.setToolTipText(rb.getString("ToolTipPickFromTable"));
         }
+        addAdditionalButtons(p);
         this.add(p);
 
         if (addToTable) {
@@ -434,6 +435,8 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         pack();
     }
 
+    protected void addAdditionalButtons(JPanel p) {}
+    
     void addToTable() {
         String name = _sysNametext.getText();
         if (name != null && name .length() > 2) {
