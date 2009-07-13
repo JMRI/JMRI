@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.6.shtml,v 1.8 2009-07-03 03:07:32 millerdl Exp $ -->
+<!-- $Id: jmri2.6.shtml,v 1.9 2009-07-13 15:21:33 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -37,9 +37,12 @@
 <br><b>This is a draft release note only; the download links do not yet work</b>
  -->
 
-<p>We are very pleased to announce that the 2.5 series of JMRI test releases has resulted in a 
-version that's good enough to be recommended for general use, including by new users. 
-We're therefore making that version, "Production version 2.6" available for download today.
+<p>
+JMRI 2.6 has been superceded by 
+<a href="jmri2.6.1.shtml">JMRI 2.6.1</a>.
+JMRI 2.6 had a bug that would occasionally cause the program to freeze
+when editing Routes, Logix or Lights.  This is fixed in JMRI 2.6.1.
+This release note for JMRI 2.6 is being kept available for historical purposes.
 
 <p>
 Among the enhancements since the last production release, JMRI 2.4, are:
@@ -128,6 +131,7 @@ the way you drag things in the Layout Editor has changed if you
 are using a Linux computer. 
 
 
+<!-- 
 <h3>Download links:</h3>
 
 <p>Please use these links for downloading:
@@ -141,6 +145,7 @@ are using a Linux computer.
 <p>Linux:
      <A HREF="http://downloads.sourceforge.net/jmri/JMRI.2.6.tgz">http://downloads.sourceforge.net/jmri/JMRI.2.6.tgz</a>
 
+ -->
 
 <h3>Changes since production version 2.4</h3>
 
