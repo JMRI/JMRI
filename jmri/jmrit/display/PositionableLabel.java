@@ -37,7 +37,7 @@ import javax.swing.JTextField;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.48 $
+ * @version $Revision: 1.49 $
  */
 
 public class PositionableLabel extends JLabel
@@ -296,7 +296,7 @@ public class PositionableLabel extends JLabel
 
     void editIcon() {
         String url = _editor.getIcon("plainIcon").getURL();
-        namedIcon = jmri.jmrit.catalog.CatalogPanel.getIconByName(url);
+        namedIcon = NamedIcon.getIconByName(url);
         setIcon(namedIcon);
         updateSize();
         _editorFrame.dispose();
