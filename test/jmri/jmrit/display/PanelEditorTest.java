@@ -15,7 +15,7 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class PanelEditorTest extends TestCase {
 
@@ -85,10 +85,10 @@ String layerTestData =
 "  <paneleditor class=\"jmri.jmrit.display.configurexml.PanelEditorXml\" name=\"Layer Name Test\" x=\"20\" y=\"22\" height=\"226\" width=\"204\" editable=\"no\" positionable=\"yes\" controlling=\"yes\" hide=\"yes\" panelmenu=\"no\">"+
 "    <positionablelabel forcecontroloff=\"false\" fixed=\"false\" showtooltip=\"true\" class=\"jmri.jmrit.display.configurexml.PositionableLabelXml\" x=\"40\" y=\"130\" level=\"5\" text=\"Checks should be\" size=\"13\" style=\"0\" />"+
 "    <positionablelabel forcecontroloff=\"false\" fixed=\"false\" showtooltip=\"true\" class=\"jmri.jmrit.display.configurexml.PositionableLabelXml\" x=\"51\" y=\"149\" level=\"5\" text=\"in front of Xs\" size=\"13\" style=\"0\" />"+
-"    <turnouticon turnout=\"IT1\" x=\"45\" y=\"55\" level=\"10\" closed=\"resource:resources/icons/misc/Checkmark-green.gif\" thrown=\"resource:resources/icons/misc/Checkmark-green.gif\" unknown=\"resource:resources/icons/misc/Checkmark-green.gif\" inconsistent=\"resource:resources/icons/misc/Checkmark-green.gif\" rotate=\"0\" forcecontroloff=\"false\" class=\"jmri.jmrit.display.configurexml.TurnoutIconXml\" />"+
-"    <sensoricon sensor=\"IS1\" x=\"46\" y=\"53\" level=\"7\" active=\"resource:resources/icons/misc/X-red.gif\" inactive=\"resource:resources/icons/misc/X-red.gif\" unknown=\"resource:resources/icons/misc/X-red.gif\" inconsistent=\"resource:resources/icons/misc/X-red.gif\" rotate=\"0\" forcecontroloff=\"false\" momentary=\"false\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\" />"+
-"    <turnouticon turnout=\"IT1\" x=\"136\" y=\"53\" level=\"7\" closed=\"resource:resources/icons/misc/X-red.gif\" thrown=\"resource:resources/icons/misc/X-red.gif\" unknown=\"resource:resources/icons/misc/X-red.gif\" inconsistent=\"resource:resources/icons/misc/X-red.gif\" rotate=\"0\" forcecontroloff=\"false\" class=\"jmri.jmrit.display.configurexml.TurnoutIconXml\" />"+
-"    <sensoricon sensor=\"IS1\" x=\"138\" y=\"54\" level=\"10\" active=\"resource:resources/icons/misc/Checkmark-green.gif\" inactive=\"resource:resources/icons/misc/Checkmark-green.gif\" unknown=\"resource:resources/icons/misc/Checkmark-green.gif\" inconsistent=\"resource:resources/icons/misc/Checkmark-green.gif\" rotate=\"0\" forcecontroloff=\"false\" momentary=\"false\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\" />"+
+"    <turnouticon turnout=\"IT1\" x=\"45\" y=\"55\" level=\"10\" closed=\"program:resources/icons/misc/Checkmark-green.gif\" thrown=\"program:resources/icons/misc/Checkmark-green.gif\" unknown=\"program:resources/icons/misc/Checkmark-green.gif\" inconsistent=\"program:resources/icons/misc/Checkmark-green.gif\" rotate=\"0\" forcecontroloff=\"false\" class=\"jmri.jmrit.display.configurexml.TurnoutIconXml\" />"+
+"    <sensoricon sensor=\"IS1\" x=\"46\" y=\"53\" level=\"7\" active=\"program:resources/icons/misc/X-red.gif\" inactive=\"program:resources/icons/misc/X-red.gif\" unknown=\"program:resources/icons/misc/X-red.gif\" inconsistent=\"program:resources/icons/misc/X-red.gif\" rotate=\"0\" forcecontroloff=\"false\" momentary=\"false\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\" />"+
+"    <turnouticon turnout=\"IT1\" x=\"136\" y=\"53\" level=\"7\" closed=\"program:resources/icons/misc/X-red.gif\" thrown=\"program:resources/icons/misc/X-red.gif\" unknown=\"program:resources/icons/misc/X-red.gif\" inconsistent=\"program:resources/icons/misc/X-red.gif\" rotate=\"0\" forcecontroloff=\"false\" class=\"jmri.jmrit.display.configurexml.TurnoutIconXml\" />"+
+"    <sensoricon sensor=\"IS1\" x=\"138\" y=\"54\" level=\"10\" active=\"program:resources/icons/misc/Checkmark-green.gif\" inactive=\"program:resources/icons/misc/Checkmark-green.gif\" unknown=\"program:resources/icons/misc/Checkmark-green.gif\" inconsistent=\"program:resources/icons/misc/Checkmark-green.gif\" rotate=\"0\" forcecontroloff=\"false\" momentary=\"false\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\" />"+
 "  </paneleditor>"+
 "</layout-config>";
 
