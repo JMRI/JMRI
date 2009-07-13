@@ -20,7 +20,7 @@ import java.awt.Color;
  *   loading a saved panel.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class LayoutMemoryIconXml implements XmlAdapter {
 
@@ -97,7 +97,7 @@ public class LayoutMemoryIconXml implements XmlAdapter {
         l.setMemory(element.getAttribute("memory").getValue());
 
         Attribute a = element.getAttribute("defaulticon");
-        if (a!=null) l.setDefaultIcon(CatalogPane.getIconByName(a.getValue()));
+        if (a!=null) l.setDefaultIcon(NamedIcon.getIconByName(a.getValue()));
         
         a = element.getAttribute("selectable");
         if (a!=null && a.getValue().equals("yes")) l.setSelectable(true);
@@ -123,7 +123,7 @@ public class LayoutMemoryIconXml implements XmlAdapter {
             Element item = items.get(i);
             String icon = item.getAttribute("icon").getValue();
             String keyValue = item.getAttribute("value").getValue();
-        	l.addKeyAndIcon(CatalogPane.getIconByName(icon), keyValue);
+        	l.addKeyAndIcon(NamedIcon.getIconByName(icon), keyValue);
 		}
 		
         // find coordinates

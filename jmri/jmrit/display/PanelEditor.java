@@ -726,7 +726,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         // most likely the image is scaled.  get full size from URL
         IconAdder bkgrndEditor = _iconEditorFrame.get("BackgroundEditor").getEditor();
         String url = bkgrndEditor.getIcon("background").getURL();
-        NamedIcon icon = jmri.jmrit.catalog.CatalogPanel.getIconByName(url);
+        NamedIcon icon = NamedIcon.getIconByName(url);
         PositionableLabel l = new PositionableLabel(icon);
         l.setFixed(true);
         l.setShowTooltip(false);
@@ -936,7 +936,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     void addIcon() {
         IconAdder iconEditor = _iconEditorFrame.get("IconEditor").getEditor();
         String url = iconEditor.getIcon("plainIcon").getURL();
-        NamedIcon icon = jmri.jmrit.catalog.CatalogPanel.getIconByName(url);
+        NamedIcon icon = NamedIcon.getIconByName(url);
         PositionableLabel l = new PositionableLabel(icon);
         setNextLocation(l);
         l.setDisplayLevel(ICONS);

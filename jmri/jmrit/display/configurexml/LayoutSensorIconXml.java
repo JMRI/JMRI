@@ -17,7 +17,7 @@ import org.jdom.Element;
  *   loading a saved panel.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LayoutSensorIconXml implements XmlAdapter {
 
@@ -75,19 +75,19 @@ public class LayoutSensorIconXml implements XmlAdapter {
 
         NamedIcon active;
         name = element.getAttribute("active").getValue();
-        l.setActiveIcon(active = CatalogPane.getIconByName(name));
+        l.setActiveIcon(active = NamedIcon.getIconByName(name));
 
         NamedIcon inactive;
         name = element.getAttribute("inactive").getValue();
-        l.setInactiveIcon(inactive = CatalogPane.getIconByName(name));
+        l.setInactiveIcon(inactive = NamedIcon.getIconByName(name));
 
         NamedIcon unknown;
         name = element.getAttribute("unknown").getValue();
-        l.setUnknownIcon(unknown = CatalogPane.getIconByName(name));
+        l.setUnknownIcon(unknown = NamedIcon.getIconByName(name));
 
         NamedIcon inconsistent;
         name = element.getAttribute("inconsistent").getValue();
-        l.setInconsistentIcon(inconsistent = CatalogPane.getIconByName(name));
+        l.setInconsistentIcon(inconsistent = NamedIcon.getIconByName(name));
 
         try {
             Attribute a = element.getAttribute("rotate");

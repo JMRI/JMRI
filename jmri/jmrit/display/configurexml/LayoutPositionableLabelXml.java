@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.LayoutPositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class LayoutPositionableLabelXml implements XmlAdapter {
 
@@ -112,7 +112,7 @@ public class LayoutPositionableLabelXml implements XmlAdapter {
 
         } else if (element.getAttribute("icon")!=null) {
             String name = element.getAttribute("icon").getValue();
-            NamedIcon icon = CatalogPane.getIconByName(name);
+            NamedIcon icon = NamedIcon.getIconByName(name);
             l = new LayoutPositionableLabel(icon);
             try {
                 Attribute a = element.getAttribute("rotate");

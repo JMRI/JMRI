@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for rps.RpsPositionIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class RpsPositionIconXml implements XmlAdapter {
 
@@ -76,11 +76,11 @@ public class RpsPositionIconXml implements XmlAdapter {
 
         NamedIcon active;
         name = element.getAttribute("active").getValue();
-        l.setActiveIcon(active = CatalogPanel.getIconByName(name));
+        l.setActiveIcon(active = NamedIcon.getIconByName(name));
 
         NamedIcon unknown;
         name = element.getAttribute("error").getValue();
-        l.setErrorIcon(unknown = CatalogPanel.getIconByName(name));
+        l.setErrorIcon(unknown = NamedIcon.getIconByName(name));
 
         try {
             Attribute a = element.getAttribute("rotate");

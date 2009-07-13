@@ -777,45 +777,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
         }
     }
 
-    /**
-     * Find the icon corresponding to a name. There are three cases:
-     * <UL>
-     * <LI> Starts with "resource:", treat the rest as a resource pathname
-     *                  in the .jar file
-     * <LI> Starts with "file:", treat the rest as an absolute file pathname
-     *                  or as a relative path below the resource directory in the preferences directory
-     * <LI> Otherwise, treat the name as a resource pathname in the .jar file
-     * </UL>
-     * @param pName The name string, possibly starting with file: or resource:
-     * @return the desired icon with this same pName as its name.
-     */
-    static public NamedIcon getIconByName(String pName) {
-        if (pName == null || pName.length() == 0) {
-            return null;
-        }
-        if (pName.startsWith("resource:"))
-            // return new NamedIcon(ClassLoader.getSystemResource(pName.substring(9)), pName);
-            return new NamedIcon(pName.substring(9), pName);
-        else if (pName.startsWith("file:")) {
-            String fileName = pName.substring(5);
-            
-            // historically, absolute path names could be stored 
-            // in the 'file' format.  Check for those, and
-            // accept them if present
-            if ((new File(fileName)).isAbsolute()) {
-                if (log.isDebugEnabled()) log.debug("Load from absolute path: "+fileName);
-                return new NamedIcon(fileName, pName);
-            }
-            // assume this is a relative path from the
-            // preferences directory
-            fileName = XmlFile.userFileLocationDefault()+File.separator+"resources"+File.separator+fileName;
-            if (log.isDebugEnabled()) log.debug("load from user preferences file: "+fileName);
-            return new NamedIcon(fileName, pName);
-        }
-        // else return new NamedIcon(ClassLoader.getSystemResource(pName), pName);
-        else return new NamedIcon(pName, pName);
-    }
-
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CatalogPanel.class.getName());
 }
 

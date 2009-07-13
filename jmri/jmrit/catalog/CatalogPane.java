@@ -40,7 +40,7 @@ import javax.swing.tree.TreePath;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright 2002
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class CatalogPane extends JPanel {
     JLabel preview = new JLabel();
@@ -106,7 +106,7 @@ public class CatalogPane extends JPanel {
                 log.debug("attempt to load resource from "+name);
                 // return new NamedIcon(ClassLoader.getSystemResource(name), "resource:"+name);
                 //return new NamedIcon(name, "resource:"+name);
-                return getIconByName(name);
+                return NamedIcon.getIconByName(name);
             } else if (((DefaultMutableTreeNode)path.getPathComponent(1)).getUserObject().equals("files")) {
                 // process a file
                 String name = "file:"+(String)((DefaultMutableTreeNode)path.getPathComponent(2)).getUserObject();
@@ -116,46 +116,10 @@ public class CatalogPane extends JPanel {
                 }
                 log.debug("attempt to load file from "+name);
                 //return new NamedIcon(name, "file:"+name);
-                return getIconByName(name);
+                return NamedIcon.getIconByName(name);
             } else log.error("unexpected first element on getSelectedIcon: "+path.getPathComponent(1));
         }
         return null;
-    }
-
-    /**
-     * Find the icon corresponding to a name. There are three cases:
-     * <UL>
-     * <LI> Starts with "resource:", treat the rest as a resource pathname
-     *                  in the .jar file
-     * <LI> Starts with "file:", treat the rest as an absolute file pathname
-     *                  or as a relative path below the resource directory in the preferences directory
-     * <LI> Otherwise, treat the name as a resource pathname in the .jar file
-     * </UL>
-     * @param pName The name string, possibly starting with file: or resource:
-     * @return the desired icon with this same pName as its name.
-     */
-    static public NamedIcon getIconByName(String pName) {
-        if (pName.startsWith("resource:"))
-            // return new NamedIcon(ClassLoader.getSystemResource(pName.substring(9)), pName);
-            return new NamedIcon(pName.substring(9), pName);
-        else if (pName.startsWith("file:")) {
-            String fileName = pName.substring(5);
-            
-            // historically, absolute path names could be stored 
-            // in the 'file' format.  Check for those, and
-            // accept them if present
-            if ((new File(fileName)).isAbsolute()) {
-                log.debug("Load from absolute path: "+fileName);
-                return new NamedIcon(fileName, pName);
-            }
-            // assume this is a relative path from the
-            // preferences directory
-            fileName = jmri.jmrit.XmlFile.userFileLocationDefault()+File.separator+"resources"+File.separator+fileName;
-            log.debug("load from user preferences file: "+fileName);
-            return new NamedIcon(fileName, pName);
-        }
-        // else return new NamedIcon(ClassLoader.getSystemResource(pName), pName);
-        else return new NamedIcon(pName, pName);
     }
 
     JTree dTree;

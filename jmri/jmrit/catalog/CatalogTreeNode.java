@@ -36,7 +36,7 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
     */
     public void addLeaf(String name, String path) {
        // check path
-       NamedIcon icon = CatalogPanel.getIconByName(path);
+       NamedIcon icon = NamedIcon.getIconByName(path);
        if (icon == null){
            log.warn("path \""+path+"\" is not a NamedIcon.");
            return;

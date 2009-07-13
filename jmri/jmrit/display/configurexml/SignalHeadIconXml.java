@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -93,42 +93,42 @@ public class SignalHeadIconXml implements XmlAdapter {
 
         NamedIcon red;
         name = element.getAttribute("red").getValue();
-        l.setRedIcon(red = CatalogPanel.getIconByName(name));
+        l.setRedIcon(red = NamedIcon.getIconByName(name));
 
         NamedIcon yellow;
         name = element.getAttribute("yellow").getValue();
-        l.setYellowIcon(yellow = CatalogPanel.getIconByName(name));
+        l.setYellowIcon(yellow = NamedIcon.getIconByName(name));
 
         NamedIcon green;
         name = element.getAttribute("green").getValue();
-        l.setGreenIcon(green = CatalogPanel.getIconByName(name));
+        l.setGreenIcon(green = NamedIcon.getIconByName(name));
 
         Attribute a; 
 
         NamedIcon held = null;
         a = element.getAttribute("held");
         if (a!=null) 
-            l.setHeldIcon(held = CatalogPanel.getIconByName(a.getValue()));
+            l.setHeldIcon(held = NamedIcon.getIconByName(a.getValue()));
 
         NamedIcon dark = null;
         a = element.getAttribute("dark");
         if (a!=null) 
-            l.setDarkIcon(dark = CatalogPanel.getIconByName(a.getValue()));
+            l.setDarkIcon(dark = NamedIcon.getIconByName(a.getValue()));
 
         NamedIcon flashred = null;
         a = element.getAttribute("flashred");
         if (a!=null) 
-            l.setFlashRedIcon(flashred = CatalogPanel.getIconByName(a.getValue()));
+            l.setFlashRedIcon(flashred = NamedIcon.getIconByName(a.getValue()));
 
         NamedIcon flashyellow = null;
         a = element.getAttribute("flashyellow");
         if (a!=null) 
-            l.setFlashYellowIcon(flashyellow = CatalogPanel.getIconByName(a.getValue()));
+            l.setFlashYellowIcon(flashyellow = NamedIcon.getIconByName(a.getValue()));
 
         NamedIcon flashgreen = null;
         a = element.getAttribute("flashgreen");
         if (a!=null) 
-            l.setFlashGreenIcon(flashgreen = CatalogPanel.getIconByName(a.getValue()));
+            l.setFlashGreenIcon(flashgreen = NamedIcon.getIconByName(a.getValue()));
         
         try {
             a = element.getAttribute("rotate");

@@ -25,7 +25,7 @@ import javax.swing.ImageIcon;
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -51,11 +51,11 @@ public class NamedIcon extends ImageIcon {
      * @param pName Human-readable name for the icon
      */
     public NamedIcon(String pUrl, String pName) {
-        super(pUrl);
+        super(jmri.util.FileUtil.getExternalFilename(pUrl));
         mDefaultImage = getImage();
         if (mDefaultImage == null) log.warn("Could not load image from "+pUrl);
         mName = pName;
-        mURL = pUrl;
+        mURL = jmri.util.FileUtil.getPortableFilename(pUrl);
         mRotation = 0;
     }
 
@@ -68,6 +68,21 @@ public class NamedIcon extends ImageIcon {
      */
     public NamedIcon(URL pUrl, String pName) {
         this(pUrl.toString(), pName);
+    }
+
+    /**
+     * Find the NamedIcon corresponding to a name. Understands the 
+     * <a href="http://jmri.org/help/en/html/doc/Technial/FileNames.shtml">standard portable filename prefixes</a>.
+     * 
+     * @param pName The name string, possibly starting with file: or resource:
+     * @return the desired icon with this same pName as its name.
+     */
+    static public NamedIcon getIconByName(String pName) {
+        if (pName == null || pName.length() == 0) {
+            return null;
+        }
+
+        return new NamedIcon(pName, pName);
     }
 
     /**
