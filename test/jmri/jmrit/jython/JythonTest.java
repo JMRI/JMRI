@@ -10,7 +10,7 @@ import junit.framework.*;
  * Some of these tests are here, as they're cross-class functions
  *
  * @author	    Bob Jacobsen  Copyright 2009
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class JythonTest extends TestCase {
 
@@ -37,6 +37,10 @@ public class JythonTest extends TestCase {
         if (jmri.util.JUnitAppender.clearBacklog() != 0) {
             Assert.fail("Emitted error messages caused test to fail");
         }
+    }
+    
+    public void testInput() {
+        new InputWindowAction().actionPerformed(null);
     }
     
     // from here down is testing infrastructure
