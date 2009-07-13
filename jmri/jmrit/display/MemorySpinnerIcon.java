@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.BoxLayout;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
@@ -25,7 +26,7 @@ import javax.swing.event.ChangeListener;
  * Memory, preserving what it finds.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @since 2.7.2
  */
 
@@ -36,7 +37,8 @@ public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.
     public MemorySpinnerIcon() {
         super();
         setDisplayLevel(PanelEditor.LABELS);
-            
+        
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         add(spinner);
         spinner.getModel().addChangeListener(
             new ChangeListener(){
@@ -47,7 +49,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.
         );
     }
 
-    JSpinner spinner = new JSpinner(new SpinnerNumberModel());
+    JSpinner spinner = new JSpinner(new SpinnerNumberModel(0,0,100,1));
     
     // the associated Memory object
     Memory memory = null;
@@ -152,7 +154,6 @@ public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.
         } else {
             spinner.setValue(memory.getValue());
         }
-        updateSize();
     }
 
     protected void spinnerUpdated() {
@@ -160,19 +161,12 @@ public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.
         if (memory.getValue() == null) return;
         // Spinner is always an Integer, but memory can contain Integer or String
         if (memory.getValue().getClass() == String.class) {
-            memory.setValue(""+spinner.getValue());
+            String newValue = ""+spinner.getValue();
+            if (! memory.getValue().equals(newValue))
+                memory.setValue(newValue);
         } else {
             memory.setValue(spinner.getValue());
         }
-        updateSize();
-    }
-    
-    int height = 4;
-    int width = 4;
-    protected void updateSize() {
-        height = Math.min(height, getPreferredSize().height);
-        width = Math.min(width, getPreferredSize().width);
-        setSize(width, height);
     }
     
     public void dispose() {
