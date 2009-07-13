@@ -16,7 +16,7 @@ import java.io.File;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003, 2005, 2006
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class FileUtil {
@@ -89,7 +89,7 @@ public class FileUtil {
     /**
      * Convert a File object to our preferred storage form.
      *
-     * This is the inverse of {@link getExternalFilename(String pName)}.
+     * This is the inverse of {@link #getExternalFilename(String pName)}.
      * Deprecated forms are not created.
      *
      * @param file File to be represented
@@ -113,7 +113,7 @@ public class FileUtil {
     /**
      * Convert a filename string to our preferred storage form.
      *
-     * This is the inverse of {@link getExternalFilename(String pName)}.
+     * This is the inverse of {@link #getExternalFilename(String pName)}.
      * Deprecated forms are not created.
      *
      * @param filename Filename to be represented
