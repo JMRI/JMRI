@@ -604,7 +604,17 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                     addToTable = false;
                     break;
                 case 4:
-                    editor = new IconAdder("MemoryEditor");
+                    editor = new IconAdder("MemoryEditor"){
+                        protected void addAdditionalButtons(JPanel p) {
+                            JButton b = new JButton("Add Spinner");
+                            b.addActionListener( new ActionListener() {
+                                public void actionPerformed(ActionEvent a) {
+                                    addMemorySpinner();
+                                }
+                            });
+                            p.add(b);
+                        }
+                    };
                     addIconAction = new ActionListener() {
                         public void actionPerformed(ActionEvent a) {
                             addMemory();
@@ -871,6 +881,15 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         target.validate();
     }
 
+    public void putJPanel(PositionableJPanel c) {
+        c.invalidate();
+        target.add(c, c.getDisplayLevel());
+        configureItem(c);
+        contents.add(c);
+        // reshow the panel
+        target.validate();
+    }
+
     /**
      * Add a label to the target
      */
@@ -901,6 +920,19 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(MEMORIES);
         putLabel(l);
+        // always allow new items to be moved
+        l.setPositionable(true);
+        moveToFront(l);
+    }
+    
+    void addMemorySpinner() {
+        MemorySpinnerIcon l = new MemorySpinnerIcon();
+        IconAdder memoryIconEditor = _iconEditorFrame.get("MemoryEditor").getEditor();
+        l.setMemory((Memory)memoryIconEditor.getTableSelection());
+        setNextLocation(l);
+        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        l.setDisplayLevel(MEMORIES);
+        putJPanel(l);
         // always allow new items to be moved
         l.setPositionable(true);
         moveToFront(l);
