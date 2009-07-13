@@ -56,6 +56,7 @@
 			<LI><a href="JUnit.shtml">Unit testing with JUnit</a>
 			<LI><a href="FindBugs.shtml">Run the FindBugs static analysis tool</a>
 			<LI><a href="Help.shtml">Providing help with JavaHelp</a>
+			<LI><a href="FileNames.shtml">Portable Filename Method</a>
 			<LI><a href="StartUpScripts.shtml">How the startup scripts work</a>
 			</ul>
 		</dd>
