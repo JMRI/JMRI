@@ -49,7 +49,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.45 $
+ * @version $Revision: 1.46 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -4142,26 +4142,12 @@ public class LayoutEditor extends JmriJFrame {
 //                                       inputFileChooser.getSelectedFile().getPath());
  
         String name = inputFileChooser.getSelectedFile().getPath();
-        String defaultPrefDir = jmri.jmrit.XmlFile.userFileLocationDefault()+"resources"+java.io.File.separator;
-        String defaultProgDir = System.getProperty("user.dir")+java.io.File.separator;
-        // try to convert to portable path
-        int len = name.length();
-        // first, try relative to preferences directory, a "file:" name
-        if (name.startsWith(defaultPrefDir))
-            name = "file:"+name.substring(defaultPrefDir.length(),len);
+
+        // convert to portable path
+        name = jmri.util.FileUtil.getPortableFilename(name);
         
-        // next, try relative to program directory, a "resource:" name
-        if (name.startsWith(defaultProgDir))
-            name = name.substring(defaultProgDir.length(),len);
-            
-        if (log.isDebugEnabled()) {
-            log.debug("getPath: "+inputFileChooser.getSelectedFile().getPath());
-            log.debug("prgPath: "+defaultProgDir);
-            log.debug("prfPath: "+defaultPrefDir);
-            log.debug("   name: "+name);
-        }
-        
-        NamedIcon icon = jmri.jmrit.catalog.CatalogPane.getIconByName(name);									   
+        // setup icon
+        NamedIcon icon = NamedIcon.getIconByName(name);									   
         LayoutPositionableLabel l = new LayoutPositionableLabel(icon);
         l.setFixed(true);
         l.setShowTooltip(false);
