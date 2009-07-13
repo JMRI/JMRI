@@ -20,7 +20,7 @@ import org.jdom.Element;
  * @author Daniel Boudreau Copyright (c) 2007
  * @author Simon Reader Copyright (C) 2008
  *
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -162,12 +162,18 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 // add sound and script file elements if needed
                 if (r.getOutputSoundName()!=null && !r.getOutputSoundName().equals("")) {
                     Element rsElem = new Element("routeSoundFile")
-                                    .setAttribute("name", r.getOutputSoundName());
+                                    .setAttribute("name", 
+                                            jmri.util.FileUtil.getPortableFilename(
+                                                new java.io.File(r.getOutputSoundName()))
+                                            );
                     elem.addContent(rsElem);
                 }
                 if (r.getOutputScriptName()!=null && !r.getOutputScriptName().equals("")) {
                     Element rsElem = new Element("routeScriptFile")
-                                    .setAttribute("name", r.getOutputScriptName());
+                                    .setAttribute("name", 
+                                            jmri.util.FileUtil.getPortableFilename(
+                                                new java.io.File(r.getOutputScriptName()))
+                                            );
                     elem.addContent(rsElem);
                 }
                 
@@ -395,11 +401,16 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 // load sound, script files if present
                 Element fileElement =routeList.get(i).getChild("routeSoundFile");
                 if (fileElement != null) {
-                    r.setOutputSoundName(fileElement.getAttribute("name").getValue());
+                    // convert to absolute path name
+                    r.setOutputSoundName(
+                        jmri.util.FileUtil.getExternalFilename(fileElement.getAttribute("name").getValue())
+                        );
                 }
                 fileElement =routeList.get(i).getChild("routeScriptFile");
                 if (fileElement != null) {
-                    r.setOutputScriptName(fileElement.getAttribute("name").getValue());
+                    r.setOutputScriptName(
+                        jmri.util.FileUtil.getExternalFilename(fileElement.getAttribute("name").getValue())
+                        );
                 }
                 // load turnouts aligned sensor if there is one
                 fileElement =routeList.get(i).getChild("turnoutsAlignedSensor");

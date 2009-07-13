@@ -10,7 +10,7 @@ package jmri.implementation;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -947,12 +947,12 @@ class SetRouteThread extends Thread {
 	
         // run script defined for start of route set
 	    if ((r.getOutputScriptName() != null) && (!r.getOutputScriptName().equals(""))) {
-	        jmri.util.PythonInterp.runScript(r.getOutputScriptName());
+	        jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(r.getOutputScriptName()));
 	    }
 	    
         // play sound defined for start of route set
 	    if ((r.getOutputSoundName() != null) && (!r.getOutputSoundName().equals(""))) {
-	        jmri.jmrit.Sound snd = new jmri.jmrit.Sound(r.getOutputSoundName());
+	        jmri.jmrit.Sound snd = new jmri.jmrit.Sound(jmri.util.FileUtil.getExternalFilename(r.getOutputSoundName()));
 	        snd.play();
 	    }
 	    
