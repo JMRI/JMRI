@@ -21,7 +21,7 @@ import javax.swing.JTextField;
  * connection.
  *
  * @author	Paul Bender Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  *
  * @see LIUSBServerAdapter
  */
@@ -48,7 +48,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 	super();
     }
 
-    public String name() { return "LIUSB Server"; }
+    public String name() { return "Lenz LIUSB Server"; }
 
     /**
      * Load the adapter with an appropriate object
