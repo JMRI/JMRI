@@ -46,6 +46,7 @@ public class OperationsRollingStockTest extends TestCase {
 		rs1.setBuilt("TESTBUILT");
 		rs1.setOwner("TESTOWNER");
 		rs1.setComment("TESTCOMMENT");
+		rs1.setRfid("TESTRFID");
 		rs1.setMoves(5);
 
 		Assert.assertEquals("RollingStock Type", "TESTTYPE", rs1.getType());
@@ -61,6 +62,7 @@ public class OperationsRollingStockTest extends TestCase {
                 Assert.assertEquals("RollingStock Built", "TESTBUILT", rs1.getBuilt());
 		Assert.assertEquals("RollingStock Owner", "TESTOWNER", rs1.getOwner());
 		Assert.assertEquals("RollingStock Comment", "TESTCOMMENT", rs1.getComment());
+		Assert.assertEquals("RollingStock Rfid", "TESTRFID", rs1.getRfid());
 		Assert.assertEquals("RollingStock Moves", 5, rs1.getMoves());
 	}
 

@@ -23,7 +23,7 @@ import javax.swing.JComboBox;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -98,6 +98,21 @@ public class CarManager implements java.beans.PropertyChangeListener {
     	while (en.hasMoreElements()) { 
     		Car car = getCarById(en.nextElement());
     		if(car.getType().equals(carType) && car.getRoad().equals(carRoad))
+    			return car;
+    	}
+    	return null;
+    }
+    
+    /**
+     * Get a car by Radio Frequency Identification (RFID). 
+     * @param rfid car's RFID.
+     * @return the car with the specific RFID, or null if not found.
+     */
+    public Car getCarByRfid(String rfid){
+    	Enumeration<String> en = _carHashTable.keys();
+    	while (en.hasMoreElements()) { 
+    		Car car = getCarById(en.nextElement());
+    		if(car.getRfid().equals(rfid))
     			return car;
     	}
     	return null;
@@ -676,6 +691,39 @@ public class CarManager implements java.beans.PropertyChangeListener {
     	return out;
     }
    
+    /**
+     * Sort by car RFID
+     * @return list of car ids ordered by RFIDs
+     */
+    public List<String> getCarsByRfidList() {
+      	// first get by id list
+    	List<String> sortById = getCarsByIdList();
+    	// now re-sort
+    	List<String> out = new ArrayList<String>();
+    	String carRfid = "";
+    	boolean carAdded = false;
+    	Car c;
+
+    	for (int i=0; i<sortById.size(); i++){
+    		carAdded = false;
+    		c = getCarById (sortById.get(i));
+    		carRfid = c.getRfid();
+    		for (int j=0; j<out.size(); j++ ){
+    			c = getCarById (out.get(j));
+    			String outCarRfid = c.getRfid();
+    			if (carRfid.compareToIgnoreCase(outCarRfid)<0){
+    				out.add(j, sortById.get(i));
+    				carAdded = true;
+    				break;
+    			}
+    		}
+    		if (!carAdded){
+    			out.add(sortById.get(i));
+    		}
+    	}
+    	return out;
+    }
+    
     /**
 	 * Return a list available cars (no assigned train or cars already assigned
 	 * to this train) on a route, cars are ordered least recently moved to most

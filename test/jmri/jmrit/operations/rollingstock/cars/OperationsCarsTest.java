@@ -6,10 +6,14 @@ import java.io.File;
 import java.util.List;
 import javax.swing.JComboBox;
 import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
+import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.jmrit.operations.trains.Train;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -24,7 +28,7 @@ import junit.framework.TestSuite;
  *   Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -114,7 +118,7 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertFalse("Car Length Delete 1", cl1.containsName("1"));
 	}
 
-	public void testCarOwnwers() {
+	public void testCarOwners() {
 //  Comment out tests that rely upon manager having run until that gets fixed
 		CarOwners co1 = new CarOwners();
 //		CarOwners co1;
@@ -309,6 +313,371 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertTrue("Kernel new Lead is Car 1 after3", knew.isLeadCar(c1));
 		Assert.assertFalse("Kernel new Lead is not Car 2 after3", knew.isLeadCar(c2));
 		Assert.assertFalse("Kernel new Lead is not Car 3 after3", knew.isLeadCar(c3));
+	}
+	
+	public void testCarManager(){
+        CarManager manager = CarManager.instance();
+        List<String> carList = manager.getCarsByIdList();
+
+        Assert.assertEquals("Starting Number of Cars", 0, carList.size());
+        Car c1 = manager.newCar("CP", "1");
+        Car c2 = manager.newCar("ACL", "3");
+        Car c3 = manager.newCar("CP", "3");
+        Car c4 = manager.newCar("CP", "3-1");
+        Car c5 = manager.newCar("PC", "2");
+        Car c6 = manager.newCar("AA", "1");
+        
+        //setup the cars
+        c1.setBuilt("2800");
+        c2.setBuilt("1212");
+        c3.setBuilt("100");
+        c4.setBuilt("10");
+        c5.setBuilt("1000");
+        c6.setBuilt("1956");
+        
+        c1.setColor("RED");
+        c2.setColor("BLUE");
+        c3.setColor("YELLOW");
+        c4.setColor("BLACK");
+        c5.setColor("ROSE");
+        c6.setColor("TUSCAN");
+        
+        c1.setType("Boxcar");
+        c2.setType("Boxcar");
+        c3.setType("Boxcar");
+        c4.setType("Boxcar");
+        c5.setType("Boxcar");
+        c6.setType("Boxcar");
+        
+        c1.setLength("13");
+        c2.setLength("9");
+        c3.setLength("12");
+        c4.setLength("10");
+        c5.setLength("11");
+        c6.setLength("14");
+        
+        Location l1 = new Location("id1", "B");
+        Track l1t1 = l1.addTrack("A",Track.SIDING);
+        Track l1t2 = l1.addTrack("B",Track.SIDING);
+        Location l2 = new Location("id2", "C");
+        Track l2t1 = l1.addTrack("B",Track.SIDING);
+        Track l2t2 = l1.addTrack("A",Track.SIDING);
+        Location l3 = new Location("id3", "A");
+        Track l3t1 = l1.addTrack("B",Track.SIDING);
+        Track l3t2 = l1.addTrack("A",Track.SIDING);
+
+        // add track lengths       
+        l1t1.setLength(100);
+        l1t2.setLength(100);
+        l2t1.setLength(100);
+        l2t2.setLength(100);
+        l3t1.setLength(100);
+        l3t2.setLength(100);
+        
+        l1.addTypeName("Boxcar");
+        l2.addTypeName("Boxcar");
+        l3.addTypeName("Boxcar");
+        l1t1.addTypeName("Boxcar");
+        l1t2.addTypeName("Boxcar");
+        l2t1.addTypeName("Boxcar");
+        l2t2.addTypeName("Boxcar");
+        l3t1.addTypeName("Boxcar");
+        l3t2.addTypeName("Boxcar");
+        
+        CarTypes ct = CarTypes.instance();
+        ct.addName("Boxcar");
+        
+        // place cars on tracks
+        Assert.assertEquals("place c1", Car.OKAY, c1.setLocation(l1, l1t1));
+        Assert.assertEquals("place c2", Car.OKAY, c2.setLocation(l1, l1t2));
+        Assert.assertEquals("place c3", Car.OKAY, c3.setLocation(l2, l2t1));
+        Assert.assertEquals("place c4", Car.OKAY, c4.setLocation(l2, l2t2));
+        Assert.assertEquals("place c5", Car.OKAY, c5.setLocation(l3, l3t1));
+        Assert.assertEquals("place c6", Car.OKAY, c6.setLocation(l3, l3t2));
+
+        // set car destinations
+        Assert.assertEquals("destination c1", Car.OKAY, c1.setDestination(l3, l3t1));
+        Assert.assertEquals("destination c2", Car.OKAY, c2.setDestination(l3, l3t2));
+        Assert.assertEquals("destination c3", Car.OKAY, c3.setDestination(l2, l2t2));
+        Assert.assertEquals("destination c4", Car.OKAY, c4.setDestination(l2, l2t1));
+        Assert.assertEquals("destination c5", Car.OKAY, c5.setDestination(l1, l1t1));
+        Assert.assertEquals("destination c6", Car.OKAY, c6.setDestination(l1, l1t2));
+
+        c1.setKernel(new Kernel("F"));
+        c2.setKernel(new Kernel("D"));
+        c3.setKernel(new Kernel("B"));
+        c4.setKernel(new Kernel("A"));
+        c5.setKernel(new Kernel("C"));
+        c6.setKernel(new Kernel("E"));
+        
+        c1.setMoves(2);
+        c2.setMoves(44);
+        c3.setMoves(99999);
+        c4.setMoves(33);
+        c5.setMoves(4);
+        c6.setMoves(9999);
+        
+        c1.setRfid("SQ1");
+        c2.setRfid("1Ab");
+        c3.setRfid("Ase");
+        c4.setRfid("asd");
+        c5.setRfid("93F");
+        c6.setRfid("B12");
+        
+        c1.setLoad("Nuts");
+        c2.setLoad("Screws");
+        c3.setLoad("Tools");
+        c4.setLoad("Fuel");
+        c5.setLoad("Bags");
+        c6.setLoad("Nails");
+
+        c1.setOwner("LAST");
+        c2.setOwner("FOOL");
+        c3.setOwner("AAA");
+        c4.setOwner("DAD");
+        c5.setOwner("DAB");
+        c6.setOwner("BOB");
+        
+        // make a couple of cabooses
+        c4.setCaboose(true);
+        c6.setCaboose(true);
+        
+        // car with FRED
+        c5.setFred(true);
+        
+        Route r = new Route("id","Test");
+        r.addLocation(l1);
+        r.addLocation(l2);
+        r.addLocation(l3);
+        
+        Train t1 = new Train("id1", "F");
+        t1.setRoute(r);
+        Train t3 = new Train("id3", "E");
+        t3.setRoute(r);
+        
+        c1.setTrain(t1);
+        c2.setTrain(new Train("id2", "C"));
+        c3.setTrain(t3);
+        c4.setTrain(new Train("id4", "B"));
+        c5.setTrain(t3);
+        c6.setTrain(new Train("id6", "A"));
+
+        // now get cars by id
+        carList = manager.getCarsByIdList();
+        Assert.assertEquals("Number of Cars by id", 6, carList.size());
+        Assert.assertEquals("1st car in list by id", c6, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list by id", c2, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by id", c1, manager.getCarById(carList.get(2)));
+        Assert.assertEquals("4th car in list by id", c3, manager.getCarById(carList.get(3)));
+        Assert.assertEquals("5th car in list by id", c4, manager.getCarById(carList.get(4)));
+        Assert.assertEquals("6th car in list by id", c5, manager.getCarById(carList.get(5)));
+   
+        // now get cars by built
+        carList = manager.getCarsByBuiltList();
+        Assert.assertEquals("Number of Cars by built", 6, carList.size());
+        Assert.assertEquals("1st car in list by built", c4, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list by built", c3, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by built", c5, manager.getCarById(carList.get(2)));
+        Assert.assertEquals("4th car in list by built", c2, manager.getCarById(carList.get(3)));
+        Assert.assertEquals("5th car in list by built", c6, manager.getCarById(carList.get(4)));
+        Assert.assertEquals("6th car in list by built", c1, manager.getCarById(carList.get(5)));
+  
+        // now get cars by moves
+        carList = manager.getCarsByMovesList();
+        Assert.assertEquals("Number of Cars by move", 6, carList.size());
+        Assert.assertEquals("1st car in list by move", c1, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list by move", c5, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by move", c4, manager.getCarById(carList.get(2)));
+        Assert.assertEquals("4th car in list by move", c2, manager.getCarById(carList.get(3)));
+        Assert.assertEquals("5th car in list by move", c6, manager.getCarById(carList.get(4)));
+        Assert.assertEquals("6th car in list by move", c3, manager.getCarById(carList.get(5)));
+  
+        // now get cars by owner
+        carList = manager.getCarsByOwnerList();
+        Assert.assertEquals("Number of Cars by owner", 6, carList.size());
+        Assert.assertEquals("1st car in list by owner", c3, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list by owner", c6, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by owner", c5, manager.getCarById(carList.get(2)));
+        Assert.assertEquals("4th car in list by owner", c4, manager.getCarById(carList.get(3)));
+        Assert.assertEquals("5th car in list by owner", c2, manager.getCarById(carList.get(4)));
+        Assert.assertEquals("6th car in list by owner", c1, manager.getCarById(carList.get(5)));
+ 
+        // now get cars by color
+        carList = manager.getCarsByColorList();
+        Assert.assertEquals("Number of Cars by color", 6, carList.size());
+        Assert.assertEquals("1st car in list by color", c4, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list by color", c2, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by color", c1, manager.getCarById(carList.get(2)));
+        Assert.assertEquals("4th car in list by color", c5, manager.getCarById(carList.get(3)));
+        Assert.assertEquals("5th car in list by color", c6, manager.getCarById(carList.get(4)));
+        Assert.assertEquals("6th car in list by color", c3, manager.getCarById(carList.get(5)));
+ 
+        // now get cars by road name
+        carList = manager.getCarsByRoadNameList();
+        Assert.assertEquals("Number of Cars by road name", 6, carList.size());
+        Assert.assertEquals("1st car in list by road name", c6, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list by road name", c2, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by road name", c1, manager.getCarById(carList.get(2)));
+        Assert.assertEquals("4th car in list by road name", c3, manager.getCarById(carList.get(3)));
+        Assert.assertEquals("5th car in list by road name", c4, manager.getCarById(carList.get(4)));
+        Assert.assertEquals("6th car in list by road name", c5, manager.getCarById(carList.get(5)));
+
+        // now get cars by load
+        carList = manager.getCarsByLoadList();
+        Assert.assertEquals("Number of Cars by load", 6, carList.size());
+        Assert.assertEquals("1st car in list by load", c5, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list by load", c4, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by load", c6, manager.getCarById(carList.get(2)));
+        Assert.assertEquals("4th car in list by load", c1, manager.getCarById(carList.get(3)));
+        Assert.assertEquals("5th car in list by load", c2, manager.getCarById(carList.get(4)));
+        Assert.assertEquals("6th car in list by load", c3, manager.getCarById(carList.get(5)));
+
+        // now get cars by kernel
+        carList = manager.getCarsByKernelList();
+        Assert.assertEquals("Number of Cars by kernel", 6, carList.size());
+        Assert.assertEquals("1st car in list by kernel", c4, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list by kernel", c3, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by kernel", c5, manager.getCarById(carList.get(2)));
+        Assert.assertEquals("4th car in list by kernel", c2, manager.getCarById(carList.get(3)));
+        Assert.assertEquals("5th car in list by kernel", c6, manager.getCarById(carList.get(4)));
+        Assert.assertEquals("6th car in list by kernel", c1, manager.getCarById(carList.get(5)));
+
+        // now get cars by location
+        carList = manager.getCarsByLocationList();
+        Assert.assertEquals("Number of Cars by location", 6, carList.size());
+        Assert.assertEquals("1st car in list by location", c6, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list by location", c5, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by location", c1, manager.getCarById(carList.get(2)));
+        Assert.assertEquals("4th car in list by location", c2, manager.getCarById(carList.get(3)));
+        Assert.assertEquals("5th car in list by location", c4, manager.getCarById(carList.get(4)));
+        Assert.assertEquals("6th car in list by location", c3, manager.getCarById(carList.get(5)));
+
+        // now get cars by destination
+        carList = manager.getCarsByDestinationList();
+        Assert.assertEquals("Number of Cars by destination", 6, carList.size());
+        Assert.assertEquals("1st car in list by destination", c2, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list by destination", c1, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by destination", c5, manager.getCarById(carList.get(2)));
+        Assert.assertEquals("4th car in list by destination", c6, manager.getCarById(carList.get(3)));
+        Assert.assertEquals("5th car in list by destination", c3, manager.getCarById(carList.get(4)));
+        Assert.assertEquals("6th car in list by destination", c4, manager.getCarById(carList.get(5)));
+
+        // now get cars by train
+        carList = manager.getCarsByTrainList();
+        Assert.assertEquals("Number of Cars by train", 6, carList.size());
+        Assert.assertEquals("1st car in list by train", c6, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list by train", c4, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by train", c2, manager.getCarById(carList.get(2)));
+        Assert.assertEquals("4th car in list by train", c5, manager.getCarById(carList.get(3)));
+        Assert.assertEquals("5th car in list by train", c3, manager.getCarById(carList.get(4)));
+        Assert.assertEquals("6th car in list by train", c1, manager.getCarById(carList.get(5)));
+
+        // now get cars by specific train
+        carList = manager.getCarsByTrainList(t1);
+        Assert.assertEquals("Number of Cars in t1", 1, carList.size());
+        Assert.assertEquals("1st car in list by t1", c1, manager.getCarById(carList.get(0)));
+        carList = manager.getCarsByTrainList(t3);
+        Assert.assertEquals("Number of Cars in t3", 2, carList.size());
+        Assert.assertEquals("1st car in list by t3", c3, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("1st car in list by t3", c5, manager.getCarById(carList.get(1)));
+        
+        // how many cars available?
+        carList = manager.getCarsAvailableTrainList(t1);
+        Assert.assertEquals("Number of Cars available for t1", 1, carList.size());
+        Assert.assertEquals("1st car in list available for t1", c1, manager.getCarById(carList.get(0)));
+
+        carList = manager.getCarsAvailableTrainList(t3);
+        Assert.assertEquals("Number of Cars available for t3", 1, carList.size());
+        Assert.assertEquals("1st car in list available for t3", c3, manager.getCarById(carList.get(0)));
+        // note that c5 isn't available since it is located at the end of the train's route
+        
+        // release cars from trains
+        c2.setTrain(null);
+        c4.setTrain(null);
+        c6.setTrain(null);	// c6 is located at the end of the route, therefore not available
+        
+        // there should be more cars now
+        carList = manager.getCarsAvailableTrainList(t1);
+        Assert.assertEquals("Number of Cars available t1 after release", 3, carList.size());
+        // should be sorted by moves
+        Assert.assertEquals("1st car in list available for t1", c1, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list available for t1", c4, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list available for t1", c2, manager.getCarById(carList.get(2)));
+
+        carList = manager.getCarsAvailableTrainList(t3);
+        Assert.assertEquals("Number of Cars available for t3 after release", 3, carList.size());
+        Assert.assertEquals("1st car in list available for t3", c4, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list available for t3", c2, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list available for t3", c3, manager.getCarById(carList.get(2)));
+
+        // now get cars by road number
+        carList = manager.getCarsByNumberList();
+        Assert.assertEquals("Number of Cars by number", 6, carList.size());
+        Assert.assertEquals("1st car in list by number", c6, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list by number", c1, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by number", c5, manager.getCarById(carList.get(2)));
+        Assert.assertEquals("4th car in list by number", c2, manager.getCarById(carList.get(3)));
+        Assert.assertEquals("5th car in list by number", c3, manager.getCarById(carList.get(4)));
+        Assert.assertEquals("6th car in list by number", c4, manager.getCarById(carList.get(5)));
+        
+        // find car by road and number
+        Assert.assertEquals("find c1 by road and number", c1, manager.getCarByRoadAndNumber("CP", "1"));
+        Assert.assertEquals("find c2 by road and number", c2, manager.getCarByRoadAndNumber("ACL", "3"));
+        Assert.assertEquals("find c3 by road and number", c3, manager.getCarByRoadAndNumber("CP", "3"));
+        Assert.assertEquals("find c4 by road and number", c4, manager.getCarByRoadAndNumber("CP", "3-1"));
+        Assert.assertEquals("find c5 by road and number", c5, manager.getCarByRoadAndNumber("PC", "2"));
+        Assert.assertEquals("find c6 by road and number", c6, manager.getCarByRoadAndNumber("AA", "1"));
+
+        // now get cars by RFID
+        carList = manager.getCarsByRfidList();
+        Assert.assertEquals("Number of Cars by rfid", 6, carList.size());
+        Assert.assertEquals("1st car in list by rfid", c2, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list by rfid", c5, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by rfid", c4, manager.getCarById(carList.get(2)));
+        Assert.assertEquals("4th car in list by rfid", c3, manager.getCarById(carList.get(3)));
+        Assert.assertEquals("5th car in list by rfid", c6, manager.getCarById(carList.get(4)));
+        Assert.assertEquals("6th car in list by rfid", c1, manager.getCarById(carList.get(5)));
+
+        // find car by RFID
+        Assert.assertEquals("find c1 by rfid", c1, manager.getCarByRfid("SQ1"));
+        Assert.assertEquals("find c2 by rfid", c2, manager.getCarByRfid("1Ab"));
+        Assert.assertEquals("find c3 by rfid", c3, manager.getCarByRfid("Ase"));
+        Assert.assertEquals("find c4 by rfid", c4, manager.getCarByRfid("asd"));
+        Assert.assertEquals("find c5 by rfid", c5, manager.getCarByRfid("93F"));
+        Assert.assertEquals("find c6 by rfid", c6, manager.getCarByRfid("B12"));
+        
+        // chance car types so sort will work
+        c1.setType("F");
+        c2.setType("D");
+        c3.setType("A");
+        c4.setType("B");
+        c5.setType("C");
+        c6.setType("E");
+        
+        // now get cars by type
+        carList = manager.getCarsByTypeList();
+        Assert.assertEquals("Number of Cars by type", 6, carList.size());
+        Assert.assertEquals("1st car in list by type", c3, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list by type", c4, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by type", c5, manager.getCarById(carList.get(2)));
+        Assert.assertEquals("4th car in list by type", c2, manager.getCarById(carList.get(3)));
+        Assert.assertEquals("5th car in list by type", c6, manager.getCarById(carList.get(4)));
+        Assert.assertEquals("6th car in list by type", c1, manager.getCarById(carList.get(5)));
+    
+        // check caboose roads
+        List<String> cabooseRoads = manager.getCabooseRoadNames();
+        Assert.assertEquals("Number of cabooses", 2, cabooseRoads.size());
+        Assert.assertEquals("1st road","AA",cabooseRoads.get(0));
+        Assert.assertEquals("2nd road","CP",cabooseRoads.get(1));
+  
+        // check FRED roads
+        List<String> fredRoads = manager.getFredRoadNames();
+        Assert.assertEquals("Number of FRED", 1, fredRoads.size());
+        Assert.assertEquals("1st road","PC",fredRoads.get(0));
+        
+        manager.dispose();
+        carList = manager.getCarsByIdList();
+        Assert.assertEquals("After dispose Number of Cars", 0, carList.size());		
 	}
 
 	// test location Xml create support

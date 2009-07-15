@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -139,6 +139,8 @@ public class Setup {
 	private static boolean appendCarComment = false;	//when true, append car comment to manifests 
 	
 	private static boolean mainMenuEnabled = false;		//when true add operations menu to main menu bar
+	private static boolean enableRfid = false;			//when true show RFID fields for rolling stock
+	
 	// Setup frame attributes
 	protected static OperationsSetupFrame _operationsSetupFrame = null;
 	protected static Dimension _operationsSetupFrameDimension = null;
@@ -163,6 +165,14 @@ public class Setup {
 	
 	public static void setMainMenuEnabled(boolean enabled){
 		mainMenuEnabled = enabled;
+	}
+	
+	public static boolean isRfidEnabled(){
+		return enableRfid;
+	}
+	
+	public static void setRfidEnabled(boolean enabled){
+		enableRfid = enabled;
 	}
 	
 	public static String getRailroadName(){
@@ -551,6 +561,7 @@ public class Setup {
     	values.setAttribute("showCarColor", isShowCarColorEnabled()?"true":"false");
     	values.setAttribute("showCarDestination", isShowCarDestinationEnabled()?"true":"false");
     	values.setAttribute("addCarComment", isAppendCarCommentEnabled()?"true":"false");
+    	values.setAttribute("showRfid", isRfidEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("panel"));
     	values.setAttribute("name", getPanelName());
@@ -675,6 +686,11 @@ public class Setup {
         	String minutes = a.getValue();
            	if (log.isDebugEnabled()) log.debug("travelTime: "+minutes);
            	Setup.setTravelTime(Integer.parseInt(minutes));
+        }
+        if ((a = operations.getChild("settings").getAttribute("showRfid"))!= null){
+        	String enable = a.getValue();
+           	if (log.isDebugEnabled()) log.debug("showRfid: "+enable);
+           	Setup.setRfidEnabled(enable.equals("true"));
         }
         if ((a = operations.getChild("panel").getAttribute("name"))!= null){
         	String panel = a.getValue();

@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -34,6 +34,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	protected String _owner = "";
 	protected String _comment = "";
 	protected String _routeId = "";  		// saved route for interchange tracks
+	protected String _rfid = "";
 	
 	protected Location _location = null;
 	protected Track _trackLocation = null;
@@ -152,7 +153,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	}
 	
 	public void setWeightTons(String weight) {
-		String old = _weight;
+		String old = _weightTons;
 		_weightTons = weight;
 		if (!old.equals(weight))
 			firePropertyChange("rolling stock weight tons", old, weight);
@@ -495,6 +496,21 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		_routeId = id;
 	}
 	
+	public String getRfid(){
+		return _rfid;
+	}
+	
+	/**
+	 * Sets the RFID for this rolling stock.
+	 * @param id 12 character RFID string.
+	 */
+	public void setRfid(String id){
+		String old = _rfid;
+		_rfid = id;
+		if (!old.equals(id))
+			firePropertyChange("rolling stock rfid", old, id);
+	}
+	
 	public void setRouteDestination (RouteLocation routeDestination){
 		if(routeDestination != null && _destination != null && !routeDestination.getName().equals(_destination.getName()))
 			log.debug("WARNING route destination name ("+routeDestination.getName()+") not equal to destination name ("+_destination.getName()+") for rolling stock ("+getId()+")" );
@@ -587,6 +603,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			_owner = a.getValue();
 		if ((a = e.getAttribute("comment")) != null)
 			_comment = a.getValue();
+		if ((a = e.getAttribute("rfid")) != null)
+			_rfid = a.getValue();
 	}
 	
 
@@ -637,6 +655,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			e.setAttribute("owner", getOwner());
 		if (!getComment().equals("") )
 			e.setAttribute("comment", getComment());
+		if (!getRfid().equals("") )
+			e.setAttribute("rfid", getRfid());
 		return e;
 	}
 	

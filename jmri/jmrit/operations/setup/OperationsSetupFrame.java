@@ -32,7 +32,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -40,35 +40,33 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 	
 	// labels
-	JLabel textScale = new JLabel();
-	JLabel textCarType = new JLabel();
-	JLabel textRailroadName = new JLabel();
-	JLabel textDirection = new JLabel();
-	JLabel textMaxTrain = new JLabel();
-	JLabel textMaxEngine = new JLabel();
-	JLabel textMoveTime = new JLabel();
-	JLabel textTravelTime = new JLabel();
-	JLabel textOwner = new JLabel();
-	JLabel textPrinter = new JLabel();
-	JLabel textBuildReport = new JLabel();
-	JLabel textManifest = new JLabel();
-	JLabel textPanel = new JLabel();
-	JLabel textIconNorth = new JLabel();
-	JLabel textIconSouth = new JLabel();
-	JLabel textIconEast = new JLabel();
-	JLabel textIconWest = new JLabel();
-	JLabel textIconLocal = new JLabel();
-	JLabel textIconTerminate = new JLabel();
-	JLabel textComment = new JLabel();
+	JLabel textScale = new JLabel(" "+ rb.getString("Scale"));
+	JLabel textCarType = new JLabel(" "+ rb.getString("CarTypes"));
+	JLabel textRailroadName = new JLabel(" " + rb.getString("RailroadName") + " ");
+	JLabel textDirection = new JLabel(rb.getString("direction"));
+	JLabel textMaxTrain = new JLabel(rb.getString("MaxLength"));
+	JLabel textMaxEngine = new JLabel(rb.getString("MaxEngine"));
+	JLabel textMoveTime = new JLabel(rb.getString("MoveTime"));
+	JLabel textTravelTime = new JLabel(rb.getString("TravelTime"));
+	JLabel textOwner = new JLabel(" "+rb.getString("Owner"));
+	JLabel textPrinter = new JLabel(rb.getString("PrinterFont"));
+	JLabel textBuildReport = new JLabel(rb.getString("BuildReport"));
+	JLabel textManifest = new JLabel(rb.getString("Manifest"));
+	JLabel textPanel = new JLabel(" "+rb.getString("Panel"));
+	JLabel textIconNorth = new JLabel(rb.getString("IconNorth"));
+	JLabel textIconSouth = new JLabel(rb.getString("IconSouth"));
+	JLabel textIconEast = new JLabel(rb.getString("IconEast"));
+	JLabel textIconWest = new JLabel(rb.getString("IconWest"));
+	JLabel textIconLocal = new JLabel(rb.getString("IconLocal"));
+	JLabel textIconTerminate = new JLabel(rb.getString("IconTerminate"));
+	JLabel textComment = new JLabel(rb.getString("Comment"));
 
-	// major buttons
-	
-	JButton backupButton = new JButton();
-	JButton restoreButton = new JButton();
-	JButton saveButton = new JButton();
+	// major buttons	
+	JButton backupButton = new JButton(rb.getString("Backup"));
+	JButton restoreButton = new JButton(rb.getString("Restore"));
+	JButton saveButton = new JButton(rb.getString("Save"));
 
-	// radio buttons
-	
+	// radio buttons	
     JRadioButton scaleZ = new JRadioButton("Z");
     JRadioButton scaleN = new JRadioButton("N");
     JRadioButton scaleTT = new JRadioButton("TT");
@@ -93,16 +91,17 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
     JRadioButton buildReportVD = new JRadioButton(rb.getString("VeryDetailed"));
     
     // check boxes
-    JCheckBox eastCheckBox = new JCheckBox();
-	JCheckBox northCheckBox = new JCheckBox();
-	JCheckBox mainMenuCheckBox = new JCheckBox();
+    JCheckBox eastCheckBox = new JCheckBox(rb.getString("eastwest"));
+	JCheckBox northCheckBox = new JCheckBox(rb.getString("northsouth"));
+	JCheckBox mainMenuCheckBox = new JCheckBox(rb.getString("MainMenu"));
 	JCheckBox showLengthCheckBox = new JCheckBox(rb.getString("ShowCarLength"));
 	JCheckBox showLoadCheckBox = new JCheckBox(rb.getString("ShowCarLoad"));
 	JCheckBox showColorCheckBox = new JCheckBox(rb.getString("ShowCarColor"));
 	JCheckBox showDestinationCheckBox = new JCheckBox(rb.getString("ShowCarDestination"));
 	JCheckBox appendCommentCheckBox = new JCheckBox(rb.getString("CarComment"));
-	JCheckBox iconCheckBox = new JCheckBox();
-	JCheckBox appendCheckBox = new JCheckBox();
+	JCheckBox iconCheckBox = new JCheckBox(rb.getString("trainIcon"));
+	JCheckBox appendCheckBox = new JCheckBox(rb.getString("trainIconAppend"));
+	JCheckBox rfidCheckBox = new JCheckBox(rb.getString("EnableRfid"));
 	
 	// text field
 	JTextField ownerTextField = new JTextField(10);
@@ -115,9 +114,9 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	JTextField commentTextField = new JTextField(35);
 
 	// for padding out panel
-	JLabel space1 = new JLabel();
-	JLabel space2 = new JLabel();
-	JLabel space3 = new JLabel();
+	JLabel space1 = new JLabel("      ");
+	JLabel space2 = new JLabel("      ");
+	JLabel space3 = new JLabel("      ");
 	
 	// combo boxes
 	JComboBox northComboBox = new JComboBox();
@@ -138,85 +137,30 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
     	// create manager to load operation settings
 		OperationsXml.instance();
 		
-		textScale.setText(" "+ rb.getString("Scale"));
-		textScale.setVisible(true);
-		
-		textCarType.setText(" "+ rb.getString("CarTypes"));
-		textCarType.setVisible(true);
-		
-		textRailroadName.setText(" " + rb.getString("RailroadName") + " ");
-		textRailroadName.setVisible(true);
-		railroadNameTextField.setText(Setup.getRailroadName());
-		
-		textDirection.setText(rb.getString("direction"));
-		textDirection.setVisible(true);
-		eastCheckBox.setText(rb.getString("eastwest"));
-		northCheckBox.setText(rb.getString("northsouth"));
-				
-		textMaxTrain.setText(rb.getString("MaxLength"));
-		textMaxTrain.setVisible(true);
+		// load fields
+		railroadNameTextField.setText(Setup.getRailroadName());				
 		maxLengthTextField.setText(Integer.toString(Setup.getTrainLength()));
-		
-		textMaxEngine.setText(rb.getString("MaxEngine"));
-		textMaxEngine.setVisible(true);
 		maxEngineSizeTextField.setText(Integer.toString(Setup.getEngineSize()));
-		
-		textMoveTime.setText(rb.getString("MoveTime"));
-		textMoveTime.setVisible(true);
 		switchTimeTextField.setText(Integer.toString(Setup.getSwitchTime()));
-		textTravelTime.setText(rb.getString("TravelTime"));
-		textTravelTime.setVisible(true);
 		travelTimeTextField.setText(Integer.toString(Setup.getTravelTime()));
-		
-		textPanel.setText(" "+rb.getString("Panel"));
-		textPanel.setVisible(true);
 		panelTextField.setText(Setup.getPanelName());
-		iconCheckBox.setText(rb.getString("trainIcon"));
-		iconCheckBox.setSelected(Setup.isTrainIconCordEnabled());
-		appendCheckBox.setText(rb.getString("trainIconAppend"));
-		appendCheckBox.setSelected(Setup.isTrainIconAppendEnabled());
-		
-		textOwner.setText(" "+rb.getString("Owner"));
-		textOwner.setVisible(true);
 		ownerTextField.setText(Setup.getOwnerName());
-		
-		mainMenuCheckBox.setText(rb.getString("MainMenu"));
-		
-		textPrinter.setText(rb.getString("PrinterFont"));
-		textPrinter.setVisible(true);
-		textManifest.setText(rb.getString("Manifest"));
-		textManifest.setVisible(true);
-		
+
+		// load checkboxes
+		mainMenuCheckBox.setSelected(Setup.isMainMenuEnabled());
+		rfidCheckBox.setSelected(Setup.isRfidEnabled());
+		iconCheckBox.setSelected(Setup.isTrainIconCordEnabled());
+		appendCheckBox.setSelected(Setup.isTrainIconAppendEnabled());		
 		showLengthCheckBox.setSelected(Setup.isShowCarLengthEnabled());
 		showLoadCheckBox.setSelected(Setup.isShowCarLoadEnabled());
 		showColorCheckBox.setSelected(Setup.isShowCarColorEnabled());
-		showDestinationCheckBox.setSelected(Setup.isShowCarDestinationEnabled());
-		
+		showDestinationCheckBox.setSelected(Setup.isShowCarDestinationEnabled());		
 		appendCommentCheckBox.setSelected(Setup.isAppendCarCommentEnabled());
-		textBuildReport.setText(rb.getString("BuildReport"));
-		textBuildReport.setVisible(true);
-				
-		textIconNorth.setText(rb.getString("IconNorth"));
-		textIconSouth.setText(rb.getString("IconSouth"));
-		textIconEast.setText(rb.getString("IconEast"));
-		textIconWest.setText(rb.getString("IconWest"));
-		textIconLocal.setText(rb.getString("IconLocal"));
-		textIconTerminate.setText(rb.getString("IconTerminate"));
-		
-		textComment.setText(rb.getString("Comment"));
-		textComment.setVisible(true);
-		space1.setText("      ");
-		space1.setVisible(true);
 
-		backupButton.setText(rb.getString("Backup"));
+		// add tool tips
 		backupButton.setToolTipText(rb.getString("BackupToolTip"));
-		backupButton.setVisible(true);
-		restoreButton.setText(rb.getString("Restore"));
 		restoreButton.setToolTipText(rb.getString("RestoreToolTip"));
-		restoreButton.setVisible(true);
-		saveButton.setText(rb.getString("Save"));
 		saveButton.setToolTipText(rb.getString("SaveToolTip"));
-		saveButton.setVisible(true);
 
 		// Layout the panel by rows
 		// row 1
@@ -302,7 +246,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		options.setLayout(new GridBagLayout());
 		options.setBorder(border);
 		addItem (options, mainMenuCheckBox, 1,7);
-		mainMenuCheckBox.setSelected(Setup.isMainMenuEnabled());
+		addItem (options, rfidCheckBox, 1,8);		
 			
 		// Printer panel
 		JPanel pPrinter = new JPanel();
@@ -331,8 +275,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addItemLeft (pPrinter, showColorCheckBox, 3, 12);
 		addItemLeft (pPrinter, showDestinationCheckBox, 4, 12);
 		addItemWidth (pPrinter, appendCommentCheckBox, 2, 1, 14);
-		
-		
+			
 		setPrinterFontRadioButton();
 		setBuildReportRadioButton();
 
@@ -469,6 +412,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			}
 			// main menu enabled?
 			Setup.setMainMenuEnabled(mainMenuCheckBox.isSelected());
+			// RFID enabled?
+			Setup.setRfidEnabled(rfidCheckBox.isSelected());
 			// set printer font
 			if (mono.isSelected())
 				Setup.setFontName(Setup.MONOSPACED);

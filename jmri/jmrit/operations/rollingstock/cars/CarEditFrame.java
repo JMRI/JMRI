@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -40,41 +40,42 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	Car _car;
 
 	// labels
-	JLabel textRoad = new JLabel();
-	JLabel textRoadNumber = new JLabel();
-	JLabel textColor = new JLabel();
-	JLabel textBuilt = new JLabel();
-	JLabel textLength = new JLabel();
-	JLabel textType = new JLabel();
-	JLabel textWeight = new JLabel();
-	JLabel textWeightTons = new JLabel();
-	JLabel textLocation = new JLabel();
-	JLabel textOptional = new JLabel();
-	JLabel textLoad = new JLabel();
-	JLabel textKernel = new JLabel();
-	JLabel textOwner = new JLabel();
-	JLabel textComment = new JLabel();
+	JLabel textRoad = new JLabel(rb.getString("Road"));
+	JLabel textRoadNumber = new JLabel(rb.getString("RoadNumber"));
+	JLabel textColor = new JLabel(rb.getString("Color"));
+	JLabel textBuilt = new JLabel(rb.getString("BuildDate"));
+	JLabel textLength = new JLabel(rb.getString("Length"));
+	JLabel textType = new JLabel(rb.getString("Type"));
+	JLabel textWeight = new JLabel(rb.getString("Weight"));
+	JLabel textWeightTons = new JLabel(rb.getString("WeightTons"));
+	JLabel textLocation = new JLabel(rb.getString("Location"));
+	JLabel textOptional = new JLabel(rb.getString("Optional"));
+	JLabel textLoad = new JLabel(rb.getString("Load"));
+	JLabel textKernel = new JLabel(rb.getString("Kernel"));
+	JLabel textOwner = new JLabel(rb.getString("Owner"));
+	JLabel textComment = new JLabel(rb.getString("Comment"));
+	JLabel textRfid = new JLabel(rb.getString("Rfid"));
 
 	// major buttons
-	JButton editRoadButton = new JButton();
-	JButton clearRoadNumberButton = new JButton();
-	JButton editTypeButton = new JButton();
-	JButton editColorButton = new JButton();
-	JButton editLengthButton = new JButton();
-	JButton fillWeightButton = new JButton();
-	JButton editLoadButton = new JButton();
-	JButton editKernelButton = new JButton();
-	JButton editOwnerButton = new JButton();
+	JButton editRoadButton = new JButton(rb.getString("Edit"));
+	JButton clearRoadNumberButton = new JButton(rb.getString("Clear"));
+	JButton editTypeButton = new JButton(rb.getString("Edit"));
+	JButton editColorButton = new JButton(rb.getString("Edit"));
+	JButton editLengthButton = new JButton(rb.getString("Edit"));
+	JButton fillWeightButton = new JButton(rb.getString("Calculate"));
+	JButton editLoadButton = new JButton(rb.getString("Edit"));
+	JButton editKernelButton = new JButton(rb.getString("Edit"));
+	JButton editOwnerButton = new JButton(rb.getString("Edit"));
 
-	JButton saveButton = new JButton();
-	JButton deleteButton = new JButton();
-	JButton addButton = new JButton();
+	JButton saveButton = new JButton(rb.getString("Save"));
+	JButton deleteButton = new JButton(rb.getString("Delete"));
+	JButton addButton = new JButton(rb.getString("Add"));
 
 	// check boxes
-	JCheckBox autoCheckBox = new JCheckBox();
-	JCheckBox cabooseCheckBox = new JCheckBox();
-	JCheckBox fredCheckBox = new JCheckBox();
-	JCheckBox hazardousCheckBox = new JCheckBox();
+	JCheckBox autoCheckBox = new JCheckBox(rb.getString("Auto"));
+	JCheckBox cabooseCheckBox = new JCheckBox(rb.getString("Caboose"));
+	JCheckBox fredCheckBox = new JCheckBox(rb.getString("Fred"));
+	JCheckBox hazardousCheckBox = new JCheckBox(rb.getString("Hazardous"));
 
 	// text field
 	JTextField roadNumberTextField = new JTextField(8);
@@ -82,11 +83,12 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	JTextField weightTextField = new JTextField(4);
 	JTextField weightTonsTextField = new JTextField(4);
 	JTextField commentTextField = new JTextField(35);
+	JTextField rfidTextField = new JTextField(16);
 
 	// for padding out panel
-	JLabel space1 = new JLabel();
-	JLabel space2 = new JLabel();
-	JLabel space3 = new JLabel();
+	JLabel space1 = new JLabel("      ");
+	JLabel space2 = new JLabel("      ");
+	JLabel space3 = new JLabel("      ");
 
 	// combo boxes
 	JComboBox roadComboBox = CarRoads.instance().getComboBox();
@@ -114,75 +116,21 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
 	public void initComponents() {
 		// the following code sets the frame's initial state
-		textRoad.setText(rb.getString("Road"));
-		textRoad.setVisible(true);
-		textRoadNumber.setText(rb.getString("RoadNumber"));
-		textRoadNumber.setVisible(true);
-		textType.setText(rb.getString("Type"));
-		textType.setVisible(true);
-		textColor.setText(rb.getString("Color"));
-		textColor.setVisible(true);
-		textBuilt.setText(rb.getString("BuildDate"));
-		textBuilt.setVisible(true);
-		textLength.setText(rb.getString("Length"));
-		textLength.setVisible(true);
-		textWeight.setText(rb.getString("Weight"));
-		textWeight.setVisible(true);
-		weightTextField.setToolTipText(rb.getString("TipCarWeightOz"));
-		textWeightTons.setText(rb.getString("WeightTons"));
-		textWeightTons.setVisible(true);
-		weightTonsTextField.setToolTipText(rb.getString("TipCarWeightTons"));
-		autoCheckBox.setText(rb.getString("Auto"));
-		autoCheckBox.setSelected(true);
-		autoCheckBox.setToolTipText(rb.getString("TipCarAutoCalculate"));
-		cabooseCheckBox.setText(rb.getString("Caboose"));
-		cabooseCheckBox.setSelected(false);
-		fredCheckBox.setText(rb.getString("Fred"));
-		fredCheckBox.setSelected(false);
-		fredCheckBox.setToolTipText(rb.getString("TipCarFred"));
-		hazardousCheckBox.setText(rb.getString("Hazardous"));
-		hazardousCheckBox.setSelected(false);
-		textLocation.setText(rb.getString("Location"));
-		textLocation.setVisible(true);
-		textOptional.setText(rb.getString("Optional"));
-		textOptional.setVisible(true);
-		textLoad.setText(rb.getString("Load"));
-		textLoad.setVisible(true);
-		textKernel.setText(rb.getString("Kernel"));
-		textKernel.setVisible(true);
-		textOwner.setText(rb.getString("Owner"));
-		textOwner.setVisible(true);
-		textComment.setText(rb.getString("Comment"));
-		textComment.setVisible(true);
-		space1.setText("      ");
-		space1.setVisible(true);
 
-		editRoadButton.setText(rb.getString("Edit"));
-		editRoadButton.setVisible(true);
-		clearRoadNumberButton.setText(rb.getString("Clear"));
-		editRoadButton.setVisible(true);
-		editTypeButton.setText(rb.getString("Edit"));
-		editTypeButton.setVisible(true);
-		editColorButton.setText(rb.getString("Edit"));
-		editColorButton.setVisible(true);
-		editLengthButton.setText(rb.getString("Edit"));
-		editLengthButton.setVisible(true);
-		fillWeightButton.setText(rb.getString("Calculate"));
+		// load tool tips
+		weightTextField.setToolTipText(rb.getString("TipCarWeightOz"));
+		weightTonsTextField.setToolTipText(rb.getString("TipCarWeightTons"));
+		autoCheckBox.setToolTipText(rb.getString("TipCarAutoCalculate"));
+		fredCheckBox.setToolTipText(rb.getString("TipCarFred"));
 		fillWeightButton.setToolTipText(rb.getString("TipCalculateCarWeight"));
-		fillWeightButton.setVisible(true);
-		editLoadButton.setText(rb.getString("Edit"));
-		editLoadButton.setVisible(true);
-		editKernelButton.setText(rb.getString("Edit"));
-		editKernelButton.setVisible(true);
 		builtTextField.setToolTipText(rb.getString("TipBuildDate"));
-		editOwnerButton.setText(rb.getString("Edit"));
-		editOwnerButton.setVisible(true);
-		deleteButton.setText(rb.getString("Delete"));
-		deleteButton.setVisible(true);
-		addButton.setText(rb.getString("Add"));
-		addButton.setVisible(true);
-		saveButton.setText(rb.getString("Save"));
-		saveButton.setVisible(true);
+		rfidTextField.setToolTipText(rb.getString("TipRfid"));
+		
+		// default check box selections
+		autoCheckBox.setSelected(true);
+		cabooseCheckBox.setSelected(false);
+		fredCheckBox.setSelected(false);	
+		hazardousCheckBox.setSelected(false);
 
 		getContentPane().setLayout(new GridBagLayout());
 
@@ -250,10 +198,16 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		addItem(ownerComboBox, 1, 19);
 		addItem(editOwnerButton, 2, 19);
 
+		// row 20
+		if(Setup.isRfidEnabled()){
+			addItem(textRfid, 0, 20);
+			addItem(rfidTextField, 1, 20);
+		}
+		
 		// row 21
 		addItem(textComment, 0, 21);
 		addItemWidth(commentTextField, 3, 1, 21);
-
+		
 		// row 23
 		addItem(space1, 0, 23);
 		
@@ -397,11 +351,10 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		CarLoads.instance().updateComboBox(car.getType(), loadComboBox);
 		loadComboBox.setSelectedItem(car.getLoad());
 		
-		kernelComboBox.setSelectedItem(car.getKernelName());
-				
-		
+		kernelComboBox.setSelectedItem(car.getKernelName());	
 
 		commentTextField.setText(car.getComment());
+		rfidTextField.setText(car.getRfid());
 	}
 
 	// combo boxes
@@ -625,6 +578,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 				}
 			}
 			_car.setComment(commentTextField.getText());
+			_car.setRfid(rfidTextField.getText());
 			return _car;
 		}
 		return null;

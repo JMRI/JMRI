@@ -25,13 +25,14 @@ import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Frame for adding and editing the car roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public class CarsTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -60,6 +61,7 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
     JRadioButton sortByMoves = new JRadioButton(rb.getString("Moves"));
     JRadioButton sortByBuilt = new JRadioButton(rb.getString("Built"));
     JRadioButton sortByOwner = new JRadioButton(rb.getString("Owner"));
+    JRadioButton sortByRfid = new JRadioButton(rb.getString("Rfid"));
     ButtonGroup group = new ButtonGroup();
     
 	// major buttons
@@ -100,6 +102,9 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
     	cp1.add(sortByMoves);
     	cp1.add(sortByBuilt);
     	cp1.add(sortByOwner);
+    	if(Setup.isRfidEnabled()){
+    		cp1.add(sortByRfid);
+    	}
     	
     	// row 2
     	JPanel cp2 = new JPanel();
@@ -144,6 +149,7 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 		addRadioButtonAction (sortByMoves);
 		addRadioButtonAction (sortByBuilt);
 		addRadioButtonAction (sortByOwner);
+		addRadioButtonAction (sortByRfid);
 		
 		group.add(sortByNumber);
 		group.add(sortByRoad);
@@ -157,6 +163,7 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 		group.add(sortByMoves);
 		group.add(sortByBuilt);
 		group.add(sortByOwner);
+		group.add(sortByRfid);
     	
  		// build menu
 		JMenuBar menuBar = new JMenuBar();
@@ -208,6 +215,9 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 		}
 		if (ae.getSource() == sortByOwner){
 			carsModel.setSort(carsModel.SORTBYOWNER);
+		}
+		if (ae.getSource() == sortByRfid){
+			carsModel.setSort(carsModel.SORTBYRFID);
 		}
 	}
 	
