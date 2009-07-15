@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.2.shtml,v 1.5 2009-07-15 16:18:05 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.2.shtml,v 1.6 2009-07-15 16:21:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -122,6 +122,10 @@ Small change in functionality, train reset no longer swaps car loads.
 
 <p>
 Internal Lights (IL1, etc) now support variable intensity.
+
+<p>
+The bug causing the program to hang when editing a Logix, Route or Light has been fixed.
+(This fix was in JMRI 2.6.1, but not in JMRI 2.7.1)
 
 <p>
 Dan Boudreau added a new save panel feature.  
