@@ -26,7 +26,7 @@ import javax.swing.event.ChangeListener;
  * Memory, preserving what it finds.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @since 2.7.2
  */
 
@@ -40,6 +40,8 @@ public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.
         
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         add(spinner);
+        connect(spinner.getEditor()); // add mouse listeners, etc
+        connect(((JSpinner.DefaultEditor)spinner.getEditor()).getTextField()); // cast going to be a problem?
         spinner.getModel().addChangeListener(
             new ChangeListener(){
                 public void stateChanged(ChangeEvent e) {

@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPopupMenu;
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
+import javax.swing.JComponent;
 import javax.swing.JCheckBoxMenuItem;
 import jmri.util.JmriJFrame;
 
@@ -19,7 +20,7 @@ import jmri.util.JmriJFrame;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 abstract class PositionableJPanel extends JPanel
                         implements MouseMotionListener, MouseListener,
@@ -27,7 +28,7 @@ abstract class PositionableJPanel extends JPanel
     public PositionableJPanel() {
         debug = log.isDebugEnabled();
         setProperToolTip();
-        connect();
+        connect(this);
     }
 
     /**
@@ -38,9 +39,9 @@ abstract class PositionableJPanel extends JPanel
     /**
      * Connect listeners
      */
-    void connect() {
-        addMouseMotionListener(this);
-        addMouseListener(this);
+    void connect(JComponent j) {
+        j.addMouseMotionListener(this);
+        j.addMouseListener(this);
     }
 
     void disconnect() {
@@ -74,7 +75,7 @@ abstract class PositionableJPanel extends JPanel
         // remember where we are
         xClick = e.getX();
         yClick = e.getY();
-        // if (debug) log.debug("Pressed: "+where(e));
+        if (debug) log.debug("Pressed: "+where(e));
         if (e.isPopupTrigger()) {
             if (debug) log.debug("show popup");
             showPopUp(e);
@@ -87,7 +88,7 @@ abstract class PositionableJPanel extends JPanel
 			layoutPanel.handleMouseReleased(e,getX(),getY());
 			return;
 		}
-        // if (debug) log.debug("Release: "+where(e));
+        if (debug) log.debug("Release: "+where(e));
         if (e.isPopupTrigger()) {
             if (debug) log.debug("show popup");
             showPopUp(e);
@@ -104,10 +105,10 @@ abstract class PositionableJPanel extends JPanel
         }
     }
     public void mouseExited(MouseEvent e) {
-        // if (debug) log.debug("Exited:  "+where(e));
+        if (debug) log.debug("Exited:  "+where(e));
     }
     public void mouseEntered(MouseEvent e) {
-        // if (debug) log.debug("Entered: "+where(e));
+        if (debug) log.debug("Entered: "+where(e));
     }
 
     public void mouseMoved(MouseEvent e) {
