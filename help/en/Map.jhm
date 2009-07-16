@@ -588,6 +588,8 @@
 
 <mapID target="manual.Comp_ManfSpecific" url="manual/Comp_ManfSpecific.shtml"/>
 
+<mapID target="html.doc.Technical.FileNames" url="html/doc/Technical/FileNames.shtml"/>
+
 <mapID target="manual.Multi_Decoder_Control" url="manual/Multi_Decoder_Control.shtml"/>
 
 <mapID target="package.jmri.jmrix.sprog.console.SprogConsoleFrame" url="package/jmri/jmrix/sprog/console/SprogConsoleFrame.shtml"/>
@@ -1014,9 +1016,9 @@
 
 <mapID target="html.tools.signaling.ldt.output2" url="html/tools/signaling/ldt/output2.shtml"/>
 
-<mapID target="manual.Comp_SoundLevels" url="manual/Comp_SoundLevels.shtml"/>
-
 <mapID target="manual.Main_Roster_Print" url="manual/Main_Roster.shtml#Print"/>
+
+<mapID target="manual.Comp_SoundLevels" url="manual/Comp_SoundLevels.shtml"/>
 
 <mapID target="manual.Dcode_Testing" url="manual/Dcode_Testing.shtml"/>
 
