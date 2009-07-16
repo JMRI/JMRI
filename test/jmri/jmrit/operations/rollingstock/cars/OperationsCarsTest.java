@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
  *   Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -64,13 +64,11 @@ public class OperationsCarsTest extends TestCase {
 	}
 
 	public void testCarColors() {
-//  Comment out tests that rely upon manager having run until that gets fixed
-		CarColors cc1 = new CarColors();
-//		CarColors cc1;
-//		cc1 = CarColors.instance();
+		CarColors cc1 = CarColors.instance();
+		cc1.getNames();	// load predefined colors
 
-//		Assert.assertTrue("Car Color Predefined Red", cc1.containsName("Red"));
-//		Assert.assertTrue("Car Color Predefined Red", cc1.containsName("Blue"));
+		Assert.assertTrue("Car Color Predefined Red", cc1.containsName("Red"));
+		Assert.assertTrue("Car Color Predefined Blue", cc1.containsName("Blue"));
 
 		cc1.addName("BoxCar Red");
 		Assert.assertTrue("Car Color Add", cc1.containsName("BoxCar Red"));
@@ -91,14 +89,12 @@ public class OperationsCarsTest extends TestCase {
 	}
 
 	public void testCarLengths() {
-//  Comment out tests that rely upon manager having run until that gets fixed
-		CarLengths cl1 = new CarLengths();
-//		CarLengths cl1;
-//		cl1 = CarLengths.instance();
+		CarLengths cl1 = CarLengths.instance();
+		cl1.getNames();	// load predefined lengths
 
-//		Assert.assertTrue("Car Length Predefined 40", cl1.containsName("40"));
-//		Assert.assertTrue("Car Length Predefined 32", cl1.containsName("32"));
-//		Assert.assertTrue("Car Length Predefined 60", cl1.containsName("60"));
+		Assert.assertTrue("Car Length Predefined 40", cl1.containsName("40"));
+		Assert.assertTrue("Car Length Predefined 32", cl1.containsName("32"));
+		Assert.assertTrue("Car Length Predefined 60", cl1.containsName("60"));
 
 		cl1.addName("1");
 		Assert.assertTrue("Car Length Add 1", cl1.containsName("1"));
@@ -119,10 +115,7 @@ public class OperationsCarsTest extends TestCase {
 	}
 
 	public void testCarOwners() {
-//  Comment out tests that rely upon manager having run until that gets fixed
-		CarOwners co1 = new CarOwners();
-//		CarOwners co1;
-//		co1 = CarOwners.instance();
+		CarOwners co1 = CarOwners.instance();
 
 		co1.addName("Rich Guy 1");
 		Assert.assertTrue("Car Owner Add", co1.containsName("Rich Guy 1"));
@@ -143,15 +136,13 @@ public class OperationsCarsTest extends TestCase {
 	}
 
 	public void testCarRoads() {
-//  Comment out tests that rely upon manager having run until that gets fixed
-		CarRoads cr1 = new CarRoads();
-//		CarRoads cr1;
-//		cr1 = CarRoads.instance();
+		CarRoads cr1 = CarRoads.instance();
+		cr1.getNames();	//load predefined roads
 
-//		Assert.assertTrue("Car Roads Predefined AA", cr1.containsName("AA"));
-//		Assert.assertTrue("Car Roads Predefined CP", cr1.containsName("CP"));
-//		Assert.assertTrue("Car Roads Predefined CN", cr1.containsName("CN"));
-//		Assert.assertTrue("Car Roads Predefined UP", cr1.containsName("UP"));
+		Assert.assertTrue("Car Roads Predefined AA", cr1.containsName("AA"));
+		Assert.assertTrue("Car Roads Predefined CP", cr1.containsName("CP"));
+		Assert.assertTrue("Car Roads Predefined CN", cr1.containsName("CN"));
+		Assert.assertTrue("Car Roads Predefined UP", cr1.containsName("UP"));
 
 		cr1.addName("Road New1");
 		Assert.assertTrue("Car Roads Add New1", cr1.containsName("Road New1"));
@@ -175,13 +166,11 @@ public class OperationsCarsTest extends TestCase {
 	}
 
 	public void testCarTypes() {
-//  Comment out tests that rely upon manager having run until that gets fixed
-		CarTypes ct1 = new CarTypes();
-//		CarTypes ct1;
-//		ct1 = CarTypes.instance();
+		CarTypes ct1 = CarTypes.instance();
+		ct1.getNames();	//Load predefined car types
 
-//		Assert.assertTrue("Car Types Predefined Engine", ct1.containsName("Engine"));
-//		Assert.assertTrue("Car Types Predefined Caboose", ct1.containsName("Caboose"));
+		Assert.assertTrue("Car Types Predefined Boxcar", ct1.containsName("Boxcar"));
+		Assert.assertTrue("Car Types Predefined Caboose", ct1.containsName("Caboose"));
 
 		ct1.addName("Type New1");
 		Assert.assertTrue("Car Types Add New1", ct1.containsName("Type New1"));
@@ -456,7 +445,7 @@ public class OperationsCarsTest extends TestCase {
         t3.setRoute(r);
         
         c1.setTrain(t1);
-        c2.setTrain(new Train("id2", "C"));
+        c2.setTrain(t3);
         c3.setTrain(t3);
         c4.setTrain(new Train("id4", "B"));
         c5.setTrain(t3);
@@ -567,8 +556,8 @@ public class OperationsCarsTest extends TestCase {
         Assert.assertEquals("Number of Cars by train", 6, carList.size());
         Assert.assertEquals("1st car in list by train", c6, manager.getCarById(carList.get(0)));
         Assert.assertEquals("2nd car in list by train", c4, manager.getCarById(carList.get(1)));
-        Assert.assertEquals("3rd car in list by train", c2, manager.getCarById(carList.get(2)));
-        Assert.assertEquals("4th car in list by train", c5, manager.getCarById(carList.get(3)));
+        Assert.assertEquals("3rd car in list by train", c5, manager.getCarById(carList.get(2)));
+        Assert.assertEquals("4th car in list by train", c2, manager.getCarById(carList.get(3)));
         Assert.assertEquals("5th car in list by train", c3, manager.getCarById(carList.get(4)));
         Assert.assertEquals("6th car in list by train", c1, manager.getCarById(carList.get(5)));
 
@@ -577,18 +566,30 @@ public class OperationsCarsTest extends TestCase {
         Assert.assertEquals("Number of Cars in t1", 1, carList.size());
         Assert.assertEquals("1st car in list by t1", c1, manager.getCarById(carList.get(0)));
         carList = manager.getCarsByTrainList(t3);
-        Assert.assertEquals("Number of Cars in t3", 2, carList.size());
-        Assert.assertEquals("1st car in list by t3", c3, manager.getCarById(carList.get(0)));
-        Assert.assertEquals("1st car in list by t3", c5, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("Number of Cars in t3", 3, carList.size());
+        Assert.assertEquals("1st car in list by t3", c2, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list by t3", c3, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by t3", c5, manager.getCarById(carList.get(2)));
         
+        // now get cars by specific train
+        carList = manager.getCarsByTrainDestinationList(t1);
+        Assert.assertEquals("Number of Cars in t1 by dest", 1, carList.size());
+        Assert.assertEquals("1st car in list by t1 by dest", c1, manager.getCarById(carList.get(0)));
+        carList = manager.getCarsByTrainDestinationList(t3);
+        Assert.assertEquals("Number of Cars in t3 by dest", 3, carList.size());
+        Assert.assertEquals("1st car in list by t3 by dest", c2, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list by t3 by dest", c3, manager.getCarById(carList.get(1)));
+        Assert.assertEquals("3rd car in list by t3 by dest", c5, manager.getCarById(carList.get(2)));
+            
         // how many cars available?
         carList = manager.getCarsAvailableTrainList(t1);
         Assert.assertEquals("Number of Cars available for t1", 1, carList.size());
         Assert.assertEquals("1st car in list available for t1", c1, manager.getCarById(carList.get(0)));
 
         carList = manager.getCarsAvailableTrainList(t3);
-        Assert.assertEquals("Number of Cars available for t3", 1, carList.size());
-        Assert.assertEquals("1st car in list available for t3", c3, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("Number of Cars available for t3", 2, carList.size());
+        Assert.assertEquals("1st car in list available for t3", c2, manager.getCarById(carList.get(0)));
+        Assert.assertEquals("2nd car in list available for t3", c3, manager.getCarById(carList.get(1)));
         // note that c5 isn't available since it is located at the end of the train's route
         
         // release cars from trains
