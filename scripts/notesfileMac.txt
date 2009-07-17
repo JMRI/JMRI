@@ -1,12 +1,11 @@
-The JMRI 2.7.1 test version is now available for download. 
+The JMRI 2.7.2 test version is now available for download. 
 
 This is the specific version for Mac OS X users. 
 
 It contains many new features, including:
-* Several new and updated decoder definitions
-* Significant improvements in Panel Editor icon support
-* Turnout invert capability for XPressNet
-* Fix to invert for LocoNet sensors
+* fix for the problem JMRI 2.7.1 to occasionally hang
+* improvements to Logix and Panel Editor
+along with other changes.
 
 For more information, please see the release note at 
 http://jmri.sf.net/releasenotes/jmri2.7.1.shtml
