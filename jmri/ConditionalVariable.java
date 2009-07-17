@@ -448,6 +448,10 @@ public class ConditionalVariable {
             int n1 = Integer.parseInt(value1);
             try {
                 int n2 = Integer.parseInt(value2);
+                if (_num1 == 0) { // for former code
+                    if (n1 == n2) return true;
+                    else return false;
+                }
                 if (log.isDebugEnabled()) log.debug("Compare numbers: n1= "+n1+", to n2= "+n2);
                 switch (_num1)  // both are numbers
                 {   // fall through
@@ -475,6 +479,10 @@ public class ConditionalVariable {
         }
         log.debug("Compare Strings: value1= "+value1+", to value2= "+value2);
         int compare = value1.compareTo(value2);
+        if (_num1 == 0) { // for former code
+            if (compare == 0) return true;
+            else return false;
+        }
         switch (_num1)
         {   // fall through
             case LESS_THAN:
