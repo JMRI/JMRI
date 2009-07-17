@@ -1,18 +1,14 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.jmrit.catalog.CatalogPanel;
-import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.MemorySpinnerIcon;
-import org.jdom.Attribute;
 import org.jdom.Element;
-import java.util.List;
 
 /**
  * Handle configuration for display.MemorySpinnerIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class MemorySpinnerIconXml extends PositionableLabelXml {
 

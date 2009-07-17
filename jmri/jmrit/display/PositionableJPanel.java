@@ -14,13 +14,12 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JCheckBoxMenuItem;
-import jmri.util.JmriJFrame;
 
 /**
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 abstract class PositionableJPanel extends JPanel
                         implements MouseMotionListener, MouseListener,

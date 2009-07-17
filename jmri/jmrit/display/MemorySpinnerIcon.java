@@ -5,15 +5,11 @@ import jmri.Memory;
 
 import java.util.ResourceBundle;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 
-import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
@@ -26,7 +22,7 @@ import javax.swing.event.ChangeListener;
  * Memory, preserving what it finds.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @since 2.7.2
  */
 

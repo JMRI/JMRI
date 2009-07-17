@@ -2,8 +2,6 @@
 
 package jmri.jmrit.catalog;
 
-import java.io.File;
-
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -57,7 +55,6 @@ import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
 import jmri.jmrit.display.IconAdder;
-import jmri.jmrit.XmlFile;
 
 /**
  * Create a JPanel containing trees of resources to replace default icons.

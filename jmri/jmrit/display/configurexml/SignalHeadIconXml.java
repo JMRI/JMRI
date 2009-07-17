@@ -4,7 +4,6 @@ package jmri.jmrit.display.configurexml;
 
 import jmri.SignalHead;
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.SignalHeadIcon;
@@ -15,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 

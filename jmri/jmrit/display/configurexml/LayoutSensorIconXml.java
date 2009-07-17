@@ -1,7 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.catalog.CatalogPane;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.LayoutSensorIcon;
@@ -17,7 +16,7 @@ import org.jdom.Element;
  *   loading a saved panel.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class LayoutSensorIconXml implements XmlAdapter {
 

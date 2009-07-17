@@ -4,8 +4,6 @@
 
 package jmri.jmrix.lenz.liusbserver;
 
-import jmri.jmrix.lenz.XNetMessage;
-import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetPacketizer;
 
 import jmri.jmrix.AbstractMRMessage;
@@ -18,7 +16,7 @@ import jmri.jmrix.AbstractMRListener;
  * <P>
  * In particular, LIUSBServerXNetPacketizer counts the number of commands received.
  * @author		Paul Bender, Copyright (C) 2009
- * @version 	$Revision: 1.1 $
+ * @version 	$Revision: 1.2 $
  *
  */
 public class LIUSBServerXNetPacketizer extends XNetPacketizer {

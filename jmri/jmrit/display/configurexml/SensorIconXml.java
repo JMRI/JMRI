@@ -1,7 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.SensorIcon;
@@ -12,7 +11,7 @@ import org.jdom.Element;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class SensorIconXml implements XmlAdapter {
 

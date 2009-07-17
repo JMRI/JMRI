@@ -1,7 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.catalog.CatalogPane;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.LayoutMemoryIcon;
@@ -20,7 +19,7 @@ import java.awt.Color;
  *   loading a saved panel.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class LayoutMemoryIconXml implements XmlAdapter {
 

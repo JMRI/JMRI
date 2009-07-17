@@ -1,7 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.PositionableLabel;
@@ -15,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 

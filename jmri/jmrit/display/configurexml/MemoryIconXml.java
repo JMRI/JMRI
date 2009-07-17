@@ -1,6 +1,5 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.MemoryIcon;
@@ -12,7 +11,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 

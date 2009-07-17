@@ -4,12 +4,6 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
 import java.net.*;
 
@@ -19,7 +13,7 @@ import java.net.*;
  *
  *
  * @author      Paul Bender  Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  * @see         jmri.jmrix.NetworkConfigException
  */
 abstract public class NetworkPortAdapter extends AbstractPortController{

@@ -2,11 +2,6 @@
 
 package jmri.jmrix.lenz.liusbserver;
 
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Vector;
-
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,7 +16,7 @@ import javax.swing.JTextField;
  * connection.
  *
  * @author	Paul Bender Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  *
  * @see LIUSBServerAdapter
  */

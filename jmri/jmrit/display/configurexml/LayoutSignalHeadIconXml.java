@@ -3,7 +3,6 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.catalog.CatalogPane;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.LayoutSignalHeadIcon;
@@ -14,7 +13,7 @@ import org.jdom.Element;
  * Handle configuration for display.LayoutSignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class LayoutSignalHeadIconXml implements XmlAdapter {
 

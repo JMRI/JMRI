@@ -3,7 +3,6 @@
 package jmri.jmrix;
 
 import javax.swing.*;
-import java.util.Vector;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +13,7 @@ import java.awt.event.KeyListener;
  * Abstract base Frame to open and configure a NetworkPortAdapeter 
  * @author			Paul Bender Copyright (C) 2009,
  * @author                      Bob Jacobsen Copyright (C) 2001-2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 abstract public class NetworkPortFrame extends jmri.util.JmriJFrame {
 

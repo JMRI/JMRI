@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import java.util.Date;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
@@ -71,7 +70,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 
 public class LogixTableAction extends AbstractTableAction {

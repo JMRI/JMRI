@@ -1,7 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.RpsPositionIcon;
@@ -12,7 +11,7 @@ import org.jdom.Element;
  * Handle configuration for rps.RpsPositionIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class RpsPositionIconXml implements XmlAdapter {
 
