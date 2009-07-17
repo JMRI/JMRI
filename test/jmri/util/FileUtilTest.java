@@ -14,7 +14,7 @@ import jmri.jmrit.XmlFile;
 /**
  * Tests for the jmri.util.FileUtil class.
  * @author	Bob Jacobsen  Copyright 2003, 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class FileUtilTest extends TestCase {
 
@@ -78,7 +78,8 @@ public class FileUtilTest extends TestCase {
 
     // tests of external to internal mapping
 
-    public void testGetpfPreferenceF() throws IOException {
+    @SuppressWarnings("unused")
+	public void testGetpfPreferenceF() throws IOException {
         File f = new File(XmlFile.prefsDir()+File.separator+"foo");
         String name = FileUtil.getPortableFilename(f);
         Assert.assertEquals("preference:foo", name);
@@ -89,7 +90,8 @@ public class FileUtilTest extends TestCase {
         Assert.assertEquals("preference:foo", name);
     }
 
-    public void testGetpfResourceF() throws IOException {
+    @SuppressWarnings("unused")
+	public void testGetpfResourceF() throws IOException {
         File f = new File(XmlFile.prefsDir()+File.separator+"resources"+File.separator+"foo");
         String name = FileUtil.getPortableFilename(f);
         Assert.assertEquals("preference:resources/foo", name);
@@ -100,7 +102,8 @@ public class FileUtilTest extends TestCase {
         Assert.assertEquals("preference:resources/foo", name);
     }
 
-    public void testGetpfProgramF() throws IOException {
+    @SuppressWarnings("unused")
+	public void testGetpfProgramF() throws IOException {
         File f = new File("resources"+File.separator+"icons");
         String name = FileUtil.getPortableFilename(f);
         Assert.assertEquals("program:resources/icons", name);

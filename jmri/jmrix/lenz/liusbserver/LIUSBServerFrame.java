@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect XPressNet via the LIUSB Server interface
  * @author			Paul Bender (C) 2009
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LIUSBServerFrame extends jmri.jmrix.NetworkPortFrame {
 
@@ -26,14 +26,14 @@ public class LIUSBServerFrame extends jmri.jmrix.NetworkPortFrame {
 	public void openPortButtonActionPerformed(java.awt.event.ActionEvent e) throws jmri.jmrix.NetworkConfigException{
                 hostField.setText("localhost"); // the LIUSB server only
                                                 // works with localhost.
-		if ((String) hostField.getText() != null) {
+		if (hostField.getText() != null) {
 			// connect to the host 
 
 			String errCode = adapter.openPort(hostField.getText(),"LIUSBServerFrame");
 			if (errCode == null)	{
 				adapter.configure();
 				// check for port in OK state
-				if (!((LIUSBServerAdapter)adapter).okToSend()) {
+				if (!(adapter).okToSend()) {
 					log.info("LIUSBServer port not ready to send");
 					JOptionPane.showMessageDialog(null,
 				   		"The LIUSBServer is unable to accept data.\n"

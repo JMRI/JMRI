@@ -6,13 +6,8 @@ import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitilizationManager;
 import jmri.jmrix.lenz.XNetPortController;
 import jmri.jmrix.AbstractMRTrafficController;
-import jmri.jmrix.AbstractMRMessage;
-import jmri.jmrix.AbstractMRListener;
 
 import jmri.jmrix.lenz.XNetReply;
-import jmri.jmrix.lenz.XNetConstants;
-import jmri.jmrix.lenz.XNetTrafficController;
-import jmri.jmrix.AbstractMRTrafficController;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -22,8 +17,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import java.io.*;
-import java.util.*;
-import java.net.*;
+
 
 /**
  * Provide access to XPressNet via a the Lenz LIUSB Server.
@@ -36,7 +30,7 @@ import java.net.*;
  * into service mode. 
  *
  * @author			Paul Bender (C) 2009
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class LIUSBServerAdapter extends XNetPortController {
@@ -125,7 +119,7 @@ public class LIUSBServerAdapter extends XNetPortController {
 	public void configure() {
             if(log.isDebugEnabled()) log.debug("configure called");
             // connect to a packetizing traffic controller
-            AbstractMRTrafficController packets = (AbstractMRTrafficController) (new LIUSBServerXNetPacketizer(new LenzCommandStation()));
+            AbstractMRTrafficController packets = (new LIUSBServerXNetPacketizer(new LenzCommandStation()));
             packets.connectPort(this);
 
        	    // start operation
@@ -218,7 +212,6 @@ public class LIUSBServerAdapter extends XNetPortController {
      * @throws IOException when presented by the input source.
      */
     private XNetReply loadChars(java.io.BufferedReader istream) throws java.io.IOException {
-        int i;
         // The LIUSBServer sends us data as strings of hex values.
         // These hex values are followed by a <cr><lf>
         String s = "";

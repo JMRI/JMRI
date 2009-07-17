@@ -6,7 +6,7 @@
  *       		LIUSB Server 
  *
  * @author	        Paul Bender Copyright (C) 2009
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 package jmri.jmrix.lenz.liusbserver;
@@ -28,7 +28,7 @@ public class LIUSBServerAction extends AbstractAction {
 			log.error("starting LIUSBServer frame caught exception: "+ex.toString());
 			}
 		//f.setVisible(true);
-	};
+	}
 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LIUSBServerAction.class.getName());
 
 }
