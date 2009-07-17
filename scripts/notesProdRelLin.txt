@@ -3,7 +3,7 @@ This release, JMRI 2.6, is recommended for all new users.
 
 This is the specific version for Linux users. 
 
-It contains many new features and updates, including:
+This production release contains many new features and updates, including:
 
 * Routes and Logix are both more powerful and simpler to configure.
 * Many improvements to the operations support.
@@ -14,5 +14,7 @@ It contains many new features and updates, including:
 * Greatly improved Windows installer.
 * More options in the Dispatcher support.
 
+JMRI 2.6.1 is an update from the original JMRI 2.6 to fix a bug that could cause the program to freeze while editing Logix, Routes and Lights.
+
 For more information, please see the release note at 
-http://jmri.sf.net/releasenotes/jmri2.5.7.shtml
+http://jmri.sf.net/releasenotes/jmri2.6.1.shtml
