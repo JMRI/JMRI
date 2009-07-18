@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.4.shtml,v 1.1 2009-07-17 21:25:39 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.4.shtml,v 1.2 2009-07-18 15:58:51 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -92,6 +92,14 @@ see our
 
 <h3>Changes since test version 2.7.3</h3>
 
+Kevin Dickerson updated the ECoS support for better turnout operation, 
+and to add initial support for throttles to run locomotives through the ECoS.
+
+<p>
+Kevin Dickerson fixed a problem what would sometimes result in improperly disabled Logix and Conditionals.
+
+<p>
+Kevin Dickerson added turnout monitoring to the ECoS support.
 
 <!--#include virtual="/Footer" -->
 
