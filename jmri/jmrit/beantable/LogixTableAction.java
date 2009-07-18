@@ -70,7 +70,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -541,7 +541,7 @@ public class LogixTableAction extends AbstractTableAction {
         // Use separate Thread so window is created on top
         Thread t = new Thread() {
                 public void run() {
-                    Thread.yield();
+                    //Thread.yield();
                     JPanel panel5 = makeAddLogixFrame("TitleCopyLogix", "CopyLogixMessage");
                     // Create Logix
                     JButton create = new JButton(rbx.getString("ButtonCopy"));
@@ -556,7 +556,7 @@ public class LogixTableAction extends AbstractTableAction {
                     }
                 };
         if (log.isDebugEnabled()) log.debug("copyPressed Thread started for " + sName);
-        t.start();
+        javax.swing.SwingUtilities.invokeLater(t);
         inCopyMode = true;
         _logixSysName = sName;
     }
@@ -775,12 +775,12 @@ public class LogixTableAction extends AbstractTableAction {
         // Use separate Thread so window is created on top
         Thread t = new Thread() {
                 public void run() {
-                    Thread.yield();
+                    //Thread.yield();
                     makeEditLogixWindow();
                     }
                 };
         if (log.isDebugEnabled()) log.debug("editPressed Thread started for " + sName);
-        t.start();
+        javax.swing.SwingUtilities.invokeLater(t);
 	}
 
 	/**
@@ -2439,7 +2439,11 @@ public class LogixTableAction extends AbstractTableAction {
         switch (type)  {
             case Conditional.TYPE_MEMORY_EQUALS:
             case Conditional.TYPE_MEMORY_COMPARE:
-                _variableCompareBox.setSelectedIndex(_curVariable.getNum1()-1);
+                int num1 = _curVariable.getNum1()-1;
+                if (num1==-1) {  // former code was only equals
+                    num1 = ConditionalVariable.EQUAL-1;
+                }
+                _variableCompareBox.setSelectedIndex(num1);
                 _variableData1Field.setText(_curVariable.getDataString());
                 // fall through
             case Conditional.TYPE_SENSOR_ACTIVE:
@@ -4011,18 +4015,18 @@ public class LogixTableAction extends AbstractTableAction {
                 } 
                 else {
                     // Use separate Thread so window is created on top
-                    class WindowMaker extends Thread {
+                    class WindowMaker implements Runnable {
                         int row;
                         WindowMaker(int r){
                             row = r;
                         }
                         public void run() {
-                                Thread.yield();
+                                //Thread.yield();
                                 editConditionalPressed(row);
                             }
                         }
                     WindowMaker t = new WindowMaker(rx);
-					t.start();
+					javax.swing.SwingUtilities.invokeLater(t);
 				}
 			} 
             else if (col == UNAME_COLUMN) {
@@ -4216,18 +4220,18 @@ public class LogixTableAction extends AbstractTableAction {
                     break;
                 case EDIT_COLUMN:
                     // Use separate Thread so window is created on top
-                    class WindowMaker extends Thread {
+                    class WindowMaker implements Runnable {
                         int row;
                         WindowMaker(int r){
                             row = r;
                         }
                         public void run() {
-                                Thread.yield();
+                                //Thread.yield();
                                 makeEditVariableWindow(row);
                             }
                         }
                     WindowMaker t = new WindowMaker(r);
-                    t.start();
+					javax.swing.SwingUtilities.invokeLater(t);
                     break;
                 case DELETE_COLUMN:
                     deleteVariablePressed(r);
@@ -4315,18 +4319,18 @@ public class LogixTableAction extends AbstractTableAction {
         public void setValueAt(Object value, int row, int col) {
             if (col == EDIT_COLUMN) {
                 // Use separate Thread so window is created on top
-                class WindowMaker extends Thread {
+                class WindowMaker implements Runnable {
                     int row;
                     WindowMaker(int r){
                         row = r;
                     }
                     public void run() {
-                            Thread.yield();
+                            //Thread.yield();
                             makeEditActionWindow(row);
                         }
                     }
                 WindowMaker t = new WindowMaker(row);
-                t.start();
+                javax.swing.SwingUtilities.invokeLater(t);
             }
             else if (col == DELETE_COLUMN) {
 				if (_inReorderMode) 
