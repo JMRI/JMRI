@@ -10,7 +10,7 @@ import jmri.Turnout;
  * System names are "NTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                 implements EcosListener {
@@ -24,11 +24,12 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         tc.addEcosListener(this);
                 
         // ask to be notified
-        EcosMessage m = new EcosMessage("request(11, view)");
-        tc.sendEcosMessage(m, this);
+        //Not sure if we need to worry about newly created turnouts on the layout.
+        /*EcosMessage m = new EcosMessage("request(11, view)");
+        */
         
         // get initial state
-        m = new EcosMessage("queryObjects(11, addr)");
+        EcosMessage m = new EcosMessage("queryObjects(11, addr)");
         tc.sendEcosMessage(m, this);
 
     }
@@ -73,11 +74,11 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                 et.setObjectNumber(object);
                                 
                                 // listen for changes
-                                EcosMessage em = new EcosMessage("request("+object+",view)");
-                                tc.sendEcosMessage(em, null);
+                                //EcosMessage em = new EcosMessage("request("+object+",view)");
+                                //tc.sendEcosMessage(em, null);
                                 
                                 // get initial state
-                                em = new EcosMessage("get("+object+",state)");
+                                EcosMessage em = new EcosMessage("get("+object+",state)");
                                 tc.sendEcosMessage(em, null);
                                 
                             }

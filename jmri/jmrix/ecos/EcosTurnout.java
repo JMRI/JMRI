@@ -14,7 +14,7 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class EcosTurnout extends AbstractTurnout 
                          implements EcosListener {
@@ -32,11 +32,20 @@ public class EcosTurnout extends AbstractTurnout
     	_number = number;
         
     	// At construction, register for messages
-    	EcosTrafficController.instance().addEcosListener(this);
+
+        //If we are to monitor what is going on with the ecos setting turnouts, we need to be able to view control of them.
+        // This is now down at the setObjectNumber
+
     	
     }
 
-    void setObjectNumber(int o) { objectNumber = o; }
+    void setObjectNumber(int o) { 
+        objectNumber = o;
+        EcosTrafficController.instance().addEcosListener(this);
+        EcosMessage m;
+        m = new EcosMessage("request("+objectNumber+", view)");
+        EcosTrafficController.instance().sendEcosMessage(m, null);
+    }
     
     static String[] modeNames = null;
     static int[] modeValues = null;
@@ -131,10 +140,13 @@ public class EcosTurnout extends AbstractTurnout
         EcosTrafficController.instance().sendEcosMessage(m, null);
     }
     
+    //Think that this might want to be changed so that is checks for <END 0 (OK)>
+    
     // to listen for status changes from Ecos system
     public void reply(EcosReply m) {
         // turnout message?
         String msg = m.toString();
+        if (!msg.contains("<END 0 (OK)>")) return; //The result is not valid therefore we can not set it.
         if (msg.startsWith("<REPLY get("+objectNumber+",") || msg.startsWith("<EVENT "+objectNumber+">")) {
             int start = msg.indexOf("state[");
             int end = msg.indexOf("]");
