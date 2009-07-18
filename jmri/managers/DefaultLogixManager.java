@@ -18,7 +18,7 @@ import jmri.implementation.DefaultLogix;
  * Logix's system name, then there is a capital C and a number.  
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class DefaultLogixManager extends AbstractManager
     implements LogixManager, java.beans.PropertyChangeListener {
@@ -98,7 +98,8 @@ public class DefaultLogixManager extends AbstractManager
 				// user has requested that Logixs be loaded disabled
 				x.setEnabled(false);
 			}
-			x.activateLogix();
+            if (x.getEnabled())
+                x.activateLogix();
 		}
 		// reset the load switch
 		loadDisabled = false;
