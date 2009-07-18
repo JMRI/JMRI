@@ -60,7 +60,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class Maintenance
@@ -251,7 +251,7 @@ public class Maintenance
         Vector <String> display = new Vector<String>();
         Vector <String> names = new Vector<String>();
 
-        System.out.println("findEmptyPressed");
+        log.debug("findEmptyPressed");
         Iterator<String> iter = InstanceManager.conditionalManagerInstance().getSystemNameList().iterator();
         jmri.ConditionalManager cm = InstanceManager.conditionalManagerInstance();
         while (iter.hasNext()) {
