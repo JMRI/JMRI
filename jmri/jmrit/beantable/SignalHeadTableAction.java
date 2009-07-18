@@ -20,6 +20,7 @@ import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.implementation.DoubleTurnoutSignalHead;
 import jmri.implementation.TripleTurnoutSignalHead;
+import jmri.implementation.QuadOutputSignalHead;
 import jmri.Turnout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -42,9 +43,9 @@ import jmri.util.JmriJFrame;
  * Swing action to create and register a
  * SignalHeadTable GUI.
  *
- * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008
+ * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.36 $
+ * @version     $Revision: 1.37 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -141,9 +142,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 case SignalHead.RED: return rbean.getString("SignalHeadStateRed");
                 case SignalHead.YELLOW: return rbean.getString("SignalHeadStateYellow");
                 case SignalHead.GREEN: return rbean.getString("SignalHeadStateGreen");
+                case SignalHead.LUNAR: return rbean.getString("SignalHeadStateLunar");
                 case SignalHead.FLASHRED: return rbean.getString("SignalHeadStateFlashingRed");
                 case SignalHead.FLASHYELLOW: return rbean.getString("SignalHeadStateFlashingYellow");
                 case SignalHead.FLASHGREEN: return rbean.getString("SignalHeadStateFlashingGreen");
+                case SignalHead.FLASHLUNAR: return rbean.getString("SignalHeadStateFlashingLunar");
                 case SignalHead.DARK: return rbean.getString("SignalHeadStateDark");
                 default: return "Unexpected value: "+val;
                 }
@@ -228,6 +231,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     String acelaAspect = rb.getString("StringAcelaaspect");
     String se8c4Aspect = rb.getString("StringSE8c4aspect");
+    String quadOutput = rb.getString("StringQuadOutput");
     String tripleTurnout = rb.getString("StringTripleTurnout");
     String doubleTurnout = rb.getString("StringDoubleTurnout");
     String virtualHead = rb.getString("StringVirtual");
@@ -286,7 +290,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             addFrame.getContentPane().add(typeBox = new JComboBox(new String[]{
                 tripleTurnout, doubleTurnout, virtualHead,
-                se8c4Aspect, lsDec, dccSignalDecoder, acelaAspect
+                se8c4Aspect, lsDec, dccSignalDecoder, acelaAspect, quadOutput
             }));
             if (jmri.jmrix.grapevine.ActiveFlag.isActive()) typeBox.addItem(grapevine);
             typeBox.addActionListener(new ActionListener(){
@@ -444,6 +448,36 @@ public class SignalHeadTableAction extends AbstractTableAction {
             vtLabel.setText(rb.getString("LabelAspectType"));
             vtLabel.setVisible(true);
             stBox.setVisible(true);
+
+        } else if (quadOutput.equals(typeBox.getSelectedItem())) {
+            nameLabel.setText(rb.getString("LabelSystemName"));
+            v1Label.setText(rb.getString("LabelGreenTurnoutNumber"));
+            v1Label.setVisible(true);
+            to1.setVisible(true);
+            s1Box.setVisible(false);
+            v2Label.setText(rb.getString("LabelYellowTurnoutNumber"));
+            v2Label.setVisible(true);
+            s2Box.setVisible(false);
+            to2.setVisible(true);
+            v3Label.setText(rb.getString("LabelRedTurnoutNumber"));
+            v3Label.setVisible(true);
+            to3.setVisible(true);
+            s3Box.setVisible(false);
+            v4Label.setText(rb.getString("LabelLunarTurnoutNumber"));
+            v4Label.setVisible(true);
+            to4.setVisible(true);
+            s4Box.setVisible(false);
+            v5Label.setVisible(false);
+            to5.setVisible(false);
+            s5Box.setVisible(false);
+            v6Label.setVisible(false);
+            to6.setVisible(false);
+            s6Box.setVisible(false);
+            v7Label.setVisible(false);
+            to7.setVisible(false);
+            s7Box.setVisible(false);
+            vtLabel.setVisible(false);
+            stBox.setVisible(false);
 
         } else if (tripleTurnout.equals(typeBox.getSelectedItem())) {
             nameLabel.setText(rb.getString("LabelSystemName"));
@@ -703,6 +737,23 @@ public class SignalHeadTableAction extends AbstractTableAction {
 				s = new jmri.jmrix.grapevine.SerialSignalHead(name.getText(),to1.getText());
 				InstanceManager.signalHeadManagerInstance().register(s);
 			}
+        } else if (quadOutput.equals(typeBox.getSelectedItem())) {
+            Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(to1.getText());
+            Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout(to2.getText());
+            Turnout t3 = InstanceManager.turnoutManagerInstance().provideTurnout(to3.getText());
+            Turnout t4 = InstanceManager.turnoutManagerInstance().provideTurnout(to4.getText());
+            if (t1==null) addTurnoutMessage(v1Label.getText(), to1.getText());
+            if (t2==null) addTurnoutMessage(v2Label.getText(), to2.getText());
+            if (t3==null) addTurnoutMessage(v3Label.getText(), to3.getText());
+            if (t4==null) addTurnoutMessage(v4Label.getText(), to4.getText());
+            if (t4==null || t3==null || t2==null || t1==null) {
+                log.warn("skipping creation of signal "+name.getText()+" due to error");
+                return;
+            }
+            if (checkBeforeCreating(name.getText())) {			
+                s = new jmri.implementation.QuadOutputSignalHead(name.getText(),t1, t2, t3, t4);
+                InstanceManager.signalHeadManagerInstance().register(s);
+            }
         } else if (tripleTurnout.equals(typeBox.getSelectedItem())) {
             Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(to1.getText());
             Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout(to2.getText());
