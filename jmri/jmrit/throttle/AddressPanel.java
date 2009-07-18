@@ -24,7 +24,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 public class AddressPanel extends JInternalFrame {
 
@@ -258,7 +258,11 @@ public class AddressPanel extends JInternalFrame {
 			consistAddress = null;
 			changeOfAddress();
 		}
-		progButton.setEnabled(true);
+		// enable program button iff programmer available
+		// for ops-mode programming
+		if (InstanceManager.programmerManagerInstance()!=null
+		    && InstanceManager.programmerManagerInstance().isAddressedModePossible())
+		        progButton.setEnabled(true);
 	}
 
 	private void consistRosterSelected() {
