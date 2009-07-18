@@ -16,13 +16,15 @@ package jmri;
  * This class has three bound parameters:
  *<DL>
  *<DT>appearance<DD>The specific color being shown. Values are the
- * various color contants defined in the class. 
+ * various color constants defined in the class. 
  * <p>
  * The appearance constants form a bit mask, so they can
  * be used with hardware that can display e.g. more than one lit
  * color at a time.  Individual implementations may not be
  * able to handle that, however; most of the early ones 
- * probably won't.
+ * probably won't. If a particular implementation can't display
+ * a commanded color, it doesn't try to replace it, but rather
+ * just leaves that color off the resulting display.
  *<DT>lit<DD>Whether the head's lamps are lit or left dark.
  *<P>
  * This differs from the DARK color defined for the appearance
@@ -33,7 +35,7 @@ package jmri;
  * evaluation in higher level logic.
  *
  *<DT>held<DD>Whether the head's lamps should be forced to the RED position
- * In higher-level logic.
+ * in higher-level logic.
  *<P>
  * For use in signaling systems, this is a convenient
  * way of storing whether a higher-level of control (e.g. non-vital
@@ -57,7 +59,7 @@ package jmri;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2002, 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public interface SignalHead extends NamedBean {
 
@@ -68,6 +70,8 @@ public interface SignalHead extends NamedBean {
     public static final int FLASHYELLOW = 0x08;
     public static final int GREEN       = 0x10;
     public static final int FLASHGREEN  = 0x20;
+    public static final int LUNAR       = 0x40;
+    public static final int FLASHLUNAR  = 0x80;
 
     /**
      * Appearance is a bound parameter. 

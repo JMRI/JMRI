@@ -7,7 +7,7 @@ package jmri.implementation;
  * Default implementation of the basic logic of the SignalHead interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public abstract class DefaultSignalHead extends AbstractSignalHead {
 
@@ -24,11 +24,13 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         mAppearance = newAppearance;
         if ( mLit && ((newAppearance == FLASHGREEN) ||
             (newAppearance == FLASHYELLOW) ||
-            (newAppearance == FLASHRED) ) )
+            (newAppearance == FLASHRED) ||
+            (newAppearance == FLASHLUNAR) ) )
                 startFlash();
         if ( (!mLit) || ( (newAppearance != FLASHGREEN) &&
             (newAppearance != FLASHYELLOW) &&
-            (newAppearance != FLASHRED) ) )
+            (newAppearance != FLASHRED) &&
+            (newAppearance != FLASHLUNAR) ) )
                 stopFlash();
                 
   		if (oldAppearance != newAppearance) {
@@ -45,7 +47,8 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         if (oldLit != newLit) {
             if ( mLit && ((mAppearance == FLASHGREEN) ||
                     (mAppearance == FLASHYELLOW) ||
-                    (mAppearance == FLASHRED) ) )
+                    (mAppearance == FLASHRED) ||
+                    (mAppearance == FLASHLUNAR) ) )
                 startFlash();
             if (!mLit) stopFlash();
             updateOutput();
