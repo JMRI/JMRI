@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.4.shtml,v 1.2 2009-07-18 15:58:51 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.4.shtml,v 1.3 2009-07-18 19:34:09 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,7 +29,7 @@
       Release Notes for JMRI 2.7.4 release
       </h2>
 
-	<p>Date: July 16, 2009</p>
+	<p>Date: MMM NN, 2009</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.7.4 of JMRI/DecoderPro is available for download.
 
@@ -100,6 +100,13 @@ Kevin Dickerson fixed a problem what would sometimes result in improperly disabl
 
 <p>
 Kevin Dickerson added turnout monitoring to the ECoS support.
+
+<p>
+Support for "Lunar" appearance has been added to signals.
+
+<p>
+A new "Four Output Signal Head" is available.
+
 
 <!--#include virtual="/Footer" -->
 
