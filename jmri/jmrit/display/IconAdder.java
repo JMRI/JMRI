@@ -350,6 +350,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
      * @return Unique object
      */
     public NamedIcon getIcon(String key) {
+        if (log.isDebugEnabled()) log.debug("getIcon for key= "+key); 
         return new NamedIcon((NamedIcon)_iconMap.get(key).getIcon());
     }
 
@@ -387,6 +388,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _addButton.setEnabled(false);
             _addButton.setToolTipText(rb.getString("ToolTipPickFromTable"));
         }
+
         addAdditionalButtons(p);
         this.add(p);
 
@@ -432,10 +434,16 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (_type != null && _defaultIcons == null) {
             getDefaultIconNode();
         }
+        valueChanged(null);
         pack();
     }
 
     protected void addAdditionalButtons(JPanel p) {}
+
+    boolean addIconIsEnabled() {
+        return _addButton.isEnabled();
+    }
+
     
     void addToTable() {
         String name = _sysNametext.getText();
