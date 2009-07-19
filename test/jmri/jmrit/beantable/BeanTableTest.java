@@ -7,18 +7,16 @@ import junit.framework.*;
 /**
  * Tests for classes in the jmri.jmrit.beantable package
  * @author	Bob Jacobsen  Copyright 2004
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class BeanTableTest extends TestCase {
 
     public void testCreate() {
         new MemoryTableAction();
-        new SignalHeadTableAction();
     }
 
     public void testExecute() {
         new MemoryTableAction().actionPerformed(null);
-        new SignalHeadTableAction().actionPerformed(null);
     }
 
     // from here down is testing infrastructure
@@ -38,6 +36,7 @@ public class BeanTableTest extends TestCase {
         TestSuite suite = new TestSuite(BeanTableTest.class);
 		//suite.addTest(jmri.jmrit.beantable.LogixTableActionTest.suite());
 		//suite.addTest(jmri.jmrit.beantable.LRouteTableActionTest.suite());
+        suite.addTest(SignalHeadTableActionTest.suite());
         suite.addTest(RouteTableActionTest.suite());
         suite.addTest(BlockTableActionTest.suite());
         return suite;
