@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-4.dtd,v 1.1 2009-07-17 21:53:55 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-7-4.dtd,v 1.2 2009-07-19 00:47:53 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.7.4 development.  Do not modify it       -->
 <!-- after version 2.7.4 is released.  For more information,                -->
@@ -452,9 +452,11 @@
     <!ATTLIST signalheadicon red         CDATA #IMPLIED>
     <!ATTLIST signalheadicon flashred    CDATA #IMPLIED>
     <!ATTLIST signalheadicon yellow      CDATA #IMPLIED>
+    <!ATTLIST signalheadicon lunar       CDATA #IMPLIED>
     <!ATTLIST signalheadicon flashyellow CDATA #IMPLIED>
     <!ATTLIST signalheadicon green       CDATA #IMPLIED>
     <!ATTLIST signalheadicon flashgreen  CDATA #IMPLIED>
+    <!ATTLIST signalheadicon flashlunar  CDATA #IMPLIED>
     <!ATTLIST signalheadicon signalhead  CDATA #IMPLIED>
     <!ATTLIST signalheadicon forcecontroloff	(true|false) "false">
     <!ATTLIST signalheadicon clickmode	 CDATA #IMPLIED>

@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -45,8 +45,10 @@ public class SignalHeadIconXml implements XmlAdapter {
         element.setAttribute("yellow", p.getYellowIcon().getURL());
         element.setAttribute("flashyellow", p.getFlashYellowIcon().getURL());
         element.setAttribute("green", p.getGreenIcon().getURL());
+        element.setAttribute("lunar", p.getLunarIcon().getURL());
         element.setAttribute("flashred", p.getFlashRedIcon().getURL());
         element.setAttribute("flashgreen", p.getFlashGreenIcon().getURL());
+        element.setAttribute("flashlunar", p.getFlashLunarIcon().getURL());
         element.setAttribute("rotate", String.valueOf(p.getGreenIcon().getRotation()));
         element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
         element.setAttribute("clickmode", ""+p.getClickMode());
@@ -102,6 +104,10 @@ public class SignalHeadIconXml implements XmlAdapter {
         name = element.getAttribute("green").getValue();
         l.setGreenIcon(green = NamedIcon.getIconByName(name));
 
+        NamedIcon lunar;
+        name = element.getAttribute("lunar").getValue();
+        l.setLunarIcon(lunar = NamedIcon.getIconByName(name));
+
         Attribute a; 
 
         NamedIcon held = null;
@@ -129,6 +135,11 @@ public class SignalHeadIconXml implements XmlAdapter {
         if (a!=null) 
             l.setFlashGreenIcon(flashgreen = NamedIcon.getIconByName(a.getValue()));
         
+        NamedIcon flashlunar = null;
+        a = element.getAttribute("flashlunar");
+        if (a!=null) 
+            l.setFlashLunarIcon(flashlunar = NamedIcon.getIconByName(a.getValue()));
+        
         try {
             a = element.getAttribute("rotate");
             if (a!=null) {
@@ -136,9 +147,11 @@ public class SignalHeadIconXml implements XmlAdapter {
                 red.setRotation(rotation, l);
                 yellow.setRotation(rotation, l);
                 green.setRotation(rotation, l);
+                if (lunar!=null) lunar.setRotation(rotation, l);
                 if (flashred!=null) flashred.setRotation(rotation, l);
                 if (flashyellow!=null) flashyellow.setRotation(rotation, l);
                 if (flashgreen!=null) flashgreen.setRotation(rotation, l);
+                if (flashlunar!=null) flashlunar.setRotation(rotation, l);
                 if (dark!=null) dark.setRotation(rotation, l);
                 if (held!=null) held.setRotation(rotation, l);
             }
