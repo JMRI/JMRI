@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * @author			Bob Jacobsen   Copyright (C) 2002
  # @author          Paul Bender Copyright (C) 2004-2009
  * @author          Giorgio Terdina Copyright (C) 2007
- * @version         $Revision: 2.27 $
+ * @version         $Revision: 2.28 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -128,6 +128,9 @@ import jmri.jmrix.lenz.XNetConstants;
 				break;
 		  case XNetConstants.CS_NOT_SUPPORTED:
 				text= "XPressNet Instruction not supported by Command Station";
+				break;
+		  case XNetConstants.CS_TRANSFER_ERROR:
+				text= "Command Station Reported Transfer Error";
 				break;
 		  /* The remaining cases are for a Double Header or MU Error */
 		  case 0x83: 

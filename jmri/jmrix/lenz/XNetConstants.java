@@ -52,6 +52,7 @@ public final static int PROG_CS_BUSY          = 0x1f; /* command station busy */
 public final static int PROG_CS_READY         = 0x11; /* command station ready */
 
 /* standard responses */
+public final static int CS_TRANSFER_ERROR     = 0x80; /* transfer error */
 public final static int CS_BUSY               = 0x81; /* command station busy */
 public final static int CS_NOT_SUPPORTED      = 0x82; /* command not supported */
 
