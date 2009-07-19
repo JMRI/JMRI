@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.4.shtml,v 1.3 2009-07-18 19:34:09 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.4.shtml,v 1.4 2009-07-19 04:27:16 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -105,7 +105,13 @@ Kevin Dickerson added turnout monitoring to the ECoS support.
 Support for "Lunar" appearance has been added to signals.
 
 <p>
-A new "Four Output Signal Head" is available.
+A new "Four Output Signal Head" is available. It uses a 4th lamp (bulb or LED) to 
+show a Lunar or Flashing Lunar aspect.  The Logix/Conditional support has been updated
+to work with this.
+
+<p>
+In preparation for new Signal Mast support, we've changed the interface to talk about
+Signal Heads instead of just Signals.
 
 
 <!--#include virtual="/Footer" -->
