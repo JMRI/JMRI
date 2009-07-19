@@ -8,7 +8,7 @@ import jmri.*;
  * Abstract class providing the basic logic of the SignalHead interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public abstract class AbstractSignalHead extends AbstractNamedBean
     implements SignalHead, java.io.Serializable {
@@ -24,26 +24,16 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 	static final ResourceBundle rbx = ResourceBundle
 			.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
-    public static String getAppearanceString(int appearance) {
-		switch (appearance) {
-            case SignalHead.RED:
-    			return (rbx.getString("AppearanceRed"));
-            case SignalHead.YELLOW:
-    			return (rbx.getString("AppearanceYellow"));
-    		case SignalHead.GREEN:
-    			return (rbx.getString("AppearanceGreen"));
-    		case SignalHead.DARK:
-    			return (rbx.getString("AppearanceDark"));
-    		case SignalHead.FLASHRED:
-    			return (rbx.getString("AppearanceFlashRed"));
-    		case SignalHead.FLASHYELLOW:
-    			return (rbx.getString("AppearanceFlashYellow"));
-    		case SignalHead.FLASHGREEN:
-    			return (rbx.getString("AppearanceFlashGreen"));
-		}
-		return ("");
+    public String getAppearanceName(int appearance) {
+        String ret = jmri.util.StringUtil.getNameFromState(
+                appearance, getValidStates(), getValidStateNames());
+		if (ret != null) return ret;
+		else return ("");
     }
-
+    public String getAppearanceName() {
+        return this.getAppearanceName(getAppearance());
+    }
+    
     protected int mAppearance = DARK;
     public int getAppearance() { return mAppearance; }
 
@@ -91,6 +81,50 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
      * script access easier to read.  
      */
     public int getState() { return getAppearance(); }
+        
+    public static int[] getDefaultValidStates() {
+        return validStates;
+    }
+    public static String[] getDefaultValidStateNames() {
+        return validStateNames;
+    }
+    public static String getDefaultStateName(int appearance) {
+        String ret = jmri.util.StringUtil.getNameFromState(
+                appearance, getDefaultValidStates(), getDefaultValidStateNames());
+		if (ret != null) return ret;
+		else return ("");
+    }
+    
+    final static private ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
+    final static private int[] validStates = new int[]{
+        DARK, 
+        RED, 
+        YELLOW,
+        GREEN,
+        LUNAR,
+        FLASHRED, 
+        FLASHYELLOW,
+        FLASHGREEN,
+        FLASHLUNAR
+    };
+    final static private String[] validStateNames = new String[]{
+        rb.getString("SignalHeadStateDark"),
+        rb.getString("SignalHeadStateRed"),
+        rb.getString("SignalHeadStateYellow"),
+        rb.getString("SignalHeadStateGreen"),
+        rb.getString("SignalHeadStateLunar"),
+        rb.getString("SignalHeadStateFlashingRed"),
+        rb.getString("SignalHeadStateFlashingYellow"),
+        rb.getString("SignalHeadStateFlashingGreen"),
+        rb.getString("SignalHeadStateFlashingLunar"),
+    };
+    
+    public int[] getValidStates() {
+        return validStates;
+    }
+    public String[] getValidStateNames() {
+        return validStateNames;
+    }
 
 }
 

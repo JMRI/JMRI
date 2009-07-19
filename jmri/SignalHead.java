@@ -59,7 +59,7 @@ package jmri;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2002, 2008
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public interface SignalHead extends NamedBean {
 
@@ -78,7 +78,9 @@ public interface SignalHead extends NamedBean {
      */
     public int getAppearance();
     public void setAppearance(int newAppearance);
-
+    public String getAppearanceName();
+    public String getAppearanceName(int appearance);
+    
     /**
      * Lit is a bound parameter. It controls
      * whether the signal head's lamps are lit or left dark.
@@ -94,6 +96,9 @@ public interface SignalHead extends NamedBean {
     public boolean getHeld();
     public void setHeld(boolean newHeld);
 
+    public int[] getValidStates();
+    public String[] getValidStateNames();
+    
 }
 
 

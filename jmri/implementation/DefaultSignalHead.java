@@ -2,12 +2,17 @@
 
 package jmri.implementation;
 
+import java.util.ResourceBundle;
 
  /**
  * Default implementation of the basic logic of the SignalHead interface.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.3 $
+ * This class only claims support for the Red, Yellow and Green appearances,
+ * and their corressponding flashing forms.  Support for Lunar is deferred
+ * to DefaultLunarSignalHead.
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2009
+ * @version     $Revision: 1.4 $
  */
 public abstract class DefaultSignalHead extends AbstractSignalHead {
 
@@ -134,6 +139,34 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         if (timer!=null) timer.stop();
         mFlashOn = true;
     }
+
+    final static private ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
+    final static private int[] validStates = new int[]{
+        DARK, 
+        RED, 
+        YELLOW,
+        GREEN,
+        FLASHRED, 
+        FLASHYELLOW,
+        FLASHGREEN,
+    };
+    final static private String[] validStateNames = new String[]{
+        rb.getString("SignalHeadStateDark"),
+        rb.getString("SignalHeadStateRed"),
+        rb.getString("SignalHeadStateYellow"),
+        rb.getString("SignalHeadStateGreen"),
+        rb.getString("SignalHeadStateFlashingRed"),
+        rb.getString("SignalHeadStateFlashingYellow"),
+        rb.getString("SignalHeadStateFlashingGreen"),
+    };
+    
+    public int[] getValidStates() {
+        return validStates;
+    }
+    public String[] getValidStateNames() {
+        return validStateNames;
+    }
+
 }
 
 /* @(#)DefaultSignalHead.java */
