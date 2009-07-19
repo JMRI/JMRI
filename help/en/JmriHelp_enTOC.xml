@@ -307,10 +307,10 @@
   </tocitem>
   <tocitem text="Sensor Groups " target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
 
-  <tocitem text="Signals " target="html.tools.signaling.index">
-   <tocitem text="Adding Signals " target="package.jmri.jmrit.beantable.SignalAddEdit"/>
+  <tocitem text="Signal Heads " target="html.tools.signaling.index">
+   <tocitem text="Adding Signal Heads " target="package.jmri.jmrit.beantable.SignalAddEdit"/>
 
-   <tocitem text="Signal Table " target="package.jmri.jmrit.beantable.SignalTable"/>
+   <tocitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalTable"/>
 
    <tocitem text="European Examples " target="html.tools.signaling.ldt.output"/>
 

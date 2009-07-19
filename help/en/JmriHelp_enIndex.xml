@@ -84,6 +84,8 @@
 
  <indexitem text="Error Codes " target="html.Errors"/>
 
+ <indexitem text="FindBugs " target="html.doc.Technical.FindBugs"/>
+
  <indexitem text="Glossary " target="glossary.index"/>
 
  <indexitem text="Hardware " target="html.hardware.index">
@@ -138,6 +140,10 @@
  </indexitem>
  <indexitem text="InstallTest " target="package.apps.InstallTest.InstallTest"/>
 
+ <indexitem text="Internationalization " target="html.doc.Technical.I8N"/>
+
+ <indexitem text="JUnit " target="html.doc.Technical.JUnit"/>
+
  <indexitem text="Layout Editor " target="package.jmri.jmrit.display.LayoutEditor"/>
 
  <indexitem text="LDT signals " target="html.tools.signaling.ldt.output"/>
@@ -173,21 +179,21 @@
 
  </indexitem>
  <indexitem text="Logix ">
-  <indexitem text="Logix Table " target="package.jmri.jmrit.beantable.LogixTable"/>
-
   <indexitem text="Add Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
-
-  <indexitem text="Edit Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
 
   <indexitem text="Edit Conditional " target="package.jmri.jmrit.beantable.ConditionalAddEdit"/>
 
+  <indexitem text="Edit Logix " target="package.jmri.jmrit.beantable.LogixAddEdit"/>
+
+  <indexitem text="Logix Table " target="package.jmri.jmrit.beantable.LogixTable"/>
+
  </indexitem>
  <indexitem text="LRoute ">
-  <indexitem text="LRoute Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
-
   <indexitem text="Add LRoute " target="package.jmri.jmrit.beantable.LRouteAddEdit"/>
 
   <indexitem text="Edit LRoute " target="package.jmri.jmrit.beantable.LRouteAddEdit"/>
+
+  <indexitem text="LRoute Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
 
  </indexitem>
  <indexitem text="Memories " target="html.tools.Memories">
@@ -308,12 +314,12 @@
  </indexitem>
  <indexitem text="Sensor Groups " target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
 
- <indexitem text="Signal ">
-  <indexitem text="Add Signal " target="package.jmri.jmrit.beantable.SignalAddEdit"/>
+ <indexitem text="Signal Heads ">
+  <indexitem text="Add Signal Head " target="package.jmri.jmrit.beantable.SignalAddEdit"/>
 
   <indexitem text="European Examples " target="html.tools.signaling.ldt.output"/>
 
-  <indexitem text="Signal Table " target="package.jmri.jmrit.beantable.SignalTable"/>
+  <indexitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalTable"/>
 
  </indexitem>
  <indexitem text="Simple Clock " target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/>
@@ -400,10 +406,4 @@
   <indexitem text="Viewing Panel Files " target="html.apps.PanelPro.ShowPanel"/>
 
  </indexitem>
- <indexitem text="FindBugs " target="html.doc.Technical.FindBugs"/>
-
- <indexitem text="JUnit " target="html.doc.Technical.JUnit"/>
-
- <indexitem text="Internationalization " target="html.doc.Technical.I8N"/>
-
 </index>

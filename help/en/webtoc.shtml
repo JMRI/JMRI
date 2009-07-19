@@ -951,17 +951,17 @@
 
   
 <li>
-<a href="html/tools/signaling/index.shtml">Signals </a>
+<a href="html/tools/signaling/index.shtml">Signal Heads </a>
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/SignalAddEdit.shtml">Adding Signals </a>
+<a href="package/jmri/jmrit/beantable/SignalAddEdit.shtml">Adding Signal Heads </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/SignalTable.shtml">Signal Table </a>
+<a href="package/jmri/jmrit/beantable/SignalTable.shtml">Signal Head Table </a>
 <ul></ul>
 </li>
 

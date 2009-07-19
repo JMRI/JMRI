@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalAddEdit.shtml,v 1.12 2008-11-01 16:40:03 jacobsen Exp $ -->
+<!-- $Id: SignalAddEdit.shtml,v 1.13 2009-07-19 00:17:06 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
-      JMRI: Adding/Editing Signals
+      JMRI: Adding/Editing Signal Heads
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
@@ -23,7 +23,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Adding/Editing Signals
+<H1>Adding/Editing Signal Heads
 </H1>
     
 <A href="../../../../images/SigAdd.gif"><IMG SRC="../../../../images/SigAdd.gif" ALIGN=RIGHT WIDTH="181" HEIGHT="218" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
@@ -34,12 +34,12 @@ is connected to the electrical hardware.  Once it knows that,
 it can send the right commands to control the appearance of the
 signal head.
 <p>
-The "Add Signal" dialog gives you a number of different 
+The "Add Signal Head" dialog gives you a number of different 
 choices for how the signal head is connected:
 <dl>
 <dt>Triple Output</dt>
   <dd>
-  This type controls a signal via three electrical connections.
+  This type controls a signal head via three electrical connections.
   One goes to a green lamp/LED, one to a yellow one, 
   and the third to a red one.
   <p>
@@ -155,13 +155,40 @@ choices for how the signal head is connected:
   <a href="../../../../html/hardware/grapevine/Names.shtml">page on Grapevine names</a>.
   </dd>
 
+<dt>Quadruple Output</dt>
+  <dd>
+  This type controls a signal head via four electrical connections.
+  One goes to a green lamp/LED, one to a yellow one, 
+  one to a red one, and the fourth to a "lunar" (white) one.
+  <p>
+  These connections are controlled via the JMRI Turnout
+  logic, and therefore appear in the Turnout Table.
+  They're not really connected to switch motors, though,
+  they're just electrical outputs.
+  <p>
+  For each connection, enter the appropriate JMRI
+  turnout for the electrical connection on the layout,
+  either as a number (1,2,3) or as a JMRI
+  name (system name like LT1, CT2 or an already-defined user name). 
+  They need not be consecutive or in any particular order.
+  <p>
+  If you need to debug one of these signal heads, start by
+  checking whether the Turnout connections work. You can
+  do this by going to the 
+  <a href="TurnoutTable.shtml">Turnout Table</a> and changing the output setting
+  there.
+  Setting e.g.
+  the turnout on the "green" connection Thrown should light the
+  green lamp.
+  </dd>
+
 </dl>
-The "Edit Signal" dialog (window) provides for viewing and changing optional 
+The "Edit Signal Head" dialog (window) provides for viewing and changing optional 
 information for existing signal heads. Use the "Edit" buttons in the 
-Signal Table to select a signal head. Signal type and system name may not be 
+Signal Head Table to select a signal head. Signal type and system name may not be 
 changed. After making changes in the dialog, click "Update" to change signal 
 head information.  Click "Cancel" to exit without
-making any changes. Closing the Edit Signal window is equivalent to clicking 
+making any changes. Closing the Edit Signal Head window is equivalent to clicking 
 "Cancel". Only one signal head may be edited at a time.
 <!--#include virtual="/Footer" -->
 </body>
