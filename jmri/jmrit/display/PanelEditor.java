@@ -568,22 +568,26 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                     break;
                 case 3:
                     editor = new IconAdder("SignalEditor");
-                    editor.setIcon(0, "SignalHeadStateFlashingYellow", 
-                        "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
-                    editor.setIcon(2, "SignalHeadStateFlashingRed", 
-                        "resources/icons/smallschematics/searchlights/left-flashred-marker.gif");
-                    editor.setIcon(5, "SignalHeadStateYellow", 
-                        "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
-                    editor.setIcon(6, "SignalHeadStateGreen",
-                        "resources/icons/smallschematics/searchlights/left-green-marker.gif");
-                    editor.setIcon(1, "SignalHeadStateFlashingGreen",
-                        "resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
-                    editor.setIcon(4, "SignalHeadStateDark",
-                        "resources/icons/smallschematics/searchlights/left-dark-marker.gif");
-                    editor.setIcon(3, "SIgnalHeadStateHeld",
-                        "resources/icons/smallschematics/searchlights/left-held-marker.gif");
-                    editor.setIcon(7, "SignalHeadStateRed",
+                    editor.setIcon(0, "SignalHeadStateRed",
                         "resources/icons/smallschematics/searchlights/left-red-marker.gif");
+                    editor.setIcon(1, "SignalHeadStateYellow", 
+                        "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
+                    editor.setIcon(2, "SignalHeadStateGreen",
+                        "resources/icons/smallschematics/searchlights/left-green-marker.gif");
+                    editor.setIcon(3, "SignalHeadStateDark",
+                        "resources/icons/smallschematics/searchlights/left-dark-marker.gif");
+                    editor.setIcon(4, "SIgnalHeadStateHeld",
+                        "resources/icons/smallschematics/searchlights/left-held-marker.gif");
+                    editor.setIcon(5, "SignalHeadStateLunar",
+                        "resources/icons/smallschematics/searchlights/left-lunar-marker.gif");
+                    editor.setIcon(6, "SignalHeadStateFlashingRed", 
+                        "resources/icons/smallschematics/searchlights/left-flashred-marker.gif");
+                    editor.setIcon(7, "SignalHeadStateFlashingYellow", 
+                        "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
+                    editor.setIcon(8, "SignalHeadStateFlashingGreen",
+                        "resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
+                    editor.setIcon(9, "SignalHeadStateFlashingLunar",
+                        "resources/icons/smallschematics/searchlights/left-flashlunar-marker.gif");
 
                     frame = makeAddIconFrame("SignalEditor", "addIconsToPanel", 
                                                        "SelectSignal", editor);

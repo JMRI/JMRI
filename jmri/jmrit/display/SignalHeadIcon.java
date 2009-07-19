@@ -24,7 +24,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -77,6 +77,12 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
 
     String flashGreenName = "resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif";
     NamedIcon flashGreen = new NamedIcon(flashGreenName, flashGreenName);
+
+    String lunarName = "resources/icons/smallschematics/searchlights/left-lunar-marker.gif";
+    NamedIcon lunar = new NamedIcon(lunarName, lunarName);
+
+    String flashLunarName = "resources/icons/smallschematics/searchlights/left-flashlunar-marker.gif";
+    NamedIcon flashLunar = new NamedIcon(flashLunarName, flashLunarName);
 
     String darkName = "resources/icons/smallschematics/searchlights/left-dark-marker.gif";
     NamedIcon dark = new NamedIcon(darkName, darkName);
@@ -132,14 +138,28 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         displayState(headState());
     }
 
+    public NamedIcon getLunarIcon() { return lunar; }
+    public void setLunarIcon(NamedIcon i) {
+        lunar = i;
+        displayState(headState());
+    }
+
+    public NamedIcon getFlashLunarIcon() { return flashLunar; }
+    public void setFlashLunarIcon(NamedIcon i) {
+        flashLunar = i;
+        displayState(headState());
+    }
+
     protected int maxHeight() {
         int max = 0;
         max = Math.max((red!=null) ? red.getIconHeight() : 0, max);
         max = Math.max((yellow!=null) ? yellow.getIconHeight() : 0, max);
         max = Math.max((green!=null) ? green.getIconHeight() : 0, max);
+        max = Math.max((lunar!=null) ? lunar.getIconHeight() : 0, max);
         max = Math.max((flashRed!=null) ? flashRed.getIconHeight() : 0, max);
         max = Math.max((flashYellow!=null) ? flashYellow.getIconHeight() : 0, max);
         max = Math.max((flashGreen!=null) ? flashGreen.getIconHeight() : 0, max);
+        max = Math.max((flashLunar!=null) ? flashLunar.getIconHeight() : 0, max);
         max = Math.max((held!=null) ? held.getIconHeight() : 0, max);
         max = Math.max((dark!=null) ? dark.getIconHeight() : 0, max);
         return max;
@@ -149,9 +169,11 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         max = Math.max((red!=null) ? red.getIconWidth() : 0, max);
         max = Math.max((yellow!=null) ? yellow.getIconWidth() : 0, max);
         max = Math.max((green!=null) ? green.getIconWidth() : 0, max);
+        max = Math.max((lunar!=null) ? lunar.getIconWidth() : 0, max);
         max = Math.max((flashRed!=null) ? flashRed.getIconWidth() : 0, max);
         max = Math.max((flashYellow!=null) ? flashYellow.getIconWidth() : 0, max);
         max = Math.max((flashGreen!=null) ? flashGreen.getIconWidth() : 0, max);
+        max = Math.max((flashLunar!=null) ? flashLunar.getIconWidth() : 0, max);
         max = Math.max((held!=null) ? held.getIconWidth() : 0, max);
         max = Math.max((dark!=null) ? dark.getIconWidth() : 0, max);
         return max;
@@ -206,9 +228,11 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                     green.setRotation(green.getRotation()+1, ours);
                     red.setRotation(red.getRotation()+1, ours);
                     yellow.setRotation(yellow.getRotation()+1, ours);
+                    lunar.setRotation(lunar.getRotation()+1, ours);
                     if (flashGreen !=null) flashGreen.setRotation(flashGreen.getRotation()+1, ours);
                     if (flashRed !=null) flashRed.setRotation(flashRed.getRotation()+1, ours);
                     if (flashYellow !=null) flashYellow.setRotation(flashYellow.getRotation()+1, ours);
+                    if (flashLunar !=null) flashLunar.setRotation(flashLunar.getRotation()+1, ours);
                     if (dark !=null) dark.setRotation(dark.getRotation()+1, ours);
                     if (held !=null) held.setRotation(held.getRotation()+1, ours);
                     displayState(headState());
@@ -359,6 +383,14 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             if (text) super.setText(rb.getString("FlashGreen"));
             if (icon) super.setIcon(flashGreen);
             break;
+        case SignalHead.LUNAR:
+            if (text) super.setText(rb.getString("lunar"));
+            if (icon) super.setIcon(lunar);
+            break;
+        case SignalHead.FLASHLUNAR:
+            if (text) super.setText(rb.getString("FlashGreen"));
+            if (icon) super.setIcon(flashLunar);
+            break;
         case SignalHead.DARK:
             if (text) super.setText(rb.getString("Dark"));
             if (icon) super.setIcon(dark);
@@ -377,14 +409,16 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             return;
         }
         _editor = new IconAdder();
-        _editor.setIcon(0, "SignalHeadStateFlashingYellow", flashYellow);
-        _editor.setIcon(2, "SignalHeadStateFlashingRed", flashRed);
-        _editor.setIcon(5, "SignalHeadStateYellow", yellow);
-        _editor.setIcon(6, "SignalHeadStateGreen", green);
-        _editor.setIcon(1, "SignalHeadStateFlashingGreen", flashGreen);
-        _editor.setIcon(4, "SignalHeadStateDark", dark);
-        _editor.setIcon(3, "SIgnalHeadStateHeld", held);
-        _editor.setIcon(7, "SignalHeadStateRed", red);
+        _editor.setIcon(0, "SignalHeadStateRed", red);
+        _editor.setIcon(1, "SignalHeadStateYellow", yellow);
+        _editor.setIcon(2, "SignalHeadStateGreen", green);
+        _editor.setIcon(3, "SignalHeadStateDark", dark);
+        _editor.setIcon(4, "SIgnalHeadStateHeld", held);
+        _editor.setIcon(5, "SignalHeadStateLunar", lunar);
+        _editor.setIcon(6, "SignalHeadStateFlashingRed", flashRed);
+        _editor.setIcon(7, "SignalHeadStateFlashingYellow", flashYellow);
+        _editor.setIcon(8, "SignalHeadStateFlashingGreen", flashGreen);
+        _editor.setIcon(9, "SignalHeadStateFlashingLunar", flashLunar);
         makeAddIconFrame("EditSignal", "addIconsToPanel", 
                                            "SelectSignal", _editor);
         _editor.makeIconPanel();
@@ -411,6 +445,8 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         setFlashYellowIcon(_editor.getIcon("SignalHeadStateFlashingYellow"));
         setGreenIcon(_editor.getIcon("SignalHeadStateGreen"));
         setFlashGreenIcon(_editor.getIcon("SignalHeadStateFlashingGreen"));
+        setLunarIcon(_editor.getIcon("SignalHeadStateLunar"));
+        setFlashLunarIcon(_editor.getIcon("SignalHeadStateFlashingLunar"));
         setDarkIcon(_editor.getIcon("SignalHeadStateDark"));
         setHeldIcon(_editor.getIcon("SIgnalHeadStateHeld"));
         setSignalHead((SignalHead)_editor.getTableSelection());
