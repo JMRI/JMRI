@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 public class SignalHeadIconXml implements XmlAdapter {
 
@@ -104,9 +104,11 @@ public class SignalHeadIconXml implements XmlAdapter {
         name = element.getAttribute("green").getValue();
         l.setGreenIcon(green = NamedIcon.getIconByName(name));
 
-        NamedIcon lunar;
-        name = element.getAttribute("lunar").getValue();
-        l.setLunarIcon(lunar = NamedIcon.getIconByName(name));
+        NamedIcon lunar=null;
+        if (element.getAttribute("lunar") != null) {
+            name = element.getAttribute("lunar").getValue();
+            l.setLunarIcon(lunar = NamedIcon.getIconByName(name));
+        }
 
         Attribute a; 
 
