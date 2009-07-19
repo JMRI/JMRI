@@ -3,17 +3,21 @@ package jmri.jmrit.display;
 import jmri.InstanceManager;
 import jmri.Memory;
 
-import java.util.ResourceBundle;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
 
 /**
  * An icon to display a status of a Memory in a JSpinner.
@@ -22,13 +26,11 @@ import javax.swing.event.ChangeListener;
  * Memory, preserving what it finds.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @since 2.7.2
  */
 
 public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
     public MemorySpinnerIcon() {
         super();
@@ -123,12 +125,50 @@ public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.
      * we recreate the popup object each time.
      */
     protected void showPopUp(MouseEvent e) {
-        if (!getEditable()) return;
-        ours = this;
-        popup = new JPopupMenu();
-        popup.add(new JMenuItem(getNameString()));
-        		
+		if (!getEditable())
+			return;
+		popup = new JPopupMenu();
+		popup.add(new JMenuItem(getNameString()));
+
+        popup.add(new AbstractAction(rb.getString("EditIcon")) {
+                public void actionPerformed(ActionEvent e) {
+                    edit();
+                }
+            });
+		popup.add(new AbstractAction(rb.getString("Remove")) {
+			public void actionPerformed(ActionEvent e) {
+				remove();
+				dispose();
+			}
+		});
         popup.show(e.getComponent(), e.getX(), e.getY());
+    }
+
+    void edit() {
+        if (_editorFrame != null) {
+            _editorFrame.setLocationRelativeTo(null);
+            _editorFrame.toFront();
+            return;
+        }
+        _editor = new IconAdder("MemoryEditor");
+        ActionListener addIconAction = new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                editMemory();
+            }
+        };
+        makeAddIconFrame("EditSpinner", "addMemValueToPanel", 
+                                             "SelectMemory", _editor);
+        _editor.setPickList(PickListModel.memoryPickModelInstance());
+        _editor.complete(addIconAction, null, true);
+        _editor.setSelection(memory);
+    }
+    void editMemory() {
+        setMemory((Memory)_editor.getTableSelection());
+        setSize(getPreferredSize().width, getPreferredSize().height);
+        _editorFrame.dispose();
+        _editorFrame = null;
+        _editor = null;
+        invalidate();
     }
 
     /**
