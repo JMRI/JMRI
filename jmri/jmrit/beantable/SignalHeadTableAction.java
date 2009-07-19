@@ -45,7 +45,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.37 $
+ * @version     $Revision: 1.38 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -137,36 +137,29 @@ public class SignalHeadTableAction extends AbstractTableAction {
             public String getValue(String name) {
                 SignalHead s = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
                 if (s==null) return "<lost>"; // if due to race condition, the device is going away
-                int val = s.getAppearance();
-                switch (val) {
-                case SignalHead.RED: return rbean.getString("SignalHeadStateRed");
-                case SignalHead.YELLOW: return rbean.getString("SignalHeadStateYellow");
-                case SignalHead.GREEN: return rbean.getString("SignalHeadStateGreen");
-                case SignalHead.LUNAR: return rbean.getString("SignalHeadStateLunar");
-                case SignalHead.FLASHRED: return rbean.getString("SignalHeadStateFlashingRed");
-                case SignalHead.FLASHYELLOW: return rbean.getString("SignalHeadStateFlashingYellow");
-                case SignalHead.FLASHGREEN: return rbean.getString("SignalHeadStateFlashingGreen");
-                case SignalHead.FLASHLUNAR: return rbean.getString("SignalHeadStateFlashingLunar");
-                case SignalHead.DARK: return rbean.getString("SignalHeadStateDark");
-                default: return "Unexpected value: "+val;
-                }
+                String val = s.getAppearanceName();
+                if (val != null) return val;
+                else return "Unexpected value: "+val;
             }
             public Manager getManager() { return InstanceManager.signalHeadManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.signalHeadManagerInstance().getBySystemName(name);}
             public NamedBean getByUserName(String name) { return InstanceManager.signalHeadManagerInstance().getByUserName(name);}
             public void clickOn(NamedBean t) {
                 int oldState = ((SignalHead)t).getAppearance();
-                int newState;
-                switch (oldState) {
-                case SignalHead.RED: newState = SignalHead.YELLOW; break;
-                case SignalHead.YELLOW: newState = SignalHead.GREEN; break;
-                case SignalHead.GREEN: newState = SignalHead.FLASHRED; break;
-                case SignalHead.FLASHRED: newState = SignalHead.FLASHYELLOW; break;
-                case SignalHead.FLASHYELLOW: newState = SignalHead.FLASHGREEN; break;
-                case SignalHead.FLASHGREEN: newState = SignalHead.DARK; break;
-                case SignalHead.DARK: newState = SignalHead.RED; break;
-                default: newState = SignalHead.DARK; this.log.warn("Unexpected state "+oldState+" becomes DARK");break;
+                int newState = SignalHead.DARK;
+                int[] stateList = ((SignalHead)t).getValidStates();
+                for (int i = 0; i < stateList.length; i++) {
+                    if (oldState == stateList[i] ) { 
+                        if (i < stateList.length-1) {
+                            newState = stateList[i+1];
+                            break;
+                        } else {
+                            newState = stateList[0];
+                            break;
+                        }
+                    }
                 }
+                log.debug("was "+oldState+" becomes "+newState);
                ((SignalHead)t).setAppearance(newState);
             }
             public JButton configureButton() {
