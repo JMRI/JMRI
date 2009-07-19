@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  *<P>
  *
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  *
  */
 public class XNetReply extends jmri.jmrix.AbstractMRReply {
@@ -464,6 +464,17 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         return (this.getElement(0)==XNetConstants.CS_INFO && 
                 this.getElement(1)==XNetConstants.CS_BUSY);
     }	
+
+
+    /* 
+     * In the interest of code reuse, The following function checks to see 
+     * if an XPressNet Message is the Command Station Transfer Error 
+     * message (61 80 e1)
+     */
+    public boolean isCSTransferError() {
+      return (this.getElement(0)==XNetConstants.CS_INFO && 
+              this.getElement(1)==XNetConstants.CS_TRANSFER_ERROR);
+    }
 
     /* 
      * In the interest of code reuse, The following function checks to see 
