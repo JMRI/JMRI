@@ -19,7 +19,7 @@ import jmri.*;
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
 
@@ -80,6 +80,40 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
 
     public Turnout getLunar() {return mLunar;}
 	public void setLunar(Turnout t) {mLunar=t;}
+
+    final static private java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
+
+    // claim support for Lunar aspects
+    
+    final static private int[] validStates = new int[]{
+        DARK, 
+        RED, 
+        YELLOW,
+        GREEN,
+        LUNAR,
+        FLASHRED, 
+        FLASHYELLOW,
+        FLASHGREEN,
+        FLASHLUNAR
+    };
+    final static private String[] validStateNames = new String[]{
+        rb.getString("SignalHeadStateDark"),
+        rb.getString("SignalHeadStateRed"),
+        rb.getString("SignalHeadStateYellow"),
+        rb.getString("SignalHeadStateGreen"),
+        rb.getString("SignalHeadStateLunar"),
+        rb.getString("SignalHeadStateFlashingRed"),
+        rb.getString("SignalHeadStateFlashingYellow"),
+        rb.getString("SignalHeadStateFlashingGreen"),
+        rb.getString("SignalHeadStateFlashingLunar"),
+    };
+    
+    public int[] getValidStates() {
+        return validStates;
+    }
+    public String[] getValidStateNames() {
+        return validStateNames;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QuadOutputSignalHead.class.getName());
 }
