@@ -18,7 +18,7 @@ import javax.swing.Timer;
  * break that, which will simplify things.
  *
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 
@@ -398,7 +398,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 } else
                     return (rbx.getString("Toggle"));
             case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
-                return DefaultSignalHead.getAppearanceString(data);
+                return DefaultSignalHead.getDefaultStateName(data);
     		case Conditional.ACTION_SET_SENSOR:
     		case Conditional.ACTION_DELAYED_SENSOR:
     		case Conditional.ACTION_RESET_DELAYED_SENSOR:

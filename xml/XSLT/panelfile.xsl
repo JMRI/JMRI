@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.23 2009-05-24 06:55:50 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.24 2009-07-19 00:04:38 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -461,6 +461,9 @@
   <xsl:when test="( @type = 17 )" >Signal Flashing Green</xsl:when>
   <xsl:when test="( @type = 18 )" >Signal Head Lit</xsl:when>
   <xsl:when test="( @type = 19 )" >Signal Head Held</xsl:when>
+  <xsl:when test="( @type = 20 )" >Signal Memory Compare</xsl:when>
+  <xsl:when test="( @type = 21 )" >Signal Head Lunar</xsl:when>
+  <xsl:when test="( @type = 22 )" >Signal Head Flashing Lunar</xsl:when>
   <xsl:otherwise>(type="<xsl:value-of select="@type"/>")</xsl:otherwise>
 </xsl:choose>
 name="<xsl:value-of select="@systemName"/>"
@@ -523,6 +526,8 @@ value="<xsl:value-of select="@dataString"/>"
         <xsl:when test='@data = 8'>Flashing Yellow</xsl:when>
         <xsl:when test='@data = 16'>Green</xsl:when>
         <xsl:when test='@data = 32'>Flashing Green</xsl:when>
+        <xsl:when test='@data = 64'>Lunar</xsl:when>
+        <xsl:when test='@data = 128'>Flashing Lunar</xsl:when>
         <xsl:otherwise>(<xsl:value-of select="@data"/>)</xsl:otherwise>
     </xsl:choose>    
   </xsl:when>

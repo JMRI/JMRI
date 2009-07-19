@@ -89,6 +89,8 @@ public interface Conditional extends NamedBean {
 	public static final int TYPE_SIGNAL_HEAD_LIT = 18;
 	public static final int TYPE_SIGNAL_HEAD_HELD = 19;
     public static final int TYPE_MEMORY_COMPARE = 20;
+	public static final int TYPE_SIGNAL_HEAD_LUNAR = 21;
+	public static final int TYPE_SIGNAL_HEAD_FLASHLUNAR = 22;
 	
 	// action definitions
 	public static final int ACTION_OPTION_ON_CHANGE_TO_TRUE = 1;

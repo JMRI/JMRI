@@ -70,7 +70,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -1725,45 +1725,7 @@ public class LogixTableAction extends AbstractTableAction {
                             .getString("WarnTitle"),
                     javax.swing.JOptionPane.WARNING_MESSAGE);
         }
-        /*
-        THIS RAISES MORE FALSE ALARMS THAN ACTUAL HAZARDS
-        // Check for consistency in suppressing triggering of calculation
-        // among state variables of this Logix.
-        // Move this to a button to be used at the user's descretion.
-        ArrayList <int[]> triggerPair = new ArrayList<int[]>(_variableList.size());
-        for (int i=0; i<_variableList.size(); i++) {
-            triggerPair.add(new int[2]);
-        }
-        _curLogix.getStateVariableList(_variableList, triggerPair);
-        for (int i=0; i<_variableList.size(); i++)
-        {
-            ConditionalVariable variable = _variableList.get(i);
-            int[] trigPair = triggerPair.get(i);  // 1st is triggerCalc, 2nd is triggerSupress
-            if ( (trigPair[0] > 0) && (trigPair[1] > 0) ) {
-                // have inconsistency, synthesize a warning message
-                log.warn("Triggers calculation inconsistency - " + variable.getName());
 
-                String msg7 = "";
-                int type = variable.getType();
-                if (type == Conditional.TYPE_SIGNAL_HEAD_RED ||
-                    type == Conditional.TYPE_SIGNAL_HEAD_YELLOW ||
-                    type == Conditional.TYPE_SIGNAL_HEAD_GREEN ||
-                    type == Conditional.TYPE_SIGNAL_HEAD_DARK ||
-                    type == Conditional.TYPE_SIGNAL_HEAD_FLASHRED ||
-                    type == Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW ||
-                    type == Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN )
-                {
-                    msg7 = java.text.MessageFormat.format(rbx.getString("Warn7"),
-                         DefaultSignalHead.getAppearanceString(variable.getType()));
-                }
-                if (!_suppressReminder) {
-                    String msg6 = java.text.MessageFormat.format(rbx.getString("Warn6"), 
-                             new Object[] {"Appearance", variable.getName(), msg7 });
-                    javax.swing.JOptionPane.showMessageDialog(editLogixFrame, msg6,
-                             rbx.getString("WarnTitle"),javax.swing.JOptionPane.WARNING_MESSAGE);
-                }
-            }
-        }  */
         if (!validateAntecedent()) {
             return;
         } 
@@ -2146,9 +2108,9 @@ public class LogixTableAction extends AbstractTableAction {
         panel1.add(_lightPanel);
 
         _actionSignalSetBox = new JComboBox();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i <= MAX_SIGNAL_APPEARANCE; i++) {
             _actionSignalSetBox.addItem(
-                DefaultSignalHead.getAppearanceString(signalAppearanceIndexToAppearance(i)));
+                DefaultSignalHead.getDefaultStateName(signalAppearanceIndexToAppearance(i)));
         }
         _signalPanel = makeEditPanel(_actionSignalSetBox, "LabelActionSignal", "SignalSetHint");
         _signalPanel.setVisible(false);
@@ -2455,10 +2417,12 @@ public class LogixTableAction extends AbstractTableAction {
             case Conditional.TYPE_SIGNAL_HEAD_RED:
             case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
             case Conditional.TYPE_SIGNAL_HEAD_GREEN:
+            case Conditional.TYPE_SIGNAL_HEAD_LUNAR:
             case Conditional.TYPE_SIGNAL_HEAD_DARK:
             case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
             case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
             case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
+            case Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR:
             case Conditional.TYPE_SIGNAL_HEAD_LIT:
             case Conditional.TYPE_SIGNAL_HEAD_HELD:
                 _variableNameField.setText(_curVariable.getName());
@@ -2822,10 +2786,12 @@ public class LogixTableAction extends AbstractTableAction {
             case Conditional.TYPE_SIGNAL_HEAD_RED:
             case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
             case Conditional.TYPE_SIGNAL_HEAD_GREEN:
+            case Conditional.TYPE_SIGNAL_HEAD_LUNAR:
             case Conditional.TYPE_SIGNAL_HEAD_DARK:
             case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
             case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
             case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
+            case Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR:
             case Conditional.TYPE_SIGNAL_HEAD_LIT:
             case Conditional.TYPE_SIGNAL_HEAD_HELD:
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintSignal"));
@@ -2937,10 +2903,12 @@ public class LogixTableAction extends AbstractTableAction {
             case Conditional.TYPE_SIGNAL_HEAD_RED:
             case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
             case Conditional.TYPE_SIGNAL_HEAD_GREEN:
+            case Conditional.TYPE_SIGNAL_HEAD_LUNAR:
             case Conditional.TYPE_SIGNAL_HEAD_DARK:
             case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
             case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
             case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
+            case Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR:
             case Conditional.TYPE_SIGNAL_HEAD_LIT:
             case Conditional.TYPE_SIGNAL_HEAD_HELD:
                 name = validateSignalHeadReference(name);
@@ -3619,6 +3587,11 @@ public class LogixTableAction extends AbstractTableAction {
 
 	/**
 	 * Signal Appearance to Signal Appearance Index
+	 * 
+	 * This provides a mapping that's specific to Conditionals
+	 * (as opposed to the mapping in SignalHead getValidStates/getValidStateNames)
+	 * so they can be transportably stored and loaded.  It's not clear
+	 * why it's here instead of in Conditional itself.
 	 */
 	int signalAppearanceToAppearanceIndex(int appearance) {
 		switch (appearance) {
@@ -3636,12 +3609,23 @@ public class LogixTableAction extends AbstractTableAction {
 			return (5);
 		case SignalHead.FLASHGREEN:
 			return (6);
+		case SignalHead.LUNAR:
+			return (7);
+		case SignalHead.FLASHLUNAR:
+			return (8);
 		}
 		return (0);
 	}
 
-	/**
-	 * Signal Appearance Index to Signal Appearance
+    static final int MAX_SIGNAL_APPEARANCE = 8;
+    
+    /**
+	 * Signal Appearance Index to Signal Appearance.
+	 * 
+	 * This provides a mapping that's specific to Conditionals
+	 * (as opposed to the mapping in SignalHead getValidStates/getValidStateNames)
+	 * so they can be transportably stored and loaded.  It's not clear
+	 * why it's here instead of in Conditional itself.
 	 */
 	int signalAppearanceIndexToAppearance(int appearanceIndex) {
 		switch (appearanceIndex) {
@@ -3659,6 +3643,10 @@ public class LogixTableAction extends AbstractTableAction {
 			return (SignalHead.FLASHYELLOW);
 		case 6:
 			return (SignalHead.FLASHGREEN);
+		case 7:
+			return (SignalHead.LUNAR);
+		case 8:
+			return (SignalHead.FLASHLUNAR);
 		}
 		return (0);
 	}
