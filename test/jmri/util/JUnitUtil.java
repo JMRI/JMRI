@@ -2,10 +2,13 @@ package jmri.util;
 
 import junit.framework.Assert;
 
+import jmri.SignalHeadManager;
+
 import jmri.InstanceManager;
 import jmri.managers.InternalLightManager;
 import jmri.managers.InternalSensorManager;
 import jmri.managers.InternalTurnoutManager;
+import jmri.managers.AbstractSignalHeadManager;
 
 /**
  * Common utility methods for working with JUnit.
@@ -34,7 +37,7 @@ import jmri.managers.InternalTurnoutManager;
 </pre></code>
 
  * @author Bob Jacobsen  Copyright 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @since 2.5.3
  */
 
@@ -99,6 +102,13 @@ public class JUnitUtil {
     public static void initInternalSensorManager() {
         InternalSensorManager m = new InternalSensorManager();
         InstanceManager.setSensorManager(m);
+        if (InstanceManager.configureManagerInstance() != null)
+            InstanceManager.configureManagerInstance().registerConfig(m);
+    }
+
+    public static void initInternalSignalHeadManager() {
+        SignalHeadManager m = new AbstractSignalHeadManager();
+        InstanceManager.setSignalHeadManager(m);
         if (InstanceManager.configureManagerInstance() != null)
             InstanceManager.configureManagerInstance().registerConfig(m);
     }
