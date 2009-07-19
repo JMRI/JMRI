@@ -23,7 +23,7 @@ import javax.swing.JPopupMenu;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LightIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -77,6 +77,8 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     NamedIcon on = new NamedIcon(onLName, onLName);
     String inconsistentLName = "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif";
     NamedIcon inconsistent = new NamedIcon(inconsistentLName, inconsistentLName);
+    String unknownLName = "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif";
+    NamedIcon unknown = new NamedIcon(unknownLName, unknownLName);
 
     public NamedIcon getOffIcon() { return off; }
     public void setOffIcon(NamedIcon i) {
@@ -93,6 +95,12 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     public NamedIcon getInconsistentIcon() { return inconsistent; }
     public void setInconsistentIcon(NamedIcon i) {
         inconsistent = i;
+        displayState(lightState());
+    }
+
+    public NamedIcon getUnknownIcon() { return unknown; }
+    public void setUnknownIcon(NamedIcon i) {
+        unknown = i;
         displayState(lightState());
     }
 
@@ -117,7 +125,9 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
      */
     int lightState() {
         if (light != null) return light.getState();
-        else return Light.UNKNOWN;
+        // This doesn't seem right. (Light.UNKNOWN = Light.ON = 0X01)  
+        //else return Light.UNKNOWN;
+        else return Light.INCONSISTENT;
     }
     
     // update icon as state of light changes
@@ -138,7 +148,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
 
     public String getNameString() {
         String name;
-        if (light == null) name = "<Not connected>";
+        if (light == null) name = rb.getString("NotConnected");
         else if (light.getUserName()!=null)
             name = light.getUserName()+" ("+light.getSystemName()+")";
         else
@@ -161,24 +171,25 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
 			
             checkLocationEditable(popup, getNameString());
 			
-			popup.add(new AbstractAction("Rotate") {
+			popup.add(new AbstractAction(rb.getString("Rotate")) {
 				public void actionPerformed(ActionEvent e) {
 					off.setRotation(off.getRotation() + 1, ours);
 					on.setRotation(on.getRotation() + 1, ours);
-					inconsistent.setRotation(inconsistent.getRotation() + 1,
-							ours);
+					inconsistent.setRotation(inconsistent.getRotation() + 1, ours);
+					unknown.setRotation(unknown.getRotation() + 1, ours);
+							
 					displayState(lightState());
 				}
 			});
 
 		addDisableMenuEntry(popup);
 
-        popup.add(new AbstractAction("Edit") {
+        popup.add(new AbstractAction(rb.getString("EditIcon")) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
                 }
             });
-		popup.add(new AbstractAction("Remove") {
+		popup.add(new AbstractAction(rb.getString("Remove")) {
 			public void actionPerformed(ActionEvent e) {
 				remove();
 				dispose();
@@ -205,7 +216,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
             if (icon) super.setIcon(on);
             break;
         default:
-            if (text) super.setText("<inconsistent>");
+            if (text) super.setText(rb.getString("Inconsistent"));
             if (icon) super.setIcon(inconsistent);
             break;
         }
@@ -213,21 +224,6 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         return;
     }
 
-    class lightPickModel extends PickListModel {
-        LightManager manager;
-        lightPickModel (LightManager m) {
-            manager = m;
-        }
-        LightManager getManager() {
-            return manager;
-        }
-        Light getBySystemName(String name) {
-            return manager.getBySystemName(name);
-        }
-        Light addBean(String name) {
-            return manager.provideLight(name);
-        }
-    }
     void edit() {
         if (_editorFrame != null) {
             _editorFrame.setLocationRelativeTo(null);
@@ -235,13 +231,13 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
             return;
         }
         _editor = new IconAdder();
-        _editor.setIcon(2, "LightStateOff", getOffIcon());
-        _editor.setIcon(1, "LightStateOn", getOnIcon());
-        _editor.setIcon(0, "BeanStateInconsistent", getInconsistentIcon());
-        makeAddIconFrame("EditTO", "addIconsToPanel", 
-                                           "SelectTO", _editor);
+        _editor.setIcon(3, "LightStateOff", off);
+        _editor.setIcon(2, "LightStateOn", on);
+        _editor.setIcon(0, "BeanStateInconsistent", inconsistent);
+        _editor.setIcon(1, "BeanStateUnknown", unknown);
+        makeAddIconFrame("EditLight", "addIconsToPanel", "SelectLight", _editor);
         _editor.makeIconPanel();
-        _editor.setPickList(new lightPickModel(InstanceManager.lightManagerInstance()));
+        _editor.setPickList(PickListModel.lightPickModelInstance());
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -260,6 +256,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     void updateLight() {
         setOffIcon(_editor.getIcon("LightStateOff"));
         setOnIcon(_editor.getIcon("LightStateOn"));
+        setUnknownIcon(_editor.getIcon("BeanStateUnknown"));
         setInconsistentIcon(_editor.getIcon("BeanStateInconsistent"));
         setLight((Light)_editor.getTableSelection());
         _editorFrame.dispose();
@@ -297,6 +294,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         off = null;
         on = null;
         inconsistent = null;
+        unknown = null;
 
         super.dispose();
     }
