@@ -2,6 +2,11 @@
 
 package jmri.jmrit.display;
 
+import java.util.ResourceBundle;
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+
 import javax.swing.JPanel;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -9,6 +14,11 @@ import java.awt.event.MouseEvent;
 import java.awt.Container;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
@@ -19,11 +29,14 @@ import javax.swing.JCheckBoxMenuItem;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 abstract class PositionableJPanel extends JPanel
                         implements MouseMotionListener, MouseListener,
                                     Positionable {
+
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
+
     public PositionableJPanel() {
         debug = log.isDebugEnabled();
         setProperToolTip();
@@ -67,6 +80,7 @@ abstract class PositionableJPanel extends JPanel
 
     public void mousePressed(MouseEvent e) {
 		// if using LayoutEditor, let LayoutEditor handle the mouse pressed event
+        if (debug) log.debug("mousePressed: "+where(e));
 		if (layoutPanel!=null) {
 			layoutPanel.handleMousePressed(e,this.getX(),this.getY());
 			return;
@@ -205,6 +219,48 @@ abstract class PositionableJPanel extends JPanel
 //    public void setPopupEnabled(boolean enabled) {popupEnabled = enabled;}
 //    public boolean getPopupEnabled() { return popupEnabled; }
 //    private boolean popupEnabled = true;
+
+    /**
+    * Generic items for editing an Icon from the panel Popup
+    */
+    JFrame _editorFrame;
+    IconAdder _editor;
+    void makeAddIconFrame(String title, String select1, String select2, 
+                                IconAdder editor) {
+        _editorFrame = new JFrame(rb.getString(title));
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        if (select1 != null) p.add(new JLabel(rb.getString(select1)));
+        if (select2 != null) p.add(new JLabel(rb.getString(select2)));
+        _editorFrame.getContentPane().add(p,BorderLayout.NORTH);
+        if (editor != null) {
+            _editorFrame.getContentPane().add(editor);
+            editor.setParent(_editorFrame);
+        } else {
+            p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+            JButton button = new JButton("Done");
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    setSize(getPreferredSize().width, getPreferredSize().height);
+                    _editorFrame.dispose();
+                    _editorFrame = null;
+                }
+            });
+            p.add(button);
+            _editorFrame.getContentPane().add(p);
+        }
+
+        _editorFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+				public void windowClosing(java.awt.event.WindowEvent e) {
+                    _editorFrame.dispose();
+                    _editorFrame = null;
+                }
+            });
+        _editorFrame.setLocationRelativeTo(this);
+        _editorFrame.setVisible(true);
+        _editorFrame.pack();
+    }
 
     /**
      * Clean up when this object is no longer needed.  Should not
