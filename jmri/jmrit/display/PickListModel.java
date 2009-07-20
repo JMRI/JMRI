@@ -2,6 +2,7 @@ package jmri.jmrit.display;
 
 
 import jmri.InstanceManager;
+import jmri.LightManager;
 import jmri.MemoryManager;
 import jmri.ReporterManager;
 import jmri.SensorManager;
@@ -36,6 +37,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     }
 
     public void init() {
+        //log.debug("manager "+getManager());
         getManager().addPropertyChangeListener(this);   // for adds and deletes
         makePickList();
     }
@@ -51,6 +53,10 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
             }
         }
         return -1;
+    }
+
+    public List <NamedBean> getBeanList() {
+        return _pickList;
     }
 
     private void makePickList() {
@@ -81,9 +87,9 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         if (log.isDebugEnabled()) log.debug("_pickList has "+_pickList.size()+" beans");
     }
 
-    abstract Manager getManager();
-    abstract NamedBean getBySystemName(String name);
-    abstract NamedBean addBean(String name);
+    abstract public Manager getManager();
+    abstract public NamedBean getBySystemName(String name);
+    abstract public NamedBean addBean(String name);
 
     public Class<?> getColumnClass(int c) {
             return String.class;
@@ -131,10 +137,11 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
             for (int i=0; i<_pickList.size(); i++) {
                 if (bean.equals(_pickList.get(i)))  {
                     fireTableRowsUpdated(i, i);
-                    return;
                 }
             }
         }
+        if (log.isDebugEnabled()) log.debug("propertyChange of \""+e.getPropertyName()+
+                                            "\" for "+e.getSource().toString());
     }
 
     public void dispose() {
@@ -156,6 +163,9 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     static PickListModel reporterPickModelInstance() {
         return new ReporterPickModel();
     }
+    static PickListModel lightPickModelInstance() {
+        return new LightPickModel();
+    }
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PickListModel.class.getName());
 }
@@ -165,13 +175,13 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         TurnoutPickModel () {
             manager = InstanceManager.turnoutManagerInstance();
         }
-        Manager getManager() {
+        public Manager getManager() {
             return manager;
         }
-        NamedBean getBySystemName(String name) {
+        public NamedBean getBySystemName(String name) {
             return manager.getBySystemName(name);
         }
-        NamedBean addBean(String name) {
+        public NamedBean addBean(String name) {
             return manager.provideTurnout(name);
         }
     }
@@ -181,13 +191,13 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         SensorPickModel () {
             manager = InstanceManager.sensorManagerInstance();
         }
-        Manager getManager() {
+        public Manager getManager() {
             return manager;
         }
-        NamedBean getBySystemName(String name) {
+        public NamedBean getBySystemName(String name) {
             return manager.getBySystemName(name);
         }
-        NamedBean addBean(String name) {
+        public NamedBean addBean(String name) {
             return manager.provideSensor(name);
         }
     }
@@ -197,13 +207,13 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         SignalPickModel () {
             manager = InstanceManager.signalHeadManagerInstance();
         }
-        Manager getManager() {
+        public Manager getManager() {
             return manager;
         }
-        NamedBean getBySystemName(String name) {
+        public NamedBean getBySystemName(String name) {
             return manager.getBySystemName(name);
         }
-        NamedBean addBean(String name) {
+        public NamedBean addBean(String name) {
             return manager.getSignalHead(name);
         }
     }
@@ -214,13 +224,13 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         MemoryPickModel () {
             manager = InstanceManager.memoryManagerInstance();
         }
-        Manager getManager() {
+        public Manager getManager() {
             return manager;
         }
-        NamedBean getBySystemName(String name) {
+        public NamedBean getBySystemName(String name) {
             return manager.getBySystemName(name);
         }
-        NamedBean addBean(String name) {
+        public NamedBean addBean(String name) {
             return manager.provideMemory(name);
         }
     }
@@ -230,13 +240,30 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         ReporterPickModel () {
             manager = InstanceManager.reporterManagerInstance();
         }
-        Manager getManager() {
+        public Manager getManager() {
             return manager;
         }
-        NamedBean getBySystemName(String name) {
+        public NamedBean getBySystemName(String name) {
             return manager.getBySystemName(name);
         }
-        NamedBean addBean(String name) {
+        public NamedBean addBean(String name) {
             return manager.provideReporter(name);
+        }
+    }
+
+
+    class LightPickModel extends PickListModel {
+        LightManager manager;
+        LightPickModel () {
+            manager = InstanceManager.lightManagerInstance();
+        }
+        public Manager getManager() {
+            return manager;
+        }
+        public NamedBean getBySystemName(String name) {
+            return manager.getBySystemName(name);
+        }
+        public NamedBean addBean(String name) {
+            return manager.provideLight(name);
         }
     }
