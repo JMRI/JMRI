@@ -16,7 +16,7 @@ import java.io.File;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003, 2005, 2006
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class FileUtil {
@@ -49,7 +49,7 @@ public class FileUtil {
             if ((new File(temp)).isAbsolute())
                 return temp;
             else
-                return "resources"+File.separator+temp;
+                return temp;
          } else if (pName.startsWith("program:")) {
             // both relative and absolute are just returned
             return pName.substring("program:".length());

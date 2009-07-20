@@ -14,7 +14,7 @@ import jmri.jmrit.XmlFile;
 /**
  * Tests for the jmri.util.FileUtil class.
  * @author	Bob Jacobsen  Copyright 2003, 2009
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class FileUtilTest extends TestCase {
 
@@ -33,7 +33,7 @@ public class FileUtilTest extends TestCase {
     }
 
     public void testGEFResourceRel() {
-        String name = FileUtil.getExternalFilename("resource:icons");
+        String name = FileUtil.getExternalFilename("resource:resources/icons");
         Assert.assertEquals("resources/icons", name);
     }
 
@@ -120,7 +120,7 @@ public class FileUtilTest extends TestCase {
     }
 
     public void testGetpfFileS2() {
-        String name = FileUtil.getPortableFilename("resource:icons");
+        String name = FileUtil.getPortableFilename("resource:resources/icons");
         Assert.assertEquals("program:resources/icons", name);
     }
 
