@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CMRI.shtml,v 1.6 2008-09-28 22:34:00 jacobsen Exp $ -->
+<!-- $Id: CMRI.shtml,v 1.7 2009-07-20 14:00:15 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -39,9 +39,8 @@
 	</UL>
 	<P>At this time, the directly connected IBEC and UBEC interfaces are not supported.
 
-	<dl>
-	<dt class=left><a name=contents><H3>Contents</H3></a></dt>
-	<dd class=top>
+    <a name=contents><H3>Contents</H3></a>
+	
 	<p>The documentation below discusses how JMRI may be used with C/MRI, and 
 	how to get started with connecting a C/MRI system to JMRI. It assumes a basic
 	knowledge of JMRI (as documented on this JMRI web site), and some familiarity
@@ -65,10 +64,9 @@
 	<li><a href="#diagnostics">C/MRI Diagnostics</a>
 	<li><a href="#sim">Running JMRI when disconnected from your C/MRI system</a>
 	</ul>
-	</dd>
 
-	<dt class=left><a name=intro><H3>Introduction to C/MRI on JMRI</H3></a></dt>
-	<dd class=top>
+	<a name=intro><H3>Introduction to C/MRI on JMRI</H3></a>
+
 	<p>C/MRI is a system of digital input and digital output lines that can be
 	used to connect a computer to a model railroad layout, allowing computer 
 	monitoring and control of various things of the layout. The SUSIC (Super 
@@ -116,11 +114,11 @@
 	library. The popular DecoderPro application focuses on programming DCC 
 	decoders, and is not of much interest to C/MRI. On the other hand, PanelPro 
 	is the JMRI application that focuses on layout automation, signaling, and CTC 
-	panels. PanelPro is the application most often used with C/MRI. The JmriDemo 
-	application is useful for exploring the many capabilities of JMRI, and is
+	panels. PanelPro is the application most often used with C/MRI, and is
 	the one used in the examples <a href="#smini">below</a>. Since all JMRI
 	applications use the same library, it is possible to run a panel from 
-	JmriDemo, or even program a DCC decoder from PanelPro. Its just not quite as
+	DecoderPro, or even program a DCC decoder from PanelPro. 
+	It's just not quite as
 	easy as using the focused application.</p> 
 	
 	<p>JMRI libraries have built-in support for C/MRI serial hardware using the 
@@ -153,8 +151,8 @@
 	SMINI flashing at a high rate.</p>
 	</dd>
 
-    <dt class=left><a name=iobits><H3>C/MRI Input and Output Bits</H3></a></dt>                                                                                          
-	<dd class=top>    
+    <a name=iobits><H3>C/MRI Input and Output Bits</H3></a>                                                                                          
+   
     <P>JMRI refers to C/MRI input bits as sensors. Sensors provide input to JMRI 
     about conditions on the layout--a button is pushed, a block is occupied, 
     etc. Within JMRI, you refer to a C/MRI input bit (sensor) by its "system 
@@ -214,20 +212,19 @@
     unassigned for successful creation of a new turnout controlled by two output 
     bits. Lists of current C/MRI bit assignments can be obtained by selecting 
     <B>List Assignments</B> in the CMRI menu.</P>
-	</dd>
+
 	
-	<dt class=left><a name=smini><H3>Getting Started with an SMINI node</H3></a>
-	</dt>
-	<dd class=top>
+	<a name=smini><H3>Getting Started with an SMINI node</H3></a>
+
 	    <p>It's easiest to try JMRI with a SMINI board, as there are few
 	    options to be configured for the C/MRI hardware. After you have 
 	    physically connected your SMINI to your computer, follow the procedure 
 	    below to configure your SMINI as a C/MRI node, and test an input and
 	    an output bit. (The procedure assumes nothing is connected to the 
 	    input and output pins of your SMINI, and that you haven't made any
-	    assignments for it's bits.)
+	    assignments for its bits.)
 	    <ol>
-		<li>Start the JmriDemo program.
+		<li>Start the PanelPro program.
 		<li>From the Edit menu, select <b>Preferences...</b> and configure:
 	        <ul>
 		    <li>For layout connection select "C/MRI".
@@ -298,10 +295,9 @@
 	    <P>You now have one C/MRI node configured and working. You may add
 	    	more nodes, by returning to the Configure C/MRI Nodes dialog 
 	    	(<a href="#nodes">see below</a>).
-	</dd>
+    
+    <H3>Getting Started with a USIC or SUSIC</H3></a>
 
-	<dt class=left><a name=susic><H3>Getting Started with a USIC or SUSIC</H3></a></dt>
-	<dd>
 	<p>After you have physically connected your SUSIC (or USIC) to your computer, 
 		follow the procedure below to configure your SUSIC (or USIC) as a C/MRI 
 		node, and test an input bit and an output bit. The procedure assumes 
@@ -311,7 +307,7 @@
 		digital output card, and 3)	that you haven't made any assignments for 
 		your SUSIC's bits.</p>
 	    <ol>
-		<li>Start the JmriDemo program.
+		<li>Start the PanelPro program.
 		<li>From the Edit menu, select <b>Preferences...</b> and configure:
 	        <ul>
 		    <li>For layout connection select "C/MRI".
@@ -387,11 +383,10 @@
 	    <P>You now have one C/MRI node configured and working. You may add
 	    	more nodes, or edit the DIN/DOUT card configuration of this SUSIC node, 
 	    	by returning to the Configure C/MRI Nodes dialog 
-	    	(<a href="#nodes">see below</a>).
-	</dd>    
+	    	(<a href="#nodes">see below</a>).  
     
-	<dt class=left><a name=nodes><H3>Managing Nodes</H3></a></dt>
-	<dd>
+	<a name=nodes><H3>Managing Nodes</H3></a>
+	
 	<P>Each SMINI, USIC or SUSIC is called a "node".  Before using C/MRI with 
 	JMRI, you must tell JMRI what nodes you have on your system and the 
 	configuration of each node.  When you select C/MRI in the Preferences 
@@ -430,8 +425,8 @@
 	names.  Printing blank assignment lists for each node provides a convenient 
 	paper form for use in setting up your input/output bit assignments.</P>
  
-	<dt class=left><a name=numbers><H3>Numbering used in C/MRI System Names</H3></a></dt>
-	<dd>
+	<a name=numbers><H3>Numbering used in C/MRI System Names</H3></a>
+	
 	<p>C/MRI system names start with "C". For example, "CS24" is a C/MRI 
 	"S"ensor, the 24th input line, "CL35" refers to the 35th output line as 
 	a "L"ight, and "CT38" refers to the 38th output line as a "T"urnout (all
@@ -505,10 +500,9 @@
     available inputs and outputs for each node. Each table has a line for each 
     pin including an address column showing what address to use for that pin in 
     system names.</P>   	
-    </dd>
 
-<dt class=left><a name=alternate><H3>Alternate Numbering for System Names</H3></a></dt>
-<dd>
+<a name=alternate><H3>Alternate Numbering for System Names</H3></a>
+
 An alternate scheme for numbering in C/MRI system names was developed 
 to give user access to the full number of lines allowed by C/MRI hardware design.
 The main numbering system (<a href="#numbers">documented above</a>) allows 
@@ -527,10 +521,9 @@ for line numbers up to 999, but must use the alternate numbering scheme for
 line numbers greater than 999. For ease in communicating with other users, 
 using the main numbering scheme is recommended unless bits greater than 999
 need to be addressed.
-</dd>
 
-<dt class=left><a name=options><H3>C/MRI Turnout Control Options</H3></a></dt>
-<dd>
+<a name=options><H3>C/MRI Turnout Control Options</H3></a>
+
 Turnouts (switches) may be controlled using one or two output bits.  
 When a turnout is created using the Add option in the Turnout Table, 
 the user is asked whether the turnout is to be controlled using one 
@@ -594,16 +587,16 @@ When "invert" is selected, "On" results in a "0" sent to the hardware, and
 the opposite polarity.
 </dd>
 
-<dt class=left><a name=signals><H3>Wiring Signals</H3></a></dt>
-<dd>
+<a name=signals><H3>Wiring Signals</H3></a>
+
    <P>JMRI can work with all the popular ways of wiring 
    signals to C/MRI hardware (and there are a lot of them!)
    For information on how to configure your signals to the
    program, please see the 
    <A HREF="Signals.shtml">C/MRI signals</a> page.   
-</dd>
-<dt class=left><a name=diagnostics><H3>C/MRI Diagnostics</H3></a></dt>
-<dd>
+
+<a name=diagnostics><H3>C/MRI Diagnostics</H3></a>
+
 JMRI supports the two automated diagnostic procedures mentioned in 
 Chapter 6 of Bruce Chubb's <b>C/MRI User's Manual, Version 3.0</b>. Diagnostics
 are useful for checking the functioning of your C/MRI hardware. These automated 
@@ -615,10 +608,9 @@ or output bits on the card(s) being tested should be unplugged when these tests
 are run. The diagnostics are easy to use.  Simply follow the instructions presented 
 in the Run C/MRI Diagnostic dialog.  Any errors found are reported in the status 
 box of the dialog.
-</dd>
 
-<dt class=left><a name=sim><H3>Running JMRI when disconnected from your C/MRI system</H3></a></dt>
-<dd>
+<a name=sim><H3>Running JMRI when disconnected from your C/MRI system</H3></a>
+
 JMRI continually polls the C/MRI hardware for status changes.
 If one or more C/MRI nodes are not responding, eventually their inputs (Sensors)
 are set to the UNKNOWN state to indicate that JMRI has lost contact with 
@@ -645,14 +637,16 @@ save preferences, quit and restart. Don't change any other settings!
 <p>
 When the C/MRI hardware is again available, go the JMRI preferences, 
 select "C/MRI Serial", save preferences, quit and restart.
-</dl>
+
 
 	<H3> More info </H3>
     	<p>For more information on C/MRI (including the C/MRI User Manual), 
     	please see the </p>
-	<p><a HREF="http://www.jlcenterprises.net/">JLC Enterprises web site</a>
+	<p><a HREF="http://www.jlcenterprises.net/">JLC Enterprises web site</a>,
+	the 
+	<a HREF="http://groups.yahoo.com/group/CMRI_Users/">C/MRI yahoo users group</a>,
 	and the 
-	<a HREF="http://groups.yahoo.com/group/CMRI_Users/">C/MRI yahoo users group</a>.
+	<A HREF="http://www.easeeinterfaces.com">Easee Interfaces web site</a>.
 	</p>
 
 <!--#include virtual="/Footer" -->
