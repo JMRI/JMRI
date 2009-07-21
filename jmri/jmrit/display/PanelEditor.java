@@ -231,18 +231,18 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         _addIconBox = new JComboBox();
         _addIconBox.setMinimumSize(new Dimension(75,75));
         _addIconBox.setMaximumSize(new Dimension(200,200));
-        _addIconBox.addItem(rb.getString("RightTOEditor"));
-        _addIconBox.addItem(rb.getString("LeftTOEditor"));
-        _addIconBox.addItem(rb.getString("SensorEditor"));
-        _addIconBox.addItem(rb.getString("SignalEditor"));
-        _addIconBox.addItem(rb.getString("MemoryEditor"));
-        _addIconBox.addItem(rb.getString("ReporterEditor"));
-        _addIconBox.addItem(rb.getString("LightEditor"));
-        _addIconBox.addItem(rb.getString("BackgroundEditor"));
-        _addIconBox.addItem(rb.getString("MultiSensorEditor"));
-        _addIconBox.addItem(rb.getString("AddRPSreporter"));
-        _addIconBox.addItem(rb.getString("AddFastClock"));
-        _addIconBox.addItem(rb.getString("IconEditor"));
+        _addIconBox.addItem(new ComboBoxItem("RightTOEditor"));
+        _addIconBox.addItem(new ComboBoxItem("LeftTOEditor"));
+        _addIconBox.addItem(new ComboBoxItem("SensorEditor"));
+        _addIconBox.addItem(new ComboBoxItem("SignalEditor"));
+        _addIconBox.addItem(new ComboBoxItem("MemoryEditor"));
+        _addIconBox.addItem(new ComboBoxItem("ReporterEditor"));
+        _addIconBox.addItem(new ComboBoxItem("LightEditor"));
+        _addIconBox.addItem(new ComboBoxItem("BackgroundEditor"));
+        _addIconBox.addItem(new ComboBoxItem("MultiSensorEditor"));
+        _addIconBox.addItem(new ComboBoxItem("AddRPSreporter"));
+        _addIconBox.addItem(new ComboBoxItem("AddFastClock"));
+        _addIconBox.addItem(new ComboBoxItem("IconEditor"));
         _addIconBox.setSelectedIndex(-1);
         _addIconBox.addItemListener(this);  // must be AFTER no selection is set
         JPanel p1 = new JPanel();
@@ -350,6 +350,19 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
     }  // end ctor
 
+    class ComboBoxItem {
+        String name;
+        ComboBoxItem(String n) {
+            name = n;
+        }
+        String getName() {
+            return name;
+        }
+        public String toString() {
+            return rb.getString(name);
+        }
+    }
+
     JFrameItem makeAddIconFrame(String title, String select1, String select2, 
                                 IconAdder editor) {
         JFrameItem frame = new JFrameItem(rb.getString(title), editor);
@@ -429,6 +442,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         return list;
     }
 
+    /**
+    * Called by ImageIndexEditor after it has stored new image files and 
+    * new default icons.
+    */
     public void addTreeToEditors(CatalogTree tree) {
         Iterator <JFrameItem> iter = _iconEditorFrame.values().iterator();
         while (iter.hasNext()) {
@@ -436,6 +453,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             IconAdder ed = frame.getEditor();
             if (ed != null){
                 ed.addTreeToCatalog(tree);
+                ed.initDefaultIcons();
             }
         }
     }
@@ -456,7 +474,6 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         public void windowClosing(java.awt.event.WindowEvent e) {
             setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
             _addIconBox.setSelectedIndex(-1);
-            _editor.reset();
             if (log.isDebugEnabled()) log.debug("windowClosing: "+toString());
         }
     }
@@ -471,8 +488,8 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     @SuppressWarnings("null")
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
-            String name = (String)e.getItem();
-            JFrameItem frame = _iconEditorFrame.get(name);
+            ComboBoxItem item = (ComboBoxItem)e.getItem();
+            JFrameItem frame = _iconEditorFrame.get(item.getName());
             if (frame != null) {
                 frame.getEditor().reset();
                 frame.setVisible(true);
