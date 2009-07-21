@@ -19,7 +19,7 @@ import jmri.jmrit.operations.routes.Route;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.25 $
+ * @version             $Revision: 1.26 $
  */
 public class Track implements java.beans.PropertyChangeListener {
 	
@@ -151,7 +151,7 @@ public class Track implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * Sets the number of cars and or engines on this track
+	 * Sets the number of rolling stock (cars and or engines) on this track
 	 * @param number
 	 */
 	private void setNumberRS(int number) {
@@ -185,7 +185,7 @@ public class Track implements java.beans.PropertyChangeListener {
 	
 	/**
 	 * 
-	 * @return The number of cars and engines on this track
+	 * @return The number of rolling stock (cars and engines) on this track
 	 */
 	public int getNumberRS() {
 		return _numberRS;
@@ -247,8 +247,8 @@ public class Track implements java.beans.PropertyChangeListener {
 	
 	/**
 	 * 
-	 * @return the number of cars and or engines that are scheduled for pickup at this
-	 *         location.
+	 * @return the number of rolling stock (cars and or engines) that are
+	 *         scheduled for pickup at this location.
 	 */
 	public int getPickupRS() {
 		return _pickupRS;
@@ -304,13 +304,13 @@ public class Track implements java.beans.PropertyChangeListener {
     	if (_typeList.contains(type))
     		return;
     	_typeList.add(0,type);
-    	log.debug("track " +getName()+ " add car type "+type);
+    	log.debug("track (" +getName()+ ") add rolling stock type "+type);
     	firePropertyChange (TYPES_CHANGED_PROPERTY, null, LENGTH);
     }
     
     public void deleteTypeName(String type){
     	_typeList.remove(type);
-    	log.debug("track " +getName()+ " delete car type "+type);
+    	log.debug("track (" +getName()+ ") delete rolling stock type "+type);
     	firePropertyChange (TYPES_CHANGED_PROPERTY, null, LENGTH);
     }
     

@@ -21,13 +21,14 @@ import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Frame for adding and editing the engine roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -55,6 +56,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     javax.swing.JRadioButton sortByMoves = new javax.swing.JRadioButton(rb.getString("Moves"));
     JRadioButton sortByBuilt = new JRadioButton(rb.getString("Built"));
     JRadioButton sortByOwner = new JRadioButton(rb.getString("Owner"));
+    JRadioButton sortByRfid = new JRadioButton(rb.getString("Rfid"));
     ButtonGroup group = new ButtonGroup();
     
 	// major buttons
@@ -95,6 +97,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     	cp1.add(sortByMoves);
        	cp1.add(sortByBuilt);
     	cp1.add(sortByOwner);
+       	if(Setup.isRfidEnabled()){
+    		cp1.add(sortByRfid);
+    	}
 
        	// row 2
     	JPanel cp2 = new JPanel();
@@ -137,6 +142,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		addRadioButtonAction (sortByMoves);
 		addRadioButtonAction (sortByBuilt);
 		addRadioButtonAction (sortByOwner);
+		addRadioButtonAction (sortByRfid);
 		
 		group.add(sortByNumber);
 		group.add(sortByRoad);
@@ -148,6 +154,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		group.add(sortByMoves);
 		group.add(sortByBuilt);
 		group.add(sortByOwner);
+		group.add(sortByRfid);
     	
  		// build menu
 		JMenuBar menuBar = new JMenuBar();
@@ -194,6 +201,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		}
 		if (ae.getSource() == sortByOwner){
 			enginesModel.setSort(enginesModel.SORTBYOWNER);
+		}
+		if (ae.getSource() == sortByRfid){
+			enginesModel.setSort(enginesModel.SORTBYRFID);
 		}
 	}
 	

@@ -20,7 +20,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -73,6 +73,21 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     public Engine getEngineByRoadAndNumber (String engineRoad, String engineNumber){
     	String engineId = Engine.createId (engineRoad, engineNumber);
     	return getEngineById (engineId);
+    }
+    
+    /**
+     * Get an engine by Radio Frequency Identification (RFID). 
+     * @param rfid engine's RFID.
+     * @return the engine with the specific RFID, or null if not found.
+     */
+    public Engine getEngineByRfid(String rfid){
+    	Enumeration<String> en = _engineHashTable.keys();
+    	while (en.hasMoreElements()) { 
+    		Engine engine = getEngineById(en.nextElement());
+    		if(engine.getRfid().equals(rfid))
+    			return engine;
+    	}
+    	return null;
     }
  
     /**
@@ -533,6 +548,39 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     			engine = getEngineById (out.get(j));
     			String outEngineBuilt = engine.getBuilt();
     			if (engineBuilt.compareToIgnoreCase(outEngineBuilt)<0){
+    				out.add(j, sortById.get(i));
+    				engineAdded = true;
+    				break;
+    			}
+    		}
+    		if (!engineAdded){
+    			out.add(sortById.get(i));
+    		}
+    	}
+    	return out;
+    }
+    
+    /**
+     * Sort by car RFID
+     * @return list of car ids ordered by RFIDs
+     */
+    public List<String> getEnginesByRfidList() {
+      	// first get by id list
+    	List<String> sortById = getEnginesByIdList();
+    	// now re-sort
+    	List<String> out = new ArrayList<String>();
+    	String engineRfid = "";
+    	boolean engineAdded = false;
+    	Engine engine;
+
+    	for (int i=0; i<sortById.size(); i++){
+    		engineAdded = false;
+    		engine = getEngineById (sortById.get(i));
+    		engineRfid = engine.getRfid();
+    		for (int j=0; j<out.size(); j++ ){
+    			engine = getEngineById (out.get(j));
+    			String outEngineRfid = engine.getRfid();
+    			if (engineRfid.compareToIgnoreCase(outEngineRfid)<0){
     				out.add(j, sortById.get(i));
     				engineAdded = true;
     				break;
