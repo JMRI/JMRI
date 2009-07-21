@@ -116,10 +116,14 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         this.invalidate();
     }
 
-    @SuppressWarnings("unchecked")
     public IconAdder(String type) {
         this();
         _type = type;
+        initDefaultIcons();
+    }
+
+    @SuppressWarnings("unchecked")
+    public void initDefaultIcons() {
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
         CatalogTree tree = manager.getBySystemName("NXDI");
         if (tree != null) {
@@ -134,7 +138,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                 }
             }
         }
-        if (log.isDebugEnabled()) log.debug("IconAdder."+type+", defaultIcons= "+_defaultIcons);
+        if (log.isDebugEnabled()) log.debug("IconAdder."+_type+", defaultIcons= "+_defaultIcons);
     }
 
     @SuppressWarnings("unchecked")
