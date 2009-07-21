@@ -36,7 +36,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   EngineManager: Consists
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class OperationsEnginesTest extends TestCase {
 
@@ -776,8 +776,8 @@ public class OperationsEnginesTest extends TestCase {
         Assert.assertEquals("find e5 by rfid", e5, manager.getEngineByRfid("93F"));
         Assert.assertEquals("find e6 by rfid", e6, manager.getEngineByRfid("B12"));
         
-        // now get engines by type which is really sort by model
-        engineList = manager.getEnginesByTypeList();
+        // now get engines by model
+        engineList = manager.getEnginesByModelList();
         Assert.assertEquals("Number of Engines by type", 6, engineList.size());
         Assert.assertEquals("1st engine in list by type", e3, manager.getEngineById(engineList.get(0)));
         Assert.assertEquals("2nd engine in list by type", e4, manager.getEngineById(engineList.get(1)));

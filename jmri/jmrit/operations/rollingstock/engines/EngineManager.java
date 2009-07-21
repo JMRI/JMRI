@@ -20,7 +20,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -286,10 +286,10 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     }
     
     /**
-     * Sort by engine type
-     * @return list of engine ids ordered by engine type
+     * Sort by engine model
+     * @return list of engine ids ordered by engine model
      */
-    public List<String> getEnginesByTypeList() {
+    public List<String> getEnginesByModelList() {
     	// first get by road list
     	List<String> sortByRoad = getEnginesByRoadNameList();
 

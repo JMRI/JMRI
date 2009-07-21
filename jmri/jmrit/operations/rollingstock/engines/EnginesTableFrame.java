@@ -28,7 +28,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -179,7 +179,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 			enginesModel.setSort(enginesModel.SORTBYROAD);
 		}
 		if (ae.getSource() == sortByModel){
-			enginesModel.setSort(enginesModel.SORTBYTYPE);
+			enginesModel.setSort(enginesModel.SORTBYMODEL);
 		}
 		if (ae.getSource() == sortByConsist){
 			enginesModel.setSort(enginesModel.SORTBYCONSIST);

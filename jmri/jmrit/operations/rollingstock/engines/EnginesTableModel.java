@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.15 $
+ * @version   $Revision: 1.16 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -58,7 +58,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     
     public final int SORTBYNUMBER = 1;
     public final int SORTBYROAD = 2;
-    public final int SORTBYTYPE = 3;
+    public final int SORTBYMODEL = 3;
     public final int SORTBYLOCATION = 4;
     public final int SORTBYDESTINATION = 5;
     public final int SORTBYTRAIN = 6;
@@ -147,8 +147,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     	List<String> list;
 		if (_sort == SORTBYROAD)
 			list = manager.getEnginesByRoadNameList();
-		else if (_sort == SORTBYTYPE)
-			list = manager.getEnginesByTypeList();
+		else if (_sort == SORTBYMODEL)
+			list = manager.getEnginesByModelList();
 		else if (_sort == SORTBYLOCATION)
 			list = manager.getEnginesByLocationList();
 		else if (_sort == SORTBYDESTINATION)
