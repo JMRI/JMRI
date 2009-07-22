@@ -11,9 +11,9 @@ import org.jdom.Element;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
-public class SensorIconXml implements XmlAdapter {
+public class SensorIconXml extends PositionableLabelXml {
 
     public SensorIconXml() {
     }
@@ -43,8 +43,7 @@ public class SensorIconXml implements XmlAdapter {
         element.setAttribute("rotate", String.valueOf(p.getActiveIcon().getRotation()));
         element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
         element.setAttribute("momentary", p.getMomentary()?"true":"false");
-        if (p.getText() != null) element.setAttribute("text", p.getText());
-
+        storeTextInfo(p, element);
         element.setAttribute("class", "jmri.jmrit.display.configurexml.SensorIconXml");
 
         return element;
@@ -108,7 +107,11 @@ public class SensorIconXml implements XmlAdapter {
             l.setMomentary(false);
             
         a = element.getAttribute("text");
-        if (a!=null) l.setText(a.getValue());
+        if (a!=null) {
+            l.setText(a.getValue());
+            loadTextInfo(l, element);
+        }
+
 
         l.setSensor(element.getAttribute("sensor").getValue());
 
