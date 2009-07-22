@@ -19,7 +19,7 @@ import jmri.*;
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
 
@@ -88,24 +88,24 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
     final static private int[] validStates = new int[]{
         DARK, 
         RED, 
+        LUNAR,
         YELLOW,
         GREEN,
-        LUNAR,
         FLASHRED, 
+        FLASHLUNAR,
         FLASHYELLOW,
-        FLASHGREEN,
-        FLASHLUNAR
+        FLASHGREEN
     };
     final static private String[] validStateNames = new String[]{
         rb.getString("SignalHeadStateDark"),
         rb.getString("SignalHeadStateRed"),
+        rb.getString("SignalHeadStateLunar"),
         rb.getString("SignalHeadStateYellow"),
         rb.getString("SignalHeadStateGreen"),
-        rb.getString("SignalHeadStateLunar"),
         rb.getString("SignalHeadStateFlashingRed"),
-        rb.getString("SignalHeadStateFlashingYellow"),
-        rb.getString("SignalHeadStateFlashingGreen"),
         rb.getString("SignalHeadStateFlashingLunar"),
+        rb.getString("SignalHeadStateFlashingYellow"),
+        rb.getString("SignalHeadStateFlashingGreen")
     };
     
     public int[] getValidStates() {
