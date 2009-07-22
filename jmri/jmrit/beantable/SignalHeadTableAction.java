@@ -45,7 +45,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.38 $
+ * @version     $Revision: 1.39 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -987,7 +987,28 @@ public class SignalHeadTableAction extends AbstractTableAction {
 		estBox.setVisible(false);		
 		// determine class name of signal head and initialize this class of signal
 		className = curS.getClass().getName();
-		if (className.equals("jmri.implementation.TripleTurnoutSignalHead")) {
+		if (className.equals("jmri.implementation.QuadOutputSignalHead")) {
+			signalType.setText(tripleTurnout);
+            eNameLabel.setText(rb.getString("LabelSystemName"));
+			eSysNameLabel.setText(curS.getSystemName());
+            ev1Label.setText(rb.getString("LabelGreenTurnoutNumber"));
+            ev1Label.setVisible(true);
+            eto1.setVisible(true);
+			eto1.setText(((TripleTurnoutSignalHead)curS).getGreen().getSystemName());
+            ev2Label.setText(rb.getString("LabelYellowTurnoutNumber"));
+            ev2Label.setVisible(true);
+            eto2.setVisible(true);
+			eto2.setText(((TripleTurnoutSignalHead)curS).getYellow().getSystemName());
+            ev3Label.setText(rb.getString("LabelRedTurnoutNumber"));
+			ev3Label.setVisible(true);
+            eto3.setVisible(true);
+			eto3.setText(((TripleTurnoutSignalHead)curS).getRed().getSystemName());
+            ev4Label.setText(rb.getString("LabelLunarTurnoutNumber"));
+			ev4Label.setVisible(true);
+            eto4.setVisible(true);
+			eto4.setText(((QuadOutputSignalHead)curS).getLunar().getSystemName());
+		}
+		else if (className.equals("jmri.implementation.TripleTurnoutSignalHead")) {
 			signalType.setText(tripleTurnout);
             eNameLabel.setText(rb.getString("LabelSystemName"));
 			eSysNameLabel.setText(curS.getSystemName());
@@ -1129,7 +1150,33 @@ public class SignalHeadTableAction extends AbstractTableAction {
 	
 	void updatePressed(ActionEvent e) {
 		// update according to class of signal head
-		if (className.equals("jmri.TripleTurnoutSignalHead")) {
+		if (className.equals("jmri.implementation.QuadOutputSignalHead")) {
+            Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(eto1.getText());
+            Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout(eto2.getText());
+            Turnout t3 = InstanceManager.turnoutManagerInstance().provideTurnout(eto3.getText());
+            Turnout t4 = InstanceManager.turnoutManagerInstance().provideTurnout(eto4.getText());
+            if (t1==null) {
+				noTurnoutMessage(ev1Label.getText(), eto1.getText());
+				return;
+			}
+			else ((QuadOutputSignalHead)curS).setGreen(t1);
+            if (t2==null) {
+				noTurnoutMessage(ev2Label.getText(), eto2.getText());
+				return;
+			}
+			else ((QuadOutputSignalHead)curS).setYellow(t2);
+            if (t3==null) {
+				noTurnoutMessage(ev3Label.getText(), eto3.getText());
+				return;
+			}
+			else ((QuadOutputSignalHead)curS).setRed(t3);
+            if (t4==null) {
+				noTurnoutMessage(ev4Label.getText(), eto4.getText());
+				return;
+			}
+			else ((QuadOutputSignalHead)curS).setLunar(t4);
+		}
+		else if (className.equals("jmri.implementation.TripleTurnoutSignalHead")) {
             Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(eto1.getText());
             Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout(eto2.getText());
             Turnout t3 = InstanceManager.turnoutManagerInstance().provideTurnout(eto3.getText());
@@ -1149,7 +1196,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 			}
 			else ((TripleTurnoutSignalHead)curS).setRed(t3);
 		}
-		else if (className.equals("jmri.DoubleTurnoutSignalHead")) {
+		else if (className.equals("jmri.implementation.DoubleTurnoutSignalHead")) {
             Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(eto1.getText());
             Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout(eto2.getText());
             if (t1==null) {
@@ -1163,7 +1210,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 			}
 			else ((DoubleTurnoutSignalHead)curS).setRed(t2);
 		}
-		else if (className.equals("jmri.LsDecSignalHead")) {
+		else if (className.equals("jmri.implementation.LsDecSignalHead")) {
 			Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(eto1.getText());
             Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout(eto2.getText());
             Turnout t3 = InstanceManager.turnoutManagerInstance().provideTurnout(eto3.getText());
@@ -1287,6 +1334,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     tNode.setOutputSignalHeadTypeString(headnumber, estBox.getSelectedItem().toString());
 //                    setSignalheadTypeInBox(estBox, tNode.getOutputSignalHeadType(headnumber), signalheadTypeValues);
 //                    ((jmri.AcelaSignalHead)curS).setDarkState(signalheadTypeFromBox(estBox));    
+		} 
+		else {
+		    log.error("Internal error - cannot update signal of type "+className);
 		}
 		// successful
 		editFrame.setVisible(false);
