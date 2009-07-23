@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.4.shtml,v 1.4 2009-07-19 04:27:16 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.4.shtml,v 1.5 2009-07-23 15:33:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -110,8 +110,36 @@ show a Lunar or Flashing Lunar aspect.  The Logix/Conditional support has been u
 to work with this.
 
 <p>
+Pete Cressman improved the memory spinner icon.
+
+<p>
 In preparation for new Signal Mast support, we've changed the interface to talk about
 Signal Heads instead of just Signals.
+
+<p>
+Fix a problem with PowerLine initialization that would prevent certain Light configurations from working.
+
+<p>
+Pete Cressman improved the Memory spinner icon support, allowed the Light icon to be edited,
+and added methods for better control of the icon editor.
+
+<p>
+Fixed a problem that prevented TwoOutput and ThreeOutput signal heads from being edited from the Signal Head Table.
+
+<p>
+Dan Boudreau added fields for RFID to the operations code.
+
+<p>
+Sakae Akanuma provided a Japanese translation.
+
+<p>
+Fixed a problem that prevented panel files from JMRI 2.7.3 from properly showing certain icons.
+(More detail:  If the file specified an icon location that started with "resource:resource", 
+JMRI 2.7.3 would not locate the icon)
+
+<p>
+Pete Cressman fixed a problem that prevented the format of panel editor Sensor Icon text
+from being properly stored and reloaded.
 
 
 <!--#include virtual="/Footer" -->
