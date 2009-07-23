@@ -3,6 +3,7 @@ package jmri.jmrit.display;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.Sensor;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -105,11 +106,12 @@ public class MultiSensorIconAdder extends IconAdder {
         if (_iconPanel != null) {
             this.remove(_iconPanel);
         }
+        Dimension dim = null;
         _iconPanel = new JPanel();
         _iconPanel.setLayout(new BoxLayout(_iconPanel, BoxLayout.Y_AXIS));
 
         JPanel rowPanel = null;
-        int cnt=1;
+        int cnt=0;
         for (int i=3; i<_order.size(); i++) {
             if (rowPanel == null) {
                 rowPanel = new JPanel();
@@ -178,10 +180,16 @@ public class MultiSensorIconAdder extends IconAdder {
             rowPanel.add(panel);
             rowPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
 
+            cnt++;
             if ((cnt%3)==0) {
                 _iconPanel.add(rowPanel);
                 rowPanel = null;
             }
+            dim = panel.getPreferredSize();
+        }
+        while ((cnt%3)!=0)
+        {
+            rowPanel.add(Box.createRigidArea(dim));
             cnt++;
         }
         if (rowPanel != null) {
