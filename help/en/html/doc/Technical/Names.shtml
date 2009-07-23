@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.18 2008-12-01 16:31:16 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.19 2009-07-23 19:35:35 matthewharris Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -150,6 +150,9 @@ Note that some of these are placeholders, and have no underlying implementation.
 there is no guarantee that any given hardware system will ever implement all of them.
 
 <ul>
+
+<li>A Audio - an internal software object that holds information about a sound
+sample to be placed at a specific position in 3d space
 
 <li>B Block - A software object that keeps track of the contents of a specific block 
 of track
