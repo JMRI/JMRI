@@ -26,7 +26,7 @@ import javax.swing.event.ListSelectionEvent;
  * Memory, preserving what it finds.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * @since 2.7.2
  */
 
@@ -77,6 +77,9 @@ public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.
      * @param m The Memory object
      */
     public void setMemory(Memory m) {
+        if (memory != null) {
+            memory.removePropertyChangeListener(this);
+        }
         memory = m;
         if (memory != null) {
             displayState();

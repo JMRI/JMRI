@@ -18,7 +18,7 @@ import javax.swing.JSeparator;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -85,6 +85,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      * @param m The Memory object
      */
     public void setMemory(Memory m) {
+        if (memory != null) {
+            memory.removePropertyChangeListener(this);
+        }
         memory = m;
         if (memory != null) {
             displayState();

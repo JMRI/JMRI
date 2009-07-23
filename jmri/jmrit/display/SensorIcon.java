@@ -17,7 +17,7 @@ import javax.swing.JCheckBoxMenuItem;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -59,6 +59,9 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
      * @param s the Sensor
      */
     public void setSensor(Sensor s) {
+        if (sensor != null) {
+            sensor.removePropertyChangeListener(this);
+        }
         sensor = s;
         if (sensor != null) {
             displayState(sensorState());

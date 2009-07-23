@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -272,6 +272,10 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         setInactiveIcon(editor.getIcon("SensorStateInactive"));
         setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
         setUnknownIcon(editor.getIcon("BeanStateUnknown"));
+        for (int i = 0; i<entries.size(); i++) {
+            entries.get(i).sensor
+                .removePropertyChangeListener(this);
+        }
         int numPositions = editor.getNumIcons();
         entries = new ArrayList<Entry>(numPositions);
         for (int i=3; i<numPositions; i++) {

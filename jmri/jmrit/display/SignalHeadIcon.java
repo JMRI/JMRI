@@ -24,7 +24,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -47,6 +47,9 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      * @param sh Specific SignalHead object
      */
     public void setSignalHead(SignalHead sh) {
+        if (mHead != null) {
+            mHead.removePropertyChangeListener(this);
+        }
         mHead = sh;
         if (mHead != null) {
             displayState(headState());
