@@ -26,7 +26,7 @@ import javax.swing.JTextField;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @since 2.7.2
  */
 
@@ -185,7 +185,11 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     	if (memory == null) {  // leave alone if not connected yet
     		return;
     	}
-        _textBox.setText(memory.getValue().toString());
+        Object show = memory.getValue();
+        if (show!=null)
+            _textBox.setText(show.toString());
+        else
+            _textBox.setText("");            
     }
 
     public void dispose() {
