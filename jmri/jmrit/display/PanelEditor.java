@@ -481,6 +481,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     int locationX = 0;
     int locationY = 0;
     static final int DELTA = 20; 
+    SpinnerNumberModel _spinCols = new SpinnerNumberModel(0,0,20,1);
 
     /*
     *  itemListener for JComboBox
@@ -630,17 +631,39 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                 case 4:
                     editor = new IconAdder("MemoryEditor") {
                             JButton b = new JButton(rb.getString("AddSpinner"));
+                            JButton bBox = new JButton(rb.getString("AddInputBox"));
+                            JSpinner spinner = new JSpinner(_spinCols);
                             protected void addAdditionalButtons(JPanel p) {
                                 b.addActionListener( new ActionListener() {
                                     public void actionPerformed(ActionEvent a) {
                                     addMemorySpinner();
                                     }
                                 });
+                                JPanel p1 = new JPanel();
+                                p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
+                                bBox.addActionListener( new ActionListener() {
+                                    public void actionPerformed(ActionEvent a) {
+                                    addMemoryInputBox();
+                                    }
+                                });
+                                ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().setColumns(2);
+                                spinner.setMaximumSize(spinner.getPreferredSize());
+                                p1.add(bBox);
+                                JPanel p2 = new JPanel();
+                                //p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
+                                p2.setLayout(new FlowLayout(FlowLayout.TRAILING));
+                                p2.add(new JLabel(rb.getString("NumColsLabel")));
+                                p2.add(spinner);
+                                p1.add(bBox);
+                                p1.add(p2);
+                                p.add(p1);
                                 p.add(b);
                             }
+
                             public void valueChanged(ListSelectionEvent e) {
                                 super.valueChanged(e);
                                 b.setEnabled(addIconIsEnabled());
+                                bBox.setEnabled(addIconIsEnabled());
                             }
                     };
                     addIconAction = new ActionListener() {
@@ -1000,6 +1023,19 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     
     void addMemorySpinner() {
         MemorySpinnerIcon l = new MemorySpinnerIcon();
+        IconAdder memoryIconEditor = _iconEditorFrame.get("MemoryEditor").getEditor();
+        l.setMemory((Memory)memoryIconEditor.getTableSelection());
+        setNextLocation(l);
+        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        l.setDisplayLevel(MEMORIES);
+        putJPanel(l);
+        // always allow new items to be moved
+        l.setPositionable(true);
+        moveToFront(l);
+    }
+
+    void addMemoryInputBox() {
+        MemoryInputIcon l = new MemoryInputIcon(_spinCols.getNumber().intValue());
         IconAdder memoryIconEditor = _iconEditorFrame.get("MemoryEditor").getEditor();
         l.setMemory((Memory)memoryIconEditor.getTableSelection());
         setNextLocation(l);
