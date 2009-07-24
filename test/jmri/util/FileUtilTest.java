@@ -14,7 +14,7 @@ import jmri.jmrit.XmlFile;
 /**
  * Tests for the jmri.util.FileUtil class.
  * @author	Bob Jacobsen  Copyright 2003, 2009
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class FileUtilTest extends TestCase {
 
@@ -100,6 +100,13 @@ public class FileUtilTest extends TestCase {
     public void testGetpfResourceS() {
         String name = FileUtil.getPortableFilename("preference:resources/foo");
         Assert.assertEquals("preference:resources/foo", name);
+    }
+
+    @SuppressWarnings("unused")
+	public void testGetpfPrefF() throws IOException {
+        File f = new File(XmlFile.prefsDir()+"resources"+File.separator+"icons");
+        String name = FileUtil.getPortableFilename(f);
+        Assert.assertEquals("preference:resources/icons", name);
     }
 
     @SuppressWarnings("unused")
