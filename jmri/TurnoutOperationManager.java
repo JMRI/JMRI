@@ -3,8 +3,8 @@
  */
 package jmri;
 
-import java.util.HashMap;
-
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.Iterator;
  */
 public class TurnoutOperationManager {
 
-	private HashMap<String,TurnoutOperation> turnoutOperations = new HashMap<String,TurnoutOperation>();
+	private SortedMap<String,TurnoutOperation> turnoutOperations = new TreeMap<String,TurnoutOperation>();
 	private List<TurnoutOperation> operationTypes = new LinkedList<TurnoutOperation>(); // array of the defining instances of each class, held in order of appearance
 	boolean doOperations = false;			// global on/off switch
 	static TurnoutOperationManager theInstance;

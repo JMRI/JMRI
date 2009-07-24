@@ -5,9 +5,9 @@
 <layout-config>
   <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
       <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
       <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
-      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
     </operations>
     <turnout systemName="IT1" userName="User 1" feedback="DIRECT" inverted="false" automate="Default">
       <comment>Comment on Turnout 1</comment>
@@ -85,6 +85,6 @@
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 2.5.5 on Sat Jun 06 12:27:55 PDT 2009 $Id: LoadFileTest.xml,v 1.10 2009-07-19 22:40:27 jacobsen Exp $-->
+  <!--Written by JMRI version 2.5.5 on Sat Jun 06 12:27:55 PDT 2009 $Id: LoadFileTest.xml,v 1.11 2009-07-24 18:07:33 jacobsen Exp $-->
 </layout-config>
 
