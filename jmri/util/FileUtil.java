@@ -16,7 +16,7 @@ import java.io.File;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003, 2005, 2006
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class FileUtil {
@@ -34,18 +34,12 @@ public class FileUtil {
      * <LI> Otherwise, treat the name as a relative path below the program directory
      * </UL>
      * In any case, absolute pathnames will work.
-     *<p>
-     * As a special case to ensure portability, "/" characters are converted to
-     * the local File.separator character.  This unfortunately means that 
-     * computers may not have a "/" as part of a valid file or directory name.
      *
-     * @param name The name string, possibly starting with file: or resource:
+     * @param pName The name string, possibly starting with file: or resource:
      * @return Absolute file name to use, or null.
      * @since 2.7.2
      */
-    static public String getExternalFilename(String name) {
-        String pName = name.replace('/', File.separatorChar);
-        
+    static public String getExternalFilename(String pName) {
         if (pName == null || pName.length() == 0) {
             return null;
         }
@@ -97,19 +91,14 @@ public class FileUtil {
      *
      * This is the inverse of {@link #getExternalFilename(String pName)}.
      * Deprecated forms are not created.
-     *<p>
-     * As a special case to ensure portability, 
-     * the local File.separator characters are converted to
-     * the "/" character.  This unfortunately means that 
-     * computers may not have a "/" as part of a valid file or directory name.
      *
      * @param file File to be represented
      * @since 2.7.2
      */
     static public String getPortableFilename(File file) {
-        String filename = file.getAbsolutePath().replace(File.separatorChar, '/');
-
         // compare full path name to see if same as preferences
+        String filename = file.getAbsolutePath();
+
         String preferencePrefix = jmri.jmrit.XmlFile.userFileLocationDefault();
         if (filename.startsWith(preferencePrefix)) 
             return "preference:"+filename.substring(preferencePrefix.length(), filename.length());
@@ -136,7 +125,7 @@ public class FileUtil {
             filename.startsWith("resource:") ||
             filename.startsWith("program:") ||
             filename.startsWith("preference:") ) {
-            return getPortableFilename(new File(getExternalFilename(filename)));
+            return getPortableFilename(getExternalFilename(filename));
         } else {
             // treat as pure filename
             return getPortableFilename(new File(filename));
