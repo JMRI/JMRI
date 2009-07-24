@@ -14,7 +14,7 @@ import jmri.jmrit.XmlFile;
 /**
  * Tests for the jmri.util.FileUtil class.
  * @author	Bob Jacobsen  Copyright 2003, 2009
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class FileUtilTest extends TestCase {
 
@@ -94,41 +94,41 @@ public class FileUtilTest extends TestCase {
 	public void testGetpfResourceF() throws IOException {
         File f = new File(XmlFile.prefsDir()+"resources"+File.separator+"foo");
         String name = FileUtil.getPortableFilename(f);
-        Assert.assertEquals("preference:resources"+File.separator+"foo", name);
+        Assert.assertEquals("preference:resources/foo", name);
     }
 
     public void testGetpfResourceS() {
         String name = FileUtil.getPortableFilename("preference:resources/foo");
-        Assert.assertEquals("preference:resources"+File.separator+"foo", name);
+        Assert.assertEquals("preference:resources/foo", name);
     }
 
     @SuppressWarnings("unused")
 	public void testGetpfPrefF() throws IOException {
         File f = new File(XmlFile.prefsDir()+"resources"+File.separator+"icons");
         String name = FileUtil.getPortableFilename(f);
-        Assert.assertEquals("preference:resources"+File.separator+"icons", name);
+        Assert.assertEquals("preference:resources/icons", name);
     }
 
     @SuppressWarnings("unused")
 	public void testGetpfProgramF() throws IOException {
         File f = new File("resources"+File.separator+"icons");
         String name = FileUtil.getPortableFilename(f);
-        Assert.assertEquals("program:resources"+File.separator+"icons", name);
+        Assert.assertEquals("program:resources/icons", name);
     }
 
     public void testGetpfProgramS() {
         String name = FileUtil.getPortableFilename("program:resources/icons");
-        Assert.assertEquals("program:resources"+File.separator+"icons", name);
+        Assert.assertEquals("program:resources/icons", name);
     }
 
     public void testGetpfFileS() {
         String name = FileUtil.getPortableFilename("file:icons");
-        Assert.assertEquals("preference:resources"+File.separator+"icons", name);
+        Assert.assertEquals("preference:resources/icons", name);
     }
 
     public void testGetpfFileS2() {
         String name = FileUtil.getPortableFilename("resource:resources/icons");
-        Assert.assertEquals("program:resources"+File.separator+"icons", name);
+        Assert.assertEquals("program:resources/icons", name);
     }
 
 	// from here down is testing infrastructure
