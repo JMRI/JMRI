@@ -14,7 +14,7 @@ import jmri.jmrit.XmlFile;
 /**
  * Tests for the jmri.util.FileUtil class.
  * @author	Bob Jacobsen  Copyright 2003, 2009
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class FileUtilTest extends TestCase {
 
@@ -23,7 +23,7 @@ public class FileUtilTest extends TestCase {
     
     public void testGEFRel() {
         String name = FileUtil.getExternalFilename("resources/icons");
-        Assert.assertEquals("resources/icons", name);
+        Assert.assertEquals("resources"+File.separator+"icons", name);
     }
 
     public void testGEFAbs() {
@@ -34,7 +34,7 @@ public class FileUtilTest extends TestCase {
 
     public void testGEFResourceRel() {
         String name = FileUtil.getExternalFilename("resource:resources/icons");
-        Assert.assertEquals("resources/icons", name);
+        Assert.assertEquals("resources"+File.separator+"icons", name);
     }
 
     public void testGEFResourceAbs() {
@@ -80,7 +80,7 @@ public class FileUtilTest extends TestCase {
 
     @SuppressWarnings("unused")
 	public void testGetpfPreferenceF() throws IOException {
-        File f = new File(XmlFile.prefsDir()+File.separator+"foo");
+        File f = new File(XmlFile.prefsDir()+"foo");
         String name = FileUtil.getPortableFilename(f);
         Assert.assertEquals("preference:foo", name);
     }
@@ -92,7 +92,7 @@ public class FileUtilTest extends TestCase {
 
     @SuppressWarnings("unused")
 	public void testGetpfResourceF() throws IOException {
-        File f = new File(XmlFile.prefsDir()+File.separator+"resources"+File.separator+"foo");
+        File f = new File(XmlFile.prefsDir()+"resources"+File.separator+"foo");
         String name = FileUtil.getPortableFilename(f);
         Assert.assertEquals("preference:resources"+File.separator+"foo", name);
     }

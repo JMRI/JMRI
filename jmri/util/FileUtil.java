@@ -16,7 +16,7 @@ import java.io.File;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003, 2005, 2006
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class FileUtil {
@@ -99,12 +99,13 @@ public class FileUtil {
         // compare full path name to see if same as preferences
         String filename = file.getAbsolutePath();
 
-        String preferencePrefix = jmri.jmrit.XmlFile.userFileLocationDefault();
+        // compare full path name to see if same as preferences
+        String preferencePrefix = jmri.jmrit.XmlFile.userFileLocationDefault().replace(File.separatorChar, '/');
         if (filename.startsWith(preferencePrefix)) 
             return "preference:"+filename.substring(preferencePrefix.length(), filename.length());
         
         // now check for relative to program dir
-        String progname = new File("").getAbsolutePath()+File.separator;
+        String progname = (new File("").getAbsolutePath()+File.separator).replace(File.separatorChar, '/');
         if (filename.startsWith(progname)) 
             return "program:"+filename.substring(progname.length(), filename.length());
         return filename;   // absolute, and doesn't match
