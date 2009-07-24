@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.4.shtml,v 1.5 2009-07-23 15:33:54 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.4.shtml,v 1.6 2009-07-24 17:21:18 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -69,7 +69,15 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-(None)
+JMRI 2.7.4 changes the way filenames for icons, etc, are stored in XML files by JMRI.
+The advantage is that this new method will make it much easier to move 
+panel files from one computer to another, even of a different type.  So long as you
+keep all your files in the JMRI preferences directory on both machines, the files
+should just move over without trouble.  The warning is that files written in this 
+format will not be properly read by JMRI versions before 2.7.4.
+This includes files
+from earlier versions that are read by JMRI 2.7.4 and then written out again, 
+as the program will update them to the new format upon storing them.
 
 <h3>Warnings from older versions:</h3>
 
@@ -140,6 +148,12 @@ JMRI 2.7.3 would not locate the icon)
 <p>
 Pete Cressman fixed a problem that prevented the format of panel editor Sensor Icon text
 from being properly stored and reloaded.
+
+<p>
+Pete Cressman added a "Memory Input Icon" to the panel editor.
+
+<p>
+More fixes to the portable filename support.
 
 
 <!--#include virtual="/Footer" -->
