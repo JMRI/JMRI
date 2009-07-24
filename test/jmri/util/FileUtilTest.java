@@ -14,62 +14,72 @@ import jmri.jmrit.XmlFile;
 /**
  * Tests for the jmri.util.FileUtil class.
  * @author	Bob Jacobsen  Copyright 2003, 2009
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class FileUtilTest extends TestCase {
 
 
     // tests of internal to external mapping
     
+    // relative file with no prefix: Leave relative in system-specific form
     public void testGEFRel() {
         String name = FileUtil.getExternalFilename("resources/icons");
         Assert.assertEquals("resources"+File.separator+"icons", name);
     }
 
+    // relative file with no prefix: Leave relative in system-specific form
     public void testGEFAbs() {
         File f = new File("resources/icons");
         String name = FileUtil.getExternalFilename(f.getAbsolutePath());
         Assert.assertEquals(f.getAbsolutePath(), name);
     }
 
+    // resource: prefix with relative path, convert to relative in system-specific form
     public void testGEFResourceRel() {
         String name = FileUtil.getExternalFilename("resource:resources/icons");
         Assert.assertEquals("resources"+File.separator+"icons", name);
     }
 
+    // resource: prefix with absolute path, convert to absolute in system-specific form
     public void testGEFResourceAbs() {
         File f = new File("resources/icons");
         String name = FileUtil.getExternalFilename("resource:"+f.getAbsolutePath());
         Assert.assertEquals(f.getAbsolutePath(), name);
     }
 
+    // program: prefix with relative path, convert to relative in system-specific form
     public void testGEFProgramRel() {
         String name = FileUtil.getExternalFilename("program:jython");
         Assert.assertEquals("jython", name);
     }
 
+    // program: prefix with absolute path, convert to absolute in system-specific form
     public void testGEFProgramAbs() {
         File f = new File("resources/icons");
         String name = FileUtil.getExternalFilename("program:"+f.getAbsolutePath());
         Assert.assertEquals(f.getAbsolutePath(), name);
     }
 
+    // preference: prefix with relative path, convert to absolute in system-specific form
     public void testGEFPrefRel() {
         String name = FileUtil.getExternalFilename("preference:foo");
         Assert.assertEquals(XmlFile.userFileLocationDefault()+"foo", name);
     }
 
+    // preference: prefix with absolute path, convert to absolute in system-specific form
     public void testGEFPrefAbs() {
         File f = new File("resources/icons");
         String name = FileUtil.getExternalFilename("preference:"+f.getAbsolutePath());
         Assert.assertEquals(f.getAbsolutePath(), name);
     }
 
+    // file: prefix with relative path, convert to absolute in system-specific form
     public void testGEFFileRel() {
         String name = FileUtil.getExternalFilename("file:foo");
         Assert.assertEquals(XmlFile.userFileLocationDefault()+"resources"+File.separator+"foo", name);
     }
 
+    // file: prefix with absolute path, convert to absolute in system-specific form
     public void testGEFFileAbs() {
         File f = new File("resources/icons");
         String name = FileUtil.getExternalFilename("file:"+f.getAbsolutePath());

@@ -16,7 +16,7 @@ import java.io.File;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003, 2005, 2006
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class FileUtil {
@@ -47,25 +47,25 @@ public class FileUtil {
             // convert to relative filename 
             String temp = pName.substring("resource:".length());
             if ((new File(temp)).isAbsolute())
-                return temp;
+                return temp.replace('/', File.separatorChar);
             else
-                return temp;
+                return temp.replace('/', File.separatorChar);
          } else if (pName.startsWith("program:")) {
             // both relative and absolute are just returned
-            return pName.substring("program:".length());
+            return pName.substring("program:".length()).replace('/', File.separatorChar);
         } else if (pName.startsWith("preference:")) {
             String filename = pName.substring("preference:".length());
             
             // Check for absolute path name
             if ((new File(filename)).isAbsolute()) {
                 if (log.isDebugEnabled()) log.debug("Load from absolute path: "+filename);
-                return filename;
+                return filename.replace('/', File.separatorChar);
             }
             // assume this is a relative path from the
             // preferences directory
             filename = jmri.jmrit.XmlFile.userFileLocationDefault()+filename;
             if (log.isDebugEnabled()) log.debug("load from user preferences file: "+filename);
-            return filename;
+            return filename.replace('/', File.separatorChar);
         } else if (pName.startsWith("file:")) {
             String filename = pName.substring("file:".length());
             
@@ -74,16 +74,16 @@ public class FileUtil {
             // accept them if present
             if ((new File(filename)).isAbsolute()) {
                 if (log.isDebugEnabled()) log.debug("Load from absolute path: "+filename);
-                return filename;
+                return filename.replace('/', File.separatorChar);
             }
             // assume this is a relative path from the
             // preferences directory
             filename = jmri.jmrit.XmlFile.userFileLocationDefault()+"resources"+File.separator+filename;
             if (log.isDebugEnabled()) log.debug("load from user preferences file: "+filename);
-            return filename;
+            return filename.replace('/', File.separatorChar);
         }
         // must just be a (hopefully) valid name
-        else return pName;
+        else return pName.replace('/', File.separatorChar);
     }
 
     /**
@@ -100,15 +100,16 @@ public class FileUtil {
         String filename = file.getAbsolutePath();
 
         // compare full path name to see if same as preferences
-        String preferencePrefix = jmri.jmrit.XmlFile.userFileLocationDefault().replace(File.separatorChar, '/');
+        String preferencePrefix = jmri.jmrit.XmlFile.userFileLocationDefault();
+
         if (filename.startsWith(preferencePrefix)) 
-            return "preference:"+filename.substring(preferencePrefix.length(), filename.length());
+            return "preference:"+filename.substring(preferencePrefix.length(), filename.length()).replace(File.separatorChar,'/');
         
         // now check for relative to program dir
-        String progname = (new File("").getAbsolutePath()+File.separator).replace(File.separatorChar, '/');
+        String progname = (new File("").getAbsolutePath()+File.separator);
         if (filename.startsWith(progname)) 
-            return "program:"+filename.substring(progname.length(), filename.length());
-        return filename;   // absolute, and doesn't match
+            return "program:"+filename.substring(progname.length(), filename.length()).replace(File.separatorChar,'/');
+        return filename.replace(File.separatorChar,'/');   // absolute, and doesn't match; not really portable...
     }
     
     /**
