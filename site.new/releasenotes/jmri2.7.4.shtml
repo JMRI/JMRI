@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.4.shtml,v 1.7 2009-07-25 02:26:36 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.4.shtml,v 1.8 2009-07-25 04:05:47 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -150,6 +150,9 @@ JMRI 2.7.3 would not locate the icon)
 <p>
 Pete Cressman fixed a problem that prevented the format of panel editor Sensor Icon text
 from being properly stored and reloaded.
+
+<p>
+Kevin Dickerson added initial support for managing the locomotive information in an ECoS command station.
 
 <p>
 Pete Cressman added a "Memory Input Icon" to the panel editor.
