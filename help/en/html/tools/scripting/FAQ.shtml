@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: FAQ.shtml,v 1.4 2009-03-02 17:07:15 jacobsen Exp $ -->
+<!-- $Id: FAQ.shtml,v 1.5 2009-07-26 16:34:29 jacobsen Exp $ -->
 <title>JMRI: Scripting FAQ</title>
 
 <!-- Style -->
@@ -264,9 +264,32 @@ sleep(10)
 
 <h2>How do I load a panel file from within a script?</h2>
 
-<div class="para">
+<div class="para"><code>
 <pre>jmri.InstanceManager.configureManagerInstance().load(java.io.File("filename.xml"))</pre>
-</div>
+</code></div>
+
+That looks for "filename.xml" in the JMRI program directory, which is
+not a good place to keep your files. (They tend to get lost or damaged
+when JMRI is updated). See the next question for a solution to this.
+
+<h2>How do I find a file in the preferences directory?</h2>
+
+You can always specify the complete pathname to a file, e.g. 
+<code>C:\Documents and Files\mine\JMRI\filename.xml</code> or
+<code>/Users/mine/.jmri/filename.xml</code>.
+This is not very portable from computer to computer, however, and
+can become a pain to keep straight.
+
+<p>
+JMRI provides routines to convert "portable" names to names your 
+computer will recognize:
+
+<div class="para"><code>
+<pre>fullname = jmri.util.FileUtil.getExternalFilename("preference:filename.xml")</pre>
+</code></div>
+
+The "<code>preference:</code>" means to look for that file starting in the preferences
+directory on the current computer. Other choices are "program:" and "home:".
 
 <h2>Can I communicate between scripts?</h2>
 
