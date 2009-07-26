@@ -26,19 +26,21 @@ import javax.swing.JTextField;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @since 2.7.2
  */
 
 public class MemoryInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
 
     JTextField  _textBox = new JTextField();
+    int _nCols; 
     
     // the associated Memory object
     Memory memory = null;
     
     public MemoryInputIcon(int nCols) {
         super();
+        _nCols = nCols;
         setDisplayLevel(PanelEditor.LABELS);
         
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -91,6 +93,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     }
 
     public Memory getMemory() { return memory; }
+    public int getNumColumns() { return _nCols; }
     
     // update icon as state of Memory changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -106,7 +109,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         setToolTipText(getNameString());
     }
 
-    String getNameString() {
+    protected String getNameString() {
         String name;
         if (memory == null) name = rb.getString("NotConnected");
         else if (memory.getUserName()!=null)
@@ -121,32 +124,17 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     public boolean isSelectable() { return selectable;}
     boolean selectable = false;
     
-    /**
-     * Pop-up displays the Memory name, allows you to remove the icon.
-     *<P>
-     * Rotate is not supported for text-holding memories
-     *<p>
-     * Because this class can change between icon and text forms, 
-     * we recreate the popup object each time.
-     */
-    protected void showPopUp(MouseEvent e) {
-		if (!getEditable())
-			return;
-		popup = new JPopupMenu();
-		popup.add(new JMenuItem(getNameString()));
-
+    protected void addToPopup() {
         popup.add(new AbstractAction(rb.getString("EditIcon")) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
                 }
             });
-		popup.add(new AbstractAction(rb.getString("Remove")) {
-			public void actionPerformed(ActionEvent e) {
-				remove();
-				dispose();
-			}
-		});
-        popup.show(e.getComponent(), e.getX(), e.getY());
+    }
+
+    public void mouseExited(MouseEvent e) {
+        if (memory == null) return;
+        memory.setValue(_textBox.getText());
     }
 
     void edit() {
@@ -164,7 +152,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         makeAddIconFrame("EditInputBox", "addMemValueToPanel", 
                                              "SelectMemory", _editor);
         _editor.setPickList(PickListModel.memoryPickModelInstance());
-        _editor.complete(addIconAction, null, true);
+        _editor.complete(addIconAction, null, true, true);
         _editor.setSelection(memory);
     }
     void editMemory() {
