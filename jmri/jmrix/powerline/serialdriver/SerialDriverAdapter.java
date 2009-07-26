@@ -3,7 +3,6 @@
 package jmri.jmrix.powerline.serialdriver;
 
 import jmri.jmrix.powerline.SerialPortController;
-import jmri.jmrix.powerline.SerialSensorManager;
 import jmri.jmrix.powerline.SerialTrafficController;
 
 import java.io.DataInputStream;
@@ -17,10 +16,11 @@ import javax.comm.SerialPortEvent;
 import javax.comm.SerialPortEventListener;
 
 /**
- * Provide access to Oak Tree via a serial comm port.
- * Normally controlled by the oaktree.serialdriver.SerialDriverFrame class.
+ * Provide access to Powerline devices via a serial comm port.
+ * Derived from the oaktree code.
  * @author			Bob Jacobsen   Copyright (C) 2006, 2007, 2008
- * @version			$Revision: 1.10 $
+ * @author			Ken Cameron, (C) 2009, sensors from poll replies
+ * @version			$Revision: 1.11 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -190,9 +190,10 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         // connect to the traffic controller
         SerialTrafficController.instance().connectPort(this);
 
-        SerialSensorManager s;
-        jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.powerline.SerialSensorManager());
-        SerialTrafficController.instance().setSensorManager(s);
+        // define the appropriate Sensor Manager
+        if (opt1.equals("CM11")) {
+        	jmri.InstanceManager.setSensorManager(new jmri.jmrix.powerline.cm11.SpecificSensorManager());
+        }
 
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.powerline.SerialTurnoutManager());
 
