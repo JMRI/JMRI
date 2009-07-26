@@ -220,7 +220,7 @@ public class MultiSensorIconAdder extends IconAdder {
     *
     */
     public void complete(ActionListener addIconAction, ActionListener changeIconAction,
-                          boolean addToTable) {
+                          boolean addToTable, boolean update) {
         ButtonGroup group = new ButtonGroup();
         _updown = new JRadioButton(rb.getString("UpDown"));
         _rightleft = new JRadioButton(rb.getString("RightLeft"));
@@ -241,7 +241,7 @@ public class MultiSensorIconAdder extends IconAdder {
         p.add(addIcon);
         this.add(p);
         this.add(new JSeparator());
-        super.complete(addIconAction, changeIconAction, addToTable);
+        super.complete(addIconAction, changeIconAction, addToTable, update);
         _table.setDragEnabled(true);
         _table.setTransferHandler(new ExportHandler());
         valueChanged(null);

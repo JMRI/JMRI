@@ -17,7 +17,7 @@ import javax.swing.JCheckBoxMenuItem;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -153,7 +153,6 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         popup = new JPopupMenu();
 
         popup.add(new JMenuItem(getNameString()));
-
         checkLocationEditable(popup, getNameString());
 
         if (icon) popup.add(new AbstractAction(rb.getString("Rotate")) {
@@ -165,6 +164,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                     displayState(sensorState());
                 }
             });
+        addFixedItem(popup);
 
         addDisableMenuEntry(popup);
 
@@ -252,7 +252,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                     _editorFrame.pack();
                 }
         };
-        _editor.complete(addIconAction, changeIconAction, true);
+        _editor.complete(addIconAction, changeIconAction, true, true);
         _editor.setSelection(sensor);
     }
     void updateSensor() {
@@ -304,6 +304,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     }
 
     public void mousePressed(MouseEvent e) {
+        super.mousePressed(e);
         if (getMomentary() && buttonLive()) {
             // this is a momentary button
             try {
@@ -312,8 +313,6 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                 log.warn("Exception setting momentary sensor: "+reason);
             }        
         }
-        // do rest of mouse processing
-        super.mousePressed(e);
     }
 
     public void mouseReleased(MouseEvent e) {

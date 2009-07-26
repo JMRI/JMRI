@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -175,6 +175,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
                 }
             });
 
+        addFixedItem(popup);
         addDisableMenuEntry(popup);
 
         popup.add(new AbstractAction(rb.getString("EditIcon")) {
@@ -265,7 +266,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
                     _editorFrame.pack();
                 }
         };
-        editor.complete(addIconAction, changeIconAction, true);
+        editor.complete(addIconAction, changeIconAction, true, true);
     }
 
     void updateSensor() {

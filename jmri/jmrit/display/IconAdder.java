@@ -368,8 +368,12 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     * which to select an image file.  
     */
     public void complete(ActionListener addIconAction, ActionListener changeIconAction,
-                         boolean addToTable) {
-        _addButton = new JButton(rb.getString("ButtonAddIcon"));
+                         boolean addToTable, boolean update) {
+        if (update) {
+            _addButton = new JButton(rb.getString("ButtonUpdateIcon"));
+        } else {
+            _addButton = new JButton(rb.getString("ButtonAddIcon"));
+        }
         _addButton.addActionListener(addIconAction);
         _addButton.setEnabled(true);
         JPanel p = new JPanel();
@@ -413,7 +417,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             p.add(_sysNametext);
             _sysNametext.addKeyListener(new KeyAdapter() {
                     public void keyReleased(KeyEvent a){
-                        if (_sysNametext.getText().length() > 2) {
+                        if (_sysNametext.getText().length() > 1) {
                             _addTableButton.setEnabled(true);
                             _addTableButton.setToolTipText(null);
                             _table.clearSelection();

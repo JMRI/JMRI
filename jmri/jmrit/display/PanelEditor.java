@@ -793,7 +793,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             if (pickList != null) {
                 editor.setPickList(pickList);
             }
-            editor.complete(addIconAction, changeIconAction, addToTable);
+            editor.complete(addIconAction, changeIconAction, addToTable, false);
             if (which == 7) {
                 frame.addHelpMenu("package.jmri.jmrit.display.MultiSensorIconAdder", true);
             } else {

@@ -37,7 +37,7 @@ import javax.swing.JTextField;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.50 $
+ * @version $Revision: 1.51 $
  */
 
 public class PositionableLabel extends JLabel
@@ -290,7 +290,7 @@ public class PositionableLabel extends JLabel
                     _editorFrame.pack();
                 }
         };
-        _editor.complete(addIconAction, changeIconAction, false);
+        _editor.complete(addIconAction, changeIconAction, false, true);
 
     }
 
@@ -369,28 +369,7 @@ public class PositionableLabel extends JLabel
         });
         setFontStyle(0, 0);
         styleMenu.add(bold);
-        /*
-        styleMenu.add(italic = newStyleMenuItem(new AbstractAction(rb.getString("Italic")) {
-            public void actionPerformed(ActionEvent e) {
-                if (log.isDebugEnabled())
-                    log.debug("When style item selected "+((String)getValue(NAME))
-                                +" bold state is "+bold.isSelected());
-                if (bold.isSelected()) setFontStyle(Font.ITALIC, 0);
-                else setFontStyle(0, Font.ITALIC);
-            }
-          }, Font.ITALIC));
-
-        styleMenu.add(bold = newStyleMenuItem(new AbstractAction(rb.getString("Bold")) {
-            public void actionPerformed(ActionEvent e) {
-                if (log.isDebugEnabled())
-                    log.debug("When style item selected "+((String)getValue(NAME))
-                                +" bold state is "+bold.isSelected());
-                if (bold.isSelected()) setFontStyle(Font.BOLD, 0);
-                else setFontStyle(0, Font.BOLD);
-            }
-          }, Font.BOLD));
-          */
-         return styleMenu;     
+        return styleMenu;     
     }
 
     protected void checkLocationEditable(JPopupMenu popup,  String name) {    
@@ -522,17 +501,7 @@ public class PositionableLabel extends JLabel
                         +", etc. "+e.toString());
         makeAddIconFrame("EditText", null, "pressAdd", null);
     }
-/*        
-    public JMenuItem newStyleMenuItem(AbstractAction a, int mask) {
-        // next two lines needed because JCheckBoxMenuItem(AbstractAction) not in 1.1.8
-        JCheckBoxMenuItem c = new JCheckBoxMenuItem((String)a.getValue(AbstractAction.NAME));
-        c.addActionListener(a);
-        if (log.isDebugEnabled()) log.debug("When creating style item "+((String)a.getValue(AbstractAction.NAME))
-                                            +" mask was "+mask+" state was "+getFont().getStyle());
-        if ( (mask & getFont().getStyle()) == mask ) c.setSelected(true);
-        return c;
-    }
-*/
+    
     JCheckBoxMenuItem italic = null;
     JCheckBoxMenuItem bold = null;
     ButtonGroup fontButtonGroup = null;
@@ -546,7 +515,6 @@ public class PositionableLabel extends JLabel
         if (bold != null) bold.setSelected( (styleValue & Font.BOLD) != 0);
         if (italic != null) italic.setSelected( (styleValue & Font.ITALIC) != 0);
         setFont(jmri.util.FontUtil.deriveFont(getFont(),styleValue));
-        //setFont(getFont().deriveFont(styleValue));
 
         setSize(getPreferredSize().width, getPreferredSize().height);
     }

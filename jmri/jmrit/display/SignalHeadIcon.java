@@ -24,7 +24,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -242,6 +242,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                 }
             });
 
+        addFixedItem(popup);
         addDisableMenuEntry(popup);
 
         // add menu to select action on click
@@ -438,7 +439,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                     _editorFrame.pack();
                 }
         };
-        _editor.complete(addIconAction, changeIconAction, false);
+        _editor.complete(addIconAction, changeIconAction, false, true);
         _editor.setSelection(mHead);
     }
     void updateSignal() {
