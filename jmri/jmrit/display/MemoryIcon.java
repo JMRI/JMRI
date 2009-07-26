@@ -18,7 +18,7 @@ import javax.swing.JSeparator;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -170,8 +170,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         if (!getEditable()) return;
         ours = this;
         popup = new JPopupMenu();
-        popup.add(new JMenuItem(getNameString()));
         
+        popup.add(new JMenuItem(getNameString()));
         checkLocationEditable(popup, getNameString());
 		
         if (icon) {
@@ -193,9 +193,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     dispose();
                 }
             });
-        
+            addFixedItem(popup);
         } else if (text) {
-            popup = new JPopupMenu();
             popup.add(makeFontSizeMenu());
 
             popup.add(makeFontStyleMenu());
@@ -315,7 +314,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         makeAddIconFrame("EditMemory", "addMemValueToPanel", 
                                              "SelectMemory", _editor);
         _editor.setPickList(PickListModel.memoryPickModelInstance());
-        _editor.complete(addIconAction, null, true);
+        _editor.complete(addIconAction, null, true, true);
         _editor.setSelection(memory);
     }
     void editMemory() {
