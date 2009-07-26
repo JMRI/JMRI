@@ -7,7 +7,13 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
@@ -25,7 +31,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class EngineSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -41,87 +47,72 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 	Engine _engine;
 		
 	// labels
-	javax.swing.JLabel textEngine = new javax.swing.JLabel();
-	javax.swing.JLabel textEngineRoad = new javax.swing.JLabel();
-	javax.swing.JLabel textName = new javax.swing.JLabel();
-	javax.swing.JLabel textTrack = new javax.swing.JLabel();
-	javax.swing.JLabel textLocation = new javax.swing.JLabel();
-	javax.swing.JLabel textOptional = new javax.swing.JLabel();
-	javax.swing.JLabel textDestination = new javax.swing.JLabel();
-	javax.swing.JLabel textTrain = new javax.swing.JLabel();
+	JLabel textEngine = new JLabel(rb.getString("Engine"));
+	JLabel textEngineRoad = new JLabel();
+	JLabel textName = new JLabel(rb.getString("Name"));
+	JLabel textTrack = new JLabel(rb.getString("Track"));
+	JLabel textLocation = new JLabel(rb.getString("Location"));
+	JLabel textDestination = new JLabel(rb.getString("Destination"));
+	JLabel textTrain = new JLabel(rb.getString("Train"));
 
-	// major buttons
-	
-	javax.swing.JButton saveButton = new javax.swing.JButton();
-
-	// for padding out panel
-	javax.swing.JLabel space1 = new javax.swing.JLabel();
-	javax.swing.JLabel space2 = new javax.swing.JLabel();
-	javax.swing.JLabel space3 = new javax.swing.JLabel();
+	// major buttons	
+	JButton saveButton = new JButton(rb.getString("Save"));
 	
 	// combo boxes
-	javax.swing.JComboBox locationBox = LocationManager.instance().getComboBox();
-	javax.swing.JComboBox trackLocationBox = new javax.swing.JComboBox(); 
-	javax.swing.JComboBox destinationBox = LocationManager.instance().getComboBox();
-	javax.swing.JComboBox trackDestinationBox = new javax.swing.JComboBox(); 
-	javax.swing.JComboBox trainBox = TrainManager.instance().getComboBox();
+	JComboBox locationBox = LocationManager.instance().getComboBox();
+	JComboBox trackLocationBox = new JComboBox(); 
+	JComboBox destinationBox = LocationManager.instance().getComboBox();
+	JComboBox trackDestinationBox = new JComboBox(); 
+	JComboBox trainBox = TrainManager.instance().getComboBox();
 		
 	public EngineSetFrame() {
 		super();
 	}
 
 	public void initComponents() {
-		
-		// the following code sets the frame's initial state
-
-		textEngine.setText(rb.getString("Engine"));
-		textEngine.setVisible(true);
-		textName.setText(rb.getString("Name"));
-		textName.setVisible(true);
-		textTrack.setText(rb.getString("Track"));
-		textTrack.setVisible(true);
-		textLocation.setText(rb.getString("Location"));
-		textLocation.setVisible(true);
-		textOptional.setText(rb.getString("Optional"));
-		textOptional.setVisible(true);
-		textDestination.setText(rb.getString("Destination"));
-		textDestination.setVisible(true);
-		textTrain.setText(rb.getString("Train"));
-		textTrain.setVisible(true);
-		
-		saveButton.setText(rb.getString("Save"));
-		saveButton.setVisible(true);
-		
-		getContentPane().setLayout(new GridBagLayout());
+		// the following code sets the frame's initial state	
+		// create panel
+		JPanel pPanel = new JPanel();
+		pPanel.setLayout(new GridBagLayout());
 		
 		// Layout the panel by rows
 		// row 1
-		addItem(textEngine, 0, 1);
-		addItemLeft(textEngineRoad, 1, 1);
+		addItem(pPanel, textEngine, 0, 1);
+		addItemLeft(pPanel, textEngineRoad, 1, 1);
 		
 		// row 2
-		addItem(textName, 1, 2);
-		addItem(textTrack, 2, 2);
+		addItem(pPanel, textName, 1, 2);
+		addItem(pPanel, textTrack, 2, 2);
 		
 		// row 3
-		addItem(textLocation, 0, 3);
-		addItem(locationBox, 1, 3);
-		addItem(trackLocationBox, 2, 3);
+		addItem(pPanel, textLocation, 0, 3);
+		addItem(pPanel, locationBox, 1, 3);
+		addItem(pPanel, trackLocationBox, 2, 3);
 		
-		// row 4
-		addItemWidth(textOptional, 3, 0, 4);
+		// optional panel
+		JPanel pOptional = new JPanel();
+		pOptional.setLayout(new GridBagLayout());
+		pOptional.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptional")));
 
 		// row 6
-		addItem(textDestination, 0, 6);
-		addItem(destinationBox, 1, 6);
-		addItem(trackDestinationBox, 2, 6);
+		addItem(pOptional, textDestination, 0, 6);
+		addItem(pOptional, destinationBox, 1, 6);
+		addItem(pOptional, trackDestinationBox, 2, 6);
 
 		// row 8
-		addItem(textTrain, 0, 8);
-		addItem(trainBox, 1, 8);
+		addItem(pOptional, textTrain, 0, 8);
+		addItem(pOptional, trainBox, 1, 8);
 
-		// row 10
-		addItem(saveButton, 2, 10);
+		// button panel
+		JPanel pButtons = new JPanel();
+		pButtons.setLayout(new GridBagLayout());
+		addItem(pButtons, saveButton, 2, 10);
+		
+		// add panels
+		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
+		getContentPane().add(pPanel);
+		getContentPane().add(pOptional);
+		getContentPane().add(pButtons);
 		
 		// setup buttons
 		addButtonAction(saveButton);
@@ -145,7 +136,6 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 		else
 			setSize (getWidth()+50, getHeight()+20);
 		setLocation(Control.panelX, Control.panelY);
-// 		setAlwaysOnTop(true);	// this blows up in Java 1.4 
 		setVisible(true);
 	}
 	

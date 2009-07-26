@@ -6,11 +6,14 @@ import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
@@ -28,7 +31,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -54,7 +57,6 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 	JLabel textHp = new JLabel(rb.getString("Hp"));
 	JLabel textType = new JLabel(rb.getString("Type"));
 	JLabel textLocation = new JLabel(rb.getString("Location"));
-	JLabel textOptional = new JLabel(rb.getString("Optional"));
 	JLabel textConsist = new JLabel(rb.getString("Consist"));
 	JLabel textOwner = new JLabel(rb.getString("Owner"));
 	JLabel textComment = new JLabel(rb.getString("Comment"));
@@ -86,11 +88,6 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 	JTextField commentTextField = new JTextField(35);
 	JTextField rfidTextField = new JTextField(16);
 
-	// for padding out panel
-	JLabel space1 = new JLabel("      ");
-	JLabel space2 = new JLabel("      ");
-	JLabel space3 = new JLabel("      ");
-
 	// combo boxes
 	JComboBox roadComboBox = CarRoads.instance().getComboBox();
 	JComboBox modelComboBox = engineModels.getComboBox();
@@ -119,75 +116,84 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		builtTextField.setToolTipText(rb.getString("buildDateTip"));
 		rfidTextField.setToolTipText(rb.getString("TipRfid"));
 
-		getContentPane().setLayout(new GridBagLayout());
-
+		// create panel
+		JPanel pPanel = new JPanel();
+		pPanel.setLayout(new GridBagLayout());
+		
 		// Layout the panel by rows
 		// row 1
-		addItem(textRoad, 0, 1);
-		addItem(roadComboBox, 1, 1);
-		addItem(editRoadButton, 2, 1);
+		addItem(pPanel, textRoad, 0, 1);
+		addItem(pPanel, roadComboBox, 1, 1);
+		addItem(pPanel, editRoadButton, 2, 1);
 		// row 2
-		addItem(textRoadNumber, 0, 2);
-		addItem(roadNumberTextField, 1, 2);
-		addItem(clearRoadNumberButton, 2, 2);
+		addItem(pPanel, textRoadNumber, 0, 2);
+		addItem(pPanel, roadNumberTextField, 1, 2);
+		addItem(pPanel, clearRoadNumberButton, 2, 2);
 		// row 3
-		addItem(textModel, 0, 3);
-		addItem(modelComboBox, 1, 3);
-		addItem(editModelButton, 2, 3);
+		addItem(pPanel, textModel, 0, 3);
+		addItem(pPanel, modelComboBox, 1, 3);
+		addItem(pPanel, editModelButton, 2, 3);
 		// row4
-		addItem(textType, 0, 4);
-		addItem(typeComboBox, 1, 4);
-		addItem(editTypeButton, 2, 4);
+		addItem(pPanel, textType, 0, 4);
+		addItem(pPanel, typeComboBox, 1, 4);
+		addItem(pPanel, editTypeButton, 2, 4);
 		// row 5
-		addItem(textLength, 0, 5);
-		addItem(lengthComboBox, 1, 5);
-		addItem(editLengthButton, 2, 5);
+		addItem(pPanel, textLength, 0, 5);
+		addItem(pPanel, lengthComboBox, 1, 5);
+		addItem(pPanel, editLengthButton, 2, 5);
 
 		// row 7
-		addItem(textHp, 0, 7);
-		addItem(hpTextField, 1, 7);
+		addItem(pPanel, textHp, 0, 7);
+		addItem(pPanel, hpTextField, 1, 7);
 
 		// row 8
 
 		// row 9
-		addItem(textLocation, 0, 9);
-		addItem(locationBox, 1, 9);
-		addItemWidth(trackLocationBox, 2, 2, 9);
+		addItem(pPanel, textLocation, 0, 9);
+		addItem(pPanel, locationBox, 1, 9);
+		addItemWidth(pPanel, trackLocationBox, 2, 2, 9);
 
-		// Separator row 10
-		addItemWidth(textOptional, 3, 0, 10);
+		// optional panel
+		JPanel pOptional = new JPanel();
+		pOptional.setLayout(new GridBagLayout());
+		pOptional.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptional")));
 		
 		// row 13
-		addItem(textConsist, 0, 13);
-		addItem(consistComboBox, 1, 13);
-		addItem(editKernelButton, 2, 13);
+		addItem(pOptional, textConsist, 0, 13);
+		addItem(pOptional, consistComboBox, 1, 13);
+		addItem(pOptional, editKernelButton, 2, 13);
 
 		// row 14
-		addItem(textBuilt, 0, 14);
-		addItem(builtTextField, 1, 14);
+		addItem(pOptional, textBuilt, 0, 14);
+		addItem(pOptional, builtTextField, 1, 14);
 		
 		// row 15
-		addItem(textOwner, 0, 15);
-		addItem(ownerComboBox, 1, 15);
-		addItem(editOwnerButton, 2, 15);
+		addItem(pOptional, textOwner, 0, 15);
+		addItem(pOptional, ownerComboBox, 1, 15);
+		addItem(pOptional, editOwnerButton, 2, 15);
 		
 		// row 18
 		if(Setup.isRfidEnabled()){
-			addItem(textRfid, 0, 18);
-			addItem(rfidTextField, 1, 18);
+			addItem(pOptional, textRfid, 0, 18);
+			addItem(pOptional, rfidTextField, 1, 18);
 		}
 
 		// row 20
-		addItem(textComment, 0, 20);
-		addItemWidth(commentTextField, 3, 1, 20);
+		addItem(pOptional, textComment, 0, 20);
+		addItemWidth(pOptional, commentTextField, 2, 1, 20);
 
-		// row 22
-		addItem(space1, 0, 22);
-		// row 24
-		addItem(deleteButton, 0, 24);
-		addItem(addButton, 1, 24);
-//		addItem(copyButton, 2, 24);
-		addItem(saveButton, 3, 24);
+		// button panel
+		JPanel pButtons = new JPanel();
+		pButtons.setLayout(new GridBagLayout());
+		addItem(pButtons, deleteButton, 0, 25);
+		addItem(pButtons, addButton, 1, 25);
+		addItem(pButtons, saveButton, 3, 25);
+		
+		// add panels
+		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
+		getContentPane().add(pPanel);
+		getContentPane().add(pOptional);
+		getContentPane().add(pButtons);
 
 		// setup buttons
 		addEditButtonAction(editRoadButton);

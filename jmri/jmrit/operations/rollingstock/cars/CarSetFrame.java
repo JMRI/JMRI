@@ -6,10 +6,14 @@ import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
@@ -27,7 +31,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class CarSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -43,23 +47,17 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 	Car _car;
 		
 	// labels
-	JLabel textCar = new JLabel();
+	JLabel textCar = new JLabel(rb.getString("Car"));
 	JLabel textCarRoad = new JLabel();
-	JLabel textName = new JLabel();
-	JLabel textTrack = new JLabel();
-	JLabel textLocation = new JLabel();
-	JLabel textOptional = new JLabel();
-	JLabel textDestination = new JLabel();
-	JLabel textTrain = new JLabel();
+	JLabel textName = new JLabel(rb.getString("Name"));
+	JLabel textTrack = new JLabel(rb.getString("Track"));
+	JLabel textLocation = new JLabel(rb.getString("Location"));
+	JLabel textDestination = new JLabel(rb.getString("Destination"));
+	JLabel textTrain = new JLabel(rb.getString("Train"));
 
 	// major buttons
 	
-	JButton saveButton = new JButton();
-
-	// for padding out panel
-	JLabel space1 = new JLabel();
-	JLabel space2 = new JLabel();
-	JLabel space3 = new JLabel();
+	JButton saveButton = new JButton(rb.getString("Save"));
 	
 	// combo boxes
 	JComboBox locationBox = LocationManager.instance().getComboBox();
@@ -72,58 +70,50 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		super();
 	}
 
-	public void initComponents() {
-		
+	public void initComponents() {	
 		// the following code sets the frame's initial state
-
-		textCar.setText(rb.getString("Car"));
-		textCar.setVisible(true);
-		textName.setText(rb.getString("Name"));
-		textName.setVisible(true);
-		textTrack.setText(rb.getString("Track"));
-		textTrack.setVisible(true);
-		textLocation.setText(rb.getString("Location"));
-		textLocation.setVisible(true);
-		textOptional.setText(rb.getString("Optional"));
-		textOptional.setVisible(true);
-		textDestination.setText(rb.getString("Destination"));
-		textDestination.setVisible(true);
-		textTrain.setText(rb.getString("Train"));
-		textTrain.setVisible(true);
-		
-		saveButton.setText(rb.getString("Save"));
-		saveButton.setVisible(true);
-		
-		getContentPane().setLayout(new GridBagLayout());
+		// create panel
+		JPanel pPanel = new JPanel();
+		pPanel.setLayout(new GridBagLayout());
 		
 		// Layout the panel by rows
 		// row 1
-		addItem(textCar, 0, 1);
-		addItemLeft(textCarRoad, 1, 1);
+		addItem(pPanel, textCar, 0, 1);
+		addItemLeft(pPanel, textCarRoad, 1, 1);
 		
 		// row 2
-		addItem(textName, 1, 2);
-		addItem(textTrack, 2, 2);
+		addItem(pPanel, textName, 1, 2);
+		addItem(pPanel, textTrack, 2, 2);
 		
 		// row 3
-		addItem(textLocation, 0, 3);
-		addItem(locationBox, 1, 3);
-		addItem(trackLocationBox, 2, 3);
+		addItem(pPanel, textLocation, 0, 3);
+		addItem(pPanel, locationBox, 1, 3);
+		addItem(pPanel, trackLocationBox, 2, 3);
 		
-		// row 4
-		addItemWidth(textOptional, 3, 0, 4);
+		// optional panel
+		JPanel pOptional = new JPanel();
+		pOptional.setLayout(new GridBagLayout());
+		pOptional.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptional")));
 
 		// row 6
-		addItem(textDestination, 0, 6);
-		addItem(destinationBox, 1, 6);
-		addItem(trackDestinationBox, 2, 6);
+		addItem(pOptional, textDestination, 0, 6);
+		addItem(pOptional, destinationBox, 1, 6);
+		addItem(pOptional, trackDestinationBox, 2, 6);
 
 		// row 8
-		addItem(textTrain, 0, 8);
-		addItem(trainBox, 1, 8);
+		addItem(pOptional, textTrain, 0, 8);
+		addItem(pOptional, trainBox, 1, 8);
 
-		// row 10
-		addItem(saveButton, 2, 10);
+		// button panel
+		JPanel pButtons = new JPanel();
+		pButtons.setLayout(new GridBagLayout());
+		addItem(pButtons, saveButton, 2, 10);
+		
+		// add panels
+		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
+		getContentPane().add(pPanel);
+		getContentPane().add(pOptional);
+		getContentPane().add(pButtons);
 		
 		// setup buttons
 		addButtonAction(saveButton);
@@ -147,7 +137,6 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		else
 			setSize (getWidth()+50, getHeight()+20);
 		setLocation(Control.panelX, Control.panelY);
-// 		setAlwaysOnTop(true);	// this blows up in Java 1.4 
 		setVisible(true);
 	}
 	
