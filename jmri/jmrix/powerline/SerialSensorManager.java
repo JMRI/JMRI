@@ -12,11 +12,10 @@ import jmri.Sensor;
  * Sensors are numbered from 1.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @author          Dave Duchamp, multi node extensions, 2004
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
-public class SerialSensorManager extends jmri.managers.AbstractSensorManager
+abstract public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {
 
     /**
@@ -34,10 +33,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     public SerialSensorManager() {
         super();
         _instance = this;
-    }
-
-    public void init() {
-    	SerialTrafficController.instance().addSerialListener(this);
+        SerialTrafficController.instance().addSerialListener(this);
     }
 
     /**
@@ -110,13 +106,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      *  Process a reply to a poll of Sensors of one node
      */
-    public void reply(SerialReply r) {
-        // determine which node
-        SerialNode node = SerialTrafficController.instance().getNodeFromAddress(r.getAddr());
-        if (node!=null) {
-            node.markChanges(r);
-        }
-    }
+    abstract public void reply(SerialReply r);
     
     /**
      * Method to register any orphan Sensors when a new Serial Node is created
@@ -155,7 +145,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      *         if need be creating one.
      */
     static public SerialSensorManager instance() {
-        if (_instance == null) _instance = new SerialSensorManager();
+        if (_instance == null) log.error("powerline.SerialSensorManager had no instance available");
         return _instance;
     }
 

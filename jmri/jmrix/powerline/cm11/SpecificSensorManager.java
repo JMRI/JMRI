@@ -16,12 +16,10 @@ import jmri.jmrix.powerline.cm11.Constants;
  * Sensors are numbered from 1.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @author          Dave Duchamp, multi node extensions, 2004
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
-public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorManager
-		 {
+public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorManager {
 
     public SpecificSensorManager() {
         super();
