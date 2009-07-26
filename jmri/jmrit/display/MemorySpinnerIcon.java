@@ -26,7 +26,7 @@ import javax.swing.event.ListSelectionEvent;
  * Memory, preserving what it finds.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  * @since 2.7.2
  */
 
@@ -48,8 +48,9 @@ public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.
             }
         );
     }
-
-    JSpinner spinner = new JSpinner(new SpinnerNumberModel(0,0,100,1));
+    int _min = 0;
+    int _max = 100;
+    JSpinner spinner = new JSpinner(new SpinnerNumberModel(0,_min,_max,1));
     
     // the associated Memory object
     Memory memory = null;
@@ -104,7 +105,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.
         setToolTipText(getNameString());
     }
 
-    String getNameString() {
+    protected String getNameString() {
         String name;
         if (memory == null) name = rb.getString("NotConnected");
         else if (memory.getUserName()!=null)
@@ -119,32 +120,12 @@ public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.
     public boolean isSelectable() { return selectable;}
     boolean selectable = false;
     
-    /**
-     * Pop-up displays the Memory name, allows you to remove the icon.
-     *<P>
-     * Rotate is not supported for text-holding memories
-     *<p>
-     * Because this class can change between icon and text forms, 
-     * we recreate the popup object each time.
-     */
-    protected void showPopUp(MouseEvent e) {
-		if (!getEditable())
-			return;
-		popup = new JPopupMenu();
-		popup.add(new JMenuItem(getNameString()));
-
+    protected void addToPopup() {
         popup.add(new AbstractAction(rb.getString("EditIcon")) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
                 }
             });
-		popup.add(new AbstractAction(rb.getString("Remove")) {
-			public void actionPerformed(ActionEvent e) {
-				remove();
-				dispose();
-			}
-		});
-        popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
     void edit() {
@@ -162,7 +143,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.
         makeAddIconFrame("EditSpinner", "addMemValueToPanel", 
                                              "SelectMemory", _editor);
         _editor.setPickList(PickListModel.memoryPickModelInstance());
-        _editor.complete(addIconAction, null, true);
+        _editor.complete(addIconAction, null, true, true);
         _editor.setSelection(memory);
     }
     void editMemory() {
@@ -184,22 +165,28 @@ public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.
     		return;
     	}
         if (memory.getValue() == null) return;
-
-        // Spinner is always an Integer, but memory can contain Integer or String
-        if (memory.getValue().getClass() == String.class) {
-            try {
-                spinner.setValue(new Integer((String)memory.getValue()));
-            } catch (NumberFormatException e) {
-                spinner.setValue(new Integer(-1));
-            }
-        } else {
-            spinner.setValue(memory.getValue());
+        Integer num = null;
+        try {
+            num =new Integer((String)memory.getValue());
+        } catch (NumberFormatException e) {
+            return;
         }
+        int n = num.intValue();
+        if (n>_max) {
+            num =new Integer(_max);
+        }
+        else if (n<_min) {
+            num =new Integer(_min);
+        }
+        spinner.setValue(num);
     }
 
     protected void spinnerUpdated() {
         if (memory == null) return;
-        if (memory.getValue() == null) return;
+        if (memory.getValue() == null) {
+            memory.setValue(spinner.getValue());
+            return;
+        }
         // Spinner is always an Integer, but memory can contain Integer or String
         if (memory.getValue().getClass() == String.class) {
             String newValue = ""+spinner.getValue();
@@ -210,6 +197,10 @@ public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.
         }
     }
     
+    public void mouseExited(MouseEvent e) {
+        spinnerUpdated();
+    }
+
     public void dispose() {
         memory.removePropertyChangeListener(this);
         memory = null;
