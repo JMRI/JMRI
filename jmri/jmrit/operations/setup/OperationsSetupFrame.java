@@ -20,7 +20,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsFrame;
@@ -32,7 +31,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -239,19 +238,17 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addItem (panel, textOwner, 0, 10);
 		addItemLeft (panel, ownerTextField, 1, 10);
 		
-		Border border = BorderFactory.createEtchedBorder();
-		
 		// Option panel
 		JPanel options = new JPanel();
 		options.setLayout(new GridBagLayout());
-		options.setBorder(border);
+		options.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptions")));
 		addItem (options, mainMenuCheckBox, 1,7);
 		addItem (options, rfidCheckBox, 1,8);		
 			
 		// Printer panel
 		JPanel pPrinter = new JPanel();
 		pPrinter.setLayout(new GridBagLayout());
-		pPrinter.setBorder(border);
+		pPrinter.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPrintOptions")));
 		ButtonGroup printerGroup = new ButtonGroup();
 		printerGroup.add(mono);
 		printerGroup.add(sanSerif);
@@ -261,20 +258,23 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		buildReportGroup.add(buildReportMax);
 		buildReportGroup.add(buildReportVD);
 		
+		// manifest options
 		addItem (pPrinter, textPrinter, 0, 8);
 		addItemLeft (pPrinter, mono, 1, 8);
 		addItemLeft (pPrinter, sanSerif, 2, 8);
-		addItem (pPrinter, textBuildReport, 0, 10);
-		addItemLeft (pPrinter, buildReportMin, 1, 10);
-		addItemLeft (pPrinter, buildReportNor, 2, 10);
-		addItemLeft (pPrinter, buildReportMax, 3, 10);
-		addItemLeft (pPrinter, buildReportVD, 4, 10);
 		addItem (pPrinter, textManifest, 0, 12);
 		addItemLeft (pPrinter, showLengthCheckBox, 1, 12);
 		addItemLeft (pPrinter, showLoadCheckBox, 2, 12);
 		addItemLeft (pPrinter, showColorCheckBox, 3, 12);
 		addItemLeft (pPrinter, showDestinationCheckBox, 4, 12);
 		addItemWidth (pPrinter, appendCommentCheckBox, 2, 1, 14);
+		// build report options
+		addItem (pPrinter, textBuildReport, 0, 16);
+		addItemLeft (pPrinter, buildReportMin, 1, 16);
+		addItemLeft (pPrinter, buildReportNor, 2, 16);
+		addItemLeft (pPrinter, buildReportMax, 3, 16);
+		addItemLeft (pPrinter, buildReportVD, 4, 16);
+
 			
 		setPrinterFontRadioButton();
 		setBuildReportRadioButton();
@@ -283,7 +283,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		JPanel pIcon = new JPanel();
 		JScrollPane pIconPane = new JScrollPane(pIcon);
 		pIcon.setLayout(new GridBagLayout());
-		pIcon.setBorder(border);
+		pIcon.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPanelOptions")));
 		addItem (pIcon, textPanel, 0, 1);
 		addItemLeft (pIcon, panelTextField, 1, 1);
 		addItem (pIcon, iconCheckBox, 0, 2);
