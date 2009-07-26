@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003, 2007, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialSensorManagerTest extends TestCase {
 
@@ -29,7 +29,9 @@ public class SerialSensorManagerTest extends TestCase {
         SerialNode n1 = new SerialNode(1,SerialNode.DAUGHTER);
         SerialNode n2 = new SerialNode(2,SerialNode.CABDRIVER);
         
-        SerialSensorManager s = new SerialSensorManager();
+        SerialSensorManager s = new SerialSensorManager(){
+            public void reply(SerialReply r) {};
+        };
         Assert.assertTrue("none expected A0", !(n0.getSensorsActive()) );
         Assert.assertTrue("none expected A1", !(n1.getSensorsActive()) );
         Assert.assertTrue("none expected A2", !(n2.getSensorsActive()) );
