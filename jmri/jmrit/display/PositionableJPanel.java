@@ -29,7 +29,7 @@ import javax.swing.JCheckBoxMenuItem;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 abstract class PositionableJPanel extends JPanel
                         implements MouseMotionListener, MouseListener,
@@ -157,34 +157,42 @@ abstract class PositionableJPanel extends JPanel
      * For over-riding in the using classes: add item specific menu choices
      */
     protected void addToPopup() { }
+    protected String getNameString() {return "name?";}
 
+    /**
+     * Because this class can change between icon and text forms, 
+     * we recreate the popup object each time.
+     */
     protected void showPopUp(MouseEvent e) {
 //        if (!getPopupEnabled()) return;  // We need to distinguish between popup and editable
         if (!getEditable()) return;
-        if (popup == null) {
-            popup = new JPopupMenu();
-            popup.add(lock = newLockMenuItem(new AbstractAction("Lock Position") {
-                public void actionPerformed(ActionEvent e) {
-                    if (lock.isSelected()) {
-                        setPositionable(false);
-                    } else {
-                        setPositionable(true);
-                    }
+        popup = new JPopupMenu();
+
+		popup.add(new JMenuItem(getNameString()));
+
+        popup.add(lock = newLockMenuItem(new AbstractAction("Lock Position") {
+            public void actionPerformed(ActionEvent e) {
+                if (lock.isSelected()) {
+                    setPositionable(false);
+                } else {
+                    setPositionable(true);
                 }
-            }));
-            popup.add(new AbstractAction("Remove") {
-                public void actionPerformed(ActionEvent e) {
-                    remove();
-                    dispose();
-                }
-            });
-            this.addToPopup();
-        }
+            }
+        }));
         if (getPositionable()) {
             lock.setSelected(false);
         } else {
             lock.setSelected(true);
         }
+
+        this.addToPopup();
+
+        popup.add(new AbstractAction("Remove") {
+            public void actionPerformed(ActionEvent e) {
+                remove();
+                dispose();
+            }
+        });
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
