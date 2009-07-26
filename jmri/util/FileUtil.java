@@ -16,7 +16,7 @@ import java.io.File;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003, 2005, 2006
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class FileUtil {
@@ -25,10 +25,11 @@ public class FileUtil {
      * Find the resource file corresponding to a name.
      * There are five cases:
      * <UL>
+     * <LI> Starts with "resource:", treat the rest as a pathname relative to the program directory
+     *                  (deprecated; see "program:" below)
      * <LI> Starts with "program:", treat the rest as a relative pathname below the program directory
      * <LI> Starts with "preference:", treat the rest as a relative path below the preferences directory
-     * <LI> Starts with "resource:", treat the rest as a pathname relative to the program directory
-     *                  (deprecated; see "program:" above)
+     * <LI> Starts with "home:", treat the rest as a relative path below the user.home directory
      * <LI> Starts with "file:", treat the rest as a relative path below the resource directory in the preferences directory
      *                  (deprecated; see "preference:" above)
      * <LI> Otherwise, treat the name as a relative path below the program directory
@@ -81,6 +82,19 @@ public class FileUtil {
             filename = jmri.jmrit.XmlFile.userFileLocationDefault()+"resources"+File.separator+filename;
             if (log.isDebugEnabled()) log.debug("load from user preferences file: "+filename);
             return filename.replace('/', File.separatorChar);
+        } else if (pName.startsWith("home:")) {
+            String filename = pName.substring("home:".length());
+            
+            // Check for absolute path name
+            if ((new File(filename)).isAbsolute()) {
+                if (log.isDebugEnabled()) log.debug("Load from absolute path: "+filename);
+                return filename.replace('/', File.separatorChar);
+            }
+            // assume this is a relative path from the
+            // user.home directory
+            filename = System.getProperty("user.home")+File.separator+filename;
+            if (log.isDebugEnabled()) log.debug("load from user preferences file: "+filename);
+            return filename.replace('/', File.separatorChar);
         }
         // must just be a (hopefully) valid name
         else return pName.replace('/', File.separatorChar);
@@ -109,6 +123,14 @@ public class FileUtil {
         String progname = (new File("").getAbsolutePath()+File.separator);
         if (filename.startsWith(progname)) 
             return "program:"+filename.substring(progname.length(), filename.length()).replace(File.separatorChar,'/');
+
+        // compare full path name to see if same as home directory
+        // do this last, in case preferences or program dir are in home directory
+        String homePrefix = System.getProperty("user.home")+File.separator;
+
+        if (filename.startsWith(homePrefix)) 
+            return "home:"+filename.substring(homePrefix.length(), filename.length()).replace(File.separatorChar,'/');
+        
         return filename.replace(File.separatorChar,'/');   // absolute, and doesn't match; not really portable...
     }
     
@@ -122,10 +144,11 @@ public class FileUtil {
      * @since 2.7.2
      */
     static public String getPortableFilename(String filename) {
-        // if this already contains prefix, convert
+        // if this already contains prefix, run through conversion to normalize
         if (filename.startsWith("file:") ||
             filename.startsWith("resource:") ||
             filename.startsWith("program:") ||
+            filename.startsWith("home:") ||
             filename.startsWith("preference:") ) {
             return getPortableFilename(getExternalFilename(filename));
         } else {

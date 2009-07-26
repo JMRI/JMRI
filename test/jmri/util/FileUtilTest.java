@@ -14,7 +14,7 @@ import jmri.jmrit.XmlFile;
 /**
  * Tests for the jmri.util.FileUtil class.
  * @author	Bob Jacobsen  Copyright 2003, 2009
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class FileUtilTest extends TestCase {
 
@@ -86,6 +86,19 @@ public class FileUtilTest extends TestCase {
         Assert.assertEquals(f.getAbsolutePath(), name);
     }
 
+    // home: prefix with relative path, convert to absolute in system-specific form
+    public void testGEFHomeRel() {
+        String name = FileUtil.getExternalFilename("home:foo");
+        Assert.assertEquals(System.getProperty("user.home")+File.separator+"foo", name);
+    }
+
+    // home: prefix with absolute path, convert to absolute in system-specific form
+    public void testGEFHomeAbs() {
+        File f = new File("resources/icons");
+        String name = FileUtil.getExternalFilename("home:"+f.getAbsolutePath());
+        Assert.assertEquals(f.getAbsolutePath(), name);
+    }
+
     // tests of external to internal mapping
 
     @SuppressWarnings("unused")
@@ -108,8 +121,8 @@ public class FileUtilTest extends TestCase {
     }
 
     public void testGetpfResourceS() {
-        String name = FileUtil.getPortableFilename("preference:resources/foo");
-        Assert.assertEquals("preference:resources/foo", name);
+        String name = FileUtil.getPortableFilename("resource:resources/foo");
+        Assert.assertEquals("program:resources/foo", name);
     }
 
     @SuppressWarnings("unused")
@@ -139,6 +152,18 @@ public class FileUtilTest extends TestCase {
     public void testGetpfFileS2() {
         String name = FileUtil.getPortableFilename("resource:resources/icons");
         Assert.assertEquals("program:resources/icons", name);
+    }
+
+    public void testGetpfHomeS() {
+        String name = FileUtil.getPortableFilename("home:foo");
+        Assert.assertEquals("home:foo", name);
+    }
+
+    @SuppressWarnings("unused")
+	public void testGetpfHomeF() throws IOException {
+        File f = new File(System.getProperty("user.home")+File.separator+"resources"+File.separator+"icons");
+        String name = FileUtil.getPortableFilename(f);
+        Assert.assertEquals("home:resources/icons", name);
     }
 
 	// from here down is testing infrastructure
