@@ -25,7 +25,7 @@ import java.util.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.27 $
+ * @version		$Revision: 1.28 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -184,21 +184,24 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     public void setValueAt(Object value, int row, int col) {
         if (col==USERNAMECOL) {
         	// check to see if user name already exists
-            NamedBean nB = getByUserName((String)value);
-            if (nB == null) {
-				getBySystemName(sysNameList.get(row)).setUserName(
-						(String) value);
-				fireTableRowsUpdated(row, row);
-			}else{
-				log.error("User name is not unique " + value);
-				String msg;
-				msg = java.text.MessageFormat.format(AbstractTableAction.rb
-						.getString("WarningUserName"),
-						new Object[] { ("" + value) });
-				JOptionPane.showMessageDialog(null, msg,
-						AbstractTableAction.rb.getString("WarningTitle"),
-						JOptionPane.ERROR_MESSAGE);
-			}
+        	if (((String)value).equals("")) value = null;
+            else {
+                NamedBean nB = getByUserName((String)value);
+                if (nB != null) {
+                    log.error("User name is not unique " + value);
+                    String msg;
+                    msg = java.text.MessageFormat.format(AbstractTableAction.rb
+                            .getString("WarningUserName"),
+                            new Object[] { ("" + value) });
+                    JOptionPane.showMessageDialog(null, msg,
+                            AbstractTableAction.rb.getString("WarningTitle"),
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+            getBySystemName(sysNameList.get(row)).setUserName(
+                    (String) value);
+            fireTableRowsUpdated(row, row);
         } else if (col==COMMENTCOL) {
             getBySystemName(sysNameList.get(row)).setComment(
                     (String) value);
