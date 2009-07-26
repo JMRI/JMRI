@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FileNames.shtml,v 1.1 2009-07-12 23:09:13 jacobsen Exp $ -->
+<!-- $Id: FileNames.shtml,v 1.2 2009-07-26 16:34:11 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -55,6 +55,8 @@ If the name
             relative pathname below the program directory
 <LI> starts with "preference:", treat the rest as a 
             relative path below the preferences directory
+<LI> starts with "home:", treat the rest as a 
+            relative path below the directory in the user.home property, Java's idea of the user's home directory
 <LI> starts with "resource:", treat the rest as a 
             pathname relative to the program directory
                  (deprecated; see "program:" above)
