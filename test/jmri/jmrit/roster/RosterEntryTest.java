@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster.RosterEntry class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class RosterEntryTest extends TestCase {
 
@@ -244,6 +244,110 @@ public class RosterEntryTest extends TestCase {
         if (f2.exists()) f2.delete();
     }
 
+    public void testNoAttribute() {
+        RosterEntry r = new RosterEntry();
+        Assert.assertNull(r.getAttribute("foo"));
+    }
+    
+    public void testOneAttribute() {
+        RosterEntry r = new RosterEntry();
+        r.putAttribute("foo", "bar");
+        Assert.assertEquals("bar",r.getAttribute("foo"));
+    }
+    
+    public void testReplaceAttribute() {
+        RosterEntry r = new RosterEntry();
+        r.putAttribute("foo", "bar");
+        r.putAttribute("foo", "a nicer bar");
+        Assert.assertEquals("a nicer bar",r.getAttribute("foo"));
+    }
+
+    public void testNullAttributeValue() {
+        RosterEntry r = new RosterEntry();
+        r.putAttribute("foo", "bar");
+        r.putAttribute("foo", null);
+        Assert.assertNull(r.getAttribute("foo"));
+    }
+    
+    public void testAttributeList() {
+        RosterEntry r = new RosterEntry();
+        r.putAttribute("key 2", "value 2");
+        r.putAttribute("key 3", "value 3");
+        r.putAttribute("key 1", "value 1");
+        java.util.Set<String> l = r.getAttributes();
+        Assert.assertEquals("number returned", 3, l.size());
+        java.util.Iterator i = l.iterator();
+        Assert.assertEquals("1st item", "key 1", i.next());
+        Assert.assertEquals("2nd item", "key 2", i.next());
+        Assert.assertEquals("3rd item", "key 3", i.next());
+        Assert.assertTrue(!i.hasNext());
+    }
+
+    public void testXmlAttributesLoadStore() {
+        // create Element
+        org.jdom.Element e = new org.jdom.Element("locomotive")
+            .setAttribute("id","our id 4")
+            .setAttribute("fileName","file here")
+            .setAttribute("roadNumber","431")
+            .setAttribute("roadName","SP")
+            .setAttribute("mfg","Athearn")
+            .setAttribute("dccAddress","1234")
+            .addContent(new org.jdom.Element("decoder")
+                        .setAttribute("family","91")
+                        .setAttribute("model","33")
+                  )
+            .addContent(new org.jdom.Element("attributepairs")
+                  .addContent(new org.jdom.Element("keyvaluepair")
+                         .addContent(new org.jdom.Element("key")
+                            .addContent("key 1")
+                         )
+                         .addContent(new org.jdom.Element("value")
+                            .addContent("value 1")
+                         )
+                       )
+                  .addContent(new org.jdom.Element("keyvaluepair")
+                         .addContent(new org.jdom.Element("key")
+                            .addContent("key 2")
+                         )
+                         .addContent(new org.jdom.Element("value")
+                            .addContent("value 2")
+                         )
+                       )
+                  )
+            ; // end create element
+
+        RosterEntry r = new RosterEntry(e){
+                            void warnShortLong(String s){}
+        };
+
+        Assert.assertEquals("value 1",r.getAttribute("key 1"));
+        Assert.assertEquals("value 2",r.getAttribute("key 2"));
+        Assert.assertEquals(null,r.getAttribute("key 4"));
+    }
+    
+    public void testStoreAttribute() {
+        RosterEntry r = new RosterEntry("dummy filename");
+        r.putAttribute("foo", "bar");
+
+        org.jdom.Element e = r.store();
+        Assert.assertNotNull(e);
+        Assert.assertNotNull(e.getChild("attributepairs"));
+        Assert.assertNotNull(e.getChild("attributepairs")
+                                .getChild("keyvaluepair"));
+        Assert.assertNotNull(e.getChild("attributepairs")
+                                .getChild("keyvaluepair")
+                                .getChild("key"));
+        Assert.assertNotNull(e.getChild("attributepairs")
+                                .getChild("keyvaluepair")
+                                .getChild("value"));
+        Assert.assertEquals("foo", e.getChild("attributepairs")
+                                .getChild("keyvaluepair")
+                                .getChild("key").getText());
+        Assert.assertNotNull("bar", e.getChild("attributepairs")
+                                .getChild("keyvaluepair")
+                                .getChild("value").getText());
+    }
+    
     // from here down is testing infrastructure
 
     public RosterEntryTest(String s) {

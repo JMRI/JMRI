@@ -33,10 +33,14 @@ import org.jdom.Element;
  * <P>
  * When the filePath attribute is non-null, the user has decided to
  * organize the roster into directories.
+ * <P>
+ * Each entry can have one or more "Attributes" associated with it.
+ * These are (key, value) pairs.  The key has to be unique, and currently
+ * both objects have to be Strings.
  *
- * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005
+ * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.33 $
+ * @version   $Revision: 1.34 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -217,6 +221,7 @@ public class RosterEntry {
         }
 
         loadFunctions(e.getChild("functionlabels"));
+        loadAttributes(e.getChild("attributepairs"));
 
     }
 
@@ -238,6 +243,22 @@ public class RosterEntry {
                     this.setFunctionLabel(num, val);
                     this.setFunctionLockable(num, lock.equals("true"));
                 }
+            }
+        }
+    }
+    
+    /**
+     * Loads attribute key/value pairs from a 
+     * JDOM element.
+     */
+	public void loadAttributes(Element e3) {
+        if (e3 != null)  {
+            java.util.List<Element> l = e3.getChildren("keyvaluepair");
+            for (int i = 0; i < l.size(); i++) {
+                Element fn = l.get(i);
+                String key = fn.getChild("key").getText();
+                String value = fn.getChild("value").getText();
+                this.putAttribute(key, value);
             }
         }
     }
@@ -290,6 +311,27 @@ public class RosterEntry {
     String[] functionLabels;
     boolean[] functionLockables;
     
+    java.util.TreeMap<String,String> attributePairs;
+    
+    public void putAttribute(String key, String value) {
+        if (attributePairs == null) attributePairs = new java.util.TreeMap<String,String>();
+        attributePairs.put(key, value);
+    }
+    public String getAttribute(String key) {
+        if (attributePairs == null) return null;
+        return attributePairs.get(key);
+    }
+
+    /**
+     * Provide access to the set of attributes.  This
+     * is directly backed access, so e.g. removing an item
+     * from this Set removes it from the RosterEntry too.
+     */
+    public java.util.Set<String> getAttributes() {
+        if (attributePairs == null) return null;
+        return attributePairs.keySet();
+    }
+
     /**
      * Warn user that the roster entry needs to be resaved.
      */
@@ -343,6 +385,27 @@ public class RosterEntry {
                 }
             }
             e.addContent(d);
+        }
+
+        java.util.Set<String> keyset = getAttributes();
+        if (keyset != null) {
+            java.util.Iterator<String> keys = keyset.iterator();
+            if (keys.hasNext()) {
+                d = new Element("attributepairs");
+                while (keys.hasNext()) {
+                    String key = keys.next();
+                    String value = getAttribute(key);
+                    d.addContent(new org.jdom.Element("keyvaluepair")
+                        .addContent(new org.jdom.Element("key")
+                            .addContent(key)
+                        )
+                        .addContent(new org.jdom.Element("value")
+                            .addContent(value)
+                        )
+                    );
+                }
+                e.addContent(d);
+            }
         }
         return e;
     }
