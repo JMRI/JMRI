@@ -18,7 +18,7 @@ import org.jdom.Element;
  * specific Memory or AbstractMemory subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -57,7 +57,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                 Object obj = m.getValue();
                 if (obj != null)
                 {
-                    String value = (String)obj;
+                    String value = obj.toString();
                     elem.setAttribute("value", value);
                 }
 
