@@ -3,7 +3,6 @@
 package jmri.jmrit.operations.rollingstock.engines;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -14,7 +13,7 @@ import javax.swing.JOptionPane;
  * This routine will remove all engines from the operation database.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 
@@ -36,11 +35,7 @@ public class DeleteEngineRosterAction extends AbstractAction {
 				"Are you sure you want to delete all the engines in your roster?", "Delete all engines?",
 				JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
 			log.debug("removing all engines from roster");
-			List<String> engines = manager.getEnginesByNumberList();
-			for (int i=0; i<engines.size(); i++){
-				Engine engine = manager.getEngineById(engines.get(i));
-				manager.deregister(engine);
-			}
+			manager.deleteAll();
 		}
 	}
 

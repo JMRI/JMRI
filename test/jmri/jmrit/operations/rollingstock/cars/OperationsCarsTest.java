@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
  *   Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -392,6 +392,14 @@ public class OperationsCarsTest extends TestCase {
         Assert.assertEquals("destination c5", Car.OKAY, c5.setDestination(l1, l1t1));
         Assert.assertEquals("destination c6", Car.OKAY, c6.setDestination(l1, l1t2));
 
+        // set car weight so there won't be an exception when setting car in a kernel
+        c1.setWeight("20");
+        c2.setWeight("6");
+        c3.setWeight("21");
+        c4.setWeight("20");
+        c5.setWeight("50");
+        c6.setWeight("30"); 
+        
         c1.setKernel(new Kernel("F"));
         c2.setKernel(new Kernel("D"));
         c3.setKernel(new Kernel("B"));

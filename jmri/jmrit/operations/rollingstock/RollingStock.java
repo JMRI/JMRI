@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -547,6 +547,15 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	}
 	
 	/**
+	 * Remove rolling stock.  Releases all listeners.
+	 */
+	public void dispose(){
+       	setTrain(null);
+    	setDestination(null, null);
+        setLocation(null, null);
+	}
+	
+	/**
 	 * Construct this Entry from XML. 
 	 * 
 	 * @param e  RollingStock XML element
@@ -606,7 +615,6 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		if ((a = e.getAttribute("rfid")) != null)
 			_rfid = a.getValue();
 	}
-	
 
 	boolean verboseStore = false;
 	/**

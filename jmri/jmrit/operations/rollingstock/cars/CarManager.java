@@ -23,7 +23,7 @@ import javax.swing.JComboBox;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -63,7 +63,8 @@ public class CarManager implements java.beans.PropertyChangeListener {
 	}
     
     public void dispose() {
-        _carHashTable.clear();
+    	deleteAll();
+        //_carHashTable.clear();
     }
 
  
@@ -149,9 +150,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
      * Unload a Car.
      */
     public void deregister(Car car) {
-    	car.setKernel(null);
-    	car.setDestination(null, null);
-        car.setLocation(null, null);
+    	car.dispose();
         Integer oldSize = new Integer(_carHashTable.size());
     	_carHashTable.remove(car.getId());
         firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_carHashTable.size()));
@@ -165,9 +164,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     	Enumeration<String> en = _carHashTable.keys();
     	while (en.hasMoreElements()) { 
     		Car car = getCarById(en.nextElement());
-        	car.setKernel(null);
-        	car.setDestination(null, null);
-            car.setLocation(null, null);
+    		car.dispose();
             _carHashTable.remove(car.getId());
     	}
     	firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_carHashTable.size()));

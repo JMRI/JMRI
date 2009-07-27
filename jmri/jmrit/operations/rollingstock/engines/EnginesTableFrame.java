@@ -28,7 +28,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -240,6 +240,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 	}
 
     public void dispose() {
+    	EngineManager.instance().removePropertyChangeListener(this);
     	enginesModel.dispose();
     	if (f != null)
     		f.dispose();

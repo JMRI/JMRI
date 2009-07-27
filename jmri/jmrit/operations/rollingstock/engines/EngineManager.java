@@ -20,7 +20,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -59,7 +59,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
 	}
     
     public void dispose() {
-        _engineHashTable.clear();
+    	deleteAll();
     }
 
  
@@ -121,12 +121,24 @@ public class EngineManager implements java.beans.PropertyChangeListener {
      * Unload a engine.
      */
     public void deregister(Engine engine) {
-    	engine.setConsist(null);
-        engine.setLocation(null, null);
-        engine.setDestination(null, null);
+    	engine.dispose();
         Integer oldSize = new Integer(_engineHashTable.size());
     	_engineHashTable.remove(engine.getId());
         firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_engineHashTable.size()));
+    }
+    
+    /**
+     * Remove all engines from roster
+     */
+    public void deleteAll(){
+    	Integer oldSize = new Integer(_engineHashTable.size());
+    	Enumeration<String> en = _engineHashTable.keys();
+    	while (en.hasMoreElements()) { 
+    		Engine engine = getEngineById(en.nextElement());
+    		engine.dispose();
+            _engineHashTable.remove(engine.getId());
+    	}
+    	firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_engineHashTable.size()));
     }
     
     public Consist newConsist(String name){
@@ -561,8 +573,8 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     }
     
     /**
-     * Sort by car RFID
-     * @return list of car ids ordered by RFIDs
+     * Sort by engine RFID
+     * @return list of engine ids ordered by RFIDs
      */
     public List<String> getEnginesByRfidList() {
       	// first get by id list

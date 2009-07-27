@@ -9,7 +9,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents an engine on the layout
  * 
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class Engine extends RollingStock {
 	
@@ -152,6 +152,11 @@ public class Engine extends RollingStock {
 			return LENGTH;	
 		}
 		return OKAY;
+	}
+	
+	public void dispose(){
+		setConsist(null);
+		super.dispose();
 	}
 	
 	LocationManager locationManager = LocationManager.instance();

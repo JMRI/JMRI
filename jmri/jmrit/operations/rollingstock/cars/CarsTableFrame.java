@@ -32,7 +32,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 public class CarsTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -252,6 +252,7 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 	}
 
     public void dispose() {
+    	CarManager.instance().removePropertyChangeListener(this);
     	carsModel.dispose();
     	if (f != null)
     		f.dispose();
