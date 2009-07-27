@@ -18,7 +18,7 @@ import javax.swing.JSeparator;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -269,7 +269,22 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     icon = true;
     		        updateSize();
                     return;
-                } else log.warn("can't display current value of "+memory.getSystemName());
+                } else if (val instanceof Integer) {
+                    setText(((Integer) memory.getValue()).toString());
+                    setIcon(null);
+                    text = true;
+                    icon = false;
+    		        updateSize();
+                    return;
+                } else if (val instanceof Float) {
+                    setText(((Float) memory.getValue()).toString());
+                    setIcon(null);
+                    text = true;
+                    icon = false;
+    		        updateSize();
+                    return;
+                } else log.warn("can't display current value of "+memory.getSystemName()+
+                                ", val= "+val);
 		    } else {
 		        // map exists, use it
 			    NamedIcon newicon = map.get(key.toString());
