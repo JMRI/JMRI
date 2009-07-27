@@ -26,7 +26,7 @@ import javax.swing.event.ListSelectionEvent;
  * Memory, preserving what it finds.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  * @since 2.7.2
  */
 
@@ -166,9 +166,19 @@ public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.
     	}
         if (memory.getValue() == null) return;
         Integer num = null;
-        try {
-            num =new Integer((String)memory.getValue());
-        } catch (NumberFormatException e) {
+        if (memory.getValue().getClass() == String.class) {
+            try {
+                num =new Integer((String)memory.getValue());
+            } catch (NumberFormatException e) {
+                return;
+            }
+        } else if (memory.getValue().getClass() == Integer.class) {
+            num = ((Number)memory.getValue()).intValue();
+        } else if (memory.getValue().getClass() == Float.class) {
+            num = new Integer(Math.round((Float)memory.getValue()));
+            log.debug("num= "+num.toString());
+        } else {
+            //spinner.setValue(memory.getValue());
             return;
         }
         int n = num.intValue();
@@ -195,6 +205,10 @@ public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.
         } else {
             memory.setValue(spinner.getValue());
         }
+    }
+
+    public String getValue() {
+        return ""+spinner.getValue();
     }
     
     public void mouseExited(MouseEvent e) {
