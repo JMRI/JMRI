@@ -82,7 +82,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  * @author  Dave Duchamp Copywright (C) 2009
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
@@ -274,7 +274,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
                 } 
             }
             if (next==null)
-            	log.error("next is null!");
+            	if (log.isDebugEnabled()) log.debug("next is null!");
             if (next!=null && count==1) {
                 // found one block with proper direction, assume that
                 setValue(next.getBlock().getValue());
