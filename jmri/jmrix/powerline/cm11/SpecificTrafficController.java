@@ -23,7 +23,7 @@ import jmri.jmrix.powerline.SerialMessage;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -36,7 +36,6 @@ public class SpecificTrafficController extends SerialTrafficController {
         setAllowUnexpectedReply(true);
         mWaitBeforePoll = 1000;  // can take a long time to send
 
-        initNodes();
     }
 
     /**

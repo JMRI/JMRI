@@ -5,6 +5,7 @@ package jmri.jmrix.powerline;
 import jmri.implementation.AbstractVariableLight;
 import jmri.Sensor;
 import jmri.Turnout;
+import jmri.jmrix.powerline.SerialAddress;
 
 /**
  * Implementation of the Light Object for X10.
@@ -27,7 +28,7 @@ import jmri.Turnout;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
  * @author      Ken Cameron Copyright (C) 2009
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 abstract public class SerialLight extends AbstractVariableLight {
 
@@ -57,11 +58,9 @@ abstract public class SerialLight extends AbstractVariableLight {
      * AbstractVariableLight base classes.
      */
     protected void initializeLight() {
-        // Extract the default 1-256 address from the name
-        int tBit = SerialAddress.getBitFromSystemName(getSystemName());
         // Convert to the two-part X10 address
-        housecode = ((tBit-1)/16)+1;
-        devicecode = ((tBit-1)%16)+1;
+        housecode = SerialAddress.houseCodeAsValueFromSystemName(getSystemName());
+        devicecode = SerialAddress.deviceCodeAsValueFromSystemName(getSystemName());
         
         // Set defaults for all other instance variables
         setControlType( NO_CONTROL );

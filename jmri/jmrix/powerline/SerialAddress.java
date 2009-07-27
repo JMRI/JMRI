@@ -8,22 +8,17 @@ import java.util.regex.*;
  * Utility Class supporting parsing and testing of addresses
  * <P>
  * Two address formats are supported:
- *   Gtxxx 
- *      where:  t is the type code, 'T' for turnouts, 'S' for sensors, and
- *                      'L' for lights
- *              xxx is a bit number of the input or output bit (1-256)
- *      examples: PT2 (House Code A, Unit 2), PS161 (House Code K, Unit 1)
- *   Gtnxx 
- *      where:  t is the type code, 'T' for turnouts, 'S' for sensors, and
+ *   Ptnxx 
+ *      where:  t is the type code, 'S' for sensors, and
  *                      'L' for lights
  *              n is the house code of the input or output bit (A - P)
  *              xx is a bit number of the input or output bit (1-16)
- *      examples: PTA2 (House Code A, Unit 2), PSK1 (House Code K, Unit 1)
+ *      examples: PLA2 (House Code A, Unit 2), PSK1 (House Code K, Unit 1)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008
- * @author Ken Cameron, Copyright (C) 2008
- * @version     $Revision: 1.8 $
+ * @author Ken Cameron, Copyright (C) 2008, 2009
+ * @version     $Revision: 1.9 $
  */
 public class SerialAddress {
 
@@ -35,56 +30,48 @@ public class SerialAddress {
 
     public SerialAddress() {
     }
-
-    /**
-     * Public static method to parse a system name and return the Serial Node
-     *  Note:  Returns 'NULL' if illegal systemName format or if the node is not found
-     */
-    public static SerialNode getNodeFromSystemName(String systemName) {
-        return (SerialTrafficController.instance().getNodeFromAddress(0));
-    }
-    
-    /**
-     * Public static method to parse a system name and return the bit number
-     *   Notes: Bits are numbered from 1.
-     *          If an error is found, 0 is returned.
-     */
-    public static int getBitFromSystemName(String systemName) {
-        // validate the system Name leader characters
-        if ( !aCodes.reset(systemName).matches() ) {
-            // here if an illegal format 
-            log.error("illegal character in header field of system name: "+systemName);
-            return (0);
-        }
-        int num = -1;
-        if (nCodes.reset(systemName).matches() && nCodes.groupCount() == 1) {
-            // name must be PLnnn format
-            try {
-                num = (Integer.parseInt(nCodes.group(1)));
-            }
-            catch (Exception e) {
-                log.error("illegal character in unit number field of system name: " + systemName);
-                return (0);
-            }
-        }
-        if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 2){
-            // This is a PLaxx address
-            try {
-            	int houseNum = hCodes.group(1).charAt(0);
-            	int deviceNum = ((Integer.parseInt(hCodes.group(2)) - 1) & 0x0F) + 1;
-                num = 16 * (houseNum - minHouseCode) + deviceNum;
-            }
-            catch (Exception e) {
-                log.error("illegal character in unit number field system name: " + systemName);
-                return (0);
-            }
-        }
-        if (num < 1 || num > 256) {
-            log.error("invalid system name: " + systemName);
-            return (0);
-        }
-        return (num);
-    }
+//    
+//    /**
+//     * Public static method to parse a system name and return the bit number
+//     *   Notes: Bits are numbered from 1.
+//     *          If an error is found, 0 is returned.
+//     */
+//    public static int getBitFromSystemName(String systemName) {
+//        // validate the system Name leader characters
+//        if ( !aCodes.reset(systemName).matches() ) {
+//            // here if an illegal format 
+//            log.error("illegal character in header field of system name: "+systemName);
+//            return (0);
+//        }
+//        int num = -1;
+//        if (nCodes.reset(systemName).matches() && nCodes.groupCount() == 1) {
+//            // name must be PLnnn format
+//            try {
+//                num = (Integer.parseInt(nCodes.group(1)));
+//            }
+//            catch (Exception e) {
+//                log.error("illegal character in unit number field of system name: " + systemName);
+//                return (0);
+//            }
+//        }
+//        if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 2){
+//            // This is a PLaxx address
+//            try {
+//            	int houseNum = hCodes.group(1).charAt(0);
+//            	int deviceNum = ((Integer.parseInt(hCodes.group(2)) - 1) & 0x0F) + 1;
+//                num = 16 * (houseNum - minHouseCode) + deviceNum;
+//            }
+//            catch (Exception e) {
+//                log.error("illegal character in unit number field system name: " + systemName);
+//                return (0);
+//            }
+//        }
+//        if (num < 1 || num > 256) {
+//            log.error("invalid system name: " + systemName);
+//            return (0);
+//        }
+//        return (num);
+//    }
 
     /**
      * Public static method to validate system name format
@@ -98,23 +85,23 @@ public class SerialAddress {
             log.error("illegal character in header field system name: " + systemName);
             return (false);
         }
-        // Is this a PLnnn address
-        if (nCodes.reset(systemName).matches() && nCodes.groupCount() == 1) {
-            int num;
-            try {
-                num = Integer.parseInt(nCodes.group(1));
-            }
-            catch (Exception e) {
-                log.error("illegal character in number field system name: " + systemName);
-                return (false);
-            }
-            if ( (num < 1) || (num > 256) ) {
-                log.error("number field out of range in system name: "
-                                                    + systemName);
-                return (false);
-            }
-            return(true);
-        }
+//        // Is this a PLnnn address
+//        if (nCodes.reset(systemName).matches() && nCodes.groupCount() == 1) {
+//            int num;
+//            try {
+//                num = Integer.parseInt(nCodes.group(1));
+//            }
+//            catch (Exception e) {
+//                log.error("illegal character in number field system name: " + systemName);
+//                return (false);
+//            }
+//            if ( (num < 1) || (num > 256) ) {
+//                log.error("number field out of range in system name: "
+//                                                    + systemName);
+//                return (false);
+//            }
+//            return(true);
+//        }
         if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 2) {
             // This is a PLaxx address - validate the house code and unit address fields
             if (hCodes.group(1).charAt(0) < minHouseCode || hCodes.group(1).charAt(0) > maxHouseCode) {
@@ -153,25 +140,6 @@ public class SerialAddress {
             log.warn(systemName+" invalid; bad format");
             return false;
         }
-/*         int bit = getBitFromSystemName(systemName); */
-/*         if ( ( type=='T' ) || (type=='L') ) { */
-/*             if ( ( bit <= 0 ) || ( bit > SerialNode.outputBits[node.nodeType] ) ) { */
-/*                 // The bit is not valid for this defined Serial node */
-/*                 log.warn(systemName+" invalid; bad bit number"); */
-/*                 return false; */
-/*             } */
-/*         } */
-/*         else if ( type=='S' ) { */
-/*             if ( ( bit <= 0 ) || ( bit > SerialNode.inputBits[node.nodeType] ) ) { */
-/*                 // The bit is not valid for this defined Serial node */
-/*                 log.warn(systemName+" invalid; bad bit number"); */
-/*                 return false; */
-/*             } */
-/*         } */
-/*         else { */
-/*             log.error("Invalid type specification in validSystemNameConfig call"); */
-/*             return false; */
-/*         } */
         // System name has passed all tests
         return true;
     }
@@ -190,18 +158,6 @@ public class SerialAddress {
             return "";
         }
         String altName = "";
-        if (nCodes.reset(systemName).matches() && nCodes.groupCount() == 1) {
-            // This is a PLnnn address
-            int num = Integer.parseInt(nCodes.group(1));
-            char c = (char)((num / 16) + minHouseCode);
-            altName = systemName.substring(0,2) + c + Integer.toString(num % 16);
-        }
-        if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 2) {
-            // This is a PLann address 
-            int house = hCodes.group(1).charAt(0) - minHouseCode;
-            int unit = Integer.parseInt(hCodes.group(2));
-            altName = systemName.substring(0,2) + Integer.toString((house * 16) + unit);
-        }        
         return altName;
     }
         
@@ -227,10 +183,6 @@ public class SerialAddress {
         boolean hMatch = hCodes.reset(systemName).matches();
         int hCount = hCodes.groupCount();
         // check for the presence of a char to differentiate the two address formats
-        if (nMatch && nCount == 1) {
-            // This is a PLnnn address
-            nName = systemName.substring(0,2) + Integer.toString(Integer.parseInt(nCodes.group(1)));
-        }
         if ( hMatch && hCount == 2) {
             // This is a PLaxx address 
             nName = systemName.substring(0,3) + Integer.toString(Integer.parseInt(hCodes.group(2)));
@@ -243,6 +195,110 @@ public class SerialAddress {
         return nName;
     }
 
+    /**
+     * Extract housecode from system name, as a letter A-P
+     * <P>
+     * If the supplied system name does not have a valid format, an empty string is 
+     *      returned.
+     */
+    public static String houseCodeFromSystemName(String systemName) {
+    	String hCode = "";
+        // ensure that input system name has a valid format
+        if ( !validSystemNameFormat(systemName, systemName.charAt(1)) ) {
+            // No point in normalizing if a valid system name format is not present
+        } else {
+			if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 2) {
+				// This is a PLaxx address
+				try {
+					hCode = hCodes.group(1);
+				}
+				catch (Exception e) {
+					log.error("illegal character in number field system name: " + systemName);
+					return "";
+				}
+			}
+        }
+        return hCode;
+    }
+
+    /**
+     * Extract devicecode from system name, as a string 1-16
+     * <P>
+     * If the supplied system name does not have a valid format, an empty string is 
+     *      returned.
+     */
+    public static String deviceCodeFromSystemName(String systemName) {
+    	String dCode = "";
+        // ensure that input system name has a valid format
+        if ( !validSystemNameFormat(systemName, systemName.charAt(1)) ) {
+            // No point in normalizing if a valid system name format is not present
+        } else {
+			if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 2) {
+				// This is a PLaxx address
+				try {
+					dCode = hCodes.group(2);
+				}
+				catch (Exception e) {
+					log.error("illegal character in number field system name: " + systemName);
+					return "";
+				}
+			}
+        }
+        return dCode;
+    }
+
+    /**
+     * Extract housecode from system name, as a value 1-16
+     * <P>
+     * If the supplied system name does not have a valid format, an empty string is 
+     *      returned.
+     */
+    public static int houseCodeAsValueFromSystemName(String systemName) {
+    	int hCode = -1;
+        // ensure that input system name has a valid format
+        if ( !validSystemNameFormat(systemName, systemName.charAt(1)) ) {
+            // No point in normalizing if a valid system name format is not present
+        } else {
+			if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 2) {
+				// This is a PLaxx address
+				try {
+					hCode = Integer.parseInt(hCodes.group(1));
+				}
+				catch (Exception e) {
+					log.error("illegal character in number field system name: " + systemName);
+					return -1;
+				}
+			}
+        }
+        return hCode;
+    }
+
+    /**
+     * Extract devicecode from system name, as a value 1-16
+     * <P>
+     * If the supplied system name does not have a valid format, an empty string is 
+     *      returned.
+     */
+    public static int deviceCodeAsValueFromSystemName(String systemName) {
+    	int dCode = -1;
+        // ensure that input system name has a valid format
+        if ( !validSystemNameFormat(systemName, systemName.charAt(1)) ) {
+            // No point in normalizing if a valid system name format is not present
+        } else {
+			if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 2) {
+				// This is a PLaxx address
+				try {
+					dCode = Integer.parseInt(hCodes.group(2));
+				}
+				catch (Exception e) {
+					log.error("illegal character in number field system name: " + systemName);
+					return -1;
+				}
+			}
+        }
+        return dCode;
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialAddress.class.getName());
 }
 

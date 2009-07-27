@@ -16,7 +16,7 @@ import jmri.Turnout;
  *
  * Description:		extend jmri.AbstractTurnout for powerline serial layouts
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -27,11 +27,9 @@ public class SerialTurnout extends AbstractTurnout {
      */
     public SerialTurnout(String systemName, String userName) {
         super(systemName, userName);
-        // Extract the default 1-256 address from the name
-        int tBit = SerialAddress.getBitFromSystemName(systemName);
         // Convert to the two-part X10 address
-        housecode = ((tBit-1)/16)+1;
-        devicecode = ((tBit-1)%16)+1;
+        housecode = SerialAddress.houseCodeAsValueFromSystemName(getSystemName());
+        devicecode = SerialAddress.deviceCodeAsValueFromSystemName(getSystemName());
     }
 
     /**

@@ -3,7 +3,6 @@
 package jmri.jmrix.powerline.cm11;
 
 import jmri.Sensor;
-import jmri.InstanceManager;
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.cm11.Constants;
@@ -17,7 +16,7 @@ import jmri.jmrix.powerline.cm11.Constants;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorManager {
 
@@ -40,27 +39,43 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
 	        int last = (l.getElement(1)& 0xFF) + 1;
 	        int bits = (l.getElement(2)& 0xFF);
         	String newHouseCode = null;
-        	String newCmdCode = null;
-        	int newAddrCode = 0;
+        	int newCmdCode = -1;
+        	int newAddrCode = -1;
         	Sensor sensor = null;
 	        for (int i = 3; i <= last; i++) {
+	        	int dat = l.getElement(i) & 0xFF;
 	            if ((bits & 0x01) != 0) {
-	                newCmdCode = X10Sequence.formatCommandByte(l.getElement(i) & 0xFF);
-	            } else {
-	            	int b = l.getElement(i) & 0xFF;
-	            	newHouseCode = X10Sequence.houseValueToText(X10Sequence.decode((b >> 4) & 0x0F));
-	            	newAddrCode = X10Sequence.decode(b & 0x0f);
-	            	if (newCmdCode != null && newHouseCode != null && newAddrCode != 0) {
-	            		String sysName = InstanceManager.sensorManagerInstance().systemLetter() + "S" + newHouseCode + newAddrCode;
-	            		sensor = InstanceManager.sensorManagerInstance().provideSensor(sysName);
-	            		// see if sensor exists
-	            		if (sensor == null) {
-	                    	sensor = InstanceManager.sensorManagerInstance().newSensor(sysName.toUpperCase(), null); 
+	                newCmdCode = dat & 0x0f;
+	            	if (newCmdCode != -1 && newHouseCode != null && newAddrCode > 0) {
+	            		String sysName = systemLetter() + "S" + newHouseCode + newAddrCode;
+	            		sensor = provideSensor(sysName);
+	            		// see if sensor exists, comment out for production, I'm using it for testing
+//	            		if (sensor == null) {
+//	                    	sensor = newSensor(sysName.toUpperCase(), null); 
+//	            		}
+	            		if (sensor != null) {
+	            			if (newCmdCode == X10Sequence.FUNCTION_ON) {
+	            				try {				
+	            					sensor.setKnownState(Sensor.ACTIVE);
+	            				} catch (jmri.JmriException e) {
+	            					log.warn("Exception setting " + sysName + " sensor ACTIVE: " + e);
+	            				}
+	            			}
+	            			if (newCmdCode == X10Sequence.FUNCTION_OFF) {
+	            				try {				
+	            					sensor.setKnownState(Sensor.INACTIVE);
+	            				} catch (jmri.JmriException e) {
+	            					log.warn("Exception setting " + sysName + " sensor INACTIVE: " + e);
+	            				}
+	            			}
 	            		}
 	            	}
 	            	newHouseCode = null;
-	            	newCmdCode = null;
-	            	newAddrCode = 0;
+	            	newCmdCode = -1;
+	            	newAddrCode = -1;
+	            } else {
+	            	newHouseCode = X10Sequence.houseValueToText(X10Sequence.decode((dat >> 4) & 0x0F));
+	            	newAddrCode = X10Sequence.decode(dat & 0x0f);
 	            }
                 bits = bits >> 1;  // shift over before next byte
 	        }
