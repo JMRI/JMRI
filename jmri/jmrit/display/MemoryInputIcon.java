@@ -26,7 +26,7 @@ import javax.swing.JTextField;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @since 2.7.2
  */
 
@@ -49,8 +49,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
                 public void keyReleased(KeyEvent e){
                     int key = e.getKeyCode();
                     if (key == KeyEvent.VK_ENTER) {
-                        if (memory == null) return;
-                        memory.setValue(_textBox.getText());
+                        updateMemory();
                     }
                 }
             });
@@ -132,9 +131,20 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
             });
     }
 
-    public void mouseExited(MouseEvent e) {
+    private void updateMemory() {
         if (memory == null) return;
-        memory.setValue(_textBox.getText());
+        String str = _textBox.getText();
+        if (str!=null && str.length()>0) {
+            char ch = str.charAt(str.length()-1);
+            if (ch == 'F' || ch == 'f') {
+                memory.setValue(new Float(str));
+            }
+        }
+        memory.setValue(str);
+    }
+
+    public void mouseExited(MouseEvent e) {
+        updateMemory();
     }
 
     void edit() {
