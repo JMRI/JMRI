@@ -18,7 +18,7 @@ import javax.swing.JSeparator;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -143,7 +143,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         setToolTipText(getNameString());
     }
 
-    String getNameString() {
+    public String getNameString() {
         String name;
         if (memory == null) name = rb.getString("NotConnected");
         else if (memory.getUserName()!=null)
