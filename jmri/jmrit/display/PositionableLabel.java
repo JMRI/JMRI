@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -20,6 +21,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -37,7 +39,7 @@ import javax.swing.JTextField;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 
 public class PositionableLabel extends JLabel
@@ -189,9 +191,29 @@ public class PositionableLabel extends JLabel
 		}
         if (e.isMetaDown()) {
             if (!getPositionable() || getFixed()) return;
-            // update object postion by how far dragged
-            int xObj = getX()+(e.getX()-xClick);
-            int yObj = getY()+(e.getY()-yClick);
+            List <JComponent> list = panelEditor.getSelections();
+            int deltaX = e.getX() - xClick;
+            int deltaY = e.getY() - yClick;
+            if (list.size() == 0) {
+                moveLabel(deltaX, deltaY);
+            } else if ( !getFixed() ) {
+                for (int i=0; i<list.size(); i++){
+                    JComponent comp = list.get(i);
+                    if (comp instanceof PositionableLabel) {
+                        ((PositionableLabel)comp).moveLabel(deltaX, deltaY);
+                    }else if (comp instanceof PositionableJPanel) {
+                        ((PositionableJPanel)comp).movePanel(deltaX, deltaY);
+                    }
+                }
+            }
+        }
+    }
+
+    // update object postion by how far dragged
+    void moveLabel(int deltaX, int deltaY) {
+        if (getPositionable() && !getFixed()) {
+            int xObj = getX() + deltaX;
+            int yObj = getY() + deltaY;
             // don't allow negative placement, icon can become unreachable
             if (xObj < 0) xObj = 0;
             if (yObj < 0) yObj = 0;
@@ -573,6 +595,12 @@ public class PositionableLabel extends JLabel
     public boolean getShowTooltip() { return showTooltip; }
     private boolean showTooltip = true;
 
+    public String getNameString() {
+        if (icon) return "(Icon)";
+        else if (text) return "(Text)";
+        else return "None!";
+    }
+
     /**
      * Clean up when this object is no longer needed.  Should not
      * be called while the object is still displayed; see remove()
@@ -592,6 +620,7 @@ public class PositionableLabel extends JLabel
      */
     public void remove() {
 		if (layoutPanel!=null) layoutPanel.removeObject(this);
+        if (panelEditor != null) panelEditor.remove(this);
         Point p = this.getLocation();
         int w = this.getWidth();
         int h = this.getHeight();

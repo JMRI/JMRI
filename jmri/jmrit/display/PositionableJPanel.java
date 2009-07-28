@@ -2,6 +2,7 @@
 
 package jmri.jmrit.display;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 import java.awt.BorderLayout;
@@ -29,7 +30,7 @@ import javax.swing.JCheckBoxMenuItem;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 abstract class PositionableJPanel extends JPanel
                         implements MouseMotionListener, MouseListener,
@@ -67,6 +68,15 @@ abstract class PositionableJPanel extends JPanel
      */
     protected void setPanel(LayoutEditor panel) {
 		layoutPanel = panel;
+    }
+
+    PanelEditor panelEditor = null;
+    /**
+     * Set panel (called from Panel Editor)
+     * @param panel
+     */
+    protected void setPanel(PanelEditor panel){
+    	panelEditor = panel;
     }
 
 	private Integer displayLevel;
@@ -136,10 +146,32 @@ abstract class PositionableJPanel extends JPanel
 			return;
 		}
         if (e.isMetaDown()) {
-            if (!getPositionable()) return;
-            // update object postion by how far dragged
-            int xObj = getX()+(e.getX()-xClick);
-            int yObj = getY()+(e.getY()-yClick);
+            List <JComponent> list = panelEditor.getSelections();
+            int deltaX = e.getX() - xClick;
+            int deltaY = e.getY() - yClick;
+            if (list.size() == 0) {
+                movePanel(deltaX, deltaY);
+            } else if (getPositionable()) {
+                for (int i=0; i<list.size(); i++){
+                    JComponent comp = list.get(i);
+                    if (comp instanceof PositionableLabel) {
+                        ((PositionableLabel)comp).moveLabel(deltaX, deltaY);
+                    } else if (comp instanceof PositionableJPanel) {
+                        ((PositionableJPanel)comp).movePanel(deltaX, deltaY);
+                    }
+                }
+            }
+        }
+    }
+
+    // update object postion by how far dragged
+    void movePanel(int deltaX, int deltaY) {
+        if (getPositionable()) {
+            int xObj = getX() + deltaX;
+            int yObj = getY() + deltaY;
+            // don't allow negative placement, icon can become unreachable
+            if (xObj < 0) xObj = 0;
+            if (yObj < 0) yObj = 0;
             this.setLocation(xObj, yObj);
             // and show!
             this.repaint();
@@ -286,6 +318,7 @@ abstract class PositionableJPanel extends JPanel
      */
     void remove() {
 		if (layoutPanel!=null) layoutPanel.removeObject(this);
+		if (panelEditor!=null) panelEditor.remove(this);
         // cleanup before "this" is removed
         cleanup();
         Point p = this.getLocation();

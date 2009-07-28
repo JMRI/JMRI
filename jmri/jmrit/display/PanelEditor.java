@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
+import javax.swing.event.MouseInputAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.event.ListSelectionEvent;
 
 import java.util.ArrayList;
@@ -979,11 +981,16 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
     public void putJPanel(PositionableJPanel c) {
         c.invalidate();
+        c.setPanel(this);
         target.add(c, c.getDisplayLevel());
         configureItem(c);
         contents.add(c);
         // reshow the panel
         target.validate();
+    }
+
+    public void remove(PositionableJPanel l) {
+        contents.remove(l);
     }
 
     /**
@@ -999,6 +1006,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         l.setPositionable(true);
         moveToFront(l);
     }
+
     public void putLabel(PositionableLabel l) {
         l.invalidate();
         l.setPanel(this);
@@ -1006,6 +1014,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         configureItem(l);
         contents.add(l);
         target.validate();
+    }
+
+    public void remove(PositionableLabel l) {
+        contents.remove(l);
     }
 
     void addMemory() {
@@ -1406,7 +1418,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         JmriJFrame targetFrame = new JmriJFrame(name);
 
         // arrange for scrolling and size services
-        JLayeredPane targetPanel = new JLayeredPane(){
+        JLayeredPane targetPanel = new JLayeredPane() {
             // provide size services, even though a null layout manager is used
             public void setSize(int w, int h) {
                 this.h = h;
@@ -1417,7 +1429,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             int h = 100;
             int w = 100;
             public Dimension getSize() {
-                if (log.isDebugEnabled()) log.debug("get size w="+w+", h="+h);
+                //if (log.isDebugEnabled()) log.debug("get size w="+w+", h="+h);
                 return new Dimension(w,h);
             }
             public Dimension getPreferredSize() {
@@ -1439,7 +1451,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                 return super.add(c, i);
             }
             public void add(Component c, Object o) {
-                if (log.isDebugEnabled()) log.debug("adding of "+c.getSize()+" with Object");
+                //if (log.isDebugEnabled()) log.debug("adding of "+c.getSize()+" with Object");
                 super.add(c, o);
                 if (log.isDebugEnabled()) log.debug("in Object add, was "+w+","+h);
                 int hnew = Math.max(h,
@@ -1448,8 +1460,27 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                         c.getLocation().x+c.getSize().width);
                 setSize(wnew,hnew);
             }
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+
+                if (_selectRect != null) {
+                    Graphics2D g2d = (Graphics2D)g;
+                    //Draw a rectangle on top of the image.
+                    g2d.setStroke(DASHED_LINE);
+                    g.setXORMode(Color.white); //Color of line varies
+                                               //depending on image colors
+                    g.drawRect(_selectRect.x, _selectRect.y, _selectRect.width, _selectRect.height);
+
+                    //controller.updateLabel(rectToDraw);
+                }
+            }
+
         };
         targetPanel.setLayout(null);
+        MouseTracker mouseListener = new MouseTracker();
+        targetPanel.addMouseListener(mouseListener);
+        targetPanel.addMouseMotionListener(mouseListener);
+
 
         js = new JScrollPane(targetPanel);
         //js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -1514,6 +1545,73 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
         return targetFrame;
 
+    }
+    BasicStroke DASHED_LINE = new BasicStroke(1f, BasicStroke.CAP_BUTT, 
+                                    BasicStroke.JOIN_BEVEL,
+                                    10f, new float[] {10f, 10f}, 0f);
+    Rectangle _selectRect = null;
+
+    private class MouseTracker extends MouseInputAdapter {
+        int anchorX;
+        int anchorY;
+        public void mousePressed(MouseEvent e) {
+            if (!positionableBox.isSelected()) {
+                _selectRect = null;
+                return;
+            }
+            anchorX = e.getX();
+            anchorY = e.getY();
+            _selectRect = new Rectangle(anchorX, anchorY, 0, 0);
+            target.repaint();
+            //if (log.isDebugEnabled()) log.debug("MouseInputAdapter mousePressed");
+        }
+
+        public void mouseDragged(MouseEvent e) {
+            if (!positionableBox.isSelected()) { return; }
+            drawSelectRect(e);
+        }
+
+        public void mouseReleased(MouseEvent e) {
+            if (!positionableBox.isSelected()) { return; }
+            drawSelectRect(e);
+            makeSelections();
+            //if (log.isDebugEnabled()) log.debug("MouseInputAdapter mouseReleased");
+            _selectRect = null;
+        }
+
+        void drawSelectRect(MouseEvent e) {
+            int x = e.getX();
+            int y = e.getY();
+            _selectRect.setSize(x - anchorX, y - anchorY);
+            target.repaint();
+        }
+    }
+
+    ArrayList <JComponent> _selectList = new ArrayList <JComponent>();
+
+    List <JComponent> getSelections() { return _selectList; }
+
+    void makeSelections() {
+        _selectList = new ArrayList <JComponent>();
+        Rectangle test = new Rectangle();
+		for (int i = 0; i < contents.size(); i++) {
+			JComponent comp = contents.get(i);
+            if (_selectRect.contains(comp.getBounds(test))) {
+                _selectList.add(comp);
+                if (log.isDebugEnabled()) {
+                    String name;
+                    try {
+                        PositionableLabel l = (PositionableLabel)comp;
+                        name =l.getNameString();
+                    } catch (Exception ex) {
+                        PositionableJPanel p = (PositionableJPanel)comp;
+                        name =p.getNameString();
+                    }
+                    log.debug("Selection: "+name+", class= "+comp.getClass().getName());
+                }
+            }
+		}
+        if (log.isDebugEnabled()) log.debug("getSelections:"+_selectList.size()+" selected.");
     }
 
     /**
