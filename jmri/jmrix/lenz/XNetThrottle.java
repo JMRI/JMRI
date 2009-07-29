@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2009
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.26 $
+ * @version    $Revision: 2.27 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -43,6 +43,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         XNetTrafficController.instance().addXNetListener(XNetInterface.COMMINFO |
                                                          XNetInterface.CS_INFO |
                                                          XNetInterface.THROTTLE, this);
+        requestList = new LinkedList<RequestMessage>();
         if (log.isDebugEnabled()) { log.debug("XnetThrottle constructor"); }
     }
     
@@ -1923,7 +1924,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         if(log.isDebugEnabled()) log.debug("adding message to message queue");
         // put the message in the queue
         RequestMessage msg=new RequestMessage(m,s);
-        requestList.addLast(msg);        
+        requestList.addLast(msg);
         // if the state is idle, trigger the message send
         if(requestState==THROTTLEIDLE) sendQueuedMessage();
     }

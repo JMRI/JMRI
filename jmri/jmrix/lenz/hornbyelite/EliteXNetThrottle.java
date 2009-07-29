@@ -14,7 +14,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection on the Hornby Elite
  * @author  Paul Bender (C) 2008-2009
- * @version    $Revision: 1.6 $
+ * @version    $Revision: 1.7 $
  */
 
 public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
@@ -29,9 +29,6 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
     public EliteXNetThrottle()
     {
         super();
-        XNetTrafficController.instance().addXNetListener(XNetInterface.COMMINFO |
-                                                         XNetInterface.CS_INFO |
-                                                         XNetInterface.THROTTLE, this);
         if (log.isDebugEnabled()) { log.debug("Elite XNetThrottle constructor"); }
     }
     
@@ -40,21 +37,7 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
      */
     public EliteXNetThrottle(LocoAddress address)
     {
-        super();
-        this.setDccAddress(((DccLocoAddress)address).getNumber());
-        this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
-        this.speedStepMode=DccThrottle.SpeedStepMode128;
-        //       this.isForward=true;
-        setIsAvailable(false);
-        
-        f0Momentary = f1Momentary = f2Momentary = f3Momentary = f4Momentary =   
-            f5Momentary = f6Momentary = f7Momentary = f8Momentary = f9Momentary =
-            f10Momentary = f11Momentary = f12Momentary = false;
-        
-        XNetTrafficController.instance().addXNetListener(XNetInterface.COMMINFO |
-                                                         XNetInterface.CS_INFO |
-                                                         XNetInterface.THROTTLE, this);
-        sendStatusInformationRequest();
+        super(address);
         if (log.isDebugEnabled()) { log.debug("Elite XNetThrottle constructor called for address " + address ); }
     }
     
