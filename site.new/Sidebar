@@ -45,7 +45,7 @@
 		of your layout, from simply controlling a crossing gate
 		to running trains in the background.
 		    <UL>
-		    <LI><dfn><a href="./apps/Signalling">Signaling</a></dfn>
+		    <LI><dfn><a href="./tools/Signalling">Signaling</a></dfn>
 		    <LI><dfn><a href="doc/scripts/index.html">Scripting</a></dfn>
 		    </UL>
 		</dd>
