@@ -7,8 +7,7 @@ import java.io.File;
 
 import javax.swing.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -47,15 +46,17 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.42 $
+ * @version	$Revision: 1.43 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
 
     /** record the single instance of Roster **/
-    private static Roster _instance = null;
+    protected static Roster _instance = null;
 
-    public synchronized static void resetInstance() { _instance = null; }
+    public synchronized static void resetInstance() { 
+        _instance = null; 
+    }
 
     /**
      * Locate the single instance of Roster, loading it if need be.
@@ -159,6 +160,13 @@ public class Roster extends XmlFile {
         }
         return null;
     }
+    
+    /**
+     * Return a specific entry by index
+     */
+    public RosterEntry getEntry(int i ) {
+        return _list.get(i);
+    }
 
     /**
      * Return filename from a "title" string, ala selection in matchingComboBox.
@@ -170,6 +178,42 @@ public class Roster extends XmlFile {
         return null;
     }
 
+    public List<RosterEntry> getEntriesWithAttributeKey(String key) {
+        // slow but effective algorithm
+        ArrayList<RosterEntry> result = new ArrayList<RosterEntry>();
+        java.util.Iterator<RosterEntry> i = _list.iterator();
+        while (i.hasNext()) {
+            RosterEntry r = i.next();
+            if (r.getAttribute(key)!=null) result.add(r);
+        }
+        return result;
+    }
+
+   public List<RosterEntry> getEntriesWithAttributeKeyValue(String key, String value) {
+        // slow but effective algorithm
+        ArrayList<RosterEntry> result = new ArrayList<RosterEntry>();
+        java.util.Iterator<RosterEntry> i = _list.iterator();
+        while (i.hasNext()) {
+            RosterEntry r = i.next();
+            String v = r.getAttribute(key);
+            if ( v!=null && v.equals(value)) 
+                result.add(r);
+        }
+        return result;
+   }
+   
+   public Set<String> getAllAttributeKeys() {
+        // slow but effective algorithm
+        Set<String> result = new TreeSet<String>();
+        java.util.Iterator<RosterEntry> i = _list.iterator();
+        while (i.hasNext()) {
+            RosterEntry r = i.next();
+            Set<String> s = r.getAttributes();
+            if (s!=null) result.addAll(s);
+        }
+        return result;
+   }
+   
     /**
      * List of contained {@link RosterEntry} elements.
      */
