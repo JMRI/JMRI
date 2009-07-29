@@ -36,7 +36,7 @@ import java.awt.event.ItemEvent;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.76 $
+ * @version   $Revision: 1.77 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -1152,6 +1152,10 @@ abstract public class PaneProgFrame extends JmriJFrame
     public boolean storeFile() {
         log.debug("storeFile starts");
 
+        if (_rPane.checkDuplicate()){
+            JOptionPane.showMessageDialog(this, rbt.getString("ErrorDuplicateID"));
+            return false;
+        }
         // reload the RosterEntry
         updateDccAddress();
         _rPane.update(_rosterEntry);
@@ -1163,6 +1167,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             JOptionPane.showMessageDialog(this, rbt.getString("PromptFillInID"));
             return false;
         }
+
         // if there isn't a filename, store using the id
         _rosterEntry.ensureFilenameExists();
         String filename = _rosterEntry.getFileName();
@@ -1183,6 +1188,25 @@ abstract public class PaneProgFrame extends JmriJFrame
                                 new Object[]{filename}));
         return true;
     }
+
+     /**
+     *
+     * @return true if the value in the id JTextField
+     * is a duplicate of some other RosterEntry in the roster
+     */
+    /*boolean checkDuplicate() {
+        // check its not a duplicate
+        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, _rPane.getEnteredId());
+        System.out.println(_rPane.getEnteredId());
+        boolean oops = false;
+        System.out.println("our new roster entry " + _rosterEntry);
+        for (int i=0; i<l.size(); i++) {
+            System.out.println("Matching Roster Entries" + l.get(i));
+            if (_rosterEntry!=l.get(i)) oops =true;
+            //if (id.getText().equals(l.get(i).getId())) oops = true;
+        }
+        return oops;
+    }*/
 
     /**
      * local dispose, which also invokes parent. Note that
