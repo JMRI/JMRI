@@ -39,7 +39,7 @@ import javax.swing.JTextField;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.52 $
+ * @version $Revision: 1.53 $
  */
 
 public class PositionableLabel extends JLabel
@@ -194,7 +194,7 @@ public class PositionableLabel extends JLabel
             List <JComponent> list = panelEditor.getSelections();
             int deltaX = e.getX() - xClick;
             int deltaY = e.getY() - yClick;
-            if (list.size() == 0) {
+            if (!list.contains(this)) {
                 moveLabel(deltaX, deltaY);
             } else if ( !getFixed() ) {
                 for (int i=0; i<list.size(); i++){

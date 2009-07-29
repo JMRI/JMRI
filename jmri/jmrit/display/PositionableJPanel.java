@@ -30,7 +30,7 @@ import javax.swing.JCheckBoxMenuItem;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 abstract class PositionableJPanel extends JPanel
                         implements MouseMotionListener, MouseListener,
@@ -149,7 +149,7 @@ abstract class PositionableJPanel extends JPanel
             List <JComponent> list = panelEditor.getSelections();
             int deltaX = e.getX() - xClick;
             int deltaY = e.getY() - yClick;
-            if (list.size() == 0) {
+            if (!list.contains(this)) {
                 movePanel(deltaX, deltaY);
             } else if (getPositionable()) {
                 for (int i=0; i<list.size(); i++){
