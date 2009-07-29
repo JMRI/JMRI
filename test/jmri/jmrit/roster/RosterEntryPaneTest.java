@@ -5,7 +5,7 @@ import junit.framework.*;
 /**
  * Tests for the jmrit.roster.RosterEntryPane class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class RosterEntryPaneTest extends TestCase {
 
@@ -151,6 +151,35 @@ public class RosterEntryPaneTest extends TestCase {
 
     }
 
+    public void testNotDuplicate() {
+        RosterEntryPane p = new RosterEntryPane(rNew);
+        // reset Roster
+        Roster.resetInstance();
+        Assert.assertTrue(!p.checkDuplicate());
+    }
+    
+    public void testIsDuplicate() {
+        RosterEntryPane p = new RosterEntryPane(rNew);
+        // reset Roster
+        Roster.resetInstance();
+        Roster.instance().addEntry(rNew);
+        
+        Assert.assertTrue(!p.checkDuplicate());
+    }
+    
+    public void testRenamedDuplicate() {
+        RosterEntryPane p = new RosterEntryPane(rOld);
+        // reset Roster
+        Roster.resetInstance();
+        Roster.instance().addEntry(rNew);
+        
+        // reset entry
+        p.id.setText("new id");
+        p.update(rNew);
+        
+        Assert.assertTrue(p.checkDuplicate());
+    }
+    
     // from here down is testing infrastructure
 
     public RosterEntryPaneTest(String s) {

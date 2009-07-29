@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.List;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -17,7 +18,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster package & jmrit.roster.Roster class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 public class RosterTest extends TestCase {
 
@@ -134,6 +135,54 @@ public class RosterTest extends TestCase {
         Assert.assertEquals("search for 3 ", 3, t.matchingList(null, "123", null, null, null, null, null).size());
     }
 
+    public void testAttributeAccess() throws Exception {
+        // create a test roster & store in file
+        Roster r = createTestRoster();
+        Assert.assertNotNull("exists", r );
+
+        //
+        List l;
+        
+        l = r.getEntriesWithAttributeKey("key a");
+        Assert.assertEquals("match key a", 2, l.size());
+        l = r.getEntriesWithAttributeKey("no match");
+        Assert.assertEquals("no match", 0, l.size());
+
+    }
+
+    public void testAttributeValueAccess() throws Exception {
+        // create a test roster & store in file
+        Roster r = createTestRoster();
+        Assert.assertNotNull("exists", r );
+
+        //
+        List l;
+        
+        l = r.getEntriesWithAttributeKeyValue("key a", "value a");
+        Assert.assertEquals("match key a", 2, l.size());
+        l = r.getEntriesWithAttributeKeyValue("key a", "none");
+        Assert.assertEquals("no match key a", 0, l.size());
+        l = r.getEntriesWithAttributeKeyValue("no match", "none");
+        Assert.assertEquals("no match", 0, l.size());
+
+    }
+
+    public void testAttributeList() throws Exception {
+        // create a test roster & store in file
+        Roster r = createTestRoster();
+        Assert.assertNotNull("exists", r );
+
+        //
+        java.util.Set<String> s;
+        
+        s = r.getAllAttributeKeys();
+        
+        Assert.assertTrue("contains right key", s.contains("key b"));
+        Assert.assertTrue("not contains wrong key", !s.contains("no key"));
+        Assert.assertEquals("length", 2, s.size());
+
+    }
+
     public static Roster createTestRoster() throws java.io.IOException, java.io.FileNotFoundException {
         // this uses explicit filenames intentionally, to ensure that
         // the resulting files go into the test tree area.
@@ -157,6 +206,8 @@ public class RosterTest extends TestCase {
         e.setRoadNumber("123");
         e.setRoadName("SP");
         e.ensureFilenameExists();
+        e.putAttribute("key a", "value a");
+        e.putAttribute("key b", "value b");
         r.addEntry(e);
         e = new RosterEntry("file name Bill");
         e.setId("Bill");
@@ -166,12 +217,14 @@ public class RosterTest extends TestCase {
         e.setDecoderModel("81");
         e.setDecoderFamily("33");
         e.ensureFilenameExists();
+        e.putAttribute("key a", "value a");
         r.addEntry(e);
         e = new RosterEntry("file name Ben");
         e.setId("Ben");
         e.setRoadNumber("123");
         e.setRoadName("UP");
         e.ensureFilenameExists();
+        e.putAttribute("key b", "value b");
         r.addEntry(e);
 
         // write it
@@ -200,6 +253,8 @@ public class RosterTest extends TestCase {
         suite.addTest(jmri.jmrit.roster.FunctionLabelPaneTest.suite());
         suite.addTest(jmri.jmrit.roster.IdentifyLocoTest.suite());
         suite.addTest(jmri.jmrit.roster.RosterEntryTest.suite());
+        suite.addTest(jmri.jmrit.roster.swing.RosterTableModelTest.suite());
+        suite.addTest(jmri.jmrit.roster.swing.attributetable.AttributeTableModelTest.suite());
         return suite;
     }
 
