@@ -1466,12 +1466,12 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                 if (_selectRect != null) {
                     Graphics2D g2d = (Graphics2D)g;
                     //Draw a rectangle on top of the image.
+                    java.awt.Stroke stroke = g2d.getStroke(); 
                     g2d.setStroke(DASHED_LINE);
                     g.setXORMode(Color.white); //Color of line varies
                                                //depending on image colors
                     g.drawRect(_selectRect.x, _selectRect.y, _selectRect.width, _selectRect.height);
-
-                    //controller.updateLabel(rectToDraw);
+                    g2d.setStroke(stroke);
                 }
             }
 
@@ -1563,7 +1563,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             anchorY = e.getY();
             _selectRect = new Rectangle(anchorX, anchorY, 0, 0);
             target.repaint();
-            //if (log.isDebugEnabled()) log.debug("MouseInputAdapter mousePressed");
+            if (log.isDebugEnabled()) log.debug("MouseInputAdapter mousePressed");
         }
 
         public void mouseDragged(MouseEvent e) {
@@ -1575,14 +1575,27 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             if (!positionableBox.isSelected()) { return; }
             drawSelectRect(e);
             makeSelections();
-            //if (log.isDebugEnabled()) log.debug("MouseInputAdapter mouseReleased");
-            _selectRect = null;
+            if (log.isDebugEnabled()) log.debug("MouseInputAdapter mouseReleased");
+            //_selectRect = null;
         }
 
         void drawSelectRect(MouseEvent e) {
             int x = e.getX();
             int y = e.getY();
-            _selectRect.setSize(x - anchorX, y - anchorY);
+            int aX = anchorX;
+            int aY = anchorY;
+            int w = x - anchorX;
+            int h = y - anchorY;
+            if (x < anchorX) {
+                aX = x;
+                w = -w;
+            }
+            if (y < anchorY) {
+                aY = y;
+                h = -h;
+            }
+            _selectRect = new Rectangle(aX, aY, w, h);
+            //_selectRect.setSize(x - anchorX, y - anchorY);
             target.repaint();
         }
     }
@@ -1611,7 +1624,16 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                 }
             }
 		}
+        if (_selectList.size() < 2) {
+            _selectRect = null;
+        }
         if (log.isDebugEnabled()) log.debug("getSelections:"+_selectList.size()+" selected.");
+    }
+
+    void moveSelectRect(int deltaX, int deltaY) {
+        _selectRect = new Rectangle(_selectRect.x+deltaX, _selectRect.y+deltaY,
+                                    _selectRect.width, _selectRect.height);
+        target.repaint();
     }
 
     /**

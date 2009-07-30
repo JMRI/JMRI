@@ -39,7 +39,7 @@ import javax.swing.JTextField;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.53 $
+ * @version $Revision: 1.54 $
  */
 
 public class PositionableLabel extends JLabel
@@ -205,6 +205,7 @@ public class PositionableLabel extends JLabel
                         ((PositionableJPanel)comp).movePanel(deltaX, deltaY);
                     }
                 }
+                panelEditor.moveSelectRect(deltaX, deltaY);
             }
         }
     }
@@ -399,14 +400,49 @@ public class PositionableLabel extends JLabel
 			popup.add("x= " + this.getX());
 			popup.add("y= " + this.getY());
 			popup.add("level= " + this.getDisplayLevel().intValue());
+            List <JComponent> list = panelEditor.getSelections();
+            if (list.size() > 1) {
+                popup.add(new AbstractAction(rb.getString("AlignX")) {
+                    public void actionPerformed(ActionEvent e) {
+                        alignGroup(true);
+                    }
+                });
+                popup.add(new AbstractAction(rb.getString("AlignY")) {
+                    public void actionPerformed(ActionEvent e) {
+                        alignGroup(false);
+                    }
+                });
+            }
 			popup.add(new PopupAction(name));
 		}
+    }
+
+    protected void alignGroup(boolean alignX) {
+        List <JComponent> list = panelEditor.getSelections();
+        int sum = 0;
+        for (int i=0; i<list.size(); i++) {
+            JComponent comp = list.get(i);
+            if (alignX) {
+                sum += comp.getX();
+            } else {
+                sum += comp.getY();
+            }
+        }
+        int ave = Math.round((float)sum/list.size());
+        for (int i=0; i<list.size(); i++) {
+            JComponent comp = list.get(i);
+            if (alignX) {
+                comp.setLocation(ave, comp.getY());
+            } else {
+                comp.setLocation(comp.getX(), ave);
+            }
+        }
     }
 
     class PopupAction extends AbstractAction {
         String name;
         PopupAction(String n) {
-            super("Set Location");
+            super(rb.getString("SetLocation"));
             name = n;
         }
         public void actionPerformed(ActionEvent e) {
@@ -422,8 +458,7 @@ public class PositionableLabel extends JLabel
 		f.initComponents(this, name);
 		f.setVisible(true);	
 	}
- 
-    
+
     protected JMenu makeFontColorMenu() {
         JMenu colorMenu = new JMenu(rb.getString("FontColor"));
         colorButtonGroup = new ButtonGroup();
