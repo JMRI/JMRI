@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -34,8 +34,8 @@
 #    falsely cycle, this may not work. You may have to add internal
 #    sensors to 'buffer' these false cycles using Logix to clean
 #    things up.
-# 6. It is expected that usernames are added for all blocks and signals as
-#    those are displayed by the script in the RobotThrottle window.
+# 6. FIXED: You no longer need usernames for everything. It will use
+#    system or user names depending on what you have in your panel.
 # 7. If you create memory values and memory labels on your panel and
 #    tie them to the blocks, you will always see the loco id displayed.
 #    That is the block value that the script is looking for when
@@ -64,6 +64,11 @@
 # 3. Learn about the neat features the 'operations' data is adding.
 #    This would help with knowing lengths of trains, grades of track,
 #    etc to aid in controlling how to stop within a block.
+#
+# Changes:
+# 07/23/2009 - Added a Halt button that tries to -1 the throttle to
+#              stop now and not be smooth. Plus a few other fixes
+#              like the system vs user name thing.
 #
 # Much thanks go to the Medina Railroad Museum who was asked for
 # something to help out when they have larger number of visitors
@@ -104,6 +109,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     isRunning = False
     currentThrottle = None
     scriptFrame = None
+    scriptFrameOldX = None
+    scriptFarmeOldY = None
     listenerBlocks = []
     listenerBlockListeners = []
     listenerSignals = []
@@ -118,6 +125,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     unknownSignalIcon = None
     redDelayTimer = None
     redDelayListener = None
+    shrinkGrow = True
+    speedPane = None
 
     def init(self):
         self.msgText("Getting throttle - ") #add text to scroll field
@@ -162,6 +171,16 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             else :
                 return sig.getUserName()
 
+    # return userName if available, else systemName
+    def giveTurnoutName(self, to) :
+        if (to == None) :
+            return 'None'
+        else :
+            if ((to.getUserName() == None) or (to.getUserName() == '')) :
+                return to.getSystemName()
+            else :
+                return to.getUserName()
+
     # figure out if we moved and where
     def didWeMove(self, event) :
         if (self.isRunning == False) :
@@ -170,6 +189,9 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         #if (self.currentBlock != None) :
             #self.msgText("Current block: " + self.giveBlockName(self.currentBlock) + "\n")
         newCurrentBlocks = self.findCurrentBlocks()
+        if (len(newCurrentBlocks) == 0) :
+            self.msgText("Can't find loco!! Doing halt!!")
+            self.doHalt()
         # new current block must be farthest connected to current block in current direction chain
         oldCurrent = self.currentBlock
         tryBlock = self.currentBlock
@@ -181,7 +203,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             if (newCurrent == None) :
                 newBlockText = "None"
             else :
-                newBlockText = giveBlockName(newCurrent)
+                newBlockText = self.giveBlockName(newCurrent)
             self.msgText("try " + giveUpTimer.toString() + " " + self.giveBlockName(tryBlock) + " " + newBlockText + "\n")
             if ((newCurrent == tryBlock) or (newCurrent == None)) :
                 break
@@ -292,8 +314,9 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.msgText("releasing listener for signal " + self.giveSignalName(s) + "\n")
             s.removePropertyChangeListener(self.listenerSignalListeners[i])
             i = i + 1
-#        if (self.redDelayTimer != None) :
-#            self.redDelayTimer.remove()
+        if (self.redDelayTimer != None) :
+            for i in self.redDelayTimer.getActionListeners() :
+                self.redDelayTimer.removeActionListener(i)
         return
 
     # take list of new current blocks, a current block, and a current direction
@@ -499,7 +522,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
         
     def doSpeedRed(self):
-        if (self.currentThrottle != None and self.currentThrottle.getSpeedSetting() != 0) :
+        if (self.currentThrottle != None and self.currentThrottle.getSpeedSetting() != 0 and (self.redDelayTimer == None or self.redDelayTimer.isRunning == False)) :
             i = int(self.locoSpeedRed.text) * 0.01
             self.currentThrottle.setSpeedSetting(i)
             self.msgText("doSpeedRed: " + i.toString() + "\n")
@@ -509,26 +532,22 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             rate = float(self.locoRateRed.text)
             stopDist = float(self.locoDistanceRedStop.text)
             if (dist != 0 and rate != 0) :
-                # shoot for 80% of the block
-                delay = (dist - stopDist) / rate * 0.80
+                # the stop distance is the reserved space plus 10% from far end of block
+                delay = (dist - stopDist) / rate * 0.90
                 self.msgText("doSpeedRed: dist: " + dist.toString() + " rate: " + rate.toString() + " stopDist: " + stopDist.toString() + " delay: " + delay.toString() + "\n")
                 if (delay > 1) :
                     currentDelay = 0
                     if (self.redDelayTimer == None) :
                         self.redDelayListener = self.TimeoutReceiver()
                         self.redDelayListener.setCallBack(self.redDelayHandler)
-                        self.redDelayTimer = javax.swing.Timer(int(0), self.redDelayListener)
+                        self.redDelayTimer = javax.swing.Timer(int(delay * 0), self.redDelayListener)
+                        self.redDelayTimer.setDelay(int(delay * 1000))
+                        self.redDelayTimer.setInitialDelay(int(delay * 1000))
                         self.redDelayTimer.setRepeats(False);
-                    else :
-                        currentDelay = self.redDelayTimer.getDelay()
-                    adjDelay = int((delay * 1000) - currentDelay)
-                    if (adjDelay > 0) :
-                        self.redDelayTimer.setDelay(adjDelay)
-                        self.redDelayTimer.setInitialDelay(adjDelay)
-                        self.redDelayTimer.start()
-                    else :
-                        self.doStop()
+                    self.redDelayTimer.setDelay(int(delay * 1000))
+                    self.redDelayTimer.start()
                 else :
+                    self.msgText("stop delay less that 1 second")
                     self.doStop()
             else :
                 self.doStop()
@@ -557,13 +576,14 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     def doHalt(self) :
         self.isRunning = False
         if (self.currentThrottle != None) :
-            self.currentThrottle.setSpeedSetting(0)
+            self.currentThrottle.setSpeedSetting(-1)
             self.msgText("doHalt, something was in error!!\n")
             self.locoSpeed.text = "0"
             if (self.currentBlock != None) :
                 self.blockStart.text = self.giveBlockName(self.currentBlock)
-        self.msgText("*** Run stopped ***\n")
+        self.msgText("*** Run halted ***\n")
         self.stopButton.setEnabled(False)
+        self.haltButton.setEnabled(False)
         self.startButton.setEnabled(True)
         return
 
@@ -571,7 +591,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     def whenLocoChanged(self, event) : 
         # keep track of whether both fields have been changed
         if (self.isRunning) :
-            self.doHalt()
+            self.doStop()
             self.msgText("whenLocoChanged, was running, now stopped\n")
         isOk = True
         startBlock = None
@@ -598,8 +618,13 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             if (self.testIfBlockNameValid(self.blockStart.text) == False) :
                 self.msgText("Invalid block name: " + self.blockStart.text + " please try again\n")
                 isOk = False
+            else:
+                if (startBlock.getState() != ACTIVE) :
+                    self.msgText("Block: " + self.blockStart.text + " is not occupied!\n")
+                    isOk = False
         if (isOk) :
             self.startButton.setEnabled(True)
+            self.haltButton.setEnabled(True)
             self.testAddBlockListener(blocks.getBlock(self.blockStart.text))
             self.msgText("Enabled Start\n")
         return
@@ -669,6 +694,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 self.start()
                 self.msgText("Change button states\n")     # add text
                 self.stopButton.setEnabled(True)
+                self.haltButton.setEnabled(True)
                 self.startButton.setEnabled(False)
                 self.isRunning = True
                 self.didWeMove(None)
@@ -682,9 +708,32 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.doStop()
         self.msgText("*** Run stopped ***\n")
         self.stopButton.setEnabled(False)
+        self.haltButton.setEnabled(False)
         self.startButton.setEnabled(True)
         self.isRunning = False
         self.whenLocoChanged(event)
+        return
+    
+    def whenHaltButtonClicked(self, event):   
+        self.msgText("Halt loco NOW!\n")     # add text
+        self.doHalt()
+        self.msgText("*** Run halted ***\n")
+        self.stopButton.setEnabled(False)
+        self.haltButton.setEnabled(False)
+        self.startButton.setEnabled(True)
+        self.isRunning = False
+        self.whenLocoChanged(event)
+        return
+    
+    def whenShrinkButtonClicked(self, event):   
+        if (self.shrinkGrow == True) :
+            self.msgText("Shrink Display!\n")     # add text
+            self.speedPane.setVisible(False)
+            self.shrinkGrow = False
+        else :
+            self.msgText("Grow Display!\n")
+            self.speedPane.setVisible(True)
+            self.shrinkGrow = True
         return
     
     def findCurrentBlocks(self) :
@@ -692,7 +741,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         blockList = []
         for x in blocks.getSystemNameList().toArray() :
             b = blocks.getBySystemName(x)
-            if (b.getValue() == self.locoAddress.text) :
+            if (b.getValue() == self.locoAddress.text and b.getState() == ACTIVE) :
                 blockList.append(b)
         return blockList
 
@@ -829,6 +878,16 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.stopButton.setToolTipText("Stops the run - there is a delay as the loco slows")
         self.stopButton.actionPerformed = self.whenStopButtonClicked
         
+        self.haltButton = javax.swing.JButton("Halt")
+        self.haltButton.setEnabled(False)           # button starts as grayed out (disabled)
+        self.haltButton.setToolTipText("Emergency halt the run - should be an abrupt stop")
+        self.haltButton.actionPerformed = self.whenHaltButtonClicked
+        
+        self.shrinkButton = javax.swing.JButton("Shrink")
+        self.shrinkButton.setEnabled(True)           
+        self.shrinkButton.setToolTipText("Shrink/Grow the window")
+        self.shrinkButton.actionPerformed = self.whenShrinkButtonClicked
+        
         self.testButton = javax.swing.JButton("Test")
         self.testButton.setEnabled(True)           # button starts as grayed out (disabled)
         self.testButton.setToolTipText("run the didWeMove test")
@@ -891,7 +950,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.locoSpeedGreen.setToolTipText("Green Speed is a number from 1 to 100%")
         self.locoSpeedGreen.actionPerformed = self.whenLocoChanged
         self.locoSpeedGreen.focusLost = self.whenLocoChanged
-        self.locoSpeedGreen.text = "44"
+        self.locoSpeedGreen.text = "45"
         
         # create the physical speed field for a Green Signal
         self.locoRateGreen = javax.swing.JTextField(sizeRateField)    # sized to hold 5 characters
@@ -947,21 +1006,21 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.locoSpeedRed.setToolTipText("Red Speed is a number from 1 to 100%, creep to Red Signal")
         self.locoSpeedRed.actionPerformed = self.whenLocoChanged
         self.locoSpeedRed.focusLost = self.whenLocoChanged
-        self.locoSpeedRed.text = "30"
+        self.locoSpeedRed.text = "15"
         
         # create the physical speed field for a Red Signal
         self.locoRateRed = javax.swing.JTextField(sizeRateField)    # sized to hold 5 characters
         self.locoRateRed.setToolTipText("Throttle as Distance/Second, approaching red signal")
         self.locoRateRed.actionPerformed = self.whenLocoChanged
         self.locoRateRed.focusLost = self.whenLocoChanged
-        self.locoRateRed.text = "6"
+        self.locoRateRed.text = "3"
         
         # create the distance field for a Red Signal
         self.locoDistanceRedStop = javax.swing.JTextField(5)    # sized to hold 5 characters
         self.locoDistanceRedStop.setToolTipText("Distance to stop at Red Speed, inches")
         self.locoDistanceRedStop.actionPerformed = self.whenLocoChanged
         self.locoDistanceRedStop.focusLost = self.whenLocoChanged
-        self.locoDistanceRedStop.text = "30"
+        self.locoDistanceRedStop.text = "10"
         
         # create current speed display
         self.locoSpeed = javax.swing.JLabel()
@@ -1043,11 +1102,11 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         # build speed table
         gLayout = java.awt.GridBagLayout()
         gConstraints = java.awt.GridBagConstraints()
-        pane2 = javax.swing.JPanel()
+        self.speedPane = javax.swing.JPanel()
         pane2Border = javax.swing.BorderFactory.createEtchedBorder()
         pane2Titled = javax.swing.BorderFactory.createTitledBorder(pane2Border, "Speed Settings")
-        pane2.setBorder(pane2Titled)
-        pane2.setLayout(gLayout)
+        self.speedPane.setBorder(pane2Titled)
+        self.speedPane.setLayout(gLayout)
         gConstraints.gridx = 0
         gConstraints.gridy = 0
         gConstraints.gridwidth = 1
@@ -1056,102 +1115,102 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         gConstraints.ipady = 3
         gConstraints.insets = java.awt.Insets(3, 3, 3, 3)
         
-        pane2.add(javax.swing.JLabel("Indication"), gConstraints)
+        self.speedPane.add(javax.swing.JLabel("Indication"), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel("Throttle"), gConstraints)
+        self.speedPane.add(javax.swing.JLabel("Throttle"), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel(" "), gConstraints)
+        self.speedPane.add(javax.swing.JLabel(" "), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel("Inch/Sec"), gConstraints)
+        self.speedPane.add(javax.swing.JLabel("Inch/Sec"), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
         
-        pane2.add(javax.swing.JLabel(" "), gConstraints)
+        self.speedPane.add(javax.swing.JLabel(" "), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel("Indication"), gConstraints)
+        self.speedPane.add(javax.swing.JLabel("Indication"), gConstraints)
         gConstraints.gridx = gConstraints.gridx+ 1
-        pane2.add(javax.swing.JLabel("Throttle"), gConstraints)
+        self.speedPane.add(javax.swing.JLabel("Throttle"), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel(" "), gConstraints)
+        self.speedPane.add(javax.swing.JLabel(" "), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel("Inch/Sec"), gConstraints)
+        self.speedPane.add(javax.swing.JLabel("Inch/Sec"), gConstraints)
         gConstraints.gridx = 0
         gConstraints.gridy = gConstraints.gridy + 1
         
-        pane2.add(javax.swing.JLabel(self.greenFlashSignalIcon), gConstraints)
+        self.speedPane.add(javax.swing.JLabel(self.greenFlashSignalIcon), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(self.locoSpeedGreenFlash, gConstraints)
+        self.speedPane.add(self.locoSpeedGreenFlash, gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel("%"), gConstraints)
+        self.speedPane.add(javax.swing.JLabel("%"), gConstraints)
         gConstraints.gridx = gConstraints.gridx+ 1
-        pane2.add(self.locoRateGreenFlash, gConstraints)
+        self.speedPane.add(self.locoRateGreenFlash, gConstraints)
         gConstraints.gridx = gConstraints.gridx+ 1
         
-        pane2.add(javax.swing.JLabel(" "), gConstraints)
+        self.speedPane.add(javax.swing.JLabel(" "), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel(self.greenSignalIcon), gConstraints)
+        self.speedPane.add(javax.swing.JLabel(self.greenSignalIcon), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(self.locoSpeedGreen, gConstraints)
+        self.speedPane.add(self.locoSpeedGreen, gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel("%"), gConstraints)
+        self.speedPane.add(javax.swing.JLabel("%"), gConstraints)
         gConstraints.gridx = gConstraints.gridx+ 1
-        pane2.add(self.locoRateGreen, gConstraints)
+        self.speedPane.add(self.locoRateGreen, gConstraints)
         gConstraints.gridx = 0
         gConstraints.gridy = gConstraints.gridy + 1
         
-        pane2.add(javax.swing.JLabel(self.yellowFlashSignalIcon), gConstraints)
+        self.speedPane.add(javax.swing.JLabel(self.yellowFlashSignalIcon), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(self.locoSpeedYellowFlash, gConstraints)
+        self.speedPane.add(self.locoSpeedYellowFlash, gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel("%"), gConstraints)
+        self.speedPane.add(javax.swing.JLabel("%"), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(self.locoRateYellowFlash, gConstraints)
+        self.speedPane.add(self.locoRateYellowFlash, gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
         
-        pane2.add(javax.swing.JLabel("  "), gConstraints)
+        self.speedPane.add(javax.swing.JLabel("  "), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel(self.yellowSignalIcon), gConstraints)
+        self.speedPane.add(javax.swing.JLabel(self.yellowSignalIcon), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(self.locoSpeedYellow, gConstraints)
+        self.speedPane.add(self.locoSpeedYellow, gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel("%"), gConstraints)
+        self.speedPane.add(javax.swing.JLabel("%"), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(self.locoRateYellow, gConstraints)
+        self.speedPane.add(self.locoRateYellow, gConstraints)
         gConstraints.gridx = 0
         gConstraints.gridy = gConstraints.gridy + 1
         
-        pane2.add(javax.swing.JLabel(self.redFlashSignalIcon), gConstraints)
+        self.speedPane.add(javax.swing.JLabel(self.redFlashSignalIcon), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(self.locoSpeedRedFlash, gConstraints)
+        self.speedPane.add(self.locoSpeedRedFlash, gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel("%"), gConstraints)
+        self.speedPane.add(javax.swing.JLabel("%"), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(self.locoRateRedFlash, gConstraints)
+        self.speedPane.add(self.locoRateRedFlash, gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
         
-        pane2.add(javax.swing.JLabel("  "), gConstraints)
+        self.speedPane.add(javax.swing.JLabel("  "), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel(self.redSignalIcon), gConstraints)
+        self.speedPane.add(javax.swing.JLabel(self.redSignalIcon), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(self.locoSpeedRed, gConstraints)
+        self.speedPane.add(self.locoSpeedRed, gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel("%"), gConstraints)
+        self.speedPane.add(javax.swing.JLabel("%"), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(self.locoRateRed, gConstraints)
+        self.speedPane.add(self.locoRateRed, gConstraints)
         gConstraints.gridx = 0
         gConstraints.gridy = gConstraints.gridy + 1
         
-        pane2.add(javax.swing.JLabel(" Current: "), gConstraints)
+        self.speedPane.add(javax.swing.JLabel(" Current: "), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(self.locoSpeed, gConstraints)
+        self.speedPane.add(self.locoSpeed, gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel("%"), gConstraints)
+        self.speedPane.add(javax.swing.JLabel("%"), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel(" Stopping Distance: "), gConstraints)
+        self.speedPane.add(javax.swing.JLabel(" Stopping Distance: "), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(self.locoDistanceRedStop, gConstraints)
+        self.speedPane.add(self.locoDistanceRedStop, gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        pane2.add(javax.swing.JLabel(" inches "), gConstraints)
+        self.speedPane.add(javax.swing.JLabel(" inches "), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
         
         # build block info
@@ -1197,11 +1256,13 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         butPanel.add(self.startButton)
         butPanel.add(self.stopButton)
         butPanel.add(self.testButton)
+        butPanel.add(self.haltButton)
+        butPanel.add(self.shrinkButton)
 
         # Put contents in frame and display
         self.scriptFrame.contentPane.add(temppanel1)
         self.scriptFrame.contentPane.add(temppanel1a)
-        self.scriptFrame.contentPane.add(pane2)
+        self.scriptFrame.contentPane.add(self.speedPane)
         self.scriptFrame.contentPane.add(temppanel3)
         self.scriptFrame.contentPane.add(temppanel4)
         self.scriptFrame.contentPane.add(srcollField)
