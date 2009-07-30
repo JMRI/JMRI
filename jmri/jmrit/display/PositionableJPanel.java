@@ -30,7 +30,7 @@ import javax.swing.JCheckBoxMenuItem;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 abstract class PositionableJPanel extends JPanel
                         implements MouseMotionListener, MouseListener,
@@ -160,6 +160,7 @@ abstract class PositionableJPanel extends JPanel
                         ((PositionableJPanel)comp).movePanel(deltaX, deltaY);
                     }
                 }
+                panelEditor.moveSelectRect(deltaX, deltaY);
             }
         }
     }
@@ -201,6 +202,7 @@ abstract class PositionableJPanel extends JPanel
         popup = new JPopupMenu();
 
 		popup.add(new JMenuItem(getNameString()));
+        checkLocationEditable(popup, getNameString());
 
         popup.add(lock = newLockMenuItem(new AbstractAction("Lock Position") {
             public void actionPerformed(ActionEvent e) {
@@ -259,6 +261,70 @@ abstract class PositionableJPanel extends JPanel
 //    public void setPopupEnabled(boolean enabled) {popupEnabled = enabled;}
 //    public boolean getPopupEnabled() { return popupEnabled; }
 //    private boolean popupEnabled = true;
+
+    protected void checkLocationEditable(JPopupMenu popup,  String name) {    
+		if (getViewCoordinates()) {
+			popup.add("x= " + this.getX());
+			popup.add("y= " + this.getY());
+			popup.add("level= " + this.getDisplayLevel().intValue());
+            List <JComponent> list = panelEditor.getSelections();
+            if (list.size() > 1) {
+                popup.add(new AbstractAction(rb.getString("AlignX")) {
+                    public void actionPerformed(ActionEvent e) {
+                        alignGroup(true);
+                    }
+                });
+                popup.add(new AbstractAction(rb.getString("AlignY")) {
+                    public void actionPerformed(ActionEvent e) {
+                        alignGroup(false);
+                    }
+                });
+            }
+			popup.add(new PopupAction(name));
+		}
+    }
+
+    protected void alignGroup(boolean alignX) {
+        List <JComponent> list = panelEditor.getSelections();
+        int sum = 0;
+        for (int i=0; i<list.size(); i++) {
+            JComponent comp = list.get(i);
+            if (alignX) {
+                sum += comp.getX();
+            } else {
+                sum += comp.getY();
+            }
+        }
+        int ave = Math.round((float)sum/list.size());
+        for (int i=0; i<list.size(); i++) {
+            JComponent comp = list.get(i);
+            if (alignX) {
+                comp.setLocation(ave, comp.getY());
+            } else {
+                comp.setLocation(comp.getX(), ave);
+            }
+        }
+    }
+
+    class PopupAction extends AbstractAction {
+        String name;
+        PopupAction(String n) {
+            super(rb.getString("SetLocation"));
+            name = n;
+        }
+        public void actionPerformed(ActionEvent e) {
+            displayCoordinateEdit(name);
+        }
+    }
+
+    public void displayCoordinateEdit(String name) {
+		if (log.isDebugEnabled())
+			log.debug("make new coordinate menu");
+		CoordinateEdit f = new CoordinateEdit();
+		f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
+		f.initComponents(this, name);
+		f.setVisible(true);	
+	}
 
     /**
     * Generic items for editing an Icon from the panel Popup

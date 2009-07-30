@@ -1,5 +1,8 @@
 package jmri.jmrit.display;
 
+import java.awt.Point;
+import java.awt.event.MouseListener;
+
 /**
  * Defines display objects.
  * <P>
@@ -17,9 +20,9 @@ package jmri.jmrit.display;
  *
  * <p>Copyright: Bob Jacobsen Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
-public interface Positionable {
+public interface Positionable  {
     public void setPositionable(boolean enabled);
     public boolean getPositionable();
     
@@ -31,4 +34,16 @@ public interface Positionable {
 
     public void setControlling(boolean enabled);
     public boolean getControlling();
+
+    public Integer getDisplayLevel();
+    public void setDisplayLevel(Integer l);
+
+    // The following are common for all JComponents
+    public int getX();
+    public int getY();
+    public Point getLocation();
+    public void setLocation(int x, int y);
+    public void setLocation(Point p);
+    public void addMouseListener(MouseListener l);
+    public void removeMouseListener(MouseListener l);
 }
