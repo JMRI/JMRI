@@ -29,7 +29,7 @@ import javax.swing.JSeparator;
  * if you move this.
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -570,6 +570,9 @@ public class SecurityElementIcon extends JPanel
     public void setControlling(boolean enabled) {controlling = enabled;}
     public boolean getControlling() { return controlling; }
     private boolean controlling = true;
+
+    public void setDisplayLevel(Integer l) { }
+    public Integer getDisplayLevel() {return null; }
 
     boolean active = true;
     /**
