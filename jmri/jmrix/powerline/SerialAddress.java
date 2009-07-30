@@ -18,7 +18,7 @@ import java.util.regex.*;
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008
  * @author Ken Cameron, Copyright (C) 2008, 2009
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class SerialAddress {
 
@@ -213,7 +213,7 @@ public class SerialAddress {
 					hCode = hCodes.group(1);
 				}
 				catch (Exception e) {
-					log.error("illegal character in number field system name: " + systemName);
+					log.error("illegal character in house code field system name: " + systemName);
 					return "";
 				}
 			}
