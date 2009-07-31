@@ -3,7 +3,6 @@ package jmri.jmrix.ecos;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
-import java.util.*;
 
 import jmri.jmrix.AbstractThrottleManager;
 
@@ -14,7 +13,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @author	    Bob Jacobsen  Copyright (C) 2001, 2005
  * @author Modified by Kevin Dickerson
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class EcosDccThrottleManager extends AbstractThrottleManager implements EcosListener{
 
@@ -41,20 +40,11 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
     }
 
     public void requestThrottleSetup(LocoAddress address) {
-        // KSL 20040409 - EcosDcc does not require feedback afaik
-        // don't quite know if the EcosDcc requires feedback.
-        // may need to extend this.
-        /* KSL - appears that the first command sent to the Queue in EcosDcc
-           is 'lost' - so it may be beneficial to send a 'Send' command 
-           just to wake up the command station.
-           This was tested on v418 - also appears as an issue with the
-           radio throttles. 
-        */
+
         log.debug("new EcosDccThrottle for "+address);
         notifyThrottleKnown(new EcosDccThrottle((DccLocoAddress)address), address);
     }
     
-    // KSL 20040409 - EcosDcc does not have a 'dispatch' function.
     public boolean hasDispatchFunction() { return false; }
     
     /**
