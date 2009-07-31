@@ -3,9 +3,9 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.7.1 on Fri Jul 03 08:11:16 PDT 2009 $Id: decoderIndex.xml,v 1.145 2009-07-03 15:16:26 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.1 on Fri Jul 03 08:11:16 PDT 2009 $Id: decoderIndex.xml,v 1.146 2009-07-31 17:31:26 jacobsen Exp $-->
   <decoderIndex version="170">
-    <mfgList nmraListDate="2009-05-06" updated="2009-07-03" lastadd="53">
+    <mfgList nmraListDate="2009-05-06" updated="2009-07-31" lastadd="54">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
@@ -90,6 +90,7 @@
       <manufacturer mfg="Silicon Railway" mfgID="33" />
       <manufacturer mfg="T4T - Technology for Trains GmbH" mfgID="20" />
       <manufacturer mfg="Tams Elektronik GmbH" mfgID="62" />
+      <manufacturer mfg="TCH Technology" mfgID="54" />
       <manufacturer mfg="Team Digital, LLC" mfgID="25" />
       <manufacturer mfg="Throttle-Up (SoundTraxx)" mfgID="141" />
       <manufacturer mfg="Train Control Systems" mfgID="153" />
