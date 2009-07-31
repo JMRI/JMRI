@@ -4,15 +4,6 @@ package jmri.jmrit.roster.swing;
 
 import jmri.jmrit.roster.*;
 
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.table.TableCellEditor;
-
-
-import java.util.List;
-
 /**
  * Table data model for display of Roster variable values.
  *<P>
@@ -23,7 +14,7 @@ import java.util.List;
  * and only shows some of the fields.  But it's a start....
  *
  * @author              Bob Jacobsen   Copyright (C) 2009
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  * @since 2.7.5
  */
 public class RosterTableModel extends javax.swing.table.AbstractTableModel {

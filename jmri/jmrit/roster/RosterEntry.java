@@ -40,7 +40,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.34 $
+ * @version   $Revision: 1.35 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -335,7 +335,7 @@ public class RosterEntry {
     /**
      * Warn user that the roster entry needs to be resaved.
      */
-    void warnShortLong(String id) {
+    protected void warnShortLong(String id) {
         log.warn("Roster entry \""+id+"\" should be saved again to store the short/long address value");
     }
     

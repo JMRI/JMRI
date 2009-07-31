@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster.RosterEntry class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class RosterEntryTest extends TestCase {
 
@@ -65,7 +65,7 @@ public class RosterEntryTest extends TestCase {
             ; // end create element
 
         RosterEntry r = new RosterEntry(e){
-                            void warnShortLong(String s){}
+                            protected void warnShortLong(String s){}
         };
         // check
         Assert.assertEquals("file name ", "file here", r.getFileName());
@@ -93,7 +93,7 @@ public class RosterEntryTest extends TestCase {
             ; // end create element
 
         RosterEntry r = new RosterEntry(e){
-                            void warnShortLong(String s){}
+                            protected void warnShortLong(String s){}
         };
         
         // check
@@ -148,7 +148,7 @@ public class RosterEntryTest extends TestCase {
             ; // end create element
 
         RosterEntry r = new RosterEntry(e){
-                            void warnShortLong(String s){}
+                            protected void warnShortLong(String s){}
         };
         
         org.jdom.Element o = r.store();
@@ -186,7 +186,7 @@ public class RosterEntryTest extends TestCase {
             ; // end create element
 
         RosterEntry r = new RosterEntry(e){
-                            void warnShortLong(String s){}
+                            protected void warnShortLong(String s){}
         };
         
         // check loaded
@@ -276,7 +276,7 @@ public class RosterEntryTest extends TestCase {
         r.putAttribute("key 1", "value 1");
         java.util.Set<String> l = r.getAttributes();
         Assert.assertEquals("number returned", 3, l.size());
-        java.util.Iterator i = l.iterator();
+        java.util.Iterator<String> i = l.iterator();
         Assert.assertEquals("1st item", "key 1", i.next());
         Assert.assertEquals("2nd item", "key 2", i.next());
         Assert.assertEquals("3rd item", "key 3", i.next());
@@ -317,7 +317,7 @@ public class RosterEntryTest extends TestCase {
             ; // end create element
 
         RosterEntry r = new RosterEntry(e){
-                            void warnShortLong(String s){}
+                            protected void warnShortLong(String s){}
         };
 
         Assert.assertEquals("value 1",r.getAttribute("key 1"));

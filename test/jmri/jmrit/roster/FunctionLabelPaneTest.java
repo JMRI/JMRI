@@ -5,7 +5,7 @@ import junit.framework.*;
 /**
  * Tests for the jmrit.roster.FunctionLabelPane class.
  * @author	Bob Jacobsen     Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class FunctionLabelPaneTest extends TestCase {
 
@@ -34,7 +34,7 @@ public class FunctionLabelPaneTest extends TestCase {
             ; // end create element
 
         rOld = new RosterEntry(eOld){
-                            void warnShortLong(String s){}
+                            protected void warnShortLong(String s){}
         };
         
         eNew = new org.jdom.Element("locomotive")
@@ -56,7 +56,7 @@ public class FunctionLabelPaneTest extends TestCase {
             ; // end create element
 
         rNew = new RosterEntry(eNew){
-                            void warnShortLong(String s){}
+                            protected void warnShortLong(String s){}
         };
     }
 

@@ -17,7 +17,7 @@ import org.jdom.*;
  * Tests for the roster.swing.RosterTableModel class.
  *
  * @author	Bob Jacobsen     Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class RosterTableModelTest extends TestCase {
 
@@ -69,7 +69,7 @@ public class RosterTableModelTest extends TestCase {
         Roster.resetInstance();
         new Roster(){
             { _instance = this; }
-            void warnShortLong(String s){}
+            protected void warnShortLong(String s){}
         };
 
         // first entry
@@ -96,7 +96,7 @@ public class RosterTableModelTest extends TestCase {
             ; // end create element
 
         r = new RosterEntry(e){
-                            void warnShortLong(String s){}
+                     protected void warnShortLong(String s){}
              };
         Roster.instance().addEntry(r);
         r.putAttribute("key a", "value 1");
@@ -120,7 +120,7 @@ public class RosterTableModelTest extends TestCase {
             ; // end create element
 
         r = new RosterEntry(e){
-                            void warnShortLong(String s){}
+                   protected void warnShortLong(String s){}
              };
         Roster.instance().addEntry(r);
         r.putAttribute("key a", "value 11");
@@ -147,7 +147,7 @@ public class RosterTableModelTest extends TestCase {
             ; // end create element
 
         r = new RosterEntry(e){
-                            void warnShortLong(String s){}
+                    protected void warnShortLong(String s){}
              };
         Roster.instance().addEntry(r);
 

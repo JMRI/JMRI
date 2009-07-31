@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster package & jmrit.roster.Roster class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 public class RosterTest extends TestCase {
 
@@ -141,7 +141,7 @@ public class RosterTest extends TestCase {
         Assert.assertNotNull("exists", r );
 
         //
-        List l;
+        List<RosterEntry> l;
         
         l = r.getEntriesWithAttributeKey("key a");
         Assert.assertEquals("match key a", 2, l.size());
@@ -156,7 +156,7 @@ public class RosterTest extends TestCase {
         Assert.assertNotNull("exists", r );
 
         //
-        List l;
+        List<RosterEntry> l;
         
         l = r.getEntriesWithAttributeKeyValue("key a", "value a");
         Assert.assertEquals("match key a", 2, l.size());
