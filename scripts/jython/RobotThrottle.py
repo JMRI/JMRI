@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -567,7 +567,6 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
 
     def whenLocoHorn(self, event, state) :
-        self.msgText("whenLocoHorn\n")
         if (self.currentThrottle != None) :
             wasState = self.currentThrottle.getF2()
             self.currentThrottle.setF2(state)
@@ -814,8 +813,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         # loco horn/whistle flag
         self.locoHorn = javax.swing.JButton("Horn")
         self.locoHorn.setToolTipText("Controls loco horn")
-        self.locoHorn.focusGained = self.whenLocoHornOn
-        self.locoHorn.focusLost = self.whenLocoHornOff
+        self.locoHorn.mousePressed = self.whenLocoHornOn
+        self.locoHorn.mouseReleased = self.whenLocoHornOff
         
         # create the speed fields similarly
         self.locoSlow = javax.swing.JTextField(5)    # sized to hold 5 characters
