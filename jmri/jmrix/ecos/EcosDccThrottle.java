@@ -2,11 +2,11 @@ package jmri.jmrix.ecos;
 
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
-import java.lang.*;
-import java.io.*;
 import jmri.jmrix.AbstractThrottle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
-import jmri.jmrit.roster.*;
 
 /**
  * An implementation of DccThrottle with code specific to an ECoS connection.
@@ -14,18 +14,19 @@ import jmri.jmrit.roster.*;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2009 by Kevin Dickerson
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 {
     /**
      * Constructor.
      */
-    int objectNumber;
+    String objectNumber;
+    int ecosretry = 0;
     private EcosLocoAddress objEcosLoco;
     private EcosLocoAddressManager objEcosLocoManager;
     //This boolean is used to prevent un-necessary commands from being sent to the ECOS if we have already lost
-    // control of the object
+    //control of the object
     private boolean _haveControl = false;
     
     public EcosDccThrottle(DccLocoAddress address)
@@ -76,10 +77,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         this.address      = address;
         this.isForward    = true;
         objEcosLocoManager = (EcosLocoAddressManager)jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+        //We go on a hunt to find an object with the dccaddress sent by our controller.
         objEcosLoco = objEcosLocoManager.provideByDccAddress(address.getNumber());
 
         this.objectNumber = objEcosLoco.getEcosObject();
-        if (this.objectNumber==0){
+        if (this.objectNumber==null){
             createEcosLoco();
         }
         else getControl();
@@ -101,10 +103,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 
         m = new EcosMessage(message);
 
-        /*m = new EcosMessage("request(11, view)");
-        tc.sendEcosMessage(m, this);
-        m = new EcosMessage(message);*/
-
         message = "get("+this.objectNumber+", speed)";
         m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
@@ -122,7 +120,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     }
 
     //The values here might need a bit of re-working
-        /**
+    /**
      * Convert a Ecos speed integer to a float speed value
      */
     protected float floatSpeed(int lSpeed) {
@@ -187,7 +185,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         message = "set("+this.objectNumber+", func[4, "+function+"])";
         m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
-        //EcosTrafficController.instance().sendEcosMessage(m, null);
+
     }
 
     /**
@@ -368,8 +366,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     //The values here might need a bit of re-working
     public void setSpeedSetting(float speed) {
         if(!_haveControl) return;
-        System.out.println("New Speed setting is " + speed);
-        System.out.println("Current Speed setting is " + this.speedSetting);
         byte[] result;
         int value;
         int new_spd = intSpeed( speed );
@@ -423,19 +419,69 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 
     private DccLocoAddress address;
     
+    public LocoAddress getLocoAddress() {
+        return address;
+    }
+    
     /**
      * Finished with this throttle.  Right now, this does nothing,
      * but it could set the speed to zero, turn off functions, etc.
+     *
      */
     public void release() {
         if (!active) log.warn("release called when not active");
 
-        tc = EcosTrafficController.instance();
-        EcosMessage m;
+        
+        if (objEcosLoco.getEcosTempEntry()){
+            final EcosPreferences p = EcosPreferences.instance();
+            if (p.getAdhocLocoFromEcos()==0){
 
-        String message = "release("+this.objectNumber+", view, control)";
-        m = new EcosMessage(message);
-        tc.sendEcosMessage(m, this);
+                final JFrame f = new JFrame("Remove Loco From ECoS?");
+                f.setSize(300, 130);
+                f.setLocation(300,200);
+                JPanel container = new JPanel();
+                JLabel question = new JLabel("Do you want to remove this loco from the ECoS?");
+                container.add(question);
+                final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                remember.setFont(remember.getFont().deriveFont(10f));
+                //user preferences do not have the save option, but once complete the following line can be removed
+                remember.setVisible(false);
+                JButton yesButton = new JButton("Yes");
+                JButton noButton = new JButton("No");
+                JPanel button = new JPanel();
+                button.add(yesButton);
+                button.add(noButton);
+                container.add(button);
+                
+                noButton.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                        if(remember.isSelected()){
+                            p.setAdhocLocoFromEcos(0x01);
+                        }
+                        ReleaseLoco();
+                        f.dispose();
+                    }
+                });
+                
+                yesButton.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                        if(remember.isSelected()) {
+                            p.setAdhocLocoFromEcos(0x02);
+                        }
+                        DeleteLocoEcos();
+                        f.dispose();
+                    }
+                });
+                container.add(remember);
+
+                f.getContentPane().add(container);
+                f.setVisible(true);
+                
+            }
+            else ReleaseLoco();
+        }
+        else ReleaseLoco();
+
         _haveControl = false;
     }
 
@@ -449,26 +495,41 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         
         super.dispose();
     }
-
-    public LocoAddress getLocoAddress() {
-        return address;
+    
+    private void ReleaseLoco(){
+    
+        tc = EcosTrafficController.instance();
+        EcosMessage m;
+        String message = "release("+this.objectNumber+", view, control)";
+        m = new EcosMessage(message);
+        tc.sendEcosMessage(m, this);
+    
+    }
+    /**
+    * Need to check with the ecos to see what happens if we delete a loco that is still running!
+    *
+    */
+    private void DeleteLocoEcos() {
+        //put code in here to delete the loco from the database
+        //return address;
+        tc = EcosTrafficController.instance();
+        EcosMessage m;
+        String message = "delete(" +this.objectNumber+")";
+        m = new EcosMessage(message);
+        tc.sendEcosMessage(m, this);
     }
 
     public void reply(EcosReply m) {
-        //This reply needs to be restructed!
         int tmpstart;
         int tmpend;
         int start;
         int end;
         String msg = m.toString();
-        //System.out.println("Ecos Response " +msg);
-        if (msg.startsWith("<REPLY set("+this.objectNumber+",")){// || msg.startsWith("<EVENT "+this.objectNumber+">")) {
-            String[] lines = msg.split("\n");
-            log.debug("found "+(lines.length)+" response from Ecos");
-
-            if (lines[lines.length-1].contains("<END 0 (OK)>")){
-                //System.out.println("The last command was accepted by the ecos");
-                log.debug("The last command was accepted by the ecos");
+        String[] lines = msg.split("\n");
+        log.debug("found "+(lines.length)+" response from Ecos");
+        if (lines[lines.length-1].contains("<END 0 (OK)>")){
+            if (lines[0].startsWith("<REPLY set("+this.objectNumber+",")){// || msg.startsWith("<EVENT "+this.objectNumber+">")) {
+                //log.debug("The last command was accepted by the ecos");
                 //This might need to use speedstep, rather than speed
                 //This is for standard response to set and request.
                 start = msg.indexOf("[");
@@ -483,7 +544,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                             val = (msg.substring(start+1, end));
                              Float newSpeed = new Float ( floatSpeed(Integer.parseInt(val) ) ) ;
                              this.speedSetting = newSpeed;
-                             log.debug("see new Speed "+ val +", " + newSpeed + " for "+this.address);
+                             log.debug("new Speed "+ val +", " + newSpeed + " for "+this.address);
                         }
                         else if(result.equals("stop")){
                             this.speedSetting = Float.valueOf(0).floatValue();
@@ -493,46 +554,24 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                             val = (msg.substring(start+1, end));
                             if (val.equals("0")) this.isForward = true;
                             else this.isForward = false;
-                            log.debug("see new direction "+ this.isForward +" for "+this.address);
+                            log.debug("new direction "+ this.isForward +" for "+this.address);
                         }
                     }
                 }
             }
-            else if (lines[lines.length-1].contains("<END 25 (NERROR_NOCONTROL>")){
-                log.info("We have no control over the ecos object" + this.objectNumber);
-                javax.swing.JOptionPane.showMessageDialog(null,"We have lost control over" + "\n" + this.address + " and the Ecos","No Control",javax.swing.JOptionPane.WARNING_MESSAGE);
-                release();
-            }
-            else if (lines[lines.length-1].contains("<END 15 (NERROR_UNKNOWNID>")){
-                log.info("Loco can not be accessed via the Ecos Object Id " + this.objectNumber);
-                javax.swing.JOptionPane.showMessageDialog(null,"Loco is unknown on the Ecos" + "\n" + this.address + "Please try access again","No Control",javax.swing.JOptionPane.WARNING_MESSAGE);
-                release();
-            }
-            else log.debug("Unable to set the command");
-
-        }
-        else if(msg.startsWith("<REPLY get("+this.objectNumber+",")||msg.startsWith("<EVENT "+this.objectNumber+">")){
-            String[] lines = msg.split("\n");
-            String object = Integer.toString(this.objectNumber);
-            log.debug("found "+(lines.length)+" response from Ecos");
-            if (lines[lines.length-1].contains("<END 0 (OK)>")){
-                log.debug("The last command was accepted by the ecos");
+            else if(lines[0].startsWith("<REPLY get("+this.objectNumber+",")||lines[0].startsWith("<EVENT "+this.objectNumber+">")){
+                //log.debug("The last command was accepted by the ecos");
                 for (int i =1; i<lines.length-1; i++){
-                    //System.out.println(lines[i]+" "+ i);
+                    String object = this.objectNumber;
                     tmpstart = lines[i].indexOf(object + " ")+object.length()+1;
                     tmpend = lines[i].indexOf("[");
-                    //System.out.println(tmpstart);
-                    //System.out.println(tmpend);
                     String val;
                     if (tmpstart>0 && tmpend >0) {
                         String result = lines[i].substring(tmpstart, tmpend);
-                        //System.out.println(result);
                         start = lines[i].indexOf("[");
                         end = lines[i].indexOf("]");
                         if (result.equals("protocol")){
-                            //System.out.println("Protocol");
                             val = (lines[i].substring(start+1, end));
-                            //System.out.println (val);
                             if (val.contains("DCC128")) this.speedStepMode=SpeedStepMode128;
                             else if (val.contains("DCC28")) this.speedStepMode=SpeedStepMode28;
 
@@ -542,7 +581,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                             if (val.contains("CONTROL_LOST")){
                                 log.debug("We have no control over the ecos object");
                                 _haveControl = false;
-                                javax.swing.JOptionPane.showMessageDialog(null,"We have lost control over" + "\n" + this.address + " and the Ecos","No Control",javax.swing.JOptionPane.WARNING_MESSAGE);
+                                javax.swing.JOptionPane.showMessageDialog(null,"We do not have control of loco " + this.address + "\n" + "Press Release and try again","No Control",javax.swing.JOptionPane.WARNING_MESSAGE);
                                 release();
                             }
                         }
@@ -584,194 +623,239 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                                 case 0: if (this.f0!=functionresult) {
                                             notifyPropertyChangeListener("F0", this.f0, functionresult);
                                             this.f0 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 1: if (this.f1!=functionresult) {
                                             notifyPropertyChangeListener("F1", this.f1, functionresult);
                                             this.f1 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 2: if (this.f2!=functionresult) {
                                             notifyPropertyChangeListener("F2", this.f2, functionresult);
                                             this.f2 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 3: if (this.f3!=functionresult) {
                                             notifyPropertyChangeListener("F3", this.f3, functionresult);
                                             this.f3 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 4: if (this.f4!=functionresult) {
                                             notifyPropertyChangeListener("F4", this.f4, functionresult);
                                             this.f4 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 5: if (this.f5!=functionresult) {
                                             notifyPropertyChangeListener("F5", this.f5, functionresult);
                                             this.f5 = functionresult;
-                                            break;
-                                            }
+                                         }
+                                         break;
                                 case 6: if (this.f6!=functionresult) {
                                             notifyPropertyChangeListener("F6", this.f6, functionresult);
                                             this.f6 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 7: if (this.f7!=functionresult) {
                                             notifyPropertyChangeListener("F7", this.f7, functionresult);
                                             this.f7 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 8: if (this.f8!=functionresult) {
                                             notifyPropertyChangeListener("F8", this.f8, functionresult);
                                             this.f8 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 9: if (this.f9!=functionresult) {
                                             notifyPropertyChangeListener("F9", this.f9, functionresult);
                                             this.f9 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 10: if (this.f10!=functionresult) {
                                             notifyPropertyChangeListener("F10", this.f10, functionresult);
                                             this.f10 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 11: if (this.f11!=functionresult) {
                                             notifyPropertyChangeListener("F11", this.f11, functionresult);
                                             this.f11 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 12: if (this.f12!=functionresult) {
                                             notifyPropertyChangeListener("F12", this.f12, functionresult);
                                             this.f12 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 13: if (this.f13!=functionresult) {
                                             notifyPropertyChangeListener("F13", this.f13, functionresult);
                                             this.f13 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 14: if (this.f14!=functionresult) {
                                             notifyPropertyChangeListener("F14", this.f14, functionresult);
                                             this.f14 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 15: if (this.f15!=functionresult) {
                                             notifyPropertyChangeListener("F15", this.f15, functionresult);
                                             this.f15 = functionresult;
-                                            break;
-                                            }
+                                         }
+                                         break;
                                 case 16: if (this.f16!=functionresult) {
                                             notifyPropertyChangeListener("F16", this.f16, functionresult);
                                             this.f16 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 17: if (this.f17!=functionresult) {
                                             notifyPropertyChangeListener("F17", this.f17, functionresult);
                                             this.f17 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 18: if (this.f18!=functionresult) {
                                             notifyPropertyChangeListener("F18", this.f18, functionresult);
                                             this.f18 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 19: if (this.f19!=functionresult) {
                                             notifyPropertyChangeListener("F19", this.f19, functionresult);
                                             this.f19 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 20: if (this.f20!=functionresult) {
                                             notifyPropertyChangeListener("F20", this.f20, functionresult);
                                             this.f20 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 21: if (this.f21!=functionresult) {
                                             notifyPropertyChangeListener("F21", this.f21, functionresult);
                                             this.f21 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 22: if (this.f22!=functionresult) {
                                             notifyPropertyChangeListener("F22", this.f22, functionresult);
                                             this.f22 = functionresult;
-                                            break;
                                         }
+                                        break;
                                 case 23: if (this.f23!=functionresult) {
                                             notifyPropertyChangeListener("F23", this.f23, functionresult);
                                             this.f23 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 24: if (this.f24!=functionresult) {
                                             notifyPropertyChangeListener("F24", this.f24, functionresult);
                                             this.f24 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 25: if (this.f25!=functionresult) {
                                             notifyPropertyChangeListener("F25", this.f25, functionresult);
                                             this.f25 = functionresult;
-                                            break;
-                                            }
+                                         }
+                                         break;
                                 case 26: if (this.f26!=functionresult) {
                                             notifyPropertyChangeListener("F26", this.f26, functionresult);
                                             this.f26 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 27: if (this.f27!=functionresult) {
                                             notifyPropertyChangeListener("F27", this.f27, functionresult);
                                             this.f27 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                                 case 28: if (this.f28!=functionresult) {
                                             notifyPropertyChangeListener("F28", this.f28, functionresult);
                                             this.f28 = functionresult;
-                                            break;
-                                        }
+                                         }
+                                         break;
                             }
                         }
                     }
-                 }
+                }
+
             }
-             else log.debug("Unable to set the command");
-        }
-        else if (msg.startsWith("<REPLY create(10, addr")){
-            String[] lines = msg.split("\n");
-            String object = Integer.toString(this.objectNumber);
-            log.debug("found "+(lines.length)+" response from Ecos for Create");
-            if (lines[lines.length-1].contains("<END 0 (OK)>")){
+            else if (lines[0].startsWith("<REPLY create(10, addr")){
+                //String object = Integer.toString(this.objectNumber);
+                //log.debug("found "+(lines.length)+" response from Ecos for Create");
                 for(int i =1; i<lines.length-1; i++) {
                     if(lines[i].contains("10 id[")){
                         start = lines[i].indexOf("[")+1;
                         end = lines[i].indexOf("]");
-                        int EcosAddr = Integer.parseInt(lines[i].substring(start, end));
+                        String EcosAddr = lines[i].substring(start, end);
                         objEcosLoco.setEcosObject(EcosAddr);
                         objEcosLocoManager.deregister(objEcosLoco);
                         objEcosLocoManager.register(objEcosLoco);
-                        //System.out.println(EcosAddr);
+                        objEcosLoco.setEcosTempEntry(true);
                         this.objectNumber=EcosAddr;
                         getControl();
                     }
                 }
             }
-        }
-        else if (msg.startsWith("<REPLY release("+this.objectNumber)){
-            String[] lines = msg.split("\n");
-            String object = Integer.toString(this.objectNumber);
-            log.debug("found "+(lines.length)+" response from Ecos for Create");
-            if (lines[lines.length-1].contains("<END 0 (OK)>")){
+            else if (lines[0].startsWith("<REPLY release("+this.objectNumber)){
                 log.debug("Released "+this.objectNumber +" from the Ecos");
                 _haveControl = false;
             }
-            else log.debug("Unable to release control of "+this.objectNumber +" back to the Ecos");
-        }
-        else if (msg.startsWith("<REPLY request("+this.objectNumber)){
-            String[] lines = msg.split("\n");
-            String object = Integer.toString(this.objectNumber);
-            if (lines[lines.length-1].contains("<END 0 (OK)>")){
+            else if (lines[0].startsWith("<REPLY request("+this.objectNumber)){
                 log.debug("We have control over "+this.objectNumber +" from the Ecos");
                 _haveControl = true;
             }
-            else log.debug("Unable to get control of "+this.objectNumber +" from the Ecos");
         }
+        else if (lines[lines.length-1].equals("<END 0 (NERROR_OK)>")){
+            //Need to investigate this a bit futher to see what the significance of the message is
+            //we may not have to worry much about it.
+            log.info("Loco has been created on the ECoS Sucessfully.");
+        }
+        else if (lines[lines.length-1].equals("<END 35 (NERROR_NOAPPEND)>")){
+            /**
+            * This message occurs when have already created a loco, but have not appended it to
+            * the database.  The Ecos will not allow another loco to be created until the previous
+            * entry has been appended.
+            */
+            
+            //Potentially need to deal with this error better.
+            log.info("Another loco create operation is already taking place unable to create another.");
+
+        }
+        else if (lines[lines.length-1].equals("<END 25 (NERROR_NOCONTROL)>")){
+            /**
+            * This section deals with no longer having control over the ecos loco object.
+            * we try three times to request control, on the fourth attempt we try a forced
+            * control, if that fails we inform the user and reset the counter to zero.
+            */
+            log.info("We have no control over the ecos object " + this.objectNumber + "Retry Counter = "+ ecosretry);
+            if (ecosretry <3){
+                //It might be worth adding in a sleep/pause of discription between retries.
+                ecosretry++;
+                tc = EcosTrafficController.instance();
+
+                String message = "request("+this.objectNumber+", view, control)";
+                EcosMessage ms = new EcosMessage(message);
+                tc.sendEcosMessage(ms, this);
+            }
+            else if(ecosretry==3){
+                ecosretry++;
+                int val = javax.swing.JOptionPane.showConfirmDialog(null,"Unable to gain control of the Loco \n Another operator may have control of the Loco \n Do you want to attempt a forced take over?","No Control", JOptionPane.YES_NO_OPTION,javax.swing.JOptionPane.QUESTION_MESSAGE);
+                if (val==0)
+                {
+                    tc = EcosTrafficController.instance();
+                    String message = "request("+this.objectNumber+", view, control, force)";
+                    EcosMessage ms = new EcosMessage(message);
+                    tc.sendEcosMessage(ms, this);
+                }
+                
+                log.info("We have no control over the ecos object " + this.objectNumber + "Trying a forced control");
+                
+
+            }
+            else{
+                javax.swing.JOptionPane.showMessageDialog(null,"We have lost control over" + "\n" + this.address + " and the Ecos","No Control",javax.swing.JOptionPane.WARNING_MESSAGE);
+                ecosretry=0;
+            }
+            release();
+        }
+        else if (lines[lines.length-1].contains("<END 15 (NERROR_UNKNOWNID)>")){
+            log.info("Loco can not be accessed via the Ecos Object Id " + this.objectNumber);
+            javax.swing.JOptionPane.showMessageDialog(null,"Loco is unknown on the Ecos" + "\n" + this.address + "Please try access again","No Control",javax.swing.JOptionPane.WARNING_MESSAGE);
+            release();
+        }
+        else log.debug("Last Message resulted in an END code we do not understand\n" + lines[lines.length-1]);
     }
 
     public void message(EcosMessage m) {
@@ -781,7 +865,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     
     private void createEcosLoco() {
         tc = EcosTrafficController.instance();
-        String message = "create(10, addr[" + objEcosLoco.getDCCAddress() + "], name[\"Created By JMRI\"], protocol[DCC128], append)";;
+        String message = "create(10, addr[" + objEcosLoco.getEcosLocoAddress() + "], name[\"Created By JMRI\"], protocol[DCC128], append)";
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
     
