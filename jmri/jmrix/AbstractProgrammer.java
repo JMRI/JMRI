@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
  * Common implementations for the Programmer interface.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public abstract class AbstractProgrammer implements Programmer {
 
@@ -33,6 +33,8 @@ public abstract class AbstractProgrammer implements Programmer {
         if ((code & ProgListener.UnknownError) != 0) sbuf.append(rb.getString("UnknownError"));
         if ((code & ProgListener.NoAck) != 0) sbuf.append(rb.getString("NoAck"));
 	    if ((code & ProgListener.ProgrammingShort) != 0) sbuf.append(rb.getString("ProgrammingShort"));
+	    if ((code & ProgListener.SequenceError) != 0) sbuf.append(rb.getString("SequenceError"));
+	    if ((code & ProgListener.CommError) != 0) sbuf.append(rb.getString("CommError"));
 
         // remove trailing separators
         if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2);

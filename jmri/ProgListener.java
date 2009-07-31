@@ -23,7 +23,7 @@ package jmri;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public interface ProgListener extends java.util.EventListener{
 	/** Receive a callback at the end of a programming operation.
@@ -72,7 +72,14 @@ public interface ProgListener extends java.util.EventListener{
 
 	/** Constant denoting that a short circuit occured while programming */
 	public final int ProgrammingShort  = 0x100;
+	
+	/** Constant denoting that there was an error with the programming 
+         *  sequence (e.g. early exit) */
+	public final int SequenceError  = 0x200;
 
+	/** Constant denoting that a communications error occured between 
+         * the command station and the PC durring programming */
+	public final int CommError  = 0x400;
 }
 
 
