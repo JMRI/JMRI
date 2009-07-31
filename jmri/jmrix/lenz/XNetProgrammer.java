@@ -27,7 +27,7 @@ import java.beans.PropertyChangeEvent;
  * @author Bob Jacobsen     Copyright (c) 2002, 2007
  * @author Paul Bender      Copyright (c) 2003, 2004, 2005
  * @author Giorgio Terdina  Copyright (c) 2007
- * @version $Revision: 2.23 $
+ * @version $Revision: 2.24 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -226,17 +226,31 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 	synchronized public void message(XNetReply m) {
             	if (m.getElement(0)==XNetConstants.CS_INFO && 
                      m.getElement(1)==XNetConstants.BC_SERVICE_MODE_ENTRY) {
-		     // the command station is in service mode.  An "OK" 
-		     // message can trigger a request for service mode 
-		     // results if progrstate is REQUESTSENT.
-		     _service_mode = true;		   
+                     if(_service_mode == false) {
+		        // the command station is in service mode.  An "OK" 
+		        // message can trigger a request for service mode 
+		        // results if progrstate is REQUESTSENT.
+		        _service_mode = true;		   
+		     } else if(_service_mode == true) {
+                        // Since we get this message as both a broadcast and
+                        // a directed message, ignore the message if we're
+                        //already in the indicated mode
+                        return;
+                     }
 		}
 		if(m.getElement(0)==XNetConstants.CS_INFO &&
 		   m.getElement(1)==XNetConstants.BC_NORMAL_OPERATIONS) {
-		     // the command station is not in service mode.  An 
-		     // "OK" message can not trigger a request for service 
-		     // mode results if progrstate is REQUESTSENT.
-		     _service_mode = false;
+                     if(_service_mode == true) {
+		        // the command station is not in service mode.  An 
+		        // "OK" message can not trigger a request for service 
+		        // mode results if progrstate is REQUESTSENT.
+		        _service_mode = false;
+		     } else if(_service_mode == false) {
+                        // Since we get this message as both a broadcast and
+                        // a directed message, ignore the message if we're
+                        //already in the indicated mode
+                        return;
+                     }
 		}
 		if (progState == NOTPROGRAMMING) {
 			// we get the complete set of replies now, so ignore these
@@ -279,7 +293,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			   log.error("Service mode exited before sequence complete.");
 			   progState = NOTPROGRAMMING;
 			   stopTimer();
-			   notifyProgListenerEnd(_val, jmri.ProgListener.UnknownError);
+			   notifyProgListenerEnd(_val, jmri.ProgListener.SequenceError);
             		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
 			   m.getElement(1)==XNetConstants.PROG_SHORT_CIRCUIT) {
 			   // We experienced a short Circuit on the Programming Track
@@ -296,7 +310,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			   log.error("Communications error in REQUESTSENT state while programming.  Error: " + m.toString());
 			   	progState = NOTPROGRAMMING;
 			   stopTimer();
-			   notifyProgListenerEnd(_val, jmri.ProgListener.UnknownError);
+			   notifyProgListenerEnd(_val, jmri.ProgListener.CommError);
 			}
 		} else if (progState == INQUIRESENT) {
 			if (log.isDebugEnabled()) log.debug("reply in INQUIRESENT state");
@@ -360,7 +374,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		   	   log.error("Service Mode exited before sequence complete.");
 		   	   progState = NOTPROGRAMMING;
 		   	   stopTimer();
-		   	   notifyProgListenerEnd(_val, jmri.ProgListener.UnknownError);
+		   	   notifyProgListenerEnd(_val, jmri.ProgListener.SequenceError);
                	    	   return;
             		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
 			   m.getElement(1)==XNetConstants.PROG_SHORT_CIRCUIT) {
@@ -378,7 +392,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			   log.error("Communications error in INQUIRESENT state while programming.  Error: " + m.toString());
 			   	progState = NOTPROGRAMMING;
 			   stopTimer();
-			   notifyProgListenerEnd(_val, jmri.ProgListener.UnknownError);
+			   notifyProgListenerEnd(_val, jmri.ProgListener.CommError);
 			} else {
                            // nothing important, ignore
                            return;

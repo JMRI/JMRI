@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  *<P>
  *
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  *
  */
 public class XNetReply extends jmri.jmrix.AbstractMRReply {
@@ -500,7 +500,9 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * we should retransmit.
      */
     public boolean isRetransmittableErrorMsg(){
-          return(this.isCSBusyMessage() || this.isCommErrorMessage() );
+          return(this.isCSBusyMessage() || 
+                 this.isCommErrorMessage() || 
+                 this.isCSTransferError());
     }
 
     // initialize logging
