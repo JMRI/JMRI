@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -522,7 +522,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
         
     def doSpeedRed(self):
-        if (self.currentThrottle != None and self.currentThrottle.getSpeedSetting() != 0 and (self.redDelayTimer == None or self.redDelayTimer.isRunning == False)) :
+        if (self.currentThrottle != None and self.currentThrottle.getSpeedSetting() != 0 and (self.redDelayTimer == None or self.redDelayTimer.isRunning() == False)) :
             i = int(self.locoSpeedRed.text) * 0.01
             self.currentThrottle.setSpeedSetting(i)
             self.msgText("doSpeedRed: " + i.toString() + "\n")
@@ -631,38 +631,37 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             
     # handle the horn button on
     def whenLocoHornOn(self, event) :
-        self.whenLocoHorn(event, True)
+        self.doLocoHorn(event, True)
         return
 
     # handle the horn button off
     def whenLocoHornOff(self, event) :
-        self.whenLocoHorn(event, False)
+        self.doLocoHorn(event, False)
         return
 
-    def whenLocoHorn(self, event, state) :
-        self.msgText("whenLocoHorn\n")
+    def doLocoHorn(self, event, state) :
         if (self.currentThrottle != None) :
             wasState = self.currentThrottle.getF2()
             self.currentThrottle.setF2(state)
-            self.msgText("changed horn to: " + state + " was " + wasState + "\n")
+            self.msgText("changed horn to: " + state.toString() + " was " + wasState.toString() + "\n")
         return
     
     # handle the Headlight button
     def whenLocoHeadlight(self, event) :
         if (self.currentThrottle != None) :
             wasState = self.currentThrottle.getF0()
-            state = self.locoHeadlight.getEnabled()
+            state = self.locoHeadlight.isSelected()
             self.currentThrottle.setF0(state)
-            self.msgText("changed light to: " + state + " was " + wasState + "\n")
+            self.msgText("changed light to: " + state.toString() + " was " + wasState.toString() + "\n")
         return
     
     # handle the Bell button
     def whenLocoBell(self, event) :
         if (self.currentThrottle != None) :
             wasState = self.currentThrottle.getF1()
-            state = self.locoBell.getEnabled()
+            state = self.locoBell.isSelected()
             self.currentThrottle.setF1(state)
-            self.msgText("changed bell to: " + state + " was " + wasState + "\n")
+            self.msgText("changed bell to: " + state.toString() + " was " + wasState.toString() + "\n")
         return
     
     # test for block name
@@ -928,8 +927,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         # loco horn/whistle flag
         self.locoHorn = javax.swing.JButton("Horn")
         self.locoHorn.setToolTipText("Controls loco horn")
-        self.locoHorn.focusGained = self.whenLocoHornOn
-        self.locoHorn.focusLost = self.whenLocoHornOff
+        self.locoHorn.mousePressed = self.whenLocoHornOn
+        self.locoHorn.mouseReleased = self.whenLocoHornOff
 
         # create the speed fields for a Green Flash Signal
         self.locoSpeedGreenFlash = javax.swing.JTextField(sizeSpeedField)    # sized to hold 5 characters
