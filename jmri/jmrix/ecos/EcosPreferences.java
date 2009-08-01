@@ -7,12 +7,12 @@ package jmri.jmrix.ecos;
  * with JMRI.
  *
  * @author	Kevin Dickerson  Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class EcosPreferences {
  
-    public void EcosPreferences(){
+    public EcosPreferences(){
 	_instance = this;
     }
     //protected static boolean _addlocotoecos = false;
@@ -92,11 +92,11 @@ public class EcosPreferences {
     }
     
     public void setLocoMaster(String master){
-        if (master.equals("NOSYNC")) _locomaster = 0x00;
-        else if (master.equals("WARN")) _locomaster = 0x01;
-        else if (master.equals("JMRI")) _locomaster = 0x02;
-        else if (master.equals("ECOS")) _locomaster = 0x03;
-        else _locomaster = 0x00;
+        if (master.equals("NOSYNC")) _locomaster = NOSYNC;
+        else if (master.equals("WARN")) _locomaster = WARN;
+        else if (master.equals("JMRI")) _locomaster = JMRI;
+        else if (master.equals("ECOS")) _locomaster = ECOS;
+        else _locomaster = NOSYNC;
     }
     
     public String getLocoMasterAsString(){
