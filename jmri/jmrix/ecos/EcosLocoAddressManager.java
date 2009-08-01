@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Managers the Ecos Loco entries within JMRI.
  * @author Kevin Dickerson
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class EcosLocoAddressManager implements java.beans.PropertyChangeListener, EcosListener{
 
@@ -22,7 +22,6 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
     public char typeLetter() { return 'Z'; }
 
     private EcosLocoAddress l;
-    private boolean wait = false;
 
     public EcosLocoAddressManager(){
          if (jmri.InstanceManager.configureManagerInstance()!=null) {
@@ -67,7 +66,8 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
         
         l = new EcosLocoAddress(dccAddress);
         register(l);
-        return (EcosLocoAddress)_tdcc.get(dccAddress);
+        //return (EcosLocoAddress)_tdcc.get(dccAddress);
+        return _tdcc.get(dccAddress);
     }
     
     public EcosLocoAddress provideByEcosObject(String ecosObject) {
@@ -78,15 +78,18 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
         
         l = new EcosLocoAddress(ecosObject);
         register(l);
-        return (EcosLocoAddress)_tecos.get(ecosObject);
+        //return (EcosLocoAddress)_tecos.get(ecosObject);
+        return _tecos.get(ecosObject);
     }
 
     public EcosLocoAddress getByEcosObject(String ecosObject) { 
-		return (EcosLocoAddress)_tecos.get(ecosObject);
+		//return (EcosLocoAddress)_tecos.get(ecosObject);
+        return _tecos.get(ecosObject);
     }
     
     public EcosLocoAddress getByDccAddress(int dccAddress) { 
-		return (EcosLocoAddress)_tdcc.get(dccAddress);
+		//return (EcosLocoAddress)_tdcc.get(dccAddress);
+        return _tdcc.get(dccAddress);
     }
     
     public String[] getEcosObjectArray() {

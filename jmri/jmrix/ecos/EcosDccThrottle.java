@@ -14,7 +14,7 @@ import javax.swing.*;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2009 by Kevin Dickerson
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 {
@@ -366,9 +366,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     //The values here might need a bit of re-working
     public void setSpeedSetting(float speed) {
         if(!_haveControl) return;
-        byte[] result;
         int value;
-        int new_spd = intSpeed( speed );
         
         if (speed == this.speedSetting) return;
         if (super.speedStepMode == SpeedStepMode128) {
