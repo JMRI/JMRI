@@ -11,7 +11,7 @@ import jmri.jmrit.operations.setup.Setup;
  * than once in a route.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.15 $
+ * @version             $Revision: 1.16 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 
@@ -44,7 +44,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	public static final String SOUTH_DIR = Setup.SOUTH_DIR;
 	
 	public static final String DISPOSE = "dispose";
-	private static final String DELETED = "<location deleted>";
+	public static final String DELETED = "<location deleted>";
 	
 	public static final String DROP_CHANGED_PROPERTY = "dropChange";
 	public static final String PICKUP_CHANGED_PROPERTY = "pickupChange";
@@ -72,6 +72,12 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	public String getName() {
 		if (_location != null)
 			return _location.getName();
+		return DELETED;
+	}
+	
+	private String getNameId(){
+		if (_location != null)
+			return _location.getId();
 		return DELETED;
 	}
 	
@@ -282,10 +288,18 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         org.jdom.Attribute a;
         if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
         else log.warn("no id attribute in track location element when reading operations");
-        if ((a = e.getAttribute("name")) != null ){
+        if ((a = e.getAttribute("locationId")) != null ){
+        	_location = LocationManager.instance().getLocationById(a.getValue());
+        	if (_location != null)
+        		_location.addPropertyChangeListener(this);
+        }
+        // old way of storing a route location
+        else if ((a = e.getAttribute("name")) != null ){
         	_location = LocationManager.instance().getLocationByName(a.getValue());
         	if (_location != null)
         		_location.addPropertyChangeListener(this);
+        	// force rewrite of route file
+        	RouteManagerXml.instance().setDirty(true);
         }
         if ((a = e.getAttribute("trainDirection")) != null ){
         	// early releases had text for train direction
@@ -321,6 +335,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     	org.jdom.Element e = new org.jdom.Element("location");
     	e.setAttribute("id", getId());
     	e.setAttribute("name", getName());
+    	e.setAttribute("locationId", getNameId());
     	e.setAttribute("sequenceId", Integer.toString(getSequenceId()));
     	e.setAttribute("trainDirection", Integer.toString(getTrainDirection()));
     	e.setAttribute("maxTrainLength", Integer.toString(getMaxTrainLength()));

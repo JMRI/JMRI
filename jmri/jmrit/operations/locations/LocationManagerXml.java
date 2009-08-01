@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Load and stores locations and schedules for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008 2009
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class LocationManagerXml extends XmlFile {
 	
@@ -205,6 +205,11 @@ public class LocationManagerXml extends XmlFile {
         } catch (Exception e) {
             log.error("Exception while writing the new operations file, may not be complete: "+e);
         }
+    }
+    
+    public void writeFileIfDirty(){
+    	if(isDirty())
+    		writeOperationsLocationFile();
     }
     
     /**

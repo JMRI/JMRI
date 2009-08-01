@@ -16,7 +16,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores routes using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class RouteManagerXml extends XmlFile {
 	
@@ -160,7 +160,7 @@ public class RouteManagerXml extends XmlFile {
         }
     }
     
-    public void writeOperationsRouteFileIfDirty(){
+    public void writeFileIfDirty(){
     	if(isDirty())
     		writeOperationsRouteFile();
     }

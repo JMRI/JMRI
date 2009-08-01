@@ -23,7 +23,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public class RoutesTableFrame extends OperationsFrame {
 	
@@ -92,7 +92,7 @@ public class RoutesTableFrame extends OperationsFrame {
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true);
     	
     	pack();
-    	setSize(350, getHeight());
+    	setSize(450, getHeight());
     	
     }
     

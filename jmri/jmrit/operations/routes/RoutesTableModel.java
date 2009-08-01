@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 public class RoutesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -31,8 +31,8 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     // Defines the columns
     private static final int IDCOLUMN   = 0;
     private static final int NAMECOLUMN   = IDCOLUMN+1;
-
-    private static final int EDITCOLUMN = NAMECOLUMN+1;
+    private static final int STATUSCOLUMN   = NAMECOLUMN+1;
+    private static final int EDITCOLUMN = STATUSCOLUMN+1;
     
     private static final int HIGHESTCOLUMN = EDITCOLUMN+1;
 
@@ -82,6 +82,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		// set column preferred widths
 		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(30);
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
+		table.getColumnModel().getColumn(STATUSCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -95,7 +96,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         switch (col) {
         case IDCOLUMN: return rb.getString("Id");
         case NAMECOLUMN: return rb.getString("Name");
-
+        case STATUSCOLUMN: return rb.getString("Status");
         case EDITCOLUMN: return "";		//edit column
         default: return "unknown";
         }
@@ -105,6 +106,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         switch (col) {
         case IDCOLUMN: return String.class;
         case NAMECOLUMN: return String.class;
+        case STATUSCOLUMN: return String.class;
         case EDITCOLUMN: return JButton.class;
         default: return null;
         }
@@ -129,11 +131,11 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     		ref.requestFocus();
     	}
     	String locId = sysList.get(row);
-    	Route l = manager.getRouteById(locId);
+    	Route r = manager.getRouteById(locId);
         switch (col) {
-        case IDCOLUMN: return l.getId();
-        case NAMECOLUMN: return l.getName();
-
+        case IDCOLUMN: return r.getId();
+        case NAMECOLUMN: return r.getName();
+        case STATUSCOLUMN: return r.getStatus()?rb.getString("Okay"):rb.getString("Error");
         case EDITCOLUMN: return rb.getString("Edit");
         default: return "unknown "+col;
         }

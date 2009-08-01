@@ -20,7 +20,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -101,9 +101,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     	Engine engine = getEngineByRoadAndNumber(engineRoad, engineNumber);
     	if (engine == null){
     		engine = new Engine(engineRoad, engineNumber);
-    		Integer oldSize = new Integer(_engineHashTable.size());
-    		_engineHashTable.put(engine.getId(), engine);
-    		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_engineHashTable.size()));
+    		register(engine);
     	}
     	return engine;
     }

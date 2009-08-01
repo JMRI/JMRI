@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.20 $
+ * @version             $Revision: 1.21 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -204,8 +204,8 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 			}
 			// confirm that length is a number and less than 10000 feet
 			try {
-				int engineLength = Integer.parseInt(addItem);
-				if (engineLength > 9999){
+				Integer.parseInt(addItem);
+				if (addItem.length() > Control.MAX_LEN_STRING_LENGTH_NAME){
 					log.error("engine length must be less than 10,000 feet");
 					JOptionPane.showMessageDialog(this,rb.getString("engineAttribute5"),
 							MessageFormat.format(rb.getString("canNotAdd"),new Object[]{_comboboxName}),

@@ -19,7 +19,7 @@ import jmri.jmrit.operations.routes.Route;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.26 $
+ * @version             $Revision: 1.27 $
  */
 public class Track implements java.beans.PropertyChangeListener {
 	
@@ -261,7 +261,7 @@ public class Track implements java.beans.PropertyChangeListener {
 	public void addDropRS(RollingStock rs) {
 		int old = _dropRS;
 		_dropRS++;
-		_moves++;
+		setMoves(getMoves()+1);
 		int reserved = getReserved() + Integer.parseInt(rs.getLength()) + RollingStock.COUPLER;
 		setReserved(reserved);
 		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
@@ -519,6 +519,8 @@ public class Track implements java.beans.PropertyChangeListener {
     
     public void setMoves(int moves){
     	_moves = moves;
+    	// set dirty
+    	LocationManagerXml.instance().setDirty(true);
     }
     
     public String getScheduleName(){

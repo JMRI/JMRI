@@ -22,11 +22,11 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * This routine will import cars into the operation database.
  * 
- * Each field is space delimited.  Field order:
+ * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Weight Color Owner Year Location
  * Note that all fields must be single words except for Location.
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class ImportCars extends Thread {
 	
@@ -137,7 +137,7 @@ public class ImportCars extends Thread {
 				carTrack ="";
 
 				log.debug("Checking car number ("+carNumber+") road ("+carRoad+ ") type ("+carType+ ") length ("+carLength+") weight ("+carWeight+") color ("+carColor+")" );
-				if (carNumber.length() > 10){
+				if (carNumber.length() > Control.MAX_LEN_STRING_ROAD_NUMBER){
 					JOptionPane.showMessageDialog(null, 
 							"Car ("+carRoad+" "+carNumber+") road number ("+carNumber+") too long!",
 							rb.getString("carRoadNum"),
@@ -158,14 +158,14 @@ public class ImportCars extends Thread {
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-				if (carLength.length() > 4){
+				if (carLength.length() > Control.MAX_LEN_STRING_LENGTH_NAME){
 					JOptionPane.showMessageDialog(null, 
 							"Car ("+carRoad+" "+carNumber+") length ("+carLength+") too long!",
 							rb.getString("carAttribute5"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-				if (carWeight.length() > 4){
+				if (carWeight.length() > Control.MAX_LEN_STRING_WEIGHT_NAME){
 					JOptionPane.showMessageDialog(null, 
 							"Car ("+carRoad+" "+carNumber+") weight ("+carWeight+") too long!",
 							rb.getString("carAttribute5"),
@@ -196,7 +196,7 @@ public class ImportCars extends Thread {
 					}
 					if(inputLine.length > base+7){
 						carBuilt = inputLine[base+7];
-						if (carBuilt.length() > 4){
+						if (carBuilt.length() > Control.MAX_LEN_STRING_BUILT_NAME){
 							JOptionPane.showMessageDialog(null, 
 									"Car ("+carRoad+" "+carNumber+") built ("+carBuilt+") too long!",
 									rb.getString("carAttribute5"),
@@ -230,14 +230,14 @@ public class ImportCars extends Thread {
 						log.debug("Car ("+carRoad+" "+carNumber+") has track ("+carTrack+")");
 					}
 
-					if (carLocation.length() > 25){
+					if (carLocation.length() > Control.MAX_LEN_STRING_LOCATION_NAME){
 						JOptionPane.showMessageDialog(null, 
 								"Car ("+carRoad+" "+carNumber+") location ("+carLocation+") too long!",
 								rb.getString("carAttribute25"),
 								JOptionPane.ERROR_MESSAGE);
 						break;
 					}
-					if (carTrack.length() > 25){
+					if (carTrack.length() > Control.MAX_LEN_STRING_TRACK_NAME){
 						JOptionPane.showMessageDialog(null, 
 								"Car ("+carRoad+" "+carNumber+") track ("+carTrack+") too long!",
 								rb.getString("carAttribute25"),

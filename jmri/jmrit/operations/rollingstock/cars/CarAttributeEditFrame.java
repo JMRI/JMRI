@@ -25,7 +25,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.19 $
+ * @version             $Revision: 1.20 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -227,8 +227,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			}
 			// confirm that length is a number and less than 10000 feet
 			try {
-				int carLength = Integer.parseInt(addItem);
-				if (carLength > 9999){
+				Integer.parseInt(addItem);
+				if (addItem.length() > Control.MAX_LEN_STRING_LENGTH_NAME){
 					log.error("car length must be less than 10,000 feet");
 					JOptionPane.showMessageDialog(this,rb.getString("carAttribute5"),
 							MessageFormat.format(rb.getString("canNotAdd"),new Object[]{_comboboxName}),

@@ -32,7 +32,7 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.23 $
+ * @version             $Revision: 1.24 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -307,8 +307,8 @@ public class TrainsTableFrame extends OperationsFrame {
 		engineMangerXml.writeOperationsEngineFile();		//Need to save train assignments
 		carMangerXml.writeOperationsCarFile();				//Need to save train assignments
 		trainManagerXml.writeOperationsTrainFile();			//Need to save train status
-		locationManagerXml.writeOperationsLocationFile();	//Need to save "moves" for track location 
-		routeManagerXml.writeOperationsRouteFileIfDirty(); 	//Only if user used setX&Y
+		locationManagerXml.writeFileIfDirty();				//Need to save "moves" for track location 
+		routeManagerXml.writeFileIfDirty(); 				//Only if user used setX&Y
 		setModifiedFlag(false);
 	}
 

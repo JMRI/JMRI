@@ -21,11 +21,11 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * This routine will import engines into the operation database.
  * 
- * Each field is space delimited.  Field order:
+ * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Owner Year Location
  * Note that all fields must be single words except for Location.
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class ImportEngines extends Thread {
 	
@@ -131,7 +131,7 @@ public class ImportEngines extends Thread {
 				engineTrack ="";
 
 				log.debug("Checking engine number ("+engineNumber+") road ("+engineRoad+ ") type ("+engineModel+ ") length ("+engineLength+")");
-				if (engineNumber.length() > 10){
+				if (engineNumber.length() > Control.MAX_LEN_STRING_ROAD_NUMBER){
 					JOptionPane.showMessageDialog(null, 
 							"Engine ("+engineRoad+" "+engineNumber+") road number ("+engineNumber+") too long!",
 							rb.getString("engineRoadNum"),
@@ -152,7 +152,7 @@ public class ImportEngines extends Thread {
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-				if (engineLength.length() > 4){
+				if (engineLength.length() > Control.MAX_LEN_STRING_LENGTH_NAME){
 					JOptionPane.showMessageDialog(null, 
 							"Engine ("+engineRoad+" "+engineNumber+") length ("+engineLength+") too long!",
 							rb.getString("engineAttribute5"),
@@ -176,7 +176,7 @@ public class ImportEngines extends Thread {
 					}
 					if(inputLine.length > base+6){
 						engineBuilt = inputLine[base+6];
-						if (engineBuilt.length() > 4){
+						if (engineBuilt.length() > Control.MAX_LEN_STRING_BUILT_NAME){
 							JOptionPane.showMessageDialog(null, 
 									"Engine ("+engineRoad+" "+engineNumber+") built ("+engineBuilt+") too long!",
 									rb.getString("engineAttribute5"),
@@ -209,14 +209,14 @@ public class ImportEngines extends Thread {
 						log.debug("Engine ("+engineRoad+" "+engineNumber+") has track ("+engineTrack+")");
 					}
 
-					if (engineLocation.length() > 25){
+					if (engineLocation.length() > Control.MAX_LEN_STRING_LOCATION_NAME){
 						JOptionPane.showMessageDialog(null, 
 								"Engine ("+engineRoad+" "+engineNumber+") location ("+engineLocation+") too long!",
 								rb.getString("engineAttribute25"),
 								JOptionPane.ERROR_MESSAGE);
 						break;
 					}
-					if (engineTrack.length() > 25){
+					if (engineTrack.length() > Control.MAX_LEN_STRING_TRACK_NAME){
 						JOptionPane.showMessageDialog(null, 
 								"Engine ("+engineRoad+" "+engineNumber+") track ("+engineTrack+") too long!",
 								rb.getString("engineAttribute25"),

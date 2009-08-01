@@ -2,11 +2,10 @@
 
 package jmri.jmrit.operations.locations;
 
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
-import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.OperationsFrame;
 
 import java.awt.*;
@@ -23,7 +22,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -97,7 +96,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	// combo boxes
 
 	public static final String NAME = rb.getString("Name");
-	public static final int MAX_NAME_LENGTH = 25;
+	public static final int MAX_NAME_LENGTH = Control.MAX_LEN_STRING_LOCATION_NAME;
 	public static final String LENGTH = rb.getString("Length");
 	public static final String DISPOSE = "dispose" ;
 
@@ -346,8 +345,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			enableButtons(false);
 			// save location file
 			managerXml.writeOperationsLocationFile();
-			// save car file in case location had cars
-			CarManagerXml.instance().writeOperationsCarFile();
 		}
 		if (ae.getSource() == addLocationButton){
 			Location l = manager.getLocationByName(locationNameTextField.getText());
@@ -398,10 +395,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		manager.setLocationEditFrame(this);
 		// save location file
 		managerXml.writeOperationsLocationFile();
-		// save car file in case location name changed
-		CarManagerXml.instance().writeOperationsCarFile();
-		// save route file in case location name changed
-		RouteManagerXml.writeOperationsRouteFile();
 	}
 	
 

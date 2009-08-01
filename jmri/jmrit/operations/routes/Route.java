@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.15 $
+ * @version             $Revision: 1.16 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 
@@ -301,6 +301,20 @@ public class Route implements java.beans.PropertyChangeListener {
     			found = true;
     	}
     	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
+    }
+    
+    /**
+     * Gets the status of the route
+     * @return true if route is okay.
+     */
+    public boolean getStatus(){
+    	List<String> routeIds = getLocationsByIdList();
+    	for (int i=0; routeIds.size()>i; i++){
+    		RouteLocation rl = getLocationById(routeIds.get(i));
+    		if (rl.getName().equals(RouteLocation.DELETED))
+    			return false;
+    	}
+    	return true;
     }
 
  	

@@ -50,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -79,6 +79,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JLabel textDescription = new JLabel(rb.getString("Description"));
 	JLabel textDepartTime = new JLabel(rb.getString("DepartTime"));
 	JLabel textRoute = new JLabel(rb.getString("Route"));
+	JLabel textRouteStatus = new JLabel();
 	JLabel textCarType = new JLabel(rb.getString("TypesCar"));
 	JLabel textEngineType = new JLabel(rb.getString("TypesEngine"));
 	JLabel textModel = new JLabel(rb.getString("Model"));
@@ -208,6 +209,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		addItem(p2, textRoute, 0, 5);
 		addItem(p2, routeBox, 1, 5);
 		addItem(p2, editButton, 2, 5);
+		addItem(p2, textRouteStatus, 3, 5);
 		p2.setBorder(border);
 
 		// row 5
@@ -333,8 +335,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			_train.addPropertyChangeListener(this);
 			// listen for route changes
 			Route route = _train.getRoute();
-			if (route != null)
+			if (route != null){
 				route.addPropertyChangeListener(this);
+			}
 		} else {
 			enableButtons(false);
 		}
@@ -864,7 +867,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		Route route = null;
 		if (_train != null)
 			route = _train.getRoute();
-		if (route !=null){
+		if (route != null){
+			textRouteStatus.setText(route.getStatus()?"":rb.getString("Error"));
 			List<String> locations = route.getLocationsBySequenceList();
 			for (int i=0; i<locations.size(); i++){
 				RouteLocation rl = route.getLocationById(locations.get(i));
@@ -872,25 +876,29 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				locationCheckBoxes.add(checkBox);
 				checkBox.setText(rl.toString());
 				checkBox.setName(rl.getId());
-
-				Location loc = LocationManager.instance().getLocationByName(rl.getName());
-				// need to listen for name and direction changes
-				loc.removePropertyChangeListener(this);
-				loc.addPropertyChangeListener(this);
-				boolean services = false;
-				// does train direction service location?
-				if ((rl.getTrainDirection() & loc.getTrainDirections())>0)
-					services = true;
-				// train must service last location or single location
-				else if (i == locations.size()-1)
-					services = true;
-				// check can drop and pickup, and moves > 0
-				if (services && (rl.canDrop() || rl.canPickup()) && rl.getMaxCarMoves()>0)
-					checkBox.setSelected(!_train.skipsLocation(rl.getId()));
-				else
-					checkBox.setEnabled(false);
-				addLocationCheckBoxAction(checkBox);
 				addItemLeft(locationPanelCheckBoxes, checkBox, 0, y++);
+				Location loc = LocationManager.instance().getLocationByName(rl.getName());
+				// does the location exist?
+				if (loc != null){
+					// need to listen for name and direction changes
+					loc.removePropertyChangeListener(this);
+					loc.addPropertyChangeListener(this);
+					boolean services = false;
+					// does train direction service location?
+					if ((rl.getTrainDirection() & loc.getTrainDirections())>0)
+						services = true;
+					// train must service last location or single location
+					else if (i == locations.size()-1)
+						services = true;
+					// check can drop and pickup, and moves > 0
+					if (services && (rl.canDrop() || rl.canPickup()) && rl.getMaxCarMoves()>0)
+						checkBox.setSelected(!_train.skipsLocation(rl.getId()));
+					else
+						checkBox.setEnabled(false);
+					addLocationCheckBoxAction(checkBox);
+				} else {
+					checkBox.setEnabled(false);
+				}
 			}
 		}
 		Border border = BorderFactory.createEtchedBorder();
@@ -938,7 +946,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				for (int i =0; i<locations.size(); i++){
 					RouteLocation rl = route.getLocationById(locations.get(i));
 					Location loc = LocationManager.instance().getLocationByName(rl.getName());
-					loc.removePropertyChangeListener(this);
+					if (loc != null)
+						loc.removePropertyChangeListener(this);
 				}
 			}
 		}

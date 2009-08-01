@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -93,7 +93,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	Border border = BorderFactory.createEtchedBorder();
 
 	public static final String DISPOSE = "dispose" ;
-	public static final int MAX_NAME_LENGTH = 25;
+	public static final int MAX_NAME_LENGTH = Control.MAX_LEN_STRING_TRACK_NAME;
 
 	public TrackEditFrame() {
 		super();
@@ -375,7 +375,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		int trackLength = 0;
 		try {
 			trackLength = Integer.parseInt(length);
-			if (trackLength > 99999){
+			if (length.length() > Control.MAX_LEN_STRING_LENGTH_NAME){
 				log.error("Track length must be less than 100,000 feet");
 				JOptionPane.showMessageDialog(this,
 						rb.getString("TrackMustBeLessThan"), rb.getString("ErrorTrackLength"),
