@@ -102,6 +102,7 @@ public class MultiSensorIconAdder extends IconAdder {
     *  Override.  First look for a table selection to set the sensor.
     *   If not, then look to change the icon image (super). 
     */
+    @SuppressWarnings("nullpointer")
     public void makeIconPanel() {
         if (_iconPanel != null) {
             this.remove(_iconPanel);
@@ -189,8 +190,10 @@ public class MultiSensorIconAdder extends IconAdder {
         }
         while ((cnt%3)!=0)
         {
-            rowPanel.add(Box.createRigidArea(dim));
-            cnt++;
+            try {
+                rowPanel.add(Box.createRigidArea(dim));
+                cnt++;
+            } catch (NullPointerException npe) { /* never */}
         }
         if (rowPanel != null) {
             _iconPanel.add(rowPanel);
