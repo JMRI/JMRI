@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 
-import javax.swing.JPanel;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
@@ -30,7 +29,7 @@ import javax.swing.JCheckBoxMenuItem;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 abstract class PositionableJPanel extends JPanel
                         implements MouseMotionListener, MouseListener,
@@ -267,18 +266,20 @@ abstract class PositionableJPanel extends JPanel
 			popup.add("x= " + this.getX());
 			popup.add("y= " + this.getY());
 			popup.add("level= " + this.getDisplayLevel().intValue());
-            List <JComponent> list = panelEditor.getSelections();
-            if (list.size() > 1) {
-                popup.add(new AbstractAction(rb.getString("AlignX")) {
-                    public void actionPerformed(ActionEvent e) {
-                        alignGroup(true);
-                    }
-                });
-                popup.add(new AbstractAction(rb.getString("AlignY")) {
-                    public void actionPerformed(ActionEvent e) {
-                        alignGroup(false);
-                    }
-                });
+            if (getPositionable()) {
+                List <JComponent> list = panelEditor.getSelections();
+                if (list.size() > 1) {
+                    popup.add(new AbstractAction(rb.getString("AlignX")) {
+                        public void actionPerformed(ActionEvent e) {
+                            alignGroup(true);
+                        }
+                    });
+                    popup.add(new AbstractAction(rb.getString("AlignY")) {
+                        public void actionPerformed(ActionEvent e) {
+                            alignGroup(false);
+                        }
+                    });
+                }
             }
 			popup.add(new PopupAction(name));
 		}
@@ -287,17 +288,29 @@ abstract class PositionableJPanel extends JPanel
     protected void alignGroup(boolean alignX) {
         List <JComponent> list = panelEditor.getSelections();
         int sum = 0;
+        int cnt = 0;
         for (int i=0; i<list.size(); i++) {
             JComponent comp = list.get(i);
+            if (comp instanceof PositionableLabel) {
+                if (((PositionableLabel)comp).getFixed() ) continue;
+            }else if (comp instanceof PositionableJPanel) {
+                if (!((PositionableJPanel)comp).getPositionable()) continue;
+            }
             if (alignX) {
                 sum += comp.getX();
             } else {
                 sum += comp.getY();
             }
+            cnt++;
         }
-        int ave = Math.round((float)sum/list.size());
+        int ave = Math.round((float)sum/cnt);
         for (int i=0; i<list.size(); i++) {
             JComponent comp = list.get(i);
+            if (comp instanceof PositionableLabel) {
+                if (((PositionableLabel)comp).getFixed() ) continue;
+            }else if (comp instanceof PositionableJPanel) {
+                if (!((PositionableJPanel)comp).getPositionable()) continue;
+            }
             if (alignX) {
                 comp.setLocation(ave, comp.getY());
             } else {
