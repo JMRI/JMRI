@@ -1466,12 +1466,14 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                 if (_selectRect != null) {
                     Graphics2D g2d = (Graphics2D)g;
                     //Draw a rectangle on top of the image.
-                    java.awt.Stroke stroke = g2d.getStroke(); 
+                    java.awt.Stroke stroke = g2d.getStroke();
+                    Color color = g2d.getColor();
                     g2d.setStroke(DASHED_LINE);
-                    g.setXORMode(Color.white); //Color of line varies
-                                               //depending on image colors
+                    g2d.setColor(Color.red);
+                    //g.setXORMode(Color.white);
                     g.drawRect(_selectRect.x, _selectRect.y, _selectRect.width, _selectRect.height);
                     g2d.setStroke(stroke);
+                    g2d.setColor(color);
                 }
             }
 
@@ -1576,7 +1578,6 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             drawSelectRect(e);
             makeSelections();
             if (log.isDebugEnabled()) log.debug("MouseInputAdapter mouseReleased");
-            //_selectRect = null;
         }
 
         void drawSelectRect(MouseEvent e) {
