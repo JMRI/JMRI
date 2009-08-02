@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.5.shtml,v 1.5 2009-07-29 07:06:04 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.5.shtml,v 1.6 2009-08-02 05:24:48 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -121,6 +121,33 @@ Pete Cressman made some improvement to Panel Editor icon handling.
 
 <p>
 Pete Cressman added support for Float values in Memories.
+
+<p>
+Paul Bender fixed a problem with XPressNet throttle setup that was particularly problematic for Hornby users.
+
+<p>
+Ken Cameron improved his RobotThrottle script.
+
+<p>
+Dan Boureau added status information to the operations route table.
+
+<p>
+Kevin Dickerson improved the way we check for duplicate roster IDs to catch some additional
+cases.
+
+<p>
+Paul Bender corrected a bug in XPressNet LI100 programmer which made it difficult to read 
+multiple values from a decoder (single reads were ok).
+
+<p>
+Kevin Dickerson added a capability to connect locomotive information in the ECoS command station to JMRI.
+
+<p>
+Ken Cameron added a horn button to the RobotThrottle.
+
+<P>
+Paul Bender added some additional error messages to the DCC programmer.
+
 
 <!--#include virtual="/Footer" -->
 
