@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CoordinateEdit.shtml,v 1.2 2008-11-01 17:33:00 jacobsen Exp $ -->
+<!-- $Id: CoordinateEdit.shtml,v 1.3 2009-08-02 22:07:22 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Coordinate Edit Help</TITLE>
@@ -40,6 +40,11 @@ move the icon 5 pixels to the right. Entering -10 in the y coordinate
 box and pressing "Set" will move an icon up 10 pixels. The editor will
 also accept just + and - in the text box if you want to move the icon
 one pixel.</P>
+
+<P>This editor also allows you to set the level at which the icon is 
+displayed.  The levels range from 1 to 10, with 10 being the top layer.
+Use the level setting to place one icon above another to get the view
+you want on your panel.
 
 <!--#include virtual="/Footer" -->
 </BODY>
