@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelEditor.shtml,v 1.12 2009-06-23 06:33:11 jacobsen Exp $ -->
+<!-- $Id: PanelEditor.shtml,v 1.13 2009-08-02 22:07:01 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
@@ -177,6 +177,21 @@ Windows) that will provide various ways to manipulate the icon. It will let
 you rotate the icon so that it points in whatever direction you want.
 Text labels can have their font, size and color changed. You can also
 remove icons from the panel with the popup menu.</P>
+
+<P>When the checkbox for repositioning icons is checked, groups of icons can be selected.
+Pressing the mouse button down in an open area and dragging will draw a dotted red
+rectangle.  All the icons that lie within this "fence" are items that are selected.  Those
+icons within the "fence" that do <b>not</b> have the <b>fixed</b> or <b>Lock Position</b> 
+checkbox marked in their popup memus can be moved as a group.  Dragging any one of the 
+repositionable icons within the fence will move the entire group.  Clicking in an open
+area will remove the "fence" and ungroup the icons.</P>
+
+<P>In addition, grouped icons can be aligned horizonally and vertically.   When grouped,
+the icons have two addtional menu items in their popup memus: <b>Align Vertically</b>
+and <b>Align Horizontally</b>.  Once again, the grouped icons that are not fixed or
+locked can be aligned with either their left edges (x coordinate) equal, or top edges 
+(y coordinate) equal.  These menu items disappear when the icons are ungrouped.</P>
+
 <H3>Multi Slice Backgrounds</H3>
 For users that need to build a classic US&S panel there are several options. The first is to
 simply select the 15 position panel background from icons/USS/background/uss-15.gif. Another
