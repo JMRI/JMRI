@@ -25,7 +25,6 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
@@ -39,7 +38,7 @@ import javax.swing.JTextField;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.54 $
+ * @version $Revision: 1.55 $
  */
 
 public class PositionableLabel extends JLabel
@@ -400,18 +399,20 @@ public class PositionableLabel extends JLabel
 			popup.add("x= " + this.getX());
 			popup.add("y= " + this.getY());
 			popup.add("level= " + this.getDisplayLevel().intValue());
-            List <JComponent> list = panelEditor.getSelections();
-            if (list.size() > 1) {
-                popup.add(new AbstractAction(rb.getString("AlignX")) {
-                    public void actionPerformed(ActionEvent e) {
-                        alignGroup(true);
-                    }
-                });
-                popup.add(new AbstractAction(rb.getString("AlignY")) {
-                    public void actionPerformed(ActionEvent e) {
-                        alignGroup(false);
-                    }
-                });
+            if (!getFixed()) {
+                List <JComponent> list = panelEditor.getSelections();
+                if (list.size() > 1) {
+                    popup.add(new AbstractAction(rb.getString("AlignX")) {
+                        public void actionPerformed(ActionEvent e) {
+                            alignGroup(true);
+                        }
+                    });
+                    popup.add(new AbstractAction(rb.getString("AlignY")) {
+                        public void actionPerformed(ActionEvent e) {
+                            alignGroup(false);
+                        }
+                    });
+                }
             }
 			popup.add(new PopupAction(name));
 		}
@@ -420,17 +421,29 @@ public class PositionableLabel extends JLabel
     protected void alignGroup(boolean alignX) {
         List <JComponent> list = panelEditor.getSelections();
         int sum = 0;
+        int cnt = 0;
         for (int i=0; i<list.size(); i++) {
             JComponent comp = list.get(i);
+            if (comp instanceof PositionableLabel) {
+                if (((PositionableLabel)comp).getFixed() ) continue;
+            }else if (comp instanceof PositionableJPanel) {
+                if (!((PositionableJPanel)comp).getPositionable()) continue;
+            }
             if (alignX) {
                 sum += comp.getX();
             } else {
                 sum += comp.getY();
             }
+            cnt++;
         }
-        int ave = Math.round((float)sum/list.size());
+        int ave = Math.round((float)sum/cnt);
         for (int i=0; i<list.size(); i++) {
             JComponent comp = list.get(i);
+            if (comp instanceof PositionableLabel) {
+                if (((PositionableLabel)comp).getFixed() ) continue;
+            }else if (comp instanceof PositionableJPanel) {
+                if (!((PositionableJPanel)comp).getPositionable()) continue;
+            }
             if (alignX) {
                 comp.setLocation(ave, comp.getY());
             } else {
