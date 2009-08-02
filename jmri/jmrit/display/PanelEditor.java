@@ -1632,9 +1632,11 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     }
 
     void moveSelectRect(int deltaX, int deltaY) {
-        _selectRect = new Rectangle(_selectRect.x+deltaX, _selectRect.y+deltaY,
-                                    _selectRect.width, _selectRect.height);
-        target.repaint();
+        if (_selectRect != null) {
+            _selectRect = new Rectangle(_selectRect.x+deltaX, _selectRect.y+deltaY,
+                                        _selectRect.width, _selectRect.height);
+            target.repaint();
+        }
     }
 
     /**
