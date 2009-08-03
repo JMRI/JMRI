@@ -18,7 +18,7 @@ import javax.swing.JPanel;
  * 
  * @author	Ken Cameron   Copyright (C) 2008
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -233,14 +233,14 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 		// load address from switchAddrTextField
 		try {
 			if (light != null) {
+				// we're changing the light we're watching
 				light.removePropertyChangeListener(this);
 			}
 			light = InstanceManager.lightManagerInstance().provideLight(
 					adrTextField.getText());
 
 			if (light == null) {
-				log.error("Light " + adrTextField.getText()
-						+ " is not available");
+				log.error(rb.getString("LightErrorButtonNameBad") + adrTextField.getText());
 			} else {
 				light.addPropertyChangeListener(this);
 				if (log.isDebugEnabled())
@@ -249,8 +249,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 				light.setState(Light.OFF);
 			}
 		} catch (Exception ex) {
-			log.error("offButtonActionPerformed, exception: "
-							+ ex.toString());
+			log.error(rb.getString("LightErrorOffButtonException") + ex.toString());
 			nowStateTextField.setText("ERROR");
 		}
 	}
@@ -259,14 +258,14 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 		// load address from switchAddrTextField
 		try {
 			if (light != null) {
+				// we're changing the light we're watching
 				light.removePropertyChangeListener(this);
 			}
 			light = InstanceManager.lightManagerInstance().provideLight(
 					adrTextField.getText());
 
 			if (light == null) {
-				log.error("Light " + adrTextField.getText()
-						+ " is not available");
+				log.error(rb.getString("LightErrorButtonNameBad") + adrTextField.getText());
 			} else {
 				light.addPropertyChangeListener(this);
 				if (log.isDebugEnabled())
@@ -275,8 +274,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 				light.setState(Light.ON);
 			}
 		} catch (Exception ex) {
-			log.error("onButtonActionPerformed, exception: "
-							+ ex.toString());
+			log.error(rb.getString("LightErrorOnButtonException") + ex.toString());
 			nowStateTextField.setText("ERROR");
 		}
 	}
@@ -285,14 +283,14 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 		// load address from switchAddrTextField
 		try {
 			if (light != null) {
+				// we're changing the light we're watching
 				light.removePropertyChangeListener(this);
 			}
 			light = InstanceManager.lightManagerInstance().provideLight(
 					adrTextField.getText());
 
 			if (light == null) {
-				log.error("Light " + adrTextField.getText()
-						+ " is not available");
+				log.error(rb.getString("LightErrorButtonNameBad") + adrTextField.getText());
 			} else {
 				light.addPropertyChangeListener(this);
 				if (log.isDebugEnabled())
@@ -301,8 +299,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 				light.setTargetIntensity(Double.parseDouble(intensityTextField.getText().trim()) / 100);
 			}
 		} catch (Exception ex) {
-			log.error("intensityButtonActionPerformed, exception: "
-							+ ex.toString());
+			log.error(rb.getString("LightErrorIntensityButtonException") + ex.toString());
 			nowStateTextField.setText("ERROR");
 		}
 	}
@@ -314,12 +311,13 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 		// load address from switchAddrTextField
     	try {
 			if (light != null) {
+				// we're changing the light we're watching
 				light.removePropertyChangeListener(this);
 	    	}
 	    	light = InstanceManager.lightManagerInstance().provideLight(adrTextField.getText());
 	
 			if (light == null) {
-				nowStateTextField.setText("Light " + adrTextField.getText() + " is not available");
+				nowStateTextField.setText(rb.getString("LightErrorButtonNameBad") + adrTextField.getText());
 			} else {
 				double min = Double.parseDouble(intensityMinTextField.getText())/100.;
 				double max = Double.parseDouble(intensityMaxTextField.getText())/100.;
@@ -333,8 +331,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 				updateLightStatusFields(false);
 			}
     	} catch (Exception ex) {
-			log.error("applyButtonActionPerformed, exception: "
-					+ ex.toString());
+			log.error(rb.getString("LightErrorApplyButtonException") + ex.toString());
 			nowStateTextField.setText("ERROR");
     	}
     }
@@ -347,65 +344,65 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
 		// load address from switchAddrTextField
     	try {
 			if (light != null) {
+				// we're changing the light we're watching
 				light.removePropertyChangeListener(this);
 			}
 			light = InstanceManager.lightManagerInstance().provideLight(adrTextField.getText());
 	
 			if (light == null) {
-				nowStateTextField.setText("Light " + adrTextField.getText() + " is not available");
+				nowStateTextField.setText(rb.getString("LightErrorButtonNameBad") + adrTextField.getText());
 			} else {
 				updateLightStatusFields(true);
 			}
     	} catch (Exception ex) {
-			log.error("LockButtonActionPerformed, exception: "
-					+ ex.toString());
+			log.error(rb.getString("LightErrorStatusButtonException") + ex.toString());
 			nowStateTextField.setText("ERROR");
     	}
 	}
 
-	public void lockButtonActionPerformed(java.awt.event.ActionEvent e) {
-		// load address from switchAddrTextField
-		try {
-			if (light != null)
-				light.removePropertyChangeListener(this);
-			light = InstanceManager.lightManagerInstance().provideLight(
-					adrTextField.getText());
-
-			if (light == null) {
-				log.error("Light " + adrTextField.getText()
-						+ " is not available");
-			} else {
-				light.addPropertyChangeListener(this);
-
-			}
-		} catch (Exception ex) {
-			log.error("LockButtonActionPerformed, exception: "
-							+ ex.toString());
-			nowStateTextField.setText("ERROR");
-		}
-	}
+//	public void lockButtonActionPerformed(java.awt.event.ActionEvent e) {
+//		// load address from switchAddrTextField
+//		try {
+//			if (light != null)
+//				light.removePropertyChangeListener(this);
+//			light = InstanceManager.lightManagerInstance().provideLight(
+//					adrTextField.getText());
+//
+//			if (light == null) {
+//				log.error("Light " + adrTextField.getText()
+//						+ " is not available");
+//			} else {
+//				light.addPropertyChangeListener(this);
+//
+//			}
+//		} catch (Exception ex) {
+//			log.error("LockButtonActionPerformed, exception: "
+//							+ ex.toString());
+//			nowStateTextField.setText("ERROR");
+//		}
+//	}
 	
-	public void lockPushButtonActionPerformed(java.awt.event.ActionEvent e) {
-		// load address from switchAddrTextField
-		try {
-			if (light != null)
-				light.removePropertyChangeListener(this);
-			light = InstanceManager.lightManagerInstance().provideLight(
-					adrTextField.getText());
-
-			if (light == null) {
-				log.error("Light " + adrTextField.getText()
-						+ " is not available");
-			} else {
-				light.addPropertyChangeListener(this);
-				
-			}
-		} catch (Exception ex) {
-			log.error("LockPushButtonActionPerformed, exception: "
-							+ ex.toString());
-			nowStateTextField.setText("ERROR");
-		}
-	}
+//	public void lockPushButtonActionPerformed(java.awt.event.ActionEvent e) {
+//		// load address from switchAddrTextField
+//		try {
+//			if (light != null)
+//				light.removePropertyChangeListener(this);
+//			light = InstanceManager.lightManagerInstance().provideLight(
+//					adrTextField.getText());
+//
+//			if (light == null) {
+//				log.error("Light " + adrTextField.getText()
+//						+ " is not available");
+//			} else {
+//				light.addPropertyChangeListener(this);
+//				
+//			}
+//		} catch (Exception ex) {
+//			log.error("LockPushButtonActionPerformed, exception: "
+//							+ ex.toString());
+//			nowStateTextField.setText("ERROR");
+//		}
+//	}
 
     // update state field in GUI as state of light changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
