@@ -4,8 +4,6 @@ package jmri.jmrit.roster.swing.attributetable;
 
 import jmri.jmrit.roster.*;
 
-import java.util.List;
-
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -17,7 +15,7 @@ import org.jdom.*;
  * Tests for the roster.swing.attributetable.AttributeTableModel class.
  *
  * @author	Bob Jacobsen     Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class AttributeTableModelTest extends TestCase {
 

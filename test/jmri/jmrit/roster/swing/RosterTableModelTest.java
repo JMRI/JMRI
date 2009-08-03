@@ -4,8 +4,6 @@ package jmri.jmrit.roster.swing;
 
 import jmri.jmrit.roster.*;
 
-import java.util.List;
-
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -17,7 +15,7 @@ import org.jdom.*;
  * Tests for the roster.swing.RosterTableModel class.
  *
  * @author	Bob Jacobsen     Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class RosterTableModelTest extends TestCase {
 
@@ -69,7 +67,6 @@ public class RosterTableModelTest extends TestCase {
         Roster.resetInstance();
         new Roster(){
             { _instance = this; }
-            protected void warnShortLong(String s){}
         };
 
         // first entry

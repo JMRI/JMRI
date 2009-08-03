@@ -2,7 +2,6 @@ package jmri.implementation.configurexml;
 
 import jmri.InstanceManager;
 import jmri.SignalHead;
-import jmri.implementation.TripleTurnoutSignalHead;
 import jmri.implementation.QuadOutputSignalHead;
 import jmri.Turnout;
 
@@ -14,7 +13,7 @@ import org.jdom.Element;
  * Handle XML configuration for QuadOutputSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
 
