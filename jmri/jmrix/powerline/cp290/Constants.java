@@ -7,27 +7,33 @@ package jmri.jmrix.powerline.cp290;
  * Constants and functions specific to the CP290 interface
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @author Ken Cameron, (C) 2009, add sensors from poll replies
+ * @version			$Revision: 1.6 $
  */
 public class Constants {
-	
+
+    public static final int CMD_ON        = 0x02;
+    public static final int CMD_OFF       = 0x03;
+    public static final int CMD_DIM_R     = 0x04;
+    public static final int CMD_DIM_S     = 0x05;
+    
 	/**
 	 * Translate Function to Text
 	 */
 	public static String commandToText(int cmd, int level) {
 		String cmdText = "";
 		switch (cmd) {
-		case 0x02:
+		case CMD_ON:
 			cmdText = "ON";
 			break;
-		case 0x03:
+		case CMD_OFF:
 			cmdText = "OFF";
 			break;
-		case 0x04:
+		case CMD_DIM_R:
 			cmdText = "recvDIM";
 			cmdText = cmdText + " ";
 			break;
-		case 0x05:
+		case CMD_DIM_S:
 			cmdText = "sendDIM";
 			int v2 = (level * 100) / 16;
 			cmdText = cmdText + " " + v2 + "%";

@@ -20,7 +20,7 @@ import javax.comm.SerialPortEventListener;
  * Derived from the oaktree code.
  * @author			Bob Jacobsen   Copyright (C) 2006, 2007, 2008
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -193,6 +193,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         // define the appropriate Sensor Manager
         if (opt1.equals("CM11")) {
         	jmri.InstanceManager.setSensorManager(new jmri.jmrix.powerline.cm11.SpecificSensorManager());
+        } else if (opt1.equals("CP290")) {
+        	jmri.InstanceManager.setSensorManager(new jmri.jmrix.powerline.cp290.SpecificSensorManager());
         }
 
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.powerline.SerialTurnoutManager());
