@@ -40,7 +40,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.35 $
+ * @version   $Revision: 1.36 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -251,6 +251,7 @@ public class RosterEntry {
      * Loads attribute key/value pairs from a 
      * JDOM element.
      */
+	@SuppressWarnings("unchecked")
 	public void loadAttributes(Element e3) {
         if (e3 != null)  {
             java.util.List<Element> l = e3.getChildren("keyvaluepair");
