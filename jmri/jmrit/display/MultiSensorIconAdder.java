@@ -102,7 +102,7 @@ public class MultiSensorIconAdder extends IconAdder {
     *  Override.  First look for a table selection to set the sensor.
     *   If not, then look to change the icon image (super). 
     */
-    @SuppressWarnings("nullpointer")
+    @SuppressWarnings("null")
     public void makeIconPanel() {
         if (_iconPanel != null) {
             this.remove(_iconPanel);

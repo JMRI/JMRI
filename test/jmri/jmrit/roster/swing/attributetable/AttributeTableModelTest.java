@@ -15,7 +15,7 @@ import org.jdom.*;
  * Tests for the roster.swing.attributetable.AttributeTableModel class.
  *
  * @author	Bob Jacobsen     Copyright (C) 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class AttributeTableModelTest extends TestCase {
 
@@ -66,7 +66,6 @@ public class AttributeTableModelTest extends TestCase {
         Roster.resetInstance();
         new Roster(){
             { _instance = this; }
-            protected void warnShortLong(String s){}
         };
 
         // first entry
