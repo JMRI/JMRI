@@ -3,7 +3,6 @@
 package jmri.jmrix.lenz.li100;
 
 import jmri.jmrix.lenz.LenzCommandStation;
-import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.XNetPortController;
 import jmri.jmrix.AbstractMRTrafficController;
 
@@ -23,7 +22,7 @@ import jmri.util.SerialUtil;
  * Provide access to XPressNet via a LI100 on an attached serial comm port.
  *					Normally controlled by the lenz.li100.LI100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 2.18 $
+ * @version			$Revision: 2.19 $
  */
 
 public class LI100Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {

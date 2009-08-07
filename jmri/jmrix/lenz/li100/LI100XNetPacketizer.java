@@ -5,7 +5,6 @@
 package jmri.jmrix.lenz.li100;
 
 import jmri.jmrix.lenz.XNetPacketizer;
-import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.jmrix.AbstractMRMessage;
 
 /**
@@ -16,7 +15,7 @@ import jmri.jmrix.AbstractMRMessage;
  * exit from service mode in the AbstractMRTrafficController.
  *
  * @author		Paul Bender  Copyright (C) 2009
- * @version 		$Revision: 2.1 $
+ * @version 		$Revision: 2.2 $
  *
  */
 public class LI100XNetPacketizer extends XNetPacketizer {

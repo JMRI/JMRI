@@ -1,6 +1,5 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.SensorIcon;
@@ -11,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 

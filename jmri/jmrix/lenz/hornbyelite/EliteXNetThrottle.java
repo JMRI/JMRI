@@ -1,20 +1,15 @@
 package jmri.jmrix.lenz.hornbyelite;
 
-import jmri.DccThrottle;
 import jmri.LocoAddress;
-import jmri.DccLocoAddress;
 
-import jmri.jmrix.lenz.XNetInterface;
-import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.jmrix.lenz.XNetReply;
-import jmri.jmrix.lenz.XNetConstants;
 
 
 /**
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection on the Hornby Elite
  * @author  Paul Bender (C) 2008-2009
- * @version    $Revision: 1.7 $
+ * @version    $Revision: 1.8 $
  */
 
 public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
