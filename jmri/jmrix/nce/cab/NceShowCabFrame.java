@@ -119,7 +119,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 				;bit7 - 0 = type a or type b cab, 1=type c or d
  * 
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -133,6 +133,7 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 	private static final int CAB_FLAGS = 35;		// FLAGS
 	private static final int CAB_FUNC_L = 36;		// Function keys low
 	private static final int CAB_FUNC_H = 37;		// Function keys high
+	private static final int CAB_ALIAS = 38;		// Consist address
 	private static final int CAB_FLAGS1 = 101;		// NCE flag 1
 	private static final int CAB_MAX = 64;			// There are up to 64 cabs
 	private static final int REPLY_1 = 1;			// reply length of 1 byte
@@ -166,10 +167,11 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 	
 	// member declarations
 	JLabel textNumer = new JLabel("Number");
-    JLabel textCab = new JLabel("Cab Type");
-    JLabel textAddress = new JLabel("Loco Addr");
-    JLabel textSpeed = new JLabel("Speed                ");		// with some padding to shift left
-    JLabel textFunctions = new JLabel("Functions              ");// with some padding to shift left
+    JLabel textCab = new JLabel("Type");
+    JLabel textAddress = new JLabel("Loco");
+    JLabel textSpeed = new JLabel("Speed");
+    JLabel textConsist = new JLabel("Consist");
+    JLabel textFunctions = new JLabel("Functions");
     JLabel textReply = new JLabel("Reply:");
     JLabel textStatus = new JLabel("");
     
@@ -190,7 +192,7 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     public NceShowCabFrame() {
         super();
         cabsPane = new JScrollPane(cabsPanel);
-    	cabsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	cabsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     }
 
     public void initComponents() throws Exception {
@@ -215,21 +217,25 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     	addItem(p1, space1, 2, 2);
     	
         // row 3
-        addItem(p1, textNumer, 1,3);
-        addItem(p1, textCab, 2,3);
-        addItem(p1, textAddress, 3,3);
-        addItem(p1, textSpeed, 4,3);
-        addItem(p1, textFunctions, 5,3);
+    	JPanel p2 = new JPanel();
+    	p2.setLayout(new GridBagLayout());
+        addItem(p2, textNumer, 1,3);
+        addItemLeft(p2, textCab, 2,3);
+        addItemLeft(p2, textAddress, 3,3);
+        addItemLeft(p2, textSpeed, 4,3);
+        addItemLeft(p2, textConsist, 5,3);
+        addItemLeft(p2, textFunctions, 6,3);
         
     	addButtonAction(refreshButton);
     	
     	getContentPane().add(p1);
+    	getContentPane().add(p2);
     	getContentPane().add(cabsPane);
     	refreshPanel();
 
     	// set frame size for display
     	pack();
-    	setSize(400, 350);
+    	setSize(500, 250);
     }
 
     // refresh button
@@ -265,8 +271,10 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         	JLabel type = new JLabel();
          	JLabel address = new JLabel();
            	JLabel speed = new JLabel();
+           	JLabel consist = new JLabel();
            	JLabel functions = new JLabel();
-           	// read the FLAGS1 byte
+           	
+           	// create cab type by reading the FLAGS1 byte
         	readCabMemory1(i, CAB_FLAGS1);
            	if (!waitNce())
         		return;
@@ -286,15 +294,16 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             	type.setText("unknown");
             }
         	// add items to table
-        	addItem(cabsPanel, number, 1, 4+i);
+        	addItem(cabsPanel, number, 1, i);
         	number.setText(Integer.toString(i));
-        	addItem(cabsPanel, type, 2, 4+i);
-        	addItem(cabsPanel, address, 3, 4+i);
-          	addItem(cabsPanel, speed, 4, 4+i);
-          	addItem(cabsPanel, functions, 5, 4+i);
+        	addItem(cabsPanel, type, 2, i);
+        	addItem(cabsPanel, address, 3, i);
+          	addItem(cabsPanel, speed, 4, i);
+          	addItem(cabsPanel, consist, 5, i);
+          	addItem(cabsPanel, functions, 6, i);
           	if (flags1 == FLAGS1_AIU)
           		continue;
-          	// read 16 bytes of memory, we need 6 of them
+          	// read 16 bytes of memory, we'll use 7 of the 16
         	readCabMemory16(i, CAB_CURR_SPEED);
         	if (!waitNce())
         		return;
@@ -318,7 +327,8 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         			sped = sped + " / 28";
         	}
         	speed.setText(sped);
-        	// read the high address byte
+        	
+        	// create loco address, read the high address byte
         	readChar = recChars[CAB_ADDR_H-CAB_CURR_SPEED];
         	log.debug("Read address high character "+readChar);
         	int locoAddress = (readChar & 0x3F) *256;
@@ -327,7 +337,15 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         	log.debug("Read address low character "+readChar);
         	locoAddress = locoAddress + (readChar & 0xFF);
         	address.setText(Integer.toString(locoAddress));
-        	// read the low function keys
+        	
+        	// create consist address
+        	readChar = recChars[CAB_ALIAS-CAB_CURR_SPEED];
+        	if(readChar == 0)
+        		consist.setText(" ");
+        	else
+        		consist.setText(Integer.toString(readChar));
+        	
+        	// create function keys
         	readChar = recChars[CAB_FUNC_L-CAB_CURR_SPEED];
         	log.debug("Function low character "+readChar);
         	String func = "";
@@ -467,6 +485,16 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 		gc.gridy = y;
 		gc.weightx = 100.0;
 		gc.weighty = 100.0;
+		p.add(c, gc);
+	}
+	
+	protected void addItemLeft(JPanel p, JComponent c, int x, int y) {
+		GridBagConstraints gc = new GridBagConstraints();
+		gc.gridx = x;
+		gc.gridy = y;
+		gc.weightx = 100.0;
+		gc.weighty = 100.0;
+		gc.anchor = GridBagConstraints.WEST;
 		p.add(c, gc);
 	}
     

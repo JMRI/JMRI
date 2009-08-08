@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NceShowCabFrame.shtml,v 1.1 2009-02-27 04:55:02 dan_boudreau Exp $ -->
+<!-- $Id: NceShowCabFrame.shtml,v 1.2 2009-08-08 02:23:43 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Edit NCE Macro</TITLE>
@@ -26,7 +26,8 @@
 <H1>Show NCE Cabs</H1>
 This tool provides a list of the NCE cabs connected to your NCE command station.
 Up to 63 cabs can be connected, the type of cabs are ProCab, Cab04, USB, and AIU.
-The tool also provides the active locomotive address and the locomotive's speed.
+The tool also provides each cab's active locomotive address, speed, consist number,
+and which locomotive functions are active.
 
 
 </BODY>
