@@ -483,7 +483,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     int locationX = 0;
     int locationY = 0;
     static final int DELTA = 20; 
-    SpinnerNumberModel _spinCols = new SpinnerNumberModel(0,0,20,1);
+    SpinnerNumberModel _spinCols = new SpinnerNumberModel(0,0,100,1);
 
     /*
     *  itemListener for JComboBox
