@@ -9,10 +9,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.Color;
+import java.awt.FlowLayout;
 
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 /**
  * An icon to display and input a Memory value in a TextField.
@@ -21,13 +27,14 @@ import javax.swing.JTextField;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * @since 2.7.2
  */
 
 public class MemoryInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
 
     JTextField  _textBox = new JTextField();
+    SpinnerNumberModel _spinCols = new SpinnerNumberModel(0,0,100,1);
     int _nCols; 
     
     // the associated Memory object
@@ -49,7 +56,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
                 }
             });
         connect(_textBox);
-        _textBox.setColumns(nCols/2+2);
+        _textBox.setColumns(_nCols);
     }
     
     /**
@@ -129,12 +136,6 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     private void updateMemory() {
         if (memory == null) return;
         String str = _textBox.getText();
-        if (str!=null && str.length()>0) {
-            char ch = str.charAt(str.length()-1);
-            if (ch == 'F' || ch == 'f') {
-                memory.setValue(new Float(str));
-            }
-        }
         memory.setValue(str);
     }
 
@@ -148,7 +149,21 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
             _editorFrame.toFront();
             return;
         }
-        _editor = new IconAdder("MemoryEditor");
+        _editor = new IconAdder("MemoryEditor") {
+                JSpinner spinner = new JSpinner(_spinCols);
+                protected void addAdditionalButtons(JPanel p) {
+                    ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().setColumns(2);
+                    spinner.setMaximumSize(spinner.getPreferredSize());
+                    spinner.setValue(new Integer(_textBox.getColumns()));
+                    JPanel p2 = new JPanel();
+                    //p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
+                    p2.setLayout(new FlowLayout(FlowLayout.TRAILING));
+                    p2.add(new JLabel(rb.getString("NumColsLabel")));
+                    p2.add(spinner);
+                    p.add(p2);
+                }
+        };
+
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 editMemory();
@@ -162,11 +177,13 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     }
     void editMemory() {
         setMemory((Memory)_editor.getTableSelection());
-        setSize(getPreferredSize().width, getPreferredSize().height);
+        _nCols = _spinCols.getNumber().intValue();
+        _textBox.setColumns(_nCols);
+        setSize(getPreferredSize().width+1, getPreferredSize().height);
         _editorFrame.dispose();
         _editorFrame = null;
         _editor = null;
-        invalidate();
+        validate();
     }
 
     /**
