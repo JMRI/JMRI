@@ -38,7 +38,7 @@ import javax.swing.JTextField;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.56 $
+ * @version $Revision: 1.57 $
  */
 
 public class PositionableLabel extends JLabel
@@ -240,6 +240,8 @@ public class PositionableLabel extends JLabel
                     namedIcon.setRotation(namedIcon.getRotation()+1, ours);
                     updateSize();
                     setIcon(namedIcon);
+                    // bug fix, must repaint icons that have same width and height
+                    repaint();
                 }
             });
             

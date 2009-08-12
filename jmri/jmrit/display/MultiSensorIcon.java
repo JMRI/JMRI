@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -172,6 +172,8 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
                     unknown.setRotation(unknown.getRotation()+1, ours);
                     inconsistent.setRotation(inconsistent.getRotation()+1, ours);
                     displayState();
+                    // bug fix, must repaint icons that have same width and height
+                    repaint();
                 }
             });
 

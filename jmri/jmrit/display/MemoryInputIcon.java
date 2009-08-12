@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.AbstractAction;
@@ -27,7 +26,7 @@ import javax.swing.SpinnerNumberModel;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  * @since 2.7.2
  */
 
