@@ -113,7 +113,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             makeIcons(_defaultIcons);
             makeIconPanel();
         }
-        this.invalidate();
+        this.validate();
     }
 
     public IconAdder(String type) {
@@ -169,6 +169,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     protected void setIcon(int order, String label, NamedIcon icon) {
         // make a button to change that icon
         if (log.isDebugEnabled()) log.debug("setNamedIcon: order= "+order+", key= "+label);
+        icon.scale(CatalogPanel.ICON_SCALE);
         JButton button = new IconButton(label, icon);
         button.setToolTipText(icon.getName());
         _iconMap.put(label, button);
@@ -342,7 +343,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _table.clearSelection();
             _addButton.setEnabled(false);
             _addButton.setToolTipText(null);
-            this.invalidate();
+            this.validate();
             return _pickListModel.getBeanAt(row);
         }
         return null;
@@ -589,9 +590,9 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (log.isDebugEnabled()) log.debug("Bounds: r.x= "+r.x+", r.y= "+r.y+", r.width= "+
                                             r.width+", r.height= "+r.height);
         _waitDialog.repaint(0, r.x, r.y, r.width, r.height);
-//        _waitDialog.invalidate();
-//        _waitDialog.validate();
+        _waitDialog.validate();
         _waitDialog.setVisible(false);
+        _waitDialog.pack();
         return waitText;
     }
 
