@@ -83,6 +83,8 @@ import jmri.jmrit.display.IconAdder;
  */
 public class CatalogPanel extends JPanel implements MouseListener {
 
+    public static final double ICON_SCALE = 0.15;
+
     JPanel          _selectedImage;
     static Color    _grayColor = new Color(235,235,235);
     Color           _currentBackground = _grayColor;
@@ -500,7 +502,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
             }
             CatalogTreeLeaf leaf = leaves.get(i);
             NamedIcon icon = new NamedIcon(leaf.getPath(), leaf.getName());
-            double scale = icon.scale(0.15);
+            double scale = icon.scale(ICON_SCALE);
             if (c.gridx < numCol) {
                 c.gridx++;
             } else if (c.gridy < numRow) { //start next row
