@@ -38,7 +38,7 @@ import javax.swing.JTextField;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 
 public class PositionableLabel extends JLabel
@@ -295,7 +295,6 @@ public class PositionableLabel extends JLabel
         }
         _editor = new IconAdder();
         NamedIcon icon = new NamedIcon(namedIcon);
-        icon.scale(0.15);
         _editor.setIcon(0, "plainIcon", icon);
         makeAddIconFrame("EditIcon", "addIconToPanel", 
                                      "pressAdd", _editor);
