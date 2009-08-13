@@ -434,10 +434,10 @@ public class ConditionalVariable {
 		return (result);
 	}
 
-    @SuppressWarnings("fallthrough")
     boolean compare(String value1, String value2) {
         if (value1==null) {
             if (value2==null) return true;
+            else return false;
         } else {
             if (value2==null) return false;
             value1 = value1.trim();
@@ -457,14 +457,19 @@ public class ConditionalVariable {
                 {   // fall through
                     case LESS_THAN:
                         if (n1 < n2) return true;
+                        break;
                     case LESS_THAN_OR_EQUAL:
                         if (n1 <= n2) return true;
+                        break;
                     case EQUAL:
                         if (n1 == n2) return true;
+                        break;
                     case GREATER_THAN_OR_EQUAL:
                         if (n1 >= n2) return true;
+                        break;
                     case GREATER_THAN:
                         if (n1 > n2) return true;
+                        break;
                 }
             } catch (NumberFormatException nfe) {
                 return false;   // n1 is a number, n2 is not
@@ -477,7 +482,7 @@ public class ConditionalVariable {
             } catch (NumberFormatException ex) { // OK neither a number
             }
         }
-        log.debug("Compare Strings: value1= "+value1+", to value2= "+value2);
+        if (log.isDebugEnabled()) log.debug("Compare Strings: value1= "+value1+", to value2= "+value2);
         int compare = value1.compareTo(value2);
         if (_num1 == 0) { // for former code
             if (compare == 0) return true;
@@ -487,14 +492,19 @@ public class ConditionalVariable {
         {   // fall through
             case LESS_THAN:
                 if (compare < 0) return true;
+                break;
             case LESS_THAN_OR_EQUAL:
                 if (compare <= 0) return true;
+                break;
             case EQUAL:
                 if (compare == 0) return true;
+                break;
             case GREATER_THAN_OR_EQUAL:
                 if (compare >= 0) return true;
+                break;
             case GREATER_THAN:
                 if (compare > 0) return true;
+                break;
         }
         return false;
     }
