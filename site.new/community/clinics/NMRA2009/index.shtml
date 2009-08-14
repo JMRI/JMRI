@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.2 2009-05-20 14:33:30 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.3 2009-08-14 15:49:16 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>JMRI: NMRA 2009 Clinics</TITLE>
@@ -28,12 +28,12 @@
 
 <a href="http://hn2009.org/home.html"><img src="http://hn2009.org/home_files/shapeimage_2.png" width="135" height="105" alt="NMRA convention logo" align="right"></a>
 
-There will be several JMRI-related clinics presented at the 
+There were several JMRI-related clinics presented at the 
 <a href="http://hn2009.org/home.html">2009 NMRA Convention</a> in Hartford, CT, USA.  
 
 <p>
-Our JMRI User Group Meeting will be Tuesday evening. 
-Two introductory clinics will be presented on Sunday and repeated on Friday.
+Our JMRI User Group Meeting was held Tuesday evening. 
+Two introductory clinics were presented on Sunday and repeated on Friday.
 <p>
 <table border="1">
 <tr><th>Date/Time</th><th>Title</th></tr>
@@ -51,8 +51,8 @@ Two introductory clinics will be presented on Sunday and repeated on Friday.
 
 <p>
 After the convention, we'll post as many links to presentations as we can.
-You can get an idea of what they'll be like from the
-<a href="../NMRA2008/index.html">2008 clinics page</a>.
+Dick Bronson has made his available on his 
+<a href="http://www.rr-cirkits.com/Clinics/Clinics.html">clinics web page</a>.
 
 <p>
 More information on the NMRA Hartford convention can be found on the  
@@ -64,7 +64,8 @@ all clinics).
 Many interesting clinics are listed in addition to ours.
 
 <p>
-Hope to see you there!
+There are also some presentations posted on our
+<a href="../NMRA2008/index.html">2008 clinics page</a>.
 
 <!--#include virtual="/Footer" -->
 
