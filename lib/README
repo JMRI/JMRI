@@ -8,13 +8,15 @@ vecmath.jar
  from <https://java3d.dev.java.net/binary-builds-old.html>
 
 Serialio.jar
-
+ from <http://serialio.com>
+ 
 javacsv.jar
  version 2.0 of 2006-12-12
  from <http://javacsv.sourceforge.net/>
 
 jhall.jar
  version 2.03
+ from <http://java.sun.com/javase/technologies/desktop/javahelp/>
  
 log4j.jar
  version 1.2.15
@@ -23,12 +25,15 @@ MRJAdapter.jar
 
 comm.jar
 javax.comm.properties
-
+  version 2.0 (minor version unknown)
+  from Sun
+  
 security.policy
  (JMRI file)
 
 crimson.jar             
  version 1.1.3
+ from <http://xml.apache.org/crimson/>
  
 jdom.jar                
  version 1.0
