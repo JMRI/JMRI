@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.5.shtml,v 1.6 2009-08-02 05:24:48 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.5.shtml,v 1.7 2009-08-14 15:47:18 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -148,6 +148,14 @@ Ken Cameron added a horn button to the RobotThrottle.
 <P>
 Paul Bender added some additional error messages to the DCC programmer.
 
+<p>
+Dan Boudreau improved the NCE Show Cab feature.
+
+<p>
+Pete Cressman fixed a bug in the memory compare in Logix
+
+<p>
+Dan Boudreau fixed a bug with rotating square icons.
 
 <!--#include virtual="/Footer" -->
 
