@@ -10,6 +10,7 @@ import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
 
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsXml;
 
 
@@ -17,7 +18,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Load and stores locations and schedules for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008 2009
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class LocationManagerXml extends XmlFile {
 	
@@ -39,7 +40,7 @@ public class LocationManagerXml extends XmlFile {
 	                log.error("Exception during operations location file reading: "+e);
 	            }
 		}
-		if (log.isDebugEnabled()) log.debug("LocationManagerXml returns instance "+_instance);
+		if (Control.showInstance && log.isDebugEnabled()) log.debug("LocationManagerXml returns instance "+_instance);
 		return _instance;
 	}
 	

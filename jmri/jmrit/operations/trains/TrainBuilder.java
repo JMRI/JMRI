@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.48 $
+ * @version             $Revision: 1.49 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -585,7 +585,7 @@ public class TrainBuilder extends TrainCommon{
 								for (int k = start; k<routeList.size(); k++){
 									rld = train.getRoute().getLocationById(routeList.get(k));
 									if (rld.canDrop()){
-										addLine(fileOut, FIVE, "Searching location ("+rld.getName()+") for possible destination");
+										addLine(fileOut, SEVEN, "Searching location ("+rld.getName()+") for possible destination");
 									}else{
 										addLine(fileOut, FIVE, "Route ("+train.getRoute().getName()+") does not allow drops at location ("+rld.getName()+")");
 										continue;
@@ -734,7 +734,7 @@ public class TrainBuilder extends TrainCommon{
 											addLine(fileOut, FIVE, "No available moves for destination ("+rld.getName()+")");
 										}
 									} else{
-										addLine(fileOut, FIVE, "Car ("+c.getId()+") location is equal to destination ("+rld.getName()+"), skiping this destination");
+										addLine(fileOut, SEVEN, "Car ("+c.getId()+") location is equal to destination ("+rld.getName()+"), skiping this destination");
 									}
 								}
 								boolean carAdded = false; // all cars departing staging must be included or build failure
