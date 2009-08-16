@@ -456,7 +456,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     
     void addToTable() {
         String name = _sysNametext.getText();
-        if (name != null && name .length() > 2) {
+        if (name != null && name .length() > 0) {
             NamedBean bean = _pickListModel.addBean(name);
             int setRow = _pickListModel.getIndexOf(bean);
             _table.setRowSelectionInterval(setRow, setRow);
