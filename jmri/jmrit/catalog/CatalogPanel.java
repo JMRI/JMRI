@@ -473,8 +473,8 @@ public class CatalogPanel extends JPanel implements MouseListener {
         if (leaves == null) {
             return null;
         }
-        int cellHeight = 0;
-        int cellWidth = 0;
+        int cellHeight = 100;
+        int cellWidth = 100;
         int numCol = 1;
         while (numCol*numCol <leaves.size()) {
             numCol++;
