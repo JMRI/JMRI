@@ -38,7 +38,7 @@ import javax.swing.JTextField;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.57 $
+ * @version $Revision: 1.58 $
  */
 
 public class PositionableLabel extends JLabel
@@ -137,7 +137,10 @@ public class PositionableLabel extends JLabel
 		if (layoutPanel!=null) {
 			layoutPanel.handleMousePressed(e,this.getX(),this.getY());
 			return;
-		}	
+		}
+        if (!e.isMetaDown() && panelEditor!=null) {
+            panelEditor.doMousePressed(getX()+e.getX(), getY()+e.getY(), true);
+        }
         // remember where we are
         xClick = e.getX();
         yClick = e.getY();
@@ -154,6 +157,9 @@ public class PositionableLabel extends JLabel
 			layoutPanel.handleMouseReleased(e,getX(),getY());
 			return;
 		}
+        if (!e.isMetaDown() && panelEditor!=null) {
+            panelEditor.doMouseReleased(getX()+e.getX(), getY()+e.getY());
+        }
         // if (debug) log.debug("mouseReleased: "+where(e));
         if (e.isPopupTrigger()) {
             //if (debug) log.debug("show popup");
@@ -188,14 +194,19 @@ public class PositionableLabel extends JLabel
 			layoutPanel.handleMouseDragged(e,getX(),getY());
 			return;
 		}
-        if (e.isMetaDown()) {
+        if (!e.isMetaDown()) {
+            if (panelEditor!=null) {
+                panelEditor.doMouseDragged(getX()+e.getX(), getY()+e.getY());
+            }
+        }
+        else {
             if (!getPositionable() || getFixed()) return;
             List <JComponent> list = panelEditor.getSelections();
             int deltaX = e.getX() - xClick;
             int deltaY = e.getY() - yClick;
-            if (!list.contains(this)) {
+            if ((list==null) || !list.contains(this)) {
                 moveLabel(deltaX, deltaY);
-            } else if ( !getFixed() ) {
+            } else if ( !getFixed() && (list!=null)) {
                 for (int i=0; i<list.size(); i++){
                     JComponent comp = list.get(i);
                     if (comp instanceof PositionableLabel) {
@@ -402,17 +413,19 @@ public class PositionableLabel extends JLabel
 			popup.add("level= " + this.getDisplayLevel().intValue());
             if (!getFixed()) {
                 List <JComponent> list = panelEditor.getSelections();
-                if (list.size() > 1) {
-                    popup.add(new AbstractAction(rb.getString("AlignX")) {
-                        public void actionPerformed(ActionEvent e) {
-                            alignGroup(true);
-                        }
-                    });
-                    popup.add(new AbstractAction(rb.getString("AlignY")) {
-                        public void actionPerformed(ActionEvent e) {
-                            alignGroup(false);
-                        }
-                    });
+                if (list!=null) {
+                    if (list.size() > 1) {
+                        popup.add(new AbstractAction(rb.getString("AlignX")) {
+                            public void actionPerformed(ActionEvent e) {
+                                alignGroup(true);
+                            }
+                        });
+                        popup.add(new AbstractAction(rb.getString("AlignY")) {
+                            public void actionPerformed(ActionEvent e) {
+                                alignGroup(false);
+                            }
+                        });
+                    }
                 }
             }
 			popup.add(new PopupAction(name));

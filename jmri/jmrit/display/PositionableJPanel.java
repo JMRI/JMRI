@@ -29,7 +29,7 @@ import javax.swing.JCheckBoxMenuItem;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 abstract class PositionableJPanel extends JPanel
                         implements MouseMotionListener, MouseListener,
@@ -94,6 +94,14 @@ abstract class PositionableJPanel extends JPanel
 			layoutPanel.handleMousePressed(e,this.getX(),this.getY());
 			return;
 		}
+        if (!e.isMetaDown() && panelEditor!=null) {
+            List <JComponent> list = panelEditor.getSelections();
+            boolean keepSelection = false;
+            if (list!=null && list.contains(this)) {
+                keepSelection =true;
+            }
+            panelEditor.doMousePressed(getX()+e.getX(), getY()+e.getY(), keepSelection);
+        }
         // remember where we are
         xClick = e.getX();
         yClick = e.getY();
@@ -110,6 +118,9 @@ abstract class PositionableJPanel extends JPanel
 			layoutPanel.handleMouseReleased(e,getX(),getY());
 			return;
 		}
+        if (!e.isMetaDown() && panelEditor!=null) {
+            panelEditor.doMouseReleased(getX()+e.getX(), getY()+e.getY());
+        }
         if (debug) log.debug("Release: "+where(e));
         if (e.isPopupTrigger()) {
             if (debug) log.debug("show popup");
@@ -144,11 +155,17 @@ abstract class PositionableJPanel extends JPanel
 			layoutPanel.handleMouseDragged(e,getX(),getY());
 			return;
 		}
-        if (e.isMetaDown()) {
+        if (!e.isMetaDown()) {
+            if (panelEditor!=null) {
+                panelEditor.doMouseDragged(getX()+e.getX(), getY()+e.getY());
+            }
+            panelEditor.doMouseDragged(getX()+e.getX(), getY()+e.getY());
+        }
+        else {
             List <JComponent> list = panelEditor.getSelections();
             int deltaX = e.getX() - xClick;
             int deltaY = e.getY() - yClick;
-            if (!list.contains(this)) {
+            if ((list==null) || !list.contains(this)) {
                 movePanel(deltaX, deltaY);
             } else if (getPositionable()) {
                 for (int i=0; i<list.size(); i++){
@@ -268,17 +285,19 @@ abstract class PositionableJPanel extends JPanel
 			popup.add("level= " + this.getDisplayLevel().intValue());
             if (getPositionable()) {
                 List <JComponent> list = panelEditor.getSelections();
-                if (list.size() > 1) {
-                    popup.add(new AbstractAction(rb.getString("AlignX")) {
-                        public void actionPerformed(ActionEvent e) {
-                            alignGroup(true);
-                        }
-                    });
-                    popup.add(new AbstractAction(rb.getString("AlignY")) {
-                        public void actionPerformed(ActionEvent e) {
-                            alignGroup(false);
-                        }
-                    });
+                if (list!=null) {
+                    if (list.size() > 1) {
+                        popup.add(new AbstractAction(rb.getString("AlignX")) {
+                            public void actionPerformed(ActionEvent e) {
+                                alignGroup(true);
+                            }
+                        });
+                        popup.add(new AbstractAction(rb.getString("AlignY")) {
+                            public void actionPerformed(ActionEvent e) {
+                                alignGroup(false);
+                            }
+                        });
+                    }
                 }
             }
 			popup.add(new PopupAction(name));

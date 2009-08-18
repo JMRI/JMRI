@@ -1460,8 +1460,8 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                         c.getLocation().x+c.getSize().width);
                 setSize(wnew,hnew);
             }
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
+            public void paint(Graphics g) {
+                super.paint(g);
 
                 if (_selectRect != null) {
                     Graphics2D g2d = (Graphics2D)g;
@@ -1470,13 +1470,11 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                     Color color = g2d.getColor();
                     g2d.setStroke(DASHED_LINE);
                     g2d.setColor(Color.red);
-                    //g.setXORMode(Color.white);
                     g.drawRect(_selectRect.x, _selectRect.y, _selectRect.width, _selectRect.height);
                     g2d.setStroke(stroke);
                     g2d.setColor(color);
                 }
             }
-
         };
         targetPanel.setLayout(null);
         MouseTracker mouseListener = new MouseTracker();
@@ -1554,58 +1552,83 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     Rectangle _selectRect = null;
 
     private class MouseTracker extends MouseInputAdapter {
-        int anchorX;
-        int anchorY;
         public void mousePressed(MouseEvent e) {
-            if (!positionableBox.isSelected()) {
-                _selectRect = null;
-                return;
+            if (!e.isMetaDown()) {
+                doMousePressed(e.getX(), e.getY(), false);
             }
-            anchorX = e.getX();
-            anchorY = e.getY();
-            _selectRect = new Rectangle(anchorX, anchorY, 0, 0);
-            target.repaint();
-            if (log.isDebugEnabled()) log.debug("MouseInputAdapter mousePressed");
         }
 
         public void mouseDragged(MouseEvent e) {
-            if (!positionableBox.isSelected()) { return; }
-            drawSelectRect(e);
+            if (!e.isMetaDown()) {
+                doMouseDragged(e.getX(), e.getY());
+            }
         }
 
         public void mouseReleased(MouseEvent e) {
-            if (!positionableBox.isSelected()) { return; }
-            drawSelectRect(e);
-            makeSelections();
-            if (log.isDebugEnabled()) log.debug("MouseInputAdapter mouseReleased");
-        }
-
-        void drawSelectRect(MouseEvent e) {
-            int x = e.getX();
-            int y = e.getY();
-            int aX = anchorX;
-            int aY = anchorY;
-            int w = x - anchorX;
-            int h = y - anchorY;
-            if (x < anchorX) {
-                aX = x;
-                w = -w;
+            if (!e.isMetaDown()) {
+                doMouseReleased(e.getX(), e.getY());
             }
-            if (y < anchorY) {
-                aY = y;
-                h = -h;
-            }
-            _selectRect = new Rectangle(aX, aY, w, h);
-            //_selectRect.setSize(x - anchorX, y - anchorY);
-            target.repaint();
         }
     }
 
-    ArrayList <JComponent> _selectList = new ArrayList <JComponent>();
+    int anchorX;
+    int anchorY;
 
-    List <JComponent> getSelections() { return _selectList; }
+    protected void doMousePressed(int x, int y, boolean keepSelection) {
+        if (!positionableBox.isSelected() ) {
+            _selectRect = null;
+            return;
+        }
+        if (dragging && keepSelection) {
+            return;
+        }
+        anchorX = x;
+        anchorY = y;
+        _selectRect = new Rectangle(anchorX, anchorY, 0, 0);
+        _selectList = null;
+        target.repaint();
+    }
 
-    void makeSelections() {
+    protected void doMouseDragged(int x, int y) {
+        if (!positionableBox.isSelected()) { return; }
+        if (_selectList==null) {
+            drawSelectRect(x, y);
+        }
+        dragging = true;
+    }
+
+    private boolean dragging = false;
+    protected void doMouseReleased(int x, int y) {
+        if (!positionableBox.isSelected()) { return; }
+        drawSelectRect(x, y);
+        if (_selectList==null && dragging) {
+            makeSelections();
+        }
+        dragging = false;
+    }
+
+    private void drawSelectRect(int x, int y) {
+        int aX = anchorX;
+        int aY = anchorY;
+        int w = x - anchorX;
+        int h = y - anchorY;
+        if (x < anchorX) {
+            aX = x;
+            w = -w;
+        }
+        if (y < anchorY) {
+            aY = y;
+            h = -h;
+        }
+        _selectRect = new Rectangle(aX, aY, w, h);
+        target.repaint();
+    }
+
+    ArrayList <JComponent> _selectList = null;
+
+    protected List <JComponent> getSelections() { return _selectList; }
+
+    private void makeSelections() {
         _selectList = new ArrayList <JComponent>();
         Rectangle test = new Rectangle();
 		for (int i = 0; i < contents.size(); i++) {
@@ -1625,13 +1648,13 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                 }
             }
 		}
+        if (log.isDebugEnabled()) log.debug("getSelections:"+_selectList.size()+" selected.");
         if (_selectList.size() < 2) {
             _selectRect = null;
         }
-        if (log.isDebugEnabled()) log.debug("getSelections:"+_selectList.size()+" selected.");
     }
 
-    void moveSelectRect(int deltaX, int deltaY) {
+    protected void moveSelectRect(int deltaX, int deltaY) {
         if (_selectRect != null) {
             _selectRect = new Rectangle(_selectRect.x+deltaX, _selectRect.y+deltaY,
                                         _selectRect.width, _selectRect.height);
