@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.5.shtml,v 1.7 2009-08-14 15:47:18 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.5.shtml,v 1.8 2009-08-18 09:09:41 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -120,7 +120,18 @@ sensor's state.
 Pete Cressman made some improvement to Panel Editor icon handling.
 
 <p>
-Pete Cressman added support for Float values in Memories.
+Pete Cressman added group icon capture and move in the Panel Editor.
+When a panel in put in "repositioned"  mode, 
+a click and drag that begins in an open area will draw a red rectangle.  
+All the non-fixed icons captured within this "fence" can be moved as a group by 
+dragging any one of the captured icons.   
+"Non-fixed" means the icons that do not have their "fixed" or "locked" 
+items checked in their popup menus.
+A group of icons captured by the "red fence" can be aligned by their upper left corners 
+horizontally or vertically by selecting the "Align Vertically", or "Align Horizontally" items 
+in one of the captured icon's popup menu.  
+These items appear only when the icon is captured.  
+This alignment will only occur to the unfixed and unlocked icons.
 
 <p>
 Paul Bender fixed a problem with XPressNet throttle setup that was particularly problematic for Hornby users.
@@ -156,6 +167,8 @@ Pete Cressman fixed a bug in the memory compare in Logix
 
 <p>
 Dan Boudreau fixed a bug with rotating square icons.
+
+
 
 <!--#include virtual="/Footer" -->
 
