@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -541,10 +541,9 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                         self.redDelayListener = self.TimeoutReceiver()
                         self.redDelayListener.setCallBack(self.redDelayHandler)
                         self.redDelayTimer = javax.swing.Timer(int(delay * 0), self.redDelayListener)
-                        self.redDelayTimer.setDelay(int(delay * 1000))
                         self.redDelayTimer.setInitialDelay(int(delay * 1000))
                         self.redDelayTimer.setRepeats(False);
-                    self.redDelayTimer.setDelay(int(delay * 1000))
+                    self.redDelayTimer.setInitialDelay(int(delay * 1000))
                     self.redDelayTimer.start()
                 else :
                     self.msgText("stop delay less that 1 second")
