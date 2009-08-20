@@ -6,7 +6,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 ##
 # A ActionListener is used to get timeout events.
 #
@@ -85,7 +85,6 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
 
     def changeOnToOff(self) :
         if (self.offTimeout != 0) :
-            self.delayTimer.setDelay(self.offTimeout)
             self.delayTimer.setInitialDelay(self.offTimeout)
             self.delayTimer.start()
         else :
@@ -95,7 +94,6 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
     def changeOffToOn(self) :
         # the source went from off to on
         if (self.onTimeout != 0) :
-            self.delayTimer.setDelay(self.onTimeout)
             self.delayTimer.setInitialDelay(self.onTimeout)
             self.delayTimer.start()
         else :
@@ -164,5 +162,4 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
 # time values are floating point seconds
 
 ##a = DebounceSensor() # create one of these 
-#a.setup()           # only invoke this is you want to watch 
 ##a.init('NS775', 'ISNS775', 0.5, 3) # invoke this for the sensor pair
