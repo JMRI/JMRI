@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -127,6 +127,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     redDelayListener = None
     shrinkGrow = True
     speedPane = None
+    rosterInstance = None
+    oldLocoAddress = None
 
     def init(self):
         self.msgText("Getting throttle - ") #add text to scroll field
@@ -598,6 +600,59 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             isOk = False
         else :
             self.scriptFrame.setTitle("Run Loco " + self.locoAddress.text)
+            if (self.locoAddress.text != self.oldLocoAddress) :
+                self.oldLocoAddress = self.locoAddress.text
+                if (self.loadFromRoster.isSelected() == True) :
+                    # take the loco id and try looking up values in roster
+                    if (self.rosterInstance == None) :
+                        self.rosterInstance = jmri.jmrit.roster.Roster.instance()
+                        self.msgText("got roster instance\n")
+                    rosterEntries = self.rosterInstance.matchingList(None, None, self.locoAddress.text, None, None, None, None)
+                    self.msgText("found " + rosterEntries.size().toString() + " entries matching |" + id.toString() + "|\n")
+                    for ent in rosterEntries :
+                       self.msgText("posible entries: " + ent.fileName + "\n")
+                    if (rosterEntries.size() == 1) :
+                        ent = rosterEntries.get(0)
+                        self.msgText("Reading roster: " + ent.fileName + "\n")
+                        v = ent.getAttribute('RT_locoSpeedGreenFlash')
+                        if (v != None and v != "") :
+                            self.locoSpeedGreenFlash.text = v
+                        v = ent.getAttribute('RT_locoRateGreenFlash')
+                        if (v != None and v != "") :
+                            self.locoRateGreenFlash.text = v
+                        v = ent.getAttribute('RT_locoSpeedGreen')
+                        if (v != None and v != "") :
+                            self.locoSpeedGreen.text = v
+                        v = ent.getAttribute('RT_locoRateGreen')
+                        if (v != None and v != "") :
+                            self.locoRateGreen.text = v
+                        v = ent.getAttribute('RT_locoSpeedYellowFlash')
+                        if (v != None and v != "") :
+                            self.locoSpeedYellowFlash.text = v
+                        v = ent.getAttribute('RT_locoRateYellowFlash')
+                        if (v != None and v != "") :
+                            self.locoRateYellowFlash.text = v
+                        v = ent.getAttribute('RT_locoSpeedYellow')
+                        if (v != None and v != "") :
+                            self.locoSpeedYellow.text = v
+                        v = ent.getAttribute('RT_locoRateYellow')
+                        if (v != None and v != "") :
+                            self.locoRateYellow.text = v
+                        v = ent.getAttribute('RT_locoSpeedRedFlash')
+                        if (v != None and v != "") :
+                            self.locoSpeedRedFlash.text = v
+                        v = ent.getAttribute('RT_locoRateRedFlash')
+                        if (v != None and v != "") :
+                            self.locoRateRedFlash.text = v
+                        v = ent.getAttribute('RT_locoSpeedRed')
+                        if (v != None and v != "") :
+                            self.locoSpeedRed.text = v
+                        v = ent.getAttribute('RT_locoRateRed')
+                        if (v != None and v != "") :
+                            self.locoRateRed.text = v
+                        self.locoLong.setSelected(ent.isLongAddress())
+                        self.msgText("Read completed: " + ent.fileName + "\n")
+                self.oldLocoAddress = self.locoAddress.text
         if (self.locoSpeedRed.text == "") :
             isOk = False
         if (self.locoSpeedRedFlash.text == "") :
@@ -732,6 +787,35 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.msgText("Grow Display!\n")
             self.speedPane.setVisible(True)
             self.shrinkGrow = True
+        return
+    
+    def whenSaveToRosterButtonClicked(self, event):   
+        if (self.locoAddress.text != "") :
+            if (self.rosterInstance == None) :
+                self.rosterInstance = jmri.jmrit.roster.Roster.instance()
+                self.msgText("got roster instance\n")
+            id = int(self.locoAddress.text)
+            rosterEntries = self.rosterInstance.matchingList(None, None, id.toString(), None, None, None, None)
+            self.msgText("found " + rosterEntries.size().toString() + " entries matching |" + id.toString() + "|\n")
+            for ent in rosterEntries :
+               self.msgText("posible entries: " + ent.fileName + "\n")
+            if (rosterEntries.size() == 1) :
+                ent = rosterEntries.get(0)
+                self.msgText("Saving to roster: " + ent.fileName + "\n")
+                ent.putAttribute('RT_locoSpeedGreenFlash', self.locoSpeedGreenFlash.text)
+                ent.putAttribute('RT_locoRateGreenFlash', self.locoRateGreenFlash.text)
+                ent.putAttribute('RT_locoSpeedGreen', self.locoSpeedGreen.text)
+                ent.putAttribute('RT_locoRateGreen', self.locoRateGreen.text)
+                ent.putAttribute('RT_locoSpeedYellowFlash', self.locoSpeedYellowFlash.text)
+                ent.putAttribute('RT_locoRateYellowFlash', self.locoRateYellowFlash.text)
+                ent.putAttribute('RT_locoSpeedYellow', self.locoSpeedYellow.text)
+                ent.putAttribute('RT_locoRateYellow', self.locoRateYellow.text)
+                ent.putAttribute('RT_locoSpeedRedFlash', self.locoSpeedRedFlash.text)
+                ent.putAttribute('RT_locoRateRedFlash', self.locoRateRedFlash.text)
+                ent.putAttribute('RT_locoSpeedRed', self.locoSpeedRed.text)
+                ent.putAttribute('RT_locoRateRed', self.locoRateRed.text)
+                self.rosterInstance.writeRosterFile()
+                self.msgText("Save completed: " + ent.fileName + "\n")
         return
     
     def findCurrentBlocks(self) :
@@ -890,6 +974,11 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.testButton.setEnabled(True)           # button starts as grayed out (disabled)
         self.testButton.setToolTipText("run the didWeMove test")
         self.testButton.actionPerformed = self.didWeMove
+        
+        self.saveToRosterButton = javax.swing.JButton("Save Settings")
+        self.saveToRosterButton.setEnabled(True)           
+        self.saveToRosterButton.setToolTipText("Saves setting in roster, if found.")
+        self.saveToRosterButton.actionPerformed = self.whenSaveToRosterButtonClicked
         
         # address of the loco
         self.locoAddress = javax.swing.JTextField(5)    # sized to hold 5 characters, initially empty
@@ -1062,6 +1151,11 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.blockBeyond = javax.swing.JLabel()
         self.blockBeyondLength = javax.swing.JLabel()
 
+        # load from roster flag
+        self.loadFromRoster = javax.swing.JCheckBox()
+        self.loadFromRoster.setToolTipText("Load settings from roster entry if found.")
+        self.loadFromRoster.setSelected(True)        
+        
         # auto-scroll message window flag
         self.autoScroll = javax.swing.JCheckBox()
         self.autoScroll.setToolTipText("Sets message window to auto-scroll")
@@ -1197,11 +1291,12 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         gConstraints.gridx = 0
         gConstraints.gridy = gConstraints.gridy + 1
         
-        self.speedPane.add(javax.swing.JLabel(" Current: "), gConstraints)
+        self.speedPane.add(javax.swing.JLabel("Load From Roster: "), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        self.speedPane.add(self.locoSpeed, gConstraints)
+        self.speedPane.add(self.loadFromRoster, gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
-        self.speedPane.add(javax.swing.JLabel("%"), gConstraints)
+        self.speedPane.add(self.saveToRosterButton, gConstraints)
+        gConstraints.gridx = gConstraints.gridx + 1
         gConstraints.gridx = gConstraints.gridx + 1
         self.speedPane.add(javax.swing.JLabel(" Stopping Distance: "), gConstraints)
         gConstraints.gridx = gConstraints.gridx + 1
@@ -1223,6 +1318,9 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         temppanel3.add(self.autoScroll)
         
         temppanel4 = javax.swing.JPanel()
+        temppanel4.add(javax.swing.JLabel(" Current: "), gConstraints)
+        temppanel4.add(self.locoSpeed, gConstraints)
+        temppanel4.add(javax.swing.JLabel("% "), gConstraints)
         temppanel4.add(javax.swing.JLabel("Block Status"))
         temppanel4.add(javax.swing.JLabel(" Now:"))
         temppanel4.add(self.blockNow)
