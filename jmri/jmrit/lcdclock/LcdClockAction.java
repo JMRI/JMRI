@@ -10,13 +10,17 @@ import java.awt.event.ActionEvent;
  *  LcdClockFrame object
  *
  * @author			Ken Cameron    Copyright (C) 2007
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * 
  * This was a direct steal form the Nixie clock code, ver 1.5.
  * Thank you Bob Jacobsen.
  */
 
  public class LcdClockAction extends AbstractAction {
+	 
+	 public LcdClockAction() {
+         this("LCD Clock");
+     }
 
  	public LcdClockAction(String s) {
     	super(s);
