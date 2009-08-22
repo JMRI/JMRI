@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -596,6 +596,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.msgText("whenLocoChanged, was running, now stopped\n")
         isOk = True
         startBlock = None
+        self.locoAddress.text = self.locoAddress.text.strip()
         if (self.locoAddress.text == "") :
             isOk = False
         else :
@@ -653,6 +654,18 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                         self.locoLong.setSelected(ent.isLongAddress())
                         self.msgText("Read completed: " + ent.fileName + "\n")
                 self.oldLocoAddress = self.locoAddress.text
+        self.locoSpeedRed.text = self.locoSpeedRed.text.strip()
+        self.locoRateRed.text = self.locoRateRed.text.strip()
+        self.locoSpeedRedFlash.text = self.locoSpeedRedFlash.text.strip()
+        self.locoRateRedFlash.text = self.locoRateRedFlash.text.strip()
+        self.locoSpeedYellow.text = self.locoSpeedYellow.text.strip()
+        self.locoRateYellow.text = self.locoRateYellow.text.strip()
+        self.locoSpeedYellowFlash.text = self.locoSpeedYellowFlash.text.strip()
+        self.locoRateYellowFlash.text = self.locoRateYellowFlash.text.strip()
+        self.locoSpeedGreen.text = self.locoSpeedGreen.text.strip()
+        self.locoRateGreen.text = self.locoRateGreen.text.strip()
+        self.locoSpeedGreenFlash.text = self.locoSpeedGreenFlash.text.strip()
+        self.locoRateGreenFlash.text = self.locoRateGreenFlash.text.strip()
         if (self.locoSpeedRed.text == "") :
             isOk = False
         if (self.locoSpeedRedFlash.text == "") :
@@ -665,6 +678,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             isOk = False
         if (self.locoSpeedGreenFlash.text == "") :
             isOk = False
+        self.blockStart.text = self.blockStart.text.strip()
         if (self.blockStart.text == "") :
             isOk = False
         else :
