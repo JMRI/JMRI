@@ -1,5 +1,8 @@
 package jmri.jmrit.display.configurexml;
 
+import java.awt.geom.AffineTransform;
+import java.util.List;
+
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
@@ -11,9 +14,9 @@ import org.jdom.Element;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
-public class TurnoutIconXml implements XmlAdapter {
+public class TurnoutIconXml extends PositionableLabelXml {
 
     public TurnoutIconXml() {
     }
@@ -30,20 +33,22 @@ public class TurnoutIconXml implements XmlAdapter {
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
         Element element = new Element("turnouticon");
+        element.setAttribute("turnout", p.getTurnout().getSystemName());
+        storeCommonAttributes(p, element);
 
         // include contents
-        element.setAttribute("turnout", p.getTurnout().getSystemName());
-        element.setAttribute("x", ""+p.getX());
-        element.setAttribute("y", ""+p.getY());
-        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
         element.setAttribute("closed", p.getClosedIcon().getURL());
         element.setAttribute("thrown", p.getThrownIcon().getURL());
         element.setAttribute("unknown", p.getUnknownIcon().getURL());
         element.setAttribute("inconsistent", p.getInconsistentIcon().getURL());
         element.setAttribute("rotate", String.valueOf(p.getClosedIcon().getRotation()));
-        element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
         element.setAttribute("tristate", p.getTristate()?"true":"false");
         
+        element.addContent(storeIcon("closed", p.getClosedIcon()));
+        element.addContent(storeIcon("thrown", p.getThrownIcon()));
+        element.addContent(storeIcon("unknown", p.getUnknownIcon()));
+        element.addContent(storeIcon("inconsistent", p.getInconsistentIcon()));
+
         element.setAttribute("class", "jmri.jmrit.display.configurexml.TurnoutIconXml");
 
         return element;
@@ -99,40 +104,27 @@ public class TurnoutIconXml implements XmlAdapter {
             }
         } catch (org.jdom.DataConversionException e) {}
 
-        Attribute a = element.getAttribute("forcecontroloff");
-        if ( (a!=null) && a.getValue().equals("true"))
-            l.setForceControlOff(true);
-        else
-            l.setForceControlOff(false);
-        
-        a = element.getAttribute("tristate");
+        loadCommonAttributes(l, PanelEditor.TURNOUTS.intValue(), element);
+
+        Attribute a = element.getAttribute("tristate");
         if ( (a==null) || ((a!=null) && a.getValue().equals("true")))
             l.setTristate(true);
         else
             l.setTristate(false);
             
         l.setTurnout(element.getAttribute("turnout").getValue());
+        
+        NamedIcon icon = loadIcon( l,"closed", element);
+        if (icon!=null) { l.setClosedIcon(icon); }
 
-        // find coordinates
-        int x = 0;
-        int y = 0;
-        try {
-            x = element.getAttribute("x").getIntValue();
-            y = element.getAttribute("y").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.error("failed to convert positional attribute");
-        }
-        l.setLocation(x,y);
+        icon = loadIcon( l,"thrown", element);
+        if (icon!=null) { l.setThrownIcon(icon); }
 
-        // find display level
-        int level = PanelEditor.TURNOUTS.intValue();
-        try {
-            level = element.getAttribute("level").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse level attribute!");
-        } catch ( NullPointerException e) {  // considered normal if the attribute not present
-        }
-        l.setDisplayLevel(level);
+        icon = loadIcon( l,"unknown", element);
+        if (icon!=null) { l.setUnknownIcon(icon); }
+
+        icon = loadIcon( l,"inconsistent", element);
+        if (icon!=null) { l.setInconsistentIcon(icon); }
 
         p.putLabel(l);
     }

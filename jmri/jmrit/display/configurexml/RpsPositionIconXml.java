@@ -1,5 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
+import java.awt.geom.AffineTransform;
+import java.util.List;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
@@ -11,9 +13,9 @@ import org.jdom.Element;
  * Handle configuration for rps.RpsPositionIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
-public class RpsPositionIconXml implements XmlAdapter {
+public class RpsPositionIconXml extends PositionableLabelXml {
 
     public RpsPositionIconXml() {
     }
@@ -30,15 +32,11 @@ public class RpsPositionIconXml implements XmlAdapter {
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
         Element element = new Element("sensoricon");
-
+        storeCommonAttributes(p, element);
         // include contents
-        element.setAttribute("x", ""+p.getX());
-        element.setAttribute("y", ""+p.getY());
-        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
         element.setAttribute("active", p.getActiveIcon().getURL());
         element.setAttribute("error", p.getErrorIcon().getURL());
         element.setAttribute("rotate", String.valueOf(p.getActiveIcon().getRotation()));
-        element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
         element.setAttribute("momentary", p.getMomentary()?"true":"false");
 
         element.setAttribute("sxscale", ""+p.getXScale());
@@ -50,8 +48,11 @@ public class RpsPositionIconXml implements XmlAdapter {
 
         if (p.getFilter()!=null) 
             element.setAttribute("filter", ""+p.getFilter());
-        element.setAttribute("class", "jmri.jmrit.display.configurexml.RpsPositionIconXml");
 
+        element.addContent(storeIcon("active", p.getActiveIcon()));
+        element.addContent(storeIcon("error", p.getErrorIcon()));
+
+        element.setAttribute("class", "jmri.jmrit.display.configurexml.RpsPositionIconXml");
         return element;
     }
 
@@ -90,13 +91,8 @@ public class RpsPositionIconXml implements XmlAdapter {
             }
         } catch (org.jdom.DataConversionException e) {}
 
-        Attribute a = element.getAttribute("forcecontroloff");
-        if ( (a!=null) && a.getValue().equals("true"))
-            l.setForceControlOff(true);
-        else
-            l.setForceControlOff(false);
-            
-        a = element.getAttribute("momentary");
+        loadCommonAttributes(l, PanelEditor.SENSORS.intValue(), element);
+        Attribute a = element.getAttribute("momentary");
         if ( (a!=null) && a.getValue().equals("true"))
             l.setMomentary(true);
         else
@@ -108,18 +104,6 @@ public class RpsPositionIconXml implements XmlAdapter {
         else
             l.setShowID(false);
 
-        // find coordinates
-        int x = 0;
-        int y = 0;
-        try {
-            x = element.getAttribute("x").getIntValue();
-            y = element.getAttribute("y").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.error("failed to convert positional attributes");
-        }
-        l.setLocation(x,y);
-
-        // find coordinates
         a = element.getAttribute("filter");
         if (a!=null) {
             l.setFilter(a.getValue());
@@ -141,15 +125,10 @@ public class RpsPositionIconXml implements XmlAdapter {
         }
         l.setTransform(sxScale, syScale, sxOrigin, syOrigin);
         
-        // find display level
-        int level = PanelEditor.SENSORS.intValue();
-        try {
-            level = element.getAttribute("level").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse level attribute!");
-        } catch ( NullPointerException e) {  // considered normal if the attribute not present
-        }
-        l.setDisplayLevel(level);
+        NamedIcon icon = loadIcon( l,"active", element);
+        if (icon!=null) { l.setActiveIcon(icon); }
+        icon = loadIcon( l,"error", element);
+        if (icon!=null) { l.setErrorIcon(icon); }
 
         p.putLabel(l);
     }

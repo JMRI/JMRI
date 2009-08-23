@@ -169,7 +169,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     protected void setIcon(int order, String label, NamedIcon icon) {
         // make a button to change that icon
         if (log.isDebugEnabled()) log.debug("setNamedIcon: order= "+order+", key= "+label);
-        icon.scale(CatalogPanel.ICON_SCALE);
+        icon.reduceTo(CatalogPanel.ICON_WIDTH, CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
         JButton button = new IconButton(label, icon);
         button.setToolTipText(icon.getName());
         _iconMap.put(label, button);

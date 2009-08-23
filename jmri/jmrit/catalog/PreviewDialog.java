@@ -339,7 +339,7 @@ public class PreviewDialog extends JDialog implements MouseListener {
                     }
                     String path = files[i].getAbsolutePath();
                     NamedIcon icon = new NamedIcon(path, name);
-                    double scale = icon.scale(0.0);
+                    double scale = icon.reduceTo(CatalogPanel.ICON_WIDTH, CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
 
                     memoryNeeded += 4*icon.getIconWidth()*icon.getIconHeight();
                     if (memoryAvailable < 10*memoryNeeded) {

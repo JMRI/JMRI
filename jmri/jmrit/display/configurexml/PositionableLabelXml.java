@@ -1,5 +1,8 @@
 package jmri.jmrit.display.configurexml;
 
+import java.awt.geom.AffineTransform;
+import java.util.List;
+
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
@@ -14,7 +17,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -33,15 +36,10 @@ public class PositionableLabelXml implements XmlAdapter {
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
         Element element = new Element("positionablelabel");
-        element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
+        storeCommonAttributes(p, element);
+
         element.setAttribute("fixed", p.getFixed()?"true":"false");
         element.setAttribute("showtooltip", p.getShowTooltip()?"true":"false");
-        element.setAttribute("class", "jmri.jmrit.display.configurexml.PositionableLabelXml");
-
-        // include contents
-        element.setAttribute("x", String.valueOf(p.getX()));
-        element.setAttribute("y", String.valueOf(p.getY()));
-        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
 
         storeTextInfo(p, element);
         
@@ -49,8 +47,10 @@ public class PositionableLabelXml implements XmlAdapter {
             NamedIcon icon = (NamedIcon)p.getIcon();
             element.setAttribute("icon", icon.getURL());
             element.setAttribute("rotate", String.valueOf(icon.getRotation()));
+            element.addContent(storeIcon("icon", icon));
         }
 
+        element.setAttribute("class", "jmri.jmrit.display.configurexml.PositionableLabelXml");
         return element;
     }
 
@@ -71,6 +71,41 @@ public class PositionableLabelXml implements XmlAdapter {
             element.setAttribute("green", ""+p.getForeground().getGreen());
             element.setAttribute("blue", ""+p.getForeground().getBlue());
         }
+    }
+    /**
+     * Default implementation for storing the common contents of an Icon
+     * @param main Element
+     * @return void
+     */
+    public void storeCommonAttributes(PositionableLabel p, Element element) {
+
+        element.setAttribute("x", ""+p.getX());
+        element.setAttribute("y", ""+p.getY());
+        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
+        element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
+    }
+
+    public Element storeIcon(String attrName, NamedIcon icon) {
+
+        Element element = new Element(attrName);
+        element.setAttribute("url", icon.getURL());        
+        element.setAttribute("rotate", String.valueOf(icon.getRotation()));
+        element.setAttribute("degrees", String.valueOf(icon.getDegrees()));
+        element.setAttribute("scale", String.valueOf(icon.getScale()));
+/*
+        AffineTransform t = icon.getTransform();
+        if (t!=null) {
+            Element elem = new Element("transform");
+            elem.setAttribute("m00", ""+t.getScaleX());
+            elem.setAttribute("m01", ""+t.getShearX());
+            elem.setAttribute("m02", ""+t.getTranslateX());
+            elem.setAttribute("m10", ""+t.getShearY());
+            elem.setAttribute("m11", ""+t.getScaleY());
+            elem.setAttribute("m12", ""+t.getTranslateY());
+            element.addContent(elem);
+        }
+        */
+        return element;
     }
     
     public boolean load(Element element) {
@@ -103,18 +138,20 @@ public class PositionableLabelXml implements XmlAdapter {
                     icon.setRotation(rotation, l);
                 }
             } catch (org.jdom.DataConversionException e) {}
+            NamedIcon nIcon = loadIcon( l,"icon", element);
+            if (nIcon!=null) {
+                l.setIcon(nIcon);
+            } else {
+                l.setIcon(icon);
+            }
         }
         if(l==null){
         	log.error("PositionableLabel is null!");
         	return;
         }
-        Attribute a = element.getAttribute("forcecontroloff");
-        if ( (a!=null) && a.getValue().equals("true"))
-            l.setForceControlOff(true);
-        else
-            l.setForceControlOff(false);
-            
-        a = element.getAttribute("fixed");
+        loadCommonAttributes(l, PanelEditor.LABELS.intValue(), element);
+
+        Attribute a = element.getAttribute("fixed");
         if ( (a!=null) && a.getValue().equals("true"))
             l.setFixed(true);
         else
@@ -126,30 +163,6 @@ public class PositionableLabelXml implements XmlAdapter {
         else
             l.setShowTooltip(true);
             
-        // find coordinates
-        int x = 0;
-        int y = 0;
-        //int height = 10;
-        //int width = 10;
-        try {
-            x = element.getAttribute("x").getIntValue();
-            y = element.getAttribute("y").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.error("failed to convert PanelEditor's attribute");
-        }
-        // find display level
-        int level = PanelEditor.LABELS.intValue();
-        if (element.getAttribute("icon")!=null) level = PanelEditor.ICONS.intValue();
-        try {
-            level = element.getAttribute("level").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse level attribute!");
-        } catch ( NullPointerException e) {  // considered normal if the attribute not present
-        }
-        l.setDisplayLevel(level);
-
-        // and activate the result
-        l.setLocation(x,y);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         p.putLabel(l);
     }
@@ -179,6 +192,88 @@ public class PositionableLabelXml implements XmlAdapter {
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
     
+    }
+	public void loadCommonAttributes(PositionableLabel l, int defaultLevel, Element element) {
+
+        Attribute a = element.getAttribute("forcecontroloff");
+        if ( (a!=null) && a.getValue().equals("true"))
+            l.setForceControlOff(true);
+        else
+            l.setForceControlOff(false);
+        
+        // find coordinates
+        int x = 0;
+        int y = 0;
+        try {
+            x = element.getAttribute("x").getIntValue();
+            y = element.getAttribute("y").getIntValue();
+        } catch ( org.jdom.DataConversionException e) {
+            log.error("failed to convert positional attribute");
+        }
+        l.setLocation(x,y);
+
+        // find display level
+        int level = defaultLevel;
+        try {
+            level = element.getAttribute("level").getIntValue();
+        } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse level attribute!");
+        } catch ( NullPointerException e) {  // considered normal if the attribute not present
+        }
+        l.setDisplayLevel(level);
+    }
+
+
+    @SuppressWarnings("unchecked")
+	public NamedIcon loadIcon(PositionableLabel l, String attrName, Element element) {
+        NamedIcon icon = null;
+        List<Element> iconList = element.getChildren(attrName);
+        if (log.isDebugEnabled()) log.debug("Found "+iconList.size()+" "+attrName+" objects");
+        if (iconList.size()>0) {
+            Element elem = iconList.get(0);
+            String name = elem.getAttribute("url").getValue();
+            icon = NamedIcon.getIconByName(name);
+            try {
+                Attribute a = elem.getAttribute("rotate");
+                if (a!=null) {
+                    int rotation = a.getIntValue();
+                    icon.setRotation(rotation, l);
+                }
+                a = elem.getAttribute("degrees");
+                if (a!=null) {
+                    int deg = a.getIntValue();
+                    double scale = 1.0;
+                    a =  elem.getAttribute("scale");
+                    if (a!=null)
+                    {
+                        scale = elem.getAttribute("scale").getDoubleValue();
+                    }
+                    icon.setLoad(deg, scale, l);
+                }
+            } catch (org.jdom.DataConversionException dce) {}
+            /*
+            List<Element> coordList = elem.getChildren("transform");
+            if (coordList.size()>0) {
+                Element e = coordList.get(0);
+                try {
+                    AffineTransform t = new AffineTransform(e.getAttribute("m00").getDoubleValue(),
+                                                            e.getAttribute("m10").getDoubleValue(),
+                                                            e.getAttribute("m01").getDoubleValue(),
+                                                            e.getAttribute("m11").getDoubleValue(),
+                                                            e.getAttribute("m02").getDoubleValue(),
+                                                            e.getAttribute("m12").getDoubleValue());
+                    icon.setTransform(t);
+                    icon.initFromLoad();
+                    //icon.transformImage(icon.getIconWidth(), icon.getIconHeight(), t, l);
+                } catch (org.jdom.DataConversionException dce) {}
+            } else {
+            log.debug("icon \""+attrName+"\" for \""+l.getName()+"\" has no transform.");
+            }
+            */
+        } else {
+            log.debug("icon \""+attrName+"\" for \""+l.getName()+"\" not found.");
+        }
+        return icon;
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PanelEditorXml.class.getName());

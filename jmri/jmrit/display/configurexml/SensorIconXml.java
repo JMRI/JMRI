@@ -1,5 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
+import java.awt.geom.AffineTransform;
+import java.util.List;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.SensorIcon;
@@ -10,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -29,22 +31,23 @@ public class SensorIconXml extends PositionableLabelXml {
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
         Element element = new Element("sensoricon");
-
-        // include contents
         element.setAttribute("sensor", p.getSensor().getSystemName());
-        element.setAttribute("x", ""+p.getX());
-        element.setAttribute("y", ""+p.getY());
-        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
+        storeCommonAttributes(p, element);
+
         element.setAttribute("active", p.getActiveIcon().getURL());
         element.setAttribute("inactive", p.getInactiveIcon().getURL());
         element.setAttribute("unknown", p.getUnknownIcon().getURL());
         element.setAttribute("inconsistent", p.getInconsistentIcon().getURL());
         element.setAttribute("rotate", String.valueOf(p.getActiveIcon().getRotation()));
-        element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
         element.setAttribute("momentary", p.getMomentary()?"true":"false");
         storeTextInfo(p, element);
-        element.setAttribute("class", "jmri.jmrit.display.configurexml.SensorIconXml");
 
+        element.addContent(storeIcon("active", p.getActiveIcon()));
+        element.addContent(storeIcon("inactive", p.getInactiveIcon()));
+        element.addContent(storeIcon("unknown", p.getUnknownIcon()));
+        element.addContent(storeIcon("inconsistent", p.getInconsistentIcon()));
+
+        element.setAttribute("class", "jmri.jmrit.display.configurexml.SensorIconXml");
         return element;
     }
 
@@ -93,13 +96,9 @@ public class SensorIconXml extends PositionableLabelXml {
             }
         } catch (org.jdom.DataConversionException e) {}
 
-        Attribute a = element.getAttribute("forcecontroloff");
-        if ( (a!=null) && a.getValue().equals("true"))
-            l.setForceControlOff(true);
-        else
-            l.setForceControlOff(false);
-            
-        a = element.getAttribute("momentary");
+        loadCommonAttributes(l, PanelEditor.SENSORS.intValue(), element);
+
+        Attribute a = element.getAttribute("momentary");
         if ( (a!=null) && a.getValue().equals("true"))
             l.setMomentary(true);
         else
@@ -114,26 +113,17 @@ public class SensorIconXml extends PositionableLabelXml {
 
         l.setSensor(element.getAttribute("sensor").getValue());
 
-        // find coordinates
-        int x = 0;
-        int y = 0;
-        try {
-            x = element.getAttribute("x").getIntValue();
-            y = element.getAttribute("y").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.error("failed to convert positional attribute");
-        }
-        l.setLocation(x,y);
+        NamedIcon icon = loadIcon( l,"active", element);
+        if (icon!=null) { l.setActiveIcon(icon); }
 
-        // find display level
-        int level = PanelEditor.SENSORS.intValue();
-        try {
-            level = element.getAttribute("level").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse level attribute!");
-        } catch ( NullPointerException e) {  // considered normal if the attribute not present
-        }
-        l.setDisplayLevel(level);
+        icon = loadIcon( l,"inactive", element);
+        if (icon!=null) { l.setInactiveIcon(icon); }
+
+        icon = loadIcon( l,"unknown", element);
+        if (icon!=null) { l.setUnknownIcon(icon); }
+
+        icon = loadIcon( l,"inconsistent", element);
+        if (icon!=null) { l.setInconsistentIcon(icon); }
 
         p.putLabel(l);
     }

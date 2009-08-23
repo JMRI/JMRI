@@ -19,7 +19,7 @@ import javax.swing.JCheckBoxMenuItem;
  * In this initial version, it ignores the ID, so there's only one icon.
  *
  * @author Bob Jacobsen Copyright (C) 2007
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class RpsPositionIcon extends PositionableLabel implements MeasurementListener {
@@ -78,8 +78,6 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         popup = new JPopupMenu();
         popup.add(new JMenuItem(getNameString()));
         
-        checkLocationEditable(popup, getNameString());
-        
         if (icon) popup.add(new AbstractAction("Rotate") {
                 public void actionPerformed(ActionEvent e) {
                     active.setRotation(active.getRotation()+1, ours);
@@ -89,6 +87,8 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
                     repaint();
                 }
             });
+        checkLocationEditable(popup, getNameString());
+        
 
         if (showIdItem == null) {
             showIdItem = new JCheckBoxMenuItem("Show ID");
@@ -140,7 +140,18 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         notify.setPosition(getX(), getY());
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
+    void scale(int s) {
+        active.scale(s, this);
+        error.scale(s, this);
+        displayState();
+    }
 
+    void rotate(int deg) {
+        active.rotate(deg, this);
+        error.rotate(deg, this);
+        displayState();
+    }
+    
     JCheckBoxMenuItem showIdItem = null;
     
     /** 

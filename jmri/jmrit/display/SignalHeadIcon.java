@@ -24,7 +24,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.45 $
+ * @version $Revision: 1.46 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -224,8 +224,6 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         popup = new JPopupMenu();
         popup.add(new JMenuItem(getNameString()));
 
-        checkLocationEditable(popup, getNameString());
-
         if (icon) popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
                     green.setRotation(green.getRotation()+1, ours);
@@ -243,6 +241,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                     repaint();
                 }
             });
+        checkLocationEditable(popup, getNameString());
 
         addFixedItem(popup);
         addDisableMenuEntry(popup);
@@ -334,6 +333,34 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         });
 
         popup.show(e.getComponent(), e.getX(), e.getY());
+    }
+
+    void scale(int s) {
+        green.scale(s, this);
+        red.scale(s, this);
+        yellow.scale(s, this);
+        lunar.scale(s, this);
+        if (flashGreen !=null) flashGreen.scale(s, this);
+        if (flashYellow !=null) flashYellow.scale(s, this);
+        if (flashRed !=null) flashRed.scale(s, this);
+        if (flashLunar !=null) flashLunar.scale(s, this);
+        if (dark !=null) dark.scale(s, this);
+        if (held !=null) held.scale(s, this);
+        displayState(headState());
+    }
+
+    void rotate(int deg) {
+        green.rotate(deg, this);
+        red.rotate(deg, this);
+        yellow.rotate(deg, this);
+        lunar.rotate(deg, this);
+        if (flashGreen !=null) flashGreen.rotate(deg, this);
+        if (flashYellow !=null) flashYellow.rotate(deg, this);
+        if (flashRed !=null) flashRed.rotate(deg, this);
+        if (flashLunar !=null) flashLunar.rotate(deg, this);
+        if (dark !=null) dark.rotate(deg, this);
+        if (held !=null) held.rotate(deg, this);
+        displayState(headState());
     }
 
     /**

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelEditor.shtml,v 1.13 2009-08-02 22:07:01 pete_cressman Exp $ -->
+<!-- $Id: PanelEditor.shtml,v 1.14 2009-08-23 07:21:13 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
@@ -178,6 +178,21 @@ you rotate the icon so that it points in whatever direction you want.
 Text labels can have their font, size and color changed. You can also
 remove icons from the panel with the popup menu.</P>
 
+<H3>Rotating and Scaling</H3>
+<P>When the checkbox for showing an icon's coordinates is checked, the icon can be scaled or
+rotated an arbitrary mumber of degrees.  When this checkbox is checked, two additional items
+appear in the icon's popup menu - <b>Rotate (degrees)...</b> and <b>Scale (percentage)...</b>.
+When these item are selected, a text box will appear near the icon and ask for a number.  
+In the case of 'Rotate (degrees)', a positive or negative integer will rotate the icon that 
+number of degrees.  In the case of 'Scale (percentage)', a positive number is the percentage 
+to increase or decrease the size of the icon.</P>  
+
+<P>The <b>Rotate (Orthogonal)</b> item rotates the icon 90 degrees each time it is selected. 
+Choosing an alternative rotation item resets the former rotationm to the default icon image. 
+For example, if the icon has been scaled to 75% and set to 30 degrees and then 
+'Rotate (Orthogonal)' is selected, the icon will return to its original size and orientation.
+
+<H3>Group Moving and Aligning</H3>
 <P>When the checkbox for repositioning icons is checked, groups of icons can be selected.
 Pressing the mouse button down in an open area and dragging will draw a dotted red
 rectangle.  All the icons that lie within this "fence" are items that are selected.  Those

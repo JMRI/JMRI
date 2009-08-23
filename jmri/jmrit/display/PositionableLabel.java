@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.AffineTransform;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -19,9 +20,9 @@ import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -38,7 +39,7 @@ import javax.swing.JTextField;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.58 $
+ * @version $Revision: 1.59 $
  */
 
 public class PositionableLabel extends JLabel
@@ -244,7 +245,6 @@ public class PositionableLabel extends JLabel
         ours = this;
         if (icon) {
             popup = new JPopupMenu();                                    
-            checkLocationEditable(popup, getText());
              
             popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
@@ -255,6 +255,7 @@ public class PositionableLabel extends JLabel
                     repaint();
                 }
             });
+            checkLocationEditable(popup, getText());
             
             addFixedItem(popup);
             addShowTooltipItem(popup);
@@ -408,13 +409,32 @@ public class PositionableLabel extends JLabel
 
     protected void checkLocationEditable(JPopupMenu popup,  String name) {    
 		if (getViewCoordinates()) {
+            if (icon) {
+                /*
+                popup.add(new AbstractAction(rb.getString("shear")) {
+                        public void actionPerformed(ActionEvent e) {
+                            tranform(e, BOX_TYPE_SHEAR);
+                        }
+                    });
+                */
+                popup.add(new AbstractAction(rb.getString("rotate")) {
+                        public void actionPerformed(ActionEvent e) {
+                            tranform(e, BOX_TYPE_ROTATE);
+                        }
+                    });
+                popup.add(new AbstractAction(rb.getString("scale")) {
+                        public void actionPerformed(ActionEvent e) {
+                            tranform(e, BOX_TYPE_SCALE);
+                        }
+                    });
+            }
 			popup.add("x= " + this.getX());
 			popup.add("y= " + this.getY());
 			popup.add("level= " + this.getDisplayLevel().intValue());
             if (!getFixed()) {
                 List <JComponent> list = panelEditor.getSelections();
                 if (list!=null) {
-                    if (list.size() > 1) {
+                    if (list.contains(this)) {
                         popup.add(new AbstractAction(rb.getString("AlignX")) {
                             public void actionPerformed(ActionEvent e) {
                                 alignGroup(true);
@@ -552,6 +572,128 @@ public class PositionableLabel extends JLabel
             }
         });
     }
+
+    static private final int BOX_TYPE_TEXT = 1;
+//    static private final int BOX_TYPE_SHEAR = 2;
+    static private final int BOX_TYPE_SCALE = 3;
+    static private final int BOX_TYPE_ROTATE = 4;
+
+    void tranform(ActionEvent e, int type) {
+        if (log.isDebugEnabled())
+            log.debug("tranform action: cmd="+e.getActionCommand());
+        String title = null;
+        switch (type) {
+            case BOX_TYPE_TEXT:
+                title = "ChangeText";
+                break;
+/*
+            case BOX_TYPE_SHEAR:
+                title = "shear";
+                break;
+*/
+            case BOX_TYPE_SCALE:
+                title = "scale";
+                break;
+            case BOX_TYPE_ROTATE:
+                title = "rotate";
+                break;
+        }
+        makeTextBoxFrame(title, "pressAdd", type);
+    }
+
+    JTextField _textBox;
+//    JTextField _textBox2;
+    void makeTextBoxFrame(String title, String select, int type) {
+        _editorFrame = new JFrame(rb.getString("Edit"));
+        JPanel p = new JPanel();
+        p.setLayout(new BorderLayout(5,5));
+        p.add(new JLabel(rb.getString(title)), BorderLayout.NORTH);
+        JPanel p2 = new JPanel();
+        p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
+        p.add(p2, BorderLayout.CENTER);
+        _textBox = new JTextField();
+        if (type==BOX_TYPE_TEXT) {
+            _textBox.setText(getText());
+        }
+        p2.add(_textBox);
+/*
+        if (type==BOX_TYPE_SHEAR) {
+            _textBox2 = new JTextField();
+            p2.add(_textBox2);
+        }
+*/
+        JButton button = new JButton(rb.getString("Done"));
+        button.addActionListener(new ActionListener() {
+                int type;
+            public void actionPerformed(ActionEvent a) {
+                switch (type) {
+                    case BOX_TYPE_TEXT:
+                        setText(_textBox.getText());
+                        setIconTextGap (-(getWidth()+getPreferredSize().width)/2);
+                        setSize(getPreferredSize().width, getPreferredSize().height);
+                        break;
+/*                    case BOX_TYPE_SHEAR:
+                        int x = 0;
+                        try {
+                            x = Integer.parseInt(_textBox.getText());
+                        } catch (NumberFormatException nfe) { break; }
+                        int y = 0;
+                        try {
+                            y = Integer.parseInt(_textBox2.getText());
+                        } catch (NumberFormatException nfe) { break; }
+                        namedIcon.shear(x, y);
+                        setIcon(namedIcon);
+                        updateSize();
+                        break;
+*/
+                    case BOX_TYPE_SCALE:
+                        int scale = 0;
+                        try {
+                            scale = Integer.parseInt(_textBox.getText());
+                        } catch (NumberFormatException nfe) { break; }
+                        scale(scale);
+                        break;
+                    case BOX_TYPE_ROTATE:
+                        int deg = 0;
+                        try {
+                            deg = Integer.parseInt(_textBox.getText());
+                        } catch (NumberFormatException nfe) { break; }
+                        rotate(deg);
+                        break;
+                }
+                _editorFrame.dispose();
+                _editorFrame = null;
+                repaint();
+            }
+            ActionListener init(int t) {
+                type = t;
+                return this;
+            }
+        }.init(type));
+        p.add(button, BorderLayout.SOUTH);
+        _editorFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+				public void windowClosing(java.awt.event.WindowEvent e) {
+                    _editorFrame.dispose();
+                    _editorFrame = null;
+                }
+            });
+        _editorFrame.getContentPane().add(p);
+        _editorFrame.setLocationRelativeTo(this);
+        _editorFrame.setVisible(true);
+        _editorFrame.pack();
+    }
+
+    void scale(int s) {
+        namedIcon.scale(s, this);
+        setIcon(namedIcon);
+        updateSize();
+    }
+
+    void rotate(int deg) {
+        namedIcon.rotate(deg, this);
+        setIcon(namedIcon);
+        updateSize();
+    }
     
     JCheckBoxMenuItem tristateItem = null;
     void addTristateEntry(JPopupMenu popup) {
@@ -576,14 +718,14 @@ public class PositionableLabel extends JLabel
                     changeText(e);
                 }
             });
-
     }
 
     void changeText(ActionEvent e) {
         if (log.isDebugEnabled())
             log.debug("changeText action: cmd="+e.getActionCommand()+", source= "+e.getSource()
                         +", etc. "+e.toString());
-        makeAddIconFrame("EditText", null, "pressAdd", null);
+        //makeAddIconFrame("EditText", null, "pressAdd", null);
+        tranform(e, BOX_TYPE_TEXT);
     }
     
     JCheckBoxMenuItem italic = null;
@@ -704,7 +846,6 @@ public class PositionableLabel extends JLabel
         return active;
     }
 
-    JTextField _textBox;
     void makeAddIconFrame(String title, String select1, String select2, 
                                 IconAdder editor) {
         _editorFrame = new JFrame(rb.getString(title));
@@ -716,23 +857,6 @@ public class PositionableLabel extends JLabel
         if (editor != null) {
             _editorFrame.getContentPane().add(editor);
             editor.setParent(_editorFrame);
-        } else {
-            p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            _textBox = new JTextField(getText());
-            p.add(_textBox);
-            JButton button = new JButton("Done");
-            button.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    setText(_textBox.getText());
-                    setIconTextGap (-(getWidth()+getPreferredSize().width)/2);
-                    setSize(getPreferredSize().width, getPreferredSize().height);
-                    _editorFrame.dispose();
-                    _editorFrame = null;
-                }
-            });
-            p.add(button);
-            _editorFrame.getContentPane().add(p);
         }
 
         _editorFrame.addWindowListener(new java.awt.event.WindowAdapter() {

@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
-//import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JCheckBoxMenuItem;
@@ -17,7 +16,7 @@ import javax.swing.JCheckBoxMenuItem;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -153,7 +152,6 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         popup = new JPopupMenu();
 
         popup.add(new JMenuItem(getNameString()));
-        checkLocationEditable(popup, getNameString());
 
         if (icon) popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
@@ -166,6 +164,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                     repaint();
                 }
             });
+        checkLocationEditable(popup, getNameString());
         addFixedItem(popup);
 
         addDisableMenuEntry(popup);
@@ -196,6 +195,22 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
+    void scale(int s) {
+        active.scale(s, this);
+        inactive.scale(s, this);
+        unknown.scale(s, this);
+        inconsistent.scale(s, this);
+        displayState(sensorState());
+    }
+
+    void rotate(int deg) {
+        active.rotate(deg, this);
+        inactive.rotate(deg, this);
+        unknown.rotate(deg, this);
+        inconsistent.rotate(deg, this);
+        displayState(sensorState());
+    }
+    
     JCheckBoxMenuItem momentaryItem;
     
     /**

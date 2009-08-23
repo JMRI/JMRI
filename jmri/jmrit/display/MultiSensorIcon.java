@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
-//import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
@@ -24,7 +23,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -160,8 +159,6 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
 
         popup.add(new JMenuItem(getNameString()));
 
-        checkLocationEditable(popup, getNameString());
-
         if (icon) popup.add(new AbstractAction("Rotate") {
                 public void actionPerformed(ActionEvent e) {
                     for (int i = 0; i<entries.size(); i++) {
@@ -176,6 +173,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
                     repaint();
                 }
             });
+        checkLocationEditable(popup, getNameString());
 
         addFixedItem(popup);
         addDisableMenuEntry(popup);
@@ -195,6 +193,29 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
 
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
+
+    void scale(int s) {
+        for (int i = 0; i<entries.size(); i++) {
+            NamedIcon icon = entries.get(i).icon;
+            icon.scale(s, this);
+        }
+        inactive.scale(s, this);
+        unknown.scale(s, this);
+        inconsistent.scale(s, this);
+        displayState();
+    }
+
+    void rotate(int deg) {
+        for (int i = 0; i<entries.size(); i++) {
+            NamedIcon icon = entries.get(i).icon;
+            icon.rotate(deg, this);
+        }
+        inactive.rotate(deg, this);
+        unknown.rotate(deg, this);
+        inconsistent.rotate(deg, this);
+        displayState();
+    }
+    
 
     int displaying = -1;
     

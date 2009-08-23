@@ -10,7 +10,7 @@ import jmri.jmrit.display.*;
  * Handle configuration for display.AnalogClock2Display objects.
  *
  * @author  Howard G. Penny  Copyright (c) 2005
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class AnalogClock2DisplayXml
     implements XmlAdapter {
@@ -36,6 +36,7 @@ public class AnalogClock2DisplayXml
         // include contents
         element.setAttribute("x", "" + p.getX());
         element.setAttribute("y", "" + p.getY());
+        element.setAttribute("scale", "" + p.getScale());
 
         element.setAttribute("class",
             "jmri.jmrit.display.configurexml.AnalogClock2DisplayXml");
@@ -77,9 +78,13 @@ public class AnalogClock2DisplayXml
         // find coordinates
         int x = 0;
         int y = 0;
+        double scale = 1.0;
         try {
             x = element.getAttribute("x").getIntValue();
             y = element.getAttribute("y").getIntValue();
+            if (element.getAttribute("scale")!=null) {
+                scale = element.getAttribute("scale").getDoubleValue();
+            }
         }
         catch (org.jdom.DataConversionException e) {
             log.error("failed to convert positional attribute");
@@ -87,7 +92,8 @@ public class AnalogClock2DisplayXml
         l.setOpaque(false);
         l.update();
         l.setLocation(x, y);
-		
+        if (scale != 1.0 && scale>0.1) { l.setScale(scale);  }
+           	
 		// add the clock to the panel
 		if (pe!=null) {
 			int level = PanelEditor.CLOCK.intValue();

@@ -6,6 +6,7 @@ import java.util.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.AffineTransform;
 import javax.swing.*;
 
 import jmri.*;
@@ -18,9 +19,11 @@ import jmri.util.JmriJFrame;
  * <p>Time code copied in part from code for the Nixie clock by Bob Jacobsen </p>
  *
  * @author  Howard G. Penny - Copyright (C) 2005
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class AnalogClock2Display extends PositionableJComponent {
+
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
     Timebase clock;
     double rate;
     static double minuteAngle;
@@ -34,6 +37,7 @@ public class AnalogClock2Display extends PositionableJComponent {
     NamedIcon jmriIcon;
     NamedIcon scaledIcon;
     NamedIcon clockIcon;
+    double _scale;         // user's scaling factor
 
     int hourX[] = {
          -12, -11, -25, -10, -10, 0, 10, 10, 25, 11, 12};
@@ -72,6 +76,7 @@ public class AnalogClock2Display extends PositionableJComponent {
 
     public AnalogClock2Display(JmriJFrame parentFrame) {
         super(parentFrame);
+        _scale = 1.0;
         clock = InstanceManager.timebaseInstance();
 
         rate = (int) clock.userGetRate();
@@ -143,7 +148,74 @@ public class AnalogClock2Display extends PositionableJComponent {
                 }
             });
             popup.insert(runMenu, 2);
+            popup.insert(new AbstractAction(rb.getString("scale")) {
+                     public void actionPerformed(ActionEvent e) {
+                         makeTextBoxFrame("scale");
+                     }
+                 }, 3);
         }
+    }
+
+    JTextField _textBox;
+    JFrame _editorFrame;
+
+    void makeTextBoxFrame(String title) {
+        _editorFrame = new JFrame(rb.getString("Edit"));
+        JPanel p = new JPanel();
+        p.setLayout(new BorderLayout(5,5));
+        p.add(new JLabel(rb.getString(title)), BorderLayout.NORTH);
+        JPanel p2 = new JPanel();
+        p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
+        p.add(p2, BorderLayout.CENTER);
+        _textBox = new JTextField();
+        p2.add(_textBox);
+        JButton button = new JButton(rb.getString("Done"));
+        ours = this;
+        button.addActionListener(new ActionListener() {
+            boolean scale;
+            public void actionPerformed(ActionEvent a) {
+                int num = 0;
+                try {
+                    num = Integer.parseInt(_textBox.getText());
+                } catch (NumberFormatException nfe) {
+                    _editorFrame.dispose();
+                    _editorFrame = null;
+                    return;
+                }
+                setScale((double)num/100.0);
+                _editorFrame.dispose();
+                _editorFrame = null;
+                repaint();
+            }
+        });
+        p.add(button, BorderLayout.SOUTH);
+        _editorFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+				public void windowClosing(java.awt.event.WindowEvent e) {
+                    _editorFrame.dispose();
+                    _editorFrame = null;
+                }
+            });
+        _editorFrame.getContentPane().add(p);
+        _editorFrame.setLocationRelativeTo(this);
+        _editorFrame.setVisible(true);
+        _editorFrame.pack();
+    }
+
+    public double getScale() { return _scale; }
+
+    public void setScale(double scale) {
+        AffineTransform t = AffineTransform.getScaleInstance(scale, scale);
+        int w = (int)Math.ceil(scale*clockIcon.getIconWidth());
+        int h = (int)Math.ceil(scale*clockIcon.getIconHeight());
+        clockIcon.transformImage(w, h, t, null);
+        w = (int)Math.ceil(scale*scaledIcon.getIconWidth());
+        h = (int)Math.ceil(scale*scaledIcon.getIconHeight());
+        scaledIcon.transformImage(w, h, t, null);
+        w = (int)Math.ceil(scale*jmriIcon.getIconWidth());
+        h = (int)Math.ceil(scale*jmriIcon.getIconHeight());
+        jmriIcon.transformImage(w, h, t, null);
+        setSize(clockIcon.getIconHeight());
+        _scale *= scale;
     }
 
     void addRateMenuEntry(JMenu menu, final int newrate) {

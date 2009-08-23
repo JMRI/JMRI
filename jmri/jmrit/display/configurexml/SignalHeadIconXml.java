@@ -2,6 +2,9 @@
 
 package jmri.jmrit.display.configurexml;
 
+import java.awt.geom.AffineTransform;
+import java.util.List;
+
 import jmri.SignalHead;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.NamedIcon;
@@ -14,9 +17,9 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
-public class SignalHeadIconXml implements XmlAdapter {
+public class SignalHeadIconXml extends PositionableLabelXml {
 
     public SignalHeadIconXml() {
     }
@@ -33,12 +36,9 @@ public class SignalHeadIconXml implements XmlAdapter {
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
         Element element = new Element("signalheadicon");
-
-        // include contents
+        storeCommonAttributes(p, element);
         element.setAttribute("signalhead", ""+p.getSignalHead().getSystemName());
-        element.setAttribute("x", ""+p.getX());
-        element.setAttribute("y", ""+p.getY());
-        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
+
         element.setAttribute("held", p.getHeldIcon().getURL());
         element.setAttribute("dark", p.getDarkIcon().getURL());
         element.setAttribute("red", p.getRedIcon().getURL());
@@ -50,12 +50,21 @@ public class SignalHeadIconXml implements XmlAdapter {
         element.setAttribute("flashgreen", p.getFlashGreenIcon().getURL());
         element.setAttribute("flashlunar", p.getFlashLunarIcon().getURL());
         element.setAttribute("rotate", String.valueOf(p.getGreenIcon().getRotation()));
-        element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
         element.setAttribute("clickmode", ""+p.getClickMode());
         element.setAttribute("litmode", ""+p.getLitMode());
 
-        element.setAttribute("class", "jmri.jmrit.display.configurexml.SignalHeadIconXml");
+        element.addContent(storeIcon("held", p.getHeldIcon()));
+        element.addContent(storeIcon("dark", p.getDarkIcon()));
+        element.addContent(storeIcon("red", p.getRedIcon()));
+        element.addContent(storeIcon("yellow", p.getYellowIcon()));
+        element.addContent(storeIcon("flashyellow", p.getFlashYellowIcon()));
+        element.addContent(storeIcon("green", p.getGreenIcon()));
+        element.addContent(storeIcon("lunar", p.getLunarIcon()));
+        element.addContent(storeIcon("flashred", p.getFlashRedIcon()));
+        element.addContent(storeIcon("flashgreen", p.getFlashGreenIcon()));
+        element.addContent(storeIcon("flashlunar", p.getFlashLunarIcon()));
 
+        element.setAttribute("class", "jmri.jmrit.display.configurexml.SignalHeadIconXml");
         return element;
     }
 
@@ -177,34 +186,37 @@ public class SignalHeadIconXml implements XmlAdapter {
             log.error("Failed on litmode attribute: "+e);
         }
 
-        a = element.getAttribute("forcecontroloff");
-        if ( (a!=null) && a.getValue().equals("true"))
-            l.setForceControlOff(true);
-        else
-            l.setForceControlOff(false);
-            
-        l.displayState(l.headState());
+        loadCommonAttributes(l, PanelEditor.SIGNALS.intValue(), element);
 
-        // find coordinates
-        int x = 0;
-        int y = 0;
-        try {
-            x = element.getAttribute("x").getIntValue();
-            y = element.getAttribute("y").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.error("failed to convert positional attribute");
-        }
-        l.setLocation(x,y);
+        NamedIcon icon = loadIcon( l,"red", element);
+        if (icon!=null) { l.setRedIcon(icon); }
 
-        // find display level
-        int level = PanelEditor.SIGNALS.intValue();
-        try {
-            level = element.getAttribute("level").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse level attribute!");
-        } catch ( NullPointerException e) {  // considered normal if the attribute not present
-        }
-        l.setDisplayLevel(level);
+        icon = loadIcon( l,"yellow", element);
+        if (icon!=null) { l.setYellowIcon(icon); }
+
+        icon = loadIcon( l,"green", element);
+        if (icon!=null) { l.setGreenIcon(icon); }
+
+        icon = loadIcon( l,"lunar", element);
+        if (icon!=null) { l.setLunarIcon(icon); }
+
+        icon = loadIcon( l,"held", element);
+        if (icon!=null) { l.setHeldIcon(icon); }
+
+        icon = loadIcon( l,"dark", element);
+        if (icon!=null) { l.setDarkIcon(icon); }
+
+        icon = loadIcon( l,"flashred", element);
+        if (icon!=null) { l.setFlashRedIcon(icon); }
+
+        icon = loadIcon( l,"flashyellow", element);
+        if (icon!=null) { l.setFlashYellowIcon(icon); }
+
+        icon = loadIcon( l,"flashgreen", element);
+        if (icon!=null) { l.setFlashGreenIcon(icon); }
+
+        icon = loadIcon( l,"flashlunar", element);
+        if (icon!=null) { l.setFlashLunarIcon(icon); }
 
         p.putLabel(l);
     }

@@ -8,11 +8,14 @@ import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
 import java.net.URL;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 import java.awt.image.BufferedImage;
 import java.awt.RenderingHints;
 import java.awt.Graphics2D;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 
 /**
  * Extend an ImageIcon to remember the name from which it was created
@@ -25,7 +28,7 @@ import javax.swing.ImageIcon;
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -57,6 +60,9 @@ public class NamedIcon extends ImageIcon {
         mName = pName;
         mURL = jmri.util.FileUtil.getPortableFilename(pUrl);
         mRotation = 0;
+        _deg = 0;
+        _scale = 1.0;
+        _transform = null;;
     }
 
     /**
@@ -115,6 +121,9 @@ public class NamedIcon extends ImageIcon {
         if (pRotation<0) pRotation = 3;
         mRotation = pRotation;
         setImage(createRotatedImage(mDefaultImage, pComponent, mRotation));
+        _transform = null;      // each rotation type normalizes the other
+        _deg = 0;
+        _scale = 1.0;
     }
 
     private String mName=null;
@@ -201,35 +210,167 @@ public class NamedIcon extends ImageIcon {
         } catch (InterruptedException ie) {}
         return myImage;
     }
+    private int _deg;
+    private double _scale;
+    private AffineTransform _transform;
+    public int getDegrees() { return _deg%360; }
+    public double getScale() { return _scale; }
+    public void setLoad(int d, double s, JComponent comp) {
+        if (d==0 && s==1.0) { return; }
+        scale(s, comp);
+        rotate(d, comp);
+    }
+    /*
+    private AffineTransform _lastTranslate;
 
-    public double scale(double limit) {
+    public AffineTransform getTransform() {
+        if (_transform !=null)
+        {
+            log.info("\n_transform= "+_transform.toString()+"\n_lastTrans= "+
+                     (_lastTranslate!=null ? _lastTranslate.toString() : null) );
+        }
+        return _transform;
+    }
+    public void setTransform(AffineTransform t) {_transform = t; }
+*/
+    private void makeCompositeTransform(AffineTransform t) {
+        if (_transform==null) {
+            _transform = t;
+        } else {
+            _transform.preConcatenate(t);
+        }
+    }
+
+    public void transformImage(int w, int h, AffineTransform t, JComponent comp) {
+        BufferedImage bufIm = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = bufIm.createGraphics();
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, 
+                             RenderingHints.VALUE_RENDER_QUALITY); 
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
+                             RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, 
+                             RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, 
+                             RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        g2d.drawImage(getImage(), t, comp);
+        setImage(bufIm);
+        g2d.dispose();
+        mRotation = 3;      // each rotation type normalizes the other
+    }
+
+    /**
+    * Find bounds for the range of transform and map default image into it
+    *
+    public void initFromLoad() {
+        //log.info("initFromLoad: "+getDescription());
+        setImage(mDefaultImage);
+        Point2D[] bds = new Point2D[4];
+        bds[0] = new Point2D.Double(0.0, 0.0);
+        bds[1] = new Point2D.Double((double)mDefaultImage.getWidth(null), 0.0);
+        bds[2] = new Point2D.Double((double)mDefaultImage.getWidth(null), (double)mDefaultImage.getHeight(null));
+        bds[3] = new Point2D.Double(0.0, (double)mDefaultImage.getHeight(null));
+        _transform.transform(bds, 0, bds, 0, 4);
+        double maxX = Math.max(bds[0].getX(), Math.max(bds[1].getX(), Math.max(bds[2].getX(),bds[3].getX()))); 
+        double minX = Math.min(bds[0].getX(), Math.min(bds[1].getX(), Math.min(bds[2].getX(),bds[3].getX()))); 
+        double maxY = Math.max(bds[0].getY(), Math.max(bds[1].getY(), Math.max(bds[2].getY(),bds[3].getY())));
+        double minY = Math.min(bds[0].getY(), Math.min(bds[1].getY(), Math.min(bds[2].getY(),bds[3].getY())));
+        //AffineTransform t = AffineTransform.getTranslateInstance(
+        //                _transform.getTranslateX(), _transform.getTranslateY());
+        //t.concatenate(_transform);
+        transformImage((int)Math.ceil(maxX-minX), (int)Math.ceil(maxY-minY), _transform, null);
+    }
+
+    /**
+    *  Scale as a percentage
+    */
+    public void scale(int s, JComponent comp) {
+        //log.info("scale= "+s+", "+getDescription());
+        if (s<1) { return; }
+        scale((double)s/100.0, comp);
+    }
+
+    public void scale(double scale, JComponent comp) {
+        if (_transform==null) {
+            setImage(mDefaultImage);
+        }
+//        int w = (int)Math.ceil(scale*mDefaultImage.getWidth(comp));
+//        int h = (int)Math.ceil(scale*mDefaultImage.getHeight(comp));
+        int w = (int)Math.ceil(scale*getIconWidth());
+        int h = (int)Math.ceil(scale*getIconHeight());
+        AffineTransform t = AffineTransform.getScaleInstance(scale, scale);
+        transformImage(w, h, t, comp);
+        _scale *= scale;
+        makeCompositeTransform(t);
+    }
+    /*
+    public void shear(int x, int y) {
+        log.info("shear: x= "+x+", y= "+y);
+        int width = mDefaultImage.getWidth(null);
+        int heigth = mDefaultImage.getHeight(null);
+        makeCompositeTransform(AffineTransform.getTranslateInstance((double)x, (double)y));
+        transformImage(new BufferedImage(width, heigth, BufferedImage.TYPE_INT_ARGB), null);
+ //       setImage(mDefaultImage.getScaledInstance(x, y, Image.SCALE_SMOOTH));
+    }
+    */
+    /**
+    * Rotate from anchor point (upper left corner) and shift into place
+    */
+    public void rotate(int deg, JComponent comp) {
+        //log.info("rotate= "+deg+", "+getDescription());
+        if (_transform==null) {
+            setImage(mDefaultImage);
+        }
+        int degree = deg%360;
+        if (degree<0){
+            degree +=360;
+        }
+        double rad = (double)degree*Math.PI/180.0;
+//        double w = (double)mDefaultImage.getWidth(comp);
+//        double h = (double)mDefaultImage.getHeight(comp);
+        double w = (double)getIconWidth();
+        double h = (double)getIconHeight();
+        int width = (int)Math.ceil(Math.abs(h*Math.sin(rad)) + Math.abs(w*Math.cos(rad)));
+        int heigth = (int)Math.ceil(Math.abs(h*Math.cos(rad)) + Math.abs(w*Math.sin(rad)));
+        AffineTransform t = null;
+        if (0<=degree && degree<90) {
+            t = AffineTransform.getTranslateInstance(h*Math.sin(rad), 0.0);
+        } else if (90<=degree && degree<180) {
+            t = AffineTransform.getTranslateInstance(h*Math.sin(rad)-w*Math.cos(rad), -h*Math.cos(rad));
+        } else if (180<=degree && degree<270) {
+            t = AffineTransform.getTranslateInstance(-w*Math.cos(rad), -w*Math.sin(rad)-h*Math.cos(rad));
+        } else if (270<=degree && degree<360) {
+            t = AffineTransform.getTranslateInstance(0.0, -w*Math.sin(rad));
+        }
+        //if (_lastTranslate==null) _lastTranslate = (AffineTransform)t.clone();
+        //else _lastTranslate.preConcatenate(t);
+        AffineTransform r = AffineTransform.getRotateInstance(rad);
+        //log.info("\nrotat= "+r.toString()+"\nTrans= "+t.toString());
+        t.concatenate(r);
+        transformImage(width, heigth, t, comp);
+        _deg += deg;
+        makeCompositeTransform(t);
+    }
+
+    /**
+    *  If necessary, reduce this image to within 'width' x 'height' dimensions.
+    * limit the reduction by 'limit'
+    */
+    public double reduceTo(int width, int height, double limit) {
         int w = getIconWidth();
         int h = getIconHeight();
         double scale = 1.0;
-        if (w > 100) {
-            scale = 100.0/w;
+        if (w > width) {
+            scale = ((double)width)/w;
         }
-        if (h > 100) {
-            scale = Math.min(scale, 100.0/h);
+        if (h > height) {
+            scale = Math.min(scale, ((double)height)/h);
         }
         if (scale < 1) { // make a thumbnail
-            if (limit > 0.0){
+            if (limit > 0.0) {
                 scale = Math.max(scale, limit);  // but not too small
             }
             AffineTransform t = AffineTransform.getScaleInstance(scale, scale);
-            BufferedImage bufIm = new BufferedImage((int)Math.ceil(scale*w), 
-                                                    (int)Math.ceil(scale*h), 
-                                                    BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2d = bufIm.createGraphics();
-            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, 
-                                 RenderingHints.VALUE_RENDER_QUALITY); 
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
-                                 RenderingHints.VALUE_ANTIALIAS_ON);
-            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, 
-                                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-            g2d.drawImage(getImage(), t, null);
-            setImage(bufIm);
-            g2d.dispose();
+            transformImage((int)Math.ceil(scale*w), (int)Math.ceil(scale*h), t, null);
         }
         return scale;
     }

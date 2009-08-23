@@ -1,5 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
+import java.awt.geom.AffineTransform;
+import java.util.List;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
@@ -14,9 +16,9 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
-public class MultiSensorIconXml implements XmlAdapter {
+public class MultiSensorIconXml extends PositionableLabelXml {
 
     public MultiSensorIconXml() {
     }
@@ -33,27 +35,26 @@ public class MultiSensorIconXml implements XmlAdapter {
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
         Element element = new Element("multisensoricon");
+        storeCommonAttributes(p, element);
 
-        // include contents
-        element.setAttribute("x", ""+p.getX());
-        element.setAttribute("y", ""+p.getY());
-        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
         element.setAttribute("inactive", p.getInactiveIcon().getURL());
         element.setAttribute("unknown", p.getUnknownIcon().getURL());
         element.setAttribute("inconsistent", p.getInconsistentIcon().getURL());
         element.setAttribute("rotate", String.valueOf(p.getUnknownIcon().getRotation()));
         element.setAttribute("updown", p.getUpDown()?"true":"false");
-        element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
-
-        element.setAttribute("class", "jmri.jmrit.display.configurexml.MultiSensorIconXml");
 
         for (int i = 0; i < p.getNumEntries(); i++) {
             Element e = new Element("multisensoriconentry");
             e.setAttribute("sensor", p.getSensorName(i));
             e.setAttribute("icon", p.getSensorIcon(i).getURL());
+            element.addContent(storeIcon("active", p.getSensorIcon(i)));
             element.addContent(e);
         }
+        element.addContent(storeIcon("inactive", p.getInactiveIcon()));
+        element.addContent(storeIcon("unknown", p.getUnknownIcon()));
+        element.addContent(storeIcon("inconsistent", p.getInconsistentIcon()));
         
+        element.setAttribute("class", "jmri.jmrit.display.configurexml.MultiSensorIconXml");
         return element;
     }
 
@@ -119,49 +120,41 @@ public class MultiSensorIconXml implements XmlAdapter {
         else
             l.setUpDown(false);
             
-        a = element.getAttribute("forcecontroloff");
-        if ( (a!=null) && a.getValue().equals("true"))
-            l.setForceControlOff(true);
-        else
-            l.setForceControlOff(false);
-            
+		if (pe!=null)
+            loadCommonAttributes(l, PanelEditor.SENSORS.intValue(), element);
+		else if (le!=null)
+            loadCommonAttributes(l, LayoutEditor.SENSORS.intValue(), element);
+
         // get the icon pairs & load
         List<Element> items = element.getChildren();
         for (int i = 0; i<items.size(); i++) {
             // get the class, hence the adapter object to do loading
             Element item = items.get(i);
-            String sensor = item.getAttribute("sensor").getValue();
-            String icon = item.getAttribute("icon").getValue();
-            NamedIcon nicon = NamedIcon.getIconByName(icon);
-            if (rotation!=0) nicon.setRotation(rotation, l);
-            l.addEntry(sensor, nicon);
-        }
-        
-        // find coordinates
-        int x = 0;
-        int y = 0;
-        try {
-            x = element.getAttribute("x").getIntValue();
-            y = element.getAttribute("y").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.error("failed to convert positional attribute");
-        }
-        l.setLocation(x,y);
+            if (item.getAttribute("sensor")!=null) {
+                String sensor = item.getAttribute("sensor").getValue();
+                String icon = item.getAttribute("icon").getValue();
+                NamedIcon nicon = NamedIcon.getIconByName(icon);
+                if (rotation!=0) nicon.setRotation(rotation, l);
+                l.addEntry(sensor, nicon);
 
-        // find display level
-		int level = 0;
-		if (pe!=null)
-			level = PanelEditor.SENSORS.intValue();
-		else if (le!=null)
-			level = LayoutEditor.SENSORS.intValue();
-        try {
-            level = element.getAttribute("level").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse level attribute!");
-        } catch ( NullPointerException e) {  // considered normal if the attribute not present
+                NamedIcon aicon = loadIcon( l,"active", item);
+                if (aicon!=null) { 
+                    l.addEntry(sensor, aicon); 
+                } else {
+                    l.addEntry(sensor, nicon);
+                }
+            }
         }
-        l.setDisplayLevel(level);
 		
+        NamedIcon icon = loadIcon( l,"inactive", element);
+        if (icon!=null) { l.setInactiveIcon(icon); }
+
+        icon = loadIcon( l,"unknown", element);
+        if (icon!=null) { l.setUnknownIcon(icon); }
+
+        icon = loadIcon( l,"inconsistent", element);
+        if (icon!=null) { l.setInconsistentIcon(icon); }
+
 		// add multi-sensor to the panel
 		if (pe!=null)
 			pe.putLabel(l);

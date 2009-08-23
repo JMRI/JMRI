@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelTarget.shtml,v 1.8 2008-11-01 17:33:00 jacobsen Exp $ -->
+<!-- $Id: PanelTarget.shtml,v 1.9 2009-08-23 07:21:12 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Help</TITLE>
@@ -78,7 +78,12 @@ you can move an icon by dragging it around the panel.  For more
 precise positioning, many icons can access the
 <a href="CoordinateEdit.shtml">Coordinate Editor</a> 
 to move the icon by a specific number of pixels or set it to an 
-absolute location.
+absolute location.</p>
+
+<P>When the checkboxes in the Panel Editor permit it, the popup menu
+may include items to recall the icon editor to change the icons or the
+entity it represents.  Other items likely to be available are; rotations,
+scaling, font sizes, colors etc.
 
 <P>The popup menu may also change if the configuration of an item is
 changed. For example, if you add feedback to a turnout, the popup menu
