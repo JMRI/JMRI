@@ -3,11 +3,13 @@
 package jmri.jmrit.operations.locations;
 import java.util.ResourceBundle;
 
+import javax.swing.BorderFactory;
+
 /**
  * Frame for user edit of a location sidings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class YardEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -25,8 +27,8 @@ public class YardEditFrame extends TrackEditFrame implements java.beans.Property
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Yards", true);
 		
 		// override text strings for tracks
-		textTrain.setText(rb.getString("TrainYard"));
-		textType.setText(rb.getString("TypesYard"));
+		panelTrainDir.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainYard")));
+		panelCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesYard")));
 		deleteTrackButton.setText(rb.getString("DeleteYard"));
 		addTrackButton.setText(rb.getString("AddYard"));
 		saveTrackButton.setText(rb.getString("SaveYard"));

@@ -4,8 +4,8 @@ package jmri.jmrit.operations.locations;
 import java.awt.GridBagLayout;
 import java.util.ResourceBundle;
 
+import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
@@ -13,15 +13,12 @@ import javax.swing.JPanel;
  * Frame for user edit of a staging track
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class StagingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-	
-	// labels
-	JLabel textLoads = new JLabel(rb.getString("OptionalLoads"));
 	
 	// check boxes
 	JCheckBox swapLoadsCheckBox = new JCheckBox(rb.getString("SwapCarLoads"));
@@ -37,22 +34,20 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 	public void initComponents(Location location, Track track) {
 		_type = Track.STAGING;
 		
-		// setup the optional panel with schedule stuff
-		// guarantee space for textSchError messages
+		// setup the optional panel with staging stuff
 		panelLoad.setLayout(new GridBagLayout());
-		addItem(panelLoad, textLoads, 0, 0);
+		panelLoad.setBorder(BorderFactory.createTitledBorder(rb.getString("OptionalLoads")));
 		addItem(panelLoad, swapLoadsCheckBox, 0, 1);
 		addItem(panelLoad, emptyCheckBox, 0, 2);
 		addItem(panelLoad, loadCheckBox, 0, 3);
-		panelLoad.setBorder(border);
 		
 		super.initComponents(location, track);
 		
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Staging", true);
 		
 		// override text strings for tracks
-		textTrain.setText(rb.getString("TrainStaging"));
-		textType.setText(rb.getString("TypesStaging"));
+		panelTrainDir.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainStaging")));
+		panelCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesStaging")));
 		deleteTrackButton.setText(rb.getString("DeleteStaging"));
 		addTrackButton.setText(rb.getString("AddStaging"));
 		saveTrackButton.setText(rb.getString("SaveStaging"));

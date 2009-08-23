@@ -31,7 +31,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -111,11 +111,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	JTextField switchTimeTextField = new JTextField(3);
 	JTextField travelTimeTextField = new JTextField(3);
 	JTextField commentTextField = new JTextField(35);
-
-	// for padding out panel
-	JLabel space1 = new JLabel("      ");
-	JLabel space2 = new JLabel("      ");
-	JLabel space3 = new JLabel("      ");
 	
 	// combo boxes
 	JComboBox northComboBox = new JComboBox();
@@ -316,9 +311,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		// row 11
 		JPanel pControl = new JPanel();
 		pControl.setLayout(new GridBagLayout());
-		addItem(pControl, space1, 0, 8);
-		
-		// row 13
 		addItem(pControl, restoreButton, 0, 9);
 		addItem(pControl, backupButton, 1, 9);
 		addItem(pControl, saveButton, 3, 9);
@@ -348,9 +340,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		pack();
 		if (Setup.getOperationsSetupFrameSize()!= null){
 			setSize(Setup.getOperationsSetupFrameSize());
-		} else {
-			setSize(getWidth()+30, getHeight()+50);
-		}
+		} 
 		if (Setup.getOperationsSetupFramePosition()!= null){
 			setLocation(Setup.getOperationsSetupFramePosition());
 		}	

@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -40,7 +40,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	RouteLocation _routeLocation = null;
 
 	// labels
-	JLabel textName = new JLabel();
 	JLabel textComment = new JLabel();
 
 	// major buttons
@@ -85,8 +84,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		manager = RouteManager.instance();
 		managerXml = RouteManagerXml.instance();
 		
-		textName.setText(rb.getString("Name"));
-		textName.setVisible(true);
 		textComment.setText(rb.getString("Comment"));
 		textComment.setVisible(true);
 		space1.setText("     ");
@@ -120,13 +117,14 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
 	    //      Set up the panels
-    	JPanel p1 = new JPanel();
-    	p1.setLayout(new GridBagLayout());
+    	JPanel pName = new JPanel();
+    	pName.setLayout(new GridBagLayout());
+    	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
 				
 		// Layout the panel by rows
 		// row 1
-		addItem(p1, textName, 0, 1);
-		addItemWidth(p1, routeNameTextField, 3, 1, 1);
+
+		addItem(pName, routeNameTextField, 1, 1);
 
 		// row 2
     	JPanel p3 = new JPanel();
@@ -140,30 +138,25 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     	addLocAtBottom.setSelected(true);
 		Border border = BorderFactory.createEtchedBorder();
 		p3.setBorder(border);
-		
-		// row 9
-    	JPanel p4 = new JPanel();
-    	p4.setLayout(new GridBagLayout());
-		
-		// row 10
-		int y = 10;
-		addItem (p4, space1, 0, ++y);
     	
-		// row 11
-		addItem(p4, textComment, 0, ++y);
-		addItemWidth(p4, commentTextField, 3, 1, y);
-				
-		// row 12
-		addItem(p4, space2, 0, ++y);
-		// row 13
-		addItem(p4, deleteRouteButton, 0, ++y);
-		addItem(p4, addRouteButton, 1, y);
-		addItem(p4, saveRouteButton, 3, y);
+		// row 11 comment
+	   	JPanel pC = new JPanel();
+    	pC.setLayout(new GridBagLayout());
+    	pC.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
+		addItem(pC, commentTextField, 0, 0);
+
+		// row 12 buttons
+    	JPanel pB = new JPanel();
+    	pB.setLayout(new GridBagLayout());
+		addItem(pB, deleteRouteButton, 0, 0);
+		addItem(pB, addRouteButton, 1, 0);
+		addItem(pB, saveRouteButton, 3, 0);
 		
-		getContentPane().add(p1);
+		getContentPane().add(pName);
        	getContentPane().add(routePane);
        	getContentPane().add(p3);
-       	getContentPane().add(p4);
+       	getContentPane().add(pC);
+       	getContentPane().add(pB);
 		
 		// setup buttons
 		addButtonAction(addLocationButton);

@@ -11,7 +11,6 @@ import jmri.jmrit.operations.OperationsFrame;
 import java.awt.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -50,15 +49,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	JPanel panelCheckBoxes = new JPanel();
 	JScrollPane typePane;
 	JPanel directionPanel = new JPanel();
-
-	// labels
-	JLabel textName = new JLabel(rb.getString("Name"));
-	JLabel textLength = new JLabel(rb.getString("Length"));
-	JLabel textTrain = new JLabel(rb.getString("TrainLocation"));
-	JLabel textLoc = new JLabel(rb.getString("Ops"));
-	JLabel textType = new JLabel(rb.getString("Types"));
-	JLabel textOptional = new JLabel("-------------------------------- Optional ------------------------------------");
-	JLabel textComment = new JLabel(rb.getString("Comment"));
 
 	// major buttons
 	JButton clearButton = new JButton(rb.getString("Clear"));
@@ -143,6 +133,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 					yardRadioButton.setSelected(true);
 				else if (interchangeModel.getRowCount()>0)
 					interchangeRadioButton.setSelected(true);
+				else if (stagingModel.getRowCount()>0)
+					stageRadioButton.setSelected(true);
 				else
 					sidingRadioButton.setSelected(true);
 			}else{
@@ -159,71 +151,60 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
 	    //      Set up the panels
-    	JPanel p1 = new JPanel();
-    	p1.setLayout(new GridBagLayout());
+    	JPanel pName = new JPanel();
+    	pName.setLayout(new GridBagLayout());
+    	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
 				
 		// Layout the panel by rows
-		// row 1
-		addItem(p1, textName, 0, 1);
-		addItemWidth(p1, locationNameTextField, 3, 1, 1);
+		// row 1a
+		addItem(pName, locationNameTextField, 0, 0);
 
-		// row 2
+		// row 1b
     	directionPanel.setLayout(new GridBagLayout());
-		addItem(directionPanel, textTrain, 0, 1);
-		addItemLeft(directionPanel, northCheckBox, 1, 1);
-		addItemLeft(directionPanel, southCheckBox, 2, 1);
-		addItemLeft(directionPanel, eastCheckBox, 3, 1);
-		addItemLeft(directionPanel, westCheckBox, 4, 1);
-		Border border = BorderFactory.createEtchedBorder();
-		directionPanel.setBorder(border);
-		// row 3
+    	directionPanel.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainLocation")));
+		addItem(directionPanel, northCheckBox, 1, 0);
+		addItem(directionPanel, southCheckBox, 2, 0);
+		addItem(directionPanel, eastCheckBox, 3, 0);
+		addItem(directionPanel, westCheckBox, 4, 0);
 		
 		// row 4
 
 		// row 5
 	   	panelCheckBoxes.setLayout(new GridBagLayout());
+	   	panelCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("Types")));
 		updateCheckboxes();
-
-		// row 8
-    	JPanel p3 = new JPanel();
-    	p3.setLayout(new GridBagLayout());
-    	int y=0;
 		
 		// row 9
-		JPanel p = new JPanel();
+		JPanel pOp = new JPanel();
+		pOp.setLayout(new GridBagLayout());
+		pOp.setBorder(BorderFactory.createTitledBorder(rb.getString("Ops")));
 		ButtonGroup opsGroup = new ButtonGroup();
 		opsGroup.add(sidingRadioButton);
 		opsGroup.add(yardRadioButton);
 		opsGroup.add(interchangeRadioButton);
 		opsGroup.add(stageRadioButton);
-		p.add(textLoc);
-		p.add(sidingRadioButton);
-		p.add(yardRadioButton);
-		p.add(interchangeRadioButton);
-		p.add(stageRadioButton);
-		addItemWidth(p3, p, 3, 0, ++y);
-		
-    	JPanel p4 = new JPanel();
-    	p4.setLayout(new GridBagLayout());
-		
-		// row 10
-		addItem (p4, space1, 0, ++y);
-    	
+		pOp.add(sidingRadioButton);
+		pOp.add(yardRadioButton);
+		pOp.add(interchangeRadioButton);
+		pOp.add(stageRadioButton);
+
 		// row 11
-		addItem(p4, textComment, 0, ++y);
-		addItemWidth(p4, commentTextField, 3, 1, y);
+    	JPanel pC = new JPanel();
+    	pC.setLayout(new GridBagLayout());
+    	pC.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
+		addItem(pC, commentTextField, 0, 0);
 				
 		// row 12
-		addItem(p4, space2, 0, ++y);
-		// row 13
-		addItem(p4, deleteLocationButton, 0, ++y);
-		addItem(p4, addLocationButton, 1, y);
-		addItem(p4, saveLocationButton, 3, y);
+	   	JPanel pB = new JPanel();
+    	pB.setLayout(new GridBagLayout());
+		addItem(pB, deleteLocationButton, 0, 0);
+		addItem(pB, addLocationButton, 1, 0);
+		addItem(pB, saveLocationButton, 3, 0);
 		
-		getContentPane().add(p1);
+		getContentPane().add(pName);
 		getContentPane().add(directionPanel);
 		getContentPane().add(typePane);
-		getContentPane().add(p3);
+		getContentPane().add(pOp);
        	getContentPane().add(yardPane);
        	getContentPane().add(addYardButton);
        	getContentPane().add(sidingPane);
@@ -232,7 +213,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
        	getContentPane().add(addInterchangeButton);
        	getContentPane().add(stagingPane);
        	getContentPane().add(addStagingButton);
-       	getContentPane().add(p4);
+       	getContentPane().add(pC);
+       	getContentPane().add(pB);
 		
 		// setup buttons
 		addButtonAction(setButton);
@@ -257,8 +239,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
 		// add property listeners
 		CarTypes.instance().addPropertyChangeListener(this);
-		EngineTypes.instance().addPropertyChangeListener(this);
-       	
+		EngineTypes.instance().addPropertyChangeListener(this);      	
 
 		// build menu
 //		JMenuBar menuBar = new JMenuBar();
@@ -509,13 +490,10 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		 y = 0;
 		checkBoxes.clear();
 		panelCheckBoxes.removeAll();
-		addItemWidth(panelCheckBoxes, textType, 3, 1, y++);
 		loadTypes(CarTypes.instance().getNames());
 		loadTypes(EngineTypes.instance().getNames());
     	addItem(panelCheckBoxes, clearButton, 1, ++y);
     	addItem(panelCheckBoxes, setButton, 4, y);
-		Border border = BorderFactory.createEtchedBorder();
-		panelCheckBoxes.setBorder(border);
 		panelCheckBoxes.revalidate();
 		repaint();
 	}

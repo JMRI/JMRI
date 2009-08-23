@@ -12,7 +12,6 @@ import jmri.jmrit.operations.trains.Train;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -41,15 +40,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JPanel panelCheckBoxes = new JPanel();
 	JPanel panelTrainDir = new JPanel();
 	JPanel panelRoadNames = new JPanel();
-
-	// labels
-	JLabel textName = new JLabel(rb.getString("Name"));
-	JLabel textLength = new JLabel(rb.getString("Length"));
-	JLabel textTrain = new JLabel(rb.getString("TrainTrack"));
-	JLabel textType = new JLabel(rb.getString("TypesTrack"));
-	JLabel textRoad = new JLabel(rb.getString("RoadsTrack"));
-	JLabel textOptional = new JLabel(rb.getString("Optional"));
-	JLabel textComment = new JLabel(rb.getString("Comment"));
 	
 	// major buttons
 	JButton clearButton = new JButton(rb.getString("Clear"));
@@ -90,8 +80,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JPanel panelOpt1 = new JPanel();
 	JPanel panelOpt2 = new JPanel();
 
-	Border border = BorderFactory.createEtchedBorder();
-
 	public static final String DISPOSE = "dispose" ;
 	public static final int MAX_NAME_LENGTH = Control.MAX_LEN_STRING_TRACK_NAME;
 
@@ -116,53 +104,58 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
 	    //      Set up the panels
-    	JPanel p1 = new JPanel();
-    	p1.setLayout(new GridBagLayout());
+    	JPanel pName = new JPanel();
+    	pName.setLayout(new GridBagLayout());
+    	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
 				
 		// Layout the panel by rows
 		// row 1
-		addItem(p1, textName, 0, 1);
-		addItemWidth(p1, trackNameTextField, 3, 1, 1);
+		addItem(pName, trackNameTextField, 0, 0);
 
 		// row 2
-		addItem(p1, textLength, 0, 2);
-		addItemLeft(p1, trackLengthTextField, 1, 2);
+    	JPanel pLength = new JPanel();
+    	pLength.setLayout(new GridBagLayout());
+    	pLength.setBorder(BorderFactory.createTitledBorder(rb.getString("Length")));
+		addItem(pLength, trackLengthTextField, 0, 0);
+		
 		
 		// row 3
 		panelTrainDir.setLayout(new GridBagLayout());
+		panelTrainDir.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainTrack")));
 		updateTrainDir();
-		
+
 		// row 4
 	   	panelCheckBoxes.setLayout(new GridBagLayout());
+	   	panelCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesTrack")));
 		updateCheckboxes();
 		
 		// row 5
 		panelRoadNames.setLayout(new GridBagLayout());
+		panelRoadNames.setBorder(BorderFactory.createTitledBorder(rb.getString("RoadsTrack")));
 		roadGroup.add(roadNameAll);
 		roadGroup.add(roadNameInclude);
 		roadGroup.add(roadNameExclude);
 		updateRoadNames();
 		
+		// row 11
     	JPanel panelComment = new JPanel();
     	panelComment.setLayout(new GridBagLayout());
-		int y = 0;
-    	
-		// row 11
-		addItem(panelComment, textComment, 0, ++y);
-		addItemWidth(panelComment, commentTextField, 3, 1, y);
+    	panelComment.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
+		addItem(panelComment, commentTextField, 0, 0);
 				
 		// row 12
 		JPanel panelButtons = new JPanel();
 		panelButtons.setLayout(new GridBagLayout());
-		addItem(panelButtons, space2, 0, ++y);
+
 		// row 13
-		addItem(panelButtons, deleteTrackButton, 0, ++y);
-		addItem(panelButtons, addTrackButton, 1, y);
-		addItem(panelButtons, saveTrackButton, 2, y);
+		addItem(panelButtons, deleteTrackButton, 0, 0);
+		addItem(panelButtons, addTrackButton, 1, 0);
+		addItem(panelButtons, saveTrackButton, 2, 0);
 		
 		JScrollPane paneCheckBoxes = new JScrollPane(panelCheckBoxes);
 		
-		getContentPane().add(p1);
+		getContentPane().add(pName);
+		getContentPane().add(pLength);
 		getContentPane().add(panelTrainDir);
 		getContentPane().add(paneCheckBoxes);
 		getContentPane().add(panelRoadNames);
@@ -375,7 +368,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		int trackLength = 0;
 		try {
 			trackLength = Integer.parseInt(length);
-			if (length.length() > Control.MAX_LEN_STRING_LENGTH_NAME){
+			if (length.length() > Control.MAX_LEN_STRING_TRACK_LENGTH_NAME){
 				log.error("Track length must be less than 100,000 feet");
 				JOptionPane.showMessageDialog(this,
 						rb.getString("TrackMustBeLessThan"), rb.getString("ErrorTrackLength"),
@@ -475,13 +468,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		panelCheckBoxes.removeAll();
 		x = 0;
 		y = 0;		// vertical position in panel
-		addItemWidth(panelCheckBoxes, textType, 3, 1, y++);
 		loadTypes(CarTypes.instance().getNames());
 		loadTypes(EngineTypes.instance().getNames());
 		enableCheckboxes(_track != null);
 		addItem (panelCheckBoxes, clearButton, 1, ++y);
 		addItem (panelCheckBoxes, setButton, 4, y);
-		panelCheckBoxes.setBorder(border);
 		panelCheckBoxes.revalidate();
 		pack();
 		repaint();
@@ -514,10 +505,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		
     	JPanel p = new JPanel();
     	p.setLayout(new GridBagLayout());
-    	p.add(textRoad, 0);
-    	p.add(roadNameAll, 1);
-    	p.add(roadNameInclude, 2);
-    	p.add(roadNameExclude, 3);
+    	p.add(roadNameAll, 0);
+    	p.add(roadNameInclude, 1);
+    	p.add(roadNameExclude, 2);
     	GridBagConstraints gc = new GridBagConstraints();
     	gc.gridwidth = 6;
     	panelRoadNames.add(p, gc);
@@ -555,7 +545,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		} else {
 			roadNameAll.setSelected(true);
 		}
-		panelRoadNames.setBorder(border);
 		panelRoadNames.revalidate();
 
 		pack();
@@ -564,13 +553,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	private void updateTrainDir(){
 		panelTrainDir.removeAll();
-		
-		addItem(panelTrainDir, textTrain, 0, 1);
-		addItemLeft(panelTrainDir, northCheckBox, 1, 1);
-		addItemLeft(panelTrainDir, southCheckBox, 2, 1);
-		addItemLeft(panelTrainDir, eastCheckBox, 3, 1);
-		addItemLeft(panelTrainDir, westCheckBox, 4, 1);
-		panelTrainDir.setBorder(border);
+
+		addItem(panelTrainDir, northCheckBox, 1, 1);
+		addItem(panelTrainDir, southCheckBox, 2, 1);
+		addItem(panelTrainDir, eastCheckBox, 3, 1);
+		addItem(panelTrainDir, westCheckBox, 4, 1);
 		
 		northCheckBox.setVisible(((Setup.getTrainDirection() & Setup.NORTH) & (_location.getTrainDirections() & Location.NORTH))>0);
 		southCheckBox.setVisible(((Setup.getTrainDirection() & Setup.SOUTH) & (_location.getTrainDirections() & Location.SOUTH))>0);

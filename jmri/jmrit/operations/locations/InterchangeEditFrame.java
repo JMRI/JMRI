@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -28,7 +29,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * to TrackEditFram for train/route car drops and pickups.
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class InterchangeEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -40,8 +41,8 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 	RouteManager routeManager = RouteManager.instance();
 	
 	// labels, buttons, etc. for interchanges
-	JLabel textDrops = new JLabel(rb.getString("TrainsOrRoutesDrops"));
-	JLabel textPickups = new JLabel(rb.getString("TrainsOrRoutesPickups"));
+	//JLabel textDrops = new JLabel(rb.getString("TrainsOrRoutesDrops"));
+	//JLabel textPickups = new JLabel(rb.getString("TrainsOrRoutesPickups"));
 	
 	JButton deleteDropButton = new JButton(rb.getString("Delete"));
 	JButton addDropButton = new JButton(rb.getString("Add"));
@@ -76,6 +77,7 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 		// load the two option panels
 		// drop panel
 		dropPanel.setLayout(new GridBagLayout());
+		dropPanel.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainsOrRoutesDrops")));
 		dropPanel.add(anyDrops);
 		dropPanel.add(trainDrop);
 		dropPanel.add(routeDrop);
@@ -83,6 +85,7 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 		
 		// pickup panel
 		pickupPanel.setLayout(new GridBagLayout());
+		pickupPanel.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainsOrRoutesPickups")));
 		pickupPanel.add(anyPickups);
 		pickupPanel.add(trainPickup);
 		pickupPanel.add(routePickup);
@@ -93,8 +96,8 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Interchange", true);
 		
 		// override text strings for tracks
-		textTrain.setText(rb.getString("TrainInterchange"));
-		textType.setText(rb.getString("TypesInterchange"));
+		panelTrainDir.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainInterchange")));
+		panelCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesInterchange")));
 		deleteTrackButton.setText(rb.getString("DeleteInterchange"));
 		addTrackButton.setText(rb.getString("AddInterchange"));
 		saveTrackButton.setText(rb.getString("SaveInterchange"));
@@ -267,10 +270,9 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 		
     	JPanel p = new JPanel();
     	p.setLayout(new GridBagLayout());
-    	p.add(textDrops, 0);
-    	p.add(anyDrops, 1);
-    	p.add(trainDrop, 2);
-    	p.add(routeDrop, 3);
+    	p.add(anyDrops, 0);
+    	p.add(trainDrop, 1);
+    	p.add(routeDrop, 2);
     	GridBagConstraints gc = new GridBagConstraints();
     	gc.gridwidth = 6;
     	dropPanel.add(p, gc);
@@ -324,7 +326,6 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 		} else {
 			anyDrops.setSelected(true);
 		}
-		dropPanel.setBorder(border);
 		dropPanel.revalidate();
 
 		pack();
@@ -336,10 +337,9 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 		
     	JPanel p = new JPanel();
     	p.setLayout(new GridBagLayout());
-    	p.add(textPickups, 0);
-    	p.add(anyPickups, 1);
-    	p.add(trainPickup, 2);
-    	p.add(routePickup, 3);
+    	p.add(anyPickups, 0);
+    	p.add(trainPickup, 1);
+    	p.add(routePickup, 2);
     	GridBagConstraints gc = new GridBagConstraints();
     	gc.gridwidth = 6;
     	pickupPanel.add(p, gc);
@@ -393,7 +393,6 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 		} else {
 			anyPickups.setSelected(true);
 		}
-		pickupPanel.setBorder(border);
 		pickupPanel.revalidate();
 
 		pack();

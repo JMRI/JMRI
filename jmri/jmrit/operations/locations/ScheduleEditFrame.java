@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -38,7 +38,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	Track _track = null;
 
 	// labels
-	JLabel textName = new JLabel();
+	//JLabel textName = new JLabel();
 	JLabel textComment = new JLabel();
 
 	// major buttons
@@ -86,8 +86,6 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		manager = ScheduleManager.instance();
 		managerXml = LocationManagerXml.instance();
 		
-		textName.setText(rb.getString("Name"));
-		textName.setVisible(true);
 		textComment.setText(rb.getString("Comment"));
 		textComment.setVisible(true);
 		space1.setText("     ");
@@ -118,15 +116,14 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		}
 		
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
-
-	    //      Set up the panels
-    	JPanel p1 = new JPanel();
-    	p1.setLayout(new GridBagLayout());
-				
+ 				
 		// Layout the panel by rows
-		// row 1
-		addItem(p1, textName, 0, 1);
-		addItemWidth(p1, scheduleNameTextField, 3, 1, 1);
+	    
+		// row 1 name
+	   	JPanel pName = new JPanel();
+    	pName.setLayout(new GridBagLayout());
+    	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
+		addItem(pName, scheduleNameTextField, 0, 0);
 
 		// row 2
     	JPanel p3 = new JPanel();
@@ -141,29 +138,26 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		Border border = BorderFactory.createEtchedBorder();
 		p3.setBorder(border);
 		
-		// row 9
-    	JPanel p4 = new JPanel();
-    	p4.setLayout(new GridBagLayout());
-		
-		// row 10
-		int y = 10;
-		addItem (p4, space1, 0, ++y);
+		// row 9 comment
+    	JPanel pC = new JPanel();
+    	pC.setLayout(new GridBagLayout());
+    	pC.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
+		addItem(pC, commentTextField, 0, 0);
     	
-		// row 11
-		addItem(p4, textComment, 0, ++y);
-		addItemWidth(p4, commentTextField, 3, 1, y);
-				
-		// row 12
-		addItem(p4, space2, 0, ++y);
+		// row 11 buttons
+    	JPanel pB = new JPanel();
+    	pB.setLayout(new GridBagLayout());
+
 		// row 13
-		addItem(p4, deleteScheduleButton, 0, ++y);
-		addItem(p4, addScheduleButton, 1, y);
-		addItem(p4, saveScheduleButton, 3, y);
+		addItem(pB, deleteScheduleButton, 0, 0);
+		addItem(pB, addScheduleButton, 1, 0);
+		addItem(pB, saveScheduleButton, 3, 0);
 		
-		getContentPane().add(p1);
+		getContentPane().add(pName);
        	getContentPane().add(schedulePane);
        	getContentPane().add(p3);
-       	getContentPane().add(p4);
+       	getContentPane().add(pC);
+       	getContentPane().add(pB);
 		
 		// setup buttons
 		addButtonAction(addTypeButton);

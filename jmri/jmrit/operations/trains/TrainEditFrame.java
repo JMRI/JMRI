@@ -26,7 +26,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
@@ -50,7 +49,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -70,6 +69,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JPanel typeEnginePanelCheckBoxes = new JPanel();
 	JPanel panelRoadNames = new JPanel();
 	JPanel locationPanelCheckBoxes = new JPanel();
+	JScrollPane roadPane;
 	JScrollPane typeCarPane;
 	JScrollPane typeEnginePane;
 	JScrollPane locationsPane;
@@ -77,18 +77,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	// labels
 	JLabel textName = new JLabel(rb.getString("Name"));
 	JLabel textDescription = new JLabel(rb.getString("Description"));
-	JLabel textDepartTime = new JLabel(rb.getString("DepartTime"));
-	JLabel textRoute = new JLabel(rb.getString("Route"));
 	JLabel textRouteStatus = new JLabel();
-	JLabel textCarType = new JLabel(rb.getString("TypesCar"));
-	JLabel textEngineType = new JLabel(rb.getString("TypesEngine"));
 	JLabel textModel = new JLabel(rb.getString("Model"));
-	JLabel textRoad = new JLabel(rb.getString("RoadsTrain"));
 	JLabel textRoad2 = new JLabel(rb.getString("Road"));
 	JLabel textRoad3 = new JLabel(rb.getString("Road"));
 	JLabel textEngine = new JLabel(rb.getString("Engines"));
 	JLabel textStops = new JLabel("       "+rb.getString("Stops"));
-	JLabel textTrainRequires = new JLabel(rb.getString("TrainRequires"));
 	JLabel textCars = new JLabel();
 	JLabel textComment = new JLabel(rb.getString("Comment"));
 
@@ -123,12 +117,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JTextField commentTextField = new JTextField(35);
 
 	// for padding out panel
-	JLabel space0 = new JLabel("     ");
 	JLabel space1 = new JLabel("     ");
 	JLabel space2 = new JLabel("     ");
 	JLabel space3 = new JLabel("     ");
 	JLabel space4 = new JLabel("     ");
 	JLabel space5 = new JLabel("     ");
+	JLabel space6 = new JLabel("     ");
 	
 	// combo boxes
 	JComboBox hourBox = new JComboBox();
@@ -147,6 +141,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     	// Set up the jtable in a Scroll Pane..
     	locationsPane = new JScrollPane(locationPanelCheckBoxes);
     	locationsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+      	roadPane = new JScrollPane(panelRoadNames);
+    	roadPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
        	typeCarPane = new JScrollPane(typeCarPanelCheckBoxes);
     	typeCarPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
        	typeEnginePane = new JScrollPane(typeEnginePanelCheckBoxes);
@@ -166,22 +162,31 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	    //      Set up the panels
     	JPanel p1 = new JPanel();
     	p1.setLayout(new GridBagLayout());
-    	p1.setPreferredSize(new Dimension(550, 50)); // this sets the minimum panel width
+    	//p1.setPreferredSize(new Dimension(550, 100)); // this sets the minimum panel width
 				
 		// Layout the panel by rows
-		// row 1
-		addItem(p1, textName, 0, 1);
-		addItemWidth(p1, trainNameTextField, 3, 1, 1);
+		// row 1a
+       	JPanel pName = new JPanel();
+    	pName.setLayout(new GridBagLayout());
+    	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
+		addItem(pName, trainNameTextField, 0, 0);
 
-		// row 2
-		addItem(p1, textDescription, 0, 3);
-		addItemWidth(p1, trainDescriptionTextField, 3, 1, 3);
-		Border border = BorderFactory.createEtchedBorder();
-		p1.setBorder(border);
+		// row 1b
+       	JPanel pDesc = new JPanel();
+    	pDesc.setLayout(new GridBagLayout());
+    	pDesc.setBorder(BorderFactory.createTitledBorder(rb.getString("Description")));
+		addItem(pDesc, trainDescriptionTextField, 0, 0);
 		
-		// row 3
+		addItem(p1, pName, 0, 0);
+		addItem(p1, pDesc, 1, 0);
+		
+		// row 2a
+		JPanel p2 = new JPanel();
+		p2.setLayout(new GridBagLayout());
+		// row 3 right		
 	   	JPanel pdt = new JPanel();
 	   	pdt.setLayout(new GridBagLayout());
+		pdt.setBorder(BorderFactory.createTitledBorder(rb.getString("DepartTime")));
 		// build hour and minute menus
 		for (int i=0; i<24; i++){
 			if (i<10)
@@ -197,40 +202,51 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			else
 				minuteBox.addItem(Integer.toString(i));
 		}
-		addItem(pdt, textDepartTime, 0, 5);
+		addItem(pdt, space1, 0, 5);
 		addItem(pdt, hourBox, 1, 5);
-		addItemLeft(pdt, minuteBox, 2, 5);
-		pdt.setBorder(border);
+		addItem(pdt, space2, 2, 5);
+		addItem(pdt, minuteBox, 3, 5);
+		addItem(pdt, space3, 4, 5);
 
-		// row 4
+		// row 2b
 		// BUG! routeBox needs its own panel when resizing frame!
-	   	JPanel p2 = new JPanel();
-    	p2.setLayout(new GridBagLayout());
-		addItem(p2, textRoute, 0, 5);
-		addItem(p2, routeBox, 1, 5);
-		addItem(p2, editButton, 2, 5);
-		addItem(p2, textRouteStatus, 3, 5);
-		p2.setBorder(border);
+	   	JPanel pr = new JPanel();
+    	pr.setLayout(new GridBagLayout());
+    	pr.setBorder(BorderFactory.createTitledBorder(rb.getString("Route")));
+		addItem(pr, routeBox, 0, 5);
+		addItem(pr, space4, 1, 5);
+		addItem(pr, editButton, 2, 5);
+		addItem(pr, space5, 3, 5);
+		addItem(pr, textRouteStatus, 4, 5);
+		
+		addItem(p1, pr, 1, 1);
+		addItem(p1, pdt, 0, 1);
 
 		// row 5
 	   	locationPanelCheckBoxes.setLayout(new GridBagLayout());
+	   	locationPanelCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("Stops")));
 
 		// row 6
 	   	typeCarPanelCheckBoxes.setLayout(new GridBagLayout());
+	   	typeCarPanelCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesCar")));
+	   	
 		
 		// row 7
 		panelRoadNames.setLayout(new GridBagLayout());
+		panelRoadNames.setBorder(BorderFactory.createTitledBorder(rb.getString("RoadsTrain")));
 		roadGroup.add(roadNameAll);
 		roadGroup.add(roadNameInclude);
 		roadGroup.add(roadNameExclude);
 		
 		// row 8
 		typeEnginePanelCheckBoxes.setLayout(new GridBagLayout());
+		typeEnginePanelCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesEngine")));
 		
 		// row 9
 		JPanel trainReq = new JPanel();
     	trainReq.setLayout(new GridBagLayout());
-    	addItem (trainReq, textTrainRequires, 0, 1);
+    	trainReq.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainRequires")));
+  
     	for (int i=0; i<Setup.getEngineSize()+1; i++){
     		numEnginesBox.addItem(Integer.toString(i));
     	}
@@ -262,44 +278,30 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     	group.add(cabooseRadioButton);
     	group.add(fredRadioButton);
      	noneRadioButton.setSelected(true);
-     	trainReq.setBorder(border);
-
-		// row 11
-    	//JPanel p3 = new JPanel();
-    	//p3.setLayout(new GridBagLayout());
-    	//addItem (p3, textCars, 0, 1);
-    	
-		//p3.setBorder(border);
-		
-    	JPanel p4 = new JPanel();
-    	p4.setLayout(new GridBagLayout());
-		
-		// row 12
-		int y = 12;
-		//addItem (p4, space1, 0, ++y);
-    	
-		// row 13
-		addItem(p4, textComment, 0, ++y);
-		addItemWidth(p4, commentTextField, 3, 1, y);
+		 
+		// row 13 comment
+     	JPanel pC = new JPanel();
+    	pC.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
+    	pC.setLayout(new GridBagLayout());
+		addItem(pC, commentTextField, 1, 0);
 				
-		// row 14
-		addItem(p4, space2, 0, ++y);
-		// row 15
-		addItem(p4, deleteTrainButton, 0, ++y);
-		addItem (p4, resetButton, 1, y);
-		addItem(p4, addTrainButton, 2, y);
-		addItem(p4, saveTrainButton, 3, y);
+		// row 15 buttons
+	   	JPanel pB = new JPanel();
+    	pB.setLayout(new GridBagLayout());		
+		addItem(pB, deleteTrainButton, 0, 0);
+		addItem (pB, resetButton, 1, 0);
+		addItem(pB, addTrainButton, 2, 0);
+		addItem(pB, saveTrainButton, 3, 0);
 		
 		getContentPane().add(p1);
-		getContentPane().add(pdt);
 		getContentPane().add(p2);
 		getContentPane().add(locationsPane);
 		getContentPane().add(typeCarPane);
-		getContentPane().add(panelRoadNames);
+		getContentPane().add(roadPane);
 		getContentPane().add(typeEnginePane);
 		getContentPane().add(trainReq);
-		//getContentPane().add(p3);
-       	getContentPane().add(p4);
+		getContentPane().add(pC);
+       	getContentPane().add(pB);
 		
 		// setup buttons
        	addButtonAction(editButton);
@@ -487,10 +489,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		
     	JPanel p = new JPanel();
     	p.setLayout(new GridBagLayout());
-    	p.add(textRoad, 0);
-    	p.add(roadNameAll, 1);
-    	p.add(roadNameInclude, 2);
-    	p.add(roadNameExclude, 3);
+    	p.add(roadNameAll, 0);
+    	p.add(roadNameInclude, 1);
+    	p.add(roadNameExclude, 2);
     	GridBagConstraints gc = new GridBagConstraints();
     	gc.gridwidth = 6;
     	panelRoadNames.add(p, gc);
@@ -527,9 +528,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		} else {
 			roadNameAll.setSelected(true);
 		}
-
-		Border border = BorderFactory.createEtchedBorder();
-		panelRoadNames.setBorder(border);
 		panelRoadNames.revalidate();
 		packFrame();
 	}
@@ -734,11 +732,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	private void updateCarTypeCheckboxes(){
 		typeCarCheckBoxes.clear();
 		typeCarPanelCheckBoxes.removeAll();
-		addItemWidth(typeCarPanelCheckBoxes, textCarType, 3, 1, 0);
 		loadCarTypes();
 		enableCheckboxes(_train != null);
-		Border border = BorderFactory.createEtchedBorder();
-		typeCarPanelCheckBoxes.setBorder(border);
 		typeCarPanelCheckBoxes.revalidate();
 		repaint();
 	}
@@ -767,11 +762,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	private void updateEngineTypeCheckboxes(){
 		typeEngineCheckBoxes.clear();
 		typeEnginePanelCheckBoxes.removeAll();
-		addItemWidth(typeEnginePanelCheckBoxes, textEngineType, 3, 1, 0);
 		loadEngineTypes();
 		enableCheckboxes(_train != null);
-		Border border = BorderFactory.createEtchedBorder();
-		typeEnginePanelCheckBoxes.setBorder(border);
 		typeEnginePanelCheckBoxes.revalidate();
 		repaint();
 	}
@@ -863,7 +855,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		locationCheckBoxes.clear();
 		locationPanelCheckBoxes.removeAll();
 		int y = 0;		// vertical position in panel
-		addItemWidth(locationPanelCheckBoxes, textStops, 3, 0, y++);
 		Route route = null;
 		if (_train != null)
 			route = _train.getRoute();
@@ -901,8 +892,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				}
 			}
 		}
-		Border border = BorderFactory.createEtchedBorder();
-		locationPanelCheckBoxes.setBorder(border);
 		locationPanelCheckBoxes.revalidate();
 		packFrame();
 	}
@@ -926,8 +915,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
  		pack();
 		if (manager.getTrainEditFrameSize()!= null){
 			setSize(manager.getTrainEditFrameSize());
-		} else if (getHeight() < 700)
-			setSize(getWidth(), getHeight()+ 50);
+		}
+		//} else if (getHeight() < 700)
+		//	setSize(getWidth(), getHeight()+ 50);
 		setVisible(true);
     }
 	

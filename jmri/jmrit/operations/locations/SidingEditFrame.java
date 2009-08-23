@@ -1,12 +1,12 @@
 // SidingEditFrame.java
 
 package jmri.jmrit.operations.locations;
-import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of a location sidings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class SidingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -42,22 +42,19 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		_type = Track.SIDING;
 		
 		// setup the optional panel with schedule stuff
-		// guarantee space for textSchError messages
 		panelSchedule.setLayout(new GridBagLayout());
-		panelSchedule.setPreferredSize(new Dimension(500, 40));
-		addItem(panelSchedule, textSchedule, 0, 0);
-		addItem(panelSchedule, comboBoxSchedules, 1, 0);
-		addItem(panelSchedule, editScheduleButton, 2, 0);
-		addItem(panelSchedule, textSchError, 3, 0);
-		panelSchedule.setBorder(border);
-
+		panelSchedule.setBorder(BorderFactory.createTitledBorder(rb.getString("DeliverySchedule")));
+		addItem(panelSchedule, comboBoxSchedules, 0, 0);
+		addItem(panelSchedule, editScheduleButton, 1, 0);
+		addItem(panelSchedule, textSchError, 2, 0);
+		
 		super.initComponents(location, track);
 		
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Sidings", true);
 		
 		// override text strings for tracks
-		textTrain.setText(rb.getString("TrainSiding"));
-		textType.setText(rb.getString("TypesSiding"));
+		panelTrainDir.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainSiding")));
+		panelCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesSiding")));
 		deleteTrackButton.setText(rb.getString("DeleteSiding"));
 		addTrackButton.setText(rb.getString("AddSiding"));
 		saveTrackButton.setText(rb.getString("SaveSiding"));

@@ -39,6 +39,9 @@ public class Control {
 	// Track name maximum string length
 	public static final int MAX_LEN_STRING_TRACK_NAME = 25;
 	
+	// Track length maximum string length
+	public static final int MAX_LEN_STRING_TRACK_LENGTH_NAME = 5;
+	
 	// Car and Engine length maximum string length
 	public static final int MAX_LEN_STRING_LENGTH_NAME = 4;
 	

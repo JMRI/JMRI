@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
@@ -384,37 +384,39 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public void options (org.jdom.Element values) {
         if (log.isDebugEnabled()) log.debug("ctor from element "+values);
         Element e = values.getChild("trainOptions");
+        if (e != null){
         org.jdom.Attribute a;
         if ((a = e.getAttribute("sortBy")) != null)
         	_sortBy = a.getValue();
- 		if ((a = e.getAttribute("buildReport")) != null)
-			_buildReport = a.getValue().equals("true");
- 		if ((a = e.getAttribute("printPreview")) != null)
-			_printPreview = a.getValue().equals("true");
+        if ((a = e.getAttribute("buildReport")) != null)
+        	_buildReport = a.getValue().equals("true");
+        if ((a = e.getAttribute("printPreview")) != null)
+        	_printPreview = a.getValue().equals("true");
         int x = 0;
         int y = 0;
         int height = Control.panelHeight;
         int width = Control.panelWidth;
         try {
-            x = e.getAttribute("x").getIntValue();
-            y = e.getAttribute("y").getIntValue();
-            height = e.getAttribute("height").getIntValue();
-            width = e.getAttribute("width").getIntValue();
-            _frameDimension = new Dimension(width, height);
-            _framePosition = new Point(x,y);
+        	x = e.getAttribute("x").getIntValue();
+        	y = e.getAttribute("y").getIntValue();
+        	height = e.getAttribute("height").getIntValue();
+        	width = e.getAttribute("width").getIntValue();
+        	_frameDimension = new Dimension(width, height);
+        	_framePosition = new Point(x,y);
         } catch ( org.jdom.DataConversionException ee) {
-            log.debug("Did not find train frame attributes");
+        	log.debug("Did not find train frame attributes");
         } catch ( NullPointerException ne) {
         	log.debug("Did not find train frame attributes");
+        }
         }
         // get Train Edit attributes
         e = values.getChild("trainEditOptions");
         if (e != null){
             try {
-                x = e.getAttribute("x").getIntValue();
-                y = e.getAttribute("y").getIntValue();
-                height = e.getAttribute("height").getIntValue();
-                width = e.getAttribute("width").getIntValue();
+                int x = e.getAttribute("x").getIntValue();
+                int y = e.getAttribute("y").getIntValue();
+                int height = e.getAttribute("height").getIntValue();
+                int width = e.getAttribute("width").getIntValue();
                 _editFrameDimension = new Dimension(width, height);
                 _editFramePosition = new Point(x,y);
             } catch ( org.jdom.DataConversionException ee) {
