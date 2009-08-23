@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -38,9 +38,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
 	Route _route = null;
 	RouteLocation _routeLocation = null;
-
-	// labels
-	JLabel textComment = new JLabel();
 
 	// major buttons
 	JButton addLocationButton = new JButton();
@@ -59,11 +56,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	// text field
 	JTextField routeNameTextField = new JTextField(20);
 	JTextField commentTextField = new JTextField(35);
-
-	// for padding out panel
-	JLabel space1 = new JLabel();
-	JLabel space2 = new JLabel();
-	JLabel space3 = new JLabel();
 	
 	// combo boxes
 	JComboBox locationBox = LocationManager.instance().getComboBox();
@@ -83,13 +75,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		// load managers
 		manager = RouteManager.instance();
 		managerXml = RouteManagerXml.instance();
-		
-		textComment.setText(rb.getString("Comment"));
-		textComment.setVisible(true);
-		space1.setText("     ");
-		space1.setVisible(true);
-		space2.setText("     ");
-		space2.setVisible(true);
 
 		deleteRouteButton.setText(rb.getString("DeleteRoute"));
 		deleteRouteButton.setVisible(true);
