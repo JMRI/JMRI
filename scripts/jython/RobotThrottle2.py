@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -129,6 +129,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     speedPane = None
     rosterInstance = None
     oldLocoAddress = None
+    didWeMoveCounter = 0
 
     def init(self):
         self.msgText("Getting throttle - ") #add text to scroll field
@@ -148,7 +149,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         
     def handle(self):
         #self.msgText("handle begin:.\n")
-        self.didWeMove(None)
+        #self.didWeMove(None)
         #self.msgText("handle done\n")
         self.waitMsec(5000)
         return 0 #continue if 1, run once if 0
@@ -183,6 +184,28 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             else :
                 return to.getUserName()
 
+    # Isolate the callback handling from the didWeMove processing
+    #   this makes dealing with multiple events simpler
+    def callBackForDidWeMove(self, event) :
+        #self.msgText("callBackForDidWeMove...start routine...counter = " + self.didWeMoveCounter.toString() + " ...incrementing counter\n")
+        self.didWeMoveCounter = self.didWeMoveCounter + 1
+        if (self.didWeMoveCounter == 1) :
+           #self.msgText("callBackForDidWeMove - counter = 1 ... calling didWeMoveCounterCheck routine\n")
+           self.didWeMoveCounterCheck(None)
+        return
+        
+    # This handles tracking how many overlapping events happened
+    #   and insures we run the didWeMove the right number of times
+    def didWeMoveCounterCheck(self, event) :
+        #self.msgText("didWeMoveCounterCheck: start of routine...counter = " + self.didWeMoveCounter.toString() + "\n")
+        while (self.didWeMoveCounter > 0) :
+             #self.msgText("didWeMoveCounterCheck: non-zero counter - calling didWeMove\n")
+             self.didWeMove(None)
+             self.didWeMoveCounter = self.didWeMoveCounter - 1
+             self.msgText("didWeMoveCounterCheck: decremented counter down to " + self.didWeMoveCounter.toString() + "\n")
+        #self.msgText("didWeMoveCounterCheck: end of routine\n")
+        return
+ 
     # figure out if we moved and where
     def didWeMove(self, event) :
         if (self.isRunning == False) :
@@ -285,7 +308,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.isInList(bk, self.listenerBlocks) == False) :
             # isn't in list, setup listener and add to list
             bl = self.BlockListener()
-            bl.setCallBack(self.didWeMove)
+            bl.setCallBack(self.callBackForDidWeMove)
             bk.addPropertyChangeListener(bl)
             self.listenerBlocks.append(bk)
             self.listenerBlockListeners.append(bl)
@@ -296,7 +319,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.isInList(sig, self.listenerSignals) == False) :
             # isn't in list, setup listener and add to list
             sl = self.SignalListener()
-            sl.setCallBack(self.didWeMove)
+            sl.setCallBack(self.callBackForDidWeMove)
             sig.addPropertyChangeListener(sl)
             self.listenerSignals.append(sig)
             self.listenerSignalListeners.append(sl)
@@ -384,24 +407,28 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     # set speed from signal appearance
     def speedFromAppearance(self, sig) :
         rep = ""
-        if (sig.getAppearance() == RED) :
-            rep = rep + "doRed "
-            self.doSpeedRed()
-        if (sig.getAppearance() == FLASHRED) :
-            rep = rep + "doRedFlash "
-            self.doSpeedRedFlash()
-        if (sig.getAppearance() == YELLOW) :
-            rep = rep + "doYellow "
-            self.doSpeedYellow()
-        if (sig.getAppearance() == FLASHYELLOW) :
-            rep = rep + "doYellowFlash "
-            self.doSpeedYellowFlash()
-        if (sig.getAppearance() == GREEN) :
-            rep = rep + "doGreen "
-            self.doSpeedGreen()
-        if (sig.getAppearance() == FLASHGREEN) :
+        sigState = sig.getAppearance()
+        if (sigState == FLASHGREEN) :
             rep = rep + "doGreenFlash "
             self.doSpeedGreenFlash()
+        elif (sigState == GREEN) :
+            rep = rep + "doGreen "
+            self.doSpeedGreen()
+        elif (sigState == FLASHYELLOW) :
+            rep = rep + "doYellowFlash "
+            self.doSpeedYellowFlash()
+        elif (sigState == YELLOW) :
+            rep = rep + "doYellow "
+            self.doSpeedYellow()
+        elif (sigState == FLASHRED) :
+            rep = rep + "doRedFlash "
+            self.doSpeedRedFlash()
+        elif (sigState == RED) :
+            rep = rep + "doRed "
+            self.doSpeedRed()
+        else :
+            rep = rep + "unknown "
+            self.doHalt()
         #self.msgText("Found signal " + self.giveSignalName(sig) + " displaying: " + self.cvtAppearanceText(sig) + " so we will: " + rep + "\n")
         return
         
@@ -412,19 +439,20 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             rep = rep + "Held "
         if (sig.getLit()) :
             rep = rep + "Lit "
-        if (sig.getAppearance() == RED) :
+        sigState = sig.getAppearance()
+        if (sigState == RED) :
             rep = rep + "Red "
-        elif (sig.getAppearance() == FLASHRED) :
+        elif (sigState == FLASHRED) :
             rep = rep + "Flashing Red "
-        elif (sig.getAppearance() == YELLOW) :
+        elif (sigState == YELLOW) :
             rep = rep + "Yellow "
-        elif (sig.getAppearance() == FLASHYELLOW) :
+        elif (sigState == FLASHYELLOW) :
             rep = rep + "Flashing Yellow "
-        elif (sig.getAppearance() == GREEN) :
+        elif (sigState == GREEN) :
             rep = rep + "Green "
-        elif (sig.getAppearance() == FLASHGREEN) :
+        elif (sigState == FLASHGREEN) :
             rep = rep + "Flashing Green "
-        elif (sig.getAppearance() == DARK) :
+        elif (sigState == DARK) :
             rep = rep + "Dark "
         else :
             rep = rep + "Unknown "
@@ -435,17 +463,18 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     def cvtAppearanceIcon(self, sig) :
         rep = self.darkSignalIcon
         if (sig.getLit()) :
-            if (sig.getAppearance() == RED) :
+            sigState = sig.getAppearance()
+            if (sigState == RED) :
                 rep = self.redSignalIcon
-            elif (sig.getAppearance() == FLASHRED) :
+            elif (sigState == FLASHRED) :
                 rep = self.redFlashSignalIcon
-            elif (sig.getAppearance() == YELLOW) :
+            elif (sigState == YELLOW) :
                 rep = self.yellowSignalIcon
-            elif (sig.getAppearance() == FLASHYELLOW) :
+            elif (sigState == FLASHYELLOW) :
                 rep = self.yellowFlashSignalIcon
-            elif (sig.getAppearance() == GREEN) :
+            elif (sigState == GREEN) :
                 rep = self.greenSignalIcon
-            elif (sig.getAppearance() == FLASHGREEN) :
+            elif (sigState == FLASHGREEN) :
                 rep = self.greenFlashSignalIcon
             else :
                 rep = self.unknownSignalIcon
@@ -764,7 +793,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 self.haltButton.setEnabled(True)
                 self.startButton.setEnabled(False)
                 self.isRunning = True
-                self.didWeMove(None)
+                self.didWeMoveCounter = 1
+                self.didWeMoveCounterCheck(None)
                 if (self.isRunning) :
                     self.msgText("Starting current:" + self.giveBlockName(self.currentBlock) + "\n")
         self.msgText("whenStartButtonClicked, done\n")     # add text
@@ -987,7 +1017,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.testButton = javax.swing.JButton("Test")
         self.testButton.setEnabled(True)           # button starts as grayed out (disabled)
         self.testButton.setToolTipText("run the didWeMove test")
-        self.testButton.actionPerformed = self.didWeMove
+        self.testButton.actionPerformed = self.callBackForDidWeMove
         
         self.saveToRosterButton = javax.swing.JButton("Save Settings")
         self.saveToRosterButton.setEnabled(True)           
