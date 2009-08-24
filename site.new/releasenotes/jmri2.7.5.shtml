@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.5.shtml,v 1.8 2009-08-18 09:09:41 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.5.shtml,v 1.9 2009-08-24 09:30:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -168,6 +168,14 @@ Pete Cressman fixed a bug in the memory compare in Logix
 <p>
 Dan Boudreau fixed a bug with rotating square icons.
 
+<p>
+Ken Cameron updated his RobotThrottle2 and DebounceSensor scripts.
+
+<p>
+Pete Cressman added rotationa and scaling of icons to the panel editor
+
+<p>
+Ken Cameron fixed the problem that would cause startup errors if you configure a clock (analog, digital or Nixie) to open at startup.
 
 
 <!--#include virtual="/Footer" -->
