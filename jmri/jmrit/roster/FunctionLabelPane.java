@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
  * Display and edit the function labels in a RosterEntry
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
     RosterEntry re;
@@ -41,6 +41,8 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         cL.ipadx = 3;
         cL.anchor = GridBagConstraints.NORTHWEST;
         cL.insets = new Insets (0,0,0,15);
+        cL.fill = GridBagConstraints.HORIZONTAL;
+        cL.weighty = 1.0;
         int nextx = 0;
         
         add(new JLabel("fn"), cL);
