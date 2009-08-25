@@ -8,10 +8,12 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
 
 /**
  * Provide tools for reading, writing and accessing
- * Digitrax SPJ files
+ * Digitrax SPJ files.
+ *<p>
+ * Four-byte quantities in SPJ files are little-endian.
  *
- * @author		Bob Jacobsen  Copyright (C) 2006
- * @version             $Revision: 1.12 $
+ * @author		Bob Jacobsen  Copyright (C) 2006, 2009
+ * @version             $Revision: 1.13 $
  */
 
 public class SpjFile {
@@ -554,7 +556,7 @@ public class SpjFile {
         }
 
         /**
-         * Copy a 4-byte integer to byte buffer, handling endian-ness of SPJ files
+         * Copy a 4-byte integer to byte buffer, handling little-endian-ness of SPJ files
          */
         private int copyInt4(byte[] buffer, int index, int i) {
             buffer[index++] = (byte)(i&0xFF);
@@ -565,7 +567,7 @@ public class SpjFile {
         }
 
         /**
-         * Read a 2-byte integer, handling endian-ness of SPJ files
+         * Read a 2-byte integer, handling little-endian-ness of SPJ files
          */
         @SuppressWarnings("unused")
 		private int readInt2(InputStream s) throws java.io.IOException {
