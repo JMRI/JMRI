@@ -27,7 +27,7 @@ import jmri.managers.AbstractAudioManager;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DefaultAudioManager extends AbstractAudioManager {
 
@@ -123,7 +123,8 @@ public class DefaultAudioManager extends AbstractAudioManager {
                     }
                 };
             }
-            InstanceManager.shutDownManagerInstance().register(audioShutDownTask);
+            if (InstanceManager.shutDownManagerInstance() !=null)
+                InstanceManager.shutDownManagerInstance().register(audioShutDownTask);
 
             _initialised = true;
             if (log.isDebugEnabled()) log.debug("Initialised AudioFactory type: " + activeAudioFactory.getClass().getSimpleName());
