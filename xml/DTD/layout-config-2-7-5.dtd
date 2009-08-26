@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-5.dtd,v 1.1 2009-07-25 02:28:54 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-7-5.dtd,v 1.2 2009-08-26 21:34:18 matthewharris Exp $ -->
 
 <!-- This DTD is part of version 2.7.5 development.  Do not modify it       -->
 <!-- after version 2.7.5 is released.  For more information,                -->
@@ -19,7 +19,7 @@
 <!-- for more details.                                                      -->
 
 <!ELEMENT layout-config (connection | gui | programmer | roster | perform |
-			preferences | turnouts | sensors | lights | blocks | signals | routes |
+			preferences | audio | turnouts | sensors | lights | blocks | signals | routes |
 			securityelements | aspectgenerator | sections |
 			paneleditor | LayoutEditor |
 			signalheads | conditionals | logixs | application | signalelements | reporters |
@@ -157,6 +157,66 @@
     <!ATTLIST memory systemName	CDATA #REQUIRED>  <!-- defines system type -->
     <!ATTLIST memory userName	CDATA #IMPLIED>
     <!ATTLIST memory value		CDATA #IMPLIED>
+
+<!ELEMENT audio (audiolistener, audiobuffer*, audiosource*)>
+  <!ATTLIST audio class                 CDATA #REQUIRED>
+
+  <!ELEMENT audiolistener (position, velocity, orientation, gain, metersperunit, comment?) >
+    <!ATTLIST audiolistener systemName  CDATA #REQUIRED>
+    <!ATTLIST audiolistener userName    CDATA #IMPLIED>
+
+  <!ELEMENT audiobuffer (url, looppoint, comment?) >
+    <!ATTLIST audiobuffer systemName    CDATA #REQUIRED>
+    <!ATTLIST audiobuffer userName      CDATA #IMPLIED>
+
+  <!ELEMENT audiosource (position, velocity, assignedbuffer, gain, pitch, referencedistance, loops, fadetimes, comment?) >
+    <!ATTLIST audiosource systemName    CDATA #REQUIRED>
+    <!ATTLIST audiosource userName      CDATA #IMPLIED>
+    <!ATTLIST audiosource autoStart     (yes|no) "no">
+
+    <!ELEMENT position EMPTY>
+      <!ATTLIST position x              CDATA #REQUIRED>
+      <!ATTLIST position y              CDATA #REQUIRED>
+      <!ATTLIST position z              CDATA #REQUIRED>
+
+    <!ELEMENT velocity EMPTY>
+      <!ATTLIST velocity x              CDATA #REQUIRED>
+      <!ATTLIST velocity y              CDATA #REQUIRED>
+      <!ATTLIST velocity z              CDATA #REQUIRED>
+
+    <!ELEMENT orientation EMPTY>
+      <!ATTLIST orientation atX         CDATA #REQUIRED>
+      <!ATTLIST orientation atY         CDATA #REQUIRED>
+      <!ATTLIST orientation atZ         CDATA #REQUIRED>
+      <!ATTLIST orientation upX         CDATA #REQUIRED>
+      <!ATTLIST orientation upY         CDATA #REQUIRED>
+      <!ATTLIST orientation upZ         CDATA #REQUIRED>
+
+    <!ELEMENT url (#PCDATA)>
+
+    <!ELEMENT looppoint EMPTY>
+      <!ATTLIST looppoint start         CDATA #REQUIRED>
+      <!ATTLIST looppoint end           CDATA #REQUIRED>
+    
+    <!ELEMENT assignedbuffer (#PCDATA)>
+
+    <!ELEMENT gain (#PCDATA)>
+
+    <!ELEMENT metersperunit (#PCDATA)>
+
+    <!ELEMENT pitch (#PCDATA)>
+
+    <!ELEMENT distances EMPTY>
+      <!ATTLIST distances ref           CDATA #REQUIRED>
+      <!ATTLIST distances max           CDATA #REQUIRED>
+
+    <!ELEMENT loops EMPTY>
+      <!ATTLIST loops min               CDATA #REQUIRED>
+      <!ATTLIST loops max               CDATA #REQUIRED>
+
+    <!ELEMENT fadetimes EMPTY>
+      <!ATTLIST fadetimes in            CDATA #REQUIRED>
+      <!ATTLIST fadetimes out           CDATA #REQUIRED>
 
 <!ELEMENT timebase EMPTY>
   <!ATTLIST timebase class		CDATA #REQUIRED>
