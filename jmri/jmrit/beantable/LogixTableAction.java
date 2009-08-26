@@ -47,6 +47,7 @@ import javax.swing.table.*;
 
 //import java.util.List;
 
+import jmri.Audio;
 import jmri.util.JmriJFrame;
 
 /**
@@ -70,7 +71,8 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.45 $
+ * @author Matthew Harris  copyright (c) 2009
+ * @version $Revision: 1.46 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -399,6 +401,7 @@ public class LogixTableAction extends AbstractTableAction {
 	JComboBox _actionSignalSetBox;
 	JComboBox _actionLightSetBox;
 	JComboBox _actionLockSetBox;
+        JComboBox _actionAudioSetBox;
 	JButton _actionSetButton;
     JPanel _optionPanel;
     JPanel _namePanel;
@@ -409,6 +412,7 @@ public class LogixTableAction extends AbstractTableAction {
     JPanel _lockPanel;
     JPanel _setPanel;
     JPanel _textPanel;
+    JPanel _audioPanel;
 
 	// Current Variable Information
     private ArrayList <ConditionalVariable> _variableList;
@@ -2124,6 +2128,20 @@ public class LogixTableAction extends AbstractTableAction {
         _lockPanel.setVisible(false);
         panel1.add(_lockPanel);
 
+        _actionAudioSetBox = new JComboBox(new String[] {
+                rbx.getString("AudioSourcePlay"),
+                rbx.getString("AudioSourceStop"),
+                rbx.getString("AudioSourcePlayToggle"),
+                rbx.getString("AudioSourcePause"),
+                rbx.getString("AudioSourceResume"),
+                rbx.getString("AudioSourcePauseToggle"),
+                rbx.getString("AudioSourceRewind"),
+                rbx.getString("AudioSourceFadeIn"),
+                rbx.getString("AudioSourceFadeOut") });
+        _audioPanel = makeEditPanel(_actionAudioSetBox, "LabelActionAudio", "SetHintAudio");
+        _audioPanel.setVisible(false);
+        panel1.add(_audioPanel);
+
         panel1.add(Box.createHorizontalGlue());
         topPanel.add(panel1);
         topPanel.add(Box.createVerticalStrut(5));
@@ -2528,6 +2546,36 @@ public class LogixTableAction extends AbstractTableAction {
                 _actionStringField.setText(formatTime(time / 60, time - ((time / 60) * 60)));
                 _actionNameField.setText("");
                 break;
+            case Conditional.ACTION_CONTROL_AUDIO:
+                switch (_curAction.getActionData()) {
+                    case Audio.CMD_PLAY:
+                        _actionAudioSetBox.setSelectedIndex(0);
+                        break;
+                    case Audio.CMD_STOP:
+                        _actionAudioSetBox.setSelectedIndex(1);
+                        break;
+                    case Audio.CMD_PLAY_TOGGLE:
+                        _actionAudioSetBox.setSelectedIndex(2);
+                        break;
+                    case Audio.CMD_PAUSE:
+                        _actionAudioSetBox.setSelectedIndex(3);
+                        break;
+                    case Audio.CMD_RESUME:
+                        _actionAudioSetBox.setSelectedIndex(4);
+                        break;
+                    case Audio.CMD_PAUSE_TOGGLE:
+                        _actionAudioSetBox.setSelectedIndex(5);
+                        break;
+                    case Audio.CMD_REWIND:
+                        _actionAudioSetBox.setSelectedIndex(6);
+                        break;
+                    case Audio.CMD_FADE_IN:
+                        _actionAudioSetBox.setSelectedIndex(7);
+                        break;
+                    case Audio.CMD_FADE_OUT:
+                        _actionAudioSetBox.setSelectedIndex(8);
+                        break;
+                }
         }
 		actionTypeChanged(false);
         // set type after call to actionTypeChanged
@@ -2615,6 +2663,7 @@ public class LogixTableAction extends AbstractTableAction {
         _lockPanel.setVisible(false);
         _textPanel.setVisible(false);
         _namePanel.setVisible(false);
+        _audioPanel.setVisible(false);
         if (type == Conditional.ACTION_NONE) {
             _optionPanel.setVisible(false);
         }
@@ -2701,6 +2750,11 @@ public class LogixTableAction extends AbstractTableAction {
                 _textPanel.setToolTipText(rbx.getString("SetHintSound"));
                 _textPanel.setVisible(true);
                 _setPanel.setVisible(true);
+                break;
+            case Conditional.ACTION_CONTROL_AUDIO:
+                _audioPanel.setVisible(true);
+                _namePanel.setToolTipText(rbx.getString("NameHintAudio"));
+                _namePanel.setVisible(true);
                 break;
             case Conditional.ACTION_RUN_SCRIPT:
                 _textPanel.setToolTipText(rbx.getString("SetHintScript"));
@@ -3153,6 +3207,43 @@ public class LogixTableAction extends AbstractTableAction {
             case Conditional.ACTION_START_FAST_CLOCK:
             case Conditional.ACTION_STOP_FAST_CLOCK:
                 break;
+            case Conditional.ACTION_CONTROL_AUDIO:
+                name = validateAudioReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _actionNameField.setText(name);
+                _curAction.setDeviceName(name);
+                switch (_actionAudioSetBox.getSelectedIndex()) {
+                    case 0:
+                        _curAction.setActionData(Audio.CMD_PLAY);
+                        break;
+                    case 1:
+                        _curAction.setActionData(Audio.CMD_STOP);
+                        break;
+                    case 2:
+                        _curAction.setActionData(Audio.CMD_PLAY_TOGGLE);
+                        break;
+                    case 3:
+                        _curAction.setActionData(Audio.CMD_PAUSE);
+                        break;
+                    case 4:
+                        _curAction.setActionData(Audio.CMD_RESUME);
+                        break;
+                    case 5:
+                        _curAction.setActionData(Audio.CMD_PAUSE_TOGGLE);
+                        break;
+                    case 6:
+                        _curAction.setActionData(Audio.CMD_REWIND);
+                        break;
+                    case 7:
+                        _curAction.setActionData(Audio.CMD_FADE_IN);
+                        break;
+                    case 8:
+                        _curAction.setActionData(Audio.CMD_FADE_OUT);
+                        break;
+                }
+                break;
 		}
 		return (true);
 	}
@@ -3442,6 +3533,24 @@ public class LogixTableAction extends AbstractTableAction {
         return name;
     }
 
+    String validateAudioReference(String name) {
+        Audio a = null;
+        name = name.trim();
+        if ((name != null) && (name != "")) {
+            a = InstanceManager.audioManagerInstance().getByUserName(name);
+            if (a != null) {
+                return name;
+            }
+            // check memory system name
+            name = name.toUpperCase().trim();
+            a = InstanceManager.audioManagerInstance().getBySystemName(name);
+        }
+        if (a == null || a.getSubType()!=Audio.SOURCE ) {
+            messageInvalidAudioName(name);
+            return null;
+        }
+        return name;
+    }
 
     /**
     * get Coditional instance.  Upshifts text of string if it is a system name
@@ -3824,6 +3933,13 @@ public class LogixTableAction extends AbstractTableAction {
 	void messageDuplicateConditionalUserName(String svName) {
 		messageGeneralInvalidBean("Error30", svName, false);
 	}
+
+        /**
+         * Sends an invalid Audio name error message for Edit Conditional window
+         */
+        void messageInvalidAudioName(String name) {
+                messageGeneralInvalidBean("Error49", name, true);
+        }
 
 	// *********** Special Table Models ********************
 

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import jmri.managers.AbstractSignalHeadManager;
 import jmri.jmrit.catalog.DefaultCatalogTreeManager;
+import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.managers.DefaultConditionalManager;
 import jmri.managers.DefaultLogixManager;
 import jmri.managers.DefaultMemoryManager;
@@ -38,7 +39,8 @@ import jmri.managers.DefaultRouteManager;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.47 $
+ * @author                      Matthew Harris copyright (c) 2009
+ * @version			$Revision: 1.48 $
  */
 public class InstanceManager {
 
@@ -197,6 +199,11 @@ public class InstanceManager {
     static public MemoryManager memoryManagerInstance()  { 
     	if (instance().memoryManager == null) instance().memoryManager = DefaultMemoryManager.instance();
     	return instance().memoryManager; 
+    }
+
+    static public AudioManager audioManagerInstance() {
+        if (instance().audioManager == null) instance().audioManager = DefaultAudioManager.instance();
+        return instance().audioManager;
     }
 
     static private InstanceManager instance() {
@@ -370,6 +377,8 @@ public class InstanceManager {
     }
 
     private CatalogTreeManager catalogTreeManager = null;
+
+    private AudioManager audioManager = null;
 
 	private MemoryManager memoryManager = null;
 

@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import java.beans.PropertyChangeEvent;
 import javax.swing.Timer;
+import jmri.jmrit.audio.AudioSource;
 
  /**
  * Class providing the basic logic of the Conditional interface.
@@ -26,7 +27,8 @@ import javax.swing.Timer;
  *
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
- * @version     $Revision: 1.3 $
+ * @author      Matthew Harris copyright (c) 2009
+ * @version     $Revision: 1.4 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -856,6 +858,41 @@ public class DefaultConditional extends AbstractNamedBean
 						InstanceManager.timebaseInstance().setRun(false);
                         actionCount++;
 						break;
+                                        case Conditional.ACTION_CONTROL_AUDIO:
+                                                Audio audio = InstanceManager.audioManagerInstance().getAudio(action.getDeviceName());
+                                                if (audio.getSubType()==Audio.SOURCE) {
+                                                    AudioSource audioSource = (AudioSource) audio;
+                                                    switch (action.getActionData()) {
+                                                        case Audio.CMD_PLAY:
+                                                            audioSource.play();
+                                                            break;
+                                                        case Audio.CMD_STOP:
+                                                            audioSource.stop();
+                                                            break;
+                                                        case Audio.CMD_PLAY_TOGGLE:
+                                                            audioSource.togglePlay();
+                                                            break;
+                                                        case Audio.CMD_PAUSE:
+                                                            audioSource.pause();
+                                                            break;
+                                                        case Audio.CMD_RESUME:
+                                                            audioSource.resume();
+                                                            break;
+                                                        case Audio.CMD_PAUSE_TOGGLE:
+                                                            audioSource.togglePause();
+                                                            break;
+                                                        case Audio.CMD_REWIND:
+                                                            audioSource.rewind();
+                                                            break;
+                                                        case Audio.CMD_FADE_IN:
+                                                            audioSource.fadeIn();
+                                                            break;
+                                                        case Audio.CMD_FADE_OUT:
+                                                            audioSource.fadeOut();
+                                                            break;
+                                                    }
+                                                }
+                                                break;
 				}
 			}
 		}

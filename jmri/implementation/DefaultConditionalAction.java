@@ -18,7 +18,8 @@ import javax.swing.Timer;
  * break that, which will simplify things.
  *
  * @author Pete Cressman Copyright (C) 2009
- * @version $Revision: 1.6 $
+ * @author Matthew Harris copyright (c) 2009
+ * @version $Revision: 1.7 $
  */
 
 
@@ -272,6 +273,8 @@ public class DefaultConditionalAction implements ConditionalAction {
     			return (rbx.getString("ActionSetLightIntensity"));
     		case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
     			return (rbx.getString("ActionSetLightTransitionTime"));
+                case Conditional.ACTION_CONTROL_AUDIO:
+                        return (rbx.getString("ActionControlAudio"));
 		}
         log.warn("Unexpected parameter to getTypeString("+t+")");
 		return ("");
@@ -378,6 +381,33 @@ public class DefaultConditionalAction implements ConditionalAction {
         else if (str.equals(rbx.getString("AppearanceFlashGreen"))) {
             return SignalHead.FLASHGREEN;
         }
+        else if (str.equals(rbx.getString("AudioSourcePlay"))) {
+            return Audio.CMD_PLAY;
+        }
+        else if (str.equals(rbx.getString("AudioSourceStop"))) {
+            return Audio.CMD_STOP;
+        }
+        else if (str.equals(rbx.getString("AudioSourcePlayToggle"))) {
+            return Audio.CMD_PLAY_TOGGLE;
+        }
+        else if (str.equals(rbx.getString("AudioSourcePause"))) {
+            return Audio.CMD_PAUSE;
+        }
+        else if (str.equals(rbx.getString("AudioSourceResume"))) {
+            return Audio.CMD_RESUME;
+        }
+        else if (str.equals(rbx.getString("AudioSourcePauseToggle"))) {
+            return Audio.CMD_PAUSE_TOGGLE;
+        }
+        else if (str.equals(rbx.getString("AudioSourceRewind"))) {
+            return Audio.CMD_REWIND;
+        }
+        else if (str.equals(rbx.getString("AudioSourceFadeIn"))) {
+            return Audio.CMD_FADE_IN;
+        }
+        else if (str.equals(rbx.getString("AudioSourceFadeOut"))) {
+            return Audio.CMD_FADE_OUT;
+        }
         // empty strings can occur frequently with types that have no integer data
         if (str.length() > 0)
         {
@@ -422,6 +452,28 @@ public class DefaultConditionalAction implements ConditionalAction {
                     return (rbx.getString("TurnoutLock"));
                 } else
                     return (rbx.getString("Toggle"));
+            case Conditional.ACTION_CONTROL_AUDIO:
+                switch (data) {
+                    case Audio.CMD_PLAY:
+                        return (rbx.getString("AudioSourcePlay"));
+                    case Audio.CMD_STOP:
+                        return (rbx.getString("AudioSourceStop"));
+                    case Audio.CMD_PLAY_TOGGLE:
+                        return (rbx.getString("AudioSourcePlayToggle"));
+                    case Audio.CMD_PAUSE:
+                        return (rbx.getString("AudioSourcePause"));
+                    case Audio.CMD_RESUME:
+                        return (rbx.getString("AudioSourceResume"));
+                    case Audio.CMD_PAUSE_TOGGLE:
+                        return (rbx.getString("AudioSourcePauseToggle"));
+                    case Audio.CMD_REWIND:
+                        return (rbx.getString("AudioSourceRewind"));
+                    case Audio.CMD_FADE_IN:
+                        return (rbx.getString("AudioSourceFadeIn"));
+                    case Audio.CMD_FADE_OUT:
+                        return (rbx.getString("AudioSourceFadeOut"));
+                }
+                
 		}
 //        log.warn("Unexpected parameters to getActionDataString("+t+", "+data+
 //                  ")  type= "+getTypeString(t));
@@ -456,6 +508,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 case Conditional.ACTION_RESET_DELAYED_TURNOUT:
                 case Conditional.ACTION_DELAYED_TURNOUT:
                 case Conditional.ACTION_DELAYED_SENSOR:
+                case Conditional.ACTION_CONTROL_AUDIO:
                     str = str + ", " + _deviceName + " " + rbx.getString("to")
                           + " " + getActionDataString();
                     break;

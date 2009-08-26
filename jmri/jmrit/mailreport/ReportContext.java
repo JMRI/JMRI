@@ -12,9 +12,9 @@ import apps.Apps;
  * Provide the JMRI context info 
  *
  * @author	Bob Jacobsen    Copyright (C) 2007, 2009
- * @author  Matt Harris Copyright (C) 2008
+ * @author  Matt Harris Copyright (C) 2008, 2009
  *
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class ReportContext {
 
@@ -42,6 +42,9 @@ public class ReportContext {
 
         //String operations = jmri.jmrit.operations.setup.OperationsXml.getFileLocation();
         //addString("Operations files location: "+operations+"  ");
+
+        String audio = jmri.InstanceManager.audioManagerInstance().getActiveAudioFactory().toString();
+        addString("Audio factory type: "+audio+"  ");
 
         addProperty("java.vendor");
         addProperty("java.home");
@@ -134,9 +137,11 @@ public class ReportContext {
                     GraphicsDevice gd = gs[j];
                     GraphicsConfiguration[] gc = gd.getConfigurations();
                     for (int i=0; i < gc.length; i++) {
-                        addString("bounds["+0+"] = "+gc[i].getBounds());
+                        addString("bounds["+i+"] = "+gc[i].getBounds());
                         // virtualBounds = virtualBounds.union(gc[i].getBounds());
                     }
+                    addString("Device: " + gd.getIDstring() + " bounds = " + gd.getDefaultConfiguration().getBounds() +
+                              " " + gd.getDefaultConfiguration().toString());
                 } 
             } catch (Throwable e2) {
                 addString("Exception getting device bounds "+e2.getMessage());

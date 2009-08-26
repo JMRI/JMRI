@@ -14,7 +14,8 @@ import java.util.*;
  * out of this class and into the contructors themselves.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2008
- * @version     $Revision: 1.30 $
+ * @author      Matthew Harris copyright (c) 2009
+ * @version     $Revision: 1.31 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -29,19 +30,19 @@ public class ToolsMenu extends JMenu {
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.JmritToolsBundle");
 
         setText(rb.getString("MenuTools"));
-        
+
         JMenu programmerMenu = new JMenu(rb.getString("MenuProgrammers"));
         programmerMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction());
         programmerMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(rb.getString("MenuItemDecoderProServiceProgrammer")));
         programmerMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(rb.getString("MenuItemDecoderProOpsModeProgrammer")));
         programmerMenu.add(new jmri.jmrit.dualdecoder.DualDecoderToolAction());
         add(programmerMenu);
-        
+
         // disable programmer menu if there's no programmer manager
         if (jmri.InstanceManager.programmerManagerInstance()==null){
         	programmerMenu.setEnabled(false);
         }
-        
+
         JMenu tableMenu = new JMenu(rb.getString("MenuTables"));
         tableMenu.add(new jmri.jmrit.beantable.TurnoutTableAction(rb.getString("MenuItemTurnoutTable")));
         tableMenu.add(new jmri.jmrit.beantable.SensorTableAction(rb.getString("MenuItemSensorTable")));
@@ -55,6 +56,7 @@ public class ToolsMenu extends JMenu {
         tableMenu.add(new jmri.jmrit.beantable.BlockTableAction(rb.getString("MenuItemBlockTable")));
         tableMenu.add(new jmri.jmrit.beantable.SectionTableAction(rb.getString("MenuItemSectionTable")));
         tableMenu.add(new jmri.jmrit.beantable.TransitTableAction(rb.getString("MenuItemTransitTable")));
+        tableMenu.add(new jmri.jmrit.beantable.AudioTableAction(rb.getString("MenuItemAudioTable")));
         add(tableMenu);
 
         JMenu throttleMenu = new JMenu(rb.getString("MenuThrottles"));
@@ -78,7 +80,7 @@ public class ToolsMenu extends JMenu {
             consistAction.setEnabled(false);
         }
 
-        
+
         JMenu clockMenu = new JMenu(rb.getString("MenuClocks"));
         clockMenu.add(new jmri.jmrit.simpleclock.SimpleClockAction(rb.getString("MenuItemSetupClock")));
         clockMenu.add(new jmri.jmrit.nixieclock.NixieClockAction(rb.getString("MenuItemNixieClock")));
@@ -87,7 +89,7 @@ public class ToolsMenu extends JMenu {
 	add(clockMenu);
 
         add(new JSeparator());
-        
+
         add(new jmri.jmrit.powerpanel.PowerPanelAction(rb.getString("MenuItemPowerControl")));
         add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction(rb.getString("MenuItemTurnoutControl")));
         add(new jmri.jmrit.blockboss.BlockBossAction(rb.getString("MenuItemSimpleSignal")));
@@ -95,15 +97,15 @@ public class ToolsMenu extends JMenu {
         add(new jmri.jmrit.speedometer.SpeedometerAction(rb.getString("MenuItemSpeedometer")));
         add(new jmri.jmrit.simplelightctrl.SimpleLightCtrlAction(rb.getString("MenuItemLightControl")));
         add(new jmri.jmrit.dispatcher.DispatcherAction(rb.getString("MenuItemDispatcher")));
-        
+
         add(new JSeparator());
 
         add(new jmri.jmrit.sendpacket.SendPacketAction( rb.getString("MenuItemSendDCCPacket") ));
 
         add(new JSeparator());
         // US&S CTC subsystem tools
-        add(new jmri.jmrit.ussctc.ToolsMenu());	
-        
+        add(new jmri.jmrit.ussctc.ToolsMenu());
+
         add(new JSeparator());
         // operations menu
         add(new jmri.jmrit.operations.OperationsMenu());
