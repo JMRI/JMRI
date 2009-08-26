@@ -41,7 +41,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.47 $
+ * @version             $Revision: 1.48 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -531,8 +531,7 @@ public class Train implements java.beans.PropertyChangeListener {
      * The number of cars worked by this train
      */
     public int getNumberCarsWorked(){
-    	CarManager carManager = CarManager.instance();
-    	return carManager.getCarsByTrainList(this).size();
+    	return CarManager.instance().getCarsByTrainList(this).size();
     }
     
     public void setDescription(String description) {
@@ -1034,7 +1033,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 		// remove engines assigned to this train
 		EngineManager engineManager = EngineManager.instance();
-		List<String> engines = engineManager.getEnginesByTrainList();
+		List<String> engines = engineManager.getEnginesByIdList();
 		for (int i=0; i<engines.size(); i++){
 			Engine engine = engineManager.getEngineById(engines.get(i));
 			if(this == engine.getTrain() && engine.getRouteLocation()!=null){
@@ -1044,7 +1043,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 		// remove all cars assigned to this train
 		CarManager carManager = CarManager.instance();
-		List<String> cars = carManager.getCarsByTrainList();
+		List<String> cars = carManager.getCarsByIdList();
 		int oldNum = getNumberCarsWorked();
 		for (int i=0; i<cars.size(); i++){
 			Car car = carManager.getCarById(cars.get(i));
