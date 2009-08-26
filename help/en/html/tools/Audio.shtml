@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright Me 2008 -->
+<!-- $Id: Audio.shtml,v 1.1 2009-08-26 21:17:34 matthewharris Exp $ -->
+<title>JMRI: Audio</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+<h2> 
+JMRI: Audio
+</h2>
+
+
+JMRI audio objects hold information about sounds that can be played-back by the
+computer.
+<p>
+
+
+<h3>The Audio Table</h3>
+The 
+<a href="../../package/jmri/jmrit/beantable/AudioTable.shtml">Audio Table</a>
+lets you see what audio objects have been defined, and what information
+they currently contain. From the table, you can 
+<a href="../../package/jmri/jmrit/beantable/AudioAddEdit.shtml">create a new audio object</a>.
+
+
+<h3>Using Audio objects With Logix</h3>
+A Logix can be defined to control audio objects. Currently, it is possible to
+play, pause, stop, rewind, fade-in and fade-out audio sources.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
