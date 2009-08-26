@@ -6,9 +6,11 @@
 	<classpathentry kind="lib" path="lib/javacsv.jar"/>
 	<classpathentry kind="lib" path="lib/crimson.jar"/>
 	<classpathentry kind="lib" path="lib/comm.jar"/>
+	<classpathentry kind="lib" path="lib/gluegen-rt.jar"/>
 	<classpathentry kind="lib" path="lib/jdom.jar"/>
 	<classpathentry kind="lib" path="lib/log4j.jar"/>
 	<classpathentry kind="lib" path="lib/jhall.jar"/>
+	<classpathentry kind="lib" path="lib/joal.jar"/>
 	<classpathentry kind="lib" path="lib/junit.jar"/>
 	<classpathentry kind="lib" path="lib/jython.jar"/>
 	<classpathentry kind="lib" path="lib/MRJAdapter.jar"/>
@@ -21,7 +23,7 @@
 	<classpathentry kind="lib" path="lib/mailapi.jar"/>
 	<classpathentry kind="lib" path="lib/smtp.jar"/>
 	<classpathentry kind="lib" path="lib/ExternalLinkContentViewerUI.jar"/>
-	<classpathentry kind="lib" path="/lib/jakarta-regexp-1.5.jar"/>
-	<classpathentry kind="lib" path="/lib/jfcunit.jar"/>
+	<classpathentry kind="lib" path="lib/jakarta-regexp-1.5.jar"/>
+	<classpathentry kind="lib" path="lib/jfcunit.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
