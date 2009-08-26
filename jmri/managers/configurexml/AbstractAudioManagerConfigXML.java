@@ -41,7 +41,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -378,15 +378,15 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                 }
 
                 if ((ce = e.getChild("assignedbuffer"))!=null) {
-                    if (!ce.getValue().isEmpty() && !ce.getValue().equals("null"))
+                    if (ce.getValue().length() != 0 && !ce.getValue().equals("null"))
                         as.setAssignedBuffer(ce.getValue());
                 }
 
-                if ((ce = e.getChild("gain"))!=null && !ce.getValue().isEmpty()) {
+                if ((ce = e.getChild("gain"))!=null && ce.getValue().length() != 0) {
                     as.setGain(Float.parseFloat(ce.getValue()));
                 }
 
-                if ((ce = e.getChild("pitch"))!=null && !ce.getValue().isEmpty()) {
+                if ((ce = e.getChild("pitch"))!=null && ce.getValue().length() != 0) {
                     as.setPitch(Float.parseFloat(ce.getValue()));
                 }
 
