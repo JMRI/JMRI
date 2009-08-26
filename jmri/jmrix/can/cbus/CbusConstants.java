@@ -8,13 +8,21 @@ package jmri.jmrix.can.cbus;
  * Description:		Constants to represent CBUS protocol
  *
  * @author		Andrew Crosland   Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public final class CbusConstants {
     
     /**
      * CBUS Opcodes
      */
+    public static final int CBUS_CVNAK = 0x12;
+    public static final int CBUS_CVACK = 0x13;
+
+    public static final int CBUS_QCVS = 0x61;
+    public static final int CBUS_PCVS = 0x62;
+
+    public static final int CBUS_WCVS = 0x81;
+
     public static final int CBUS_ACON = 0x90;
     public static final int CBUS_ACOF = 0x91;
     public static final int CBUS_AREQ = 0x92;
@@ -24,6 +32,15 @@ public final class CbusConstants {
     
     public static final int CBUS_ACON1 = 0xB0;
     public static final int CBUS_ACOF1 = 0xB1;
+
+    /**
+     * Programming modes
+     */
+    public static final int CBUS_PROG_DIRECT_BYTE = 0;
+    public static final int CBUS_PROG_DIRECT_BIT = 1;
+    public static final int CBUS_PROG_PAGED = 2;
+    public static final int CBUS_PROG_REGISTER = 3;
+    public static final int CBUS_PROG_ADDRESS = 4;
 
     /**
      * Event types

@@ -38,12 +38,13 @@ import jmri.jmrix.can.*;
 import jmri.jmrix.can.cbus.CbusEventFilterFrame;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusConstants;
+import jmri.jmrix.can.cbus.CbusOpCodes;
 
 /**
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -681,14 +682,14 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
             String logLine = sbCbus.toString();
             if (!newline.equals("\n")) {
                 // have to massage the line-ends
-                int i = 0;
+                int j = 0;
                 int lim = sbCbus.length();
                 StringBuffer out = new StringBuffer(sbCbus.length()+10);  // arbitrary guess at space
-                for ( i = 0; i<lim; i++) {
-                    if (sbCbus.charAt(i) == '\n')
+                for ( j = 0; j<lim; j++) {
+                    if (sbCbus.charAt(j) == '\n')
                         out.append(newline);
                     else
-                        out.append(sbCbus.charAt(i));
+                        out.append(sbCbus.charAt(j));
                 }
                 logLine = new String(out);
             }
@@ -946,55 +947,8 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
      * @param msg CanMessage to be decoded
      * Return String decoded message
      */
-    @SuppressWarnings("fallthrough")
-	public String decode(AbstractMessage msg) {
-        String str = "";
-        //int bytes = msg.getElement(0) >> 5;
-        int op = msg.getElement(0);
-        int node = msg.getElement(1)*256 + msg.getElement(2);
-        int event = msg.getElement(3)*256 + msg.getElement(4);
-        String onOff = new String("OFF");
-        switch (op) {
-            // On/Off events
-            case CbusConstants.CBUS_ACON:
-                // ON event
-                onOff = "ON";
-                //fall through
-            case CbusConstants.CBUS_ACOF:
-                // OFF event
-                str = str+"Event "+onOff+" NN:"+node+" Ev:"+event;
-                break;
-            
-            // On/Off short events
-            case CbusConstants.CBUS_ASON:
-                // ON event
-                onOff = "ON";
-                //fall through
-            case CbusConstants.CBUS_ASOF:
-                // OFF event
-                str = str+"Event "+onOff+" NN:"+node+" Ev:"+event;
-                break;
-            
-            // Request Event
-            case CbusConstants.CBUS_AREQ:
-                str = str+"Event Request NN:"+node+" Ev:"+event;
-                break;
-                
-            // On/Off event with data
-            case CbusConstants.CBUS_ACON1:
-                // ON event
-                onOff = "ON";
-                //fall through
-            case CbusConstants.CBUS_ACOF1:
-                // OFF event
-                str = str+"Event "+onOff+" NN:"+node+" Ev:"+event+" Data:"+msg.getElement(5);
-                break;
-            
-            default: {
-                str = str+"Unrecognised: "+msg.toString();
-                break;
-            }
-        }
+    public String decode(AbstractMessage msg) {
+        String str = CbusOpCodes.decode(msg);
         return (str);
     }
     

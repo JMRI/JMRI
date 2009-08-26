@@ -7,13 +7,15 @@ package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.Programmer;
+
 
 /**
  * Class to allow use of CBUS concepts to access the underlying
  * can message
  *
  * @author          Andrew Crosland Copyright (C) 2008
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class CbusMessage {
     /* Methods that take a CanMessage as argument */
@@ -143,4 +145,42 @@ public class CbusMessage {
         }      
     }
     
+    /**
+     * CBUS programmer commands
+    */
+    static public CanMessage getReadCV(int cv, int mode) {
+        CanMessage m = new CanMessage(4);
+        m.setElement(0, CbusConstants.CBUS_QCVS);
+        m.setElement(1, cv/256);
+        m.setElement(2, cv & 0xff);
+        if (mode == Programmer.PAGEMODE) {
+          m.setElement(3, CbusConstants.CBUS_PROG_PAGED);
+        } else if (mode == Programmer.DIRECTBITMODE) {
+          m.setElement(3, CbusConstants.CBUS_PROG_DIRECT_BIT);
+        } else if (mode == Programmer.DIRECTBYTEMODE) {
+          m.setElement(3, CbusConstants.CBUS_PROG_DIRECT_BYTE);
+        } else {
+          m.setElement(3, CbusConstants.CBUS_PROG_REGISTER);
+        }
+        return m;
+    }
+
+    static public CanMessage getWriteCV(int cv, int val, int mode) {
+        CanMessage m = new CanMessage(5);
+        m.setElement(0, CbusConstants.CBUS_WCVS);
+        m.setElement(1, cv/256);
+        m.setElement(2, cv & 0xff);
+        if (mode == Programmer.PAGEMODE) {
+          m.setElement(3, CbusConstants.CBUS_PROG_PAGED);
+        } else if (mode == Programmer.DIRECTBITMODE) {
+          m.setElement(3, CbusConstants.CBUS_PROG_DIRECT_BIT);
+        } else if (mode == Programmer.DIRECTBYTEMODE) {
+          m.setElement(3, CbusConstants.CBUS_PROG_DIRECT_BYTE);
+        } else {
+          m.setElement(3, CbusConstants.CBUS_PROG_REGISTER);
+        }
+        m.setElement(4, val);
+        return m;
+    }
+
 }
