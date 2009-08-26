@@ -23,7 +23,8 @@ import java.util.ArrayList;
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.26 $
+ * @author      Matthew Harris copyright (c) 2009
+ * @version	$Revision: 1.27 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -54,7 +55,9 @@ public class AppConfigPanel extends JPanel {
 
         // Swing GUI LAF
         log.debug("start laf");
-        addAndRemember(p3 = new GuiLafConfigPane());
+        super.add(p3 = new GuiLafConfigPane());
+        // place at beginning of preferences list to avoid UI anomalies
+        clist.add(0, p3);
         p3.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutGUI")));
 
         // default programmer configuration
