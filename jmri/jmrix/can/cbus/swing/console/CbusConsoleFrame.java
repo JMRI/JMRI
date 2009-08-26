@@ -44,7 +44,7 @@ import jmri.jmrix.can.cbus.CbusOpCodes;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.27 $
+ * @version			$Revision: 1.28 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -172,7 +172,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
                 BorderFactory.createEtchedBorder(), "CAN Frame"));
         
         // fix a width for Cbus field for current character set
-        JTextField tCbus = new JTextField(30);
+        JTextField tCbus = new JTextField(40);
         tCbus.setDragEnabled(true);
         x = jScrollPane1Cbus.getPreferredSize().width+tCbus.getPreferredSize().width;
         y = jScrollPane1Cbus.getPreferredSize().height+10*tCbus.getPreferredSize().height;
@@ -911,7 +911,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     public synchronized void message(CanMessage m) {  // receive a message and log it
         nextLine("sent: "+m.toString()+"\n",
                 "ID:---"+" "+(m.isRtr() ? "R " : "N ")+decode(m)+" ["+CbusMessage.toAddress(m)+"]\n",
-                "Dyn Pri:"+CbusMessage.getPri(m)/4+" Min Pri:"+CbusMessage.getPri(m),
+                "Dyn Pri:"+CbusMessage.getPri(m)/4+" Min Pri:"+(CbusMessage.getPri(m)&3),
                 (_filterFrame != null) ? _filterFrame.filter(m) : -1);
         sentCountField.setText(Integer.toString(++_sent));
     }

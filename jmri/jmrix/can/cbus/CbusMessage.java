@@ -15,7 +15,7 @@ import jmri.Programmer;
  * can message
  *
  * @author          Andrew Crosland Copyright (C) 2008
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class CbusMessage {
     /* Methods that take a CanMessage as argument */
@@ -162,6 +162,7 @@ public class CbusMessage {
         } else {
           m.setElement(3, CbusConstants.CBUS_PROG_REGISTER);
         }
+        setPri(m, 0xb);
         return m;
     }
 
@@ -180,6 +181,7 @@ public class CbusMessage {
           m.setElement(3, CbusConstants.CBUS_PROG_REGISTER);
         }
         m.setElement(4, val);
+        setPri(m, 0xb);
         return m;
     }
 
