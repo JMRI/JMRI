@@ -197,6 +197,8 @@
  <tocitem text="Error Codes " target="html.Errors"/>
 
  <tocitem text="Tools " target="html.tools.index">
+  <tocitem text="Audio " target="html.tools.Audio"/>
+
   <tocitem text="Consist Tool " target="html.tools.consisttool.ConsistTool"/>
 
   <tocitem text="Clocks " target="html.tools.fastclock.index">
@@ -300,7 +302,7 @@
   <tocitem text="Send DCC Packet Tool " target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
 
   <tocitem text="Sensors " target="html.tools.Sensors">
-   <tocitem text="Sensor Add/Edit " target="package.jmri.jmrit.beantable.SignalAddEdit"/>
+   <tocitem text="Sensor Add/Edit " target="package.jmri.jmrit.beantable.SensorAddEdit"/>
 
    <tocitem text="Sensor Table " target="package.jmri.jmrit.beantable.SensorTable"/>
 

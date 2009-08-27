@@ -612,6 +612,12 @@
 <ul>
   
 <li>
+<a href="html/tools/Audio.shtml">Audio </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="html/tools/consisttool/ConsistTool.shtml">Consist Tool </a>
 <ul></ul>
 </li>
@@ -930,7 +936,7 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/SignalAddEdit.shtml">Sensor Add/Edit </a>
+<a href="package/jmri/jmrit/beantable/SensorAddEdit.shtml">Sensor Add/Edit </a>
 <ul></ul>
 </li>
 

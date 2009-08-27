@@ -29,6 +29,12 @@
 
  
 <li>
+<a href="html/tools/Audio.shtml">Audio </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="html/tools/tracker/index.shtml">Block </a>
 <ul></ul>
 </li>
@@ -1106,6 +1112,12 @@
   
 <li>
 <a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/AudioTable.shtml">Audio Table </a>
 <ul></ul>
 </li>
 

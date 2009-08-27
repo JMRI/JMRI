@@ -6,6 +6,8 @@
 
  <indexitem text="AppleScript " target="html.tools.scripting.AppleScript"/>
 
+ <indexitem text="Audio " target="html.tools.Audio"/>
+
  <indexitem text="Block " target="html.tools.tracker.index"/>
 
  <indexitem text="C/MRI " target="html.hardware.cmri.CMRI">
@@ -364,6 +366,8 @@
   <indexitem text="Thread Table " target="package.jmri.jmrit.automat.monitor.AutomatTableFrame"/>
 
   <indexitem text="Turnout Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
+
+  <indexitem text="Audio Table " target="package.jmri.jmrit.beantable.AudioTable"/>
 
  </indexitem>
  <indexitem text="Tracker " target="html.tools.tracker.index"/>

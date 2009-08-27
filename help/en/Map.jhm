@@ -172,6 +172,8 @@
 
 <mapID target="html.apps.DecoderPro.FAQ_lb-xp" url="html/apps/DecoderPro/FAQ.shtml#lb-xp"/>
 
+<mapID target="package.jmri.jmrit.beantable.AudioTable" url="package/jmri/jmrit/beantable/AudioTable.shtml"/>
+
 <mapID target="package.jmri.jmrit.ussctc.SignalLeverFrame" url="package/jmri/jmrit/ussctc/SignalLeverFrame.shtml"/>
 
 <mapID target="manual.Main_SPROG_Console" url="manual/Main_SPROG.shtml#Console"/>
@@ -275,6 +277,8 @@
 <mapID target="html.tools.throttle.ThrottleMain_HowToUse" url="html/tools/throttle/ThrottleMain.shtml#HowToUse"/>
 
 <mapID target="manual.Main_LocoNet_SlotMonitor" url="manual/Main_LocoNet.shtml#SlotMonitor"/>
+
+<mapID target="package.jmri.jmrit.beantable.AudioAddEdit" url="package/jmri/jmrit/beantable/AudioAddEdit.shtml"/>
 
 <mapID target="html.tools.signaling.ldt.output3" url="html/tools/signaling/ldt/output3.shtml"/>
 
@@ -410,9 +414,9 @@
 
 <mapID target="manual.Main_RPS_TrackingFrame" url="manual/Main_RPS.shtml#TrackingFrame"/>
 
-<mapID target="html.tools.signaling.ldt.output4" url="html/tools/signaling/ldt/output4.shtml"/>
-
 <mapID target="html.apps.DecoderPro.IntroXML" url="html/apps/DecoderPro/IntroXML.shtml"/>
+
+<mapID target="html.tools.signaling.ldt.output4" url="html/tools/signaling/ldt/output4.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_Yards" url="package/jmri/jmrit/operations/Operations.shtml#Yards"/>
 
@@ -756,6 +760,8 @@
 
 <mapID target="manual.Main_NCE" url="manual/Main_NCE.shtml"/>
 
+<mapID target="html.tools.Audio" url="html/tools/Audio.shtml"/>
+
 <mapID target="package.jmri.jmrix.rps.aligntable.AlignTableFrame" url="package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml"/>
 
 <mapID target="package.jmri.jmrit.dispatcher.AllocatedSections" url="package/jmri/jmrit/dispatcher/AllocatedSections.shtml"/>
@@ -800,9 +806,9 @@
 
 <mapID target="manual.Simple_Programmer" url="manual/Simple_Programmer.shtml"/>
 
-<mapID target="manual.Main_Panels_ThreadMonitor" url="manual/Main_Panels.shtml#ThreadMonitor"/>
-
 <mapID target="manual.Main_Roster_Delete" url="manual/Main_Roster.shtml#Delete"/>
+
+<mapID target="manual.Main_Panels_ThreadMonitor" url="manual/Main_Panels.shtml#ThreadMonitor"/>
 
 <mapID target="package.jmri.jmrit.display.EditLevelXing" url="package/jmri/jmrit/display/EditLevelXing.shtml"/>
 
