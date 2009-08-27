@@ -84,7 +84,28 @@ ExternalLinkContentViewerUI.jar
   made with Java 1.6 by JMRI to handle the single jmri.util.ExternalLinkContentViewerUI class,
   now being carried in this jar file instead of source until we migrate to Java 1.6
   
+Joal 1.1.2
+  from <https://joal.dev.java.net/servlets/ProjectDocumentList?folderID=9265&expandFolder=9265&folderID=9264>
+  cross-platform .jar files
+    from any one of the platform-specific download .zip files
+      joal.jar
+      gluegen-rt.jar
 
+  plus helper native libraries:
+  for MacOS X 10.4+
+    from joal-1.1.2-macosx-universal.zip download
+      libjoal_native.jnilib
+      libgluegen-rt.jnilib
+
+  for Windows
+    from joal-1.1.2-windows-i586.zip download
+      joal_native.dll
+      gluegen-rt.dll
+  
+  for Linux
+    from joal-1.1.2-linux-i586.zip download
+      libjoal_native.so
+      libgluegen-rt.so
 
 Older:
 
