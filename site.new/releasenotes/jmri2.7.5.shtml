@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.5.shtml,v 1.9 2009-08-24 09:30:19 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.5.shtml,v 1.10 2009-08-27 06:21:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -177,6 +177,12 @@ Pete Cressman added rotationa and scaling of icons to the panel editor
 <p>
 Ken Cameron fixed the problem that would cause startup errors if you configure a clock (analog, digital or Nixie) to open at startup.
 
+<p>
+Matt Harris fixed the way the preferences store the GUI selection to avoid occasional problems.
+
+<p>
+Matt Harris added great new <a href="http:/jmri.org/help/en/html/tools/Audio.shtml">Audio support</a>,
+including a <a href="http:/jmri.org/jython/AudioExample.py">demo script</a> that shows off many of the features.
 
 <!--#include virtual="/Footer" -->
 
