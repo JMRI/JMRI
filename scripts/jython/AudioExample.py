@@ -4,7 +4,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 import time
 
@@ -20,11 +20,11 @@ source1.setAssignedBuffer("IAB1")
 source1.setPitch(1)
 # Set this Audio Source to loop indefinitely (or until stopped)
 source1.setLooped(True)
-# Set the position of this Audio Source using a Vector3D
+# Set the position of this Audio Source using x, y, z coordinates
 #   20 units to the left
 #    0 units up
 #   10 units to the rear
-source1.setPosition(jmri.Vector3D(-20.0,0.0,10.0))
+source1.setPosition(-20.0,0.0,10.0)
 
 # Create the second Audio Source object
 source2 = audio.provideAudio("IAS2")
