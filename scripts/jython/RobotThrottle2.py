@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.9 $
+# $Revision: 1.10 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -130,6 +130,9 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     rosterInstance = None
     oldLocoAddress = None
     didWeMoveCounter = 0
+    stopBlock = None
+    hornDelayTimer = None
+    hornDelayListener = None
 
     def init(self):
         self.msgText("Getting throttle - ") #add text to scroll field
@@ -202,7 +205,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
              #self.msgText("didWeMoveCounterCheck: non-zero counter - calling didWeMove\n")
              self.didWeMove(None)
              self.didWeMoveCounter = self.didWeMoveCounter - 1
-             self.msgText("didWeMoveCounterCheck: decremented counter down to " + self.didWeMoveCounter.toString() + "\n")
+             #self.msgText("didWeMoveCounterCheck: decremented counter down to " + self.didWeMoveCounter.toString() + "\n")
         #self.msgText("didWeMoveCounterCheck: end of routine\n")
         return
  
@@ -258,6 +261,10 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     self.testAddBlockListener(self.beyondBlock)
             self.priorBlock = oldCurrent
             self.priorBlocks = self.currentBlocks
+        # if we have a stop block
+        if (self.stopBlock != None and self.currentBlock == self.stopBlock) :
+            self.msgText("Found stop block, doing stop.\n")
+            self.doStop()
         # find next block from currentBlock
         if (self.currentBlock != None) :
             if (self.blockAhead2.isSelected() == False) :
@@ -342,6 +349,9 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.redDelayTimer != None) :
             for i in self.redDelayTimer.getActionListeners() :
                 self.redDelayTimer.removeActionListener(i)
+        if (self.hornDelayTimer != None) :
+            for i in self.hornDelayTimer.getActionListeners() :
+                self.hornDelayTimer.removeActionListener(i)
         return
 
     # take list of new current blocks, a current block, and a current direction
@@ -369,7 +379,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                         for c in cList :
                             if (c == pB) :
                                 nBlock = pB
-                                #self.msgText("findNewCurrentBlock found " + self.giveBlockName(pB) + "\n")
+                                self.msgText("findNewCurrentBlock found " + self.giveBlockName(pB) + "\n")
                                 break
                             #else :
                                 #self.msgText("findNewCurrentBlock not in cList: " + self.giveBlockName(c) + "\n")
@@ -394,14 +404,17 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     self.msgText("Failed to find next block\n")
                     self.doHalt()
                 else :
-                    self.msgText("looking for signal between " + self.giveBlockName(cBlock) + " and " + self.giveBlockName(nBlock) + "\n")
-                    s = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(cBlock, nBlock)
-                    if (s != None) :
-                        self.msgText("Found signal: " + self.giveSignalName(s) + " displaying: " + self.cvtAppearanceText(s) + "\n")
-                        self.speedFromAppearance(s)
+                    if (self.stopBlock != None and self.currentBlock == self.stopBlock) :
+                        self.doStop()
                     else :
-                        self.msgText("Failed finding signal!\n")
-                        self.doHalt()
+                        self.msgText("looking for signal between " + self.giveBlockName(cBlock) + " and " + self.giveBlockName(nBlock) + "\n")
+                        s = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(cBlock, nBlock)
+                        if (s != None) :
+                            self.msgText("Found signal: " + self.giveSignalName(s) + " displaying: " + self.cvtAppearanceText(s) + "\n")
+                            self.speedFromAppearance(s)
+                        else :
+                            self.msgText("Failed finding signal!\n")
+                            self.doHalt()
         return
     
     # set speed from signal appearance
@@ -569,7 +582,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 if (delay > 1) :
                     currentDelay = 0
                     if (self.redDelayTimer == None) :
-                        self.redDelayListener = self.TimeoutReceiver()
+                        self.redDelayListener = self.RedStopTimeoutReceiver()
                         self.redDelayListener.setCallBack(self.redDelayHandler)
                         self.redDelayTimer = javax.swing.Timer(int(delay * 0), self.redDelayListener)
                         self.redDelayTimer.setInitialDelay(int(delay * 1000))
@@ -600,6 +613,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.locoSpeed.text = "0"
             if (self.currentBlock != None) :
                 self.blockStart.text = self.giveBlockName(self.currentBlock)
+        if (self.stopBlock != None and self.currentBlock == self.stopBlock) :
+            self.isRunning = False
         return
                
     # doHalt is for stopping due to error conditions, won't restart
@@ -615,6 +630,15 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.stopButton.setEnabled(False)
         self.haltButton.setEnabled(False)
         self.startButton.setEnabled(True)
+        return
+        
+    # process the stop block
+    def whenStopBlockChanged(self, event) :
+        self.blockStop.text = self.blockStop.text.strip()
+        if (self.blockStop.text == "") :
+            self.stopBlock = None
+        else :
+            self.stopBlock = blocks.getBlock(self.blockStop.text)
         return
 
     # enable the button when OK
@@ -741,6 +765,36 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             wasState = self.currentThrottle.getF2()
             self.currentThrottle.setF2(state)
             self.msgText("changed horn to: " + state.toString() + " was " + wasState.toString() + "\n")
+        return
+    
+    def doShortHorn(self) :
+        self.doTimedHorn(1*1000)
+        return
+        
+    def doLongHorn(self) :
+        self.doTimedHorn(2*1000)
+        return
+        
+    def doTimedHorn(self, delay) :
+        if (self.currentThrottle != None) :
+            self.currentThrottle.setF2(True)
+            if (self.hornDelayTimer == None) :
+                self.hornDelayListener = self.hornTimeoutReceiver()
+                self.hornDelayListener.setCallBack(self.hornDelayHandler)
+                self.hornDelayTimer = javax.swing.Timer(int(delay), self.hornDelayListener)
+                self.hornDelayTimer.setInitialDelay(int(delay))
+                self.hornDelayTimer.setRepeats(False);
+            self.hornDelayTimer.setInitialDelay(int(delay))
+            self.hornDelayTimer.start()
+            self.msgText("Started Timed Horn\n")
+        return
+        
+    def hornDelayHandler(self, event) :
+        if (self.hornDelayTimer != None) :
+            self.hornDelayTimer.stop()
+        if (self.currentThrottle != None) :
+            self.currentThrottle.setF2(False)
+        self.msgText("Stopped Timed Horn\n")
         return
     
     # handle the Headlight button
@@ -896,7 +950,20 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return nB
         
     # ActionListener - used for the stop timeout
-    class TimeoutReceiver(java.awt.event.ActionListener):
+    class RedStopTimeoutReceiver(java.awt.event.ActionListener):
+        cb = None
+
+        def actionPerformed(self, event) :
+            if (self.cb != None) :
+                self.cb(event)
+            return
+        
+        def setCallBack(self, cbf) :
+            self.cb = cbf
+            return
+
+    # ActionListener - used for the horn timeout
+    class hornTimeoutReceiver(java.awt.event.ActionListener):
         cb = None
 
         def actionPerformed(self, event) :
@@ -1175,6 +1242,12 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.blockAhead2.setSelected(False)
         self.blockAhead2.setToolTipText("for 4 block mode")
         
+        # create the stopping block field
+        self.blockStop = javax.swing.JTextField(10)
+        self.blockStop.setToolTipText("Stopping Block Name")
+        self.blockStop.actionPerformed = self.whenStopBlockChanged
+        self.blockStop.focusLost = self.whenStopBlockChanged
+        
         # create the current block field
         self.blockNow = javax.swing.JLabel()
         self.blockNowLength = javax.swing.JLabel()
@@ -1360,6 +1433,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         temppanel3.add(self.blockAhead2)
         temppanel3.add(javax.swing.JLabel(" AutoScroll Messages: "))
         temppanel3.add(self.autoScroll)
+        temppanel3.add(javax.swing.JLabel(" Stopping Block: "))
+        temppanel3.add(self.blockStop)
         
         temppanel4 = javax.swing.JPanel()
         temppanel4.add(javax.swing.JLabel(" Current: "), gConstraints)
@@ -1411,6 +1486,96 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.scriptFrame.show()
         return
         
-# create one of these
-a = LocoThrot()
-a.setup()
+    def setLoco(self, locoId) :
+        self.locoAddress.text = locoId
+        self.whenLocoChanged(self)
+        return
+        
+    def setLocoEast(self) :
+        self.blockDirection.setSelected(True)
+        self.whenLocoChanged(self)
+        return
+        
+    def setLocoWest(self) :
+        self.blockDirection.setSelected(False)
+        self.whenLocoChanged(self)
+        return
+        
+    def setLocoForward(self) :
+        self.locoForward.setSelected(True)
+        self.whenLocoChanged(self)
+        return
+        
+    def setLocoReverse(self) :
+        self.locoForward.setSelected(False)
+        self.whenLocoChanged(self)
+        return
+        
+    def locoHeadlightOn(self) :
+        self.locoHeadlight.setSelected(True)
+        self.whenLocoHeadlight(self)
+        return
+        
+    def locoHeadlightOff(self) :
+        self.locoHeadlight.setSelected(False)
+        self.whenLocoHeadlight(self)
+        return
+        
+    def soundShortHorn(self) :
+        self.doShortHorn()
+        return
+        
+    def soundLongHorn(self) :
+        self.doLongHorn()
+        return
+        
+    def doShrink(self) :
+        self.whenShrinkButtonClicked(self)
+        return
+        
+    def setStartBlock(self, blockId) :
+        self.blockStart.text = blockId
+        self.whenLocoChanged(self)
+        return
+        
+    def pushStart(self) :
+        if (self.startButton.isEnabled() == True) :
+            self.whenStartButtonClicked(self)
+        return
+        
+    def pushStop(self) :
+        if (self.stopButton.isEnabled() == True) :
+            self.whenStopButtonClicked(self)
+        return
+        
+    def pushTest(self) :
+        if (self.testButton.isEnabled() == True) :
+            self.callBackForDidWeMove(self)
+        return
+        
+    def setStopBlock(self, blockId) :
+        self.blockStop.text = blockId
+        self.whenStopBlockChanged(self)
+        return
+        
+# if you are running the RobotThrottle completely interactive, the following two lines are all you need
+rb = LocoThrot()
+rb.setup()
+# However, if you are automating the automation, then 
+## Options for doing more via scripts
+## this will set the loco number, if a matching roster entry is found, it will load the values
+## rb.setLoco("111")
+## rb.setLocoEast()
+## rb.setLocoWest()
+## rb.setLocoHeadlight(True/False)
+## rb.hornShort()
+## rb.hornLong()
+## this will set the starting block
+## rb.setStartBlock("block1")
+## this will enable the loco to move according to the signals
+## rb.pushStart()
+## this sets a block to stop at
+## rb.stopBlock("block1")
+## shrink the display size
+## rb.doShrink()
+
