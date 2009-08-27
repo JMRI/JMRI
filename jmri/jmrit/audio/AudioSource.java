@@ -38,7 +38,7 @@ import jmri.Vector3D;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public interface AudioSource extends Audio {
 
@@ -302,7 +302,6 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
-     * @return
      */
     public float getMaximumDistance();
 
@@ -344,7 +343,6 @@ public interface AudioSource extends Audio {
      * <ul>
      * <li>Source
      * </ul>
-     * @return
      */
     public float getRollOffFactor();
 

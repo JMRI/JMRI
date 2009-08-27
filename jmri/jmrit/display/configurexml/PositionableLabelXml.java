@@ -17,7 +17,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -74,8 +74,7 @@ public class PositionableLabelXml implements XmlAdapter {
     }
     /**
      * Default implementation for storing the common contents of an Icon
-     * @param main Element
-     * @return void
+     * @param element Element in which contents are stored
      */
     public void storeCommonAttributes(PositionableLabel p, Element element) {
 

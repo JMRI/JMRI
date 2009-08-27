@@ -74,7 +74,7 @@ import net.java.games.joal.util.ALut;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class JoalAudioFactory extends AbstractAudioFactory {
 
@@ -372,8 +372,6 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * <p>
      * If no error has occurred, return False.
      * 
-     * @param msg
-     * @return
      */
     public static boolean checkALEError(String msg) {
         // Trim any whitespace then append a space if required
