@@ -3,7 +3,7 @@
 package jmri.jmrit.audio;
 
 import jmri.Audio;
-import jmri.Vector3D;
+import javax.vecmath.Vector3f;
 
 
 /**
@@ -38,7 +38,7 @@ import jmri.Vector3D;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public interface AudioSource extends Audio {
 
@@ -62,7 +62,7 @@ public interface AudioSource extends Audio {
      * </ul>
      * @param pos 3d position vector
      */
-    public void setPosition(Vector3D pos);
+    public void setPosition(Vector3f pos);
 
     /**
      * Sets the position of this AudioSource object in x, y and z planes
@@ -105,7 +105,7 @@ public interface AudioSource extends Audio {
      * </ul>
      * @return 3d position vector
      */
-    public Vector3D getPosition();
+    public Vector3f getPosition();
 
     /**
      * Sets the velocity of this AudioSource object
@@ -117,7 +117,7 @@ public interface AudioSource extends Audio {
      * </ul>
      * @param vel 3d velocity vector
      */
-    public void setVelocity(Vector3D vel);
+    public void setVelocity(Vector3f vel);
 
     /**
      * Returns the velocity of this AudioSource object
@@ -129,7 +129,7 @@ public interface AudioSource extends Audio {
      * </ul>
      * @return 3d velocity vector
      */
-    public Vector3D getVelocity();
+    public Vector3f getVelocity();
 
     /**
      * Returns linked AudioBuffer object

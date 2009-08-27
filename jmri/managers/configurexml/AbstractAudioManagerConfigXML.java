@@ -7,7 +7,7 @@ import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
 import java.util.List;
-import jmri.Vector3D;
+import javax.vecmath.Vector3f;
 import jmri.jmrit.audio.AudioBuffer;
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;
@@ -41,7 +41,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -252,7 +252,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
                 if ((ce = e.getChild("position"))!=null) {
                     al.setPosition(
-                        new Vector3D(
+                        new Vector3f(
                             Float.parseFloat(ce.getAttribute("x").getValue()),
                             Float.parseFloat(ce.getAttribute("y").getValue()),
                             Float.parseFloat(ce.getAttribute("z").getValue())));
@@ -260,7 +260,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
                 if ((ce = e.getChild("velocity"))!=null) {
                     al.setVelocity(
-                        new Vector3D(
+                        new Vector3f(
                             Float.parseFloat(ce.getAttribute("x").getValue()),
                             Float.parseFloat(ce.getAttribute("y").getValue()),
                             Float.parseFloat(ce.getAttribute("z").getValue())));
@@ -268,11 +268,11 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
                 if ((ce = e.getChild("orientation"))!=null) {
                     al.setOrientation(
-                        new Vector3D(
+                        new Vector3f(
                             Float.parseFloat(ce.getAttribute("atX").getValue()),
                             Float.parseFloat(ce.getAttribute("atY").getValue()),
                             Float.parseFloat(ce.getAttribute("atZ").getValue())),
-                        new Vector3D(
+                        new Vector3f(
                             Float.parseFloat(ce.getAttribute("upX").getValue()),
                             Float.parseFloat(ce.getAttribute("upY").getValue()),
                             Float.parseFloat(ce.getAttribute("upZ").getValue())));
@@ -363,7 +363,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
                 if ((ce = e.getChild("position"))!=null) {
                     as.setPosition(
-                        new Vector3D(
+                        new Vector3f(
                             Float.parseFloat(ce.getAttribute("x").getValue()),
                             Float.parseFloat(ce.getAttribute("y").getValue()),
                             Float.parseFloat(ce.getAttribute("z").getValue())));
@@ -371,7 +371,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
                 if ((ce = e.getChild("velocity"))!=null) {
                     as.setVelocity(
-                        new Vector3D(
+                        new Vector3f(
                             Float.parseFloat(ce.getAttribute("x").getValue()),
                             Float.parseFloat(ce.getAttribute("y").getValue()),
                             Float.parseFloat(ce.getAttribute("z").getValue())));

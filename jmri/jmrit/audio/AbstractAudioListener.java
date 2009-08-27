@@ -3,7 +3,7 @@
 package jmri.jmrit.audio;
 
 import jmri.InstanceManager;
-import jmri.Vector3D;
+import javax.vecmath.Vector3f;
 import jmri.implementation.AbstractAudio;
 
 /**
@@ -27,14 +27,14 @@ import jmri.implementation.AbstractAudio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class AbstractAudioListener extends AbstractAudio implements AudioListener {
 
-    private Vector3D _position      = new Vector3D( 0.0f,  0.0f,  0.0f);
-    private Vector3D _velocity      = new Vector3D( 0.0f,  0.0f,  0.0f);
-    private Vector3D _orientationAt = new Vector3D( 0.0f,  0.0f, -1.0f);
-    private Vector3D _orientationUp = new Vector3D( 0.0f,  1.0f,  0.0f);
+    private Vector3f _position      = new Vector3f( 0.0f,  0.0f,  0.0f);
+    private Vector3f _velocity      = new Vector3f( 0.0f,  0.0f,  0.0f);
+    private Vector3f _orientationAt = new Vector3f( 0.0f,  0.0f, -1.0f);
+    private Vector3f _orientationUp = new Vector3f( 0.0f,  1.0f,  0.0f);
     private float _gain             = 1.0f;
     private float _metersPerUnit    = 1.0f;
 
@@ -65,43 +65,43 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
         return LISTENER;
     }
 
-    public void setPosition(Vector3D pos) {
+    public void setPosition(Vector3f pos) {
         this._position = pos;
         if (log.isDebugEnabled())
             log.debug("Set position of Listener " + this.getSystemName() + " to " + pos);
     }
 
     public void setPosition(float x, float y, float z) {
-        this.setPosition(new Vector3D(x, y, z));
+        this.setPosition(new Vector3f(x, y, z));
     }
 
     public void setPosition(float x, float z) {
-        this.setPosition(new Vector3D(x, 0.0f, z));
+        this.setPosition(new Vector3f(x, 0.0f, z));
     }
 
-    public Vector3D getPosition() {
+    public Vector3f getPosition() {
         return this._position;
     }
 
-    public void setVelocity(Vector3D vel) {
+    public void setVelocity(Vector3f vel) {
         this._velocity = vel;
         if (log.isDebugEnabled())
             log.debug("Set velocity of Listener " + this.getSystemName() + " to " + vel);
     }
 
-    public Vector3D getVelocity() {
+    public Vector3f getVelocity() {
         return this._velocity;
     }
 
-    public void setOrientation(Vector3D at, Vector3D up) {
+    public void setOrientation(Vector3f at, Vector3f up) {
         this._orientationAt = at;
         this._orientationUp = up;
         if (log.isDebugEnabled())
             log.debug("Set orientation of Listener " + this.getSystemName() + " to (at) " + at + " (up) " + up);
     }
 
-    public Vector3D getOrientation(int which) {
-        Vector3D _orientation = null;
+    public Vector3f getOrientation(int which) {
+        Vector3f _orientation = null;
         switch (which) {
             case AT: {
                 _orientation = this._orientationAt;

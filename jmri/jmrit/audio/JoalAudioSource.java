@@ -2,7 +2,7 @@
 
 package jmri.jmrit.audio;
 
-import jmri.Vector3D;
+import javax.vecmath.Vector3f;
 import net.java.games.joal.AL;
 
 /**
@@ -62,7 +62,7 @@ import net.java.games.joal.AL;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class JoalAudioSource extends AbstractAudioSource {
 
@@ -131,7 +131,7 @@ public class JoalAudioSource extends AbstractAudioSource {
     }
 
     @Override
-    public void setPosition(Vector3D pos) {
+    public void setPosition(Vector3f pos) {
         super.setPosition(pos);
         if (_initialised) {
             al.alSource3f(_source[0], AL.AL_POSITION, pos.x, pos.y, pos.z);
@@ -142,7 +142,7 @@ public class JoalAudioSource extends AbstractAudioSource {
     }
 
     @Override
-    public void setVelocity(Vector3D vel) {
+    public void setVelocity(Vector3f vel) {
         super.setVelocity(vel);
         if (_initialised) {
             al.alSource3f(_source[0], AL.AL_VELOCITY, vel.x, vel.y, vel.z);

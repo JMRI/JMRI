@@ -3,7 +3,7 @@
 package jmri.jmrit.audio;
 
 import jmri.Audio;
-import jmri.Vector3D;
+import javax.vecmath.Vector3f;
 
 
 /**
@@ -38,7 +38,7 @@ import jmri.Vector3D;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public interface AudioListener extends Audio {
 
@@ -52,7 +52,7 @@ public interface AudioListener extends Audio {
      * </ul>
      * @param pos 3d position vector
      */
-    public void setPosition(Vector3D pos);
+    public void setPosition(Vector3f pos);
 
     /**
      * Sets the position of this AudioListener object in x, y and z planes
@@ -95,7 +95,7 @@ public interface AudioListener extends Audio {
      * </ul>
      * @return 3d position vector
      */
-    public Vector3D getPosition();
+    public Vector3f getPosition();
 
     /**
      * Sets the velocity of this AudioListener object
@@ -107,7 +107,7 @@ public interface AudioListener extends Audio {
      * </ul>
      * @param vel 3d velocity vector
      */
-    public void setVelocity(Vector3D vel);
+    public void setVelocity(Vector3f vel);
 
     /**
      * Returns the velocity of this AudioListener object
@@ -118,7 +118,7 @@ public interface AudioListener extends Audio {
      *
      * @return 3d velocity vector
      */
-    public Vector3D getVelocity();
+    public Vector3f getVelocity();
 
     /**
      * Set the orientation of this AudioListener object
@@ -130,7 +130,7 @@ public interface AudioListener extends Audio {
      * @param at 3d vector representing the position
      * @param up 3d vector representing the look-at point
      */
-    public void setOrientation(Vector3D at, Vector3D up);
+    public void setOrientation(Vector3f at, Vector3f up);
 
     /**
      * Return the orientation of this AudioListener object
@@ -144,7 +144,7 @@ public interface AudioListener extends Audio {
      *              == UP - look-at point
      * @return vector representing the chosen orientation vector
      */
-    public Vector3D getOrientation(int which);
+    public Vector3f getOrientation(int which);
 
     /**
      * Return the current gain setting
