@@ -18,7 +18,7 @@ public interface FileDropListener extends java.util.EventListener
 {
     
     /**
-     * Fired by the {@link FileDropBean} when files are dropped
+     * Fired by the source when files are dropped
      * onto a drop target.
      *
      * @param evt The {@link FileDropEvent} associated with this event

@@ -49,8 +49,7 @@ import java.awt.datatransfer.DataFlavor ;
  * </p>
  * <p><em>Copyright •À? 2001 Robert Harder</em></p>
  *
- * @author  Robert.Harder
- * @copyright 2001
+ * @author  Robert.Harder copyright 2001
  * @version 1.1
  */
 public class TransferableObject implements java.awt.datatransfer.Transferable
@@ -240,8 +239,7 @@ public class TransferableObject implements java.awt.datatransfer.Transferable
      * on the {@link TransferableObject}, the {@link Fetcher}'s
      * {@link #getObject getObject()} method will be called.
      *
-     * @author Robert Harder
-     * @copyright 2001
+     * @author Robert Harder copyright 2001
      * @version 1.1
      * @since 1.1
      */
