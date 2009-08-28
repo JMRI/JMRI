@@ -41,7 +41,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -171,7 +171,10 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
                     ce = new Element("distances");
                     ce.setAttribute("ref", ""+as.getReferenceDistance());
-                    ce.setAttribute("max", ""+as.getMaximumDistance());
+                    float f;
+                    if ((f=as.getMaximumDistance())!=Float.MAX_VALUE) {
+                        ce.setAttribute("max", ""+f);
+                    }
                     e.addContent(ce);
 
                     ce = new Element("loops");
