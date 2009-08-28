@@ -49,7 +49,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -98,8 +98,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JButton deleteTrainButton = new JButton(rb.getString("DeleteTrain"));
 	JButton addTrainButton = new JButton(rb.getString("AddTrain"));
 
-	// check boxes
-
 	// radio buttons
     JRadioButton noneRadioButton = new JRadioButton(rb.getString("None"));
     JRadioButton cabooseRadioButton = new JRadioButton(rb.getString("Caboose"));
@@ -117,12 +115,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JTextField commentTextField = new JTextField(35);
 
 	// for padding out panel
-	JLabel space1 = new JLabel("     ");
-	JLabel space2 = new JLabel("     ");
-	JLabel space3 = new JLabel("     ");
-	JLabel space4 = new JLabel("     ");
-	JLabel space5 = new JLabel("     ");
-	JLabel space6 = new JLabel("     ");
+	JLabel space1 = new JLabel("       ");
+	JLabel space2 = new JLabel("       ");
+	JLabel space3 = new JLabel("       ");
+	JLabel space4 = new JLabel("       ");
+	JLabel space5 = new JLabel("       ");
+	JLabel space6 = new JLabel("       ");
 	
 	// combo boxes
 	JComboBox hourBox = new JComboBox();
@@ -518,7 +516,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		    		JLabel road = new JLabel();
 		    		road.setText(carRoads[i]);
 		    		addItem(panelRoadNames, road, x++, y);
-		    		if (x > 5){
+		    		if (x > 6){
 		    			y++;
 		    			x = 0;
 		    		}
@@ -676,8 +674,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				}else{
 					_train.setRoute(null);
 				}
+				updateLocationCheckboxes();
+				packFrame();
 			}
-			updateLocationCheckboxes();
 		}
 	}
 	
@@ -712,7 +711,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			_train.addTrainSkipsLocation(id);
 	}
 	
-	private void updateComboBoxes(){
+	private void updateRouteComboBox(){
 		routeBox.setEnabled(false);
 		routeManager.updateComboBox(routeBox);
 		if (_train != null){
@@ -749,7 +748,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			addItemLeft(typeCarPanelCheckBoxes, checkBox, x++, y);
 			if(_train != null && _train.acceptsTypeName(types[i]))
 				checkBox.setSelected(true);
-			if (x > 5){
+			if (x > 6){
 				y++;
 				x = 0;
 			}
@@ -779,7 +778,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			addItemLeft(typeEnginePanelCheckBoxes, checkBox, x++, y);
 			if(_train != null && _train.acceptsTypeName(types[i]))
 				checkBox.setSelected(true);
-			if (x > 5){
+			if (x > 6){
 				y++;
 				x = 0;
 			}
@@ -858,7 +857,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (_train != null)
 			route = _train.getRoute();
 		if (route != null){
-			textRouteStatus.setText(route.getStatus()?"":rb.getString("Error"));
+			textRouteStatus.setText(route.getStatus()?"     ":rb.getString("Error"));
 			List<String> locations = route.getLocationsBySequenceList();
 			for (int i=0; i<locations.size(); i++){
 				RouteLocation rl = route.getLocationById(locations.get(i));
@@ -892,7 +891,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			}
 		}
 		locationPanelCheckBoxes.revalidate();
-		packFrame();
 	}
 	
     private void editAddRoute (){
@@ -915,8 +913,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (manager.getTrainEditFrameSize()!= null){
 			setSize(manager.getTrainEditFrameSize());
 		}
-		//} else if (getHeight() < 700)
-		//	setSize(getWidth(), getHeight()+ 50);
 		setVisible(true);
     }
 	
@@ -954,13 +950,14 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			updateEngineTypeCheckboxes();
 		}
 		if (e.getPropertyName().equals(RouteManager.LISTLENGTH_CHANGED_PROPERTY)){
-			updateComboBoxes();
+			updateRouteComboBox();
 		}
 		if (e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY) || 
 				e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY)){
 			updateLocationCheckboxes();
+			packFrame();
 		}
 		if (e.getPropertyName().equals(Train.NUMBERCARS_CHANGED_PROPERTY) || 
 				e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)){

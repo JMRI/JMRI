@@ -30,7 +30,7 @@ import javax.swing.JComboBox;
  *   RouteLocation: XML read/write
  * 
  * @author	Bob Coleman     Copyright (C) 2008, 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class OperationsRoutesTest extends TestCase {
 
@@ -56,7 +56,7 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("Route Constant NORTH", 4, Route.NORTH);
 		Assert.assertEquals("Route Constant SOUTH", 8, Route.SOUTH);
 
-		Assert.assertEquals("Route Constant LISTCHANGE_CHANGED_PROPERTY", "listChange", Route.LISTCHANGE_CHANGED_PROPERTY);
+		Assert.assertEquals("Route Constant LISTCHANGE_CHANGED_PROPERTY", "routeListChange", Route.LISTCHANGE_CHANGED_PROPERTY);
 		Assert.assertEquals("Route Constant DISPOSE", "dispose", Route.DISPOSE);
 	}
 

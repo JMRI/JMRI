@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.15 $
+ * @version   $Revision: 1.16 $
  */
 public class RouteLocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -407,6 +407,8 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         removePropertyChangeRouteLocations();
         if (_route != null)
         	_route.removePropertyChangeListener(this);
+        list.clear();
+        fireTableDataChanged();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteLocationsTableModel.class.getName());

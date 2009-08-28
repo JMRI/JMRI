@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -204,6 +204,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 			_route = null;
 
 			enableButtons(false);
+			routeModel.dispose();
 			// save route file
 			RouteManagerXml.writeOperationsRouteFile();
 		}

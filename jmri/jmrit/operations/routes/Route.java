@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.17 $
+ * @version             $Revision: 1.18 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 
@@ -33,7 +33,7 @@ public class Route implements java.beans.PropertyChangeListener {
 	public static final int NORTH = 4;
 	public static final int SOUTH = 8;
 	
-	public static final String LISTCHANGE_CHANGED_PROPERTY = "listChange";
+	public static final String LISTCHANGE_CHANGED_PROPERTY = "routeListChange";
 	public static final String DISPOSE = "dispose";
 	
 
