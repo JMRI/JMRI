@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * <p>Time code copied in part from code for the Nixie clock by Bob Jacobsen </p>
  *
  * @author  Howard G. Penny - Copyright (C) 2005
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class AnalogClock2Display extends PositionableJComponent {
 
@@ -172,7 +172,6 @@ public class AnalogClock2Display extends PositionableJComponent {
         JButton button = new JButton(rb.getString("Done"));
         ours = this;
         button.addActionListener(new ActionListener() {
-            boolean scale;
             public void actionPerformed(ActionEvent a) {
                 int num = 0;
                 try {
@@ -182,7 +181,7 @@ public class AnalogClock2Display extends PositionableJComponent {
                     _editorFrame = null;
                     return;
                 }
-                setScale((double)num/100.0);
+                setScale(num/100.0);
                 _editorFrame.dispose();
                 _editorFrame = null;
                 repaint();
