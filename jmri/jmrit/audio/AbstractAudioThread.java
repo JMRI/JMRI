@@ -21,7 +21,7 @@ package jmri.jmrit.audio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class AbstractAudioThread extends Thread implements AudioThread {
     
@@ -114,9 +114,6 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
             Thread.sleep(ms);
         } catch (InterruptedException ex) {}
     }
-
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractAudioThread.class.getName());
-
 }
 
 /* @(#)AbstractAudioThread.java */

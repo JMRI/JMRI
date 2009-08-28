@@ -2,7 +2,6 @@
 
 package jmri.jmrit.audio;
 
-import jmri.InstanceManager;
 import javax.vecmath.Vector3f;
 import jmri.implementation.AbstractAudio;
 
@@ -27,7 +26,7 @@ import jmri.implementation.AbstractAudio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractAudioListener extends AbstractAudio implements AudioListener {
 
@@ -37,8 +36,6 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
     private Vector3f _orientationUp = new Vector3f( 0.0f,  1.0f,  0.0f);
     private float _gain             = 1.0f;
     private float _metersPerUnit    = 1.0f;
-
-    private static AudioFactory activeAudioFactory = InstanceManager.audioManagerInstance().getActiveAudioFactory();
 
     /**
      * Abstract constructor for new AudioListener with system name

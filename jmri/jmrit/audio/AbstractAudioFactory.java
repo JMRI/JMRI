@@ -25,7 +25,7 @@ import jmri.Audio;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class AbstractAudioFactory implements AudioFactory {
 
@@ -80,7 +80,6 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                     break;
                 }
                 AbstractAudioThread.snooze(100);
-                //snooze(100);
             }
         }
     }
@@ -134,7 +133,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                                 break;
                             default:
                                 log.warn("Command " + audioCommand.toString()
-                                        + " not suitable for Audio (" + audio.getSystemName() + ")");
+                                        + " not suitable for AudioSource (" + audioSource.getSystemName() + ")");
                         }
                     }
 
@@ -147,7 +146,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                                 break;
                             default:
                                 log.warn("Command " + audioCommand.toString()
-                                        + " not suitable for Audio (" + audio.getSystemName() + ")");
+                                        + " not suitable for AudioBuffer (" + audioBuffer.getSystemName() + ")");
                         }
                     }
 
@@ -157,7 +156,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                         switch (audioCommand.getCommand()) {
                             default:
                                 log.warn("Command " + audioCommand.toString()
-                                        + " not suitable for Audio (" + audio.getSystemName() + ")");
+                                        + " not suitable for AudioListener (" + audioListener.getSystemName() + ")");
                         }
                     }
                 }
@@ -177,18 +176,6 @@ public abstract class AbstractAudioFactory implements AudioFactory {
     public Thread getCommandThread() {
         return audioCommandThread;
     }
-
-//    /**
-//     * Sleep for the specified number of milliseconds
-//     * (Avoids cluttering the main code with the try-catch construct)
-//     *
-//     * @param ms number of milliseconds to sleep for
-//     */
-//    protected static void snooze(long ms) {
-//        try {
-//            Thread.sleep(ms);
-//        } catch (InterruptedException ex) {}
-//    }
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractAudioFactory.class.getName());
 

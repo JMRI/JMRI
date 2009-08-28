@@ -26,7 +26,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DefaultAudioManagerXml extends AbstractAudioManagerConfigXML {
 
@@ -59,8 +59,6 @@ public class DefaultAudioManagerXml extends AbstractAudioManagerConfigXML {
         loadAudio(audio);
         return true;
     }
-
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultAudioManagerXml.class.getName());
 }
 
 /* $(#)DefaultAudioManagerXml.java */
