@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -130,11 +130,13 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     rosterInstance = None
     oldLocoAddress = None
     didWeMoveCounter = 0
+    holdMoving = False
     stopBlock = None
     hornDelayTimer = None
     hornDelayListener = None
 
     def init(self):
+        self.holdMoving = True
         self.msgText("Getting throttle - ") #add text to scroll field
         number = int(self.locoAddress.text)
         dir = self.locoLong.isSelected()
@@ -148,6 +150,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
            self.throttle.setIsForward(self.locoForward.isSelected())
            self.throttle.setF0(self.locoHeadlight.isSelected())
            self.throttle.setF1(self.locoBell.isSelected())
+        self.holdMoving = False
+        self.didWeMoveCounterCheck(None)
         return
         
     def handle(self):
@@ -201,7 +205,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     #   and insures we run the didWeMove the right number of times
     def didWeMoveCounterCheck(self, event) :
         #self.msgText("didWeMoveCounterCheck: start of routine...counter = " + self.didWeMoveCounter.toString() + "\n")
-        while (self.didWeMoveCounter > 0) :
+        while (self.didWeMoveCounter > 0 and self.holdMoving == False) :
              #self.msgText("didWeMoveCounterCheck: non-zero counter - calling didWeMove\n")
              self.didWeMove(None)
              self.didWeMoveCounter = self.didWeMoveCounter - 1
@@ -442,7 +446,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         else :
             rep = rep + "unknown "
             self.doHalt()
-        #self.msgText("Found signal " + self.giveSignalName(sig) + " displaying: " + self.cvtAppearanceText(sig) + " so we will: " + rep + "\n")
+        #self.msgText("Found signal " + self.giveSignalName(sig) + " displaying: " + self.cvtAppearanceText(sig) + " so we did: " + rep + "\n")
         return
         
     # convert signal appearance to english
@@ -704,6 +708,9 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                         v = ent.getAttribute('RT_locoRateRed')
                         if (v != None and v != "") :
                             self.locoRateRed.text = v
+                        v = ent.getAttribute('RT_locoDistanceRedStop')
+                        if (v != None and v != "") :
+                            self.locoDistanceRedStop.text = v
                         self.locoLong.setSelected(ent.isLongAddress())
                         self.msgText("Read completed: " + ent.fileName + "\n")
                 self.oldLocoAddress = self.locoAddress.text
@@ -912,6 +919,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 ent.putAttribute('RT_locoRateRedFlash', self.locoRateRedFlash.text)
                 ent.putAttribute('RT_locoSpeedRed', self.locoSpeedRed.text)
                 ent.putAttribute('RT_locoRateRed', self.locoRateRed.text)
+                ent.putAttribute('RT_locoDistanceRedStop', self.locoDistanceRedStop.text)
                 self.rosterInstance.writeRosterFile()
                 self.msgText("Save completed: " + ent.fileName + "\n")
         return
@@ -1215,7 +1223,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         
         # create the distance field for a Red Signal
         self.locoDistanceRedStop = javax.swing.JTextField(5)    # sized to hold 5 characters
-        self.locoDistanceRedStop.setToolTipText("Distance to stop at Red Speed, inches")
+        self.locoDistanceRedStop.setToolTipText("Distance to stop before Red signal, inches")
         self.locoDistanceRedStop.actionPerformed = self.whenLocoChanged
         self.locoDistanceRedStop.focusLost = self.whenLocoChanged
         self.locoDistanceRedStop.text = "10"
@@ -1556,6 +1564,11 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     def setStopBlock(self, blockId) :
         self.blockStop.text = blockId
         self.whenStopBlockChanged(self)
+        return
+        
+    def setStopDistance(self, dist) :
+        self.locoDistanceRedStop.text = dist
+        self.whenLocoChanged(self)
         return
         
 # if you are running the RobotThrottle completely interactive, the following two lines are all you need
