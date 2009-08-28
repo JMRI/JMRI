@@ -19,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
  */
 public class TrackTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -220,6 +220,8 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
         	_location.removePropertyChangeListener(this);
         if (tef != null)
         	tef.dispose();
+        tracksList.clear();
+        fireTableDataChanged();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackTableModel.class.getName());

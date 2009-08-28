@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -330,6 +330,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
+		if (trackNameTextField.getText().trim().equals(""))
+			return false;
 		return true;
 	}
 	

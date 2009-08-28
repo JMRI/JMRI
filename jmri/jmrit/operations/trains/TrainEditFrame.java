@@ -49,7 +49,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.45 $
+ * @version $Revision: 1.46 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -356,6 +356,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
 
+		// place frame
+		if (manager.getTrainEditFramePosition()!= null){
+			setLocation(manager.getTrainEditFramePosition());
+		}	
+		
 		// load route location checkboxes
 		updateLocationCheckboxes();
 		updateCarTypeCheckboxes();
@@ -365,14 +370,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		//updateNumberCars();
 		updateCabooseRoadComboBox();
 		updateEngineRoadComboBox();
-		
-		// set frame size and train for display
-		// packFrame is done in updateLocationCheckboxes() above
-		// packFrame();
-		// place frame
-		if (manager.getTrainEditFramePosition()!= null){
-			setLocation(manager.getTrainEditFramePosition());
-		}	
 		
 		// setup combobox
 		addComboBoxAction(numEnginesBox);
@@ -386,6 +383,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		CarRoads.instance().addPropertyChangeListener(this);
 		EngineTypes.instance().addPropertyChangeListener(this);
 		EngineModels.instance().addPropertyChangeListener(this);
+		LocationManager.instance().addPropertyChangeListener(this);
+		
 	}
 	
 	// Save, Delete, Add 
@@ -922,6 +921,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     }
 	
 	public void dispose() {
+		LocationManager.instance().removePropertyChangeListener(this);
 		EngineTypes.instance().removePropertyChangeListener(this);
 		EngineModels.instance().removePropertyChangeListener(this);
 		CarTypes.instance().removePropertyChangeListener(this);
@@ -957,6 +957,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			updateComboBoxes();
 		}
 		if (e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY) || 
+				e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY)){
 			updateLocationCheckboxes();

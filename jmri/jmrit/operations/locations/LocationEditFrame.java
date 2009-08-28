@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -118,6 +118,13 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     	stagingPane = new JScrollPane(stagingTable);
     	stagingPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
  		
+    	// button group
+		ButtonGroup opsGroup = new ButtonGroup();
+		opsGroup.add(sidingRadioButton);
+		opsGroup.add(yardRadioButton);
+		opsGroup.add(interchangeRadioButton);
+		opsGroup.add(stageRadioButton);
+		
 		if (_location != null){
 			enableButtons(true);
 			locationNameTextField.setText(_location.getName());
@@ -178,11 +185,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		JPanel pOp = new JPanel();
 		pOp.setLayout(new GridBagLayout());
 		pOp.setBorder(BorderFactory.createTitledBorder(rb.getString("Ops")));
-		ButtonGroup opsGroup = new ButtonGroup();
-		opsGroup.add(sidingRadioButton);
-		opsGroup.add(yardRadioButton);
-		opsGroup.add(interchangeRadioButton);
-		opsGroup.add(stageRadioButton);
 		pOp.add(sidingRadioButton);
 		pOp.add(yardRadioButton);
 		pOp.add(interchangeRadioButton);
@@ -319,6 +321,20 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 				}
 			}
 			
+			yardModel.dispose();
+			sidingModel.dispose();
+			interchangeModel.dispose();
+			stagingModel.dispose();
+			
+			if (yef != null)
+				yef.dispose();
+			if (sef != null)
+				sef.dispose();
+			if (ief != null)
+				ief.dispose();
+			if (stef != null)
+				stef.dispose();
+			
 			manager.deregister(l);
 			_location = null;
 			selectCheckboxes(false);
@@ -447,9 +463,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	private void setEnabledLocations(){
 		log.debug("set radio button");
 		if (sidingModel.getRowCount()>0 || yardModel.getRowCount()>0 || interchangeModel.getRowCount()>0){
-			stageRadioButton.setEnabled(false);
 			if(stageRadioButton.isSelected())
 				sidingRadioButton.setSelected(true);
+			stageRadioButton.setEnabled(false);
 		}
 		else if (stagingModel.getRowCount()>0){
 			stageRadioButton.setSelected(true);
