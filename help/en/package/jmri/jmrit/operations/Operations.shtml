@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.44 2009-06-19 00:10:05 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.45 2009-08-29 16:09:25 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -425,7 +425,8 @@ town's sidings.
 
 The program when generating a switch list for a train with a single
 location (local switcher) will never move a car from a siding to a
-siding or yard to a yard, only yard to siding or siding to yard.
+siding or yard to a yard, only yard to siding or siding to yard. This
+rule also applies to interchanges. 
 
 <A	NAME="Interchange"></A>
 <H3>Interchange Tracks</H3>
@@ -660,10 +661,16 @@ To the right of each of the car attributes (Road, Type, Length, Color,
 Kernel, Load, Owner) is an "Edit" button. Use this to add, delete, or replace
 the available attributes for a car.
 
+<P>
+<img src="images/EditCarAttribute.png">
+<P>
+
 <H3>Add Button</H3>
 
 To add a new car attribute, enter the desired text in the text box and
-press the "Add" button.
+press the "Add" button.  When you first enter a new car attribute it will
+show up at the start of the list.  Later when your restart the program it
+will be sorted in the correct order.
 
 <H3>Delete Button</H3>
 
@@ -678,7 +685,7 @@ bottom right of the edit car attribute panel. For example, if you wish
 to change the car road name attribute "UP" to "UPS" for all of your
 cars. Press the "Edit" button for any of your cars in the Cars panel,
 and then press the "Edit" button across from Road in the "Car Edit"
-panel. Enter the new road "UPS" in the top box, select "UP" in the menu
+panel. Enter the new road "UPS" in the text box, select "UP" in the menu
 box, and press "Replace". All cars with "UP" as their road will now have
 "UPS" as their road name. 
 
@@ -943,7 +950,9 @@ track grade, and the horsepower of the engines.
 
 <P>You can also require a caboose or car with FRED (Flashing Rear
 End Device) as the last car in the train, and you can optionally specify
-the road name for the caboose or car with FRED.</P>
+the road name for the caboose or car with FRED.  If you leave the road name
+blank, the program will try and find a caboose with the same road name as the
+engine.</P>
 
 <H3>Reset Train</H3>
 
