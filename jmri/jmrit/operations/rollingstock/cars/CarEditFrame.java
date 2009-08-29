@@ -30,7 +30,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -221,10 +221,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		JPanel pOwner = new JPanel();
 		pOwner.setLayout(new GridBagLayout());
 		pOwner.setBorder(BorderFactory.createTitledBorder(rb.getString("Owner")));
-
-		//addItem(pOptional, textOwner, 0, 19);
-		addItem(pOwner, ownerComboBox, 1, 19);
-		addItem(pOwner, editOwnerButton, 2, 19);
+		addItem(pOwner, ownerComboBox, 1, 0);
+		addItem(pOwner, editOwnerButton, 2, 0);
 		pOptional.add(pOwner);
 
 		// row 20
@@ -232,10 +230,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			JPanel pRfid = new JPanel();
 			pRfid.setLayout(new GridBagLayout());
 			pRfid.setBorder(BorderFactory.createTitledBorder(rb.getString("Rfid")));
-
-		
-		//	addItem(pOptional, textRfid, 0, 20);
-			addItem(pRfid, rfidTextField, 1, 20);
+			addItem(pRfid, rfidTextField, 1, 0);
 			pOptional.add(pRfid);
 		}
 		
@@ -243,9 +238,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		JPanel pComment = new JPanel();
 		pComment.setLayout(new GridBagLayout());
 		pComment.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
-
-		//addItem(pOptional, textComment, 0, 21);
-		addItem(pComment, commentTextField, 1, 21);
+		addItem(pComment, commentTextField, 1, 0);
 		pOptional.add(pComment);
 				
 		// button panel
@@ -305,9 +298,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		// set frame size and location for display
 		pack();
 		if ( (getWidth()<400)) 
-			setSize(450, getHeight()+20);
+			setSize(450, getHeight());
 		else
-			setSize(getWidth()+50, getHeight()+20);
+			setSize (getWidth()+50, getHeight());
 		setLocation(Control.panelX, Control.panelY);
 		setVisible(true);	
 	}

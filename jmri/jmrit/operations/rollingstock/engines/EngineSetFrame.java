@@ -31,7 +31,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class EngineSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -47,13 +47,11 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 	Engine _engine;
 		
 	// labels
-	JLabel textEngine = new JLabel(rb.getString("Engine"));
 	JLabel textEngineRoad = new JLabel();
 	JLabel textName = new JLabel(rb.getString("Name"));
 	JLabel textTrack = new JLabel(rb.getString("Track"));
-	JLabel textLocation = new JLabel(rb.getString("Location"));
-	JLabel textDestination = new JLabel(rb.getString("Destination"));
-	JLabel textTrain = new JLabel(rb.getString("Train"));
+	JLabel textName2 = new JLabel(rb.getString("Name"));
+	JLabel textTrack2 = new JLabel(rb.getString("Track"));
 
 	// major buttons	
 	JButton saveButton = new JButton(rb.getString("Save"));
@@ -73,35 +71,49 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 		// the following code sets the frame's initial state	
 		// create panel
 		JPanel pPanel = new JPanel();
-		pPanel.setLayout(new GridBagLayout());
+		pPanel.setLayout(new BoxLayout(pPanel,BoxLayout.Y_AXIS));
 		
 		// Layout the panel by rows
 		// row 1
-		addItem(pPanel, textEngine, 0, 1);
-		addItemLeft(pPanel, textEngineRoad, 1, 1);
+		JPanel pEngine = new JPanel();
+		pEngine.setLayout(new GridBagLayout());
+		pEngine.setBorder(BorderFactory.createTitledBorder(rb.getString("Engine")));
+		addItem(pEngine, textEngineRoad, 1, 0);
+		pPanel.add(pEngine);
 		
 		// row 2
-		addItem(pPanel, textName, 1, 2);
-		addItem(pPanel, textTrack, 2, 2);
+		JPanel pLocation = new JPanel();
+		pLocation.setLayout(new GridBagLayout());
+		pLocation.setBorder(BorderFactory.createTitledBorder(rb.getString("Location")));
+		addItem(pLocation, textName, 1, 0);
+		addItem(pLocation, textTrack, 2, 0);
 		
 		// row 3
-		addItem(pPanel, textLocation, 0, 3);
-		addItem(pPanel, locationBox, 1, 3);
-		addItem(pPanel, trackLocationBox, 2, 3);
+		addItem(pLocation, locationBox, 1, 1);
+		addItem(pLocation, trackLocationBox, 2, 1);
+		pPanel.add(pLocation);
 		
 		// optional panel
 		JPanel pOptional = new JPanel();
-		pOptional.setLayout(new GridBagLayout());
+		pOptional.setLayout(new BoxLayout(pOptional,BoxLayout.Y_AXIS));
 		pOptional.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptional")));
 
 		// row 6
-		addItem(pOptional, textDestination, 0, 6);
-		addItem(pOptional, destinationBox, 1, 6);
-		addItem(pOptional, trackDestinationBox, 2, 6);
+		JPanel pDestination = new JPanel();
+		pDestination.setLayout(new GridBagLayout());
+		pDestination.setBorder(BorderFactory.createTitledBorder(rb.getString("Destination")));
+		addItem(pDestination, textName2, 1, 0);
+		addItem(pDestination, textTrack2, 2, 0);
+		addItem(pDestination, destinationBox, 1, 1);
+		addItem(pDestination, trackDestinationBox, 2, 1);
+		pOptional.add(pDestination);
 
 		// row 8
-		addItem(pOptional, textTrain, 0, 8);
-		addItem(pOptional, trainBox, 1, 8);
+		JPanel pTrain = new JPanel();
+		pTrain.setLayout(new GridBagLayout());
+		pTrain.setBorder(BorderFactory.createTitledBorder(rb.getString("Train")));
+		addItem(pTrain, trainBox, 0, 0);
+		pOptional.add(pTrain);
 
 		// button panel
 		JPanel pButtons = new JPanel();
@@ -132,9 +144,9 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 		// set frame size and location for display
 		pack();
 		if ( (getWidth()<400)) 
-			setSize(450, getHeight()+20);
+			setSize(450, getHeight()+50);
 		else
-			setSize (getWidth()+50, getHeight()+20);
+			setSize (getWidth()+50, getHeight()+50);
 		setLocation(Control.panelX, Control.panelY);
 		setVisible(true);
 	}

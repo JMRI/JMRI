@@ -11,9 +11,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
@@ -31,7 +31,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -48,20 +48,6 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 
 	Engine _engine;
 
-	// labels
-	JLabel textRoad = new JLabel(rb.getString("Road"));
-	JLabel textRoadNumber = new JLabel(rb.getString("RoadNumber"));
-	JLabel textBuilt = new JLabel(rb.getString("BuildDate"));
-	JLabel textLength = new JLabel(rb.getString("Length"));
-	JLabel textModel = new JLabel(rb.getString("Model"));
-	JLabel textHp = new JLabel(rb.getString("Hp"));
-	JLabel textType = new JLabel(rb.getString("Type"));
-	JLabel textLocation = new JLabel(rb.getString("Location"));
-	JLabel textConsist = new JLabel(rb.getString("Consist"));
-	JLabel textOwner = new JLabel(rb.getString("Owner"));
-	JLabel textComment = new JLabel(rb.getString("Comment"));
-	JLabel textRfid = new JLabel(rb.getString("Rfid"));
-
 	// major buttons
 	JButton editRoadButton = new JButton(rb.getString("Edit"));
 	JButton clearRoadNumberButton = new JButton(rb.getString("Clear"));
@@ -70,7 +56,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 	JButton editColorButton = new JButton(rb.getString("Edit"));
 	JButton editLengthButton = new JButton(rb.getString("Edit"));
 	JButton fillWeightButton = new JButton();
-	JButton editKernelButton = new JButton(rb.getString("Edit"));
+	JButton editConsistButton = new JButton(rb.getString("Edit"));
 	JButton editOwnerButton = new JButton(rb.getString("Edit"));
 
 	JButton saveButton = new JButton(rb.getString("Save"));
@@ -118,69 +104,108 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 
 		// create panel
 		JPanel pPanel = new JPanel();
-		pPanel.setLayout(new GridBagLayout());
-		
+		pPanel.setLayout(new BoxLayout(pPanel,BoxLayout.Y_AXIS));
+
 		// Layout the panel by rows
 		// row 1
-		addItem(pPanel, textRoad, 0, 1);
-		addItem(pPanel, roadComboBox, 1, 1);
-		addItem(pPanel, editRoadButton, 2, 1);
+		JPanel pRoad = new JPanel();
+		pRoad.setLayout(new GridBagLayout());
+		pRoad.setBorder(BorderFactory.createTitledBorder(rb.getString("Road")));
+		addItem(pRoad, roadComboBox, 1, 0);
+		addItem(pRoad, editRoadButton, 2, 0);
+		pPanel.add(pRoad);
+		
 		// row 2
-		addItem(pPanel, textRoadNumber, 0, 2);
-		addItem(pPanel, roadNumberTextField, 1, 2);
-		addItem(pPanel, clearRoadNumberButton, 2, 2);
+		JPanel pRoadNumber = new JPanel();
+		pRoadNumber.setLayout(new GridBagLayout());
+		pRoadNumber.setBorder(BorderFactory.createTitledBorder(rb.getString("RoadNumber")));
+		addItem(pRoadNumber, roadNumberTextField, 1, 0);
+		addItem(pRoadNumber, clearRoadNumberButton, 2, 0);
+		pPanel.add(pRoadNumber);
+		
 		// row 3
-		addItem(pPanel, textModel, 0, 3);
-		addItem(pPanel, modelComboBox, 1, 3);
-		addItem(pPanel, editModelButton, 2, 3);
+		JPanel pModel = new JPanel();
+		pModel.setLayout(new GridBagLayout());
+		pModel.setBorder(BorderFactory.createTitledBorder(rb.getString("Model")));
+		addItem(pModel, modelComboBox, 1, 0);
+		addItem(pModel, editModelButton, 2, 0);
+		pPanel.add(pModel);
+		
 		// row4
-		addItem(pPanel, textType, 0, 4);
-		addItem(pPanel, typeComboBox, 1, 4);
-		addItem(pPanel, editTypeButton, 2, 4);
+		JPanel pType = new JPanel();
+		pType.setLayout(new GridBagLayout());
+		pType.setBorder(BorderFactory.createTitledBorder(rb.getString("Type")));
+		addItem(pType, typeComboBox, 1, 0);
+		addItem(pType, editTypeButton, 2, 0);
+		pPanel.add(pType);
+		
 		// row 5
-		addItem(pPanel, textLength, 0, 5);
-		addItem(pPanel, lengthComboBox, 1, 5);
-		addItem(pPanel, editLengthButton, 2, 5);
+		JPanel pLength = new JPanel();
+		pLength.setLayout(new GridBagLayout());
+		pLength.setBorder(BorderFactory.createTitledBorder(rb.getString("Length")));
+		addItem(pLength, lengthComboBox, 1, 0);
+		addItem(pLength, editLengthButton, 2, 0);
+		pPanel.add(pLength);
 
 		// row 7
-		addItem(pPanel, textHp, 0, 7);
-		addItem(pPanel, hpTextField, 1, 7);
-
-		// row 8
+		JPanel pHp = new JPanel();
+		pHp.setLayout(new GridBagLayout());
+		pHp.setBorder(BorderFactory.createTitledBorder(rb.getString("Hp")));
+		addItem(pHp, hpTextField, 0, 0);
+		pPanel.add(pHp);
 
 		// row 9
-		addItem(pPanel, textLocation, 0, 9);
-		addItem(pPanel, locationBox, 1, 9);
-		addItemWidth(pPanel, trackLocationBox, 2, 2, 9);
+		JPanel pLocation = new JPanel();
+		pLocation.setLayout(new GridBagLayout());
+		pLocation.setBorder(BorderFactory.createTitledBorder(rb.getString("Location")));
+		addItem(pLocation, locationBox, 1, 0);
+		addItem(pLocation, trackLocationBox, 2, 0);
+		pPanel.add(pLocation);
 
 		// optional panel
 		JPanel pOptional = new JPanel();
-		pOptional.setLayout(new GridBagLayout());
-		pOptional.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptional")));
+		pOptional.setLayout(new BoxLayout(pOptional,BoxLayout.Y_AXIS));
+		JScrollPane optionPane = new JScrollPane(pOptional);
+		optionPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptional")));
 		
 		// row 13
-		addItem(pOptional, textConsist, 0, 13);
-		addItem(pOptional, consistComboBox, 1, 13);
-		addItem(pOptional, editKernelButton, 2, 13);
+		JPanel pConsist = new JPanel();
+		pConsist.setLayout(new GridBagLayout());
+		pConsist.setBorder(BorderFactory.createTitledBorder(rb.getString("Consist")));
+		addItem(pConsist, consistComboBox, 1, 0);
+		addItem(pConsist, editConsistButton, 2, 0);
+		pOptional.add(pConsist);
 
 		// row 14
-		addItem(pOptional, textBuilt, 0, 14);
-		addItem(pOptional, builtTextField, 1, 14);
-		
+		JPanel pBuilt = new JPanel();
+		pBuilt.setLayout(new GridBagLayout());
+		pBuilt.setBorder(BorderFactory.createTitledBorder(rb.getString("Built")));
+		addItem(pBuilt, builtTextField, 1, 0);
+		pOptional.add(pBuilt);
+
 		// row 15
-		addItem(pOptional, textOwner, 0, 15);
-		addItem(pOptional, ownerComboBox, 1, 15);
-		addItem(pOptional, editOwnerButton, 2, 15);
+		JPanel pOwner = new JPanel();
+		pOwner.setLayout(new GridBagLayout());
+		pOwner.setBorder(BorderFactory.createTitledBorder(rb.getString("Owner")));
+		addItem(pOwner, ownerComboBox, 1, 0);
+		addItem(pOwner, editOwnerButton, 2, 0);
+		pOptional.add(pOwner);
 		
 		// row 18
 		if(Setup.isRfidEnabled()){
-			addItem(pOptional, textRfid, 0, 18);
-			addItem(pOptional, rfidTextField, 1, 18);
+			JPanel pRfid = new JPanel();
+			pRfid.setLayout(new GridBagLayout());
+			pRfid.setBorder(BorderFactory.createTitledBorder(rb.getString("Rfid")));
+			addItem(pRfid, rfidTextField, 1, 0);
+			pOptional.add(pRfid);
 		}
 
 		// row 20
-		addItem(pOptional, textComment, 0, 20);
-		addItemWidth(pOptional, commentTextField, 2, 1, 20);
+		JPanel pComment = new JPanel();
+		pComment.setLayout(new GridBagLayout());
+		pComment.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
+		addItem(pComment, commentTextField, 1, 0);
+		pOptional.add(pComment);
 
 		// button panel
 		JPanel pButtons = new JPanel();
@@ -192,7 +217,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		// add panels
 		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 		getContentPane().add(pPanel);
-		getContentPane().add(pOptional);
+		getContentPane().add(optionPane);
 		getContentPane().add(pButtons);
 
 		// setup buttons
@@ -202,7 +227,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		addEditButtonAction(editTypeButton);
 		addEditButtonAction(editLengthButton);
 		addEditButtonAction(editColorButton);
-		addEditButtonAction(editKernelButton);
+		addEditButtonAction(editConsistButton);
 		addEditButtonAction(editOwnerButton);
 
 		addButtonAction(deleteButton);
@@ -236,9 +261,9 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		// set frame size and location for display
 		pack();
 		if ( (getWidth()<400)) 
-			setSize(450, getHeight()+50);
+			setSize(450, getHeight());
 		else
-			setSize(getWidth()+50, getHeight()+50);
+			setSize (getWidth()+50, getHeight());
 		setLocation(Control.panelX, Control.panelY);
 		setVisible(true);	
 	}
@@ -529,7 +554,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 			f.initComponents(LENGTH);
 		if(ae.getSource() == editOwnerButton)
 			f.initComponents(OWNER);
-		if(ae.getSource() == editKernelButton)
+		if(ae.getSource() == editConsistButton)
 			f.initComponents(CONSIST);
 	}
 

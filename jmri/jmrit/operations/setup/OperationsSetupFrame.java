@@ -31,7 +31,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -339,13 +339,10 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true);
 
 		// set frame size and location for display
-		pack();
-		if (Setup.getOperationsSetupFrameSize()!= null){
-			setSize(Setup.getOperationsSetupFrameSize());
-		} 
 		if (Setup.getOperationsSetupFramePosition()!= null){
 			setLocation(Setup.getOperationsSetupFramePosition());
 		}	
+		packFrame();
 		setVisible(true);
 	}
 	
@@ -503,8 +500,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			direction += Setup.NORTH;
 		}
 		setDirectionCheckBox(direction);
-		pack();
-		//setSize(getWidth(),getHeight()+getHeight()*1/10);
+		packFrame();
 	}
 	
 	private void setScale(){
@@ -584,6 +580,13 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		buildReportNor.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL));
 		buildReportMax.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED));
 		buildReportVD.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED));
+	}
+	
+	private void packFrame(){
+		pack();
+		if (Setup.getOperationsSetupFrameSize()!= null){
+			setSize(Setup.getOperationsSetupFrameSize());
+		} 
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {

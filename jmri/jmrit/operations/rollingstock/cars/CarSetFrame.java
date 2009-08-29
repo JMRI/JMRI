@@ -31,7 +31,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class CarSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -47,15 +47,11 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 	Car _car;
 		
 	// labels
-	//JLabel textCar = new JLabel(rb.getString("Car"));
 	JLabel textCarRoad = new JLabel();
 	JLabel textName = new JLabel(rb.getString("Name"));
 	JLabel textTrack = new JLabel(rb.getString("Track"));
 	JLabel textName2 = new JLabel(rb.getString("Name"));
 	JLabel textTrack2 = new JLabel(rb.getString("Track"));
-	JLabel textLocation = new JLabel(rb.getString("Location"));
-	JLabel textDestination = new JLabel(rb.getString("Destination"));
-	JLabel textTrain = new JLabel(rb.getString("Train"));
 
 	// major buttons
 	
@@ -90,7 +86,6 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		JPanel pLocation = new JPanel();
 		pLocation.setLayout(new GridBagLayout());
 		pLocation.setBorder(BorderFactory.createTitledBorder(rb.getString("Location")));
-
 		addItem(pLocation, textName, 1, 0);
 		addItem(pLocation, textTrack, 2, 0);
 		
@@ -150,9 +145,9 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		// set frame size and location for display
 		pack();
 		if ( (getWidth()<400)) 
-			setSize(450, getHeight()+20);
+			setSize(450, getHeight()+50);
 		else
-			setSize (getWidth()+50, getHeight()+20);
+			setSize (getWidth()+50, getHeight()+50);
 		setLocation(Control.panelX, Control.panelY);
 		setVisible(true);
 	}
