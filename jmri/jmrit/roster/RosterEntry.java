@@ -40,7 +40,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.36 $
+ * @version   $Revision: 1.37 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -432,6 +432,36 @@ public class RosterEntry {
         return out;
     }
 
+    /**
+     * Write the contents of this RosterEntry back to a file,
+     * preserving all existing decoder content.
+     * <p>
+     * This writes the file back in place, with the same decoder-specific
+     * content.
+     */
+    public void updateFile() {
+        LocoFile df = new LocoFile();
+
+        String fullFilename = LocoFile.getFileLocation()+getFileName();
+
+        // read in the content
+        try {
+            mRootElement = df.rootFromName(fullFilename);
+        } catch (Exception e) { log.error("Exception while loading loco XML file: "+getFileName()+" exception: "+e); }
+
+        try {
+            File f = new File(fullFilename);
+            // do backup
+            df.makeBackupFile(LocoFile.getFileLocation()+getFileName());
+
+            // and finally write the file
+            df.writeFile(f, mRootElement, this.store());
+
+        } catch (Exception e) {
+            log.error("error during locomotive file output: "+e);
+        }
+    }
+     
     /**
      * Write the contents of this RosterEntry to a file.
      * Information on the contents is passed through the parameters,

@@ -24,7 +24,7 @@ import org.jdom.ProcessingInstruction;
  * @author    Bob Jacobsen     Copyright (C) 2001, 2002, 2008
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.31 $
+ * @version   $Revision: 1.32 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
@@ -138,7 +138,9 @@ class LocoFile extends XmlFile {
 
     /**
      * Write an XML version of this object, including also the RosterEntry
-     * information.  Does not do an automatic backup of the file, so that
+     * information, and memory-resident decoder contents.  
+     * 
+     * Does not do an automatic backup of the file, so that
      * should be done elsewhere.
      *
      * @param file Destination file. This file is overwritten if it exists.
@@ -247,8 +249,10 @@ class LocoFile extends XmlFile {
     }
 
     /**
-     * Write an XML version of this object, including also the RosterEntry
-     * information.  Does not do an automatic backup of the file, so that
+     * Write an XML version of this object from an existing XML tree, 
+     * updating only the ID string. 
+     * 
+     * Does not do an automatic backup of the file, so that
      * should be done elsewhere. This is intended for copy and import
      * operations, where the tree has been read from an existing file.
      * Hence, only the "ID" information in the roster entry is updated.
@@ -273,6 +277,49 @@ class LocoFile extends XmlFile {
             // Update the locomotive.id element
             pRootElement.getChild("locomotive").getAttribute("id").setValue(pEntry.getId());
 
+            writeXML(pFile, doc);
+        }
+        catch (Exception ex) {
+            // need to trace this one back
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Write an XML version of this object, updating the RosterEntry
+     * information, from an existing XML tree.  
+     * 
+     * Does not do an automatic backup of the file, so that
+     * should be done elsewhere. This is intended for 
+     * writing out changes to the RosterEntry information only.
+     *
+     * @param pFile Destination file. This file is overwritten if it exists.
+     * @param pRootElement Root element of the existing JDOM tree containing
+     *                           the CV and variable contents
+     * @param newLocomotive Element from RosterEntry providing name, etc, information
+     */
+    public void writeFile(File pFile, Element existingElement, Element newLocomotive) {
+        if (log.isDebugEnabled()) log.debug("writeFile to "+pFile.getAbsolutePath()+" "+pFile.getName());
+        try {
+            // This is taken in large part from "Java and XML" page 368
+
+            // create root element
+            Element root = new Element("locomotive-config");
+            Document doc = newDocument(root, dtdLocation+"locomotive-config.dtd");
+            root.addContent(newLocomotive);
+            
+            // add XSLT processing instruction
+            // <?xml-stylesheet type="text/xsl" href="XSLT/locomotive.xsl"?>
+            java.util.Map<String,String> m = new java.util.HashMap<String,String>();
+            m.put("type", "text/xsl");
+            m.put("href", xsltLocation+"locomotive.xsl");
+            ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
+            doc.addContent(0,p);
+
+            // Add the variable info
+            Element values = existingElement.getChild("locomotive").getChild("values");
+            newLocomotive.addContent((Element)values.clone());
+            
             writeXML(pFile, doc);
         }
         catch (Exception ex) {
