@@ -13,7 +13,7 @@ import javax.swing.JPanel;
  * Frame for user edit of a staging track
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class StagingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -47,7 +47,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		
 		// override text strings for tracks
 		panelTrainDir.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainStaging")));
-		panelCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesStaging")));
+		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesStaging")));
 		deleteTrackButton.setText(rb.getString("DeleteStaging"));
 		addTrackButton.setText(rb.getString("AddStaging"));
 		saveTrackButton.setText(rb.getString("SaveStaging"));

@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
@@ -29,7 +30,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -43,20 +44,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	Car _car;
 
 	// labels
-	JLabel textRoad = new JLabel(rb.getString("Road"));
-	JLabel textRoadNumber = new JLabel(rb.getString("RoadNumber"));
-	JLabel textColor = new JLabel(rb.getString("Color"));
-	JLabel textBuilt = new JLabel(rb.getString("BuildDate"));
-	JLabel textLength = new JLabel(rb.getString("Length"));
-	JLabel textType = new JLabel(rb.getString("Type"));
-	JLabel textWeight = new JLabel(rb.getString("Weight"));
+	JLabel textWeightOz = new JLabel(rb.getString("WeightOz"));
 	JLabel textWeightTons = new JLabel(rb.getString("WeightTons"));
-	JLabel textLocation = new JLabel(rb.getString("Location"));
-	JLabel textLoad = new JLabel(rb.getString("Load"));
-	JLabel textKernel = new JLabel(rb.getString("Kernel"));
-	JLabel textOwner = new JLabel(rb.getString("Owner"));
-	JLabel textComment = new JLabel(rb.getString("Comment"));
-	JLabel textRfid = new JLabel(rb.getString("Rfid"));
 
 	// major buttons
 	JButton editRoadButton = new JButton(rb.getString("Edit"));
@@ -131,83 +120,133 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
 		// create panel
 		JPanel pPanel = new JPanel();
-		pPanel.setLayout(new GridBagLayout());
+		pPanel.setLayout(new BoxLayout(pPanel,BoxLayout.Y_AXIS));
 
 		// Layout the panel by rows
 		// row 1
-		addItem(pPanel, textRoad, 0, 1);
-		addItem(pPanel, roadComboBox, 1, 1);
-		addItem(pPanel, editRoadButton, 2, 1);
+		JPanel pRoad = new JPanel();
+		pRoad.setLayout(new GridBagLayout());
+		pRoad.setBorder(BorderFactory.createTitledBorder(rb.getString("Road")));
+		addItem(pRoad, roadComboBox, 1, 0);
+		addItem(pRoad, editRoadButton, 2, 0);
+		pPanel.add(pRoad);
+		
 		// row 2
-		addItem(pPanel, textRoadNumber, 0, 2);
-		addItem(pPanel, roadNumberTextField, 1, 2);
-		addItem(pPanel, clearRoadNumberButton, 2, 2);
+		JPanel pRoadNumber = new JPanel();
+		pRoadNumber.setLayout(new GridBagLayout());
+		pRoadNumber.setBorder(BorderFactory.createTitledBorder(rb.getString("RoadNumber")));
+		addItem(pRoadNumber, roadNumberTextField, 1, 0);
+		addItem(pRoadNumber, clearRoadNumberButton, 2, 0);
+		pPanel.add(pRoadNumber);
+		
 		// row 3
-		addItem(pPanel, textType, 0, 3);
-		addItem(pPanel, typeComboBox, 1, 3);
-		addItem(pPanel, editTypeButton, 2, 3);
+		JPanel pType = new JPanel();
+		pType.setLayout(new GridBagLayout());
+		pType.setBorder(BorderFactory.createTitledBorder(rb.getString("Type")));
+		addItem(pType, typeComboBox, 1, 0);
+		addItem(pType, editTypeButton, 2, 0);
+		addItem(pType, cabooseCheckBox, 1, 1);
+		addItem(pType, fredCheckBox, 2, 1);
+		addItem(pType, hazardousCheckBox, 3, 1);
+		pPanel.add(pType);
+		
 		// row 4
-		addItem(pPanel, textLength, 0, 4);
-		addItem(pPanel, lengthComboBox, 1, 4);
-		addItem(pPanel, editLengthButton, 2, 4);
+		JPanel pLength = new JPanel();
+		pLength.setLayout(new GridBagLayout());
+		pLength.setBorder(BorderFactory.createTitledBorder(rb.getString("Length")));
+		addItem(pLength, lengthComboBox, 1, 0);
+		addItem(pLength, editLengthButton, 2, 0);
+		pPanel.add(pLength);
+		
 		// row 5
-		addItem(pPanel, textColor, 0, 5);
-		addItem(pPanel, colorComboBox, 1, 5);
-		addItem(pPanel, editColorButton, 2, 5);
 
 		// row 7
-		addItem(pPanel, textWeight, 0, 7);
-		addItem(pPanel, weightTextField, 1, 7);
-		addItem(pPanel, fillWeightButton, 2, 7);
-		addItem(pPanel, autoCheckBox, 3, 7);
+		JPanel pWeight = new JPanel();
+		pWeight.setLayout(new GridBagLayout());
+		pWeight.setBorder(BorderFactory.createTitledBorder(rb.getString("Weight")));
+		addItem(pWeight, textWeightOz, 0, 0);
+		addItem(pWeight, weightTextField, 1, 0);
+		addItem(pWeight, fillWeightButton, 2, 0);
+		addItem(pWeight, autoCheckBox, 3, 0);
+		addItem(pWeight, textWeightTons, 0, 1);
+		addItem(pWeight, weightTonsTextField, 1, 1);
+		pPanel.add(pWeight);
 		
-		// row 8
-		addItem(pPanel, textWeightTons, 0, 8);
-		addItem(pPanel, weightTonsTextField, 1, 8);
-		
-		// row 10
-		addItem(pPanel, cabooseCheckBox, 1, 10);
-		addItem(pPanel, fredCheckBox, 2, 10);
-		addItem(pPanel, hazardousCheckBox, 3, 10);
-
 		// row 11
-		addItem(pPanel, textLocation, 0, 11);
-		addItem(pPanel, locationBox, 1, 11);
-		addItemWidth(pPanel, trackLocationBox, 2, 2, 11);
+		JPanel pLocation = new JPanel();
+		pLocation.setLayout(new GridBagLayout());
+		pLocation.setBorder(BorderFactory.createTitledBorder(rb.getString("Location")));
+		addItem(pLocation, locationBox, 1, 0);
+		addItem(pLocation, trackLocationBox, 2, 0);
+		pPanel.add(pLocation);
 
 		// optional panel
 		JPanel pOptional = new JPanel();
-		pOptional.setLayout(new GridBagLayout());
-		pOptional.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptional")));
+		pOptional.setLayout(new BoxLayout(pOptional,BoxLayout.Y_AXIS));
+		JScrollPane optionPane = new JScrollPane(pOptional);
+		optionPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptional")));
+		
+		// row 12
+		JPanel pColor = new JPanel();
+		pColor.setLayout(new GridBagLayout());
+		pColor.setBorder(BorderFactory.createTitledBorder(rb.getString("Color")));
+		addItem(pColor, colorComboBox, 1, 0);
+		addItem(pColor, editColorButton, 2, 0);
+		pOptional.add(pColor);		
 		
 		// row 13
-		addItem(pOptional, textLoad, 0, 13);
-		addItem(pOptional, loadComboBox, 1, 13);
-		addItem(pOptional, editLoadButton, 2, 13);
+		JPanel pLoad = new JPanel();
+		pLoad.setLayout(new GridBagLayout());
+		pLoad.setBorder(BorderFactory.createTitledBorder(rb.getString("Load")));
+		addItem(pLoad, loadComboBox, 1, 0);
+		addItem(pLoad, editLoadButton, 2, 0);
+		pOptional.add(pLoad);
 		
 		// row 15
-		addItem(pOptional, textKernel, 0, 15);
-		addItem(pOptional, kernelComboBox, 1, 15);
-		addItem(pOptional, editKernelButton, 2, 15);
+		JPanel pKernel = new JPanel();
+		pKernel.setLayout(new GridBagLayout());
+		pKernel.setBorder(BorderFactory.createTitledBorder(rb.getString("Kernel")));
+		addItem(pKernel, kernelComboBox, 1, 0);
+		addItem(pKernel, editKernelButton, 2, 0);
+		pOptional.add(pKernel);
 
 		// row 17
-		addItem(pOptional, textBuilt, 0, 17);
-		addItem(pOptional, builtTextField, 1, 17);
+		JPanel pBuilt = new JPanel();
+		pBuilt.setLayout(new GridBagLayout());
+		pBuilt.setBorder(BorderFactory.createTitledBorder(rb.getString("Built")));
+		addItem(pBuilt, builtTextField, 1, 0);
+		pOptional.add(pBuilt);
 		
 		// row 19
-		addItem(pOptional, textOwner, 0, 19);
-		addItem(pOptional, ownerComboBox, 1, 19);
-		addItem(pOptional, editOwnerButton, 2, 19);
+		JPanel pOwner = new JPanel();
+		pOwner.setLayout(new GridBagLayout());
+		pOwner.setBorder(BorderFactory.createTitledBorder(rb.getString("Owner")));
+
+		//addItem(pOptional, textOwner, 0, 19);
+		addItem(pOwner, ownerComboBox, 1, 19);
+		addItem(pOwner, editOwnerButton, 2, 19);
+		pOptional.add(pOwner);
 
 		// row 20
 		if(Setup.isRfidEnabled()){
-			addItem(pOptional, textRfid, 0, 20);
-			addItem(pOptional, rfidTextField, 1, 20);
+			JPanel pRfid = new JPanel();
+			pRfid.setLayout(new GridBagLayout());
+			pRfid.setBorder(BorderFactory.createTitledBorder(rb.getString("Rfid")));
+
+		
+		//	addItem(pOptional, textRfid, 0, 20);
+			addItem(pRfid, rfidTextField, 1, 20);
+			pOptional.add(pRfid);
 		}
 		
 		// row 21
-		addItem(pOptional, textComment, 0, 21);
-		addItemWidth(pOptional, commentTextField, 2, 1, 21);
+		JPanel pComment = new JPanel();
+		pComment.setLayout(new GridBagLayout());
+		pComment.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
+
+		//addItem(pOptional, textComment, 0, 21);
+		addItem(pComment, commentTextField, 1, 21);
+		pOptional.add(pComment);
 				
 		// button panel
 		JPanel pButtons = new JPanel();
@@ -219,7 +258,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		// add panels
 		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 		getContentPane().add(pPanel);
-		getContentPane().add(pOptional);
+		getContentPane().add(optionPane);
 		getContentPane().add(pButtons);
 
 		// setup buttons

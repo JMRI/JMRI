@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -104,7 +104,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	   	// Set up the jtable in a Scroll Pane..
     	typePane = new JScrollPane(panelCheckBoxes);
     	typePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-    	//typePane.setMinimumSize(new Dimension (typePane.getWidth(), 100));
+    	typePane.setBorder(BorderFactory.createTitledBorder(rb.getString("Types")));
     	
     	yardPane = new JScrollPane(yardTable);
     	yardPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -178,7 +178,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
 		// row 5
 	   	panelCheckBoxes.setLayout(new GridBagLayout());
-	   	panelCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("Types")));
 		updateCheckboxes();
 		
 		// row 9

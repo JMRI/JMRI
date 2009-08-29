@@ -49,7 +49,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -139,12 +139,16 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     	// Set up the jtable in a Scroll Pane..
     	locationsPane = new JScrollPane(locationPanelCheckBoxes);
     	locationsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	locationsPane.setBorder(BorderFactory.createTitledBorder(rb.getString("Stops")));
       	roadPane = new JScrollPane(panelRoadNames);
     	roadPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	roadPane.setBorder(BorderFactory.createTitledBorder(rb.getString("RoadsTrain")));
        	typeCarPane = new JScrollPane(typeCarPanelCheckBoxes);
+       	typeCarPane.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesCar")));
     	typeCarPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
        	typeEnginePane = new JScrollPane(typeEnginePanelCheckBoxes);
     	typeEnginePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	typeEnginePane.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesEngine")));
 	}
 
 	public void initComponents(Train train) {
@@ -222,23 +226,18 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 		// row 5
 	   	locationPanelCheckBoxes.setLayout(new GridBagLayout());
-	   	locationPanelCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("Stops")));
 
 		// row 6
 	   	typeCarPanelCheckBoxes.setLayout(new GridBagLayout());
-	   	typeCarPanelCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesCar")));
-	   	
-		
+	   			
 		// row 7
 		panelRoadNames.setLayout(new GridBagLayout());
-		panelRoadNames.setBorder(BorderFactory.createTitledBorder(rb.getString("RoadsTrain")));
 		roadGroup.add(roadNameAll);
 		roadGroup.add(roadNameInclude);
 		roadGroup.add(roadNameExclude);
 		
 		// row 8
 		typeEnginePanelCheckBoxes.setLayout(new GridBagLayout());
-		typeEnginePanelCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesEngine")));
 		
 		// row 9
 		JPanel trainReq = new JPanel();

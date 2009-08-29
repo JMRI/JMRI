@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -38,6 +38,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	String _type = "";
 	List<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
 	JPanel panelCheckBoxes = new JPanel();
+	JScrollPane paneCheckBoxes = new JScrollPane(panelCheckBoxes);
 	JPanel panelTrainDir = new JPanel();
 	JPanel panelRoadNames = new JPanel();
 	
@@ -126,7 +127,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 		// row 4
 	   	panelCheckBoxes.setLayout(new GridBagLayout());
-	   	panelCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesTrack")));
 		updateCheckboxes();
 		
 		// row 5
@@ -151,8 +151,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addItem(panelButtons, deleteTrackButton, 0, 0);
 		addItem(panelButtons, addTrackButton, 1, 0);
 		addItem(panelButtons, saveTrackButton, 2, 0);
-		
-		JScrollPane paneCheckBoxes = new JScrollPane(panelCheckBoxes);
+			
+		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesTrack")));
 		
 		getContentPane().add(pName);
 		getContentPane().add(pLength);
