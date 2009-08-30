@@ -59,7 +59,7 @@ import jmri.jmrit.operations.routes.RouteManager;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -2381,6 +2381,7 @@ public class OperationsTrainsTest extends TestCase {
 		train1.setName("Bedford Chelmsford Westford");
 		train1.build(false);
 		
+		Assert.assertEquals("Train Bedford Chelmsford Westford build status", true, train1.getBuilt());
 		Assert.assertEquals("c1 load from staging", "Metal 3", c1.getLoad());
 		Assert.assertEquals("c2 load from staging", "L", c2.getLoad());
 		Assert.assertEquals("c3 load from staging", "Metal 2", c3.getLoad());

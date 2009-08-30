@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.50 $
+ * @version             $Revision: 1.51 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -823,8 +823,7 @@ public class TrainBuilder extends TrainCommon{
 		if (!leavingStaging && reqNumEngines == 0)
 			return true;
 
-		// get list of engines for this route
-		
+		// get list of engines for this route		
 		List<String> engineList = engineManager.getEnginesAvailableTrainList(train);
 		// remove engines not at departure, wrong road name, or part of consist (not lead)
 		for (int indexEng=0; indexEng<engineList.size(); indexEng++){
@@ -875,15 +874,32 @@ public class TrainBuilder extends TrainCommon{
 						}
 						continue;
 						// Single engine, does train require a consist?
-					} else if (reqNumEngines == 1)
+					} else if (reqNumEngines <= 1)
 						continue;	// no keep this engine
 				} 
 			}
+			// engine not on the departure track
 			addLine(fileOut, THREE, "Exclude engine ("+engine.getId()+")");
 			engineList.remove(indexEng);
 			indexEng--;
 		}
-
+		// departing staging with 0 engines?
+		// test to see if departure track has engines assigned to another train
+		if (leavingStaging && engineList.size() == 0 && departStageTrack.getNumberEngines()>0){
+			addLine(fileOut, THREE, "Staging track ("+departStageTrack.getName()+") is already assigned to a train");
+			return false;	// can't use this track		
+		}
+		// test to see if departure track has cars assigned to another train
+		if (leavingStaging && engineList.size() == 0 && departStageTrack.getNumberCars()>0){
+			List<String> carList = carManager.getCarsByIdList();
+			for (int i=0; i<carList.size(); i++){
+				Car car = carManager.getCarById(carList.get(i));
+				if (car.getTrackName().equals(departStageTrack.getName()) && car.getRouteDestination()!=null){
+					addLine(fileOut, THREE, "Cars on staging track ("+departStageTrack.getName()+") are already assigned to a train");
+					return false;	// can't use this track		
+				}
+			}
+		}
 		// now load the number of engines into the train
 		Track terminateTrack = null;
 		for (int indexEng=0; indexEng<engineList.size(); indexEng++){
