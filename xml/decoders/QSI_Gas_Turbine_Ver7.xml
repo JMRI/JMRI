@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
-<!-- $Id: QSI_Gas_Turbine_Ver7.xml,v 1.10 2009-03-26 05:28:20 jacobsen Exp $ -->
+<!-- $Id: QSI_Gas_Turbine_Ver7.xml,v 1.11 2009-08-30 07:50:16 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+  <version author="Michael Mosher" version="7" lastUpdated="20090724"/>
   <version author="Michael Mosher" version="6" lastUpdated="20090302"/>
   <version author="Michael Mosher" version="5" lastUpdated="20080906"/>
   <version author="Michael Mosher" version="4" lastUpdated="20080811"/>
@@ -30,6 +31,7 @@
 <!-- version 4 - Added new models & CV's -->
 <!-- version 5 - removed leading zeros on IDs -->
 <!-- version 6 - Added CV 55.70.12,55.73.12,55.76.6,11,12,13,56.18.1,56.19.1,56.20.1,56.21.1 -->
+<!-- version 7 - Added CV 51.2 bit 1 -->
 
 <decoder>
 
@@ -555,6 +557,14 @@
 
     <ivariable label="Horn Triggered Doppler" CVname="51.2" CV="51" PI="2" default="1"
                comment="QSI" item="CV51.2 Doppler" mask="XXXXXXXV">
+      <ienumVal>
+      	<ienumChoice choice="No"/>
+      	<ienumChoice choice="Yes"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Coded Horn for Gas Turbine Startup" CVname="51.2" CV="51" PI="2" default="1"
+               comment="QSI" item="CV51.2 Turbine" mask="XXXXXXXV">
       <ienumVal>
       	<ienumChoice choice="No"/>
       	<ienumChoice choice="Yes"/>
@@ -3942,6 +3952,7 @@
       	<label label="      "/>
 		<column>
         	<display item="CV51.2 Doppler" format="checkbox"/>
+        	<display item="CV51.2 Turbine" format="checkbox"/>
         	<display item="CV51.2 Horn" format="checkbox"/>
         	<display item="CV51.2 Whistle" format="checkbox"/>
         	<display item="CV51.2 Heavy" format="checkbox"/>
@@ -4862,5 +4873,7 @@
 </pane>
 
 </decoder-config>
+
+ 	  	 
 
  	  	 
