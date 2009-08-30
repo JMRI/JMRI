@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2008 All rights reserved -->
-<!-- $Id: SoundTraxx_Tsu_Diesel.xml,v 1.1 2009-06-03 23:55:26 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Diesel.xml,v 1.2 2009-08-30 07:56:10 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -18,15 +18,20 @@
 <decoder-config>
 
 	<version author="Jack Shall lcrr@bellsouth.net" version="1" lastUpdated="20090602"/>
+	<version author="Jack Shall lcrr@bellsouth.net" version="2" lastUpdated="20090723"/>
 
 	<!-- This file contains the Tsunami definitions for ALL of the internal combustion engine locomotives	-->
 
-	<!-- version 1	Based on the "Soundtraxx_Tsu_(various diesels)" series of files.				-->
-	<!--			Co-authored by Michael Mosher.	Special thanks to Bob Jacobsen and Phil Utley	-->
-	<!--			for their assistance, and Marc Fournier for getting the ball rolling.			-->
-	<!--			This file incorporates the "include" attribute to allow proper display of		-->
-	<!--			various elements based on their pertinence to a particular model.  When adding	-->
-	<!--			models, the productID must be attached to the proper sets of horn selections.	-->
+	<!-- version 1	Based on the "Soundtraxx_Tsu_(various diesels)" series of files.					-->
+	<!--			Co-authored by Michael Mosher.	Special thanks to Bob Jacobsen and Phil Utley		-->
+	<!--			for their assistance, and Marc Fournier for getting the ball rolling.				-->
+	<!--			This file incorporates the "include" attribute to allow proper display of			-->
+	<!--			various elements based on their pertinence to a particular model.  When adding		-->
+	<!--			models, the productID must be attached to the proper sets of horn selections.		-->
+	<!-- version 2	Fixed bug in CV112 where auto/manual control of air compressor and radiator fans	-->
+	<!--			was reversed (this was corrected in Tsunami Diesel Tech. Ref. v1.10).  Fixed bug	-->
+	<!--			in CV116, bit 4 "Engine RPM Interlock".  Added CV116, bit 5 "Auto Engine Start		-->
+	<!--			Enable" and CV118 "Motor Recovery Speed".  Updated some tool tips.					-->
 
 
 <!-- Decoder Model information follows -->
@@ -1458,7 +1463,7 @@
 			
 			
 		<variable label="Analog Horn Control (0-255)" CV="47" mask="XVVVVVVV"
-			item="Sound Option 8" default="0"
+			item="Sound Option 11" default="0"
 			tooltip="Value of 0 = Disabled.  See command station instructions for value to enable this feature.">
 			<decVal/>
 		</variable>
@@ -1765,30 +1770,36 @@
 		</variable>
 
 		<variable label="User Identifier #1 (0-255)" CV="105"
-			item="User Id #1">
+			item="User Id #1"
+			tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;
+				the decoder is reset to default values, this CV is&lt;br&gt;
+				preset to the softwares minor revision code.&lt;/html&gt;">
 			<decVal/>
 		</variable>
 
 		<variable label="User Identifier #2 (0-255)" CV="106"
-			item="User Id #2">
+			item="User Id #2"
+			tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;
+				the decoder is reset to default values, this CV is&lt;br&gt;
+				preset to the softwares default CV value configuration.&lt;/html&gt;">
 			<decVal/>
 		</variable>
 			
 		<variable label="Auto Air Compressor Enable" CV="112" mask="XXXXXXXV"
-			item="Sound Option 1" default="0"
+			item="Sound Option 2" default="0"
 			tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function">
 			<enumVal>
-				<enumChoice choice="Turns on/off automatically with engine sound"/>
-				<enumChoice choice="Turns on/off manually with a mapped function"/>
+				<enumChoice choice="Turns on and off manually with a mapped function"/>
+				<enumChoice choice="Turns on and off automatically with engine sound"/>
 			</enumVal>
 		</variable>
 
 		<variable label="Auto Radiator Fan Enable" CV="112" mask="XXXXXXVX"
-			item="Sound Option 2" default="0"
+			item="Sound Option 3" default="0"
 			tooltip="If using manual engine notching, set to Automatic as [RPM+] will be using this function">
 			<enumVal>
-				<enumChoice choice="Turns on/off automatically with engine sound"/>
-				<enumChoice choice="Turns on/off manually with a mapped function"/>
+				<enumChoice choice="Turns on and off manually with a mapped function"/>
+				<enumChoice choice="Turns on and off automatically with engine sound"/>
 			</enumVal>
 		</variable>
 
@@ -1809,7 +1820,7 @@
 <!-- Airhorn Selection follows -->
 
 		<variable label="Airhorn Select" CV="115" mask="XXXXVVVV"
-			item="Sound Option 6" default="9"
+			item="Sound Option 9" default="9"
 			comment="Show these horns for the models (productID) listed below"
 			include="827001,827004,827008,827101,827104,827106,827108,828040,828043,828045,828047,828050"
 			tooltip="Selects which airhorn to use">
@@ -1834,7 +1845,7 @@
 		</variable>
 
 		<variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX"
-			item="Sound Option 7" default="0"
+			item="Sound Option 10" default="0"
 			comment="Show these horns for the models (productID) listed below"
 			include="827001,827004,827008,827101,827104,827106,827108,828040,828043,828045,828047,828050"
 			tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
@@ -1859,7 +1870,7 @@
 		</variable>
 
 		<variable label="Airhorn Select" CV="115" mask="XXXXVVVV"
-			item="Sound Option 6" default="9"
+			item="Sound Option 9" default="9"
 			comment="Show these horns for the models (productID) listed below"
 			include="827105,828044"
 			tooltip="Selects which airhorn to use">
@@ -1884,7 +1895,7 @@
 		</variable>
 
 		<variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX"
-			item="Sound Option 7" default="0"
+			item="Sound Option 10" default="0"
 			comment="Show these horns for the models (productID) listed below"
 			include="827105,828044"
 			tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
@@ -1909,7 +1920,7 @@
 		</variable>
 
 		<variable label="Airhorn Select" CV="115" mask="XXXXVVVV"
-			item="Sound Option 6" default="9"
+			item="Sound Option 9" default="9"
 			comment="Show these horns for the models (productID) listed below"
 			include="827102,827107,827109,828041,828046,828048,828051,828056"
 			tooltip="Selects which airhorn to use">
@@ -1934,7 +1945,7 @@
 		</variable>
 
 		<variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX"
-			item="Sound Option 7" default="0"
+			item="Sound Option 10" default="0"
 			comment="Show these horns for the models (productID) listed below"
 			include="827102,827107,827109,828041,828046,828048,828051,828056"
 			tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
@@ -1959,7 +1970,7 @@
 		</variable>
 
 		<variable label="Airhorn Select" CV="115" mask="XXXXVVVV"
-			item="Sound Option 6" default="9"
+			item="Sound Option 9" default="9"
 			comment="Show these horns for the models (productID) listed below"
 			include="827103,828042,828052"
 			tooltip="Selects which airhorn to use">
@@ -1984,7 +1995,7 @@
 		</variable>
 
 		<variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX"
-			item="Sound Option 7" default="0"
+			item="Sound Option 10" default="0"
 			comment="Show these horns for the models (productID) listed below"
 			include="827103,828042,828052"
 			tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
@@ -2009,7 +2020,7 @@
 		</variable>
 
 		<variable label="Horn Select" CV="115" mask="XXXXVVVV"
-			item="Sound Option 6" default="0"
+			item="Sound Option 9" default="0"
 			include="827010,827110"
 			comment="These are the horns for the Galloping Goose"
 			tooltip="Selects which horn to use">
@@ -2026,7 +2037,7 @@
 		</variable>
 
 		<variable label="Alternate Horn Select" CV="115" mask="VVVVXXXX"
-			item="Sound Option 7" default="0"
+			item="Sound Option 10" default="0"
 			include="827010,827110"
 			comment="These are the horns for the Galloping Goose"
 			tooltip="Choose an alternate horn or a short blast of the primary horn">
@@ -2042,8 +2053,18 @@
 			</enumVal>
 		</variable>
 
+		<variable label="Auto Engine Start Enable" CV="116" mask="XXVXXXXX"
+			item="Sound Option 1" default="1"
+			tooltip="&lt;html&gt;Determines whether prime mover will start up automatically or manually&lt;br&gt;
+				Note: This feature is not available in all decoders&lt;/html&gt;">
+			<enumVal>
+				<enumChoice choice="Prime mover starts up at speed step 1"/>
+				<enumChoice choice="Prime mover starts up when track is powered on"/>
+			</enumVal>
+		</variable>
+
 		<variable label="Dynamic Brake Override" CV="116" mask="VVXXXXXX"
-			item="Sound Option 3" default="0"
+			item="Sound Option 4" default="0"
 			tooltip="Controls how the dynamic brakes interact with the engine RPMs">
 			<enumVal>
 				<enumChoice choice="Dynamic Brakes operate independently of engine RPMs"/>
@@ -2053,8 +2074,8 @@
 			</enumVal>
 		</variable>
 
-		<variable label="Engine RPM Interlock" CV="116" mask="XXXXVXXX"
-			item="Sound Option 4" default="0"
+		<variable label="Engine RPM Interlock" CV="116" mask="XXXVXXXX"
+			item="Sound Option 5" default="0"
 			tooltip="When this option AND manual (notching) engine control is enabled, locomotive will not move until engine starts">
 			<enumVal>
 				<enumChoice choice="Interlock is disabled"/>
@@ -2063,7 +2084,7 @@
 		</variable>
 
 		<variable label="Engine Notch Rate" CV="116" mask="XXXXVVVV"
-			item="Sound Option 5" default="7"
+			item="Sound Option 6" default="7"
 			tooltip="Controls how the engine RPMs interact with the speed step setting of the throttle">
 			<enumVal>
 				<enumChoice choice="Manual notching, engine RPM controlled by F10/F9"/>
@@ -2083,6 +2104,16 @@
 				<enumChoice choice="Engine RPM increases every 14 speed steps"/>
 				<enumChoice choice="Engine RPM increases every 15 speed steps"/>
 			</enumVal>
+		</variable>
+
+		<variable label="Motor Recovery Speed (0-255)" CV="118"
+			item="Advanced Group 2 Option 6" default="204"
+			tooltip="&lt;html&gt;Adjust the motor response following a momentary power glitch&lt;br&gt;
+				0 or 128 = Disabled&lt;br&gt;
+				1-127 = Absolute Limiting (will return to this speed step)&lt;br&gt;
+				129-255 = Proportional Limiting (a percentage of set speed)&lt;br&gt;
+				Note: This feature is not available in all decoders&lt;/html&gt;">
+			<decVal/>
 		</variable>
 
 
@@ -2403,8 +2434,8 @@
 
 <!-- highest used so far: -->
 <!-- "Advanced Group 1 Option 8" -->
-<!-- "Advanced Group 2 Option 5" -->
-<!-- "Sound Option 8"  -->
+<!-- "Advanced Group 2 Option 6" -->
+<!-- "Sound Option 11"  -->
 <!-- "Sound Group 1 Option (none yet)" -->
 <!-- "Sound Group 2 Option (none yet)" -->
 <!-- "Sound Setting 25" -->
@@ -2597,5 +2628,7 @@
 </pane>
 
 </decoder-config>
+
+ 	  	 
 
  	  	 
