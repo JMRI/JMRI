@@ -265,7 +265,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
     			rosterEntry.setFunctionLockable(functionNumber, lockable);
     		}
     	}
-		JOptionPane.showMessageDialog(this, "Use Roster Edit Entry to save your function keys", "Feature still under development!",
+		JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle").getString("Use_Roster_Edit_Entry_to_save_your_function_keys"), java.util.ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle").getString("Feature_still_under_development!"),
 				JOptionPane.INFORMATION_MESSAGE);
     	//TODO save roster!
     }
@@ -299,7 +299,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
         }
         alt1Button.setText("*");
         alt1Button.setPreferredSize(new Dimension(FunctionButton.BUT_WDTH,FunctionButton.BUT_HGHT));
-        alt1Button.setToolTipText("Push for alternate set of function keys");
+        alt1Button.setToolTipText(java.util.ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle").getString("Push_for_alternate_set_of_function_keys"));
         alt1Button.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				buttonActionCmdPerformed();
@@ -311,7 +311,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
         
         alt2Button.setText("#");
         alt2Button.setPreferredSize(new Dimension(FunctionButton.BUT_WDTH,FunctionButton.BUT_HGHT));
-        alt2Button.setToolTipText("currently not used");
+        alt2Button.setToolTipText(java.util.ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle").getString("currently_not_used"));
         mainPanel.add(alt2Button);
 
 		functionButton[0].setKeyCode(KeyEvent.VK_NUMPAD0);
@@ -389,7 +389,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.45 $
+	 * @version $Revision: 1.46 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{
