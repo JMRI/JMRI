@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 	
@@ -60,7 +60,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 		// check length
         if (singleUse() && (a.size()>0)) {
             throttleFree= false;
-            if (log.isDebugEnabled()) log.debug("case 1");
+            if (log.isDebugEnabled()) log.debug("case 1");           
         } else if (a.size() == 0) {
         	a.add(l);
             if (log.isDebugEnabled()) log.debug("case 2: "+la+";"+a);
@@ -126,6 +126,19 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         boolean isLong = true;
         if (canBeShortAddress(address)) isLong = false;
         cancelThrottleRequest(address, isLong, l);
+    }
+
+    /**
+     * If the system-specific ThrottleManager has been unable to create the DCC
+     * throttle then it needs to be removed from the throttleListeners, otherwise
+     * any subsequent request for that address results in the address being reported
+     * as already in use, if singleUse is set.
+     * @param address The DCC Loco Address that the request failed on.
+     */
+    public void failedThrottleRequest(DccLocoAddress address) {
+        if ((throttleListeners.containsKey(address)) && (singleUse())){
+            throttleListeners.remove(address);
+        }
     }
 
     /**
