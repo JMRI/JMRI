@@ -10,7 +10,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * SPROG implementation of a ThrottleManager.
  * <P>
  * @author	    Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class SprogThrottleManager extends AbstractThrottleManager {
 
@@ -50,6 +50,8 @@ public class SprogThrottleManager extends AbstractThrottleManager {
             SprogTrafficController.instance().sendSprogMessage(m, null);
             notifyThrottleKnown(new SprogThrottle(address), address);
         } else {
+            failedThrottleRequest((DccLocoAddress)address);
+            javax.swing.JOptionPane.showMessageDialog(null,"Only one Throttle can be in use at anyone time with the Sprog.","Sprog Throttle",javax.swing.JOptionPane.WARNING_MESSAGE);
             log.warn("Single SPROG Throttle already in use");
         }
     }
