@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.5.shtml,v 1.10 2009-08-27 06:21:20 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.5.shtml,v 1.11 2009-08-30 08:22:34 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -69,7 +69,11 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-(None)
+The new audio support in JMRI 2.7.5 requires some new libraries.
+Those libraries are included in the JMRI downloads.  They, in turn, require that the
+startup scripts include the new libraries, so these have also been modified.
+The 2.7.4 and earlier scripts will not work with 2.7.5 and later.  In particular, if you've
+created your own copies of startup scripts, you'll have to update those.
 
 <h3>Warnings from older versions:</h3>
 
@@ -160,6 +164,9 @@ Ken Cameron added a horn button to the RobotThrottle.
 Paul Bender added some additional error messages to the DCC programmer.
 
 <p>
+Sakae Akanuma added a Japanese translation.
+
+<p>
 Dan Boudreau improved the NCE Show Cab feature.
 
 <p>
@@ -183,6 +190,30 @@ Matt Harris fixed the way the preferences store the GUI selection to avoid occas
 <p>
 Matt Harris added great new <a href="http:/jmri.org/help/en/html/tools/Audio.shtml">Audio support</a>,
 including a <a href="http:/jmri.org/jython/AudioExample.py">demo script</a> that shows off many of the features.
+
+<p>
+Peter Ulvestad added a definition for the DN163K1D decoder and updated 'maxMotorCurrents' on the DN163K1A,B,C.
+
+<p>
+Jack Shall reworked the Soundtraxx Bachmann OEM decoder definition.
+
+<p>
+Mike Mosher updated the ESU XL V3.5 decoder definition to 
+fix acc/dec on motor tab and incorporate latest changes from LS V3.5 file.
+
+<p>
+Mike Mosher updated the QSI Gas Turbine decoder definition to add "Code Horn for Gas Turbine Startup".
+
+<p>
+Jack Shall and Mike Mosher updated the SoundTraxx Tsunami Diesel definition to add CVs, correct a couple bugs, and add tooltips.
+
+<p>
+Peter Ulvestard updated the Bachmann EZDCC 4fn definition to add a max value for CV2, 
+changed the Lenz tab name to Bachmann, updated
+dimensions and default values as per decoder manual and added factory reset menu items.
+
+
+
 
 <!--#include virtual="/Footer" -->
 
