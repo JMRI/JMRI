@@ -111,7 +111,7 @@ import java.util.Hashtable;
  * signal (along the track with the green signal).
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.30 $
+ * @version     $Revision: 1.31 $
  * 
  * Revisions to add facing point sensors, approach lighting, and check box
  * to limit speed. Dick Bronosn (RJB) 2006
@@ -137,11 +137,11 @@ public class BlockBossLogic extends Siglet {
      * @param name System or user name of the driven signal.
      */
     public BlockBossLogic(String name) {
-        super(name+" BlockBossLogic");
+        super(name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_BlockBossLogic"));
         this.name = name;
         if (log.isTraceEnabled()) log.trace("Create BBL "+name);
         driveSignal = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-        if (driveSignal == null) log.warn("Signal "+name+" was not found!");
+        if (driveSignal == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Signal_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
 
     /**
@@ -159,7 +159,7 @@ public class BlockBossLogic extends Siglet {
             return;
         }
         watchSensor1 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchSensor1 == null) log.warn("Sensor1 "+name+" was not found!");
+        if (watchSensor1 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor1_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
 
     public void setSensor2(String name) {
@@ -168,7 +168,7 @@ public class BlockBossLogic extends Siglet {
             return;
         }
         watchSensor2 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchSensor2 == null) log.warn("Sensor2 "+name+" was not found!");
+        if (watchSensor2 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor2_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
 
     public void setSensor3(String name) {
@@ -177,7 +177,7 @@ public class BlockBossLogic extends Siglet {
             return;
         }
         watchSensor3 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchSensor3 == null) log.warn("Sensor3 "+name+" was not found!");
+        if (watchSensor3 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor3_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
 
     public void setSensor4(String name) {
@@ -186,7 +186,7 @@ public class BlockBossLogic extends Siglet {
             return;
         }
         watchSensor4 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchSensor4 == null) log.warn("Sensor4 "+name+" was not found!");
+        if (watchSensor4 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor4_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
 
     /**
@@ -216,7 +216,7 @@ public class BlockBossLogic extends Siglet {
             return;
         }
         watchTurnout = InstanceManager.turnoutManagerInstance().provideTurnout(name);
-        if (watchTurnout == null) log.warn("Turnout "+name+" was not found!");
+        if (watchTurnout == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Turnout_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
     
     /**
@@ -244,7 +244,7 @@ public class BlockBossLogic extends Siglet {
             return;
         }
         watchedSignal1 = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-        if (watchedSignal1 == null) log.warn("Signal "+name+" was not found!");
+        if (watchedSignal1 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Signal_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
         protectWithFlashing = useFlash;
     }
     /**
@@ -262,7 +262,7 @@ public class BlockBossLogic extends Siglet {
             return;
         }
         watchedSignal1Alt = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-        if (watchedSignal1Alt == null) log.warn("Signal "+name+" was not found!");
+        if (watchedSignal1Alt == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Signal_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
     /**
      * Return the system name of the alternate signal being monitored for first route
@@ -279,7 +279,7 @@ public class BlockBossLogic extends Siglet {
             return;
         }
         watchedSignal2 = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-        if (watchedSignal2 == null) log.warn("Signal "+name+" was not found!");
+        if (watchedSignal2 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Signal_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
     /**
      * Return the system name of the signal being monitored for the 2nd route
@@ -296,7 +296,7 @@ public class BlockBossLogic extends Siglet {
             return;
         }
         watchedSignal2Alt = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-        if (watchedSignal2Alt == null) log.warn("Signal "+name+" was not found!");
+        if (watchedSignal2Alt == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Signal_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
     /**
      * Return the system name of the secondary signal being monitored for the 2nd route
@@ -313,7 +313,7 @@ public class BlockBossLogic extends Siglet {
             return;
         }
         watchedSensor1 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchedSensor1 == null) log.warn("Sensor1 "+name+" was not found!");
+        if (watchedSensor1 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor1_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
         
     }
     /**
@@ -331,7 +331,7 @@ public class BlockBossLogic extends Siglet {
             return;
         }
         watchedSensor1Alt = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchedSensor1Alt == null) log.warn("Sensor1Alt "+name+" was not found!");
+        if (watchedSensor1Alt == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor1Alt_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
         
     }
     /**
@@ -349,7 +349,7 @@ public class BlockBossLogic extends Siglet {
             return;
         }
         watchedSensor2 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchedSensor2 == null) log.warn("Sensor2 "+name+" was not found!");
+        if (watchedSensor2 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor2_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
         
     }
     /**
@@ -367,7 +367,7 @@ public class BlockBossLogic extends Siglet {
             return;
         }
         watchedSensor2Alt = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchedSensor2Alt == null) log.warn("Sensor2Alt "+name+" was not found!");
+        if (watchedSensor2Alt == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor2Alt_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
         
     }
     /**
@@ -441,7 +441,7 @@ public class BlockBossLogic extends Siglet {
             return;
         }
         approachSensor1 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (approachSensor1 == null) log.warn("Approach Sensor1 "+name+" was not found!");
+        if (approachSensor1 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Approach_Sensor1_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
         
     }
     /**
@@ -531,7 +531,7 @@ public class BlockBossLogic extends Siglet {
         // manually and having it instantly recomputed & changed back
         driveSignal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    if (e.getPropertyName().equals("Held"))
+                    if (e.getPropertyName().equals(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Held")))
                         setOutput();
                 }
             });
@@ -568,7 +568,7 @@ public class BlockBossLogic extends Siglet {
             doFacing();
             break;
         default:
-            log.error("Unexpected mode: "+mode);
+            log.error(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Unexpected_mode:_")+mode);
         }
     }
 

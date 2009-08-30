@@ -30,7 +30,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  *              
  *              Revisions to add facing point sensors, approach lighting,
  *              limited speed, changed layout, and tool tips.  
@@ -103,32 +103,34 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     JTextField commentField;
     
-    String buttonSingleTooltip = "In direction of traffic";
-    String buttonTrailMainTooltip = "<HTML><BODY>Signal head for main track<BR>" 
-        + "through turnout in either direction</BODY></HTML>";
-    String buttonTrailDivTooltip = "<HTML><BODY>Signal head for branching track<BR>"
-        + "through turnout in either direction</BODY></HTML>";
-    String buttonFacingTooltip = "<HTML><BODY>Single signal head on single<BR>"
-        + "track facing double track</BODY></HTML>";
-    String outSignalFieldTooltip =  "<HTML><BODY>Enter a new signal head number, or<BR>"
-        + "enter an existing signal head number<BR>" 
-        + "then hit return to load its information.</BODY></HTML>";
-    String approachSensor1Tooltip = "<HTML><BODY>Enter sensor that lights this signal or<BR>"
-        + "leave blank for always on.";  
-    String sensorFieldTooltip =  "Sensor active sets this signal to Red.";            
-    String turnoutFieldTooltip = "Enter protected turnout number here.";
-    String flashBoxTooltip = "<HTML><BODY>One aspect faster than yellow displays<BR>" 
-        + "flashing yellow, rather than green.</BODY></HTML>";
-    String limitBoxTooltip = "<HTML><BODY>Limits the fastest aspect displayed<BR>"
-        + "to yellow, rather than green.</BODY></HTML>";
-    String nextSignalFieldTooltip = "<HTML><BODY>Enter the low speed signal head for this track.<BR>" 
-        + "For dual head signals the fastest aspect is protected.</BODY></HTML>";
-    String highSignalFieldTooltip = "<HTML><BODY>Enter the high speed signal head for this track.<BR>" 
-        + "For dual head signals the fastest aspect is protected.</BODY></HTML>";
-   String distantBoxTooltip = "<HTML><BODY>Mirrors the protected (following) signal's status<BR>" 
-        + "unless over ridden by an intermediate stop sensor.</BODY></HTML>";
+    static final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle");
     
-    public BlockBossFrame() { this("Simple Signal Logic");}
+    String buttonSingleTooltip = rbt.getString("In_direction_of_traffic");
+    String buttonTrailMainTooltip = rbt.getString("Signal_head_for_main_track")
+        + rbt.getString("through_turnout_in_either_direction");
+    String buttonTrailDivTooltip = rbt.getString("Signal_head_for_branching_track")
+        + rbt.getString("through_turnout_in_either_direction");
+    String buttonFacingTooltip = rbt.getString("Single_signal_head_on_single")
+        + rbt.getString("track_facing_double_track");
+    String outSignalFieldTooltip =  rbt.getString("Enter_a_new_signal_head_number,_or")
+        + rbt.getString("enter_an_existing_signal_head_number")
+        + rbt.getString("then_hit_return_to_load_its_information.");
+    String approachSensor1Tooltip = rbt.getString("Enter_sensor_that_lights_this_signal_or")
+        + rbt.getString("leave_blank_for_always_on.");
+    String sensorFieldTooltip =  rbt.getString("Sensor_active_sets_this_signal_to_Red.");
+    String turnoutFieldTooltip = rbt.getString("Enter_protected_turnout_number_here.");
+    String flashBoxTooltip = rbt.getString("One_aspect_faster_than_yellow_displays")
+        + rbt.getString("flashing_yellow,_rather_than_green.");
+    String limitBoxTooltip = rbt.getString("Limits_the_fastest_aspect_displayed")
+        + rbt.getString("to_yellow,_rather_than_green.");
+    String nextSignalFieldTooltip = rbt.getString("Enter_the_low_speed_signal_head_for_this_track.")
+        + rbt.getString("For_dual_head_signals_the_fastest_aspect_is_protected.");
+    String highSignalFieldTooltip = rbt.getString("Enter_the_high_speed_signal_head_for_this_track.")
+        + rbt.getString("For_dual_head_signals_the_fastest_aspect_is_protected.");
+   String distantBoxTooltip = rbt.getString("Mirrors_the_protected_(following)_signal's_status")
+        + rbt.getString("unless_over_ridden_by_an_intermediate_stop_sensor.");
+    
+    public BlockBossFrame() { this(rbt.getString("Simple_Signal_Logic"));}
     public BlockBossFrame(String frameName) {
 
         // create the frame
@@ -143,41 +145,41 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.configurexml.SaveMenu());
         setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.blockboss.BlockBossFrame", true);
+        addHelpMenu(rbt.getString("package.jmri.jmrit.blockboss.BlockBossFrame"), true);
         
         // create GUI items
-        sLimitBox  = new JCheckBox("Limited Speed");
-        tmLimitBox = new JCheckBox("Limited Speed");
+        sLimitBox  = new JCheckBox(rbt.getString("Limited_Speed"));
+        tmLimitBox = new JCheckBox(rbt.getString("Limited_Speed"));
         tmLimitBox.setModel(sLimitBox.getModel());
-        fmLimitBox  = new JCheckBox("Limited Speed");
+        fmLimitBox  = new JCheckBox(rbt.getString("Limited_Speed"));
         fmLimitBox.setModel(sLimitBox.getModel());
 
-        tdLimitBox = new JCheckBox("Limited Speed");
-        fdLimitBox  = new JCheckBox("Limited Speed");
+        tdLimitBox = new JCheckBox(rbt.getString("Limited_Speed"));
+        fdLimitBox  = new JCheckBox(rbt.getString("Limited_Speed"));
         fdLimitBox.setModel(tdLimitBox.getModel());
 
 
 
-        sFlashBox  = new JCheckBox("With Flashing Yellow");
-        tmFlashBox = new JCheckBox("With Flashing Yellow");
+        sFlashBox  = new JCheckBox(rbt.getString("With_Flashing_Yellow"));
+        tmFlashBox = new JCheckBox(rbt.getString("With_Flashing_Yellow"));
         tmFlashBox.setModel(sFlashBox.getModel());
-        tdFlashBox = new JCheckBox("With Flashing Yellow");
+        tdFlashBox = new JCheckBox(rbt.getString("With_Flashing_Yellow"));
         tdFlashBox.setModel(sFlashBox.getModel());
-        fFlashBox  = new JCheckBox("With Flashing Yellow");
+        fFlashBox  = new JCheckBox(rbt.getString("With_Flashing_Yellow"));
         fFlashBox.setModel(sFlashBox.getModel());
 
-        sDistantBox  = new JCheckBox("Is Distant Signal");
-        tmDistantBox = new JCheckBox("Is Distant Signal");
+        sDistantBox  = new JCheckBox(rbt.getString("Is_Distant_Signal"));
+        tmDistantBox = new JCheckBox(rbt.getString("Is_Distant_Signal"));
         tmDistantBox.setModel(sDistantBox.getModel());
-        tdDistantBox = new JCheckBox("Is Distant Signal");
+        tdDistantBox = new JCheckBox(rbt.getString("Is_Distant_Signal"));
         tdDistantBox.setModel(sDistantBox.getModel());
-        fDistantBox  = new JCheckBox("Is Distant Signal");
+        fDistantBox  = new JCheckBox(rbt.getString("Is_Distant_Signal"));
         fDistantBox.setModel(sDistantBox.getModel());
 
-        buttonSingle = new JRadioButton("On Single Block");
-        buttonTrailMain = new JRadioButton("Main Leg of Turnout");
-        buttonTrailDiv = new JRadioButton("Diverging Leg of Turnout");
-        buttonFacing = new JRadioButton("On Facing-Point Turnout");
+        buttonSingle = new JRadioButton(rbt.getString("On_Single_Block"));
+        buttonTrailMain = new JRadioButton(rbt.getString("Main_Leg_of_Turnout"));
+        buttonTrailDiv = new JRadioButton(rbt.getString("Diverging_Leg_of_Turnout"));
+        buttonFacing = new JRadioButton(rbt.getString("On_Facing-Point_Turnout"));
         ButtonGroup g = new ButtonGroup();
         g.add(buttonSingle);
         g.add(buttonTrailMain);
@@ -223,7 +225,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
         // add top part of GUI, holds signal head name to drive
         JPanel line = new JPanel();
-        line.add(new JLabel("         Signal Named "));
+        line.add(new JLabel(rbt.getString("_________Signal_Named_")));
         line.add(outSignalField= new JTextField(12));
         outSignalField.setToolTipText(outSignalFieldTooltip);
         outSignalField.addActionListener(new ActionListener() {
@@ -257,7 +259,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         getContentPane().add(fillModeFacing());
 
         line = new JPanel();
-        line.add(new JLabel("   Approach Lighting Sensor "));
+        line.add(new JLabel(rbt.getString("___Approach_Lighting_Sensor_")));
         line.add(approachSensorField1= new JTextField(6));
         approachSensorField1.setToolTipText(approachSensor1Tooltip);
         line.setAlignmentX(0.5f);        
@@ -266,14 +268,14 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
         line = new JPanel();
         line.setLayout(new FlowLayout());
-        line.add(new JLabel("Comment: "));
+        line.add(new JLabel(rbt.getString("Comment:_")));
         line.add(commentField = new JTextField(30));
         getContentPane().add(line);
 
         getContentPane().add(new JSeparator(JSeparator.HORIZONTAL));
         
         // add OK button at bottom
-        JButton b = new JButton("Apply");
+        JButton b = new JButton(rbt.getString("Apply"));
         b.setAlignmentX(0.5f);
         getContentPane().add(b);
         b.addActionListener(new ActionListener(){
@@ -311,7 +313,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         insets.top = 9;
         insets.bottom = 9;
 
-        modeSingle.add(new JLabel("  Protects Sensor/s"), constraints);        
+        modeSingle.add(new JLabel(rbt.getString("__Protects_Sensor/s")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         sSensorField1.setToolTipText(sensorFieldTooltip);
@@ -331,7 +333,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         constraints.gridy = 1;       
         constraints.fill = GridBagConstraints.NONE;
 
-        modeSingle.add(new JLabel("Protects Signal"), constraints);
+        modeSingle.add(new JLabel(rbt.getString("Protects_Signal")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         sNextSignalField1.setToolTipText(highSignalFieldTooltip);
@@ -377,7 +379,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         constraints.gridy = 0;
         insets.top = 9;
         insets.bottom = 9;
-        modeTrailMain.add(new JLabel(" Protects Sensor/s"), constraints);        
+        modeTrailMain.add(new JLabel(rbt.getString("_Protects_Sensor/s")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         tmSensorField1.setToolTipText(sensorFieldTooltip);
@@ -397,21 +399,21 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         constraints.gridx = 0;
         constraints.gridy = 1;
         insets.bottom = 9;
-        modeTrailMain.add(new JLabel("Red When Turnout"), constraints);        
+        modeTrailMain.add(new JLabel(rbt.getString("Red_When_Turnout")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         tmProtectTurnoutField.setToolTipText(turnoutFieldTooltip);
         modeTrailMain.add(tmProtectTurnoutField, constraints);
         constraints.gridx = 2;
         constraints.gridwidth = 2;
-        modeTrailMain.add(new JLabel("Is "+InstanceManager.turnoutManagerInstance().getThrownText()), constraints);
+        modeTrailMain.add(new JLabel(rbt.getString("Is_")+InstanceManager.turnoutManagerInstance().getThrownText()), constraints);
         constraints.gridwidth = 1;
         
         constraints.fill = GridBagConstraints.NONE;
         constraints.gridx = 0;
         constraints.gridy = 4;
         insets.bottom = 2;
-        modeTrailMain.add(new JLabel("Protects Signal"), constraints);
+        modeTrailMain.add(new JLabel(rbt.getString("Protects_Signal")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         tmNextSignalField1.setToolTipText(highSignalFieldTooltip);
@@ -457,7 +459,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         constraints.gridy = 0;
         insets.top = 9;
         insets.bottom = 9;
-        modeTrailDiv.add(new JLabel(" Protects Sensor/s"), constraints);        
+        modeTrailDiv.add(new JLabel(rbt.getString("_Protects_Sensor/s")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         tdSensorField1.setToolTipText(sensorFieldTooltip);
@@ -477,21 +479,21 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         constraints.gridx = 0;
         constraints.gridy = 1;
         insets.bottom = 9;
-        modeTrailDiv.add(new JLabel("Red When Turnout"), constraints);        
+        modeTrailDiv.add(new JLabel(rbt.getString("Red_When_Turnout")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         tdProtectTurnoutField.setToolTipText(turnoutFieldTooltip);
         modeTrailDiv.add(tdProtectTurnoutField, constraints);
         constraints.gridx = 2;
         constraints.gridwidth = 2;
-        modeTrailDiv.add(new JLabel("Is "+InstanceManager.turnoutManagerInstance().getClosedText()), constraints);
+        modeTrailDiv.add(new JLabel(rbt.getString("Is_")+InstanceManager.turnoutManagerInstance().getClosedText()), constraints);
         constraints.gridwidth = 1;
         
         constraints.fill = GridBagConstraints.NONE;
         constraints.gridx = 0;
         constraints.gridy = 4;
         insets.bottom = 2;
-        modeTrailDiv.add(new JLabel("Protects Signal"), constraints);
+        modeTrailDiv.add(new JLabel(rbt.getString("Protects_Signal")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         tdNextSignalField1.setToolTipText(highSignalFieldTooltip);
@@ -538,7 +540,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         constraints.gridy = 0;
         insets.top = 9;
         insets.bottom = 9;
-        modeFacing.add(new JLabel("Protects Sensor/s"), constraints);        
+        modeFacing.add(new JLabel(rbt.getString("Protects_Sensor/s")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         fSensorField1.setToolTipText(sensorFieldTooltip);
@@ -558,7 +560,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         constraints.gridx = 0;
         constraints.gridy = 1;
         insets.bottom = 9;
-        modeFacing.add(new JLabel("Watches Turnout"), constraints);        
+        modeFacing.add(new JLabel(rbt.getString("Watches_Turnout")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         fProtectTurnoutField.setToolTipText(turnoutFieldTooltip);
@@ -568,7 +570,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         constraints.gridx = 0;
         constraints.gridy = 2;
         insets.bottom = 2;
-        modeFacing.add(new JLabel("To Protect Signal"), constraints);
+        modeFacing.add(new JLabel(rbt.getString("To_Protect_Signal")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         fNextSignalField1.setToolTipText(highSignalFieldTooltip);
@@ -586,7 +588,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         constraints.gridx = 0;
         constraints.gridy = 3;
         insets.bottom = 9;
-        modeFacing.add(new JLabel("And Sensor/s"), constraints);
+        modeFacing.add(new JLabel(rbt.getString("And_Sensor/s")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         fNextSensorField1.setToolTipText(sensorFieldTooltip);
@@ -596,14 +598,14 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeFacing.add(fNextSensorField1Alt, constraints);
         constraints.gridx = 3;
         constraints.gridwidth = 2;
-        modeFacing.add(new JLabel("When Turnout is "+InstanceManager.turnoutManagerInstance().getClosedText()), constraints);
+        modeFacing.add(new JLabel(rbt.getString("When_Turnout_is_")+InstanceManager.turnoutManagerInstance().getClosedText()), constraints);
         constraints.gridwidth = 1;
 
         constraints.fill = GridBagConstraints.NONE;
         constraints.gridx = 0;
         constraints.gridy = 4;
         insets.bottom = 2;
-        modeFacing.add(new JLabel("And Protect Signal"), constraints);
+        modeFacing.add(new JLabel(rbt.getString("And_Protect_Signal")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         fNextSignalField2.setToolTipText(highSignalFieldTooltip);
@@ -621,7 +623,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         constraints.gridx = 0;
         constraints.gridy = 5;
         insets.bottom = 9;
-        modeFacing.add(new JLabel("And Sensor/s"), constraints);
+        modeFacing.add(new JLabel(rbt.getString("And_Sensor/s")), constraints);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridx = 1;
         fNextSensorField2.setToolTipText(sensorFieldTooltip);
@@ -631,7 +633,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeFacing.add(fNextSensorField2Alt, constraints);
         constraints.gridx = 3;
         constraints.gridwidth = 2;
-        modeFacing.add(new JLabel("When Turnout is "+InstanceManager.turnoutManagerInstance().getThrownText()), constraints);
+        modeFacing.add(new JLabel(rbt.getString("When_Turnout_is_")+InstanceManager.turnoutManagerInstance().getThrownText()), constraints);
         constraints.gridwidth = 1;
 
         constraints.gridy = 6;
@@ -652,8 +654,8 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     void okPressed() {
         // check signal head exists
         if (InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText())==null) {
-            setTitle("Simple Signal Logic");
-            JOptionPane.showMessageDialog(this,"Signal head \""+outSignalField.getText()+"\" is not defined yet");
+            setTitle(rbt.getString("Simple_Signal_Logic"));
+            JOptionPane.showMessageDialog(this,rbt.getString("Signal_head_\"")+outSignalField.getText()+rbt.getString("\"_is_not_defined_yet"));
             return;
         }
 
@@ -669,7 +671,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         else if (buttonFacing.isSelected())
             loadFacing(b);
         else {
-            log.error("no button selected?");
+            log.error(rbt.getString("no_button_selected?"));
             return;
         }
     }
@@ -763,18 +765,18 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         
         // check signal head exists
         if (InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText())==null) {
-            setTitle("Simple Signal Logic");
+            setTitle(rbt.getString("Simple_Signal_Logic"));
             return;
         }
         
         // find existing logic  
         BlockBossLogic b = BlockBossLogic.getExisting(outSignalField.getText());
         if (b==null) {
-            setTitle("Simple Signal Logic");
+            setTitle(rbt.getString("Simple_Signal_Logic"));
             return;
         }
         
-        setTitle("Signal logic for "+outSignalField.getText());
+        setTitle(rbt.getString("Signal_logic_for_")+outSignalField.getText());
 
         approachSensorField1.setText(b.getApproachSensor1());
         
@@ -831,7 +833,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         else if (buttonFacing.isSelected())
             modeFacing.setVisible(true);
         else {
-            log.debug("no button selected?");
+            log.debug(rbt.getString("no_button_selected?"));
         }
         modeSingle.validate();
         modeTrailMain.validate();

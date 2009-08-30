@@ -12,7 +12,7 @@ import javax.swing.JFrame;
  * "Simple Signal Logic" GUI panel.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class BlockBossAction extends AbstractAction {
@@ -24,7 +24,7 @@ public class BlockBossAction extends AbstractAction {
             setEnabled(false);
         }
     }
-    public BlockBossAction() { this("Simple Signal Logic");}
+    public BlockBossAction() { this(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Simple_Signal_Logic"));}
 
     public void actionPerformed(ActionEvent e) {
 
