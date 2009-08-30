@@ -6,7 +6,7 @@ package jmri.jmrix.libusb;
  * Invoke the UsbView tool from libusb-java.
  *
  * @author   Bob Jacobsen Copyright 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class UsbViewAction extends javax.swing.AbstractAction {
 
@@ -15,7 +15,7 @@ public class UsbViewAction extends javax.swing.AbstractAction {
     }
 
     public UsbViewAction() {
-        this("USB Device Viewer");
+        this(java.util.ResourceBundle.getBundle("jmri.jmrix.libusb.UsbViewActionBundle").getString("USB_Device_Viewer"));
     }
 
     public void actionPerformed(java.awt.event.ActionEvent e) {
