@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -69,6 +69,10 @@
 # 07/23/2009 - Added a Halt button that tries to -1 the throttle to
 #              stop now and not be smooth. Plus a few other fixes
 #              like the system vs user name thing.
+#
+# 08/30/2009 - Added methods so this can be run from a master script
+#              for running mulitple throttles. Also improved many
+#              reliblity issues in the code.
 #
 # Much thanks go to the Medina Railroad Museum who was asked for
 # something to help out when they have larger number of visitors
@@ -137,19 +141,25 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
 
     def init(self):
         self.holdMoving = True
+        if (self.currentThrottle != None) :
+            oldId = self.currentThrottle.getLocoAddress()
+            self.msgText("stop and release the current loco: " + oldId.toString() + "\n")
+            self.doStop();
+            self.currentThrottle.release()
+            self.msgText("Throttle " + oldId.toString() + " released\n")
         self.msgText("Getting throttle - ") #add text to scroll field
-        number = int(self.locoAddress.text)
-        dir = self.locoLong.isSelected()
-        self.throttle = self.getThrottle(number, dir)
-        self.currentThrottle = self.throttle
-        if (self.throttle == None) :
+        id = int(self.locoAddress.text)
+        isLong = self.locoLong.isSelected()
+        throttle = self.getThrottle(id, isLong)
+        self.currentThrottle = throttle
+        if (self.currentThrottle == None) :
            self.msgText("Couldn't assign throttle! - Run stopped\n")
            self.doHalt()
         else : 
            self.msgText("got throttle\n")
-           self.throttle.setIsForward(self.locoForward.isSelected())
-           self.throttle.setF0(self.locoHeadlight.isSelected())
-           self.throttle.setF1(self.locoBell.isSelected())
+           self.currentThrottle.setIsForward(self.locoForward.isSelected())
+           self.currentThrottle.setF0(self.locoHeadlight.isSelected())
+           self.currentThrottle.setF1(self.locoBell.isSelected())
         self.holdMoving = False
         self.didWeMoveCounterCheck(None)
         return
@@ -846,8 +856,10 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 self.priorBlocks = self.currentBlocks
                 if (self.blockDirection.isSelected() == True) :
                     self.currentDirection = jmri.Path.EAST
+                    self.currentBlock.setDirection(jmri.Path.EAST)
                 else :
                     self.currentDirection = jmri.Path.WEST
+                    self.currentBlock.setDirection(jmri.Path.WEST)
                 self.start()
                 self.msgText("Change button states\n")     # add text
                 self.stopButton.setEnabled(True)
