@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -932,6 +932,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 ent.putAttribute('RT_locoSpeedRed', self.locoSpeedRed.text)
                 ent.putAttribute('RT_locoRateRed', self.locoRateRed.text)
                 ent.putAttribute('RT_locoDistanceRedStop', self.locoDistanceRedStop.text)
+                ent.updateFile()
                 self.rosterInstance.writeRosterFile()
                 self.msgText("Save completed: " + ent.fileName + "\n")
         return
