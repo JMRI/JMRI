@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a car roster -->
-<!-- $Id: operations-cars.dtd,v 1.8 2009-07-15 14:09:47 dan_boudreau Exp $ -->
+<!-- $Id: operations-cars.dtd,v 1.9 2009-09-02 03:31:32 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT operations-config (cars | roadNames | carTypes | carColors | carLengths | carOwners | kernels | loads)*>
+<!ELEMENT operations-config (options | cars | roadNames | carTypes | carColors | carLengths | carOwners | kernels | loads)*>
 
 <!ELEMENT roadNames (#PCDATA)>
 <!ELEMENT carTypes (#PCDATA)>
@@ -21,6 +21,9 @@
 <!ELEMENT carLengths (#PCDATA)>
 <!ELEMENT carOwners (#PCDATA)>
 <!ELEMENT kernels (#PCDATA)>
+
+<!ELEMENT options (carEditOptions)*>
+<!ELEMENT carEditOptions EMPTY>
 
 <!ELEMENT cars (car*)>
 <!ELEMENT car EMPTY>
@@ -67,5 +70,8 @@
 <!ATTLIST load type					CDATA #IMPLIED> 
 <!ATTLIST load names				CDATA #IMPLIED> 
 
-
+<!ATTLIST carEditOptions x			CDATA #IMPLIED> 
+<!ATTLIST carEditOptions y			CDATA #IMPLIED> 
+<!ATTLIST carEditOptions height		CDATA #IMPLIED> 
+<!ATTLIST carEditOptions width		CDATA #IMPLIED> 
 
