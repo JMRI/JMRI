@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2009
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.27 $
+ * @version    $Revision: 2.28 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -603,6 +603,13 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 					  " Current step mode is: " + this.speedStepMode );
 
         this.speedSetting = speed;
+        if(XNetTrafficController.instance()
+                               .getCommandStation()
+                               .getCommandStationType()==0x10) {
+            // MultiMaus doesn't support emergency off.  When -1 is
+            // sent, set the speed to 0 instead.
+            if(speed<0) speed=0;
+        }
 	if (speed<0)
             {
                 /* we're sending an emergency stop to this locomotive only */
@@ -935,7 +942,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                     requestState=THROTTLEIDLE;
                     sendQueuedMessage();
                 } else if(l.getElement(0)==XNetConstants.CS_INFO &&
-                          l.getElement(2)==XNetConstants.CS_NOT_SUPPORTED) {
+                          l.getElement(1)==XNetConstants.CS_NOT_SUPPORTED) {
                     /* The Command Station does not support this command */
                     log.error("Unsupported Command Sent to command station");
                     requestState=THROTTLEIDLE;
