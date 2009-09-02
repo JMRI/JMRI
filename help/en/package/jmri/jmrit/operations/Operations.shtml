@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.45 2009-08-29 16:09:25 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.46 2009-09-02 03:34:58 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -1104,8 +1104,10 @@ following operation windows:
 <ul>
 <li>Settings</li>
 <li>Edit Location</li>
+<li>Edit Car</li>
+<li>Edit Engine</li>
 <li>Trains</li>
-<li>Edit Trains</li>
+<li>Edit Train</li>
 </ul>
 
 <P>The end of operations help.</P>
