@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.52 $
+ * @version             $Revision: 1.53 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -75,11 +75,14 @@ public class TrainBuilder extends TrainCommon{
 	 * 3. Optional, train must depart with the required number of moves (cars)
 	 * 4. Add caboose or car with FRED to train if required
 	 * 5. All cars and engines must leave staging tracks
-	 * 6. If a train is assigned to staging, all cars and engines must go there  
-	 * 7. Service locations based on train direction, location car types and roads
-	 * 8. Ignore train/track direction when servicing the last location in a route
+	 * 6  When departing staging find a track matching engine requirements
+	 * 7. If a train is assigned to staging, all cars and engines must go there  
+	 * 8. Service locations based on train direction, location car types and roads
 	 * 9. Ignore track direction when train is a local (serves one location)
 	 *
+	 * @param train the train that is to be built
+	 * @param jOptionPane = true normal operation, false test mode - suppress popup error 
+	 * message windows.
 	 */
 	public void build(Train train, boolean jOptionPane){
 		log.debug("Building train "+train.getName());
@@ -219,9 +222,8 @@ public class TrainBuilder extends TrainCommon{
 				return;
 			}
 		}
-
 		// load engines for this train
-		if (departStageTrack == null && !getEngines(fileOut)){
+		else if (!getEngines(fileOut)){
 			buildFailed(fileOut, rb.getString("buildErrorEngines"));
 			return;
 		}
@@ -234,28 +236,7 @@ public class TrainBuilder extends TrainCommon{
 				train.getName(), Integer.toString(carList.size())}));
 			return;
 		}
-		// get any requirements for this train
-		boolean requiresCaboose = false;		// start off without any requirements
-		boolean requiresFred = false;
-		boolean foundFred = true;
-		boolean foundCaboose = true;
-		String textRequires = rb.getString("None");
-		if (train.getRequirements()>0){
-			if ((train.getRequirements()& Train.FRED) > 0){
-				requiresFred = true;
-				foundFred = false;
-				textRequires = rb.getString("FRED");
-			} 
-			if ((train.getRequirements()& Train.CABOOSE) > 0){
-				requiresCaboose = true;
-				foundCaboose = false;
-				textRequires = rb.getString("Caboose");
-			}
-			if (!train.getCabooseRoad().equals("")){
-				textRequires += " road ("+train.getCabooseRoad()+")";
-			}
-			addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildTrainRequires"),new Object[]{train.getName(), textRequires}));
-		}
+
 		// show road names that this train will service
 		if (!train.getRoadOption().equals(Train.ALLROADS)){
 			String[] roads = train.getRoadNames();
@@ -390,113 +371,9 @@ public class TrainBuilder extends TrainCommon{
 				}
 			}
 		}
-		// now go through the car list and find a caboose or FRED if required
-		// first pass, try and find a caboose that matches the engine's road
-		if(requiresCaboose && train.getCabooseRoad().equals("") && train.getLeadEngine() != null){
-			for (carIndex=0; carIndex<carList.size(); carIndex++){
-				Car car = carManager.getCarById(carList.get(carIndex));
-				if (car.isCaboose() && car.getLocationName().equals(train.getTrainDepartsName()) && car.getRoad().equals(train.getLeadEngine().getRoad())
-						&& checkPickUpTrainDirection(fileOut, car, train.getRoute().getLocationById(routeList.get(0)))){
-					if (car.getDestination() == null || car.getDestination() == terminateLocation){
-						addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildFoundCaboose"),new Object[]{car.getId()}));
-						// remove all other cabooses from list
-						for (int i=0; i<carList.size(); i++){
-							Car testCar = carManager.getCarById(carList.get(i));
-							if (testCar.isCaboose() && testCar != car){
-								// need to keep it if departing staging
-								if (departStageTrack == null || testCar.getTrack() != departStageTrack){
-									addLine(fileOut, FIVE, "Exclude caboose ("+testCar.getId()+") at location ("+testCar.getLocationName()+", "+testCar.getTrackName()+")");
-									carList.remove(carList.get(i));		// remove this car from the list
-									i--;
-								}
-							}
-						}
-						break;
-					}
-				}
-			}
-		}
-		// second pass looking for caboose or car with FRED and if not needed remove
-		for (carIndex=0; carIndex<carList.size(); carIndex++){
-			Car c = carManager.getCarById(carList.get(carIndex));
-			// find a caboose or card with FRED for this train if needed
-			// check for caboose or car with FRED
-			if (c.isCaboose()){
-				addLine(fileOut, FIVE, "Car (" +c.getId()+ ") is a caboose");
-				if (departStageTrack != null && c.getTrack() == departStageTrack) 
-					foundCaboose = false;		// must move caboose from staging   
-			}
-			if (c.hasFred()){
-				addLine(fileOut, FIVE, "Car (" +c.getId()+ ") has a FRED");
-				if (departStageTrack != null && c.getTrack() == departStageTrack) 
-					foundFred = false;		// must move car with FRED from staging
-			}
-			
-			// remove cabooses and cars with FRED if not needed for train
-			if (c.isCaboose() && foundCaboose || c.hasFred() && foundFred){
-				addLine(fileOut, THREE, "Exclude car ("+c.getId()+ ") type ("+c.getType()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
-				carList.remove(carList.get(carIndex));		// remove this car from the list
-				carIndex--;
-				continue;
-			}
-			// now find destinations for cabooses or cars with FRED
-			if (c.isCaboose() && !foundCaboose || c.hasFred() && !foundFred){	
-				if(c.getLocationName().equals(train.getTrainDepartsName()) 
-						&& checkPickUpTrainDirection(fileOut, c, train.getRoute().getLocationById(routeList.get(0)))){
-					if (c.getDestination() == null || c.getDestination() == terminateLocation || departStageTrack != null){
-						if (train.getCabooseRoad().equals("") || train.getCabooseRoad().equals(c.getRoad()) || departStageTrack != null){
-							// find a track to place car
-							if (train.getTrainTerminatesRouteLocation().getStagingTrack() == null){
-								List<String> sls = terminateLocation.getTracksByMovesList(null);
-								for (int s = 0; s < sls.size(); s++){
-									Track destTrack = terminateLocation.getTrackById(sls.get(s));
-									String status = c.testDestination(terminateLocation, destTrack);
-									if (status.equals(Car.OKAY)){
-										boolean carAdded = addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, destTrack);
-										if (carAdded && c.isCaboose())
-											foundCaboose = true;
-										if (carAdded && c.hasFred())
-											foundFred = true;
-										break;
-									} 
-									addLine(fileOut, SEVEN, "Can not drop car ("+c.getId()+") to track (" +destTrack.getName()+") because of "+status);
-								}
-								if ((c.isCaboose() && !foundCaboose) || (c.hasFred() && !foundFred)){
-									addLine(fileOut, THREE, "Could not find a destination for ("+c.getId()+")");
-									if (departStageTrack != null && c.getTrack() == departStageTrack){
-										buildFailed(fileOut, rb.getString("buildErrorCaboose"));
-										return;
-									}
-								}
-							} else {
-								// terminate into staging
-								String status = c.testDestination(terminateLocation, train.getTrainTerminatesRouteLocation().getStagingTrack());
-								if (status.equals(Car.OKAY)){
-									boolean carAdded = addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, train.getTrainTerminatesRouteLocation().getStagingTrack());
-									if (carAdded && c.isCaboose())
-										foundCaboose = true;
-									if (carAdded && c.hasFred())
-										foundFred = true;
-								} else {
-									addLine(fileOut, SEVEN, "Can not drop car ("+c.getId()+") to track (" +train.getTrainTerminatesRouteLocation().getStagingTrack().getName()+") because of "+status);
-								}
-							}
-						}
-					}
-				} 
-				// caboose or FRED not at departure location so remove from list
-				if((c.isCaboose() && !foundCaboose) || (c.hasFred() && !foundFred)) {
-					addLine(fileOut, THREE, "Exclude car ("+c.getId()+ ") type ("+c.getType()+ ") at location ("+c.getLocationName()+" "+c.getTrackName()+")");
-					carList.remove(carList.get(carIndex));		// remove this car from the list
-					carIndex--;
-				}
-			}
-		}
-		if (requiresFred && !foundFred || requiresCaboose && !foundCaboose){
-			buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorRequirements"),
-					new Object[]{train.getName(), textRequires, train.getTrainDepartsName(), train.getTrainTerminatesName()}));
+		// get caboose or car with FRED if needed for train
+		if(!getCabooseOrFred(fileOut))
 			return;
-		}
 		addLine(fileOut, THREE, "Requested cars (" +requested+ ") for train (" +train.getName()+ ") the number available (" +carList.size()+ ") building train!");
 
 		// now find destinations for cars 
@@ -969,15 +846,8 @@ public class TrainBuilder extends TrainCommon{
 		}
 		// terminating into staging without engines?
 		if (terminateTrack == null && engineList.size() == 0){
-			// find a staging track if there's one, take first available
-			List<String> destTracks = terminateLocation.getTracksByMovesList(Track.STAGING);
-			for (int s = 0; s < destTracks.size(); s++){
-				Track track = terminateLocation.getTrackById(destTracks.get(s));
-				if (track.getNumberRS()==0 && track.getDropRS()==0){
-					terminateTrack = track;
-					break;
-				}
-			}
+			// Use previously found staging track if there's one
+			terminateTrack = terminateStageTrack;
 		}
 		if (terminateTrack != null && terminateTrack.getLocType().equals(Track.STAGING)){
 			train.getTrainTerminatesRouteLocation().setStagingTrack(terminateTrack);
@@ -1020,6 +890,148 @@ public class TrainBuilder extends TrainCommon{
 			nE = Setup.getEngineSize();
 		} 
 		return nE;
+	}
+	/**
+	 * Adds a caboose or car with FRED to the train if needed.  Caboose or
+	 * car with FRED must travel with the train to the last location in the
+	 * route.
+	 * @param fileOut
+	 * @return true if the correct caboose or car with FRED is found and accepted by
+	 * last location in route.
+	 */
+	private boolean getCabooseOrFred(PrintWriter fileOut){
+		// get any requirements for this train
+		boolean requiresCaboose = false;		// start off without any requirements
+		boolean requiresFred = false;
+		boolean foundFred = true;
+		boolean foundCaboose = true;
+		String textRequires = rb.getString("None");
+		if (train.getRequirements()>0){
+			if ((train.getRequirements()& Train.FRED) > 0){
+				requiresFred = true;
+				foundFred = false;
+				textRequires = rb.getString("FRED");
+			} 
+			if ((train.getRequirements()& Train.CABOOSE) > 0){
+				requiresCaboose = true;
+				foundCaboose = false;
+				textRequires = rb.getString("Caboose");
+			}
+			if (!train.getCabooseRoad().equals("")){
+				textRequires += " road ("+train.getCabooseRoad()+")";
+			}
+			addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildTrainRequires"),new Object[]{train.getName(), textRequires}));
+		} else {
+			addLine(fileOut, SEVEN, "Train does not require caboose or car with FRED");
+		}
+		// now go through the car list and find a caboose or FRED if required
+		// first pass, try and find a caboose that matches the engine's road
+		if(requiresCaboose && train.getCabooseRoad().equals("") && train.getLeadEngine() != null){
+			for (carIndex=0; carIndex<carList.size(); carIndex++){
+				Car car = carManager.getCarById(carList.get(carIndex));
+				if (car.isCaboose() && car.getLocationName().equals(train.getTrainDepartsName()) && car.getRoad().equals(train.getLeadEngine().getRoad())
+						&& checkPickUpTrainDirection(fileOut, car, train.getRoute().getLocationById(routeList.get(0)))){
+					if (car.getDestination() == null || car.getDestination() == terminateLocation){
+						addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildFoundCaboose"),new Object[]{car.getId()}));
+						// remove all other cabooses from list
+						for (int i=0; i<carList.size(); i++){
+							Car testCar = carManager.getCarById(carList.get(i));
+							if (testCar.isCaboose() && testCar != car){
+								// need to keep it if departing staging
+								if (departStageTrack == null || testCar.getTrack() != departStageTrack){
+									addLine(fileOut, FIVE, "Exclude caboose ("+testCar.getId()+") at location ("+testCar.getLocationName()+", "+testCar.getTrackName()+")");
+									carList.remove(carList.get(i));		// remove this car from the list
+									i--;
+								}
+							}
+						}
+						break;	// found a caboose matches engine and removed all others from list
+					}
+				}
+			}
+		}
+		// second pass looking for caboose or car with FRED and if not needed remove
+		for (carIndex=0; carIndex<carList.size(); carIndex++){
+			Car c = carManager.getCarById(carList.get(carIndex));
+			// find a caboose or card with FRED for this train if needed
+			// check for caboose or car with FRED
+			if (c.isCaboose()){
+				addLine(fileOut, FIVE, "Car (" +c.getId()+ ") is a caboose, road (" +c.getRoad()+ ")");
+				if (departStageTrack != null && c.getTrack() == departStageTrack) 
+					foundCaboose = false;		// must move caboose from staging   
+			}
+			if (c.hasFred()){
+				addLine(fileOut, FIVE, "Car (" +c.getId()+ ") has a FRED, road (" +c.getRoad()+ ")");
+				if (departStageTrack != null && c.getTrack() == departStageTrack) 
+					foundFred = false;		// must move car with FRED from staging
+			}
+			
+			// remove cabooses and cars with FRED if not needed for train
+			if (c.isCaboose() && foundCaboose || c.hasFred() && foundFred){
+				addLine(fileOut, THREE, "Exclude car ("+c.getId()+ ") type ("+c.getType()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
+				carList.remove(carList.get(carIndex));		// remove this car from the list
+				carIndex--;
+				continue;
+			}
+			// now find destination track for cabooses or cars with FRED
+			if (c.isCaboose() && !foundCaboose || c.hasFred() && !foundFred){	
+				if(c.getLocationName().equals(train.getTrainDepartsName()) 
+						&& checkPickUpTrainDirection(fileOut, c, train.getRoute().getLocationById(routeList.get(0)))){
+					if (c.getDestination() == null || c.getDestination() == terminateLocation || departStageTrack != null){
+						if (train.getCabooseRoad().equals("") || train.getCabooseRoad().equals(c.getRoad()) || departStageTrack != null){
+							// find a track to place car
+							if (train.getTrainTerminatesRouteLocation().getStagingTrack() == null){
+								List<String> sls = terminateLocation.getTracksByMovesList(null);
+								for (int s = 0; s < sls.size(); s++){
+									Track destTrack = terminateLocation.getTrackById(sls.get(s));
+									String status = c.testDestination(terminateLocation, destTrack);
+									if (status.equals(Car.OKAY)){
+										boolean carAdded = addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, destTrack);
+										if (carAdded && c.isCaboose())
+											foundCaboose = true;
+										if (carAdded && c.hasFred())
+											foundFred = true;
+										break;
+									} 
+									addLine(fileOut, SEVEN, "Can not drop car ("+c.getId()+") to track (" +destTrack.getName()+") because of "+status);
+								}
+								if ((c.isCaboose() && !foundCaboose) || (c.hasFred() && !foundFred)){
+									addLine(fileOut, THREE, "Could not find a destination for ("+c.getId()+")");
+									if (departStageTrack != null && c.getTrack() == departStageTrack){
+										buildFailed(fileOut, rb.getString("buildErrorCaboose"));
+										return false;
+									}
+								}
+							} else {
+								// terminate into staging
+								String status = c.testDestination(terminateLocation, train.getTrainTerminatesRouteLocation().getStagingTrack());
+								if (status.equals(Car.OKAY)){
+									boolean carAdded = addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, train.getTrainTerminatesRouteLocation().getStagingTrack());
+									if (carAdded && c.isCaboose())
+										foundCaboose = true;
+									if (carAdded && c.hasFred())
+										foundFred = true;
+								} else {
+									addLine(fileOut, SEVEN, "Can not drop car ("+c.getId()+") to track (" +train.getTrainTerminatesRouteLocation().getStagingTrack().getName()+") because of "+status);
+								}
+							}
+						}
+					}
+				} 
+				// caboose or FRED not at departure location so remove from list
+				if((c.isCaboose() && !foundCaboose) || (c.hasFred() && !foundFred)) {
+					addLine(fileOut, THREE, "Exclude car ("+c.getId()+ ") type ("+c.getType()+ ") at location ("+c.getLocationName()+" "+c.getTrackName()+")");
+					carList.remove(carList.get(carIndex));		// remove this car from the list
+					carIndex--;
+				}
+			}
+		}
+		if (requiresFred && !foundFred || requiresCaboose && !foundCaboose){
+			buildFailed(fileOut, MessageFormat.format(rb.getString("buildErrorRequirements"),
+					new Object[]{train.getName(), textRequires, train.getTrainDepartsName(), train.getTrainTerminatesName()}));
+			return false;
+		}
+		return true;
 	}
 	
 	/**

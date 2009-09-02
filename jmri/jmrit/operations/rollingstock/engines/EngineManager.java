@@ -2,12 +2,16 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
+import java.awt.Dimension;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.JComboBox;
+
+import org.jdom.Element;
 
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.routes.Route;
@@ -20,10 +24,15 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
+	// Edit engine frame attributes
+	protected EngineEditFrame _engineEditFrame = null;
+	protected Dimension _editFrameDimension = null;
+	protected Point _editFramePosition = null;
+
 	LocationManager locationManager = LocationManager.instance();
 	protected Hashtable<String, Engine> _engineHashTable = new Hashtable<String, Engine>();   		// stores Engines by id
 	protected Hashtable<String, Consist> _consistHashTable = new Hashtable<String, Consist>();   	// stores Consists by number
@@ -51,6 +60,17 @@ public class EngineManager implements java.beans.PropertyChangeListener {
 		return _instance;
 	}
 
+	public void setCarEditFrame(EngineEditFrame frame){
+		_engineEditFrame = frame;
+	}
+
+	public Dimension getEngineEditFrameSize(){
+		return _editFrameDimension;
+	}
+
+	public Point getEngineEditFramePosition(){
+		return _editFramePosition;
+	}
 	/**
 	 * @return Number of engines in the Roster
 	 */
@@ -731,6 +751,54 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     	return out;
     }
 
+	public void options (org.jdom.Element values) {
+		if (log.isDebugEnabled()) log.debug("ctor from element "+values);
+		// get Engine Edit attributes
+		Element e = values.getChild("engineEditOptions");
+		if (e != null){
+			try {
+				int x = e.getAttribute("x").getIntValue();
+				int y = e.getAttribute("y").getIntValue();
+				int height = e.getAttribute("height").getIntValue();
+				int width = e.getAttribute("width").getIntValue();
+				_editFrameDimension = new Dimension(width, height);
+				_editFramePosition = new Point(x,y);
+			} catch ( org.jdom.DataConversionException ee) {
+				log.debug("Did not find train edit frame attributes");
+			} catch ( NullPointerException ne) {
+				log.debug("Did not find train edit frame attributes");
+			}
+		}
+	}
+
+	   /**
+     * Create an XML element to represent this Entry. This member has to remain synchronized with the
+     * detailed DTD in operations-locations.dtd.
+     * @return Contents in a JDOM Element
+     */
+    public org.jdom.Element store() {
+    	Element values = new Element("options");
+        // now save Engine Edit frame size and position
+        Element e = new org.jdom.Element("engineEditOptions");
+        Dimension size = getEngineEditFrameSize();
+        Point posn = getEngineEditFramePosition();
+        if (_engineEditFrame != null){
+        	size = _engineEditFrame.getSize();
+        	posn = _engineEditFrame.getLocation();
+        	_editFrameDimension = size;
+        	_editFramePosition = posn;
+        }
+        if (posn != null){
+        	e.setAttribute("x", ""+posn.x);
+        	e.setAttribute("y", ""+posn.y);
+        }
+        if (size != null){
+        	e.setAttribute("height", ""+size.height);
+        	e.setAttribute("width", ""+size.width); 
+        }
+        values.addContent(e);
+        return values;
+    }
 
     /**
      * The PropertyChangeListener interface in this class is

@@ -23,7 +23,6 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 
@@ -31,7 +30,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -260,11 +259,15 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 
 		// set frame size and location for display
 		pack();
-		if ( (getWidth()<400)) 
+		if (manager.getEngineEditFrameSize()!= null)
+			setSize(manager.getEngineEditFrameSize());
+		else if (getWidth()<400)
 			setSize(450, getHeight());
 		else
 			setSize (getWidth()+50, getHeight());
-		setLocation(Control.panelX, Control.panelY);
+		if (manager.getEngineEditFramePosition()!= null){
+			setLocation(manager.getEngineEditFramePosition());
+		}
 		setVisible(true);	
 	}
 
@@ -410,6 +413,8 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 				}
 			}
 			addEngine();
+			// save frame size and position
+			manager.setCarEditFrame(this);
 			managerXml.writeOperationsEngineFile();		//save engine file
 			carManagerXml.writeOperationsCarFile(); 	//save road names, and owners
 		}

@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * and car kernels.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class CarManagerXml extends XmlFile {
 	
@@ -102,6 +102,7 @@ public class CarManagerXml extends XmlFile {
 
 
 	        // add top-level elements
+	        root.addContent(manager.store());
 	        Element values;
 	        root.addContent(values = new Element("roadNames"));
 	        String[]roads = CarRoads.instance().getNames();
@@ -220,7 +221,11 @@ public class CarManagerXml extends XmlFile {
         if (log.isDebugEnabled()) XmlFile.dumpElement(root);
         
         CarManager manager = CarManager.instance();
-
+       	if (root.getChild("options") != null) {
+    		Element e = root.getChild("options");
+    		manager.options(e);
+    	}
+       	
         if (root.getChild("roadNames")!= null){
         	String names = root.getChildText("roadNames");
         	String[] roads = names.split("%%");

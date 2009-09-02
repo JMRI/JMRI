@@ -10,6 +10,8 @@ import jmri.jmrit.operations.setup.OperationsXml;
 
 import jmri.jmrit.operations.trains.Train;
 
+import java.awt.Dimension;
+import java.awt.Point;
 import java.util.Enumeration;
 
 import java.util.ArrayList;
@@ -18,15 +20,22 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import org.jdom.Element;
+
 
 /**
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.24 $
+ * @version	$Revision: 1.25 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
+	// Edit car frame attributes
+	protected CarEditFrame _carEditFrame = null;
+	protected Dimension _editFrameDimension = null;
+	protected Point _editFramePosition = null;
+
 	LocationManager locationManager = LocationManager.instance();
 	protected Hashtable<String, Car> _carHashTable = new Hashtable<String, Car>();   		// stores Cars by id
 	protected Hashtable<String, Kernel> _kernelHashTable = new Hashtable<String, Kernel>(); // stores Kernels by number
@@ -52,6 +61,18 @@ public class CarManager implements java.beans.PropertyChangeListener {
 		}
 		if (Control.showInstance && log.isDebugEnabled()) log.debug("CarManager returns instance "+_instance);
 		return _instance;
+	}
+
+	public void setCarEditFrame(CarEditFrame frame){
+		_carEditFrame = frame;
+	}
+
+	public Dimension getCarEditFrameSize(){
+		return _editFrameDimension;
+	}
+
+	public Point getCarEditFramePosition(){
+		return _editFramePosition;
 	}
 
 	/**
@@ -892,7 +913,55 @@ public class CarManager implements java.beans.PropertyChangeListener {
     	return out;
     }
 
+	public void options (org.jdom.Element values) {
+		if (log.isDebugEnabled()) log.debug("ctor from element "+values);
+		// get Car Edit attributes
+		Element e = values.getChild("carEditOptions");
+		if (e != null){
+			try {
+				int x = e.getAttribute("x").getIntValue();
+				int y = e.getAttribute("y").getIntValue();
+				int height = e.getAttribute("height").getIntValue();
+				int width = e.getAttribute("width").getIntValue();
+				_editFrameDimension = new Dimension(width, height);
+				_editFramePosition = new Point(x,y);
+			} catch ( org.jdom.DataConversionException ee) {
+				log.debug("Did not find train edit frame attributes");
+			} catch ( NullPointerException ne) {
+				log.debug("Did not find train edit frame attributes");
+			}
+		}
+	}
 
+	   /**
+     * Create an XML element to represent this Entry. This member has to remain synchronized with the
+     * detailed DTD in operations-locations.dtd.
+     * @return Contents in a JDOM Element
+     */
+    public org.jdom.Element store() {
+    	Element values = new Element("options");
+        // now save Car Edit frame size and position
+        Element e = new org.jdom.Element("carEditOptions");
+        Dimension size = getCarEditFrameSize();
+        Point posn = getCarEditFramePosition();
+        if (_carEditFrame != null){
+        	size = _carEditFrame.getSize();
+        	posn = _carEditFrame.getLocation();
+        	_editFrameDimension = size;
+        	_editFramePosition = posn;
+        }
+        if (posn != null){
+        	e.setAttribute("x", ""+posn.x);
+        	e.setAttribute("y", ""+posn.y);
+        }
+        if (size != null){
+        	e.setAttribute("height", ""+size.height);
+        	e.setAttribute("width", ""+size.width); 
+        }
+        values.addContent(e);
+        return values;
+    }
+    
     /**
      * The PropertyChangeListener interface in this class is
      * intended to keep track of user name changes to individual NamedBeans.
