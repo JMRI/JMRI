@@ -36,7 +36,7 @@ import java.awt.event.ItemEvent;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.78 $
+ * @version   $Revision: 1.79 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -94,7 +94,8 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // create ShutDownTasks
         if (jmri.InstanceManager.shutDownManagerInstance()!=null) {
-            if (getModePane()!=null && decoderDirtyTask == null) decoderDirtyTask = 
+            //if (getModePane()!=null && decoderDirtyTask == null) decoderDirtyTask =
+            if (decoderDirtyTask == null) decoderDirtyTask =
                                             new SwingShutDownTask("DecoderPro Decoder Window Check", 
                                                                   rbt.getString("PromptQuitWindowNotWrittenDecoder"), 
                                                                   (String)null, this
