@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!--Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
-<!--$Id: ESU_Bachman_3_function.xml,v 1.1 2009-03-28 19:40:07 jacobsen Exp $ -->
+<!--$Id: ESU_Bachman_3_function.xml,v 1.2 2009-09-03 22:35:41 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,7 +16,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
-
+		<version author="Peter Ulvestad" version="2" lastUpdated="20090726"/>
 		<version author="Ian Birchenough@talktalk.netJeff Schmaltz escopetas@comcast.net"
 			version="1.0" lastUpdated="20080131" />
 
@@ -27,7 +27,7 @@
 
      Based on theBachmann Branchlines 3 function decoder leaflet
 
-     This decoder XML is meant to be used with the "Comprehensive" programmer format.
+     This decoder XML is meant to be used with the "Comprehensive" programmer format
     
      I did not include low/high versionID because ESU CV 7 version numbers are not included in the Bachmann data and appear to be set to 0 on the decoder itself
 
@@ -35,13 +35,12 @@
 
      Version History:
 
-        1.0 - Initial release 28 Mar 2009
--->
-
+        1.0 - Initial release 28 Mar 2009-->
+<!-- Version 2 - Added CV17 - Extended address, corrected CV4 max value and CV5 default value (Peter Ulvestad) -->
 
 <decoder>
-	<family name = "Bachmann 336-553" mfg = "Electronic Solutions Ulm GmbH">
-		<model model = "EZ Command 3 function decoder"
+	<family name = "Bachmann" mfg = "Electronic Solutions Ulm GmbH">
+		<model model = "EZ Command 3 function decoder (336-553)"
 			maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A"
 			numOuts="3" numFns="4"
 			formFactor="HO" connector="NMRAmedium" >
@@ -58,8 +57,9 @@
 	<variables>
 
 		<variable label="Short Address" CV="1" default="3"
-			item="Short Address">
-			<shortAddressVal/>
+			item="Short Address"
+			tooltip="2 digit address (Range 01-0128)">
+			<shortAddressVal min="01" max="128"/>
             	</variable>
 
 		<variable label="Starting Voltage" CV="2" default="3"
@@ -77,10 +77,10 @@
 		<variable label="Deceleration" CV="4" default="6"
 			item="Decel"
 			tooltip="This value multiplied by 0.5 gives the time from maximum speed to stop, range 1-63. CV4" >
-			<decVal min="1" max="64"/>
+			<decVal min="1" max="63"/>
 		</variable>
 		
-		<variable label="Maximum Speed" CV="5" default="63"
+		<variable label="Maximum Speed" CV="5" default="42"
 			item="Vhigh"
 			tooltip="Maximum speed of locomotive, range 1-63. CV5">
 			<decVal min="1" max="63"/>
@@ -98,6 +98,12 @@
 			<decVal/>
 		</variable>
 
+		<variable label="Long Address" CV="17"
+			item="Extended Address"
+			tooltip="4 digit address (Range 0128-9999)">
+			<longAddressVal/>
+		</variable>
+		
 		<variable label="Direction of Travel" CV="29" mask="XXXXXXXV" default="0"
 			item="Locomotive Direction"
 			tooltip="Sets the relative direction of the loco when told to move forward CV29" >
@@ -134,9 +140,9 @@
 			</enumVal>
 		</variable>
 
-		<variable label="Brake mode control" CV="51" mask="XXXXXXXV" default="1"
+		<variable label="DC Brake Control Mode" CV="51" mask="XXXXXXXV" default="1"
 			item="Dither option"
-			tooltip="CV51" >
+			tooltip="Supports Lenz DC brake sections CV51" >
 			<enumVal>
 				<enumChoice choice="Off"/>
 				<enumChoice choice="Active"/>
@@ -145,7 +151,7 @@
 
 		<variable label="Feedback Reference" CV="53"  default="42"
 			item="Dither option"
-			tooltip="Determines the back EMF supplied by the motor at Max speed. The moor efficient the motor the higher this value should be. 0-63 default=42." >
+			tooltip="Determines the back EMF supplied by the motor at Max speed. The more efficient the motor the higher this value should be. 0-63 default=42." >
 			<decVal min="0" max="63"/>
 		</variable>
 
@@ -169,9 +175,11 @@
 	</variables>
 
         <resets>
-		<factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
+		<factReset label="Reset all CVs to default values" CV="8" default="8"/>
         </resets>
 
 </decoder>
 
-</decoder-config>
+</decoder-config>
+
+ 	  	 
