@@ -39,7 +39,7 @@ import jmri.InstanceManager;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class JavaSoundAudioFactory extends AbstractAudioFactory {
 
@@ -78,7 +78,7 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
 
         super.init();
         _initialised = true;
-        return true; // return false;
+        return true;
     }
 
     @Override

@@ -25,7 +25,7 @@ import jmri.implementation.AbstractManager;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class AbstractAudioManager extends AbstractManager
     implements AudioManager {
@@ -77,7 +77,10 @@ public abstract class AbstractAudioManager extends AbstractManager
                             +" needed either "+systemLetter()+typeLetter()+Audio.BUFFER
                             +" or "+systemLetter()+typeLetter()+Audio.SOURCE
                             +" or "+systemLetter()+typeLetter()+Audio.LISTENER);
-            return null;
+            throw new AudioException("Invalid system name for Audio: "+systemName
+                            +" needed either "+systemLetter()+typeLetter()+Audio.BUFFER
+                            +" or "+systemLetter()+typeLetter()+Audio.SOURCE
+                            +" or "+systemLetter()+typeLetter()+Audio.LISTENER);
         }
 
         // return existing if there is one

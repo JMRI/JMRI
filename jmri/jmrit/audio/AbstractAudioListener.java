@@ -26,7 +26,7 @@ import jmri.implementation.AbstractAudio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public abstract class AbstractAudioListener extends AbstractAudio implements AudioListener {
 
@@ -134,6 +134,13 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
 
     public void stateChanged() {
         // Move along... nothing to see here...
+    }
+
+    @Override
+    public String toString() {
+        return "Pos: " + this.getPosition().toString()
+                + ", gain=" + this.getGain()
+                + ", meters/unit=" + this.getMetersPerUnit();
     }
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractAudioListener.class.getName());

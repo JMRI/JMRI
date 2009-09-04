@@ -37,7 +37,7 @@ import jmri.Audio;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public interface AudioBuffer extends Audio {
 
@@ -135,17 +135,6 @@ public interface AudioBuffer extends Audio {
      */
     public static final int FORMAT_16BIT_7DOT1  = 0x82;
     
-//    /**
-//     * Return reference to the DataStorageBuffer integer array
-//     * <p>
-//     * Applies only to sub-types:
-//     * <ul>
-//     * <li>Buffer
-//     * </u>
-//     * @return buffer[] reference to DataStorageBuffer
-//     */
-//    public int[] getDataStorageBuffer();
-
     /**
      * Return the url of the sound sample
      * <p>
@@ -167,28 +156,6 @@ public interface AudioBuffer extends Audio {
      * @param pUrl
      */
     public void setURL(String pUrl);
-
-//    /**
-//     * Method used to load the actual sound sample data.
-//     * This will be sound-system specific.
-//     *
-//     * Applies only to sub-types:
-//     *   - Buffer
-//     *
-//     * @return true if successful
-//     */
-//    public boolean loadBuffer();
-//
-//    /**
-//     * Method used to unload the actual sound sample data.
-//     * This will be sound-system specific.
-//     *
-//     * Applies only to sub-types:
-//     *   - Buffer
-//     *
-//     * @return true if successful
-//     */
-//    public boolean unloadBuffer();
 
     /**
      * Retrieves the format of the sound sample stored in this buffer

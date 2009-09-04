@@ -41,7 +41,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -172,7 +172,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     ce = new Element("distances");
                     ce.setAttribute("ref", ""+as.getReferenceDistance());
                     float f;
-                    if ((f=as.getMaximumDistance())!=Float.MAX_VALUE) {
+                    if ((f=as.getMaximumDistance())!=Audio.MAX_DISTANCE) {
                         ce.setAttribute("max", ""+f);
                     }
                     e.addContent(ce);
@@ -237,10 +237,10 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                 log.warn("unexpected null in systemName "+(e)+" "+(e).getAttributes());
                 break;
             }
-            String sysName = e.getAttribute("systemName").getValue();
+            String sysName = e.getAttributeValue("systemName");
             String userName = null;
             if (e.getAttribute("userName") != null)
-                userName = e.getAttribute("userName").getValue();
+                userName = e.getAttributeValue("userName");
             if (log.isDebugEnabled()) log.debug("create Audio: ("+sysName+")("+(userName==null?"<null>":userName)+")");
             try {
                 AudioListener al = (AudioListener) am.newAudio(sysName, userName);
@@ -256,29 +256,29 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                 if ((ce = e.getChild("position"))!=null) {
                     al.setPosition(
                         new Vector3f(
-                            Float.parseFloat(ce.getAttribute("x").getValue()),
-                            Float.parseFloat(ce.getAttribute("y").getValue()),
-                            Float.parseFloat(ce.getAttribute("z").getValue())));
+                            Float.parseFloat(ce.getAttributeValue("x")),
+                            Float.parseFloat(ce.getAttributeValue("y")),
+                            Float.parseFloat(ce.getAttributeValue("z"))));
                 }
 
                 if ((ce = e.getChild("velocity"))!=null) {
                     al.setVelocity(
                         new Vector3f(
-                            Float.parseFloat(ce.getAttribute("x").getValue()),
-                            Float.parseFloat(ce.getAttribute("y").getValue()),
-                            Float.parseFloat(ce.getAttribute("z").getValue())));
+                            Float.parseFloat(ce.getAttributeValue("x")),
+                            Float.parseFloat(ce.getAttributeValue("y")),
+                            Float.parseFloat(ce.getAttributeValue("z"))));
                 }
 
                 if ((ce = e.getChild("orientation"))!=null) {
                     al.setOrientation(
                         new Vector3f(
-                            Float.parseFloat(ce.getAttribute("atX").getValue()),
-                            Float.parseFloat(ce.getAttribute("atY").getValue()),
-                            Float.parseFloat(ce.getAttribute("atZ").getValue())),
+                            Float.parseFloat(ce.getAttributeValue("atX")),
+                            Float.parseFloat(ce.getAttributeValue("atY")),
+                            Float.parseFloat(ce.getAttributeValue("atZ"))),
                         new Vector3f(
-                            Float.parseFloat(ce.getAttribute("upX").getValue()),
-                            Float.parseFloat(ce.getAttribute("upY").getValue()),
-                            Float.parseFloat(ce.getAttribute("upZ").getValue())));
+                            Float.parseFloat(ce.getAttributeValue("upX")),
+                            Float.parseFloat(ce.getAttributeValue("upY")),
+                            Float.parseFloat(ce.getAttributeValue("upZ"))));
                 }
 
                 if ((ce = e.getChild("gain"))!=null) {
@@ -304,10 +304,10 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                 log.warn("unexpected null in systemName "+(e)+" "+(e).getAttributes());
                 break;
             }
-            String sysName = e.getAttribute("systemName").getValue();
+            String sysName = e.getAttributeValue("systemName");
             String userName = null;
             if (e.getAttribute("userName") != null)
-                userName = e.getAttribute("userName").getValue();
+                userName = e.getAttributeValue("userName");
             if (log.isDebugEnabled()) log.debug("create Audio: ("+sysName+")("+(userName==null?"<null>":userName)+")");
             try {
                 AudioBuffer ab = (AudioBuffer) am.newAudio(sysName, userName);
@@ -326,9 +326,9 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                 }
 
                 if ((ce = e.getChild("looppoint"))!=null) {
-                    if ((value = ce.getAttribute("start").getValue())!=null)
+                    if ((value = ce.getAttributeValue("start"))!=null)
                         ab.setStartLoopPoint(Integer.parseInt(value));
-                    if ((value = ce.getAttribute("end").getValue())!=null)
+                    if ((value = ce.getAttributeValue("end"))!=null)
                         ab.setEndLoopPoint(Integer.parseInt(value));
                 }
                 
@@ -347,10 +347,10 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                 log.warn("unexpected null in systemName "+(e)+" "+(e).getAttributes());
                 break;
             }
-            String sysName = e.getAttribute("systemName").getValue();
+            String sysName = e.getAttributeValue("systemName");
             String userName = null;
             if (e.getAttribute("userName") != null)
-                userName = e.getAttribute("userName").getValue();
+                userName = e.getAttributeValue("userName");
             if (log.isDebugEnabled()) log.debug("create Audio: ("+sysName+")("+(userName==null?"<null>":userName)+")");
             try {
                 AudioSource as = (AudioSource) am.newAudio(sysName, userName);
@@ -367,17 +367,17 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                 if ((ce = e.getChild("position"))!=null) {
                     as.setPosition(
                         new Vector3f(
-                            Float.parseFloat(ce.getAttribute("x").getValue()),
-                            Float.parseFloat(ce.getAttribute("y").getValue()),
-                            Float.parseFloat(ce.getAttribute("z").getValue())));
+                            Float.parseFloat(ce.getAttributeValue("x")),
+                            Float.parseFloat(ce.getAttributeValue("y")),
+                            Float.parseFloat(ce.getAttributeValue("z"))));
                 }
 
                 if ((ce = e.getChild("velocity"))!=null) {
                     as.setVelocity(
                         new Vector3f(
-                            Float.parseFloat(ce.getAttribute("x").getValue()),
-                            Float.parseFloat(ce.getAttribute("y").getValue()),
-                            Float.parseFloat(ce.getAttribute("z").getValue())));
+                            Float.parseFloat(ce.getAttributeValue("x")),
+                            Float.parseFloat(ce.getAttributeValue("y")),
+                            Float.parseFloat(ce.getAttributeValue("z"))));
                 }
 
                 if ((ce = e.getChild("assignedbuffer"))!=null) {
@@ -394,23 +394,23 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                 }
 
                 if ((ce = e.getChild("distances"))!=null) {
-                    if ((value = ce.getAttribute("ref").getValue())!=null)
+                    if ((value = ce.getAttributeValue("ref"))!=null)
                         as.setReferenceDistance(Float.parseFloat(value));
-                    if ((value = ce.getAttribute("max").getValue())!=null)
+                    if ((value = ce.getAttributeValue("max"))!=null)
                         as.setMaximumDistance(Float.parseFloat(value));
                 }
 
                 if ((ce = e.getChild("loops"))!=null) {
-                    if ((value = ce.getAttribute("min").getValue())!=null)
+                    if ((value = ce.getAttributeValue("min"))!=null)
                         as.setMinLoops(Integer.parseInt(value));
-                    if ((value = ce.getAttribute("max").getValue())!=null)
+                    if ((value = ce.getAttributeValue("max"))!=null)
                         as.setMaxLoops(Integer.parseInt(value));
                 }
 
                 if ((ce = e.getChild("fadetimes"))!=null) {
-                    if ((value = ce.getAttribute("in").getValue())!=null)
+                    if ((value = ce.getAttributeValue("in"))!=null)
                         as.setFadeIn(Integer.parseInt(value));
-                    if ((value = ce.getAttribute("out").getValue())!=null)
+                    if ((value = ce.getAttributeValue("out"))!=null)
                         as.setFadeOut(Integer.parseInt(value));
                 }
 

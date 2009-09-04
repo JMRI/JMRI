@@ -38,7 +38,7 @@ import javax.vecmath.Vector3f;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public interface AudioSource extends Audio {
 
@@ -293,7 +293,7 @@ public interface AudioSource extends Audio {
     /**
      * Return the current maximum distance setting
      * <p>
-     * Default value = Float.MAX_VALUE
+     * Default value = Audio.MAX_DISTANCE
      * <p>
      * The maximum distance is that where the volume of the sound would
      * normally be zero.
@@ -308,7 +308,7 @@ public interface AudioSource extends Audio {
     /**
      * Set the current maximum distance setting
      * <p>
-     * Default value = Float.MAX_VALUE
+     * Default value = Audio.MAX_DISTANCE
      * <p>
      * The maximum distance is that where the volume of the sound would
      * normally be zero.

@@ -2,6 +2,8 @@
 
 package jmri.jmrit.audio;
 
+import java.util.ArrayList;
+import java.util.List;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.InstanceManager;
@@ -27,7 +29,7 @@ import jmri.managers.AbstractAudioManager;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class DefaultAudioManager extends AbstractAudioManager {
 
@@ -82,6 +84,18 @@ public class DefaultAudioManager extends AbstractAudioManager {
         }
 
         return a;
+    }
+
+    public List<String> getSystemNameList(int subType) {
+        List<String> tempList = getSystemNameList();
+        List<String> out = new ArrayList<String>();
+        for (int i=0; i<tempList.size(); i++) {
+            Audio audio = this.getBySystemName(tempList.get(i));
+            if (audio.getSubType()==subType) {
+                out.add(tempList.get(i));
+            }
+        }
+        return out;
     }
 
     /**

@@ -11,6 +11,7 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import jmri.util.FileUtil;
 
 /**
  * JavaSound implementation of the Audio Buffer sub-class.
@@ -36,7 +37,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
 
@@ -128,11 +129,10 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
 
     @Override
     public String toString() {
-        String string = this.getClass().getName() + " (" + this.getSystemName() + ") ";
         if (this.getState()!=STATE_LOADED) {
-            return string + "Empty buffer";
+            return "Empty buffer";
         } else {
-            return string + this.getURL() + " (" + parseFormat() + ", " + this._freq + " Hz)";
+            return this.getURL() + " (" + parseFormat() + ", " + this._freq + " Hz)";
         }
     }
 
@@ -148,7 +148,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         byte[] buffer;
 
         // Retrieve filename of specified .wav file
-        File file = new File(this.getURL());
+        File file = new File(FileUtil.getExternalFilename(this.getURL()));
 
         // Create the input stream for the audio file
         try {

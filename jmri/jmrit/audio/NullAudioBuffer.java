@@ -23,7 +23,7 @@ package jmri.jmrit.audio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class NullAudioBuffer extends AbstractAudioBuffer {
 
@@ -48,13 +48,30 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
         if (log.isDebugEnabled()) log.debug("New NullAudioBuffer: "+userName+" ("+systemName+")");
     }
 
-    public boolean loadBuffer() {
+    @Override
+    public String toString() {
+        if (this.getState()!=STATE_LOADED) {
+            return "Empty buffer";
+        } else {
+            return this.getURL() + " (" + parseFormat() + ", " + "?? Hz)";
+        }
+    }
+
+    protected boolean loadBuffer() {
         // No need to do this for the NullAudioBuffer - it's always successful ;-)
         return true;
     }
 
     public int getFormat() {
         return FORMAT_UNKNOWN;
+    }
+
+    /**
+     * Internal method to return a string representation of the audio format
+     * @return string representation
+     */
+    private String parseFormat() {
+        return "unknown format";
     }
 
     protected void cleanUp() {

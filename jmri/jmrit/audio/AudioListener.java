@@ -38,7 +38,7 @@ import javax.vecmath.Vector3f;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public interface AudioListener extends Audio {
 
@@ -180,6 +180,12 @@ public interface AudioListener extends Audio {
      * <p>
      * Default value = 1.0f (i.e. 1 unit == 1 metre)
      * <p>
+     * Typical alternative values:
+     * <ul>
+     * <li>0.3048f (i.e. 1 unit == 1 foot)
+     * <li>0.9144f (i.e. 1 unit == 1 yard)
+     * </ul>
+     * <p>
      * Applies only to sub-types:
      * <ul>
      * <li>Listener
@@ -193,6 +199,12 @@ public interface AudioListener extends Audio {
      * calculations.
      * <p>
      * Default value = 1.0f (i.e. 1 unit == 1 metre)
+     * <p>
+     * Typical alternative values:
+     * <ul>
+     * <li>0.3048f (i.e. 1 unit == 1 foot)
+     * <li>0.9144f (i.e. 1 unit == 1 yard)
+     * </ul>
      * <p>
      * Applies only to sub-types:
      * <ul>

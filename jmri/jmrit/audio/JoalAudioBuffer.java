@@ -3,6 +3,7 @@
 package jmri.jmrit.audio;
 
 import java.nio.ByteBuffer;
+import jmri.util.FileUtil;
 import net.java.games.joal.AL;
 import net.java.games.joal.ALException;
 import net.java.games.joal.util.ALut;
@@ -64,7 +65,7 @@ import net.java.games.joal.util.ALut;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class JoalAudioBuffer extends AbstractAudioBuffer {
 
@@ -136,11 +137,10 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
     
     @Override
     public String toString() {
-        String string = this.getClass().getName() + " (" + this.getSystemName() + ") ";
         if (this.getState()!=STATE_LOADED) {
-            return string + "Empty buffer";
+            return "Empty buffer";
         } else {
-            return string + this.getURL() + " (" + parseFormat() + ", " + this._freq[0] + " Hz)";
+            return this.getURL() + " (" + parseFormat() + ", " + this._freq[0] + " Hz)";
         }
     }
 
@@ -198,7 +198,8 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
 
         // Load the specified .wav file into data arrays
         try {
-            ALut.alutLoadWAVFile(this.getURL(), _format, _data, _size, _freq, _loop);
+            ALut.alutLoadWAVFile(FileUtil.getExternalFilename(this.getURL())
+                    , _format, _data, _size, _freq, _loop);
         }
         catch (ALException e) {
             log.warn("Error loading JoalAudioBuffer: " + e.getMessage());

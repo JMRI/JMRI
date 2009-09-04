@@ -2,8 +2,6 @@
 
 package jmri.jmrit.audio;
 
-//import jmri.Audio;
-//import jmri.InstanceManager;
 import jmri.implementation.AbstractAudio;
 import jmri.util.FileUtil;
 
@@ -28,7 +26,7 @@ import jmri.util.FileUtil;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class AbstractAudioBuffer extends AbstractAudio implements AudioBuffer {
 
@@ -37,11 +35,6 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
      */
     private String _url;
 
-//    /**
-//     * Reference to the currently active AudioFactory
-//     */
-//    private static AudioFactory activeAudioFactory = InstanceManager.audioManagerInstance().getActiveAudioFactory();
-    
     /**
      * Start loop point for this buffer represented as a number of samples
      */
@@ -78,17 +71,15 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
     }
     
     public String getURL() {
-        return this._url; //FileUtil.getPortableFilename(this._url);
+        return this._url;
     }
 
     public void setURL(String url) {
-        this._url = FileUtil.getExternalFilename(url);
+        this._url = FileUtil.getPortableFilename(url);
         
         // Run the loadBuffer method on the main AWT thread to avoid any
         // potential issues with interrupted exceptions if run on the audio
         // command thread
-        //activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_LOAD_SOUND));
-        //activeAudioFactory.getCommandThread().interrupt();
         loadBuffer();
         if (log.isDebugEnabled())
             log.debug("Set url of Buffer " + this.getSystemName() + " to " + url);

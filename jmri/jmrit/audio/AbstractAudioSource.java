@@ -30,7 +30,7 @@ import jmri.implementation.AbstractAudio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractAudioSource extends AbstractAudio implements AudioSource {
 
@@ -39,7 +39,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     private float _gain               = 1.0f;
     private float _pitch              = 1.0f;
     private float _referenceDistance  = 1.0f;
-    private float _maximumDistance    = Float.MAX_VALUE;
+    private float _maximumDistance    = Audio.MAX_DISTANCE;
     private float _rollOffFactor      = 1.0f;
     private int _minLoops             = LOOP_NONE;
     private int _maxLoops             = LOOP_NONE;
@@ -103,7 +103,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     }
 
     public String getAssignedBufferName() {
-        return _buffer.getSystemName();
+        return (_buffer!=null)?_buffer.getSystemName():"[none]";
     }
 
     public void setPosition(Vector3f pos) {
@@ -214,7 +214,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     }
 
     public boolean isLooped() {
-        return (this._minLoops != LOOP_NONE && this._maxLoops != LOOP_NONE);
+        return (this._minLoops != LOOP_NONE || this._maxLoops != LOOP_NONE);
     }
 
     public void setMinLoops(int loops) {
@@ -279,21 +279,11 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     /**
      * Used to return the current calculated fade gain for this AudioSource
      *
-     * @return current fade in gain
+     * @return current fade gain
      */
     protected float getFadeGain() {
         return this._fadeGain;
     }
-
-//    /**
-//     * Used to return the current calculated fade out gain for this AudioSource
-//     *
-//     * @return current fade out gain
-//     */
-//    protected float getFadeOutGain() {
-//
-//        return this._fadeOutGain;
-//    }
 
     /**
      * Method used to calculate the fade gains
@@ -308,7 +298,6 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         switch (this._fading) {
             case Audio.FADE_NONE:
                 // Reset fade gain
-                //this._fadeInGain = 1.0f;
                 this._fadeGain = 1.0f;
                 break;
             case Audio.FADE_OUT:
@@ -461,7 +450,6 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     public void fadeIn() {
         this._fading = Audio.FADE_IN;
         this._fadeGain = 0.0f;
-//        this._fadeOutGain = 1.0f;
         this._timeOfLastFadeCheck = System.currentTimeMillis();
         this.setState(STATE_PLAYING);
         activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_FADE_IN));
@@ -476,7 +464,6 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     public void fadeOut() {
         this._fading = Audio.FADE_OUT;
         this._fadeGain = 1.0f;
-//        this._fadeOutGain = 1.0f;
         this._timeOfLastFadeCheck = System.currentTimeMillis();
         this.setState(STATE_PLAYING);
         activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_FADE_OUT));
@@ -495,6 +482,16 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
      */
     protected int getFading() {
         return this._fading;
+    }
+
+    @Override
+    public String toString() {
+        return "Pos: " + this.getPosition().toString()
+                + ", bound to: " + this.getAssignedBufferName()
+                + ", loops: "
+                    + ((this.getMinLoops()==LOOP_CONTINUOUS)?"infinite":
+                        ((!this.isLooped())?"none":
+                            "(min=" + this.getMinLoops() + " max=" + this.getMaxLoops() + ")"));
     }
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractAudioSource.class.getName());

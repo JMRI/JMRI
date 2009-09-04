@@ -34,7 +34,7 @@ package jmri;
  * <P>
  *
  * @author  Matthew Harris copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public interface Audio extends NamedBean {
 
@@ -189,6 +189,11 @@ public interface Audio extends NamedBean {
      * Fade state of Source when fading in
      */
     public static final int FADE_IN = 0x02;
+
+    /**
+     * Maximum distance for Audio objects
+     */
+    public static final float MAX_DISTANCE = 9999.99f;
 
     /**
      * An Audio object can represent one of a number of subtypes of object.
