@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
-<!-- $Id: QSI_Articulated_Steam_ver7.xml,v 1.10 2009-03-26 05:28:19 jacobsen Exp $ -->
+<!-- $Id: QSI_Articulated_Steam_ver7.xml,v 1.11 2009-09-04 23:00:34 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+  <version author="Michael Mosher" version="7" lastUpdated="20090819"/>
   <version author="Michael Mosher" version="6" lastUpdated="20090302"/>
   <version author="Michael Mosher" version="5" lastUpdated="20080906"/>
   <version author="Michael Mosher" version="4" lastUpdated="20080811"/>
@@ -30,6 +31,7 @@
 <!-- version 4 - Added new models & CV's -->
 <!-- version 5 - removed leading zeros on IDs -->
 <!-- version 6 - Add model 4004, CV 55.70.12,55.73.12,55.76.6,11,12,13,56.18.1,56.19.1,56.20.1,56.21.1 -->
+<!-- version 7 - Added CV 55.21.0,CV53.15.0 thru CV53.30.0, CV55.154.SI CV56.9 CV55.3.5 CV55.84.SI CV55.70.12 CV55.76.6,11,12,13 CV51.2 -->
 
 <decoder>
   <family name="QSI Articulated Steam Ver. 7" mfg="QSIndustries" lowVersionID="7">
@@ -608,7 +610,7 @@
                comment="QSI" item="CV51.0">
       <indexedVal max="127"/>
     </ivariable>
-    <ivariable label="Mute Volume" CVname="51.1" CV="51" PI="1" default="0"
+    <ivariable label="e Volume" CVname="51.1" CV="51" PI="1" default="0"
                comment="QSI" item="CV51.1">
       <indexedVal max="63"/>
     </ivariable>
@@ -658,6 +660,24 @@
       <indexedVal/>
     </ivariable>
 
+    <ivariable label="Chuff Cutoff" CVname="51.10" CV="51" PI="10" default="50"
+    			include="4000,4004,4050"
+                comment="QSI" item="CV51.10">
+      <indexedVal/>
+    </ivariable>
+
+    <ivariable label="Min Sound of Power" CVname="51.12" CV="51" PI="12" default="40"
+    			include="4000,4004,4050"
+                comment="QSI" item="CV51.12">
+      <indexedVal/>
+    </ivariable>
+
+    <ivariable label="Max Sound of Power" CVname="51.13" CV="51" PI="13" default="65"
+    			include="4000,4004,4050"
+                comment="QSI" item="CV51.13">
+      <indexedVal/>
+    </ivariable>
+
     <!-- Sound volumes -->
     <ivariable label="Whistle" CVname="52.0" CV="52" PI="0" default="11" comment="QSI" item="CV52.0">
       <indexedVal max="15"/> </ivariable>
@@ -666,6 +686,9 @@
     <ivariable label="Chuff 1" CVname="52.10" CV="52" PI="10" default="11" comment="QSI" item="CV52.10">
       <indexedVal max="15"/> </ivariable>
     <ivariable label="Chuff 2" CVname="52.11" CV="52" PI="11" default="11" comment="QSI" item="CV52.11">
+      <indexedVal max="15"/> </ivariable>
+    <ivariable label="Valve Rod Clank" CVname="52.13" CV="52" PI="15" default="11" comment="QSI" item="CV52.13"
+    	include="4000,4004,4050">
       <indexedVal max="15"/> </ivariable>
     <ivariable label="Cylinder Cocks" CVname="52.15" CV="52" PI="15" default="11" comment="QSI" item="CV52.15">
       <indexedVal max="15"/> </ivariable>
@@ -711,6 +734,8 @@
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
@@ -756,6 +781,8 @@
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
@@ -801,6 +828,8 @@
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
@@ -846,6 +875,8 @@
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
@@ -891,6 +922,8 @@
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
@@ -936,6 +969,8 @@
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
@@ -981,6 +1016,8 @@
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
@@ -1026,6 +1063,8 @@
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
@@ -1071,6 +1110,8 @@
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
@@ -1116,6 +1157,8 @@
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
@@ -1161,6 +1204,8 @@
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
@@ -1206,6 +1251,8 @@
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
@@ -1251,6 +1298,8 @@
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
@@ -1296,6 +1345,8 @@
         <ienumChoice choice="Blower Hiss" value="8"/>
         <ienumChoice choice="Long Air Let-off"/>
         <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Doppler Shift"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
@@ -1346,6 +1397,8 @@
         <ienumChoice choice="Pop-off" value="12"/>
         <ienumChoice choice="Blow down"/>
         <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
         <ienumChoice choice="Headlight" value="71"/>
@@ -1393,6 +1446,8 @@
         <ienumChoice choice="Pop-off" value="12"/>
         <ienumChoice choice="Blow down"/>
         <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
         <ienumChoice choice="Headlight" value="71"/>
@@ -1440,6 +1495,8 @@
         <ienumChoice choice="Pop-off" value="12"/>
         <ienumChoice choice="Blow down"/>
         <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
         <ienumChoice choice="Headlight" value="71"/>
@@ -1487,6 +1544,8 @@
         <ienumChoice choice="Pop-off" value="12"/>
         <ienumChoice choice="Blow down"/>
         <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
         <ienumChoice choice="Headlight" value="71"/>
@@ -1534,6 +1593,8 @@
         <ienumChoice choice="Pop-off" value="12"/>
         <ienumChoice choice="Blow down"/>
         <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
         <ienumChoice choice="Headlight" value="71"/>
@@ -1581,6 +1642,8 @@
         <ienumChoice choice="Pop-off" value="12"/>
         <ienumChoice choice="Blow down"/>
         <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
         <ienumChoice choice="Headlight" value="71"/>
@@ -1628,6 +1691,8 @@
         <ienumChoice choice="Pop-off" value="12"/>
         <ienumChoice choice="Blow down"/>
         <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
         <ienumChoice choice="Headlight" value="71"/>
@@ -1675,6 +1740,8 @@
         <ienumChoice choice="Pop-off" value="12"/>
         <ienumChoice choice="Blow down"/>
         <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
         <ienumChoice choice="Headlight" value="71"/>
@@ -1722,6 +1789,8 @@
         <ienumChoice choice="Pop-off" value="12"/>
         <ienumChoice choice="Blow down"/>
         <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
         <ienumChoice choice="Headlight" value="71"/>
@@ -1769,6 +1838,8 @@
         <ienumChoice choice="Pop-off" value="12"/>
         <ienumChoice choice="Blow down"/>
         <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
         <ienumChoice choice="Headlight" value="71"/>
@@ -1816,6 +1887,8 @@
         <ienumChoice choice="Pop-off" value="12"/>
         <ienumChoice choice="Blow down"/>
         <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
         <ienumChoice choice="Headlight" value="71"/>
@@ -1863,6 +1936,8 @@
         <ienumChoice choice="Pop-off" value="12"/>
         <ienumChoice choice="Blow down"/>
         <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
         <ienumChoice choice="Headlight" value="71"/>
@@ -1910,6 +1985,8 @@
         <ienumChoice choice="Pop-off" value="12"/>
         <ienumChoice choice="Blow down"/>
         <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
         <ienumChoice choice="Headlight" value="71"/>
@@ -1957,6 +2034,8 @@
         <ienumChoice choice="Pop-off" value="12"/>
         <ienumChoice choice="Blow down"/>
         <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="4000,4004,4050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="4000,4004,4050"/>
         <ienumChoice choice="Mute" value="64"/>
         <ienumChoice choice="Automatic Headlight" value="70"/>
         <ienumChoice choice="Headlight" value="71"/>
@@ -1990,8 +2069,911 @@
       </ienumVal>
     </ivariable>
 
+    <ivariable label="Output 15" CVname="53.15.0" CV="53" PI="15" SI="0"
+    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+        default="10" item="CV53.15.0">
+      <ienumVal>
+        <ienumChoice choice="None" value="0"/>
+        <ienumChoice choice="Whistle" value="1"/>
+        <ienumChoice choice="Standard/Alt Whistle Selection" value="2"/>
+        <ienumChoice choice="Bell" value="3"/>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Arm Cylinder Cocks" value="6"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="3010,3017,3050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="3010,3017,3050"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Automatic Headlight" value="70"/>
+        <ienumChoice choice="Headlight" value="71"/>
+        <ienumChoice choice="Dim Headlight" value="72"/>
+        <ienumChoice choice="Automatic Reverse Light" value="73"/>
+        <ienumChoice choice="Reverse Light" value="74"/>
+        <ienumChoice choice="Dim Reverse Light" value="75"/>
+        <ienumChoice choice="Automatic Mars Light" value="76" 			 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Mars Light" value="77"						 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Dim Mars Light" value="78" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Strobe Mars Light" value="79" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Number Board Lights" value="100" 	include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Number Board Lights" value="101" 			include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Marker Lights" value="104" 		include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Marker Lights Lights" value="105"   			include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106" 			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"    			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Step Lights" value="112"  			include="3015"/>
+        <ienumChoice choice="Front Step Lights" value="113"         			include="3015"/>
+        <ienumChoice choice="Automatic Front Cab Lights" value="116"   			include="3050"/>
+        <ienumChoice choice="Front Cab Lights" value="117"						include="3050"/>
+        <ienumChoice choice="Automatic Rear Cab Lights" value="118" 			include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Cab Lights Lights" value="119" 				include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
+        <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
+        <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
+        <ienumChoice choice="Grade Crossing" value="154"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Heavy Load" value="179"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label="Output 16" CVname="53.16.0" CV="53" PI="16" SI="0"
+    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+               default="10" item="CV53.16.0">
+      <ienumVal>
+        <ienumChoice choice="None" value="0"/>
+        <ienumChoice choice="Whistle" value="1"/>
+        <ienumChoice choice="Standard/Alt Whistle Selection" value="2"/>
+        <ienumChoice choice="Bell" value="3"/>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Arm Cylinder Cocks" value="6"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="3010,3017,3050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="3010,3017,3050"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Automatic Headlight" value="70"/>
+        <ienumChoice choice="Headlight" value="71"/>
+        <ienumChoice choice="Dim Headlight" value="72"/>
+        <ienumChoice choice="Automatic Reverse Light" value="73"/>
+        <ienumChoice choice="Reverse Light" value="74"/>
+        <ienumChoice choice="Dim Reverse Light" value="75"/>
+        <ienumChoice choice="Automatic Mars Light" value="76" 			 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Mars Light" value="77"						 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Dim Mars Light" value="78" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Strobe Mars Light" value="79" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Number Board Lights" value="100" 	include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Number Board Lights" value="101" 			include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Marker Lights" value="104" 		include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Marker Lights Lights" value="105"   			include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106" 			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"    			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Step Lights" value="112"  			include="3015"/>
+        <ienumChoice choice="Front Step Lights" value="113"         			include="3015"/>
+        <ienumChoice choice="Automatic Front Cab Lights" value="116"   			include="3050"/>
+        <ienumChoice choice="Front Cab Lights" value="117"						include="3050"/>
+        <ienumChoice choice="Automatic Rear Cab Lights" value="118" 			include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Cab Lights Lights" value="119" 				include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
+        <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
+        <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
+        <ienumChoice choice="Grade Crossing" value="154"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Heavy Load" value="179"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label="Output 17" CVname="53.17.0" CV="53" PI="17" SI="0"
+    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+               default="10" item="CV53.17.0">
+      <ienumVal>
+        <ienumChoice choice="None" value="0"/>
+        <ienumChoice choice="Whistle" value="1"/>
+        <ienumChoice choice="Standard/Alt Whistle Selection" value="2"/>
+        <ienumChoice choice="Bell" value="3"/>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Arm Cylinder Cocks" value="6"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="3010,3017,3050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="3010,3017,3050"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Automatic Headlight" value="70"/>
+        <ienumChoice choice="Headlight" value="71"/>
+        <ienumChoice choice="Dim Headlight" value="72"/>
+        <ienumChoice choice="Automatic Reverse Light" value="73"/>
+        <ienumChoice choice="Reverse Light" value="74"/>
+        <ienumChoice choice="Dim Reverse Light" value="75"/>
+        <ienumChoice choice="Automatic Mars Light" value="76" 			 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Mars Light" value="77"						 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Dim Mars Light" value="78" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Strobe Mars Light" value="79" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Number Board Lights" value="100" 	include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Number Board Lights" value="101" 			include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Marker Lights" value="104" 		include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Marker Lights Lights" value="105"   			include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106" 			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"    			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Step Lights" value="112"  			include="3015"/>
+        <ienumChoice choice="Front Step Lights" value="113"         			include="3015"/>
+        <ienumChoice choice="Automatic Front Cab Lights" value="116"   			include="3050"/>
+        <ienumChoice choice="Front Cab Lights" value="117"						include="3050"/>
+        <ienumChoice choice="Automatic Rear Cab Lights" value="118" 			include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Cab Lights Lights" value="119" 				include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
+        <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
+        <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
+        <ienumChoice choice="Grade Crossing" value="154"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Heavy Load" value="179"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label="Output 18" CVname="53.18.0" CV="53" PI="18" SI="0"
+    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+               default="10" item="CV53.18.0">
+      <ienumVal>
+        <ienumChoice choice="None" value="0"/>
+        <ienumChoice choice="Whistle" value="1"/>
+        <ienumChoice choice="Standard/Alt Whistle Selection" value="2"/>
+        <ienumChoice choice="Bell" value="3"/>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Arm Cylinder Cocks" value="6"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="3010,3017,3050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="3010,3017,3050"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Automatic Headlight" value="70"/>
+        <ienumChoice choice="Headlight" value="71"/>
+        <ienumChoice choice="Dim Headlight" value="72"/>
+        <ienumChoice choice="Automatic Reverse Light" value="73"/>
+        <ienumChoice choice="Reverse Light" value="74"/>
+        <ienumChoice choice="Dim Reverse Light" value="75"/>
+        <ienumChoice choice="Automatic Mars Light" value="76" 			 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Mars Light" value="77"						 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Dim Mars Light" value="78" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Strobe Mars Light" value="79" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Number Board Lights" value="100" 	include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Number Board Lights" value="101" 			include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Marker Lights" value="104" 		include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Marker Lights Lights" value="105"   			include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106" 			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"    			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Step Lights" value="112"  			include="3015"/>
+        <ienumChoice choice="Front Step Lights" value="113"         			include="3015"/>
+        <ienumChoice choice="Automatic Front Cab Lights" value="116"   			include="3050"/>
+        <ienumChoice choice="Front Cab Lights" value="117"						include="3050"/>
+        <ienumChoice choice="Automatic Rear Cab Lights" value="118" 			include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Cab Lights Lights" value="119" 				include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
+        <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
+        <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
+        <ienumChoice choice="Grade Crossing" value="154"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Heavy Load" value="179"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label="Output 19" CVname="53.19.0" CV="53" PI="19" SI="0"
+    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+               default="10" item="CV53.19.0">
+      <ienumVal>
+        <ienumChoice choice="None" value="0"/>
+        <ienumChoice choice="Whistle" value="1"/>
+        <ienumChoice choice="Standard/Alt Whistle Selection" value="2"/>
+        <ienumChoice choice="Bell" value="3"/>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Arm Cylinder Cocks" value="6"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="3010,3017,3050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="3010,3017,3050"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Automatic Headlight" value="70"/>
+        <ienumChoice choice="Headlight" value="71"/>
+        <ienumChoice choice="Dim Headlight" value="72"/>
+        <ienumChoice choice="Automatic Reverse Light" value="73"/>
+        <ienumChoice choice="Reverse Light" value="74"/>
+        <ienumChoice choice="Dim Reverse Light" value="75"/>
+        <ienumChoice choice="Automatic Mars Light" value="76" 			 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Mars Light" value="77"						 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Dim Mars Light" value="78" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Strobe Mars Light" value="79" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Number Board Lights" value="100" 	include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Number Board Lights" value="101" 			include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Marker Lights" value="104" 		include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Marker Lights Lights" value="105"   			include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106" 			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"    			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Step Lights" value="112"  			include="3015"/>
+        <ienumChoice choice="Front Step Lights" value="113"         			include="3015"/>
+        <ienumChoice choice="Automatic Front Cab Lights" value="116"   			include="3050"/>
+        <ienumChoice choice="Front Cab Lights" value="117"						include="3050"/>
+        <ienumChoice choice="Automatic Rear Cab Lights" value="118" 			include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Cab Lights Lights" value="119" 				include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
+        <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
+        <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
+        <ienumChoice choice="Grade Crossing" value="154"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Heavy Load" value="179"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label="Output 20" CVname="53.20.0" CV="53" PI="20" SI="0"
+    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+               default="10" item="CV53.20.0">
+      <ienumVal>
+        <ienumChoice choice="None" value="0"/>
+        <ienumChoice choice="Whistle" value="1"/>
+        <ienumChoice choice="Standard/Alt Whistle Selection" value="2"/>
+        <ienumChoice choice="Bell" value="3"/>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Arm Cylinder Cocks" value="6"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="3010,3017,3050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="3010,3017,3050"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Automatic Headlight" value="70"/>
+        <ienumChoice choice="Headlight" value="71"/>
+        <ienumChoice choice="Dim Headlight" value="72"/>
+        <ienumChoice choice="Automatic Reverse Light" value="73"/>
+        <ienumChoice choice="Reverse Light" value="74"/>
+        <ienumChoice choice="Dim Reverse Light" value="75"/>
+        <ienumChoice choice="Automatic Mars Light" value="76" 			 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Mars Light" value="77"						 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Dim Mars Light" value="78" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Strobe Mars Light" value="79" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Number Board Lights" value="100" 	include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Number Board Lights" value="101" 			include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Marker Lights" value="104" 		include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Marker Lights Lights" value="105"   			include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106" 			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"    			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Step Lights" value="112"  			include="3015"/>
+        <ienumChoice choice="Front Step Lights" value="113"         			include="3015"/>
+        <ienumChoice choice="Automatic Front Cab Lights" value="116"   			include="3050"/>
+        <ienumChoice choice="Front Cab Lights" value="117"						include="3050"/>
+        <ienumChoice choice="Automatic Rear Cab Lights" value="118" 			include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Cab Lights Lights" value="119" 				include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
+        <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
+        <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
+        <ienumChoice choice="Grade Crossing" value="154"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Heavy Load" value="179"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label="Output 21" CVname="53.21.0" CV="53" PI="21" SI="0"
+    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+               default="10" item="CV53.21.0">
+      <ienumVal>
+        <ienumChoice choice="None" value="0"/>
+        <ienumChoice choice="Whistle" value="1"/>
+        <ienumChoice choice="Standard/Alt Whistle Selection" value="2"/>
+        <ienumChoice choice="Bell" value="3"/>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Arm Cylinder Cocks" value="6"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="3010,3017,3050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="3010,3017,3050"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Automatic Headlight" value="70"/>
+        <ienumChoice choice="Headlight" value="71"/>
+        <ienumChoice choice="Dim Headlight" value="72"/>
+        <ienumChoice choice="Automatic Reverse Light" value="73"/>
+        <ienumChoice choice="Reverse Light" value="74"/>
+        <ienumChoice choice="Dim Reverse Light" value="75"/>
+        <ienumChoice choice="Automatic Mars Light" value="76" 			 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Mars Light" value="77"						 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Dim Mars Light" value="78" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Strobe Mars Light" value="79" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Number Board Lights" value="100" 	include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Number Board Lights" value="101" 			include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Marker Lights" value="104" 		include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Marker Lights Lights" value="105"   			include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106" 			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"    			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Step Lights" value="112"  			include="3015"/>
+        <ienumChoice choice="Front Step Lights" value="113"         			include="3015"/>
+        <ienumChoice choice="Automatic Front Cab Lights" value="116"   			include="3050"/>
+        <ienumChoice choice="Front Cab Lights" value="117"						include="3050"/>
+        <ienumChoice choice="Automatic Rear Cab Lights" value="118" 			include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Cab Lights Lights" value="119" 				include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
+        <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
+        <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
+        <ienumChoice choice="Grade Crossing" value="154"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Heavy Load" value="179"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label="Output 22" CVname="53.22.0" CV="53" PI="22" SI="0"
+    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+               default="10" item="CV53.22.0">
+      <ienumVal>
+        <ienumChoice choice="None" value="0"/>
+        <ienumChoice choice="Whistle" value="1"/>
+        <ienumChoice choice="Standard/Alt Whistle Selection" value="2"/>
+        <ienumChoice choice="Bell" value="3"/>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Arm Cylinder Cocks" value="6"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="3010,3017,3050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="3010,3017,3050"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Automatic Headlight" value="70"/>
+        <ienumChoice choice="Headlight" value="71"/>
+        <ienumChoice choice="Dim Headlight" value="72"/>
+        <ienumChoice choice="Automatic Reverse Light" value="73"/>
+        <ienumChoice choice="Reverse Light" value="74"/>
+        <ienumChoice choice="Dim Reverse Light" value="75"/>
+        <ienumChoice choice="Automatic Mars Light" value="76" 			 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Mars Light" value="77"						 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Dim Mars Light" value="78" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Strobe Mars Light" value="79" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Number Board Lights" value="100" 	include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Number Board Lights" value="101" 			include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Marker Lights" value="104" 		include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Marker Lights Lights" value="105"   			include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106" 			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"    			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Step Lights" value="112"  			include="3015"/>
+        <ienumChoice choice="Front Step Lights" value="113"         			include="3015"/>
+        <ienumChoice choice="Automatic Front Cab Lights" value="116"   			include="3050"/>
+        <ienumChoice choice="Front Cab Lights" value="117"						include="3050"/>
+        <ienumChoice choice="Automatic Rear Cab Lights" value="118" 			include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Cab Lights Lights" value="119" 				include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
+        <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
+        <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
+        <ienumChoice choice="Grade Crossing" value="154"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Heavy Load" value="179"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label="Output 23" CVname="53.23.0" CV="53" PI="23" SI="0"
+    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+               default="10" item="CV53.23.0">
+      <ienumVal>
+        <ienumChoice choice="None" value="0"/>
+        <ienumChoice choice="Whistle" value="1"/>
+        <ienumChoice choice="Standard/Alt Whistle Selection" value="2"/>
+        <ienumChoice choice="Bell" value="3"/>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Arm Cylinder Cocks" value="6"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="3010,3017,3050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="3010,3017,3050"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Automatic Headlight" value="70"/>
+        <ienumChoice choice="Headlight" value="71"/>
+        <ienumChoice choice="Dim Headlight" value="72"/>
+        <ienumChoice choice="Automatic Reverse Light" value="73"/>
+        <ienumChoice choice="Reverse Light" value="74"/>
+        <ienumChoice choice="Dim Reverse Light" value="75"/>
+        <ienumChoice choice="Automatic Mars Light" value="76" 			 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Mars Light" value="77"						 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Dim Mars Light" value="78" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Strobe Mars Light" value="79" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Number Board Lights" value="100" 	include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Number Board Lights" value="101" 			include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Marker Lights" value="104" 		include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Marker Lights Lights" value="105"   			include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106" 			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"    			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Step Lights" value="112"  			include="3015"/>
+        <ienumChoice choice="Front Step Lights" value="113"         			include="3015"/>
+        <ienumChoice choice="Automatic Front Cab Lights" value="116"   			include="3050"/>
+        <ienumChoice choice="Front Cab Lights" value="117"						include="3050"/>
+        <ienumChoice choice="Automatic Rear Cab Lights" value="118" 			include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Cab Lights Lights" value="119" 				include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
+        <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
+        <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
+        <ienumChoice choice="Grade Crossing" value="154"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Heavy Load" value="179"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label="Output 24" CVname="53.24.0" CV="53" PI="24" SI="0"
+    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+               default="10" item="CV53.24.0">
+      <ienumVal>
+        <ienumChoice choice="None" value="0"/>
+        <ienumChoice choice="Whistle" value="1"/>
+        <ienumChoice choice="Standard/Alt Whistle Selection" value="2"/>
+        <ienumChoice choice="Bell" value="3"/>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Arm Cylinder Cocks" value="6"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="3010,3017,3050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="3010,3017,3050"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Automatic Headlight" value="70"/>
+        <ienumChoice choice="Headlight" value="71"/>
+        <ienumChoice choice="Dim Headlight" value="72"/>
+        <ienumChoice choice="Automatic Reverse Light" value="73"/>
+        <ienumChoice choice="Reverse Light" value="74"/>
+        <ienumChoice choice="Dim Reverse Light" value="75"/>
+        <ienumChoice choice="Automatic Mars Light" value="76" 			 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Mars Light" value="77"						 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Dim Mars Light" value="78" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Strobe Mars Light" value="79" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Number Board Lights" value="100" 	include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Number Board Lights" value="101" 			include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Marker Lights" value="104" 		include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Marker Lights Lights" value="105"   			include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106" 			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"    			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Step Lights" value="112"  			include="3015"/>
+        <ienumChoice choice="Front Step Lights" value="113"         			include="3015"/>
+        <ienumChoice choice="Automatic Front Cab Lights" value="116"   			include="3050"/>
+        <ienumChoice choice="Front Cab Lights" value="117"						include="3050"/>
+        <ienumChoice choice="Automatic Rear Cab Lights" value="118" 			include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Cab Lights Lights" value="119" 				include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
+        <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
+        <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
+        <ienumChoice choice="Grade Crossing" value="154"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Heavy Load" value="179"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label="Output 25" CVname="53.25.0" CV="53" PI="25" SI="0"
+    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+               default="10" item="CV53.25.0">
+      <ienumVal>
+        <ienumChoice choice="None" value="0"/>
+        <ienumChoice choice="Whistle" value="1"/>
+        <ienumChoice choice="Standard/Alt Whistle Selection" value="2"/>
+        <ienumChoice choice="Bell" value="3"/>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Arm Cylinder Cocks" value="6"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="3010,3017,3050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="3010,3017,3050"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Automatic Headlight" value="70"/>
+        <ienumChoice choice="Headlight" value="71"/>
+        <ienumChoice choice="Dim Headlight" value="72"/>
+        <ienumChoice choice="Automatic Reverse Light" value="73"/>
+        <ienumChoice choice="Reverse Light" value="74"/>
+        <ienumChoice choice="Dim Reverse Light" value="75"/>
+        <ienumChoice choice="Automatic Mars Light" value="76" 			 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Mars Light" value="77"						 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Dim Mars Light" value="78" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Strobe Mars Light" value="79" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Number Board Lights" value="100" 	include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Number Board Lights" value="101" 			include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Marker Lights" value="104" 		include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Marker Lights Lights" value="105"   			include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106" 			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"    			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Step Lights" value="112"  			include="3015"/>
+        <ienumChoice choice="Front Step Lights" value="113"         			include="3015"/>
+        <ienumChoice choice="Automatic Front Cab Lights" value="116"   			include="3050"/>
+        <ienumChoice choice="Front Cab Lights" value="117"						include="3050"/>
+        <ienumChoice choice="Automatic Rear Cab Lights" value="118" 			include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Cab Lights Lights" value="119" 				include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
+        <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
+        <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
+        <ienumChoice choice="Grade Crossing" value="154"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Heavy Load" value="179"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label="Output 26" CVname="53.26.0" CV="53" PI="26" SI="0"
+    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+               default="10" item="CV53.26.0">
+      <ienumVal>
+        <ienumChoice choice="None" value="0"/>
+        <ienumChoice choice="Whistle" value="1"/>
+        <ienumChoice choice="Standard/Alt Whistle Selection" value="2"/>
+        <ienumChoice choice="Bell" value="3"/>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Arm Cylinder Cocks" value="6"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="3010,3017,3050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="3010,3017,3050"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Automatic Headlight" value="70"/>
+        <ienumChoice choice="Headlight" value="71"/>
+        <ienumChoice choice="Dim Headlight" value="72"/>
+        <ienumChoice choice="Automatic Reverse Light" value="73"/>
+        <ienumChoice choice="Reverse Light" value="74"/>
+        <ienumChoice choice="Dim Reverse Light" value="75"/>
+        <ienumChoice choice="Automatic Mars Light" value="76" 			 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Mars Light" value="77"						 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Dim Mars Light" value="78" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Strobe Mars Light" value="79" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Number Board Lights" value="100" 	include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Number Board Lights" value="101" 			include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Marker Lights" value="104" 		include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Marker Lights Lights" value="105"   			include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106" 			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"    			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Step Lights" value="112"  			include="3015"/>
+        <ienumChoice choice="Front Step Lights" value="113"         			include="3015"/>
+        <ienumChoice choice="Automatic Front Cab Lights" value="116"   			include="3050"/>
+        <ienumChoice choice="Front Cab Lights" value="117"						include="3050"/>
+        <ienumChoice choice="Automatic Rear Cab Lights" value="118" 			include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Cab Lights Lights" value="119" 				include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
+        <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
+        <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
+        <ienumChoice choice="Grade Crossing" value="154"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Heavy Load" value="179"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label="Output 27" CVname="53.27.0" CV="53" PI="27" SI="0"
+    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+               default="10" item="CV53.27.0">
+      <ienumVal>
+        <ienumChoice choice="None" value="0"/>
+        <ienumChoice choice="Whistle" value="1"/>
+        <ienumChoice choice="Standard/Alt Whistle Selection" value="2"/>
+        <ienumChoice choice="Bell" value="3"/>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Arm Cylinder Cocks" value="6"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="3010,3017,3050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="3010,3017,3050"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Automatic Headlight" value="70"/>
+        <ienumChoice choice="Headlight" value="71"/>
+        <ienumChoice choice="Dim Headlight" value="72"/>
+        <ienumChoice choice="Automatic Reverse Light" value="73"/>
+        <ienumChoice choice="Reverse Light" value="74"/>
+        <ienumChoice choice="Dim Reverse Light" value="75"/>
+        <ienumChoice choice="Automatic Mars Light" value="76" 			 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Mars Light" value="77"						 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Dim Mars Light" value="78" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Strobe Mars Light" value="79" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Number Board Lights" value="100" 	include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Number Board Lights" value="101" 			include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Marker Lights" value="104" 		include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Marker Lights Lights" value="105"   			include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106" 			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"    			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Step Lights" value="112"  			include="3015"/>
+        <ienumChoice choice="Front Step Lights" value="113"         			include="3015"/>
+        <ienumChoice choice="Automatic Front Cab Lights" value="116"   			include="3050"/>
+        <ienumChoice choice="Front Cab Lights" value="117"						include="3050"/>
+        <ienumChoice choice="Automatic Rear Cab Lights" value="118" 			include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Cab Lights Lights" value="119" 				include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
+        <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
+        <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
+        <ienumChoice choice="Grade Crossing" value="154"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Heavy Load" value="179"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label="Output 28" CVname="53.28.0" CV="53" PI="28" SI="0"
+    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+               default="10" item="CV53.28.0">
+      <ienumVal>
+        <ienumChoice choice="None" value="0"/>
+        <ienumChoice choice="Whistle" value="1"/>
+        <ienumChoice choice="Standard/Alt Whistle Selection" value="2"/>
+        <ienumChoice choice="Bell" value="3"/>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Arm Cylinder Cocks" value="6"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="3010,3017,3050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="3010,3017,3050"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Automatic Headlight" value="70"/>
+        <ienumChoice choice="Headlight" value="71"/>
+        <ienumChoice choice="Dim Headlight" value="72"/>
+        <ienumChoice choice="Automatic Reverse Light" value="73"/>
+        <ienumChoice choice="Reverse Light" value="74"/>
+        <ienumChoice choice="Dim Reverse Light" value="75"/>
+        <ienumChoice choice="Automatic Mars Light" value="76" 			 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Mars Light" value="77"						 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Dim Mars Light" value="78" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Strobe Mars Light" value="79" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Number Board Lights" value="100" 	include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Number Board Lights" value="101" 			include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Marker Lights" value="104" 		include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Marker Lights Lights" value="105"   			include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106" 			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"    			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Step Lights" value="112"  			include="3015"/>
+        <ienumChoice choice="Front Step Lights" value="113"         			include="3015"/>
+        <ienumChoice choice="Automatic Front Cab Lights" value="116"   			include="3050"/>
+        <ienumChoice choice="Front Cab Lights" value="117"						include="3050"/>
+        <ienumChoice choice="Automatic Rear Cab Lights" value="118" 			include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Cab Lights Lights" value="119" 				include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
+        <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
+        <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
+        <ienumChoice choice="Grade Crossing" value="154"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Heavy Load" value="179"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label="Output 29" CVname="53.29.0" CV="53" PI="29" SI="0"
+    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+               default="10" item="CV53.29.0">
+      <ienumVal>
+        <ienumChoice choice="None" value="0"/>
+        <ienumChoice choice="Whistle" value="1"/>
+        <ienumChoice choice="Standard/Alt Whistle Selection" value="2"/>
+        <ienumChoice choice="Bell" value="3"/>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Arm Cylinder Cocks" value="6"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="3010,3017,3050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="3010,3017,3050"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Automatic Headlight" value="70"/>
+        <ienumChoice choice="Headlight" value="71"/>
+        <ienumChoice choice="Dim Headlight" value="72"/>
+        <ienumChoice choice="Automatic Reverse Light" value="73"/>
+        <ienumChoice choice="Reverse Light" value="74"/>
+        <ienumChoice choice="Dim Reverse Light" value="75"/>
+        <ienumChoice choice="Automatic Mars Light" value="76" 			 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Mars Light" value="77"						 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Dim Mars Light" value="78" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Strobe Mars Light" value="79" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Number Board Lights" value="100" 	include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Number Board Lights" value="101" 			include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Marker Lights" value="104" 		include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Marker Lights Lights" value="105"   			include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106" 			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"    			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Step Lights" value="112"  			include="3015"/>
+        <ienumChoice choice="Front Step Lights" value="113"         			include="3015"/>
+        <ienumChoice choice="Automatic Front Cab Lights" value="116"   			include="3050"/>
+        <ienumChoice choice="Front Cab Lights" value="117"						include="3050"/>
+        <ienumChoice choice="Automatic Rear Cab Lights" value="118" 			include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Cab Lights Lights" value="119" 				include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
+        <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
+        <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
+        <ienumChoice choice="Grade Crossing" value="154"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Heavy Load" value="179"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes"/>
+      </ienumVal>
+    </ivariable>
+    <ivariable label="Output 30" CVname="53.30.0" CV="53" PI="30" SI="0"
+    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+               default="10" item="CV53.30.0">
+      <ienumVal>
+        <ienumChoice choice="None" value="0"/>
+        <ienumChoice choice="Whistle" value="1"/>
+        <ienumChoice choice="Standard/Alt Whistle Selection" value="2"/>
+        <ienumChoice choice="Bell" value="3"/>
+        <ienumChoice choice="Dynamic Brakes" value="5"/>
+        <ienumChoice choice="Arm Cylinder Cocks" value="6"/>
+        <ienumChoice choice="Blower Hiss" value="8"/>
+        <ienumChoice choice="Long Air Let-off"/>
+        <ienumChoice choice="Short Air Let-off"/>
+        <ienumChoice choice="Pop-off" value="12"/>
+        <ienumChoice choice="Blow down"/>
+        <ienumChoice choice="Injector"/>
+        <ienumChoice choice="User Sound" value="25"							  include="3010,3017,3050"/>
+        <ienumChoice choice="Loop User Sound" value="26"     				  include="3010,3017,3050"/>
+        <ienumChoice choice="Mute" value="64"/>
+        <ienumChoice choice="Doppler Shift"/>
+        <ienumChoice choice="Automatic Headlight" value="70"/>
+        <ienumChoice choice="Headlight" value="71"/>
+        <ienumChoice choice="Dim Headlight" value="72"/>
+        <ienumChoice choice="Automatic Reverse Light" value="73"/>
+        <ienumChoice choice="Reverse Light" value="74"/>
+        <ienumChoice choice="Dim Reverse Light" value="75"/>
+        <ienumChoice choice="Automatic Mars Light" value="76" 			 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Mars Light" value="77"						 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Dim Mars Light" value="78" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Strobe Mars Light" value="79" 				 		include="317,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Number Board Lights" value="100" 	include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Number Board Lights" value="101" 			include="331,3001,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Marker Lights" value="104" 		include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Front Marker Lights Lights" value="105"   			include="3001,3006,3007,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Rear Marker Lights" value="106" 			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Marker Lights Lights" value="107"    			include="321,329,331,3010,3015,3017,3050"/>
+        <ienumChoice choice="Automatic Front Step Lights" value="112"  			include="3015"/>
+        <ienumChoice choice="Front Step Lights" value="113"         			include="3015"/>
+        <ienumChoice choice="Automatic Front Cab Lights" value="116"   			include="3050"/>
+        <ienumChoice choice="Front Cab Lights" value="117"						include="3050"/>
+        <ienumChoice choice="Automatic Rear Cab Lights" value="118" 			include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Rear Cab Lights Lights" value="119" 				include="308,321,329,331,332,3010,3015,3017,3050"/>
+        <ienumChoice choice="Start Up" value="144"/>
+        <ienumChoice choice="Shut Down"/>
+        <ienumChoice choice="Multiple Automatic Lights #1" value="136"/>
+        <ienumChoice choice="Multiple Automatic Lights #2" value="137"/>
+        <ienumChoice choice="Multiple Automatic Lights #3" value="138"/>
+        <ienumChoice choice="Grade Crossing" value="154"/>
+        <ienumChoice choice="Air Brakes" value="176"/>
+        <ienumChoice choice="Status Report" value="178"/>
+        <ienumChoice choice="Heavy Load" value="179"/>
+        <ienumChoice choice="Coupler Effect" value="211"/>
+        <ienumChoice choice="Squealing Brakes" value="215"/>
+        <ienumChoice choice="Squealing Brakes + Air Brakes"/>
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Max Bell" CVname="55.3.0" CV="55" PI="3" SI="0"
+    		include="400,401,402,403,404,406,407,408,410"
+              default="2" item="CV55.3.0" readOnly="yes">
+		<indexedVal/>
+    </ivariable>
+
     <ivariable label="Bell Select" CVname="55.3.1" CV="55" PI="3" SI="1"
-    		include="400,401,402,403,404,406,407,408,410,4002"
+    		include="400,401,402,403,404,406,407,408,410"
               default="1" item="CV55.3.0">
 		<indexedVal/>	               
     </ivariable>
@@ -2049,7 +3031,7 @@
     
     <ivariable label="Headlight Max Intensity" CVname="55.70.12" CV="55" PI="70" SI="12"
               default="255" item="CV55.70.12" 
-              include ="4000,4004,4050">
+              include ="400,401,402,403,404,406,407,408,410,4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
@@ -2420,6 +3402,15 @@
 
     <ivariable label="Auto Rear Cab Lights Config NFR" CVname="55.118.1" CV="55" PI="118" SI="1"
                default="1" item="CV55.118.1 NFR" mask="XVXXXXXX"
+               include="4000,4004,4050">
+      <ienumVal>
+        <ienumChoice choice="Off" />
+        <ienumChoice choice="On" />
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Firebox Light" CVname="55.135.0" CV="55" PI="135" SI="0"
+               default="1" item="CV55.135.0 Firebox" mask="XXXVXXXX"
                include="4000,4004,4050">
       <ienumVal>
         <ienumChoice choice="Off" />
@@ -2813,43 +3804,43 @@
 
     <ivariable label="Crossing Blast 1" CVname="55.154.0" CV="55" PI="154" SI="0"
               default="30" item="CV55.154.0"
-               include="4000,4004,4050">
+               include="400,401,402,403,404,406,407,408,410,4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Crossing Silence 1" CVname="55.154.1" CV="55" PI="154" SI="1"
               default="15" item="CV55.154.1"
-               include="4000,4004,4050">
+               include="400,401,402,403,404,406,407,408,410,4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Crossing Blast 2" CVname="55.154.2" CV="55" PI="154" SI="2"
               default="30" item="CV55.154.2"
-               include="4000,4004,4050">
+               include="400,401,402,403,404,406,407,408,410,4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Crossing Silence 2" CVname="55.154.3" CV="55" PI="154" SI="3"
               default="15" item="CV55.154.3"
-               include="4000,4004,4050">
+               include="400,401,402,403,404,406,407,408,410,4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Crossing Blast 3" CVname="55.154.4" CV="55" PI="154" SI="4"
               default="10" item="CV55.154.4"
-               include="4000,4004,4050">
+               include="400,401,402,403,404,406,407,408,410,4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Crossing Silence 3" CVname="55.154.5" CV="55" PI="154" SI="5"
               default="15" item="CV55.154.5"
-               include="4000,4004,4050">
+               include="400,401,402,403,404,406,407,408,410,4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Crossing Blast 4" CVname="55.154.6" CV="55" PI="154" SI="6"
               default="30" item="CV55.154.6"
-               include="4000,4004,4050">
+               include="400,401,402,403,404,406,407,408,410,4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
@@ -2877,6 +3868,30 @@
       </ienumVal>
     </ivariable>
 
+    <ivariable label="Status Report Temp" CVname="55.178.0" CV="55" PI="178" SI="0"
+               default="0" item="CV55.178.0 Temp" mask="XXXXVXXX">
+      <ienumVal>
+        <ienumChoice choice="Off" />
+        <ienumChoice choice="On" />
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Status Report Miles" CVname="55.178.0" CV="55" PI="178" SI="0"
+               default="0" item="CV55.178.0 Miles" mask="XXXVXXXX">
+      <ienumVal>
+        <ienumChoice choice="Off" />
+        <ienumChoice choice="On" />
+      </ienumVal>
+    </ivariable>
+
+    <ivariable label="Status Report Volts" CVname="55.178.0" CV="55" PI="178" SI="0"
+               default="0" item="CV55.178.0 Volts" mask="XXVXXXXX">
+      <ienumVal>
+        <ienumChoice choice="Off" />
+        <ienumChoice choice="On" />
+      </ienumVal>
+    </ivariable>
+
     <ivariable label="Sounds on Power Up" CVname="56.0" CV="56" PI="0" 
                default="0" item="CV56.0 Power" mask="XXXXXXXV">
       <ienumVal>
@@ -2894,8 +3909,7 @@
     </ivariable>
     
     <ivariable label="Chuff Cal" CVname="56.0" CV="56" PI="0" 
-               default="0" item="CV56.0 Cal" mask="XXXXVXXX"
-               include="4000,4002,4004,4050">
+               default="0" item="CV56.0 Cal" mask="XXXXVXXX">
 
       <ienumVal>
         <ienumChoice choice="Off" />
@@ -2905,6 +3919,15 @@
     
     <ivariable label="Chuff Sync" CVname="56.0" CV="56" PI="0" 
                default="0" item="CV56.0 Sync" mask="XXXVXXXX"
+               include="4000,4002,4004,4050">
+      <ienumVal>
+        <ienumChoice choice="BEMF" />
+        <ienumChoice choice="Cam" />
+      </ienumVal>
+    </ivariable>
+    
+    <ivariable label="Odometer" CVname="56.0" CV="56" PI="0" 
+               default="0" item="CV56.0 Odo" mask="XXVXXXXX"
                include="4000,4002,4004,4050">
       <ienumVal>
         <ienumChoice choice="BEMF" />
@@ -2947,7 +3970,6 @@
     </ivariable>
 
     <ivariable label="Chuff Interval Trim" CVname="56.13" CV="56" PI="13" default="128"
-    			include="4000,4002,4004,4050"
                item="CV56.13">
       <indexedVal /> 
     </ivariable>
@@ -2958,7 +3980,7 @@
     </ivariable>
 
     <ivariable label="Very Low Speed Intergral Gain" CVname="56.18.1" CV="56" PI="18" SI="1"
-		include="4000,4004,4050"
+		include="4000,4002,4004,4050"
     	default="2" item="CV56.18.1" >
       <indexedVal /> 
     </ivariable>
@@ -2974,7 +3996,7 @@
     </ivariable>
 
     <ivariable label="Low Speed Intergral Gain" CVname="56.19.1" CV="56" PI="19" SI="1"
-		include="4000,4004,4050"
+		include="4000,4002,4004,4050"
     	default="2" item="CV56.19.1" >
       <indexedVal /> 
     </ivariable>
@@ -2990,7 +4012,7 @@
     </ivariable>
 
     <ivariable label="Medium Speed Intergral Gain" CVname="56.20.1" CV="56" PI="20" SI="1"
-		include="4000,4004,4050"
+		include="4000,4002,4004,4050"
     	default="2" item="CV56.20.1" >
       <indexedVal /> 
     </ivariable>
@@ -3006,7 +4028,7 @@
     </ivariable>
 
     <ivariable label="High Speed Intergral Gain" CVname="56.21.1" CV="56" PI="21" SI="1"
-		include="4000,4004,4050"
+		include="4000,4002,4004,4050"
     	default="2" item="CV56.21.1" >
       <indexedVal /> 
     </ivariable>
@@ -3165,6 +4187,31 @@
 		    </row>
 		    <label label=" "/>
 		    <row>
+		    	<display item="CV51.10" layout="above" label="" />
+		    	<display item="CV51.10" layout="above" format="hslider"/>
+		    </row>
+		    <label label=" "/>
+		    <row>
+		    	<display item="CV51.12" layout="above" label="" />
+		    	<display item="CV51.12" layout="above" format="hslider"/>
+		    </row>
+		    <label label=" "/>
+		    <row>
+		    	<display item="CV51.13" layout="above" label="" />
+		    	<display item="CV51.13" layout="above" format="hslider"/>
+		    </row>
+		    <label label=" "/>
+		    <row>
+		    	<display item="CV55.3.5 Hold" layout="above" label="" />
+		    	<display item="CV55.3.5 Hold" layout="above" format="hslider"/>
+		    </row>
+		    <label label=" "/>
+		    <row>
+		    	<display item="CV55.21.0" layout="above" label="" />
+		    	<display item="CV55.21.0" layout="above" format="hslider"/>
+		    </row>
+		    <label label=" "/>
+		    <row>
 		     	<display item="CV56.12" layout="above" label="" />
 		     	<display item="CV56.12" layout="above" format="hslider"/>
 		    </row>
@@ -3177,22 +4224,29 @@
       	<label label="      "/>
 		<column>
         	<display item="CV51.2 Doppler" format="checkbox"/>
+        	<display item="CV51.2 Turbine" format="checkbox"/>
         	<display item="CV51.2 Horn" format="checkbox"/>
         	<display item="CV51.2 Whistle" format="checkbox"/>
         	<display item="CV51.2 Heavy" format="checkbox"/>
         	<display item="CV51.2 Cocks1" format="checkbox"/>
         	<display item="CV51.2 Cocks2" format="checkbox"/>
+        	<display item="CV55.3.0" />
         	<display item="CV55.3.1" />
+        	<display item="CV55.3.5 Auto" />
 	    	<display item="CV56.0 Power" />
+		    <display item="CV56.0 Units" />
 	    	<display item="CV56.0 Cal" />
 	    	<display item="CV56.0 Sync" />
+	    	<display item="CV56.0 Odo" />
 	    	<display item="CV56.0 Reed" />
 	    	<display item="Wheel Diameter" />
 	    	<display item="Locomotive Scale" />
 		    <display item="CV55.178.0 MPH" format="checkbox"/>
 		    <display item="CV55.178.0 BEMF" format="checkbox"/>
 		    <display item="CV55.178.0 PWM" format="checkbox"/>
-		    <display item="CV56.0 Units" />
+		    <display item="CV55.178.0 Temp" format="checkbox"/>
+		    <display item="CV55.178.0 Miles" format="checkbox"/>
+		    <display item="CV55.178.0 Volts" format="checkbox"/>
 	        <label label=" "/>
 		</column>
     </row>
@@ -3557,7 +4611,135 @@
         <label label=" F12"/>
       </column>
     </row>
-  </column>
+    <row>
+      <column>
+        <display item="CV53.15.0"/>
+      </column>
+      <column>
+        <label label=" F13"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.16.0"/>
+      </column>
+      <column>
+        <label label=" F14"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.17.0"/>
+      </column>
+      <column>
+        <label label=" F15"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.18.0"/>
+      </column>
+      <column>
+        <label label=" F16"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.19.0"/>
+      </column>
+      <column>
+        <label label=" F17"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.20.0"/>
+      </column>
+      <column>
+        <label label=" F18"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.21.0"/>
+      </column>
+      <column>
+        <label label=" F19"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.22.0"/>
+      </column>
+      <column>
+        <label label=" F20"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.23.0"/>
+      </column>
+      <column>
+        <label label=" F21"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.24.0"/>
+      </column>
+      <column>
+        <label label=" F22"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.25.0"/>
+      </column>
+      <column>
+        <label label=" F23"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.26.0"/>
+      </column>
+      <column>
+        <label label=" F24"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.27.0"/>
+      </column>
+      <column>
+        <label label=" F25"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.28.0"/>
+      </column>
+      <column>
+        <label label=" F26"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.29.0"/>
+      </column>
+      <column>
+        <label label=" F27"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="CV53.30.0"/>
+      </column>
+      <column>
+        <label label=" F28"/>
+      </column>
+    </row>
+</column>
 </pane>
 
 <pane name="Light Control">
@@ -3577,12 +4759,14 @@
         <display item="CV55.70.1 REV"/>
         <display item="CV55.70.1 NFR"/>
         <row>
-	        <display item="CV55.70.10" layout="above" label="" />
-	        <display item="CV55.70.10" layout="above" format="hslider"/>
+	        <display item="CV55.70.10" />                          
+		    <label label="          "/>
+	        <display item="CV55.70.10" format="hslider" label="" />
         </row>
         <row>
-	        <display item="CV55.70.12" layout="above" label="" />
-	        <display item="CV55.70.12" layout="above" format="hslider"/>
+	        <display item="CV55.70.12" />                          
+		    <label label="          "/>
+	        <display item="CV55.70.12" format="hslider" label="" />
         </row>
       </column>
       <column>
@@ -3592,12 +4776,14 @@
         <display item="CV55.73.1 REV"/>
         <display item="CV55.73.1 NFR"/>
         <row>
-	        <display item="CV55.73.10" layout="above" label="" />
-	        <display item="CV55.73.10" layout="above" format="hslider"/>
+	        <display item="CV55.73.10" />                          
+		    <label label="          "/>
+	        <display item="CV55.73.10" format="hslider" label="" />
         </row>
         <row>
-	        <display item="CV55.73.12" layout="above" label="" />
-	        <display item="CV55.73.12" layout="above" format="hslider"/>
+	        <display item="CV55.73.12" />                          
+		    <label label="          "/>
+	        <display item="CV55.73.12" format="hslider" label="" />
         </row>
       </column>
     </row>
@@ -3610,24 +4796,29 @@
         <display item="CV55.76.3"/>
         <display item="CV55.76.4"/>
         <row>
-	        <display item="CV55.76.6" layout="above" label="" />
-	        <display item="CV55.76.6" layout="above" format="hslider"/>
+	        <display item="CV55.76.6" />                          
+		    <label label="          "/>
+	        <display item="CV55.76.6" format="hslider" label="" />
         </row>
         <row>
-	        <display item="CV55.76.10" layout="above" label="" />
-	        <display item="CV55.76.10" layout="above" format="hslider"/>
+	        <display item="CV55.76.10" />                          
+		    <label label="          "/>
+	        <display item="CV55.76.10" format="hslider" label="" />
         </row>
         <row>
-	        <display item="CV55.76.11" layout="above" label="" />
-	        <display item="CV55.76.11" layout="above" format="hslider"/>
+	        <display item="CV55.76.11" />                          
+		    <label label="          "/>
+	        <display item="CV55.76.11" format="hslider" label="" />
         </row>
         <row>
-	        <display item="CV55.76.12" layout="above" label="" />
-	        <display item="CV55.76.12" layout="above" format="hslider"/>
+	        <display item="CV55.76.12" />                          
+		    <label label="          "/>
+	        <display item="CV55.76.12" format="hslider" label="" />
         </row>
         <row>
-	        <display item="CV55.76.13" layout="above" label="" />
-	        <display item="CV55.76.13" layout="above" format="hslider"/>
+	        <display item="CV55.76.13" />                          
+		    <label label="          "/>
+	        <display item="CV55.76.13" format="hslider" label="" />
         </row>
       </column>
 
@@ -3638,24 +4829,29 @@
         <display item="CV55.80.3"/>
         <display item="CV55.80.4"/>
         <row>
-	        <display item="CV55.80.6" layout="above" label="" />
-	        <display item="CV55.80.6" layout="above" format="hslider"/>
+	        <display item="CV55.80.6" />                          
+		    <label label="          "/>
+	        <display item="CV55.80.6" format="hslider" label="" />
         </row>
         <row>
-	        <display item="CV55.80.10" layout="above" label="" />
-	        <display item="CV55.80.10" layout="above" format="hslider"/>
+	        <display item="CV55.80.10" />                          
+		   <label label="          "/>
+	        <display item="CV55.80.10" format="hslider" label="" />
         </row>
         <row>
-	        <display item="CV55.80.11" layout="above" label="" />
-	        <display item="CV55.80.11" layout="above" format="hslider"/>
+	        <display item="CV55.80.11" />                          
+		   <label label="          "/>
+	        <display item="CV55.80.11" format="hslider" label="" />
         </row>
         <row>
-	        <display item="CV55.80.12" layout="above" label="" />
-	        <display item="CV55.80.12" layout="above" format="hslider"/>
+	        <display item="CV55.80.12" />                          
+		   <label label="          "/>
+	        <display item="CV55.80.12" format="hslider" label="" />
         </row>
         <row>
-	        <display item="CV55.80.13" layout="above" label="" />
-	        <display item="CV55.80.13" layout="above" format="hslider"/>
+	        <display item="CV55.80.13" />                          
+		   <label label="          "/>
+	        <display item="CV55.80.13" format="hslider" label="" />
         </row>
       </column>
 	</row>
@@ -3679,24 +4875,29 @@
     		  </column>
     		</row>
     		<row>
-			    <display item="CV55.84.5" layout="above" label="" />
-			    <display item="CV55.84.5" layout="above" format="hslider"/>
+			    <display item="CV55.84.5" />                          
+			   <label label="          "/>
+			    <display item="CV55.84.5" format="hslider" label="" />
     		</row>
     		<row>
-    		   <display item="CV55.84.6" layout="above" label="" />
-    		   <display item="CV55.84.6" layout="above" format="hslider"/>
+    		   <display item="CV55.84.6" />                          
+			   <label label="          "/>
+    		   <display item="CV55.84.6" format="hslider" label="" />
     		</row>
     		<row>
-    		   <display item="CV55.84.10" layout="above" label="" />
-    		   <display item="CV55.84.10" layout="above" format="hslider"/>
+    		   <display item="CV55.84.10" />                          
+			   <label label="          "/>
+    		   <display item="CV55.84.10" format="hslider" label="" />
     		</row>
     		<row>
-    		   <display item="CV55.84.11" layout="above" label="" />
-    		   <display item="CV55.84.11" layout="above" format="hslider"/>
+    		   <display item="CV55.84.11" />                          
+			   <label label="          "/>
+    		   <display item="CV55.84.11" format="hslider" label="" />
     		</row>
     		<row>
-    		   <display item="CV55.84.12" layout="above" label="" />
-    		   <display item="CV55.84.12" layout="above" format="hslider"/>
+    		   <display item="CV55.84.12" />                          
+			   <label label="          "/>
+    		   <display item="CV55.84.12" format="hslider" label="" />
     		</row>
    		  </column>
    		  <column>
@@ -3717,59 +4918,82 @@
     		  </column>
   			</row>
     		<row>
-    		   <display item="CV55.88.5" layout="above" label="" />
-    		   <display item="CV55.88.5" layout="above" format="hslider"/>
+    		   <display item="CV55.88.5" />                          
+			   <label label="          "/>
+    		   <display item="CV55.88.5" format="hslider" label="" />
     		</row>
     		<row>
-    		   <display item="CV55.88.6" layout="above" label="" />
-    		   <display item="CV55.88.6" layout="above" format="hslider"/>
+    		   <display item="CV55.88.6" />                          
+			   <label label="          "/>
+    		   <display item="CV55.88.6" format="hslider" label="" />
     		</row>
     		<row>
-    		   <display item="CV55.88.10" layout="above" label="" />
-    		   <display item="CV55.88.10" layout="above" format="hslider"/>
+    		   <display item="CV55.88.10" />                          
+			   <label label="          "/>
+    		   <display item="CV55.88.10" format="hslider" label="" />
     		</row>
     		<row>
-    		   <display item="CV55.88.11" layout="above" label="" />
-    		   <display item="CV55.88.11" layout="above" format="hslider"/>
+    		   <display item="CV55.88.11" />
+			   <label label="          "/>
+    		   <display item="CV55.88.11" format="hslider" label="" />
     		</row>
     		<row>
-    		   <display item="CV55.88.12" layout="above" label="" />
-    		   <display item="CV55.88.12" layout="above" format="hslider"/>
+    		   <display item="CV55.88.12" />                          
+			   <label label="          "/>
+    		   <display item="CV55.88.12" format="hslider" label="" />
     		</row>
 		</column>
 	</row>
     <label label=" "/>
     <row>
       <column>
+        <display item="CV55.92.0 Auto" />
         <display item="CV55.92.0 Init" />
+        <display item="CV55.92.0 Bell" />
    	    <display item="CV55.92.0 Effect" />
+        <display item="CV55.92.1 FWD" />
+        <display item="CV55.92.1 NFF" />
+        <display item="CV55.92.1 REV" />
+        <display item="CV55.92.1 NFR" />
    		<row>
-   		   <display item="CV55.92.6" layout="above" label="" />
-   		   <display item="CV55.92.6" layout="above" format="hslider"/>
+   		   <display item="CV55.92.6"  />
+		   <label label="          "/>
+   		   <display item="CV55.92.6" format="hslider" label=""/>
    		</row>
    		<row>
-   		   <display item="CV55.92.11" layout="above" label="" />
-   		   <display item="CV55.92.11" layout="above" format="hslider"/>
+   		   <display item="CV55.92.11"  />          
+		   <label label="          "/>
+   		   <display item="CV55.92.11" format="hslider" label=""/>
    		</row>
    		<row>
-   		   <display item="CV55.92.12" layout="above" label="" />
-   		   <display item="CV55.92.12" layout="above" format="hslider"/>
+   		   <display item="CV55.92.12"  />          
+		   <label label="          "/>
+   		   <display item="CV55.92.12" format="hslider" label=""/>
    		</row>
       </column>
       <column>
+        <display item="CV55.96.0 Auto" />
         <display item="CV55.96.0 Init" />
+        <display item="CV55.96.0 Bell" />
         <display item="CV55.96.0 Effect" />
+        <display item="CV55.96.1 FWD" />
+        <display item="CV55.96.1 NFF" />
+        <display item="CV55.96.1 REV" />
+        <display item="CV55.96.1 NFR" />
    		<row>
-   		   <display item="CV55.96.6" layout="above" label="" />
-   		   <display item="CV55.96.6" layout="above" format="hslider"/>
+   		   <display item="CV55.96.6"  />          
+		   <label label="          "/>
+   		   <display item="CV55.96.6" format="hslider" label=""/>
    		</row>
    		<row>
-   		   <display item="CV55.96.11" layout="above" label="" />
-   		   <display item="CV55.96.11" layout="above" format="hslider"/>
+   		   <display item="CV55.96.11"  />          
+		   <label label="          "/>
+   		   <display item="CV55.96.11" format="hslider" label=""/>
    		</row>
    		<row>
-   		   <display item="CV55.96.12" layout="above" label="" />
-   		   <display item="CV55.96.12" layout="above" format="hslider"/>
+   		   <display item="CV55.96.12"  />          
+		   <label label="          "/>
+   		   <display item="CV55.96.12" format="hslider" label=""/>
    		</row>
       </column>
   	</row>
@@ -3847,9 +5071,16 @@
         <display item="CV55.134.0 Truck" format="checkbox"/>
         <display item="CV55.134.0 Step" format="checkbox"/>
       </column>
+      <column>
+        <display item="CV55.135.0 Engine" format="checkbox"/>
+        <display item="CV55.135.0 Front Panel" format="checkbox"/>
+        <display item="CV55.135.0 Rear Panel" format="checkbox"/>
+        <display item="CV55.135.0 Firebox" format="checkbox"/>
+      </column>
     </row>
   </column>
 </pane>
+
 
 <pane name="Multi Auto Lights">
   <column>
@@ -3934,7 +5165,11 @@
       </column>
       <label label="        "/>
       <column>
-        <row>
+       <row>
+     		<display item="CV56.4"/>
+       </row>
+       <label label=" "/>
+       <row>
         	<display item="CV56.5" layout="above" label=""/>
         	<display item="CV56.5" layout="above" format="hslider" />
         </row>
@@ -3954,8 +5189,8 @@
         </row>
         <label label=" "/>
         <row>
-       		<display item="CV56.18.1" layout="above" label="" />
-       		<display item="CV56.18.1" layout="above" format="hslider" />
+        	<display item="CV56.18.1" layout="above" label="" />
+        	<display item="CV56.18.1" layout="above" format="hslider" />
         </row>
         <label label=" "/>
         <row>
@@ -4051,8 +5286,6 @@
     <display item="CV56.254.17"/>
     <display item="CV56.254.18"/>
     <label label=" "/>
-    <display item="CV56.4"/>
-    <label label=" "/>
     <label label="When programming in Ops-mode, set Verbal Acknowledgement to disable"/>
     <label label=" "/>
     <display item="CV62 Verbal Ack"/>
@@ -4064,6 +5297,5 @@
     <display item="Verbal CV Inquiry"/>
   </column>
 </pane>
-</decoder-config>
 
- 	  	 
+</decoder-config>
