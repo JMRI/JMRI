@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.5.shtml,v 1.11 2009-08-30 08:22:34 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.5.shtml,v 1.12 2009-09-04 23:14:55 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -208,10 +208,67 @@ Mike Mosher updated the QSI Gas Turbine decoder definition to add "Code Horn for
 Jack Shall and Mike Mosher updated the SoundTraxx Tsunami Diesel definition to add CVs, correct a couple bugs, and add tooltips.
 
 <p>
-Peter Ulvestard updated the Bachmann EZDCC 4fn definition to add a max value for CV2, 
+Peter Ulvestad updated the Bachmann EZDCC 4fn definition to add a max value for CV2, 
 changed the Lenz tab name to Bachmann, updated
 dimensions and default values as per decoder manual and added factory reset menu items.
 
+<p>
+Dan Boudreau fixed a minor bug when building trains from staging tracks without engines.  
+Builds would sometimes fail if the staging tracks didn't have engines.  
+Fix now allows trains to be build from staging without requiring engines.
+
+<p>
+Kevin Dickerson added a new "failedThrottleRequest" function to the core Throttle support, 
+so that if System-specific throttles are unable to create a throttle, 
+then the address is removed from the throttleListeners Hashmap, and hence prevents the DCC address being locked out.
+
+<p>
+Andrew Crosland added support for CBUS programmers and throttles.
+
+<p>
+Dan Boudreau fixed a minor operations bug to allow terminating a train into staging without an engine.
+
+<p>
+Paul Bender fixed an error when parsing an "unsupported command" XPressNet response message.
+
+<p>
+Paul Bender changed the XPressNet code: instead of sending emergency stop to a MultiMaus 
+(which doesn't support the emergency stop command?) send speed 0.
+
+<p>
+Peter Ulvestad updated the Bachmann EZ DCC, and EZ DCC 1 function
+decoder definitions to change the model name, added decoder dimensions, 
+update defaults and cleaned up the formatting.
+
+<p>
+Peter Ulvestad updated the ESU Bachmann 3 function to
+add CV17 - Extended address, corrected CV4 max value and CV5 default
+value.
+
+<p>
+Paul Fraker contributed a decoder definition for the MRC diesel 1829 decoder.
+
+<p>
+Paul Fraker contributed a decoder definition for the MRC Athearn Genesis SD45-2.
+
+<p>
+Peter Ulvestad created a definition for the MRC 1820 Athearn RS3 Dropin Decoder.
+
+<p>
+Peter Ulvestad updated the definition for the MRC 1806 decoder
+to correct CV67-94 (speed table), moved consist info to consist tab
+
+<p>
+Michael Mosher updated the QSI Version 7 decoder definitions to add new models
+and CV 55.21.0,CV53.15.0 thru CV53.30.0, CV55.154.SI CV56.9
+CV55.3.5 CV55.84.SI CV55.70.12 CV55.76.6,11,12,13 CV51.2
+
+<p>
+Nigel Cliffe provided a new decoder definition for the ZTC 471 sound decoder.
+
+<p>
+Nigel Cliffe provided a new decoder definition for the CT ElektroniK SL series (post v40) sound decoders.
+He also improved the CT Elektronik DCX decoder definitions.
 
 
 
