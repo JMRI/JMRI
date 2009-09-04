@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
-<!-- $Id: NYB_dualmode.xml,v 1.4 2009-07-03 15:31:33 jacobsen Exp $ -->
+<!-- $Id: NYB_dualmode.xml,v 1.5 2009-09-04 22:54:45 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,10 +16,13 @@
 <!-- for more details.                                                      -->
 
 <decoder-config showEmptyPanes="default">
+  <version author="Peter Ulvestad" version="2" lastUpdated="20090831"/>
   <version author="phill_perry@bigpond.com" version="1" lastUpdated="20070630" />
   <!-- Version 1 - made from 0NMRA.xml -->
+  <!-- Version 2 - Corrected mfg. spelling -->
+  
   <decoder>
-    <family name="NYB Dual Mode Decoder" mfg="New Youk Byano Limited" type="locomotive">
+    <family name="NYB Dual Mode Decoder" mfg="New York Byano Limited" type="locomotive">
       <model model="NYB Dual Mode Decoder" numOuts="2" numFns="0" lowVersionID="46" nmraWarrant="yes" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="no" bidirRead="no"></programming>
@@ -116,3 +119,4 @@
 
   </decoder>
 </decoder-config>
+ 	  	 
