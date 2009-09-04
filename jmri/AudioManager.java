@@ -38,7 +38,7 @@ import jmri.jmrit.audio.AudioFactory;
  * for more details.
  * <P>
  * @author Matthew Harris   Copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public interface AudioManager extends Manager {
 
@@ -142,7 +142,7 @@ public interface AudioManager extends Manager {
     
     /**
      * Get a list of specified Audio sub-type objects' system names.
-     * @param type sub-type to retrieve
+     * @param subType sub-type to retrieve
      * @return List of specified Audio sub-type objects' system names.
      */
     public List<String> getSystemNameList(int subType);
