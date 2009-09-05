@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.13 $
+# $Revision: 1.14 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -110,6 +110,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     currentNextBlocks = []
     priorBlocks = []
     priorNextBlocks = []
+    currentSignal = None
+    currentSignalAspect = None
     isRunning = False
     currentThrottle = None
     scriptFrame = None
@@ -130,6 +132,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     redDelayTimer = None
     redDelayListener = None
     shrinkGrow = True
+    fullScrollRows = 15
     speedPane = None
     rosterInstance = None
     oldLocoAddress = None
@@ -138,39 +141,56 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     stopBlock = None
     hornDelayTimer = None
     hornDelayListener = None
+    throttleManager = None
 
     def init(self):
+        #print("init begin:.\n")
+        if (self.locoAddress.text.strip() != "") :
+            self.getNewThrottle()
+        return
+        
+    def handle(self):
+        #print("handle begin:.\n")
+        #self.didWeMove(None)
+        #self.msgText("handle done\n")
+        self.waitMsec(5000)
+        return 0 #continue if 1, run once if 0
+    
+    def getNewThrottle(self) :
         self.holdMoving = True
         if (self.currentThrottle != None) :
             oldId = self.currentThrottle.getLocoAddress()
             self.msgText("stop and release the current loco: " + oldId.toString() + "\n")
             self.doStop();
             self.currentThrottle.release()
+            self.currentThrottle = None
             self.msgText("Throttle " + oldId.toString() + " released\n")
         self.msgText("Getting throttle - ") #add text to scroll field
         id = int(self.locoAddress.text)
-        isLong = self.locoLong.isSelected()
+        if (self.throttleManager.addressTypeUnique() == True) :
+            self.msgText("id values are not ambiguous\n")
+            isLong = self.throttleManager.canBeLongAddress(id)
+        else :
+            self.msgText("id values are ambiguous\n")
+            isLong = True
+            if (self.throttleManager.canBeShortAddress(id)) :
+                self.msgText("id could be a short.\n")
+                if (self.locoLong.isSelected() == False) :
+                    isLong = False
+        self.msgText(" getting " + id.toString() + " " + isLong.toString() + " - ")
         throttle = self.getThrottle(id, isLong)
         self.currentThrottle = throttle
         if (self.currentThrottle == None) :
-           self.msgText("Couldn't assign throttle! - Run stopped\n")
-           self.doHalt()
+            self.msgText("Couldn't assign throttle! - Run stopped\n")
+            self.doHalt()
         else : 
-           self.msgText("got throttle\n")
-           self.currentThrottle.setIsForward(self.locoForward.isSelected())
-           self.currentThrottle.setF0(self.locoHeadlight.isSelected())
-           self.currentThrottle.setF1(self.locoBell.isSelected())
-        self.holdMoving = False
-        self.didWeMoveCounterCheck(None)
+            self.msgText("got throttle: " + self.currentThrottle.getLocoAddress().toString() + "\n")
+            self.currentThrottle.setIsForward(self.locoForward.isSelected())
+            self.currentThrottle.setF0(self.locoHeadlight.isSelected())
+            self.currentThrottle.setF1(self.locoBell.isSelected())
+            self.holdMoving = False
         return
         
-    def handle(self):
-        #self.msgText("handle begin:.\n")
-        #self.didWeMove(None)
-        #self.msgText("handle done\n")
-        self.waitMsec(5000)
-        return 0 #continue if 1, run once if 0
-    
     # return userName if available, else systemName
     def giveBlockName(self, block) :
         if (block == None) :
@@ -225,8 +245,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
  
     # figure out if we moved and where
     def didWeMove(self, event) :
-        if (self.isRunning == False) :
-            #self.msgText("didWeMove called while isRunning was false\n")
+        if (self.currentThrottle == None) :
+            #self.msgText("didWeMove called while currentThrottle was None\n")
             return
         #if (self.currentBlock != None) :
             #self.msgText("Current block: " + self.giveBlockName(self.currentBlock) + "\n")
@@ -236,6 +256,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.doHalt()
         # new current block must be farthest connected to current block in current direction chain
         oldCurrent = self.currentBlock
+        oldSignal = self.currentSignal
         tryBlock = self.currentBlock
         newCurrent = None
         giveUpTimer = 0
@@ -281,25 +302,57 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.doStop()
         # find next block from currentBlock
         if (self.currentBlock != None) :
-            if (self.blockAhead2.isSelected() == False) :
-                self.msgText("3 block test: " + self.giveBlockName(self.currentBlock) + "\n")
-                # if only looking ahead to next block
-                self.findNewSpeed(self.currentBlock, self.nextBlock)
-            else :
-                self.msgText("4 block test: " + self.giveBlockName(self.nextBlock) + "\n")
-                # if looking ahead beyond block (4 block system)
-                if (self.beyondBlock == None) :
-                    self.msgText("failed to find next block: " + self.giveBlockName(self.nextBlock) + "\n")
-                    self.doHalt()
-                else :
-                    self.findNewSpeed(self.nextBlock, self.beyondBlock)
             nearSig = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(self.currentBlock, self.nextBlock)
             farSig = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(self.nextBlock, self.beyondBlock)
-            if (self.isRunning and nearSig != None) :
+            if (self.blockAhead2.isSelected() == False) :
+                # if only looking ahead to next block
+                self.msgText("3 block test: " + self.giveBlockName(self.currentBlock) + ":" + self.giveBlockName(self.nextBlock) + ":" + self.giveBlockName(oldCurrent) + " signals:" + self.giveSignalName(oldSignal) + ":" + self.giveSignalName(nearSig) + "\n")
+                if (oldCurrent == None or oldCurrent != self.currentBlock) :
+                    # we moved somewhere
+                    #self.msgText("We moved or started up.\n")
+                    self.findNewSpeed(self.currentBlock, self.nextBlock)
+                elif (oldSignal == None) :
+                    # we didn't move, it is startup
+                    self.msgText("Not move, startup.\n")
+                    self.findNewSpeed(self.currentBlock, self.nextBlock)
+                elif (oldSignal != nearSig or self.currentSignalAspect != nearSig.getAppearance()) :
+                    # we didn't move, but a signal changed
+                    self.msgText("Not move, signal changed.\n")
+                    if (self.compareSignalAspects(self.currentSignalAspect, nearSig.getAppearance()) < 0) :
+                        # signal dropped, that's bad
+                        self.doHalt()
+                        self.msgText("Signal dropped in front of train. Halting!!\n")
+                    else :
+                        self.findNewSpeed(self.currentBlock, self.nextBlock)
+                else :
+                    self.msgText("we didn't seem to move or have a signal change!!\n")
+            else :
+                # if looking ahead beyond block (4 block system)
+                self.msgText("4 block test: " + self.giveBlockName(self.nextBlock) + "\n")
+                if (self.beyondBlock == None) :
+                    self.msgText("failed to find next block: " + self.giveBlockName(self.nextBlock) + ":" + self.giveBlockName(self.beyondBlock) + "\n")
+                    self.doHalt()
+                else :
+                    if (oldCurrent == None or oldCurrent != self.currentBlock) :
+                        # we moved somewhere
+                        self.findNewSpeed(self.nextBlock, self.beyondBlock)
+                    elif (oldSignal == None) :
+                        # we didn't move, it is startup
+                        self.findNewSpeed(self.nextBlock, self.beyondBlock)
+                    elif (oldSignal != farSig or self.currentSignalAspect != farSig.getAppearance()) :
+                        # we didn't move, but a signal changed
+                        if (self.compareSignalAspects(self.currentSignalAspect, farSig.getAppearance()) < 0) :
+                            # signal dropped, that's bad
+                            self.doHalt()
+                            self.msgText("Signal dropped in front of train. Halting!!\n")
+                        else :
+                            self.findNewSpeed(self.currentBlock, self.nextBlock)
+            # this is for display updates
+            if (nearSig != None) :
                 self.signalNext.setIcon(self.cvtAppearanceIcon(nearSig))
                 self.signalNextText.text = self.cvtAppearanceText(nearSig)
                 self.testAddSignalListener(nearSig)
-                if (self.isRunning and farSig != None) :
+                if (farSig != None) :
                     self.signalBeyond.setIcon(self.cvtAppearanceIcon(farSig))
                     self.signalBeyondText.text = self.cvtAppearanceText(nearSig)
                     self.testAddSignalListener(farSig)
@@ -366,6 +419,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.hornDelayTimer != None) :
             for i in self.hornDelayTimer.getActionListeners() :
                 self.hornDelayTimer.removeActionListener(i)
+        if (self.currentThrottle != None) :
+            self.currentThrottle.release()
         return
 
     # take list of new current blocks, a current block, and a current direction
@@ -426,11 +481,48 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                         if (s != None) :
                             self.msgText("Found signal: " + self.giveSignalName(s) + " displaying: " + self.cvtAppearanceText(s) + "\n")
                             self.speedFromAppearance(s)
+                            self.currentSignal = s
+                            self.currentSignalAspect = s.getAppearance()
                         else :
                             self.msgText("Failed finding signal!\n")
                             self.doHalt()
         return
     
+    # convert signal appearance to a ranked value
+    def rankSignalAspect(self, sigAspect) :
+        ret = 0
+        if (sigAspect & RED != 0) :
+            ret = 1
+        elif (sigAspect & FLASHRED != 0) :
+            ret = 2
+        elif (sigAspect & YELLOW != 0) :
+            ret = 3
+        elif (sigAspect & FLASHYELLOW != 0) :
+            ret = 4
+        elif (sigAspect & GREEN != 0) :
+            ret = 5
+        elif (sigAspect & FLASHGREEN != 0) :
+            ret = 6
+        return ret
+        
+    # compare two signal appearances
+    def compareSignalAspects(self ,oldSig, newSig) :
+        ret = "0"
+        if (newSig == None or oldSig == None) :
+            # this is wrong
+            self.msgText("compare signals got a None for a signal\n")
+            self.doHalt()
+            return
+        newSigState = self.rankSignalAspect(newSig)
+        oldSigState = self.rankSignalAspect(oldSig)
+        self.msgText("compareSignalAspects - old: " + oldSigState.toString() + "\n")
+        self.msgText("compareSignalAspects - new: " + newSigState.toString() + "\n")
+        if (newSigState < oldSigState) :
+            ret = -1
+        elif (newSigState > oldSigState) :
+            ret = 1
+        return ret
+        
     # set speed from signal appearance
     def speedFromAppearance(self, sig) :
         rep = ""
@@ -860,13 +952,15 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 else :
                     self.currentDirection = jmri.Path.WEST
                     self.currentBlock.setDirection(jmri.Path.WEST)
-                self.start()
+                self.currentSignalAspect = None
+                self.currentSignal = None
+                self.getNewThrottle()
                 self.msgText("Change button states\n")     # add text
                 self.stopButton.setEnabled(True)
                 self.haltButton.setEnabled(True)
                 self.startButton.setEnabled(False)
                 self.isRunning = True
-                self.didWeMoveCounter = 1
+                self.didWeMoveCounter = self.didWeMoveCounter + 1
                 self.didWeMoveCounterCheck(None)
                 if (self.isRunning) :
                     self.msgText("Starting current:" + self.giveBlockName(self.currentBlock) + "\n")
@@ -900,10 +994,15 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.msgText("Shrink Display!\n")     # add text
             self.speedPane.setVisible(False)
             self.shrinkGrow = False
+            self.fullScrollRows = self.scrollArea.getRows()
+            self.scrollArea.setRows(self.fullScrollRows / 2)
+            self.scriptFrame.pack()
         else :
             self.msgText("Grow Display!\n")
             self.speedPane.setVisible(True)
             self.shrinkGrow = True
+            self.scrollArea.setRows(self.fullScrollRows)
+            self.scriptFrame.pack()
         return
     
     def whenSaveToRosterButtonClicked(self, event):   
@@ -1077,13 +1176,14 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.redFlashSignalIcon = jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/searchlights/right-flashred-short.gif", "RedFlashCabSignal")
         self.darkSignalIcon = jmri.jmrit.catalog.NamedIcon("resources/icons/smallschematics/searchlights/right-dark-short.gif", "DarkCabSignal")
         self.unknownSignalIcon = jmri.jmrit.catalog.NamedIcon("resources/icons/misc/Question-black.gif", "UnknownCabSignal")
+        self.throttleManager = jmri.InstanceManager.throttleManagerInstance()
    
         # start to initialise the GUI
         sizeRateField = 4
         sizeSpeedField = 3
         
         # create buttons and define action
-        self.startButton = javax.swing.JButton("Start the Run")
+        self.startButton = javax.swing.JButton("Start")
         self.startButton.setEnabled(False)           # button starts as grayed out (disabled)
         self.startButton.actionPerformed = self.whenStartButtonClicked
         
@@ -1122,6 +1222,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.locoLong = javax.swing.JCheckBox()
         self.locoLong.setToolTipText("Check to use long address")
         self.locoLong.setSelected(True)
+        if (self.throttleManager.addressTypeUnique() == True) :
+            self.locoLong.setEnabled(False)
         self.locoLong.actionPerformed = self.whenLocoChanged
         self.locoLong.focusLost = self.whenLocoChanged
         
@@ -1505,6 +1607,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.scriptFrame.contentPane.add(butPanel)
         self.scriptFrame.pack()
         self.scriptFrame.show()
+        self.start()
         return
         
     def setLoco(self, locoId) :
@@ -1585,23 +1688,23 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
         
 # if you are running the RobotThrottle completely interactive, the following two lines are all you need
-rb = LocoThrot()
-rb.setup()
+rb1 = LocoThrot()
+rb1.setup()
 # However, if you are automating the automation, then 
 ## Options for doing more via scripts
 ## this will set the loco number, if a matching roster entry is found, it will load the values
-## rb.setLoco("111")
-## rb.setLocoEast()
-## rb.setLocoWest()
-## rb.setLocoHeadlight(True/False)
-## rb.hornShort()
-## rb.hornLong()
+## rb1.setLoco("111")
+## rb1.setLocoEast()
+## rb1.setLocoWest()
+## rb1.setLocoHeadlight(True/False)
+## rb1.hornShort()
+## rb1.hornLong()
 ## this will set the starting block
-## rb.setStartBlock("block1")
+## rb1.setStartBlock("block1")
 ## this will enable the loco to move according to the signals
-## rb.pushStart()
+## rb1.pushStart()
 ## this sets a block to stop at
-## rb.stopBlock("block1")
+## rb1.stopBlock("block1")
 ## shrink the display size
-## rb.doShrink()
+## rb1.doShrink()
 
