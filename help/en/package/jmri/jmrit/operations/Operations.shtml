@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.46 2009-09-02 03:34:58 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.47 2009-09-05 01:53:40 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -202,15 +202,16 @@ in your manifests and switch lists.
 
 <H3>Show Car Destination</H3>
 
-Select the "Show Car Destination" checkbox if you want the car's destination shown
-in your manifests and switch lists.
-
-
+If you want your manifest and switch lists to show the cars destination
+when picking it up, select the "Show Car Destination" checkbox. The
+program always provides the car's destination when dropping a car from
+the train.
 
 <H3>Append Car and Engine Comments</H3>
 
 For each car in your roster, you can have an optional comment. If you
-want the car's comment added to your manifest, select the checkbox.
+want the car's comment added to your manifest and switch lists, select
+the checkbox.
 
 <H3>Train Icons</H3>
 
@@ -505,14 +506,16 @@ must be directly serviced by the route that departs the staging track.
 <H2>Cars</H2>
 
 The cars panel allows you to edit your car roster. You can enter a car's
-number, road, type, length, color, and weight. You can optionally add
-the car's build date and owner. If you want a group of cars to be
-switched as a unit, you can create a "kernel". You can assign any number
-of cars to a kernel but the type of the first car assigned will be used
-by the program to determine if the kernel is allowed at a location. The
-entire length of the kernel is used to determine if the cars in the
-kernel will fit. Note that the program also includes space for the car's
-couplers when calculating the length of a kernel.
+number, road, type, length. The program will automatically calculate the
+car's weight based on length and the scale your modeling. You can
+optionally add the car's color, build date, load and owner. If you want
+a group of cars to be switched as a unit, you can create a "kernel". You
+can assign any number of cars to a kernel but the type of the first car
+assigned will be used by the program to determine if the kernel is
+allowed at a location. The entire length of the kernel is used to
+determine if the cars in the kernel will fit. Note that the program also
+includes space for the car's couplers when calculating the length of a
+kernel.
 
 <P>
 <img src="images/Cars.png">
@@ -559,6 +562,10 @@ cars that don't exist in the program's car roster. It the car already
 exists, the import will be skipped by the program. You must also create
 the locations and their tracks before importing the cars into the
 operations program.</P>
+
+<P>To improve the speed of the car import, you can close the cars
+panel. It takes significantly more processor cycles to update the cars
+panel than to actually import the cars. 
 
 <P>After importing your cars, you must save them if you want to keep
 them as part of your roster. Select any car by pressing the edit button
@@ -703,7 +710,7 @@ The cars "Tools" menu allows you to perform some useful functions to your car
 roster. In addition to "Import from file" feature described earlier, you
 can remove all of the cars in your roster using the "Delete all cars" option.
 You can also preview and print your car roster. The preview and print features
-use the same "Sort by" radio buttons as the cars window. One of the more
+use the same "Sort by" radio buttons as the cars panel. One of the more
 useful sorts is by "Location", this allows you to quickly verify your car
 locations before or after an operations session. 
 
@@ -885,7 +892,7 @@ routes is also created each time the "Save Route" button is pressed.
 <A NAME="CopyRoute"></A>
 <H3>Copy Route</H3>
 
-In the Route window select "Tools->Copy Route" to make a copy of your
+In the Route panel select "Tools->Copy Route" to make a copy of your
 route. Enter the name of the new route and select the route that you
 want to copy. If you want the route reversed check the "Invert" box. 
 
@@ -986,7 +993,7 @@ The program will then build manifests for all of the selected trains.
 <H2>Problems Building Trains</H2>
 
 If you have a problem building a train you can select the "Build
-Reports" checkbox at the bottom of the train window. When a build fails
+Reports" checkbox at the bottom of the train panel. When a build fails
 for any reason and the "Build Reports" checkbox is selected, the program
 will send a report to your printer if the "Preview Manifests" isn't
 selected; or to a preview window if the "Preview Manifest" is selected.
@@ -1097,9 +1104,9 @@ program you can build a new train.
 
 <H2>Operation Windows</H2>
 
-Some of the operation windows can be resized and placed to your liking.
+Some of the operation panels can be resized and placed to your liking.
 Pressing the save button will store the size and location for the
-following operation windows:
+following operation panels:
 
 <ul>
 <li>Settings</li>
