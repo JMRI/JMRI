@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.98 $)
+distribution.  ($Revision: 1.99 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -36,16 +36,17 @@ Make sure everything is up-to-date:
         Update the version number by hand, adding 2.
         Commit.
     
-( ) Update the help/en/Acknowledgements.html help page with any recent changes
+( ) Update the help/en/Acknowledgements.shtml help page with any recent changes
 
 ( ) Check for uncommitted changes in the web site directory, 
     these can end up in help, xml, etc
 
-( ) Check if the help has changed since the previous tag
-    If so, remake the help index  (need a command line approach, so can put in ant!)
-    open ~/Documents/JMRI/JavaHelpStuff/jhelpdev/jhelpdev.jar
+( ) Edit the version number into the top help page:
+    bbedit help/en/index.html
+    
+( ) Remake the help index  (need a command line approach, so can put in ant!)
+    ./JHelpDev.csh   (See the doc page for setup)
     (navigate to JHelpDev.xml in release & open it)
-    (select properties from file menu, set directory to project help/en
     (click "generate all")
     
     In that same directory, also remake the index and toc web
@@ -74,10 +75,7 @@ Make sure everything is up-to-date:
 ( ) Edit the "manifest" file in your development directory, and make sure that the
     version number is correct in four places (this file comes from java/, not scripts/)
     
-( ) Edit the version number into the top help page:
-    bbedit help/en/index.html
-    
-( ) Create the _next_ version-specific layout-config-2-5-*.dtd in xml/DTD
+( ) Create the _next_ version-specific layout-config-2-7-*.dtd in xml/DTD
     and commit back to CVS; this needs to be a copy of the contents 
     of the file that's actually being released, so don't do it early!
     Update the comment at the top of the file (two places).
@@ -208,8 +206,17 @@ To actually create the distribution:
 
 ( ) Use sf-upload to create the SF.net release structures:  http://sf-upload.sourceforge.net/
 
+    If you "ssh -t jacobsen,jmri@shell.sourceforge.net create", the files ended up in "uploads"
+    
+    Go to release manager with Safari
+    Create a "JMRI 2.7.4" directory in "test files"
+    Upload the three files via the web
+    (Only set default platform for production version, controls download)
+    (That seems to be it)
+    
+    (Following stopped working in July 2009 with new SF pages)
     cd scripts
-
+    
     For test release:
     bbedit notesfile*.txt changefile.txt
     sf-upload -g 26788 -packageid 49077 -r "JMRI 2.7.4 test version for Linux" -nf notesfileLin.txt  -cf changefile.txt -f JMRI.2.7.4.tgz -type ".gz" -noupload
@@ -289,8 +296,14 @@ To actually create the distribution:
 	Title is of the form "JMRI 2.7.4 test version is available";
 	text is pretty much directly taken from the release note
 
-( ) If a production version, update the SF automatic download pages
+( ) If a production version, update the SF automatic download icon by selecting default in FRS
 
+( ) Commit changes toward next version by editing (perhaps in a new -cand work directory)
+        manifest src/jmri/Version.java src/jmri/configurexml/ConfigXmlManager.java test/jmri/configurexml/LoadFileTest.xml
+        help/en/index.html
+        
+        (Create new DTD)
+        
 ( ) Decide if worth announcing elsewhere (production version or 
 	big system-specific fix/feature):
 	    RailRoadSoftware&yahoogroups.com
