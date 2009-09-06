@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.5.shtml,v 1.12 2009-09-04 23:14:55 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.5.shtml,v 1.13 2009-09-06 23:54:36 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -73,7 +73,27 @@ The new audio support in JMRI 2.7.5 requires some new libraries.
 Those libraries are included in the JMRI downloads.  They, in turn, require that the
 startup scripts include the new libraries, so these have also been modified.
 The 2.7.4 and earlier scripts will not work with 2.7.5 and later.  In particular, if you've
-created your own copies of startup scripts, you'll have to update those.
+created your own copies of startup scripts, you'll have to update those:
+
+<p>
+The decoder definitions for the SoundTraxx Tsunami Steam decoders have been updated and combined.
+To get the full value from this, you need to migrate any existing locomotive roster entries
+you have from the old definitions to the new ones. If you have SoundTraxx Steam decoders in 
+your roster, please do the following:
+<ul>
+<li>With the program running, but no decoder programming screens open, select
+    "Run Script..." from the "Panels" menu.
+<li>In the file selection window that opens, select the "RosterMigrate.py" file and click
+    "Open" to run the migration script.
+<li>The script will go through your roster looking at the decoder definitions. For each
+    locomotive with a steam Tsunami decoder, you'll get a small window identifying the locomotive
+    and giving you a selection of possible decoders.  Pick the one that's installed (leave the first 
+    one if you don't know), and click OK.
+<li>When no more windows appear, quit the program and restart it. 
+    Your roster is now updated, and you don't have 
+    to do this again.
+</ul>
+
 
 <h3>Warnings from older versions:</h3>
 
@@ -249,6 +269,9 @@ value.
 Paul Fraker contributed a decoder definition for the MRC diesel 1829 decoder.
 
 <p>
+Jack Shall updated and combined the SoundTraxx Tsunami Steam decoder definitions.
+
+<p>
 Paul Fraker contributed a decoder definition for the MRC Athearn Genesis SD45-2.
 
 <p>
@@ -270,6 +293,8 @@ Nigel Cliffe provided a new decoder definition for the ZTC 471 sound decoder.
 Nigel Cliffe provided a new decoder definition for the CT ElektroniK SL series (post v40) sound decoders.
 He also improved the CT Elektronik DCX decoder definitions.
 
+<p>
+Ilidio Serra provided a decoder definition for the Rapido TurboTrain.
 
 
 <!--#include virtual="/Footer" -->
