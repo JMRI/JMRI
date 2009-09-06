@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelEditor.shtml,v 1.14 2009-08-23 07:21:13 pete_cressman Exp $ -->
+<!-- $Id: PanelEditor.shtml,v 1.15 2009-09-06 16:42:20 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
@@ -207,6 +207,15 @@ and <b>Align Horizontally</b>.  Once again, the grouped icons that are not fixed
 locked can be aligned with either their left edges (x coordinate) equal, or top edges 
 (y coordinate) equal.  These menu items disappear when the icons are ungrouped.</P>
 
+<P>Another feature of grouped icons is they can be locked (fixed) and unlocked (unfixed)
+as a group when any one of the group's popup menu item for lock or fix is checked.
+
+<P> When placing icons on top of one another, the upper icon may prevent moving
+the icon uderneath.  For example when labeling a turnout, you may not be able to 
+reposition the label without dragging the turnout above it.  However, if you press the Shuft key
+before dragging the label the turnout will remain in place while you reposition the label.
+That is a "Shift-Drag" leaves the top icon in place and only moves the icons beneath it.</P>
+  
 <H3>Multi Slice Backgrounds</H3>
 For users that need to build a classic US&S panel there are several options. The first is to
 simply select the 15 position panel background from icons/USS/background/uss-15.gif. Another
