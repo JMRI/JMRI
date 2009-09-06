@@ -29,7 +29,7 @@ import javax.swing.JSeparator;
  * if you move this.
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -94,7 +94,7 @@ public class SecurityElementIcon extends JPanel
         setToolTipText(getNameString());
     }
 
-    String getNameString() {
+    public String getNameString() {
         String name;
         if (element == null) name = "<Not connected>";
         else name = "SE"+element.getNumber();

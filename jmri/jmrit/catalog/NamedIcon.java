@@ -28,7 +28,7 @@ import javax.swing.JComponent;
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -62,7 +62,7 @@ public class NamedIcon extends ImageIcon {
         mRotation = 0;
         _deg = 0;
         _scale = 1.0;
-        _transform = null;;
+        _transform = null;
     }
 
     /**
@@ -220,19 +220,7 @@ public class NamedIcon extends ImageIcon {
         scale(s, comp);
         rotate(d, comp);
     }
-    /*
-    private AffineTransform _lastTranslate;
-
-    public AffineTransform getTransform() {
-        if (_transform !=null)
-        {
-            log.info("\n_transform= "+_transform.toString()+"\n_lastTrans= "+
-                     (_lastTranslate!=null ? _lastTranslate.toString() : null) );
-        }
-        return _transform;
-    }
-    public void setTransform(AffineTransform t) {_transform = t; }
-*/
+    
     private void makeCompositeTransform(AffineTransform t) {
         if (_transform==null) {
             _transform = t;
@@ -259,42 +247,18 @@ public class NamedIcon extends ImageIcon {
     }
 
     /**
-    * Find bounds for the range of transform and map default image into it
-    *
-    public void initFromLoad() {
-        //log.info("initFromLoad: "+getDescription());
-        setImage(mDefaultImage);
-        Point2D[] bds = new Point2D[4];
-        bds[0] = new Point2D.Double(0.0, 0.0);
-        bds[1] = new Point2D.Double((double)mDefaultImage.getWidth(null), 0.0);
-        bds[2] = new Point2D.Double((double)mDefaultImage.getWidth(null), (double)mDefaultImage.getHeight(null));
-        bds[3] = new Point2D.Double(0.0, (double)mDefaultImage.getHeight(null));
-        _transform.transform(bds, 0, bds, 0, 4);
-        double maxX = Math.max(bds[0].getX(), Math.max(bds[1].getX(), Math.max(bds[2].getX(),bds[3].getX()))); 
-        double minX = Math.min(bds[0].getX(), Math.min(bds[1].getX(), Math.min(bds[2].getX(),bds[3].getX()))); 
-        double maxY = Math.max(bds[0].getY(), Math.max(bds[1].getY(), Math.max(bds[2].getY(),bds[3].getY())));
-        double minY = Math.min(bds[0].getY(), Math.min(bds[1].getY(), Math.min(bds[2].getY(),bds[3].getY())));
-        //AffineTransform t = AffineTransform.getTranslateInstance(
-        //                _transform.getTranslateX(), _transform.getTranslateY());
-        //t.concatenate(_transform);
-        transformImage((int)Math.ceil(maxX-minX), (int)Math.ceil(maxY-minY), _transform, null);
-    }
-
-    /**
     *  Scale as a percentage
     */
     public void scale(int s, JComponent comp) {
         //log.info("scale= "+s+", "+getDescription());
         if (s<1) { return; }
-        scale((double)s/100.0, comp);
+        scale(s/100.0, comp);
     }
 
     public void scale(double scale, JComponent comp) {
         if (_transform==null) {
             setImage(mDefaultImage);
         }
-//        int w = (int)Math.ceil(scale*mDefaultImage.getWidth(comp));
-//        int h = (int)Math.ceil(scale*mDefaultImage.getHeight(comp));
         int w = (int)Math.ceil(scale*getIconWidth());
         int h = (int)Math.ceil(scale*getIconHeight());
         AffineTransform t = AffineTransform.getScaleInstance(scale, scale);
@@ -302,16 +266,7 @@ public class NamedIcon extends ImageIcon {
         _scale *= scale;
         makeCompositeTransform(t);
     }
-    /*
-    public void shear(int x, int y) {
-        log.info("shear: x= "+x+", y= "+y);
-        int width = mDefaultImage.getWidth(null);
-        int heigth = mDefaultImage.getHeight(null);
-        makeCompositeTransform(AffineTransform.getTranslateInstance((double)x, (double)y));
-        transformImage(new BufferedImage(width, heigth, BufferedImage.TYPE_INT_ARGB), null);
- //       setImage(mDefaultImage.getScaledInstance(x, y, Image.SCALE_SMOOTH));
-    }
-    */
+    
     /**
     * Rotate from anchor point (upper left corner) and shift into place
     */
@@ -324,11 +279,9 @@ public class NamedIcon extends ImageIcon {
         if (degree<0){
             degree +=360;
         }
-        double rad = (double)degree*Math.PI/180.0;
-//        double w = (double)mDefaultImage.getWidth(comp);
-//        double h = (double)mDefaultImage.getHeight(comp);
-        double w = (double)getIconWidth();
-        double h = (double)getIconHeight();
+        double rad = degree*Math.PI/180.0;
+        double w = getIconWidth();
+        double h = getIconHeight();
         int width = (int)Math.ceil(Math.abs(h*Math.sin(rad)) + Math.abs(w*Math.cos(rad)));
         int heigth = (int)Math.ceil(Math.abs(h*Math.cos(rad)) + Math.abs(w*Math.sin(rad)));
         AffineTransform t = null;
@@ -338,13 +291,10 @@ public class NamedIcon extends ImageIcon {
             t = AffineTransform.getTranslateInstance(h*Math.sin(rad)-w*Math.cos(rad), -h*Math.cos(rad));
         } else if (180<=degree && degree<270) {
             t = AffineTransform.getTranslateInstance(-w*Math.cos(rad), -w*Math.sin(rad)-h*Math.cos(rad));
-        } else if (270<=degree && degree<360) {
+        } else /*if (270<=degree && degree<360)*/ {
             t = AffineTransform.getTranslateInstance(0.0, -w*Math.sin(rad));
         }
-        //if (_lastTranslate==null) _lastTranslate = (AffineTransform)t.clone();
-        //else _lastTranslate.preConcatenate(t);
         AffineTransform r = AffineTransform.getRotateInstance(rad);
-        //log.info("\nrotat= "+r.toString()+"\nTrans= "+t.toString());
         t.concatenate(r);
         transformImage(width, heigth, t, comp);
         _deg += deg;

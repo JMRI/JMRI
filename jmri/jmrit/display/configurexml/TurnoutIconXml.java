@@ -1,9 +1,5 @@
 package jmri.jmrit.display.configurexml;
 
-import java.awt.geom.AffineTransform;
-import java.util.List;
-
-import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.TurnoutIcon;
@@ -14,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 

@@ -1,8 +1,5 @@
 package jmri.jmrit.display.configurexml;
 
-import java.awt.geom.AffineTransform;
-import java.util.List;
-import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.RpsPositionIcon;
@@ -13,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for rps.RpsPositionIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class RpsPositionIconXml extends PositionableLabelXml {
 

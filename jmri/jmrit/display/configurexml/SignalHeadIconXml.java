@@ -2,11 +2,7 @@
 
 package jmri.jmrit.display.configurexml;
 
-import java.awt.geom.AffineTransform;
-import java.util.List;
-
 import jmri.SignalHead;
-import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.SignalHeadIcon;
@@ -17,7 +13,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 

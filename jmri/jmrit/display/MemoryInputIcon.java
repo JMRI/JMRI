@@ -26,7 +26,7 @@ import javax.swing.SpinnerNumberModel;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  * @since 2.7.2
  */
 
@@ -109,7 +109,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         setToolTipText(getNameString());
     }
 
-    protected String getNameString() {
+    public String getNameString() {
         String name;
         if (memory == null) name = rb.getString("NotConnected");
         else if (memory.getUserName()!=null)

@@ -1,8 +1,5 @@
 package jmri.jmrit.display.configurexml;
 
-import java.awt.geom.AffineTransform;
-import java.util.List;
-import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.LayoutEditor;
@@ -16,7 +13,7 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class MultiSensorIconXml extends PositionableLabelXml {
 
