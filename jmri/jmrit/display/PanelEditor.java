@@ -75,6 +75,7 @@ import java.util.Iterator;
 public class PanelEditor extends JmriJFrame implements ItemListener {
 
     final public static Integer BKG       = new Integer(1);
+    final public static Integer TEMP      = new Integer(2);
     final public static Integer ICONS     = new Integer(3);
     final public static Integer LABELS    = new Integer(5);
     final public static Integer MEMORIES  = new Integer(5);
@@ -1560,13 +1561,14 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 
         public void mouseDragged(MouseEvent e) {
             if (!e.isMetaDown()) {
-                doMouseDragged(e.getX(), e.getY());
+                doMouseDragged(e.getX(), e.getY(), true);
             }
         }
 
         public void mouseReleased(MouseEvent e) {
             if (!e.isMetaDown()) {
-                doMouseReleased(e.getX(), e.getY());
+                log.debug("mouseReleased ");
+                doMouseReleased(e.getX(), e.getY(), false);
             }
         }
     }
@@ -1579,32 +1581,78 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             _selectRect = null;
             return;
         }
-        if (dragging && keepSelection) {
+        if (_dragging && keepSelection) {
             return;
         }
         anchorX = x;
         anchorY = y;
-        _selectRect = new Rectangle(anchorX, anchorY, 0, 0);
+        if (keepSelection) {
+            _selectRect = new Rectangle(anchorX, anchorY, 0, 0);
+        } else {
+            _selectRect = null;
+        }
         _selectList = null;
         target.repaint();
     }
 
-    protected void doMouseDragged(int x, int y) {
-        if (!positionableBox.isSelected()) { return; }
-        if (_selectList==null) {
-            drawSelectRect(x, y);
+    protected void doMousePressedShift(int x, int y) {
+        _selectRect = null;
+        _selectList = new ArrayList <JComponent>();
+		for (int i = 0; i < contents.size(); i++) {
+			JComponent comp = contents.get(i);
+            if (comp.getBounds(null).contains(x, y))
+            {
+                _selectList.add(comp);
+                if (log.isDebugEnabled()) {
+                    String name = null;
+                    if (comp instanceof PositionableLabel) {
+                        name = ((PositionableLabel)comp).getNameString();
+                    } else if (comp instanceof PositionableJPanel) {
+                        name = ((PositionableJPanel)comp).getNameString();
+                    }
+                    log.debug("doMousePressedShift selection: "+
+                                name+", class= "+comp.getClass().getName());
+                }
+            }
+		}
+        if (_selectList.size() < 2) {
+            _selectRect = null;
+        } else {
+            _shiftDrag = true;
         }
-        dragging = true;
+        target.repaint();
     }
 
-    private boolean dragging = false;
-    protected void doMouseReleased(int x, int y) {
+    protected void doMouseDragged(int x, int y, boolean draw) {
         if (!positionableBox.isSelected()) { return; }
-        drawSelectRect(x, y);
-        if (_selectList==null && dragging) {
-            makeSelections();
+        if (_selectList==null && draw) {
+            drawSelectRect(x, y);
         }
-        dragging = false;
+        _dragging = true;
+    }
+    
+    private boolean _dragging = false;
+    private boolean _shiftDrag = false;
+
+    protected boolean doMouseReleased(int x, int y, boolean noSelection) {
+        boolean wasDragging = _dragging;
+        if (!positionableBox.isSelected()) { return wasDragging; }
+        log.debug("doMouseReleased noSelection= "+noSelection);
+        if (!noSelection)  {
+            drawSelectRect(x, y);
+            if (_selectList==null && _dragging) {
+                makeSelections();
+            }
+            if (_selectList==null) { _selectRect = null; }
+        } else if (_shiftDrag) {
+                _selectList = null;
+                _selectRect = null;
+        } else if (_selectList==null) {
+                _selectRect = null;
+        }
+        _dragging = false;
+        _shiftDrag = false;
+        return wasDragging;
     }
 
     private void drawSelectRect(int x, int y) {
@@ -1636,20 +1684,19 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             if (_selectRect.contains(comp.getBounds(test))) {
                 _selectList.add(comp);
                 if (log.isDebugEnabled()) {
-                    String name;
-                    try {
-                        PositionableLabel l = (PositionableLabel)comp;
-                        name =l.getNameString();
-                    } catch (Exception ex) {
-                        PositionableJPanel p = (PositionableJPanel)comp;
-                        name =p.getNameString();
+                    String name = null;
+                    if (comp instanceof PositionableLabel) {
+                        name = ((PositionableLabel)comp).getNameString();
+                    } else if (comp instanceof PositionableJPanel) {
+                        name = ((PositionableJPanel)comp).getNameString();
                     }
-                    log.debug("Selection: "+name+", class= "+comp.getClass().getName());
+                    log.debug("makeSelections: selection: "+ name+
+                                ", class= "+comp.getClass().getName());
                 }
             }
 		}
         if (log.isDebugEnabled()) log.debug("getSelections:"+_selectList.size()+" selected.");
-        if (_selectList.size() < 2) {
+        if (_selectList.size() < 1) {
             _selectRect = null;
         }
     }

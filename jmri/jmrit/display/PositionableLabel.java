@@ -12,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.AffineTransform;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -39,7 +38,7 @@ import javax.swing.JTextField;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.59 $
+ * @version $Revision: 1.60 $
  */
 
 public class PositionableLabel extends JLabel
@@ -139,8 +138,15 @@ public class PositionableLabel extends JLabel
 			layoutPanel.handleMousePressed(e,this.getX(),this.getY());
 			return;
 		}
-        if (!e.isMetaDown() && panelEditor!=null) {
-            panelEditor.doMousePressed(getX()+e.getX(), getY()+e.getY(), true);
+        _saveFixed = getFixed();    // may get teporarily fixed to move icon underneath this one
+        if (panelEditor!=null) {
+            if (!e.isMetaDown()) {
+                panelEditor.doMousePressed(getX()+e.getX(), getY()+e.getY(), true);
+            }
+            else if (e.isShiftDown()) {
+                panelEditor.doMousePressedShift(getX()+e.getX(), getY()+e.getY());
+                setFixed(true);    // hold this icon temporarily while moving what is below
+            }
         }
         // remember where we are
         xClick = e.getX();
@@ -158,12 +164,16 @@ public class PositionableLabel extends JLabel
 			layoutPanel.handleMouseReleased(e,getX(),getY());
 			return;
 		}
-        if (!e.isMetaDown() && panelEditor!=null) {
-            panelEditor.doMouseReleased(getX()+e.getX(), getY()+e.getY());
+        boolean wasDragging = false;
+        if (panelEditor!=null) {
+             List <JComponent> list = panelEditor.getSelections();
+             log.debug("mouseReleased "+(list!=null && list.contains(this)));
+             wasDragging = panelEditor.doMouseReleased(getX()+e.getX(), getY()+e.getY(), 
+                                                   (list!=null && list.contains(this)) );
         }
+        setFixed(_saveFixed);       // restore (if needed)
         // if (debug) log.debug("mouseReleased: "+where(e));
-        if (e.isPopupTrigger()) {
-            //if (debug) log.debug("show popup");
+        if (e.isPopupTrigger() && !wasDragging) {
             showPopUp(e);
         }
     }
@@ -195,28 +205,44 @@ public class PositionableLabel extends JLabel
 			layoutPanel.handleMouseDragged(e,getX(),getY());
 			return;
 		}
-        if (!e.isMetaDown()) {
-            if (panelEditor!=null) {
-                panelEditor.doMouseDragged(getX()+e.getX(), getY()+e.getY());
+        if (panelEditor!=null) {
+            if (!e.isMetaDown()) {
+                panelEditor.doMouseDragged(getX()+e.getX(), getY()+e.getY(), true);
             }
-        }
-        else {
-            if (!getPositionable() || getFixed()) return;
-            List <JComponent> list = panelEditor.getSelections();
-            int deltaX = e.getX() - xClick;
-            int deltaY = e.getY() - yClick;
-            if ((list==null) || !list.contains(this)) {
-                moveLabel(deltaX, deltaY);
-            } else if ( !getFixed() && (list!=null)) {
-                for (int i=0; i<list.size(); i++){
-                    JComponent comp = list.get(i);
-                    if (comp instanceof PositionableLabel) {
-                        ((PositionableLabel)comp).moveLabel(deltaX, deltaY);
-                    }else if (comp instanceof PositionableJPanel) {
-                        ((PositionableJPanel)comp).movePanel(deltaX, deltaY);
+            else {
+                if (!getPositionable()) return;
+                panelEditor.doMouseDragged(getX()+e.getX(), getY()+e.getY(), false);
+                List <JComponent> list = panelEditor.getSelections();
+                int deltaX = e.getX() - xClick;
+                int deltaY = e.getY() - yClick;
+                if ((list==null) || !list.contains(this)) {
+                    moveLabel(deltaX, deltaY);
+                    panelEditor.doMousePressed(getX()+e.getX(), getY()+e.getY(), false);
+                } else if (!getFixed()) {
+                    for (int i=0; i<list.size(); i++){
+                        JComponent comp = list.get(i);
+                        if (comp instanceof PositionableLabel) {
+                            ((PositionableLabel)comp).moveLabel(deltaX, deltaY);
+                        } else if (comp instanceof PositionableJPanel) {
+                            ((PositionableJPanel)comp).movePanel(deltaX, deltaY);
+                        }
                     }
+                    panelEditor.moveSelectRect(deltaX, deltaY);
+                } else if (e.isShiftDown()) {
+                    deltaX = e.getX() - xClick;
+                    deltaY = e.getY() - yClick;
+                    for (int i=0; i<list.size(); i++){
+                        JComponent comp = list.get(i);
+                        if (comp instanceof PositionableLabel) {
+                            ((PositionableLabel)comp).moveLabel(deltaX, deltaY);
+                        } else if (comp instanceof PositionableJPanel) {
+                            ((PositionableJPanel)comp).movePanel(deltaX, deltaY);
+                        }
+                    }
+                    xClick = e.getX();
+                    yClick = e.getY();
+                    this.repaint();
                 }
-                panelEditor.moveSelectRect(deltaX, deltaY);
             }
         }
     }
@@ -431,7 +457,7 @@ public class PositionableLabel extends JLabel
 			popup.add("x= " + this.getX());
 			popup.add("y= " + this.getY());
 			popup.add("level= " + this.getDisplayLevel().intValue());
-            if (!getFixed()) {
+            if (!_saveFixed) {  // this is user's setting
                 List <JComponent> list = panelEditor.getSelections();
                 if (list!=null) {
                     if (list.contains(this)) {
@@ -556,7 +582,7 @@ public class PositionableLabel extends JLabel
         popup.add(showFixedItem);
         showFixedItem.addActionListener(new ActionListener(){
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                setFixed(showFixedItem.isSelected());
+                doSetFixed(showFixedItem.isSelected());
             }
         });
     }
@@ -767,8 +793,25 @@ public class PositionableLabel extends JLabel
         fixed = enabled;
         if (showFixedItem!=null) showFixedItem.setSelected(getFixed());
     }
+
+    protected void doSetFixed(boolean enabled) {
+        if (panelEditor!=null) {
+            List <JComponent> list = panelEditor.getSelections();
+            if (list!=null && list.contains(this)) {
+                for (int i=0; i<list.size(); i++) {
+                    JComponent comp = list.get(i);
+                    if (comp instanceof PositionableLabel) {
+                        ((PositionableLabel)comp).setFixed(enabled);
+                    } else if (comp instanceof PositionableJPanel) {
+                        ((PositionableJPanel)comp).setPositionable(!enabled);
+                    }
+                }
+            }
+        } else { setFixed(enabled); }
+    }
     public boolean getFixed() { return fixed; }
     private boolean fixed = false;
+    private boolean _saveFixed = false;
 
     public void setControlling(boolean enabled) {controlling = enabled;}
     public boolean getControlling() { return controlling; }

@@ -29,7 +29,7 @@ import javax.swing.JCheckBoxMenuItem;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 abstract class PositionableJPanel extends JPanel
                         implements MouseMotionListener, MouseListener,
@@ -94,13 +94,15 @@ abstract class PositionableJPanel extends JPanel
 			layoutPanel.handleMousePressed(e,this.getX(),this.getY());
 			return;
 		}
-        if (!e.isMetaDown() && panelEditor!=null) {
-            List <JComponent> list = panelEditor.getSelections();
-            boolean keepSelection = false;
-            if (list!=null && list.contains(this)) {
-                keepSelection =true;
+        _savePositionable = getPositionable();    // may get teporarily fixed to move icon underneath this one
+        if (panelEditor!=null) {
+            if (!e.isMetaDown()) {
+                panelEditor.doMousePressed(getX()+e.getX(), getY()+e.getY(), true); // (list!=null && list.contains(this)
             }
-            panelEditor.doMousePressed(getX()+e.getX(), getY()+e.getY(), keepSelection);
+            else if (e.isShiftDown()) {
+                panelEditor.doMousePressedShift(getX()+e.getX(), getY()+e.getY());
+                setPositionable(false);    // hold this icon temporarily while moving what is below
+            }
         }
         // remember where we are
         xClick = e.getX();
@@ -118,11 +120,16 @@ abstract class PositionableJPanel extends JPanel
 			layoutPanel.handleMouseReleased(e,getX(),getY());
 			return;
 		}
-        if (!e.isMetaDown() && panelEditor!=null) {
-            panelEditor.doMouseReleased(getX()+e.getX(), getY()+e.getY());
+        boolean wasDragging = false;
+        if (panelEditor!=null) {
+             List <JComponent> list = panelEditor.getSelections();
+             log.debug("mouseReleased "+(list!=null && list.contains(this)));
+             wasDragging = panelEditor.doMouseReleased(getX()+e.getX(), getY()+e.getY(), 
+                                                   (list!=null && list.contains(this)) );
         }
-        if (debug) log.debug("Release: "+where(e));
-        if (e.isPopupTrigger()) {
+        setPositionable(_savePositionable);       // restore (if needed)
+        // if (debug) log.debug("Release: "+where(e));
+        if (e.isPopupTrigger() && !wasDragging) {
             if (debug) log.debug("show popup");
             showPopUp(e);
         }
@@ -155,28 +162,45 @@ abstract class PositionableJPanel extends JPanel
 			layoutPanel.handleMouseDragged(e,getX(),getY());
 			return;
 		}
-        if (!e.isMetaDown()) {
-            if (panelEditor!=null) {
-                panelEditor.doMouseDragged(getX()+e.getX(), getY()+e.getY());
+
+        if (panelEditor!=null) {
+            if (!e.isMetaDown()) {
+                panelEditor.doMouseDragged(getX()+e.getX(), getY()+e.getY(), true);
             }
-            panelEditor.doMouseDragged(getX()+e.getX(), getY()+e.getY());
-        }
-        else {
-            List <JComponent> list = panelEditor.getSelections();
-            int deltaX = e.getX() - xClick;
-            int deltaY = e.getY() - yClick;
-            if ((list==null) || !list.contains(this)) {
-                movePanel(deltaX, deltaY);
-            } else if (getPositionable()) {
-                for (int i=0; i<list.size(); i++){
-                    JComponent comp = list.get(i);
-                    if (comp instanceof PositionableLabel) {
-                        ((PositionableLabel)comp).moveLabel(deltaX, deltaY);
-                    } else if (comp instanceof PositionableJPanel) {
-                        ((PositionableJPanel)comp).movePanel(deltaX, deltaY);
+            else {
+                if (!getPositionable()) return;
+                panelEditor.doMouseDragged(getX()+e.getX(), getY()+e.getY(), false);
+                List <JComponent> list = panelEditor.getSelections();
+                int deltaX = e.getX() - xClick;
+                int deltaY = e.getY() - yClick;
+                if ((list==null) || !list.contains(this)) {
+                    movePanel(deltaX, deltaY);
+                    panelEditor.doMousePressed(getX()+e.getX(), getY()+e.getY(), false);
+                } else if (getPositionable()) {
+                    for (int i=0; i<list.size(); i++){
+                        JComponent comp = list.get(i);
+                        if (comp instanceof PositionableLabel) {
+                            ((PositionableLabel)comp).moveLabel(deltaX, deltaY);
+                        } else if (comp instanceof PositionableJPanel) {
+                            ((PositionableJPanel)comp).movePanel(deltaX, deltaY);
+                        }
                     }
+                    panelEditor.moveSelectRect(deltaX, deltaY);
+                } else if (e.isShiftDown()) {
+                    deltaX = e.getX() - xClick;
+                    deltaY = e.getY() - yClick;
+                    for (int i=0; i<list.size(); i++){
+                        JComponent comp = list.get(i);
+                        if (comp instanceof PositionableLabel) {
+                            ((PositionableLabel)comp).moveLabel(deltaX, deltaY);
+                        } else if (comp instanceof PositionableJPanel) {
+                            ((PositionableJPanel)comp).movePanel(deltaX, deltaY);
+                        }
+                    }
+                    xClick = e.getX();
+                    yClick = e.getY();
+                    this.repaint();
                 }
-                panelEditor.moveSelectRect(deltaX, deltaY);
             }
         }
     }
@@ -206,7 +230,7 @@ abstract class PositionableJPanel extends JPanel
      * For over-riding in the using classes: add item specific menu choices
      */
     protected void addToPopup() { }
-    protected String getNameString() {return "name?";}
+    public String getNameString() {return "name?";}
 
     /**
      * Because this class can change between icon and text forms, 
@@ -222,11 +246,7 @@ abstract class PositionableJPanel extends JPanel
 
         popup.add(lock = newLockMenuItem(new AbstractAction("Lock Position") {
             public void actionPerformed(ActionEvent e) {
-                if (lock.isSelected()) {
-                    setPositionable(false);
-                } else {
-                    setPositionable(true);
-                }
+                doLockPosition(lock.isSelected());
             }
         }));
         if (getPositionable()) {
@@ -246,6 +266,22 @@ abstract class PositionableJPanel extends JPanel
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
+    protected void doLockPosition(boolean lock) {
+        if (panelEditor!=null) {
+            List <JComponent> list = panelEditor.getSelections();
+            if (list!=null && list.contains(this)) {
+                for (int i=0; i<list.size(); i++) {
+                    JComponent comp = list.get(i);
+                    if (comp instanceof PositionableLabel) {
+                        ((PositionableLabel)comp).setFixed(lock);
+                    } else if (comp instanceof PositionableJPanel) {
+                        ((PositionableJPanel)comp).setPositionable(!lock);
+                    }
+                }
+            }
+        } else { setPositionable(!lock); }
+    }
+
     public JMenuItem newLockMenuItem(AbstractAction a) {
       JCheckBoxMenuItem k = new JCheckBoxMenuItem((String)a.getValue(AbstractAction.NAME));
       k.addActionListener(a);
@@ -261,6 +297,7 @@ abstract class PositionableJPanel extends JPanel
     public void setPositionable(boolean enabled) {positionable = enabled;}
     public boolean getPositionable() { return positionable; }
     private boolean positionable = true;
+    private boolean _savePositionable = true;
 
     public void setEditable(boolean enabled) {editable = enabled;}
     public boolean getEditable() { return editable; }
@@ -283,7 +320,7 @@ abstract class PositionableJPanel extends JPanel
 			popup.add("x= " + this.getX());
 			popup.add("y= " + this.getY());
 			popup.add("level= " + this.getDisplayLevel().intValue());
-            if (getPositionable()) {
+            if (_savePositionable) {
                 List <JComponent> list = panelEditor.getSelections();
                 if (list!=null) {
                     if (list.size() > 1) {
