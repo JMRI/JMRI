@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.80 2009-07-23 15:59:26 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.81 2009-09-06 22:31:53 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -119,7 +119,7 @@
 	<LI>Barry Chinn, who created the PDF file of our manual
 	<LI>Bill Chown, who did a lot of work on the MRC decoder definitions
 	<li>Nigel Cliffe, who updated the CT Elektronic decoder definitions
-	    and provided new Zimo MX620 definitions.
+	    and provided new Zimo MX620 and ZTC 471 definitions.
 	<LI>Normal Clymer, who contribed a TCS definition file
 	<LI>Seth Cohen, who helped get serial sensors and NCE AIUs to work, and
 	wrote the speedometer web page
@@ -128,7 +128,7 @@
 	amount of work on the operations code tests.
     <li>Peter Cressman provided a major improvement to Logix, improved
     Sensor Groups, and fixed some problems in Routes.
-	<LI>Andrew Crossland create the SPROG implementation, SPROG programming
+	<LI>Andrew Crosland create the SPROG implementation, SPROG programming
 	tools, 
 	has generously contributed lots of time for SPROG users,
 	and worked on the CAN and CBUS support
@@ -142,7 +142,8 @@
 	<LI>Kevin Dickerson, who figured out the ECoS protocol so JMRI
 	could connect to one and wrote code for ECoS throttles and turnouts,
 	added turnout monitoring to the ECoS support,
-    and fixed a problem what would sometimes result in improperly disabled Logix and Conditionals.
+    fixed a problem what would sometimes result in improperly disabled Logix and Conditionals,
+    and worked on improving the throttles.
 	<LI>Robert Doss, who provided ID information for the MRC 330 decoder
 	<LI>David Duchamp, who has added diagnostics to the C/MRI code, 
 	did much of the customization work for the fast clock, 
@@ -176,7 +177,7 @@
 	debugging XPressNet turnout support
 	<li>Marc Fournier, who improved the TCS decoder definition
 	<LI>Paul Fraker, who wrote the documentation for the Throttles
-	    and provided an MRC decoder definition
+	    and provided MRC decoder definitions
 	<li>Joe Fugate and the other people of 
 	<a href="http://model-railroad-hobbyist.com">Model Railroad Hobbyist</a> emagazine for
 	putting the 
@@ -205,7 +206,8 @@
 	updated the roster pane to work on small screens,
 	improved handling of screen insets,
 	provided a shutdown task,
-	and greatly improved the handling of scroll bars on panels.
+	greatly improved the handling of scroll bars on panels, 
+	and added greatly improved audio capabilities.
 	<LI>Phil Hartung, who provided some CTC graphics
 	<LI>Tim Hatch, who added the support for TCH Technology devices
 	<LI>Ian Havercroft, who provided the correct identification codes for ESU decoders
@@ -356,9 +358,10 @@
     <li>Dale Tripp, who co-wrote the 2009 version of the DecoderPro manual.
 <a name="U"></A>
     <li>Peter Ulvestad, who created some nice 
-    <a href="http://jmri.org/community/clinics/">clinic presentations</a>
-    and created the 
-    <a href="html/doc/Technical/XmlEditors.shtml">page on XML editors</a>.
+    <a href="http://jmri.org/community/clinics/">clinic presentations</a>,
+    created the 
+    <a href="html/doc/Technical/XmlEditors.shtml">page on XML editors</a>,
+    and has done a large amount of work on decoder definitions.
 <a name="V"></A>
     <li>Didrik Voss, who provided the configuration information, including the default values, for the Hornby R8215 decoder
 <a name="W"></A>
