@@ -38,7 +38,7 @@ import javax.swing.JTextField;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.60 $
+ * @version $Revision: 1.61 $
  */
 
 public class PositionableLabel extends JLabel
@@ -145,7 +145,7 @@ public class PositionableLabel extends JLabel
             }
             else if (e.isShiftDown()) {
                 panelEditor.doMousePressedShift(getX()+e.getX(), getY()+e.getY());
-                setFixed(true);    // hold this icon temporarily while moving what is below
+                setFixed(true);  // hold this icon temporarily while moving what is below
             }
         }
         // remember where we are
@@ -171,7 +171,7 @@ public class PositionableLabel extends JLabel
              wasDragging = panelEditor.doMouseReleased(getX()+e.getX(), getY()+e.getY(), 
                                                    (list!=null && list.contains(this)) );
         }
-        setFixed(_saveFixed);       // restore (if needed)
+        setFixed(_saveFixed);  // restore (if needed)
         // if (debug) log.debug("mouseReleased: "+where(e));
         if (e.isPopupTrigger() && !wasDragging) {
             showPopUp(e);
@@ -790,7 +790,12 @@ public class PositionableLabel extends JLabel
     private boolean editable = true;
 
     public void setFixed(boolean enabled) {
+        if (log.isDebugEnabled())
+            log.debug("setFixed fixed="+fixed+", _saveFixed= "+_saveFixed+", enabled= "+enabled);
         fixed = enabled;
+        _saveFixed = enabled; 
+        if (log.isDebugEnabled())
+            log.debug("setFixed fixed="+fixed+", _saveFixed= "+_saveFixed);
         if (showFixedItem!=null) showFixedItem.setSelected(getFixed());
     }
 
@@ -806,8 +811,8 @@ public class PositionableLabel extends JLabel
                         ((PositionableJPanel)comp).setPositionable(!enabled);
                     }
                 }
-            }
-        } else { setFixed(enabled); }
+            } else { setFixed(enabled); }
+        }
     }
     public boolean getFixed() { return fixed; }
     private boolean fixed = false;

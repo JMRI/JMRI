@@ -29,7 +29,7 @@ import javax.swing.JCheckBoxMenuItem;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 abstract class PositionableJPanel extends JPanel
                         implements MouseMotionListener, MouseListener,
@@ -278,8 +278,8 @@ abstract class PositionableJPanel extends JPanel
                         ((PositionableJPanel)comp).setPositionable(!lock);
                     }
                 }
-            }
-        } else { setPositionable(!lock); }
+            } else { setPositionable(!lock); }
+        }
     }
 
     public JMenuItem newLockMenuItem(AbstractAction a) {
