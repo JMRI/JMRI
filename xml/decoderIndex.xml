@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.7.5 on Sun Sep 06 15:33:22 PDT 2009 $Id: decoderIndex.xml,v 1.147 2009-09-06 22:36:37 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.5 on Sun Sep 06 17:52:58 PDT 2009 $Id: decoderIndex.xml,v 1.148 2009-09-07 00:54:38 jacobsen Exp $-->
   <decoderIndex version="172">
     <mfgList nmraListDate="2009-05-06" updated="2009-07-31" lastadd="54">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -3833,103 +3833,245 @@
         </model>
       </family>
       <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam.xml">
-        <model model="Tsunami Steam" numOuts="4" numFns="14" connector="9pin" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+        <model model="TSU-750 Light Steam" numOuts="2" numFns="14" connector="other" productID="826001" comment="Model 826001" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="FX5" label=" Rule 17" connection="unspecified" />
+          <output name="FX6" label="Mode" connection="unspecified" />
           <output name="Dynamo" connection="unspecified" />
           <output name="Short-Whistle" connection="unspecified" />
           <output name="Steam-Release" connection="unspecified" />
           <output name="Water-Stop" connection="unspecified" />
-          <output name="Dim" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
           <output name="Mute" connection="unspecified" />
           <output name="Injector" connection="unspecified" />
           <output name="Brake-Squeal" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
-          <!-- The four electical outputs are front headlight, back -->
-          <!-- headlight, F5, F6 -->
         </model>
-      </family>
-      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam_1Hvy.xml">
-        <model model="Tsunami Heavy Steam" numOuts="4" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="TSU-750 Medium Steam" numOuts="2" numFns="14" connector="other" productID="826002" comment="Model 826002" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="FX5" label=" Rule 17" connection="unspecified" />
+          <output name="FX6" label="Mode" connection="unspecified" />
           <output name="Dynamo" connection="unspecified" />
           <output name="Short-Whistle" connection="unspecified" />
           <output name="Steam-Release" connection="unspecified" />
           <output name="Water-Stop" connection="unspecified" />
-          <output name="Dim" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
           <output name="Mute" connection="unspecified" />
           <output name="Injector" connection="unspecified" />
           <output name="Brake-Squeal" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
-          <!-- The four electical outputs are front headlight, back -->
-          <!-- headlight, F5, F6 -->
         </model>
-      </family>
-      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam_2Med.xml">
-        <model model="Tsunami Medium Steam" numOuts="4" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="TSU-750 Heavy Steam" numOuts="2" numFns="14" connector="other" productID="826003" comment="Model 826003" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="FX5" label=" Rule 17" connection="unspecified" />
+          <output name="FX6" label="Mode" connection="unspecified" />
           <output name="Dynamo" connection="unspecified" />
           <output name="Short-Whistle" connection="unspecified" />
           <output name="Steam-Release" connection="unspecified" />
           <output name="Water-Stop" connection="unspecified" />
-          <output name="Dim" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
           <output name="Mute" connection="unspecified" />
           <output name="Injector" connection="unspecified" />
           <output name="Brake-Squeal" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
-          <!-- The four electical outputs are front headlight, back -->
-          <!-- headlight, F5, F6 -->
         </model>
-      </family>
-      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam_3Light.xml">
-        <model model="Tsunami Light Steam" numOuts="4" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="TSU-750 Lt Logging Steam" numOuts="2" numFns="14" connector="other" productID="826020" comment="Model 826020" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="FX5" label=" Rule 17" connection="unspecified" />
+          <output name="FX6" label="Mode" connection="unspecified" />
           <output name="Dynamo" connection="unspecified" />
           <output name="Short-Whistle" connection="unspecified" />
           <output name="Steam-Release" connection="unspecified" />
           <output name="Water-Stop" connection="unspecified" />
-          <output name="Dim" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
           <output name="Mute" connection="unspecified" />
           <output name="Injector" connection="unspecified" />
           <output name="Brake-Squeal" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
-          <!-- The four electical outputs are front headlight, back -->
-          <!-- headlight, F5, F6 -->
         </model>
-      </family>
-      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam_4Lt_Log.xml">
-        <model model="Tsunami Lt Logging Steam" numOuts="4" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+        <model model="TSU-750 DRGW C-Class Steam" numOuts="2" numFns="14" connector="other" productID="826016" comment="Model 826016" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Whistle" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
+          <output name="FX5" label=" Rule 17" connection="unspecified" />
+          <output name="FX6" label="Mode" connection="unspecified" />
           <output name="Dynamo" connection="unspecified" />
           <output name="Short-Whistle" connection="unspecified" />
           <output name="Steam-Release" connection="unspecified" />
           <output name="Water-Stop" connection="unspecified" />
-          <output name="Dim" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
           <output name="Mute" connection="unspecified" />
           <output name="Injector" connection="unspecified" />
           <output name="Brake-Squeal" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
-          <!-- The four electical outputs are front headlight, back -->
-          <!-- headlight, F5, F6 -->
+        </model>
+        <model model="TSU-750 DRGW K-Class Steam" numOuts="2" numFns="14" connector="other" productID="826004" comment="Model 826004" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="FX5" label=" Rule 17" connection="unspecified" />
+          <output name="FX6" label="Mode" connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+        </model>
+        <model model="TSU-750 SP Cab Forward Steam" numOuts="2" numFns="14" connector="other" productID="826005" comment="Model 826005" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="FX5" label=" Rule 17" connection="unspecified" />
+          <output name="FX6" label="Mode" connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+        </model>
+        <model model="TSU-1000 Light Steam" numOuts="4" numFns="14" connector="other" productID="826101" comment="Model 826101" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+        </model>
+        <model model="TSU-1000 Medium Steam" numOuts="4" numFns="14" connector="other" productID="826102" comment="Model 826102" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+        </model>
+        <model model="TSU-1000 Heavy Steam" numOuts="4" numFns="14" connector="other" productID="826103" comment="Model 826103" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+        </model>
+        <model model="TSU-1000 Lt Logging Steam" numOuts="4" numFns="14" connector="other" productID="826120" comment="Model 826120" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+        </model>
+        <model model="TSU-1000 DRGW C-Class Steam" numOuts="4" numFns="14" connector="other" productID="826116" comment="Model 826116" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+        </model>
+        <model model="TSU-1000 DRGW K-Class Steam" numOuts="4" numFns="14" connector="other" productID="826104" comment="Model 826104" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+        </model>
+        <model model="TSU-1000 SP Cab Forward Steam" numOuts="4" numFns="14" connector="other" productID="826105" comment="Model 826105" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+        </model>
+        <model model="TSU-1000 Southern Steam" numOuts="4" numFns="14" connector="other" productID="826121" comment="Model 826121" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
+          <output name="Dynamo" connection="unspecified" />
+          <output name="Short-Whistle" connection="unspecified" />
+          <output name="Steam-Release" connection="unspecified" />
+          <output name="Water-Stop" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Injector" connection="unspecified" />
+          <output name="Brake-Squeal" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
         </model>
       </family>
       <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam_Bachmann.xml">
@@ -3947,46 +4089,6 @@
           <output name="Mute" connection="unspecified" />
           <output name="Brake-Squeal" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
-        </model>
-      </family>
-      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam_DRGC.xml">
-        <model model="Tsunami DRG C-Class Steam" numOuts="4" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <versionCV lowVersionID="64" />
-          <output name="Whistle" connection="unspecified" />
-          <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
-          <output name="Dynamo" connection="unspecified" />
-          <output name="Short-Whistle" connection="unspecified" />
-          <output name="Steam-Release" connection="unspecified" />
-          <output name="Water-Stop" connection="unspecified" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Mute" connection="unspecified" />
-          <output name="Injector" connection="unspecified" />
-          <output name="Brake-Squeal" connection="unspecified" />
-          <output name="Coupler" connection="unspecified" />
-          <!-- The four electical outputs are front headlight, back -->
-          <!-- headlight, F5, F6 -->
-        </model>
-      </family>
-      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Steam_DRGK.xml">
-        <model model="Tsunami DRGW K-Class Steam" numOuts="4" numFns="14" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <versionCV lowVersionID="64" />
-          <output name="Whistle" connection="unspecified" />
-          <output name="Bell" connection="unspecified" />
-          <output name="3" label="FX5" connection="unspecified" />
-          <output name="4" label="FX6" connection="unspecified" />
-          <output name="Dynamo" connection="unspecified" />
-          <output name="Short-Whistle" connection="unspecified" />
-          <output name="Steam-Release" connection="unspecified" />
-          <output name="Water-Stop" connection="unspecified" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Mute" connection="unspecified" />
-          <output name="Injector" connection="unspecified" />
-          <output name="Brake-Squeal" connection="unspecified" />
-          <output name="Coupler" connection="unspecified" />
-          <!-- The four electical outputs are front headlight, back -->
-          <!-- headlight, F5, F6 -->
         </model>
       </family>
       <family name="TCS A1 decoder" mfg="Train Control Systems" type="locomotive" file="TCS_A1.xml">
