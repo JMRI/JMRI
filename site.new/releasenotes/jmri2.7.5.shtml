@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.5.shtml,v 1.15 2009-09-07 02:25:04 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.5.shtml,v 1.16 2009-09-07 21:01:24 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -240,7 +240,7 @@ so that if System-specific throttles are unable to create a throttle,
 then the address is removed from the throttleListeners Hashmap, and hence prevents the DCC address being locked out.
 
 <p>
-Andrew Crosland added support for CBUS programmers and throttles.
+Andrew Crosland added support for CBUS CV programmers.
 
 <p>
 Dan Boudreau fixed a minor operations bug to allow terminating a train into staging without an engine.
