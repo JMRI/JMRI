@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MacOSX.html,v 1.29 2009-07-11 19:38:44 jacobsen Exp $ -->
+<!-- $Id: MacOSX.html,v 1.30 2009-09-07 05:39:09 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -111,16 +111,31 @@
 	 talk to a command station, so we provide an installer.
 	 
 	 <P>
-	 If you're using Mac OS X 10.5, 
-	 download the installer for the default communications library from
+	 If you're using Mac OS X 10.6 (Snow Leopard), you first have to configure 
+	 Java on Mac OS X for "32 bit" operation.  Mac OS X 10.6 can run in either 32-bit or 64-bit
+	 mode, but the communications libraries we currently use are only available in 32-bit mode.
+	 To do this, open the "Java Preferences" application from the Utilities folder inside the computer's 
+	 Applications folder, then set the default "Java Application" in the lower window to "Java SE 6 32-bit".
+	 Next, download the installer for the default communications library from
      <A HREF="http://downloads.sourceforge.net/jmri/RXTX-Leopard.pkg.zip">http://downloads.sourceforge.net/jmri/RXTX-Leopard.pkg.zip</a>
-     (This installer works for both PowerPC and Intel-based Macintoshes running Mac OS X 10.5 only. The
+     (This installer works for Intel-based Macintoshes running Mac OS X 10.6. The
      file name will be RXT-Leopard.pkg, but the splash screen will say "Tiger" and "10.4" due to an oversight; just ignore that)
 	 If the installer doesn't start automatically, double click on the downloaded and expanded file to install it.
 	 You will need the Mac OS X administrator password to run the
 	 installer.</p>
+
 	 <P>
-	 If you're using Mac OS X 10.4, 
+	 If you're using Mac OS X 10.5 (Leopard), 
+	 download the installer for the default communications library from
+     <A HREF="http://downloads.sourceforge.net/jmri/RXTX-Leopard.pkg.zip">http://downloads.sourceforge.net/jmri/RXTX-Leopard.pkg.zip</a>
+     (This installer works for both PowerPC and Intel-based Macintoshes running Mac OS X 10.5. The
+     file name will be RXT-Leopard.pkg, but the splash screen will say "Tiger" and "10.4" due to an oversight; just ignore that)
+	 If the installer doesn't start automatically, double click on the downloaded and expanded file to install it.
+	 You will need the Mac OS X administrator password to run the
+	 installer.</p>
+
+	 <P>
+	 If you're using Mac OS X 10.4 (Tiger), 
 	 download the installer for the default communications library from
      <A HREF="http://downloads.sourceforge.net/jmri/RXTX-for-Intel-Mac.pkg.zip">http://downloads.sourceforge.net/jmri/RXTX-for-Intel-Mac.pkg.zip</a>
      (This installer works for both PowerPC and Intel-based Macintoshes)
@@ -129,7 +144,7 @@
 	 installer.</p>
 
      <P>
-	 If you're using Mac OS X 10.2 or 10.3, 
+	 If you're using Mac OS X 10.2 (Jaguar) or 10.3 (Panther), 
 	 download the necessary installer for the default communications library from
      <A HREF="http://downloads.sourceforge.net/jmri/JavaCommInstaller2.hqx">http://downloads.sourceforge.net/jmri/JavaCommInstaller2.hqx</a>
 	 If the installer doesn't start automatically, double click on the downloaded and expanded file to install it.
