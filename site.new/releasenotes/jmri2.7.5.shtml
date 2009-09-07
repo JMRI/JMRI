@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.5.shtml,v 1.14 2009-09-07 01:59:02 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.5.shtml,v 1.15 2009-09-07 02:25:04 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -188,7 +188,15 @@ Dan Boudreau fixed a bug with rotating square icons.
 Ken Cameron updated his RobotThrottle2 and DebounceSensor scripts.
 
 <p>
-Pete Cressman added rotationa and scaling of icons to the panel editor
+Pete Cressman improved rotations of icons to the panel editor, and 
+added scaling and repositioning.
+A new "Rotate (degrees)" item was added to the popup menu.  
+The former "Rotation" item is now labeled "Rotate (Orthogonal)".  
+"Rotate (degrees)" will rotate an icon an arbitrary number of degrees.  
+Each "Rotation" item resets the other.  
+The "Scale (percentage)" popup item enlarges or shrinks the icon by the percentage input.  
+To scale and rotate, use "Rotate (degrees)".
+A "Shift-Drag" feature allows repositioning of the icons in a layer beneath an icon, while holding the top icon in place.
 
 <p>
 Ken Cameron fixed the problem that would cause startup errors if you configure a clock (analog, digital or Nixie) to open at startup.
