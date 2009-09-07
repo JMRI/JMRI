@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009 -->
-<!-- Revision $Revision: 1.48 $ -->
+<!-- Revision $Revision: 1.49 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -431,7 +431,7 @@
       <doctitle><![CDATA[<h1>JMRI Library API</h1>]]></doctitle>
       <bottom><![CDATA[<i>Copyright &copy; 1997 - 2009 JMRI Community. 
                     <br>JMRI, DecoderPro, PanelPro, SoundPro, DispatcherPro and associated logos are our trademarks.</i>
-                       <br><a html="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
+                       <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                        <br>Site hosted by: 
                        <a href="http://sourceforge.net/projects/jmri">
                        <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
@@ -443,6 +443,9 @@
       <link href="http://javacsv.sourceforge.net/" />
       <link href="http://logging.apache.org/log4j/1.2/apidocs/" />
       <link href="http://java.sun.com/javase/technologies/desktop/java3d/forDevelopers/j3dapi/" />
+      <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public" />
+      <link href="http://java.sun.com/javase/6/docs/api/" />
+      <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public" />
     </javadoc>
   </target>
 
