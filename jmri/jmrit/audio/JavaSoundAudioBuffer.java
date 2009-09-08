@@ -37,7 +37,7 @@ import jmri.util.FileUtil;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
 
@@ -155,8 +155,10 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
             _audioInputStream = AudioSystem.getAudioInputStream(file);
         } catch (UnsupportedAudioFileException ex) {
             log.error("Unsupported audio file format when loading buffer:" + ex);
+            return false;
         } catch (IOException ex) {
             log.error("Error loading buffer:" + ex);
+            return false;
         }
 
         // Get the AudioFormat
