@@ -1634,6 +1634,15 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     private boolean _dragging = false;
     private boolean _shiftDrag = false;
 
+    protected void doMouseClicked(int x, int y, boolean inSelection) {
+        if (!inSelection) {
+            _selectList = null;
+            _selectRect = null;
+            _dragging = false;
+            _shiftDrag = false;
+        }
+    }
+
     protected boolean doMouseReleased(int x, int y, boolean noSelection) {
         boolean wasDragging = _dragging;
         if (!positionableBox.isSelected()) { return wasDragging; }

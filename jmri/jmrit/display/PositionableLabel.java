@@ -38,7 +38,7 @@ import javax.swing.JTextField;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.61 $
+ * @version $Revision: 1.62 $
  */
 
 public class PositionableLabel extends JLabel
@@ -179,7 +179,12 @@ public class PositionableLabel extends JLabel
     }
 
     public void mouseClicked(MouseEvent e) {
-        if (debug) log.debug("mouseClicked: "+where(e));
+        if (panelEditor!=null) {
+             List <JComponent> list = panelEditor.getSelections();
+             log.debug("mouseClicked "+(list!=null && list.contains(this)));
+             panelEditor.doMouseClicked(getX()+e.getX(), getY()+e.getY(), 
+                                                   (list!=null && list.contains(this)) );
+        } else if (debug) log.debug("mouseClicked: "+where(e));
         if (debug && e.isMetaDown()) log.debug("meta down");
         if (debug && e.isAltDown()) log.debug(" alt down");
         if (e.isPopupTrigger()) {
@@ -790,12 +795,7 @@ public class PositionableLabel extends JLabel
     private boolean editable = true;
 
     public void setFixed(boolean enabled) {
-        if (log.isDebugEnabled())
-            log.debug("setFixed fixed="+fixed+", _saveFixed= "+_saveFixed+", enabled= "+enabled);
         fixed = enabled;
-        _saveFixed = enabled; 
-        if (log.isDebugEnabled())
-            log.debug("setFixed fixed="+fixed+", _saveFixed= "+_saveFixed);
         if (showFixedItem!=null) showFixedItem.setSelected(getFixed());
     }
 
