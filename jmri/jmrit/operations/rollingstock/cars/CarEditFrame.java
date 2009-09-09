@@ -30,7 +30,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -107,7 +107,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		weightTextField.setToolTipText(rb.getString("TipCarWeightOz"));
 		weightTonsTextField.setToolTipText(rb.getString("TipCarWeightTons"));
 		autoCheckBox.setToolTipText(rb.getString("TipCarAutoCalculate"));
+		cabooseCheckBox.setToolTipText(rb.getString("TipCarCaboose"));
 		fredCheckBox.setToolTipText(rb.getString("TipCarFred"));
+		hazardousCheckBox.setToolTipText(rb.getString("TipCarHazardous"));
 		fillWeightButton.setToolTipText(rb.getString("TipCalculateCarWeight"));
 		builtTextField.setToolTipText(rb.getString("TipBuildDate"));
 		rfidTextField.setToolTipText(rb.getString("TipRfid"));
