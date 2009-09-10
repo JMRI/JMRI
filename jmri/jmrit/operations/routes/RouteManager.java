@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages the routes
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class RouteManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLength"; 
@@ -197,9 +197,9 @@ public class RouteManager implements java.beans.PropertyChangeListener {
     }
     
     private List<String> getList() {
-        String[] arr = new String[_routeHashTable.size()];
         List<String> out = new ArrayList<String>();
         Enumeration<String> en = _routeHashTable.keys();
+        String[] arr = new String[_routeHashTable.size()];
         int i=0;
         while (en.hasMoreElements()) {
             arr[i] = en.nextElement();

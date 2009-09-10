@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
@@ -342,9 +342,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     private List<String> getList() {
 		if (!trainsloaded)
 			log.error("TrainManager getList called before trains completely loaded!");
-        String[] arr = new String[_trainHashTable.size()];
         List<String> out = new ArrayList<String>();
         Enumeration<String> en = _trainHashTable.keys();
+        String[] arr = new String[_trainHashTable.size()];
         int i=0;
         while (en.hasMoreElements()) {
             arr[i] = en.nextElement();

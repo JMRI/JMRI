@@ -24,7 +24,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -222,10 +222,10 @@ public class EngineManager implements java.beans.PropertyChangeListener {
      * Sort by engine id
      * @return list of engine ids ordered by id
      */
-    public List<String> getEnginesByIdList() {
-        String[] arr = new String[_engineHashTable.size()];
+    public List<String> getEnginesByIdList() {        
         List<String> out = new ArrayList<String>();
         Enumeration<String> en = _engineHashTable.keys();
+        String[] arr = new String[_engineHashTable.size()];
         int i=0;
         while (en.hasMoreElements()) {
             arr[i] = en.nextElement();
