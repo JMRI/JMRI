@@ -8,6 +8,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.PositionableLabel;
 import java.awt.Color;
+import java.awt.Font;
 
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
@@ -17,7 +18,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -175,7 +176,7 @@ public class PositionableLabelXml implements XmlAdapter {
         }
         a = element.getAttribute("style");
         try {
-            if (a!=null) l.setFontStyle(a.getIntValue(), 0);  // label is created plain, so don't need to drop
+            if (a!=null) l.setFontStyle(a.getIntValue(), Font.BOLD);  // label is created bold, so drop bold
         } catch (DataConversionException ex) {
             log.warn("invalid style attribute value");
         }

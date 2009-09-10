@@ -38,7 +38,7 @@ import javax.swing.JTextField;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.62 $
+ * @version $Revision: 1.63 $
  */
 
 public class PositionableLabel extends JLabel
@@ -423,6 +423,7 @@ public class PositionableLabel extends JLabel
         italic = new JCheckBoxMenuItem(rb.getString("Italic"));
         italic.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                italic.setSelected(!italic.isSelected());
                 setItalic();
             }
         });
@@ -430,6 +431,7 @@ public class PositionableLabel extends JLabel
         bold = new JCheckBoxMenuItem(rb.getString("Bold"));
         bold.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                bold.setSelected(!bold.isSelected());
                 setBold();
             }
         });
