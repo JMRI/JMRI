@@ -27,7 +27,7 @@ import org.jdom.Element;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.26 $
+ * @version	$Revision: 1.27 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -279,9 +279,9 @@ public class CarManager implements java.beans.PropertyChangeListener {
      * @return list of car ids ordered by id
      */
     public List<String> getCarsByIdList() {
+    	Enumeration<String> en = _carHashTable.keys();
         String[] arr = new String[_carHashTable.size()];
-        List<String> out = new ArrayList<String>();
-        Enumeration<String> en = _carHashTable.keys();
+        List<String> out = new ArrayList<String>();     
         int i=0;
         while (en.hasMoreElements()) {
             arr[i] = en.nextElement();
@@ -292,7 +292,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
         return out;
     }
     
-    private static final int divisor = 32;
+    private static final int pageSize = 64;
     /**
      * Sort by car road name
      * @return list of car ids ordered by road name
@@ -312,16 +312,15 @@ public class CarManager implements java.beans.PropertyChangeListener {
     		carRoad = getCarById(sortIn.get(i)).getRoad();
     		int start = 0;
     		// page to improve performance.  Most cars have id = road+number
-    		if (out.size()>divisor){
-    			for (int k=divisor; k>0; k--){
-    				outCarRoad = getCarById(out.get((out.size()-1)*k/divisor)).getRoad();
-    				if (carRoad.compareToIgnoreCase(outCarRoad)>=0){
-    					start = (out.size()-1)*k/divisor;
-    					break;
-    				}
-    			}
-    		}
-    		for (int j=start; j<out.size(); j++ ){
+      		int divisor = out.size()/pageSize;
+      		for (int k=divisor; k>0; k--){
+      			outCarRoad = getCarById(out.get((out.size()-1)*k/divisor)).getRoad();
+      			if (carRoad.compareToIgnoreCase(outCarRoad)>=0){
+      				start = (out.size()-1)*k/divisor;
+      				break;
+      			}
+      		}
+      		for (int j=start; j<out.size(); j++ ){
     			outCarRoad = getCarById(out.get(j)).getRoad();
     			if (carRoad.compareToIgnoreCase(outCarRoad)<0){
     				out.add(j, sortIn.get(i));
@@ -349,18 +348,23 @@ public class CarManager implements java.beans.PropertyChangeListener {
     	List<String> out = new ArrayList<String>();
     	int carNumber = 0;
     	int outCarNumber = 0;
+    	int notInteger = -999999999;	// flag when car number isn't an integer
     	String[] number;
     	boolean carAdded = false;
 
     	for (int i=0; i<sortIn.size(); i++){
-    		carAdded = false;   
+    		carAdded = false;
     		try{
     			carNumber = Integer.parseInt(getCarById(sortIn.get(i)).getNumber());
+    			getCarById(sortIn.get(i)).number = carNumber;
     		}catch (NumberFormatException e) {
+    			// maybe car number in the format xxx-y
     	   		try{
         			number = getCarById(sortIn.get(i)).getNumber().split("-");
         			carNumber = Integer.parseInt(number[0]);
+        			getCarById(sortIn.get(i)).number = carNumber;
         		}catch (NumberFormatException e2) {
+        			getCarById(sortIn.get(i)).number = notInteger;
         			// sort alpha numeric numbers at the end of the out list
         			String numberIn = getCarById(sortIn.get(i)).getNumber(); 
         			//log.debug("car in road number ("+numberIn+") isn't a number");
@@ -389,33 +393,33 @@ public class CarManager implements java.beans.PropertyChangeListener {
  
     		int start = 0;
     		// page to improve sort performance. 
-    		if (out.size()>divisor){
-    			for (int k=divisor; k>0; k--){
-    				try{
-    					number  = getCarById(out.get((out.size()-1)*k/divisor)).getNumber().split("-");
-    					if (carNumber >= Integer.parseInt(number[0])){
-    						start = (out.size()-1)*k/divisor;
-    						break;
-    					}
-    				}catch (NumberFormatException e) {
-    					//log.debug("list out road number isn't a number");
-    				}
+    		int divisor = out.size()/pageSize;
+    		for (int k=divisor; k>0; k--){
+    			outCarNumber  = getCarById(out.get((out.size()-1)*k/divisor)).number;
+    			if(outCarNumber == notInteger)
+    				continue;
+    			if (carNumber >= outCarNumber){
+    				start = (out.size()-1)*k/divisor;
+    				break;
     			}
     		}
     		for (int j=start; j<out.size(); j++ ){
-    	   		try{
-        			outCarNumber = Integer.parseInt(getCarById(out.get(j)).getNumber());
-        		}catch (NumberFormatException e) {        			
-        	   		try{      	   			
-            			number = getCarById(out.get(j)).getNumber().split("-");
-            			outCarNumber = Integer.parseInt(number[0]);
-            		}catch (NumberFormatException e2) {
-            			//Car c = getCarById(out.get(j));
-            			//log.debug("Car ("+c.getId()+") road number ("+c.getNumber()+") isn't a number");
-              			// force car add
-            			outCarNumber = carNumber+1;
-            		}
-        		}
+    			outCarNumber = getCarById(out.get(j)).number;
+    			if (outCarNumber == notInteger){
+    				try{
+    					outCarNumber = Integer.parseInt(getCarById(out.get(j)).getNumber());
+    				}catch (NumberFormatException e) {        			
+    					try{      	   			
+    						number = getCarById(out.get(j)).getNumber().split("-");
+    						outCarNumber = Integer.parseInt(number[0]);
+    					}catch (NumberFormatException e2) {
+    						//Car c = getCarById(out.get(j));
+    						//log.debug("Car ("+c.getId()+") road number ("+c.getNumber()+") isn't a number");
+    						// force car add
+    						outCarNumber = carNumber+1;
+    					}
+    				}
+    			}
         		if (carNumber < outCarNumber){
         			out.add(j, sortIn.get(i));
         			carAdded = true;
@@ -435,7 +439,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
      * @return list of car ids ordered by car type
      */
     public List<String> getCarsByTypeList() {
-    	log.debug("start car sort by type list");
+    	//log.debug("start car sort by type list");
     	// first get by road list
     	List<String> sortIn = getCarsByRoadNameList();
 
@@ -450,13 +454,12 @@ public class CarManager implements java.beans.PropertyChangeListener {
     		carType = getCarById(sortIn.get(i)).getType();
        		int start = 0;
     		// page to improve sort performance. 
-       		if (out.size()>divisor){
-       			for (int k=divisor; k>0; k--){
-       				outCarType = getCarById(out.get((out.size()-1)*k/divisor)).getType();
-       				if (carType.compareToIgnoreCase(outCarType)>=0){
-       					start = (out.size()-1)*k/divisor;
-       					break;
-       				}
+       		int divisor = out.size()/pageSize;
+       		for (int k=divisor; k>0; k--){
+       			outCarType = getCarById(out.get((out.size()-1)*k/divisor)).getType();
+       			if (carType.compareToIgnoreCase(outCarType)>=0){
+       				start = (out.size()-1)*k/divisor;
+       				break;
        			}
        		}
     		for (int j=start; j<out.size(); j++ ){
@@ -471,7 +474,7 @@ public class CarManager implements java.beans.PropertyChangeListener {
     			out.add(sortIn.get(i));
     		}
     	}
-    	log.debug("end car sort by type list");
+    	//log.debug("end car sort by type list");
     	return out;
     }
     
@@ -494,16 +497,15 @@ public class CarManager implements java.beans.PropertyChangeListener {
     		carColor = getCarById(sortByType.get(i)).getColor();
       		int start = 0;
        		// page to improve sort performance. 
-       		if (out.size()>divisor){
-       			for (int k=divisor; k>0; k--){
-       				outCarColor = getCarById(out.get((out.size()-1)*k/divisor)).getColor();
-       				if (carColor.compareToIgnoreCase(outCarColor)>=0){
-       					start = (out.size()-1)*k/divisor;
-       					break;
-       				}
-       			}
-       		}
-    		for (int j=start; j<out.size(); j++ ){
+      		int divisor = out.size()/pageSize;
+      		for (int k=divisor; k>0; k--){
+      			outCarColor = getCarById(out.get((out.size()-1)*k/divisor)).getColor();
+      			if (carColor.compareToIgnoreCase(outCarColor)>=0){
+      				start = (out.size()-1)*k/divisor;
+      				break;
+      			}
+      		}
+      		for (int j=start; j<out.size(); j++ ){
     			outCarColor = getCarById(out.get(j)).getColor();
     			if (carColor.compareToIgnoreCase(outCarColor)<0){
     				out.add(j, sortByType.get(i));
@@ -537,16 +539,15 @@ public class CarManager implements java.beans.PropertyChangeListener {
     		carKernelName = getCarById(sortIn.get(i)).getKernelName();
      		int start = 0;
        		// page to improve sort performance. 
-       		if (out.size()>divisor){
-       			for (int k=divisor; k>0; k--){
-       				outCarKernelName = getCarById(out.get((out.size()-1)*k/divisor)).getKernelName();
-       				if (carKernelName.compareToIgnoreCase(outCarKernelName)>=0){
-       					start = (out.size()-1)*k/divisor;
-       					break;
-       				}
-       			}
-       		}
-    		for (int j=start; j<out.size(); j++ ){
+      		int divisor = out.size()/pageSize;
+      		for (int k=divisor; k>0; k--){
+      			outCarKernelName = getCarById(out.get((out.size()-1)*k/divisor)).getKernelName();
+      			if (carKernelName.compareToIgnoreCase(outCarKernelName)>=0){
+      				start = (out.size()-1)*k/divisor;
+      				break;
+      			}
+      		}
+      		for (int j=start; j<out.size(); j++ ){
     			outCarKernelName = getCarById(out.get(j)).getKernelName();
     			if (carKernelName.compareToIgnoreCase(outCarKernelName)<0){
     				out.add(j, sortIn.get(i));
@@ -583,17 +584,16 @@ public class CarManager implements java.beans.PropertyChangeListener {
     		carLocation = c.getLocationName()+c.getTrackName();
      		int start = 0;
        		// page to improve sort performance. 
-       		if (out.size()>divisor){
-       			for (int k=divisor; k>0; k--){
-       				c = getCarById (out.get((out.size()-1)*k/divisor));
-       				outCarLocation = c.getLocationName()+c.getTrackName();
-       				if (carLocation.compareToIgnoreCase(outCarLocation)>=0){
-       					start = (out.size()-1)*k/divisor;
-       					break;
-       				}
-       			}
-       		}
-    		for (int j=start; j<out.size(); j++ ){
+      		int divisor = out.size()/pageSize;
+      		for (int k=divisor; k>0; k--){
+      			c = getCarById (out.get((out.size()-1)*k/divisor));
+      			outCarLocation = c.getLocationName()+c.getTrackName();
+      			if (carLocation.compareToIgnoreCase(outCarLocation)>=0){
+      				start = (out.size()-1)*k/divisor;
+      				break;
+      			}
+      		}
+      		for (int j=start; j<out.size(); j++ ){
     			c = getCarById (out.get(j));
     			outCarLocation = c.getLocationName()+c.getTrackName();
     			if (carLocation.compareToIgnoreCase(outCarLocation)<0){
@@ -630,17 +630,16 @@ public class CarManager implements java.beans.PropertyChangeListener {
 			carDestination = c.getDestinationName()+c.getDestinationTrackName();
     		int start = 0;
        		// page to improve sort performance. 
-       		if (out.size()>divisor){
-       			for (int k=divisor; k>0; k--){
-       				c = getCarById (out.get((out.size()-1)*k/divisor));
-       				outCarDestination = c.getDestinationName()+c.getDestinationTrackName();
-       				if (carDestination.compareToIgnoreCase(outCarDestination)>=0){
-       					start = (out.size()-1)*k/divisor;
-       					break;
-       				}
-       			}
-       		}
-    		for (int j=start; j<out.size(); j++ ){
+      		int divisor = out.size()/pageSize;
+      		for (int k=divisor; k>0; k--){
+      			c = getCarById (out.get((out.size()-1)*k/divisor));
+      			outCarDestination = c.getDestinationName()+c.getDestinationTrackName();
+      			if (carDestination.compareToIgnoreCase(outCarDestination)>=0){
+      				start = (out.size()-1)*k/divisor;
+      				break;
+      			}
+      		}
+      		for (int j=start; j<out.size(); j++ ){
 				c = getCarById(out.get(j));
 				outCarDestination = c.getDestinationName()+c.getDestinationTrackName();
 				if (carDestination.compareToIgnoreCase(outCarDestination) < 0 ) {
@@ -677,18 +676,17 @@ public class CarManager implements java.beans.PropertyChangeListener {
     			carTrainName = c.getTrain().getName();
        		int start = 0;
        		// page to improve sort performance. 
-       		if (out.size()>divisor){
-       			for (int k=divisor; k>0; k--){
-       				c = getCarById(out.get((out.size()-1)*k/divisor));
-       	 			String outCarTrainName = "";
-        			if(c.getTrain() != null)
-        				outCarTrainName = c.getTrain().getName();
-       				if (carTrainName.compareToIgnoreCase(outCarTrainName)>=0){
-       					start = (out.size()-1)*k/divisor;
-       					break;
-       				}
-       			}
-       		}
+      		int divisor = out.size()/pageSize;
+      		for (int k=divisor; k>0; k--){
+      			c = getCarById(out.get((out.size()-1)*k/divisor));
+      			String outCarTrainName = "";
+      			if(c.getTrain() != null)
+      				outCarTrainName = c.getTrain().getName();
+      			if (carTrainName.compareToIgnoreCase(outCarTrainName)>=0){
+      				start = (out.size()-1)*k/divisor;
+      				break;
+      			}
+      		}
     		for (int j=start; j<out.size(); j++ ){
     			c = getCarById (out.get(j));
     			String outCarTrainName = "";
@@ -726,16 +724,15 @@ public class CarManager implements java.beans.PropertyChangeListener {
     		carLoadName = getCarById(sortIn.get(i)).getLoad();
     		int start = 0;
        		// page to improve sort performance. 
-       		if (out.size()>divisor){
-       			for (int k=divisor; k>0; k--){
-       				outCarLoadName = getCarById(out.get((out.size()-1)*k/divisor)).getLoad();
-       				if (carLoadName.compareToIgnoreCase(outCarLoadName)>=0){
-       					start = (out.size()-1)*k/divisor;
-       					break;
-       				}
-       			}
-       		}
-    		for (int j=start; j<out.size(); j++ ){
+      		int divisor = out.size()/pageSize;
+      		for (int k=divisor; k>0; k--){
+      			outCarLoadName = getCarById(out.get((out.size()-1)*k/divisor)).getLoad();
+      			if (carLoadName.compareToIgnoreCase(outCarLoadName)>=0){
+      				start = (out.size()-1)*k/divisor;
+      				break;
+      			}
+      		}
+      		for (int j=start; j<out.size(); j++ ){
     			outCarLoadName = getCarById(out.get(j)).getLoad();
     			if (carLoadName.compareToIgnoreCase(outCarLoadName)<0){
     				out.add(j, sortIn.get(i));
@@ -769,16 +766,15 @@ public class CarManager implements java.beans.PropertyChangeListener {
     		inMoves = getCarById (sortIn.get(i)).getMoves();
     		int start = 0;
     		// page to improve performance.
-    		if (out.size()>divisor){
-    			for (int k=divisor; k>0; k--){
-    				outMoves = getCarById(out.get((out.size()-1)*k/divisor)).getMoves();
-    				if (inMoves>=outMoves){
-    					start = (out.size()-1)*k/divisor;
-    					break;
-    				}
-    			}
-    		}
-    		for (int j=start; j<out.size(); j++ ){
+      		int divisor = out.size()/pageSize;
+      		for (int k=divisor; k>0; k--){
+      			outMoves = getCarById(out.get((out.size()-1)*k/divisor)).getMoves();
+      			if (inMoves>=outMoves){
+      				start = (out.size()-1)*k/divisor;
+      				break;
+      			}
+      		}
+      		for (int j=start; j<out.size(); j++ ){
 					outMoves = getCarById(out.get(j)).getMoves();
 					if (inMoves < outMoves) {
 						out.add(j, sortIn.get(i));
@@ -812,16 +808,15 @@ public class CarManager implements java.beans.PropertyChangeListener {
     		carBuilt = getCarById (sortIn.get(i)).getBuilt();
       		int start = 0;
     		// page to improve sort performance. 
-       		if (out.size()>divisor){
-       			for (int k=divisor; k>0; k--){
-       				outCarBuilt = getCarById(out.get((out.size()-1)*k/divisor)).getBuilt();
-       				if (carBuilt.compareToIgnoreCase(outCarBuilt)>=0){
-       					start = (out.size()-1)*k/divisor;
-       					break;
-       				}
-       			}
-       		}
-    		for (int j=start; j<out.size(); j++ ){
+      		int divisor = out.size()/pageSize;
+      		for (int k=divisor; k>0; k--){
+      			outCarBuilt = getCarById(out.get((out.size()-1)*k/divisor)).getBuilt();
+      			if (carBuilt.compareToIgnoreCase(outCarBuilt)>=0){
+      				start = (out.size()-1)*k/divisor;
+      				break;
+      			}
+      		}
+      		for (int j=start; j<out.size(); j++ ){
     			outCarBuilt = getCarById (out.get(j)).getBuilt();
     			if (carBuilt.compareToIgnoreCase(outCarBuilt)<0){
     				out.add(j, sortIn.get(i));
@@ -855,16 +850,15 @@ public class CarManager implements java.beans.PropertyChangeListener {
     		carOwner = getCarById(sortIn.get(i)).getOwner();
       		int start = 0;
     		// page to improve sort performance. 
-       		if (out.size()>divisor){
-       			for (int k=divisor; k>0; k--){
-       				outCarOwner = getCarById(out.get((out.size()-1)*k/divisor)).getOwner();
-       				if (carOwner.compareToIgnoreCase(outCarOwner)>=0){
-       					start = (out.size()-1)*k/divisor;
-       					break;
-       				}
-       			}
-       		}
-    		for (int j=start; j<out.size(); j++ ){
+      		int divisor = out.size()/pageSize;
+      		for (int k=divisor; k>0; k--){
+      			outCarOwner = getCarById(out.get((out.size()-1)*k/divisor)).getOwner();
+      			if (carOwner.compareToIgnoreCase(outCarOwner)>=0){
+      				start = (out.size()-1)*k/divisor;
+      				break;
+      			}
+      		}
+      		for (int j=start; j<out.size(); j++ ){
     			outCarOwner = getCarById(out.get(j)).getOwner();
     			if (carOwner.compareToIgnoreCase(outCarOwner)<0){
     				out.add(j, sortIn.get(i));
@@ -897,15 +891,14 @@ public class CarManager implements java.beans.PropertyChangeListener {
     		carRfid = getCarById (sortIn.get(i)).getRfid();
       		int start = 0;
     		// page to improve sort performance. 
-       		if (out.size()>divisor){
-       			for (int k=divisor; k>0; k--){
-       				outCarRfid = getCarById(out.get((out.size()-1)*k/divisor)).getRfid();
-       				if (carRfid.compareToIgnoreCase(outCarRfid)>=0){
-       					start = (out.size()-1)*k/divisor;
-       					break;
-       				}
-       			}
-       		}
+      		int divisor = out.size()/pageSize;
+      		for (int k=divisor; k>0; k--){
+      			outCarRfid = getCarById(out.get((out.size()-1)*k/divisor)).getRfid();
+      			if (carRfid.compareToIgnoreCase(outCarRfid)>=0){
+      				start = (out.size()-1)*k/divisor;
+      				break;
+      			}
+      		}
     		for (int j=start; j<out.size(); j++ ){
     			outCarRfid = getCarById(out.get(j)).getRfid();
     			if (carRfid.compareToIgnoreCase(outCarRfid)<0){
@@ -1088,9 +1081,9 @@ public class CarManager implements java.beans.PropertyChangeListener {
 				_editFrameDimension = new Dimension(width, height);
 				_editFramePosition = new Point(x,y);
 			} catch ( org.jdom.DataConversionException ee) {
-				log.debug("Did not find train edit frame attributes");
+				log.debug("Did not find car edit frame attributes");
 			} catch ( NullPointerException ne) {
-				log.debug("Did not find train edit frame attributes");
+				log.debug("Did not find car edit frame attributes");
 			}
 		}
 	}

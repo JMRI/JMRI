@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -44,6 +44,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	protected RouteLocation _routeLocation = null;
 	protected RouteLocation _routeDestination = null;
 	protected int _moves = 0;
+	
+	public int number = 0;	// used by managers for sort by number
 	
 	public static final String OKAY = rb.getString("okay");			// return status when placing rolling stock at a location
 	public static final String LENGTH = rb.getString("length");

@@ -24,7 +24,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -60,7 +60,7 @@ public class EngineManager implements java.beans.PropertyChangeListener {
 		return _instance;
 	}
 
-	public void setCarEditFrame(EngineEditFrame frame){
+	public void setEngineEditFrame(EngineEditFrame frame){
 		_engineEditFrame = frame;
 	}
 
@@ -270,49 +270,104 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     	return out;
     }
     
+    private static final int pageSize = 64;
     
     /**
      * Sort by engine number, number can alpha numeric
      * @return list of engine ids ordered by number
      */
     public List<String> getEnginesByNumberList() {
+    	//log.debug("start Engine sort by number list");
     	// first get by road list
-    	List<String> sortByRoad = getEnginesByRoadNameList();
+    	List<String> sortIn = getEnginesByRoadNameList();
     	// now re-sort
     	List<String> out = new ArrayList<String>();
     	int engineNumber = 0;
+    	int outEngineNumber = 0;
+    	int notInteger = -999999999;	// flag when Engine number isn't an integer
     	String[] number;
     	boolean engineAdded = false;
-    	Engine engine;
-    	
-    	for (int i=0; i<sortByRoad.size(); i++){
+
+    	for (int i=0; i<sortIn.size(); i++){
     		engineAdded = false;
-    		engine = getEngineById (sortByRoad.get(i));
     		try{
-    			number = engine.getNumber().split("-");
-    			engineNumber = Integer.parseInt(number[0]);
+    			engineNumber = Integer.parseInt(getEngineById(sortIn.get(i)).getNumber());
+    			getEngineById(sortIn.get(i)).number = engineNumber;
     		}catch (NumberFormatException e) {
- //   			log.debug("Road number isn't a number");
-    		}
-    		for (int j=0; j<out.size(); j++ ){
-    			engine = getEngineById (out.get(j));
-        		try{
-        			number = engine.getNumber().split("-");
-        			int outEngineNumber = Integer.parseInt(number[0]);
-        			if (engineNumber < outEngineNumber){
-        				out.add(j, sortByRoad.get(i));
-        				engineAdded = true;
-        				break;
+    			// maybe engine number in the format xxx-y
+    	   		try{
+        			number = getEngineById(sortIn.get(i)).getNumber().split("-");
+        			engineNumber = Integer.parseInt(number[0]);
+        			getEngineById(sortIn.get(i)).number = engineNumber;
+        		}catch (NumberFormatException e2) {
+        			getEngineById(sortIn.get(i)).number = notInteger;
+        			// sort alpha numeric numbers at the end of the out list
+        			String numberIn = getEngineById(sortIn.get(i)).getNumber(); 
+        			//log.debug("engine in road number ("+numberIn+") isn't a number");
+        			for (int k=(out.size()-1); k>=0; k--){
+        				String numberOut = getEngineById(out.get(k)).getNumber();
+        				try{
+        					Integer.parseInt(numberOut);
+        					// done, place engine with alpha numeric number after
+        					// engines with real numbers.
+        					out.add(k+1, sortIn.get(i));
+        					engineAdded = true;
+        					break;
+        				}catch (NumberFormatException e3) {
+        					if (numberIn.compareToIgnoreCase(numberOut)>=0){
+            					out.add(k+1, sortIn.get(i));
+            					engineAdded = true;
+            					break;
+        					}
+        				}
         			}
-        		}catch (NumberFormatException e) {
- //       			log.debug("list out road number isn't a number");
+        			if(!engineAdded)
+        				out.add(0, sortIn.get(i));
+        			continue;
+        		}
+    		}
+ 
+    		int start = 0;
+    		// page to improve sort performance. 
+    		int divisor = out.size()/pageSize;
+    		for (int k=divisor; k>0; k--){
+    			outEngineNumber  = getEngineById(out.get((out.size()-1)*k/divisor)).number;
+    			if(outEngineNumber == notInteger)
+    				continue;
+    			if (engineNumber >= outEngineNumber){
+    				start = (out.size()-1)*k/divisor;
+    				break;
+    			}
+    		}
+    		for (int j=start; j<out.size(); j++ ){
+    			outEngineNumber = getEngineById(out.get(j)).number;
+    			if (outEngineNumber == notInteger){
+    				try{
+    					outEngineNumber = Integer.parseInt(getEngineById(out.get(j)).getNumber());
+    				}catch (NumberFormatException e) {        			
+    					try{      	   			
+    						number = getEngineById(out.get(j)).getNumber().split("-");
+    						outEngineNumber = Integer.parseInt(number[0]);
+    					}catch (NumberFormatException e2) {
+    						//Engine eng = getEngineById(out.get(j));
+    						//log.debug("Engine ("+eng.getId()+") road number ("+eng.getNumber()+") isn't a number");
+    						// force engine add
+    						outEngineNumber = engineNumber+1;
+    					}
+    				}
+    			}
+        		if (engineNumber < outEngineNumber){
+        			out.add(j, sortIn.get(i));
+        			engineAdded = true;
+        			break;
         		}
     		}
     		if (!engineAdded){
-    			out.add(sortByRoad.get(i));
+    			out.add(sortIn.get(i));
     		}
     	}
-        return out;
+    	//log.debug("end engine sort by number list");
+    	return out;
     }
     
     /**
@@ -764,9 +819,9 @@ public class EngineManager implements java.beans.PropertyChangeListener {
 				_editFrameDimension = new Dimension(width, height);
 				_editFramePosition = new Point(x,y);
 			} catch ( org.jdom.DataConversionException ee) {
-				log.debug("Did not find train edit frame attributes");
+				log.debug("Did not find engine edit frame attributes");
 			} catch ( NullPointerException ne) {
-				log.debug("Did not find train edit frame attributes");
+				log.debug("Did not find engine edit frame attributes");
 			}
 		}
 	}

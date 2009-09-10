@@ -30,7 +30,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -377,7 +377,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 	// Save, Delete, Add, Clear, Calculate buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton){
-			// log.debug("engine save button actived");
+			// log.debug("engine save button activated");
 			String roadNum = roadNumberTextField.getText();
 			if (roadNum.length() > 10){
 				JOptionPane.showMessageDialog(this,rb.getString("engineRoadNum"),
@@ -414,7 +414,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 			}
 			addEngine();
 			// save frame size and position
-			manager.setCarEditFrame(this);
+			manager.setEngineEditFrame(this);
 			managerXml.writeOperationsEngineFile();		//save engine file
 			carManagerXml.writeOperationsCarFile(); 	//save road names, and owners
 		}

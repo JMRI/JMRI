@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.Control;
  * Number Road Type Length Weight Color Owner Year Location
  * Note that all fields must be single words except for Location.
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class ImportCars extends Thread {
 	
@@ -44,9 +44,9 @@ public class ImportCars extends Thread {
 		fc.addChoosableFileFilter(new textFilter());
 		int retVal = fc.showOpenDialog(null);
 		if (retVal != JFileChooser.APPROVE_OPTION)
-			return; // cancelled
+			return; // canceled
 		if (fc.getSelectedFile() == null)
-			return; // cancelled
+			return; // canceled
 		File f = fc.getSelectedFile();
 		BufferedReader in;
 		try {
@@ -98,6 +98,10 @@ public class ImportCars extends Thread {
 				importOkay = true;
 				break;
 			}
+			
+			// has user canceled import?
+			if (!fstatus.isShowing())
+				break;
 
 			line = line.trim();
 			if (log.isDebugEnabled()) {
