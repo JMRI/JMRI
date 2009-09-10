@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.53 $
+ * @version             $Revision: 1.54 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -341,7 +341,11 @@ public class TrainBuilder extends TrainCommon{
 		// now go through the car list and remove non-lead cars in kernels, destinations that aren't part of this route
 		for (carIndex=0; carIndex<carList.size(); carIndex++){
 			Car c = carManager.getCarById(carList.get(carIndex));
-			addLine(fileOut, FIVE, "Car (" +c.getId()+ ") at location (" +c.getLocationName()+ ", " +c.getTrackName()+ ") with " + c.getMoves()+ " moves");
+			// only print out the first 500 cars
+			if (carIndex < 500)
+				addLine(fileOut, FIVE, "Car (" +c.getId()+ ") at location (" +c.getLocationName()+ ", " +c.getTrackName()+ ") with " + c.getMoves()+ " moves");
+			if (carIndex == 500)
+				addLine(fileOut, FIVE, " ************* Only the first 500 cars are shown ************* ");
 			// use only the lead car in a kernel for building trains
 			if (c.getKernel() != null){
 				addLine(fileOut, FIVE, "Car (" +c.getId()+ ") is part of kernel ("+c.getKernelName()+")");

@@ -27,7 +27,7 @@ import org.jdom.Element;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.27 $
+ * @version	$Revision: 1.28 $
  */
 public class CarManager implements java.beans.PropertyChangeListener {
 	
@@ -752,8 +752,12 @@ public class CarManager implements java.beans.PropertyChangeListener {
      * @return list of car ids ordered by car moves
      */
     public List<String> getCarsByMovesList() {
-    	// first get by road list
-    	List<String> sortIn = getCarsByIdList();
+    	// get random order of car ids
+    	Enumeration<String> en = _carHashTable.keys();
+    	List<String> sortIn = new ArrayList<String>();
+        while (en.hasMoreElements()) {
+        	sortIn.add(en.nextElement());
+        }
 
     	// now re-sort
     	List<String> out = new ArrayList<String>();

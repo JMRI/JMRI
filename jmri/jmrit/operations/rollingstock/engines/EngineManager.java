@@ -24,7 +24,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 public class EngineManager implements java.beans.PropertyChangeListener {
 	
@@ -549,29 +549,33 @@ public class EngineManager implements java.beans.PropertyChangeListener {
      * @return list of engine ids ordered by engine moves
      */
     public List<String> getEnginesByMovesList() {
-    	// first get by road list
-    	List<String> sortByRoad = getEnginesByRoadNameList();
+    	// get random order of engine ids
+    	Enumeration<String> en = _engineHashTable.keys();
+    	List<String> sortIn = new ArrayList<String>();
+        while (en.hasMoreElements()) {
+        	sortIn.add(en.nextElement());
+        }
 
     	// now re-sort
     	List<String> out = new ArrayList<String>();
      	boolean engineAdded = false;
     	Engine engine;
 
-    	for (int i=0; i<sortByRoad.size(); i++){
+    	for (int i=0; i<sortIn.size(); i++){
     		engineAdded = false;
-    		engine = getEngineById (sortByRoad.get(i));
+    		engine = getEngineById (sortIn.get(i));
 				int inMoves = engine.getMoves();
 				for (int j=0; j<out.size(); j++) {
 					engine = getEngineById(out.get(j));
 					int outMoves = engine.getMoves();
 					if (inMoves < outMoves) {
-						out.add(j,sortByRoad.get(i));
+						out.add(j,sortIn.get(i));
 						engineAdded = true;
 						break;
 					}
 				}
      		if (!engineAdded){
-    			out.add(sortByRoad.get(i));
+    			out.add(sortIn.get(i));
     		}
     	}
     	return out;
@@ -703,33 +707,21 @@ public class EngineManager implements java.beans.PropertyChangeListener {
     			}
     		}
     	}
-    	// get engines by number list
-    	List<String> enginesSortByNum = getEnginesByNumberList();
+    	// get engines by moves list
+    	List<String> enginesSortByMoves = getEnginesByMovesList();
     	// now build list of available engines for this route
     	List<String> out = new ArrayList<String>();
-    	boolean engineAdded = false;
     	Engine engine;
  
-    	for (int i = 0; i < enginesSortByNum.size(); i++) {
-    		engineAdded = false;
-    		engine = getEngineById(enginesSortByNum.get(i));
+    	for (int i = 0; i < enginesSortByMoves.size(); i++) {
+    		engine = getEngineById(enginesSortByMoves.get(i));
+       		// only use engines with a location
+    		if (engine.getLocationName().equals(""))
+    			continue;
     		RouteLocation rl = route.getLastLocationByName(engine.getLocationName());
     		// get engines that don't have an assigned train, or the assigned train is this one 
     		if (rl != null && rl != destination && (engine.getTrain() == null || train.equals(engine.getTrain()))){
-    			// sort by engine moves
-    			int inMoves = engine.getMoves();
-    			for (int j = 0; j < out.size(); j++) {
-    				engine = getEngineById(out.get(j));
-    				int outMoves = engine.getMoves();
-    				if (inMoves < outMoves) {
-    					out.add(j, enginesSortByNum.get(i));
-    					engineAdded = true;
-    					break;
-    				}
-    			}
-    			if (!engineAdded) {
-    				out.add(enginesSortByNum.get(i));
-    			}
+    			out.add(enginesSortByMoves.get(i));
     		}
     	}
     	return out;
