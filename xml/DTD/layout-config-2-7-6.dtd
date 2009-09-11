@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-6.dtd,v 1.2 2009-09-06 22:46:34 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-7-6.dtd,v 1.3 2009-09-11 15:51:41 kevin-dickerson Exp $ -->
 
 <!-- This DTD is part of version 2.7.6 development.  Do not modify it       -->
 <!-- after version 2.7.6 is released.  For more information,                -->
@@ -117,6 +117,7 @@
     <!ATTLIST turnout locked		(true | false ) "false">
     <!ATTLIST turnout lockMode		CDATA #IMPLIED>
     <!ATTLIST turnout decoder		CDATA #IMPLIED>
+    <!ATTLIST turnout state		    (THROWN | CLOSED ) #IMPLIED>
 
 <!ELEMENT lights (light*)>
   <!ATTLIST lights class		CDATA #REQUIRED>
@@ -238,6 +239,7 @@
   	<!ATTLIST signalhead class	CDATA #REQUIRED>
     <!ATTLIST signalhead systemName	CDATA #REQUIRED>  
     <!ATTLIST signalhead userName	CDATA #IMPLIED>
+	<!ATTLIST signalhead aspects    CDATA #IMPLIED>
 
   <!ELEMENT dccsignalhead (comment?, turnout*) >     <!-- different actual types carry different contents -->
   	<!ATTLIST dccsignalhead class	CDATA #REQUIRED>
