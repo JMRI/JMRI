@@ -15,13 +15,13 @@ import jmri.util.JmriJFrame;
  * positionable labels
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
 
 	Positionable pl; 			// positional label tracked by this frame
-	MouseListener ml = new ml(); 	// mouse listerner so we know if the label moves
+	MouseListener ml = new ml(); 	// mouse listener so we know if the label moves
 	static final int INIT = -999;
 	int oldX = INIT;
 	int oldY = INIT;
@@ -156,7 +156,8 @@ public class CoordinateEdit extends JmriJFrame {
 			textX.setText("x= " + pl.getX());
 			textY.setText("y= " + pl.getY());
             textL.setText("level= " + l);
-			dispose();
+            // don't dispose on okay, allows users to use + and - functions
+			//dispose();
 		}
 		if (ae.getSource() == cancelButton) {
 			if (oldX != INIT)
