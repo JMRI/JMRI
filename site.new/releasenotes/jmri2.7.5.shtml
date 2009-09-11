@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.5.shtml,v 1.16 2009-09-07 21:01:24 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.5.shtml,v 1.17 2009-09-11 05:58:38 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,11 +29,11 @@
       Release Notes for JMRI 2.7.5 release
       </h2>
 
-	<p>Date: MMM NN, 2009</p>
+	<p>Date: September 7, 2009</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.7.5 of JMRI/DecoderPro is available for download.
 
-<br><b>This is a draft release note only; the download links do not yet work</b>
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b>  -->
 
 <h3>Notes:</h3>
 
@@ -49,7 +49,12 @@ It contains
 many new features, including:
 
 <ul>
-<li>
+<li>Better handling of local files for panels, icons, etc, to make it easier to
+    move your work from one computer to another.
+<li>Improved SoundTraxx decoder definitions, but see the warnings.
+<li>Many improvements to the usability of the Panel Editor, including the ability to
+    grab and move groups of icons, and better control over placement and rotation.
+<li>Great new <a href="http:/jmri.org/help/en/html/tools/Audio.shtml">Audio support</a>.
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -101,13 +106,13 @@ as the program will update them to the new format upon storing them.
 <p>Please use these links for downloading:
 
 <p>MacOS X:
-     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI%202.7.5/JMRI.2.7.5.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI%202.7.5/JMRI.2.7.5.dmg/download</a>
+     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.5.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.5.dmg/download</a>
 
 <p>Windows:
-     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI%202.7.5/JMRI.2.7.5.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI%202.7.5/JMRI.2.7.5.exe/download</a>
+     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.5.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.5.exe/download</a>
 
 <p>Linux:
-     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI%202.7.5/JMRI.2.7.5.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI%202.7.5/JMRI.2.7.5.tgz/download</a>
+     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.5.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.5.tgz/download</a>
 
 <h3>Changes since test version 2.7.4</h3>
 
