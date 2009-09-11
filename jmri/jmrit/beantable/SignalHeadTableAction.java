@@ -45,7 +45,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.39 $
+ * @version     $Revision: 1.40 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -193,6 +193,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
                                             signalheadBiPolar, signalheadWigwag};
     int[] signalheadTypeValues = new int[]{AcelaNode.DOUBLE, AcelaNode.TRIPLE,
                                            AcelaNode.BPOLAR, AcelaNode.WIGWAG};
+                                           
+    String[] ukSignalAspects = new String[]{"2","3","4"};
+    String[] ukSignalType = new String[]{"Home", "Distant"};
 
     JmriJFrame addFrame = null;
     JComboBox typeBox;
@@ -221,6 +224,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
     JComboBox s6Box = new JComboBox(turnoutStates);
     JComboBox s7Box = new JComboBox(turnoutStates);
     JComboBox stBox = new JComboBox(signalheadTypes);
+    JComboBox mstBox = new JComboBox(ukSignalType);
+    JComboBox msaBox = new JComboBox(ukSignalAspects);
 
     String acelaAspect = rb.getString("StringAcelaaspect");
     String se8c4Aspect = rb.getString("StringSE8c4aspect");
@@ -232,6 +237,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     String acela = rb.getString("StringAcelaaspect");
     String lsDec = rb.getString("StringLsDec");
     String dccSignalDecoder = rb.getString("StringDccSigDec");
+    String mergSignalDriver = "Merg Signal Driver";
 
     int turnoutStateFromBox(JComboBox box) {
         String mode = (String)box.getSelectedItem();
@@ -248,7 +254,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 		else if (state==iTurnoutStates[1]) box.setSelectedIndex(1);
 		else log.error("unexpected  turnout state value: "+state);
 	}		
-
+    
     int signalheadTypeFromBox(JComboBox box) {
         String mode = (String)box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, signalheadTypeValues, signalheadTypes);
@@ -266,6 +272,40 @@ public class SignalHeadTableAction extends AbstractTableAction {
 		else if (state==iSignalheadTypes[3]) box.setSelectedIndex(3);
 		else log.error("unexpected signalhead type value: "+state);
 	}		
+    
+    int ukSignalAspectsFromBox(JComboBox box){
+        //String mode = (String)box.getSelectedItem();
+        if(box.getSelectedIndex()==0) return 2;
+        else if(box.getSelectedIndex()==1) return 3;
+        else if(box.getSelectedIndex()==2) return 4;
+        else {
+            log.warn("unexpected aspect" + box.getSelectedItem());
+            throw new IllegalArgumentException();
+        }
+    }
+    
+    void setUkSignalAspectsFromBox(JComboBox box, int val){
+        if (val==2) box.setSelectedIndex(0);
+        else if (val==3) box.setSelectedIndex(1);
+        else if (val==4) box.setSelectedIndex(2);
+        else log.error("Unexpected Signal Aspect" + val);
+    }
+    
+    String ukSignalTypeFromBox(JComboBox box){
+        //String mode = (String)box.getSelectedItem();
+        if(box.getSelectedIndex()==0) return "Home";
+        else if(box.getSelectedIndex()==1) return "Distant";
+        else {
+            log.warn("unexpected aspect" + box.getSelectedItem());
+            throw new IllegalArgumentException();
+        }
+    }
+    
+    void setUkSignalType(JComboBox box, String val){
+        if (val.equals(ukSignalType[0])) box.setSelectedIndex(0);
+        else if (val.equals(ukSignalType[1])) box.setSelectedIndex(1);
+        else log.error("Unexpected Signal Type " + val);
+    }
 
     /**
      * Provide GUI for adding a new SignalHead.
@@ -283,7 +323,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             addFrame.getContentPane().add(typeBox = new JComboBox(new String[]{
                 tripleTurnout, doubleTurnout, virtualHead,
-                se8c4Aspect, lsDec, dccSignalDecoder, acelaAspect, quadOutput
+                se8c4Aspect, lsDec, dccSignalDecoder, acelaAspect, quadOutput, mergSignalDriver
             }));
             if (jmri.jmrix.grapevine.ActiveFlag.isActive()) typeBox.addItem(grapevine);
             typeBox.addActionListener(new ActionListener(){
@@ -303,12 +343,14 @@ public class SignalHeadTableAction extends AbstractTableAction {
             p.add(v1Label);
             p.add(to1);
             p.add(s1Box);
+            p.add(msaBox);
             addFrame.getContentPane().add(p);
 
             p = new JPanel(); p.setLayout(new FlowLayout());
             p.add(v2Label);
             p.add(to2);
             p.add(s2Box);
+            p.add(mstBox);
             addFrame.getContentPane().add(p);
 
             p = new JPanel(); p.setLayout(new FlowLayout());
@@ -386,6 +428,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
             s7Box.setVisible(false);
             vtLabel.setVisible(false);
             stBox.setVisible(false);
+            mstBox.setVisible(false);
+            msaBox.setVisible(false);
 
         } else if (grapevine.equals(typeBox.getSelectedItem())) {
             nameLabel.setText(rb.getString("LabelSystemName"));
@@ -413,6 +457,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
             s7Box.setVisible(false);
             vtLabel.setVisible(false);
             stBox.setVisible(false);
+            mstBox.setVisible(false);
+            msaBox.setVisible(false);
 
         } else if (acelaAspect.equals(typeBox.getSelectedItem())) {
             nameLabel.setText(rb.getString("LabelUserName"));
@@ -441,6 +487,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
             vtLabel.setText(rb.getString("LabelAspectType"));
             vtLabel.setVisible(true);
             stBox.setVisible(true);
+            mstBox.setVisible(false);
+            msaBox.setVisible(false);
 
         } else if (quadOutput.equals(typeBox.getSelectedItem())) {
             nameLabel.setText(rb.getString("LabelSystemName"));
@@ -471,7 +519,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
             s7Box.setVisible(false);
             vtLabel.setVisible(false);
             stBox.setVisible(false);
-
+            mstBox.setVisible(false);
+            msaBox.setVisible(false);
+            
         } else if (tripleTurnout.equals(typeBox.getSelectedItem())) {
             nameLabel.setText(rb.getString("LabelSystemName"));
             v1Label.setText(rb.getString("LabelGreenTurnoutNumber"));
@@ -500,7 +550,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
             s7Box.setVisible(false);
             vtLabel.setVisible(false);
             stBox.setVisible(false);
-
+            mstBox.setVisible(false);
+            msaBox.setVisible(false);
+            
         } else if (doubleTurnout.equals(typeBox.getSelectedItem())) {
             nameLabel.setText(rb.getString("LabelSystemName"));
             v1Label.setText(rb.getString("LabelGreenTurnoutNumber"));
@@ -528,7 +580,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
             s7Box.setVisible(false);
             vtLabel.setVisible(false);
             stBox.setVisible(false);
-
+            mstBox.setVisible(false);
+            msaBox.setVisible(false);
+            
         } else if (virtualHead.equals(typeBox.getSelectedItem())) {
             nameLabel.setText(rb.getString("LabelSystemName"));
             v1Label.setVisible(false);
@@ -554,7 +608,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
             s7Box.setVisible(false);
             vtLabel.setVisible(false);
             stBox.setVisible(false);
-
+            mstBox.setVisible(false);
+            msaBox.setVisible(false);
+            
         } else if (lsDec.equals(typeBox.getSelectedItem())) {
             nameLabel.setText(rb.getString("LabelSystemName"));
             v1Label.setText(rb.getString("LabelGreenTurnoutNumber"));
@@ -587,7 +643,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
             s7Box.setVisible(true);
             vtLabel.setVisible(false);
             stBox.setVisible(false);
-
+            mstBox.setVisible(false);
+            msaBox.setVisible(false);
+            
         } else if (dccSignalDecoder.equals(typeBox.getSelectedItem())) {
               nameLabel.setText(rb.getString("LabelSystemName"));
               v1Label.setVisible(false);
@@ -613,7 +671,48 @@ public class SignalHeadTableAction extends AbstractTableAction {
               s7Box.setVisible(false);
               vtLabel.setVisible(false);
               stBox.setVisible(false);
-
+              mstBox.setVisible(false);
+              msaBox.setVisible(false);
+            
+        } else if (mergSignalDriver.equals(typeBox.getSelectedItem())) {
+            nameLabel.setText(rb.getString("LabelSystemName"));
+            v1Label.setText("Aspects");
+            v1Label.setVisible(true);
+            to1.setVisible(false);
+            s1Box.setVisible(false);
+            v2Label.setText("Home");
+            v2Label.setVisible(true);
+            to2.setVisible(false);
+            s2Box.setVisible(false);
+            mstBox.setVisible(true);
+            msaBox.setVisible(true);
+            setUkSignalAspectsFromBox(msaBox, 2);
+            v3Label.setText("Input1");
+            v3Label.setVisible(true);
+            to3.setVisible(true);
+            s3Box.setVisible(false);
+            v4Label.setText("Input2");
+            v4Label.setVisible(false);
+            to4.setVisible(false);
+            s4Box.setVisible(false);
+            v5Label.setText("Input3");
+            v5Label.setVisible(false);
+            to5.setVisible(false);
+            s5Box.setVisible(false);
+            v6Label.setVisible(false);
+            to6.setVisible(false);
+            s6Box.setVisible(false);
+            v7Label.setVisible(false);
+            to7.setVisible(false);
+            s7Box.setVisible(false);
+            vtLabel.setVisible(false);
+            stBox.setVisible(false);
+            msaBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    ukAspectChange(false);
+                }
+            });
+        
         } else log.error("Unexpected type in typeChanged: "+typeBox.getSelectedItem());
 
         // make sure size OK
@@ -815,7 +914,44 @@ public class SignalHeadTableAction extends AbstractTableAction {
 				s = new jmri.implementation.DccSignalHead(name.getText());
 				InstanceManager.signalHeadManagerInstance().register(s);
 			}
-        } else log.error("Unexpected type: "+typeBox.getSelectedItem());
+        } else if (mergSignalDriver.equals(typeBox.getSelectedItem())){
+            // Add code here for adding Merg Signal Driver.
+            Turnout t3 = null;
+            Turnout t2 = null;
+            Turnout t1 = null;
+
+            switch(ukSignalAspectsFromBox(msaBox)){
+                case 4: t3 = InstanceManager.turnoutManagerInstance().provideTurnout(to5.getText());
+                        if (t3==null) {
+                            addTurnoutMessage(v5Label.getText(), to5.getText());
+                            log.warn("skipping creation of signal "+name.getText()+" due to error");
+                            return;
+                        }
+                case 3: t2 = InstanceManager.turnoutManagerInstance().provideTurnout(to4.getText());
+                        if (t2==null) {
+                            addTurnoutMessage(v4Label.getText(), eto4.getText());
+                            log.warn("skipping creation of signal "+name.getText()+" due to error");
+                            return;
+                        }
+                case 2: t1 = InstanceManager.turnoutManagerInstance().provideTurnout(to3.getText());
+                        if (t1==null) {
+                            addTurnoutMessage(v3Label.getText(), eto3.getText());
+                            log.warn("skipping creation of signal "+name.getText()+" due to error");
+                            return;
+                        }
+            }
+                        if (checkBeforeCreating(name.getText())) {
+            }
+            if (checkBeforeCreating(name.getText())) {
+                boolean home;
+                if(ukSignalTypeFromBox(mstBox).equals("Distant")) home=false;
+                else home=true;
+
+                s = new jmri.implementation.MergSD2SignalHead(name.getText(), ukSignalAspectsFromBox(msaBox), t1, t2, t3, false, home);
+                InstanceManager.signalHeadManagerInstance().register(s);
+
+            }
+        }else log.error("Unexpected type: "+typeBox.getSelectedItem());
     }
 	
     // variables for edit of signal heads
@@ -853,6 +989,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
     JComboBox es6Box = new JComboBox(turnoutStates);
     JComboBox es7Box = new JComboBox(turnoutStates);
     JComboBox estBox = new JComboBox(signalheadTypes);
+    JComboBox emstBox = new JComboBox(ukSignalType);
+    JComboBox emsaBox = new JComboBox(ukSignalAspects);
+    
 	
 	void editSignal(int row) {
 		String eSName = (String)m.getValueAt(row,BeanTableDataModel.SYSNAMECOL);
@@ -896,11 +1035,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
             p.add(eto1);
 			p.add(eNumLabel);
             p.add(es1Box);
+            p.add(emsaBox);
             editFrame.getContentPane().add(p);
             p = new JPanel(); p.setLayout(new FlowLayout());
             p.add(ev2Label);
             p.add(eto2);
             p.add(es2Box);
+            p.add(emstBox);
             editFrame.getContentPane().add(p);
             p = new JPanel(); p.setLayout(new FlowLayout());
             p.add(ev3Label);
@@ -985,6 +1126,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
 		evtLabel.setVisible(false);
 		etot.setVisible(false);
 		estBox.setVisible(false);		
+        emstBox.setVisible(false);
+        emsaBox.setVisible(false);
 		// determine class name of signal head and initialize this class of signal
 		className = curS.getClass().getName();
 		if (className.equals("jmri.implementation.QuadOutputSignalHead")) {
@@ -1137,6 +1280,46 @@ public class SignalHeadTableAction extends AbstractTableAction {
             eNameLabel.setText(rb.getString("LabelSystemName"));
 			eSysNameLabel.setText(curS.getSystemName());
         } 
+        else if (className.equals("jmri.implementation.MergSD2SignalHead")) {
+        //Edit signal stuff to go here!
+            signalType.setText(mergSignalDriver);
+            eNameLabel.setText(rb.getString("LabelSystemName"));
+			eSysNameLabel.setText(curS.getSystemName());
+            ev1Label.setText("Aspects");
+            ev1Label.setVisible(true);
+            setUkSignalAspectsFromBox(emsaBox, ((jmri.implementation.MergSD2SignalHead)curS).getAspects());
+            eto1.setVisible(false);
+            emsaBox.setVisible(true);
+            ev2Label.setText("Signal Type");
+            ev2Label.setVisible(true);
+            eto2.setVisible(false);
+            emstBox.setVisible(true);
+            if (((jmri.implementation.MergSD2SignalHead)curS).getHome())
+                setUkSignalType(emstBox, "Home");
+            else
+                setUkSignalType(emstBox, "Distant");
+            //setUKSignalTypeFromBox(emstBox, ((jmri.implementation.MergSD2SignalHead)curS).getAspects());
+            ev3Label.setText("Input1");
+            ev3Label.setVisible(true);
+            eto3.setVisible(true);
+            eto3.setText(((jmri.implementation.MergSD2SignalHead)curS).getInput1().getSystemName());
+            ev4Label.setText("Input2");
+            ev4Label.setVisible(true);
+            eto4.setVisible(true);
+            if(((jmri.implementation.MergSD2SignalHead)curS).getInput2()!=null)
+                eto4.setText(((jmri.implementation.MergSD2SignalHead)curS).getInput2().getSystemName());
+            ev5Label.setText("Input3");
+            ev5Label.setVisible(true);
+            eto5.setVisible(true);
+            if(((jmri.implementation.MergSD2SignalHead)curS).getInput3()!=null)
+                eto5.setText(((jmri.implementation.MergSD2SignalHead)curS).getInput3().getSystemName());
+            emsaBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    ukAspectChange(true);
+                }
+            });
+            ukAspectChange(true);
+        }
         else log.error("Cannot edit SignalHead of unrecognized type: "+className);			
 		// finish up
 		editFrame.pack();
@@ -1334,7 +1517,34 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     tNode.setOutputSignalHeadTypeString(headnumber, estBox.getSelectedItem().toString());
 //                    setSignalheadTypeInBox(estBox, tNode.getOutputSignalHeadType(headnumber), signalheadTypeValues);
 //                    ((jmri.AcelaSignalHead)curS).setDarkState(signalheadTypeFromBox(estBox));    
-		} 
+		}
+        else if (className.equals("jmri.implementation.MergSD2SignalHead")){
+            String nam = eto1.getText();
+            switch(ukSignalAspectsFromBox(emsaBox)){
+                case 4: Turnout t3 = InstanceManager.turnoutManagerInstance().provideTurnout(eto5.getText());
+                        if (t3==null) {
+                            noTurnoutMessage(ev5Label.getText(), eto5.getText());
+                            return;
+                            }
+                        else ((jmri.implementation.MergSD2SignalHead)curS).setInput3(t3);
+                case 3: Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout(eto4.getText());
+                        if (t2==null) {
+                            noTurnoutMessage(ev4Label.getText(), eto4.getText());
+                            return;
+                            }
+                        else ((jmri.implementation.MergSD2SignalHead)curS).setInput2(t2);
+                case 2: Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(eto3.getText());
+                        if (t1==null) {
+                            noTurnoutMessage(ev3Label.getText(), eto3.getText());
+                            return;
+                            }
+                        else ((jmri.implementation.MergSD2SignalHead)curS).setInput1(t1);
+                        ((jmri.implementation.MergSD2SignalHead)curS).setAspects(ukSignalAspectsFromBox(emsaBox));
+                        if(ukSignalTypeFromBox(emstBox)=="Distant") ((jmri.implementation.MergSD2SignalHead)curS).setHome(false);
+                        else ((jmri.implementation.MergSD2SignalHead)curS).setHome(true);
+            }
+            //Need to add the code here for update!
+        }
 		else {
 		    log.error("Internal error - cannot update signal of type "+className);
 		}
@@ -1349,6 +1559,64 @@ public class SignalHeadTableAction extends AbstractTableAction {
 		JOptionPane.showMessageDialog(editFrame, msg,
 				AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
 	}
+    
+    void ukAspectChange(boolean edit){
+        if(edit){
+            switch (ukSignalAspectsFromBox(emsaBox)){
+                case 2 : ev4Label.setVisible(false);
+                         eto4.setVisible(false);
+                         ev5Label.setVisible(false);
+                         eto5.setVisible(false);
+                         ev2Label.setVisible(true);
+                         emstBox.setVisible(true);
+                         break;
+                case 3 : ev4Label.setVisible(true);
+                         eto4.setVisible(true);
+                         ev5Label.setVisible(false);
+                         eto5.setVisible(false);
+                         ev2Label.setVisible(false);
+                         emstBox.setVisible(false);
+                         setUkSignalType(emstBox, "Home");
+                         break;
+                case 4 : ev4Label.setVisible(true);
+                         eto4.setVisible(true);
+                         ev5Label.setVisible(true);
+                         eto5.setVisible(true);
+                         ev2Label.setVisible(false);
+                         emstBox.setVisible(false);
+                         setUkSignalType(emstBox, "Home");
+            }
+            editFrame.pack();
+        
+        } else {
+            switch (ukSignalAspectsFromBox(msaBox)){
+                case 2 : v4Label.setVisible(false);
+                         to4.setVisible(false);
+                         v5Label.setVisible(false);
+                         to5.setVisible(false);
+                         v2Label.setVisible(true);
+                         mstBox.setVisible(true);
+                         break;
+                case 3 : v4Label.setVisible(true);
+                         to4.setVisible(true);
+                         v5Label.setVisible(false);
+                         to5.setVisible(false);
+                         v2Label.setVisible(false);
+                         mstBox.setVisible(false);
+                         setUkSignalType(mstBox, "Home");
+                         break;
+                case 4 : v4Label.setVisible(true);
+                         to4.setVisible(true);
+                         v5Label.setVisible(true);
+                         to5.setVisible(true);
+                         v2Label.setVisible(false);
+                         mstBox.setVisible(false);
+                         setUkSignalType(mstBox, "Home");
+            }
+            addFrame.pack();
+        }
+    
+    }
 
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadTableAction.class.getName());
