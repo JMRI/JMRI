@@ -23,7 +23,7 @@ import jmri.jmrix.sprog.sprogslotmon.*;
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
  *              Andrew Crosland         (C) 2006 ported to SPROG
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SprogSlotManager extends SprogCommandStation implements SprogListener, CommandStation, Runnable {
 
@@ -82,6 +82,14 @@ public class SprogSlotManager extends SprogCommandStation implements SprogListen
      */
     public SprogSlot slot(int i) {return _Queue.slot(i);}
 
+    public void forwardCommandChangeToLayout(int address, boolean closed){
+        byte[] payload = NmraPacket.accDecoderPkt(address, closed);
+        address=address+10000;
+        int s = _Queue.add(address, payload,SprogConstants.S_REPEATS);
+        if (s>=0) { notify(slot(s)); }
+    
+    }
+    
     public void function0Through4Packet(int address,
                                         boolean f0, boolean f1, boolean f2,
                                         boolean f3, boolean f4) {
@@ -237,10 +245,10 @@ public class SprogSlotManager extends SprogCommandStation implements SprogListen
             if (p != null) {
               sendPacket(p);
               synchronized(this) {
-                  replyReceived = false;
-                  awaitingReply = true;
+                  replyReceived = false; //should be false!
+                  awaitingReply = true;  //should be true!
               }
-              state = 1;
+              state = 1; //Should be 1
             }
             break;
           }
