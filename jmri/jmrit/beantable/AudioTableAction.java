@@ -17,9 +17,6 @@ import javax.swing.JTextField;
 import jmri.Audio;
 import jmri.AudioManager;
 import jmri.NamedBean;
-import jmri.jmrit.audio.AudioBuffer;
-import jmri.jmrit.audio.AudioListener;
-import jmri.jmrit.audio.AudioSource;
 
 /**
  * Swing action to create and register an
@@ -41,7 +38,7 @@ import jmri.jmrit.audio.AudioSource;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
  * @author      Matthew Harris  copyright (c) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class AudioTableAction extends AbstractTableAction {
@@ -162,7 +159,7 @@ public class AudioTableAction extends AbstractTableAction {
                 if (listenerFrame==null) {
                     listenerFrame = new AudioListenerFrame(rb.getString("TitleAddAudioListener"), listener);
                 }
-                listenerFrame.populateFrame((AudioListener) a);
+                listenerFrame.populateFrame(a);
                 t = new Thread() {
                     @Override
                     public void run() {
@@ -176,7 +173,7 @@ public class AudioTableAction extends AbstractTableAction {
                 if (bufferFrame==null) {
                     bufferFrame = new AudioBufferFrame(rb.getString("TitleAddAudioBuffer"), buffers);
                 }
-                bufferFrame.populateFrame((AudioBuffer) a);
+                bufferFrame.populateFrame(a);
                 t = new Thread() {
                     @Override
                     public void run() {
@@ -191,7 +188,7 @@ public class AudioTableAction extends AbstractTableAction {
                     sourceFrame = new AudioSourceFrame(rb.getString("TitleAddAudioBuffer"), sources);
                 }
                 sourceFrame.updateBufferList();
-                sourceFrame.populateFrame((AudioSource) a);
+                sourceFrame.populateFrame(a);
                 t = new Thread() {
                     @Override
                     public void run() {
