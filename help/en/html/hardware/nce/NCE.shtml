@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.18 2008-10-19 18:21:29 jacobsen Exp $ -->
+<!-- $Id: NCE.shtml,v 1.19 2009-09-12 17:01:54 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI Hardware Guide: NCE</TITLE>
@@ -374,6 +374,17 @@ command station, it will request the EPROM revision to see if the
 connection and command station is still operational. So if you see
 timeouts and "AA" commands you have either poor or failed connection, or
 a powered down or failed command station.</P>
+
+
+<h3>Loop Back Serial Cable</h3>
+
+You can confirm that you've selected the correct port and that your
+cable is okay by by connecting the male connector pins 2 and 3 with a
+small jumper wire. Doing this will loop the message "AA" back to JMRI
+via the receive line. The console messages should change and look like
+the ones in the following image:
+<P><IMG SRC="../images/jmriConsoleLoopback.jpg" ALT="JMRI Console Loopback" ></P>
+
 <P>If you are still having problems, you should try the <A
 	HREF="http://groups.yahoo.com/group/jmriusers/"> JMRI users </A> group.
 There you should be able to contact other JMRI users that can help you
