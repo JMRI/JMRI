@@ -1,6 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
-import java.awt.geom.AffineTransform;
+//import java.awt.geom.AffineTransform;
 import java.util.List;
 
 import jmri.configurexml.XmlAdapter;
@@ -18,7 +18,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
