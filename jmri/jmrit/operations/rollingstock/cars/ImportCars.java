@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.Control;
  * Number Road Type Length Weight Color Owner Year Location
  * Note that all fields must be single words except for Location.
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class ImportCars extends Thread {
 	
@@ -162,6 +162,17 @@ public class ImportCars extends Thread {
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
+				if (!CarTypes.instance().containsName(carType)){
+					int results = JOptionPane.showConfirmDialog(null,
+							"Car ("+carRoad+" "+carNumber+") \n"+MessageFormat.format(rb.getString("typeNameNotExist"),new Object[]{carType}),
+							rb.getString("carAddType"),
+							JOptionPane.YES_NO_CANCEL_OPTION);
+					if (results == JOptionPane.YES_OPTION)
+						CarTypes.instance().addName(carType);
+					else if (results == JOptionPane.CANCEL_OPTION){
+						break;	
+					}
+				}
 				if (carLength.length() > Control.MAX_LEN_STRING_LENGTH_NAME){
 					JOptionPane.showMessageDialog(null, 
 							"Car ("+carRoad+" "+carNumber+") length ("+carLength+") too long!",
@@ -260,7 +271,7 @@ public class ImportCars extends Thread {
 						sl = l.getTrackByName(carTrack, null);
 						if (sl == null){
 							JOptionPane.showMessageDialog(null, "Car ("+carRoad+" "+carNumber+") track location ("+carLocation+", "+carTrack+") does not exist",
-									rb.getString("carLocation"),
+									rb.getString("carTrack"),
 									JOptionPane.ERROR_MESSAGE);
 							break;
 						}
