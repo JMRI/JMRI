@@ -24,6 +24,7 @@ public class ImportRosterEngines extends Thread {
 	EngineManager manager = EngineManager.instance();
 	private static String defaultEngineLength = rb.getString("engineDefaultLength");
 	private static String defaultEngineType = rb.getString("engineDefaultType");
+	private static String defaultEngineHp = rb.getString("engineDefaultHp");
 	
 	javax.swing.JLabel textEngine = new javax.swing.JLabel();
 	javax.swing.JLabel textId = new javax.swing.JLabel();
@@ -71,6 +72,9 @@ public class ImportRosterEngines extends Thread {
 					// does this model already have a type?
 					if (engine.getType().equals(""))
 						engine.setType(defaultEngineType);
+					// does this model already have a hp?
+					if (engine.getHp().equals(""))
+						engine.setHp(defaultEngineHp);
 					String owner = re.getOwner();
 					if (owner.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
 						owner = owner.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);

@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import javax.swing.JFileChooser;
@@ -25,12 +26,14 @@ import jmri.jmrit.operations.setup.Control;
  * Number Road Type Length Owner Year Location
  * Note that all fields must be single words except for Location.
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class ImportEngines extends Thread {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
-	
+	private static String defaultEngineType = rb.getString("engineDefaultType");
+	private static String defaultEngineHp = rb.getString("engineDefaultHp");
+
 	EngineManager manager = EngineManager.instance();
 	
 	javax.swing.JLabel textLine = new javax.swing.JLabel();
@@ -156,6 +159,16 @@ public class ImportEngines extends Thread {
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
+				if (!EngineModels.instance().containsName(engineModel)){
+					int results = JOptionPane.showConfirmDialog(null,
+							"Engine ("+engineRoad+" "+engineNumber+") \n"+MessageFormat.format(rb.getString("modelNameNotExist"),new Object[]{engineModel}),
+							rb.getString("engineAddModel"),
+							JOptionPane.YES_NO_CANCEL_OPTION);
+					if (results == JOptionPane.YES_OPTION)
+						EngineModels.instance().addName(engineModel);
+					else if (results == JOptionPane.CANCEL_OPTION)
+						break;		
+				}
 				if (engineLength.length() > Control.MAX_LEN_STRING_LENGTH_NAME){
 					JOptionPane.showMessageDialog(null, 
 							"Engine ("+engineRoad+" "+engineNumber+") length ("+engineLength+") too long!",
@@ -239,7 +252,7 @@ public class ImportEngines extends Thread {
 						sl = l.getTrackByName(engineTrack, null);
 						if (sl == null){
 							JOptionPane.showMessageDialog(null, "Engine ("+engineRoad+" "+engineNumber+") track location ("+engineLocation+", "+engineTrack+") does not exist",
-									rb.getString("engineLocation"),
+									rb.getString("engineTrack"),
 									JOptionPane.ERROR_MESSAGE);
 							break;
 						}
@@ -248,6 +261,12 @@ public class ImportEngines extends Thread {
 					Engine engine = manager.newEngine(engineRoad, engineNumber);
 					engine.setModel(engineModel);
 					engine.setLength(engineLength);
+					// does this model already have a type?
+					if (engine.getType().equals(""))
+						engine.setType(defaultEngineType);
+					// does this model already have a hp?
+					if (engine.getHp().equals(""))
+						engine.setHp(defaultEngineHp);
 					engine.setOwner(engineOwner);
 					engine.setBuilt(engineBuilt);
 					enginesAdded++;
