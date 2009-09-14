@@ -14,7 +14,7 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -378,25 +378,24 @@ public class DefaultLogix extends AbstractNamedBean
                     if (newSV) {
                         switch (varListenerType) {
                             case LISTENER_TYPE_SENSOR:
-                                listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_SENSOR, 
+                                listener = new JmriSimplePropertyListener("KnownState", LISTENER_TYPE_SENSOR, 
                                                                     varName, varType, conditional);
                                 break;
                             case LISTENER_TYPE_TURNOUT:
-                                listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_TURNOUT, 
+                                listener = new JmriSimplePropertyListener("KnownState", LISTENER_TYPE_TURNOUT, 
                                                                     varName, varType, conditional);
                                 break;
                             case LISTENER_TYPE_CONDITIONAL:
-                                listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_CONDITIONAL, 
+                                listener = new JmriSimplePropertyListener("KnownState", LISTENER_TYPE_CONDITIONAL, 
                                                                     varName, varType, conditional);
                                 break;
                             case LISTENER_TYPE_LIGHT:
-                                listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_LIGHT,
+                                listener = new JmriSimplePropertyListener("KnownState", LISTENER_TYPE_LIGHT,
                                                                     varName, varType, conditional);
                                 break;
                             case LISTENER_TYPE_MEMORY:
-                                listener = new JmriMemoryPropertyListener("value", LISTENER_TYPE_MEMORY, 
-                                                                          varName, varType,
-                                                                    conditional, variable.getDataString());
+                                listener = new JmriSimplePropertyListener("value", LISTENER_TYPE_MEMORY, 
+                                                                          varName, varType, conditional);
                                 break;
                             case LISTENER_TYPE_FASTCLOCK:
                                 listener = new JmriClockPropertyListener("minutes", LISTENER_TYPE_FASTCLOCK, 
@@ -406,10 +405,10 @@ public class DefaultLogix extends AbstractNamedBean
                             case LISTENER_TYPE_SIGNAL:
                                 if (signalAspect <0) {
                                     if (varType == Conditional.TYPE_SIGNAL_HEAD_LIT) {
-                                        listener = new JmriTwoStatePropertyListener("Lit", LISTENER_TYPE_SIGNAL,
+                                        listener = new JmriSimplePropertyListener("Lit", LISTENER_TYPE_SIGNAL,
                                                                             varName, varType, conditional);
                                     } else { // varType == Conditional.TYPE_SIGNAL_HEAD_HELD
-                                        listener = new JmriTwoStatePropertyListener("Held", LISTENER_TYPE_SIGNAL,
+                                        listener = new JmriSimplePropertyListener("Held", LISTENER_TYPE_SIGNAL,
                                                                             varName, varType, conditional);
                                     }
                                 } else {
