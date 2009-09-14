@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-6.dtd,v 1.3 2009-09-11 15:51:41 kevin-dickerson Exp $ -->
+<!-- $Id: layout-config-2-7-6.dtd,v 1.4 2009-09-14 15:40:20 kevin-dickerson Exp $ -->
 
 <!-- This DTD is part of version 2.7.6 development.  Do not modify it       -->
 <!-- after version 2.7.6 is released.  For more information,                -->
@@ -31,13 +31,30 @@
   <!ATTLIST application class CDATA #REQUIRED>
 
 <!--  Connection section identifies serial port info -->
-<!ELEMENT connection (node*)>
+<!ELEMENT connection (node*, commandStationPreferences*)>
   <!ATTLIST connection class CDATA #REQUIRED>
   <!ATTLIST connection port CDATA #IMPLIED>
   <!ATTLIST connection speed CDATA #IMPLIED>  <!-- May not be provided if fixed by protocol -->
   <!ATTLIST connection option1 CDATA #IMPLIED> <!-- Meaning is protocol specific -->
   <!ATTLIST connection option2 CDATA #IMPLIED> <!-- Meaning is protocol specific -->
 
+    <!ELEMENT commandStationPreferences EMPTY>
+      <!ATTLIST commandStationPreferences addTurnoutToCS (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences addTurnoutToJMRI (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences removeTurnoutFromCS (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences removeTurnoutFromJMRI (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences addSensorToCS (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences addSensorToJMRI (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences removeSensorFromCS (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences removeSensorFromJMRI (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences addLocoToCS (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences addLocoToJMRI (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences removeLocoFromJMRI (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences removeAdhocLocoFromCS (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences defaultCSProtocol CDATA #IMPLIED>
+      <!ATTLIST commandStationPreferences defaultCSLocoDescription CDATA #IMPLIED>
+      <!ATTLIST commandStationPreferences locoMaster CDATA #IMPLIED>
+      
 <!ELEMENT node (parameter*)>
   <!ATTLIST node name CDATA #REQUIRED>
 
@@ -239,7 +256,7 @@
   	<!ATTLIST signalhead class	CDATA #REQUIRED>
     <!ATTLIST signalhead systemName	CDATA #REQUIRED>  
     <!ATTLIST signalhead userName	CDATA #IMPLIED>
-	<!ATTLIST signalhead aspects    CDATA #IMPLIED>
+    <!ATTLIST signalhead home    (yes|no) #IMPLIED>
 
   <!ELEMENT dccsignalhead (comment?, turnout*) >     <!-- different actual types carry different contents -->
   	<!ATTLIST dccsignalhead class	CDATA #REQUIRED>
