@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class PrintRosterAction  extends AbstractAction {
 
@@ -61,7 +61,14 @@ public class PrintRosterAction  extends AbstractAction {
         int i=-1;
         log.debug("Roster list size: "+l.size());
         for (i = 0; i<l.size(); i++) {
-            l.get(i).printEntry(writer);
+            if(r.getRosterGroup()!=null){
+                if(l.get(i).getAttribute(r.getRosterGroupWP())!=null){
+                    if(l.get(i).getAttribute(r.getRosterGroupWP()).equals("yes"))
+                        l.get(i).printEntry(writer);
+                }
+            }
+            else
+                l.get(i).printEntry(writer);
         }
 
         // and force completion of the printing

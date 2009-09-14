@@ -46,13 +46,15 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.43 $
+ * @version	$Revision: 1.44 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
 
     /** record the single instance of Roster **/
     protected static Roster _instance = null;
+    
+
 
     public synchronized static void resetInstance() { 
         _instance = null; 
@@ -68,6 +70,7 @@ public class Roster extends XmlFile {
             // create and load
             _instance = new Roster();
             try {
+                //_instance._rosterGroupList.add("Global");
                 _instance.readFile(defaultRosterFilename());
             } catch (Exception e) {
                 log.error("Exception during roster reading: "+e);
@@ -91,6 +94,8 @@ public class Roster extends XmlFile {
             i--;
         }
         _list.add(i+1, e);
+        if(_rostergroup!=null)
+            e.putAttribute(getRosterGroupWP(), "yes");
         setDirty(true);
         firePropertyChange("add", null, e);
     }
@@ -102,7 +107,12 @@ public class Roster extends XmlFile {
      */
     public void removeEntry(RosterEntry e) {
         if (log.isDebugEnabled()) log.debug("Remove entry "+e);
-        _list.remove(_list.indexOf(e));
+        if(_rostergroup!=null){
+            e.deleteAttribute(getRosterGroupWP());
+            e.updateFile();
+        }
+        else
+            _list.remove(_list.indexOf(e));
         setDirty(true);
         firePropertyChange("remove", null, e);
     }
@@ -113,7 +123,9 @@ public class Roster extends XmlFile {
     public int numEntries() { return _list.size(); }
 
     /**
-     * Return a JComboBox containing the entire roster.
+     * Return a JComboBox containing the entire roster, if a roster group
+     * has been selected, it will only return the entries relating to that 
+     * group.
      * <P>
      * The JComboBox is based on a common model object, so it updates
      * when the roster changes.
@@ -122,10 +134,24 @@ public class Roster extends XmlFile {
     public JComboBox fullRosterComboBox() {
         return matchingComboBox(null, null, null, null, null, null, null);
     }
+    
+    /**
+     * Return a JComboBox containing the entire roster, regardless of what
+     * roster group has been selected.
+     * <P>
+     * The JComboBox is based on a common model object, so it updates
+     * when the roster changes.
+     *
+     */
+    
+    public JComboBox fullRosterComboBoxGlobal() {
+        return matchingComboBoxGlobal(null, null, null, null, null, null, null);
+    }
 
     /**
-     * Get a JComboBox representing the choices that match
-     * some information.
+     * Get a JComboBox representing the choices that match some information.
+     * If a roster group has been selected then the results will be restricted
+     * to those in the roster group.
      * <P>
      * The JComboBox is based on a common model object, so it updates
      * when the roster changes.
@@ -136,12 +162,52 @@ public class Roster extends XmlFile {
         JComboBox b = new JComboBox();
         for (int i = 0; i < l.size(); i++) {
             RosterEntry r = _list.get(i);
+            if(_rostergroup!=null){
+                if(r.getAttribute(getRosterGroupWP())!=null){
+                    if(r.getAttribute(getRosterGroupWP()).equals("yes"))
+                        b.addItem(r.titleString());
+                }
+            }
+            else
+                b.addItem(r.titleString());
+        }
+        return b;
+    }
+    /**
+     * Get a JComboBox representing the choices that match some information
+     * regardless of which roster group has been selected.
+     * <P>
+     * The JComboBox is based on a common model object, so it updates
+     * when the roster changes.
+     */
+    public JComboBox matchingComboBoxGlobal(String roadName, String roadNumber, String dccAddress,
+                                      String mfg, String decoderMfgID, String decoderVersionID, String id ) {
+        List<RosterEntry> l = matchingList(roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id );
+        JComboBox b = new JComboBox();
+        for (int i = 0; i < l.size(); i++) {
+            RosterEntry r = _list.get(i);
             b.addItem(r.titleString());
         }
         return b;
     }
-
+    
     public void updateComboBox(JComboBox box) {
+        List<RosterEntry> l = matchingList(null, null, null, null, null, null, null );
+        box.removeAllItems();
+        for (int i = 0; i < l.size(); i++) {
+            RosterEntry r = _list.get(i);
+            if(_rostergroup!=null){
+                if(r.getAttribute(getRosterGroupWP())!=null){
+                    if(r.getAttribute(getRosterGroupWP()).equals("yes"))
+                        box.addItem(r.titleString());
+                }
+            }
+            else
+                box.addItem(r.titleString());
+        }
+    }
+    
+    public void updateComboBoxGlobal(JComboBox box) {
         List<RosterEntry> l = matchingList(null, null, null, null, null, null, null );
         box.removeAllItems();
         for (int i = 0; i < l.size(); i++) {
@@ -336,6 +402,18 @@ public class Roster extends XmlFile {
         for (int i=0; i<numEntries(); i++) {
             values.addContent(_list.get(i).store());
         }
+        
+        if(_rosterGroupList.size()>=2){
+            Element rosterGroup = new Element("rosterGroup");
+            for (int i=0; i<_rosterGroupList.size(); i++){
+                Element group = new Element("group");
+                if(!_rosterGroupList.get(i).toString().equals("Global")){
+                    group.addContent(_rosterGroupList.get(i).toString());
+                    rosterGroup.addContent(group);
+                }
+            }
+            root.addContent(rosterGroup);
+        }
         writeXML(file, doc);
 
         //Now that the roster has been rewritten in file form we need to
@@ -468,11 +546,18 @@ public class Roster extends XmlFile {
 
                 r.setDecoderComment(xmlDecoderComment);
             }
-
-
         }
+        
         else {
             log.error("Unrecognized roster file contents in file: "+name);
+        }
+        if (root.getChild("rosterGroup") != null) {
+            List<Element> g = root.getChild("rosterGroup").getChildren("group");
+//            if (g.size()>=1){
+                for (int i=0; i<g.size(); i++) {
+                    addRosterGroupList(g.get(i).getText().toString());
+                }
+//            }
         }
     }
 
@@ -554,7 +639,7 @@ public class Roster extends XmlFile {
     public static String getFileLocation() { return fileLocation; }
     private static String fileLocation  = XmlFile.prefsDir();
 
-    public static void setRosterFileName(String name) { rosterFileName = name; }
+    public static void setRosterGroupName(String name) { rosterFileName = name; }
     private static String rosterFileName = "roster.xml";
 
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
@@ -589,6 +674,71 @@ public class Roster extends XmlFile {
 
         firePropertyChange("change", null, r);
     }
+    
+        
+    protected static String _rostergroup = null;
+    
+    public static void setRosterGroup(String group){
+        if (group==null) _rostergroup=null;
+        else if (group.equals("Global"))
+            _rostergroup=null;
+        else
+            _rostergroup = group;
+    }
+    
+    public static String getRosterGroup(){
+        return _rostergroup;
+    }
+    
+    public static String getRosterGroupWP(){
+        String group = _rosterGroupPrefix+_rostergroup;
+        return group;
+    }
+
+    
+    protected ArrayList<String> _rosterGroupList = new ArrayList<String>();
+    
+    protected static String _rosterGroupPrefix = "RosterGroup:";
+    
+    public String getRosterGroupPrefix(){ return _rosterGroupPrefix; }
+    
+    public void addRosterGroupList(String str){
+        for(int i=0; i<_rosterGroupList.size(); i++){
+            if (_rosterGroupList.get(i).toString().equals(str))
+                return;
+        }
+        _rosterGroupList.add(str);
+        writeRosterFile();
+    }
+    
+    public void delRosterGroupList(String str) {
+        _rosterGroupList.remove(str);
+        str=_rosterGroupPrefix+str;
+        List<RosterEntry> groupentries = getEntriesWithAttributeKey(str);
+        for(int i=0; i<groupentries.size();i++){
+            groupentries.get(i).deleteAttribute(str);
+        }
+    }
+    
+    public void getRosterGroupList(int i) {
+        _rosterGroupList.get(i);
+    }
+    
+    public JComboBox rosterGroupBox() {
+        JComboBox b = new JComboBox();
+        for (int i = 0; i < _rosterGroupList.size(); i++) {
+            b.addItem(_rosterGroupList.get(i));
+        }
+        return b;
+    }
+    
+    public void updateGroupBox(JComboBox box){
+        box.removeAllItems();
+        for (int i = 0; i < _rosterGroupList.size(); i++) {
+            box.addItem(_rosterGroupList.get(i));
+        }
+    }
+    
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Roster.class.getName());
 

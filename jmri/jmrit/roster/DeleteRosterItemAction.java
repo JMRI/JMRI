@@ -35,7 +35,7 @@ import javax.swing.JOptionPane;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  * @see         jmri.jmrit.XmlFile
  */
 public class DeleteRosterItemAction extends AbstractAction {
@@ -77,27 +77,36 @@ public class DeleteRosterItemAction extends AbstractAction {
         log.debug("resolves to \""+filename+"\", \""+fullFilename+"\"");
 
         // prompt for one last chance
-        if (!userOK(entry, filename, fullFilename)) return;
-
-        // delete it from roster
-        roster.removeEntry(roster.entryFromTitle(entry));
+        if(roster.getRosterGroup()==null){
+            if (!userOK(entry, filename, fullFilename)) return;
+            // delete it from roster
+            roster.removeEntry(roster.entryFromTitle(entry));
+        }
+        else {
+            RosterEntry r = roster.entryFromTitle(entry);
+            String group = roster.getRosterGroupPrefix()+roster.getRosterGroup();
+            r.deleteAttribute(group);
+            r.updateFile();
+        }
         roster.writeRosterFile();
 
         // backup the file & delete it
-        try {
-            // ensure preferences will be found
-            XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
+        if(roster.getRosterGroup()==null){
+            try {
+                // ensure preferences will be found
+                XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
 
-            // do backup
-            LocoFile df = new LocoFile();   // need a dummy object to do this operation in next line
-            df.makeBackupFile(LocoFile.getFileLocation()+filename);
+                // do backup
+                LocoFile df = new LocoFile();   // need a dummy object to do this operation in next line
+                df.makeBackupFile(LocoFile.getFileLocation()+filename);
 
-            // locate the file and delete
-            File f = new File(fullFilename);
-            f.delete();
+                // locate the file and delete
+                File f = new File(fullFilename);
+                f.delete();
 
-        } catch (Exception ex) {
-            log.error("error during locomotive file output: "+ex);
+            } catch (Exception ex) {
+                log.error("error during locomotive file output: "+ex);
+            }
         }
 
     }
