@@ -7,7 +7,7 @@ package jmri.jmrix.sprog;
  *
  * Description:		Constants to represent values seen in SPROG traffic
  * @author		Andrew Crosland   Copyright (C) 2006 from LnConstants.java
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public final class SprogConstants {
 
@@ -19,7 +19,7 @@ public final class SprogConstants {
   public final static int MAX_SLOTS = 16;
 
   /* How many times to repeat an accessory or function packet in the S queue */
-  public final static int S_REPEATS = 3;
+  public final static int S_REPEATS = 1;
 
   /* How many times to repeat an ops mode programming packet */
   public final static int OPS_REPEATS = 3;
