@@ -15,7 +15,7 @@ import javax.swing.JMenu;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2008
  * @author  Dennis Miller  Copyright (C) 2005
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -74,6 +74,23 @@ public class RosterMenu extends JMenu {
 
         AbstractAction deleteAction = new DeleteRosterItemAction(rb.getString("MenuItemDelete"), pWho);
         deleteAction.setEnabled(false);
+        
+        AbstractAction deleteGroupAction = new DeleteRosterGroupAction(rb.getString("MenuGroupDelete"), pWho);
+        deleteGroupAction.setEnabled(false);
+        
+        AbstractAction createGroupAction = new CreateRosterGroupAction(rb.getString("MenuGroupCreate"), pWho);
+        createGroupAction.setEnabled(false);
+        
+        AbstractAction selectGroupAction = new SelectRosterGroupAction(rb.getString("MenuGroupActive"), pWho);
+        selectGroupAction.setEnabled(false);
+        
+        AbstractAction rosterEntryToGroupAction = new RosterEntryToGroupAction(rb.getString("MenuGroupAssociate"), pWho);
+        rosterEntryToGroupAction.setEnabled(false);
+        
+        AbstractAction removeRosterEntryToGroupAction = new RemoveRosterEntryToGroupAction(rb.getString("MenuGroupDisassociate"), pWho);
+        removeRosterEntryToGroupAction.setEnabled(false);
+        
+
 
         // Need a frame here, but are not passed one
         Frame newFrame = new Frame();
@@ -81,7 +98,14 @@ public class RosterMenu extends JMenu {
         printAction.setEnabled(false);
         AbstractAction previewAction = new PrintRosterAction(rb.getString("MenuItemPreview"), newFrame, true);
         printAction.setEnabled(false);
-
+        
+        JMenu groupMenu = new JMenu("Roster Groups");
+        groupMenu.add(createGroupAction);
+        groupMenu.add(selectGroupAction);
+        groupMenu.add(deleteGroupAction);
+        groupMenu.add(rosterEntryToGroupAction);
+        groupMenu.add(removeRosterEntryToGroupAction);
+        
         add(createAction);
         add(editAction);
         add(copyAction);
@@ -90,6 +114,8 @@ public class RosterMenu extends JMenu {
         add(deleteAction);
         add(printAction);
         add(previewAction);
+        addSeparator();
+        add(groupMenu);
 
         // activate the right items
         switch (pMenuType) {
@@ -100,6 +126,11 @@ public class RosterMenu extends JMenu {
                 importAction.setEnabled(true);
                 exportAction.setEnabled(true);
                 copyAction.setEnabled(true);
+                deleteGroupAction.setEnabled(true);
+                createGroupAction.setEnabled(true);
+                selectGroupAction.setEnabled(true);
+                rosterEntryToGroupAction.setEnabled(true);
+                removeRosterEntryToGroupAction.setEnabled(true);
                 printAction.setEnabled(true);
                 previewAction.setEnabled(true);
                 break;

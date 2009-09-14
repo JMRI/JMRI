@@ -46,7 +46,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.44 $
+ * @version	$Revision: 1.45 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -403,7 +403,7 @@ public class Roster extends XmlFile {
             values.addContent(_list.get(i).store());
         }
         
-        if(_rosterGroupList.size()>=2){
+        if(_rosterGroupList.size()>=1){
             Element rosterGroup = new Element("rosterGroup");
             for (int i=0; i<_rosterGroupList.size(); i++){
                 Element group = new Element("group");

@@ -50,7 +50,7 @@ import java.util.List;
  * for further information.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.29 $
+ * @version			$Revision: 1.30 $
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 
@@ -150,7 +150,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         JPanel pane2a = new JPanel();
         pane2a.setLayout(new BoxLayout(pane2a, BoxLayout.X_AXIS));
         pane2a.add(new JLabel("Use locomotive settings for: "));
-        locoBox = Roster.instance().fullRosterComboBox();
+        locoBox = Roster.instance().fullRosterComboBoxGlobal();
         Roster.instance().addPropertyChangeListener(this);
         locoBox.insertItemAt("<none - new loco>",0);
         locoBox.setSelectedIndex(0);
@@ -288,7 +288,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * @param ev Ignored.
      */
     public void propertyChange(PropertyChangeEvent ev) {
-        Roster.instance().updateComboBox(locoBox);
+        Roster.instance().updateComboBoxGlobal(locoBox);
         locoBox.insertItemAt("<none - new loco>",0);
         locoBox.setSelectedIndex(0);
     }
