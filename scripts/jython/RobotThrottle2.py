@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -142,19 +142,26 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     hornDelayTimer = None
     hornDelayListener = None
     throttleManager = None
+    askChangeThrottle = False
+    askFinishStartButton = False
 
     def init(self):
-        #print("init begin:.\n")
-        if (self.locoAddress.text.strip() != "") :
-            self.getNewThrottle()
+        #print("start begin:.\n")
+        self.setup()
+        #print("start end:.\n")
         return
         
     def handle(self):
         #print("handle begin:.\n")
-        #self.didWeMove(None)
         #self.msgText("handle done\n")
-        self.waitMsec(5000)
-        return 0 #continue if 1, run once if 0
+        self.waitMsec(1000)
+        if (self.askChangeThrottle) :
+        	self.getNewThrottle()
+        	self.askChangeThrottle = False
+    	if (self.askFinishStartButton) :
+    	   self.doFinishStartButton()
+    	   self.askFinishStartButton = False
+        return 1 #continue if 1, run once if 0
     
     def getNewThrottle(self) :
         self.holdMoving = True
@@ -324,8 +331,6 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                         self.msgText("Signal dropped in front of train. Halting!!\n")
                     else :
                         self.findNewSpeed(self.currentBlock, self.nextBlock)
-                else :
-                    self.msgText("we didn't seem to move or have a signal change!!\n")
             else :
                 # if looking ahead beyond block (4 block system)
                 self.msgText("4 block test: " + self.giveBlockName(self.nextBlock) + "\n")
@@ -888,7 +893,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.currentThrottle != None) :
             self.currentThrottle.setF2(True)
             if (self.hornDelayTimer == None) :
-                self.hornDelayListener = self.hornTimeoutReceiver()
+                self.hornDelayListener = self.HornTimeoutReceiver()
                 self.hornDelayListener.setCallBack(self.hornDelayHandler)
                 self.hornDelayTimer = javax.swing.Timer(int(delay), self.hornDelayListener)
                 self.hornDelayTimer.setInitialDelay(int(delay))
@@ -954,17 +959,23 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     self.currentBlock.setDirection(jmri.Path.WEST)
                 self.currentSignalAspect = None
                 self.currentSignal = None
-                self.getNewThrottle()
-                self.msgText("Change button states\n")     # add text
-                self.stopButton.setEnabled(True)
-                self.haltButton.setEnabled(True)
-                self.startButton.setEnabled(False)
-                self.isRunning = True
-                self.didWeMoveCounter = self.didWeMoveCounter + 1
-                self.didWeMoveCounterCheck(None)
-                if (self.isRunning) :
-                    self.msgText("Starting current:" + self.giveBlockName(self.currentBlock) + "\n")
+                # set flags so things get done from handle() routine
+                self.askChangeThrottle = True
+                self.askFinishStartButton = True
         self.msgText("whenStartButtonClicked, done\n")     # add text
+        return
+        
+    # split out so it can happen from the handle() routine
+    def doFinishStartButton(self) :
+        self.msgText("Change button states\n")     # add text
+        self.stopButton.setEnabled(True)
+        self.haltButton.setEnabled(True)
+        self.startButton.setEnabled(False)
+        self.isRunning = True
+        self.didWeMoveCounter = self.didWeMoveCounter + 1
+        self.didWeMoveCounterCheck(None)
+        if (self.isRunning) :
+            self.msgText("Starting current:" + self.giveBlockName(self.currentBlock) + "\n")
         return
             
     def whenStopButtonClicked(self, event):   
@@ -1083,7 +1094,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             return
 
     # ActionListener - used for the horn timeout
-    class hornTimeoutReceiver(java.awt.event.ActionListener):
+    class HornTimeoutReceiver(java.awt.event.ActionListener):
         cb = None
 
         def actionPerformed(self, event) :
@@ -1607,7 +1618,6 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.scriptFrame.contentPane.add(butPanel)
         self.scriptFrame.pack()
         self.scriptFrame.show()
-        self.start()
         return
         
     def setLoco(self, locoId) :
@@ -1689,7 +1699,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         
 # if you are running the RobotThrottle completely interactive, the following two lines are all you need
 rb1 = LocoThrot()
-rb1.setup()
+rb1.start()
 # However, if you are automating the automation, then 
 ## Options for doing more via scripts
 ## this will set the loco number, if a matching roster entry is found, it will load the values
