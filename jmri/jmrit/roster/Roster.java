@@ -46,7 +46,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.45 $
+ * @version	$Revision: 1.46 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -639,7 +639,7 @@ public class Roster extends XmlFile {
     public static String getFileLocation() { return fileLocation; }
     private static String fileLocation  = XmlFile.prefsDir();
 
-    public static void setRosterGroupName(String name) { rosterFileName = name; }
+    public static void setRosterFileName(String name) { rosterFileName = name; }
     private static String rosterFileName = "roster.xml";
 
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
