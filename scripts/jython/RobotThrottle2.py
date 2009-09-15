@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.15 $
+# $Revision: 1.16 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -152,15 +152,15 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
         
     def handle(self):
-        #print("handle begin:.\n")
-        #self.msgText("handle done\n")
+        #self.msgText("handle begin:.\n")
         self.waitMsec(1000)
         if (self.askChangeThrottle) :
-        	self.getNewThrottle()
-        	self.askChangeThrottle = False
-    	if (self.askFinishStartButton) :
-    	   self.doFinishStartButton()
-    	   self.askFinishStartButton = False
+            self.getNewThrottle()
+            self.askChangeThrottle = False
+        if (self.askFinishStartButton) :
+            self.doFinishStartButton()
+            self.askFinishStartButton = False
+        #self.msgText("handle done\n")
         return 1 #continue if 1, run once if 0
     
     def getNewThrottle(self) :
