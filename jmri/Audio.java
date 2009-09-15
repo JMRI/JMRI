@@ -34,7 +34,7 @@ package jmri;
  * <P>
  *
  * @author  Matthew Harris copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public interface Audio extends NamedBean {
 
@@ -194,6 +194,11 @@ public interface Audio extends NamedBean {
      * Maximum distance for Audio objects
      */
     public static final float MAX_DISTANCE = 9999.99f;
+
+    /**
+     * Number of decimal places for float values to be stored in
+     */
+    public static final double DECIMAL_PLACES = 2;
 
     /**
      * An Audio object can represent one of a number of subtypes of object.

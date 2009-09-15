@@ -14,7 +14,7 @@ import apps.Apps;
  * @author	Bob Jacobsen    Copyright (C) 2007, 2009
  * @author  Matt Harris Copyright (C) 2008, 2009
  *
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class ReportContext {
 
@@ -43,7 +43,8 @@ public class ReportContext {
         //String operations = jmri.jmrit.operations.setup.OperationsXml.getFileLocation();
         //addString("Operations files location: "+operations+"  ");
 
-        String audio = jmri.InstanceManager.audioManagerInstance().getActiveAudioFactory().toString();
+        jmri.jmrit.audio.AudioFactory af = jmri.InstanceManager.audioManagerInstance().getActiveAudioFactory();
+        String audio = af!=null?af.toString():"[not initialised]";
         addString("Audio factory type: "+audio+"  ");
 
         addProperty("java.vendor");

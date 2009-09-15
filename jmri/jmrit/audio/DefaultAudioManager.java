@@ -29,7 +29,7 @@ import jmri.managers.AbstractAudioManager;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class DefaultAudioManager extends AbstractAudioManager {
 
@@ -49,6 +49,11 @@ public class DefaultAudioManager extends AbstractAudioManager {
     public char systemLetter() { return 'I'; }
 
     protected Audio createNewAudio(String systemName, String userName) throws AudioException {
+
+        if (activeAudioFactory==null) {
+            log.debug("Initialise in createNewAudio");
+            init();
+        }
 
         Audio a = null;
 
@@ -101,7 +106,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     /**
      * Method used to initialise the manager
      */
-    public void init() {
+    public synchronized void init() {
         if(!_initialised) {
             // First try to initialise JOAL
             activeAudioFactory = new JoalAudioFactory();
@@ -165,7 +170,6 @@ public class DefaultAudioManager extends AbstractAudioManager {
     public static DefaultAudioManager instance() {
         if (_instance == null) {
             _instance = new DefaultAudioManager();
-            _instance.init();
         }
         return _instance;
     }

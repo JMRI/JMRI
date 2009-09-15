@@ -17,6 +17,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.vecmath.Vector3f;
 import jmri.Audio;
+import jmri.implementation.AbstractAudio;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
 import jmri.util.JmriJFrame;
 
@@ -38,7 +39,7 @@ import jmri.util.JmriJFrame;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 abstract public class AbstractAudioFrame extends JmriJFrame {
 
@@ -49,8 +50,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
 
     AudioTableDataModel model;
 
-    public static final double DECIMAL_PLACES = 2;
-    static final int INT_PRECISION = (int) Math.pow(10, DECIMAL_PLACES);
+    static final int INT_PRECISION = (int) Math.pow(10, Audio.DECIMAL_PLACES);
     static final float FLT_PRECISION = 1/(float)INT_PRECISION;
 
     // Common UI components for Add/Edit Audio
@@ -68,33 +68,6 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
     public AbstractAudioFrame(String title, AudioTableDataModel model) {
         super(title);
         this.model = model;
-    }
-
-    /**
-     * Static method to round a float value to the specified number
-     * of decimal places
-     *
-     * @param value float value to round
-     * @param places number of decimal places to round to
-     * @return float value rounded to specified number of decimal places
-     */
-    public static float roundDecimal(float value, double places) {
-        double multiplier = Math.pow(10, places);
-        value *= multiplier;
-        int i = Math.round(value);
-        value = i;
-        return value /= multiplier;
-    }
-
-    /**
-     * Static method to round a float value to the number of decimal places
-     * defined by DECIMAL_PLACES.
-     * 
-     * @param value float value to round
-     * @return float value rounded to DECIMAL_PLACES decimal places
-     */
-    public static float roundDecimal(float value) {
-            return roundDecimal(value, Math.log10(INT_PRECISION));
     }
 
     /**
@@ -217,9 +190,9 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
          */
         public Vector3f getValue() {
             return new Vector3f(
-                    AbstractAudioFrame.roundDecimal((Float) xValue.getValue()),
-                    AbstractAudioFrame.roundDecimal((Float) yValue.getValue()),
-                    AbstractAudioFrame.roundDecimal((Float) zValue.getValue()));
+                    AbstractAudio.roundDecimal((Float) xValue.getValue()),
+                    AbstractAudio.roundDecimal((Float) yValue.getValue()),
+                    AbstractAudio.roundDecimal((Float) zValue.getValue()));
         }
     }
 
@@ -290,7 +263,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
          * @return current value
          */
         public float getValue() {
-            return AbstractAudioFrame.roundDecimal((Float)spinner.getValue());
+            return AbstractAudio.roundDecimal((Float)spinner.getValue());
         }
     }
 }

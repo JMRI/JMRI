@@ -17,6 +17,7 @@ import javax.swing.SpinnerNumberModel;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.InstanceManager;
+import jmri.implementation.AbstractAudio;
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
 
@@ -38,7 +39,7 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AudioListenerFrame extends AbstractAudioFrame {
 
@@ -131,7 +132,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
             l.setVelocity(velocity.getValue());
             l.setOrientation(oriAt.getValue(), oriUp.getValue());
             l.setGain(gain.getValue());
-            l.setMetersPerUnit(AbstractAudioFrame.roundDecimal((Float)metersPerUnit.getValue(),4d));
+            l.setMetersPerUnit(AbstractAudio.roundDecimal((Float)metersPerUnit.getValue(),4d));
 
             // Notify changes
             model.fireTableDataChanged();

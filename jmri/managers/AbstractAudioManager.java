@@ -25,7 +25,7 @@ import jmri.implementation.AbstractManager;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractAudioManager extends AbstractManager
     implements AudioManager {
@@ -50,7 +50,7 @@ public abstract class AbstractAudioManager extends AbstractManager
     }
 
     public Audio getBySystemName(String key) {
-		String name = key.toUpperCase();
+        String name = key.toUpperCase();
         return (Audio)_tsys.get(name);
     }
 
@@ -59,7 +59,7 @@ public abstract class AbstractAudioManager extends AbstractManager
     }
 
     public Audio newAudio(String sysName, String userName) throws AudioException {
-		String systemName = sysName.toUpperCase();
+        String systemName = sysName.toUpperCase();
         if (log.isDebugEnabled()) log.debug("new Audio:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));

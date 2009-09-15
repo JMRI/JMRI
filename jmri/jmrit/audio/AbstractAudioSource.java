@@ -30,7 +30,7 @@ import jmri.implementation.AbstractAudio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public abstract class AbstractAudioSource extends AbstractAudio implements AudioSource {
 
@@ -302,7 +302,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                 break;
             case Audio.FADE_OUT:
                 // Calculate fade-out gain
-                this._fadeGain -= ((float) timePassed) / ((float) this.getFadeOut());
+                this._fadeGain -= roundDecimal((float) timePassed) / ((float) this.getFadeOut());
 
                 // Ensure that fade-out gain is not less than 0.0f
                 if (this._fadeGain < 0.0f) {
@@ -317,7 +317,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                 break;
             case Audio.FADE_IN:
                 // Calculate fade-in gain
-                this._fadeGain += ((float) timePassed) / ((float) this.getFadeIn());
+                this._fadeGain += roundDecimal((float) timePassed) / ((float) this.getFadeIn());
 
                 // Ensure that fade-in gain is not greater than 1.0f
                 if (this._fadeGain >= 1.0f) {
@@ -352,9 +352,11 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 
     public void play() {
         this._fading = Audio.FADE_NONE;
-        this.setState(STATE_PLAYING);
-        activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_PLAY));
-        activeAudioFactory.getCommandThread().interrupt();
+        if (this.getState()!=STATE_PLAYING) {
+            this.setState(STATE_PLAYING);
+            activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_PLAY));
+            activeAudioFactory.getCommandThread().interrupt();
+        }
     }
 
     /**
@@ -448,12 +450,14 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     abstract protected void doRewind();
 
     public void fadeIn() {
-        this._fading = Audio.FADE_IN;
-        this._fadeGain = 0.0f;
-        this._timeOfLastFadeCheck = System.currentTimeMillis();
-        this.setState(STATE_PLAYING);
-        activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_FADE_IN));
-        activeAudioFactory.getCommandThread().interrupt();
+        if (this.getState()!=STATE_PLAYING && this._fading!=Audio.FADE_IN) {
+            this._fading = Audio.FADE_IN;
+            this._fadeGain = 0.0f;
+            this._timeOfLastFadeCheck = System.currentTimeMillis();
+            this.setState(STATE_PLAYING);
+            activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_FADE_IN));
+            activeAudioFactory.getCommandThread().interrupt();
+        }
     }
 
     /**
@@ -462,12 +466,14 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     abstract protected void doFadeIn();
 
     public void fadeOut() {
-        this._fading = Audio.FADE_OUT;
-        this._fadeGain = 1.0f;
-        this._timeOfLastFadeCheck = System.currentTimeMillis();
-        this.setState(STATE_PLAYING);
-        activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_FADE_OUT));
-        activeAudioFactory.getCommandThread().interrupt();
+        if (this.getState()==STATE_PLAYING && this._fading!=Audio.FADE_OUT) {
+            this._fading = Audio.FADE_OUT;
+            this._fadeGain = 1.0f;
+            this._timeOfLastFadeCheck = System.currentTimeMillis();
+            this.setState(STATE_PLAYING);
+            activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_FADE_OUT));
+            activeAudioFactory.getCommandThread().interrupt();
+        }
     }
 
     /**

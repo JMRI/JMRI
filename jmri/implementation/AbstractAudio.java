@@ -25,12 +25,14 @@ import jmri.Audio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
 
     private int _state = STATE_INITIAL;
 
+    private static final int INT_PRECISION = (int) Math.pow(10, DECIMAL_PLACES);
+    
     /**
      * Abstract constructor for new Audio with system name
      * 
@@ -71,6 +73,33 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
      * cleanup routines.
      */
     abstract protected void cleanUp();
+
+    /**
+     * Static method to round a float value to the specified number
+     * of decimal places
+     *
+     * @param value float value to round
+     * @param places number of decimal places to round to
+     * @return float value rounded to specified number of decimal places
+     */
+    public static float roundDecimal(float value, double places) {
+        double multiplier = Math.pow(10, places);
+        value *= multiplier;
+        int i = Math.round(value);
+        value = i;
+        return value /= multiplier;
+    }
+
+    /**
+     * Static method to round a float value to the number of decimal places
+     * defined by DECIMAL_PLACES.
+     *
+     * @param value float value to round
+     * @return float value rounded to DECIMAL_PLACES decimal places
+     */
+    public static float roundDecimal(float value) {
+            return roundDecimal(value, Math.log10(INT_PRECISION));
+    }
 
 }
 

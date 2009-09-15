@@ -38,7 +38,7 @@ import javax.vecmath.Vector3f;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public interface AudioSource extends Audio {
 
@@ -46,7 +46,7 @@ public interface AudioSource extends Audio {
      * Constant to define that this source should loop continously when played
      */
     public static final int LOOP_CONTINUOUS = -1;
-    
+
     /**
      * Constant to define that this source should not loop when played
      */
@@ -509,6 +509,8 @@ public interface AudioSource extends Audio {
     /**
      * Method to start playing this AudioSource Object
      * <p>
+     * If this AudioSource is already playing, this command is ignored.
+     * <p>
      * Applies only to sub-types:
      * <ul>
      * <li>Source
@@ -587,7 +589,10 @@ public interface AudioSource extends Audio {
     public void fadeIn();
 
     /**
-     * Method to fade out and then stop this AudioSource Object
+     * Method to fade out and then stop this AudioSource Object only when it
+     * is already playing.
+     * <p>
+     * If not playing, command is ignored.
      * <p>
      * Applies only to sub-types:
      * <ul>

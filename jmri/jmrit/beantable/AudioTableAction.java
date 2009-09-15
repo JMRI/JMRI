@@ -38,7 +38,7 @@ import jmri.NamedBean;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
  * @author      Matthew Harris  copyright (c) 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class AudioTableAction extends AbstractTableAction {
@@ -77,6 +77,11 @@ public class AudioTableAction extends AbstractTableAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // ensure that the AudioFactory has been initialised
+        if(InstanceManager.audioManagerInstance().getActiveAudioFactory()==null) {
+            InstanceManager.audioManagerInstance().init();
+        }
+
         // create the JTable model, with changes for specific NamedBean
         createModel();
 

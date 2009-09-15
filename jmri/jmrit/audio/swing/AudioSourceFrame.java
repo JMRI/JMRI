@@ -21,6 +21,7 @@ import javax.swing.event.ChangeListener;
 import javax.vecmath.Vector3f;
 import jmri.Audio;
 import jmri.AudioException;
+import jmri.AudioManager;
 import jmri.InstanceManager;
 import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
@@ -43,7 +44,7 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AudioSourceFrame extends AbstractAudioFrame {
 
@@ -257,10 +258,16 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     }
 
     public void updateBufferList() {
+        AudioManager am=InstanceManager.audioManagerInstance();
         assignedBuffer.removeAllItems();
         assignedBuffer.addItem("Select buffer from list");
-        for (String s: InstanceManager.audioManagerInstance().getSystemNameList(Audio.BUFFER)) {
-            assignedBuffer.addItem(s);
+        for (String s: am.getSystemNameList(Audio.BUFFER)) {
+            String u=am.getAudio(s).getUserName();
+            if (u!=null) {
+                assignedBuffer.addItem(u);
+            } else {
+                assignedBuffer.addItem(s);
+            }
         }
     }
 
@@ -270,10 +277,12 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         String sName = sysName.getText().toUpperCase();
         AudioSource s;
         try {
-            s = (AudioSource) InstanceManager.audioManagerInstance().provideAudio(sName);
+            AudioManager am = InstanceManager.audioManagerInstance();
+            s = (AudioSource) am.provideAudio(sName);
             s.setUserName(user);
             if (assignedBuffer.getSelectedIndex() > 0) {
-                s.setAssignedBuffer((String) assignedBuffer.getSelectedItem());
+                Audio a = am.getAudio((String) assignedBuffer.getSelectedItem());
+                s.setAssignedBuffer(a.getSystemName());
             }
             s.setMinLoops(loopInfinite.isSelected()?AudioSource.LOOP_CONTINUOUS:(Integer)loopMin.getValue());
             s.setMaxLoops(loopInfinite.isSelected()?AudioSource.LOOP_CONTINUOUS:(Integer)loopMax.getValue());
