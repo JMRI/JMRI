@@ -44,7 +44,7 @@ import jmri.util.FileUtil;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AudioBufferFrame extends AbstractAudioFrame {
 
@@ -77,19 +77,8 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 
     @Override
     public void layoutFrame() {
-        frame.addHelpMenu("package.jmri.jmrit.beantable.AudioAddEdit", true);
-        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+        super.layoutFrame();
         JPanel p;
-
-        p = new JPanel(); p.setLayout(new FlowLayout());
-        p.add(sysNameLabel);
-        p.add(sysName);
-        frame.getContentPane().add(p);
-
-        p = new JPanel(); p.setLayout(new FlowLayout());
-        p.add(userNameLabel);
-        p.add(userName);
-        frame.getContentPane().add(p);
 
         JPanel p2;
         p = new JPanel(); p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
@@ -110,7 +99,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 //        p2.add(formatLabel);
 //        p2.add(format);
 //        p.add(p2);
-        frame.getContentPane().add(p);
+        main.add(p);
 
         p = new JPanel(); p.setLayout(new FlowLayout());
         p.setBorder(BorderFactory.createCompoundBorder(
@@ -144,7 +133,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
             }
         });
         p.add(loopEnd);
-        frame.getContentPane().add(p);
+        main.add(p);
 
         JButton ok;
         frame.getContentPane().add(ok = new JButton(rb.getString("ButtonOK")));

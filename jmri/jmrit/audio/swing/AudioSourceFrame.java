@@ -44,7 +44,7 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class AudioSourceFrame extends AbstractAudioFrame {
 
@@ -91,7 +91,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         p = new JPanel(); p.setLayout(new FlowLayout());
         p.add(assignedBufferLabel);
         p.add(assignedBuffer);
-        frame.getContentPane().add(p);
+        main.add(p);
 
         p = new JPanel(); p.setLayout(new FlowLayout());
         p.setBorder(BorderFactory.createCompoundBorder(
@@ -130,12 +130,12 @@ public class AudioSourceFrame extends AbstractAudioFrame {
             }
         });
         p.add(loopInfinite);
-        frame.getContentPane().add(p);
+        main.add(p);
 
-        frame.getContentPane().add(position);
-        frame.getContentPane().add(velocity);
-        frame.getContentPane().add(gain);
-        frame.getContentPane().add(pitch);
+        main.add(position);
+        main.add(velocity);
+        main.add(gain);
+        main.add(pitch);
 
         p = new JPanel(); p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.setBorder(BorderFactory.createCompoundBorder(
@@ -186,7 +186,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         rollOffFactor.setEditor(new JSpinner.NumberEditor(rollOffFactor, "0.00"));
         p2.add(rollOffFactor);
         p.add(p2);
-        frame.getContentPane().add(p);
+        main.add(p);
 
         p = new JPanel(); p.setLayout(new FlowLayout());
         p.setBorder(BorderFactory.createCompoundBorder(
@@ -204,7 +204,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         p.add(fadeOutTime);
 
         p.add(fadeTimeUnitsLabel);
-        frame.getContentPane().add(p);
+        main.add(p);
 
 
         JButton ok;

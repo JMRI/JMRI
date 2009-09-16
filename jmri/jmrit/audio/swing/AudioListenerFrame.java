@@ -39,7 +39,7 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class AudioListenerFrame extends AbstractAudioFrame {
 
@@ -65,8 +65,8 @@ public class AudioListenerFrame extends AbstractAudioFrame {
         super.layoutFrame();
         JPanel p;
 
-        frame.getContentPane().add(position);
-        frame.getContentPane().add(velocity);
+        main.add(position);
+        main.add(velocity);
 
         p = new JPanel(); p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
         p.setBorder(BorderFactory.createCompoundBorder(
@@ -76,9 +76,9 @@ public class AudioListenerFrame extends AbstractAudioFrame {
         p.add(oriAt);
         p.add(oriUpLabel);
         p.add(oriUp);
-        frame.getContentPane().add(p);
+        main.add(p);
 
-        frame.getContentPane().add(gain);
+        main.add(gain);
 
         p = new JPanel(); p.setLayout(new FlowLayout());
         p.setBorder(BorderFactory.createCompoundBorder(
@@ -90,7 +90,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
         metersPerUnit.setEditor(new JSpinner.NumberEditor(metersPerUnit, "0.0000"));
         p.add(metersPerUnit);
         p.add(metersPerUnitLabel);
-        frame.getContentPane().add(p);
+        main.add(p);
 
         JButton ok;
         frame.getContentPane().add(ok = new JButton(rb.getString("ButtonOK")));

@@ -9,9 +9,11 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -39,7 +41,7 @@ import jmri.util.JmriJFrame;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 abstract public class AbstractAudioFrame extends JmriJFrame {
 
@@ -47,6 +49,12 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
     static final ResourceBundle rba = ResourceBundle.getBundle("jmri.jmrit.audio.swing.AudioTableBundle");
 
     AbstractAudioFrame frame = this;
+
+    JPanel main = new JPanel();
+    JScrollPane scroll =
+            new JScrollPane(main,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
     AudioTableDataModel model;
 
@@ -80,6 +88,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
     public void layoutFrame() {
         frame.addHelpMenu("package.jmri.jmrit.beantable.AudioAddEdit", true);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+        main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
         
         JPanel p;
 
@@ -92,6 +101,8 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
         p.add(userNameLabel);
         p.add(userName);
         frame.getContentPane().add(p);
+
+        frame.add(scroll);
 
     }
 
