@@ -4,14 +4,25 @@ import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.jmrit.catalog.NamedIcon;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
-
 import java.util.ResourceBundle;
+
+//Next are new imports
+import java.awt.event.MouseEvent;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.ButtonGroup;
+import javax.swing.JMenu;
+//import javax.swing.border.LineBorder;
+//import java.awt.Color;
+import javax.swing.JTextField;
+import javax.swing.JOptionPane;
+import java.awt.event.ActionListener;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+//import java.awt.Dimension;
 
 /**
  * An icon to display a status of a Memory.<P>
@@ -32,7 +43,7 @@ import java.util.ResourceBundle;
  *	 bundle for its user-seen text, like other LayoutEditor modules.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.beans.PropertyChangeListener {
@@ -47,8 +58,117 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
         resetDefaultIcon();
 		text = true;
 		icon = false;
+        updateSize();
     }
 
+    private int originalX=0;
+    private int originalY=0;
+    
+    static final int LEFT   = 0x00;
+    static final int RIGHT  = 0x02;
+    static final int CENTRE = 0x04;
+    
+    private int justification=LEFT; //Default is always left    
+    
+    public void setJustification(int just){
+        justification=just;
+        setJustification();
+    }
+    
+    public void setJustification(String just){
+        if (just.equals("right"))
+            justification=RIGHT;
+        else if (just.equals("centre"))
+            justification=CENTRE;
+        else
+            justification=LEFT;
+        setJustification();
+    }
+    
+    private void setJustification(){
+        if (getFixedWidth()==0){
+            this.setHorizontalAlignment(JLabel.CENTER);
+            updateSize();
+        }
+        else{
+            switch (justification){
+                case LEFT :     this.setHorizontalAlignment(JLabel.LEFT);
+                                break;
+                case RIGHT :    this.setHorizontalAlignment(JLabel.RIGHT);
+                                break;
+                case CENTRE :   this.setHorizontalAlignment(JLabel.CENTER);
+                                break;
+                default     :   this.setHorizontalAlignment(JLabel.CENTER);
+            }
+        
+        }    
+    }
+    
+    public void setOriginalLocation(int x, int y){
+        originalX=x;
+        originalY=y;
+        updateSize();
+    }
+    
+    public int getJustification(){
+        return justification;
+    }
+    
+    public int getOriginalX(){
+        return originalX;
+    }
+    
+    public int getOriginalY(){
+        return originalY;
+    }
+    private int fixedWidth=0;
+    private int fixedHeight=0;
+    
+    public int getFixedWidth(){
+        return fixedWidth;
+    }
+    
+    public int getFixedHeight(){
+        return fixedHeight;
+    }
+    
+    public void setFixedSize(int width, int height){
+        
+        fixedWidth=width;
+        fixedHeight=height;
+        if ((width!=0) && (height!=0)){
+            setSize(fixedWidth, fixedHeight);
+            setMargin(0);
+        } else if ((width!=0) && (height==0)){
+            setSize(fixedWidth, maxHeight());
+            setMargin(0);
+        } else if ((width==0) && (height!=0)){
+            setSize(maxWidth(), fixedHeight);
+            setMargin(0);
+        } else {
+            setLocation(getX(), getY());
+            setSize(maxWidth(), maxHeight());
+        }
+        //displayState();
+    }
+    
+    public void setLocation(int x, int y){
+
+        super.setLocation(x,y);
+
+        if (super.getFixedWidth()==0){
+            switch (justification){
+                case LEFT :     setOriginalLocation(this.getX(), this.getY());
+                                break;
+                case RIGHT :    setOriginalLocation(this.getX()+this.maxWidth(), this.getY());
+                                break;
+                case CENTRE :   setOriginalLocation(this.getX()+(this.maxWidth()/2), this.getY());
+                                break;
+                default :       setOriginalLocation(this.getX(), this.getY());
+            }
+        }
+    }
+    
     private void resetDefaultIcon() {
         defaultIcon = new NamedIcon("resources/icons/misc/X-red.gif",
                             "resources/icons/misc/X-red.gif");
@@ -117,7 +237,11 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
      * construction of this object is complete.  Be careful about that!
      */
     protected int maxHeight() {
-        return ((javax.swing.JLabel)this).getMaximumSize().height;  // defer to superclass
+        if ((this.getFixedHeight()==0) && (getMargin()==0))
+            return ((javax.swing.JLabel)this).getMaximumSize().height;  // defer to superclass
+        else if ((this.getFixedHeight()==0) && (getMargin()!=0))
+            return ((javax.swing.JLabel)this).getMaximumSize().height+(getMargin()*2);
+        return this.getFixedHeight()+getBorderSize()*2;
     }
     
     //private int width = -1;
@@ -126,7 +250,11 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
      * construction of this object is complete.  Be careful about that!
      */
     protected int maxWidth() {
-        return ((javax.swing.JLabel)this).getMaximumSize().width;  // defer to superclass
+        if ((super.getFixedWidth()==0) && (super.getMargin()==0))
+            return ((javax.swing.JLabel)this).getMaximumSize().width;  // defer to superclass
+        else if ((super.getFixedWidth()==0) && (super.getMargin()!=0))
+            return ((javax.swing.JLabel)this).getMaximumSize().width+(super.getMargin()*2);
+        return super.getFixedWidth();
     }
 
     // update icon as state of Memory changes
@@ -173,12 +301,37 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
 		popup.add(new JMenuItem(getNameString()));
 		popup.add("x= " + this.getX());
 		popup.add("y= " + this.getY());
-		popup.add(new AbstractAction(rb.getString("SetXY")) {
+
+        if (getFixedWidth()==0)
+            popup.add("Width= Auto");
+        else
+            popup.add("Width= " + this.maxWidth());
+        if (getFixedHeight()==0){
+            popup.add("Height= Auto");
+            if (text)
+                popup.add("Margin= " + this.getMargin());
+            }
+            
+        else
+            popup.add("Height= " + this.maxHeight());
+
+        popup.addSeparator();
+        
+        popup.add(new AbstractAction(rb.getString("SetXY")) {
 				public void actionPerformed(ActionEvent e) {
 					String name = getNameString();
 					displayCoordinateEdit(name);
 				}
 			});
+        
+        popup.add(new AbstractAction("Set Fixed Size") {
+            public void actionPerformed(ActionEvent e) {
+                String name = getNameString();
+                fixedSizeEdit(name);
+            }
+        });
+        
+
         if (icon) {
             popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
@@ -200,12 +353,26 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
             });
         
         } else if (text) {
+            if(getFixedWidth()==0)
+                popup.add(makeTextJustificationMenu());
+            
             popup.add(makeFontSizeMenu());
 
             popup.add(makeFontStyleMenu());
 
             popup.add(makeFontColorMenu());
-
+            
+            popup.add(makeBackgroundFontColorMenu());
+            
+            popup.add(textBorderMenu(getNameString()));
+            if (getFixedWidth()==0){
+                popup.add(new AbstractAction("Set Margin Size") {
+                    public void actionPerformed(ActionEvent e) {
+                        String name = getNameString();
+                        marginSizeEdit(name);
+                    }
+                });
+            }
             addFixedItem(popup);
             addShowTooltipItem(popup);
             
@@ -238,6 +405,53 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
+    private ButtonGroup justButtonGroup;
+    
+    JMenu makeTextJustificationMenu() {
+        JMenu justMenu = new JMenu("Justification");
+        justButtonGroup = new ButtonGroup();
+        addJustificationMenuEntry(justMenu, LEFT);
+        addJustificationMenuEntry(justMenu, RIGHT);
+        addJustificationMenuEntry(justMenu, CENTRE);
+        return justMenu;
+    }
+    
+    void addJustificationMenuEntry(JMenu menu, final int just) {
+        JRadioButtonMenuItem r;
+        switch(just){
+            case LEFT :     r = new JRadioButtonMenuItem("LEFT");
+                            break;
+            case RIGHT:     r = new JRadioButtonMenuItem("RIGHT");
+                            break;
+            case CENTRE:    r = new JRadioButtonMenuItem("CENTRE");
+                            break;
+            default :       r = new JRadioButtonMenuItem("LEFT");
+        }
+        r.addActionListener(new ActionListener() {
+            //final int justification = just;
+            public void actionPerformed(ActionEvent e) { setJustification(just); }
+        });
+        justButtonGroup.add(r);
+        if (justification == just) r.setSelected(true);
+        else r.setSelected(false);
+        menu.add(r);
+    }
+    
+    /*JMenu textBorderMenu() {
+        JMenu borderMenu = new JMenu("Border Menu");
+        borderMenu.add("Border Size= " + getBorderSize());
+        borderMenu.add(new AbstractAction("Set Border Size") {
+				public void actionPerformed(ActionEvent e) {
+					String name = getNameString();
+					displayBorderEdit(name);
+				}
+			});
+        
+        borderMenu.add(makeBorderColorMenu());
+        return borderMenu;
+    }*/
+
+    
     /**
      * Drive the current state of the display from the state of the
      * Memory.
@@ -299,9 +513,18 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
     }
 
     public void updateSize() {
-    	//height = -1;
-    	//width = -1;
-        super.updateSize();
+
+        if (getFixedWidth()==0){
+            switch (justification){
+                case LEFT :     super.setLocation(this.getOriginalX(), this.getOriginalY());
+                                break;
+                case RIGHT :    super.setLocation(this.getOriginalX()-this.maxWidth(), this.getOriginalY());
+                                break;
+                case CENTRE :   super.setLocation(this.getOriginalX()-(this.maxWidth()/2), this.getOriginalY());
+                                break;
+            }
+            this.setSize(this.maxWidth(), this.maxHeight());
+        }
     }
     
     /**
@@ -309,6 +532,27 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
      * @param e
      */
     public void mouseClicked(java.awt.event.MouseEvent e) {
+        if (e.getClickCount() == 2){ 
+            editMemoryValue();
+        }
+    }
+    
+    private void editMemoryValue(){
+        JFrame frame= new JFrame("DialogDemo");
+
+        JTextField _newMemory = new JTextField(20);
+        if (memory.getValue()!=null)
+            _newMemory.setText(memory.getValue().toString());
+        Object[] options = {"Cancel", "OK", _newMemory};
+        int retval = JOptionPane.showOptionDialog(null,
+                                                  "Edit Current Memory Value", memory.getSystemName(),
+                                                  0, JOptionPane.INFORMATION_MESSAGE, null,
+                                                  options, options[2] );
+
+        if (retval != 1) return;
+        String entry = (String) _newMemory.getText();
+        memory.setValue(entry);
+    
     }
 
     public void dispose() {
