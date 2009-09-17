@@ -9,6 +9,7 @@ import org.jdom.DataConversionException;
 import org.jdom.Element;
 import java.util.List;
 import java.awt.Color;
+import javax.swing.border.LineBorder;
 
 /**
  * This module handles configuration for display.LayoutMemoryIcon objects for a LayoutEditor.
@@ -19,7 +20,7 @@ import java.awt.Color;
  *   loading a saved panel.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class LayoutMemoryIconXml implements XmlAdapter {
 
@@ -40,7 +41,10 @@ public class LayoutMemoryIconXml implements XmlAdapter {
 
         // include attributes
         element.setAttribute("memory", p.getMemory().getSystemName());
-        element.setAttribute("x", ""+p.getX());
+        if (p.getOriginalX()!=0)
+            element.setAttribute("x", ""+p.getOriginalX());
+        else
+            element.setAttribute("x", ""+p.getX());
         element.setAttribute("y", ""+p.getY());
         element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
         if (p.isText() && p.getText()!=null) {
@@ -51,9 +55,45 @@ public class LayoutMemoryIconXml implements XmlAdapter {
                 element.setAttribute("green", ""+p.getForeground().getGreen());
                 element.setAttribute("blue", ""+p.getForeground().getBlue());
             }
+            if(!p.getBackground().equals(new Color(238, 238, 238))){
+                element.setAttribute("redBack", ""+p.getBackground().getRed());
+                element.setAttribute("greenBack", ""+p.getBackground().getGreen());
+                element.setAttribute("blueBack", ""+p.getBackground().getBlue());
+            }
         }
+        if(p.getBorderSize()!=0){
+            element.setAttribute("boarderSize", ""+p.getBorderSize());
+            //Need to add in a bit about border color.
+        }
+        
         element.setAttribute("selectable", (p.isSelectable()?"yes":"no"));
-
+        if(p.getJustification()!=0x00){
+            String just;
+            switch (p.getJustification()){
+                case 0x02 : just="right";
+                            break;
+                case 0x04 : just ="centre";
+                            break;
+                default :   just="left";
+                            break;
+                }
+            element.setAttribute("justification", just);
+        }
+        
+        if (p.getFixedWidth()!=0)
+            element.setAttribute("fixedWidth", ""+p.getFixedWidth());
+        if (p.getFixedHeight()!=0)
+            element.setAttribute("fixedHeight", ""+p.getFixedHeight());
+            
+        if (p.getMargin()!=0)
+            element.setAttribute("margin", ""+p.getMargin());
+        
+        if (p.getBorderSize()!=0){
+            element.setAttribute("borderWidth", ""+p.getBorderSize());
+            element.setAttribute("redBorder", ""+p.getBorderColor().getRed());
+            element.setAttribute("greenBorder", ""+p.getBorderColor().getGreen());
+            element.setAttribute("blueBorder", ""+p.getBorderColor().getBlue());
+        }    
         element.setAttribute("class", "jmri.jmrit.display.configurexml.LayoutMemoryIconXml");
         if (p.getDefaultIcon()!=null)
             element.setAttribute("defaulticon", p.getDefaultIcon().getName());
@@ -115,6 +155,10 @@ public class LayoutMemoryIconXml implements XmlAdapter {
             log.warn("invalid style attribute value");
         }
         
+        a = element.getAttribute("justification");
+        if(a!=null)
+            l.setJustification(a.getValue());
+
         // get the icon pairs
         List<Element> items = element.getChildren();
         for (int i = 0; i<items.size(); i++) {
@@ -125,6 +169,26 @@ public class LayoutMemoryIconXml implements XmlAdapter {
         	l.addKeyAndIcon(NamedIcon.getIconByName(icon), keyValue);
 		}
 		
+        //find if we have a fixed width memory icon
+        int fixedWidth=0;
+        int fixedHeight=0;
+        try {
+            fixedWidth=element.getAttribute("fixedWidth").getIntValue();
+            fixedHeight=element.getAttribute("fixedHeight").getIntValue();
+            l.setFixedSize(fixedWidth, fixedHeight);
+        } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse color attributes!");
+        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+        }
+        
+        int margin=0;
+        try {
+            margin=element.getAttribute("margin").getIntValue();
+            l.setMargin(margin);
+        } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse color attributes!");
+        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+        }
         // find coordinates
         int x = 0;
         int y = 0;
@@ -134,7 +198,11 @@ public class LayoutMemoryIconXml implements XmlAdapter {
         } catch ( org.jdom.DataConversionException e) {
             log.error("failed to convert positional attribute");
         }
-        l.setLocation(x,y);
+        // if the justification is set to left or the memory area is of a fixed width we simply set the x,y location as is.
+        if ((l.getJustification()==0x00) || (fixedWidth!=0))
+            l.setLocation(x,y);
+        else
+            l.setOriginalLocation(x,y);
  
          // find display level
         int level = LayoutEditor.LABELS.intValue();
@@ -145,8 +213,12 @@ public class LayoutMemoryIconXml implements XmlAdapter {
         } catch ( NullPointerException e) {  // considered normal if the attribute not present
         }
         l.setDisplayLevel(level);
-
-        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        if ((fixedWidth==0) && (margin==0))
+            l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        else if ((fixedWidth==0) && (margin!=0))
+            l.setSize(l.getPreferredSize().width+(margin*2), l.getPreferredSize().height+(margin*2));
+        else
+            l.setSize(fixedWidth, fixedHeight);
         p.putLabel(l);
     
         // set color if needed
@@ -160,6 +232,30 @@ public class LayoutMemoryIconXml implements XmlAdapter {
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
         
+        try {
+            int red = element.getAttribute("redBack").getIntValue();
+            int blue = element.getAttribute("blueBack").getIntValue();
+            int green = element.getAttribute("greenBack").getIntValue();
+            l.setBackground(new Color(red, green, blue));
+            l.setOpaque(true);
+         } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse color attributes!");
+        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+        }
+        try {
+            l.setBorderSize(element.getAttribute("borderSize").getIntValue());
+            int red = element.getAttribute("redBorder").getIntValue();
+            int blue = element.getAttribute("blueBorder").getIntValue();
+            int green = element.getAttribute("greenBorder").getIntValue();
+            l.setBorderColor(new Color(red, green, blue));
+            //l.setBorder(new LineBorder(l.getBorderColor(), l.getBorderSize()));
+            
+            //l.setBorderWidth(new Color(red, green, blue));
+            //l.setOpaque(true);
+        } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse level attribute!");
+        } catch ( NullPointerException e) {  // considered normal if the attribute not present
+        }
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutMemoryIconXml.class.getName());

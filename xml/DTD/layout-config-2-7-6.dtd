@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-6.dtd,v 1.4 2009-09-14 15:40:20 kevin-dickerson Exp $ -->
+<!-- $Id: layout-config-2-7-6.dtd,v 1.5 2009-09-17 18:10:09 kevin-dickerson Exp $ -->
 
 <!-- This DTD is part of version 2.7.6 development.  Do not modify it       -->
 <!-- after version 2.7.6 is released.  For more information,                -->
@@ -425,15 +425,26 @@
     <!ATTLIST positionablelabel y		CDATA #REQUIRED>
     <!ATTLIST positionablelabel height	CDATA #IMPLIED> <!-- deprecated -->
     <!ATTLIST positionablelabel width	CDATA #IMPLIED> <!-- deprecated -->
+    <!ATTLIST positionablelabel fixedHeight	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel fixedWidth	CDATA #IMPLIED>
     <!ATTLIST positionablelabel rotate  CDATA #IMPLIED>
     <!ATTLIST positionablelabel text	CDATA #IMPLIED>
     <!ATTLIST positionablelabel icon	CDATA #IMPLIED>
     <!ATTLIST positionablelabel level	CDATA #IMPLIED>
     <!ATTLIST positionablelabel size	CDATA #IMPLIED>
     <!ATTLIST positionablelabel style	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel margin	CDATA #IMPLIED>
     <!ATTLIST positionablelabel red  	CDATA #IMPLIED>
     <!ATTLIST positionablelabel green	CDATA #IMPLIED>
     <!ATTLIST positionablelabel blue	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel redBack  	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel greenBack	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel blueBack	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel borderSize	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel redBorder  	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel greenBorder	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel blueBorder	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel justification	(left|centre|right) "left">
     <!ATTLIST positionablelabel forcecontroloff	(true|false) "false">
     <!ATTLIST positionablelabel fixed	(true|false) "false">
     <!ATTLIST positionablelabel showtooltip	(true|false) "true">
@@ -490,6 +501,17 @@
     <!ATTLIST memoryicon defaulticon CDATA #IMPLIED>
     <!ATTLIST memoryicon selectable ( yes | no ) "no" >
     <!ATTLIST memoryicon forcecontroloff	(true|false) "false">
+    <!ATTLIST memoryicon fixedHeight	CDATA #IMPLIED>
+    <!ATTLIST memoryicon fixedWidth	CDATA #IMPLIED>    
+    <!ATTLIST memoryicon margin	CDATA #IMPLIED>
+    <!ATTLIST memoryicon redBack  	CDATA #IMPLIED>
+    <!ATTLIST memoryicon greenBack	CDATA #IMPLIED>
+    <!ATTLIST memoryicon blueBack	CDATA #IMPLIED>
+    <!ATTLIST memoryicon borderSize	CDATA #IMPLIED>
+    <!ATTLIST memoryicon redBorder  	CDATA #IMPLIED>
+    <!ATTLIST memoryicon greenBorder	CDATA #IMPLIED>
+    <!ATTLIST memoryicon blueBorder	CDATA #IMPLIED>
+    <!ATTLIST memoryicon justification	(left|centre|right) "left">
         
   <!ELEMENT memorystate EMPTY>
     <!ATTLIST memorystate value	CDATA #REQUIRED>
