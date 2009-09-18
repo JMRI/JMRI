@@ -15,7 +15,7 @@ import javax.swing.JMenu;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2008
  * @author  Dennis Miller  Copyright (C) 2005
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -89,7 +89,9 @@ public class RosterMenu extends JMenu {
         
         AbstractAction removeRosterEntryToGroupAction = new RemoveRosterEntryToGroupAction(rb.getString("MenuGroupDisassociate"), pWho);
         removeRosterEntryToGroupAction.setEnabled(false);
-        
+
+        AbstractAction rosterGroupTableAction = new jmri.jmrit.roster.swing.rostergroup.RosterGroupTableAction("Table Association");
+        rosterGroupTableAction.setEnabled(false);        
 
 
         // Need a frame here, but are not passed one
@@ -103,8 +105,10 @@ public class RosterMenu extends JMenu {
         groupMenu.add(createGroupAction);
         groupMenu.add(selectGroupAction);
         groupMenu.add(deleteGroupAction);
+        groupMenu.add(rosterGroupTableAction);
         groupMenu.add(rosterEntryToGroupAction);
         groupMenu.add(removeRosterEntryToGroupAction);
+        
         
         add(createAction);
         add(editAction);
@@ -133,6 +137,7 @@ public class RosterMenu extends JMenu {
                 removeRosterEntryToGroupAction.setEnabled(true);
                 printAction.setEnabled(true);
                 previewAction.setEnabled(true);
+                rosterGroupTableAction.setEnabled(true);
                 break;
             case SELECTMENU:
                 printAction.setEnabled(true);
