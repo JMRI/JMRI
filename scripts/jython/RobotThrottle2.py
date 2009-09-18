@@ -1,11 +1,11 @@
-# This script runs a loco around the track, controlling the speed
+he ays# This script runs a loco around the track, controlling the speed
 # according to signals and following the blocks.
 #
 # Author: Ken Cameron, copyright 2009
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.16 $
+# $Revision: 1.17 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -144,7 +144,20 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     throttleManager = None
     askChangeThrottle = False
     askFinishStartButton = False
-
+    methodLocoAddress = None
+    methodBlockDirection = None
+    methodLocoDirection = None
+    methodLocoHeadlight = None
+    methodShortHorn = None
+    methodLongHorn = None
+    methodBlockStart = None
+    methodPushShrink = None
+    methodPushStart = None
+    methodPushStop = None
+    methodPushTest = None
+    methodBlockStop = None
+    methodLocoDistanceRedStop = None
+    
     def init(self):
         #print("start begin:.\n")
         self.setup()
@@ -160,6 +173,61 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.askFinishStartButton) :
             self.doFinishStartButton()
             self.askFinishStartButton = False
+        if (self.methodLocoAddress != None) :
+            self.locoAddress.text = self.methodLocoAddress
+            self.methodLocoAddress = None
+            self.whenLocoChanged(self)
+        if (self.methodBlockDirection != None) :
+            if (self.methodBlockDirection == True) :
+                self.blockDirection.setSelected(True)
+            else  :
+                self.blockDirection.setSelected(False)
+            self.methodBlockDirection = None
+            self.whenLocoChanged(self)
+        if (self.methodLocoDirection != None) :
+            if (self.methodLocoDirection == True) :
+                self.locoForward.setSelected(True)
+            else :
+                self.locoForward.setSelected(False)
+            self.methodLocoDirection = None
+            self.whenLocoChanged(self)
+        if (self.methodLocoHeadlight != None) :
+            if (self.methodLocoHeadlight == True) :
+                self.locoHeadlight.setSelected(True)
+            else :
+                self.locoHeadlight.setSelected(False)
+            self.methodLocoHeadlight = None
+            self.whenLocoHeadlight(self)
+        if (self.methodShortHorn != None) :
+            self.methodShortHorn = None
+            self.doShortHorn()
+        if (self.methodLongHorn != None) :
+            self.methodLongHorn = None
+            self.doLongHorn()
+        if (self.methodBlockStart != None) :
+            self.blockStart.text = self.methodBlockStart
+            self.methodBlockStart = None
+            self.whenLocoChanged(self)
+        if (self.methodPushShrink != None) :
+            self.methodPushShrink = None
+            self.whenShrinkButtonClicked(self)
+        if (self.stopButton.isEnabled() == True and self.methodPushStop != None) :
+            self.methodPushStop = None
+            self.whenStopButtonClicked(self)
+        if (self.testButton.isEnabled() == True and self.methodPushTest != None) :
+            self.methodPushTest = None
+            self.callBackForDidWeMove(self)
+        if (self.startButton.isEnabled() == True and self.methodPushStart != None) :
+            self.methodPushStart = None
+            self.whenStartButtonClicked(self)
+        if (self.methodBlockStop != None) :
+            self.blockStop.text = self.methodBlockStop
+            self.methodBlockStop = None
+            self.whenStopBlockChanged(self)
+        if (self.methodLocoDistanceRedStop != None) :
+            self.locoDistanceRedStop.text = self.methodLocoDistanceRedStop
+            self.methodLocoDistanceRedStop = None
+            self.whenLocoChanged(self)
         #self.msgText("handle done\n")
         return 1 #continue if 1, run once if 0
     
@@ -1621,80 +1689,67 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
         
     def setLoco(self, locoId) :
-        self.locoAddress.text = locoId
-        self.whenLocoChanged(self)
+        self.methodLocoAddress = locoId
         return
         
     def setLocoEast(self) :
-        self.blockDirection.setSelected(True)
-        self.whenLocoChanged(self)
+        self.methodBlockDirection = True
         return
         
     def setLocoWest(self) :
-        self.blockDirection.setSelected(False)
-        self.whenLocoChanged(self)
+        self.methodBlockDirection = False
         return
         
     def setLocoForward(self) :
-        self.locoForward.setSelected(True)
-        self.whenLocoChanged(self)
+        self.methodLocoForward = True
         return
         
     def setLocoReverse(self) :
-        self.locoForward.setSelected(False)
-        self.whenLocoChanged(self)
+        self.methodLocoForward = False
         return
         
     def locoHeadlightOn(self) :
-        self.locoHeadlight.setSelected(True)
-        self.whenLocoHeadlight(self)
+        self.methodLocoHeadlight = True
         return
         
     def locoHeadlightOff(self) :
-        self.locoHeadlight.setSelected(False)
-        self.whenLocoHeadlight(self)
+        self.methodLocoHeadlight = False
         return
         
     def soundShortHorn(self) :
-        self.doShortHorn()
+        self.methodShortHorn = True
         return
         
     def soundLongHorn(self) :
-        self.doLongHorn()
+        self.methodLongHorn = True
         return
         
-    def doShrink(self) :
-        self.whenShrinkButtonClicked(self)
+    def pushShrink(self) :
+        self.methodPushShrink = True
         return
         
     def setStartBlock(self, blockId) :
-        self.blockStart.text = blockId
-        self.whenLocoChanged(self)
+        self.methodBlockStart = blockId
         return
         
     def pushStart(self) :
-        if (self.startButton.isEnabled() == True) :
-            self.whenStartButtonClicked(self)
+        self.methodPushStart = True
         return
         
     def pushStop(self) :
-        if (self.stopButton.isEnabled() == True) :
-            self.whenStopButtonClicked(self)
+        self.methodPushStop = True
         return
         
     def pushTest(self) :
-        if (self.testButton.isEnabled() == True) :
-            self.callBackForDidWeMove(self)
+        self.methodPushTest = Ture
         return
         
     def setStopBlock(self, blockId) :
-        self.blockStop.text = blockId
-        self.whenStopBlockChanged(self)
+        self.methodBlockStop = blockId
         return
         
     def setStopDistance(self, dist) :
-        self.locoDistanceRedStop.text = dist
-        self.whenLocoChanged(self)
+        self.methodLocoDistanceRedStop = dist
         return
         
 # if you are running the RobotThrottle completely interactive, the following two lines are all you need
@@ -1706,15 +1761,17 @@ rb1.start()
 ## rb1.setLoco("111")
 ## rb1.setLocoEast()
 ## rb1.setLocoWest()
-## rb1.setLocoHeadlight(True/False)
-## rb1.hornShort()
-## rb1.hornLong()
+## rb1.locoHeadlightOn()
+## rb1.locoHeadlightOff()
+## rb1.soundShortHorn()
+## rb1.soundLongHorn()
 ## this will set the starting block
-## rb1.setStartBlock("block1")
+## rb1.setStartBlock("LB25")
 ## this will enable the loco to move according to the signals
 ## rb1.pushStart()
+## rb1.pushStop()
 ## this sets a block to stop at
-## rb1.stopBlock("block1")
+## rb1.setStopBlock("LB27")
 ## shrink the display size
-## rb1.doShrink()
+## rb1.pushShrink()
 
