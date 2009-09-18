@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.6.shtml,v 1.4 2009-09-11 17:00:52 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.6.shtml,v 1.5 2009-09-18 00:54:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -132,7 +132,42 @@ and greatly improved the internal structure of that code.
 Kevin Dickerson added support for the <a href="http://merg.co.uk">MERG</a> Signal Driver 2 board.
 
 <p>
+Pete Cressman fixed a bug in Logix support for Memories
+
+<p>
 Dan Boudreau fixed the panel editor to allow the user to use the + and - functions to nudge labels.  
+
+<p>
+Kevin Dickerson reduced to one the number of times a function is sent to a decoder by an SPROG system, 
+thus for sound functions it prevents the sound being repeated three times or a turnout being set three times.  
+
+<p>
+Dan Boudreau improved the operations "engine import" feature to check if the model exists.  
+
+<p>
+Kevin Dickerson added support for groups in the DecoderPro roster.
+
+<p>
+Ken Cameron updated the RobotThrottle2 script to solve the 'waiting for throttle' problem
+
+<p>
+Matt Harris updated the audio GUI to be compatible with smaller screens.
+
+<p>
+Kevin Dickerson added formatting features into the Text and Memory 
+Label on the Layout Editor:
+<ul>
+<li>Set Fixed Size,
+<li>Set Margin Size (Not available if the size is fixed)
+<li>Text Label Background Colour
+<li>Border Size & Border Colour
+<p>
+For the Memory Label he also added:
+<li>Justification - If the Size is fixed, it deals with the justification 
+within the box, if the size is dynamic, then it is the justification 
+around the x axis.
+<li>Double Click to present an Edit Memory value.
+</ul>
 
 <!--#include virtual="/Footer" -->
 
