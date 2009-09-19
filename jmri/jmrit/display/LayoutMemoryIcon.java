@@ -43,7 +43,7 @@ import javax.swing.JLabel;
  *	 bundle for its user-seen text, like other LayoutEditor modules.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.beans.PropertyChangeListener {
@@ -538,7 +538,6 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
     }
     
     private void editMemoryValue(){
-        JFrame frame= new JFrame("DialogDemo");
 
         JTextField _newMemory = new JTextField(20);
         if (memory.getValue()!=null)
@@ -550,8 +549,7 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
                                                   options, options[2] );
 
         if (retval != 1) return;
-        String entry = (String) _newMemory.getText();
-        memory.setValue(entry);
+        memory.setValue((String) _newMemory.getText());
     
     }
 
