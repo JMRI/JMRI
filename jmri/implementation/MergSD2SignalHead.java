@@ -14,7 +14,6 @@
 
 package jmri.implementation;
 
-import jmri.*;
 import jmri.Turnout;
 
 /**
