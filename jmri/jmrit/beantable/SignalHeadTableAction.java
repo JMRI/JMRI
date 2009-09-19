@@ -45,7 +45,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.40 $
+ * @version     $Revision: 1.41 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -749,6 +749,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 				AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
 	}
 
+    @SuppressWarnings("fallthrough")
     void okPressed(ActionEvent e) {
         SignalHead s;
         if (se8c4Aspect.equals(typeBox.getSelectedItem())) {
@@ -927,12 +928,14 @@ public class SignalHeadTableAction extends AbstractTableAction {
                             log.warn("skipping creation of signal "+name.getText()+" due to error");
                             return;
                         }
+                        // fall through
                 case 3: t2 = InstanceManager.turnoutManagerInstance().provideTurnout(to4.getText());
                         if (t2==null) {
                             addTurnoutMessage(v4Label.getText(), eto4.getText());
                             log.warn("skipping creation of signal "+name.getText()+" due to error");
                             return;
                         }
+                        // fall through
                 case 2: t1 = InstanceManager.turnoutManagerInstance().provideTurnout(to3.getText());
                         if (t1==null) {
                             addTurnoutMessage(v3Label.getText(), eto3.getText());
@@ -1331,6 +1334,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 		editingHead = false;
 	}
 	
+    @SuppressWarnings("fallthrough")
 	void updatePressed(ActionEvent e) {
 		// update according to class of signal head
 		if (className.equals("jmri.implementation.QuadOutputSignalHead")) {
@@ -1519,7 +1523,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
 //                    ((jmri.AcelaSignalHead)curS).setDarkState(signalheadTypeFromBox(estBox));    
 		}
         else if (className.equals("jmri.implementation.MergSD2SignalHead")){
-            String nam = eto1.getText();
             switch(ukSignalAspectsFromBox(emsaBox)){
                 case 4: Turnout t3 = InstanceManager.turnoutManagerInstance().provideTurnout(eto5.getText());
                         if (t3==null) {
@@ -1527,12 +1530,14 @@ public class SignalHeadTableAction extends AbstractTableAction {
                             return;
                             }
                         else ((jmri.implementation.MergSD2SignalHead)curS).setInput3(t3);
+                        // fall through
                 case 3: Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout(eto4.getText());
                         if (t2==null) {
                             noTurnoutMessage(ev4Label.getText(), eto4.getText());
                             return;
                             }
                         else ((jmri.implementation.MergSD2SignalHead)curS).setInput2(t2);
+                        // fall through
                 case 2: Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(eto3.getText());
                         if (t1==null) {
                             noTurnoutMessage(ev3Label.getText(), eto3.getText());
