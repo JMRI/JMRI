@@ -24,13 +24,14 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
 	// Train frame attributes
 	protected String _sortBy = "";
-	protected boolean _buildReport = false;
+	protected boolean _buildMessages = true;	// when true, show build messages
+	protected boolean _buildReport = false;		// when true, print/preview build reports
 	protected boolean _printPreview = false;	// when true, preview train manifest
 	protected TrainsTableFrame _trainFrame = null;
 	protected Dimension _frameDimension = new Dimension(Control.panelWidth,Control.panelHeight);
@@ -70,6 +71,14 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		log.debug("Trains have been loaded!");
 	}
  
+    public boolean getBuildMessages(){
+    	return _buildMessages;
+    }
+    
+    public void setBuildMessages(boolean messages){
+    	_buildMessages = messages;
+    }
+    
     public boolean getBuildReport(){
     	return _buildReport;
     }
@@ -388,6 +397,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         org.jdom.Attribute a;
         if ((a = e.getAttribute("sortBy")) != null)
         	_sortBy = a.getValue();
+        if ((a = e.getAttribute("buildMessages")) != null)
+        	_buildMessages = a.getValue().equals("true");
         if ((a = e.getAttribute("buildReport")) != null)
         	_buildReport = a.getValue().equals("true");
         if ((a = e.getAttribute("printPreview")) != null)
@@ -437,6 +448,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	Element values = new Element("options");
         org.jdom.Element e = new org.jdom.Element("trainOptions");
         e.setAttribute("sortBy", getTrainFrameSortBy());
+        e.setAttribute("buildMessages", getBuildMessages()?"true":"false");
         e.setAttribute("buildReport", getBuildReport()?"true":"false");
         e.setAttribute("printPreview", getPrintPreview()?"true":"false");
         // get previous Train frame size and position

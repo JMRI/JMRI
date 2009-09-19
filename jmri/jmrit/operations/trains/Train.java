@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -41,7 +42,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.48 $
+ * @version             $Revision: 1.49 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -59,6 +60,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _status = "";
 	protected boolean _built = false;		// when true, a train manifest has been built
 	protected boolean _build = true;		// when true, build this train
+	protected boolean _buildFailed = false;	// when true, build for this train failed
 	protected boolean _printed = false;		// when true, manifest has been printed
 	protected Route _route = null;
 	protected String _roadOption = ALLROADS;// train road name restrictions
@@ -612,26 +614,36 @@ public class Train implements java.beans.PropertyChangeListener {
 	
 	public boolean buildIfSelected(){
 		if(_build && !_built){
-			build(true);
+			build();
 			return true;
 		}
 		log.debug("Train ("+getName()+") not selected or already built, skipping build");
 		return false;
 	}
 
-	public void build(boolean jOptionPane){
+	public void build(){
 		reset();
 		TrainBuilder tb = new TrainBuilder();
-		tb.build(this, jOptionPane);
+		tb.build(this);
 		setPrinted(false);
 	}
 
 	public void printBuildReport(){
-		if(_built && TrainManager.instance().getBuildReport()){
-			File buildFile = TrainManagerXml.instance().getTrainBuildReportFile(getName());
-			boolean isPreview = TrainManager.instance().getPrintPreview();
-			printReport(buildFile, "Train Build Report " + getDescription(), isPreview, "", true);
+		File buildFile = TrainManagerXml.instance().getTrainBuildReportFile(getName());
+		boolean isPreview = TrainManager.instance().getPrintPreview();
+		printReport(buildFile, MessageFormat.format(rb.getString("buildReport"),new Object[]{getDescription()}), isPreview, "", true);
+	}
+	
+	public void setBuildFailed(boolean status) {
+		boolean old = _buildFailed;
+		_buildFailed = status;
+		if (old != status){
+			firePropertyChange("buildFailed", old?"true":"false", status?"true":"false");
 		}
+	}
+	
+	public boolean getBuildFailed() {
+		return _buildFailed;
 	}
 	
 	/**
@@ -680,6 +692,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		try {
 			in = new BufferedReader(new FileReader(file));
 		} catch (FileNotFoundException e) {
+			log.debug("Build file doesn't exist");
 			return;
 		}
 		String newLine = "\n";
@@ -1055,6 +1068,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		setStatus(TRAINRESET);
 		setCurrentLocation(null);
 		setBuilt(false);
+		setBuildFailed(false);
 		setPrinted(false);
 		// remove train icon
 		if (trainIcon != null && trainIcon.isActive()) {
@@ -1131,6 +1145,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			_built = a.getValue().equals("true");
 		if ((a = e.getAttribute("build")) != null)
 			_build = a.getValue().equals("true");
+		if ((a = e.getAttribute("buildFailed")) != null)
+			_buildFailed = a.getValue().equals("true");
 		if ((a = e.getAttribute("printed")) != null)
 			_printed = a.getValue().equals("true");
 		if ((a = e.getAttribute("leadEngine")) != null)
@@ -1178,6 +1194,7 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("cabooseRoad", getCabooseRoad());
         e.setAttribute("built", getBuilt()?"true":"false");
         e.setAttribute("build", getBuild()?"true":"false");
+        e.setAttribute("buildFailed", getBuildFailed()?"true":"false");
         e.setAttribute("printed", getPrinted()?"true":"false");
         if(getLeadEngine()!= null)
         	e.setAttribute("leadEngine", getLeadEngine().getId());

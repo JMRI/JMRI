@@ -32,7 +32,7 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.24 $
+ * @version             $Revision: 1.25 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -74,6 +74,7 @@ public class TrainsTableFrame extends OperationsFrame {
 	JButton saveButton = new JButton(rb.getString("SaveBuilds"));
 	
 	// check boxes
+	javax.swing.JCheckBox buildMsgBox = new javax.swing.JCheckBox(rb.getString("BuildMessages"));
 	javax.swing.JCheckBox buildReportBox = new javax.swing.JCheckBox(rb.getString("BuildReport"));
 	javax.swing.JCheckBox printPreviewBox = new javax.swing.JCheckBox(rb.getString("PrintPreview"));
 
@@ -117,6 +118,7 @@ public class TrainsTableFrame extends OperationsFrame {
     	cp1.add(sortByTime);
     	cp1.add(sortById);
     	cp1.add(textSep1);
+    	cp1.add(buildMsgBox);
     	cp1.add(buildReportBox);
     	cp1.add(printPreviewBox);
     	
@@ -168,8 +170,10 @@ public class TrainsTableFrame extends OperationsFrame {
 		addRadioButtonAction(sortByTime);
 		addRadioButtonAction(sortById);
 		
+		buildMsgBox.setSelected(trainManager.getBuildMessages());
     	buildReportBox.setSelected(trainManager.getBuildReport());
-    	printPreviewBox.setSelected(trainManager.getPrintPreview());
+    	printPreviewBox.setSelected(trainManager.getPrintPreview()); 	
+    	addCheckBoxAction(buildMsgBox);
 		addCheckBoxAction(buildReportBox);
 		addCheckBoxAction(printPreviewBox);
     	
@@ -288,6 +292,9 @@ public class TrainsTableFrame extends OperationsFrame {
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		setModifiedFlag(true);
+		if (ae.getSource() == buildMsgBox){
+			trainManager.setBuildMessages(buildMsgBox.isSelected());
+		}
 		if (ae.getSource() == buildReportBox){
 			trainManager.setBuildReport(buildReportBox.isSelected());
 		}

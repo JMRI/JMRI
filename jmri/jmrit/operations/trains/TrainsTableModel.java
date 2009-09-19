@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.17 $
+ * @version   $Revision: 1.18 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -117,7 +117,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		table.getColumnModel().getColumn(CURRENTCOLUMN).setPreferredWidth(100);
 		table.getColumnModel().getColumn(TERMINATESCOLUMN).setPreferredWidth(100);
 		table.getColumnModel().getColumn(STATUSCOLUMN).setPreferredWidth(100);
-		table.getColumnModel().getColumn(MOVECOLUMN).setPreferredWidth(64);
+		table.getColumnModel().getColumn(MOVECOLUMN).setPreferredWidth(66);
 		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(64);
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -208,11 +208,15 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         case TERMINATESCOLUMN: return train.getTrainTerminatesName();
         case STATUSCOLUMN: return train.getStatus();
         case BUILDCOLUMN: {
-        	if (!train.getBuilt())
-        		return rb.getString("Build");
-        	return rb.getString("Print");
+        	if (train.getBuilt())
+        		return rb.getString("Print");
+        	return rb.getString("Build");
         }
-        case MOVECOLUMN: return rb.getString("Move");
+        case MOVECOLUMN: {
+        	if (!train.getBuildFailed())
+        		return rb.getString("Move");
+        	return rb.getString("Report");
+        }
         case EDITCOLUMN: return rb.getString("Edit");
         default: return "unknown "+col;
         }
@@ -253,18 +257,23 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
      	Train train = manager.getTrainById(sysList.get(row));
      	if (!train.getBuilt()){
      		frame.setModifiedFlag(true);
-     		train.build(true);
+     		train.build();
      	} else {
-     		train.printBuildReport();
+     		if (TrainManager.instance().getBuildReport())
+     			train.printBuildReport();
      		train.printManifest();
      	}
     }
     
     private void moveTrain (int row){
     	Train train = manager.getTrainById(sysList.get(row));
-       	if (log.isDebugEnabled()) log.debug("Move train ("+train.getName()+")");
-       	frame.setModifiedFlag(true);
-     	train.move();
+    	if (!train.getBuildFailed()){
+    		if (log.isDebugEnabled()) log.debug("Move train ("+train.getName()+")");
+    		frame.setModifiedFlag(true);
+    		train.move();
+    	} else {
+    		train.printBuildReport();
+    	}
     }
 
     public void propertyChange(PropertyChangeEvent e) {
