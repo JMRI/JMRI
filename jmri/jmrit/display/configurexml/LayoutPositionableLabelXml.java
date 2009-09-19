@@ -5,7 +5,6 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.LayoutPositionableLabel;
 import java.awt.Color;
-import javax.swing.border.LineBorder;
 
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
@@ -15,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.LayoutPositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class LayoutPositionableLabelXml implements XmlAdapter {
 

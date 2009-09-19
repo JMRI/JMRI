@@ -9,7 +9,6 @@ import org.jdom.DataConversionException;
 import org.jdom.Element;
 import java.util.List;
 import java.awt.Color;
-import javax.swing.border.LineBorder;
 
 /**
  * This module handles configuration for display.LayoutMemoryIcon objects for a LayoutEditor.
@@ -20,7 +19,7 @@ import javax.swing.border.LineBorder;
  *   loading a saved panel.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class LayoutMemoryIconXml implements XmlAdapter {
 
