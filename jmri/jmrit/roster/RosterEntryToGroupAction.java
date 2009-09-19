@@ -2,13 +2,8 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.XmlFile;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.io.File;
-
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
@@ -32,7 +27,7 @@ import java.awt.event.ActionListener;
  * for more details.
  * <P>
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class RosterEntryToGroupAction extends AbstractAction {
 

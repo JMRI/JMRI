@@ -2,13 +2,13 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.XmlFile;
+//import jmri.jmrit.XmlFile;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.io.File;
+// import java.io.File;
 
 import javax.swing.AbstractAction;
-import javax.swing.Action;
+//import javax.swing.Action;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 
@@ -30,7 +30,7 @@ import javax.swing.JOptionPane;
  * for more details.
  * <P>
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class CreateRosterGroupAction extends AbstractAction {
 
@@ -57,7 +57,7 @@ public class CreateRosterGroupAction extends AbstractAction {
                                                   new Object[]{"Cancel", "OK", _newGroup}, null );
 
         if (retval != 1) return;
-        String entry = (String) _newGroup.getText();
+        String entry = _newGroup.getText();
         if(entry.equals("Global")){
             return;
         }
