@@ -1,11 +1,11 @@
-he ays# This script runs a loco around the track, controlling the speed
+# This script runs a loco around the track, controlling the speed
 # according to signals and following the blocks.
 #
 # Author: Ken Cameron, copyright 2009
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 #
 # The start button is inactive until data has been entered.
 #
