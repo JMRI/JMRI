@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.6.shtml,v 1.5 2009-09-18 00:54:39 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.6.shtml,v 1.6 2009-09-20 16:23:07 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -168,6 +168,9 @@ within the box, if the size is dynamic, then it is the justification
 around the x axis.
 <li>Double Click to present an Edit Memory value.
 </ul>
+
+<p>
+Dan Boudreau added options to allow operations users to control the display of error messages.
 
 <!--#include virtual="/Footer" -->
 
