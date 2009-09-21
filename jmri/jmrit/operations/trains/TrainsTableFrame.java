@@ -32,7 +32,7 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.25 $
+ * @version             $Revision: 1.26 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -83,7 +83,7 @@ public class TrainsTableFrame extends OperationsFrame {
         
         // create ShutDownTasks
         if (jmri.InstanceManager.shutDownManagerInstance() != null) {
-			if (true) {
+			if (trainDirtyTask == null) {
 				trainDirtyTask = new SwingShutDownTask(
 						"Operations Train Window Check", rb.getString("PromptQuitWindowNotWritten"),
 						rb.getString("PromptSaveQuit"), this) {
@@ -217,13 +217,14 @@ public class TrainsTableFrame extends OperationsFrame {
 			f.initComponents(null);
 		}
 		if (ae.getSource() == buildButton){
-			List<String> trains = getTrainList();
-			for (int i=0; i<trains.size(); i++){
-				Train train = trainManager.getTrainById(trains.get(i));
-				boolean build = train.buildIfSelected();
-				if (build)
-					setModifiedFlag(true);
-			}
+			// use a thread to allow table updates during build
+			Thread build = new Thread(new Runnable() {
+				public void run() {
+					buildTrains();
+				}
+			});
+			build.setName("Build Trains");		
+			build.start();		
 		}
 		if (ae.getSource() == printButton){
 			List<String> trains = getTrainList();
@@ -261,6 +262,19 @@ public class TrainsTableFrame extends OperationsFrame {
 		
 		if (ae.getSource() == saveButton){
 			storeValues();
+		}
+	}
+	
+	/**
+	 * A thread is used to allow train table updates during builds.
+	 */
+	private void buildTrains(){
+		List<String> trains = getTrainList();
+		for (int i=0; i<trains.size(); i++){
+			Train train = trainManager.getTrainById(trains.get(i));
+			boolean build = train.buildIfSelected();
+			if (build)
+				setModifiedFlag(true);
 		}
 	}
 	
