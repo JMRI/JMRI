@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import java.beans.PropertyChangeEvent;
 import javax.swing.Timer;
 import jmri.jmrit.audio.AudioSource;
+import jmri.util.PythonInterp;
 
  /**
  * Class providing the basic logic of the Conditional interface.
@@ -28,7 +29,7 @@ import jmri.jmrit.audio.AudioSource;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -893,6 +894,28 @@ public class DefaultConditional extends AbstractNamedBean
                                                     }
                                                 }
                                                 break;
+					case Conditional.ACTION_JYTHON_COMMAND:
+						if (!(action.getActionString().equals(""))) {
+					        PythonInterp.getPythonInterpreter();
+
+					        String cmd = action.getActionString() + "\n";
+
+					        // The command must end with exactly one \n
+					        while ((cmd.length() > 1 ) && cmd.charAt(cmd.length() - 2) == '\n')
+					            cmd = cmd.substring(0, cmd.length() - 1);
+
+					        // add the text to the output frame
+					        String echo = ">>> " + cmd;
+					        // intermediate \n characters need to be prefixed
+					        echo = jmri.util.StringUtil.replaceAll(echo, "\n", "\n... ");
+					        echo = echo.substring(0, echo.length() - 4);
+					        PythonInterp.getOutputArea().append(echo);
+
+					        // and execute
+					        PythonInterp.execCommand(cmd);
+							actionCount++;
+						}
+						break;
 				}
 			}
 		}

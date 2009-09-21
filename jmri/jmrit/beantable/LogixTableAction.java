@@ -72,7 +72,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -2764,6 +2764,10 @@ public class LogixTableAction extends AbstractTableAction {
 			case Conditional.ACTION_START_FAST_CLOCK:
 			case Conditional.ACTION_STOP_FAST_CLOCK:
 				break;
+            case Conditional.ACTION_JYTHON_COMMAND:
+                _textPanel.setToolTipText(rbx.getString("SetHintJythonCmd"));
+                _textPanel.setVisible(true);
+                break;
         }
 	} /* actionTypeChanged */
 
@@ -3195,6 +3199,7 @@ public class LogixTableAction extends AbstractTableAction {
                 break;
             case Conditional.ACTION_PLAY_SOUND:
             case Conditional.ACTION_RUN_SCRIPT:
+            case Conditional.ACTION_JYTHON_COMMAND:
                 _curAction.setActionString(actionString);
                 break;
             case Conditional.ACTION_SET_FAST_CLOCK_TIME:

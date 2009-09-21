@@ -19,7 +19,7 @@ import javax.swing.Timer;
  *
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 
@@ -273,8 +273,10 @@ public class DefaultConditionalAction implements ConditionalAction {
     			return (rbx.getString("ActionSetLightIntensity"));
     		case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
     			return (rbx.getString("ActionSetLightTransitionTime"));
-                case Conditional.ACTION_CONTROL_AUDIO:
-                        return (rbx.getString("ActionControlAudio"));
+            case Conditional.ACTION_CONTROL_AUDIO:
+                return (rbx.getString("ActionControlAudio"));
+            case Conditional.ACTION_JYTHON_COMMAND:
+            	return (rbx.getString("ActionJythonCommand"));
 		}
         log.warn("Unexpected parameter to getTypeString("+t+")");
 		return ("");
@@ -548,6 +550,9 @@ public class DefaultConditionalAction implements ConditionalAction {
                         str = str + " " + rbx.getString("to") + " " + _actionString + " "
                             + rbx.getString("ValueInMemory") + ".";
                     }
+                    break;
+                case Conditional.ACTION_JYTHON_COMMAND:
+                    str = str + " " + rbx.getString("ExecJythonCmd")+ " "+ _actionString+ ".";
                     break;
             }
         }

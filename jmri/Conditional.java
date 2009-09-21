@@ -99,7 +99,7 @@ public interface Conditional extends NamedBean {
 	public static final int ACTION_OPTION_ON_CHANGE = 3;
 	public static final int NUM_ACTION_OPTIONS = 3;
 	// action types
-	public static final int NUM_ACTION_TYPES = 29;
+	public static final int NUM_ACTION_TYPES = 30;
 	public static final int ACTION_NONE = 1;
 	public static final int ACTION_SET_TURNOUT = 2;
 	// allowed settings for turnout are Thrown and Closed (in data)
@@ -151,8 +151,10 @@ public interface Conditional extends NamedBean {
 	// copies value from memory variable (in name) to memory variable (in string)
 	public static final int ACTION_SET_LIGHT_TRANSITION_TIME = 28;
 	// copies value from memory variable (in name) to memory variable (in string)
-        public static final int ACTION_CONTROL_AUDIO = 29;
-        // control the specified audio object
+    public static final int ACTION_CONTROL_AUDIO = 29;
+    // control the specified audio object
+    public static final int ACTION_JYTHON_COMMAND = 30;
+    // execute a jython command
 				
     /**
     * set the logic type (all AND's all OR's or mixed AND's and OR's
