@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Kevin Dickerosn 2009 (LayoutEditor version);
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutFixedSizeEdit extends JmriJFrame 
@@ -37,16 +37,16 @@ public class LayoutFixedSizeEdit extends JmriJFrame
 	// member declarations
 	javax.swing.JLabel lableName = new javax.swing.JLabel();
 	javax.swing.JLabel nameText = new javax.swing.JLabel();
-	javax.swing.JLabel textX = new javax.swing.JLabel();
-	javax.swing.JLabel textY = new javax.swing.JLabel();
+	javax.swing.JLabel textHeight = new javax.swing.JLabel();
+	javax.swing.JLabel textWidth = new javax.swing.JLabel();
 
 	// buttons
 	javax.swing.JButton okButton = new javax.swing.JButton();
 	javax.swing.JButton cancelButton = new javax.swing.JButton();
 
 	// text field
-	javax.swing.JTextField xTextField = new javax.swing.JTextField(4);
-	javax.swing.JTextField yTextField = new javax.swing.JTextField(4);
+	javax.swing.JTextField textHeightField = new javax.swing.JTextField(4);
+	javax.swing.JTextField textWidthField = new javax.swing.JTextField(4);
 
 	// for padding out panel
 	javax.swing.JLabel space1 = new javax.swing.JLabel();
@@ -76,31 +76,31 @@ public class LayoutFixedSizeEdit extends JmriJFrame
 		nameText.setText(name);
 		nameText.setVisible(true);
 
-		textX.setText("Height= " + pl.getFixedHeight());
-		textX.setVisible(true);
-		textY.setText("Width= " + pl.getFixedWidth());
-		textY.setVisible(true);
+		textHeight.setText("Height= " + pl.getFixedHeight());
+		textHeight.setVisible(true);
+		textWidth.setText("Width= " + pl.getFixedWidth());
+		textWidth.setVisible(true);
 
-		xTextField.setText("");
-		xTextField.setToolTipText(rb.getString("EnterXTooltip"));
-		xTextField.setMaximumSize(new Dimension(
-				xTextField.getMaximumSize().width, xTextField
+		textHeightField.setText("");
+		textHeightField.setToolTipText(rb.getString("FixedSizeHeight"));
+		textHeightField.setMaximumSize(new Dimension(
+				textHeightField.getMaximumSize().width, textHeightField
 						.getPreferredSize().height));
         
 
-		yTextField.setText("");
-		yTextField.setToolTipText(rb.getString("EnterYTooltip"));
-		yTextField.setMaximumSize(new Dimension(
-				yTextField.getMaximumSize().width, yTextField
+		textWidthField.setText("");
+		textWidthField.setToolTipText(rb.getString("FixedSizeWidth"));
+		textWidthField.setMaximumSize(new Dimension(
+				textWidthField.getMaximumSize().width, textWidthField
 						.getPreferredSize().height));
 
 		okButton.setText(rb.getString("Set"));
 		okButton.setVisible(true);
-		okButton.setToolTipText(rb.getString("SetButtonToolTip"));
+		okButton.setToolTipText(rb.getString("SetButtonToolTipSize"));
 
 		cancelButton.setText(rb.getString("Cancel"));
 		cancelButton.setVisible(true);
-		cancelButton.setToolTipText(rb.getString("CancelButtonToolTip"));
+		cancelButton.setToolTipText(rb.getString("CancelButtonToolTipSize"));
 
 		setTitle(rb.getString("SetFixedWidth"));
 		getContentPane().setLayout(new GridBagLayout());
@@ -109,10 +109,10 @@ public class LayoutFixedSizeEdit extends JmriJFrame
 
 		addItem(lableName, 0, 0);
 		addItem(nameText, 1, 0);
-		addItem(textX, 0, 1);
-		addItem(xTextField, 1, 1);
-		addItem(textY, 0, 2);
-		addItem(yTextField, 1, 2);
+		addItem(textHeight, 0, 1);
+		addItem(textHeightField, 1, 1);
+		addItem(textWidth, 0, 2);
+		addItem(textWidthField, 1, 2);
 		addItem(cancelButton, 0, 3);
 		addItem(okButton, 1, 3);
 
@@ -152,11 +152,11 @@ public class LayoutFixedSizeEdit extends JmriJFrame
 				oldWidth = pl.getFixedWidth();
 				oldHeight = pl.getFixedHeight();
 			}
-			int width = validXFixedSize(xTextField.getText());
-			int height = validYFixedSize(yTextField.getText());
+			int height = validXFixedSize(textHeightField.getText());
+			int width = validYFixedSize(textWidthField.getText());
 			pl.setFixedSize(width, height);
-			textX.setText("x= " + pl.getFixedWidth());
-			textY.setText("y= " + pl.getFixedHeight());
+			textHeight.setText("Height= " + pl.getFixedHeight());
+			textWidth.setText("Width= " + pl.getFixedWidth());
 		}
 		if (ae.getSource() == cancelButton) {
 			if (oldWidth != INIT)
@@ -169,7 +169,7 @@ public class LayoutFixedSizeEdit extends JmriJFrame
 
 	// determines x movement absolute or relative
 	private int validXFixedSize(String s) {
-		int x = pl.getFixedWidth();
+		int x = pl.getFixedHeight();
 		try {
 			x = Integer.parseInt(s);
 		} catch (NumberFormatException e) {
@@ -189,7 +189,7 @@ public class LayoutFixedSizeEdit extends JmriJFrame
 		}
 		// neg delta?
 		if (x < 0) {
-			x = pl.getFixedWidth() + x;
+			x = pl.getFixedHeight() + x;
 			if (x < 0)
 				x = 0;
 		}
@@ -231,8 +231,8 @@ public class LayoutFixedSizeEdit extends JmriJFrame
 		}
 
 		public void mouseReleased(MouseEvent e) {
-			textX.setText("x= " + pl.getX());
-			textY.setText("y= " + pl.getY());
+			/*textHeight.setText("x= " + pl.getX());
+			textWidth.setText("y= " + pl.getY());*/
 		}
 
 		public void mouseClicked(MouseEvent e) {

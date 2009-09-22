@@ -42,7 +42,7 @@ import java.util.ResourceBundle;
  * included here, but commented out.
  *
  * @author Dave Duchamp Copyright (c) 2007, 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class LayoutPositionableLabel extends JLabel
@@ -100,6 +100,10 @@ public class LayoutPositionableLabel extends JLabel
      */
     public void setPanel(LayoutEditor panel) {
 		layoutPanel = panel;
+    }
+    
+    public LayoutEditor getPanel(){
+        return layoutPanel;
     }
 
     /**
@@ -167,12 +171,16 @@ public class LayoutPositionableLabel extends JLabel
         fixedHeight=height;
         if ((width!=0) && (height!=0)){
             setSize(fixedWidth, fixedHeight);
+            setHorizontalAlignment(JLabel.CENTER);
+            setVerticalAlignment(JLabel.CENTER);
             margin=0;
         } else if ((width!=0) && (height==0)){
             setSize(fixedWidth, maxHeight());
+            setHorizontalAlignment(JLabel.CENTER);
             margin=0;
         } else if ((width==0) && (height!=0)){
             setSize(maxWidth(), fixedHeight);
+            setHorizontalAlignment(JLabel.CENTER);
             margin=0;
         } else
             setSize(maxWidth(), maxHeight());
@@ -328,14 +336,14 @@ public class LayoutPositionableLabel extends JLabel
 					displayCoordinateEdit(name);
 				}
 			});
-			popup.add(new AbstractAction("Set Fixed Size") {
+			popup.add(new AbstractAction(rb.getString("SetFixedSize")) {
 				public void actionPerformed(ActionEvent e) {
 					String name = getText();
 					fixedSizeEdit(name);
 				}
 			});
             if(fixedHeight==0){
-                popup.add(new AbstractAction("Set Margin Size") {
+                popup.add(new AbstractAction(rb.getString("SetMarginSize")) {
                     public void actionPerformed(ActionEvent e) {
                         String name = getText();
                         marginSizeEdit(name);
@@ -390,7 +398,7 @@ public class LayoutPositionableLabel extends JLabel
         JMenu borderMenu = new JMenu("Border Menu");
         borderMenu.add("Border Size= " + borderSize);
         borderMenu.addSeparator();
-        borderMenu.add(new AbstractAction("Set Border Size") {
+        borderMenu.add(new AbstractAction(rb.getString("SetMarginSize")) {
 				public void actionPerformed(ActionEvent e) {
 					displayBorderEdit(name);
 				}
@@ -656,8 +664,10 @@ public class LayoutPositionableLabel extends JLabel
         if (bold != null) bold.setSelected( (styleValue & Font.BOLD) != 0);
         if (italic != null) italic.setSelected( (styleValue & Font.ITALIC) != 0);
         setFont(jmri.util.FontUtil.deriveFont(getFont(),styleValue));
-
-        setSize(getPreferredSize().width, getPreferredSize().height);
+        if (fixedWidth==0)
+            setSize(getPreferredSize().width, getPreferredSize().height);
+        else
+            updateSize();
     }
 
     String where(MouseEvent e) {

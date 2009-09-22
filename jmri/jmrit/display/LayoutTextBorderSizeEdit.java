@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Kevin Dickerson 2009 (LayoutEditor version);
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutTextBorderSizeEdit extends JmriJFrame 
@@ -101,7 +101,7 @@ public class LayoutTextBorderSizeEdit extends JmriJFrame
 		cancelButton.setVisible(true);
 		cancelButton.setToolTipText(rb.getString("CancelButtonToolTip"));
 
-		setTitle(rb.getString("SetBorderSize"));
+		setTitle(rb.getString("SetXY"));
 		getContentPane().setLayout(new GridBagLayout());
 		
 		//setSize(150, 120);
