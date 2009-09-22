@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.LayoutPositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class LayoutPositionableLabelXml implements XmlAdapter {
 
@@ -70,6 +70,11 @@ public class LayoutPositionableLabelXml implements XmlAdapter {
             element.setAttribute("greenBorder", ""+p.getBorderColor().getGreen());
             element.setAttribute("blueBorder", ""+p.getBorderColor().getBlue());
         } 
+        if (p.getFixedWidth()!=0)
+            element.setAttribute("fixedWidth", ""+p.getFixedWidth());
+        if (p.getFixedHeight()!=0)
+            element.setAttribute("fixedHeight", ""+p.getFixedHeight());
+            
         return element;
     }
 
