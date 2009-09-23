@@ -49,7 +49,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -3931,7 +3931,7 @@ public class LayoutEditor extends JmriJFrame {
 						rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-        LayoutSensorIcon l = new LayoutSensorIcon();
+        LayoutSensorIcon l = new LayoutSensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
         l.setActiveIcon(sensorIconEditor.getIcon(0));
         l.setInactiveIcon(sensorIconEditor.getIcon(1));
         l.setInconsistentIcon(sensorIconEditor.getIcon(2));
