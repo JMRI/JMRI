@@ -30,7 +30,7 @@ import jmri.implementation.AbstractAudio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public abstract class AbstractAudioSource extends AbstractAudio implements AudioSource {
 
@@ -302,7 +302,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                 break;
             case Audio.FADE_OUT:
                 // Calculate fade-out gain
-                this._fadeGain -= roundDecimal((float) timePassed) / ((float) this.getFadeOut());
+                this._fadeGain -= roundDecimal(timePassed) / (this.getFadeOut());
 
                 // Ensure that fade-out gain is not less than 0.0f
                 if (this._fadeGain < 0.0f) {
@@ -317,7 +317,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                 break;
             case Audio.FADE_IN:
                 // Calculate fade-in gain
-                this._fadeGain += roundDecimal((float) timePassed) / ((float) this.getFadeIn());
+                this._fadeGain += roundDecimal(timePassed) / (this.getFadeIn());
 
                 // Ensure that fade-in gain is not greater than 1.0f
                 if (this._fadeGain >= 1.0f) {
