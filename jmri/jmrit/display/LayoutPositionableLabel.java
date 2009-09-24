@@ -20,6 +20,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
+import java.awt.Dimension;
 import javax.swing.border.LineBorder;
 import java.util.ResourceBundle;
 
@@ -42,7 +43,7 @@ import java.util.ResourceBundle;
  * included here, but commented out.
  *
  * @author Dave Duchamp Copyright (c) 2007, 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class LayoutPositionableLabel extends JLabel
@@ -188,11 +189,11 @@ public class LayoutPositionableLabel extends JLabel
     }
     
     public void setBackground(Color color){
-        if (color==(new Color(238, 238, 238)))
-            setOpaque(false);
-        else
+        if (text){
+
             setOpaque(true);
-        super.setBackground(color);
+            super.setBackground(color);
+        }
     }
     
     /**
@@ -521,7 +522,6 @@ public class LayoutPositionableLabel extends JLabel
         addColorMenuEntry(colorMenu, rb.getString("Green"),Color.green, 0x02);
         addColorMenuEntry(colorMenu, rb.getString("Blue"),Color.blue, 0x02);
         addColorMenuEntry(colorMenu, rb.getString("Magenta"),Color.magenta, 0x02);
-        addColorMenuEntry(colorMenu, rb.getString("Clear"),new Color(238, 238, 238), 0x02);
         return colorMenu;
     }
     
@@ -556,7 +556,7 @@ public class LayoutPositionableLabel extends JLabel
         addColorMenuEntry(colorMenu, rb.getString("Green"),Color.green, 0x01);
         addColorMenuEntry(colorMenu, rb.getString("Blue"),Color.blue, 0x01);
         addColorMenuEntry(colorMenu, rb.getString("Magenta"),Color.magenta, 0x01);
-        addColorMenuEntry(colorMenu, rb.getString("Clear"),new Color(238, 238, 238), 0x01);
+        addColorMenuEntry(colorMenu, rb.getString("Clear"), null, 0x01);
         return colorMenu;
     }
         
@@ -566,7 +566,22 @@ public class LayoutPositionableLabel extends JLabel
             final Color desiredColor = color;
             public void actionPerformed(ActionEvent e) { 
                 if (foreground==0x00) setForeground(desiredColor); 
-                else if (foreground==0x01) setBackground(desiredColor);
+                else if (foreground==0x01){
+                    if(color==null){
+                        setOpaque(false);
+                        //We need to force a redisplay when going to clear as the area
+                        //doesn't always go transparent on the first click.
+                        Point p = getLocation();
+                        int w = getWidth();
+                        int h = getHeight();
+                        Container parent = getParent();
+                        // force redisplay
+                        parent.validate();
+                        parent.repaint(p.x,p.y,w,h);
+                    }
+                    else
+                        setBackground(desiredColor);
+                }
                 else setBorderColor(desiredColor);
             }
         };
@@ -579,7 +594,12 @@ public class LayoutPositionableLabel extends JLabel
         }
         else if (foreground==0x01){
             colorBackButtonGroup.add(r);
-            if (getBackground().getRGB() == color.getRGB())  r.setSelected(true);
+            if (color==null){
+                if (!isOpaque())
+                    r.setSelected(true);
+                else
+                    r.setSelected(false);
+            } else if (getBackground().getRGB() == color.getRGB()) r.setSelected(true);
             else r.setSelected(false);
         }
         else{

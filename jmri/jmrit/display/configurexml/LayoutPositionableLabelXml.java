@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.LayoutPositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class LayoutPositionableLabelXml implements XmlAdapter {
 
@@ -51,7 +51,7 @@ public class LayoutPositionableLabelXml implements XmlAdapter {
                 element.setAttribute("green", ""+p.getForeground().getGreen());
                 element.setAttribute("blue", ""+p.getForeground().getBlue());
             }
-            if(!p.getBackground().equals(new Color(238, 238, 238))){
+            if(p.isOpaque()){
                 element.setAttribute("redBack", ""+p.getBackground().getRed());
                 element.setAttribute("greenBack", ""+p.getBackground().getGreen());
                 element.setAttribute("blueBack", ""+p.getBackground().getBlue());
@@ -197,7 +197,6 @@ public class LayoutPositionableLabelXml implements XmlAdapter {
             int blue = element.getAttribute("blueBack").getIntValue();
             int green = element.getAttribute("greenBack").getIntValue();
             l.setBackground(new Color(red, green, blue));
-            l.setOpaque(true);
          } catch ( org.jdom.DataConversionException e) {
             log.warn("Could not parse color attributes!");
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
@@ -219,7 +218,7 @@ public class LayoutPositionableLabelXml implements XmlAdapter {
             fixedHeight=element.getAttribute("fixedHeight").getIntValue();
             l.setFixedSize(fixedWidth, fixedHeight);
         } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse color attributes!");
+            log.warn("Could not parse fixedwidth or Height attributes!");
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
         
@@ -229,27 +228,19 @@ public class LayoutPositionableLabelXml implements XmlAdapter {
             int blue = element.getAttribute("blueBorder").getIntValue();
             int green = element.getAttribute("greenBorder").getIntValue();
             l.setBorderColor(new Color(red, green, blue));
-            //l.setBorder(new LineBorder(l.getBorderColor(), l.getBorderSize()));
-            
-            //l.setBorderWidth(new Color(red, green, blue));
-            //l.setOpaque(true);
+
         } catch ( org.jdom.DataConversionException e) {
             log.warn("Could not parse level attribute!");
         } catch ( NullPointerException e) {  // considered normal if the attribute not present
         }
         // and activate the result
         l.setLocation(x,y);
-        /*if (margin==0)
-            l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        else if (margin!=0)
-            l.setSize(l.getPreferredSize().width+(margin*2), l.getPreferredSize().height+(margin*2));*/
         if ((fixedWidth==0) && (margin==0))
             l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         else if ((fixedWidth==0) && (margin!=0))
             l.setSize(l.getPreferredSize().width+(margin*2), l.getPreferredSize().height+(margin*2));
         else
             l.setSize(fixedWidth, fixedHeight);
-        //l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         p.putLabel(l);
 	}
    
