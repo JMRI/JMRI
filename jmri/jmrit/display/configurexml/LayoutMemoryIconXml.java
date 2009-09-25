@@ -19,7 +19,7 @@ import java.awt.Color;
  *   loading a saved panel.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class LayoutMemoryIconXml implements XmlAdapter {
 
@@ -54,7 +54,7 @@ public class LayoutMemoryIconXml implements XmlAdapter {
                 element.setAttribute("green", ""+p.getForeground().getGreen());
                 element.setAttribute("blue", ""+p.getForeground().getBlue());
             }
-            if(!p.getBackground().equals(new Color(238, 238, 238))){
+            if(p.isOpaque()){
                 element.setAttribute("redBack", ""+p.getBackground().getRed());
                 element.setAttribute("greenBack", ""+p.getBackground().getGreen());
                 element.setAttribute("blueBack", ""+p.getBackground().getBlue());
