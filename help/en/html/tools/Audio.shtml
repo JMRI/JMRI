@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: Audio.shtml,v 1.1 2009-08-26 21:17:34 matthewharris Exp $ -->
+<!-- $Id: Audio.shtml,v 1.2 2009-09-26 23:35:32 jacobsen Exp $ -->
 <title>JMRI: Audio</title>
 
 <!-- Style -->
@@ -22,15 +22,10 @@
     <div id="mainContent">
 
 
-<h2> 
-JMRI: Audio
-</h2>
-
+<h2>JMRI: Audio</h2>
 
 JMRI audio objects hold information about sounds that can be played-back by the
 computer.
-<p>
-
 
 <h3>The Audio Table</h3>
 The 
@@ -38,6 +33,9 @@ The
 lets you see what audio objects have been defined, and what information
 they currently contain. From the table, you can 
 <a href="../../package/jmri/jmrit/beantable/AudioAddEdit.shtml">create a new audio object</a>.
+<a href="../../package/jmri/jmrit/beantable/AudioTable.jpg">
+<img src="../../package/jmri/jmrit/beantable/AudioTable.jpg" height="178" width="420">
+</a>
 
 
 <h3>Using Audio objects With Logix</h3>

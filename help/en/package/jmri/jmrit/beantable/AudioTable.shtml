@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AudioTable.shtml,v 1.1 2009-08-26 21:17:34 matthewharris Exp $ -->
+<!-- $Id: AudioTable.shtml,v 1.2 2009-09-26 23:35:32 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -25,10 +25,14 @@
 
 <H1>The Audio Table</H1>
     
+
 You can use the Audio Table to look at the contents of JMRI audio objects.
 <p>
 Note that you can sort the table by each of the columns, just click on the
 column heading.
+<a href="AudioTable.jpg">
+<img src="AudioTable.jpg" height="178" width="420">
+</a>
 <p>
 To create a new audio object, click on the 
 "<a href="AudioAddEdit.shtml">Add...</a>" button at the bottom of the window.
