@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.30 2009-07-03 06:33:54 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.31 2009-09-26 22:23:39 jacobsen Exp $ -->
     <version version="11" author="Howard G. Penny" lastUpdated="20050713"/>
     <version version="12" author="Michael Mosher" lastUpdated="20070717"/>
     <version version="13" author="Bruce Shanks" lastUpdated="20080614"/>
@@ -20,6 +20,7 @@
     <version version="15" author="Bob Jacobsen jake@physics.berkeley.edu" lastUpdated="20090111"/>
     <version version="16" author="Jack Shall jack745@bellsouth.net" lastUpdated="20090115"/>
     <version version="17" author="Jack Shall jack745@bellsouth.net" lastUpdated="20090525"/>
+    <version version="18" author="Peter Ulvestad" lastUpdated="20090904"/>
 
 <!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
 <!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
@@ -39,7 +40,9 @@
 <!-- Version 17 - Modified format of Analog Controls pane to 3 columns. Modified spaces -->
 <!--              from Sound Levels pane so columns align when equally populated. Added "buffer" -->
 <!--              labels to Advanced pane to create spaces between columns. -->
-
+<!-- Version 18 - Modified 'Basic Speed Control pane for decoders that use CV6  -->
+<!--              to select speed curve when using CV2 and 5. Moved Forward and Reverse trims to  -->
+<!--              'Speed Table' pane as they are only used with speed tables. -->
 
     <programmer decoderFilePanes="yes" showEmptyPanes="default">
         <pane name="Basic">
@@ -114,29 +117,21 @@
                         <display item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1"/>
                         <display item="Vmid" tooltip="Sets the voltage at mid throttle"/>
                         <display item="Vhigh" tooltip="Sets the maximum voltage at full throttle"/>
-                        <display item="Speed Table/Mid Range Cab Speed Step" tooltip="Sets voltage curve for mid throttle, set Vstart and Vhigh first"/>
                     </column>
                     <column>
                         <display item="Vstart" format="hslider" label="" tooltip="Sets the starting voltage at throttle speed step 1"/>
                         <display item="Vmid" format="hslider" label="" tooltip="Sets the voltage at mid throttle"/>
                         <display item="Vhigh" format="hslider" label="" tooltip="Sets the maximum voltage at full throttle"/>
-                    </column>
+		    </column>
+		</row>
+		<row>
+                    <column>
+		    	<label label=" "/>
+		     	<display item="Speed Table/Mid Range Cab Speed Step" tooltip="Sets voltage curve for mid throttle, set Vstart and Vhigh first"/>
+			<label label=" "/>
+		    </column>
                 </row>
-                <row>
-                    <column>
-                        <label label=" "/>
-                        <display item="Forward Trim" tooltip="Fine tune the forward voltage levels"/>
-                        <label label=" "/>
-                    </column>
-                    <column>
-                        <label label="     "/>
-                    </column>
-                    <column>
-                        <label label=" "/>
-                        <display item="Reverse Trim" tooltip="Fine tune the reverse voltage levels"/>
-                        <label label=" "/>
-                    </column>
-                </row>
+                
             </column>
         </pane>
         <pane name="Speed Table">
@@ -162,6 +157,21 @@
                 <row>
                     <column>
                         <display item="Speed Table" layout="above"/>
+                        <label label=" "/>
+                    </column>
+                </row>
+		<row>
+                    <column>
+                        <label label=" "/>
+                        <display item="Forward Trim" tooltip="Fine tune the forward voltage levels"/>
+                        <label label=" "/>
+                    </column>
+                    <column>
+                        <label label="     "/>
+                    </column>
+                    <column>
+                        <label label=" "/>
+                        <display item="Reverse Trim" tooltip="Fine tune the reverse voltage levels"/>
                         <label label=" "/>
                     </column>
                 </row>
@@ -894,5 +904,7 @@
 
 
 
+
+ 	  	 
 
  	  	 
