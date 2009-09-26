@@ -99,16 +99,17 @@ directory.
 A rudimentary version control system is provided by DTD naming, i.e.
 <ul>
 <li>layout-config.dtd - the original, not to be changed any more.
-<li>layout-config-2-1-5.dtd - manually created when the first XML content 
-change was made after the release of JMRI 2.1.4, this accumulates changes
-until 2.1.5 is released.
+<li>layout-config-2-7-5.dtd - manually created when the first XML content 
+change was made after the release of JMRI 2.7.4, this accumulates changes
+until 2.7.5 is released.
 </ul>
 
 The first time a change is made to XML persistance after a release,
 the following steps are needed:
 <ul>
 <li>Copy the existing DTD to one with the next version name (e.g.
-after 2.1.7 is released, copy layout-config-2-1-7.dtd to layout-config-2-1-8.dtd)
+while building the 2.7.4 release, 
+copy layout-config-2-7-4.dtd to layout-config-2-7-5.dtd)
 and commit to CVS.
 <li>Update the comment on the previous file.
 <li>Update the references in the 

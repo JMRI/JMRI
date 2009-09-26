@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-8.dtd,v 1.1 2009-09-06 22:46:34 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-8.dtd,v 1.2 2009-09-26 18:14:19 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.8 development.  Do not modify it       -->
 <!-- after version 2.8 is released.  For more information,                -->
@@ -31,13 +31,30 @@
   <!ATTLIST application class CDATA #REQUIRED>
 
 <!--  Connection section identifies serial port info -->
-<!ELEMENT connection (node*)>
+<!ELEMENT connection (node*, commandStationPreferences*)>
   <!ATTLIST connection class CDATA #REQUIRED>
   <!ATTLIST connection port CDATA #IMPLIED>
   <!ATTLIST connection speed CDATA #IMPLIED>  <!-- May not be provided if fixed by protocol -->
   <!ATTLIST connection option1 CDATA #IMPLIED> <!-- Meaning is protocol specific -->
   <!ATTLIST connection option2 CDATA #IMPLIED> <!-- Meaning is protocol specific -->
 
+    <!ELEMENT commandStationPreferences EMPTY>
+      <!ATTLIST commandStationPreferences addTurnoutToCS (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences addTurnoutToJMRI (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences removeTurnoutFromCS (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences removeTurnoutFromJMRI (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences addSensorToCS (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences addSensorToJMRI (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences removeSensorFromCS (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences removeSensorFromJMRI (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences addLocoToCS (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences addLocoToJMRI (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences removeLocoFromJMRI (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences removeAdhocLocoFromCS (yes|no) #IMPLIED>
+      <!ATTLIST commandStationPreferences defaultCSProtocol CDATA #IMPLIED>
+      <!ATTLIST commandStationPreferences defaultCSLocoDescription CDATA #IMPLIED>
+      <!ATTLIST commandStationPreferences locoMaster CDATA #IMPLIED>
+      
 <!ELEMENT node (parameter*)>
   <!ATTLIST node name CDATA #REQUIRED>
 
@@ -117,6 +134,7 @@
     <!ATTLIST turnout locked		(true | false ) "false">
     <!ATTLIST turnout lockMode		CDATA #IMPLIED>
     <!ATTLIST turnout decoder		CDATA #IMPLIED>
+    <!ATTLIST turnout state		    (THROWN | CLOSED ) #IMPLIED>
 
 <!ELEMENT lights (light*)>
   <!ATTLIST lights class		CDATA #REQUIRED>
@@ -238,6 +256,7 @@
   	<!ATTLIST signalhead class	CDATA #REQUIRED>
     <!ATTLIST signalhead systemName	CDATA #REQUIRED>  
     <!ATTLIST signalhead userName	CDATA #IMPLIED>
+    <!ATTLIST signalhead home    (yes|no) #IMPLIED>
 
   <!ELEMENT dccsignalhead (comment?, turnout*) >     <!-- different actual types carry different contents -->
   	<!ATTLIST dccsignalhead class	CDATA #REQUIRED>
@@ -406,18 +425,30 @@
     <!ATTLIST positionablelabel y		CDATA #REQUIRED>
     <!ATTLIST positionablelabel height	CDATA #IMPLIED> <!-- deprecated -->
     <!ATTLIST positionablelabel width	CDATA #IMPLIED> <!-- deprecated -->
+    <!ATTLIST positionablelabel fixedHeight	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel fixedWidth	CDATA #IMPLIED>
     <!ATTLIST positionablelabel rotate  CDATA #IMPLIED>
     <!ATTLIST positionablelabel text	CDATA #IMPLIED>
     <!ATTLIST positionablelabel icon	CDATA #IMPLIED>
     <!ATTLIST positionablelabel level	CDATA #IMPLIED>
     <!ATTLIST positionablelabel size	CDATA #IMPLIED>
     <!ATTLIST positionablelabel style	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel margin	CDATA #IMPLIED>
     <!ATTLIST positionablelabel red  	CDATA #IMPLIED>
     <!ATTLIST positionablelabel green	CDATA #IMPLIED>
     <!ATTLIST positionablelabel blue	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel redBack  	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel greenBack	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel blueBack	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel borderSize	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel redBorder  	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel greenBorder	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel blueBorder	CDATA #IMPLIED>
+    <!ATTLIST positionablelabel justification	(left|centre|right) "left">
     <!ATTLIST positionablelabel forcecontroloff	(true|false) "false">
     <!ATTLIST positionablelabel fixed	(true|false) "false">
     <!ATTLIST positionablelabel showtooltip	(true|false) "true">
+    
     
 
   <!ELEMENT sensoricon EMPTY>
@@ -436,12 +467,52 @@
     <!ATTLIST sensoricon forcecontroloff	(true|false) "false">
     <!ATTLIST sensoricon momentary	(true|false) "false">
     <!ATTLIST sensoricon text	    CDATA #IMPLIED>
+    <!ATTLIST sensoricon icon	CDATA #IMPLIED>
     <!ATTLIST sensoricon sxscale	CDATA #IMPLIED>
     <!ATTLIST sensoricon syscale	CDATA #IMPLIED>
     <!ATTLIST sensoricon sxorigin	CDATA #IMPLIED>
     <!ATTLIST sensoricon syorigin	CDATA #IMPLIED>
     <!ATTLIST sensoricon filter	    CDATA #IMPLIED>
     <!ATTLIST sensoricon showid	(true|false) "false">
+    <!ATTLIST sensoricon fixed	(true|false) "false">
+    <!ATTLIST sensoricon borderSize	CDATA #IMPLIED>
+    <!ATTLIST sensoricon redBorder  	CDATA #IMPLIED>
+    <!ATTLIST sensoricon greenBorder	CDATA #IMPLIED>
+    <!ATTLIST sensoricon blueBorder	CDATA #IMPLIED>
+    <!ATTLIST sensoricon size	CDATA #IMPLIED>
+    <!ATTLIST sensoricon style	CDATA #IMPLIED>
+    <!ATTLIST sensoricon margin	CDATA #IMPLIED>
+    <!ATTLIST sensoricon fixedHeight	CDATA #IMPLIED>
+    <!ATTLIST sensoricon fixedWidth	CDATA #IMPLIED>
+    <!ATTLIST sensoricon redBack  	CDATA #IMPLIED>
+    <!ATTLIST sensoricon greenBack	CDATA #IMPLIED>
+    <!ATTLIST sensoricon blueBack	CDATA #IMPLIED>
+    <!ATTLIST sensoricon redActiveBack  	CDATA #IMPLIED>
+    <!ATTLIST sensoricon greenActiveBack	CDATA #IMPLIED>
+    <!ATTLIST sensoricon blueActiveBack	CDATA #IMPLIED>
+    <!ATTLIST sensoricon redInActiveBack  	CDATA #IMPLIED>
+    <!ATTLIST sensoricon greenInActiveBack	CDATA #IMPLIED>
+    <!ATTLIST sensoricon blueInActiveBack	CDATA #IMPLIED>
+    <!ATTLIST sensoricon redUnknownBack  	CDATA #IMPLIED>
+    <!ATTLIST sensoricon greenUnknownBack	CDATA #IMPLIED>
+    <!ATTLIST sensoricon blueUnknownBack	CDATA #IMPLIED>
+    <!ATTLIST sensoricon redInconsistentBack  	CDATA #IMPLIED>
+    <!ATTLIST sensoricon greenInconsistentBack	CDATA #IMPLIED>
+    <!ATTLIST sensoricon blueInconsistentBack	CDATA #IMPLIED>
+    <!ATTLIST sensoricon redActive  	CDATA #IMPLIED>
+    <!ATTLIST sensoricon greenActive	CDATA #IMPLIED>
+    <!ATTLIST sensoricon blueActive	CDATA #IMPLIED>
+    <!ATTLIST sensoricon redInActive  	CDATA #IMPLIED>
+    <!ATTLIST sensoricon greenInActive	CDATA #IMPLIED>
+    <!ATTLIST sensoricon blueInActive	CDATA #IMPLIED>
+    <!ATTLIST sensoricon redUnknown  	CDATA #IMPLIED>
+    <!ATTLIST sensoricon greenUnknown	CDATA #IMPLIED>
+    <!ATTLIST sensoricon blueUnknown	CDATA #IMPLIED>
+    <!ATTLIST sensoricon redInconsistent  	CDATA #IMPLIED>
+    <!ATTLIST sensoricon greenInconsistent	CDATA #IMPLIED>
+    <!ATTLIST sensoricon blueInconsistent	CDATA #IMPLIED>
+    <!ATTLIST sensoricon selectable	CDATA #IMPLIED>
+    <!ATTLIST sensoricon defaulticon	CDATA #IMPLIED>
 
   <!ELEMENT reportericon EMPTY>
     <!ATTLIST reportericon class	CDATA #REQUIRED>
@@ -471,6 +542,17 @@
     <!ATTLIST memoryicon defaulticon CDATA #IMPLIED>
     <!ATTLIST memoryicon selectable ( yes | no ) "no" >
     <!ATTLIST memoryicon forcecontroloff	(true|false) "false">
+    <!ATTLIST memoryicon fixedHeight	CDATA #IMPLIED>
+    <!ATTLIST memoryicon fixedWidth	CDATA #IMPLIED>    
+    <!ATTLIST memoryicon margin	CDATA #IMPLIED>
+    <!ATTLIST memoryicon redBack  	CDATA #IMPLIED>
+    <!ATTLIST memoryicon greenBack	CDATA #IMPLIED>
+    <!ATTLIST memoryicon blueBack	CDATA #IMPLIED>
+    <!ATTLIST memoryicon borderSize	CDATA #IMPLIED>
+    <!ATTLIST memoryicon redBorder  	CDATA #IMPLIED>
+    <!ATTLIST memoryicon greenBorder	CDATA #IMPLIED>
+    <!ATTLIST memoryicon blueBorder	CDATA #IMPLIED>
+    <!ATTLIST memoryicon justification	(left|centre|right) "left">
         
   <!ELEMENT memorystate EMPTY>
     <!ATTLIST memorystate value	CDATA #REQUIRED>
