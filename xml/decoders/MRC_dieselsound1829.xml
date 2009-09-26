@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005, 2006, 2007, 2008, 2009 All rights reserved    -->
-<!-- $Id: MRC_dieselsound1829.xml,v 1.1 2009-09-03 22:38:52 jacobsen Exp $ -->
+<!-- $Id: MRC_dieselsound1829.xml,v 1.2 2009-09-26 22:31:07 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,8 +14,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config>
-	<version author="Paul Fraker" version="1.0" lastUpdated="20090731" />
-	<!-- used MRC_soundbrilliance1638 file as a starting point-->
+		<version author="Peter Ulvestad" version="1.1" lastUpdated="200900904" />
+		<version author="Paul Fraker" version="1.0" lastUpdated="20090731" />
+		<!-- used MRC_soundbrilliance1638 file as a starting point-->
+		<!-- Version 1.1 Added speed table, corrected CV6-->
   <decoder>
 	<family name="Sound Decoders" mfg="MRC" lowVersionID="29" highVersionID="29">
 		<model model="Synch Diesel Sound 1829" numOuts="4" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
@@ -49,13 +51,21 @@
 				<enumChoice choice="On"/>
 			</enumVal>
 		</variable>
-		<variable label="Speed Curve Select" CV="6" item="Speed Table Selection" default="0" tooltip="CV6, Speed Curve Select">
-		     <enumVal>
-			 	<enumChoice choice="Linear"/>
-				<enumChoice choice="Slow Increase"/>
-				<enumChoice choice="Fast Increase at Slow Speed"/>
+		
+		
+		<!-- Version 1.1 Modified CV6-->
+		<variable label="Speed Curve Select" CV="6" item="Speed Table/Mid Range Cab Speed Step" 
+				tooltip="CV6 sets Speed Curve when using CVs 2 and 5 (Set CV2 and CV5 first)">
+			<enumVal>
+				<enumChoice choice="Linear"/>
+				<enumChoice choice="Slow increase at slow speed"/>
+				<enumChoice choice="Fast increase at slow speed"/>
 			</enumVal>
+			
 		</variable>
+		
+		
+		
 		<variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version" default="29" tooltip="CV07, Decoder Version">
 			<decVal/>
 		</variable>
@@ -123,6 +133,15 @@
 		<variable label="Bell Type" CV="52" item="Sound Option 3" default="2" tooltip="CV52, Bell Type, Range 0-7" comment="Range 0-7">
 			<decVal max="7"/>
 		</variable>
+		
+		
+		<!-- Version 1.1 Added speed table-->
+		<variable label="Speed Table" CV="67">
+			<speedTableVal/>
+		</variable>
+		
+		
+		
 		<variable label="Auto Brake Squeal" CV="115" item="Sound Option 4" default="1" tooltip="CV115, Auto Brake Squeal, range 0-1, 1=enable">
 			<enumVal>
 				<enumChoice choice="Disable"/>
@@ -219,4 +238,6 @@
   </decoder>
 
 </decoder-config>
+ 	  	 
+
  	  	 
