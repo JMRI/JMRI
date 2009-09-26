@@ -295,6 +295,7 @@ public class FileDrop
                     // over the drag target.
                 }   // end dragOver
 
+@SuppressWarnings("unchecked")
                 public void drop( java.awt.dnd.DropTargetDropEvent evt )
                 {   log( out, "FileDrop: drop event." );
                     try
@@ -436,6 +437,8 @@ public class FileDrop
     
      // BEGIN 2007-09-12 Nathan Blomquist -- Linux (KDE/Gnome) support added.
      private static String ZERO_CHAR_STRING = "" + (char)0;
+
+@SuppressWarnings("unchecked")
      private static File[] createFileArray(BufferedReader bReader, PrintStream out)
      {
         try { 
