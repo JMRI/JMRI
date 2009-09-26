@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.40 $ -->
+<!-- Revision $Revision: 1.41 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -178,11 +178,13 @@
     <cvs command="export" reallyquiet="true" package="scripts/MacOSXapps/V1" dest="MacOSX/JMRI" tag="${release}"/>
     <delete dir="MacOSX/JMRI/DecoderPro.app" />
     <delete dir="MacOSX/JMRI/PanelPro.app" />
+    <delete dir="MacOSX/JMRI/SoundPro.app" />
     <delete dir="MacOSX/JMRI/JmriDemo.app" />
     <delete dir="MacOSX/JMRI/LocoTools.app" />
     <delete dir="MacOSX/JMRI/CornwallRR.app" />
     <move todir="MacOSX/JMRI" file="MacOSX/JMRI/scripts/MacOSXapps/V1/DecoderPro.app" />
     <move todir="MacOSX/JMRI" file="MacOSX/JMRI/scripts/MacOSXapps/V1/PanelPro.app" />
+    <move todir="MacOSX/JMRI" file="MacOSX/JMRI/scripts/MacOSXapps/V1/SoundPro.app" />
     <move todir="MacOSX/JMRI" file="MacOSX/JMRI/scripts/MacOSXapps/V1/JmriDemo.app" />
     <move todir="MacOSX/JMRI" file="MacOSX/JMRI/scripts/MacOSXapps/V1/LocoTools.app" />
     <move todir="MacOSX/JMRI" file="MacOSX/JMRI/scripts/MacOSXapps/V1/CornwallRR.app" />
@@ -239,6 +241,7 @@
 		<fileset dir="Linux/JMRI/scripts" >
       		<include name="DecoderPro"/>
       		<include name="PanelPro"/>
+      		<include name="SoundPro"/>
       		<include name="LocoTools"/>
       		<include name="JmriDemo"/>
       		<include name="InstallTest"/>
@@ -249,6 +252,7 @@
 		<fileset dir="Linux/JMRI/scripts" >
       		<include name="DecoderPro"/>
       		<include name="PanelPro"/>
+      		<include name="SoundPro"/>
       		<include name="LocoTools"/>
       		<include name="JmriDemo"/>
       		<include name="InstallTest"/>
@@ -291,6 +295,7 @@
                 <include name="JMRI/**" />
                 <exclude name="JMRI/DecoderPro" />
                 <exclude name="JMRI/PanelPro" />
+                <exclude name="JMRI/SoundPro" />
                 <exclude name="JMRI/LocoTools" />
                 <exclude name="JMRI/JmriDemo" />
                 <exclude name="JMRI/InstallTest" />
@@ -299,6 +304,7 @@
             <tarfileset  dir="Linux" filemode="755">
                 <include name="JMRI/DecoderPro" />
                 <include name="JMRI/PanelPro" />
+                <include name="JMRI/SoundPro" />
                 <include name="JMRI/LocoTools" />
                 <include name="JMRI/JmriDemo" />
                 <include name="JMRI/InstallTest" />
@@ -326,21 +332,21 @@
     <scp sftp="true" 
         keyfile="${user.home}/.ssh/id_dsa"
         password="${password}"
-        todir="${user.name}@frs.sourceforge.net:uploads" >
+        todir="${user.name},jmri@frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/${release}/" >
       <fileset dir="." includes="JMRI.${number}.tgz" />
     </scp>
 	<echo message="upload MacOS X file"/>
     <scp sftp="true" 
         keyfile="${user.home}/.ssh/id_dsa"
         password="${password}"
-        todir="${user.name}@frs.sourceforge.net:uploads" >
+        todir="${user.name},jmri@frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/${release}/" >
       <fileset dir="." includes="JMRI.${number}.dmg" />
     </scp>
 	<echo message="upload Windows file"/>
     <scp sftp="true" 
         keyfile="${user.home}/.ssh/id_dsa"
         password="${password}"
-        todir="${user.name}@frs.sourceforge.net:uploads" >
+        todir="${user.name},jmri@frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/${release}/" >
       <fileset dir="." includes="JMRI.${number}.exe" />
     </scp>
 </target>
