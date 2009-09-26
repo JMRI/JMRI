@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.3 2008-03-08 00:56:38 dan_boudreau Exp $ -->
+<!-- $Id: index.shtml,v 1.4 2009-09-26 04:58:48 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -68,6 +68,14 @@ it by dragging the window edges.  There's also a pause/run button.
 from the panel editor.
 </UL>
 
+<p>
+When a clock is running, JMRI creates an internal sensor and a memory variable
+that you can use to control and access the clock.  The ISCLOCKRUNNING sensor
+controls whether the clock is running (ACTIVE) or stopped (INACTIVE). 
+The IMCURRENTTIME memory contains the current fast-clock time, and can be easily accessed 
+from Logix and scripts.
+
+<p>
 Happy timekeeping!
 
     

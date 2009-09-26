@@ -3,6 +3,7 @@
 package jmri.jmrit.simpleclock;
 
 import java.util.Date;
+import jmri.Memory;
 import jmri.Timebase;
 import jmri.Sensor;
 import jmri.ClockControl;
@@ -25,11 +26,18 @@ import jmri.ClockControl;
  *
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
  *                  Dave Duchamp - 2007 additions/revisions for handling one hardware clock
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class SimpleTimebase implements Timebase {
 
 	public SimpleTimebase() {
+		// initialize time-containing memory
+		clockMemory = jmri.InstanceManager.memoryManagerInstance().provideMemory("IMCURRENTTIME");
+		if (clockMemory==null) {
+            log.warn("Unable to create IMCURRENTTIME time memory variable");
+		} else {
+		    clockMemory.setValue("--");
+	    }
 		// set to start counting from now
 		setTime(new Date());
 		pauseTime = null;
@@ -420,8 +428,11 @@ public class SimpleTimebase implements Timebase {
 	private Date setTimeValue;
 	private Date pauseTime;   // null value indicates clock is running
 	private Sensor clockSensor = null;   // active when clock is running, inactive when stopped
+	private Memory clockMemory = null;   // contains current time on each tick
+	
 	@SuppressWarnings("unused")
 	private java.beans.PropertyChangeListener clockSensorListener = null;
+	
 	private boolean internalMaster = true;     // false indicates a hardware clock is the master
 	private String masterName = "";		// name of hardware time source, if not internal master
 	private ClockControl hardwareTimeSource = null;  // ClockControl instance of hardware time source
@@ -435,6 +446,10 @@ public class SimpleTimebase implements Timebase {
 	private int startClockOption = NONE;	// request start of a clock at start up
 	private boolean notInitialized = true;  // true before initialization received from start up
 
+    java.text.SimpleDateFormat timeStorageFormat = 
+            new java.text.SimpleDateFormat(java.util.ResourceBundle.getBundle("jmri.jmrit.simpleclock.SimpleClockBundle")
+                                .getString("TimeStorageFormat"));
+                                
 	javax.swing.Timer timer = null;
     java.beans.PropertyChangeSupport pcMinutes = new java.beans.PropertyChangeSupport(this);
 	
@@ -473,13 +488,20 @@ public class SimpleTimebase implements Timebase {
         
         // and notify the others
         int minutes = date.getMinutes();
-    	if (minutes!=oldMinutes) 
+    	if (minutes!=oldMinutes) {
+    	    // update memory
+    	    updateMemory(date);
+    	    // notify listeners
     	    pcMinutes.firePropertyChange("minutes", new Double(oldMinutes), new Double(minutes));
-
+        }
         oldMinutes = minutes;
 
     }
 
+    void updateMemory(Date date) {
+        clockMemory.setValue(timeStorageFormat.format(date));
+    }
+    
     /**
      * Request a call-back when the minutes place of the time changes.
      */
