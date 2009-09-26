@@ -3,8 +3,6 @@
 package jmri.jmrit.display;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
@@ -19,7 +17,7 @@ import java.util.ResourceBundle;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Kevin Dickerson (LayoutSensorTextEditor version);
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutSensorTextEdit extends JmriJFrame 

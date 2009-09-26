@@ -6,8 +6,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 import jmri.util.JTableUtil;
 import jmri.util.com.sun.TableSorter;
@@ -30,7 +28,7 @@ import jmri.util.com.sun.TableSorter;
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
 

@@ -1,9 +1,7 @@
 //LayoutSensorChangeType
 package jmri.jmrit.display;
 
-import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
-//import jmri.jmrit.display.LayoutEditor;
 
 public class LayoutSensorChangeType {
 

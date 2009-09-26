@@ -20,7 +20,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
-import java.awt.Dimension;
 import javax.swing.border.LineBorder;
 import java.util.ResourceBundle;
 
@@ -43,7 +42,7 @@ import java.util.ResourceBundle;
  * included here, but commented out.
  *
  * @author Dave Duchamp Copyright (c) 2007, 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class LayoutPositionableLabel extends JLabel

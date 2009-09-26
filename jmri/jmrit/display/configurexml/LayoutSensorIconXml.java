@@ -18,7 +18,7 @@ import java.awt.Color;
  *   loading a saved panel.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class LayoutSensorIconXml implements XmlAdapter {
 
@@ -179,25 +179,21 @@ public class LayoutSensorIconXml implements XmlAdapter {
             } catch (org.jdom.DataConversionException e) {}
 
         } else {
-            String active;
             if (element.getAttribute("inactive")!=null){
                 name = element.getAttribute("active").getValue();
                 l.setActiveText(name);
             }
             
-            String inactive;
             if (element.getAttribute("inactive")!=null){
                 name = element.getAttribute("inactive").getValue();
                 l.setInactiveText(name);
             }
             
-            String unknown;
             if (element.getAttribute("inactive")!=null){
                 name = element.getAttribute("unknown").getValue();
                 l.setUnknownText(name);
             }
             
-            String inconsistent;
             if (element.getAttribute("inactive")!=null){
                 name = element.getAttribute("inconsistent").getValue();
                 l.setInconsistentText(name);

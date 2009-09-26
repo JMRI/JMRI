@@ -4,7 +4,6 @@ package jmri.jmrit.roster.swing.rostergroup;
 import javax.swing.JTable;
 import jmri.jmrit.roster.*;
 import javax.swing.JTextField;
-import java.awt.Font;
 
 /**
  * Table data model for display of Rosters entries to a specific
@@ -19,7 +18,7 @@ import java.awt.Font;
  *
  * @author              Bob Jacobsen   Copyright (C) 2009
  * @author              Kevin Dickerson   Copyright (C) 2009
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  * @since 2.7.5
  */
 public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel {
