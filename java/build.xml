@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009 -->
-<!-- Revision $Revision: 1.51 $ -->
+<!-- Revision $Revision: 1.52 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -162,9 +162,9 @@
            fork="true"
            memoryinitialsize="256m"
            memorymaximumsize="256m"
-           deprecation="${deprecation}"
            debug="yes" >
-       <compilerarg value="-Xlint:fallthrough,path,finally,unchecked,-serial,deprecation"/>
+       <compilerarg value="-Xlint"/>
+       <compilerarg value="-Xlint:-serial"/>
        <classpath refid="project.class.path"    />
     </javac>
   </target>
