@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.6.shtml,v 1.7 2009-09-26 05:01:39 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.6.shtml,v 1.8 2009-09-26 18:57:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -148,7 +148,8 @@ Dan Boudreau improved the operations "engine import" feature to check if the mod
 Kevin Dickerson added support for groups in the DecoderPro roster.
 
 <p>
-Ken Cameron updated the RobotThrottle2 script to solve the 'waiting for throttle' problem
+Ken Cameron updated the RobotThrottle2 script to solve the 'waiting for throttle' problem,
+and to provide smoother stops.
 
 <p>
 Matt Harris updated the audio GUI to be compatible with smaller screens.
@@ -186,6 +187,9 @@ default text will either be from the sensor username or that it blank then it wi
 
 <P>
 There is now a IMCURRENTTIME memory variable that contains the current fast time.
+
+<p>
+Matt Harris provided a new "<a href="../help/en/html/apps/SoundPro/SoundPro.shtml">SoundPro</a>" application.
 
 
 <!--#include virtual="/Footer" -->
