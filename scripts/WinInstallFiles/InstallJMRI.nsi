@@ -50,6 +50,16 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.6.0
+; - Corrected an error where old install location was not being read back
+; - if previously installed.
+; - Improved check to avoid installation into Program Files root.
+; - Updated installer to ensure JMRI uses the same library file layout as
+; - on Linux and Mac OS X platforms.
+; - Added additional obsolete decoder definitions to delete.
+; - Use new icon for InstallTest application.
+; - Add shortcut for SoundPro application.
+; -------------------------------------------------------------------------
 ; - Version 0.1.5.0
 ; - Incorporated new routine to delete obsolete decoder definitions.
 ; - At the moment, it is purely done by deleting specified files from the
@@ -116,9 +126,9 @@
 !define AUTHOR    "Matt Harris for JMRI"        ; Author name
 !define APP       "JMRI"                        ; Application name
 !define COPYRIGHT "© 1997-2009 JMRI Community"  ; Copyright string
-!define JMRI_VER  "2.7.5"                       ; Application version
+!define JMRI_VER  "2.7.5A"                       ; Application version
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.5.0"                     ; Installer version
+!define INST_VER  "0.1.6.0"                     ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -283,20 +293,56 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- Main JMRI files
     SetOutPath "$INSTDIR"
     
-    ; -- Delete old .jar files in destination directory
+    ; -- Delete old .jar & support files in destination directory
     Delete "$INSTDIR\jh.1.1.2.jar"
     Delete "$INSTDIR\jh.jar"
     Delete "$INSTDIR\jdom-jdk11.jar"
     
+    ; -- Delete old .jar & support files in lib/ directory
+    ; [Placeholder for now]
+
+    ; -- Delete .jar & support files installed using previous layout
+    Delete "$INSTDIR\activation.jar"
+    Delete "$INSTDIR\ch.ntb.usb.jar"
+    Delete "$INSTDIR\comm.jar"
+    Delete "$INSTDIR\crimson.jar"
+    Delete "$INSTDIR\ExternalLinkContentViewerUI.jar"
+    Delete "$INSTDIR\gluegen-rt.dll"
+    Delete "$INSTDIR\gluegen-rt.jar"
+    Delete "$INSTDIR\javacsv.jar"
+    Delete "$INSTDIR\javax.comm.properties"
+    Delete "$INSTDIR\jdom.jar"
+    Delete "$INSTDIR\jhall.jar"
+    Delete "$INSTDIR\jinput-dx8.dll"
+    Delete "$INSTDIR\jinput-raw.dll"
+    Delete "$INSTDIR\jinput-wintab.dll"
+    Delete "$INSTDIR\jinput.jar"
+    Delete "$INSTDIR\joal.jar"
+    Delete "$INSTDIR\joal_native.dll"
+    Delete "$INSTDIR\jspWin.dll"
+    Delete "$INSTDIR\jython.jar"
+    Delete "$INSTDIR\LibusbJava.dll"
+    Delete "$INSTDIR\log4j.jar"
+    Delete "$INSTDIR\mailapi.jar"
+    Delete "$INSTDIR\MRJAdapter.jar"
+    Delete "$INSTDIR\security.policy"
+    Delete "$INSTDIR\Serialio.jar"
+    Delete "$INSTDIR\servlet.jar"
+    Delete "$INSTDIR\smtp.jar"
+    Delete "$INSTDIR\vecmath.jar"
+    Delete "$INSTDIR\win32com.dll"
+    
+    ; -- Delete old messages.log file from program folder
+    Delete "$INSTDIR\messages.log"
+    
     ; -- Install main JMRI files
+    ; -- Library & Support Files now moved from here
     File /a "${SRCDIR}\*.jar"
     File /a "${SRCDIR}\COPYING"
     File /a "${SRCDIR}\LaunchJMRI.exe"
     File /a "${SRCDIR}\*.bat"
     File /a "${SRCDIR}\default.lcf"
     File /a "${SRCDIR}\*.ico"
-    File /a "${SRCDIR}\*.dll"
-    File /a "${SRCDIR}\javax.comm.properties"
     File /a "${SRCDIR}\lib\security.policy"
 
   SectionEnd ; SEC_MAIN
@@ -307,7 +353,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     SetOutPath "$JAVADIR\lib"
     File /a "${SRCDIR}\javax.comm.properties"
     SetOutPath "$JAVADIR\lib\ext"
-    File /a "${SRCDIR}\Serialio.jar"
+    File /a "${SRCDIR}\lib\Serialio.jar"
     SetOutPath "$JAVADIR\bin"
     File /a "${SRCDIR}\jspWin.dll"
     File /a "${SRCDIR}\win32com.dll"
@@ -325,6 +371,13 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- Library files installed here
     SetOutPath "$INSTDIR\lib"
     File /a /r "${SRCDIR}\lib\*.*"
+    
+    ; -- Extract and run OpenAL library installer in silent mode
+    ; [Ignored for now]
+    ;SetOutPath "$TEMP"
+    ;File /a /r "${SRCDIR}\oalinst.exe"
+    ;ExecWait `"$TEMP\oalinst.exe" -s`
+    ;Delete "$TEMP\oalinst.exe"
   SectionEnd ; SEC_LIB
   
   Section "Jython files" SEC_JYTHON
@@ -381,11 +434,16 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
                    "apps.PanelPro.PanelPro" \
                    "$INSTDIR\PanelPro80x80.ico" 0 "" "" \
                    "Start Panel Pro"
+    CreateShortcut "$SMPROGRAMS\$SMFOLDER\SoundPro.lnk" \
+                   "$INSTDIR\LaunchJMRI.exe" \
+                   "apps.SoundPro.SoundPro" \
+                   "$INSTDIR\SoundPro80x80.ico" 0 "" "" \
+                   "Start Sound Pro"
     CreateDirectory "$SMPROGRAMS\$SMFOLDER\Tools and Demos"
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\InstallTest.lnk" \
                    "$INSTDIR\InstallTest.bat" \
                    "" \
-                   "$INSTDIR\PanelPro80x80.ico" 0 "" "" \
+                   "$INSTDIR\InstallTest80x80.ico" 0 "" "" \
                    "Start JMRI Install Test"
     StrCmp $PROFILE "" 0 Win2k+ ; -- prior to Win2k this is blank
     ; -- Create a preferences directory for this user
@@ -634,8 +692,7 @@ Function DirectoryLeave
   Push $0
   
   ; -- Check to see if Install Directory is set to 'Program Files'
-  StrCpy $0 $INSTDIR "" -13
-  StrCmp $0 "Program Files" Invalid Valid
+  StrCmp $INSTDIR $PROGRAMFILES Invalid Valid
 
   Invalid:
     ; -- If so, display a message and ask user to re-select
@@ -847,7 +904,19 @@ Function nsDialogRemoveOldJMRI
   Backup:
     ; -- If we get to here, we've been previously installed by the new installer
     ; -- so, we can read the install location and prompt for backup
-    ReadRegStr $INSTDIR SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "InstallLocation"
+    
+    ; -- As we've not yet set the installation context (i.e. All Users or Current User)
+    ; -- first attempt to get the registry string from 'Current User'
+    ReadRegStr $0 HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "InstallLocation"
+    StrCmp $0 "" 0 CopyToInstDir
+    ; -- Location wasn't in 'Current User' - attempt to retrieve from 'All Users'
+    ReadRegStr $0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "InstallLocation"
+    StrCmp $0 "" PrepareBackup CopyToInstDir
+    
+  CopyToInstDir:
+    StrCpy $INSTDIR $0
+
+  PrepareBackup:
     StrCpy $REMOVEOLDJMRI.BACKUPONLY 1
     StrCpy $2 "This wizard will backup any existing roster files and settings."
     StrCpy $3 "Backup existing files"
@@ -1205,4 +1274,11 @@ Function RemoveObsoleteDecoderDefinitions
   Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_Diesel_EMD645.xml"
   Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_Diesel_EMD710.xml"
   Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_Diesel_FM1.xml"
+  Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_Steam_1Hvy.xml"
+  Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_Steam_2Med.xml"
+  Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_Steam_3Light.xml"
+  Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_Steam_4Lt_Log.xml"
+  Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_Steam_DRGC.xml"
+  Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_Steam_DRGK.xml"
+  Delete "$INSTDIR\xml\decoders\SoundTraxx_Tsu_Steam_Cab_Frwd.xml"
 FunctionEnd
