@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009 -->
-<!-- Revision $Revision: 1.50 $ -->
+<!-- Revision $Revision: 1.51 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -227,6 +227,20 @@
     </java>
  </target>
 
+  <target name="soundpro" depends="debug" description="build and run SoundPro app">
+    <property name="antargline" value="SoundProConfig2.xml" />
+    <java classname="apps.SoundPro.SoundPro"
+          dir=".." 
+	  fork="yes" >
+       <classpath refid="project.class.path"    />
+       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
+       <sysproperty key="log4j.ignoreTCL" path="true/"/>       
+       <sysproperty key="java.library.path" path=".:lib/"/>       
+       <arg value="${antargline}"/>
+    </java>
+ </target>
+
   <target name="installtest" depends="debug" description="build and run InstallTest app">
     <property name="antargline" value="InstallTestConfig2.xml" />
     <java classname="apps.InstallTest.InstallTest"
@@ -242,6 +256,7 @@
  </target>
 
   <target name="jmridemo" depends="debug" description="build and run JmriDemo app">
+    <property name="antargline" value="JmriDemoConfig2.xml" />
     <java classname="apps.JmriDemo.JMRIdemo"
           dir=".."
 	  fork="yes" >
@@ -250,10 +265,12 @@
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
        <sysproperty key="java.library.path" path=".:lib/"/>       
+       <arg value="${antargline}"/>
     </java>
   </target>
 
   <target name="locotools" depends="debug" description="build and run LocoTools app">
+    <property name="antargline" value="LocoToolsConfig2.xml" />
     <java classname="apps.LocoTools.LocoTools"
           dir=".." 
 	  fork="yes" >
@@ -262,6 +279,7 @@
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
        <sysproperty key="java.library.path" path=".:lib/"/>       
+       <arg value="${antargline}"/>
     </java>
  </target>
 
