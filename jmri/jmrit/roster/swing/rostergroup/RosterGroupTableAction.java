@@ -34,16 +34,7 @@ public class RosterGroupTableAction extends AbstractAction {
     RosterGroupTableFrame f;
     void createModel() {
     
-        m = new RosterGroupTableModel() {
-    		public int getColumnCount(){ return NUMCOL;}
-            
-            public String getValue(String s) {
-                return "Set";
-            }
-            public JButton configureButton() {
-                return new JButton(" Set ");
-            }
-        };
+        m = new RosterGroupTableModel();
     }
 
         public void actionPerformed() {

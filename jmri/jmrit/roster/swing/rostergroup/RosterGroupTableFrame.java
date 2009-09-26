@@ -28,7 +28,7 @@ import jmri.util.com.sun.TableSorter;
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
 
@@ -67,7 +67,6 @@ public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
 
         // add save menu item
         JMenuBar menuBar = new JMenuBar();
-        ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
  
         setJMenuBar(menuBar);
 
