@@ -194,6 +194,10 @@
   <tocitem text="Switch List " target="package.jmri.jmrit.operations.Operations_SwitchList"/>
 
  </tocitem>
+ <tocitem text="SoundPro " target="html.apps.SoundPro.SoundPro">
+  <tocitem text="Intro " target="html.apps.SoundPro.SoundPro"/>
+
+ </tocitem>
  <tocitem text="Error Codes " target="html.Errors"/>
 
  <tocitem text="Tools " target="html.tools.index">

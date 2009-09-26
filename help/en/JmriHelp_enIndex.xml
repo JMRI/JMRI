@@ -330,6 +330,8 @@
 
  <indexitem text="Slot Monitor " target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame"/>
 
+ <indexitem text="SoundPro " target="html.apps.SoundPro.SoundPro"/>
+
  <indexitem text="Speed Matching, Locomotive " target="html.tools.speedometer.SpeedMatch"/>
 
  <indexitem text="Speedometer " target="html.tools.speedometer.index"/>
