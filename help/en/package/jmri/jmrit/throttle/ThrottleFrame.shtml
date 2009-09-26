@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ThrottleFrame.shtml,v 1.8 2009-09-26 21:00:04 jacobsen Exp $ -->
+<!-- $Id: ThrottleFrame.shtml,v 1.9 2009-09-26 21:03:16 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -71,7 +71,7 @@ You can operate the Throttle using your keyboard.  Keys include:
 </dl>
 
 <h2>Preferences</h2>
-
+<a id="prefs">
 The Throttle Preferences, accessed from the main menu, control how the throttle window looks:
 
 <dl>
