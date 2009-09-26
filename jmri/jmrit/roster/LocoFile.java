@@ -24,7 +24,7 @@ import org.jdom.ProcessingInstruction;
  * @author    Bob Jacobsen     Copyright (C) 2001, 2002, 2008
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.32 $
+ * @version   $Revision: 1.33 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
@@ -211,36 +211,44 @@ class LocoFile extends XmlFile {
             Element decoderDef;
             values.addContent(decoderDef = new Element("decoderDef"));
             // add the variable values to the decoderDef Element
-            for (int i = 0; i < variableModel.getRowCount(); i++) {
-                decoderDef.addContent(new Element("varValue")
-                                      .setAttribute("item", variableModel.getLabel(i))
-                                      .setAttribute("value", variableModel.getValString(i))
-                    );
+            if (variableModel!=null) {
+                for (int i = 0; i < variableModel.getRowCount(); i++) {
+                    decoderDef.addContent(new Element("varValue")
+                                          .setAttribute("item", variableModel.getLabel(i))
+                                          .setAttribute("value", variableModel.getValString(i))
+                        );
+                }
+                // mark file as OK
+                variableModel.setFileDirty(false);
             }
+            
             // add the CV values to the values Element
-            for (int i = 0; i < cvModel.getRowCount(); i++) {
-                values.addContent(new Element("CVvalue")
-                                  .setAttribute("name", cvModel.getName(i))
-                                  .setAttribute("value", cvModel.getValString(i))
-                    );
+            if (cvModel!=null) {
+                for (int i = 0; i < cvModel.getRowCount(); i++) {
+                    values.addContent(new Element("CVvalue")
+                                      .setAttribute("name", cvModel.getName(i))
+                                      .setAttribute("value", cvModel.getValString(i))
+                        );
+                }
             }
+            
             // add the Indexed CV values to the
-            for (int i = 0; i < iCvModel.getRowCount(); i++) {
-                values.addContent(new Element("indexedCVvalue")
-                                  .setAttribute("name", iCvModel.getName(i))
-                                  .setAttribute("piCv", ""+(iCvModel.getCvByRow(i)).piCv())
-                                  .setAttribute("piVal", ""+(iCvModel.getCvByRow(i)).piVal())
-                                  .setAttribute("siCv", ""+(iCvModel.getCvByRow(i)).siCv())
-                                  .setAttribute("siVal", ""+(iCvModel.getCvByRow(i)).siVal())
-                                  .setAttribute("iCv", ""+(iCvModel.getCvByRow(i)).iCv())
-                                  .setAttribute("value", iCvModel.getValString(i))
-                    );
+            if (iCvModel!=null) {
+                for (int i = 0; i < iCvModel.getRowCount(); i++) {
+                    values.addContent(new Element("indexedCVvalue")
+                                      .setAttribute("name", iCvModel.getName(i))
+                                      .setAttribute("piCv", ""+(iCvModel.getCvByRow(i)).piCv())
+                                      .setAttribute("piVal", ""+(iCvModel.getCvByRow(i)).piVal())
+                                      .setAttribute("siCv", ""+(iCvModel.getCvByRow(i)).siCv())
+                                      .setAttribute("siVal", ""+(iCvModel.getCvByRow(i)).siVal())
+                                      .setAttribute("iCv", ""+(iCvModel.getCvByRow(i)).iCv())
+                                      .setAttribute("value", iCvModel.getValString(i))
+                        );
+                }
             }
-
+            
             writeXML(file, doc);
 
-            // mark file as OK
-            variableModel.setFileDirty(false);
         }
         catch (Exception ex) {
             // need to trace this one back
