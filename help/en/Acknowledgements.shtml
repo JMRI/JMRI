@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.82 2009-09-26 22:19:19 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.83 2009-09-26 22:53:05 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -263,6 +263,8 @@
 	<LI>The good people at 
 	<a href="http://www.mindvision.com/">MindVision</a>, who are letting us use their excellent Installer Vise
 	to build our Windows installer
+    <LI>Elmer McKay, who provided a nice
+        <a href="html/tools/signaling/IntroToSignalingYourMRR.html">help file on how to start signaling your layout</a>.
     <li>Mike Moir, who provided a lot of information on how <a href="http://www.protrak.cc/">Grapevine</a> works.
 	<LI>Michael Mosher, who helped identify the way Digitrax decoder models are organized,
 	has done a lot of work to improve the decoder definitions for NCE, Soundtraxx 

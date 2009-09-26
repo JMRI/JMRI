@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.6.shtml,v 1.10 2009-09-26 22:19:20 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.6.shtml,v 1.11 2009-09-26 22:53:05 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -195,6 +195,21 @@ Matt Harris provided a new "<a href="../help/en/html/apps/SoundPro/SoundPro.shtm
 Lionel Jeanson added support for icons to the roster, so you can associate images with your
 locomotives.  He also updated the Throttle to display them, and provided a 
 <a href="../help/en/package/jmri/jmrit/throttle/ThrottleFrame.shtml#prefs">throttle preferences panel</a> for controlling that.
+
+<p>
+Peter Ulvestad updated the Comprehensive programmer format to display built-in speed table information better.
+
+<p>
+Peter Ulvestad updated the MRC Sound Brilliance 1820 definition to better display CV 6. 
+He also provided new MRC 1637 and 1665 definitions, 
+and updated the MRC Diesel 1829.
+
+<p>
+Paul Fraker updated the MRC Athearn Genesis SD45-2 definition.
+
+<p>
+Elmer McKay provided a nice help file describing how to start putting signals on your layout.
+
 
 <!--#include virtual="/Footer" -->
 
