@@ -1,14 +1,11 @@
-# Sample script showing how to loop 
-# through the Roster entries.
-#
-# This example just prints the name, but you
-# can extract or use other info too.
+# Script to migrate specific decoder names 
+# to new names.
 #
 # Author: Bob Jacobsen, copyright 2008
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 import jmri.jmrit.roster
 import java
@@ -47,15 +44,6 @@ def checkEntry(entry, chooseList) :
         # not selected
         print "no change"
     return
-
-# If a string was returned, say so.
-#if ((s != null) && (s.length() > 0)) {
-#    setLabel("Green eggs and... " + s + "!");
-#    return;
-#}
-
-#If you're here, the return value was null/empty.
-#setLabel("Come on, finish the sentence!");
 
 ############
 #  main code
