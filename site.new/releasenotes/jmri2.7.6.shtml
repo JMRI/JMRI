@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.6.shtml,v 1.9 2009-09-26 21:04:02 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.6.shtml,v 1.10 2009-09-26 22:19:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -192,7 +192,7 @@ There is now a IMCURRENTTIME memory variable that contains the current fast time
 Matt Harris provided a new "<a href="../help/en/html/apps/SoundPro/SoundPro.shtml">SoundPro</a>" application.
 
 <p>
-Lionel Hebbos added support for icons to the roster, so you can associate images with your
+Lionel Jeanson added support for icons to the roster, so you can associate images with your
 locomotives.  He also updated the Throttle to display them, and provided a 
 <a href="../help/en/package/jmri/jmrit/throttle/ThrottleFrame.shtml#prefs">throttle preferences panel</a> for controlling that.
 

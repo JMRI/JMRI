@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.81 2009-09-06 22:31:53 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.82 2009-09-26 22:19:19 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -222,6 +222,8 @@
 	<LI>John Jabour, who created the excellent LocoBuffer and thereby made 
 	reliable LocoNet communications routine
 	<LI>Bob Jacobsen, who wrote some of the early code and does packaging and user support
+    <LI>Lionel Jeanson, who added images to the roster and updated the throttle
+        to add preferences for displaying them
 	<LI>Robert Johnson, who provided info on the DZ123 decoder
 	<LI>Colin Jones, who first recognized the LocoButter
 	<LI>Randy Jones, who provided identification info for several Quantum decoders
