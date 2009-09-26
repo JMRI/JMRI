@@ -25,7 +25,7 @@ import jmri.ClockControl;
  *
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
  *                  Dave Duchamp - 2007 additions/revisions for handling one hardware clock
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class SimpleTimebase implements Timebase {
 
@@ -34,12 +34,12 @@ public class SimpleTimebase implements Timebase {
 		setTime(new Date());
 		pauseTime = null;
 		// initialize start/stop sensor for time running
-		clockSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor("ISClockRunning");
+		clockSensor = jmri.InstanceManager.sensorManagerInstance().provideSensor("ISCLOCKRUNNING");
 		if (clockSensor!=null) {
 			try {				
 				clockSensor.setKnownState(Sensor.ACTIVE);
 			} catch (jmri.JmriException e) {
-				log.warn("Exception setting ISClockRunning sensor ACTIVE: "+e);
+				log.warn("Exception setting ISCLOCKRUNNING sensor ACTIVE: "+e);
 			}
 			clockSensor.addPropertyChangeListener(clockSensorListener =
 					new java.beans.PropertyChangeListener() {
