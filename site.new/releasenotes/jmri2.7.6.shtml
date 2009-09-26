@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.6.shtml,v 1.6 2009-09-20 16:23:07 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.6.shtml,v 1.7 2009-09-26 05:01:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -171,6 +171,22 @@ around the x axis.
 
 <p>
 Dan Boudreau added options to allow operations users to control the display of error messages.
+
+<p>
+Matt Harris updated the build.xml file so that JMRI can be built with Java 1.7 (1.5 is still the default)
+
+<p>
+Ken Cameron added Jython command support to Logix.
+
+<p>
+Kevin Dickerson updated the layout sensor, 
+so that it can be converted and displayed as a text label instead of an icon.  
+Formatting options are similar to that added with the positional label, 
+default text will either be from the sensor username or that it blank then it will use active, inactive.
+
+<P>
+There is now a IMCURRENTTIME memory variable that contains the current fast time.
+
 
 <!--#include virtual="/Footer" -->
 
