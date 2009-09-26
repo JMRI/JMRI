@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2006, 2007,2008 All rights reserved                  -->
-<!-- $Id: MRC_soundbrilliance1820.xml,v 1.1 2009-09-03 22:48:12 jacobsen Exp $ -->
+<!-- $Id: MRC_soundbrilliance1820.xml,v 1.2 2009-09-26 22:25:45 jacobsen Exp $ -->
 <!--                                                                         -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under   -->
 <!-- the terms of version 2 of the GNU General Public License as published   -->
@@ -15,8 +15,10 @@
 <!--                                                                         -->
 
 <decoder-config>
-		<version author="Peter Ulvestad" version="1.0" lastUpdated="20090827" />  
-		<!--   version 1.0 Based on MRC_soundbrilliance1806-->
+		<version author="Peter Ulvestad" version="2" lastUpdated="20090904" />
+		<version author="Peter Ulvestad" version="1" lastUpdated="20090827" />
+<!--   version 1 Based on MRC_soundbrilliance1806-->
+<!--   version 2 Modified CV6 to better match manual-->
 
    <decoder>
 	  <family name="Brilliance Sound Decoders" mfg="MRC"
@@ -75,13 +77,15 @@
 			<decVal max="32"/>
 		</variable>
 		
-		<variable label="Mid Voltage [range 0-2]" 
+		<variable label="Speed Curve Select" 
 								CV="6" 
-								item="Vmid" 
-								tooltip="CV6 sets Speed Curve, 0-Linear 1-Slow increase at slow speed 2-Fast increase at slow speed"
-								default="0">
-			<decVal max="2"/>
-
+								item="Speed Table/Mid Range Cab Speed Step" 
+								tooltip="CV6 sets Speed Curve">
+			<enumVal>
+				<enumChoice choice="Linear"/>
+				<enumChoice choice="Slow increase at slow speed"/>
+				<enumChoice choice="Fast increase at slow speed"/>
+			</enumVal>
 		</variable>
 		
 		<variable label="Manufacturer Version Number" 
@@ -439,5 +443,7 @@
     </pane>
 
 </decoder-config>
+
+ 	  	 
 
  	  	 
