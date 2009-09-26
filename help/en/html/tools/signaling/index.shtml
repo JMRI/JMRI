@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.4 2008-03-09 20:27:29 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.5 2009-09-26 22:48:34 jacobsen Exp $ -->
 <title>JMRI: Signaling</title>
 
 <!-- Style -->
@@ -30,6 +30,12 @@ JMRI: Signaling
 Modeling railroad signaling on a layout can be done many different ways,
 ranging from "stoplights" to complete emulation of a particular prototype's
 signaling logic.
+
+<p>
+Elmer McKay has provided a very nice 
+<a href="IntroToSignalingYourMRR.html">discussion of how to get started</a>
+with signals on your layout.
+
 <P>
 JMRI provides several different things that can help with this:
 <OL>
