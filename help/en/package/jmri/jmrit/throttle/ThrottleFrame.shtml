@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ThrottleFrame.shtml,v 1.7 2009-07-12 14:51:27 dan_boudreau Exp $ -->
+<!-- $Id: ThrottleFrame.shtml,v 1.8 2009-09-26 21:00:04 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -43,7 +43,7 @@ If you select "Frame Properties" from the Edit menu on the throttle
 window, you can change the title on top of your throttle window.
 There are four choices you can select from:
 <ul>
-<li> Address - Automatically display the address of whatever locomotive is selected. This is the default.
+<li>Address - Automatically display the address of whatever locomotive is selected. This is the default.
 <li>Text - Display the text that you enter in the field at the top of this window
 <li>Text Address - Display the text you entered, followed by the selected address
 <li>Address Text - Display the selected address, followed by the text you entered
@@ -70,6 +70,41 @@ You can operate the Throttle using your keyboard.  Keys include:
 <dt>Numeric Pad *<dd>Idle (speed 0)
 </dl>
 
+<h2>Preferences</h2>
+
+The Throttle Preferences, accessed from the main menu, control how the throttle window looks:
+
+<dl>
+<dt>Use extended throttle</dt>
+<dd>Enable/disable the whole bunch of features I've added, when disabled, throttle windows have the same behaviour than before.</dd>
+
+<dt>Use roster image as background</dt>
+<dd>If a roster image is defined in the roster entry, it will be used as background in the throttle pane.</dd>
+
+<dt>Resize window to image size</dt>
+<dd>Will force throttle pane to resize to actual roster image size (overriden by throttle window size when backup file exist)</dd>
+
+<dt>Set controls transparent</dt>
+<dd>Allow AddresPanel, ControlPanel and FunctionPanel to be transparent, quite nice with background image. Due to a bug in UI implementation, might not work in Linux, but is very nice on OSW, not sure on Windows.</dd>
+
+<dt>Search roster info when address entered</dt>
+<dd>When an address is entered in the AddressPanel instead of a roster entry being selected, will search in the roster list if there is one matching this address and then automotically update the throttle frame.</dd>
+
+<dt>Automatic load of throttle window preferences when linked to roster</dt>
+<dd>When a roster entry is selected, if there is a matching throttle file (based on roster id) automatically load these preferences (windows position and size, and icon status; I've created a reduced throttle backup file as function buttons label and background image are already in the roster entry). This throttle file is created when choosing "Export customization to roster", automatically saved as "roster ID.xml" in throttle folder in JMRI preferences folder.</dd>
+
+<dt>Hide undefined roster function buttons</dt>
+<dd>When using a roster entry, it will hide function buttons that have no label defined. Also hide the alternatives buttons if no function text defined over 15.</dd>
+
+<dt>Apply</dt>
+<dd>Apply curent preferences, a new throttle window shall be opened to enjoy.</dd>
+
+<dt>Save</dt>
+<dd>Apply, Save to xml file and close preferences window.</dd>
+
+<dt>Cancel</dt>
+<dd>Close the preferences window.</dd>
+</dl>
 
 <p>
 (This is the jmri.jmrit.throttle.ThrottleFrame help page)

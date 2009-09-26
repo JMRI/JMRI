@@ -8,12 +8,12 @@ import java.awt.event.KeyEvent;
 import java.util.ResourceBundle;
 
 import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import org.jdom.Element;
 
+import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
 
@@ -90,10 +90,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
         RosterEntry rosterEntry = null;
         if (addressPanel != null)
         	rosterEntry = addressPanel.getRosterEntry();
-        if (rosterEntry != null){
-        	if (log.isDebugEnabled()) log.debug("RosterEntry found");
-        	initGUI();	// need to rebuild panel
-        }
+/*        if (rosterEntry != null){
+        	if (log.isDebugEnabled()) log.debug("RosterEntry found");*/
+        initGUI();	// need to rebuild panel in all cases to update button texts
+        int maxi = 0;
         for (int i=0; i<this.NUM_FUNCTION_BUTTONS; i++)
         {
            try
@@ -113,7 +113,14 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
                 		if (butWidth < FunctionButton.BUT_WDTH) butWidth = FunctionButton.BUT_WDTH;
                 		functionButton[i].setPreferredSize(new Dimension(butWidth,FunctionButton.BUT_HGHT));
                 		functionButton[i].setIsLockable(rosterEntry.getFunctionLockable(functionNumber));
+                		maxi = i;
                 	}
+                	else
+                		if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() &&
+                        	 jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isHidingUndefinedFuncButt() ) {
+                			functionButton[i].setDisplay(false);
+                			functionButton[i].setVisible(false);
+                		}
                 }
            }
            catch (java.lang.NoSuchMethodException ex1)
@@ -129,6 +136,14 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
                log.warn("Exception in notifyThrottleFound: "+ex3);
            }
         }
+        alt1Button.setVisible(true);
+        alt2Button.setVisible(true);
+		if ( (rosterEntry != null) && (maxi < NUM_FUNC_BUTTONS_INIT) &&
+			 jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() &&
+           	 jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isHidingUndefinedFuncButt() ) {
+	        alt1Button.setVisible(false);
+	        alt2Button.setVisible(false);		
+		}
         this.setEnabled(true);
         this.throttle.addPropertyChangeListener(this);
     }
@@ -241,6 +256,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
         {
             functionButton[i].setEnabled(isEnabled);
         }
+        alt1Button.setEnabled(isEnabled);
+        alt2Button.setEnabled(isEnabled);
     }
     
     AddressPanel addressPanel = null;
@@ -265,9 +282,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
     			rosterEntry.setFunctionLockable(functionNumber, lockable);
     		}
     	}
-		JOptionPane.showMessageDialog(this, java.util.ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle").getString("Use_Roster_Edit_Entry_to_save_your_function_keys"), java.util.ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle").getString("Feature_still_under_development!"),
-				JOptionPane.INFORMATION_MESSAGE);
-    	//TODO save roster!
+    	Roster.writeRosterFile();
     }
 
     JPanel mainPanel = new JPanel();
@@ -382,6 +397,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
     		if (i<3)
     			functionButton[i].setVisible(true);
     	}
+    	alt1Button.setVisible(true);
+    	alt2Button.setVisible(true);
     	buttonActionCmdPerformed();
     }
     
@@ -389,7 +406,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.46 $
+	 * @version $Revision: 1.47 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{
@@ -534,7 +551,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
     public Element getXml()
     {
         Element me = new Element("FunctionPanel");
-        //Element window = new Element("window");
         WindowPreferences wp = new WindowPreferences();
         java.util.ArrayList<Element> children =
                 new java.util.ArrayList<Element>(1);
@@ -546,7 +562,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
         me.setContent(children);
         return me;
     }
-
+    
     /**
      * Set the preferences based on the XML Element.
      * <ul>
@@ -565,12 +581,14 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
         java.util.List<Element> buttonElements =
                 e.getChildren("FunctionButton");
 
-        int i = 0;
-        for (java.util.Iterator<Element> iter =
-             buttonElements.iterator(); iter.hasNext();)
-        {
-            Element buttonElement = iter.next();
-            functionButton[i++].setXml(buttonElement);
+        if (buttonElements != null && buttonElements.size()>0) {
+	        int i = 0;
+	        for (java.util.Iterator<Element> iter =
+	             buttonElements.iterator(); iter.hasNext();)
+	        {
+	            Element buttonElement = iter.next();
+	            functionButton[i++].setXml(buttonElement);
+	        }
         }
     }
 

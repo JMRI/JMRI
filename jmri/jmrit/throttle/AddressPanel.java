@@ -24,7 +24,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 public class AddressPanel extends JInternalFrame {
 
@@ -129,6 +129,16 @@ public class AddressPanel extends JInternalFrame {
 	 * @return RosterEntry or null
 	 */
 	public RosterEntry getRosterEntry(){
+		if ((rosterEntry == null) &&
+			(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()) &&	
+		    (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isEnablingRosterSearch()) && 
+		    addrSelector != null && addrSelector.getAddress() != null )
+		{
+			List<RosterEntry> l = Roster.instance().matchingList(null, null, ""+addrSelector.getAddress().getNumber(), null, null, null, null);
+			if (l.size()>0) {
+				setRosterEntry(l.get(0));				
+			}
+		}			
 		return rosterEntry;
 	}
 	
@@ -258,7 +268,7 @@ public class AddressPanel extends JInternalFrame {
 			consistAddress = null;
 			changeOfAddress();
 		}
-		// enable program button iff programmer available
+		// enable program button if programmer available
 		// for ops-mode programming
 		if (InstanceManager.programmerManagerInstance()!=null
 		    && InstanceManager.programmerManagerInstance().isAddressedModePossible())
@@ -411,7 +421,6 @@ public class AddressPanel extends JInternalFrame {
 		me.setContent(children);
 		return me;
 	}
-	
 
 	/**
 	 * Use the Element passed to initialize based on user prefs.

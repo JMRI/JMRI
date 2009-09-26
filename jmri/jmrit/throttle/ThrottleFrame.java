@@ -7,20 +7,26 @@ import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.ThrottleListener;
 
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
@@ -30,11 +36,14 @@ import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
+import jmri.jmrit.XmlFile;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.powerpanel.PowerPane;
 import jmri.util.JmriJFrame;
 
+import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.ProcessingInstruction;
 
 import jmri.jmrit.roster.RosterEntry;
 
@@ -47,15 +56,16 @@ import jmri.jmrit.roster.RosterEntry;
  *
  * @author     Glen Oberhauser
  * @author     Bob Jacobsen    Copyright 2008
- * @version    $Revision: 1.46 $
+ * @version    $Revision: 1.47 $
  */
 /**
  * @author DSM
  *
  */
-public class ThrottleFrame extends JmriJFrame implements AddressListener, ThrottleListener, java.beans.PropertyChangeListener
+public class ThrottleFrame extends JmriJFrame implements AddressListener, ThrottleListener, java.beans.PropertyChangeListener, ComponentListener
 {
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
+    private final Integer BACKPANEL_LAYER = new Integer(Integer.MIN_VALUE);
     private final Integer PANEL_LAYER = new Integer(1);
     private static int NEXT_FRAME_KEY = KeyEvent.VK_RIGHT;
     private static int PREV_FRAME_KEY = KeyEvent.VK_LEFT;
@@ -71,6 +81,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
     private ControlPanel controlPanel;
     private FunctionPanel functionPanel;
     private AddressPanel addressPanel;
+    private BackgroundPanel backgroundPanel;
     
     private JCheckBoxMenuItem viewControlPanel;
     private JCheckBoxMenuItem viewFunctionPanel;
@@ -79,6 +90,8 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
     
     private DccThrottle throttle;
     private Dimension bDim;
+    
+    protected String _throttlesBasePath = XmlFile.prefsDir()+"throttle"+File.separator ;
     
     PowerPane powerControl  = new PowerPane();
     PowerManager powerMgr = null;
@@ -121,10 +134,19 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
             addressPanel.notifyThrottleFound(t);
             controlPanel.notifyThrottleFound(t);
             functionPanel.notifyThrottleFound(t);
+            if (backgroundPanel != null)
+            	backgroundPanel.notifyThrottleFound(t);
+        	if ((jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()) &&
+            		(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isAutoLoading()) && 
+            		(addressPanel !=null) && (addressPanel.getRosterEntry() != null ))
+            		loadThrottle( _throttlesBasePath+ addressPanel.getRosterEntry().getId() +".xml" );
+         
     	} else {
             log.debug("Notify control panel to use consist throttle");
             controlPanel.notifyThrottleFound(t);
             addressPanel.notifyConsistThrottleFound(t);
+            if (backgroundPanel != null)
+            	backgroundPanel.notifyConsistThrottleFound(t);
     	}
     }
     
@@ -133,35 +155,87 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
      * @param address The address that is now selected.
      */
     public void notifyAddressChosen(int address, boolean isLong)
-    {
-        
-        boolean requestOK =
-            InstanceManager.throttleManagerInstance().requestThrottle(address, isLong, this);
-        if (!requestOK)
-            {
-                JOptionPane.showMessageDialog(this, "Address in use by another throttle.");
-            }
-        else
-            {
-        		setFrameTitle(); 
-            }
+    {    
+    	boolean requestOK =
+    		InstanceManager.throttleManagerInstance().requestThrottle(address, isLong, this);
+    	if (!requestOK)
+    		JOptionPane.showMessageDialog(this, "Address in use by another throttle.");   
+    	else
+    		setFrameTitle();
     }
-    
+
     /**
      * Receive notification that an address has been released or dispatched
      * @param address The address released/dispatched
      */
     public void notifyAddressReleased(int address, boolean isLong)
-    {
+    {      	
         setTitle("Throttle");
         InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
         controlPanel.notifyThrottleDisposed();
         functionPanel.notifyThrottleDisposed();
         addressPanel.notifyThrottleDisposed();
+        if (backgroundPanel != null)
+        	backgroundPanel.notifyThrottleDisposed();
         throttle = null;
     }
     
-    /**
+    private void saveThrottle(String sfile) {
+    	// Save throttle: title / window position
+    	// as strongly linked to extended throttles and roster presence, do not save function buttons and background window as they're stored in the roster entry
+		XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
+		xf.makeBackupFile(sfile);
+		File file=new File(sfile);
+		try {
+			//The file does not exist, create it before writing
+			File parentDir=file.getParentFile();
+			if(!parentDir.exists())
+				parentDir.mkdir();
+			file.createNewFile();
+		} catch (Exception exp) {
+			log.error("Exception while writing the throttle file, may not be complete: "+exp);
+		}
+   
+		try {
+			Element root = new Element("throttle-config");
+			Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation+"throttle-config.dtd");
+			// add XSLT processing instruction
+			// <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>
+			java.util.Map<String,String> m = new java.util.HashMap<String,String>();
+			m.put("type", "text/xsl");
+			m.put("href", jmri.jmrit.XmlFile.xsltLocation+"throttle.xsl");
+			ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
+			doc.addContent(0,p);
+			Element throttleElement = getXml();
+			// don't save the loco address or consist address
+			throttleElement.getChild("AddressPanel").removeChild("locoaddress");
+			throttleElement.getChild("AddressPanel").removeChild("locoaddress");
+		    // don't save function buttons labels, they're in roster entry
+			throttleElement.getChild("FunctionPanel").removeChildren("FunctionButton");
+			
+			root.setContent(throttleElement);
+			xf.writeXML(file, doc);
+		}
+		catch (Exception ex){
+    		log.warn("Exception in storing throttles preferences xml: "+ex);
+    	}
+	}
+    
+    private void loadThrottle(String sfile) {
+		try {
+			XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
+			File f=new File(sfile);
+			Element root = xf.rootFromFile(f);
+			Element conf = root.getChild("ThrottleFrame");
+			setXml(conf);
+		} catch (Exception ex) {
+			if (log.isDebugEnabled())
+				log.debug("Loading throttle exception ",ex);
+		}
+		return ;
+	}
+
+	/**
      * Notify that a new throttle roster entry is to be used.
      * Works the same way as selecting a roster entry from the 
      * address menu.
@@ -170,7 +244,25 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
     public void notifyRosterEntryChosen(RosterEntry entry){
     	addressPanel.setRosterEntry(entry);
     	notifyAddressChosen(entry.getDccLocoAddress().getNumber(), entry.getDccLocoAddress().isLongAddress());
-    }
+   }
+    
+	private void setTransparent(JComponent jcomp)
+	{
+		jcomp.setOpaque(false);
+		Component[] comps = jcomp.getComponents();
+		JComponent jcmp2;
+		for (int i=0; i<comps.length; i++)
+		{
+			try
+			{
+				jcmp2 = (JComponent) comps[i];
+				setTransparent( jcmp2 );
+			}
+			catch(Exception e)
+			{ // Do nothing, just go on
+			}
+		}
+	}
     
     /**
      *  Place and initialize the GUI elements.
@@ -239,7 +331,6 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         addressPanel.setVisible(true);
         addressPanel.addInternalFrameListener(frameListener);
         addressPanel.addAddressListener(this);
-        
         functionPanel.setAddressPanel(addressPanel); // so the function panel can get access to the roster
         
         if (controlPanel.getHeight() < functionPanel.getHeight() + addressPanel.getHeight())
@@ -251,7 +342,22 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         desktop.add(controlPanel, PANEL_LAYER);
         desktop.add(functionPanel, PANEL_LAYER);
         desktop.add(addressPanel, PANEL_LAYER);
-        
+
+        if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) {
+        	if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingTransparentCtl() ) {
+        		setTransparent(functionPanel);
+        		setTransparent(addressPanel);
+        		setTransparent(controlPanel);
+        	}
+        	if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingRosterImage() ) {
+        		backgroundPanel = new BackgroundPanel();
+        		backgroundPanel.setAddressPanel(addressPanel); // reusing same way to do it than existing thing in functionPanel
+        		desktop.addComponentListener(backgroundPanel); // backgroudPanel warned when desktop resized
+        		desktop.add(backgroundPanel, BACKPANEL_LAYER);
+        	}
+        	desktop.addComponentListener(this); // to force sub windows repositionning
+        }
+
         frameList = new JInternalFrame[NUM_FRAMES];
         frameList[ADDRESS_PANEL_INDEX] = addressPanel;
         frameList[CONTROL_PANEL_INDEX] = controlPanel;
@@ -268,13 +374,12 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         try
             {
                 addressPanel.setSelected(true);
-                
             }
         catch (java.beans.PropertyVetoException ex)
             {
                 log.error("Error selecting InternalFrame:" + ex);
             }
-        
+    
     }
     
     
@@ -336,11 +441,14 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 				resetFuncButtons();
 			}
 		});
-		JMenuItem saveFuncButtonsItem = new JMenuItem("Save Function Buttons");
+		JMenuItem saveFuncButtonsItem = new JMenuItem("Export Customizations To Roster");
 		editMenu.add(saveFuncButtonsItem);
 		saveFuncButtonsItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				saveFuncButtons();
+				saveRosterChanges();
+		        if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) {
+		        	saveThrottle( _throttlesBasePath+ addressPanel.getRosterEntry().getId() +".xml" ); 
+		        }
 			}
 		});
 
@@ -394,6 +502,29 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 		addHelpMenu("package.jmri.jmrit.throttle.ThrottleFrame", true);
 	}
     
+	private void checkPosition(JComponent comp)
+	{ // make sure components are inside this frame bounds	
+		if ( (this.getWidth()<1) || (this.getHeight()<1)) return;
+		Rectangle pos = comp.getBounds();
+		if ( ( pos.x < 0 ) || (pos.x + pos.width > this.getWidth()) )
+			pos.x = this.getWidth() - pos.width - 8;
+		if (pos.x < 1)
+			pos.x = 10;
+		if ( ( pos.y < 0 ) || (pos.y + pos.height > this.getHeight()) )
+			pos.y = this.getHeight() - pos.height - 48;
+		if (pos.y < 1)
+			pos.y = 10;
+		comp.setBounds(pos);
+	}
+	
+    // overwritten in order to be able to check sub windows positions
+    public void pack() {
+    	super.pack();
+    	checkPosition(controlPanel);
+		checkPosition(functionPanel);
+		checkPosition(addressPanel);
+    }
+    
     private void editPreferences(){
         ThrottleFramePropertyEditor editor =
             ThrottleFrameManager.instance().getThrottleFrameEditor();
@@ -408,7 +539,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
     	functionPanel.setEnabled(false);
     }
     
-    private void saveFuncButtons(){
+    private void saveRosterChanges(){
     	RosterEntry rosterEntry = addressPanel.getRosterEntry();
     	if (rosterEntry == null){
 			JOptionPane.showMessageDialog(this, "Select loco using roster menu in Address Panel", "No Loco Roster Entry Selected",
@@ -416,14 +547,15 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
     		return;
     	}
 		if (JOptionPane.showConfirmDialog(this,
-				"Save function buttons to your loco's roster?", "Update Roster Entry",
+				"Save function buttons and loco image to your loco's roster?", "Update Roster Entry",
 				JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 			return;
 		}
-		// save function buttons to roster
 		functionPanel.saveFunctionButtonsToRoster(rosterEntry);
+        if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() )
+        	backgroundPanel.saveImageToRoster(rosterEntry);
     }
-    
+   
     /**
 	 * Handle my own destruction.
 	 * <ol>
@@ -598,7 +730,6 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         
     }
     
-    
     /**
      *  Collect the prefs of this object into XML Element
      *  <ul>
@@ -692,10 +823,29 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
     		this.setTitle(addr + " " + titleText);
     	} else if (titleTextType.compareTo("textAddress") == 0) {
     		this.setTitle(titleText + " " + addr);
+    	} else if (titleTextType.compareTo("rosterID") == 0) {
+    		if ( (addressPanel.getRosterEntry() != null) && (addressPanel.getRosterEntry().getId() != null) )
+    			this.setTitle(addressPanel.getRosterEntry().getId()) ;
+    		else
+    			this.setTitle(addr);
     	}
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleFrame.class.getName());
-    
+
+	public void componentHidden(ComponentEvent e) {		
+	}
+
+	public void componentMoved(ComponentEvent e) {		
+	}
+
+	public void componentResized(ComponentEvent e) {
+    	checkPosition(controlPanel);
+		checkPosition(functionPanel);
+		checkPosition(addressPanel);	
+	}
+
+	public void componentShown(ComponentEvent e) {		
+	}  
 }
 

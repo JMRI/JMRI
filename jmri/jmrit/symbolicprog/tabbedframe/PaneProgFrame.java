@@ -36,7 +36,7 @@ import java.awt.event.ItemEvent;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.79 $
+ * @version   $Revision: 1.80 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -60,6 +60,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     RosterEntry         _rosterEntry    = null;
     RosterEntryPane     _rPane          = null;
     FunctionLabelPane   _flPane         = null;
+    RosterMediaPane     _rMPane         = null;
     
     List<JPanel>        paneList        = new ArrayList<JPanel>();
     int                 paneListIndex;
@@ -526,7 +527,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @return true if file needs to be written
      */
     protected boolean checkDirtyFile() {
-        return (variableModel.fileDirty() || _rPane.guiChanged(_rosterEntry) || _flPane.guiChanged(_rosterEntry));
+        return (variableModel.fileDirty() || _rPane.guiChanged(_rosterEntry) || _flPane.guiChanged(_rosterEntry) || _rMPane.guiChanged(_rosterEntry));
     }
     protected void handleDirtyFile() {
     }
@@ -601,6 +602,9 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // add the Function Label tab
         tabPane.addTab("Function Labels", makeFunctionLabelPane(r));
+
+        // add the Media tab
+        tabPane.addTab("Roster Media", makeMediaPane(r));
 
         // for all "pane" elements in the programmer
         List<Element> paneList = base.getChildren("pane");
@@ -761,6 +765,45 @@ abstract public class PaneProgFrame extends JmriJFrame
         return outer;
     }
 
+    protected JPanel makeMediaPane(RosterEntry r) {
+        // create the identification pane (not configured by programmer file now; maybe later?
+
+        JPanel outer = new JPanel();
+        outer.setLayout(new BoxLayout(outer, BoxLayout.Y_AXIS));
+        JPanel body = new JPanel();
+        body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
+        JScrollPane scrollPane = new JScrollPane(body);
+
+        // add tab description
+        JLabel title = new JLabel(rbt.getString("UseThisTabMedia"));
+        title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        body.add(title);
+        body.add(new JLabel(" "));	// some padding
+
+        // add roster info
+        _rMPane = new RosterMediaPane(r);
+        _rMPane.setMaximumSize(_rMPane.getPreferredSize());
+        body.add(_rMPane);
+
+        // add the store button
+        JButton store = new JButton(rbt.getString("ButtonSave"));
+        store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        store.addActionListener(new ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                storeFile();
+            }
+        });
+
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
+
+        buttons.add(store);
+
+        body.add(buttons);
+        outer.add(scrollPane);
+        return outer;
+    }
     
     // hold refs to variables to check dccAddress
     VariableValue primaryAddr = null;
@@ -1161,6 +1204,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         updateDccAddress();
         _rPane.update(_rosterEntry);
         _flPane.update(_rosterEntry);
+        _rMPane.update(_rosterEntry);
 
         // id has to be set!
         if (_rosterEntry.getId().equals("") || _rosterEntry.getId().equals(rbt.getString("LabelNewDecoder"))) {
@@ -1235,6 +1279,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         // dispose of things we owned, in order of dependence
         _rPane.dispose();
         _flPane.dispose();
+        _rMPane.dispose();
         variableModel.dispose();
         cvModel.dispose();
         iCvModel.dispose();
@@ -1247,6 +1292,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         _rosterEntry = null;
         _rPane = null;
         _flPane = null;
+        _rMPane = null;
 
         paneList.clear();
         paneList = null;

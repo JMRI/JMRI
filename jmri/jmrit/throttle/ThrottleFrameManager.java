@@ -2,15 +2,18 @@ package jmri.jmrit.throttle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import jmri.jmrit.XmlFile;
 
 /**
  *  Interface for allocating and deallocating throttles frames. Not to be
  *  confused with ThrottleManager
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.14 $
+ * @version    $Revision: 1.15 $
  */
 public class ThrottleFrameManager
 {
@@ -26,6 +29,8 @@ public class ThrottleFrameManager
 	private ArrayList<ThrottleFrame> throttleFrames;
 	private FunctionButtonPropertyEditor functionButtonEditor;
 	private ThrottleFramePropertyEditor throttleFramePropertyEditor;
+	
+	private ThrottlesPreferences throttlesPref ;
 
 
 	/**
@@ -35,6 +40,7 @@ public class ThrottleFrameManager
 	{
 		throttleCycler = new ThrottleCyclingKeyListener();
 		throttleFrames = new ArrayList<ThrottleFrame>(0);
+		throttlesPref = new ThrottlesPreferences(XmlFile.prefsDir()+ "throttle" +File.separator+ "ThrottlesPreferences.xml");
 	}
 
 	/**
@@ -159,6 +165,11 @@ public class ThrottleFrameManager
 		ThrottleFrame tf = throttleFrames.get(activeFrame);
 		tf.requestFocus();
 	}
+	
+	public ThrottlesPreferences getThrottlesPreferences() {
+		return throttlesPref; 
+	}
+
 
 	/**
 	 *  Description of the Class

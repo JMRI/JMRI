@@ -12,7 +12,7 @@ import javax.swing.JInternalFrame;
  * object.
  * @author		Original Unknown
  * @author		Ken Cameron, copyright 2008
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class ThrottleFramePropertyEditor extends JDialog
 {
@@ -26,12 +26,13 @@ public class ThrottleFramePropertyEditor extends JDialog
 	
 	private JCheckBox borderOff;
 
-    private String [] titleTextTypes = {"address", "text", "textAddress", "addressText"};
+    private String [] titleTextTypes = {"address", "text", "textAddress", "addressText", "rosterID"};
     private String [] titleTextTypeNames = {
     		rb.getString("SelectTitleTypeADDRESS"),
     		rb.getString("SelectTitleTypeTEXT"),
     		rb.getString("SelectTitleTypeTEXTADDRESS"),
-    		rb.getString("SelectTitleTypeADDRESSTEXT")
+    		rb.getString("SelectTitleTypeADDRESSTEXT"),
+    		rb.getString("SelectTitleTypeROSTERID")
     };
 	
     /**

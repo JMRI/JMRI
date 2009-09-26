@@ -40,7 +40,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.39 $
+ * @version   $Revision: 1.40 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -79,6 +79,9 @@ public class RosterEntry {
         _decoderFamily = pEntry._decoderFamily;
         _decoderComment = pEntry._decoderComment;
         _owner = pEntry._owner;
+        _imageFilePath = pEntry._imageFilePath;
+        _iconFilePath = pEntry._iconFilePath;
+        _URL = pEntry._URL;
     }
 
     public void setId(String s) {
@@ -160,6 +163,15 @@ public class RosterEntry {
         return new DccLocoAddress(n,isLongAddress());
     }
 
+    public void setImagePath(String s) { _imageFilePath = s; }
+    public String getImagePath() { return _imageFilePath; }
+
+    public void setIconPath(String s) { _iconFilePath = s; }
+    public String getIconPath() { return _iconFilePath; }
+
+    public void setURL(String s) { _URL = s; }
+    public String getURL() { return _URL; }
+
     /**
      * Construct this Entry from XML. This member has to remain synchronized with the
      * detailed DTD in roster-config.xml
@@ -178,6 +190,10 @@ public class RosterEntry {
         if ((a = e.getAttribute("mfg")) != null )  _mfg = a.getValue();
         if ((a = e.getAttribute("model")) != null )  _model = a.getValue();
         if ((a = e.getAttribute("dccAddress")) != null )  _dccAddress = a.getValue();
+        // file path were saved without default xml config path 
+        if ((a = e.getAttribute("imageFilePath")) != null )  _imageFilePath = _resourcesBasePath+a.getValue();
+        if ((a = e.getAttribute("iconFilePath")) != null )  _iconFilePath = _resourcesBasePath+a.getValue();
+        if ((a = e.getAttribute("URL")) != null )  _URL = a.getValue();
         org.jdom.Element e3;
         if ((e3 = e.getChild("locoaddress")) != null )  {
             DccLocoAddress la = (DccLocoAddress)((new jmri.configurexml.LocoAddressXml()).getAddress(e3));
@@ -361,6 +377,10 @@ public class RosterEntry {
         e.setAttribute("model",getModel());
         e.setAttribute("dccAddress",getDccAddress());
         e.setAttribute("comment",getComment());
+        // file path are saved without default xml config path
+        e.setAttribute("imageFilePath", getImagePath().substring( _resourcesBasePath.length() ));
+        e.setAttribute("iconFilePath", getIconPath().substring( _resourcesBasePath.length() ));
+        e.setAttribute("URL", getURL());
 
         org.jdom.Element d = new org.jdom.Element("decoder");
         d.setAttribute("model",getDecoderModel());
@@ -746,6 +766,12 @@ public class RosterEntry {
     public static String getDefaultOwner() { return _defaultOwner; }
     public static void setDefaultOwner(String n) { _defaultOwner = n; }
     static private String _defaultOwner = "";
+    
+    protected String _resourcesBasePath = XmlFile.prefsDir()+ "resources" +File.separator ;
+
+    protected String _imageFilePath = _resourcesBasePath + "__noImage.jpg" ; // at DndImagePanel init will
+    protected String _iconFilePath = _resourcesBasePath + "__noIcon.jpg" ;   // force image copy to correct folder
+    protected String _URL = "";
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterEntry.class.getName());
