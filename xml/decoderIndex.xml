@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.7.5 on Sun Sep 06 17:52:58 PDT 2009 $Id: decoderIndex.xml,v 1.148 2009-09-07 00:54:38 jacobsen Exp $-->
-  <decoderIndex version="172">
+  <!--Written by JMRI version 2.7.6 on Sat Sep 26 15:54:02 PDT 2009 $Id: decoderIndex.xml,v 1.149 2009-09-26 22:57:36 jacobsen Exp $-->
+  <decoderIndex version="174">
     <mfgList nmraListDate="2009-05-06" updated="2009-07-31" lastadd="54">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1483,8 +1483,8 @@
           <!-- headlight, F5, F6 -->
         </model>
       </family>
-      <family name="Athearn Genesis Sound" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_AthearnGenesisSD45-2.xml">
-        <model model="Athearn Genesis SD45-2" numOuts="4" numFns="4" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
+      <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_AthearnGenesisSD45-2.xml">
+        <model model="Athearn Genesis SD45-2" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified" />
       </family>
       <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_Athearn_BigBoy.xml">
         <model model="Athearn Big Boy and 4-8-4 FEF" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
@@ -1521,12 +1521,6 @@
       </family>
       <family name="Athearn Genesis F Unit" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_F_Unit.xml">
         <model model="Athearn Genesis F Unit" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes" extFnsMRC="no" extFnsNmraBSC="no" nmraWarrant="no" connector="unspecified" />
-      </family>
-      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="TurboTrain" file="MRC_Rapido_TurboTrain.xml">
-        <model model="Rapido TurboTrain" numOuts="0" numFns="26" maxTotalCurrent="0.75A" extFnsMRC="yes" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no">
-          <!-- note only F0 to F12 are NMRA compatible -->
-          <size length="0" width="0" height="0" units="mm" />
-        </model>
       </family>
       <family name="Sound Decoders" mfg="MRC" lowVersionID="29" highVersionID="29" type="locomotive" file="MRC_dieselsound1829.xml">
         <model model="Synch Diesel Sound 1829" numOuts="4" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
@@ -1574,6 +1568,12 @@
         <model model="Synch Diesel Sound 1636" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <!-- note only F0 to F12 are NMRA compatible -->
           <size length="70" width="9.2" height="5.8" units="mm" />
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1637.xml">
+        <model model="Synch Steam Sound 1637" numOuts="2" numFns="12" connector="NMRAmedium" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <!-- note only F0 to F12 are NMRA compatible -->
+          <size length="33" width="10.5" height="5.0" units="mm" />
         </model>
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1638.xml">
@@ -1632,6 +1632,11 @@
       </family>
       <family name="MRC Sounder Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_sounder1662.xml">
         <model model="Diesel Sound Decoder 1662 SD45-SW1500" numOuts="2" numFns="12" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <size length="17.4" width="17.4" height="4.0" units="mm" />
+        </model>
+      </family>
+      <family name="MRC Sounder Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_sounder1665.xml">
+        <model model="Steam Sound Decoder 1665" numOuts="2" numFns="28" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <size length="17.4" width="17.4" height="4.0" units="mm" />
         </model>
       </family>
