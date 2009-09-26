@@ -28,9 +28,6 @@ implements  java.awt.dnd.DropTargetListener,
     private java.awt.dnd.DragSource dragSource = null;
     
     private int sourceIndex = -1;
-    private int dropIndex   = -1;
-    private Object sourceObject;
-
     
     /**
      * Constructs a default {@link DnDList} using a
@@ -95,6 +92,8 @@ implements  java.awt.dnd.DropTargetListener,
     private void initComponents()
     {
         dropTarget = new java.awt.dnd.DropTarget (this, this);
+        if (dropTarget == null)
+            System.err.println("Failed to create DropTarget");
         dragSource = new java.awt.dnd.DragSource();
         dragSource.createDefaultDragGestureRecognizer( this, java.awt.dnd.DnDConstants.ACTION_MOVE, this);
     }   // end initComponents

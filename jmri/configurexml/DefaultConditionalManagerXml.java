@@ -6,9 +6,10 @@ package jmri.configurexml;
  * deferring to the present class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  * @deprecated 2.5.4
  */
+@Deprecated
 public class DefaultConditionalManagerXml 
     extends jmri.managers.configurexml.DefaultConditionalManagerXml {
 }

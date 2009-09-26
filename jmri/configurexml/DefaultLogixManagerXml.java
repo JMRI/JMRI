@@ -6,9 +6,10 @@ package jmri.configurexml;
  * deferring to the present class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  * @deprecated 2.5.4
  */
+@Deprecated
 public class DefaultLogixManagerXml 
     extends jmri.managers.configurexml.DefaultLogixManagerXml {
 }

@@ -6,9 +6,10 @@ package jmri.configurexml;
  * deferring to the present class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  * @deprecated 2.5.4
  */
+@Deprecated
 public class TripleTurnoutSignalHeadXml 
     extends jmri.implementation.configurexml.TripleTurnoutSignalHeadXml {
 }

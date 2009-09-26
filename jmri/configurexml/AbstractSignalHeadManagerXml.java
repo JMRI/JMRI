@@ -6,9 +6,10 @@ package jmri.configurexml;
  * deferring to the present class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  * @deprecated 2.5.4
  */
+@Deprecated
 public class AbstractSignalHeadManagerXml 
     extends jmri.managers.configurexml.AbstractSignalHeadManagerXml {
 }

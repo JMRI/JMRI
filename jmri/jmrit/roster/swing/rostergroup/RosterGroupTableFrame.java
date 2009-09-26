@@ -12,8 +12,6 @@ import java.awt.event.ActionEvent;
 import jmri.util.JTableUtil;
 import jmri.util.com.sun.TableSorter;
 
-import jmri.util.davidflanagan.HardcopyWriter;
-
 
 /**
  * Provide a JFrame to display the Roster Data
@@ -32,7 +30,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class RosterGroupTableFrame extends jmri.util.JmriJFrame {
 

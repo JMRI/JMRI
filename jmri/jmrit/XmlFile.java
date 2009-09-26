@@ -32,7 +32,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.45 $
+ * @version	$Revision: 1.46 $
  */
 public abstract class XmlFile {
 
@@ -196,6 +196,7 @@ public abstract class XmlFile {
      * Find the DTD via a relative path and get the root element.
      * @deprecated 1.8
      */
+    @Deprecated
     private Element getRootViaRelative(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
 
         // Invoke a utility service routine to provide the URL for DTDs
@@ -219,6 +220,7 @@ public abstract class XmlFile {
      * @deprecated 1.8
      * 
      */
+    @Deprecated
     private Element getRootViaURL(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
         
         // Invoke a utility service routine to provide the URL for DTDs
@@ -541,7 +543,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.45 2009-07-12 13:12:29 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.46 2009-09-26 20:36:30 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }

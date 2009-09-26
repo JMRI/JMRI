@@ -3,12 +3,7 @@
 package jmri.jmrit.roster.swing.rostergroup;
 import javax.swing.JTable;
 import jmri.jmrit.roster.*;
-import javax.swing.table.*;
-import javax.swing.JButton;
 import javax.swing.JTextField;
-import javax.swing.DefaultCellEditor;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumnModel;
 import java.awt.Font;
 
 /**
@@ -24,7 +19,7 @@ import java.awt.Font;
  *
  * @author              Bob Jacobsen   Copyright (C) 2009
  * @author              Kevin Dickerson   Copyright (C) 2009
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  * @since 2.7.5
  */
 public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel {

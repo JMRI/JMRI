@@ -6,9 +6,10 @@ package jmri.configurexml;
  * deferring to the present class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  * @deprecated 2.5.4
  */
+@Deprecated
 public abstract class AbstractLightManagerConfigXML 
     extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 }

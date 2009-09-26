@@ -12,7 +12,7 @@ import jmri.implementation.DefaultRoute;
  * Note that this does not enforce any particular system naming convention
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class DefaultRouteManager extends AbstractManager
     implements RouteManager, java.beans.PropertyChangeListener {
@@ -45,6 +45,7 @@ public class DefaultRouteManager extends AbstractManager
     /**
      * @deprecated Since 2.5.1
      */
+    @Deprecated
     public Route createNewRoute(String systemName, String userName) {
         return provideRoute(systemName, userName);
     }

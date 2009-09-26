@@ -25,7 +25,7 @@ import java.util.List;
  * <P>
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public interface RouteManager extends Manager {
 
@@ -42,6 +42,7 @@ public interface RouteManager extends Manager {
     /**
      * @deprecated Since 2.5.1
      */
+    @Deprecated
     public Route createNewRoute(String systemName, String userName);
     
     /**

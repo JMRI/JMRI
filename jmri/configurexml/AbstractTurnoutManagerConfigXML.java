@@ -6,9 +6,10 @@ package jmri.configurexml;
  * deferring to the present class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  * @deprecated 2.5.4
  */
+@Deprecated
 public abstract class AbstractTurnoutManagerConfigXML 
     extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 }
