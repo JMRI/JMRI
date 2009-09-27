@@ -9,7 +9,7 @@ import javax.swing.BorderFactory;
  * Frame for user edit of a location sidings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class YardEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -32,6 +32,9 @@ public class YardEditFrame extends TrackEditFrame implements java.beans.Property
 		deleteTrackButton.setText(rb.getString("DeleteYard"));
 		addTrackButton.setText(rb.getString("AddYard"));
 		saveTrackButton.setText(rb.getString("SaveYard"));
+		// finish
+		pack();
+		setVisible(true);
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger

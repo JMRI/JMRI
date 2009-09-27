@@ -37,7 +37,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -788,17 +788,17 @@ public class OperationsLocationsTest extends TestCase {
 		Track t = l.addTrack("new track", Track.SIDING);
 
 		Assert.assertEquals("Location Accepts Type Name BoxCar", true, l.acceptsTypeName("BoxCar"));
-		Assert.assertEquals("Location Accepts Type Name Boxcar", false, l.acceptsTypeName("Boxcar"));
+		Assert.assertEquals("Location Accepts Type Name boxCar", false, l.acceptsTypeName("boxCar"));
 		Assert.assertEquals("Location Accepts Type Name MOW", true, l.acceptsTypeName("MOW"));
 		Assert.assertEquals("Location Accepts Type Name Caboose", true, l.acceptsTypeName("Caboose"));
 		Assert.assertEquals("Location Accepts Type Name BoxCar", true, l.acceptsTypeName("BoxCar"));
 		Assert.assertEquals("Location Accepts Type Name undefined3", false, l.acceptsTypeName("TestTypeName"));
 
-		Assert.assertEquals("Track Accepts Type Name BoxCar", false, t.acceptsTypeName("BoxCar"));
-		Assert.assertEquals("Track Accepts Type Name Boxcar", false, t.acceptsTypeName("Boxcar"));
-		Assert.assertEquals("Track Accepts Type Name MOW", false, t.acceptsTypeName("MOW"));
-		Assert.assertEquals("Track Accepts Type Name Caboose", false, t.acceptsTypeName("Caboose"));
-		Assert.assertEquals("Track Accepts Type Name undefined3", false, t.acceptsTypeName("TestTypeName"));
+		Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.acceptsTypeName("BoxCar"));
+		Assert.assertEquals("Track Accepts Type Name boxCar", false, t.acceptsTypeName("boxCar"));
+		Assert.assertEquals("Track Accepts Type Name MOW", true, t.acceptsTypeName("MOW"));
+		Assert.assertEquals("Track Accepts Type Name Caboose", true, t.acceptsTypeName("Caboose"));
+		Assert.assertEquals("Track Accepts Type Name undefined3", false, t.acceptsTypeName("undefined"));
 
 		t.addTypeName("Baggage");
 		t.addTypeName("BoxCar");
@@ -813,11 +813,11 @@ public class OperationsLocationsTest extends TestCase {
 		t.addTypeName("Tank Oil");
 
 		Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.acceptsTypeName("BoxCar"));
-		Assert.assertEquals("Track Accepts Type Name Boxcar", false, t.acceptsTypeName("Boxcar"));
+		Assert.assertEquals("Track Accepts Type Name boxCar", false, t.acceptsTypeName("boxCar"));
 		Assert.assertEquals("Track Accepts Type Name MOW", true, t.acceptsTypeName("MOW"));
 		Assert.assertEquals("Track Accepts Type Name Caboose", true, t.acceptsTypeName("Caboose"));
 		Assert.assertEquals("Track Accepts Type Name BoxCar", true, t.acceptsTypeName("BoxCar"));
-		Assert.assertEquals("Track Accepts Type Name undefined3", false, t.acceptsTypeName("TestTypeName"));
+		Assert.assertEquals("Track Accepts Type Name undefined3", false, t.acceptsTypeName("undefined"));
 
 		// test replace	
 
@@ -1209,7 +1209,7 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 1 switchList", true, loc.getSwitchList());
 				Assert.assertEquals("Location 1 car type", true, loc.acceptsTypeName("BoxCar"));
 				Assert.assertEquals("Location 1 car type", false, loc.acceptsTypeName("boxCar"));
-				Assert.assertEquals("Location 1 car type", false, loc.acceptsTypeName("Boxcar"));
+				Assert.assertEquals("Location 1 car type", true, loc.acceptsTypeName("Boxcar"));
 				List<String> list = loc.getTracksByNameList(null);
 				Assert.assertEquals("Location 1 has n tracks", 1, list.size());
 				Track t = loc.getTrackById(list.get(0));
@@ -1254,7 +1254,7 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertEquals("Location 3 switchList", true, loc.getSwitchList());
 				Assert.assertEquals("Location 3 car type", true, loc.acceptsTypeName("boxCar"));
 				Assert.assertEquals("Location 3 car type", false, loc.acceptsTypeName("BoxCar"));
-				Assert.assertEquals("Location 3 car type", false, loc.acceptsTypeName("Boxcar"));
+				Assert.assertEquals("Location 3 car type", true, loc.acceptsTypeName("Boxcar"));
 		
 				List<String> list = loc.getTracksByNameList(null);
 				Assert.assertEquals("Location 3 has n tracks", 1, list.size());

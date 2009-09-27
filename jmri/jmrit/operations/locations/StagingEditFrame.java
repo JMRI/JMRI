@@ -13,7 +13,7 @@ import javax.swing.JPanel;
  * Frame for user edit of a staging track
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class StagingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -58,6 +58,9 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 			emptyCheckBox.setSelected(_track.isRemoveLoadsEnabled());
 			loadCheckBox.setSelected(_track.isAddLoadsEnabled());
 		}
+		// finish
+		pack();
+		setVisible(true);
 	}
 	
 	protected void saveTrack (Track track){

@@ -19,7 +19,7 @@ import jmri.jmrit.operations.routes.Route;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.27 $
+ * @version             $Revision: 1.28 $
  */
 public class Track implements java.beans.PropertyChangeListener {
 	
@@ -90,6 +90,9 @@ public class Track implements java.beans.PropertyChangeListener {
 		_locType = type;
 		_name = name;
 		_id = id;
+		// a new track accepts all types
+		setTypeNames(CarTypes.instance().getNames());
+		setTypeNames(EngineTypes.instance().getNames());
 	}
 	
 	// for combo boxes
@@ -309,6 +312,8 @@ public class Track implements java.beans.PropertyChangeListener {
     }
     
     public void deleteTypeName(String type){
+       	if (!_typeList.contains(type))
+    		return;
     	_typeList.remove(type);
     	log.debug("track (" +getName()+ ") delete rolling stock type "+type);
     	firePropertyChange (TYPES_CHANGED_PROPERTY, null, LENGTH);

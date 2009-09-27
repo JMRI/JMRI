@@ -59,7 +59,7 @@ import jmri.jmrit.operations.routes.RouteManager;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -259,17 +259,17 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
 		Assert.assertEquals("Train Name", "TESTTRAINNAME", train1.getName());
 
-		train1.addTypeName("Caboose");
+		// Caboose is one of the default car types
 		Assert.assertTrue("Train accepts type name Caboose", train1.acceptsTypeName("Caboose"));
-		Assert.assertFalse("Train does not accept type name Hopper", train1.acceptsTypeName("Hopper"));
+		Assert.assertFalse("Train does not accept type name HopperTest", train1.acceptsTypeName("HopperTest"));
 
-		train1.addTypeName("Hopper");
+		train1.addTypeName("HopperTest");
 		Assert.assertTrue("Train still accepts type name Caboose", train1.acceptsTypeName("Caboose"));
-		Assert.assertTrue("Train accepts type name Hopper", train1.acceptsTypeName("Hopper"));
+		Assert.assertTrue("Train accepts type name HopperTest", train1.acceptsTypeName("HopperTest"));
 
 		train1.deleteTypeName("Caboose");
 		Assert.assertFalse("Train no longer accepts type name Caboose", train1.acceptsTypeName("Caboose"));
-		Assert.assertTrue("Train still accepts type name Hopper", train1.acceptsTypeName("Hopper"));
+		Assert.assertTrue("Train still accepts type name HopperTest", train1.acceptsTypeName("HopperTest"));
 	}
 
 	// test train accepts road names support
@@ -437,9 +437,6 @@ public class OperationsTrainsTest extends TestCase {
 		l1.setLocationOps(Location.STAGING);
 		l1.setTrainDirections(DIRECTION_ALL);
 		l1.setSwitchList(true);
-		l1.addTypeName("Diesel");
-		l1.addTypeName("Boxcar");
-		l1.addTypeName("Caboose");
 		lmanager.register(l1);
 
 		Track l1s1 = new Track("1s1", "North End 1", Track.STAGING);
@@ -449,9 +446,6 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 1s1 LocType", "Staging", l1s1.getLocType());
 		Assert.assertEquals("Location 1s1 Length", 300, l1s1.getLength());
 		l1s1.setTrainDirections(DIRECTION_ALL);
-		l1s1.addTypeName("Diesel");
-		l1s1.addTypeName("Boxcar");
-		l1s1.addTypeName("Caboose");
 		l1s1.setRoadOption(Track.ALLROADS);
 		l1s1.setDropOption(Track.ANY);
 		l1s1.setPickupOption(Track.ANY);
@@ -463,9 +457,6 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 1s2 LocType", "Staging", l1s2.getLocType());
 		Assert.assertEquals("Location 1s2 Length", 400, l1s2.getLength());
 		l1s2.setTrainDirections(DIRECTION_ALL);
-		l1s2.addTypeName("Diesel");
-		l1s2.addTypeName("Boxcar");
-		l1s2.addTypeName("Caboose");
 		l1s2.setRoadOption(Track.ALLROADS);
 		l1s2.setDropOption(Track.ANY);
 		l1s2.setPickupOption(Track.ANY);
@@ -493,10 +484,6 @@ public class OperationsTrainsTest extends TestCase {
 		l2.setLocationOps(Location.NORMAL);
 		l2.setTrainDirections(DIRECTION_ALL);
 		l2.setSwitchList(true);
-		l2.addTypeName("Diesel");
-		l2.addTypeName("Boxcar");
-		l2.addTypeName("Caboose");
-		l2.addTypeName("Flat");
 		lmanager.register(l2);
 				
 		Track l2s1 = new Track("2s1", "NI Yard", Track.YARD);
@@ -506,8 +493,6 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 2s1 LocType", Track.YARD, l2s1.getLocType());
 		Assert.assertEquals("Location 2s1 Length", 432, l2s1.getLength());
 		l2s1.setTrainDirections(DIRECTION_ALL);
-		l2s1.addTypeName("Boxcar");
-		l2s1.addTypeName("Flat");
 		
 		l2.register(l2s1);
 		Assert.assertEquals("Location 2 Length", 432, l2.getLength());
@@ -519,10 +504,6 @@ public class OperationsTrainsTest extends TestCase {
 		l3.setLocationOps(Location.STAGING);
 		l3.setTrainDirections(DIRECTION_ALL);
 		l3.setSwitchList(true);
-		l3.addTypeName("Diesel");
-		l3.addTypeName("Boxcar");
-		l3.addTypeName("Flat");
-		l3.addTypeName("Caboose");
 		lmanager.register(l3);
 
 		Track l3s1 = new Track("3s1", "South End 1", Track.STAGING);
@@ -532,10 +513,6 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 3s1 LocType", "Staging", l3s1.getLocType());
 		Assert.assertEquals("Location 3s1 Length", 300, l3s1.getLength());
 		l3s1.setTrainDirections(DIRECTION_ALL);
-		l3s1.addTypeName("Diesel");
-		l3s1.addTypeName("Boxcar");
-		l3s1.addTypeName("Caboose");
-		l3s1.addTypeName("Flat");
 		l3s1.setRoadOption(Track.ALLROADS);
 		l3s1.setDropOption(Track.ANY);
 		l3s1.setPickupOption(Track.ANY);
@@ -547,10 +524,6 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 3s2 LocType", "Staging", l3s2.getLocType());
 		Assert.assertEquals("Location 3s2 Length", 400, l3s2.getLength());
 		l3s2.setTrainDirections(DIRECTION_ALL);
-		l3s2.addTypeName("Diesel");
-		l3s2.addTypeName("Boxcar");
-		l3s2.addTypeName("Caboose");
-		l3s2.addTypeName("Flat");
 		l3s2.setRoadOption(Track.ALLROADS);
 		l3s2.setDropOption(Track.ANY);
 		l3s2.setPickupOption(Track.ANY);
@@ -654,9 +627,10 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Train Name", "Southbound Through Freight", train1.getName());
 		train1.setRequirements(Train.CABOOSE);
 		train1.setCabooseRoad("CP");
-		train1.addTypeName("Caboose");
-		train1.addTypeName("Boxcar");
-		train1.addTypeName("Diesel");
+		//train1.addTypeName("Caboose");
+		//train1.addTypeName("Boxcar");
+		//train1.addTypeName("Diesel");
+		train1.deleteTypeName("Flat");
 		train1.setRoadOption("All");
 		train1.setRoute(r1);
 		train1.setDepartureTime("6", "5");
@@ -665,7 +639,10 @@ public class OperationsTrainsTest extends TestCase {
 		Train train2 = new Train("2", "Southbound Fast Freight");
 		Assert.assertEquals("Train Id", "2", train2.getId());
 		Assert.assertEquals("Train Name", "Southbound Fast Freight", train2.getName());
-		train2.addTypeName("Diesel");
+		train2.deleteTypeName("Caboose");
+		train2.deleteTypeName("Boxcar");
+		train2.deleteTypeName("Flat");
+		//train2.addTypeName("Diesel");
 		train2.setRoute(r1);
 		train2.setDepartureTime("22", "45");
 		tmanager.register(train2);
@@ -677,6 +654,13 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Train 1 Route Terminates Name", "South End", train1.getTrainTerminatesRouteLocation().getName());
 		Assert.assertEquals("Train 1 Next Location Name", "", train1.getNextLocationName());
 		Assert.assertEquals("Train 1 Route Name", "Southbound Main Route", train1.getRoute().getName());
+
+		Assert.assertEquals("Train 2 Departs Name", "North End", train2.getTrainDepartsName());
+		Assert.assertEquals("Train 2 Route Departs Name", "North End", train2.getTrainDepartsRouteLocation().getName());
+		Assert.assertEquals("Train 2 Terminates Name", "South End", train2.getTrainTerminatesName());
+		Assert.assertEquals("Train 2 Route Terminates Name", "South End", train2.getTrainTerminatesRouteLocation().getName());
+		Assert.assertEquals("Train 2 Next Location Name", "", train2.getNextLocationName());
+		Assert.assertEquals("Train 2 Route Name", "Southbound Main Route", train2.getRoute().getName());
 
 		// disable build messages
 		tmanager.setBuildMessages(false);
@@ -751,6 +735,14 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Car c3 After Build should be assigned to Train 1", train1, c3.getTrain());
 		Assert.assertEquals("Car c4 After Build should be assigned to Train 1", train1, c4.getTrain());
 		Assert.assertEquals("Car c8 After Build should be assigned to Train 1", train1, c8.getTrain());
+		
+		// Are the proper engines and cars assigned to train 2?
+		Assert.assertEquals("Engine e3 After Build should be assigned to Train 2", train2, e3.getTrain());
+		Assert.assertEquals("Engine e4 After Build should be assigned to Train 2", train2, e4.getTrain());
+		Assert.assertEquals("Car c2 After Build should be assigned to Train 2", train2, c2.getTrain());
+		Assert.assertEquals("Car c5 After Build should be assigned to Train 2", train2, c5.getTrain());
+		Assert.assertEquals("Car c7 After Build should be not be assigned", null, c7.getTrain());
+		Assert.assertEquals("Car c9 After Build should be not be assigned", null, c9.getTrain());
 		
 		// Are the engine and car destinations correct?
 		Assert.assertEquals("Engine e1 After Build destination", "South End", e1.getDestinationName());
@@ -1266,9 +1258,6 @@ public class OperationsTrainsTest extends TestCase {
 		Location loc1;
 		loc1 = lmanager.newLocation("Westend");
 		loc1.setTrainDirections(Location.WEST + Location.EAST);
-		loc1.addTypeName("Diesel");
-		loc1.addTypeName("Boxcar");
-		loc1.addTypeName("Caboose");
 		Assert.assertEquals("Bob Test Location Westend Name", "Westend", loc1.getName());
 		Assert.assertEquals("Bob Test Location Westend Directions", 3, loc1.getTrainDirections());
 		Assert.assertEquals("Bob Test Location Westend Type Diesel", true, loc1.acceptsTypeName("Diesel"));
@@ -1278,9 +1267,6 @@ public class OperationsTrainsTest extends TestCase {
 		Location loc2;
 		loc2 = lmanager.newLocation("Midtown");
 		loc2.setTrainDirections(Location.WEST + Location.EAST);
-		loc2.addTypeName("Diesel");
-		loc2.addTypeName("Boxcar");
-		loc2.addTypeName("Caboose");
 		Assert.assertEquals("Bob Test Location Midtown Name", "Midtown", loc2.getName());
 		Assert.assertEquals("Bob Test Location Midtown Directions", 3, loc2.getTrainDirections());
 		Assert.assertEquals("Bob Test Location Midtown Type Diesel", true, loc2.acceptsTypeName("Diesel"));
@@ -1290,9 +1276,6 @@ public class OperationsTrainsTest extends TestCase {
 		Location loc3;
 		loc3 = lmanager.newLocation("Eastend");
 		loc3.setTrainDirections(Location.WEST + Location.EAST);
-		loc3.addTypeName("Diesel");
-		loc3.addTypeName("Boxcar");
-		loc3.addTypeName("Caboose");
 		Assert.assertEquals("Bob Test Location Eastend Name", "Eastend", loc3.getName());
 		Assert.assertEquals("Bob Test Location Eastend Directions", 3, loc3.getTrainDirections());
 		Assert.assertEquals("Bob Test Location Eastend Type Diesel", true, loc3.acceptsTypeName("Diesel"));
@@ -1303,9 +1286,6 @@ public class OperationsTrainsTest extends TestCase {
 		loc1trk1 = loc1.addTrack("Westend Staging 1", Track.YARD);
 		loc1trk1.setTrainDirections(Track.WEST + Track.EAST);
 		loc1trk1.setLength(500);
-		loc1trk1.addTypeName("Diesel");
-		loc1trk1.addTypeName("Boxcar");
-		loc1trk1.addTypeName("Caboose");
 		Assert.assertEquals("Bob Test Track Westend Staging 1 Name", "Westend Staging 1", loc1trk1.getName());
 		Assert.assertEquals("Bob Test Track Westend Staging 1 Directions", 3, loc1trk1.getTrainDirections());
 		Assert.assertEquals("Bob Test Track Westend Staging 1 Length", 500, loc1trk1.getLength());
@@ -1317,9 +1297,6 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk1 = loc2.addTrack("Midtown Inbound from West", Track.YARD);
 		loc2trk1.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk1.setLength(500);
-		loc2trk1.addTypeName("Diesel");
-		loc2trk1.addTypeName("Boxcar");
-//		loc2trk1.addTypeName("Caboose");
 		Assert.assertEquals("Bob Test Track Midtown West Inbound Name", "Midtown Inbound from West", loc2trk1.getName());
 		Assert.assertEquals("Bob Test Track Midtown West Inbound Directions", 3, loc2trk1.getTrainDirections());
 		Assert.assertEquals("Bob Test Track Midtown West Inbound Length", 500, loc2trk1.getLength());
@@ -1328,9 +1305,6 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk2 = loc2.addTrack("Midtown Inbound from East", Track.YARD);
 		loc2trk2.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk2.setLength(500);
-		loc2trk2.addTypeName("Diesel");
-		loc2trk2.addTypeName("Boxcar");
-//		loc2trk2.addTypeName("Caboose");
 		Assert.assertEquals("Bob Test Track Midtown East Inbound Name", "Midtown Inbound from East", loc2trk2.getName());
 		Assert.assertEquals("Bob Test Track Midtown East Inbound Directions", 3, loc2trk2.getTrainDirections());
 		Assert.assertEquals("Bob Test Track Midtown East Inbound Length", 500, loc2trk2.getLength());
@@ -1339,8 +1313,6 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk3 = loc2.addTrack("Midtown Outbound to West", Track.YARD);
 		loc2trk3.setTrainDirections(Track.WEST);
 		loc2trk3.setLength(500);
-		loc2trk3.addTypeName("Diesel");
-		loc2trk3.addTypeName("Boxcar");
 		Assert.assertEquals("Bob Test Track Midtown West Outbound Name", "Midtown Outbound to West", loc2trk3.getName());
 		Assert.assertEquals("Bob Test Track Midtown West Outbound Directions", 2, loc2trk3.getTrainDirections());
 		Assert.assertEquals("Bob Test Track Midtown West Outbound Length", 500, loc2trk3.getLength());
@@ -1349,8 +1321,6 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk4 = loc2.addTrack("Midtown Outbound to East", Track.YARD);
 		loc2trk4.setTrainDirections(Track.EAST);
 		loc2trk4.setLength(500);
-		loc2trk4.addTypeName("Diesel");
-		loc2trk4.addTypeName("Boxcar");
 		Assert.assertEquals("Bob Test Track Midtown East Outbound Name", "Midtown Outbound to East", loc2trk4.getName());
 		Assert.assertEquals("Bob Test Track Midtown East Outbound Directions", 1, loc2trk4.getTrainDirections());
 		Assert.assertEquals("Bob Test Track Midtown East Outbound Length", 500, loc2trk4.getLength());
@@ -1359,7 +1329,6 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trkc1 = loc2.addTrack("Midtown Caboose to East", Track.YARD);
 		loc2trkc1.setTrainDirections(Track.EAST);
 		loc2trkc1.setLength(100);
-		loc2trkc1.addTypeName("Caboose");
 		Assert.assertEquals("Bob Test Track Midtown East Caboose Name", "Midtown Caboose to East", loc2trkc1.getName());
 		Assert.assertEquals("Bob Test Track Midtown East Caboose Directions", 1, loc2trkc1.getTrainDirections());
 		Assert.assertEquals("Bob Test Track Midtown East Caboose Length", 100, loc2trkc1.getLength());
@@ -1368,7 +1337,6 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trkc2 = loc2.addTrack("Midtown Caboose to West", Track.YARD);
 		loc2trkc2.setTrainDirections(Track.WEST);
 		loc2trkc2.setLength(100);
-		loc2trkc2.addTypeName("Caboose");
 		Assert.assertEquals("Bob Test Track Midtown West Caboose Name", "Midtown Caboose to West", loc2trkc2.getName());
 		Assert.assertEquals("Bob Test Track Midtown West Caboose Directions", 2, loc2trkc2.getTrainDirections());
 		Assert.assertEquals("Bob Test Track Midtown west Caboose Length", 100, loc2trkc2.getLength());
@@ -1377,7 +1345,6 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trke1 = loc2.addTrack("Midtown Engine to East", Track.YARD);
 		loc2trke1.setTrainDirections(Track.EAST);
 		loc2trke1.setLength(200);
-		loc2trke1.addTypeName("Diesel");
 		Assert.assertEquals("Bob Test Track Midtown East Engine Name", "Midtown Engine to East", loc2trke1.getName());
 		Assert.assertEquals("Bob Test Track Midtown East Engine Directions", 1, loc2trke1.getTrainDirections());
 		Assert.assertEquals("Bob Test Track Midtown East Engine Length", 200, loc2trke1.getLength());
@@ -1386,7 +1353,6 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trke2 = loc2.addTrack("Midtown Engine to West", Track.YARD);
 		loc2trke2.setTrainDirections(Track.WEST);
 		loc2trke2.setLength(200);
-		loc2trke2.addTypeName("Diesel");
 		Assert.assertEquals("Bob Test Track Midtown West Engine Name", "Midtown Engine to West", loc2trke2.getName());
 		Assert.assertEquals("Bob Test Track Midtown West Engine Directions", 2, loc2trke2.getTrainDirections());
 		Assert.assertEquals("Bob Test Track Midtown west Engine Length", 200, loc2trke2.getLength());
@@ -1395,9 +1361,6 @@ public class OperationsTrainsTest extends TestCase {
 		loc3trk1 = loc3.addTrack("Eastend Staging 1", Track.YARD);
 		loc3trk1.setTrainDirections(Track.WEST + Track.EAST);
 		loc3trk1.setLength(500);
-		loc3trk1.addTypeName("Diesel");
-		loc3trk1.addTypeName("Boxcar");
-		loc3trk1.addTypeName("Caboose");
 		Assert.assertEquals("Bob Test Track Eastend Staging 1 Name", "Eastend Staging 1", loc3trk1.getName());
 		Assert.assertEquals("Bob Test Track Eastend Staging 1 Directions", 3, loc3trk1.getTrainDirections());
 		Assert.assertEquals("Bob Test Track Eastend Staging 1 Length", 500, loc3trk1.getLength());
@@ -1585,9 +1548,9 @@ public class OperationsTrainsTest extends TestCase {
 		train1.setRoute(rte1);
 		train1.setNumberEngines("1");
 		train1.setRequirements(Train.CABOOSE);
-		train1.addTypeName("Diesel");
-		train1.addTypeName("Boxcar");
-		train1.addTypeName("Caboose");
+		//train1.addTypeName("Diesel");
+		//train1.addTypeName("Boxcar");
+		//train1.addTypeName("Caboose");
 		Assert.assertEquals("Bob Test Train train1 Name", "Midtown to Eastend Through 0800", train1.getName());
 		Assert.assertEquals("Bob Test Train train1 Departs Name", "Midtown", train1.getTrainDepartsName());
 		Assert.assertEquals("Bob Test Train train1 Terminates Name", "Eastend", train1.getTrainTerminatesName());
@@ -1597,9 +1560,9 @@ public class OperationsTrainsTest extends TestCase {
 		train2.setRoute(rte2);
 		train2.setNumberEngines("1");
 		train2.setRequirements(Train.CABOOSE);
-		train2.addTypeName("Diesel");
-		train2.addTypeName("Boxcar");
-		train2.addTypeName("Caboose");
+		//train2.addTypeName("Diesel");
+		//train2.addTypeName("Boxcar");
+		//train2.addTypeName("Caboose");
 		Assert.assertEquals("Bob Test Train train2 Name", "Midtown to Westend Through 0900", train2.getName());
 		Assert.assertEquals("Bob Test Train train2 Departs Name", "Midtown", train2.getTrainDepartsName());
 		Assert.assertEquals("Bob Test Train train2 Terminates Name", "Westend", train2.getTrainTerminatesName());
@@ -1632,69 +1595,59 @@ public class OperationsTrainsTest extends TestCase {
 		loc1 = lmanager.newLocation("Westford");
 		loc1.setTrainDirections(DIRECTION_ALL);	
 		loc1.addTypeName("Flat Car");
-		loc1.addTypeName("Boxcar");
 		
 		Location loc2;
 		loc2 = lmanager.newLocation("Chelmsford");
 		loc2.setTrainDirections(DIRECTION_ALL);	
 		loc2.addTypeName("Flat Car");
-		loc2.addTypeName("Boxcar");
 		
 		Track loc1trk1;
 		loc1trk1 = loc1.addTrack("Westford Yard 1", Track.YARD);
 		loc1trk1.setTrainDirections(Track.WEST + Track.EAST);
 		loc1trk1.setLength(500);
 		loc1trk1.addTypeName("Flat Car");
-		loc1trk1.addTypeName("Boxcar");
 		
 		Track loc1trk2;
 		loc1trk2 = loc1.addTrack("Westford Yard 2", Track.YARD);
 		loc1trk2.setTrainDirections(Track.WEST + Track.EAST);
 		loc1trk2.setLength(500);
 		loc1trk2.addTypeName("Flat Car");
-		loc1trk2.addTypeName("Boxcar");
 		
 		Track loc1trk3;
 		loc1trk3 = loc1.addTrack("Westford Siding 3", Track.SIDING);
 		loc1trk3.setTrainDirections(0);		// Only local moves allowed
 		loc1trk3.setLength(300);
 		loc1trk3.addTypeName("Flat Car");
-		loc1trk3.addTypeName("Boxcar");
 		
 		Track loc1trk4;
 		loc1trk4 = loc1.addTrack("Westford Siding 4", Track.SIDING);
 		loc1trk4.setTrainDirections(0);		// Only local moves allowed
 		loc1trk4.setLength(300);
 		loc1trk4.addTypeName("Flat Car");
-		loc1trk4.addTypeName("Boxcar");
 		
 		Track loc1trk5;
 		loc1trk5 = loc1.addTrack("Westford Interchange 5", Track.INTERCHANGE);
 		loc1trk5.setTrainDirections(0);		// Only local moves allowed
 		loc1trk5.setLength(300);
 		loc1trk5.addTypeName("Flat Car");
-		loc1trk5.addTypeName("Boxcar");
 		
 		Track loc1trk6;
 		loc1trk6 = loc1.addTrack("Westford Interchange 6", Track.INTERCHANGE);
 		loc1trk6.setTrainDirections(Track.WEST + Track.EAST);		
 		loc1trk6.setLength(300);
 		loc1trk6.addTypeName("Flat Car");
-		loc1trk6.addTypeName("Boxcar");
 		
 		Track loc1trk7;
 		loc1trk7 = loc1.addTrack("Westford Interchange 7", Track.INTERCHANGE);
 		loc1trk7.setTrainDirections(0);		// Only local moves allowed
 		loc1trk7.setLength(300);
 		loc1trk7.addTypeName("Flat Car");
-		loc1trk7.addTypeName("Boxcar");
 		
 		Track loc2trk1;
 		loc2trk1 = loc2.addTrack("Chelmsford Yard 1", Track.YARD);
 		loc2trk1.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk1.setLength(900);
 		loc2trk1.addTypeName("Flat Car");
-		loc2trk1.addTypeName("Boxcar");
 		
 		// now bias track selection by moves
 		loc1trk1.setMoves(3);		// no yard to yard moves expected
@@ -1715,7 +1668,7 @@ public class OperationsTrainsTest extends TestCase {
 		Train train1;
 		train1 = tmanager.newTrain("Local Train");
 		train1.setRoute(rte1);
-		train1.addTypeName("Boxcar");
+		// Flat Car isn't registered yet so add it now
 		train1.addTypeName("Flat Car");
 		
 		// Set up 7 box cars and 2 flat cars
@@ -2102,65 +2055,45 @@ public class OperationsTrainsTest extends TestCase {
 		Location loc1;
 		loc1 = lmanager.newLocation("New Westford");
 		loc1.setTrainDirections(DIRECTION_ALL);	
-		loc1.addTypeName("Flat Car");
-		loc1.addTypeName("Boxcar");
-		loc1.addTypeName("Gon");
-		loc1.addTypeName("Coil Car");
 		
 		Location loc2;
 		loc2 = lmanager.newLocation("New Chelmsford");
 		loc2.setTrainDirections(DIRECTION_ALL);	
-		loc2.addTypeName("Flat Car");
-		loc2.addTypeName("Boxcar");
-		loc2.addTypeName("Gon");
-		loc2.addTypeName("Coil Car");
 		
 		Location loc3;
 		loc3 = lmanager.newLocation("New Bedford");
 		loc3.setTrainDirections(DIRECTION_ALL);	
-		loc3.addTypeName("Flat Car");
-		loc3.addTypeName("Boxcar");
-		loc3.addTypeName("Gon");
-		loc3.addTypeName("Coil Car");
 		
 		Track loc1trk1;
 		loc1trk1 = loc1.addTrack("Westford Yard 1", Track.YARD);
 		loc1trk1.setTrainDirections(Track.WEST + Track.EAST);
 		loc1trk1.setLength(900);
-		loc1trk1.addTypeName("Flat Car");
-		loc1trk1.addTypeName("Boxcar");
-		loc1trk1.addTypeName("Gon");
-		loc1trk1.addTypeName("Coil Car");
-		
+
 		Track loc1trk2;
 		loc1trk2 = loc1.addTrack("Westford Yard 2", Track.YARD);
 		loc1trk2.setTrainDirections(Track.WEST + Track.EAST);
 		loc1trk2.setLength(500);
-		loc1trk2.addTypeName("Flat Car");
-		loc1trk2.addTypeName("Boxcar");
-		loc1trk2.addTypeName("Gon");
+		loc1trk2.deleteTypeName("Coil Car");
 		
 		Track loc1trk3;
 		loc1trk3 = loc1.addTrack("Westford Express 3", Track.SIDING);
 		loc1trk3.setTrainDirections(Track.WEST + Track.EAST);	
 		loc1trk3.setLength(300);
-		loc1trk3.addTypeName("Flat Car");
-		loc1trk3.addTypeName("Boxcar");
+		loc1trk3.deleteTypeName("Gon");
+		loc1trk3.deleteTypeName("Coil Car");
 		
 		Track loc1trk4;
 		loc1trk4 = loc1.addTrack("Westford Express 4", Track.SIDING);
 		loc1trk4.setTrainDirections(Track.WEST + Track.EAST);
 		loc1trk4.setLength(300);
-		loc1trk4.addTypeName("Flat Car");
-		loc1trk4.addTypeName("Boxcar");
+		loc1trk4.deleteTypeName("Gon");
+		loc1trk4.deleteTypeName("Coil Car");
 		
 		Track loc2trk1;
 		loc2trk1 = loc2.addTrack("Chelmsford Freight 1", Track.SIDING);
 		loc2trk1.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk1.setLength(900);
-		loc2trk1.addTypeName("Flat Car");
-		loc2trk1.addTypeName("Boxcar");
-		loc2trk1.addTypeName("Gon");
+		loc2trk1.deleteTypeName("Coil Car");
 		loc2trk1.setScheduleName(sch1.getName());
 		// start the schedule with 2nd item Flat Car
 		loc2trk1.setScheduleItemId(sch1.getItemsBySequenceList().get(1));
@@ -2169,9 +2102,7 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk2 = loc2.addTrack("Chelmsford Freight 2", Track.SIDING);
 		loc2trk2.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk2.setLength(900);
-		loc2trk2.addTypeName("Flat Car");
-		loc2trk2.addTypeName("Boxcar");
-		loc2trk2.addTypeName("Gon");
+		loc2trk2.deleteTypeName("Coil Car");
 		loc2trk2.setScheduleName(sch1.getName());
 		// start the schedule with 3rd item Gon
 		loc2trk2.setScheduleItemId(sch1.getItemsBySequenceList().get(2));
@@ -2180,26 +2111,19 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk3 = loc2.addTrack("Chelmsford Yard 3", Track.YARD);
 		loc2trk3.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk3.setLength(900);
-		loc2trk3.addTypeName("Flat Car");
-		loc2trk3.addTypeName("Boxcar");
+		loc2trk3.deleteTypeName("Gon");
+		loc2trk3.deleteTypeName("Coil Car");
 		
 		Track loc2trk4;
 		loc2trk4 = loc2.addTrack("Chelmsford Freight 4", Track.SIDING);
 		loc2trk4.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk4.setLength(900);
-		loc2trk4.addTypeName("Flat Car");
-		loc2trk4.addTypeName("Boxcar");
-		loc2trk4.addTypeName("Coil Car");
 		loc2trk4.setScheduleName(sch2.getName());
 		
 		Track loc3trk1;
 		loc3trk1 = loc3.addTrack("Bedford Yard 1", Track.STAGING);
 		loc3trk1.setTrainDirections(Track.WEST + Track.EAST);
 		loc3trk1.setLength(900);
-		loc3trk1.addTypeName("Flat Car");
-		loc3trk1.addTypeName("Boxcar");
-		loc3trk1.addTypeName("Gon");
-		loc3trk1.addTypeName("Coil Car");
 		loc3trk1.enableRemoveLoads(true);
 		
 		// Create route with 2 location
@@ -2216,10 +2140,6 @@ public class OperationsTrainsTest extends TestCase {
 		Train train1;
 		train1 = tmanager.newTrain("New Westford to New Chelmsford");
 		train1.setRoute(rte1);
-		train1.addTypeName("Boxcar");
-		train1.addTypeName("Flat Car");
-		train1.addTypeName("Gon");
-		train1.addTypeName("Coil Car");
 		
 		// Set up 13 cars
 		Car c1 = new Car("BM", "S1");
@@ -2517,79 +2437,54 @@ public class OperationsTrainsTest extends TestCase {
 		Location loc1;
 		loc1 = lmanager.newLocation("Old Westford");
 		loc1.setTrainDirections(DIRECTION_ALL);	
-		loc1.addTypeName("Flat Car");
-		loc1.addTypeName("Boxcar");
-		loc1.addTypeName("Gon");
-		loc1.addTypeName("Coil Car");
-		loc1.addTypeName("XCaboose");
 		
 		Location loc2;
 		loc2 = lmanager.newLocation("Old Chelmsford");
 		loc2.setTrainDirections(DIRECTION_ALL);	
-		loc2.addTypeName("Flat Car");
-		loc2.addTypeName("Boxcar");
-		loc2.addTypeName("Gon");
-		loc2.addTypeName("Coil Car");
-		loc2.addTypeName("XCaboose");
 		
 		Location loc3;
 		loc3 = lmanager.newLocation("Old Bedford");
 		loc3.setTrainDirections(DIRECTION_ALL);	
-		loc3.addTypeName("Flat Car");
-		loc3.addTypeName("Boxcar");
-		loc3.addTypeName("Gon");
-		loc3.addTypeName("Coil Car");
-		loc3.addTypeName("XCaboose");
 		
 		Track loc1trk1;
 		loc1trk1 = loc1.addTrack("Westford Yard 1", Track.YARD);
 		loc1trk1.setTrainDirections(Track.WEST + Track.EAST);
 		loc1trk1.setLength(900);
-		loc1trk1.addTypeName("Flat Car");
-		loc1trk1.addTypeName("Boxcar");
-		loc1trk1.addTypeName("Gon");
-		loc1trk1.addTypeName("Coil Car");
-		loc1trk1.addTypeName("XCaboose");
 		
 		Track loc1trk2;
 		loc1trk2 = loc1.addTrack("Westford Yard 2", Track.YARD);
 		loc1trk2.setTrainDirections(Track.WEST + Track.EAST);
 		loc1trk2.setLength(500);
-		loc1trk2.addTypeName("Flat Car");
-		loc1trk2.addTypeName("Boxcar");
-		loc1trk2.addTypeName("Gon");
+		loc1trk2.deleteTypeName("Coil Car");
+		loc1trk2.deleteTypeName("XCaboose");
 		
 		Track loc2trk1;
 		loc2trk1 = loc2.addTrack("Chelmsford Interchange 1", Track.INTERCHANGE);
 		loc2trk1.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk1.setLength(900);
-		loc2trk1.addTypeName("Flat Car");
-		loc2trk1.addTypeName("Boxcar");
-		loc2trk1.addTypeName("Gon");
+		loc2trk1.deleteTypeName("Coil Car");
+		loc2trk1.deleteTypeName("XCaboose");
 
 		Track loc2trk2;
 		loc2trk2 = loc2.addTrack("Chelmsford Interchange 2", Track.INTERCHANGE);
 		loc2trk2.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk2.setLength(900);
-		loc2trk2.addTypeName("Flat Car");
-		loc2trk2.addTypeName("Boxcar");
-		loc2trk2.addTypeName("Gon");
-		loc2trk2.addTypeName("Coil Car");
+		loc2trk2.deleteTypeName("XCaboose");
 		
 		Track loc2trk3;
 		loc2trk3 = loc2.addTrack("Chelmsford Yard 3", Track.YARD);
 		loc2trk3.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk3.setLength(900);
-		loc2trk3.addTypeName("Flat Car");
-		loc2trk3.addTypeName("Boxcar");
+		loc2trk3.deleteTypeName("Gon");
+		loc2trk3.deleteTypeName("Coil Car");
+		loc2trk3.deleteTypeName("XCaboose");
 		
 		Track loc2trk4;
 		loc2trk4 = loc2.addTrack("Chelmsford Freight 4", Track.SIDING);
 		loc2trk4.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk4.setLength(900);
-		loc2trk4.addTypeName("Flat Car");
-		loc2trk4.addTypeName("Boxcar");
-		loc2trk4.addTypeName("Coil Car");
+		loc2trk4.deleteTypeName("Gon");
+		loc2trk4.deleteTypeName("XCaboose");
 		
 		loc2trk3.setMoves(20);	// bias interchange tracks
 		loc2trk4.setMoves(20);
@@ -2598,11 +2493,6 @@ public class OperationsTrainsTest extends TestCase {
 		loc3trk1 = loc3.addTrack("Bedford Yard 1", Track.YARD);
 		loc3trk1.setTrainDirections(Track.WEST + Track.EAST);
 		loc3trk1.setLength(900);
-		loc3trk1.addTypeName("Flat Car");
-		loc3trk1.addTypeName("Boxcar");
-		loc3trk1.addTypeName("Gon");
-		loc3trk1.addTypeName("Coil Car");
-		loc3trk1.addTypeName("XCaboose");
 		
 		// Create route with 3 location
 		Route rte1;
@@ -2634,27 +2524,14 @@ public class OperationsTrainsTest extends TestCase {
 		Train train1;
 		train1 = tmanager.newTrain("Train 1 Old Westford to Old Bedford");
 		train1.setRoute(rte1);
-		train1.addTypeName("Boxcar");
-		train1.addTypeName("Flat Car");
-		train1.addTypeName("Gon");
-		train1.addTypeName("Coil Car");
 		
 		Train train2;
 		train2 = tmanager.newTrain("Train 2 Old Westford to Old Bedford");
 		train2.setRoute(rte1);
-		train2.addTypeName("Boxcar");
-		train2.addTypeName("Flat Car");
-		train2.addTypeName("Gon");
-		train2.addTypeName("Coil Car");
 		
 		Train train3;
 		train3 = tmanager.newTrain("Train 3 Old Westford to Old Bedford");
 		train3.setRoute(rte1);
-		train3.addTypeName("Boxcar");
-		train3.addTypeName("Flat Car");
-		train3.addTypeName("Gon");
-		train3.addTypeName("Coil Car");
-		train3.addTypeName("XCaboose");
 		
 		// Set up 7 box cars and 2 flat cars
 		Car c1 = new Car("BM", "Q1");
@@ -3182,46 +3059,26 @@ public class OperationsTrainsTest extends TestCase {
 
 		// Create 3 locations
 		Location loc1 = lmanager.newLocation("Harvard");
-		loc1.addTypeName("Boxcar");
-		loc1.addTypeName("Diesel");
-		loc1.addTypeName("Flat");
-		loc1.addTypeName("Caboose");
 		
 		Track loc1trk1 = loc1.addTrack("Harvard Yard", Track.YARD);
 		loc1trk1.setLength(1000);
-		loc1trk1.addTypeName("Boxcar");
-		loc1trk1.addTypeName("Diesel");
-		loc1trk1.addTypeName("Flat");
-		loc1trk1.addTypeName("Caboose");
 		
 		Location loc2 = lmanager.newLocation("Arlington");
-		loc2.addTypeName("Boxcar");
-		loc2.addTypeName("Diesel");
-		loc2.addTypeName("Flat");
-		loc2.addTypeName("Caboose");
 		
 		Track loc2trk1 = loc2.addTrack("Arlington Yard", Track.YARD);
 		loc2trk1.setLength(1000);
-		loc2trk1.addTypeName("Boxcar");
-		loc2trk1.addTypeName("Diesel");
-		loc2trk1.addTypeName("Flat");
-		loc2trk1.addTypeName("Caboose");
 		
 		Location loc3 = lmanager.newLocation("Boston");
-		loc3.addTypeName("Boxcar");
-		loc3.addTypeName("Diesel");
-		loc3.addTypeName("Flat");
-		loc3.addTypeName("Caboose");
 		
 		Track loc3trk1 = loc3.addTrack("Boston Yard", Track.YARD);
 		loc3trk1.setLength(1000);
-		loc3trk1.addTypeName("Boxcar");
-		loc3trk1.addTypeName("Flat");
-		loc3trk1.addTypeName("Caboose");
+		loc3trk1.deleteTypeName("Diesel");
 		
 		Track loc3trk2 = loc3.addTrack("Boston Engine Yard", Track.YARD);
 		loc3trk2.setLength(200);
-		loc3trk2.addTypeName("Diesel");
+		loc3trk2.deleteTypeName("Boxcar");
+		loc3trk2.deleteTypeName("Flat");
+		loc3trk2.deleteTypeName("Caboose");
 		
 		// Create route with 3 location
 		Route rte1 = rmanager.newRoute("Route 2 Boston");
@@ -3232,10 +3089,6 @@ public class OperationsTrainsTest extends TestCase {
 		// Create train
 		Train train1 = tmanager.newTrain("Harvard to Boston");
 		train1.setRoute(rte1);
-		train1.addTypeName("Boxcar");
-		train1.addTypeName("Diesel");
-		train1.addTypeName("Flat");
-		train1.addTypeName("Caboose");
 		
 		// Place cars
 		Assert.assertEquals("Place c1", Car.OKAY, c1.setLocation(loc1, loc1trk1));
@@ -3473,10 +3326,6 @@ public class OperationsTrainsTest extends TestCase {
 		// add staging
 		Track loc1trk2 = loc1.addTrack("Harvard Staging", Track.STAGING);
 		loc1trk2.setLength(1000);
-		loc1trk2.addTypeName("Boxcar");
-		loc1trk2.addTypeName("Diesel");
-		loc1trk2.addTypeName("Flat");
-		loc1trk2.addTypeName("Caboose");
 		// now depart staging, must take all cars in staging
 		// Place cars
 		Assert.assertEquals("Move c1", Car.OKAY, c1.setLocation(loc1, loc1trk2));

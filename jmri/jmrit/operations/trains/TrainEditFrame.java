@@ -49,7 +49,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.49 $
+ * @version $Revision: 1.50 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -535,9 +535,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		_train = train;
 		if (_train != null)
 			_train.addPropertyChangeListener(this);
-		// setup checkboxes
-		selectCheckboxes(true);
-		// enable checkboxes
+		// update check boxes
+		updateCarTypeCheckboxes();
+		// enable check boxes and buttons
 		enableButtons(true);
 		saveTrain();
 	}
@@ -946,7 +946,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
  	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()
 				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(Train.TYPES_CHANGED_PROPERTY)	){
 			updateCarTypeCheckboxes();
 		}
 		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY)){

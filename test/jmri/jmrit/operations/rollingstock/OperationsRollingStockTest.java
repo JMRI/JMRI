@@ -102,84 +102,86 @@ public class OperationsRollingStockTest extends TestCase {
 	// test RollingStock location and track
 	public void testRollingStockLocation() {
 		RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
-                /* Rolling Stock needs a valid type */
-                rs1.setType("TESTTYPE");
-                /* Type needs to be in CarTypes or EngineTypes */
-                CarTypes.instance().addName("TESTTYPE");
+		/* Rolling Stock needs a valid type */
+		rs1.setType("TESTTYPE");
+		/* Type needs to be in CarTypes or EngineTypes */
+		CarTypes.instance().addName("TESTTYPE");
 
-                Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoad());
+		Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoad());
 		Assert.assertEquals("RollingStock Number", "TESTNUMBER1", rs1.getNumber());
 		Assert.assertEquals("RollingStock Type", "TESTTYPE", rs1.getType());
 
-                /* Rolling Stock not placed on layout yet */
-                Assert.assertEquals("RollingStock null Location Name", "", rs1.getLocationName());
-                Assert.assertEquals("RollingStock null Location Id", "", rs1.getLocationId());
-                Assert.assertEquals("RollingStock null Track Name", "", rs1.getTrackName());
-                Assert.assertEquals("RollingStock null Track Id", "", rs1.getTrackId());
+		/* Rolling Stock not placed on layout yet */
+		Assert.assertEquals("RollingStock null Location Name", "", rs1.getLocationName());
+		Assert.assertEquals("RollingStock null Location Id", "", rs1.getLocationId());
+		Assert.assertEquals("RollingStock null Track Name", "", rs1.getTrackName());
+		Assert.assertEquals("RollingStock null Track Id", "", rs1.getTrackId());
 
-                String testresult;
+		String testresult;
 
-                /* Place Rolling Stock on layout */
-                Location testlocation1 = new Location("Loc1", "Test Town");
-                Track testtrack1 = new Track("Trk1", "Testees Office", Track.SIDING);
-                
-                testresult = rs1.setLocation(testlocation1, testtrack1);
-                Assert.assertEquals("RollingStock null Set Location", "type", testresult);
-                
-                /* type needs to be valid for Track */
-                testtrack1.addTypeName("TESTTYPE");
-                testresult = rs1.setLocation(testlocation1, testtrack1);
-                Assert.assertEquals("RollingStock null Set Location Track type", "type", testresult);
-                
-                /* type needs to be valid for Location */
-                testlocation1.addTypeName("TESTTYPE");
-                testresult = rs1.setLocation(testlocation1, testtrack1);
-                Assert.assertEquals("RollingStock null Set Location type", "length", testresult);
-                
-                /* track needs to have a defined length */
-                rs1.setLength("41");
-                testresult = rs1.setLocation(testlocation1, testtrack1);
-                Assert.assertEquals("RollingStock null Set Length null", "length", testresult);
-                
-                /* track needs to be long enough */
-                testtrack1.setLength(40);
-                rs1.setLength("41");
-                testresult = rs1.setLocation(testlocation1, testtrack1);
-                Assert.assertEquals("RollingStock null Set Length short", "length", testresult);
-                
-                /* track needs to be long enough */
-                testtrack1.setLength(44);  // rs length + Coupler == 4
-                rs1.setLength("40");
-                testresult = rs1.setLocation(testlocation1, testtrack1);
-                Assert.assertEquals("RollingStock null Set Length match", "okay", testresult);
-                
-                /* track needs to accept road */
-                testtrack1.setRoadOption(Track.INCLUDEROADS);
-                testresult = rs1.setLocation(testlocation1, testtrack1);
-                Assert.assertEquals("RollingStock null Set includeroads", "road", testresult);
-                
-                /* track needs to accept road */
-                testtrack1.setRoadOption(Track.INCLUDEROADS);
-                testtrack1.addRoadName("TESTROAD");
-                testresult = rs1.setLocation(testlocation1, testtrack1);
-                Assert.assertEquals("RollingStock Set includeroads", "okay", testresult);
-                
-                /* track needs to accept road */
-                testtrack1.setRoadOption(Track.EXCLUDEROADS);
-                testresult = rs1.setLocation(testlocation1, testtrack1);
-                Assert.assertEquals("RollingStock Set excluderoads", "road", testresult);
-                
-                /* track needs to accept road */
-                testtrack1.setRoadOption(Track.ALLROADS);
-                testresult = rs1.setLocation(testlocation1, testtrack1);
-                Assert.assertEquals("RollingStock Set allroads", "okay", testresult);
-                
-                /* track needs to accept road */
-                testtrack1.setRoadOption(Track.EXCLUDEROADS);
-                testtrack1.deleteRoadName("TESTROAD");
-                testresult = rs1.setLocation(testlocation1, testtrack1);
-                Assert.assertEquals("RollingStock Set null excluderoads", "okay", testresult);
-        }
+		/* Place Rolling Stock on layout */
+		Location testlocation1 = new Location("Loc1", "Test Town");
+		Track testtrack1 = new Track("Trk1", "Testees Office", Track.SIDING);
+
+		testtrack1.deleteTypeName("TESTTYPE");
+		testresult = rs1.setLocation(testlocation1, testtrack1);
+		Assert.assertEquals("RollingStock null Set Location", "type", testresult);
+
+		/* type needs to be valid for Track */
+		testtrack1.addTypeName("TESTTYPE");
+		testlocation1.deleteTypeName("TESTTYPE");
+		testresult = rs1.setLocation(testlocation1, testtrack1);
+		Assert.assertEquals("RollingStock null Set Location Track type", "type", testresult);
+
+		/* type needs to be valid for Location */
+		testlocation1.addTypeName("TESTTYPE");
+		testresult = rs1.setLocation(testlocation1, testtrack1);
+		Assert.assertEquals("RollingStock null Set Location type", "length", testresult);
+
+		/* track needs to have a defined length */
+		rs1.setLength("41");
+		testresult = rs1.setLocation(testlocation1, testtrack1);
+		Assert.assertEquals("RollingStock null Set Length null", "length", testresult);
+
+		/* track needs to be long enough */
+		testtrack1.setLength(40);
+		rs1.setLength("41");
+		testresult = rs1.setLocation(testlocation1, testtrack1);
+		Assert.assertEquals("RollingStock null Set Length short", "length", testresult);
+
+		/* track needs to be long enough */
+		testtrack1.setLength(44);  // rs length + Coupler == 4
+		rs1.setLength("40");
+		testresult = rs1.setLocation(testlocation1, testtrack1);
+		Assert.assertEquals("RollingStock null Set Length match", "okay", testresult);
+
+		/* track needs to accept road */
+		testtrack1.setRoadOption(Track.INCLUDEROADS);
+		testresult = rs1.setLocation(testlocation1, testtrack1);
+		Assert.assertEquals("RollingStock null Set includeroads", "road", testresult);
+
+		/* track needs to accept road */
+		testtrack1.setRoadOption(Track.INCLUDEROADS);
+		testtrack1.addRoadName("TESTROAD");
+		testresult = rs1.setLocation(testlocation1, testtrack1);
+		Assert.assertEquals("RollingStock Set includeroads", "okay", testresult);
+
+		/* track needs to accept road */
+		testtrack1.setRoadOption(Track.EXCLUDEROADS);
+		testresult = rs1.setLocation(testlocation1, testtrack1);
+		Assert.assertEquals("RollingStock Set excluderoads", "road", testresult);
+
+		/* track needs to accept road */
+		testtrack1.setRoadOption(Track.ALLROADS);
+		testresult = rs1.setLocation(testlocation1, testtrack1);
+		Assert.assertEquals("RollingStock Set allroads", "okay", testresult);
+
+		/* track needs to accept road */
+		testtrack1.setRoadOption(Track.EXCLUDEROADS);
+		testtrack1.deleteRoadName("TESTROAD");
+		testresult = rs1.setLocation(testlocation1, testtrack1);
+		Assert.assertEquals("RollingStock Set null excluderoads", "okay", testresult);
+	}
 
 
     // Ensure minimal setup for log4J

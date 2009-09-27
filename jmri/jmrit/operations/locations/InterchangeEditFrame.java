@@ -29,7 +29,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * to TrackEditFram for train/route car drops and pickups.
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class InterchangeEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -122,6 +122,10 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 		// add property change
 		trainManager.addPropertyChangeListener(this);
 		routeManager.addPropertyChangeListener(this);
+		
+		// finish
+		pack();
+		setVisible(true);
 	}
 	
 	protected void enableButtons(boolean enabled){
@@ -333,6 +337,7 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 	}
 	
 	private void updatePickupOptions(){
+		log.debug("update pickup options");
 		pickupPanel.removeAll();
 		
     	JPanel p = new JPanel();

@@ -42,7 +42,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.49 $
+ * @version             $Revision: 1.50 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -80,6 +80,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String TYPES_CHANGED_PROPERTY = "Types";
 	public static final String ROADS_CHANGED_PROPERTY = "Road";
 	public static final String LENGTH_CHANGED_PROPERTY = "length";
+	public static final String NAME_CHANGED_PROPERTY = "train name";
+	public static final String DESCRIPTION_CHANGED_PROPERTY = "description";
 	public static final String ENGINELOCATION_CHANGED_PROPERTY = "EngineLocation";
 	public static final String NUMBERCARS_CHANGED_PROPERTY = "numberCarsMoves";
 	public static final String STATUS_CHANGED_PROPERTY = "status";
@@ -105,6 +107,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		log.debug("New train " + name + " " + id);
 		_name = name;
 		_id = id;
+		// a new train accepts all types
+		setTypeNames(CarTypes.instance().getNames());
+		setTypeNames(EngineTypes.instance().getNames());
 	}
 
 	public String getId() {
@@ -115,7 +120,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _name;
 		_name = name;
 		if (!old.equals(name)){
-			firePropertyChange("name", old, name);
+			firePropertyChange(NAME_CHANGED_PROPERTY, old, name);
 		}
 	}
 	
@@ -154,9 +159,15 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	public void setDepartureTime(String hour, String minute){
+		String oldHour = getDepartureTimeHour();
+		String oldMinute = getDepartureTimeMinute();
+		// new departure time?
+		if (Integer.parseInt(hour) == Integer.parseInt(oldHour) &&
+				Integer.parseInt(minute) == Integer.parseInt(oldMinute))
+			return;
 		_departureTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
 		_departureTime.set(Calendar.MINUTE, Integer.parseInt(minute));
-		firePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, null, hour+":"+minute);
+		firePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, oldHour+":"+oldMinute, hour+":"+minute);
 	}
 	
 	public String getDepartureTimeHour(){
@@ -457,6 +468,8 @@ public class Train implements java.beans.PropertyChangeListener {
     }
     
     public void deleteTypeName(String type){
+       	if (!_typeList.contains(type))
+    		return;
     	_typeList.remove(type);
     	log.debug("train delete car type "+type);
      	firePropertyChange (TYPES_CHANGED_PROPERTY, null, LENGTH);
@@ -540,7 +553,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		String old = _description;
 		_description = description;
 		if (!old.equals(description)){
-			firePropertyChange("description", old, description);
+			firePropertyChange(DESCRIPTION_CHANGED_PROPERTY, old, description);
 		}
 	}
 	

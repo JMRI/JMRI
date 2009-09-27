@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -133,6 +133,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	      	sidingModel.initTable(sidingTable, location);
 	      	interchangeModel.initTable(interchangeTable, location);
 	      	stagingModel.initTable(stagingTable, location);
+	      	_location.addPropertyChangeListener(this);
 			if (_location.getLocationOps() == Location.NORMAL){
 				if (sidingModel.getRowCount()>0)
 					sidingRadioButton.setSelected(true);
@@ -367,9 +368,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
       	interchangeModel.initTable(interchangeTable, location);
       	stagingModel.initTable(stagingTable, location);
 		_location = location;
-		// enable checkboxes
-		selectCheckboxes(true);
-		enableCheckboxes(true);
+		// enable check boxes
+		updateCheckboxes();
+		//enableCheckboxes(true);
 		enableButtons(true);
 		setTrainDirectionBoxes();
 		saveLocation();
@@ -541,11 +542,13 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		log.debug("checkbox change "+ b.getText());
 		if (_location == null)
 			return;
+		_location.removePropertyChangeListener(this);
 		if (b.isSelected()){
 			_location.addTypeName(b.getText());
 		}else{
 			_location.deleteTypeName(b.getText());
 		}
+		_location.addPropertyChangeListener(this);
 	}
 	
 	
@@ -591,6 +594,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	}
 	
 	public void dispose() {
+		if (_location != null)
+			_location.removePropertyChangeListener(this);
 		CarTypes.instance().removePropertyChangeListener(this);
 		EngineTypes.instance().removePropertyChangeListener(this);
 		yardModel.dispose();
@@ -604,7 +609,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		if (log.isDebugEnabled()) 
 			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY)){
+				e.getPropertyName().equals(EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)){
 			updateCheckboxes();
 		}
 	}

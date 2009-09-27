@@ -20,12 +20,14 @@ import javax.swing.JTextField;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.locations.LocationsByCarTypeFrame;
+import jmri.jmrit.operations.trains.TrainsByCarTypeFrame;
 
 /**
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.20 $
+ * @version             $Revision: 1.21 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -185,12 +187,37 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		}
 	}
 	
+	static boolean showDialogBox = true;
 	private void addItemToCombobox (String addItem){
 		if(_comboboxName == CarEditFrame.ROAD){
 			CarRoads.instance().addName(addItem);
 		}
 		if(_comboboxName == CarEditFrame.TYPE){
 			CarTypes.instance().addName(addItem);
+			if (showDialogBox){
+				int results = JOptionPane.showOptionDialog(this, 
+						rb.getString("AddNewCarType"), rb.getString("ModifyLocations"),
+				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
+						null, new Object[] {rb.getString("ButtonYes"), rb.getString("ButtonNo"),
+								rb.getString("ButtonDontShow") }, rb.getString("ButtonNo"));
+				if (results == JOptionPane.YES_OPTION){
+					LocationsByCarTypeFrame lf = new LocationsByCarTypeFrame();
+					lf.initComponents(addItem);
+				}
+				if (results == JOptionPane.CANCEL_OPTION)
+					showDialogBox = false;
+				results = JOptionPane.showOptionDialog(this, 
+						rb.getString("AddNewCarType"), rb.getString("ModifyTrains"),
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
+								null, new Object[] {rb.getString("ButtonYes"), rb.getString("ButtonNo"),
+										rb.getString("ButtonDontShow") }, rb.getString("ButtonNo"));
+				if (results == JOptionPane.YES_OPTION){
+					TrainsByCarTypeFrame lf = new TrainsByCarTypeFrame();
+					lf.initComponents(addItem);
+				}
+				if (results == JOptionPane.CANCEL_OPTION)
+					showDialogBox = false;
+			}
 		}
 		if(_comboboxName == CarEditFrame.COLOR){
 			CarColors.instance().addName(addItem);

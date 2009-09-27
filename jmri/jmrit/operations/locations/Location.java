@@ -18,7 +18,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -64,6 +64,9 @@ public class Location implements java.beans.PropertyChangeListener {
 		log.debug("New location " + name + " " + id);
 		_name = name;
 		_id = id;
+		// a new location accepts all types
+		setTypeNames(CarTypes.instance().getNames());
+		setTypeNames(EngineTypes.instance().getNames());
 	}
 
 	public String getId() {
@@ -298,6 +301,8 @@ public class Location implements java.beans.PropertyChangeListener {
     }
     
     public void deleteTypeName(String type){
+    	if (!list.contains(type))
+    		return;
     	list.remove(type);
     	log.debug("location ("+getName()+") delete rolling stock type "+type);
      	firePropertyChange (TYPES_CHANGED_PROPERTY, null, LENGTH);

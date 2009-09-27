@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -182,6 +182,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		
 		// load fields and enable buttons
 		if (_track !=null){
+			_track.addPropertyChangeListener(this);
 			trackNameTextField.setText(_track.getName());
 			commentTextField.setText(_track.getComment());
 			trackLengthTextField.setText(Integer.toString(_track.getLength()));
@@ -191,10 +192,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		
 		// set frame size and location for display
-		pack();
-		setSize(getWidth()+50, getHeight()+25); // add some room for menu
-		setLocation(Control.panelX, Control.panelY);
-		setVisible(true);	
+		//setSize(getWidth()+50, getHeight()+25); // add some room for menu
+		setLocation(Control.panelX, Control.panelY);	
 	}
 	
 	// Save, Delete, Add 
@@ -262,13 +261,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		_track =_location.addTrack(trackNameTextField.getText(), _type);
 		// check track length
 		checkLength(_track);
-		// copy checkboxes
-		copyCheckboxes();
+		//update check boxes
+		updateCheckboxes();
 		// store comment
 		_track.setComment(commentTextField.getText());
+		_track.addPropertyChangeListener(this);
 		// enable 
 		enableButtons(true);
-		// setup checkboxes
+		// setup check boxes
 		selectCheckboxes(true);
 		updateTrainDir();
 		// save location file
@@ -455,16 +455,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 	}
 	
-	private void copyCheckboxes(){
-		for (int i=0; i < checkBoxes.size(); i++){
-			checkBox = checkBoxes.get(i);
-			if (checkBox.isSelected() && _track != null)
-				_track.addTypeName(checkBox.getText());
-			else
-				_track.deleteTypeName(checkBox.getText());
-		}
-	}
-	
 	private void updateCheckboxes(){
 		checkBoxes.clear();
 		panelCheckBoxes.removeAll();
@@ -584,11 +574,13 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		log.debug("checkbox change "+ b.getText());
 		if (_location == null)
 			return;
+		_track.removePropertyChangeListener(this);
 		if (b.isSelected()){
 			_track.addTypeName(b.getText());
 		}else{
 			_track.deleteTypeName(b.getText());
 		}
+		_track.addPropertyChangeListener(this);
 	}
 	
 	private void updateRoadComboBox(){
@@ -602,7 +594,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (Control.showProperty && log.isDebugEnabled()) 
 			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
 		if (e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)){
+				e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)){
 			updateCheckboxes();
 		}
 		if (e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY)){
@@ -615,6 +608,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 	
     public void dispose() {
+    	if (_track != null)
+    		_track.removePropertyChangeListener(this);
     	_location.removePropertyChangeListener(this);
     	CarRoads.instance().removePropertyChangeListener(this);
     	CarTypes.instance().removePropertyChangeListener(this);
