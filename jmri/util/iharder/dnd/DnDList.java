@@ -82,7 +82,8 @@ implements  java.awt.dnd.DropTargetListener,
      * @param data The data from which to construct a list
      * @since 1.1
      */
-    public DnDList( java.util.Vector data )
+    @SuppressWarnings("unchecked")
+	public DnDList( java.util.Vector data )
     {   this();
         ((javax.swing.DefaultListModel)getModel()).copyInto( data.toArray() );
     }   // end constructor

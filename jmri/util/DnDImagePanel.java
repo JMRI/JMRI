@@ -148,7 +148,8 @@ public class DnDImagePanel extends JPanel implements FileDrop.Listener, Componen
     public void componentHidden(ComponentEvent e) {
     }
 
-    private boolean loadImage() {
+
+	private boolean loadImage() {
         try {
             image = ImageIO.read(new File(_imagePath));
         } catch (IOException ex) {
@@ -167,8 +168,7 @@ public class DnDImagePanel extends JPanel implements FileDrop.Listener, Componen
         		setSize(d);
         		while (p1.getParent() != null) 	p1=p1.getParent();
         		try {
-        			if (p1!=null)
-        				((Window)p1).pack(); // yes, lucky hack, possibly dirty
+        			((Window)p1).pack(); // yes, lucky hack, possibly dirty
         		}
         		catch(Exception e)
         		{

@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractThrottle;
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
  * @author  Stephen Williams  Copyright (C) 2008
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -197,9 +197,11 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         }
         
         // reset timeout
-        mRefreshTimer.stop();
-        mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
-        mRefreshTimer.start();
+        if (mRefreshTimer != null) { // got NullPointerException sometimes
+        	mRefreshTimer.stop();
+        	mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
+        	mRefreshTimer.start();
+        }
     }
 
     /**

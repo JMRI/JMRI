@@ -4,6 +4,7 @@ package jmri;
 
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.display.LayoutBlockManager;
+import jmri.jmrit.roster.RosterIconFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +41,7 @@ import jmri.managers.DefaultRouteManager;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.48 $
+ * @version			$Revision: 1.49 $
  */
 public class InstanceManager {
 
@@ -205,6 +206,11 @@ public class InstanceManager {
         if (instance().audioManager == null) instance().audioManager = DefaultAudioManager.instance();
         return instance().audioManager;
     }
+    
+    static public RosterIconFactory rosterIconFactoryInstance()  { 
+    	if (instance().rosterIconFactory == null) instance().rosterIconFactory = RosterIconFactory.instance();
+    	return instance().rosterIconFactory; 
+    }    
 
     static private InstanceManager instance() {
         if (root==null) root = new InstanceManager();
@@ -381,6 +387,8 @@ public class InstanceManager {
     private AudioManager audioManager = null;
 
 	private MemoryManager memoryManager = null;
+	
+	private RosterIconFactory rosterIconFactory = null;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InstanceManager.class.getName());
 }

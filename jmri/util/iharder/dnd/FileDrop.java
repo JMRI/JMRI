@@ -313,7 +313,8 @@ public class FileDrop
                             // Get a useful list
                             java.util.List fileList = (java.util.List) 
                                 tr.getTransferData(java.awt.datatransfer.DataFlavor.javaFileListFlavor);
-                            java.util.Iterator iterator = fileList.iterator();
+                            @SuppressWarnings("unused")
+							java.util.Iterator iterator = fileList.iterator();
 
                             // Convert list to array
                             java.io.File[] filesTemp = new java.io.File[ fileList.size() ];
@@ -417,13 +418,15 @@ public class FileDrop
     }   // end constructor
 
     
-    private static boolean supportsDnD()
+    @SuppressWarnings("unchecked")
+	private static boolean supportsDnD()
     {   // Static Boolean
         if( supportsDnD == null )
         {   
             boolean support = false;
             try
-            {   Class arbitraryDndClass = Class.forName( "java.awt.dnd.DnDConstants" );
+            {   @SuppressWarnings("unused")
+			Class arbitraryDndClass = Class.forName( "java.awt.dnd.DnDConstants" );
                 support = true;
             }   // end try
             catch( Exception e )

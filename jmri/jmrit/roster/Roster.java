@@ -46,7 +46,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.46 $
+ * @version	$Revision: 1.47 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -160,6 +160,7 @@ public class Roster extends XmlFile {
                                       String mfg, String decoderMfgID, String decoderVersionID, String id ) {
         List<RosterEntry> l = matchingList(roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id );
         JComboBox b = new JComboBox();
+        b.setRenderer(new RosterComboListRenderer());
         for (int i = 0; i < l.size(); i++) {
             RosterEntry r = _list.get(i);
             if(_rostergroup!=null){
@@ -184,6 +185,7 @@ public class Roster extends XmlFile {
                                       String mfg, String decoderMfgID, String decoderVersionID, String id ) {
         List<RosterEntry> l = matchingList(roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderVersionID, id );
         JComboBox b = new JComboBox();
+        b.setRenderer(new RosterComboListRenderer());
         for (int i = 0; i < l.size(); i++) {
             RosterEntry r = _list.get(i);
             b.addItem(r.titleString());
