@@ -27,8 +27,8 @@ import java.util.ResourceBundle;
  * LayoutPositionableLabel is a JLabel that can be dragged around the
  * inside of the Layout Editor panel using a right-drag.
  * <P>
- * This module is derived from PositionalLabel.java by 
- *   Bob Jacobsen Copyright (c) 2002, Revision 1.30 
+ * This module is derived from PositionalLabel.java by
+ *   Bob Jacobsen Copyright (c) 2002, Revision 1.30
  * <P>
  * A name change was needed to work around the hard dependence on PanelEditor
  *   in PositionaleLabelXml.java, without the possibility of compromising any
@@ -38,11 +38,11 @@ import java.util.ResourceBundle;
  * The positionable parameter is a global, set from outside.
  * The 'fixed' parameter is local, set from the popup here.
  * <P>
- * Since Layout Editor does not currently use turnout icons, tristate code is 
+ * Since Layout Editor does not currently use turnout icons, tristate code is
  * included here, but commented out.
  *
  * @author Dave Duchamp Copyright (c) 2007, 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class LayoutPositionableLabel extends JLabel
@@ -101,7 +101,7 @@ public class LayoutPositionableLabel extends JLabel
     public void setPanel(LayoutEditor panel) {
 		layoutPanel = panel;
     }
-    
+
     public LayoutEditor getPanel(){
         return layoutPanel;
     }
@@ -112,8 +112,8 @@ public class LayoutPositionableLabel extends JLabel
      */
 
     private int borderSize=0;
-    
-    public void setBorderSize(int border){ 
+
+    public void setBorderSize(int border){
         borderSize = border;
         if(borderColor!=null){
             setBorder(new LineBorder(borderColor, borderSize));
@@ -121,51 +121,51 @@ public class LayoutPositionableLabel extends JLabel
             this.setHorizontalAlignment(JLabel.CENTER);
         }
     }
-    
+
     public int getBorderSize(){
         return borderSize;
     }
 
     private Color borderColor=null;
-    
-    public void setBorderColor(Color border){ 
+
+    public void setBorderColor(Color border){
         borderColor = border;
         if(borderSize!=0){
             setBorder(new LineBorder(borderColor, borderSize));
         //updateSize();
-            setSize(getPreferredSize().width, getPreferredSize().height);
+            setSize(maxWidth(), maxHeight());
             this.setHorizontalAlignment(JLabel.CENTER);
         }
     }
-    
+
     public Color getBorderColor(){
         return borderColor;
     }
 
-     
+
     private int margin=0;
-    
-    public void setMargin(int mar){ 
+
+    public void setMargin(int mar){
         margin = mar;
         this.setHorizontalAlignment(JLabel.CENTER);
         updateSize();
     }
-    
+
     public int getMargin(){
         return margin;
     }
-    
+
     private int fixedWidth=0;
     private int fixedHeight=0;
-    
+
     public int getFixedWidth(){
         return fixedWidth;
     }
-    
+
     public int getFixedHeight(){
         return fixedHeight;
-    } 
-    
+    }
+
     public void setFixedSize(int width, int height){
         fixedWidth=width;
         fixedHeight=height;
@@ -186,7 +186,7 @@ public class LayoutPositionableLabel extends JLabel
             setSize(maxWidth(), maxHeight());
         //displayState();
     }
-    
+
     public void setBackground(Color color){
         if (text){
 
@@ -194,13 +194,13 @@ public class LayoutPositionableLabel extends JLabel
             super.setBackground(color);
         }
     }
-    
+
     /**
      * Update the AWT and Swing size information due to change in internal
      * state, e.g. if one or more of the icons that might be displayed
      * is changed
      */
-     
+
 
     protected void updateSize(){
         setSize(maxWidth(), maxHeight());
@@ -211,23 +211,37 @@ public class LayoutPositionableLabel extends JLabel
             return namedIcon.getIconWidth();
         else
             return namedIcon.getIconWidth()+(margin*2);*/
-        if ((fixedWidth==0) && (margin==0))
-            return namedIcon.getIconWidth(); // defer to superclass
-        else if ((fixedWidth==0) && (margin!=0))
-            return namedIcon.getIconWidth()+(margin*2);
+        if ((fixedWidth==0) && (margin==0)){
+            if(text)
+                return ((javax.swing.JLabel)this).getMaximumSize().width;
+            else
+                return namedIcon.getIconWidth(); // defer to superclass
+        }else if ((fixedWidth==0) && (margin!=0)){
+            if(text)
+                return ((javax.swing.JLabel)this).getMaximumSize().height+(margin*2);
+            else
+                return namedIcon.getIconWidth()+(margin*2);
+        }
         return fixedWidth;
     }
-    
+
 
     protected int maxHeight(){
        /* if (margin==0)
             return namedIcon.getIconHeight();
         else
             return namedIcon.getIconHeight()+(margin*2);*/
-        if ((fixedHeight==0) && (margin==0))
-            return namedIcon.getIconHeight(); // defer to superclass
-        else if ((fixedHeight==0) && (margin!=0))
-            return namedIcon.getIconHeight()+(margin*2);
+        if ((fixedHeight==0) && (margin==0)){
+            if(text)
+                return ((javax.swing.JLabel)this).getMaximumSize().height;
+            else
+                return namedIcon.getIconHeight(); // defer to superclass
+        }else if ((fixedHeight==0) && (margin!=0)){
+            if (text)
+                return ((javax.swing.JLabel)this).getMaximumSize().height+(margin*2);
+            else
+                return namedIcon.getIconHeight()+(margin*2);
+        }
         return fixedHeight;
     }
 
@@ -255,7 +269,7 @@ public class LayoutPositionableLabel extends JLabel
 		// allow Layout Editor to handle the mouse clicked event
 		layoutPanel.handleMouseClicked(e, this.getX(), this.getY());
     }
-	
+
     public void mouseExited(MouseEvent e) {
         // if (debug) log.debug("Exited:  "+where(e));
     }
@@ -266,7 +280,7 @@ public class LayoutPositionableLabel extends JLabel
     public void mouseMoved(MouseEvent e) {
 		// update coordinates in Layout Editor tool bar
 		layoutPanel.setLoc((int)((getX()+e.getX())/layoutPanel.getZoomScale()),
-							(int)((getY()+e.getY())/layoutPanel.getZoomScale())); 
+							(int)((getY()+e.getY())/layoutPanel.getZoomScale()));
     }
     public void mouseDragged(MouseEvent e) {
 		// allow Layout Editor to handle the mouse dragged event
@@ -301,7 +315,7 @@ public class LayoutPositionableLabel extends JLabel
 				});
 				addFixedItem(popup);
 				addShowTooltipItem(popup);
-			}            
+			}
             popup.add(new AbstractAction(rb.getString("Remove")) {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -317,19 +331,19 @@ public class LayoutPositionableLabel extends JLabel
                 popup.add("Width= Auto");
             else
                 popup.add("Width= " + this.maxWidth());
-                
-            if (fixedHeight==0){
+
+            if (fixedHeight==0)
                 popup.add("Height= Auto");
-                popup.add("Margin= " + this.getMargin());
-            }
             else
                 popup.add("Height= " + this.maxHeight());
-                
-                
-            
-                
+
+            if((fixedHeight==0)||(fixedWidth==0))
+                popup.add("Margin= " + this.getMargin());
+
+
+
             popup.addSeparator();
-            
+
             popup.add(new AbstractAction("Set x & y") {
 				public void actionPerformed(ActionEvent e) {
 					String name = getText();
@@ -342,7 +356,7 @@ public class LayoutPositionableLabel extends JLabel
 					fixedSizeEdit(name);
 				}
 			});
-            if(fixedHeight==0){
+            if((fixedHeight==0)||(fixedWidth==0)){
                 popup.add(new AbstractAction(rb.getString("SetMarginSize")) {
                     public void actionPerformed(ActionEvent e) {
                         String name = getText();
@@ -355,14 +369,14 @@ public class LayoutPositionableLabel extends JLabel
             popup.add(makeFontStyleMenu());
 
             popup.add(makeFontColorMenu());
-            
+
             popup.add(makeBackgroundFontColorMenu());
-            
+
             popup.add(textBorderMenu(getText()));
 
             addFixedItem(popup);
             addShowTooltipItem(popup);
-            
+
             popup.add(new AbstractAction(rb.getString("Remove")) {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -393,21 +407,21 @@ public class LayoutPositionableLabel extends JLabel
         addFontMenuEntry(sizeMenu, 36);
         return sizeMenu;
     }
-    
+
     JMenu textBorderMenu(final String name) {
         JMenu borderMenu = new JMenu("Border Menu");
         borderMenu.add("Border Size= " + borderSize);
         borderMenu.addSeparator();
-        borderMenu.add(new AbstractAction(rb.getString("SetMarginSize")) {
+        borderMenu.add(new AbstractAction(rb.getString("SetBorderSize")) {
 				public void actionPerformed(ActionEvent e) {
 					displayBorderEdit(name);
 				}
 			});
-        
+
         borderMenu.add(makeBorderColorMenu());
         return borderMenu;
     }
-    
+
     void addFontMenuEntry(JMenu menu, final int size) {
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(""+size);
         r.addActionListener(new ActionListener() {
@@ -449,9 +463,9 @@ public class LayoutPositionableLabel extends JLabel
                 else setFontStyle(0, Font.BOLD);
             }
           }, Font.BOLD));
-         return styleMenu;     
+         return styleMenu;
     }
-    
+
     public void displayCoordinateEdit(String name) {
 		if (log.isDebugEnabled())
 			log.debug("make new coordinate menu");
@@ -463,9 +477,9 @@ public class LayoutPositionableLabel extends JLabel
 		catch (Exception ex) {
 			log.error("Exception: "+ex.toString());
 			}
-		f.setVisible(true);	
+		f.setVisible(true);
 	}
-    
+
     public void displayBorderEdit(String name){
         LayoutTextBorderSizeEdit f = new LayoutTextBorderSizeEdit();
 		f.addHelpMenu("package.jmri.jmrit.display.TextBorderSizeEdit", true);
@@ -475,10 +489,10 @@ public class LayoutPositionableLabel extends JLabel
 		catch (Exception ex) {
 			log.error("Exception: "+ex.toString());
 			}
-		f.setVisible(true);	
-        
+		f.setVisible(true);
+
     }
-    
+
     public void fixedSizeEdit(String name) {
 		if (log.isDebugEnabled())
 			log.debug("make new coordinate menu");
@@ -490,9 +504,9 @@ public class LayoutPositionableLabel extends JLabel
 		catch (Exception ex) {
 			log.error("Exception: "+ex.toString());
 			}
-		f.setVisible(true);	
+		f.setVisible(true);
 	}
-    
+
     public void marginSizeEdit(String name) {
 		if (log.isDebugEnabled())
 			log.debug("make new coordinate menu");
@@ -504,9 +518,9 @@ public class LayoutPositionableLabel extends JLabel
 		catch (Exception ex) {
 			log.error("Exception: "+ex.toString());
 			}
-		f.setVisible(true);	
+		f.setVisible(true);
 	}
-    
+
     protected JMenu makeBorderColorMenu() {
         JMenu colorMenu = new JMenu(rb.getString("ColorMenu"));
         colorBorderButtonGroup = new ButtonGroup();
@@ -523,7 +537,7 @@ public class LayoutPositionableLabel extends JLabel
         addColorMenuEntry(colorMenu, rb.getString("Magenta"),Color.magenta, 0x02);
         return colorMenu;
     }
-    
+
     protected JMenu makeFontColorMenu() {
         JMenu colorMenu = new JMenu(rb.getString("FontColor"));
         colorButtonGroup = new ButtonGroup();
@@ -540,7 +554,7 @@ public class LayoutPositionableLabel extends JLabel
         addColorMenuEntry(colorMenu, rb.getString("Magenta"),Color.magenta, 0x00);
         return colorMenu;
     }
-    
+
     protected JMenu makeBackgroundFontColorMenu() {
         JMenu colorMenu = new JMenu(rb.getString("FontBackgroundColor"));
         colorBackButtonGroup = new ButtonGroup();
@@ -558,13 +572,13 @@ public class LayoutPositionableLabel extends JLabel
         addColorMenuEntry(colorMenu, rb.getString("Clear"), null, 0x01);
         return colorMenu;
     }
-        
+
     void addColorMenuEntry(JMenu menu, final String name, final Color color, final int foreground) {
         ActionListener a = new ActionListener() {
             //final String desiredName = name;
             final Color desiredColor = color;
-            public void actionPerformed(ActionEvent e) { 
-                if (foreground==0x00) setForeground(desiredColor); 
+            public void actionPerformed(ActionEvent e) {
+                if (foreground==0x00) setForeground(desiredColor);
                 else if (foreground==0x01){
                     if(color==null){
                         setOpaque(false);
@@ -624,7 +638,7 @@ public class LayoutPositionableLabel extends JLabel
             }
         });
     }
-        
+
     JCheckBoxMenuItem showFixedItem = null;
     void addFixedItem(JPopupMenu popup) {
         showFixedItem = new JCheckBoxMenuItem(rb.getString("Fixed"));
@@ -636,7 +650,7 @@ public class LayoutPositionableLabel extends JLabel
             }
         });
     }
-        
+
     JCheckBoxMenuItem disableItem = null;
     void addDisableMenuEntry(JPopupMenu popup) {
         disableItem = new JCheckBoxMenuItem(rb.getString("Disabled"));
@@ -648,7 +662,7 @@ public class LayoutPositionableLabel extends JLabel
             }
         });
     }
-    
+
 //    JCheckBoxMenuItem tristateItem = null;
 //    void addTristateEntry(JPopupMenu popup) {
 //    	tristateItem = new JCheckBoxMenuItem(rb.getString("Tristate"));
@@ -660,7 +674,7 @@ public class LayoutPositionableLabel extends JLabel
 //            }
 //        });
 //    }
-        
+
     public JMenuItem newStyleMenuItem(AbstractAction a, int mask) {
         // next two lines needed because JCheckBoxMenuItem(AbstractAction) not in 1.1.8
         JCheckBoxMenuItem c = new JCheckBoxMenuItem((String)a.getValue(AbstractAction.NAME));
@@ -698,8 +712,8 @@ public class LayoutPositionableLabel extends JLabel
     public void setPositionable(boolean enabled) { positionable = enabled; }
     public boolean getPositionable() { return positionable; }
     private boolean positionable = true;
-    
-// The three items below are not used with Layout Editor, but are present for 
+
+// The three items below are not used with Layout Editor, but are present for
 //		compatibality with the Positionable interface.
     public void setViewCoordinates(boolean enabled) { viewCoordinates = enabled; }
     public boolean getViewCoordinates() { return viewCoordinates; }
@@ -726,12 +740,12 @@ public class LayoutPositionableLabel extends JLabel
     }
     public boolean getForceControlOff() { return forceControlOff; }
     private boolean forceControlOff = false;
-    
+
 //    public void setTristate(boolean set) {
 //    	tristate = set;
 //    }
-    
-//    public boolean getTristate() { return tristate; }	
+
+//    public boolean getTristate() { return tristate; }
 //    private boolean tristate = false;
 
     public void setShowTooltip(boolean set) {

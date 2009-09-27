@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Kevin Dickerson 2009 (LayoutEditor version);
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LayoutTextBorderSizeEdit extends JmriJFrame 
@@ -82,7 +82,7 @@ public class LayoutTextBorderSizeEdit extends JmriJFrame
 		//textY.setVisible(true);
 
 		xTextField.setText("");
-		xTextField.setToolTipText(rb.getString("EnterXTooltip"));
+		xTextField.setToolTipText(rb.getString("SetBorderWidth"));
 		xTextField.setMaximumSize(new Dimension(
 				xTextField.getMaximumSize().width, xTextField
 						.getPreferredSize().height));
@@ -95,13 +95,13 @@ public class LayoutTextBorderSizeEdit extends JmriJFrame
 
 		okButton.setText(rb.getString("Set"));
 		okButton.setVisible(true);
-		okButton.setToolTipText(rb.getString("SetButtonToolTip"));
+		okButton.setToolTipText(rb.getString("SetButtonToolTipBorder"));
 
 		cancelButton.setText(rb.getString("Cancel"));
 		cancelButton.setVisible(true);
-		cancelButton.setToolTipText(rb.getString("CancelButtonToolTip"));
+		cancelButton.setToolTipText(rb.getString("CancelButtonToolTipBorder"));
 
-		setTitle(rb.getString("SetXY"));
+		setTitle(rb.getString("SetBorderWidth"));
 		getContentPane().setLayout(new GridBagLayout());
 		
 		//setSize(150, 120);

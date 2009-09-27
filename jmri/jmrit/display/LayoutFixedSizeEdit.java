@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Kevin Dickerosn 2009 (LayoutEditor version);
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LayoutFixedSizeEdit extends JmriJFrame 
@@ -145,15 +145,15 @@ public class LayoutFixedSizeEdit extends JmriJFrame
 	}
 
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-
+        if (oldWidth == INIT) {
+            oldWidth = pl.getFixedWidth();
+            oldHeight = pl.getFixedHeight();
+        }
 		if (ae.getSource() == okButton) {
 			// save current coordinates in case user cancels
-			if (oldWidth == INIT) {
-				oldWidth = pl.getFixedWidth();
-				oldHeight = pl.getFixedHeight();
-			}
-			int height = validXFixedSize(textHeightField.getText());
-			int width = validYFixedSize(textWidthField.getText());
+
+			int height = validHeightFixedSize(textHeightField.getText());
+			int width = validWidthFixedSize(textWidthField.getText());
 			pl.setFixedSize(width, height);
 			textHeight.setText("Height= " + pl.getFixedHeight());
 			textWidth.setText("Width= " + pl.getFixedWidth());
@@ -168,7 +168,7 @@ public class LayoutFixedSizeEdit extends JmriJFrame
 	}
 
 	// determines x movement absolute or relative
-	private int validXFixedSize(String s) {
+	private int validHeightFixedSize(String s) {
 		int x = pl.getFixedHeight();
 		try {
 			x = Integer.parseInt(s);
@@ -197,7 +197,7 @@ public class LayoutFixedSizeEdit extends JmriJFrame
 	}
 
 	// determines y movement absolute or relative
-	private int validYFixedSize(String s) {
+	private int validWidthFixedSize(String s) {
 		int y = pl.getFixedWidth();
 		try {
 			y = Integer.parseInt(s);

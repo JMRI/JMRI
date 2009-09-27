@@ -42,7 +42,7 @@ import javax.swing.JLabel;
  *	 bundle for its user-seen text, like other LayoutEditor modules.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.beans.PropertyChangeListener {
@@ -145,7 +145,7 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
             setSize(maxWidth(), fixedHeight);
             setMargin(0);
         } else {
-            setLocation(getX(), getY());
+            //setLocation(getX(), getY());
             setSize(maxWidth(), maxHeight());
         }
         //displayState();
@@ -249,11 +249,11 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
      * construction of this object is complete.  Be careful about that!
      */
     protected int maxWidth() {
-        if ((super.getFixedWidth()==0) && (super.getMargin()==0))
+        if ((getFixedWidth()==0) && (getMargin()==0))
             return ((javax.swing.JLabel)this).getMaximumSize().width;  // defer to superclass
-        else if ((super.getFixedWidth()==0) && (super.getMargin()!=0))
-            return ((javax.swing.JLabel)this).getMaximumSize().width+(super.getMargin()*2);
-        return super.getFixedWidth();
+        else if ((getFixedWidth()==0) && (getMargin()!=0))
+            return ((javax.swing.JLabel)this).getMaximumSize().width+(getMargin()*2);
+        return getFixedWidth();
     }
 
     // update icon as state of Memory changes
@@ -304,15 +304,15 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
         if (getFixedWidth()==0)
             popup.add("Width= Auto");
         else
-            popup.add("Width= " + this.maxWidth());
-        if (getFixedHeight()==0){
-            popup.add("Height= Auto");
-            if (text)
-                popup.add("Margin= " + this.getMargin());
-            }
-            
+            popup.add("Width= " + this.fixedWidth);
+
+        if (getFixedHeight()==0)
+            popup.add("Height= Auto");           
         else
-            popup.add("Height= " + this.maxHeight());
+            popup.add("Height= " + this.fixedHeight);
+
+        if (((fixedHeight==0) || (fixedWidth==0))&&(text))
+           popup.add("Margin= " + this.getMargin());
 
         popup.addSeparator();
         
@@ -352,8 +352,7 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
             });
         
         } else if (text) {
-            if(getFixedWidth()==0)
-                popup.add(makeTextJustificationMenu());
+            popup.add(makeTextJustificationMenu());
             
             popup.add(makeFontSizeMenu());
 
@@ -468,7 +467,10 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
 		        // no map, attempt to show object directly
                 Object val = memory.getValue();
                 if (val instanceof String) {
-                    setText((String) memory.getValue());
+                    if (memory.getValue().equals(""))
+                        setText(defaultText);
+                    else
+                        setText((String) memory.getValue());
                     setIcon(null);
                     text = true;
                     icon = false;
@@ -522,8 +524,9 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
                 case CENTRE :   super.setLocation(this.getOriginalX()-(this.maxWidth()/2), this.getOriginalY());
                                 break;
             }
-            this.setSize(this.maxWidth(), this.maxHeight());
+            
         }
+        this.setSize(this.maxWidth(), this.maxHeight());
     }
     
     /**
