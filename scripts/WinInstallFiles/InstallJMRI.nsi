@@ -353,7 +353,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     SetOutPath "$JAVADIR\lib"
     File /a "${SRCDIR}\javax.comm.properties"
     SetOutPath "$JAVADIR\lib\ext"
-    File /a "${SRCDIR}\lib\Serialio.jar"
+    File /a "${SRCDIR}\Serialio.jar"
     SetOutPath "$JAVADIR\bin"
     File /a "${SRCDIR}\jspWin.dll"
     File /a "${SRCDIR}\win32com.dll"
