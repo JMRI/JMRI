@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.6.shtml,v 1.12 2009-09-27 20:01:11 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.6.shtml,v 1.13 2009-09-27 21:24:33 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -220,6 +220,9 @@ Paul Fraker updated the MRC Athearn Genesis SD45-2 definition and updated the MR
 <p>
 Elmer McKay provided a nice help file describing how to start putting signals on your layout.
 
+<p>
+Dan Boudreau add two new operations tools for trains and locations.  
+The "Modify Trains" and "Modify Locations" tools allows the user to quickly edit which car types a train or location will service.
 
 <!--#include virtual="/Footer" -->
 

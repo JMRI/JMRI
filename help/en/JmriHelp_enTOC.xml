@@ -313,6 +313,8 @@
   </tocitem>
   <tocitem text="Sensor Groups " target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
 
+  <tocitem text="Signaling " target="html.tools.signaling.index"/>
+
   <tocitem text="Signal Heads " target="html.tools.signaling.index">
    <tocitem text="Adding Signal Heads " target="package.jmri.jmrit.beantable.SignalAddEdit"/>
 

@@ -324,6 +324,8 @@
   <indexitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalTable"/>
 
  </indexitem>
+ <indexitem text="Signaling " target="html.tools.signaling.index"/>
+
  <indexitem text="Simple Clock " target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/>
 
  <indexitem text="Simple Signal Logic " target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
@@ -347,6 +349,8 @@
  <indexitem text="SRCP " target="html.hardware.SRCP.index"/>
 
  <indexitem text="Tables ">
+  <indexitem text="Audio Table " target="package.jmri.jmrit.beantable.AudioTable"/>
+
   <indexitem text="Block Table " target="package.jmri.jmrit.beantable.BlockTable"/>
 
   <indexitem text="Light Table " target="package.jmri.jmrit.beantable.LightTable"/>
@@ -368,8 +372,6 @@
   <indexitem text="Thread Table " target="package.jmri.jmrit.automat.monitor.AutomatTableFrame"/>
 
   <indexitem text="Turnout Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
-
-  <indexitem text="Audio Table " target="package.jmri.jmrit.beantable.AudioTable"/>
 
  </indexitem>
  <indexitem text="Tracker " target="html.tools.tracker.index"/>

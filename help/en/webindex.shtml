@@ -988,6 +988,12 @@
 </li>
  
 <li>
+<a href="html/tools/signaling/index.shtml">Signaling </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">Simple Clock </a>
 <ul></ul>
 </li>
@@ -1057,6 +1063,12 @@
 <li>Tables <ul>
   
 <li>
+<a href="package/jmri/jmrit/beantable/AudioTable.shtml">Audio Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="package/jmri/jmrit/beantable/BlockTable.shtml">Block Table </a>
 <ul></ul>
 </li>
@@ -1118,12 +1130,6 @@
   
 <li>
 <a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/beantable/AudioTable.shtml">Audio Table </a>
 <ul></ul>
 </li>
 
