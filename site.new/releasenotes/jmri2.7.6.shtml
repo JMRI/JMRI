@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.6.shtml,v 1.11 2009-09-26 22:53:05 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.6.shtml,v 1.12 2009-09-27 20:01:11 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -49,6 +49,12 @@ It contains
 many new features, including:
 
 <ul>
+<li>Many improvements to icons in the panel and layout editors,
+    including many new formatting options.
+<li>New audio support, including a new 
+    <a href="">SoundPro</a> application.
+<li>Roster entries can now contain pictures of your locomotives,
+    which can also be used in the throttles.
 <li>
 </ul>
 along with lots of other changes.  See the complete list below.
@@ -69,7 +75,11 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-(None)
+The Windows installer now puts the Java libraries (jar files) in a lib subdirectory.
+This is the same layout used on Linux and Mac OS X, and makes the JMRI program directory
+much more organized and easier to understand.  If you have your own custom startup scripts,
+you may have to adjust them to the new library location.  If you're just using the JMRI 
+installer and its startup tools, you shouldn't have to change anything you do.
 
 <h3>Warnings from older versions:</h3>
 
@@ -205,7 +215,7 @@ He also provided new MRC 1637 and 1665 definitions,
 and updated the MRC Diesel 1829.
 
 <p>
-Paul Fraker updated the MRC Athearn Genesis SD45-2 definition.
+Paul Fraker updated the MRC Athearn Genesis SD45-2 definition and updated the MRC Diesel 1829 definition.
 
 <p>
 Elmer McKay provided a nice help file describing how to start putting signals on your layout.
