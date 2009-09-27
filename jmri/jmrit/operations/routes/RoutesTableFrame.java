@@ -23,7 +23,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 public class RoutesTableFrame extends OperationsFrame {
 	
@@ -83,7 +83,7 @@ public class RoutesTableFrame extends OperationsFrame {
     	
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu("Tools");
+		JMenu toolMenu = new JMenu(rb.getString("Tools"));
 		toolMenu.add(new RouteCopyAction(rb.getString("MenuItemCopy")));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);

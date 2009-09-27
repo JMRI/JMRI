@@ -49,7 +49,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.50 $
+ * @version $Revision: 1.51 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -346,7 +346,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu("Tools");
+		JMenu toolMenu = new JMenu(rb.getString("Tools"));
 		toolMenu.add(new PrintTrainAction(rb.getString("MenuItemPrint"), new Frame(), false, _train));
 		toolMenu.add(new PrintTrainAction(rb.getString("MenuItemPreview"), new Frame(), true, _train));
 		menuBar.add(toolMenu);
@@ -409,7 +409,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 					rb.getString("deleteTrain"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}	
-			selectCheckboxes(false);
 			routeBox.setSelectedItem("");
 			manager.deregister(train);
 			_train = null;
@@ -537,6 +536,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			_train.addPropertyChangeListener(this);
 		// update check boxes
 		updateCarTypeCheckboxes();
+		updateEngineTypeCheckboxes();
 		// enable check boxes and buttons
 		enableButtons(true);
 		saveTrain();
@@ -646,10 +646,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			JCheckBox checkBox = typeCarCheckBoxes.get(i);
 			checkBox.setSelected(enable);
 			if(_train != null){
+				_train.removePropertyChangeListener(this);
 				if (enable)
 					_train.addTypeName(checkBox.getText());
 				else
 					_train.deleteTypeName(checkBox.getText());
+				_train.addPropertyChangeListener(this);
 			}
 		}
 	}

@@ -32,7 +32,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 public class CarsTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -167,7 +167,7 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
     	
  		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu("Tools");
+		JMenu toolMenu = new JMenu(rb.getString("Tools"));
 		toolMenu.add(new CarRosterMenu("Roster", CarRosterMenu.MAINMENU, this));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);

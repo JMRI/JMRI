@@ -28,7 +28,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -158,7 +158,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     	
  		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu("Tools");
+		JMenu toolMenu = new JMenu(rb.getString("Tools"));
 		toolMenu.add(new EngineRosterMenu("Roster", EngineRosterMenu.MAINMENU, this));
 		toolMenu.add(new NceConsistEngineAction(rb.getString("MenuItemNceSync"), this));
 		menuBar.add(toolMenu);

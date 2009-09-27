@@ -26,7 +26,7 @@ import javax.swing.ScrollPaneConstants;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 public class LocationsTableFrame extends OperationsFrame {
 	
@@ -86,7 +86,7 @@ public class LocationsTableFrame extends OperationsFrame {
     	
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu("Tools");
+		JMenu toolMenu = new JMenu(rb.getString("Tools"));
 		Frame newFrame = new Frame();
 		toolMenu.add(new PrintLocationsAction(rb.getString("MenuItemPrint"), newFrame, false, this));
 		toolMenu.add(new PrintLocationsAction(rb.getString("MenuItemPreview"), newFrame, true, this));
