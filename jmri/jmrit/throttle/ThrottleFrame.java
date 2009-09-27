@@ -56,7 +56,7 @@ import jmri.jmrit.roster.RosterEntry;
  *
  * @author     Glen Oberhauser
  * @author     Bob Jacobsen    Copyright 2008
- * @version    $Revision: 1.47 $
+ * @version    $Revision: 1.48 $
  */
 /**
  * @author DSM
@@ -789,7 +789,11 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         
         Element window = e.getChild("window");
         WindowPreferences wp = new WindowPreferences();
-        wp.setPreferences(this, window);
+		if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() &&
+           	 jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isIgnoringThrottlePosition() )
+			wp.setPreferences(this, window, true);
+		else
+			wp.setPreferences(this, window);
         Element controlPanelElement = e.getChild("ControlPanel");
         controlPanel.setXml(controlPanelElement);
         if (((javax.swing.plaf.basic.BasicInternalFrameUI) controlPanel.getUI()).getNorthPane() != null)

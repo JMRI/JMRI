@@ -91,7 +91,7 @@ public class WindowPreferences
      * <li> height
      * </ul>
      */
-    public void setPreferences(Container c, Element e)
+    public void setPreferences(Container c, Element e, boolean ignorePosition)
     {
         try
         {
@@ -99,11 +99,16 @@ public class WindowPreferences
             int y = e.getAttribute("y").getIntValue();
             int width = e.getAttribute("width").getIntValue();
             int height = e.getAttribute("height").getIntValue();
-            c.setLocation(x, y);
+            if ( ! ignorePosition)
+            	c.setLocation(x, y);
             c.setSize(width, height);
         }
         catch (org.jdom.DataConversionException ex) {
             System.out.println(ex);
         }
+    }
+    
+    public void setPreferences(Container c, Element e) {
+    	 setPreferences(c, e, false);
     }
 }

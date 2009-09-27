@@ -19,6 +19,7 @@ public class ThrottlesPreferences {
     private boolean _enableRosterSearch = false;
     private boolean _enableAutoLoad = false;
     private boolean _hideUndefinedFunButton = false;
+    private boolean _ignoreThrottlePosition = false;
     private Dimension _winDim = new Dimension(800,600);
     private String prefFile;
     
@@ -55,6 +56,7 @@ public class ThrottlesPreferences {
     	if ((a = e.getAttribute("isEnablingRosterSearch")) != null )  setEnableRosterSearch( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isAutoLoading")) != null )  setAutoLoad( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isHidingUndefinedFunctionButtons")) != null )  setHideUndefinedFuncButt( a.getValue().compareTo("true") == 0 );
+    	if ((a = e.getAttribute("isIgnoringThrottlePosition")) != null )  setIgnoreThrottlePosition( a.getValue().compareTo("true") == 0 );
     	
     }
 
@@ -79,7 +81,8 @@ public class ThrottlesPreferences {
     	e.setAttribute("isEnablingRosterSearch", ""+isEnablingRosterSearch());
     	e.setAttribute("isAutoLoading", ""+isAutoLoading());
     	e.setAttribute("isHidingUndefinedFunctionButtons", ""+isHidingUndefinedFuncButt());
-    	
+    	e.setAttribute("isIgnoringThrottlePosition", ""+isIgnoringThrottlePosition());
+
     	return e;
     }
 
@@ -95,6 +98,7 @@ public class ThrottlesPreferences {
     	setEnableRosterSearch(tp.isEnablingRosterSearch());
     	setAutoLoad(tp.isAutoLoading());
     	setHideUndefinedFuncButt(tp.isHidingUndefinedFuncButt());
+    	setIgnoreThrottlePosition(tp.isIgnoringThrottlePosition());
     }
     
     public boolean compareTo(ThrottlesPreferences tp)
@@ -204,7 +208,13 @@ public class ThrottlesPreferences {
 	}
 	public boolean isHidingUndefinedFuncButt() {
 		return _hideUndefinedFunButton;
-	}	
+	}
+	public void setIgnoreThrottlePosition(boolean b) {
+		_ignoreThrottlePosition = b;		
+	}    
+	public boolean isIgnoringThrottlePosition() {
+		return _ignoreThrottlePosition;
+	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottlesPreferences.class.getName());
 }

@@ -13,7 +13,7 @@ import jmri.jmrit.XmlFile;
  *  confused with ThrottleManager
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.15 $
+ * @version    $Revision: 1.16 $
  */
 public class ThrottleFrameManager
 {
@@ -153,6 +153,7 @@ public class ThrottleFrameManager
 		activeFrame = (activeFrame + 1) % throttleFrames.size();
 		ThrottleFrame tf = throttleFrames.get(activeFrame);
 		tf.requestFocus();
+		tf.toFront();
 	}
 
 	private void requestFocusForPreviousFrame()
@@ -164,6 +165,7 @@ public class ThrottleFrameManager
 		}
 		ThrottleFrame tf = throttleFrames.get(activeFrame);
 		tf.requestFocus();
+		tf.toFront();
 	}
 	
 	public ThrottlesPreferences getThrottlesPreferences() {
