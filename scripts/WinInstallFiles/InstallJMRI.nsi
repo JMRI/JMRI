@@ -58,7 +58,8 @@
 ; - on Linux and Mac OS X platforms.
 ; - Added additional obsolete decoder definitions to delete.
 ; - Use new icon for InstallTest application.
-; - Add shortcut for SoundPro application.
+; - Add Start menu shortcut and optional Desktop shortcut for SoundPro
+; - application.
 ; -------------------------------------------------------------------------
 ; - Version 0.1.5.0
 ; - Incorporated new routine to delete obsolete decoder definitions.
@@ -126,7 +127,7 @@
 !define AUTHOR    "Matt Harris for JMRI"        ; Author name
 !define APP       "JMRI"                        ; Application name
 !define COPYRIGHT "© 1997-2009 JMRI Community"  ; Copyright string
-!define JMRI_VER  "2.7.5A"                       ; Application version
+!define JMRI_VER  "2.7.5"                       ; Application version
 !define JRE_VER   "1.5"                         ; Required JRE version
 !define INST_VER  "0.1.6.0"                     ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
@@ -516,6 +517,15 @@ SectionGroup "Desktop Shortcuts" SEC_DTSC
                    "Start Panel Pro"
   SectionEnd ; SEC_PPDTSC
 
+  Section "SoundPro" SEC_SPDTSC
+    SectionIn 2
+    CreateShortcut "$DESKTOP\SoundPro.lnk" \
+                   "$INSTDIR\LaunchJMRI.exe" \
+                   "apps.SoundPro.SoundPro" \
+                   "$INSTDIR\SoundPro80x80.ico" 0 "" "" \
+                   "Start Sound Pro"
+  SectionEnd ; SEC_SPDTSC
+
 SectionGroupEnd ; SEC_DTSC
 
 Section "-Create Uninstaller" SEC_CRUNINST
@@ -633,6 +643,7 @@ LangString DESC_SEC_OCSMSC ${LANG_ENGLISH} "Creates Start menu shortcuts for JMR
 LangString DESC_SEC_DTSC ${LANG_ENGLISH} "Select Desktop Shortcuts to create."
 LangString DESC_SEC_DPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for DecoderPro"
 LangString DESC_SEC_PPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for PanelPro"
+LangString DESC_SEC_SPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for SoundPro"
 LangString DESC_SEC_CRUNINST ${LANG_ENGLISH} "Creates an Uninstaller for ${APP}"
 LangString MESSAGE_INVALID_DIRECTORY ${LANG_ENGLISH} "This not a valid installation directory. Please reselect"
 
@@ -652,6 +663,7 @@ LangString MESSAGE_INVALID_DIRECTORY ${LANG_ENGLISH} "This not a valid installat
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_DTSC} $(DESC_SEC_DTSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_DPDTSC} $(DESC_SEC_DPDTSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_PPDTSC} $(DESC_SEC_PPDTSC)
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_SPDTSC} $(DESC_SEC_SPDTSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_CRUNINST} $(DESC_SEC_CRUNINST)
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
