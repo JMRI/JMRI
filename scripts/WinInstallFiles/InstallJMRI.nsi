@@ -517,7 +517,7 @@ SectionGroup "Desktop Shortcuts" SEC_DTSC
                    "Start Panel Pro"
   SectionEnd ; SEC_PPDTSC
 
-  Section "SoundPro" SEC_SPDTSC
+  Section /o "SoundPro" SEC_SPDTSC
     SectionIn 2
     CreateShortcut "$DESKTOP\SoundPro.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
@@ -596,6 +596,7 @@ Section "Uninstall" ; SEC_CRUNINST
   !insertmacro MUI_STARTMENU_GETFOLDER JMRIStartMenu $0
   Delete "$SMPROGRAMS\$0\DecoderPro.lnk"
   Delete "$SMPROGRAMS\$0\PanelPro.lnk"
+  Delete "$SMPROGRAMS\$0\SoundPro.lnk"
   Delete "$SMPROGRAMS\$0\Tools and Demos\JmriDemo.lnk"
   Delete "$SMPROGRAMS\$0\Tools and Demos\LocoTools.lnk"
   Delete "$SMPROGRAMS\$0\Tools and Demos\CornwallRR.lnk"
@@ -608,7 +609,8 @@ Section "Uninstall" ; SEC_CRUNINST
   RMDir "$SMPROGRAMS\$0\"
   Delete "$DESKTOP\DecoderPro.lnk"
   Delete "$DESKTOP\PanelPro.lnk"
-  
+  Delete "$DESKTOP\SoundPro.lnk"
+
   ; -- Remove registry entries
   DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI"
   StrCmp $MultiUser.InstallMode "CurrentUser" Done
