@@ -24,14 +24,13 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainManagerXml;
 
 
 /**
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class EngineSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -41,7 +40,6 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 	EngineManager manager = EngineManager.instance();
 	EngineManagerXml managerXml = EngineManagerXml.instance();
 	LocationManager locationManager = LocationManager.instance();
-	TrainManagerXml trainManagerXml = TrainManagerXml.instance();
 	TrainManager trainManager = TrainManager.instance();
 	
 	Engine _engine;
@@ -155,8 +153,6 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 		_engine = engine;
 		textEngineRoad.setText(engine.getRoad()+" "+engine.getNumber());
 		updateComboBoxes();
-
-		trainBox.setSelectedItem(engine.getTrain());
 	}
 	
 	private void updateComboBoxes(){
@@ -354,7 +350,6 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 				}
 			}
 			managerXml.writeOperationsEngineFile();
-			trainManagerXml.writeOperationsTrainFile();
 		}
 	}
 
@@ -366,7 +361,8 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug ("EngineSetFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
-		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)){
 			updateComboBoxes();
 		}
 	}

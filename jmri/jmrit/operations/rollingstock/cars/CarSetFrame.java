@@ -24,14 +24,13 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainManagerXml;
 
 
 /**
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class CarSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -41,7 +40,6 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 	CarManager manager = CarManager.instance();
 	CarManagerXml managerXml = CarManagerXml.instance();
 	LocationManager locationManager = LocationManager.instance();
-	TrainManagerXml trainManagerXml = TrainManagerXml.instance();
 	TrainManager trainManager = TrainManager.instance();
 	
 	Car _car;
@@ -156,11 +154,14 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		_car = car;
 		textCarRoad.setText(car.getRoad()+" "+car.getNumber());
 		updateComboBoxes();
-
-		trainBox.setSelectedItem(car.getTrain());
+		if (_car.getRouteLocation() != null)
+			log.debug("car has a pickup location "+_car.getRouteLocation().getName());
+		if (_car.getRouteDestination() != null)
+			log.debug("car has a destination "+_car.getRouteDestination().getName());
 	}
 	
 	private void updateComboBoxes(){
+		log.debug("update combo boxes");
 		locationManager.updateComboBox(locationBox);
 		locationBox.setSelectedItem(_car.getLocation());
 		Location l = _car.getLocation();
@@ -205,7 +206,7 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		}
 	}
 	
-	// Save, Delete, Add, Clear, Calculate buttons
+	// Save button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton) {
 			if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
@@ -358,7 +359,6 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 				}
 			}
 			managerXml.writeOperationsCarFile();
-			trainManagerXml.writeOperationsTrainFile();
 		}
 	}
 
@@ -370,7 +370,8 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug ("CarSetFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
-		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)){
 			updateComboBoxes();
 		}
 	}

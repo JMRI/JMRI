@@ -16,7 +16,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.22 $
+ * @version             $Revision: 1.23 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -195,6 +195,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	 * Also changes the car load status when the car reaches its destination.
 	 */
 	public String setDestination(Location destination, Track track) {
+		// save destination name and track in case car has reached its destination
 		String destinationName = getDestinationName();
 		Track destTrack = getDestinationTrack();
 		String status = super.setDestination(destination, track);
