@@ -73,7 +73,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.38 $
+ * @version     $Revision: 1.39 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -581,6 +581,9 @@ public class AbstractAutomaton implements Runnable {
                         synchronized (self) {
                             self.notifyAll(); // should be only one thread waiting, but just in case
                         }
+                    }
+                    public void notifyThrottleLost(jmri.DccLocoAddress dccAddress){
+                    //This function is redundant but is in the throttle listener
                     }
                 });
                 
