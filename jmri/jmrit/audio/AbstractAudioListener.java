@@ -26,14 +26,14 @@ import jmri.implementation.AbstractAudio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public abstract class AbstractAudioListener extends AbstractAudio implements AudioListener {
 
     private Vector3f _position      = new Vector3f( 0.0f,  0.0f,  0.0f);
     private Vector3f _velocity      = new Vector3f( 0.0f,  0.0f,  0.0f);
-    private Vector3f _orientationAt = new Vector3f( 0.0f,  0.0f, -1.0f);
-    private Vector3f _orientationUp = new Vector3f( 0.0f,  1.0f,  0.0f);
+    private Vector3f _orientationAt = new Vector3f( 0.0f,  1.0f,  0.0f);
+    private Vector3f _orientationUp = new Vector3f( 0.0f,  0.0f,  1.0f);
     private float _gain             = 1.0f;
     private float _metersPerUnit    = 1.0f;
 
