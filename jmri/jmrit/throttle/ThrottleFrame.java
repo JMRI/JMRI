@@ -56,7 +56,7 @@ import jmri.jmrit.roster.RosterEntry;
  *
  * @author     Glen Oberhauser
  * @author     Bob Jacobsen    Copyright 2008
- * @version    $Revision: 1.48 $
+ * @version    $Revision: 1.49 $
  */
 /**
  * @author DSM
@@ -180,6 +180,11 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         throttle = null;
     }
     
+    public void notifyThrottleLost(DccLocoAddress dccAddress){
+        int address = dccAddress.getNumber();
+        boolean isLong = dccAddress.isLongAddress();
+        notifyAddressReleased(address, isLong);
+    }
     private void saveThrottle(String sfile) {
     	// Save throttle: title / window position
     	// as strongly linked to extended throttles and roster presence, do not save function buttons and background window as they're stored in the roster entry

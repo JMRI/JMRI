@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 	
@@ -177,7 +177,21 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     public int supportedSpeedModes() {
 	return(DccThrottle.SpeedStepMode128);
     }
-
+    
+    /**
+     * Handle throttle feedback information on whether we have lost
+     * control of a decoder address.
+     **/
+    
+    public void lostThrottle(DccLocoAddress dccAddress){
+        //Integer addressKey = new Integer(address);        
+        ArrayList<ThrottleListener> a = throttleListeners.get(dccAddress);
+        if (a==null) return;
+        for (int i = 0; i<a.size(); i++) {
+            a.get(i).notifyThrottleLost(dccAddress);
+        }
+        
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractThrottleManager.class.getName());
 }
