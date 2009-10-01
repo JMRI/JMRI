@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -480,7 +480,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		}
 		else if(routeLocation != null && _location != null && !routeLocation.getName().equals(_location.getName()))
 			log.debug("WARNING route location name("+routeLocation.getName()+") not equal to location name ("+_location.getName()+") for rolling stock ("+getId()+")" );
+		RouteLocation old = _routeLocation;
 		_routeLocation = routeLocation;
+		if (old != routeLocation)
+			firePropertyChange("new route location", old, routeLocation);
 	}
 	
 	public RouteLocation getRouteLocation(){

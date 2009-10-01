@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.16 $
+ * @version   $Revision: 1.17 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -299,7 +299,12 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         		s = engine.getDestinationName() + " (" + engine.getDestinationTrackName() + ")";
         	return s;
         }
-        case TRAINCOLUMN: return engine.getTrain();
+        case TRAINCOLUMN: {
+        	// if train was manually set by user add an asterisk
+        	if (engine.getTrain() != null && engine.getRouteLocation() == null)
+        		return engine.getTrain().getName()+"*";
+        	return engine.getTrain();
+        }
         case MOVESCOLUMN: {
            	if (showMoveCol == SHOWBUILT)
         		return engine.getBuilt();
@@ -371,9 +376,9 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		if (sysList != null) {
 			for (int i = 0; i < sysList.size(); i++) {
 				// if object has been deleted, it's not here; ignore it
-				Engine c = manager.getEngineById(sysList.get(i));
-				if (c != null)
-					c.removePropertyChangeListener(this);
+				Engine engine = manager.getEngineById(sysList.get(i));
+				if (engine != null)
+					engine.removePropertyChangeListener(this);
 			}
 		}
     }

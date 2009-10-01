@@ -30,7 +30,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class EngineSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -153,6 +153,16 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 		_engine = engine;
 		textEngineRoad.setText(engine.getRoad()+" "+engine.getNumber());
 		updateComboBoxes();
+		if (_engine.getRouteLocation() != null)
+			log.debug("engine has a pickup location "+_engine.getRouteLocation().getName());
+		if (_engine.getRouteDestination() != null)
+			log.debug("engine has a destination "+_engine.getRouteDestination().getName());
+		// has the program generated a pickup and drop for this engine?
+		if (_engine.getRouteLocation() != null || _engine.getRouteDestination() != null){
+			JOptionPane.showMessageDialog(this,
+					rb.getString("pressSaveWill"),	rb.getString("engineInRoute"),
+					JOptionPane.WARNING_MESSAGE);
+		}
 	}
 	
 	private void updateComboBoxes(){
@@ -200,7 +210,7 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 		}
 	}
 	
-	// Save, Delete, Add, Clear, Calculate buttons
+	// Save button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton) {
 			if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
@@ -247,8 +257,16 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 				_engine.setTrain(null);
 			else {
 				_engine.setTrain((Train)trainBox.getSelectedItem());
-				// determine if train services the location and destination selected by user
+				// determine if train services this engine's type
 				Train train = _engine.getTrain();
+				if (train != null && !train.acceptsTypeName(_engine.getType())){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(rb.getString("engineTrainNotServ"), new Object[]{_engine.getType(), train.getName()}),
+							rb.getString("engineNotMove"),
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}		
+				// determine if train services the location and destination selected by user
 				RouteLocation rl = null;
 				RouteLocation rd = null;
 				Route route = null;
@@ -346,9 +364,15 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 						} else {
 							engine.setTrain((Train)trainBox.getSelectedItem());
 						}
+						// remove engine from being picked up and delivered
+						engine.setRouteLocation(null);
+						engine.setRouteDestination(null);
 					}
 				}
 			}
+			// remove engine from being picked up and delivered
+			_engine.setRouteLocation(null);
+			_engine.setRouteDestination(null);
 			managerXml.writeOperationsEngineFile();
 		}
 	}

@@ -30,7 +30,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class CarSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -158,6 +158,12 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 			log.debug("car has a pickup location "+_car.getRouteLocation().getName());
 		if (_car.getRouteDestination() != null)
 			log.debug("car has a destination "+_car.getRouteDestination().getName());
+		// has the program generated a pickup and drop for this car?
+		if (_car.getRouteLocation() != null || _car.getRouteDestination() != null){
+			JOptionPane.showMessageDialog(this,
+					rb.getString("pressSaveWill"),	rb.getString("carInRoute"),
+					JOptionPane.WARNING_MESSAGE);
+		}
 	}
 	
 	private void updateComboBoxes(){
@@ -256,8 +262,16 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 				_car.setTrain(null);
 			else {
 				_car.setTrain((Train)trainBox.getSelectedItem());
-				// determine if train services the location and destination selected by user
 				Train train = _car.getTrain();
+				// determine if train services this car's type
+				if (train != null && !train.acceptsTypeName(_car.getType())){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(rb.getString("carTrainNotServ"), new Object[]{_car.getType(), train.getName()}),
+							rb.getString("carNotMove"),
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}				
+				// determine if train services the location and destination selected by user
 				RouteLocation rl = null;
 				RouteLocation rd = null;
 				Route route = null;
@@ -355,9 +369,15 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 						} else {
 							kCar.setTrain((Train)trainBox.getSelectedItem());
 						}
+						// remove car from being picked up and delivered
+						kCar.setRouteLocation(null);
+						kCar.setRouteDestination(null);
 					}
 				}
 			}
+			// remove car from being picked up and delivered
+			_car.setRouteLocation(null);
+			_car.setRouteDestination(null);
 			managerXml.writeOperationsCarFile();
 		}
 	}

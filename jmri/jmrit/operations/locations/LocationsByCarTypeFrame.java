@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * Frame to display which locations service certain car types
  * 
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LocationsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -27,6 +27,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 	
 	LocationManager manager;
+	String Empty = "            ";
 
 	ArrayList<JCheckBox> locationList = new ArrayList<JCheckBox>();
 	ArrayList<JCheckBox> trackList = new ArrayList<JCheckBox>();
@@ -41,11 +42,12 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 	JButton saveButton = new JButton(rb.getString("Save"));
 	
 	// check boxes
-	JCheckBox checkBox;
+	JCheckBox copyCheckBox = new JCheckBox(rb.getString("Copy"));
 	
 	// radio buttons
         
 	// text field
+	JLabel textCarType = new JLabel(Empty);
 
 	// for padding out panel
 	
@@ -70,7 +72,10 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
     	pCarType.setBorder(BorderFactory.createTitledBorder(rb.getString("Type")));
     	
     	addItem(pCarType, typeComboBox, 0,0);
+    	addItem(pCarType, copyCheckBox, 1,0);
+    	addItem(pCarType, textCarType, 2,0);
     	typeComboBox.setSelectedItem(carType);
+    	copyCheckBox.setToolTipText(rb.getString("TipCopyCarType"));
 
     	pLocations = new JPanel();
     	pLocations.setLayout(new GridBagLayout());
@@ -99,7 +104,11 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 		addButtonAction(clearButton);
 		addButtonAction(saveButton);
 		
+		// setup checkbox
+		addCheckBoxAction(copyCheckBox);
+		
 		manager.addPropertyChangeListener(this);
+		CarTypes.instance().addPropertyChangeListener(this);
 
 		pack();
 		setSize(getWidth()+30, getHeight());
@@ -157,13 +166,15 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 	}
 	
 	private void updateLocations(){
-		log.debug("update");
+		log.debug("update checkboxes");
 		removePropertyChangeLocations();
 		locationList.clear();
 		trackList.clear();
 		int x=0;
 		pLocations.removeAll();
 		String carType = (String)typeComboBox.getSelectedItem();
+		if (copyCheckBox.isSelected())
+			carType = textCarType.getText();
 		List<String> locations = manager.getLocationsByNameList();
 		for (int i=0; i<locations.size(); i++){
 			Location loc = manager.getLocationById(locations.get(i));
@@ -179,6 +190,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 			List<String> tracks = loc.getTracksByNameList(null);
 			for (int j=0; j<tracks.size(); j++){
 				Track track = loc.getTrackById(tracks.get(j));
+				track.addPropertyChangeListener(this);
 				cb = new JCheckBox(track.getName());
 				cb.setName(track.getId());
 				cb.setToolTipText(MessageFormat.format(rb.getString("TipTrackCarType"),new Object[]{carType}));
@@ -190,6 +202,11 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 		}
 		pLocations.revalidate();
 		repaint();
+	}
+	
+	private void updateComboBox(){
+		log.debug("update combobox");
+		CarTypes.instance().updateComboBox(typeComboBox);
 	}
 	
 	private void selectCheckboxes(boolean b){
@@ -204,37 +221,47 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		JCheckBox cb =  (JCheckBox)ae.getSource();
-		log.debug("Checkbox "+cb.getName()+" text: "+cb.getText());
-		if (locationList.contains(cb)){
-			log.debug("Checkbox location "+cb.getText());
-			// must deselect tracks if location is deselect
-			if (!cb.isSelected()){
-				String locId = cb.getName();
-				for (int i=0; i<trackList.size(); i++){
-					cb = trackList.get(i);
-					String[] id = cb.getName().split("s");
-					if (locId.equals(id[0])){
-						cb.setSelected(false);
-					}				
-				}
-			}
-			
-		}else if (trackList.contains(cb)){
-			log.debug("Checkbox track "+cb.getText());
-			// Must select location if track is selected
-			if (cb.isSelected()){
-				String[] loc = cb.getName().split("s");
-				for (int i=0; i<locationList.size(); i++){
-					cb = locationList.get(i);
-					if (cb.getName().equals(loc[0])){
-						cb.setSelected(true);
-						break;
-					}				
-				}
+		// copy checkbox?
+		if (ae.getSource() == copyCheckBox){
+			if (copyCheckBox.isSelected()){
+				textCarType.setText((String)typeComboBox.getSelectedItem());
+			}else{
+				textCarType.setText(Empty);
+				updateLocations();
 			}
 		}else{
-			log.error("Error checkbox not found");
+			JCheckBox cb = (JCheckBox)ae.getSource();
+			log.debug("Checkbox "+cb.getName()+" text: "+cb.getText());
+			if (locationList.contains(cb)){
+				log.debug("Checkbox location "+cb.getText());
+				// must deselect tracks if location is deselect
+				if (!cb.isSelected()){
+					String locId = cb.getName();
+					for (int i=0; i<trackList.size(); i++){
+						cb = trackList.get(i);
+						String[] id = cb.getName().split("s");
+						if (locId.equals(id[0])){
+							cb.setSelected(false);
+						}				
+					}
+				}
+
+			}else if (trackList.contains(cb)){
+				log.debug("Checkbox track "+cb.getText());
+				// Must select location if track is selected
+				if (cb.isSelected()){
+					String[] loc = cb.getName().split("s");
+					for (int i=0; i<locationList.size(); i++){
+						cb = locationList.get(i);
+						if (cb.getName().equals(loc[0])){
+							cb.setSelected(true);
+							break;
+						}				
+					}
+				}
+			}else{
+				log.error("Error checkbox not found");
+			}
 		}
 	}
 
@@ -242,15 +269,22 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 		if (locationList != null) {
 			for (int i = 0; i < locationList.size(); i++) {
 				// if object has been deleted, it's not here; ignore it
-				Location l = manager.getLocationById(locationList.get(i).getName());
-				if (l != null)
-					l.removePropertyChangeListener(this);
+				Location loc = manager.getLocationById(locationList.get(i).getName());
+				if (loc != null){
+					loc.removePropertyChangeListener(this);
+					List<String> tracks = loc.getTracksByNameList(null);
+					for (int j=0; j<tracks.size(); j++){
+						Track track = loc.getTrackById(tracks.get(j));
+						track.removePropertyChangeListener(this);
+					}
+				}
 			}
 		}
 	}
 
 	public void dispose(){
 		manager.removePropertyChangeListener(this);
+		CarTypes.instance().removePropertyChangeListener(this);
 		removePropertyChangeLocations();
 		super.dispose();
 	}
@@ -265,10 +299,11 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 				e.getPropertyName().equals(Location.SIDINGLISTLENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Location.STAGINGLISTLENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Location.YARDLISTLENGTH_CHANGED_PROPERTY))
-				 {
 			updateLocations();
-		}
-	}
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY))
+			updateComboBox();
+ 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 	.getLogger(LocationsByCarTypeFrame.class.getName());

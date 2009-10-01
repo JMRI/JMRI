@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * Frame to display which trains service certain car types
  * 
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -27,6 +27,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
 	TrainManager manager;
+	String Empty = "            ";
 
 	ArrayList<JCheckBox> trainList = new ArrayList<JCheckBox>();
 	JPanel trainCheckBoxes = new JPanel();
@@ -40,11 +41,12 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 	JButton saveButton = new JButton(rb.getString("Save"));
 	
 	// check boxes
-	JCheckBox checkBox;
+	JCheckBox copyCheckBox = new JCheckBox(rb.getString("Copy"));
 	
 	// radio buttons
         
 	// text field
+	JLabel textCarType = new JLabel(Empty);
 
 	// for padding out panel
 	
@@ -69,7 +71,10 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
     	pCarType.setBorder(BorderFactory.createTitledBorder(rb.getString("Type")));
     	
     	addItem(pCarType, typeComboBox, 0,0);
+    	addItem(pCarType, copyCheckBox, 1,0);
+    	addItem(pCarType, textCarType, 2,0);
     	typeComboBox.setSelectedItem(carType);
+    	copyCheckBox.setToolTipText(rb.getString("TipCopyCarType"));
 
     	pTrains = new JPanel();
     	pTrains.setLayout(new GridBagLayout());
@@ -98,7 +103,11 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 		addButtonAction(clearButton);
 		addButtonAction(saveButton);
 		
+		// setup checkbox
+		addCheckBoxAction(copyCheckBox);
+		
 		manager.addPropertyChangeListener(this);
+		CarTypes.instance().addPropertyChangeListener(this);
 
 		pack();
 		setSize(getWidth()+30, getHeight());
@@ -143,12 +152,14 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 	}
 	
 	private void updateTrains(){
-		log.debug("update");
+		log.debug("update trains");
 		removePropertyChangeTrains();
 		trainList.clear();
 		int x=0;
 		pTrains.removeAll();
 		String carType = (String)typeComboBox.getSelectedItem();
+		if (copyCheckBox.isSelected())
+			carType = textCarType.getText();
 		List<String> trains = manager.getTrainsByNameList();
 		for (int i=0; i<trains.size(); i++){
 			Train train = manager.getTrainById(trains.get(i));
@@ -168,6 +179,11 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 		repaint();
 	}
 	
+	private void updateComboBox(){
+		log.debug("update combobox");
+		CarTypes.instance().updateComboBox(typeComboBox);
+	}
+	
 	private void selectCheckboxes(boolean b){
 		for (int i=0; i<trainList.size(); i++){
 			JCheckBox cb = trainList.get(i);
@@ -176,12 +192,22 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		JCheckBox cb =  (JCheckBox)ae.getSource();
-		log.debug("Checkbox "+cb.getName()+" text: "+cb.getText());
-		if (trainList.contains(cb)){
-			log.debug("Checkbox train "+cb.getText());
+		// copy checkbox?
+		if (ae.getSource() == copyCheckBox){
+			if (copyCheckBox.isSelected()){
+				textCarType.setText((String)typeComboBox.getSelectedItem());
+			}else{
+				textCarType.setText(Empty);
+				updateTrains();
+			}
 		}else{
-			log.error("Error checkbox not found");
+			JCheckBox cb = (JCheckBox)ae.getSource();
+			log.debug("Checkbox "+cb.getName()+" text: "+cb.getText());
+			if (trainList.contains(cb)){
+				log.debug("Checkbox train "+cb.getText());
+			}else{
+				log.error("Error checkbox not found");
+			}
 		}
 	}
 
@@ -198,6 +224,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 
 	public void dispose(){
 		manager.removePropertyChangeListener(this);
+		CarTypes.instance().removePropertyChangeListener(this);
 		removePropertyChangeTrains();
 		super.dispose();
 	}
@@ -210,6 +237,9 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 				e.getPropertyName().equals(Train.NAME_CHANGED_PROPERTY) || 
 			e.getPropertyName().equals(Train.DESCRIPTION_CHANGED_PROPERTY))
 			updateTrains();
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY))
+			updateComboBox();
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
