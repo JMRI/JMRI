@@ -32,8 +32,7 @@ public interface ThrottleListener extends EventListener
     /**
      * Provides notification that the controlling throttle has lost control of
      * the decoder.
-     * @param address The decoder address lost.
-     * @param isLong True if this is a request for a DCC long (extended) address.
+     * @param dccAddress The decoder address lost.
      */
     public void notifyThrottleLost(DccLocoAddress dccAddress);
 }
