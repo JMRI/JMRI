@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.6.shtml,v 1.13 2009-09-27 21:24:33 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.6.shtml,v 1.14 2009-10-01 18:51:01 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -80,6 +80,12 @@ This is the same layout used on Linux and Mac OS X, and makes the JMRI program d
 much more organized and easier to understand.  If you have your own custom startup scripts,
 you may have to adjust them to the new library location.  If you're just using the JMRI 
 installer and its startup tools, you shouldn't have to change anything you do.
+
+<p>
+The orientation of the coordinate system has changed in the new audio support.  Starting with this
+release, when you are looking at the model railroad, X is positive toward the right, Y is positive into the layout
+(away from you), and Z is positive upward.  If you wrote scripts using the new audio support with
+JMRI 2.7.5, you'll have to swap axes.
 
 <h3>Warnings from older versions:</h3>
 
@@ -223,6 +229,10 @@ Elmer McKay provided a nice help file describing how to start putting signals on
 <p>
 Dan Boudreau add two new operations tools for trains and locations.  
 The "Modify Trains" and "Modify Locations" tools allows the user to quickly edit which car types a train or location will service.
+
+<p>
+Kevin Dickerson added a function to allow the system throttle manager to notify software throttles that they have
+lost control over the selected loco.
 
 <!--#include virtual="/Footer" -->
 
