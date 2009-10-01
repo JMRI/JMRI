@@ -41,7 +41,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -180,11 +180,17 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     ce = new Element("loops");
                     ce.setAttribute("min", ""+as.getMinLoops());
                     ce.setAttribute("max", ""+as.getMaxLoops());
+//                    ce.setAttribute("mindelay", ""+as.getMinLoopDelay());
+//                    ce.setAttribute("maxdelay", ""+as.getMaxLoopDelay());
                     e.addContent(ce);
 
                     ce = new Element("fadetimes");
                     ce.setAttribute("in", ""+as.getFadeIn());
                     ce.setAttribute("out", ""+as.getFadeOut());
+                    e.addContent(ce);
+
+                    ce = new Element("dopplerfactor");
+                    ce.addContent(""+as.getDopplerFactor());
                     e.addContent(ce);
                 }
 
@@ -227,75 +233,11 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
         AudioManager am = InstanceManager.audioManagerInstance();
 
-        // Load Listeners first
-        List<Element> audioList = audio.getChildren("audiolistener");
-        if (log.isDebugEnabled()) log.debug("Found "+audioList.size()+" Audio Listener objects");
+        // Count number of loaded Audio objects
+        int loadedObjects = 0;
 
-        for (int i=0; i<audioList.size(); i++) {
-            Element e = audioList.get(i);
-            if (e.getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+(e)+" "+(e).getAttributes());
-                break;
-            }
-            String sysName = e.getAttributeValue("systemName");
-            String userName = null;
-            if (e.getAttribute("userName") != null)
-                userName = e.getAttributeValue("userName");
-            if (log.isDebugEnabled()) log.debug("create Audio: ("+sysName+")("+(userName==null?"<null>":userName)+")");
-            try {
-                AudioListener al = (AudioListener) am.newAudio(sysName, userName);
-
-                // load common parts
-                loadCommon(al, e);
-
-                // load sub-type specific parts
-
-                // Transient object for reading child elements
-                Element ce;
-
-                if ((ce = e.getChild("position"))!=null) {
-                    al.setPosition(
-                        new Vector3f(
-                            Float.parseFloat(ce.getAttributeValue("x")),
-                            Float.parseFloat(ce.getAttributeValue("y")),
-                            Float.parseFloat(ce.getAttributeValue("z"))));
-                }
-
-                if ((ce = e.getChild("velocity"))!=null) {
-                    al.setVelocity(
-                        new Vector3f(
-                            Float.parseFloat(ce.getAttributeValue("x")),
-                            Float.parseFloat(ce.getAttributeValue("y")),
-                            Float.parseFloat(ce.getAttributeValue("z"))));
-                }
-
-                if ((ce = e.getChild("orientation"))!=null) {
-                    al.setOrientation(
-                        new Vector3f(
-                            Float.parseFloat(ce.getAttributeValue("atX")),
-                            Float.parseFloat(ce.getAttributeValue("atY")),
-                            Float.parseFloat(ce.getAttributeValue("atZ"))),
-                        new Vector3f(
-                            Float.parseFloat(ce.getAttributeValue("upX")),
-                            Float.parseFloat(ce.getAttributeValue("upY")),
-                            Float.parseFloat(ce.getAttributeValue("upZ"))));
-                }
-
-                if ((ce = e.getChild("gain"))!=null) {
-                    al.setGain(Float.parseFloat(ce.getValue()));
-                }
-
-                if ((ce = e.getChild("metersperunit"))!=null) {
-                    al.setMetersPerUnit(Float.parseFloat((ce.getValue())));
-                }
-
-            } catch (AudioException ex){
-                log.error("Error loading AudioListener ("+ sysName +"): " + ex);
-            }
-        }
-
-        // Now load buffers
-        audioList = audio.getChildren("audiobuffer");
+        // Load buffers first
+        List<Element> audioList = audio.getChildren("audiobuffer");
         if (log.isDebugEnabled()) log.debug("Found "+audioList.size()+" Audio Buffer objects");
 
         for (int i=0; i<audioList.size(); i++) {
@@ -336,8 +278,9 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                 log.error("Error loading AudioBuffer ("+ sysName +"): " + ex);
             }
         }
+        loadedObjects += audioList.size();
 
-        // Finally, load sources
+        // Now load sources
         audioList = audio.getChildren("audiosource");
         if (log.isDebugEnabled()) log.debug("Found "+audioList.size()+" Audio Source objects");
 
@@ -405,6 +348,10 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                         as.setMinLoops(Integer.parseInt(value));
                     if ((value = ce.getAttributeValue("max"))!=null)
                         as.setMaxLoops(Integer.parseInt(value));
+//                    if ((value = ce.getAttributeValue("mindelay"))!=null)
+//                        as.setMinLoopDelay(Integer.parseInt(value));
+//                    if ((value = ce.getAttributeValue("maxdelay"))!=null)
+//                        as.setMaxLoopDelay(Integer.parseInt(value));
                 }
 
                 if ((ce = e.getChild("fadetimes"))!=null) {
@@ -414,8 +361,82 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                         as.setFadeOut(Integer.parseInt(value));
                 }
 
+                if ((ce = e.getChild("dopplerfactor"))!=null && ce.getValue().length() != 0) {
+                    as.setDopplerFactor(Float.parseFloat(ce.getValue()));
+                }
+
             } catch (AudioException ex) {
                 log.error("Error loading AudioSource ("+ sysName +"): " + ex);
+            }
+        }
+        loadedObjects += audioList.size();
+
+        // Finally, load Listeners if needed
+        if (loadedObjects > 0) {
+            audioList = audio.getChildren("audiolistener");
+            if (log.isDebugEnabled()) log.debug("Found "+audioList.size()+" Audio Listener objects");
+
+            for (int i=0; i<audioList.size(); i++) {
+                Element e = audioList.get(i);
+                if (e.getAttribute("systemName") == null) {
+                    log.warn("unexpected null in systemName "+(e)+" "+(e).getAttributes());
+                    break;
+                }
+                String sysName = e.getAttributeValue("systemName");
+                String userName = null;
+                if (e.getAttribute("userName") != null)
+                    userName = e.getAttributeValue("userName");
+                if (log.isDebugEnabled()) log.debug("create Audio: ("+sysName+")("+(userName==null?"<null>":userName)+")");
+                try {
+                    AudioListener al = (AudioListener) am.newAudio(sysName, userName);
+
+                    // load common parts
+                    loadCommon(al, e);
+
+                    // load sub-type specific parts
+
+                    // Transient object for reading child elements
+                    Element ce;
+
+                    if ((ce = e.getChild("position"))!=null) {
+                        al.setPosition(
+                            new Vector3f(
+                                Float.parseFloat(ce.getAttributeValue("x")),
+                                Float.parseFloat(ce.getAttributeValue("y")),
+                                Float.parseFloat(ce.getAttributeValue("z"))));
+                    }
+
+                    if ((ce = e.getChild("velocity"))!=null) {
+                        al.setVelocity(
+                            new Vector3f(
+                                Float.parseFloat(ce.getAttributeValue("x")),
+                                Float.parseFloat(ce.getAttributeValue("y")),
+                                Float.parseFloat(ce.getAttributeValue("z"))));
+                    }
+
+                    if ((ce = e.getChild("orientation"))!=null) {
+                        al.setOrientation(
+                            new Vector3f(
+                                Float.parseFloat(ce.getAttributeValue("atX")),
+                                Float.parseFloat(ce.getAttributeValue("atY")),
+                                Float.parseFloat(ce.getAttributeValue("atZ"))),
+                            new Vector3f(
+                                Float.parseFloat(ce.getAttributeValue("upX")),
+                                Float.parseFloat(ce.getAttributeValue("upY")),
+                                Float.parseFloat(ce.getAttributeValue("upZ"))));
+                    }
+
+                    if ((ce = e.getChild("gain"))!=null) {
+                        al.setGain(Float.parseFloat(ce.getValue()));
+                    }
+
+                    if ((ce = e.getChild("metersperunit"))!=null) {
+                        al.setMetersPerUnit(Float.parseFloat((ce.getValue())));
+                    }
+
+                } catch (AudioException ex){
+                    log.error("Error loading AudioListener ("+ sysName +"): " + ex);
+                }
             }
         }
     }

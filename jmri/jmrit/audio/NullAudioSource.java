@@ -2,6 +2,8 @@
 
 package jmri.jmrit.audio;
 
+import javax.vecmath.Vector3f;
+
 /**
  * Null audio system implementation of the Audio Source sub-class.
  * <P>
@@ -23,7 +25,7 @@ package jmri.jmrit.audio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class NullAudioSource extends AbstractAudioSource {
 
@@ -69,6 +71,10 @@ public class NullAudioSource extends AbstractAudioSource {
      */
     private boolean init() {
         return true;
+    }
+
+    protected void changePosition(Vector3f pos) {
+        // Do nothing
     }
 
     protected void doPlay() {

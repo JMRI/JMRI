@@ -26,7 +26,7 @@ import jmri.util.FileUtil;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractAudioBuffer extends AbstractAudio implements AudioBuffer {
 
@@ -69,14 +69,14 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
     public char getSubType() {
         return BUFFER;
     }
-    
+
     public String getURL() {
         return this._url;
     }
 
     public void setURL(String url) {
         this._url = FileUtil.getPortableFilename(url);
-        
+
         // Run the loadBuffer method on the main AWT thread to avoid any
         // potential issues with interrupted exceptions if run on the audio
         // command thread
@@ -111,7 +111,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
         return this._endLoopPoint;
     }
 
-    public void stateChanged() {
+    public void stateChanged(int oldState) {
         // Move along... nothing to see here...
     }
 

@@ -38,7 +38,7 @@ import javax.vecmath.Vector3f;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public interface AudioSource extends Audio {
 
@@ -79,10 +79,10 @@ public interface AudioSource extends Audio {
     public void setPosition(float x, float y, float z);
 
     /**
-     * Sets the position of this AudioSource object in x and z planes with
-     * y plane position fixed at zero
+     * Sets the position of this AudioSource object in x and y planes with
+     * z plane position fixed at zero
      * <p>
-     * Equivalent to setPosition(x, 0.0f, z)
+     * Equivalent to setPosition(x, y, 0.0f)
      * <p>
      * Applies only to sub-types:
      * <ul>
@@ -90,9 +90,9 @@ public interface AudioSource extends Audio {
      * <li>Source
      * </ul>
      * @param x x-coordinate
-     * @param z z-coordinate
+     * @param y y-coordinate
      */
-    public void setPosition(float x, float z);
+    public void setPosition(float x, float y);
 
     /**
      * Returns the position of this AudioSource object as a
@@ -106,6 +106,31 @@ public interface AudioSource extends Audio {
      * @return 3d position vector
      */
     public Vector3f getPosition();
+
+    /**
+     * Returns the current position of this AudioSource object as a
+     * 3-dimensional vector.
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Listener
+     * <li>Source
+     * </ul>
+     * @return 3d position vector
+     */
+    public Vector3f getCurrentPosition();
+
+    /**
+     * Method to reset the current position of this AudioSource object to
+     * the initial position as defined by setPosition.
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Listener
+     * <li>Source
+     * </ul>
+     */
+    public void resetCurrentPosition();
 
     /**
      * Sets the velocity of this AudioSource object
@@ -454,6 +479,92 @@ public interface AudioSource extends Audio {
      */
     public int getNumLoops();
 
+//    /**
+//     * Set the minimum length of time in milliseconds to wait before
+//     * playing a subsequent loop of this source.
+//     * <p>
+//     * Not applicable when number of loops is LOOP_NONE or LOOP_CONTINUOUS
+//     * <p>
+//     * Default value = 0
+//     * <p>
+//     * Applies only to sub-types:
+//     * <ul>
+//     * <li>Source
+//     * </ul>
+//     * @param loopDelay minimum time in milliseconds to wait
+//     */
+//    public void setMinLoopDelay(int loopDelay);
+//
+//    /**
+//     * Retrieve the minimum length of time in milliseconds to wait before
+//     * playing a subsequent loop of this source.
+//     * <p>
+//     * Not applicable when number of loops is LOOP_NONE or LOOP_CONTINUOUS
+//     * <p>
+//     * Default value = 0
+//     * <p>
+//     * Applies only to sub-types:
+//     * <ul>
+//     * <li>Source
+//     * </ul>
+//     * @return minimum time in milliseconds to wait
+//     */
+//    public int getMinLoopDelay();
+//
+//    /**
+//     * Set the maximum length of time in milliseconds to wait before
+//     * playing a subsequent loop of this source.
+//     * <p>
+//     * Not applicable when number of loops is LOOP_NONE or LOOP_CONTINUOUS
+//     * <p>
+//     * Default value = 0
+//     * <p>
+//     * Applies only to sub-types:
+//     * <ul>
+//     * <li>Source
+//     * </ul>
+//     * @param loopDelay maximum time in milliseconds to wait
+//     */
+//    public void setMaxLoopDelay(int loopDelay);
+//
+//    /**
+//     * Set the maximum length of time in milliseconds to wait before
+//     * playing a subsequent loop of this source.
+//     * <p>
+//     * Not applicable when number of loops is LOOP_NONE or LOOP_CONTINUOUS
+//     * <p>
+//     * Default value = 0
+//     * <p>
+//     * Applies only to sub-types:
+//     * <ul>
+//     * <li>Source
+//     * </ul>
+//     * @return maximum time in milliseconds to wait
+//     */
+//    public int getMaxLoopDelay();
+//
+//    /**
+//     * The length of time in milliseconds that this source should wait
+//     * before playing a subsequent loop.
+//     * <p>
+//     * Not applicable when number of loops is LOOP_NONE or LOOP_CONTINUOUS
+//     * <p>
+//     * When the minimum and maximum delay times are different, each call
+//     * to this method will return a different random number that lies between
+//     * the two settings:
+//     * <pre>
+//     * minimum &lt= delay time &lt= maximum
+//     * </pre>
+//     * Default value = 0
+//     * <p>
+//     * Applies only to sub-types:
+//     * <ul>
+//     * <li>Source
+//     * </ul>
+//     * @return time in milliseconds to wait
+//     */
+//    public int getLoopDelay();
+
     /**
      * Set the length of time in milliseconds to fade this source in
      * <p>
@@ -505,6 +616,36 @@ public interface AudioSource extends Audio {
      * @return fade-in time in milliseconds
      */
     public int getFadeOut();
+
+    /**
+     * Set the doppler factor of this source
+     * <p>
+     * Default value = 1.0f
+     * <p>
+     * Only calculated for JoalAudioSources
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Source
+     * </ul>
+     * @param dopplerFactor factor to apply in doppler calculations
+     */
+    public void setDopplerFactor(float dopplerFactor);
+
+    /**
+     * Retrieve the doppler factor of this source
+     * <p>
+     * Default value = 1.0f
+     * <p>
+     * Only calculated for JoalAudioSources
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Source
+     * </ul>
+     * @return factor to apply in doppler calculations
+     */
+    public float getDopplerFactor();
 
     /**
      * Method to start playing this AudioSource Object

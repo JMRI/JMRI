@@ -34,7 +34,7 @@ import javax.vecmath.Vector3f;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class JavaSoundAudioSource extends AbstractAudioSource {
 
@@ -62,6 +62,9 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
      * Holds reference to the JavaSoundAudioChannel object
      */
     private JavaSoundAudioChannel _audioChannel = null;
+
+
+    private boolean _jsState;
 
     /**
      * Constructor for new JavaSoundAudioSource with system name
@@ -150,9 +153,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
 
     }
 
-    @Override
-    public void setPosition(Vector3f pos) {
-        super.setPosition(pos);
+    protected void changePosition(Vector3f pos) {
         if (_initialised && isBound() && _audioChannel != null) {
             calculateGain();
             calculatePan();
@@ -182,9 +183,24 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
             calculateGain();
         }
     }
-    
+
     @Override
-    public void stateChanged() {
+    public int getState() {
+        boolean old = _jsState;
+        _jsState = this._clip.isActive();
+        if (_jsState != old) {
+            if (_jsState == true) {
+                this.setState(STATE_PLAYING);
+            } else {
+                this.setState(STATE_STOPPED);
+            }
+        }
+        return super.getState();
+    }
+
+    @Override
+    public void stateChanged(int oldState) {
+        super.stateChanged(oldState);
         if (_initialised && isBound() && _audioChannel != null) {
             calculateGain();
             calculatePan();
@@ -282,8 +298,8 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         Vector3f side = new Vector3f();
         side.cross(_activeAudioListener.getOrientation(UP), _activeAudioListener.getOrientation(AT));
         side.normalize();
-        Vector3f vecX = new Vector3f(this.getPosition());
-        Vector3f vecZ = new Vector3f(this.getPosition());
+        Vector3f vecX = new Vector3f(this.getCurrentPosition());
+        Vector3f vecZ = new Vector3f(this.getCurrentPosition());
         float x = vecX.dot(side);
         float z = vecZ.dot(_activeAudioListener.getOrientation(AT));
         float angle = (float) Math.atan2( x, z );
@@ -300,8 +316,8 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
     protected void calculateGain() {
 
         // Calculate distance from listener
-        Vector3f distance = new Vector3f(this.getPosition());
-        distance.sub(_activeAudioListener.getPosition());
+        Vector3f distance = new Vector3f(this.getCurrentPosition());
+        distance.sub(_activeAudioListener.getCurrentPosition());
 
         float distanceFromListener =
                 (float) Math.sqrt( distance.dot(distance));

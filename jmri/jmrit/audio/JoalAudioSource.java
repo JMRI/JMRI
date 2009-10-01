@@ -62,7 +62,7 @@ import net.java.games.joal.AL;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class JoalAudioSource extends AbstractAudioSource {
 
@@ -71,6 +71,8 @@ public class JoalAudioSource extends AbstractAudioSource {
     private boolean _initialised = false;
 
     private int[] _source = new int[1];
+
+    private int[] _alState = new int[1];
 
     /**
      * Constructor for new JoalAudioSource with system name
@@ -130,9 +132,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         return true;
     }
 
-    @Override
-    public void setPosition(Vector3f pos) {
-        super.setPosition(pos);
+    protected void changePosition(Vector3f pos) {
         if (_initialised) {
             al.alSource3f(_source[0], AL.AL_POSITION, pos.x, pos.y, pos.z);
             if (JoalAudioFactory.checkALEError()) {
@@ -205,11 +205,34 @@ public class JoalAudioSource extends AbstractAudioSource {
     }
 
     @Override
-    public void stateChanged() {
+    public void setDopplerFactor(float dopplerFactor) {
+        super.setDopplerFactor(dopplerFactor);
+        if (_initialised) {
+            al.alSourcef(_source[0], AL.AL_DOPPLER_FACTOR, dopplerFactor);
+        }
+    }
+
+    @Override
+    public int getState() {
+        int old = _alState[0];
+        al.alGetSourcei(_source[0], AL.AL_SOURCE_STATE, _alState, 0);
+        if (_alState[0] != old) {
+            if (_alState[0] == AL.AL_PLAYING) {
+                this.setState(STATE_PLAYING);
+            } else {
+                this.setState(STATE_STOPPED);
+            }
+        }
+        return super.getState();
+    }
+
+    @Override
+    public void stateChanged(int oldState) {
+        super.stateChanged(oldState);
         if (_initialised){
             al.alSourcef(_source[0], AL.AL_PITCH, this.getPitch());
             al.alSourcef(_source[0], AL.AL_GAIN, this.getGain());
-            al.alSource3f(_source[0], AL.AL_POSITION, this.getPosition().x, this.getPosition().y, this.getPosition().z);
+            al.alSource3f(_source[0], AL.AL_POSITION, this.getCurrentPosition().x, this.getCurrentPosition().y, this.getCurrentPosition().z);
             al.alSource3f(_source[0], AL.AL_VELOCITY, this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
             al.alSourcei(_source[0], AL.AL_LOOPING, this.isLooped() ? AL.AL_TRUE : AL.AL_FALSE);
             if (JoalAudioFactory.checkALEError()) {
@@ -349,9 +372,10 @@ public class JoalAudioSource extends AbstractAudioSource {
          */
         AudioSourceLoopThread(JoalAudioSource audioSource, int numLoops) {
             super();
+            this.setName("loopsrc-"+super.getName());
             this.sourceBuffer = audioSource.getSourceBuffer();
             this.numLoops = numLoops;
-            if (log.isDebugEnabled()) log.debug("Created AudioSourceLoopThread for AudioSource " + audioSource.toString()
+            if (log.isDebugEnabled()) log.debug("Created AudioSourceLoopThread for AudioSource " + audioSource.getSystemName()
                     + " loopcount " + this.numLoops);
         }
 

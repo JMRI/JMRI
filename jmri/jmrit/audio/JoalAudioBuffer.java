@@ -65,7 +65,7 @@ import net.java.games.joal.util.ALut;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class JoalAudioBuffer extends AbstractAudioBuffer {
 
@@ -192,8 +192,9 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
             return false;
         }
         // Reset buffer state
-        this.setStartLoopPoint(0);
-        this.setEndLoopPoint(0);
+        // Use super class methods to postpone loop buffer generation
+        super.setStartLoopPoint(0);
+        super.setEndLoopPoint(0);
         this.setState(STATE_EMPTY);
 
         // Load the specified .wav file into data arrays
@@ -211,8 +212,10 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         this.setState(STATE_LOADED);
 
         // Set initial loop points
-        this.setStartLoopPoint(0);
-        this.setEndLoopPoint(_size[0]);
+        // Use super class methods to postpone loop buffer generation
+        super.setStartLoopPoint(0);
+        super.setEndLoopPoint(_size[0]);
+        generateLoopBuffers();
 
         if (log.isDebugEnabled()) {
             log.debug("Loaded buffer: " + this.getSystemName());
@@ -220,6 +223,30 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
             log.debug(" format: " + parseFormat() + ", " + _freq[0] + " Hz");
         }
         return true;
+    }
+
+    // Override super class method to ensure loop buffers are re-generated
+    @Override
+    public void setStartLoopPoint(long startLoopPoint) {
+        super.setStartLoopPoint(startLoopPoint);
+        generateLoopBuffers();
+    }
+
+    // Override super class method to ensure loop buffers are re-generated
+    @Override
+    public void setEndLoopPoint(long endLoopPoint) {
+        super.setEndLoopPoint(endLoopPoint);
+        generateLoopBuffers();
+    }
+
+    /**
+     * Method used to generate any necessary loop buffers.
+     */
+    protected void generateLoopBuffers() {
+        // TODO: Actually write this bit ;-)
+        if (log.isDebugEnabled()) {
+            log.debug("Method generateLoopBuffers() called for buffer " + this.getSystemName());
+        }
     }
 
     public int getFormat() {

@@ -25,7 +25,7 @@ import jmri.Audio;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractAudioFactory implements AudioFactory {
 
@@ -131,6 +131,9 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                             case Audio.CMD_FADE_OUT:
                                 audioSource.doFadeOut();
                                 break;
+                            case Audio.CMD_RESET_POSITION:
+                                audioSource.doResetCurrentPosition();
+                                break;
                             default:
                                 log.warn("Command " + audioCommand.toString()
                                         + " not suitable for AudioSource (" + audioSource.getSystemName() + ")");
@@ -154,6 +157,9 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                     else if (audio instanceof AudioListener) {
                         AbstractAudioListener audioListener = (AbstractAudioListener) audio;
                         switch (audioCommand.getCommand()) {
+                            case Audio.CMD_RESET_POSITION:
+                                audioListener.doResetCurrentPosition();
+                                break;
                             default:
                                 log.warn("Command " + audioCommand.toString()
                                         + " not suitable for AudioListener (" + audioListener.getSystemName() + ")");

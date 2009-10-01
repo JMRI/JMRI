@@ -2,6 +2,8 @@
 
 package jmri.jmrit.audio;
 
+import javax.vecmath.Vector3f;
+
 /**
  * Null implementation of the Audio Listener sub-class.
  * <P>
@@ -23,7 +25,7 @@ package jmri.jmrit.audio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class NullAudioListener extends AbstractAudioListener {
 
@@ -46,6 +48,10 @@ public class NullAudioListener extends AbstractAudioListener {
     public NullAudioListener(String systemName, String userName) {
         super(systemName, userName);
         if (log.isDebugEnabled()) log.debug("New NullAudioListener: "+userName+" ("+systemName+")");
+    }
+
+    protected void changePosition(Vector3f pos) {
+        // Do nothing
     }
 
     protected void cleanUp() {

@@ -38,7 +38,7 @@ import javax.vecmath.Vector3f;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public interface AudioListener extends Audio {
 
@@ -69,10 +69,10 @@ public interface AudioListener extends Audio {
     public void setPosition(float x, float y, float z);
 
     /**
-     * Sets the position of this AudioListener object in x and z planes with
-     * y plane position fixed at zero
+     * Sets the position of this AudioListener object in x and y planes with
+     * z plane position fixed at zero
      * <p>
-     * Equivalent to setPosition(x, 0.0f, z)
+     * Equivalent to setPosition(x, y, 0.0f)
      * <p>
      * Applies only to sub-types:
      * <ul>
@@ -80,9 +80,9 @@ public interface AudioListener extends Audio {
      * <li>Source
      * </ul>
      * @param x x-coordinate
-     * @param z z-coordinate
+     * @param y y-coordinate
      */
-    public void setPosition(float x, float z);
+    public void setPosition(float x, float y);
 
     /**
      * Returns the position of this AudioListener object as a
@@ -96,6 +96,31 @@ public interface AudioListener extends Audio {
      * @return 3d position vector
      */
     public Vector3f getPosition();
+
+    /**
+     * Returns the current position of this AudioListener object as a
+     * 3-dimensional vector.
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Listener
+     * <li>Source
+     * </ul>
+     * @return 3d position vector
+     */
+    public Vector3f getCurrentPosition();
+
+    /**
+     * Method to reset the current position of this AudioListener object to
+     * the initial position as defined by setPosition.
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Listener
+     * <li>Source
+     * </ul>
+     */
+    public void resetCurrentPosition();
 
     /**
      * Sets the velocity of this AudioListener object
@@ -145,6 +170,20 @@ public interface AudioListener extends Audio {
      * @return vector representing the chosen orientation vector
      */
     public Vector3f getOrientation(int which);
+
+    /**
+     * Return the current orientation of this AudioListener object
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Listener
+     * </ul>
+     * @param which the orientation vector to return:
+     *              == AT - position;
+     *              == UP - look-at point
+     * @return vector representing the chosen orientation vector
+     */
+    public Vector3f getCurrentOrientation(int which);
 
     /**
      * Return the current gain setting

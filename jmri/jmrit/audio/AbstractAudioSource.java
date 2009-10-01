@@ -30,11 +30,12 @@ import jmri.implementation.AbstractAudio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public abstract class AbstractAudioSource extends AbstractAudio implements AudioSource {
 
     private Vector3f _position        = new Vector3f( 0.0f,  0.0f,  0.0f);
+    private Vector3f _currentPosition = new Vector3f( 0.0f,  0.0f,  0.0f);
     private Vector3f _velocity        = new Vector3f( 0.0f,  0.0f,  0.0f);
     private float _gain               = 1.0f;
     private float _pitch              = 1.0f;
@@ -44,15 +45,23 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     private int _minLoops             = LOOP_NONE;
     private int _maxLoops             = LOOP_NONE;
     private int _numLoops             = 0;
+//    private int _minLoopDelay         = 0;
+//    private int _maxLoopDelay         = 0;
+//    private int _loopDelay            = 0;
     private int _fadeInTime           = 1000;
     private int _fadeOutTime          = 1000;
     private float _fadeGain           = 1.0f;
+    private float _dopplerFactor      = 1.0f;
     private long _timeOfLastFadeCheck = 0;
+    private long _timeOfLastPositionCheck = 0;
     private int _fading               = Audio.FADE_NONE;
     private boolean _bound            = false;
     private AudioBuffer _buffer;
+//    private AudioSourceDelayThread asdt = null;
 
     private static AudioFactory activeAudioFactory = InstanceManager.audioManagerInstance().getActiveAudioFactory();
+
+    private static float metersPerUnit = activeAudioFactory.getActiveAudioListener().getMetersPerUnit();
 
     /**
      * Abstract constructor for new AudioSource with system name
@@ -108,6 +117,8 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 
     public void setPosition(Vector3f pos) {
         this._position = pos;
+        this._currentPosition = pos;
+        changePosition(pos);
         if (log.isDebugEnabled())
             log.debug("Set position of Source " + this.getSystemName() + " to " + pos);
     }
@@ -116,12 +127,16 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         this.setPosition(new Vector3f(x, y, z));
     }
 
-    public void setPosition(float x, float z) {
-        this.setPosition(new Vector3f(x, 0.0f, z));
+    public void setPosition(float x, float y) {
+        this.setPosition(new Vector3f(x, y, 0.0f));
     }
 
     public Vector3f getPosition() {
         return this._position;
+    }
+
+    public Vector3f getCurrentPosition() {
+        return this._currentPosition;
     }
 
     public void setVelocity(Vector3f vel) {
@@ -133,6 +148,49 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     public Vector3f getVelocity() {
         return this._velocity;
     }
+
+    /**
+     * Method to calculate current position based on velocity
+     */
+    protected void calculateCurrentPosition() {
+
+        // Calculate how long it's been since we lasted checked position
+        long currentTime = System.currentTimeMillis();
+        float timePassed = (currentTime - this._timeOfLastPositionCheck);
+        this._timeOfLastPositionCheck = currentTime;
+
+        log.debug("timePassed = " + timePassed +
+                  " metersPerUnit = " + metersPerUnit +
+                  " source = " + this.getSystemName() +
+                  " state = " + this.getState());
+        if (this._velocity.length()!=0) {
+            this._currentPosition.scaleAdd(
+                    (timePassed/1000) * metersPerUnit,
+                    this._velocity,
+                    this._currentPosition);
+            changePosition(this._currentPosition);
+            if (log.isDebugEnabled())
+                log.debug("Set current position of Source " + this.getSystemName() + " to " + this._currentPosition);
+        }
+    }
+
+    public void resetCurrentPosition() {
+        activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_RESET_POSITION));
+        activeAudioFactory.getCommandThread().interrupt();
+    }
+
+    /**
+     * Method to reset the current position
+     */
+    protected void doResetCurrentPosition() {
+        this._currentPosition = this._position;
+    }
+
+    /**
+     * Method to change the current position of this source
+     * @param pos new position
+     */
+    abstract protected void changePosition(Vector3f pos);
 
     public void setGain(float gain) {
         this._gain = gain;
@@ -260,6 +318,49 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         return this._numLoops;
     }
 
+//    public void setMinLoopDelay(int loopDelay) {
+//        if (this._maxLoopDelay < loopDelay) {
+//            this._maxLoopDelay = loopDelay;
+//        }
+//        this._minLoopDelay = loopDelay;
+//        calculateLoopDelay();
+//    }
+//
+//    public int getMinLoopDelay() {
+//        return this._minLoopDelay;
+//    }
+//
+//    public void setMaxLoopDelay(int loopDelay) {
+//        if (this._minLoopDelay > loopDelay) {
+//            this._minLoopDelay = loopDelay;
+//        }
+//        this._maxLoopDelay = loopDelay;
+//        calculateLoopDelay();
+//    }
+//
+//    public int getMaxLoopDelay() {
+//        return this._maxLoopDelay;
+//    }
+//
+//    public int getLoopDelay() {
+//        // Call the calculate method each time so as to ensure
+//        // randomness when min and max are not equal
+//        calculateLoopDelay();
+//        return this._loopDelay;
+//    }
+//
+//    /**
+//     * Method to calculate the delay between subsequent loops of this source
+//     */
+//    protected void calculateLoopDelay() {
+//        if (this._minLoopDelay != this._maxLoopDelay) {
+//            Random r = new Random();
+//            this._loopDelay = this._minLoopDelay + r.nextInt(this._maxLoopDelay-this._minLoopDelay);
+//        } else {
+//            this._loopDelay = this._minLoopDelay;
+//        }
+//    }
+
     public void setFadeIn(int fadeInTime) {
         this._fadeInTime = fadeInTime;
     }
@@ -274,6 +375,14 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 
     public int getFadeOut() {
         return this._fadeOutTime;
+    }
+
+    public void setDopplerFactor(float dopplerFactor) {
+        this._dopplerFactor = dopplerFactor;
+    }
+
+    public float getDopplerFactor() {
+        return this._dopplerFactor;
     }
 
     /**
@@ -346,12 +455,39 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         return this._bound;
     }
 
-    public void stateChanged() {
-        // Move along... nothing to see here...
+    public void stateChanged(int oldState) {
+        // Get the current state
+        int i = this.getState();
+
+        // Check if the current state has changed to playing
+        if (i!=oldState && i==STATE_PLAYING) {
+            // We've changed to playing so start the move thread
+            this._timeOfLastPositionCheck = System.currentTimeMillis();
+            AudioSourceMoveThread asmt = new AudioSourceMoveThread(this);
+            asmt.start();
+        }
+
+//        // Check if the current state has changed to stopped
+//        if (i!=oldState && i==STATE_STOPPED) {
+//            // We've changed to stopped so determine if we need to start the
+//            // loop delay thread
+//            if (isLooped() && getMinLoops()!=LOOP_CONTINUOUS) {
+//                // Yes, we need to
+//                if (asdt!=null) {
+//                    asdt.cleanup();
+//                    asdt = null;
+//                }
+//                asdt = new AudioSourceDelayThread(this);
+//                asdt.start();
+//            }
+//        }
     }
 
     public void play() {
         this._fading = Audio.FADE_NONE;
+//        if (asdt!=null) {
+//            asdt.interrupt();
+//        }
         if (this.getState()!=STATE_PLAYING) {
             this.setState(STATE_PLAYING);
             activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_PLAY));
@@ -528,9 +664,10 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
          */
         AudioSourceFadeThread(AbstractAudioSource audioSource) {
             super();
+            this.setName("fadesrc-"+super.getName());
             this.audioSource = audioSource;
             this.fadeDirection = audioSource.getFading();
-            if (log.isDebugEnabled()) log.debug("Created AudioSourceFadeThread for AudioSource " + audioSource.toString());
+            if (log.isDebugEnabled()) log.debug("Created AudioSourceFadeThread for AudioSource " + audioSource.getSystemName());
         }
 
         /**
@@ -587,6 +724,124 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             super.cleanup();
         }
     }
+
+    /**
+     * An internal class used to create a new thread to monitor and maintain
+     * current source position with respect to velocity.
+     */
+    protected class AudioSourceMoveThread extends AbstractAudioThread {
+
+        /**
+         * Reference to the AudioSource object being monitored
+         */
+        private AbstractAudioSource audioSource;
+
+        /**
+         * Constructor that takes handle to looping AudioSource to monitor
+         *
+         * @param audioSource looping AudioSource to monitor
+         */
+        AudioSourceMoveThread(AbstractAudioSource audioSource) {
+            super();
+            this.setName("movesrc-" + super.getName());
+            this.audioSource = audioSource;
+            if (log.isDebugEnabled()) log.debug("Created AudioSourceMoveThread for AudioSource " + audioSource.getSystemName());
+        }
+
+        /**
+         * Main processing loop
+         */
+        @Override
+        public void run() {
+
+            while (!dying()) {
+
+                // Recalculate the position
+                audioSource.calculateCurrentPosition();
+
+                // Check state and die if not playing
+                if (audioSource.getState()!=STATE_PLAYING) {
+                    die();
+                }
+
+                // sleep for a while so as not to overload CPU
+                snooze(100);
+            }
+
+//            // Reset the current position
+//            audioSource.resetCurrentPosition();
+
+            // Finish up
+            if (log.isDebugEnabled()) log.debug("Clean up thread " + this.getName());
+            cleanup();
+        }
+
+        /**
+         * Shuts this thread down and clears references to created objects
+         */
+        @Override
+        protected void cleanup() {
+            // Thread is to shutdown
+            die();
+
+            // Clear references to objects
+            this.audioSource = null;
+
+            // Finalise cleanup in super-class
+            super.cleanup();
+        }
+    }
+
+//    /**
+//     * An internal class used to create a new thread to delay subsequent
+//     * playbacks of a non-continuous looped source.
+//     */
+//    private class AudioSourceDelayThread extends Thread {
+//
+//        /**
+//         * Reference to the AudioSource object being monitored
+//         */
+//        private AbstractAudioSource audioSource;
+//
+//        /**
+//         * Constructor that takes handle to looping AudioSource to monitor
+//         *
+//         * @param audioSource looping AudioSource to monitor
+//         */
+//        AudioSourceDelayThread(AbstractAudioSource audioSource) {
+//            super();
+//            this.setName("delaysrc-"+super.getName());
+//            this.audioSource = audioSource;
+//            if (log.isDebugEnabled()) log.debug("Created AudioSourceDelayThread for AudioSource " + audioSource.getSystemName());
+//        }
+//
+//        /**
+//         * Main processing loop
+//         */
+//        @Override
+//        public void run() {
+//
+//            // Sleep for the required period of time
+//            try {
+//                Thread.sleep(audioSource.getLoopDelay());
+//            } catch (InterruptedException ex) {}
+//
+//            // Restart playing this AudioSource
+//            this.audioSource.play();
+//
+//            // Finish up
+//            if (log.isDebugEnabled()) log.debug("Clean up thread " + this.getName());
+//            cleanup();
+//        }
+//
+//        /**
+//         * Shuts this thread down and clears references to created objects
+//         */
+//        protected void cleanup() {
+//            // Clear references to objects
+//            this.audioSource = null;
+//        }
+//    }
 }
 
 /* $(#)AbstractAudioSource.java */

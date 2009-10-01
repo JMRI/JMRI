@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import java.beans.PropertyChangeEvent;
 import javax.swing.Timer;
+import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;
 import jmri.util.PythonInterp;
 
@@ -29,7 +30,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -890,6 +891,16 @@ public class DefaultConditional extends AbstractNamedBean
                                                             break;
                                                         case Audio.CMD_FADE_OUT:
                                                             audioSource.fadeOut();
+                                                            break;
+                                                        case Audio.CMD_RESET_POSITION:
+                                                            audioSource.resetCurrentPosition();
+                                                            break;
+                                                    }
+                                                } else if (audio.getSubType()==Audio.LISTENER) {
+                                                    AudioListener audioListener = (AudioListener) audio;
+                                                    switch (action.getActionData()) {
+                                                        case Audio.CMD_RESET_POSITION:
+                                                            audioListener.resetCurrentPosition();
                                                             break;
                                                     }
                                                 }

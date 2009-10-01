@@ -34,7 +34,7 @@ package jmri;
  * <P>
  *
  * @author  Matthew Harris copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public interface Audio extends NamedBean {
 
@@ -105,6 +105,11 @@ public interface Audio extends NamedBean {
      */
     public static final int STATE_POSITIONED = 0x30;
 
+    /**
+     * State code for an AudioListener when moving
+     */
+    public static final int STATE_MOVING     = 0x31;
+
     // Define Audio command constants
 
     // Constants defining Factory related commands
@@ -173,6 +178,11 @@ public interface Audio extends NamedBean {
      */
     public static final int CMD_FADE_OUT = 0x48;
 
+    /**
+     * Command to reset the position of this Source
+     */
+    public static final int CMD_RESET_POSITION = 0x49;
+
     // Define state variables for fade states
 
     /**
@@ -219,7 +229,7 @@ public interface Audio extends NamedBean {
     /**
      * Method used to update the current state of the Audio object
      */
-    public void stateChanged();
+    public void stateChanged(int oldState);
 
 }
 

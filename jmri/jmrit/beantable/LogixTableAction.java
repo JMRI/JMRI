@@ -72,7 +72,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -2137,7 +2137,8 @@ public class LogixTableAction extends AbstractTableAction {
                 rbx.getString("AudioSourcePauseToggle"),
                 rbx.getString("AudioSourceRewind"),
                 rbx.getString("AudioSourceFadeIn"),
-                rbx.getString("AudioSourceFadeOut") });
+                rbx.getString("AudioSourceFadeOut"),
+                rbx.getString("AudioResetPosition") });
         _audioPanel = makeEditPanel(_actionAudioSetBox, "LabelActionAudio", "SetHintAudio");
         _audioPanel.setVisible(false);
         panel1.add(_audioPanel);
@@ -2574,6 +2575,9 @@ public class LogixTableAction extends AbstractTableAction {
                         break;
                     case Audio.CMD_FADE_OUT:
                         _actionAudioSetBox.setSelectedIndex(8);
+                        break;
+                    case Audio.CMD_RESET_POSITION:
+                        _actionAudioSetBox.setSelectedIndex(9);
                         break;
                 }
         }
@@ -3247,6 +3251,9 @@ public class LogixTableAction extends AbstractTableAction {
                     case 8:
                         _curAction.setActionData(Audio.CMD_FADE_OUT);
                         break;
+                    case 9:
+                        _curAction.setActionData(Audio.CMD_RESET_POSITION);
+                        break;
                 }
                 break;
 		}
@@ -3550,7 +3557,7 @@ public class LogixTableAction extends AbstractTableAction {
             name = name.toUpperCase().trim();
             a = InstanceManager.audioManagerInstance().getBySystemName(name);
         }
-        if (a == null || a.getSubType()!=Audio.SOURCE ) {
+        if (a == null || ( a.getSubType()!=Audio.SOURCE && a.getSubType()!=Audio.LISTENER) ) {
             messageInvalidAudioName(name);
             return null;
         }

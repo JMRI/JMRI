@@ -2,6 +2,7 @@
 
 package jmri.jmrit.audio;
 
+import javax.vecmath.Vector3f;
 import jmri.Audio;
 import jmri.AudioManager;
 import jmri.InstanceManager;
@@ -30,7 +31,7 @@ import jmri.InstanceManager;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class JavaSoundAudioListener extends AbstractAudioListener {
 
@@ -55,18 +56,30 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
         if (log.isDebugEnabled()) log.debug("New JavaSoundAudioListener: "+userName+" ("+systemName+")");
     }
 
+    protected void changePosition(Vector3f pos) {
+        recalculateSources();
+    }
+
     @Override
     public void setGain(float gain) {
         super.setGain(gain);
-        // Loop through each AudioSource and recalculate their gain
+        recalculateSources();
+    }
+
+    /**
+     * Private method to loop through all sources and recalculate gain & pan
+     */
+    private void recalculateSources() {
+        // Loop through each AudioSource and recalculate their gain & pan
         AudioManager am = InstanceManager.audioManagerInstance();
         for (String sysName: am.getSystemNameList()) {
             Audio audio = am.getBySystemName(sysName);
             if (audio.getSubType()==Audio.SOURCE
                     && audio instanceof JavaSoundAudioSource) {
                 ((JavaSoundAudioSource) audio).calculateGain();
+                ((JavaSoundAudioSource) audio).calculatePan();
                 if (log.isDebugEnabled())
-                    log.debug("Recalculating gain for JavaSoundAudioSource " + audio.getSystemName());
+                    log.debug("Recalculating gain & pan for JavaSoundAudioSource " + audio.getSystemName());
             }
         }
     }

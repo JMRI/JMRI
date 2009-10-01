@@ -19,7 +19,7 @@ import javax.swing.Timer;
  *
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 
@@ -410,6 +410,9 @@ public class DefaultConditionalAction implements ConditionalAction {
         else if (str.equals(rbx.getString("AudioSourceFadeOut"))) {
             return Audio.CMD_FADE_OUT;
         }
+        else if (str.equals(rbx.getString("AudioResetPosition"))) {
+            return Audio.CMD_RESET_POSITION;
+        }
         // empty strings can occur frequently with types that have no integer data
         if (str.length() > 0)
         {
@@ -474,6 +477,8 @@ public class DefaultConditionalAction implements ConditionalAction {
                         return (rbx.getString("AudioSourceFadeIn"));
                     case Audio.CMD_FADE_OUT:
                         return (rbx.getString("AudioSourceFadeOut"));
+                    case Audio.CMD_RESET_POSITION:
+                        return (rbx.getString("AudioResetPosition"));
                 }
                 
 		}

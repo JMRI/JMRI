@@ -4,9 +4,11 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 
 import time
+
+from javax.vecmath import Vector3f
 
 # Create Audio Buffer object and associate file
 buffer = audio.provideAudio("IAB1")
@@ -22,9 +24,9 @@ source1.setPitch(1)
 source1.setLooped(True)
 # Set the position of this Audio Source using x, y, z coordinates
 #   20 units to the left
-#    0 units up
 #   10 units to the rear
-source1.setPosition(-20.0,0.0,10.0)
+#    0 units up
+source1.setPosition(-20.0,10.0,0.0)
 
 # Create the second Audio Source object
 source2 = audio.provideAudio("IAS2")
@@ -37,9 +39,14 @@ source2.setMinLoops(3)
 source2.setMaxLoops(6)
 # Set the position of this Audio Source using x, y, z coordinates
 #   10 units to the right
-#    0 units up
 #    0 units to the rear
+#    0 units up
 source2.setPosition(10.0,0.0,0.0)
+# Set the velocity of this Audio Source using Vector3f object
+#    1 units/sec to the left
+#    0 units/sec to the rear
+#    0 units/sec up
+source2.setVelocity(Vector3f(-1.0,0.0,0.0))
 
 # Start playing the first Audio Source
 source1.play()

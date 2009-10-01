@@ -44,7 +44,7 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class AudioSourceFrame extends AbstractAudioFrame {
 
@@ -57,6 +57,11 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     JSpinner loopMin = new JSpinner();
     JLabel loopMaxLabel = new JLabel(rba.getString("LabelLoopMax"));
     JSpinner loopMax = new JSpinner();
+//    JLabel loopMinDelayLabel = new JLabel(rba.getString("LabelLoopMin"));
+//    JSpinner loopMinDelay = new JSpinner();
+//    JLabel loopMaxDelayLabel = new JLabel(rba.getString("LabelLoopMax"));
+//    JSpinner loopMaxDelay = new JSpinner();
+//    JLabel loopDelayUnitsLabel = new JLabel(rba.getString("UnitMS"));
     JCheckBox loopInfinite = new JCheckBox(rba.getString("LabelLoopInfinite"));
     JPanelVector3f position = new JPanelVector3f(rba.getString("LabelPosition"),
                                                  rba.getString("UnitUnits"));
@@ -132,6 +137,39 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         p.add(loopInfinite);
         main.add(p);
 
+//        p = new JPanel(); p.setLayout(new FlowLayout());
+//        p.setBorder(BorderFactory.createCompoundBorder(
+//                        BorderFactory.createTitledBorder(rba.getString("LabelLoopDelay")),
+//                        BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+//        p.add(loopMinDelayLabel);
+//        loopMinDelay.setPreferredSize(new JTextField(8).getPreferredSize());
+//        loopMinDelay.setModel(new SpinnerNumberModel(0,0,Integer.MAX_VALUE,1));
+//        loopMinDelay.addChangeListener(new ChangeListener() {
+//            public void stateChanged(ChangeEvent e) {
+//                loopMaxDelay.setValue(
+//                        ((Integer)loopMinDelay.getValue()
+//                        <(Integer)loopMaxDelay.getValue())
+//                        ?loopMaxDelay.getValue()
+//                        :loopMinDelay.getValue());
+//            }
+//        });
+//        p.add(loopMinDelay);
+//        p.add(loopMaxDelayLabel);
+//        loopMaxDelay.setPreferredSize(new JTextField(8).getPreferredSize());
+//        loopMaxDelay.setModel(new SpinnerNumberModel(0,0,Integer.MAX_VALUE,1));
+//        loopMaxDelay.addChangeListener(new ChangeListener() {
+//            public void stateChanged(ChangeEvent e) {
+//                loopMinDelay.setValue(
+//                        ((Integer)loopMaxDelay.getValue()
+//                        <(Integer)loopMinDelay.getValue())
+//                        ?loopMaxDelay.getValue()
+//                        :loopMinDelay.getValue());
+//            }
+//        });
+//        p.add(loopMaxDelay);
+//        p.add(loopDelayUnitsLabel);
+//        main.add(p);
+//
         main.add(position);
         main.add(velocity);
         main.add(gain);
@@ -224,6 +262,8 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         userName.setText(null);
         loopMin.setValue(AudioSource.LOOP_NONE);
         loopMax.setValue(AudioSource.LOOP_NONE);
+//        loopMinDelay.setValue(0);
+//        loopMaxDelay.setValue(0);
         position.setValue(new Vector3f(0,0,0));
         velocity.setValue(new Vector3f(0,0,0));
         gain.setValue(1.0f);
@@ -246,6 +286,8 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         loopInfinite.setSelected((s.getMinLoops()==AudioSource.LOOP_CONTINUOUS));
         loopMin.setValue(loopInfinite.isSelected()?0:s.getMinLoops());
         loopMax.setValue(loopInfinite.isSelected()?0:s.getMaxLoops());
+//        loopMinDelay.setValue(s.getMinLoopDelay());
+//        loopMaxDelay.setValue(s.getMaxLoopDelay());
         position.setValue(s.getPosition());
         velocity.setValue(s.getVelocity());
         gain.setValue(s.getGain());
@@ -286,6 +328,8 @@ public class AudioSourceFrame extends AbstractAudioFrame {
             }
             s.setMinLoops(loopInfinite.isSelected()?AudioSource.LOOP_CONTINUOUS:(Integer)loopMin.getValue());
             s.setMaxLoops(loopInfinite.isSelected()?AudioSource.LOOP_CONTINUOUS:(Integer)loopMax.getValue());
+//            s.setMinLoopDelay((Integer) loopMinDelay.getValue());
+//            s.setMaxLoopDelay((Integer) loopMaxDelay.getValue());
             s.setPosition(position.getValue());
             s.setGain(gain.getValue());
             s.setPitch(pitch.getValue());

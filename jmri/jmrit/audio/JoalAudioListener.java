@@ -62,7 +62,7 @@ import net.java.games.joal.AL;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class JoalAudioListener extends AbstractAudioListener {
 
@@ -98,9 +98,7 @@ public class JoalAudioListener extends AbstractAudioListener {
         return true;
     }
 
-    @Override
-    public void setPosition(Vector3f pos) {
-        super.setPosition(pos);
+    protected void changePosition(Vector3f pos) {
         if (_initialised) {
             al.alListener3f(AL.AL_POSITION, pos.x, pos.y, pos.z);
             if (JoalAudioFactory.checkALEError()) {
@@ -157,10 +155,11 @@ public class JoalAudioListener extends AbstractAudioListener {
     }
 
     @Override
-    public void stateChanged() {
+    public void stateChanged(int oldState) {
+        super.stateChanged(oldState);
         if (_initialised){
             al.alListenerf(AL.AL_GAIN, this.getGain());
-            al.alListener3f(AL.AL_POSITION, this.getPosition().x, this.getPosition().y, this.getPosition().z);
+            al.alListener3f(AL.AL_POSITION, this.getCurrentPosition().x, this.getCurrentPosition().y, this.getCurrentPosition().z);
             al.alListener3f(AL.AL_VELOCITY, this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
             al.alListenerfv(AL.AL_ORIENTATION,
                     new float[] { this.getOrientation(AT).x, this.getOrientation(AT).y, this.getOrientation(AT).z,

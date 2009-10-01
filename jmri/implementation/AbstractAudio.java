@@ -25,7 +25,7 @@ import jmri.Audio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
 
@@ -59,7 +59,7 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
     public void setState(int newState) {
         Object _old = this._state;
         this._state = newState;
-        stateChanged();
+        stateChanged((Integer) _old);
         firePropertyChange("State", _old, _state);
     }
 
