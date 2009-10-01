@@ -7,6 +7,7 @@ import java.util.List;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
 import jmri.managers.AbstractAudioManager;
@@ -29,7 +30,7 @@ import jmri.managers.AbstractAudioManager;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class DefaultAudioManager extends AbstractAudioManager {
 
@@ -147,6 +148,26 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
             _initialised = true;
             if (log.isDebugEnabled()) log.debug("Initialised AudioFactory type: " + activeAudioFactory.getClass().getSimpleName());
+        }
+    }
+
+    @Override
+    public void deregister(NamedBean s) {
+        super.deregister(s);
+        // Decrement the relevant Audio object counter
+        switch (((Audio) s).getSubType()) {
+            case (Audio.BUFFER): {
+                countBuffers--;
+                break;
+            }
+            case (Audio.SOURCE): {
+                countSources--;
+                break;
+            }
+            case (Audio.LISTENER): {
+                countListeners--;
+                break;
+            }
         }
     }
 
