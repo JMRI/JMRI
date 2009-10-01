@@ -42,7 +42,7 @@ import java.util.ResourceBundle;
  * included here, but commented out.
  *
  * @author Dave Duchamp Copyright (c) 2007, 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class LayoutPositionableLabel extends JLabel
@@ -775,6 +775,14 @@ public class LayoutPositionableLabel extends JLabel
         ours = null;
     }
 
+    public void updateLevel(){
+        if (layoutPanel!=null) layoutPanel.removeObject(this);
+        Container parent = this.getParent();
+        parent.remove(this);
+        parent.validate();
+        layoutPanel.putLabel(this);
+    }
+    
     /**
      * Removes this object from display and persistance
      */

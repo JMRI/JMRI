@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Dave Duchamp (LayoutEditor version);
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class LayoutCoordinateEdit extends JmriJFrame 
@@ -40,6 +40,7 @@ public class LayoutCoordinateEdit extends JmriJFrame
 	javax.swing.JLabel nameText = new javax.swing.JLabel();
 	javax.swing.JLabel textX = new javax.swing.JLabel();
 	javax.swing.JLabel textY = new javax.swing.JLabel();
+	javax.swing.JLabel textL = new javax.swing.JLabel();
 
 	// buttons
 	javax.swing.JButton okButton = new javax.swing.JButton();
@@ -48,6 +49,7 @@ public class LayoutCoordinateEdit extends JmriJFrame
 	// text field
 	javax.swing.JTextField xTextField = new javax.swing.JTextField(4);
 	javax.swing.JTextField yTextField = new javax.swing.JTextField(4);
+	javax.swing.JTextField lTextField = new javax.swing.JTextField(4);
 
 	// for padding out panel
 	javax.swing.JLabel space1 = new javax.swing.JLabel();
@@ -81,19 +83,26 @@ public class LayoutCoordinateEdit extends JmriJFrame
 		textX.setVisible(true);
 		textY.setText("y= " + pl.getY());
 		textY.setVisible(true);
+		textL.setText("level= " +pl.getDisplayLevel().toString());
+		textL.setVisible(true);
 
-		xTextField.setText("");
-		xTextField.setToolTipText(rb.getString("EnterXTooltip"));
+		xTextField.setText(Integer.toString(pl.getX()));
+		xTextField.setToolTipText("Enter x coordinate");
 		xTextField.setMaximumSize(new Dimension(
 				xTextField.getMaximumSize().width, xTextField
 						.getPreferredSize().height));
 
-		yTextField.setText("");
+		yTextField.setText(Integer.toString(pl.getY()));
 		yTextField.setToolTipText(rb.getString("EnterYTooltip"));
 		yTextField.setMaximumSize(new Dimension(
 				yTextField.getMaximumSize().width, yTextField
 						.getPreferredSize().height));
 
+		lTextField.setText(pl.getDisplayLevel().toString());
+		lTextField.setToolTipText("Enter display level");
+		lTextField.setMaximumSize(new Dimension(
+				lTextField.getMaximumSize().width, lTextField.getPreferredSize().height));
+                
 		okButton.setText(rb.getString("Set"));
 		okButton.setVisible(true);
 		okButton.setToolTipText(rb.getString("SetButtonToolTip"));
@@ -113,8 +122,10 @@ public class LayoutCoordinateEdit extends JmriJFrame
 		addItem(xTextField, 1, 1);
 		addItem(textY, 0, 2);
 		addItem(yTextField, 1, 2);
-		addItem(cancelButton, 0, 3);
-		addItem(okButton, 1, 3);
+		addItem(textL, 0, 3);
+		addItem(lTextField, 1, 3);
+		addItem(cancelButton, 0, 4);
+		addItem(okButton, 1, 4);
 
 		// setup buttons
 		addButtonAction(okButton);
@@ -154,9 +165,15 @@ public class LayoutCoordinateEdit extends JmriJFrame
 			}
 			int x = validXCoordinate(xTextField.getText());
 			int y = validYCoordinate(yTextField.getText());
+			int l = validLevel(lTextField.getText());
 			pl.setLocation(x, y);
+            pl.setDisplayLevel(l);
+            pl.updateLevel();
 			textX.setText("x= " + pl.getX());
 			textY.setText("y= " + pl.getY());
+            textL.setText("level= " + l);
+            // don't dispose on okay, allows users to use + and - functions
+			//dispose();
 		}
 		if (ae.getSource() == cancelButton) {
 			if (oldX != INIT)
@@ -165,6 +182,33 @@ public class LayoutCoordinateEdit extends JmriJFrame
 				pl.removeMouseListener(ml);
 			dispose();
 		}
+	}
+
+    private int  validLevel(String s) {
+		int l = pl.getDisplayLevel().intValue();
+		try {
+			l = Integer.parseInt(s);
+		} catch (NumberFormatException e) {
+			if (s.length() > 0) {
+				if (s.charAt(0) == '+')
+					if (s.length() > 1) {
+						try {
+							l = l + Integer.parseInt(s.substring(1));
+						} catch (NumberFormatException e2) {
+						}
+					} else {
+						l = l + 1;
+					}
+				if (s.charAt(0) == '-')
+					l = l - 1;
+			}
+		}
+		if (l < 0) {
+			l = 0;
+		} else if (l > 10) {
+				l = 10;
+		}
+		return l;
 	}
 
 	// determines x movement absolute or relative
