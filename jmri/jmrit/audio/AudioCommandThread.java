@@ -21,7 +21,7 @@ package jmri.jmrit.audio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AudioCommandThread extends AbstractAudioThread {
 
@@ -37,6 +37,7 @@ public class AudioCommandThread extends AbstractAudioThread {
      */
     public AudioCommandThread(AudioFactory activeAudioFactory) {
         super();
+        this.setName("command-"+super.getName());
         this.activeAudioFactory = activeAudioFactory;
         if (log.isDebugEnabled()) log.debug("Created AudioThread for AudioFactory " + activeAudioFactory.toString());
     }
