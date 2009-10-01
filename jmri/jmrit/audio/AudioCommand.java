@@ -23,7 +23,7 @@ import jmri.Audio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AudioCommand {
 
@@ -65,7 +65,7 @@ public class AudioCommand {
     @Override
     public String toString() {
         if (this.audio != null) {
-            return "Command " + commandString() + " for Audio " + audio.toString();
+            return "Command " + commandString() + " for Audio " + audio.getSystemName();
         } else {
             return "Command " + commandString() + " for null object";
         }
