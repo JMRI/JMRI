@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.83 2009-09-26 22:53:05 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.84 2009-10-02 14:07:22 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -374,7 +374,7 @@
 	<LI>Mark Waters, who provided numerous Zimo decoder definitions
 	    and new Zimo MX620 definitions.
     <LI>Howard Watkins, who helped test the CBUS support
-	<LI>Jim Wells, who created our logos
+	<LI>Jim Wells, who created our logos and the great program icons
     <LI>Donn Welton, who provided info on configuring a PowerBook for DecoderPro
     <LI>Ken Weygandt, who provided the default values for the SoundTraxx Tsunami decoder definition and 45-degree icons for panels,
         and helped fix a problem with over-running LocoNet command stations.
