@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-6.dtd,v 1.7 2009-10-01 19:23:11 matthewharris Exp $ -->
+<!-- $Id: layout-config-2-7-6.dtd,v 1.8 2009-10-02 13:53:19 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.7.6 development.  Do not modify it       -->
 <!-- after version 2.7.6 is released.  For more information,                -->
@@ -187,7 +187,7 @@
     <!ATTLIST audiobuffer systemName    CDATA #REQUIRED>
     <!ATTLIST audiobuffer userName      CDATA #IMPLIED>
 
-  <!ELEMENT audiosource (position, velocity, assignedbuffer, gain, pitch, referencedistance, loops, fadetimes, dopplerfactor comment?) >
+  <!ELEMENT audiosource (position, velocity, assignedbuffer, gain, pitch, referencedistance, loops, fadetimes, dopplerfactor, comment?) >
     <!ATTLIST audiosource systemName    CDATA #REQUIRED>
     <!ATTLIST audiosource userName      CDATA #IMPLIED>
 
