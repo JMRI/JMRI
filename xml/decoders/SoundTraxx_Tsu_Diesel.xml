@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2008 All rights reserved -->
-<!-- $Id: SoundTraxx_Tsu_Diesel.xml,v 1.2 2009-08-30 07:56:10 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Diesel.xml,v 1.3 2009-10-02 21:58:40 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -19,6 +19,7 @@
 
 	<version author="Jack Shall lcrr@bellsouth.net" version="1" lastUpdated="20090602"/>
 	<version author="Jack Shall lcrr@bellsouth.net" version="2" lastUpdated="20090723"/>
+	<version author="Jack Shall lcrr@bellsouth.net" version="3" lastUpdated="20090925"/>
 
 	<!-- This file contains the Tsunami definitions for ALL of the internal combustion engine locomotives	-->
 
@@ -32,14 +33,49 @@
 	<!--			was reversed (this was corrected in Tsunami Diesel Tech. Ref. v1.10).  Fixed bug	-->
 	<!--			in CV116, bit 4 "Engine RPM Interlock".  Added CV116, bit 5 "Auto Engine Start		-->
 	<!--			Enable" and CV118 "Motor Recovery Speed".  Updated some tool tips.					-->
+	<!-- version 3	Added Alco 539 models 827011, 827012, 828049.										-->															-->
+
 
 
 <!-- Decoder Model information follows -->
 
 <decoder>
-	<family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)">
+	<family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)"
+		comment="These are the -retail- version Tsunami diesel decoders">
 		<model model="TSU-750 Alco 244" numOuts="2" numFns="14" connector="other"
 			productID="827004" comment="Model 827004">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="FX5" label=" Rule 17"/>
+			<output name="FX6" label="Mode"/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-750 Alco 539 (Non-Turbo)" numOuts="2" numFns="14" connector="other"
+			productID="827011" comment="Model 827011">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="FX5" label=" Rule 17"/>
+			<output name="FX6" label="Mode"/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-750 Alco 539 (Turbo)" numOuts="2" numFns="14" connector="other"
+			productID="827012" comment="Model 827012">
 			<versionCV lowVersionID="64"/>
 			<output name="Air Horn"/>
 			<output name="Bell"/>
@@ -296,6 +332,22 @@
 		</model>
 		<model model="TSU-AT1000 Alco 251 (V16)" numOuts="4" numFns="14" connector="other"
 			productID="828045" comment="Model 828045">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-AT1000 Alco 539 (Turbo)" numOuts="4" numFns="14" connector="other"
+			productID="828049" comment="Model 828049">
 			<versionCV lowVersionID="64"/>
 			<output name="Air Horn"/>
 			<output name="Bell"/>
@@ -1822,7 +1874,7 @@
 		<variable label="Airhorn Select" CV="115" mask="XXXXVVVV"
 			item="Sound Option 9" default="9"
 			comment="Show these horns for the models (productID) listed below"
-			include="827001,827004,827008,827101,827104,827106,827108,828040,828043,828045,828047,828050"
+			include="827001,827004,827008,827011,827012,827101,827104,827106,827108,828040,828043,828045,828047,828049,828050"
 			tooltip="Selects which airhorn to use">
 			<enumVal>
 				<enumChoice choice="Wabco A2"/>
@@ -1847,7 +1899,7 @@
 		<variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX"
 			item="Sound Option 10" default="0"
 			comment="Show these horns for the models (productID) listed below"
-			include="827001,827004,827008,827101,827104,827106,827108,828040,828043,828045,828047,828050"
+			include="827001,827004,827008,827011,827012,827101,827104,827106,827108,828040,828043,828045,828047,828049,828050"
 			tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
 			<enumVal>
 				<enumChoice choice="Short horn blast"/>
