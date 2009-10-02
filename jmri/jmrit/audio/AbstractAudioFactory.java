@@ -25,7 +25,7 @@ import jmri.Audio;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public abstract class AbstractAudioFactory implements AudioFactory {
 
@@ -38,6 +38,12 @@ public abstract class AbstractAudioFactory implements AudioFactory {
      * Boolean used to determine if this AudioFactory has been initialised
      */
     private static boolean _initialised = false;
+
+    /**
+     * Boolean used to determine if this AudioFactory should attenuate sources
+     * based on their distance from the Listener
+     */
+    private static boolean _distanceAttenuated = true;
 
     /**
      * Reference to the seperate thread used to process all AudioCommands
@@ -181,6 +187,14 @@ public abstract class AbstractAudioFactory implements AudioFactory {
 
     public Thread getCommandThread() {
         return audioCommandThread;
+    }
+
+    public void setDistanceAttenuated(boolean attenuated) {
+        _distanceAttenuated = attenuated;
+    }
+
+    public boolean isDistanceAttenuated() {
+        return _distanceAttenuated;
     }
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractAudioFactory.class.getName());

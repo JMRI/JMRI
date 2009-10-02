@@ -33,7 +33,7 @@ package jmri.jmrit.audio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public interface AudioFactory {
 
@@ -99,6 +99,24 @@ public interface AudioFactory {
      * @return active CommandThread
      */
     public Thread getCommandThread();
+
+    /**
+     * Sets if this AudioFactory should attenuate sources based on their
+     * distance from the listener
+     * <p>
+     * Default = true
+     *
+     * @param attenuated true if distance attenuation to be used
+     */
+    public void setDistanceAttenuated(boolean attenuated);
+
+    /**
+     * Determines if this AudioFactory attenuates sources based on their
+     * distance from the Listener
+     *
+     * @return true if distance attenuation used
+     */
+    public boolean isDistanceAttenuated();
 
 }
 

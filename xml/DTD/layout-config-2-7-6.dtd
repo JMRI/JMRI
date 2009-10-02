@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-6.dtd,v 1.8 2009-10-02 13:53:19 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-7-6.dtd,v 1.9 2009-10-02 20:30:55 matthewharris Exp $ -->
 
 <!-- This DTD is part of version 2.7.6 development.  Do not modify it       -->
 <!-- after version 2.7.6 is released.  For more information,                -->
@@ -178,6 +178,7 @@
 
 <!ELEMENT audio (audiolistener, audiobuffer*, audiosource*)>
   <!ATTLIST audio class                 CDATA #REQUIRED>
+  <!ATTLIST audio distanceattenuated    ( yes | no ) "yes" >
 
   <!ELEMENT audiolistener (position, velocity, orientation, gain, metersperunit, comment?) >
     <!ATTLIST audiolistener systemName  CDATA #REQUIRED>

@@ -12,6 +12,7 @@ import jmri.jmrit.audio.AudioBuffer;
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;
 import jmri.util.FileUtil;
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
@@ -41,7 +42,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -68,6 +69,10 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             // don't return an element if there are not any audios to include
             if (!iter.hasNext()) return null;
             
+            // store global information
+            audio.setAttribute("distanceattenuated",
+                    am.getActiveAudioFactory().isDistanceAttenuated()?"yes":"no");
+
             // store the audios
             while (iter.hasNext()) {
                 String sname = iter.next();
@@ -438,6 +443,11 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     log.error("Error loading AudioListener ("+ sysName +"): " + ex);
                 }
             }
+        }
+        
+        Attribute a;
+        if ((a=audio.getAttribute("distanceattenuated"))!=null) {
+            am.getActiveAudioFactory().setDistanceAttenuated(a.getValue().equals("yes"));
         }
     }
 

@@ -34,7 +34,7 @@ import javax.vecmath.Vector3f;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class JavaSoundAudioSource extends AbstractAudioSource {
 
@@ -324,29 +324,35 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         if (log.isDebugEnabled())
             log.debug("Distance of JavaSoundAudioSource " + this.getSystemName() + " from Listener = " + distanceFromListener);
 
-        // Calculate gain of this source using clamped inverse distance
-        // attenuation model
+        // Default value to start with (used for no distance attenuation)
+        float currentGain = 1.0f;
 
-        distanceFromListener = Math.max(distanceFromListener, this.getReferenceDistance());
-        if (log.isDebugEnabled())
-            log.debug("After initial clamping, distance of JavaSoundAudioSource " + this.getSystemName() + " from Listener = " + distanceFromListener);
-        distanceFromListener = Math.min(distanceFromListener, this.getMaximumDistance());
-        if (log.isDebugEnabled())
-            log.debug("After final clamping, distance of JavaSoundAudioSource " + this.getSystemName() + " from Listener = " + distanceFromListener);
+        if (InstanceManager.audioManagerInstance().getActiveAudioFactory().isDistanceAttenuated())
+        {
+            // Calculate gain of this source using clamped inverse distance
+            // attenuation model
 
-        float currentGain =
-                _activeAudioListener.getMetersPerUnit()
-                * (this.getReferenceDistance()
-                    / (this.getReferenceDistance() + this.getRollOffFactor()
-                    * (distanceFromListener - this.getReferenceDistance())));
-        if (log.isDebugEnabled())
-            log.debug("Calculated for JavaSoundAudioSource " + this.getSystemName() + " gain = " + currentGain);
+            distanceFromListener = Math.max(distanceFromListener, this.getReferenceDistance());
+            if (log.isDebugEnabled())
+                log.debug("After initial clamping, distance of JavaSoundAudioSource " + this.getSystemName() + " from Listener = " + distanceFromListener);
+            distanceFromListener = Math.min(distanceFromListener, this.getMaximumDistance());
+            if (log.isDebugEnabled())
+                log.debug("After final clamping, distance of JavaSoundAudioSource " + this.getSystemName() + " from Listener = " + distanceFromListener);
 
-        // Ensure that gain is between 0 and 1
-        if (currentGain > 1.0f) {
-            currentGain = 1.0f;
-        } else if (currentGain < 0.0f) {
-            currentGain = 0.0f;
+            currentGain =
+                    _activeAudioListener.getMetersPerUnit()
+                    * (this.getReferenceDistance()
+                        / (this.getReferenceDistance() + this.getRollOffFactor()
+                        * (distanceFromListener - this.getReferenceDistance())));
+            if (log.isDebugEnabled())
+                log.debug("Calculated for JavaSoundAudioSource " + this.getSystemName() + " gain = " + currentGain);
+
+            // Ensure that gain is between 0 and 1
+            if (currentGain > 1.0f) {
+                currentGain = 1.0f;
+            } else if (currentGain < 0.0f) {
+                currentGain = 0.0f;
+            }
         }
 
         // Finally, adjust based on master gain for this source, the gain

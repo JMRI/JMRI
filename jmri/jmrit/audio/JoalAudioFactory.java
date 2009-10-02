@@ -74,7 +74,7 @@ import net.java.games.joal.util.ALut;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class JoalAudioFactory extends AbstractAudioFactory {
 
@@ -338,6 +338,16 @@ public class JoalAudioFactory extends AbstractAudioFactory {
 
     public AudioSource createNewSource(String systemName, String userName) {
         return new JoalAudioSource(systemName, userName);
+    }
+
+    @Override
+    public void setDistanceAttenuated(boolean attenuated) {
+        super.setDistanceAttenuated(attenuated);
+        if (isDistanceAttenuated()) {
+            al.alDistanceModel(al.AL_INVERSE_DISTANCE_CLAMPED);
+        } else {
+            al.alDistanceModel(al.AL_NONE);
+        }
     }
 
     /**
