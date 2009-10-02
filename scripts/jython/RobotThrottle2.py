@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.19 $
+# $Revision: 1.20 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -1764,11 +1764,43 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.methodLocoDistanceRedStop = dist
         return
         
+    def updateMemoryWithCurrentSpeed(self, memoryId) :
+        mem = jmri.InstanceManager.memoryManagerInstance().provideMemory(memoryId)
+        if (mem != None) :
+            if (self.currentThrottle != None) :
+                mem.setValue(((int)(round(self.currentThrottle.getSpeedSetting() * 100, 0))).toString())
+            else :
+                mem.setValue("0")
+        return
+        
+    def returnCurrentSpeed(self) :
+        if (self.currentThrottle != None) :
+            v = (((int)(round(self.currentThrottle.getSpeedSetting() * 100, 0))).toString())
+        else :
+            v = "0"
+        return(v)
+        
+    def updateMemoryWithCurrentBlock(self, memoryId) :
+        mem = jmri.InstanceManager.memoryManagerInstance().provideMemory(memoryId)
+        if (mem != None) :
+            if (self.currentBlock != None) :
+                mem.setValue(self.giveBlockName(self.currentBlock))
+            else :
+                mem.setValue("")
+        return
+        
+    def returnCurrentBlock(self) :
+        if (self.currentBlock != None) :
+            v = self.giveBlockName(self.currentBlock)
+        else :
+            v = ""
+        return(v)
+        
 # if you are running the RobotThrottle completely interactive, the following two lines are all you need
 rb1 = LocoThrot()
 rb1.start()
 # However, if you are automating the automation, then 
-## Options for doing more via scripts
+## Options for doing more via scripts or Logix Jython command line option
 ## this will set the loco number, if a matching roster entry is found, it will load the values
 ## rb1.setLoco("111")
 ## rb1.setLocoEast()
