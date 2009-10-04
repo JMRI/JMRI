@@ -1,4 +1,4 @@
-@REM Start the InstallTest program from JMRI 2.7.5 ($Revision: 1.1 $)
+@REM Start the InstallTest program from JMRI 2.7.6 ($Revision: 1.1 $)
 @REM @author Ken Cameron
 @echo testing for Java working
 @echo . 

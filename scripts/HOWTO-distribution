@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.101 $)
+distribution.  ($Revision: 1.102 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -83,7 +83,7 @@ Make sure everything is up-to-date:
     
     Check proper value in java/src/jmri/configurexml/ConfigXmlManager.java (line 30)
     
-    Update test/jmri/configurexml/LoadFileTest.xml
+    Update java/test/jmri/configurexml/LoadFileTest.xml
     
 ( ) Update the MacOS X bundles version numbers:
     
