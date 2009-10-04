@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2006, 2007,2008 All rights reserved                  -->
-<!-- $Id: MRC_soundbrilliance1820.xml,v 1.2 2009-09-26 22:25:45 jacobsen Exp $ -->
+<!-- $Id: MRC_soundbrilliance1820.xml,v 1.3 2009-10-04 00:50:24 jacobsen Exp $ -->
 <!--                                                                         -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under   -->
 <!-- the terms of version 2 of the GNU General Public License as published   -->
@@ -15,10 +15,12 @@
 <!--                                                                         -->
 
 <decoder-config>
+		<version author="Peter Ulvestad" version="3" lastUpdated="20091003" />
 		<version author="Peter Ulvestad" version="2" lastUpdated="20090904" />
 		<version author="Peter Ulvestad" version="1" lastUpdated="20090827" />
 <!--   version 1 Based on MRC_soundbrilliance1806-->
 <!--   version 2 Modified CV6 to better match manual-->
+<!--   version 3 Modified MRC tab, added missing sound option and setting, corrected some defaults.-->
 
    <decoder>
 	  <family name="Brilliance Sound Decoders" mfg="MRC"
@@ -184,7 +186,7 @@
 								mask="XXXVXXXX"
 								item="Speed Table Definition"
 								tooltip="CV29 ['8' bit] determines if loco will use Speed Table or not"
-								default="1">
+								default="0">
 			<enumVal>
 				<enumChoice choice="Don't use Speed Table"/>
 				<enumChoice choice="Use Speed Table"/>
@@ -297,7 +299,7 @@
 			
 		<variable label="Safety pop valve volume" 
 								CV="60"
-						        item="Sound Setting 9" 
+								item="Sound Setting 9" 
 								tooltip="CV60 sets the Safety Pop Valve Volume [range 0-3]"
 								default="3">
 			<decVal max="3"/>
@@ -365,7 +367,7 @@
 		
 		<variable label="Coupling fire volume" 
 								CV="113" 
-								item="Sound Setting 16" 
+								item="Sound Setting 14" 
 								tooltip="CV113 sets the Coupling Fire Volume [range 0-3]" 
 							    default="3">
 			<decVal max="3"/>
@@ -373,7 +375,7 @@
 			
 		<variable label="Brake Release volume" 
 								CV="114" 
-								item="Sound Setting 17" 
+								item="Sound Setting 15" 
 								tooltip="CV114 sets the Brake Release Volume [range 0-3]" 
 								default="2">
 			<decVal max="3"/>
@@ -381,7 +383,7 @@
 
 		<variable label="Auto Brake squeal" 
 								CV="115"
-								item="Sound Option 5" 
+								item="Sound Option 4" 
 								tooltip="CV115 sets the Auto Brake Squeal [Enable/Disable]" 
 								default="1">
 			<enumVal>
@@ -392,6 +394,7 @@
 
 		<variable label="Coupling Sound"  
 								CV="116"
+								item="Sound Option 5"
 								tooltip="CV116 selects the Coupling Sound Mode" 
 								default="1">
 			<enumVal>
@@ -402,7 +405,7 @@
 
 		<variable label="Diesel notch mode" 
 								CV="122"
-								item="Sound Option 7" 
+								item="Sound Option 6" 
 								tooltip="CV122 can only have values of 0 or 3"
 								default="0">
 			<enumVal>
@@ -413,7 +416,7 @@
 	
 		<variable label="Prime Mover"  
 								CV="123" 
-								item="Sound Option 8"
+								item="Sound Option 7"
 								tooltip="CV123 selects the Prime Mover Type
 								with traction air compressor cycling randomly" 
 								default="0">
@@ -436,13 +439,17 @@
     </decoder>
 
     <pane name="MRC">
-	<column>
-		<display item="Advanced Consist Address" />
-		<display item="Functions Respond To" />
+    	<column>
+            <label label="MRC NOTE: Some DCC systems do not have enough power on the program track for programming"/>
+            <label label="sound decoders. If your system is one of these, There are Program Track Boosters available"/>
+            <label label="from aftermarket DCC suppliers."/>
+            <label label=" "/>
 	</column>
     </pane>
 
 </decoder-config>
+
+ 	  	 
 
  	  	 
 
