@@ -42,7 +42,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -443,12 +443,12 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     log.error("Error loading AudioListener ("+ sysName +"): " + ex);
                 }
             }
+            Attribute a;
+            if ((a=audio.getAttribute("distanceattenuated"))!=null) {
+                am.getActiveAudioFactory().setDistanceAttenuated(a.getValue().equals("yes"));
+            }
         }
         
-        Attribute a;
-        if ((a=audio.getAttribute("distanceattenuated"))!=null) {
-            am.getActiveAudioFactory().setDistanceAttenuated(a.getValue().equals("yes"));
-        }
     }
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractAudioManagerConfigXML.class.getName());
