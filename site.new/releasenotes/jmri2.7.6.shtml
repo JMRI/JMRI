@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.6.shtml,v 1.14 2009-10-01 18:51:01 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.6.shtml,v 1.15 2009-10-04 00:55:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -233,6 +233,12 @@ The "Modify Trains" and "Modify Locations" tools allows the user to quickly edit
 <p>
 Kevin Dickerson added a function to allow the system throttle manager to notify software throttles that they have
 lost control over the selected loco.
+
+<p>
+Jack Shall updated the SoundTraxx Diesel Tsunami definition to include the new ALCO 539 models.
+
+<p>
+Micheal Dunn and Peter Ulvestad provided a new definition for the MRC 1658 Sound Brilliance decoder.
 
 <!--#include virtual="/Footer" -->
 

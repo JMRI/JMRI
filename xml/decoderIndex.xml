@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.7.6 on Sat Sep 26 15:54:02 PDT 2009 $Id: decoderIndex.xml,v 1.149 2009-09-26 22:57:36 jacobsen Exp $-->
-  <decoderIndex version="174">
+  <!--Written by JMRI version 2.7.6 on Sat Oct 03 17:54:23 PDT 2009 $Id: decoderIndex.xml,v 1.150 2009-10-04 00:55:33 jacobsen Exp $-->
+  <decoderIndex version="176">
     <mfgList nmraListDate="2009-05-06" updated="2009-07-31" lastadd="54">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1564,12 +1564,6 @@
           <size length="48" width="17" height="7.5" units="mm" />
         </model>
       </family>
-      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1636.xml">
-        <model model="Synch Diesel Sound 1636" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
-          <!-- note only F0 to F12 are NMRA compatible -->
-          <size length="70" width="9.2" height="5.8" units="mm" />
-        </model>
-      </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1637.xml">
         <model model="Synch Steam Sound 1637" numOuts="2" numFns="12" connector="NMRAmedium" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <!-- note only F0 to F12 are NMRA compatible -->
@@ -1600,6 +1594,12 @@
         <model model="Synch Steam Sound 1656" maxTotalCurrent="1.5A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
           <!-- note All functions are NMRA compatible -->
           <size length="45" width="18" height="6.2" units="mm" />
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1658.xml">
+        <model model="Synch Diesel Sound 1658 - Kato N F3" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no" connector="unspecified">
+          <!-- note only F0 to F12 are NMRA compatible -->
+          <size length="90" width="14" height="4.2" units="mm" />
         </model>
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1663.xml">
@@ -3430,8 +3430,38 @@
           <output name="Mute" connection="unspecified" />
         </model>
       </family>
-      <family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)" type="locomotive" file="SoundTraxx_Tsu_Diesel.xml">
+      <family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)" comment="These are the -retail- version Tsunami diesel decoders" type="locomotive" file="SoundTraxx_Tsu_Diesel.xml">
         <model model="TSU-750 Alco 244" numOuts="2" numFns="14" connector="other" productID="827004" comment="Model 827004" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="FX5" label=" Rule 17" connection="unspecified" />
+          <output name="FX6" label="Mode" connection="unspecified" />
+          <output name="Dynamics" connection="unspecified" />
+          <output name="Short Horn" connection="unspecified" />
+          <output name="Fans(+)" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Comp(-)" connection="unspecified" />
+          <output name="Brakes" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+        </model>
+        <model model="TSU-750 Alco 539 (Non-Turbo)" numOuts="2" numFns="14" connector="other" productID="827011" comment="Model 827011" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="FX5" label=" Rule 17" connection="unspecified" />
+          <output name="FX6" label="Mode" connection="unspecified" />
+          <output name="Dynamics" connection="unspecified" />
+          <output name="Short Horn" connection="unspecified" />
+          <output name="Fans(+)" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Comp(-)" connection="unspecified" />
+          <output name="Brakes" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+        </model>
+        <model model="TSU-750 Alco 539 (Turbo)" numOuts="2" numFns="14" connector="other" productID="827012" comment="Model 827012" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -3672,6 +3702,21 @@
           <output name="Coupler" connection="unspecified" />
         </model>
         <model model="TSU-AT1000 Alco 251 (V16)" numOuts="4" numFns="14" connector="other" productID="828045" comment="Model 828045" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="3" label="  FX5  " connection="unspecified" />
+          <output name="4" label="  FX6  " connection="unspecified" />
+          <output name="Dynamics" connection="unspecified" />
+          <output name="Short Horn" connection="unspecified" />
+          <output name="Fans(+)" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Comp(-)" connection="unspecified" />
+          <output name="Brakes" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+        </model>
+        <model model="TSU-AT1000 Alco 539 (Turbo)" numOuts="4" numFns="14" connector="other" productID="828049" comment="Model 828049" extFnsMRC="no" extFnsNmraBSC="no" extFnsNmraF13="no" nmraWarrant="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
