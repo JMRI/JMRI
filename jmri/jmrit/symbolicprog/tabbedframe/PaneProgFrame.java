@@ -36,7 +36,7 @@ import java.awt.event.ItemEvent;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.80 $
+ * @version   $Revision: 1.81 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -601,10 +601,20 @@ abstract public class PaneProgFrame extends JmriJFrame
         tabPane.addTab("Roster Entry", makeInfoPane(r));
 
         // add the Function Label tab
-        tabPane.addTab("Function Labels", makeFunctionLabelPane(r));
-
+        if (root.getChild("programmer").getAttribute("showFnLanelPane").getValue().equals("yes")) {
+            tabPane.addTab("Function Labels", makeFunctionLabelPane(r));
+        } else {
+            // make it, just don't make it visible
+            makeFunctionLabelPane(r);
+        }
+        
         // add the Media tab
-        tabPane.addTab("Roster Media", makeMediaPane(r));
+        if (root.getChild("programmer").getAttribute("showRosterMediaPane").getValue().equals("yes")) {
+            tabPane.addTab("Roster Media", makeMediaPane(r));
+        } else {
+            // make it, just don't make it visible
+            makeMediaPane(r);
+        }
 
         // for all "pane" elements in the programmer
         List<Element> paneList = base.getChildren("pane");
