@@ -32,7 +32,7 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.28 $
+ * @version             $Revision: 1.29 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -96,8 +96,8 @@ public class TrainsTableFrame extends OperationsFrame {
 						return true;
 					}
 				};
-			}
-            jmri.InstanceManager.shutDownManagerInstance().register(trainDirtyTask);
+				jmri.InstanceManager.shutDownManagerInstance().register(trainDirtyTask);
+			}        
         }
         
         // general GUI configuration
