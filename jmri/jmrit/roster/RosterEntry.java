@@ -40,7 +40,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.41 $
+ * @version   $Revision: 1.42 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -351,6 +351,11 @@ public class RosterEntry {
     public java.util.Set<String> getAttributes() {
         if (attributePairs == null) return null;
         return attributePairs.keySet();
+    }
+    
+    public String[] getAttributeList() {
+        if (attributePairs == null) return null;
+        return attributePairs.keySet().toArray(new String[attributePairs.size()]);
     }
 
     /**
