@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
  * Test PaneProgFrame
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class PaneProgFrameTest extends TestCase {
 
@@ -83,6 +83,8 @@ public class PaneProgFrameTest extends TestCase {
 
         // add some elements
         root.addContent(new Element("programmer")
+                .setAttribute("showFnLanelPane","yes")
+                .setAttribute("showRosterMediaPane","yes")
             .addContent(new Element("pane")
                 .setAttribute("name","Basic")
                 .addContent(new Element("column")
