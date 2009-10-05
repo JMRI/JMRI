@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.6.shtml,v 1.15 2009-10-04 00:55:54 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.6.shtml,v 1.16 2009-10-05 04:05:43 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,11 +29,9 @@
       Release Notes for JMRI 2.7.6 release
       </h2>
 
-	<p>Date: MMM NN, 2009</p>
+	<p>Date: October 4, 2009</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.7.6 of JMRI/DecoderPro is available for download.
-
-<br><b>This is a draft release note only; the download links do not yet work</b>
 
 <h3>Notes:</h3>
 
@@ -52,10 +50,9 @@ many new features, including:
 <li>Many improvements to icons in the panel and layout editors,
     including many new formatting options.
 <li>New audio support, including a new 
-    <a href="">SoundPro</a> application.
+    <a href="../help/en/html/apps/SoundPro/SoundPro.shtml">SoundPro</a> application.
 <li>Roster entries can now contain pictures of your locomotives,
     which can also be used in the throttles.
-<li>
 </ul>
 along with lots of other changes.  See the complete list below.
 
