@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -617,141 +617,150 @@ public class Setup {
         Element operations = e.getChild("operations");
         org.jdom.Attribute a;
         
-        if ((a = operations.getChild("railRoad").getAttribute("name"))!= null){
+        if ((operations.getChild("railRoad") != null) && 
+        		(a = operations.getChild("railRoad").getAttribute("name"))!= null){
         	String name = a.getValue();
            	if (log.isDebugEnabled()) log.debug("railroadName: "+name);
            	Setup.setRailroadName(name);
         }
-        if ((a = operations.getChild("settings").getAttribute("mainMenu"))!= null){
-        	String enabled = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("mainMenu: "+enabled);
-           	Setup.setMainMenuEnabled(enabled.equals("true"));
+        if (operations.getChild("settings") != null){
+        	if ((a = operations.getChild("settings").getAttribute("mainMenu"))!= null){
+        		String enabled = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("mainMenu: "+enabled);
+        		Setup.setMainMenuEnabled(enabled.equals("true"));
+        	}
+        	if ((a = operations.getChild("settings").getAttribute("trainDirection"))!= null){
+        		String dir = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("direction: "+dir);
+        		Setup.setTrainDirection(Integer.parseInt(dir));
+        	}
+        	if ((a = operations.getChild("settings").getAttribute("trainLength"))!= null){
+        		String length = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("Max train length: "+length);
+        		Setup.setTrainLength(Integer.parseInt(length));
+        	}
+        	if ((a = operations.getChild("settings").getAttribute("maxEngines"))!= null){
+        		String size = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("Max number of engines: "+size);
+        		Setup.setEngineSize(Integer.parseInt(size));
+        	}
+        	if ((a = operations.getChild("settings").getAttribute("scale"))!= null){
+        		String scale = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("scale: "+scale);
+        		Setup.setScale(Integer.parseInt(scale));
+        	}
+        	if ((a = operations.getChild("settings").getAttribute("carTypes"))!= null){
+        		String types = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("CarTypes: "+types);
+        		Setup.setCarTypes(types);
+        	}
+        	if ((a = operations.getChild("settings").getAttribute("showCarLength"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("showCarLength: "+enable);
+        		Setup.setShowCarLengthEnabled(enable.equals("true"));
+        	}
+        	if ((a = operations.getChild("settings").getAttribute("showCarLoad"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("showCarLoad: "+enable);
+        		Setup.setShowCarLoadEnabled(enable.equals("true"));
+        	}
+        	if ((a = operations.getChild("settings").getAttribute("showCarColor"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("showCarColor: "+enable);
+        		Setup.setShowCarColorEnabled(enable.equals("true"));
+        	}
+        	if ((a = operations.getChild("settings").getAttribute("showCarDestination"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("showCarDestination: "+enable);
+        		Setup.setShowCarDestinationEnabled(enable.equals("true"));
+        	}
+        	if ((a = operations.getChild("settings").getAttribute("addCarComment"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("addCarComment: "+enable);
+        		Setup.setAppendCarCommentEnabled(enable.equals("true"));
+        	}
+        	if ((a = operations.getChild("settings").getAttribute("switchTime"))!= null){
+        		String minutes = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("switchTime: "+minutes);
+        		Setup.setSwitchTime(Integer.parseInt(minutes));
+        	}
+        	if ((a = operations.getChild("settings").getAttribute("travelTime"))!= null){
+        		String minutes = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("travelTime: "+minutes);
+        		Setup.setTravelTime(Integer.parseInt(minutes));
+        	}
+        	if ((a = operations.getChild("settings").getAttribute("showRfid"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("showRfid: "+enable);
+        		Setup.setRfidEnabled(enable.equals("true"));
+        	}
         }
-        if ((a = operations.getChild("settings").getAttribute("trainDirection"))!= null){
-        	String dir = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("direction: "+dir);
-           	Setup.setTrainDirection(Integer.parseInt(dir));
+        if (operations.getChild("panel") != null){
+        	if ((a = operations.getChild("panel").getAttribute("name"))!= null){
+        		String panel = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("panel: "+panel);
+        		Setup.setPanelName(panel);
+        	}
+        	if ((a = operations.getChild("panel").getAttribute("trainIconXY"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("TrainIconXY: "+enable);
+        		Setup.setTrainIconCordEnabled(enable.equals("true"));
+        	}
+        	if ((a = operations.getChild("panel").getAttribute("trainIconAppend"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("TrainIconAppend: "+enable);
+        		Setup.setTrainIconAppendEnabled(enable.equals("true"));
+        	}
         }
-        if ((a = operations.getChild("settings").getAttribute("trainLength"))!= null){
-        	String length = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("Max train length: "+length);
-           	Setup.setTrainLength(Integer.parseInt(length));
-        }
-        if ((a = operations.getChild("settings").getAttribute("maxEngines"))!= null){
-        	String size = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("Max number of engines: "+size);
-           	Setup.setEngineSize(Integer.parseInt(size));
-        }
-        if ((a = operations.getChild("settings").getAttribute("scale"))!= null){
-        	String scale = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("scale: "+scale);
-           	Setup.setScale(Integer.parseInt(scale));
-        }
-        if ((a = operations.getChild("settings").getAttribute("carTypes"))!= null){
-        	String types = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("CarTypes: "+types);
-           	Setup.setCarTypes(types);
-        }
-        if ((a = operations.getChild("settings").getAttribute("showCarLength"))!= null){
-        	String enable = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("showCarLength: "+enable);
-           	Setup.setShowCarLengthEnabled(enable.equals("true"));
-        }
-        if ((a = operations.getChild("settings").getAttribute("showCarLoad"))!= null){
-        	String enable = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("showCarLoad: "+enable);
-           	Setup.setShowCarLoadEnabled(enable.equals("true"));
-        }
-        if ((a = operations.getChild("settings").getAttribute("showCarColor"))!= null){
-        	String enable = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("showCarColor: "+enable);
-           	Setup.setShowCarColorEnabled(enable.equals("true"));
-        }
-        if ((a = operations.getChild("settings").getAttribute("showCarDestination"))!= null){
-        	String enable = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("showCarDestination: "+enable);
-           	Setup.setShowCarDestinationEnabled(enable.equals("true"));
-        }
-        if ((a = operations.getChild("settings").getAttribute("addCarComment"))!= null){
-        	String enable = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("addCarComment: "+enable);
-           	Setup.setAppendCarCommentEnabled(enable.equals("true"));
-        }
-        if ((a = operations.getChild("settings").getAttribute("switchTime"))!= null){
-        	String minutes = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("switchTime: "+minutes);
-           	Setup.setSwitchTime(Integer.parseInt(minutes));
-        }
-        if ((a = operations.getChild("settings").getAttribute("travelTime"))!= null){
-        	String minutes = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("travelTime: "+minutes);
-           	Setup.setTravelTime(Integer.parseInt(minutes));
-        }
-        if ((a = operations.getChild("settings").getAttribute("showRfid"))!= null){
-        	String enable = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("showRfid: "+enable);
-           	Setup.setRfidEnabled(enable.equals("true"));
-        }
-        if ((a = operations.getChild("panel").getAttribute("name"))!= null){
-        	String panel = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("panel: "+panel);
-           	Setup.setPanelName(panel);
-        }
-        if ((a = operations.getChild("panel").getAttribute("trainIconXY"))!= null){
-        	String enable = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("TrainIconXY: "+enable);
-           	Setup.setTrainIconCordEnabled(enable.equals("true"));
-        }
-        if ((a = operations.getChild("panel").getAttribute("trainIconAppend"))!= null){
-        	String enable = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("TrainIconAppend: "+enable);
-           	Setup.setTrainIconAppendEnabled(enable.equals("true"));
-        }
-        if ((a = operations.getChild("fontName").getAttribute("name"))!= null){
+        if ((operations.getChild("fontName") != null) 
+        		&& (a = operations.getChild("fontName").getAttribute("name"))!= null){
         	String font = a.getValue();
            	if (log.isDebugEnabled()) log.debug("fontName: "+font);
            	Setup.setFontName(font);
         }
-        if (operations.getChild("buildReport") != null
+        if ((operations.getChild("buildReport") != null)
 				&& (a = operations.getChild("buildReport").getAttribute("level")) != null) {
         	String level = a.getValue();
            	if (log.isDebugEnabled()) log.debug("buildReport: "+level);
            	Setup.setBuildReportLevel(level);
         }
-        if ((a = operations.getChild("owner").getAttribute("name"))!= null){
+        if ((operations.getChild("owner") != null) 
+        		&& (a = operations.getChild("owner").getAttribute("name"))!= null){
         	String owner = a.getValue();
            	if (log.isDebugEnabled()) log.debug("owner: "+owner);
            	Setup.setOwnerName(owner);
         }
-        if ((a = operations.getChild("iconColor").getAttribute("north"))!= null){
-        	String color = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("north color: "+color);
-           	Setup.setTrainIconColorNorth(color);
-        }
-        if ((a = operations.getChild("iconColor").getAttribute("south"))!= null){
-        	String color = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("south color: "+color);
-           	Setup.setTrainIconColorSouth(color);
-        }
-        if ((a = operations.getChild("iconColor").getAttribute("east"))!= null){
-        	String color = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("east color: "+color);
-           	Setup.setTrainIconColorEast(color);
-        }
-        if ((a = operations.getChild("iconColor").getAttribute("west"))!= null){
-        	String color = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("west color: "+color);
-           	Setup.setTrainIconColorWest(color);
-        }
-        if ((a = operations.getChild("iconColor").getAttribute("local"))!= null){
-        	String color = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("local color: "+color);
-           	Setup.setTrainIconColorLocal(color);
-        }
-        if ((a = operations.getChild("iconColor").getAttribute("terminate"))!= null){
-        	String color = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("terminate color: "+color);
-           	Setup.setTrainIconColorTerminate(color);
+        if (operations.getChild("iconColor") != null){
+        	if ((a = operations.getChild("iconColor").getAttribute("north"))!= null){
+        		String color = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("north color: "+color);
+        		Setup.setTrainIconColorNorth(color);
+        	}
+        	if ((a = operations.getChild("iconColor").getAttribute("south"))!= null){
+        		String color = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("south color: "+color);
+        		Setup.setTrainIconColorSouth(color);
+        	}
+        	if ((a = operations.getChild("iconColor").getAttribute("east"))!= null){
+        		String color = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("east color: "+color);
+        		Setup.setTrainIconColorEast(color);
+        	}
+        	if ((a = operations.getChild("iconColor").getAttribute("west"))!= null){
+        		String color = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("west color: "+color);
+        		Setup.setTrainIconColorWest(color);
+        	}
+        	if ((a = operations.getChild("iconColor").getAttribute("local"))!= null){
+        		String color = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("local color: "+color);
+        		Setup.setTrainIconColorLocal(color);
+        	}
+        	if ((a = operations.getChild("iconColor").getAttribute("terminate"))!= null){
+        		String color = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("terminate color: "+color);
+        		Setup.setTrainIconColorTerminate(color);
+        	}
         }
         Element frameOptions;
         if ((operations.getChild("options")!= null)
