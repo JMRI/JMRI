@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a CV programmer format -->
-<!-- $Revision: 1.21 $ -->
+<!-- $Revision: 1.22 $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -30,6 +30,10 @@
 <!ATTLIST programmer decoderFilePanes (yes | no ) "yes">
 <!-- Suppress panes with no variables? -->
 <!ATTLIST programmer showEmptyPanes (yes | no | default ) "default">
+<!-- Show function label pane? -->
+<!ATTLIST programmer showFnLanelPane (yes | no ) "no">
+<!-- Show roster media pane? -->
+<!ATTLIST programmer showRosterMediaPane (yes | no ) "no">
 
 <!-- The pane sections define each tabbed pane of options -->
 <!ELEMENT pane (column | row)*>

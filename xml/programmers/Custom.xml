@@ -14,15 +14,17 @@
 <!-- for more details.                                                      -->
 
 <programmer-config>
-<!-- $Id: Custom.xml,v 1.2 2007-09-21 05:49:59 jacobsen Exp $ -->
+<!-- $Id: Custom.xml,v 1.3 2009-10-05 15:10:29 jacobsen Exp $ -->
 		<version author="Bob Jacobsen" version="1" lastUpdated="20020808"/>
 
 <!-- Programmer for wierd types that have all their info -->
 <!-- in the decoder files as panes -->
 
-<programmer decoderFilePanes="yes">
+    <programmer 
+                decoderFilePanes="yes" showEmptyPanes="default"
+                showFnLanelPane="yes" showRosterMediaPane="yes">
 
-	<!-- everything comes from the Roster and decoder file panes -->
+	<!-- everything comes from the Roster and built in panes -->
 	
 </programmer>
 </programmer-config>

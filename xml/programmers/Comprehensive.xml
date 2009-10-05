@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <programmer-config>
-<!-- $Id: Comprehensive.xml,v 1.31 2009-09-26 22:23:39 jacobsen Exp $ -->
+<!-- $Id: Comprehensive.xml,v 1.32 2009-10-05 15:10:29 jacobsen Exp $ -->
     <version version="11" author="Howard G. Penny" lastUpdated="20050713"/>
     <version version="12" author="Michael Mosher" lastUpdated="20070717"/>
     <version version="13" author="Bruce Shanks" lastUpdated="20080614"/>
@@ -21,6 +21,7 @@
     <version version="16" author="Jack Shall jack745@bellsouth.net" lastUpdated="20090115"/>
     <version version="17" author="Jack Shall jack745@bellsouth.net" lastUpdated="20090525"/>
     <version version="18" author="Peter Ulvestad" lastUpdated="20090904"/>
+    <version version="19" author="Bob Jacobsen" lastUpdated="20091001"/>
 
 <!-- Version 4 - add consist control for functions (Simon Ginsburg) -->
 <!-- Version 4.1 - changed spelling of "behavior" (Jack Shall) -->
@@ -43,8 +44,11 @@
 <!-- Version 18 - Modified 'Basic Speed Control pane for decoders that use CV6  -->
 <!--              to select speed curve when using CV2 and 5. Moved Forward and Reverse trims to  -->
 <!--              'Speed Table' pane as they are only used with speed tables. -->
+<!-- Version 19 - Don't show function label, roster media tabs -->
 
-    <programmer decoderFilePanes="yes" showEmptyPanes="default">
+    <programmer 
+                decoderFilePanes="yes" showEmptyPanes="default"
+                showFnLanelPane="no" showRosterMediaPane="no">
         <pane name="Basic">
             <column>
                 <dccaddress/>

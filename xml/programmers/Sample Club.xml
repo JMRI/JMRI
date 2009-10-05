@@ -17,11 +17,13 @@
 <!-- for more details.                                                      -->
 
 <programmer-config>
-<!-- $Id: Sample Club.xml,v 1.3 2007-09-21 05:49:59 jacobsen Exp $ -->
+<!-- $Id: Sample Club.xml,v 1.4 2009-10-05 15:10:29 jacobsen Exp $ -->
 		<version author="Bob Jacobsen" 
 					version="2" lastUpdated="20020112"/>
 
-<programmer decoderFilePanes="no">
+    <programmer 
+                decoderFilePanes="no" showEmptyPanes="default"
+                showFnLanelPane="yes" showRosterMediaPane="yes">
 		<!-- want this to always look the same, so -->
 		<!-- don't include panes from the decoder file -->
 
