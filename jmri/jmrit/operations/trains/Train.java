@@ -42,7 +42,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.50 $
+ * @version             $Revision: 1.51 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -546,7 +546,15 @@ public class Train implements java.beans.PropertyChangeListener {
      * The number of cars worked by this train
      */
     public int getNumberCarsWorked(){
-    	return CarManager.instance().getCarsByTrainList(this).size();
+    	List<String> cars = CarManager.instance().getCarsByTrainList(this);
+    	// remove cars that haven't been assigned by the train builder
+    	for (int i=0; i<cars.size(); i++){
+    		Car c = CarManager.instance().getCarById(cars.get(i));
+    		if (c.getRouteLocation() == null){
+    			cars.remove(i--);
+    		}
+    	}
+    	return cars.size();
     }
     
     public void setDescription(String description) {
