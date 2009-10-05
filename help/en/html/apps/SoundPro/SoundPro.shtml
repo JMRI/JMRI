@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SoundPro.shtml,v 1.1 2009-09-26 09:26:55 matthewharris Exp $ -->
+<!-- $Id: SoundPro.shtml,v 1.2 2009-10-05 04:05:57 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -26,6 +26,7 @@
 
 <H1>JMRI: SoundPro Main Window</H1>
 
+<img src="../../../../../resources/SoundPro.gif" align="right" height="100" width="100">
 The SoundPro main window gives you access to all the 
 capabilities of JMRI.
 
