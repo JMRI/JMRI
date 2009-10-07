@@ -26,7 +26,7 @@ import javax.swing.ScrollPaneConstants;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.15 $
+ * @version             $Revision: 1.16 $
  */
 public class LocationsTableFrame extends OperationsFrame {
 	
@@ -92,6 +92,7 @@ public class LocationsTableFrame extends OperationsFrame {
 		toolMenu.add(new PrintLocationsAction(rb.getString("MenuItemPreview"), newFrame, true, this));
 		toolMenu.add(new SchedulesTableAction(rb.getString("Schedules")));
 		toolMenu.add(new ModifyLocationsAction(rb.getString("TitleModifyLocations")));
+		toolMenu.add(new ShowCarsByLocationAction(false, null, null));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);

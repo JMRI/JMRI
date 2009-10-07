@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -190,6 +190,13 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		} else {
 			enableButtons(false);
 		}
+		
+		// build menu
+		JMenuBar menuBar = new JMenuBar();
+		JMenu toolMenu = new JMenu(rb.getString("Tools"));
+		toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), track.getName()));
+		menuBar.add(toolMenu);
+		setJMenuBar(menuBar);
 		
 		// set frame size and location for display
 		//setSize(getWidth()+50, getHeight()+25); // add some room for menu

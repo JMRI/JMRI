@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.16 $
+ * @version   $Revision: 1.17 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -41,7 +41,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     private static final int LOCATIONCOLUMN  = 6;
     private static final int DESTINATIONCOLUMN = 7;
     private static final int TRAINCOLUMN = 8;
-    private static final int MOVESCOLUMN = 9;
+    private static final int MOVESCOLUMN = 9;	// also the Owner and RFID column
     private static final int SETCOLUMN = 10;
     private static final int EDITCOLUMN = 11;
     
@@ -53,12 +53,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     private static final int SHOWOWNER = 2;
     private static final int SHOWRFID = 3;
     private int showMoveCol = SHOWMOVES;
-
-    public CarsTableModel() {
-        super();
-        manager.addPropertyChangeListener(this);
-        updateList();
-    }
     
     public final int SORTBYNUMBER = 1;
     public final int SORTBYROAD = 2;
@@ -76,6 +70,21 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     
     private int _sort = SORTBYNUMBER;
     
+	List<String> sysList = null;	// list of car ids
+	boolean showAllCars = true;		// when true show all cars
+	String locationName = null;		// only show cars with this location
+	String trackName = null;		// only show cars with this track
+	JTable _table;
+    
+    public CarsTableModel(boolean showAllCars, String locationName, String trackName) {
+        super();
+        this.showAllCars = showAllCars;
+        this.locationName = locationName;
+        this.trackName = trackName;
+        manager.addPropertyChangeListener(this);
+        updateList();
+    }
+ 
     public void setSort (int sort){
     	_sort = sort;
     	updateList();
@@ -154,9 +163,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     	removePropertyChangeCars();
      	sysList = getSelectedCarList();
  		// and add listeners back in
-		for (int i = 0; i < sysList.size(); i++)
-			manager.getCarById(sysList.get(i))
-					.addPropertyChangeListener(this);
+     	addPropertyChangeCars();
 	}
     
     public List<String> getSelectedCarList(){
@@ -187,12 +194,37 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			list = manager.getCarsByRfidList();
 		else
 			list = manager.getCarsByNumberList();
+    	filterList(list);
 		return list;
     }
-
-	List<String> sysList = null;
-	
-	JTable _table;
+    
+    private void filterList(List<String> list){
+    	if (showAllCars)
+    		return;
+    	for (int i=0; i<list.size(); i++){
+    		Car car = manager.getCarById(list.get(i));
+    		if (car.getLocationName().equals("")){
+    			list.remove(i--);
+    			continue;
+    		}
+    		// filter out cars that don't have a location name that matches
+    		if (locationName != null) {
+    			if (car.getLocationName().equals(locationName)){
+    				if (trackName != null){
+    					if (car.getTrackName().equals(trackName)){
+    						continue;
+    					}else{
+    						list.remove(i--);
+    					}
+    				}else{
+    					continue;
+    				}
+    			}else{
+    				list.remove(i--);
+    			}
+    		}
+    	}
+    }
     
 	void initTable(JTable table) {
 		_table = table;
@@ -408,15 +440,24 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     		cef.dispose();
     }
 
+    private void addPropertyChangeCars() {
+    	List<String> list = manager.getCarsByIdList();
+    	for (int i = 0; i < list.size(); i++) {
+    		// if object has been deleted, it's not here; ignore it
+    		Car c = manager.getCarById(list.get(i));
+    		if (c != null)
+    			c.addPropertyChangeListener(this);
+    	}
+    }
+    
     private void removePropertyChangeCars() {
-		if (sysList != null) {
-			for (int i = 0; i < sysList.size(); i++) {
-				// if object has been deleted, it's not here; ignore it
-				Car c = manager.getCarById(sysList.get(i));
-				if (c != null)
-					c.removePropertyChangeListener(this);
-			}
-		}
+    	List<String> list = manager.getCarsByIdList();
+    	for (int i = 0; i < list.size(); i++) {
+    		// if object has been deleted, it's not here; ignore it
+    		Car c = manager.getCarById(list.get(i));
+    		if (c != null)
+    			c.removePropertyChangeListener(this);
+    	}
     }
     
     public void propertyChange(PropertyChangeEvent e) {
@@ -430,7 +471,12 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     		String carId = ((Car) e.getSource()).getId();
     		int row = sysList.indexOf(carId);
     		if(Control.showProperty && log.isDebugEnabled()) log.debug("Update car table row: "+row);
-    		fireTableRowsUpdated(row, row);
+    		if (row >= 0){
+    			fireTableRowsUpdated(row, row);
+    		}else{
+    			updateList();
+        		fireTableDataChanged();
+    		}
     	}
     }
 

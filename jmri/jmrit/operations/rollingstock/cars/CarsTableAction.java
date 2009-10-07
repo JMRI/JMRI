@@ -12,7 +12,7 @@ import javax.swing.AbstractAction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class CarsTableAction extends AbstractAction {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
@@ -27,7 +27,7 @@ public class CarsTableAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         // create a car table frame
-        CarsTableFrame f = new CarsTableFrame();
+        CarsTableFrame f = new CarsTableFrame(true, null, null);
         f.setVisible(true);
     }
 }

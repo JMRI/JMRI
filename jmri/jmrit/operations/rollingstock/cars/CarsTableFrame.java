@@ -4,8 +4,8 @@
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import javax.swing.event.TableModelListener; 
+import javax.swing.event.TableModelEvent;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,14 +32,17 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.15 $
+ * @version             $Revision: 1.16 $
  */
-public class CarsTableFrame extends OperationsFrame implements PropertyChangeListener{
+public class CarsTableFrame extends OperationsFrame implements TableModelListener{
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 
-	CarsTableModel carsModel = new CarsTableModel();
-	JTable carsTable = new JTable(carsModel);
+	CarsTableModel carsModel;
+	JTable carsTable;
+	boolean showAllCars;
+	String locationName;
+	String trackName;
 		
 	// labels
 	JLabel numCars = new JLabel();
@@ -70,20 +73,24 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 	
 	JTextField findCarTextBox = new JTextField(6);
 
-    public CarsTableFrame() {
+    public CarsTableFrame(boolean showAllCars, String locationName, String trackName) {
         super(ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle").getString("TitleCarsTable"));
+        this.showAllCars = showAllCars;
+        this.locationName = locationName;
+        this.trackName = trackName;
         // general GUI configuration
-
         getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
     	// Set up the table in a Scroll Pane..
+        carsModel = new CarsTableModel(showAllCars, locationName, trackName);
+        carsTable = new JTable(carsModel);
         JScrollPane carsPane = new JScrollPane(carsTable);
     	carsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
        	carsModel.initTable(carsTable);
      	
     	// load the number of cars and listen for changes
-    	numCars.setText(Integer.toString(CarManager.instance().getNumEntries()));
-    	CarManager.instance().addPropertyChangeListener(this);
+       	updateNumCars();
+    	carsModel.addTableModelListener(this);
     	
     	// Set up the control panel
     	
@@ -164,6 +171,18 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 		group.add(sortByBuilt);
 		group.add(sortByOwner);
 		group.add(sortByRfid);
+		
+		// sort by location
+		if (!showAllCars){
+			sortByLocation.doClick();
+			if (locationName != null){
+				String title = rb.getString("TitleCarsTable") +" "+ locationName;
+				if (trackName != null){
+					title = title + " "+trackName;
+				}
+				setTitle(title);
+			}
+		}
     	
  		// build menu
 		JMenuBar menuBar = new JMenuBar();
@@ -252,18 +271,26 @@ public class CarsTableFrame extends OperationsFrame implements PropertyChangeLis
 	}
 
     public void dispose() {
-    	CarManager.instance().removePropertyChangeListener(this);
+    	carsModel.removeTableModelListener(this);
     	carsModel.dispose();
     	if (f != null)
     		f.dispose();
         super.dispose();
     }
     
-    public void propertyChange(PropertyChangeEvent e) {
-    	if(Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-    	if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY)) {
-    		numCars.setText(Integer.toString(CarManager.instance().getNumEntries()));
+    public void tableChanged(TableModelEvent e){
+    	if(Control.showProperty && log.isDebugEnabled()) log.debug("Table changed");
+    	updateNumCars();
+    }
+    
+    private void updateNumCars(){
+    	String totalNumber = Integer.toString(CarManager.instance().getNumEntries());
+    	if (showAllCars){
+    		numCars.setText(totalNumber);
+    		return;
     	}
+    	String showNumber = Integer.toString(getSortByList().size());
+       	numCars.setText(showNumber + "/" + totalNumber);
     }
     
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
