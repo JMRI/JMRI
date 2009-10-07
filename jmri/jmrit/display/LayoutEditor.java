@@ -20,6 +20,7 @@ import java.awt.event.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.Math;
 
 import javax.swing.*;
 
@@ -49,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -2837,6 +2838,12 @@ public class LayoutEditor extends JmriJFrame {
 		else if ( (event.isPopupTrigger() || delayedPopupTrigger) && (!isDragging) ) {
 			LocoIcon lo = checkMarkers(dLoc);
 			if (lo!=null) lo.showPopUp(event);
+            else {
+                AnalogClock2Display c = checkClocks(dLoc);
+                if (c!=null){
+                    c.showPopUp(event);
+                }
+            }
 		}
 		// check if clicking on sensor or multisensor out of edit mode
 		else if ( (!isDragging) && (!awaitingIconChange) ) {
@@ -5486,8 +5493,218 @@ public class LayoutEditor extends JmriJFrame {
 				if (b!=null) g2.setColor(b.getBlockColor());
 				else g2.setColor(defaultTrackColor);
 				setTrackStrokeWidth(g2,mainline);
-				g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()),
-										getCoords(t.getConnect2(),t.getType2())));
+                
+                if(t.getArc()){
+                    setTrackStrokeWidth(g2,false);
+                    Point2D pt1 = getCoords(t.getConnect1(),t.getType1());
+                    Point2D pt2 = getCoords(t.getConnect2(),t.getType2());
+                    boolean flip = false;
+                    double pt2x;
+                    double pt2y;
+                    double pt1x;
+                    double pt1y;
+                    if (t.getFlip()){
+                        pt2x = pt1.getX();
+                        pt2y = pt1.getY();
+                        pt1x = pt2.getX();
+                        pt1y = pt2.getY();
+                    } else {
+                        pt2x = pt2.getX();
+                        pt2y = pt2.getY();
+                        pt1x = pt1.getX();
+                        pt1y = pt1.getY();
+                    }
+                    double cW;
+                    double cH;
+                    double cY;
+                    double cX;
+                    int angle;
+                    double start;
+                    double startadj=0;
+                    start =0;
+                    angle = t.getAngle();
+                    if (angle == 0)
+                        angle=90;
+                    double chord;
+                    double a;
+                    double o;
+                    double centreX;
+                    double centreY;
+                    double radius;
+                    
+                    if (pt2x<pt1x){
+                        // we have to do a bit of trig to get the chord of the line!
+                        a = pt1x - pt2x;
+                        if (pt2y<pt1y){
+                            o = pt1y-pt2y;
+                        } else if(pt2y==pt1y){
+                            o=0;
+                        }
+                        else {
+                            o = pt2y-pt1y;
+                        }
+                    } else if (pt2x==pt1x){
+                        a=0;
+                        if (pt2y<pt1y){
+                            o = pt1y-pt2y;
+                        } else {
+                            o = pt2y-pt1y;
+                        }
+                    }
+                    else {
+                        a = pt2x - pt1x;
+                        if (pt2y<pt1y){
+                            o = pt1y-pt2y;
+                        } else if(pt2y==pt1y){
+                            o =0;
+                        }
+                        else {
+                            o = pt2y-pt1y;
+                        }
+                    }
+                    //System.out.println("a : " + a + " o : " + o);
+                    chord=java.lang.Math.sqrt(((a*a)+(o*o)));
+                    radius = (chord/2)/(java.lang.Math.sin(java.lang.Math.toRadians(angle/2.0D)));
+                    cW = radius * 2.0D;
+                    cH = cW;
+                    //System.out.println("radius: " + radius);
+                    //double startadj = ((java.lang.Math.sin(o/chord))*100.0D)+180;
+                    startadj = 0.0D;
+                    if(t.getCircle()){
+                        centreX=0.0D;
+                        centreY=0.0D;
+                        double x3 = (pt1x+pt2x)/2.0D;
+                        double y3 = (pt1y+pt2y)/2.0D;
+                        double offset=0;
+                        //http://mathforum.org/library/drmath/view/53027.html
+                        if(pt1x<=pt2x){
+                            //centreX=pt2x-radius;
+                            if (pt1y<=pt2y) {
+                                //This works
+                                centreY = y3 + java.lang.Math.sqrt(Math.pow(radius, 2)-(Math.pow((chord/2),2)))*((pt2x-pt1x)/chord);
+                                centreX = x3 + java.lang.Math.sqrt(Math.pow(radius, 2)-(Math.pow((chord/2),2)))*((pt1y-pt2y)/chord);
+                                //System.out.println("case 1");
+                            }
+
+                            else{
+                                //System.out.println("case 3");
+                                //This works
+                                centreY = y3 + java.lang.Math.sqrt(Math.pow(radius, 2)-(Math.pow((chord/2),2)))*((pt2x-pt1x)/chord);
+                                centreX = x3 + java.lang.Math.sqrt(Math.pow(radius, 2)-(Math.pow((chord/2),2)))*((pt1y-pt2y)/chord);
+                            }
+                        }
+
+                        else{
+                            if (pt1y<=pt2y){
+                                //Works
+                                centreX = x3 + java.lang.Math.sqrt(Math.pow(radius, 2)-(Math.pow((chord/2),2)))*((pt1y-pt2y)/chord);
+                                centreY = y3 + java.lang.Math.sqrt(Math.pow(radius, 2)-(Math.pow((chord/2),2)))*((pt2x-pt1x)/chord);
+                                //offset=t.getAngle();
+                            }else {
+                                                                //offset=t.getAngle();
+                                //works
+                                centreX = x3 + java.lang.Math.sqrt(Math.pow(radius, 2)-(Math.pow((chord/2),2)))*((pt1y-pt2y)/chord);
+                                centreY = y3 + java.lang.Math.sqrt(Math.pow(radius, 2)-(Math.pow((chord/2),2)))*((pt2x-pt1x)/chord);
+                            }
+                            //need to work maths bit out for x
+                        }
+                        double a1;
+                        if (pt1x<pt2x){
+                            //System.out.println("case 1 adjacent");
+                            a1 = pt2x-centreX;
+                        }
+                        else {
+                            //System.out.println("case 3 adjacent");
+                            a1 = pt1x-centreX;
+                        }
+                        
+                        //System.out.println(Math.toDegrees(Math.acos(a1/radius)));
+                        offset = (Math.toDegrees(Math.acos(a1/radius)));
+                        if ((pt2y>centreY) && (pt1y<centreY) && (pt2x<pt1x)){
+                            //System.out.println("360 offset case 3");
+                            offset = 360-(angle-offset);
+                        
+                        }
+                        else if (pt2x<pt1x){
+                            //System.out.println("360 offset case 1");
+                            offset = 360-(offset+angle);
+                        }
+                        else if ((pt2y>centreY) && (pt1y<centreY)){
+                            //System.out.println("360 offset case 2");
+                            offset = 360-offset;
+                        }
+
+                        
+                        //System.out.println("offset " + offset);
+
+                        startadj = offset;
+                        //System.out.println("o1 : " + a1);
+
+                        
+                        cX = centreX-(radius);
+                        cY = centreY-(radius);
+                        //System.out.println("centrex : " + centreX + " centrey : " + centreY);
+                        if(editMode){
+                            g2.setStroke(new BasicStroke(1.0F,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
+                            //g2.setStroke(new BasicStroke(sideTrackWidth,BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND))
+                            //g2.draw(new Line2D.Double(new Point2D.Double(cX,centreY), new Point2D.Double(cX+(radius*2),centreY)));
+                            //g2.draw(new Line2D.Double(new Point2D.Double(centreX,cY), new Point2D.Double(centreX,(cY+radius*2))));
+                            g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), new Point2D.Double(centreX,centreY)));
+                            g2.draw(new Line2D.Double(getCoords(t.getConnect2(),t.getType2()), new Point2D.Double(centreX,centreY)));
+                        }
+                        
+                    } 
+                    else {
+                        if (pt2x<pt1x){
+                            cW=(pt1x-pt2x)*2;
+                            if (pt2y<pt1y){
+                                //System.out.println("case 1");
+                                cH=(pt1y-pt2y)*2;
+                                cY = pt2y-(cH/2);
+                                cX = pt2x;
+                                startadj=startadj+180;
+                            }
+                            else {
+                                //System.out.println("case 2");
+                                cH=(pt2y-pt1y)*2;
+                                cY = pt1y-(cH/2);
+                                cX = pt2x-(cW/2);
+                                startadj=startadj+270;
+                            }
+                        }
+                        else {
+                            cW=(pt2x-pt1x)*2;
+                            
+                            if (pt2y<pt1y){
+                                cH=(pt1y-pt2y)*2;
+                                //System.out.println("case 3");
+                                cY = pt2y;
+                                cX = pt1x;
+                                startadj=startadj+90;
+                            } 
+                            else{
+                                cH=(pt2y-pt1y)*2;
+                                //System.out.println("case 4");
+                                cY = pt1y;
+                                cX=pt1x-(cW/2);
+                            }
+                        }
+
+                        
+
+                        /**/
+                        
+                        //System.out.println("Y: " + cY + " X: " + cX + " Width: " + cW + " Height: " + cH + " chord: " + chord + " Angle: " + angle + " Adjust " + startadj);
+                    }
+                    setTrackStrokeWidth(g2, t.getMainline());
+                    g2.draw(new Arc2D.Double(cX, cY, cW, cH, startadj, angle, Arc2D.OPEN));
+                    /*if(editMode){
+                        g2.setStroke(new BasicStroke(1.0F,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
+                        g2.draw(new Rectangle2D.Double(cX, cY, cW, cH));
+                    }*/
+                } 
+                else
+                    g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), getCoords(t.getConnect2(),t.getType2())));
 			}
 		}
 	}	
@@ -5510,8 +5727,14 @@ public class LayoutEditor extends JmriJFrame {
 			Point2D pt1 = getCoords(t.getConnect1(),t.getType1());
 			Point2D pt2 = getCoords(t.getConnect2(),t.getType2());
 			double cX = (pt1.getX() + pt2.getX())/2.0D;
-			double cY = (pt1.getY() + pt2.getY())/2.0D;			
-			g2.draw(new Ellipse2D.Double (cX-SIZE2, cY-SIZE2, SIZE2+SIZE2, SIZE2+SIZE2));
+			double cY = (pt1.getY() + pt2.getY())/2.0D;
+            g2.draw(new Ellipse2D.Double (cX-SIZE2, cY-SIZE2, SIZE2+SIZE2, SIZE2+SIZE2));
+            if (t.getArc()) {
+                LayoutBlock b = t.getLayoutBlock();
+				if (b!=null) g2.setColor(b.getBlockColor());
+				else g2.setColor(defaultTrackColor);
+                g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), getCoords(t.getConnect2(),t.getType2())));
+			}
 		}
 	}
 
