@@ -20,6 +20,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
+import java.awt.Dimension;
 import javax.swing.border.LineBorder;
 import java.util.ResourceBundle;
 
@@ -42,7 +43,7 @@ import java.util.ResourceBundle;
  * included here, but commented out.
  *
  * @author Dave Duchamp Copyright (c) 2007, 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class LayoutPositionableLabel extends JLabel
@@ -173,15 +174,15 @@ public class LayoutPositionableLabel extends JLabel
             setSize(fixedWidth, fixedHeight);
             setHorizontalAlignment(JLabel.CENTER);
             setVerticalAlignment(JLabel.CENTER);
-            margin=0;
+            //margin=0;
         } else if ((width!=0) && (height==0)){
             setSize(fixedWidth, maxHeight());
             setHorizontalAlignment(JLabel.CENTER);
-            margin=0;
+            //margin=0;
         } else if ((width==0) && (height!=0)){
             setSize(maxWidth(), fixedHeight);
             setHorizontalAlignment(JLabel.CENTER);
-            margin=0;
+            //margin=0;
         } else
             setSize(maxWidth(), maxHeight());
         //displayState();
@@ -189,7 +190,6 @@ public class LayoutPositionableLabel extends JLabel
 
     public void setBackground(Color color){
         if (text){
-
             setOpaque(true);
             super.setBackground(color);
         }
@@ -221,6 +221,8 @@ public class LayoutPositionableLabel extends JLabel
                 return ((javax.swing.JLabel)this).getMaximumSize().height+(margin*2);
             else
                 return namedIcon.getIconWidth()+(margin*2);
+        }else if ((fixedWidth!=0) && (margin!=0)){
+            return fixedWidth-(margin*2);
         }
         return fixedWidth;
     }
@@ -241,6 +243,8 @@ public class LayoutPositionableLabel extends JLabel
                 return ((javax.swing.JLabel)this).getMaximumSize().height+(margin*2);
             else
                 return namedIcon.getIconHeight()+(margin*2);
+        } else if ((fixedHeight!=0) && (margin!=0)){
+            return fixedHeight-(margin*2);
         }
         return fixedHeight;
     }
@@ -436,10 +440,12 @@ public class LayoutPositionableLabel extends JLabel
 
     public void setFontSize(float newSize) {
         setFont(jmri.util.FontUtil.deriveFont(getFont(), newSize));
-        if (margin==0)
+        
+        /*if (margin==0)
             setSize(getPreferredSize().width+(borderSize*2), getPreferredSize().height+(borderSize*2));
         else
-            setSize(getPreferredSize().width+(margin*2)+(borderSize*2), getPreferredSize().height+(margin*2)+(borderSize*2));
+            setSize(getPreferredSize().width+(margin*2)+(borderSize*2), getPreferredSize().height+(margin*2)+(borderSize*2));*/
+        updateSize();
     }
 
     JMenu makeFontStyleMenu() {
@@ -697,10 +703,9 @@ public class LayoutPositionableLabel extends JLabel
         if (bold != null) bold.setSelected( (styleValue & Font.BOLD) != 0);
         if (italic != null) italic.setSelected( (styleValue & Font.ITALIC) != 0);
         setFont(jmri.util.FontUtil.deriveFont(getFont(),styleValue));
-        if (fixedWidth==0)
-            setSize(getPreferredSize().width, getPreferredSize().height);
-        else
-            updateSize();
+        /*if (fixedWidth==0)
+            setSize(getPreferredSize().width, getPreferredSize().height);*/
+        updateSize();
     }
 
     String where(MouseEvent e) {

@@ -8,20 +8,16 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
-import java.util.ResourceBundle;
-
-//Next are new imports
 import java.awt.event.MouseEvent;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
-//import javax.swing.border.LineBorder;
-//import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
-//import java.awt.Dimension;
+import java.util.ResourceBundle;
+
 
 /**
  * An icon to display a status of a Memory.<P>
@@ -42,7 +38,7 @@ import javax.swing.JLabel;
  *	 bundle for its user-seen text, like other LayoutEditor modules.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.beans.PropertyChangeListener {
@@ -86,6 +82,12 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
     
     private void setJustification(){
         if (getFixedWidth()==0){
+            switch (justification){
+                case RIGHT :    setOriginalLocation(this.getX()+this.maxWidth(), this.getY());
+                                break;
+                case CENTRE :   setOriginalLocation(this.getX()+(this.maxWidth()/2), this.getY());
+                                break;
+            }
             this.setHorizontalAlignment(JLabel.CENTER);
             updateSize();
         }
@@ -137,13 +139,13 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
         fixedHeight=height;
         if ((width!=0) && (height!=0)){
             setSize(fixedWidth, fixedHeight);
-            setMargin(0);
+            //setMargin(0);
         } else if ((width!=0) && (height==0)){
             setSize(fixedWidth, maxHeight());
-            setMargin(0);
+            //setMargin(0);
         } else if ((width==0) && (height!=0)){
             setSize(maxWidth(), fixedHeight);
-            setMargin(0);
+            //setMargin(0);
         } else {
             //setLocation(getX(), getY());
             setSize(maxWidth(), maxHeight());
@@ -155,15 +157,12 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
 
         super.setLocation(x,y);
 
-        if (super.getFixedWidth()==0){
+        if (getFixedWidth()==0){
             switch (justification){
-                case LEFT :     setOriginalLocation(this.getX(), this.getY());
-                                break;
                 case RIGHT :    setOriginalLocation(this.getX()+this.maxWidth(), this.getY());
                                 break;
                 case CENTRE :   setOriginalLocation(this.getX()+(this.maxWidth()/2), this.getY());
                                 break;
-                default :       setOriginalLocation(this.getX(), this.getY());
             }
         }
     }
@@ -236,11 +235,12 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
      * construction of this object is complete.  Be careful about that!
      */
     protected int maxHeight() {
-        if ((this.getFixedHeight()==0) && (getMargin()==0))
+        if ((getFixedHeight()==0) && (getMargin()==0))
             return ((javax.swing.JLabel)this).getMaximumSize().height;  // defer to superclass
-        else if ((this.getFixedHeight()==0) && (getMargin()!=0))
+        else if ((getFixedHeight()==0) && (getMargin()!=0))
             return ((javax.swing.JLabel)this).getMaximumSize().height+(getMargin()*2);
-        return this.getFixedHeight()+getBorderSize()*2;
+        return getFixedHeight();
+        
     }
     
     //private int width = -1;
@@ -363,7 +363,7 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
             popup.add(makeBackgroundFontColorMenu());
             
             popup.add(textBorderMenu(getNameString()));
-            if (getFixedWidth()==0){
+            if ((getFixedWidth()==0)||(getFixedHeight()==0)){
                 popup.add(new AbstractAction("Set Margin Size") {
                     public void actionPerformed(ActionEvent e) {
                         String name = getNameString();
@@ -517,14 +517,11 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
 
         if (getFixedWidth()==0){
             switch (justification){
-                case LEFT :     super.setLocation(this.getOriginalX(), this.getOriginalY());
-                                break;
                 case RIGHT :    super.setLocation(this.getOriginalX()-this.maxWidth(), this.getOriginalY());
                                 break;
                 case CENTRE :   super.setLocation(this.getOriginalX()-(this.maxWidth()/2), this.getOriginalY());
                                 break;
             }
-            
         }
         this.setSize(this.maxWidth(), this.maxHeight());
     }
