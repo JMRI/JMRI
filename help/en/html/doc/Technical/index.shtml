@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.9 2009-06-30 22:39:35 plocher Exp $ -->
+<!-- $Id: index.shtml,v 1.10 2009-10-07 22:04:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -80,11 +80,11 @@ interface in-between:
 <p> In the short term, we've created several programs based on
 the JMRI libraries to move the project along and demonstrate
 its capabilities.
-(<a href="./releasenotes/history.html">Why so many programs?...</a>)
+(<a href="http://jmri.org/releasenotes/history.html">Why so many programs?...</a>)
 </p>
 
 <p> The most popular is
-	<a href="apps/DecoderPro">DecoderPro</a>,
+	<a href="../../apps/DecoderPro">DecoderPro</a>,
 a tool for programming decoders.  It simplifies the job
 of configuring complicated DCC decoders by providing screens on
 which you can select the various options and values you want.
@@ -102,7 +102,7 @@ There are several different ways to modify JMRI:
     <li>You can use the JMRI interfaces to write programs for
     your own layouts.  Making this easy is an important goal.
     This can be done via our
-    <A HREF="help/en/html/tools/scripting/index.shtml">scripting language</a>.
+    <A HREF="../../tools/scripting/index.shtml">scripting language</a>.
    
     <li> You can add new Java code to the program or modify the existing
 	code.  Fixing things that annoy you (aka bugs) is an easy place to jump
