@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.LayoutPositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class LayoutPositionableLabelXml implements XmlAdapter {
 
@@ -121,7 +121,17 @@ public class LayoutPositionableLabelXml implements XmlAdapter {
             }
             a = element.getAttribute("style");
             try {
-                if (a!=null) l.setFontStyle(a.getIntValue(), 0);  // label is created plain, so don't need to drop
+                if (a!=null){
+                    int style = a.getIntValue();
+                    int drop = 0;
+                    switch (style){
+                        case 0: drop = 1; //0 Normal
+                                break;
+                        case 2: drop = 1; //italic
+                                break;
+                    }
+                    l.setFontStyle(style, drop);
+                }
             } catch (DataConversionException ex) {
                 log.warn("invalid style attribute value");
             }
@@ -202,26 +212,32 @@ public class LayoutPositionableLabelXml implements XmlAdapter {
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
         
-        int margin=0;
-        try {
-            margin=element.getAttribute("margin").getIntValue();
-            l.setMargin(margin);
-        } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse color attributes!");
-        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-        }
         
         int fixedWidth=0;
         int fixedHeight=0;
         try {
-            fixedWidth=element.getAttribute("fixedWidth").getIntValue();
             fixedHeight=element.getAttribute("fixedHeight").getIntValue();
-            l.setFixedSize(fixedWidth, fixedHeight);
         } catch ( org.jdom.DataConversionException e) {
             log.warn("Could not parse fixedwidth or Height attributes!");
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
-        
+        try {
+            fixedWidth=element.getAttribute("fixedWidth").getIntValue();
+        } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse fixedwidth or Height attributes!");
+        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+        }
+        l.setFixedSize(fixedWidth, fixedHeight);
+        int margin=0;
+        if ((l.getFixedWidth()==0) || (l.getFixedHeight()==0)){
+            try {
+                margin=element.getAttribute("margin").getIntValue();
+                l.setMargin(margin);
+            } catch ( org.jdom.DataConversionException e) {
+                log.warn("Could not parse color attributes!");
+            } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+            }
+        }
         try {
             l.setBorderSize(element.getAttribute("borderSize").getIntValue());
             int red = element.getAttribute("redBorder").getIntValue();
@@ -235,12 +251,12 @@ public class LayoutPositionableLabelXml implements XmlAdapter {
         }
         // and activate the result
         l.setLocation(x,y);
-        if ((fixedWidth==0) && (margin==0))
+        /*if ((fixedWidth==0) && (margin==0))
             l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         else if ((fixedWidth==0) && (margin!=0))
             l.setSize(l.getPreferredSize().width+(margin*2), l.getPreferredSize().height+(margin*2));
         else
-            l.setSize(fixedWidth, fixedHeight);
+            l.setSize(fixedWidth, fixedHeight);*/
         p.putLabel(l);
 	}
    

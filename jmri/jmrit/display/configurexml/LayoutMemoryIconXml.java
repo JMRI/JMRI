@@ -19,7 +19,7 @@ import java.awt.Color;
  *   loading a saved panel.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class LayoutMemoryIconXml implements XmlAdapter {
 
@@ -147,17 +147,23 @@ public class LayoutMemoryIconXml implements XmlAdapter {
         } catch (DataConversionException ex) {
             log.warn("invalid size attribute value");
         }
-        a = element.getAttribute("style");
-        try {
-            if (a!=null) l.setFontStyle(a.getIntValue(), 0);  // label is created plain, so don't need to drop
-        } catch (DataConversionException ex) {
-            log.warn("invalid style attribute value");
-        }
+            a = element.getAttribute("style");
+            try {
+                if (a!=null){
+                    int style = a.getIntValue();
+                    int drop = 0;
+                    switch (style){
+                        case 0: drop = 1; //0 Normal
+                                break;
+                        case 2: drop = 1; //italic
+                                break;
+                    }
+                    l.setFontStyle(style, drop);
+                }
+            } catch (DataConversionException ex) {
+                log.warn("invalid style attribute value");
+            }
         
-        a = element.getAttribute("justification");
-        if(a!=null)
-            l.setJustification(a.getValue());
-
         // get the icon pairs
         List<Element> items = element.getChildren();
         for (int i = 0; i<items.size(); i++) {
@@ -173,21 +179,30 @@ public class LayoutMemoryIconXml implements XmlAdapter {
         int fixedHeight=0;
         try {
             fixedWidth=element.getAttribute("fixedWidth").getIntValue();
-            fixedHeight=element.getAttribute("fixedHeight").getIntValue();
-            l.setFixedSize(fixedWidth, fixedHeight);
         } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse color attributes!");
-        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+            log.warn("Could not parse Width attributes!");
+        } catch ( NullPointerException e) { // considered normal if the attributes are not present
         }
-        
-        int margin=0;
         try {
-            margin=element.getAttribute("margin").getIntValue();
-            l.setMargin(margin);
+            fixedHeight=element.getAttribute("fixedHeight").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse color attributes!");
-        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+            log.warn("Could not parse Height attributes!");
+        } catch ( NullPointerException e) { // considered normal if the attributes are not present
         }
+        l.setFixedSize(fixedWidth, fixedHeight);
+        int margin=0;
+        /*if ((l.getFixedWidth()==0) || (l.getFixedHeight()==0)){*/
+            try {
+                margin=element.getAttribute("margin").getIntValue();
+                l.setMargin(margin);
+            } catch ( org.jdom.DataConversionException e) {
+                log.warn("Could not parse color attributes!");
+            } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+            //}
+        }
+        a = element.getAttribute("justification");
+        if(a!=null)
+            l.setJustification(a.getValue());
         // find coordinates
         int x = 0;
         int y = 0;
@@ -202,7 +217,6 @@ public class LayoutMemoryIconXml implements XmlAdapter {
             l.setLocation(x,y);
         else
             l.setOriginalLocation(x,y);
- 
          // find display level
         int level = LayoutEditor.LABELS.intValue();
         try {
@@ -212,12 +226,12 @@ public class LayoutMemoryIconXml implements XmlAdapter {
         } catch ( NullPointerException e) {  // considered normal if the attribute not present
         }
         l.setDisplayLevel(level);
-        if ((fixedWidth==0) && (margin==0))
+        /*if ((fixedWidth==0) && (margin==0))
             l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         else if ((fixedWidth==0) && (margin!=0))
             l.setSize(l.getPreferredSize().width+(margin*2), l.getPreferredSize().height+(margin*2));
         else
-            l.setSize(fixedWidth, fixedHeight);
+            l.setSize(fixedWidth, fixedHeight);*/
         p.putLabel(l);
     
         // set color if needed

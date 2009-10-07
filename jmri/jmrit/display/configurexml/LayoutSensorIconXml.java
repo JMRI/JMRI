@@ -18,7 +18,7 @@ import java.awt.Color;
  *   loading a saved panel.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class LayoutSensorIconXml implements XmlAdapter {
 
@@ -179,7 +179,7 @@ public class LayoutSensorIconXml implements XmlAdapter {
             } catch (org.jdom.DataConversionException e) {}
 
         } else {
-            if (element.getAttribute("inactive")!=null){
+            if (element.getAttribute("active")!=null){
                 name = element.getAttribute("active").getValue();
                 l.setActiveText(name);
             }
@@ -189,26 +189,22 @@ public class LayoutSensorIconXml implements XmlAdapter {
                 l.setInactiveText(name);
             }
             
-            if (element.getAttribute("inactive")!=null){
+            if (element.getAttribute("unknown")!=null){
                 name = element.getAttribute("unknown").getValue();
                 l.setUnknownText(name);
             }
             
-            if (element.getAttribute("inactive")!=null){
+            if (element.getAttribute("inconsistent")!=null){
                 name = element.getAttribute("inconsistent").getValue();
                 l.setInconsistentText(name);
             }
             a = element.getAttribute("size");
             try {
-                if (a!=null) l.setFontSize(a.getFloatValue());
+                if (a!=null){ 
+                    l.setFontSize(a.getFloatValue());
+                }
             } catch (DataConversionException ex) {
                 log.warn("invalid size attribute value");
-            }
-            a = element.getAttribute("style");
-            try {
-                if (a!=null) l.setFontStyle(a.getIntValue(), 0);  // label is created plain, so don't need to drop
-            } catch (DataConversionException ex) {
-                log.warn("invalid style attribute value");
             }
             try {
                 int red = element.getAttribute("redActiveBack").getIntValue();
@@ -302,32 +298,49 @@ public class LayoutSensorIconXml implements XmlAdapter {
             int fixedHeight=0;
             try {
                 fixedWidth=element.getAttribute("fixedWidth").getIntValue();
-                fixedHeight=element.getAttribute("fixedHeight").getIntValue();
-                l.setFixedSize(fixedWidth, fixedHeight);
             } catch ( org.jdom.DataConversionException e) {
-                log.warn("Could not parse color attributes!");
+                log.warn("Could not parse width attribute!");
             } catch ( NullPointerException e) {  // considered normal if the attributes are not present
             }
+            try {
+                fixedHeight=element.getAttribute("fixedHeight").getIntValue();
+            } catch ( org.jdom.DataConversionException e) {
+                log.warn("Could not parse height attributes!");
+            } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+            }
+            l.setFixedSize(fixedWidth, fixedHeight);
             try {
                 l.setBorderSize(element.getAttribute("borderSize").getIntValue());
                 int red = element.getAttribute("redBorder").getIntValue();
                 int blue = element.getAttribute("blueBorder").getIntValue();
                 int green = element.getAttribute("greenBorder").getIntValue();
                 l.setBorderColor(new Color(red, green, blue));
-                //l.setBorder(new LineBorder(l.getBorderColor(), l.getBorderSize()));
-                
-                //l.setBorderWidth(new Color(red, green, blue));
-                //l.setOpaque(true);
             } catch ( org.jdom.DataConversionException e) {
                 log.warn("Could not parse level attribute!");
             } catch ( NullPointerException e) {  // considered normal if the attribute not present
             }
-            if ((fixedWidth==0) && (margin==0))
+            a = element.getAttribute("style");
+            try {
+                if (a!=null){
+                    int style = a.getIntValue();
+                    int drop = 0;
+                    switch (style){
+                        case 0: drop = 1; //0 Normal
+                                break;
+                        case 2: drop = 1; //italic
+                                break;
+                    }
+                    l.setFontStyle(style, drop);
+                }
+            } catch (DataConversionException ex) {
+                log.warn("invalid style attribute value");
+            }
+            /*if ((fixedWidth==0) && (margin==0))
                 l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
             else if ((fixedWidth==0) && (margin!=0))
                 l.setSize(l.getPreferredSize().width+(margin*2), l.getPreferredSize().height+(margin*2));
             else
-                l.setSize(fixedWidth, fixedHeight);
+                l.setSize(fixedWidth, fixedHeight);*/
         }
         a = element.getAttribute("forcecontroloff");
         if ( (a!=null) && a.getValue().equals("true"))
