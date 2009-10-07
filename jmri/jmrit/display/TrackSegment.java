@@ -29,7 +29,7 @@ import javax.swing.*;
  *		may be hidden when the panel is not in EditMode. 
  *
  * @author Dave Duchamp Copyright (c) 2004-2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class TrackSegment 
@@ -55,6 +55,12 @@ public class TrackSegment
 	private boolean dashed = false;
 	private boolean mainline = false;
 	private boolean hidden = false;
+    private boolean arc = false;
+    private boolean flip = false;
+    private int angle =0;
+    //private int startangle =0;
+    //private int radius = 0;
+    private boolean circle=false;
 	
     public TrackSegment(String id, Object c1, int t1, Object c2, int t2, boolean dash,
 							boolean main, LayoutEditor myPanel) {
@@ -83,6 +89,10 @@ public class TrackSegment
 		ident = id;
 		dashed = dash;
 		mainline = main;
+        arc = false;
+        flip = false;
+        angle = 0;
+        circle = false;
     }
 	// alternate constructor for loading layout editor panels
 	public TrackSegment(String id, String c1Name, int t1, String c2Name, int t2, boolean dash,
@@ -114,6 +124,23 @@ public class TrackSegment
 	public void setHidden(boolean hide) {hidden = hide;} 	
 	public boolean getMainline() {return mainline;}
 	public void setMainline(boolean main) {mainline = main;} 
+    public boolean getArc() {return arc;}
+	public void setArc(boolean boo) {arc = boo;} 
+    public boolean getCircle() {return circle;}
+	public void setCircle(boolean boo) {circle = boo;} 
+    public boolean getFlip() {return flip;}
+	public void setFlip(boolean boo) {flip = boo;} 
+    //public int getStartAngle() {return startangle;}
+	//public void setStartAngle(int x) {startangle = x;} 
+    public int getAngle() {return angle;}
+	public void setAngle(int x) {
+        if (angle>180)
+            x=180;
+        angle = x;
+    }
+    //public int getRadius() {return radius;}
+	//public void setRadius(int x) {radius = x;} 
+    
 	public LayoutBlock getLayoutBlock() {
 		if ( (block==null) && (blockName!=null) && (blockName!="") ) {
 			block = layoutEditor.provideLayoutBlock(blockName);
@@ -238,9 +265,73 @@ public class TrackSegment
 					dispose();
 				}
 			});
+        JMenu lineType = new JMenu("Change To");
+/*        String title = "Change to Arc";
+        if (getArc())
+            title = "Change to Line";*/
+       lineType.add(new AbstractAction("Line") {
+            public void actionPerformed(ActionEvent e) {
+                changeType(0);
+				}
+        });
+        lineType.add(new AbstractAction("Circle") {
+            public void actionPerformed(ActionEvent e) {
+                changeType(1);
+            }
+        });
+        lineType.add(new AbstractAction("Elipse") {
+            public void actionPerformed(ActionEvent e) {
+                changeType(2);
+            }
+        });
+        popup.add(lineType);
+        if (getArc()){
+            popup.add(new AbstractAction("Flip Angle") {
+                    public void actionPerformed(ActionEvent e) {
+                        flipAngle();
+                    }
+                });
+        }
+        
 		popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
+    void changeType(int choice){
+        switch (choice){
+            case 0 :    setArc(false);
+                        setAngle(0);
+                        setCircle(false);
+                        break;
+            case 1 :    setArc(true);
+                        setAngle(90);
+                        setCircle(true);
+                        break;
+            case 2 :    setArc(true);
+                        setAngle(90);
+                        setCircle(false);
+                        break;
+        }
+        /*if(getArc()){
+            setArc(false);
+            setAngle(0);
+        } else{
+            setArc(true);
+            setAngle(90);
+        }*/
+        layoutEditor.redrawPanel();
+		layoutEditor.setDirty();
+    }
+    
+    void flipAngle(){
+        if(getFlip()){
+            setFlip(false);
+        } else{
+            setFlip(true);
+        }
+        layoutEditor.redrawPanel();
+		layoutEditor.setDirty();
+    }
+    
 	// variables for Edit Track Segment pane
 	private JmriJFrame editTrackSegmentFrame = null;
 	private JComboBox dashedBox = new JComboBox();
@@ -250,6 +341,7 @@ public class TrackSegment
     private int mainlineTrackIndex;
     private int sideTrackIndex;
 	private JTextField blockNameField = new JTextField(16);
+    private JTextField arcField = new JTextField(5);
 	private JCheckBox hiddenBox = new JCheckBox(rb.getString("HideTrack"));
 	private JButton segmentEditBlock;
 	private JButton segmentEditDone;
@@ -309,6 +401,16 @@ public class TrackSegment
             panel2.add(blockNameField);
             blockNameField.setToolTipText( rb.getString("EditBlockNameHint") );
             contentPane.add(panel2);
+            if((getArc())&&(getCircle())){
+                JPanel panel20 = new JPanel(); 
+                panel20.setLayout(new FlowLayout());
+                JLabel arcLabel = new JLabel( "Set Arc Angle");
+                panel20.add(arcLabel);
+                panel20.add(arcField);
+                arcField.setToolTipText( "Set Arc Angle" );
+                contentPane.add(panel20);
+                arcField.setText(""+getAngle());
+            }
 			// set up Edit Block, Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
@@ -397,6 +499,10 @@ public class TrackSegment
 		// set hidden
 		boolean oldHidden = hidden;
 		hidden = hiddenBox.isSelected();
+        if(getArc()){
+            setAngle(Integer.parseInt(arcField.getText()));
+            needsRedraw = true;
+        }
 		// check if anything changed
 		if ( (oldDashed!=dashed) || (oldMainline!=mainline) || (oldHidden!=hidden) )
 			needsRedraw = true;

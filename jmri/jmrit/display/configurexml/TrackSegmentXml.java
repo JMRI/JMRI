@@ -12,7 +12,7 @@ import org.jdom.Element;
  * This module handles configuration for display.TrackSegment objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class TrackSegmentXml implements XmlAdapter {
 
@@ -43,7 +43,13 @@ public class TrackSegmentXml implements XmlAdapter {
         element.setAttribute("dashed", ""+(p.getDashed()?"yes":"no"));
         element.setAttribute("mainline", ""+(p.getMainline()?"yes":"no"));
         element.setAttribute("hidden", ""+(p.getHidden()?"yes":"no"));
-
+        element.setAttribute("arc", ""+(p.getArc()?"yes":"no"));
+        if(p.getArc()){
+            element.setAttribute("flip", ""+(p.getFlip()?"yes":"no"));
+            element.setAttribute("circle", ""+(p.getCircle()?"yes":"no"));
+            if((p.getCircle())&& (p.getAngle()!=0))
+                element.setAttribute("angle", ""+(p.getAngle()));
+        }
         element.setAttribute("class", "jmri.jmrit.display.configurexml.TrackSegmentXml");
         return element;
     }
@@ -88,7 +94,31 @@ public class TrackSegmentXml implements XmlAdapter {
 		// create the new TrackSegment
         TrackSegment l = new TrackSegment(name,con1Name,type1,con2Name,type2,
 									dash,main,hide,p);
-		
+        try {
+            if (element.getAttribute("arc").getValue().equals("yes")){
+                l.setArc(true);
+            }
+        } catch ( NullPointerException e) { }//considered normal if the attribute is not present }
+        if (l.getArc()){
+            int angle = 0;
+            int startangle = 0;
+            try {
+                if (element.getAttribute("flip").getValue().equals("yes"))
+                    l.setFlip(true);
+            } catch ( NullPointerException e) { }//considered normal if the attribute is not present }
+            try {
+                if (element.getAttribute("circle").getValue().equals("yes"))
+                    l.setCircle(true);
+            } catch ( NullPointerException e) { }
+            if(l.getCircle()){
+                try {
+                    l.setAngle(element.getAttribute("angle").getIntValue());
+                } catch (org.jdom.DataConversionException e) {
+                    log.error("failed to convert tracksegment attribute");
+                } catch ( NullPointerException e) {  // considered normal if the attribute not present
+                }
+            }
+        }
 		// get remaining attribute
 		Attribute a = element.getAttribute("blockname");
 		if (a != null) {

@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-7.dtd,v 1.1 2009-10-02 14:10:13 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-7-7.dtd,v 1.2 2009-10-07 19:02:45 kevin-dickerson Exp $ -->
 
 <!-- This DTD is part of version 2.7.7 development.  Do not modify it       -->
 <!-- after version 2.7.7 is released.  For more information,                -->
@@ -782,6 +782,10 @@
     <!ATTLIST tracksegment dashed	(yes|no) "yes">
     <!ATTLIST tracksegment mainline	(yes|no) "yes">
     <!ATTLIST tracksegment hidden	(yes|no) "yes">
+    <!ATTLIST tracksegment arc	    (yes|no) "no">
+    <!ATTLIST tracksegment flip	    (yes|no) "no">
+    <!ATTLIST tracksegment circle	    (yes|no) "no">
+    <!ATTLIST tracksegment angle    CDATA #IMPLIED>
 
   <!ELEMENT layoutturnout EMPTY>
     <!ATTLIST layoutturnout class        CDATA #REQUIRED>
