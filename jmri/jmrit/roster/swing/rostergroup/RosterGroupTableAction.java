@@ -4,10 +4,7 @@ package jmri.jmrit.roster.swing.rostergroup;
 import jmri.jmrit.roster.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-
 import javax.swing.AbstractAction;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -22,6 +19,9 @@ public class RosterGroupTableAction extends AbstractAction {
      * <P>
      * Note that the argument is the Action title, not the title of the
      * resulting frame.  Perhaps this should be changed?
+     *  * @author	Bob Jacobsen   Copyright (C) 2003
+     * @author	Kevin Dickerson   Copyright (C) 2009
+     * @version	$Revision: 1.3 $
      * @param s
      */
    public RosterGroupTableAction(String s) {
