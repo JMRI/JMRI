@@ -75,7 +75,7 @@ import javax.swing.*;
  * A link is required to be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class LayoutTurnout
@@ -1330,7 +1330,7 @@ public class LayoutTurnout
 			needRedraw = true;
 		}
 		// set the continuing route Turnout State
-		if ( (type==DOUBLE_XOVER) || (type==LH_XOVER) || (type==RH_XOVER) ) {
+		if ( (type==RH_TURNOUT) || (type==LH_TURNOUT) || (type==WYE_TURNOUT) ) {
 			continuingSense = Turnout.CLOSED;
 			if ( stateBox.getSelectedIndex() == turnoutThrownIndex ) {
 				continuingSense = Turnout.THROWN;
