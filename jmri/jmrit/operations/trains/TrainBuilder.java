@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.56 $
+ * @version             $Revision: 1.57 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -604,6 +604,11 @@ public class TrainBuilder extends TrainCommon{
 													double saveRatio = saveCarMoves/rldSave.getMaxCarMoves();
 													double nextCarMoves = rld.getCarMoves();
 													double nextRatio = nextCarMoves/rld.getMaxCarMoves();
+													// bias cars to the terminal 
+													if (rld.getName().equals(terminateLocation.getName())){
+														log.debug("Location "+rld.getName()+" is terminate location "+Double.toString(nextRatio));
+														nextRatio = nextRatio * nextRatio;
+													}
 													log.debug(rldSave.getName()+" = "+Double.toString(saveRatio)+ " " + rld.getName()+" = "+Double.toString(nextRatio));
 													if (saveRatio < nextRatio){
 														rld = rldSave;					// the saved is better than the last found
@@ -1240,7 +1245,7 @@ public class TrainBuilder extends TrainCommon{
 		addLine(fileOut, Setup.getRailroadName());
 		newLine(fileOut);
 		addLine(fileOut, rb.getString("ManifestForTrain")+" (" + train.getName() + ") "+ train.getDescription());
-		addLine(fileOut, "Valid " + new Date());
+		addLine(fileOut, MessageFormat.format(rb.getString("Valid"), new Object[]{new Date()}));
 		if (!train.getComment().equals("")){
 			addLine(fileOut, train.getComment());
 		}

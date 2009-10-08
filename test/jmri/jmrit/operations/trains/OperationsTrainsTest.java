@@ -59,7 +59,7 @@ import jmri.jmrit.operations.routes.RouteManager;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -2393,12 +2393,12 @@ public class OperationsTrainsTest extends TestCase {
 		
 		Assert.assertEquals("c1 track from staging terminated", "Chelmsford Freight 1", c1.getTrackName());
 		Assert.assertEquals("c1 load from staging terminated", "Tin", c1.getLoad());
-		Assert.assertEquals("c2 track from staging terminated", "Westford Express 4", c2.getTrackName());
-		Assert.assertEquals("c2 load from staging terminated", "E", c2.getLoad());
+		Assert.assertEquals("c2 track from staging terminated", "Westford Yard 2", c2.getTrackName());
+		Assert.assertEquals("c2 load from staging terminated", "L", c2.getLoad());
 		Assert.assertEquals("c3 track from staging terminated", "Chelmsford Freight 1", c3.getTrackName());
 		Assert.assertEquals("c3 load from staging terminated", "Scrap", c3.getLoad());
-		Assert.assertEquals("c4 track from staging terminated", "Chelmsford Yard 3", c4.getTrackName());
-		Assert.assertEquals("c4 load from staging terminated", "L", c4.getLoad());
+		Assert.assertEquals("c4 track from staging terminated", "Westford Express 4", c4.getTrackName());
+		Assert.assertEquals("c4 load from staging terminated", "E", c4.getLoad());
 		Assert.assertEquals("c5 track from staging terminated", "Westford Yard 1", c5.getTrackName());
 		Assert.assertEquals("c5 load from staging terminated", "E", c5.getLoad());
 		Assert.assertEquals("c6 track from staging terminated", "Westford Express 3", c6.getTrackName());
@@ -3146,7 +3146,7 @@ public class OperationsTrainsTest extends TestCase {
 		
 		Assert.assertEquals("c5 destination 2", "", c5.getDestinationTrackName());
 		Assert.assertEquals("c6 destination 2", "", c6.getDestinationTrackName());
-		Assert.assertEquals("c7 destination 2", "Arlington Yard", c7.getDestinationTrackName());
+		Assert.assertEquals("c7 destination 2", "Boston Yard", c7.getDestinationTrackName());
 		Assert.assertEquals("c8 destination 2", "Boston Yard", c8.getDestinationTrackName());
 		
 		Assert.assertEquals("c9 destination 2", "Arlington Yard", c9.getDestinationTrackName());
@@ -3169,7 +3169,7 @@ public class OperationsTrainsTest extends TestCase {
 		
 		Assert.assertEquals("c5 destination 3", "", c5.getDestinationTrackName());
 		Assert.assertEquals("c6 destination 3", "", c6.getDestinationTrackName());
-		Assert.assertEquals("c7 destination 3", "Arlington Yard", c7.getDestinationTrackName());
+		Assert.assertEquals("c7 destination 3", "Boston Yard", c7.getDestinationTrackName());
 		Assert.assertEquals("c8 destination 3", "Boston Yard", c8.getDestinationTrackName());
 		
 		Assert.assertEquals("c9 destination 3", "Arlington Yard", c9.getDestinationTrackName());
@@ -3194,7 +3194,7 @@ public class OperationsTrainsTest extends TestCase {
 		
 		Assert.assertEquals("c5 destination 4", "", c5.getDestinationTrackName());
 		Assert.assertEquals("c6 destination 4", "", c6.getDestinationTrackName());
-		Assert.assertEquals("c7 destination 4", "Arlington Yard", c7.getDestinationTrackName());
+		Assert.assertEquals("c7 destination 4", "Boston Yard", c7.getDestinationTrackName());
 		Assert.assertEquals("c8 destination 4", "Boston Yard", c8.getDestinationTrackName());
 		
 		Assert.assertEquals("c9 destination 4", "Arlington Yard", c9.getDestinationTrackName());
@@ -3245,7 +3245,7 @@ public class OperationsTrainsTest extends TestCase {
 		
 		Assert.assertEquals("c5 destination 6", "Boston Yard", c5.getDestinationTrackName());
 		Assert.assertEquals("c6 destination 6", "", c6.getDestinationTrackName());
-		Assert.assertEquals("c7 destination 6", "Arlington Yard", c7.getDestinationTrackName());
+		Assert.assertEquals("c7 destination 6", "Boston Yard", c7.getDestinationTrackName());
 		Assert.assertEquals("c8 destination 6", "Boston Yard", c8.getDestinationTrackName());
 		
 		Assert.assertEquals("c9 destination 6", "Arlington Yard", c9.getDestinationTrackName());
@@ -3267,7 +3267,7 @@ public class OperationsTrainsTest extends TestCase {
 		
 		Assert.assertEquals("c5 destination 7", "", c5.getDestinationTrackName());
 		Assert.assertEquals("c6 destination 7", "Boston Yard", c6.getDestinationTrackName());
-		Assert.assertEquals("c7 destination 7", "Arlington Yard", c7.getDestinationTrackName());
+		Assert.assertEquals("c7 destination 7", "Boston Yard", c7.getDestinationTrackName());
 		Assert.assertEquals("c8 destination 7", "Boston Yard", c8.getDestinationTrackName());
 		
 		Assert.assertEquals("c9 destination 7", "Arlington Yard", c9.getDestinationTrackName());
