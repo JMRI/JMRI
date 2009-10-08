@@ -19,7 +19,7 @@ import java.awt.Color;
  *   loading a saved panel.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class LayoutMemoryIconXml implements XmlAdapter {
 
@@ -96,7 +96,8 @@ public class LayoutMemoryIconXml implements XmlAdapter {
         element.setAttribute("class", "jmri.jmrit.display.configurexml.LayoutMemoryIconXml");
         if (p.getDefaultIcon()!=null)
             element.setAttribute("defaulticon", p.getDefaultIcon().getName());
-
+        if(p.getHidden())
+            element.setAttribute("hidden", "yes");
 		// include contents
 		java.util.HashMap<String,NamedIcon> map = p.getMap();
 		if (map!=null) {
@@ -180,13 +181,13 @@ public class LayoutMemoryIconXml implements XmlAdapter {
         try {
             fixedWidth=element.getAttribute("fixedWidth").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse Width attributes!");
+            log.warn("Could not parse color attributes!");
         } catch ( NullPointerException e) { // considered normal if the attributes are not present
         }
         try {
             fixedHeight=element.getAttribute("fixedHeight").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse Height attributes!");
+            log.warn("Could not parse color attributes!");
         } catch ( NullPointerException e) { // considered normal if the attributes are not present
         }
         l.setFixedSize(fixedWidth, fixedHeight);
@@ -269,6 +270,9 @@ public class LayoutMemoryIconXml implements XmlAdapter {
             log.warn("Could not parse level attribute!");
         } catch ( NullPointerException e) {  // considered normal if the attribute not present
         }
+        a = element.getAttribute("hidden");
+        if ( (a!=null) && a.getValue().equals("yes"))
+            l.setHidden(true);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutMemoryIconXml.class.getName());

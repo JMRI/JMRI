@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle configuration for display.LayoutSignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class LayoutSignalHeadIconXml implements XmlAdapter {
 
@@ -50,7 +50,8 @@ public class LayoutSignalHeadIconXml implements XmlAdapter {
         element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
         element.setAttribute("clickmode", ""+p.getClickMode());
         element.setAttribute("litmode", ""+p.getLitMode());
-
+        if(p.getHidden())
+            element.setAttribute("hidden", "yes");
         element.setAttribute("class", "jmri.jmrit.display.configurexml.LayoutSignalHeadIconXml");
 
         return element;
@@ -181,7 +182,9 @@ public class LayoutSignalHeadIconXml implements XmlAdapter {
         } catch ( NullPointerException e) {  // considered normal if the attribute not present
         }
         l.setDisplayLevel(level);
-
+        a = element.getAttribute("hidden");
+        if ( (a!=null) && a.getValue().equals("yes"))
+            l.setHidden(true);
         p.putSignal(l);
     }
 

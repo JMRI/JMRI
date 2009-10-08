@@ -18,7 +18,7 @@ import java.awt.Color;
  *   loading a saved panel.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class LayoutSensorIconXml implements XmlAdapter {
 
@@ -116,7 +116,10 @@ public class LayoutSensorIconXml implements XmlAdapter {
                 element.setAttribute("fixedHeight", ""+p.getFixedHeight());
                             
         }
-            
+        
+        if(p.getHidden())
+            element.setAttribute("hidden", "yes");
+        
         element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
         element.setAttribute("momentary", p.getMomentary()?"true":"false");
 
@@ -205,6 +208,13 @@ public class LayoutSensorIconXml implements XmlAdapter {
                 }
             } catch (DataConversionException ex) {
                 log.warn("invalid size attribute value");
+            }
+            a = element.getAttribute("style");
+            try {
+                if (a!=null)
+                    l.setFontStyle(a.getIntValue(), 0);  // label is created plain, so don't need to drop
+            } catch (DataConversionException ex) {
+                log.warn("invalid style attribute value");
             }
             try {
                 int red = element.getAttribute("redActiveBack").getIntValue();
@@ -299,13 +309,13 @@ public class LayoutSensorIconXml implements XmlAdapter {
             try {
                 fixedWidth=element.getAttribute("fixedWidth").getIntValue();
             } catch ( org.jdom.DataConversionException e) {
-                log.warn("Could not parse width attribute!");
+                log.warn("Could not parse color attributes!");
             } catch ( NullPointerException e) {  // considered normal if the attributes are not present
             }
             try {
                 fixedHeight=element.getAttribute("fixedHeight").getIntValue();
             } catch ( org.jdom.DataConversionException e) {
-                log.warn("Could not parse height attributes!");
+                log.warn("Could not parse color attributes!");
             } catch ( NullPointerException e) {  // considered normal if the attributes are not present
             }
             l.setFixedSize(fixedWidth, fixedHeight);
@@ -367,6 +377,11 @@ public class LayoutSensorIconXml implements XmlAdapter {
         }
         l.setLocation(x,y);
 
+        a = element.getAttribute("hidden");
+        if ( (a!=null) && a.getValue().equals("yes"))
+            l.setHidden(true);
+
+        
         // find display level
         int level = LayoutEditor.SENSORS.intValue();
         try {
