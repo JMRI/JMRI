@@ -8,16 +8,20 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
+import java.awt.Font;
+//Next are new imports
 import java.awt.event.MouseEvent;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
+//import javax.swing.border.LineBorder;
+//import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import java.util.ResourceBundle;
-
+//import java.awt.Dimension;
 
 /**
  * An icon to display a status of a Memory.<P>
@@ -38,7 +42,7 @@ import java.util.ResourceBundle;
  *	 bundle for its user-seen text, like other LayoutEditor modules.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.beans.PropertyChangeListener {
@@ -167,6 +171,7 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
         }
     }
     
+
     private void resetDefaultIcon() {
         defaultIcon = new NamedIcon("resources/icons/misc/X-red.gif",
                             "resources/icons/misc/X-red.gif");
@@ -239,8 +244,9 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
             return ((javax.swing.JLabel)this).getMaximumSize().height;  // defer to superclass
         else if ((getFixedHeight()==0) && (getMargin()!=0))
             return ((javax.swing.JLabel)this).getMaximumSize().height+(getMargin()*2);
+        //else if ((getFixedHeight()!=0) && (getMargin()!=0))
         return getFixedHeight();
-        
+        //return getFixedHeight()+(getBorderSize()*2);
     }
     
     //private int width = -1;
@@ -253,6 +259,8 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
             return ((javax.swing.JLabel)this).getMaximumSize().width;  // defer to superclass
         else if ((getFixedWidth()==0) && (getMargin()!=0))
             return ((javax.swing.JLabel)this).getMaximumSize().width+(getMargin()*2);
+        //else if ((getFixedWidth()!=0) && (getMargin()!=0))
+         //   return getFixedWidth();
         return getFixedWidth();
     }
 
@@ -279,7 +287,6 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
             name = memory.getSystemName();
         return name;
     }
-
 
     public void setSelectable(boolean b) {selectable = b;}
     public boolean isSelectable() { return selectable;}
@@ -313,6 +320,9 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
 
         if (((fixedHeight==0) || (fixedWidth==0))&&(text))
            popup.add("Margin= " + this.getMargin());
+           
+        if (getHidden()) popup.add(rb.getString("Hidden"));
+        else popup.add(rb.getString("NotHidden"));
 
         popup.addSeparator();
         
@@ -399,7 +409,7 @@ public class LayoutMemoryIcon extends LayoutPositionableLabel implements java.be
                 });
             }
         }  // end of selectable
-
+        popup.add(setHiddenMenu());
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 

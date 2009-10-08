@@ -43,7 +43,7 @@ import java.util.ResourceBundle;
  * included here, but commented out.
  *
  * @author Dave Duchamp Copyright (c) 2007, 2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class LayoutPositionableLabel extends JLabel
@@ -102,7 +102,7 @@ public class LayoutPositionableLabel extends JLabel
     public void setPanel(LayoutEditor panel) {
 		layoutPanel = panel;
     }
-
+    
     public LayoutEditor getPanel(){
         return layoutPanel;
     }
@@ -155,6 +155,18 @@ public class LayoutPositionableLabel extends JLabel
     public int getMargin(){
         return margin;
     }
+    
+    private boolean hidden = false;
+
+    public void setHidden(boolean boo){
+        hidden=boo;
+    }
+    
+
+    public boolean getHidden(){
+        return hidden;
+    }
+
 
     private int fixedWidth=0;
     private int fixedHeight=0;
@@ -253,7 +265,9 @@ public class LayoutPositionableLabel extends JLabel
     public void setDisplayLevel(Integer l) { displayLevel = l; }
     public void setDisplayLevel(int l) { setDisplayLevel(new Integer(l)); }
     public Integer getDisplayLevel() { return displayLevel; }
-	public boolean isBackground() { return (displayLevel.intValue() == LayoutEditor.BKG.intValue());}
+    
+	public boolean isBackground() { return (displayLevel.intValue() == LayoutEditor.BKG.intValue());
+    }
 
     // cursor location reference for this move (relative to object)
     int xClick = 0;
@@ -303,6 +317,8 @@ public class LayoutPositionableLabel extends JLabel
             popup = new JPopupMenu();
 			popup.add("x= " + this.getX());
 			popup.add("y= " + this.getY());
+            if (hidden) popup.add(rb.getString("Hidden"));
+            else popup.add(rb.getString("NotHidden"));
 			popup.add(new AbstractAction("Set x & y") {
 				public void actionPerformed(ActionEvent e) {
 					String name = getText();
@@ -320,6 +336,7 @@ public class LayoutPositionableLabel extends JLabel
 				addFixedItem(popup);
 				addShowTooltipItem(popup);
 			}
+            popup.add(setHiddenMenu());
             popup.add(new AbstractAction(rb.getString("Remove")) {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -343,9 +360,9 @@ public class LayoutPositionableLabel extends JLabel
 
             if((fixedHeight==0)||(fixedWidth==0))
                 popup.add("Margin= " + this.getMargin());
-
-
-
+            if (hidden) popup.add(rb.getString("Hidden"));
+            else popup.add(rb.getString("NotHidden"));
+            
             popup.addSeparator();
 
             popup.add(new AbstractAction("Set x & y") {
@@ -377,7 +394,7 @@ public class LayoutPositionableLabel extends JLabel
             popup.add(makeBackgroundFontColorMenu());
 
             popup.add(textBorderMenu(getText()));
-
+            popup.add(setHiddenMenu());
             addFixedItem(popup);
             addShowTooltipItem(popup);
 
@@ -394,6 +411,34 @@ public class LayoutPositionableLabel extends JLabel
         if (popup != null) popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
+    ButtonGroup hiddenButtonGroup;
+    
+    JMenu setHiddenMenu(){
+        JMenu hiddenMenu = new JMenu("Hide");
+        
+        hiddenButtonGroup = new ButtonGroup();
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem("Hide");
+        r.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { setHidden(true); }
+        });
+        hiddenButtonGroup.add(r);
+        if (getHidden()) r.setSelected(true);
+        else r.setSelected(false);
+        hiddenMenu.add(r);
+        
+        r = new JRadioButtonMenuItem("Visible");
+        r.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { setHidden(false); }
+        });
+        hiddenButtonGroup.add(r);
+        if (!getHidden()) r.setSelected(true);
+        else r.setSelected(false);
+        hiddenMenu.add(r);
+        
+        return hiddenMenu;
+    }
+    
+    
     JMenu makeFontSizeMenu() {
         JMenu sizeMenu = new JMenu(rb.getString("FontSize"));
         fontButtonGroup = new ButtonGroup();
@@ -440,11 +485,6 @@ public class LayoutPositionableLabel extends JLabel
 
     public void setFontSize(float newSize) {
         setFont(jmri.util.FontUtil.deriveFont(getFont(), newSize));
-        
-        /*if (margin==0)
-            setSize(getPreferredSize().width+(borderSize*2), getPreferredSize().height+(borderSize*2));
-        else
-            setSize(getPreferredSize().width+(margin*2)+(borderSize*2), getPreferredSize().height+(margin*2)+(borderSize*2));*/
         updateSize();
     }
 
@@ -724,7 +764,13 @@ public class LayoutPositionableLabel extends JLabel
     public boolean getViewCoordinates() { return viewCoordinates; }
     private boolean viewCoordinates = true;
 
-    public void setEditable(boolean enabled) {editable = enabled;}
+    public void setEditable(boolean enabled) {
+        editable = enabled;
+        if((hidden) && (editable))
+            setVisible(true);
+        else if ((hidden) && (!editable))
+            setVisible(false);
+        }
     public boolean getEditable() { return editable; }
     private boolean editable = true;
 

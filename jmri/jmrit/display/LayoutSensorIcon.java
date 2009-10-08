@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  *	its user-seen text, like other Layout Editor modules.
  *
  * @author David J. Duchamp Copyright (C) 2007
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  *
  *  (Copied with minor changes from SensorIcon.java)
  */
@@ -332,6 +332,8 @@ public class LayoutSensorIcon extends LayoutPositionableLabel implements java.be
 		popup.add(new JMenuItem(getNameString()));
 		popup.add("x= " + this.getX());
 		popup.add("y= " + this.getY());
+        if (getHidden()) popup.add(rb.getString("Hidden"));
+        else popup.add(rb.getString("NotHidden"));
 		popup.add(new AbstractAction(rb.getString("SetXY")) {
 				public void actionPerformed(ActionEvent e) {
 					String name = getNameString();
@@ -379,12 +381,11 @@ public class LayoutSensorIcon extends LayoutPositionableLabel implements java.be
             popup.add(stateColor);
             
             popup.add(textBorderMenu(getNameString()));
-
             addFixedItem(popup);
             addShowTooltipItem(popup);
         }
         
-        
+        popup.add(setHiddenMenu());
 		addDisableMenuEntry(popup);            
 		momentaryItem = new JCheckBoxMenuItem(rb.getString("Momentary"));
 		popup.add(momentaryItem);

@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
  * @see jmri.InstanceManager
  *
  * @author David J. Duchamp Copyright (C) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  *
  */
 
@@ -213,6 +213,8 @@ public class LayoutSignalHeadIcon extends LayoutPositionableLabel implements jav
 		popup.add(new JMenuItem(getNameString()));
 		popup.add("x= " + this.getX());
 		popup.add("y= " + this.getY());
+        if (getHidden()) popup.add(rb.getString("Hidden"));
+        else popup.add(rb.getString("NotHidden"));
 		popup.add(new AbstractAction(rb.getString("SetXY")) {
 				public void actionPerformed(ActionEvent e) {
 					String name = getNameString();
@@ -311,6 +313,8 @@ public class LayoutSignalHeadIcon extends LayoutPositionableLabel implements jav
                     f.setVisible(true);
                 }
             });
+        
+        popup.add(setHiddenMenu());
 		// end creation of pop-up menu
 
         popup.show(e.getComponent(), e.getX(), e.getY());
