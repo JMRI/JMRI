@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.48 $
+ * @version $Revision: 1.49 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -212,9 +212,13 @@ public class LayoutEditor extends JmriJFrame {
 	private JCheckBoxMenuItem skipTurnoutItem = null;
 	//private ButtonGroup bkColorButtonGroup = null;
 	private ButtonGroup trackColorButtonGroup = null;
+    private ButtonGroup textColorButtonGroup = null;
 	private Color[] trackColors = new Color[13];
+    private Color[] textColors = new Color[13];
 	private JRadioButtonMenuItem[] trackColorMenuItems = new JRadioButtonMenuItem[13];
+    private JRadioButtonMenuItem[] textColorMenuItems = new JRadioButtonMenuItem[13];
 	private int trackColorCount = 0;
+    private int textColorCount = 0;
 	
 	// Selected point information
     //private final static int TURNOUT = 1;      // possible object types
@@ -272,6 +276,7 @@ public class LayoutEditor extends JmriJFrame {
     private static float mainlineTrackWidth = 4.0F;
     private static float sideTrackWidth = 2.0F;
 	private Color defaultTrackColor = Color.black;
+    private Color defaultTextColor = Color.black;
     private String layoutName = "";
 	private double xScale = 1.0;
 	private double yScale = 1.0;
@@ -1005,6 +1010,23 @@ public class LayoutEditor extends JmriJFrame {
 		addTrackColorMenuEntry(trackColorMenu, rb.getString("Magenta"),Color.magenta);
 		addTrackColorMenuEntry(trackColorMenu, rb.getString("Cyan"),Color.cyan);
         optionMenu.add(trackColorMenu);
+
+		JMenu textColorMenu = new JMenu(rb.getString("DefaultTextColor"));
+		textColorButtonGroup = new ButtonGroup();
+		addTextColorMenuEntry(textColorMenu, rb.getString("Black"), Color.black);
+		addTextColorMenuEntry(textColorMenu, rb.getString("DarkGray"),Color.darkGray);
+		addTextColorMenuEntry(textColorMenu, rb.getString("Gray"),Color.gray);
+		addTextColorMenuEntry(textColorMenu, rb.getString("LightGray"),Color.lightGray);
+		addTextColorMenuEntry(textColorMenu, rb.getString("White"),Color.white);
+		addTextColorMenuEntry(textColorMenu, rb.getString("Red"),Color.red);
+		addTextColorMenuEntry(textColorMenu, rb.getString("Pink"),Color.pink);
+		addTextColorMenuEntry(textColorMenu, rb.getString("Orange"),Color.orange);
+		addTextColorMenuEntry(textColorMenu, rb.getString("Yellow"),Color.yellow);
+		addTextColorMenuEntry(textColorMenu, rb.getString("Green"),Color.green);
+		addTextColorMenuEntry(textColorMenu, rb.getString("Blue"),Color.blue);
+		addTextColorMenuEntry(textColorMenu, rb.getString("Magenta"),Color.magenta);
+		addTextColorMenuEntry(textColorMenu, rb.getString("Cyan"),Color.cyan);
+        optionMenu.add(textColorMenu);
 	}
 
 	private void setupZoomMenu(JMenuBar menuBar) {
@@ -2029,6 +2051,39 @@ public class LayoutEditor extends JmriJFrame {
 				trackColorMenuItems[i].setSelected(false);
 		}	
 	}
+    
+    void addTextColorMenuEntry(JMenu menu, final String name, final Color color) {
+        ActionListener a = new ActionListener() {
+				//final String desiredName = name;
+				final Color desiredColor = color;
+				public void actionPerformed(ActionEvent e) { 
+					if (defaultTextColor!=desiredColor) {
+						defaultTextColor = desiredColor;
+						setDirty(true);
+						repaint();
+					}
+				}
+			};
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
+        r.addActionListener(a);
+        textColorButtonGroup.add(r);
+        if (defaultTextColor == color) r.setSelected(true);
+        else r.setSelected(false);
+        menu.add(r);
+		textColorMenuItems[textColorCount] = r;
+		textColors[textColorCount] = color;
+		textColorCount ++;
+    }
+    
+	protected void setOptionMenuTextColor() {
+		for (int i = 0;i<textColorCount;i++) {
+			if (textColors[i] == defaultTextColor) 
+				textColorMenuItems[i].setSelected(true);
+			else 
+				textColorMenuItems[i].setSelected(false);
+		}	
+	}    
+    
     
     public void setEditMode(boolean visible) {
     	int restoreScroll = savedSliders;
@@ -4030,6 +4085,7 @@ public class LayoutEditor extends JmriJFrame {
         l.setDisplayLevel(LABELS);
 		setDirty(true);
         putLabel(l);
+        l.setForeground(defaultTextColor);
     }
     public void putLabel(LayoutPositionableLabel l) {
         l.invalidate();
@@ -4069,6 +4125,7 @@ public class LayoutEditor extends JmriJFrame {
         setNextLocation(l);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(LABELS);
+        l.setForeground(defaultTextColor);
 		memoryLabelList.add(l);
 		setDirty(true);
         putLabel(l);
@@ -4446,6 +4503,7 @@ public class LayoutEditor extends JmriJFrame {
 	public double getXScale() {return xScale;}
 	public double getYScale() {return yScale;}
 	public String getDefaultTrackColor() {return colorToString(defaultTrackColor);}
+    public String getDefaultTextColor() {return colorToString(defaultTextColor);}
 	public String getLayoutName() {return layoutName;}
 	public boolean getShowHelpBar() {return showHelpBar;}
 	public boolean getDrawGrid() {return drawGrid;}
@@ -4469,6 +4527,10 @@ public class LayoutEditor extends JmriJFrame {
 	public void setDefaultTrackColor(String color) {
 		defaultTrackColor = stringToColor(color);
 		setOptionMenuTrackColor();
+	}
+	public void setDefaultTextColor(String color) {
+		defaultTextColor = stringToColor(color);
+		setOptionMenuTextColor();
 	}
 	public void setXScale(double xSc) {xScale = xSc;}
 	public void setYScale(double ySc) {yScale = ySc;}

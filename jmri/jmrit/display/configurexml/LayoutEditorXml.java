@@ -13,7 +13,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class LayoutEditorXml implements XmlAdapter {
 
@@ -58,6 +58,7 @@ public class LayoutEditorXml implements XmlAdapter {
 		panel.setAttribute("yscale", Float.toString((float)p.getYScale()));
         panel.setAttribute("sidetrackwidth", ""+p.getSideTrackWidth());
 		panel.setAttribute("defaulttrackcolor",p.getDefaultTrackColor());
+        panel.setAttribute("defaulttextcolor",p.getDefaultTextColor());
 		panel.setAttribute("turnoutbx", Float.toString((float)p.getTurnoutBX()));
 		panel.setAttribute("turnoutcx", Float.toString((float)p.getTurnoutCX()));
 		panel.setAttribute("turnoutwid", Float.toString((float)p.getTurnoutWid()));
@@ -240,15 +241,18 @@ public class LayoutEditorXml implements XmlAdapter {
         if (element.getAttribute("name")!=null)
             name = element.getAttribute("name").getValue();
         String defaultColor = "";
+        String defaultTextColor = "";
         if (element.getAttribute("defaulttrackcolor")!=null)
             defaultColor = element.getAttribute("defaulttrackcolor").getValue();
-			
+        if (element.getAttribute("defaulttextcolor")!=null)
+            defaultTextColor = element.getAttribute("defaulttextcolor").getValue();
         // create the objects
         LayoutEditor panel = new LayoutEditor(name);
 		panel.setLayoutName(name);
 		panel.setMainlineTrackWidth(mainlinetrackwidth);
 		panel.setSideTrackWidth(sidetrackwidth);
 		panel.setDefaultTrackColor(defaultColor);
+        panel.setDefaultTextColor(defaultTextColor);
 		panel.setXScale(xScale);
 		panel.setYScale(yScale);
 		// turnout size parameters
