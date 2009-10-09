@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.17 $
+ * @version   $Revision: 1.18 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -444,9 +444,9 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     	List<String> list = manager.getCarsByIdList();
     	for (int i = 0; i < list.size(); i++) {
     		// if object has been deleted, it's not here; ignore it
-    		Car c = manager.getCarById(list.get(i));
-    		if (c != null)
-    			c.addPropertyChangeListener(this);
+    		Car car = manager.getCarById(list.get(i));
+    		if (car != null)
+    			car.addPropertyChangeListener(this);
     	}
     }
     
@@ -454,9 +454,9 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     	List<String> list = manager.getCarsByIdList();
     	for (int i = 0; i < list.size(); i++) {
     		// if object has been deleted, it's not here; ignore it
-    		Car c = manager.getCarById(list.get(i));
-    		if (c != null)
-    			c.removePropertyChangeListener(this);
+    		Car car = manager.getCarById(list.get(i));
+    		if (car != null)
+    			car.removePropertyChangeListener(this);
     	}
     }
     
@@ -473,9 +473,14 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     		if(Control.showProperty && log.isDebugEnabled()) log.debug("Update car table row: "+row);
     		if (row >= 0){
     			fireTableRowsUpdated(row, row);
-    		}else{
-    			updateList();
-        		fireTableDataChanged();
+    		// add car to table?
+    		}else if (e.getPropertyName().equals(Car.LOCATION_CHANGED_PROPERTY) || e.getPropertyName().equals(Car.TRACK_CHANGED_PROPERTY)) {
+    			Car car = manager.getCarById(carId);
+    			if ((locationName == null || car.getLocationName().equals(locationName)) 
+    					&& (trackName == null || car.getTrackName().equals(trackName))){
+    				updateList();
+    				fireTableDataChanged();
+    			}
     		}
     	}
     }

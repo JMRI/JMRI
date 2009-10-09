@@ -32,7 +32,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.16 $
+ * @version             $Revision: 1.17 $
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener{
 	
@@ -241,7 +241,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 	}
 	
 	public List<String> getSortByList(){
-		return carsModel.getSelectedCarList();
+		return carsModel.sysList;
 	}
     
 	CarEditFrame f = null;

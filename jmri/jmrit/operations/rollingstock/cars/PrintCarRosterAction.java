@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class PrintCarRosterAction  extends AbstractAction {
 	
@@ -52,15 +52,7 @@ public class PrintCarRosterAction  extends AbstractAction {
 
         // Print all cars?
         boolean printAll = true;
-        
-        int selectedValue = JOptionPane.showOptionDialog(mFrame, 
-        		rb.getString("PrintAllCars"), null,
-        		JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-        		null, new Object[] { rb.getString("ButtonYes"), rb.getString("ButtonNoOnly")},
-        		rb.getString("ButtonYes"));
-
-        if (selectedValue == 1)
-        	printAll = false;
+        boolean askQuestion = true;
  
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
@@ -95,8 +87,22 @@ public class PrintCarRosterAction  extends AbstractAction {
         	for (int i=0; i<cars.size(); i++){
         		Car car = manager.getCarById(cars.get(i));
         		// skip cars without a location?
-        		if (car.getLocationName().equals("") && !printAll)
-        			continue;
+        		if (car.getLocationName().equals("")){
+        			if (!printAll)
+        				continue;
+        			else if (askQuestion){
+        				int selectedValue = JOptionPane.showOptionDialog(mFrame, 
+        						rb.getString("PrintAllCars"), null,
+        						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+        						null, new Object[] { rb.getString("ButtonYes"), rb.getString("ButtonNoOnly")},
+        						rb.getString("ButtonYes"));
+        				askQuestion = false;
+        				if (selectedValue == 1)
+        					printAll = false;
+        			}
+
+        		}
+        			
         		location = "";
         		if (!car.getLocationName().equals("")){
         			location = car.getLocationName().trim() + " - " + car.getTrackName().trim();
