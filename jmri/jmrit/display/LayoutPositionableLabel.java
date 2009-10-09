@@ -43,7 +43,7 @@ import java.util.ResourceBundle;
  * included here, but commented out.
  *
  * @author Dave Duchamp Copyright (c) 2007, 2008
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class LayoutPositionableLabel extends JLabel
@@ -56,6 +56,8 @@ public class LayoutPositionableLabel extends JLabel
         text = true;
         debug = log.isDebugEnabled();
         setProperToolTip();
+        setHorizontalAlignment(JLabel.CENTER);
+        setVerticalAlignment(JLabel.CENTER);
     }
     public LayoutPositionableLabel(NamedIcon s) {
         super(s);
@@ -118,7 +120,8 @@ public class LayoutPositionableLabel extends JLabel
         borderSize = border;
         if(borderColor!=null){
             setBorder(new LineBorder(borderColor, borderSize));
-            setSize(getPreferredSize().width, getPreferredSize().height);
+            //setSize(getPreferredSize().width, getPreferredSize().height);
+            setSize(maxWidth(), maxHeight());
             this.setHorizontalAlignment(JLabel.CENTER);
         }
     }
@@ -184,16 +187,17 @@ public class LayoutPositionableLabel extends JLabel
         fixedHeight=height;
         if ((width!=0) && (height!=0)){
             setSize(fixedWidth, fixedHeight);
-            setHorizontalAlignment(JLabel.CENTER);
-            setVerticalAlignment(JLabel.CENTER);
+            //setHorizontalAlignment(JLabel.CENTER);
+            //setVerticalAlignment(JLabel.CENTER);
             //margin=0;
         } else if ((width!=0) && (height==0)){
             setSize(fixedWidth, maxHeight());
-            setHorizontalAlignment(JLabel.CENTER);
+            //setHorizontalAlignment(JLabel.CENTER);
             //margin=0;
         } else if ((width==0) && (height!=0)){
             setSize(maxWidth(), fixedHeight);
-            setHorizontalAlignment(JLabel.CENTER);
+            //setHorizontalAlignment(JLabel.CENTER);
+            //setVerticalAlignment(JLabel.CENTER);
             //margin=0;
         } else
             setSize(maxWidth(), maxHeight());
@@ -204,6 +208,7 @@ public class LayoutPositionableLabel extends JLabel
         if (text){
             setOpaque(true);
             super.setBackground(color);
+            updateSize();
         }
     }
 
@@ -230,7 +235,7 @@ public class LayoutPositionableLabel extends JLabel
                 return namedIcon.getIconWidth(); // defer to superclass
         }else if ((fixedWidth==0) && (margin!=0)){
             if(text)
-                return ((javax.swing.JLabel)this).getMaximumSize().height+(margin*2);
+                return ((javax.swing.JLabel)this).getMaximumSize().width+(margin*2);
             else
                 return namedIcon.getIconWidth()+(margin*2);
         }else if ((fixedWidth!=0) && (margin!=0)){

@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Kevin Dickerson 2009 (LayoutEditor version);
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutTextMarginSizeEdit extends JmriJFrame 
@@ -77,6 +77,7 @@ public class LayoutTextMarginSizeEdit extends JmriJFrame
 		nameText.setVisible(true);
 
 		textX.setText("Margin Size= " + pl.getMargin());
+        textX.setPreferredSize(new Dimension(textX.getMaximumSize().width+10, textX.getPreferredSize().height));
 		textX.setVisible(true);
 		//textY.setText("Size= " + pl.getFixedSize());
 		//textY.setVisible(true);
