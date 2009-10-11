@@ -7,6 +7,7 @@ import jmri.Section;
 import jmri.Transit;
 import jmri.TransitManager;
 import jmri.TransitSection;
+import jmri.TransitSectionAction;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import org.jdom.*;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -64,13 +65,30 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
 						tsElem.setAttribute("sectionname",ts.getSection().getSystemName());
 						tsElem.setAttribute("sequence",Integer.toString(ts.getSequenceNumber()));
 						tsElem.setAttribute("direction",Integer.toString(ts.getDirection()));
-						tsElem.setAttribute("action",Integer.toString(ts.getAction()));
-						tsElem.setAttribute("data",Integer.toString(ts.getData()));
-						tsElem.setAttribute("alternate",""+(ts.isAlternate()?"yes":"no"));
+						tsElem.setAttribute("alternate",""+(ts.isAlternate()?"yes":"no"));                
+						// save child transitsectionaction entries if any
+						ArrayList<TransitSectionAction> tsaList = ts.getTransitSectionActionList();
+						if (tsaList.size()>0) {
+							Element tsaElem = null;
+							for (int m = 0; m<tsaList.size(); m++) {
+								TransitSectionAction tsa = tsaList.get(m);
+								if (tsa!=null) {						
+									tsaElem = new Element ("transitsectionaction");
+									tsaElem.setAttribute("whencode",Integer.toString(tsa.getWhenCode()));
+									tsaElem.setAttribute("whatcode",Integer.toString(tsa.getWhatCode()));
+									tsaElem.setAttribute("whendata",Integer.toString(tsa.getDataWhen()));
+									tsaElem.setAttribute("whenstring",tsa.getStringWhen());
+									tsaElem.setAttribute("whatdata1",Integer.toString(tsa.getDataWhat1()));
+									tsaElem.setAttribute("whatdata2",Integer.toString(tsa.getDataWhat2()));
+									tsaElem.setAttribute("whatstring",tsa.getStringWhat());									
+									tsElem.addContent(tsaElem);
+								}
+							}
+						}
 						elem.addContent(tsElem);
 					}
 				}
-				
+								
 				transits.addContent(elem);
 			}
 		}
@@ -137,26 +155,53 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
 					Element elem = transitTransitSectionList.get(n);
 					int seq = 0;
 					int dir = Section.UNKNOWN;
-					int act = TransitSection.NONE;
-					int dat = 5;
 					boolean alt = false;
 					String sectionName = elem.getAttribute("sectionname").getValue();
 					try {
 						seq = elem.getAttribute("sequence").getIntValue();
 						dir = elem.getAttribute("direction").getIntValue();
-						act = elem.getAttribute("action").getIntValue();
-						dat = elem.getAttribute("data").getIntValue();
 					}
 					catch (Exception e) {
 						log.error("Data Conversion Exception when loading direction of entry point - "+e);
 					}
 					if (elem.getAttribute("alternate").getValue().equals("yes")) alt = true;
-					TransitSection ts = new TransitSection(sectionName,seq,dir,act,dat,alt);
+					TransitSection ts = new TransitSection(sectionName,seq,dir,alt);
 					if (ts==null) {
 						log.error("Trouble creation TransitSection for Transit - "+sysName);
 					}
 					else {
 						x.addTransitSection(ts);
+						// load transitsectionaction children, if any
+						List<Element> transitTransitSectionActionList = transitTransitSectionList.get(n).
+											getChildren("transitsectionaction");
+						for (int m = 0; m<transitTransitSectionActionList.size(); m++) {
+							Element elemx = transitTransitSectionActionList.get(m);
+							int tWhen = 1;
+							int tWhat = 1;
+							int tWhenData = 0;
+							String tWhenString = elemx.getAttribute("whenstring").getValue();
+							int tWhatData1 = 0;
+							int tWhatData2 = 0;
+							String tWhatString = elemx.getAttribute("whatstring").getValue();
+							try {
+								tWhen = elemx.getAttribute("whencode").getIntValue();
+								tWhat = elemx.getAttribute("whatcode").getIntValue();
+								tWhenData = elemx.getAttribute("whendata").getIntValue();
+								tWhatData1 = elemx.getAttribute("whatdata1").getIntValue();
+								tWhatData2 = elemx.getAttribute("whatdata2").getIntValue();
+							}
+							catch (Exception e) {
+								log.error("Data Conversion Exception when loading transit section action - "+e);
+							}
+							TransitSectionAction tsa = new TransitSectionAction(tWhen,tWhat,tWhenData,
+										tWhatData1,tWhatData2,tWhenString,tWhatString);
+							if (tsa==null) {
+								log.error("Trouble creating TransitSectionAction for Transit - "+sysName);
+							}
+							else {
+								ts.addAction(tsa);
+							}
+						}							
 					}
 				}                
 			}	
