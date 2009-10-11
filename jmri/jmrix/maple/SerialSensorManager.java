@@ -18,7 +18,7 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author                      Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {
@@ -64,18 +64,11 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             log.error("Sensor with this name already exists - "+systemName);
             return null;
         }
-        // check under alternate name
-        String altName = SerialAddress.convertSystemNameToAlternate(sName);
-        s = getBySystemName(altName);
-        if (s!=null) {
-            log.error("Sensor with name '"+systemName+"' already exists as '"+altName+"'");
-            return null;
-        }
         // check bit number
         int bit = SerialAddress.getBitFromSystemName(sName);
-        if ( (bit<=0) || (bit>=SENSORSPERUA) ) {
+        if ( (bit<=0) || (bit>1000) ) {
             log.error("Sensor bit number, "+Integer.toString(bit)+
-                    ", is outside the supported range, 1-"+Integer.toString(SENSORSPERUA-1));
+                    ", is outside the supported range, 1-1000");
             return null;
         }
         // Sensor system name is valid and Sensor doesn't exist, make a new one
@@ -83,16 +76,18 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             s = new SerialSensor(sName);
         else
             s = new SerialSensor(sName, userName);
-
-        // ensure that a corresponding Serial Node exists
-        SerialNode node = (SerialNode) SerialAddress.getNodeFromSystemName(sName);
-        if (node==null) {
-            log.warn("Sensor " + sName + " refers to an undefined Serial Node.");
-            return s;
-        }
-        // register this sensor with the Serial Node
-        node.registerSensor(s, bit-1);
-        return s;
+		if (s!=null) {
+			// check configured
+            if (!SerialAddress.validSystemNameConfig(sName,'S')) {
+                log.warn("Sensor system Name '"+sName+"' does not address configured hardware.");
+				javax.swing.JOptionPane.showMessageDialog(null,"WARNING - The Sensor just added, "+
+					sName+", refers to an unconfigured input bit.","Configuration Warning",
+						javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
+			}
+			// register this sensor 
+			InputBits.instance().registerSensor(s, bit-1);
+		}
+		return s;
     }
     
     /**
@@ -103,14 +98,10 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     *  Process a reply to a poll of Sensors of one node
+     *  Process a reply to a poll of Sensors of one panel node
      */
     public void reply(SerialReply r) {
-        // determine which node
-        SerialNode node = (SerialNode)SerialTrafficController.instance().getNodeFromAddress(r.getUA());
-        if (node!=null) {
-            node.markChanges(r);
-        }
+		InputBits.instance().markChanges(r);
     }
     
     /**
@@ -130,13 +121,9 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             else {
                 log.debug("system name is "+sName);
                 if ( (sName.charAt(0) == 'K') && (sName.charAt(1) == 'S') ) {
-                    // This is a valid Sensor
-                    tNode = SerialAddress.getNodeFromSystemName(sName);
-                    if (tNode==node) {
-                        // This sensor is for this new Serial Node - register it
-                        node.registerSensor(getBySystemName(sName),
+                    // This is a valid Sensor - make sure it is registered
+                   InputBits.instance().registerSensor(getBySystemName(sName),
                                     (SerialAddress.getBitFromSystemName(sName)-1));
-                    }
                 }
             }
         }

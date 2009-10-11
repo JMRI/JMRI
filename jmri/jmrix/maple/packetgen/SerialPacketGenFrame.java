@@ -6,6 +6,7 @@ import jmri.util.StringUtil;
 import jmri.jmrix.maple.SerialMessage;
 import jmri.jmrix.maple.SerialReply;
 import jmri.jmrix.maple.SerialTrafficController;
+import jmri.jmrix.maple.InputBits;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -18,7 +19,7 @@ import javax.swing.JSeparator;
 /**
  * Frame for user input of serial messages
  * @author	Bob Jacobsen   Copyright (C) 2002, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.maple.SerialListener {
 
@@ -83,14 +84,16 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
                     pollButtonActionPerformed(e);
                 }
             });
-        pollButton.setToolTipText("Send poll request");
+        pollButton.setToolTipText("Send poll request (first command only, if multiple commands)");
 
         // pack for display
         pack();
     }
 
     public void pollButtonActionPerformed(java.awt.event.ActionEvent e) {
-        SerialMessage msg = SerialMessage.getPoll(Integer.valueOf(uaAddrField.getText()).intValue());
+		int endAddr = InputBits.instance().getNumInputBits();
+		if (endAddr>99) endAddr = 99;
+        SerialMessage msg = SerialMessage.getPoll(Integer.valueOf(uaAddrField.getText()).intValue(),1,endAddr);
         SerialTrafficController.instance().sendSerialMessage(msg, this);
     }
 

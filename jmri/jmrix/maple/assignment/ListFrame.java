@@ -6,6 +6,8 @@ import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.jmrix.maple.SerialTrafficController;
 import jmri.jmrix.maple.SerialNode;
 import jmri.jmrix.maple.SerialAddress;
+import jmri.jmrix.maple.InputBits;
+import jmri.jmrix.maple.OutputBits;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -24,7 +26,7 @@ import java.lang.Integer;
 /**
  * Frame for running assignment list.
  * @author	 Dave Duchamp   Copyright (C) 2006
- * @version	 $Revision: 1.4 $
+ * @version	 $Revision: 1.5 $
  */
 public class ListFrame extends jmri.util.JmriJFrame {
 
@@ -75,7 +77,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
 
         // set the frame's initial state
         setTitle(rb.getString("WindowTitle"));
-        setSize(500,300);
+        setSize(500,400);
         Container contentPane = getContentPane();        
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
@@ -252,24 +254,10 @@ public class ListFrame extends jmri.util.JmriJFrame {
 			selNode = s;
 			selNodeNum = nAdd;
 			// prepare the information line
-			int type = selNode.getNodeType();
-			if (type == SerialNode.SMINI) {
-				nodeInfoText.setText("SMINI - 24 "+rb.getString("InputBitsAnd")+" 48 "+
-													rb.getString("OutputBits"));
-				numInputBits = 24;
-				numOutputBits = 48;
-			}
-			else if (type == SerialNode.USIC_SUSIC) {
-				int bitsPerCard = selNode.getNumBitsPerCard();
-				int numInputCards = selNode.numInputCards();
-				int numOutputCards = selNode.numOutputCards();
-				numInputBits = bitsPerCard*numInputCards;
-				numOutputBits = bitsPerCard*numOutputCards;
-				nodeInfoText.setText("USIC_SUSIC - "+bitsPerCard+rb.getString("BitsPerCard")+
-						", "+numInputBits+" "+rb.getString("InputBitsAnd")+" "+
+			numInputBits = InputBits.instance().getNumInputBits();
+			numOutputBits = OutputBits.instance().getNumOutputBits();
+			nodeInfoText.setText(" - "+numInputBits+" "+rb.getString("InputBitsAnd")+" "+
 							numOutputBits+" "+rb.getString("OutputBits"));
-			}
-// here insert code for new types of nodes
 		}
 		// initialize for input or output assignments
 		if (inputSelected) {
@@ -336,16 +324,19 @@ public class ListFrame extends jmri.util.JmriJFrame {
                 return Integer.toString(r+1);
             }
             else if (c==1) {
-                return Integer.toString((selNodeNum*1000)+r+1);
+				if (inputSelected)
+					return Integer.toString(r+1);
+				else 
+					return Integer.toString(r+1001);
             }
             else if (c==2) {
 				String  sName = null;
 				if (curRow!=r) {
 					if (inputSelected) {
-						sName = SerialAddress.isInputBitFree(selNodeNum,(r+1));
+						sName = SerialAddress.isInputBitFree((r+1));
 					}
 					else {
-						sName = SerialAddress.isOutputBitFree(selNodeNum,(r+1));
+						sName = SerialAddress.isOutputBitFree((r+1));
 					}
 					curRow = r;
 					curRowSysName = sName;
@@ -364,10 +355,10 @@ public class ListFrame extends jmri.util.JmriJFrame {
 				String  sName = null;
 				if (curRow!=r) {
 					if (inputSelected) {
-						sName = SerialAddress.isInputBitFree(selNodeNum,(r+1));
+						sName = SerialAddress.isInputBitFree((r+1));
 					}
 					else {
-						sName = SerialAddress.isOutputBitFree(selNodeNum,(r+1));
+						sName = SerialAddress.isOutputBitFree((r+1));
 					}
 					curRow = r;
 					curRowSysName = sName;

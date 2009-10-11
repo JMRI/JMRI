@@ -14,7 +14,7 @@ import jmri.Light;
  *
  * @author  Bob Jacobsen Copyright (C) 2008
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialLightManager extends AbstractLightManager {
 
@@ -38,25 +38,29 @@ public class SerialLightManager extends AbstractLightManager {
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
 		// check if the output bit is available
-		int nAddress = -1;
-		nAddress = SerialAddress.getNodeAddressFromSystemName(systemName);
-		if (nAddress == -1) return (null);
 		int bitNum = SerialAddress.getBitFromSystemName(systemName);
 		if (bitNum == 0) return (null);
 		String conflict = "";
-		conflict = SerialAddress.isOutputBitFree(nAddress,bitNum);
+		conflict = SerialAddress.isOutputBitFree(bitNum);
 		if ( conflict != "" ) {
 			log.error("Assignment conflict with "+conflict+".  Light not created.");
 			notifyLightCreationError(conflict,bitNum);
 			return (null);
 		}
         // Validate the systemName
+		String sysName = SerialAddress.normalizeSystemName(systemName);
+		if (sysName=="") {
+			log.error("error when normalizing system name "+systemName);
+			return null;
+		}
         if ( SerialAddress.validSystemNameFormat(systemName,'L') ) {
-            lgt = new SerialLight(systemName,userName); 
-            if (!SerialAddress.validSystemNameConfig(systemName,'L')) {
-                log.warn("Light system Name does not refer to configured hardware: "
-                                                            +systemName);
-            }
+            lgt = new SerialLight(sysName,userName); 
+            if (!SerialAddress.validSystemNameConfig(sysName,'L')) {
+                log.warn("Light system Name '"+sysName+"' does not refer to configured hardware.");
+				javax.swing.JOptionPane.showMessageDialog(null,"WARNING - The Light just added, "+sysName+
+					", refers to an unconfigured output bit.","Configuration Warning",
+						javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
+           }
         }
         else {
             log.error("Invalid Light system Name format: "+systemName);
@@ -80,7 +84,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     public boolean validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName,'L'));
-        }
+	}
 
     /**
      * Public method to validate system name for configuration
@@ -100,16 +104,17 @@ public class SerialLightManager extends AbstractLightManager {
     public String normalizeSystemName(String systemName) {
         return (SerialAddress.normalizeSystemName(systemName));
     }
-    
-    /**
-     * Public method to convert system name to its alternate format
-     * <P>
-     * Returns a normalized system name if system name is valid and has a 
-     *      valid alternate representation, else return "".
-     */
-    public String convertSystemNameToAlternate(String systemName) {
-        return (SerialAddress.convertSystemNameToAlternate(systemName));
-    }
+
+// djd debugging    
+//    /**
+//     * Public method to convert system name to its alternate format
+//     * <P>
+//     * Returns a normalized system name if system name is valid and has a 
+//     *      valid alternate representation, else return "".
+//     */
+//    public String convertSystemNameToAlternate(String systemName) {
+//        return (SerialAddress.convertSystemNameToAlternate(systemName));
+//    }
     
     /** 
      * Allow access to SerialLightManager

@@ -10,7 +10,7 @@ import jmri.jmrix.maple.SerialTrafficController;
 /**
  * Frame displaying (and logging) serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -31,37 +31,47 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         super.dispose();
     }
 
+    protected void addHelpMenu() {
+        addHelpMenu("package.jmri.jmrix.maple.serialmon.SerialMonFrame", true);
+    }
+
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {
             nextLine("Truncated message of length "+l.getNumDataElements()+"\n",
                             l.toString());
             return;
-        } else if (l.isPoll()) {
-            nextLine("Poll node "+l.getUA()+"\n", l.toString());
-        } else if (l.isXmt()) {
-            String s = "Transmit node="+l.getUA()+" OB=";
-            int i = 11;
-            while (i<l.getNumDataElements()-3) {
-                for (int j=0; j<8; j++) {
-                    s+=(((l.getElement(i)&0x01)!=0)?"1":"0");
-                    i++;
-                }
-                s+=" ";            }
-            nextLine(s+"\n", l.toString());
-        } else if (l.isInit()) {
-            String s = "Init ua="+l.getUA()
-                +" type="+((char)l.getElement(2));
-            int len = l.getNumDataElements();
-            if (len>=5)
-                s +=" DL="+(l.getElement(3)*256+l.getElement(4));
-            if (len>=6) {
-                s+=" NS="+l.getElement(5)+" CT: ";
-                for (int i=6; i<l.getNumDataElements(); i++)
-                    s+=Integer.toHexString(l.getElement(i)&0x000000ff)+" ";
-            }
-            nextLine(s+"\n", l.toString());
-        } else
+        } 
+		else if (l.isPoll()) {
+			if ( (l.getNumDataElements()<=6) && (l.getElement(0)==15) ) 
+				nextLine("Poll Reply - NAK (error)", l.toString());
+			else 
+				nextLine("Poll node "+l.getUA()+"\n", l.toString());
+        } 
+		else if (l.isXmt()) {
+			if (l.getNumDataElements()>12) {
+				// this is the write command
+				int n = l.getNumItems();
+				String s = "Transmit node="+l.getUA()+" ADDR = "+l.getAddress()+" N = "+n+" OB=";
+				int i = 11;
+				while (n>0) {
+					for (int j=0; (j<8)&&(n>0); j++,n--) {
+						s+=(((l.getElement(i)&0x01)!=0)?"1":"0");
+						i++;
+					}
+					s+=" ";
+				}
+				nextLine(s+"\n", l.toString());
+			}
+			else {
+				// this is the reply to the write command
+				String s = "Transmit Reply - ";
+				if (l.getElement(0)==6) s = s+"ACK (OK)";
+				else if (l.getElement(0)==15) s = s+"NAK (error)";
+				nextLine(s+"\n", l.toString());
+			}
+        } 
+        else
             nextLine("unrecognized cmd: \""+l.toString()+"\"\n", "");
     }
 

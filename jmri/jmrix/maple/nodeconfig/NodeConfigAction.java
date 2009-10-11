@@ -10,14 +10,14 @@ import java.awt.event.ActionEvent;
  *       			NodeConfigFrame object
  *
  * @author	Bob Jacobsen    Copyright (C) 2001
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class NodeConfigAction extends AbstractAction {
 
 	public NodeConfigAction(String s) { super(s);}
 
     public NodeConfigAction() {
-        this("Configure C/MRI Nodes");
+		this("Configure Maple Nodes");
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -31,7 +31,8 @@ public class NodeConfigAction extends AbstractAction {
         f.setLocation(100,30);
         f.setVisible(true);
     }
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NodeConfigAction.class.getName());
+	
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NodeConfigAction.class.getName());
 }
 
 

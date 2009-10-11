@@ -13,8 +13,8 @@ import jmri.Turnout;
  * <P>
  *  Based in part on SerialTurnout.java
  *
- * @author      Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.4 $
+ * @author      Dave Duchamp Copyright (C) 2004, 2009
+ * @version     $Revision: 1.5 $
  */
 public class SerialLight extends AbstractLight {
 
@@ -70,18 +70,19 @@ public class SerialLight extends AbstractLight {
      *         will be sent before this Node is next polled.
      */
 	protected void doNewState(int oldState, int newState) {
-        SerialNode mNode = (SerialNode) SerialAddress.getNodeFromSystemName(getSystemName());
-        if (mNode!=null) {
+// djd debugging
+//        SerialNode mNode = (SerialNode) SerialAddress.getNodeFromSystemName(getSystemName());
+//        if (mNode!=null) {
             if (newState==ON) {
-                mNode.setOutputBit(mBit,false);
+                OutputBits.instance().setOutputBit(mBit,false);
             }
             else if (newState==OFF) {
-                mNode.setOutputBit(mBit,true);
+               OutputBits.instance().setOutputBit(mBit,true);
             }
             else {
                 log.warn("illegal state requested for Light: "+getSystemName());
             }
-        }
+//        }
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialLight.class.getName());

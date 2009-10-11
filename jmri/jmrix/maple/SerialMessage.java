@@ -12,13 +12,11 @@ package jmri.jmrix.maple;
  * are included. These are added during transmission.
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     // is this logically an abstract class?
-
-    final static int POLL_TIMEOUT = 250;
     
     public SerialMessage() {
         super();
@@ -70,28 +68,41 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         return getElement(3)=='W' && getElement(4)=='C';
     }
     
-    public boolean isInit() { return (getElement(1)==0x49); }
-    public int getUA() { return (getElement(1)-'0')*10+(getElement(2)-'0'); }
+    public boolean isInit() { return (false); }  // initialization is not used in Maple
+	
+    public int getUA() { return ((getElement(1)-'0')*10)+(getElement(2)-'0'); }
+	
+	public int getAddress() {
+		return ( ((getElement(5)-'0')*1000)+((getElement(6)-'0')*100)+((getElement(7)-'0')*10)+(getElement(8)-'0') );
+	}
+	
+	public int getNumItems() {
+		return ((getElement(9)-'0')*10)+(getElement(10)-'0');
+	}
 
     // static methods to return a formatted message
-    static public SerialMessage getPoll(int UA) {
+    static public SerialMessage getPoll(int UA, int startAdd, int count) {
+		if ((count<=0) || (count>99)) {
+			log.error("Illegal count in Maple poll message - "+count);
+			return null;
+		}
         SerialMessage m = new SerialMessage(14);
         m.setElement( 0, 02);        
-        m.setElement( 1, '0');        
-        m.setElement( 2, '0'+UA);  // only 0-9 so far        
+        m.setElement( 1, '0'+(UA/10));        
+        m.setElement( 2, '0'+(UA-((UA/10)*10)));          
         m.setElement( 3, 'R');        
         m.setElement( 4, 'C');        
-        m.setElement( 5, '0');    // read starting at 0001    
-        m.setElement( 6, '0');        
-        m.setElement( 7, '0');        
-        m.setElement( 8, '1');        
-        m.setElement( 9, '5');    // read 50 items
-        m.setElement(10, '0');        
+        m.setElement( 5, '0'+(startAdd/1000));    // read starting at 0001    
+        m.setElement( 6, '0'+((startAdd-((startAdd/1000)*1000))/100));        
+        m.setElement( 7, '0'+((startAdd-((startAdd/100)*100))/10));        
+        m.setElement( 8, '0'+(startAdd-((startAdd/10)*10)));        
+        m.setElement( 9, '0'+(count/10));   
+        m.setElement(10, '0'+(count - ((count/10)*10)));        
         m.setElement(11, 03);        
 
         m.setChecksum(12);        
 
-        m.setTimeout(POLL_TIMEOUT);    // minumum reasonable timeout
+        m.setTimeout(InputBits.instance().getTimeoutTime());    
         return m;
     }
 
@@ -118,6 +129,8 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
             secondChar = (char)('0'+secondVal);
         setElement(index+1, secondChar);
     }
+
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialMessage.class.getName());
 }
 
 /* @(#)SerialMessage.java */

@@ -18,8 +18,11 @@ import org.jdom.*;
  * as that class is the one actually registered. Reads are brought
  * here directly via the class attribute in the XML.
  *
+ * NOTE: Code related to pulsed turnout control has been commented out.
+ *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.3 $
+ * @author Bob Jacobsen, Dave Duchamp Copyright (c) 2009 - Maple modifications
+ * @version $Revision: 1.4 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -40,21 +43,11 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             n.setAttribute("name",""+node.getNodeAddress());
             e.addContent(n);
             // add parameters to the node as needed
-            n.addContent(makeParameter("nodetype", ""+node.getNodeType()));
-            n.addContent(makeParameter("bitspercard", ""+node.getNumBitsPerCard()));
-            n.addContent(makeParameter("transmissiondelay", ""+node.getTransmissionDelay()));
-            n.addContent(makeParameter("num2lsearchlights", ""+node.getNum2LSearchLights()));
-            n.addContent(makeParameter("pulsewidth", ""+node.getPulseWidth()));
-            String value = "";
-            for (int i=0; i<node.getLocSearchLightBits().length; i++) {
-            	value = value + Integer.toHexString(node.getLocSearchLightBits()[i]&0xF);
-            }
-            n.addContent(makeParameter("locsearchlightbits", ""+value));
-            value = "";
-            for (int i=0; i<node.getCardTypeLocation().length; i++) {
-            	value = value + Integer.toHexString(node.getCardTypeLocation()[i]&0xF);
-            }
-            n.addContent(makeParameter("cardtypelocation", ""+value));
+            n.addContent(makeParameter("transmissiondelay", ""+InputBits.getTimeoutTime()));
+            n.addContent(makeParameter("inputbits", ""+InputBits.getNumInputBits()));
+            n.addContent(makeParameter("senddelay", ""+OutputBits.getSendDelay()));
+            n.addContent(makeParameter("outputbits", ""+OutputBits.getNumOutputBits()));
+//            n.addContent(makeParameter("pulsewidth", ""+node.getPulseWidth()));
 
             // look for the next node
             node = (SerialNode) SerialTrafficController.instance().getNode(index);
@@ -83,33 +76,22 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         for (int i = 0; i<l.size(); i++) {
             Element n = l.get(i);
             int addr = Integer.parseInt(n.getAttributeValue("name"));
-            int type = Integer.parseInt(findParmValue(n,"nodetype"));
-            int bpc = Integer.parseInt(findParmValue(n,"bitspercard"));
             int delay = Integer.parseInt(findParmValue(n,"transmissiondelay"));
-            int num2l = Integer.parseInt(findParmValue(n,"num2lsearchlights"));
-			int pulseWidth = 500;
-			if ((findParmValue(n,"pulsewidth")) != null) {
-				pulseWidth = Integer.parseInt(findParmValue(n,"pulsewidth"));
-			}
+			int senddelay = Integer.parseInt(findParmValue(n,"senddelay"));
+			int numinput = Integer.parseInt(findParmValue(n,"inputbits"));
+			int numoutput = Integer.parseInt(findParmValue(n,"outputbits"));
+//			int pulseWidth = 500;
+//			if ((findParmValue(n,"pulsewidth")) != null) {
+//				pulseWidth = Integer.parseInt(findParmValue(n,"pulsewidth"));
+//			}
             
-            String slb = findParmValue(n,"locsearchlightbits");
-            String ctl = findParmValue(n,"cardtypelocation");
-            
-
             // create node (they register themselves)
-            SerialNode node = new SerialNode(addr, type);
-            node.setNumBitsPerCard(bpc);
-            node.setTransmissionDelay(delay);
-            node.setNum2LSearchLights(num2l);
-			node.setPulseWidth(pulseWidth);
-            
-            for (int j = 0; j<slb.length(); j++) {
-            	node.setLocSearchLightBits(j, (slb.charAt(j)-'0') );
-            }
-            
-            for  (int j = 0; j<ctl.length(); j++) {
-            	node.setCardTypeLocation(j, (ctl.charAt(j)-'0') );
-            }
+            SerialNode node = new SerialNode(addr, 0);
+            InputBits.instance().setTimeoutTime(delay);
+			InputBits.instance().setNumInputBits(numinput);
+			OutputBits.instance().setSendDelay(senddelay);
+			OutputBits.instance().setNumOutputBits(numoutput);
+//			node.setPulseWidth(pulseWidth);
             
             // Trigger initialization of this Node to reflect these parameters
             SerialTrafficController.instance().initializeSerialNode(node);
