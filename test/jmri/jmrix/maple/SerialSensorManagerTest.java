@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialSensorManagerTest extends TestCase {
 
@@ -25,47 +25,23 @@ public class SerialSensorManagerTest extends TestCase {
         
         SerialSensorManager s = new SerialSensorManager();
 
-        SerialNode n0 = new SerialNode();
-        SerialNode n1 = new SerialNode(1,SerialNode.SMINI);
-        SerialNode n2 = new SerialNode(2,SerialNode.USIC_SUSIC);
-        n2.setNumBitsPerCard (24);
-        n2.setCardTypeByAddress (0,SerialNode.INPUT_CARD);
-        n2.setCardTypeByAddress (1,SerialNode.OUTPUT_CARD);
-        n2.setCardTypeByAddress (3,SerialNode.OUTPUT_CARD);
-        n2.setCardTypeByAddress (4,SerialNode.INPUT_CARD);
-        n2.setCardTypeByAddress (2,SerialNode.OUTPUT_CARD);
+        SerialNode n1 = new SerialNode(1,0);
+        SerialNode n2 = new SerialNode(2,0);
 
-        Assert.assertTrue("none expected A0", !(n0.getSensorsActive()) );
-        Assert.assertTrue("none expected A1", !(n1.getSensorsActive()) );
-        Assert.assertTrue("none expected A2", !(n2.getSensorsActive()) );
-        
         Sensor sensor = s.provideSensor("3");
         Assert.assertNotNull("found sensor", sensor);
         Assert.assertTrue("right name", sensor.getSystemName().equals("KS3"));
-        Assert.assertTrue("UA 0", n0.getSensorsActive() );
-        Assert.assertTrue("2nd none expected A1", !(n1.getSensorsActive()) );
-        Assert.assertTrue("2nd none expected A2", !(n2.getSensorsActive()) );
-
-        s.provideSensor("11");
-        s.provideSensor("8");
-        s.provideSensor("19");
-        s.provideSensor("23");
-        s.provideSensor("KS2048");
-        Assert.assertTrue("2nd UA 0", n0.getSensorsActive() );
-        Assert.assertTrue("3rd none expected UA 1", !(n1.getSensorsActive()) );
-        Assert.assertTrue("UA 2", n2.getSensorsActive() );
-
-        s.provideSensor("15");
-        s.provideSensor("1001");
-        Assert.assertTrue("3rd UA 0", n0.getSensorsActive() );
-        Assert.assertTrue("UA 1", n1.getSensorsActive() );
-        Assert.assertTrue("2nd UA 2", n0.getSensorsActive() );
-        s.provideSensor("17");
-        s.provideSensor("1017");
-        s.provideSensor("2017");
-        Assert.assertTrue("4th UA 0", n0.getSensorsActive() );
-        Assert.assertTrue("2nd UA 1", n1.getSensorsActive() );
-        Assert.assertTrue("3rd UA 2", n0.getSensorsActive() );
+        Sensor s11 = s.provideSensor("11");
+		Assert.assertNotNull("found s11", s11);
+        Assert.assertTrue("right name s11", s11.getSystemName().equals("KS11"));
+		InputBits ibit = new InputBits();
+		ibit.setNumInputBits(1000);
+        Sensor s248 = s.provideSensor("KS248");
+		Assert.assertNotNull("found s248", s248);
+        Assert.assertTrue("right name s248", s248.getSystemName().equals("KS248"));
+        Sensor s1000 = s.provideSensor("1000");
+		Assert.assertNotNull("found s1000", s1000);
+        Assert.assertTrue("right name s1000", s1000.getSystemName().equals("KS1000"));
     }
 
     // from here down is testing infrastructure

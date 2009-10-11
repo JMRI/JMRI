@@ -19,7 +19,7 @@ import jmri.util.JUnitAppender;
 /**
  * Description:	    JUnit tests for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2006
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class SerialTrafficControllerTest extends TestCase {
 
@@ -30,10 +30,10 @@ public class SerialTrafficControllerTest extends TestCase {
     
     public void testSerialNodeEnumeration() {
         SerialTrafficController c = new SerialTrafficController();
-        SerialNode b = new SerialNode(1,SerialNode.USIC_SUSIC);
-        SerialNode f = new SerialNode(3,SerialNode.SMINI);
-        SerialNode d = new SerialNode(2,SerialNode.SMINI);
-        SerialNode e = new SerialNode(6,SerialNode.USIC_SUSIC);
+        SerialNode b = new SerialNode(1,0);
+        SerialNode f = new SerialNode(3,0);
+        SerialNode d = new SerialNode(2,0);
+        SerialNode e = new SerialNode(6,0);
         Assert.assertEquals("1st Node", b, c.getNode(0) );
         Assert.assertEquals("2nd Node", f, c.getNode(1) );
         Assert.assertEquals("3rd Node", d, c.getNode(2) );
@@ -41,9 +41,7 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("no more Nodes", null, c.getNode(4) );
         Assert.assertEquals("1st Node Again", b, c.getNode(0) );
         Assert.assertEquals("2nd Node Again", f, c.getNode(1) );
-        Assert.assertEquals("node with address 6", e, c.getNodeFromAddress(6) );
         Assert.assertEquals("3rd Node again", d, c.getNode(2) );
-        Assert.assertEquals("no node with address 0", null, c.getNodeFromAddress(0) );
 
         c.deleteNode(6);
 
@@ -51,13 +49,6 @@ public class SerialTrafficControllerTest extends TestCase {
         Assert.assertEquals("2nd Node after del", f, c.getNode(1) );
         Assert.assertEquals("3rd Node after del", d, c.getNode(2) );
         Assert.assertEquals("no more Nodes after del", null, c.getNode(3) );
-
-        c.deleteNode(1);
-        JUnitAppender.assertWarnMessage("Deleting the serial node active in the polling loop");
-
-        Assert.assertEquals("1st Node after del2", f, c.getNode(0) );
-        Assert.assertEquals("2nd Node after del2", d, c.getNode(1) );
-        Assert.assertEquals("no more Nodes after del2", null, c.getNode(2) );        
     }
 
     @SuppressWarnings("unused")

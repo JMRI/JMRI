@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.maple package.
  * @author      Bob Jacobsen  Copyright 2003
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class SerialTest extends TestCase {
 
@@ -42,6 +42,8 @@ public class SerialTest extends TestCase {
         suite.addTest(jmri.jmrix.maple.SerialMessageTest.suite());
         suite.addTest(jmri.jmrix.maple.SerialTrafficControllerTest.suite());
         suite.addTest(jmri.jmrix.maple.SerialAddressTest.suite());
+        suite.addTest(jmri.jmrix.maple.OutputBitsTest.suite());
+        suite.addTest(jmri.jmrix.maple.InputBitsTest.suite());
         return suite;
     }
 

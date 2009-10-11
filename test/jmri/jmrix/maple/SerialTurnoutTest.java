@@ -8,7 +8,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.maple.SerialTurnout class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialTurnoutTest extends AbstractTurnoutTest {
 
@@ -18,9 +18,10 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
 	public void setUp() {
 		// prepare an interface
 		tcis = new SerialTrafficControlScaffold();
-        n = new SerialNode(0,SerialNode.SMINI);
+        n = new SerialNode(1,0);
 		t = new SerialTurnout("KT4","t4");
 		Assert.assertNotNull("exists", n );
+		Assert.assertNotNull("turnout exists",t);
 	}
 
 	public int numListeners() { return tcis.numListeners(); }
