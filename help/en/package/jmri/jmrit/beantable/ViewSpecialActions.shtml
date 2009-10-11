@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: ViewSpecialActions.shtml,v 1.1 2009-10-11 19:15:57 djduchamp Exp $ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: ViewSpecialActions
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help Transit Special Actions">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Special Actions</H1>
+    
+<H2>What are Special Actions?</H2>
+<p>Special Actions are things that can be initiated automatically as a train 
+running in automatic mode traverses the layout. One or more Special Actions may be 
+requested for each Section in a Transit. If a Section is in a Transit multiple 
+times, different Special Actions may be specified for each occurence of the 
+Section. Special Actions only apply to automatically running trains with a 
+<i>virtual engineer</i>.  If running trains in automatic mode is of interest 
+read on. If your trains will only be run manually with a human engineer, 
+Special Actions aren't used.</p>
+
+<p>Special Actions are in addition to the <i>standard actions</i> that also 
+happen automatically when a train runs in automatic mode. Some standard actions 
+are things like following signals and using stop sensors, that are specified with 
+each Section. <i>Standard actions</i> occur automatically whenever a Section is 
+traversed in automatic mode. Other <i>standard actions</i> include automatically 
+requesting allocation of Sections, and automatically releasing Sections when 
+they are no longer needed.</p>
+
+<p>Special Actions are tied to Sections, but are specified at the Transit level 
+to provide maximum user flexibility. A Section is a piece of physical track, 
+that may, for example, be used by passenger trains, through freight trains, or 
+locals. Each of these uses may need different Special Actions in a specific 
+Section. For example, a passenger train may make a station stop in a particular 
+Section, whereas a through freight train may go straight through. Placing 
+Special Actions in Transits allows Active Trains traveling the same path 
+through the layout to have different Special Actions.</p>
+
+<h2>Requesting a Special Action</h2>
+
+<p>A Special Action is requested by specifying <i>what</i> action to be 
+initiated and <i>when</i> that action is to be initiated. Any <i>when</i> event 
+may be combined with any <i>what</i> action, providing a wide variety of Special 
+Actions. Currently available <i>when</i> events are:</p>
+
+<p><ul>
+<li><b>Entry to Section</b> - When the automatic train enters the current 
+Section.
+<li><b>Exit from Section</b> - When the automatic train exits the current 
+Section. This means when the last detectable car leaves the Section, and the 
+Section is unoccupied.
+<li><b>Entry to Block in Section</b> - When the automatic train enters a 
+specified Block in the Section. For Sections with only one Block, this is 
+equivalent to <b>Entry to Section</b>.</li>
+<li><b>Exit from Block in Section</b> - When the automatic train exits a 
+specified Block in the Section. This means when the last detectable car leaves 
+the specified Block, and the Block is unoccupied. For Sections with only one 
+Block, this is equivalent to <b>Exit from Section</b>.</li>
+<li><b>When Train Stops</b> - When the automatic train stops. This may be 
+used, for example, for stopping the bell in a sound decoder or initiating other 
+actions when the train stops at a station.</li>
+<li><b>When Train Starts</b> - When the automatic trains starts up after having 
+been stopped. This may be used, for example, to initiate actions when a train 
+starts up after a station stop.</li>
+<li><b>When Sensor goes Active</b> - When the specified Sensor moves to the 
+active state. The specified Sensor may be either internal or hardware, and must 
+be in the Sensor Table. This might be used, for example, with a hardware Sensor 
+connected to a fascia push button to resume automatic operation after being in 
+manual mode, when the user pushes the fascia button to indicate manual operation 
+work has been completed. It can also be used to trigger actions using 
+position sensors on the layout.</li>
+<li><b>When Sensor goes Inactive</b> - When the specified Sensor moves to the 
+inactive state. This is the same as above, but with the opposite sensor state. 
+Use the one that best fits your hardware.</li>
+<li><b>When Train is Within the Section</b> - When the last detectable car enters 
+the Section, and the previous Section goes unoccupied.</li>
+</ul></p>
+<p>An optional delay, specified in milliseconds, is available for each <i>when</i> 
+event. No delay is the default.  If an optional delay time is not entered (or a 
+delay time of zero is entered), the action will be initiated immediately after 
+the <i>when</i> event occurs. If a delay time is specified, the program will wait 
+for the specified time after the <i>when</i> event occurs before initiating the 
+action.</p>
+<p>Currently available <i>what</i> actions are:
+<p><ul>
+<li><b>Pause</b> - Stop the train for a specified number of fast clock minutes. 
+This item may be used to request a station stop.</li>
+<li><b>Set Maximum Speed</b> - Set the maximum speed to a specified percentage 
+of the maximum hardware speed. When a train is run in automatic mode, the 
+program will never exceed the maximum speed. For example, this item may be used 
+to force an automatic train to run slower through a town. Setting maximum speed 
+does not affect the current speed of the train if it is less than the specified 
+maximum speed.</li>
+<li><b>Set Train Speed</b> - Set the current train speed to the target value. 
+The change will not occur instantaneously. The current speed will be changed to 
+the target speed in a manner determined by the program. The target speed may be 
+either lower or higher than the current value.</li>
+<li><b>Ramp Train Speed</b> - Set the current train speed to the target value 
+by ramping to the target value over a specified time period. The target speed 
+may be either lower or higher than the current value.</li>
+<li><b>Go to Manual Mode</b> - Drop out of automatic mode to allow a human 
+engineer to perform work with a manual throttle. The train will remain in 
+manual mode until the following action occurs.</li>
+<li><b>Resume Automatic Operation</b> - Resume automatic operation after 
+having been in manual mode to allow a human user to work with a manual 
+throttle.</li>
+<li><b>Start Bell Ringing</b> - Start bell ringing on a sound decoder. This 
+item will turn throttle function 1 on.</li>
+<li><b>Stop Bell Ringing</b> - Stop bell ringing on a sound decoder. This 
+item will turn throttle function 1 off.</li>
+<li><b>Sound Horn</b> - Sound the horn of a sound decoder for a specified 
+time. This item is equivalent to holding down throttle function 2 for the 
+specified time.</li>
+<li><b>Patterned Sound Horn</b> - Sound the horn in a manner specified by 
+a pattern. The pattern consists of short and long blasts, specified as "s" 
+and "l" in the pattern. For example a pattern of "lsl" specifies long-short-
+long. The user sets the duration of the short and long blasts.</li>
+<li><b>Set Decoder Function</b> - Press the specified decoder function button. 
+The function button is specified by the user.</li>
+<li><b>Set Sensor Active</b> - Set a specified Sensor active. The specified 
+Sensor must be in the Sensor Table. If the specified Sensor is already in the 
+active state, it is toggled. This action may be used, for example, with an 
+internal sensor to trigger a Logix or a Route, or to set a Light. It offers 
+access to a wide variety of actions not included here.</li>
+<li><b>Set Sensor Inactive</b> - Set a specified Sensor inactive. The specified 
+Sensor must be in the Sensor Table. This is equivalent to the action above, 
+except with a different target Sensor state.</li>
+</ul></p>
+
+<h2>The View Special Actions Window</h2>
+<p>The <b>View Special Actions</b> window displays Special Actions that are 
+currently set, and provides for adding, editing, or deleting Special Actions. 
+The View Special Actions window (example below) is displayed for a specific 
+Section in a Transit by pressing the <b>View Special Actions</b> button on that 
+Section's row in the <b>Add/Edit Transit</b> window.</p>
+<img src="ViewSpecialActions.jpg" height="363" width="765"></li>
+<p>For all Special Events that have been created, the <i>when</i> event and the 
+<i>what</i> action are described in the <b>When</b> and <b>Action Requested</b> 
+columns. To add a new Special Action, click <b>Add New Action</b> to bring up the 
+<b><a href="AddEditAction.shtml">Add/Edit Action</a></b> window. To edit an 
+existing Special Action, click the <b>Edit</b> button in its row. To delete an 
+existing Special Action, click the <b>Delete</b> button in its row. 
+The order of the Special Actions is not important.</p>
+<p>When the Special Actions are completely defined, click the <b>Done</b> button.
+</p>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+
