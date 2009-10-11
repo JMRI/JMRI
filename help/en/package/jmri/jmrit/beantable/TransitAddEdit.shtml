@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TransitAddEdit.shtml,v 1.3 2008-12-24 16:21:29 jacobsen Exp $ -->
+<!-- $Id: TransitAddEdit.shtml,v 1.4 2009-10-11 19:25:38 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -33,7 +33,7 @@ To add a new Transit, follow this procedure:
 <b>Tables</b> submenu of the <b>Tools</b> menu to bring up
 the Transit Table, and click the <b>Add...</b> button at the bottom of the 
 table to bring up the Add/Edit Transit window.</p>
-<img src="TransitAddFrame.jpg" height="384" width="578">
+<img src="TransitAddFrame.jpg" height="390" width="681">
 <li><p>Enter a <b>System Name</b>, according to the JMRI convention. Since Transits 
 are internal objects, the first letter should be "I" (for internal). The second 
 letter should be "Z" to indicate a Transit. This is usually followed by a 
@@ -67,14 +67,12 @@ Section listed in the lower popup menu is a valid alternate Section.</b>
 For more information on alternate Sections and their use, refer to the 
 <a href="TransitTable.shtml">Transit Table help file</a>.
 </li>
-<li><p>Next set any <b>Special Action</b> needed when a train has completely 
-entered a Section.  The entries in the Special Action column are popup menus 
-with <none> as the default entry. Currently only two Special Actions are 
-provided. Selecting <b>Pause For</b> and entering a fast clock pause time
-(in minutes) will provide for an automatic station stop or similar action. 
-Entering <b>Await Restart</b> will cause the train to delay in that Section, 
-for example, if a set out or pick up needs to be made. More information is 
-provided in the <a href="TransitTable.shtml">Transit Table help file</a>.</p>
+<li><p>If you will be using this Transit to run an automatic train, click the 
+<b>View Special Actions</b> button to set up any <b>Special Action</b> needed 
+when a train is in the specified Section. You can add Special Actions now, or 
+you can edit this Transit at a later time to set up Special Actions.
+More information is provided in the <a href="ViewSpecialActions.shtml">
+View Special Actions help file</a>.</p>
 </li>
 </li><li><p>Click the <b>Create</b> button at the bottom of the window.  
 If everything is fine, the window will close and a new Transit will appear in 
@@ -83,6 +81,13 @@ displayed indicating the error and what you should do to fix it.
 Correct the error and click <b>Create</b> again.</p></li>
 </ol>
 
+<p>Note: The <b>Direction</b> and <b>Alternate</b> columns in the Add/Edit 
+Transit table are for information only. They are set automatically as you 
+build the Transit. The Direction column indicates the direction of travel 
+through the Section, and the Alternate column indicates whether the Section 
+is the <i>primary</i> Section for this sequence number or an <i>alternate</i> 
+Section.</p>
+
 <h2>Editing an existing Transit</h2>
 To edit an existing Transit, follow  this procedure:
 <ol>
@@ -90,7 +95,7 @@ To edit an existing Transit, follow  this procedure:
 Transit Table</a> to bring up the Add/Edit Transit window. The window will 
 be the same as that shown above, except the System Name will be fixed, and 
 the <b>Create</b> button will be replaced with an <b>Update</b> Button.</p>
-</li>
+<img src="TransitEditFrame.jpg" height="389" width="680"></li>
 <li><p>Make whatever changes or additions you need to the information in
 the window. Note that the System Name of the edited Transit may not be 
 changed, but the User Name may be changed. Items that may be edited are described 

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TransitTable.shtml,v 1.5 2009-03-01 18:48:38 djduchamp Exp $ -->
+<!-- $Id: TransitTable.shtml,v 1.6 2009-10-11 19:25:38 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -43,18 +43,20 @@ be multiple "3rd" Sections, any of which might be used to travel between the 2nd
 4th Sections. Alternate Sections provide for passing tracks and staging yards. 
 Transits also provide for reverse loops. Currently Transits do not provide for an 
 operator reversing the direction of a train.</P>
-<p>Transits provide for a special action to be performed when a train is in a 
-Section.  Currently two special actions are supported: <b>Pause</b> for a user-designated 
-number of fast clock minutes, and <b>Await</b> a manual restart. The Pause action 
-may be used for automatic station stops. The Await action is designed to support 
-an engineer doing work in a specified Section, and requesting a restart when the 
-work is complete. More actions may be added in the future as needed.</p>
+<p>Transits support both manual and automatic operation of trains.  When a train 
+is running in automatic mode, Transits provide for <b>Special Actions</b> to be 
+performed when a train reaches a designated Section in the Transit. A 
+Special Action may be initiated by a number of events, for 
+example, when the train enters a Section, or when the train stops. A variety of 
+actions are possible, such as pausing the train for a user-designated 
+number of fast clock minutes, reverting to manual mode for local manual operation, 
+or sounding the horn on a sound decoder.</p>
 <H2>How are Transits Activated and Used?
 </H2
 <p>Transits are static objects. They specify routes for trains to follow around the 
 layout. Transits do not run trains, or keep track of running trains. A Transit 
 becomes part of the train running process when it is <i>activated</i> by being 
-assigned to an Active Train. Transits are saved as part of a panel/configuration 
+assigned to an <b>Active Train</b>. Transits are saved as part of a panel/configuration 
 file, only need to be set up once, and can be reused. Active Trains, on the other 
 hand are dynamic and transient.  Active Trains are not saved to disk, and must be 
 set up each time they are used.</p>
@@ -120,7 +122,7 @@ of a Transit when multiple trains must follow the same route at the same time.
 </LI></UL>
 <P>To define a new Transit, click the <b><A HREF="TransitAddEdit.shtml">Add...</a>
 </b> button. An Add/Edit Transit window will 
-be brought up that will allow you to define the Sections in the new Transit.  
+be brought up that will allow you to designate the Sections in the new Transit.  
 (Obviously, Sections must be defined before any Transit can be created.) Since a 
 Transit may be used in only one Active Train at a time, the Duplicate option 
 (see above) may save time when creating multiple copies of the same Transit.</p>
