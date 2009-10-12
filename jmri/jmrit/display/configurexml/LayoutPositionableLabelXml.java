@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.LayoutPositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class LayoutPositionableLabelXml implements XmlAdapter {
 
@@ -249,6 +249,9 @@ public class LayoutPositionableLabelXml implements XmlAdapter {
             log.warn("Could not parse level attribute!");
         } catch ( NullPointerException e) {  // considered normal if the attribute not present
         }
+        a = element.getAttribute("hidden");
+        if ( (a!=null) && a.getValue().equals("yes"))
+            l.setHidden(true);
         // and activate the result
         l.setLocation(x,y);
         /*if ((fixedWidth==0) && (margin==0))
@@ -284,9 +287,7 @@ public class LayoutPositionableLabelXml implements XmlAdapter {
             log.warn("Could not parse color attributes!");
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
-        a = element.getAttribute("hidden");
-        if ( (a!=null) && a.getValue().equals("yes"))
-            l.setHidden(true);
+
 	}
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutPositionableLabelXml.class.getName());
