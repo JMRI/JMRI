@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-7.dtd,v 1.3 2009-10-11 20:08:25 djduchamp Exp $ -->
+<!-- $Id: layout-config-2-7-7.dtd,v 1.4 2009-10-12 19:34:58 kevin-dickerson Exp $ -->
 
 <!-- This DTD is part of version 2.7.7 development.  Do not modify it       -->
 <!-- after version 2.7.7 is released.  For more information,                -->
@@ -452,6 +452,7 @@
     <!ATTLIST positionablelabel forcecontroloff	(true|false) "false">
     <!ATTLIST positionablelabel fixed	(true|false) "false">
     <!ATTLIST positionablelabel showtooltip	(true|false) "true">
+    <!ATTLIST positionablelabel hidden	    (yes|no) "no">
     
     
 
@@ -517,6 +518,7 @@
     <!ATTLIST sensoricon blueInconsistent	CDATA #IMPLIED>
     <!ATTLIST sensoricon selectable	CDATA #IMPLIED>
     <!ATTLIST sensoricon defaulticon	CDATA #IMPLIED>
+    <!ATTLIST sensoricon hidden	    (yes|no) "no">
 
   <!ELEMENT reportericon EMPTY>
     <!ATTLIST reportericon class	CDATA #REQUIRED>
@@ -557,6 +559,7 @@
     <!ATTLIST memoryicon greenBorder	CDATA #IMPLIED>
     <!ATTLIST memoryicon blueBorder	CDATA #IMPLIED>
     <!ATTLIST memoryicon justification	(left|centre|right) "left">
+    <!ATTLIST memoryicon hidden	    (yes|no) "no">
         
   <!ELEMENT memorystate EMPTY>
     <!ATTLIST memorystate value	CDATA #REQUIRED>
@@ -607,6 +610,7 @@
     <!ATTLIST signalheadicon clickmode	 CDATA #IMPLIED>
     <!ATTLIST signalheadicon heldicon    CDATA #IMPLIED>
     <!ATTLIST signalheadicon litmode     CDATA #IMPLIED>
+    <!ATTLIST signalheadicon hidden	    (yes|no) "no">
 
     <!-- the next two (aspectgenerator and head) are obsolete, and -->
     <!-- are only retained until JMRI 2 so that old files can be read -->
