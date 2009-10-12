@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "PTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -33,12 +33,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         if (t!=null) {
             return null;
         }
-        // check under alternate name
-        String altName = SerialAddress.convertSystemNameToAlternate(sName);
-        t = getBySystemName(altName);
-        if (t!=null) {
-            return null;
-        }
+
         // create the turnout
         t = new SerialTurnout(sName,userName);
         
