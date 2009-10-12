@@ -8,17 +8,22 @@ import java.util.regex.*;
  * Utility Class supporting parsing and testing of addresses
  * <P>
  * Two address formats are supported:
- *   Ptnxx 
+ *   For X10: Ptnxx 
  *      where:  t is the type code, 'S' for sensors, and
  *                      'L' for lights
  *              n is the house code of the input or output bit (A - P)
  *              xx is a bit number of the input or output bit (1-16)
  *      examples: PLA2 (House Code A, Unit 2), PSK1 (House Code K, Unit 1)
+ *   For Insteon: Pthh.hh.hh
+ *      where:  t is the type code, 'S' for sensors, and
+ *                      'L' for lights
+ *              aa is two hexadecimal digits
+ *      examples: PLA2.43.CB
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004
- * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008
+ * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008, 2009
  * @author Ken Cameron, Copyright (C) 2008, 2009
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class SerialAddress {
 
@@ -82,23 +87,6 @@ public class SerialAddress {
         }
         // System name has passed all tests
         return true;
-    }
-
-    /**
-     * Public static method to convert one format system name for the alternate
-     *      format.
-     * If the supplied system name does not have a valid format, or if there is
-     *      no representation in the alternate naming scheme, an empty string is 
-     *      returned.
-     */
-    public static String convertSystemNameToAlternate(String systemName) {
-        // ensure that input system name has a valid format
-        if ( !validSystemNameFormat(systemName,systemName.charAt(1)) ) {
-            // No point in trying if a valid system name format is not present
-            return "";
-        }
-        String altName = "";
-        return altName;
     }
         
     /**

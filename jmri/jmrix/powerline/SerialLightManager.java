@@ -12,7 +12,7 @@ import jmri.Light;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 abstract public class SerialLightManager extends AbstractLightManager {
 
@@ -77,16 +77,6 @@ abstract public class SerialLightManager extends AbstractLightManager {
      */
     public String normalizeSystemName(String systemName) {
         return (SerialAddress.normalizeSystemName(systemName));
-    }
-    
-    /**
-     * Public method to convert system name to its alternate format
-     * <P>
-     * Returns a normalized system name if system name is valid and has a 
-     *      valid alternate representation, else return "".
-     */
-    public String convertSystemNameToAlternate(String systemName) {
-        return (SerialAddress.convertSystemNameToAlternate(systemName));
     }
     
     /** 
