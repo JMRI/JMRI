@@ -20,7 +20,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author			Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SaveThrottlePreferencesAction extends AbstractAction {
 
@@ -86,8 +86,8 @@ public class SaveThrottlePreferencesAction extends AbstractAction {
 			ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
 			doc.addContent(0,p);
 
-			Iterator<ThrottleFrame> i = ThrottleFrameManager.instance().getThrottleFrames();
-			ThrottleFrame f = i.next();
+			Iterator<ThrottleWindow> i = ThrottleFrameManager.instance().getThrottleFrames();
+			ThrottleWindow f = i.next();
 			Element throttleElement = f.getXml();
 			// don't save the loco address or consist address
 			throttleElement.getChild("AddressPanel").removeChild("locoaddress");

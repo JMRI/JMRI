@@ -12,13 +12,13 @@ import javax.swing.JInternalFrame;
  * object.
  * @author		Original Unknown
  * @author		Ken Cameron, copyright 2008
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class ThrottleFramePropertyEditor extends JDialog
 {
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
     
-    private ThrottleFrame frame;
+    private ThrottleWindow frame;
 	
 	private JTextField titleField;
 	
@@ -90,7 +90,7 @@ public class ThrottleFramePropertyEditor extends JDialog
         titleType.setVisibleRowCount(titleTextTypeNames.length);
         titleType.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         for (int i = 0; i < titleTextTypes.length; i++) {
-        	if (titleTextTypes[i] == frame.titleTextType)
+        	if (titleTextTypes[i] == frame.getTitleTextType())
             	titleType.setSelectedIndex(i);
         }
         constraints.gridy++;
@@ -101,7 +101,7 @@ public class ThrottleFramePropertyEditor extends JDialog
 
         // add a checkbox for borders off, but only if that's actually possible.
         // this code uses details of internal UI code
-        if (((javax.swing.plaf.basic.BasicInternalFrameUI)frame.getControlPanel().getUI()).getNorthPane()!=null) {
+        if (((javax.swing.plaf.basic.BasicInternalFrameUI)frame.getCurentThrottleFrame().getControlPanel().getUI()).getNorthPane()!=null) {
             borderOff = new JCheckBox(rb.getString("FrameBorderOffTitle"), false);
             constraints.gridy++;
             constraints.gridx = 0;
@@ -143,17 +143,17 @@ public class ThrottleFramePropertyEditor extends JDialog
      * Set the ThrottleFrame used here. Does some initialization of the
      * Frame.
      */
-    public void setThrottleFrame(ThrottleFrame f)
+    public void setThrottleFrame(ThrottleWindow f)
     {
     	Dimension bSize = new Dimension (0,0);
         this.frame = f;
         initGUI();
         pack();
-        titleField.setText(frame.titleText);
+        titleField.setText(frame.getTitleText());
 		titleField.selectAll();
 		
-        if (((javax.swing.plaf.basic.BasicInternalFrameUI)frame.getControlPanel().getUI()).getNorthPane()!=null) {
-            bSize=((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getControlPanel().getUI()).getNorthPane().getPreferredSize();
+        if (((javax.swing.plaf.basic.BasicInternalFrameUI)frame.getCurentThrottleFrame().getControlPanel().getUI()).getNorthPane()!=null) {
+            bSize=((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getCurentThrottleFrame().getControlPanel().getUI()).getNorthPane().getPreferredSize();
             if (bSize.height == 0) borderOff.setSelected(true);
             else borderOff.setSelected(false);
         }
@@ -178,25 +178,25 @@ public class ThrottleFramePropertyEditor extends JDialog
         {
         	int bSize = Integer.parseInt(rb.getString("FrameSize"));
         	JInternalFrame myFrame;
-        	frame.titleText = titleField.getText();
-            frame.titleTextType = titleTextTypes[titleType.getSelectedIndex()];
-            frame.setFrameTitle();
+        	frame.setTitleText( titleField.getText() );
+            frame.setTitleTextType( titleTextTypes[titleType.getSelectedIndex()] );
+            frame.getCurentThrottleFrame().setFrameTitle();
 
-            if (((javax.swing.plaf.basic.BasicInternalFrameUI)frame.getControlPanel().getUI()).getNorthPane()!=null) {
+            if (((javax.swing.plaf.basic.BasicInternalFrameUI)frame.getCurentThrottleFrame().getControlPanel().getUI()).getNorthPane()!=null) {
                 if (borderOff.isSelected()) bSize = 0;
-                myFrame = frame.getControlPanel();
+                myFrame = frame.getCurentThrottleFrame().getControlPanel();
                 ((javax.swing.plaf.basic.BasicInternalFrameUI)myFrame.getUI()).getNorthPane().setPreferredSize( new Dimension(0,bSize));
                 if (myFrame.isVisible()) {
                     myFrame.setVisible(false);
                     myFrame.setVisible(true);
                 }
-                myFrame = frame.getFunctionPanel();
+                myFrame = frame.getCurentThrottleFrame().getFunctionPanel();
                 ((javax.swing.plaf.basic.BasicInternalFrameUI)myFrame.getUI()).getNorthPane().setPreferredSize( new Dimension(0,bSize));
                 if (myFrame.isVisible()) {
                     myFrame.setVisible(false);
                     myFrame.setVisible(true);
                 }
-                myFrame = frame.getAddressPanel();
+                myFrame = frame.getCurentThrottleFrame().getAddressPanel();
                 ((javax.swing.plaf.basic.BasicInternalFrameUI)myFrame.getUI()).getNorthPane().setPreferredSize( new Dimension(0,bSize));
                 if (myFrame.isVisible()) {
                     myFrame.setVisible(false);

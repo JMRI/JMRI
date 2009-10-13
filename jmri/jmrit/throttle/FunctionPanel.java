@@ -406,54 +406,34 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.47 $
+	 * @version $Revision: 1.48 $
 	 */
-	class FunctionButtonKeyListener extends KeyAdapter
-	{
-		private boolean keyReleased = true;
+    class FunctionButtonKeyListener extends KeyAdapter {
+    	private boolean keyReleased = true;
 
-		/**
-		 *  Description of the Method
-		 *
-		 * @param  e  Description of the Parameter
-		 */
-		public void keyPressed(KeyEvent e)
-		{
-			if (keyReleased)
-			{
-				log.debug("Pressed");
-				for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
-				{
-					if ( functionButton[i].checkKeyCode(e.getKeyCode()) )
-					{
-						functionButton[i].changeState(!functionButton[i].isSelected());
-					}
-				}
-			}
-			keyReleased = false;
-		}
+    	/**
+    	 *  Description of the Method
+    	 *
+    	 * @param  e  Description of the Parameter
+    	 */
+    	public void keyPressed(KeyEvent e) {
+    		if (keyReleased) {
+    			for (int i=0; i<NUM_FUNCTION_BUTTONS; i++) {
+    				if ( functionButton[i].checkKeyCode(e.getKeyCode()) )
+    					functionButton[i].changeState(!functionButton[i].isSelected());
+    			}
+    		}
+    		keyReleased = false;
+    	}
 
-		public void keyTyped(KeyEvent e)
-		{
-			log.debug("Typed");
-		}
-
-		public void keyReleased(KeyEvent e)
-		{
- 			log.debug("Released");
-			for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
-			{
-				if ( functionButton[i].checkKeyCode(e.getKeyCode()) )
-				{
-					if (!functionButton[i].getIsLockable())
-					{
-						functionButton[i].changeState(!functionButton[i].isSelected());
-					}
-				}
-			}
-			keyReleased = true;
-		}
-	}
+    	public void keyReleased(KeyEvent e) {
+    		for (int i=0; i<NUM_FUNCTION_BUTTONS; i++) {
+    			if ( (functionButton[i].checkKeyCode(e.getKeyCode())) && (!functionButton[i].getIsLockable()) )
+    					functionButton[i].changeState(!functionButton[i].isSelected());
+    		}
+    		keyReleased = true;
+    	}
+    }
 
  	// update the state of this panel if any of the properties change
 	// did not add f13 - f28 dboudreau, maybe I should have? 

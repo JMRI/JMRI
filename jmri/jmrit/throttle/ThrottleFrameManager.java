@@ -13,7 +13,7 @@ import jmri.jmrit.XmlFile;
  *  confused with ThrottleManager
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.16 $
+ * @version    $Revision: 1.17 $
  */
 public class ThrottleFrameManager
 {
@@ -26,7 +26,7 @@ public class ThrottleFrameManager
 	private int activeFrame;
 	private ThrottleCyclingKeyListener throttleCycler;
 
-	private ArrayList<ThrottleFrame> throttleFrames;
+	private ArrayList<ThrottleWindow> throttleWindows;
 	private FunctionButtonPropertyEditor functionButtonEditor;
 	private ThrottleFramePropertyEditor throttleFramePropertyEditor;
 	
@@ -39,7 +39,7 @@ public class ThrottleFrameManager
 	public ThrottleFrameManager()
 	{
 		throttleCycler = new ThrottleCyclingKeyListener();
-		throttleFrames = new ArrayList<ThrottleFrame>(0);
+		throttleWindows = new ArrayList<ThrottleWindow>(0);
 		throttlesPref = new ThrottlesPreferences(XmlFile.prefsDir()+ "throttle" +File.separator+ "ThrottlesPreferences.xml");
 	}
 
@@ -62,26 +62,26 @@ public class ThrottleFrameManager
 	 */
 	public ThrottleFrame createThrottleFrame()
 	{
-		ThrottleFrame tf = new ThrottleFrame();
-		tf.pack();
-		KeyListenerInstaller.installKeyListenerOnAllComponents(throttleCycler, tf);
-		throttleFrames.add(tf);
-		activeFrame = throttleFrames.indexOf(tf);
-		return tf;
+		ThrottleWindow tw = new ThrottleWindow();
+		tw.pack();
+		KeyListenerInstaller.installKeyListenerOnAllComponents(throttleCycler, tw);
+		throttleWindows.add(tw);
+		activeFrame = throttleWindows.indexOf(tw);
+		return tw.getCurentThrottleFrame() ;
 	}
-
+	
 	/**
 	 *  Request that this manager destroy a throttle frame.
 	 *
 	 * @param  frame  The to-be-destroyed ThrottleFrame
 	 */
-	public void requestThrottleFrameDestruction(ThrottleFrame frame)
+	public void requestThrottleFrameDestruction(ThrottleWindow frame)
 	{
 		if (frame != null)
 		{
-			throttleFrames.remove(throttleFrames.indexOf(frame));
+			throttleWindows.remove(throttleWindows.indexOf(frame));
 			destroyThrottleFrame(frame);
-			if (throttleFrames.size() > 0)
+			if (throttleWindows.size() > 0)
 			{
 				requestFocusForNextFrame();
 			}
@@ -90,12 +90,12 @@ public class ThrottleFrameManager
 
 	public void requestAllThrottleFramesDestroyed()
 	{
-		for (Iterator<ThrottleFrame> i = throttleFrames.iterator(); i.hasNext();)
+		for (Iterator<ThrottleWindow> i = throttleWindows.iterator(); i.hasNext();)
 		{
-			ThrottleFrame frame = i.next();
+			ThrottleWindow frame = i.next();
 			destroyThrottleFrame(frame);
 		}
-		throttleFrames = new ArrayList<ThrottleFrame>(0);
+		throttleWindows = new ArrayList<ThrottleWindow>(0);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class ThrottleFrameManager
 	 * affect the throttleFrames list, thus ensuring no synchronozation problems.
 	 * @param frame The ThrottleFrame to be destroyed.
 	 */
-	private void destroyThrottleFrame(ThrottleFrame frame)
+	private void destroyThrottleFrame(ThrottleWindow frame)
 	{
 		frame.dispose();
 	}
@@ -113,9 +113,9 @@ public class ThrottleFrameManager
 	 *
 	 * @return    The Iterator on the list of ThrottleFrames.
 	 */
-	public Iterator<ThrottleFrame> getThrottleFrames()
+	public Iterator<ThrottleWindow> getThrottleFrames()
 	{
-		return throttleFrames.iterator();
+		return throttleWindows.iterator();
 	}
 
 	/**
@@ -145,13 +145,13 @@ public class ThrottleFrameManager
 	}
 	
 	public int getNumberThrottles(){
-		return throttleFrames.size();
+		return throttleWindows.size();
 	}
 
 	private void requestFocusForNextFrame()
 	{
-		activeFrame = (activeFrame + 1) % throttleFrames.size();
-		ThrottleFrame tf = throttleFrames.get(activeFrame);
+		activeFrame = (activeFrame + 1) % throttleWindows.size();
+		ThrottleWindow tf = throttleWindows.get(activeFrame);
 		tf.requestFocus();
 		tf.toFront();
 	}
@@ -161,43 +161,43 @@ public class ThrottleFrameManager
 		activeFrame--;
 		if (activeFrame < 0)
 		{
-			activeFrame = throttleFrames.size() - 1;
+			activeFrame = throttleWindows.size() - 1;
 		}
-		ThrottleFrame tf = throttleFrames.get(activeFrame);
+		ThrottleWindow tf = throttleWindows.get(activeFrame);
 		tf.requestFocus();
 		tf.toFront();
+	}
+	
+	public ThrottleWindow getCurentThrottleFrame() {
+		if (throttleWindows == null) return null;
+		if (throttleWindows.size() == 0) return null;
+		return throttleWindows.get(activeFrame);
 	}
 	
 	public ThrottlesPreferences getThrottlesPreferences() {
 		return throttlesPref; 
 	}
 
-
 	/**
 	 *  Description of the Class
 	 *
 	 * @author     glen
 	 */
-	class ThrottleCyclingKeyListener extends KeyAdapter
-	{
+	class ThrottleCyclingKeyListener extends KeyAdapter	{
 		/**
 		 *  Description of the Method
 		 *
 		 * @param  e  Description of the Parameter
 		 */
-		public void keyPressed(KeyEvent e)
-		{
-			if (e.isShiftDown() && e.getKeyCode() == NEXT_THROTTLE_KEY)
-			{
-				requestFocusForNextFrame();
-			}
+		public void keyReleased(KeyEvent e)	{
+			if (e.isShiftDown() && e.getKeyCode() == NEXT_THROTTLE_KEY)		
+				requestFocusForNextFrame();			
 			else if (e.isShiftDown() && e.getKeyCode() == PREV_THROTTLE_KEY)
-			{
-				requestFocusForPreviousFrame();
-			}
+				requestFocusForPreviousFrame();			
 		}
 	}
-
+	
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleFrameManager.class.getName());
 }
 
 

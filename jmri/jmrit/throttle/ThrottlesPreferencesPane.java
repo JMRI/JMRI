@@ -53,7 +53,11 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
 
     private void initComponents() {
 
-    	
+    	GridBagConstraints gridBagConstraints12 = new GridBagConstraints();
+    	gridBagConstraints12.gridx = 0;
+        gridBagConstraints12.insets = new Insets(2, 23, 2, 2);
+        gridBagConstraints12.anchor = GridBagConstraints.WEST;
+        gridBagConstraints12.gridy = 8;
     	
     	GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
         gridBagConstraints11.gridx = 0;
@@ -100,16 +104,16 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
         // last line: buttons
         GridBagConstraints gridBagConstraints9 = new GridBagConstraints();
         gridBagConstraints9.insets = new Insets(5, 3, 5, 5);
-        gridBagConstraints9.gridy = 8;
+        gridBagConstraints9.gridy = 9;
         gridBagConstraints9.gridx = 1;
         GridBagConstraints gridBagConstraints8 = new GridBagConstraints();
         gridBagConstraints8.insets = new Insets(5, 3, 5, 2);
-        gridBagConstraints8.gridy = 8;
+        gridBagConstraints8.gridy = 9;
         gridBagConstraints8.anchor = GridBagConstraints.WEST;
         gridBagConstraints8.gridx = 0;
         GridBagConstraints gridBagConstraints7 = new GridBagConstraints();
         gridBagConstraints7.insets = new Insets(5, 3, 5, 2);
-        gridBagConstraints7.gridy = 8;
+        gridBagConstraints7.gridy = 9;
         gridBagConstraints7.gridx = 8;
         
         jbCancel = new javax.swing.JButton();
@@ -183,7 +187,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
         this.add(jbApply, gridBagConstraints9);
         this.add(cbHideUndefinedButtons, gridBagConstraints11);
         this.add(cbIgnoreThrottlePosition, gridBagConstraints10);
-     // TODO       add(cb1Win4all, gridBagConstraints);
+        this.add(cb1Win4all, gridBagConstraints12);
      // TODO       add(cbUseAdvTransition, gridBagConstraints);
     }
 
@@ -227,6 +231,14 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
         cbResizeWinImg.setEnabled( cbUseExThrottle.isSelected() &&  cbUseRosterImage.isSelected() );
         cbHideUndefinedButtons.setEnabled( cbUseExThrottle.isSelected() );
         cbIgnoreThrottlePosition.setEnabled( cbUseExThrottle.isSelected() && cbEnableAutoLoad.isSelected() );
+        if ( cbUseExThrottle.isSelected() ) {
+        	if ( cb1Win4all.isSelected() ) {
+        		cbResizeWinImg.setSelected( false );
+        		cbResizeWinImg.setEnabled( false );
+        		cbIgnoreThrottlePosition.setSelected( true );
+        		cbIgnoreThrottlePosition.setEnabled( false );
+        	}
+        }
     }
 
     private void jbApplyActionPerformed(java.awt.event.ActionEvent evt) {

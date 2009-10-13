@@ -21,18 +21,18 @@ public class BackgroundPanel extends DnDImagePanel {
 	
 	public void notifyThrottleFound(DccThrottle t) {
 		RosterEntry rosterEntry = null;
-        if (addressPanel != null)
-        	rosterEntry = addressPanel.getRosterEntry();
-        if ( rosterEntry != null ) {
-    		setImagePath(rosterEntry.getImagePath());
-    		setDnd(true);
-        }
- /*       else {	
-			if ( (DccLocoAddress)t.getLocoAddress().toString() == new DccLocoAddress(0, false) )
-				setImagePath(jmri.util.FileUtil.getExternalFilename("program:/resources/throttles/DCImage.jpg"));
-			if ( t.getLocoAddress() == 3 )
-				setImagePath(jmri.util.FileUtil.getExternalFilename("program:/resources/throttles/DCCImage.jpg"));
-		}*/
+		if (addressPanel != null)
+			rosterEntry = addressPanel.getRosterEntry();
+		if ( rosterEntry != null ) {
+			setImagePath(rosterEntry.getImagePath());
+//			setDnd(true);
+		}
+		else {
+			if ( t.getLocoAddress().toString().compareTo("3(S)") == 0 )  // default DCC address
+				setImagePath(jmri.util.FileUtil.getExternalFilename("resources/icons/throttles/DCCImage.jpg"));
+			if ( t.getLocoAddress().toString().compareTo("0(S)") == 0 )  // default DC address
+				setImagePath(jmri.util.FileUtil.getExternalFilename("resources/icons/throttles/DCImage.jpg"));
+		}
 	}
 
 	public void notifyThrottleDisposed() {
@@ -40,8 +40,6 @@ public class BackgroundPanel extends DnDImagePanel {
 		unsetImage();
 	}
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BackgroundPanel.class.getName());
-
 	public void saveImageToRoster(RosterEntry rosterEntry) {
     	if (rosterEntry == null)
     		return;
@@ -50,9 +48,8 @@ public class BackgroundPanel extends DnDImagePanel {
     	return;
 	}
 
-	public void notifyConsistThrottleFound(DccThrottle t) {
-		// TODO Auto-generated method stub
-		
+	public void notifyConsistThrottleFound(DccThrottle t) {	
 	}
-
+	
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BackgroundPanel.class.getName());
 }

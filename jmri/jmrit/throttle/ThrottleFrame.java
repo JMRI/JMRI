@@ -1,68 +1,35 @@
 package jmri.jmrit.throttle;
 
-import jmri.DccThrottle;
-import jmri.DccLocoAddress;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.PowerManager;
-import jmri.ThrottleListener;
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ResourceBundle;
 
-import javax.swing.AbstractAction;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
+import jmri.DccLocoAddress;
+import jmri.DccThrottle;
+import jmri.InstanceManager;
+import jmri.ThrottleListener;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.powerpanel.PowerPane;
-import jmri.util.JmriJFrame;
+import jmri.jmrit.roster.RosterEntry;
 
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
 
-import jmri.jmrit.roster.RosterEntry;
-
-/**
- *  A JFrame to contain throttle elements such as speed control, address
- *  chooser, function panel, and maybe others. <p>
- *
- *  This class requests a DccThrottle and calls methods in that object as
- *  directed by the interface.
- *
- * @author     Glen Oberhauser
- * @author     Bob Jacobsen    Copyright 2008
- * @version    $Revision: 1.49 $
- */
-/**
- * @author DSM
- *
- */
-public class ThrottleFrame extends JmriJFrame implements AddressListener, ThrottleListener, java.beans.PropertyChangeListener, ComponentListener
+// Should be named ThrottlePanel but was already existing with that name and don't want to break dependancies (particularly in Jython code)
+public class ThrottleFrame extends JDesktopPane  implements AddressListener, ThrottleListener, ComponentListener
 {
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
     private final Integer BACKPANEL_LAYER = new Integer(Integer.MIN_VALUE);
@@ -78,45 +45,28 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
     private JInternalFrame[] frameList;
     private int activeFrame;
     
+    private ThrottleWindow throttleWindow;
+
     private ControlPanel controlPanel;
     private FunctionPanel functionPanel;
     private AddressPanel addressPanel;
     private BackgroundPanel backgroundPanel;
     
-    private JCheckBoxMenuItem viewControlPanel;
-    private JCheckBoxMenuItem viewFunctionPanel;
-    private JCheckBoxMenuItem viewAddressPanel;
-    private JMenuItem viewAllButtons;
-    
     private DccThrottle throttle;
-    private Dimension bDim;
     
     protected String _throttlesBasePath = XmlFile.prefsDir()+"throttle"+File.separator ;
-    
-    PowerPane powerControl  = new PowerPane();
-    PowerManager powerMgr = null;
-    JButton powerLight;
-    // Load the power lights as icons to be placed in an invisible JButton so the light 
-    // can be clicked to change the power status
-    NamedIcon powerOnIcon = new NamedIcon("resources/GreenPowerLED.gif", "resources/GreenPowerLED.gif");
-    NamedIcon powerOffIcon = new NamedIcon("resources/RedPowerLED.gif", "resources/RedPowerLED.gif");
-    NamedIcon powerXIcon = new NamedIcon("resources/YellowPowerLED.gif", "resources/YellowPowerLED.gif");
-    
-    String titleText = "";
-    String titleTextType = "address";
-        
-    /**
-     *  Default constructor
-     */
-    public ThrottleFrame()
+            
+    public ThrottleFrame(ThrottleWindow tw)
     {
         super();
-        powerMgr = InstanceManager.powerManagerInstance();
-        if (powerMgr == null) {
-            log.info("No power manager instance found, panel not active");
-        }
-        else powerMgr.addPropertyChangeListener(this);
+        throttleWindow = tw;
         initGUI();
+    }
+    
+    public void setVisible(boolean b)
+    {
+    	super.setVisible(b);
+    	throttleWindow.setVisible(b);
     }
     
     public ControlPanel getControlPanel() { return controlPanel; }
@@ -139,8 +89,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         	if ((jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()) &&
             		(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isAutoLoading()) && 
             		(addressPanel !=null) && (addressPanel.getRosterEntry() != null ))
-            		loadThrottle( _throttlesBasePath+ addressPanel.getRosterEntry().getId() +".xml" );
-         
+            		loadThrottle( _throttlesBasePath+ addressPanel.getRosterEntry().getId() +".xml" );         
     	} else {
             log.debug("Notify control panel to use consist throttle");
             controlPanel.notifyThrottleFound(t);
@@ -170,7 +119,7 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
      */
     public void notifyAddressReleased(int address, boolean isLong)
     {      	
-        setTitle("Throttle");
+    	throttleWindow.setTitle("Throttle");
         InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
         controlPanel.notifyThrottleDisposed();
         functionPanel.notifyThrottleDisposed();
@@ -180,11 +129,6 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         throttle = null;
     }
     
-    public void notifyThrottleLost(DccLocoAddress dccAddress){
-        int address = dccAddress.getNumber();
-        boolean isLong = dccAddress.isLongAddress();
-        notifyAddressReleased(address, isLong);
-    }
     private void saveThrottle(String sfile) {
     	// Save throttle: title / window position
     	// as strongly linked to extended throttles and roster presence, do not save function buttons and background window as they're stored in the roster entry
@@ -237,6 +181,9 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 			if (log.isDebugEnabled())
 				log.debug("Loading throttle exception ",ex);
 		}
+    	checkPosition(controlPanel);
+		checkPosition(functionPanel);
+		checkPosition(addressPanel);
 		return ;
 	}
 
@@ -281,21 +228,6 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
      */
     private void initGUI()
     {
-        setTitle("Throttle");
-        JDesktopPane desktop = new JDesktopPane();
-        this.setContentPane(desktop);
-        this.addWindowListener(
-                               new WindowAdapter()
-                               {
-                                   public void windowClosing(WindowEvent e)
-                                   {
-                                       ThrottleFrame me = (ThrottleFrame)e.getSource();
-                                       ThrottleFrameManager.instance().requestThrottleFrameDestruction(me);
-                                   }
-                               });
-        
-        initializeMenu();
-        
         FrameListener frameListener = new FrameListener();
         
         controlPanel = new ControlPanel();
@@ -344,9 +276,9 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
             {addressPanel.setSize(addressPanel.getWidth(),controlPanel.getHeight()-functionPanel.getHeight());}
         if (functionPanel.getWidth() < addressPanel.getWidth())
             {functionPanel.setSize(addressPanel.getWidth(),functionPanel.getHeight());}
-        desktop.add(controlPanel, PANEL_LAYER);
-        desktop.add(functionPanel, PANEL_LAYER);
-        desktop.add(addressPanel, PANEL_LAYER);
+        add(controlPanel, PANEL_LAYER);
+        add(functionPanel, PANEL_LAYER);
+        add(addressPanel, PANEL_LAYER);
 
         if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) {
         	if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingTransparentCtl() ) {
@@ -357,10 +289,10 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         	if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingRosterImage() ) {
         		backgroundPanel = new BackgroundPanel();
         		backgroundPanel.setAddressPanel(addressPanel); // reusing same way to do it than existing thing in functionPanel
-        		desktop.addComponentListener(backgroundPanel); // backgroudPanel warned when desktop resized
-        		desktop.add(backgroundPanel, BACKPANEL_LAYER);
+        		addComponentListener(backgroundPanel); // backgroudPanel warned when desktop resized
+        		add(backgroundPanel, BACKPANEL_LAYER);
         	}
-        	desktop.addComponentListener(this); // to force sub windows repositionning
+        	addComponentListener(this); // to force sub windows repositionning
         }
 
         frameList = new JInternalFrame[NUM_FRAMES];
@@ -369,148 +301,30 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         frameList[FUNCTION_PANEL_INDEX] = functionPanel;
         activeFrame = ADDRESS_PANEL_INDEX;
         
-        desktop.setPreferredSize(new Dimension(
-                                               Math.max(controlPanel.getWidth()+functionPanel.getWidth(),controlPanel.getWidth()+addressPanel.getWidth()),
-                                               Math.max(addressPanel.getHeight()+functionPanel.getHeight(),controlPanel.getHeight())));
+        setPreferredSize(new Dimension( Math.max(controlPanel.getWidth()+functionPanel.getWidth(),controlPanel.getWidth()+addressPanel.getWidth()),
+                                        Math.max(addressPanel.getHeight()+functionPanel.getHeight(),controlPanel.getHeight())) );
         
-        KeyListenerInstaller.installKeyListenerOnAllComponents(
-                                                               new FrameCyclingKeyListener(), this);
-        
-        try
-            {
-                addressPanel.setSelected(true);
-            }
-        catch (java.beans.PropertyVetoException ex)
-            {
-                log.error("Error selecting InternalFrame:" + ex);
-            }
-    
+        KeyListenerInstaller.installKeyListenerOnAllComponents(new FrameCyclingKeyListener(), this);
+
+        try {
+        	addressPanel.setSelected(true);
+        }
+        catch (java.beans.PropertyVetoException ex) {
+        	log.error("Error selecting InternalFrame:" + ex);
+        }
     }
-    
-    
-    /**
-     *  Set up View, Edit and Power Menus
-     */
-    private void initializeMenu() {
-		JMenu viewMenu = new JMenu("View");
-		viewAddressPanel = new JCheckBoxMenuItem("Address Panel");
-		viewAddressPanel.setSelected(true);
-		viewAddressPanel.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				addressPanel
-						.setVisible(e.getStateChange() == ItemEvent.SELECTED);
-			}
-		});
 
-		viewControlPanel = new JCheckBoxMenuItem("Control Panel");
-		viewControlPanel.setSelected(true);
-		viewControlPanel.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				controlPanel
-						.setVisible(e.getStateChange() == ItemEvent.SELECTED);
-			}
-		});
-		viewFunctionPanel = new JCheckBoxMenuItem("Function Panel");
-		viewFunctionPanel.setSelected(true);
-		viewFunctionPanel.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				functionPanel
-						.setVisible(e.getStateChange() == ItemEvent.SELECTED);
-			}
-		});
-
-		viewAllButtons = new JMenuItem("Show All Function Buttons");
-		viewAllButtons.addActionListener(new AbstractAction() {
-			public void actionPerformed(ActionEvent ev) {
-				functionPanel.showAllFnButtons();
-			}
-		});
-
-		viewMenu.add(viewAddressPanel);
-		viewMenu.add(viewControlPanel);
-		viewMenu.add(viewFunctionPanel);
-		viewMenu.add(viewAllButtons);
-
-		JMenu editMenu = new JMenu("Edit");
-		JMenuItem preferencesItem = new JMenuItem("Frame Properties");
-		editMenu.add(preferencesItem);
-		preferencesItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				editPreferences();
-			}
-		});
-		JMenuItem resetFuncButtonsItem = new JMenuItem("Reset Function Buttons");
-		editMenu.add(resetFuncButtonsItem);
-		resetFuncButtonsItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				resetFuncButtons();
-			}
-		});
-		JMenuItem saveFuncButtonsItem = new JMenuItem("Export Customizations To Roster");
-		editMenu.add(saveFuncButtonsItem);
-		saveFuncButtonsItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				saveRosterChanges();
-		        if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) {
-		        	saveThrottle( _throttlesBasePath+ addressPanel.getRosterEntry().getId() +".xml" ); 
-		        }
-			}
-		});
-
-		this.setJMenuBar(new JMenuBar());
-		this.getJMenuBar().add(viewMenu);
-		this.getJMenuBar().add(editMenu);
-
-		if (powerMgr != null) {
-			JMenu powerMenu = new JMenu("  Power");
-			JMenuItem powerOn = new JMenuItem("Power On");
-			powerMenu.add(powerOn);
-			powerOn.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					powerControl.onButtonPushed();
-				}
-			});
-
-			JMenuItem powerOff = new JMenuItem("Power Off");
-			powerMenu.add(powerOff);
-			powerOff.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					powerControl.offButtonPushed();
-				}
-			});
-
-			this.getJMenuBar().add(powerMenu);
-			powerLight = new JButton();
-			setPowerIcons();
-			// make the button itself invisible, just display the power LED
-			powerLight.setBorderPainted(false);
-			powerLight.setContentAreaFilled(false);
-			powerLight.setFocusPainted(false);
-			this.getJMenuBar().add(powerLight);
-			powerLight.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					try {
-						if (powerMgr.getPower() == PowerManager.ON)
-							powerControl.offButtonPushed();
-						else if (powerMgr.getPower() == PowerManager.OFF)
-							powerControl.onButtonPushed();
-						else if (powerMgr.getPower() == PowerManager.UNKNOWN)
-							powerControl.offButtonPushed();
-					} catch (JmriException ex) {
-						powerLight.setIcon(powerXIcon);
-					}
-				}
-			});
-		}
-
-		// add help selection
-		addHelpMenu("package.jmri.jmrit.throttle.ThrottleFrame", true);
-	}
-    
-	private void checkPosition(JComponent comp)
-	{ // make sure components are inside this frame bounds	
+    // make sure components are inside this frame bounds
+	private void checkPosition(JComponent comp)	{ 	
 		if ( (this.getWidth()<1) || (this.getHeight()<1)) return;
+		
 		Rectangle pos = comp.getBounds();
+		
+		if (pos.width > this.getWidth())
+			pos.width = this.getWidth() - 8;
+		if (pos.height > this.getHeight())
+			pos.height = this.getHeight() - 48;
+		
 		if ( ( pos.x < 0 ) || (pos.x + pos.width > this.getWidth()) )
 			pos.x = this.getWidth() - pos.width - 8;
 		if (pos.x < 1)
@@ -519,32 +333,48 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 			pos.y = this.getHeight() - pos.height - 48;
 		if (pos.y < 1)
 			pos.y = 10;
+		
 		comp.setBounds(pos);
 	}
 	
     // overwritten in order to be able to check sub windows positions
     public void pack() {
-    	super.pack();
     	checkPosition(controlPanel);
 		checkPosition(functionPanel);
 		checkPosition(addressPanel);
     }
-    
-    private void editPreferences(){
-        ThrottleFramePropertyEditor editor =
-            ThrottleFrameManager.instance().getThrottleFrameEditor();
-        editor.setThrottleFrame(this);
-        // editor.setLocation(this.getLocationOnScreen());
-        editor.setLocationRelativeTo(this);
-        editor.setVisible(true);
+
+    /**
+	 * Handle my own destruction.
+	 * <ol>
+	 * <li> dispose of sub windows.
+	 * <li> notify my manager of my demise.
+	 * </ol>
+	 * 
+	 */
+    public void dispose() {
+    	log.debug("Disposing");
+        // check for any special disposing in InternalFrames
+        controlPanel.destroy();
+        functionPanel.destroy();
+        // dispose of this last because it will release and destroy throttle.
+        addressPanel.destroy();
+                
+        // Handle disposing of the throttle
+        if (throttle != null)
+            {
+                DccLocoAddress l = (DccLocoAddress) throttle.getLocoAddress();
+                InstanceManager.throttleManagerInstance().
+                    cancelThrottleRequest(l.getNumber(), this);
+            }
     }
-    
-    private void resetFuncButtons(){
+       
+    public void resetFuncButtons(){
     	functionPanel.initGUI();
     	functionPanel.setEnabled(false);
     }
     
-    private void saveRosterChanges(){
+    public void saveRosterChanges(){
     	RosterEntry rosterEntry = addressPanel.getRosterEntry();
     	if (rosterEntry == null){
 			JOptionPane.showMessageDialog(this, "Select loco using roster menu in Address Panel", "No Loco Roster Entry Selected",
@@ -560,123 +390,6 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() )
         	backgroundPanel.saveImageToRoster(rosterEntry);
     }
-   
-    /**
-	 * Handle my own destruction.
-	 * <ol>
-	 * <li> dispose of sub windows.
-	 * <li> notify my manager of my demise.
-	 * </ol>
-	 * 
-	 */
-    public void dispose()
-    {
-        // check for any special disposing in InternalFrames
-        controlPanel.destroy();
-        functionPanel.destroy();
-        // dispose of this last because it will release and destroy throttle.
-        addressPanel.destroy();
-        
-        if (powerMgr!=null) powerMgr.removePropertyChangeListener(this);
-        
-        // Handle disposing of the throttle
-        if (throttle != null)
-            {
-                DccLocoAddress l = (DccLocoAddress) throttle.getLocoAddress();
-                InstanceManager.throttleManagerInstance().
-                    cancelThrottleRequest(l.getNumber(), this);
-            }
-        
-        super.dispose();
-    }
-    
-    
-    /**
-	 * A KeyAdapter that listens for the key that cycles through the
-	 * JInternalFrames.
-	 * 
-	 * @author glen
-	 */
-    class FrameCyclingKeyListener extends KeyAdapter
-    {
-        /**
-		 * Description of the Method
-		 * 
-		 * @param e
-		 *            Description of the Parameter
-		 */
-        public void keyPressed(KeyEvent e)
-        {
-            if (e.isControlDown() && e.getKeyCode() == NEXT_FRAME_KEY)
-                {
-                    try
-                        {
-                            activeFrame = (activeFrame + 1) % NUM_FRAMES;
-                            frameList[activeFrame].setSelected(true);
-                        }
-                    catch (java.beans.PropertyVetoException ex)
-                        {
-                            log.warn("Exception selecting internal frame:" + ex);
-                        }
-                    
-                }
-            else if (e.isControlDown() && e.getKeyCode() == PREV_FRAME_KEY)
-                {
-                    try
-                        {
-                            activeFrame--;
-                            if (activeFrame < 0)
-                                {
-                                    activeFrame = NUM_FRAMES - 1;
-                                }
-                            frameList[activeFrame].setSelected(true);
-                        }
-                    catch (java.beans.PropertyVetoException ex)
-                        {
-                            log.warn("Exception selecting internal frame:" + ex);
-                        }
-                }
-        }
-    }
-    
-    /**
-     *  implement a property change listener to monitor the power state and change
-     *  the power LED displayed as appropriate
-     */
-    public void propertyChange(java.beans.PropertyChangeEvent ev) {
-        setPowerIcons();
-    }
-    
-    /**
-     *  change the power LED displayed as appropriate and set corresponding tooltip
-     *  
-     */
-    public void setPowerIcons() {
-        if (powerMgr==null) return;
-        try {
-            if (powerMgr.getPower()==PowerManager.ON) {
-                powerLight.setIcon(powerOnIcon);
-                powerLight.setToolTipText("Layout Power On.  Click light to turn off, or use Power menu");
-            }
-            else if (powerMgr.getPower()==PowerManager.OFF) {
-                powerLight.setIcon(powerOffIcon);
-                powerLight.setToolTipText("Layout Power Off.  Click light to turn on, or use Power menu");
-            }
-            else if (powerMgr.getPower()==PowerManager.UNKNOWN) {
-                powerLight.setIcon(powerXIcon);
-                powerLight.setToolTipText("Layout Power state unknown.  Click light to turn off, or use Power menu");
-            }
-            else {
-                powerLight.setIcon(powerXIcon);
-                powerLight.setToolTipText("Layout Power state unknown.  Click light to turn off, or use Power menu");
-                log.error("Unexpected state value: +"+powerMgr.getPower());
-            }
-        } catch (JmriException ex) {
-            powerLight.setIcon(powerXIcon);
-            powerLight.setToolTipText("Layout Power state unknown.  Click light to turn off, or use Power menu");
-        }
-    }
-    
     
     /**
      *  An extension of InternalFrameAdapter for listening to the closing of of
@@ -696,43 +409,35 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
         {
             if (e.getSource() == controlPanel)
                 {
-                    viewControlPanel.setSelected(false);
+            		throttleWindow.getViewControlPanel().setSelected(false);
                     controlPanel.setVisible(false);
                 }
             else if (e.getSource() == addressPanel)
                 {
-                    viewAddressPanel.setSelected(false);
+            		throttleWindow.getViewAddressPanel().setSelected(false);
                     addressPanel.setVisible(false);
                 }
             else if (e.getSource() == functionPanel)
                 {
-                    viewFunctionPanel.setSelected(false);
+            		throttleWindow.getViewFunctionPanel().setSelected(false);
                     functionPanel.setVisible(false);
                 }
         }
         
         /**
          *  Listen for the activation of an internal frame record this property for
-         *  coorect processing of the frame cycling key.
+         *  correct processing of the frame cycling key.
          *
          * @param  e  The InternalFrameEvent leading to this action
          */
-        public void internalFrameActivated(InternalFrameEvent e)
-        {
-            if (e.getSource() == controlPanel)
-                {
-                    activeFrame = CONTROL_PANEL_INDEX;
-                }
-            else if (e.getSource() == addressPanel)
-                {
-                    activeFrame = ADDRESS_PANEL_INDEX;
-                }
-            else if (e.getSource() == functionPanel)
-                {
-                    activeFrame = FUNCTION_PANEL_INDEX;
-                }
+        public void internalFrameActivated(InternalFrameEvent e) {
+        	if (e.getSource() == controlPanel)
+        		activeFrame = CONTROL_PANEL_INDEX;
+        	else if (e.getSource() == addressPanel)
+        		activeFrame = ADDRESS_PANEL_INDEX;
+        	else if (e.getSource() == functionPanel)
+        		activeFrame = FUNCTION_PANEL_INDEX;
         }
-        
     }
     
     /**
@@ -747,18 +452,17 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
      *
      * @return    the XML of this object.
      */
-    public Element getXml()
-    {
-    	bDim = new Dimension (0,0);
-        Element me = new Element("ThrottleFrame");
-        me.setAttribute("title", titleText);
-        me.setAttribute("titleType", titleTextType);
-        if (((javax.swing.plaf.basic.BasicInternalFrameUI) controlPanel.getUI()).getNorthPane() != null) {
-            bDim = ((javax.swing.plaf.basic.BasicInternalFrameUI)controlPanel.getUI()).getNorthPane().getPreferredSize();
+    public Element getXml() {
+		Dimension bDim = new Dimension (0,0);
+
+        Element me = new Element("ThrottlePanel");
+        
+        if (((javax.swing.plaf.basic.BasicInternalFrameUI) getControlPanel().getUI()).getNorthPane() != null) {
+            bDim = ((javax.swing.plaf.basic.BasicInternalFrameUI) getControlPanel().getUI()).getNorthPane().getPreferredSize();
             me.setAttribute("border",Integer.toString(bDim.height));
         }
-        java.util.ArrayList<Element> children =
-            new java.util.ArrayList<Element>(1);
+        
+        java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1);
         WindowPreferences wp = new WindowPreferences();
         
         children.add(wp.getPreferences(this));
@@ -782,23 +486,11 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
      *
      * @param  e  The Element for this object.
      */
-    public void setXml(Element e)
-    {
+    public void setXml(Element e) {
     	int bSize = 23;
-        this.setTitle(e.getAttribute("title").getValue());
         // Get InternalFrame border size
         if (e.getAttribute("border") != null) bSize = Integer.parseInt((e.getAttribute("border").getValue()));
 
-        titleText = e.getAttribute("title").getValue();
-        titleTextType = e.getAttribute("titleType").getValue();
-        
-        Element window = e.getChild("window");
-        WindowPreferences wp = new WindowPreferences();
-		if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() &&
-           	 jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isIgnoringThrottlePosition() )
-			wp.setPreferences(this, window, true);
-		else
-			wp.setPreferences(this, window);
         Element controlPanelElement = e.getChild("ControlPanel");
         controlPanel.setXml(controlPanelElement);
         if (((javax.swing.plaf.basic.BasicInternalFrameUI) controlPanel.getUI()).getNorthPane() != null)
@@ -818,30 +510,27 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
     /**
      * setFrameTitle - set the frame title based on type, text and address
      */
-    void setFrameTitle()
-    {
+    public void setFrameTitle() {
     	String addr = "";
     	if (throttle != null) {
     		addr = throttle.getLocoAddress().toString();
     	}
-    	if (titleTextType.compareTo("address") == 0) {
-    		this.setTitle(addr);
-    	} else if (titleTextType.compareTo("text") == 0) {
-    		this.setTitle(titleText);
-    	} else if (titleTextType.compareTo("addressText") == 0) {
-    		this.setTitle(addr + " " + titleText);
-    	} else if (titleTextType.compareTo("textAddress") == 0) {
-    		this.setTitle(titleText + " " + addr);
-    	} else if (titleTextType.compareTo("rosterID") == 0) {
+    	if ( throttleWindow.getTitleTextType().compareTo("address") == 0) {
+    		throttleWindow.setTitle(addr);
+    	} else if (throttleWindow.getTitleTextType().compareTo("text") == 0) {
+    		throttleWindow.setTitle(throttleWindow.getTitleText());
+    	} else if (throttleWindow.getTitleTextType().compareTo("addressText") == 0) {
+    		throttleWindow.setTitle(addr + " " + throttleWindow.getTitleText());
+    	} else if (throttleWindow.getTitleTextType().compareTo("textAddress") == 0) {
+    		throttleWindow.setTitle(throttleWindow.getTitleText() + " " + addr);
+    	} else if (throttleWindow.getTitleTextType().compareTo("rosterID") == 0) {
     		if ( (addressPanel.getRosterEntry() != null) && (addressPanel.getRosterEntry().getId() != null) )
-    			this.setTitle(addressPanel.getRosterEntry().getId()) ;
+    			throttleWindow.setTitle(addressPanel.getRosterEntry().getId()) ;
     		else
-    			this.setTitle(addr);
+    			throttleWindow.setTitle(addr);
     	}
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleFrame.class.getName());
-
 	public void componentHidden(ComponentEvent e) {		
 	}
 
@@ -855,6 +544,54 @@ public class ThrottleFrame extends JmriJFrame implements AddressListener, Thrott
 	}
 
 	public void componentShown(ComponentEvent e) {		
-	}  
-}
+	}
+	
+	public void saveThrottle() {
+		 saveThrottle( _throttlesBasePath+ addressPanel.getRosterEntry().getId() +".xml" ); 		
+	}
+	
+	public void notifyThrottleLost(DccLocoAddress dccAddress){
+		int address = dccAddress.getNumber();
+		boolean isLong = dccAddress.isLongAddress();
+		notifyAddressReleased(address, isLong);
+	}
 
+    /**
+	 * A KeyAdapter that listens for the key that cycles through the
+	 * JInternalFrames.
+	 * 
+	 * @author glen
+	 */
+	class FrameCyclingKeyListener extends KeyAdapter {
+		/**
+		 * Description of the Method
+		 * 
+		 * @param e
+		 *            Description of the Parameter
+		 */
+		public void keyReleased(KeyEvent e) {
+			if (e.isControlDown() && e.getKeyCode() == NEXT_FRAME_KEY) {
+				try {
+					activeFrame = (activeFrame + 1) % NUM_FRAMES;
+					frameList[activeFrame].setSelected(true);
+				}
+				catch (java.beans.PropertyVetoException ex) {
+					log.warn("Exception selecting internal frame:" + ex);
+				}
+			}
+			else if (e.isControlDown() && e.getKeyCode() == PREV_FRAME_KEY) {
+				try {
+					activeFrame--;
+					if (activeFrame < 0)
+						activeFrame = NUM_FRAMES - 1;    
+					frameList[activeFrame].setSelected(true);
+				}
+				catch (java.beans.PropertyVetoException ex) {
+					log.warn("Exception selecting internal frame:" + ex);
+				}
+			}
+		}
+    }
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleFrame.class.getName());
+}

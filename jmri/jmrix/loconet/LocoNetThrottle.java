@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractThrottle;
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
  * @author  Stephen Williams  Copyright (C) 2008
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -222,8 +222,9 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         if (!active) log.warn("release called when not active");
 
         // set status to common
-        LnTrafficController.instance().sendLocoNetMessage(
-                slot.writeStatus(LnConstants.LOCO_COMMON));
+        if (slot != null)
+        	LnTrafficController.instance().sendLocoNetMessage(
+        			slot.writeStatus(LnConstants.LOCO_COMMON));
 
         dispose();
     }
@@ -257,10 +258,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         log.debug("dispose");
 
         // stop timeout
-        mRefreshTimer.stop();
+        if (mRefreshTimer != null)
+        	mRefreshTimer.stop();
 
         // release connections
-        slot.removeSlotListener(this);
+        if (slot != null)
+        	slot.removeSlotListener(this);
 
         mRefreshTimer = null;
         slot = null;
