@@ -45,7 +45,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.41 $
+ * @version     $Revision: 1.42 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -199,6 +199,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     JmriJFrame addFrame = null;
     JComboBox typeBox;
+    
+    // we share input fields across boxes so that 
+    // entries in one don't disappear when the user switches
+    // to a different type
+    
     JTextField name = new JTextField(5);
     JTextField to1 = new JTextField(5);
     JTextField to2 = new JTextField(5);
@@ -223,7 +228,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     JComboBox s5Box = new JComboBox(turnoutStates);
     JComboBox s6Box = new JComboBox(turnoutStates);
     JComboBox s7Box = new JComboBox(turnoutStates);
-    JComboBox stBox = new JComboBox(signalheadTypes);
+    JComboBox stBox = new JComboBox(signalheadTypes); // Acela signal types
     JComboBox mstBox = new JComboBox(ukSignalType);
     JComboBox msaBox = new JComboBox(ukSignalAspects);
 
