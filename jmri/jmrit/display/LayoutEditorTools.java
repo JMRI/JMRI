@@ -33,7 +33,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class LayoutEditorTools 
@@ -4608,7 +4608,10 @@ public class LayoutEditorTools
 			}				
 			else {
 				removeSignalHeadFromPanel(layoutTurnout1.getSignalB1Name());
-				placeA1TToT();
+				if (layoutTurnout1.getContinuingSense()==Turnout.CLOSED)
+					placeA1TToT(a1TToTField.getText().trim());
+				else 
+					placeB1TToT(a1TToTField.getText().trim());
 				removeAssignment(a1TToTHead);
 				layoutTurnout1.setSignalB1Name(a1TToTField.getText().trim());
 				needRedraw = true;
@@ -4655,7 +4658,10 @@ public class LayoutEditorTools
 			}				
 			else {
 				removeSignalHeadFromPanel(layoutTurnout1.getSignalB2Name());
-				placeA2TToT();
+				if (layoutTurnout1.getContinuingSense()==Turnout.CLOSED)
+					placeA2TToT(a2TToTField.getText().trim());
+				else 
+					placeB2TToT(a2TToTField.getText().trim());
 				removeAssignment(a2TToTHead);
 				layoutTurnout1.setSignalB2Name(a2TToTField.getText().trim());
 				needRedraw = true;
@@ -4706,7 +4712,10 @@ public class LayoutEditorTools
 			}				
 			else {
 				removeSignalHeadFromPanel(layoutTurnout1.getSignalC1Name());
-				placeB1TToT();
+				if (layoutTurnout1.getContinuingSense()==Turnout.CLOSED)
+					placeB1TToT(b1TToTField.getText().trim());
+				else 
+					placeA1TToT(b1TToTField.getText().trim());
 				removeAssignment(b1TToTHead);
 				layoutTurnout1.setSignalC1Name(b1TToTField.getText().trim());
 				needRedraw = true;
@@ -4753,7 +4762,10 @@ public class LayoutEditorTools
 			}				
 			else {
 				removeSignalHeadFromPanel(layoutTurnout1.getSignalC2Name());
-				placeB2TToT();
+				if (layoutTurnout1.getContinuingSense()==Turnout.CLOSED)
+					placeB2TToT(b2TToTField.getText().trim());
+				else 
+					placeA2TToT(b2TToTField.getText().trim());
 				removeAssignment(b2TToTHead);
 				layoutTurnout1.setSignalC2Name(b2TToTField.getText().trim());
 				needRedraw = true;
@@ -4805,7 +4817,10 @@ public class LayoutEditorTools
 			}				
 			else {
 				removeSignalHeadFromPanel(layoutTurnout2.getSignalB1Name());
-				placeC1TToT();
+				if (layoutTurnout2.getContinuingSense()==Turnout.CLOSED)
+					placeC1TToT(c1TToTField.getText().trim());
+				else 
+					placeD1TToT(c1TToTField.getText().trim());
 				removeAssignment(c1TToTHead);
 				layoutTurnout2.setSignalB1Name(c1TToTField.getText().trim());
 				needRedraw = true;
@@ -4852,7 +4867,10 @@ public class LayoutEditorTools
 			}				
 			else {
 				removeSignalHeadFromPanel(layoutTurnout2.getSignalB2Name());
-				placeC2TToT();
+				if (layoutTurnout2.getContinuingSense()==Turnout.CLOSED)
+					placeC2TToT(c2TToTField.getText().trim());
+				else 
+					placeD2TToT(c2TToTField.getText().trim());
 				removeAssignment(c2TToTHead);
 				layoutTurnout2.setSignalB2Name(c2TToTField.getText().trim());
 				needRedraw = true;
@@ -4903,7 +4921,10 @@ public class LayoutEditorTools
 			}				
 			else {
 				removeSignalHeadFromPanel(layoutTurnout2.getSignalC1Name());
-				placeD1TToT();
+				if (layoutTurnout2.getContinuingSense()==Turnout.CLOSED)
+					placeD1TToT(d1TToTField.getText().trim());
+				else 
+					placeC1TToT(d1TToTField.getText().trim());
 				removeAssignment(d1TToTHead);
 				layoutTurnout2.setSignalC1Name(d1TToTField.getText().trim());
 				needRedraw = true;
@@ -4950,7 +4971,10 @@ public class LayoutEditorTools
 			}				
 			else {
 				removeSignalHeadFromPanel(layoutTurnout2.getSignalC2Name());
-				placeD2TToT();
+				if (layoutTurnout2.getContinuingSense()==Turnout.CLOSED)
+					placeD2TToT(d2TToTField.getText().trim());
+				else 
+					placeC2TToT(d2TToTField.getText().trim());
 				removeAssignment(d2TToTHead);
 				layoutTurnout2.setSignalC2Name(d2TToTField.getText().trim());
 				needRedraw = true;
@@ -5032,354 +5056,355 @@ public class LayoutEditorTools
 		d2TToTHead = getSignalHeadFromEntry(d2TToTField,false,setSignalsAtTToTFrame);
 		return true;
 	}
-	private void placeA1TToT() {
+	private void placeA1TToT(String headName) {
+		// place head near the continuing track of turnout 1
 		if (testIcon == null)
 			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && layoutTurnout1BUp ) {
-			setSignalHeadOnPanel(0,a1TToTField.getText().trim(),
+			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()),
 				(int)(layoutTurnout1.getCoordsB().getY()-4-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && (!layoutTurnout1BUp) ) {
-			setSignalHeadOnPanel(0,a1TToTField.getText().trim(),
+			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()),
 				(int)(layoutTurnout1.getCoordsB().getY()+4) );
 		}
 		else if( layoutTurnout1Horizontal && (!layoutTurnout1ThroatLeft) && layoutTurnout1BUp ) {
-			setSignalHeadOnPanel(2,a1TToTField.getText().trim(),
+			setSignalHeadOnPanel(2,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()-testIcon.getIconWidth()),
 				(int)(layoutTurnout1.getCoordsB().getY()-4-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout1Horizontal && (!layoutTurnout1ThroatLeft) && (!layoutTurnout1BUp) ) {
-			setSignalHeadOnPanel(2,a1TToTField.getText().trim(),
+			setSignalHeadOnPanel(2,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()-testIcon.getIconWidth()),
 				(int)(layoutTurnout1.getCoordsB().getY()+4) );
 		}
 		else if( layoutTurnout1Vertical && layoutTurnout1ThroatUp && layoutTurnout1BLeft ) {
-			setSignalHeadOnPanel(3,a1TToTField.getText().trim(),
+			setSignalHeadOnPanel(3,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()-4-testIcon.getIconWidth()),
 				(int)(layoutTurnout1.getCoordsB().getY()) );
 		}
 		else if( layoutTurnout1Vertical && layoutTurnout1ThroatUp && (!layoutTurnout1BLeft) ) {
-			setSignalHeadOnPanel(3,a1TToTField.getText().trim(),
+			setSignalHeadOnPanel(3,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()+4),
 				(int)(layoutTurnout1.getCoordsB().getY()) );
 		}
 		else if( layoutTurnout1Vertical && (!layoutTurnout1ThroatUp) && layoutTurnout1BLeft ) {
-			setSignalHeadOnPanel(1,a1TToTField.getText().trim(),
+			setSignalHeadOnPanel(1,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()-4-testIcon.getIconWidth()),
 				(int)(layoutTurnout1.getCoordsB().getY()-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout1Vertical && (!layoutTurnout1ThroatUp) && (!layoutTurnout1BLeft) ) {
-			setSignalHeadOnPanel(1,a1TToTField.getText().trim(),
+			setSignalHeadOnPanel(1,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()+4),
 				(int)(layoutTurnout1.getCoordsB().getY()-testIcon.getIconHeight()) );
 		}
 	}
-	private void placeA2TToT() {
+	private void placeA2TToT(String headName) {
 		if (testIcon == null)
 			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && layoutTurnout1BUp ) {
-			setSignalHeadOnPanel(0,a2TToTField.getText().trim(),
+			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()+4+testIcon.getIconWidth()),
 				(int)(layoutTurnout1.getCoordsB().getY()-4-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && (!layoutTurnout1BUp) ) {
-			setSignalHeadOnPanel(0,a2TToTField.getText().trim(),
+			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()+4+testIcon.getIconWidth()),
 				(int)(layoutTurnout1.getCoordsB().getY()+4) );
 		}
 		else if( layoutTurnout1Horizontal && (!layoutTurnout1ThroatLeft) && layoutTurnout1BUp ) {
-			setSignalHeadOnPanel(2,a2TToTField.getText().trim(),
+			setSignalHeadOnPanel(2,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()-4-(2*testIcon.getIconWidth())),
 				(int)(layoutTurnout1.getCoordsB().getY()-4-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout1Horizontal && (!layoutTurnout1ThroatLeft) && (!layoutTurnout1BUp) ) {
-			setSignalHeadOnPanel(2,a2TToTField.getText().trim(),
+			setSignalHeadOnPanel(2,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()-4-(2*testIcon.getIconWidth())),
 				(int)(layoutTurnout1.getCoordsB().getY()+4) );
 		}
 		else if( layoutTurnout1Vertical && layoutTurnout1ThroatUp && layoutTurnout1BLeft ) {
-			setSignalHeadOnPanel(3,a2TToTField.getText().trim(),
+			setSignalHeadOnPanel(3,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()-4-testIcon.getIconWidth()),
 				(int)(layoutTurnout1.getCoordsB().getY()+4+testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout1Vertical && layoutTurnout1ThroatUp && (!layoutTurnout1BLeft) ) {
-			setSignalHeadOnPanel(3,a2TToTField.getText().trim(),
+			setSignalHeadOnPanel(3,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()+4),
 				(int)(layoutTurnout1.getCoordsB().getY()+4+testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout1Vertical && (!layoutTurnout1ThroatUp) && layoutTurnout1BLeft ) {
-			setSignalHeadOnPanel(1,a2TToTField.getText().trim(),
+			setSignalHeadOnPanel(1,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()-4-testIcon.getIconWidth()),
 				(int)(layoutTurnout1.getCoordsB().getY()-4-(2*testIcon.getIconHeight())) );
 		}
 		else if( layoutTurnout1Vertical && (!layoutTurnout1ThroatUp) && (!layoutTurnout1BLeft) ) {
-			setSignalHeadOnPanel(1,a2TToTField.getText().trim(),
+			setSignalHeadOnPanel(1,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()+4),
 				(int)(layoutTurnout1.getCoordsB().getY()-4-(2*testIcon.getIconHeight())) );
 		}
 	}
-	private void placeB1TToT() {
+	private void placeB1TToT(String headName) {
 		if (testIcon == null)
 			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && layoutTurnout1BUp) {
-			setSignalHeadOnPanel(0,b1TToTField.getText().trim(),
+			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()),
 				(int)(layoutTurnout1.getCoordsC().getY()+4) );
 		}
 		else if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && (!layoutTurnout1BUp) ) {
-			setSignalHeadOnPanel(0,b1TToTField.getText().trim(),
+			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()),
 				(int)(layoutTurnout1.getCoordsC().getY()-4-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout1Horizontal && (!layoutTurnout1ThroatLeft) && layoutTurnout1BUp ) {
-			setSignalHeadOnPanel(2,b1TToTField.getText().trim(),
+			setSignalHeadOnPanel(2,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()-testIcon.getIconWidth()),
 				(int)(layoutTurnout1.getCoordsC().getY()+4) );
 		}
 		else if( layoutTurnout1Horizontal && (!layoutTurnout1ThroatLeft) && (!layoutTurnout1BUp) ) {
-			setSignalHeadOnPanel(2,b1TToTField.getText().trim(),
+			setSignalHeadOnPanel(2,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()-testIcon.getIconWidth()),
 				(int)(layoutTurnout1.getCoordsC().getY()-4-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout1Vertical && layoutTurnout1ThroatUp && layoutTurnout1BLeft ) {
-			setSignalHeadOnPanel(3,b1TToTField.getText().trim(),
+			setSignalHeadOnPanel(3,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()+4),
 				(int)(layoutTurnout1.getCoordsC().getY()) );
 		}
 		else if( layoutTurnout1Vertical && layoutTurnout1ThroatUp && (!layoutTurnout1BLeft) ) {
-			setSignalHeadOnPanel(3,b1TToTField.getText().trim(),
+			setSignalHeadOnPanel(3,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()-4-testIcon.getIconWidth()),
 				(int)(layoutTurnout1.getCoordsC().getY()) );
 		}
 		else if( layoutTurnout1Vertical && (!layoutTurnout1ThroatUp) && layoutTurnout1BLeft ) {
-			setSignalHeadOnPanel(1,b1TToTField.getText().trim(),
+			setSignalHeadOnPanel(1,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()+4),
 				(int)(layoutTurnout1.getCoordsC().getY()-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout1Vertical && (!layoutTurnout1ThroatUp) && (!layoutTurnout1BLeft) ) {
-			setSignalHeadOnPanel(1,b1TToTField.getText().trim(),
+			setSignalHeadOnPanel(1,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()-4-testIcon.getIconWidth()),
 				(int)(layoutTurnout1.getCoordsC().getY()-testIcon.getIconHeight()) );
 		}
 	}
-	private void placeB2TToT() {
+	private void placeB2TToT(String headName) {
 		if (testIcon == null)
 			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && layoutTurnout1BUp) {
-			setSignalHeadOnPanel(0,b2TToTField.getText().trim(),
+			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()+4+testIcon.getIconWidth()),
 				(int)(layoutTurnout1.getCoordsC().getY()+4) );
 		}
 		else if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && (!layoutTurnout1BUp) ) {
-			setSignalHeadOnPanel(0,b2TToTField.getText().trim(),
+			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()+4+testIcon.getIconWidth()),
 				(int)(layoutTurnout1.getCoordsC().getY()-4-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout1Horizontal && (!layoutTurnout1ThroatLeft) && layoutTurnout1BUp ) {
-			setSignalHeadOnPanel(2,b2TToTField.getText().trim(),
+			setSignalHeadOnPanel(2,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()-4-(2*testIcon.getIconWidth())),
 				(int)(layoutTurnout1.getCoordsC().getY()+4) );
 		}
 		else if( layoutTurnout1Horizontal && (!layoutTurnout1ThroatLeft) && (!layoutTurnout1BUp) ) {
-			setSignalHeadOnPanel(2,b2TToTField.getText().trim(),
+			setSignalHeadOnPanel(2,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()-4-(2*testIcon.getIconWidth())),
 				(int)(layoutTurnout1.getCoordsC().getY()-4-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout1Vertical && layoutTurnout1ThroatUp && layoutTurnout1BLeft ) {
-			setSignalHeadOnPanel(3,b2TToTField.getText().trim(),
+			setSignalHeadOnPanel(3,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()+4),
 				(int)(layoutTurnout1.getCoordsC().getY()+4+testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout1Vertical && layoutTurnout1ThroatUp && (!layoutTurnout1BLeft) ) {
-			setSignalHeadOnPanel(3,b2TToTField.getText().trim(),
+			setSignalHeadOnPanel(3,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()-4-testIcon.getIconWidth()),
 				(int)(layoutTurnout1.getCoordsC().getY()+4+testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout1Vertical && (!layoutTurnout1ThroatUp) && layoutTurnout1BLeft ) {
-			setSignalHeadOnPanel(1,b2TToTField.getText().trim(),
+			setSignalHeadOnPanel(1,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()+4),
 				(int)(layoutTurnout1.getCoordsC().getY()-4-(2*testIcon.getIconHeight())) );
 		}
 		else if( layoutTurnout1Vertical && (!layoutTurnout1ThroatUp) && (!layoutTurnout1BLeft) ) {
-			setSignalHeadOnPanel(1,b2TToTField.getText().trim(),
+			setSignalHeadOnPanel(1,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()-4-testIcon.getIconWidth()),
 				(int)(layoutTurnout1.getCoordsC().getY()-4-(2*testIcon.getIconHeight())) );
 		}
 	}
-	private void placeC1TToT() {
+	private void placeC1TToT(String headName) {
 		if (testIcon == null)
 			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && layoutTurnout2BUp ) {
-			setSignalHeadOnPanel(0,c1TToTField.getText().trim(),
+			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()),
 				(int)(layoutTurnout2.getCoordsB().getY()-4-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && (!layoutTurnout2BUp) ) {
-			setSignalHeadOnPanel(0,c1TToTField.getText().trim(),
+			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()),
 				(int)(layoutTurnout2.getCoordsB().getY()+4) );
 		}
 		else if( layoutTurnout2Horizontal && (!layoutTurnout2ThroatLeft) && layoutTurnout2BUp ) {
-			setSignalHeadOnPanel(2,c1TToTField.getText().trim(),
+			setSignalHeadOnPanel(2,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()-testIcon.getIconWidth()),
 				(int)(layoutTurnout2.getCoordsB().getY()-4-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout2Horizontal && (!layoutTurnout2ThroatLeft) && (!layoutTurnout2BUp) ) {
-			setSignalHeadOnPanel(2,c1TToTField.getText().trim(),
+			setSignalHeadOnPanel(2,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()-testIcon.getIconWidth()),
 				(int)(layoutTurnout2.getCoordsB().getY()+4) );
 		}
 		else if( layoutTurnout2Vertical && layoutTurnout2ThroatUp && layoutTurnout2BLeft ) {
-			setSignalHeadOnPanel(3,c1TToTField.getText().trim(),
+			setSignalHeadOnPanel(3,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()-4-testIcon.getIconWidth()),
 				(int)(layoutTurnout2.getCoordsB().getY()) );
 		}
 		else if( layoutTurnout2Vertical && layoutTurnout2ThroatUp && (!layoutTurnout2BLeft) ) {
-			setSignalHeadOnPanel(3,c1TToTField.getText().trim(),
+			setSignalHeadOnPanel(3,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()+4),
 				(int)(layoutTurnout2.getCoordsB().getY()) );
 		}
 		else if( layoutTurnout2Vertical && (!layoutTurnout2ThroatUp) && layoutTurnout2BLeft ) {
-			setSignalHeadOnPanel(1,c1TToTField.getText().trim(),
+			setSignalHeadOnPanel(1,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()-4-testIcon.getIconWidth()),
 				(int)(layoutTurnout2.getCoordsB().getY()-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout2Vertical && (!layoutTurnout2ThroatUp) && (!layoutTurnout2BLeft) ) {
-			setSignalHeadOnPanel(1,c1TToTField.getText().trim(),
+			setSignalHeadOnPanel(1,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()+4),
 				(int)(layoutTurnout2.getCoordsB().getY()-testIcon.getIconHeight()) );
 		}
 	}
-	private void placeC2TToT() {
+	private void placeC2TToT(String headName) {
 		if (testIcon == null)
 			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && layoutTurnout2BUp ) {
-			setSignalHeadOnPanel(0,c2TToTField.getText().trim(),
+			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()+4+testIcon.getIconWidth()),
 				(int)(layoutTurnout2.getCoordsB().getY()-4-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && (!layoutTurnout2BUp) ) {
-			setSignalHeadOnPanel(0,c2TToTField.getText().trim(),
+			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()+4+testIcon.getIconWidth()),
 				(int)(layoutTurnout2.getCoordsB().getY()+4) );
 		}
 		else if( layoutTurnout2Horizontal && (!layoutTurnout2ThroatLeft) && layoutTurnout2BUp ) {
-			setSignalHeadOnPanel(2,c2TToTField.getText().trim(),
+			setSignalHeadOnPanel(2,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()-4-(2*testIcon.getIconWidth())),
 				(int)(layoutTurnout2.getCoordsB().getY()-4-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout2Horizontal && (!layoutTurnout2ThroatLeft) && (!layoutTurnout2BUp) ) {
-			setSignalHeadOnPanel(2,c2TToTField.getText().trim(),
+			setSignalHeadOnPanel(2,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()-4-(2*testIcon.getIconWidth())),
 				(int)(layoutTurnout2.getCoordsB().getY()+4) );
 		}
 		else if( layoutTurnout2Vertical && layoutTurnout2ThroatUp && layoutTurnout2BLeft ) {
-			setSignalHeadOnPanel(3,c2TToTField.getText().trim(),
+			setSignalHeadOnPanel(3,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()-4-testIcon.getIconWidth()),
 				(int)(layoutTurnout2.getCoordsB().getY()+4+testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout2Vertical && layoutTurnout2ThroatUp && (!layoutTurnout2BLeft) ) {
-			setSignalHeadOnPanel(3,c2TToTField.getText().trim(),
+			setSignalHeadOnPanel(3,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()+4),
 				(int)(layoutTurnout2.getCoordsB().getY()+4+testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout2Vertical && (!layoutTurnout2ThroatUp) && layoutTurnout2BLeft ) {
-			setSignalHeadOnPanel(1,c2TToTField.getText().trim(),
+			setSignalHeadOnPanel(1,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()-4-testIcon.getIconWidth()),
 				(int)(layoutTurnout2.getCoordsB().getY()-4-(2*testIcon.getIconHeight())) );
 		}
 		else if( layoutTurnout2Vertical && (!layoutTurnout2ThroatUp) && (!layoutTurnout2BLeft) ) {
-			setSignalHeadOnPanel(1,c2TToTField.getText().trim(),
+			setSignalHeadOnPanel(1,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()+4),
 				(int)(layoutTurnout2.getCoordsB().getY()-4-(2*testIcon.getIconHeight())) );
 		}
 	}
-	private void placeD1TToT() {
+	private void placeD1TToT(String headName) {
 		if (testIcon == null)
 			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && layoutTurnout2BUp) {
-			setSignalHeadOnPanel(0,d1TToTField.getText().trim(),
+			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()),
 				(int)(layoutTurnout2.getCoordsC().getY()+4) );
 		}
 		else if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && (!layoutTurnout2BUp) ) {
-			setSignalHeadOnPanel(0,d1TToTField.getText().trim(),
+			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()),
 				(int)(layoutTurnout2.getCoordsC().getY()-4-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout2Horizontal && (!layoutTurnout2ThroatLeft) && layoutTurnout2BUp ) {
-			setSignalHeadOnPanel(2,d1TToTField.getText().trim(),
+			setSignalHeadOnPanel(2,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()-testIcon.getIconWidth()),
 				(int)(layoutTurnout2.getCoordsC().getY()+4) );
 		}
 		else if( layoutTurnout2Horizontal && (!layoutTurnout2ThroatLeft) && (!layoutTurnout2BUp) ) {
-			setSignalHeadOnPanel(2,d1TToTField.getText().trim(),
+			setSignalHeadOnPanel(2,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()-testIcon.getIconWidth()),
 				(int)(layoutTurnout2.getCoordsC().getY()-4-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout2Vertical && layoutTurnout2ThroatUp && layoutTurnout2BLeft ) {
-			setSignalHeadOnPanel(3,d1TToTField.getText().trim(),
+			setSignalHeadOnPanel(3,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()+4),
 				(int)(layoutTurnout2.getCoordsC().getY()) );
 		}
 		else if( layoutTurnout2Vertical && layoutTurnout2ThroatUp && (!layoutTurnout2BLeft) ) {
-			setSignalHeadOnPanel(3,d1TToTField.getText().trim(),
+			setSignalHeadOnPanel(3,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()-4-testIcon.getIconWidth()),
 				(int)(layoutTurnout2.getCoordsC().getY()) );
 		}
 		else if( layoutTurnout2Vertical && (!layoutTurnout2ThroatUp) && layoutTurnout2BLeft ) {
-			setSignalHeadOnPanel(1,d1TToTField.getText().trim(),
+			setSignalHeadOnPanel(1,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()+4),
 				(int)(layoutTurnout2.getCoordsC().getY()-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout2Vertical && (!layoutTurnout2ThroatUp) && (!layoutTurnout2BLeft) ) {
-			setSignalHeadOnPanel(1,d1TToTField.getText().trim(),
+			setSignalHeadOnPanel(1,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()-4-testIcon.getIconWidth()),
 				(int)(layoutTurnout2.getCoordsC().getY()-testIcon.getIconHeight()) );
 		}
 	}
-	private void placeD2TToT() {
+	private void placeD2TToT(String headName) {
 		if (testIcon == null)
 			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && layoutTurnout2BUp) {
-			setSignalHeadOnPanel(0,d2TToTField.getText().trim(),
+			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()+4+testIcon.getIconWidth()),
 				(int)(layoutTurnout2.getCoordsC().getY()+4) );
 		}
 		else if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && (!layoutTurnout2BUp) ) {
-			setSignalHeadOnPanel(0,d2TToTField.getText().trim(),
+			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()+4+testIcon.getIconWidth()),
 				(int)(layoutTurnout2.getCoordsC().getY()-4-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout2Horizontal && (!layoutTurnout2ThroatLeft) && layoutTurnout2BUp ) {
-			setSignalHeadOnPanel(2,d2TToTField.getText().trim(),
+			setSignalHeadOnPanel(2,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()-4-(2*testIcon.getIconWidth())),
 				(int)(layoutTurnout2.getCoordsC().getY()+4) );
 		}
 		else if( layoutTurnout2Horizontal && (!layoutTurnout2ThroatLeft) && (!layoutTurnout2BUp) ) {
-			setSignalHeadOnPanel(2,d2TToTField.getText().trim(),
+			setSignalHeadOnPanel(2,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()-4-(2*testIcon.getIconWidth())),
 				(int)(layoutTurnout2.getCoordsC().getY()-4-testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout2Vertical && layoutTurnout2ThroatUp && layoutTurnout2BLeft ) {
-			setSignalHeadOnPanel(3,d2TToTField.getText().trim(),
+			setSignalHeadOnPanel(3,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()+4),
 				(int)(layoutTurnout2.getCoordsC().getY()+4+testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout2Vertical && layoutTurnout2ThroatUp && (!layoutTurnout2BLeft) ) {
-			setSignalHeadOnPanel(3,d2TToTField.getText().trim(),
+			setSignalHeadOnPanel(3,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()-4-testIcon.getIconWidth()),
 				(int)(layoutTurnout2.getCoordsC().getY()+4+testIcon.getIconHeight()) );
 		}
 		else if( layoutTurnout2Vertical && (!layoutTurnout2ThroatUp) && layoutTurnout2BLeft ) {
-			setSignalHeadOnPanel(1,d2TToTField.getText().trim(),
+			setSignalHeadOnPanel(1,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()+4),
 				(int)(layoutTurnout2.getCoordsC().getY()-4-(2*testIcon.getIconHeight())) );
 		}
 		else if( layoutTurnout2Vertical && (!layoutTurnout2ThroatUp) && (!layoutTurnout2BLeft) ) {
-			setSignalHeadOnPanel(1,d2TToTField.getText().trim(),
+			setSignalHeadOnPanel(1,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()-4-testIcon.getIconWidth()),
 				(int)(layoutTurnout2.getCoordsC().getY()-4-(2*testIcon.getIconHeight())) );
 		}
