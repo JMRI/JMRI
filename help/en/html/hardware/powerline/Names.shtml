@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Names.shtml,v 1.6 2009-02-07 20:13:14 jacobsen Exp $ -->
-<title>JMRI: Grapevine System Names</title>
+<!-- $Id: Names.shtml,v 1.7 2009-10-13 00:36:28 ken_c Exp $ -->
+<title>JMRI: Power Line System Names</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -44,46 +44,36 @@ that means that input messages will only be received
 from devices set to house code A.
 
 <p>
-Outputs (Lights and Turnouts) in house code A 
+Outputs (Lights or Turnouts) in house code A 
 are numbered with their 
 device code, e.g. PT1 is device 1, PT2 is device 2, etc.
 
 <p>
-Depending on your setup, you might be able to access other housecodes
-by adding "16"s to the number, e.g. PT17 is device 1 in housecode B,
-etc. 
+Inputs (Sensors) are identified by the house code and device number
+that was reported by some other X10 device like a motion sensor or
+light control pad.
+NOTE: due to a large number of false codes due to other X10 users
+sensors are not automaticly generated.
+They must be entered in the sensor table by the user.
 
-<table border="1">
-<tr><th>House code</th><th>Offset</th><th>Device 1</th><th>Device 16</th></tr>
-<tr><td>A</td><td>0</td><td>1</td><td>16</td></tr>
-<tr><td>B</td><td>16</td><td>17</td><td>32</td></tr>
-<tr><td>C</td><td>32</td><td>33</td><td>48</td></tr>
-<tr><td>D</td><td>48</td><td>49</td><td>64</td></tr>
-<tr><td>E</td><td>64</td><td>65</td><td>80</td></tr>
-<tr><td>F</td><td>80</td><td>81</td><td>96</td></tr>
-<tr><td>G</td><td>96</td><td>97</td><td>112</td></tr>
-<tr><td>H</td><td>112</td><td>112</td><td>128</td></tr>
-<tr><td>I</td><td>128</td><td>129</td><td>144</td></tr>
-<tr><td>J</td><td>144</td><td>145</td><td>160</td></tr>
-<tr><td>K</td><td>160</td><td>161</td><td>176</td></tr>
-<tr><td>L</td><td>176</td><td>177</td><td>192</td></tr>
-<tr><td>M</td><td>192</td><td>193</td><td>208</td></tr>
-<tr><td>N</td><td>208</td><td>209</td><td>224</td></tr>
-<tr><td>O</td><td>224</td><td>225</td><td>240</td></tr>
-<tr><td>P</td><td>240</td><td>241</td><td>256</td></tr>
-</table>
+<p>For example:
 
-<p>
-Eventually, it will be possible to use a letter-number combination
-to address X10 devices.  For example:
 <ul>
 <li>PTB3 - Device 3 on housecode B, the same as PT19
 <li>PLA12 - Device 12 on housecode A, the same as PL12
 <li>PTC02 - Device 2 on housecode C, the same as PT34
+<li>PSA4 - Device 4 on housecode A, reported an on or off from some other X10 device.
 </ul>
-This code has not yet been written, though.
 
-<h2>Insteon</h2>
+<p>
+If an output is called as a turnout, you only get on and off
+for output options.
+
+<p>
+An output that is used as a light will take variable intensities.
+However, some physical X10 devices may not support dimming.
+
+<h2>Insteon (currently planned, not implemented)</h2>
 
 Insteon adapters are labelled with a four-part number that looks
 like 01.2A.B4.CD, four bytes in hexadecimal.  These are just random
