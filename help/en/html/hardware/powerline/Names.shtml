@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Names.shtml,v 1.7 2009-10-13 00:36:28 ken_c Exp $ -->
+<!-- $Id: Names.shtml,v 1.8 2009-10-13 13:56:46 jacobsen Exp $ -->
 <title>JMRI: Power Line System Names</title>
 
 <!-- Style -->
@@ -38,52 +38,50 @@ X10 devices are addressed via a "House Code" of A through P,
 and a "Device Code" of 1 through 16.
 
 <p>
-JMRI configures the adapter to use House Code "A" now.
-We'll eventually make that configuable, but for now
-that means that input messages will only be received
-from devices set to house code A.
+Outputs (Lights or Turnouts) in each house code 
+are numbered with their 
+device code, e.g. PTA1 is a JMRI Turnout that
+talks to device 1 on housecode A; PTB3 is a Turnout
+for device 3 on housecode B; PLP16 is a JMRI Light
+for device 16 on housecode P.
 
 <p>
-Outputs (Lights or Turnouts) in house code A 
-are numbered with their 
-device code, e.g. PT1 is device 1, PT2 is device 2, etc.
+If an output is called as a turnout (name starts with PT), you only get on and off
+for output options.
+
+<p>
+An output that is used as a light (name starts with PL) 
+will take variable intensities.
+However, some physical X10 devices may not support dimming.
 
 <p>
 Inputs (Sensors) are identified by the house code and device number
 that was reported by some other X10 device like a motion sensor or
 light control pad.
 NOTE: due to a large number of false codes due to other X10 users
-sensors are not automaticly generated.
+sensors are not automatically generated.
 They must be entered in the sensor table by the user.
 
-<p>For example:
-
-<ul>
-<li>PTB3 - Device 3 on housecode B, the same as PT19
-<li>PLA12 - Device 12 on housecode A, the same as PL12
-<li>PTC02 - Device 2 on housecode C, the same as PT34
-<li>PSA4 - Device 4 on housecode A, reported an on or off from some other X10 device.
-</ul>
+<p>
+JMRI configures the adapter to use House Code "A" now.
+We'll eventually make that configuable, but for now
+that means that input messages will only be received
+from devices set to house code A, so only sensors PSA1 through PSA16
+will work.
 
 <p>
-If an output is called as a turnout, you only get on and off
-for output options.
-
-<p>
-An output that is used as a light will take variable intensities.
-However, some physical X10 devices may not support dimming.
+(Early versions of JMRI X10 support used an all-numeric address
+like PT12, with no housecode letters; this is no longer available,
+because it caused way too much confusion)
 
 <h2>Insteon (currently planned, not implemented)</h2>
 
 Insteon adapters are labelled with a four-part number that looks
-like 01.2A.B4.CD, four bytes in hexadecimal.  These are just random
+like "01.2A.B4.CD".  These are just random
 strings as part as the user and the program is concerned, and
-we don't make any effort to subdivide them.  We will accept 
-dropping of leading zeros (e.g. 01 and 1 can be used in a group, so
-both 1.2.3.4 and 01.02.03.4 are accepted). We also accept either lower
-case or upper case letters.  Extra zeros, e.g. numbers beyond 
-two digits, are not accepted.  Note that .23. is a hexadecimal 23, 
-decimal 19.  Entry of addresses in decimal form it not (yet) available.
+we don't make any effort to subdivide them.  You should
+enter these exactly as they appear on the device you 
+want to address. Do not delete or add leading zeros, etc.
 
 <h3>More Information</h3>
 
