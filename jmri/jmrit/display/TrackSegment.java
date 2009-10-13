@@ -3,6 +3,7 @@ package jmri.jmrit.display;
 import jmri.util.JmriJFrame;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -29,7 +30,7 @@ import javax.swing.*;
  *		may be hidden when the panel is not in EditMode. 
  *
  * @author Dave Duchamp Copyright (c) 2004-2009
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class TrackSegment 
@@ -58,8 +59,6 @@ public class TrackSegment
     private boolean arc = false;
     private boolean flip = false;
     private int angle =0;
-    //private int startangle =0;
-    //private int radius = 0;
     private boolean circle=false;
 	
     public TrackSegment(String id, Object c1, int t1, Object c2, int t2, boolean dash,
@@ -129,13 +128,18 @@ public class TrackSegment
     public boolean getCircle() {return circle;}
 	public void setCircle(boolean boo) {circle = boo;} 
     public boolean getFlip() {return flip;}
-	public void setFlip(boolean boo) {flip = boo;} 
+	public void setFlip(boolean boo) {flip = boo;}
     //public int getStartAngle() {return startangle;}
 	//public void setStartAngle(int x) {startangle = x;} 
     public int getAngle() {return angle;}
 	public void setAngle(int x) {
-        if (angle>180)
+// GT 8-OCT-2009 ==== Changed arcs maths : Start
+//        if (angle>180) // ???
+        if (x>180)
             x=180;
+		else if (x < 0)
+			x = 0;
+// GT 8-OCT-2009 ==== Changed arcs maths : End
         angle = x;
     }
     //public int getRadius() {return radius;}
@@ -266,10 +270,7 @@ public class TrackSegment
 				}
 			});
         JMenu lineType = new JMenu("Change To");
-/*        String title = "Change to Arc";
-        if (getArc())
-            title = "Change to Line";*/
-       lineType.add(new AbstractAction("Line") {
+        lineType.add(new AbstractAction("Line") {
             public void actionPerformed(ActionEvent e) {
                 changeType(0);
 				}
@@ -311,13 +312,6 @@ public class TrackSegment
                         setCircle(false);
                         break;
         }
-        /*if(getArc()){
-            setArc(false);
-            setAngle(0);
-        } else{
-            setArc(true);
-            setAngle(90);
-        }*/
         layoutEditor.redrawPanel();
 		layoutEditor.setDirty();
     }
@@ -564,7 +558,102 @@ public class TrackSegment
     public boolean isActive() {
         return active;
     }
+    
+    /** 
+    * The following are used only as a temporary store after a circle or arc has been calculated. 
+    * This prevents the need to recalculate the values each time a re-draw is required.
+    */
+    
+    private Point2D pt1;
+    private Point2D pt2;
 
+    public Point2D getTmpPt1(){
+        return pt1;
+    }
+    public Point2D getTmpPt2(){
+        return pt2;
+    }
+    
+    public void setTmpPt1(Point2D Pt1){
+        pt1 = Pt1;
+    }
+    public void setTmpPt2(Point2D Pt2){
+        pt2 = Pt2;
+    }
+    
+    //private int startadj;
+    
+    private double cX;
+    public double getCX(){
+        return cX;
+    }
+    
+    public void setCX(double CX){
+        cX = CX;
+    }
+    
+    private double cY;
+    public double getCY(){
+        return cY;
+    }
+    
+    public void setCY(double CY){
+        cY = CY;
+    }
+    
+    private double cW;
+    public double getCW(){
+        return cW;
+    }
+    
+    public void setCW(double CW){
+        cW = CW;
+    }
+    
+    private double cH;
+    public double getCH(){
+        return cH;
+    }
+    
+    public void setCH(double CH){
+        cH = CH;
+    }
+    
+    private double startadj;
+    public double getStartadj(){
+        return startadj;
+    }
+    
+    public void setStartadj(double Startadj){
+        startadj = Startadj;
+    }
+    
+    private double centreX;
+    public double getCentreX(){
+        return centreX;
+    }
+    
+    public void setCentreX(double CentreX){
+        centreX = CentreX;
+    }
+    
+    private double centreY;
+    public double getCentreY(){
+        return centreY;
+    }
+    
+    public void setCentreY(double CentreY){
+        centreY = CentreY;
+    }
+    
+    private int tmpangle;
+    public double getTmpAngle(){
+        return tmpangle;
+    }
+    
+    public void setTmpAngle(int TmpAngle){
+        tmpangle = TmpAngle;
+    }
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackSegment.class.getName());
 
 }
