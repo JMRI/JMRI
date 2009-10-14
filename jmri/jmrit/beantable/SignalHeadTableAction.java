@@ -45,7 +45,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.42 $
+ * @version     $Revision: 1.43 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -761,9 +761,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
             // the turnout field can hold either a NNN number or a system name
             String num = to1.getText();
             int number;
-            if (num.substring(0,2).equals("LT"))
+            if (num.length() > 2 && num.substring(0,2).equals("LT"))
                 number = Integer.parseInt(num.substring(2,num.length()));
-            else if (num.substring(0,2).equals("lt"))
+            else if (num.length() > 2 && num.substring(0,2).equals("lt"))
                 number = Integer.parseInt(num.substring(2,num.length()));
             else
                 number = Integer.parseInt(num);
