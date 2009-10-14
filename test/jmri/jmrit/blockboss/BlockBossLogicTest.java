@@ -17,7 +17,7 @@ import jmri.Turnout;
 /**
  * Tests for the BlockBossLogic class
  * @author	Bob Jacobsen
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class BlockBossLogicTest extends TestCase {
 	
@@ -145,12 +145,102 @@ public class BlockBossLogicTest extends TestCase {
 		p.stop();
 	}
 
+    // check that user names were preserved
+    public void testUserNamesRetained() {
+		BlockBossLogic p = new BlockBossLogic("IH1");
+
+        p.setSensor1("1");
+        p.setSensor2("2");
+        p.setSensor3("3");
+        p.setSensor4("4");
+        
+        p.setTurnout("1");
+        
+        p.setWatchedSignal1("1", false);
+        p.setWatchedSignal1Alt("2");
+        p.setWatchedSignal2("3");
+        p.setWatchedSignal2Alt("4");
+        
+        p.setWatchedSensor1("5");
+        p.setWatchedSensor1Alt("6");
+        p.setWatchedSensor2("7");
+        p.setWatchedSensor2Alt("8");
+        
+        p.setApproachSensor1("9");
+
+
+        Assert.assertEquals("sensor1", "1", p.getSensor1());
+        Assert.assertEquals("sensor2", "2", p.getSensor2());
+        Assert.assertEquals("sensor3", "3", p.getSensor3());
+        Assert.assertEquals("sensor4", "4", p.getSensor4());
+
+        Assert.assertEquals("turnout1", "1", p.getTurnout());
+        
+        Assert.assertEquals("watchedsignal1", "1", p.getWatchedSignal1());
+        Assert.assertEquals("watchedsignal1alt", "2", p.getWatchedSignal1Alt());
+        Assert.assertEquals("watchedsignal2", "3", p.getWatchedSignal2());
+        Assert.assertEquals("watchedsignal2alt", "4", p.getWatchedSignal2Alt());
+        
+        Assert.assertEquals("watchedsensor1", "5", p.getWatchedSensor1());
+        Assert.assertEquals("watchedsensor1alt", "6", p.getWatchedSensor1Alt());
+        Assert.assertEquals("watchedsensor2", "7", p.getWatchedSensor2());
+        Assert.assertEquals("watchedsensor2alt", "8", p.getWatchedSensor2Alt());
+
+        Assert.assertEquals("approach", "9", p.getApproachSensor1());
+                
+    }
+    
+    // check that system names were preserved
+    public void testSystemNamesRetained() {
+		BlockBossLogic p = new BlockBossLogic("IH1");
+
+        p.setSensor1("IS1");
+        p.setSensor2("IS2");
+        p.setSensor3("IS3");
+        p.setSensor4("IS4");
+        
+        p.setTurnout("IT1");
+        
+        p.setWatchedSignal1("IH1", false);
+        p.setWatchedSignal1Alt("IH2");
+        p.setWatchedSignal2("IH3");
+        p.setWatchedSignal2Alt("IH4");
+        
+        p.setWatchedSensor1("IS5");
+        p.setWatchedSensor1Alt("IS6");
+        p.setWatchedSensor2("IS7");
+        p.setWatchedSensor2Alt("IS8");
+        
+        p.setApproachSensor1("IS9");
+
+
+        Assert.assertEquals("sensor1", "IS1", p.getSensor1());
+        Assert.assertEquals("sensor2", "IS2", p.getSensor2());
+        Assert.assertEquals("sensor3", "IS3", p.getSensor3());
+        Assert.assertEquals("sensor4", "IS4", p.getSensor4());
+
+        Assert.assertEquals("turnout1", "IT1", p.getTurnout());
+        
+        Assert.assertEquals("watchedsignal1", "IH1", p.getWatchedSignal1());
+        Assert.assertEquals("watchedsignal1alt", "IH2", p.getWatchedSignal1Alt());
+        Assert.assertEquals("watchedsignal2", "IH3", p.getWatchedSignal2());
+        Assert.assertEquals("watchedsignal2alt", "IH4", p.getWatchedSignal2Alt());
+        
+        Assert.assertEquals("watchedsensor1", "IS5", p.getWatchedSensor1());
+        Assert.assertEquals("watchedsensor1alt", "IS6", p.getWatchedSensor1Alt());
+        Assert.assertEquals("watchedsensor2", "IS7", p.getWatchedSensor2());
+        Assert.assertEquals("watchedsensor2alt", "IS8", p.getWatchedSensor2Alt());
+
+        Assert.assertEquals("approach", "IS9", p.getApproachSensor1());
+                
+    }
+    
 	// from here down is testing infrastructure
 
     // Ensure minimal setup for log4J
 
     Turnout t1, t2, t3;
-    Sensor s1, s2, s3, s4, s5;
+    Sensor s1, s2, s3, s4, s5, s6, s7, s8, s9;
     SignalHead h1, h2, h3, h4;
     
     /**
@@ -181,19 +271,24 @@ public class BlockBossLogicTest extends TestCase {
         t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT1", "1");
         t2 = InstanceManager.turnoutManagerInstance().newTurnout("IT2", "2");
         t3 = InstanceManager.turnoutManagerInstance().newTurnout("IT3", "3");
+        
         s1 = InstanceManager.sensorManagerInstance().newSensor("IS1", "1");
         s2 = InstanceManager.sensorManagerInstance().newSensor("IS2", "2");
         s3 = InstanceManager.sensorManagerInstance().newSensor("IS3", "3");
         s4 = InstanceManager.sensorManagerInstance().newSensor("IS4", "4");
         s5 = InstanceManager.sensorManagerInstance().newSensor("IS5", "5");
+        s6 = InstanceManager.sensorManagerInstance().newSensor("IS6", "6");
+        s7 = InstanceManager.sensorManagerInstance().newSensor("IS7", "7");
+        s8 = InstanceManager.sensorManagerInstance().newSensor("IS8", "8");
+        s9 = InstanceManager.sensorManagerInstance().newSensor("IS9", "9");
 
-        h1 = new jmri.implementation.VirtualSignalHead("IH1");
+        h1 = new jmri.implementation.VirtualSignalHead("IH1","1");
         InstanceManager.signalHeadManagerInstance().register(h1);
-        h2 = new jmri.implementation.VirtualSignalHead("IH2");
+        h2 = new jmri.implementation.VirtualSignalHead("IH2","2");
         InstanceManager.signalHeadManagerInstance().register(h2);
-        h3 = new jmri.implementation.VirtualSignalHead("IH3");
+        h3 = new jmri.implementation.VirtualSignalHead("IH3","3");
         InstanceManager.signalHeadManagerInstance().register(h3);
-        h4 = new jmri.implementation.VirtualSignalHead("IH4");
+        h4 = new jmri.implementation.VirtualSignalHead("IH4","4");
         InstanceManager.signalHeadManagerInstance().register(h4);
     }
 
