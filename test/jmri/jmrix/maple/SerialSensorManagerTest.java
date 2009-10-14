@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003, 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SerialSensorManagerTest extends TestCase {
 
@@ -25,8 +25,8 @@ public class SerialSensorManagerTest extends TestCase {
         
         SerialSensorManager s = new SerialSensorManager();
 
-        SerialNode n1 = new SerialNode(1,0);
-        SerialNode n2 = new SerialNode(2,0);
+//        SerialNode n1 = new SerialNode(1,0);
+//        SerialNode n2 = new SerialNode(2,0);
 
         Sensor sensor = s.provideSensor("3");
         Assert.assertNotNull("found sensor", sensor);
