@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalAddEdit.shtml,v 1.13 2009-07-19 00:17:06 jacobsen Exp $ -->
+<!-- $Id: SignalAddEdit.shtml,v 1.14 2009-10-14 13:41:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -104,11 +104,21 @@ choices for how the signal head is connected:
   <a href="http://www.digitrax.com">Digitrax</a>
   <a href="http://www.digitrax.com/prd_statdec_se8c.php">SE8c signal driver card</a>.
   <p>
-  In the text field, enter the appropriate address as a number.  For example,
+  Because a SE8c 4 Aspect signal head works with LocoNet hardware at a specific
+  address, its system name is determined automatically from that address.  You
+  don't have to enter it.  For example, the SE8c 4 Aspect signal head for 
+  hardware address 257 will be given a system name of LH257.
+  <p>
+  You can optionally enter a user name if you'd like.
+  <p>
+  In the "turnout number" field, enter the appropriate address 
+  of the SE8c output as a number.  For example,
   the 1st signal head on the 1st SE8c, as configured from the Digitrax
   factory, is addressed by putting a "257" here. See e.g. page
-  5 of the Digitrax SE8c manual 
+  5 and 7 of the Digitrax SE8c manual 
   (<a href="http://www.digitrax.com/ftp/se8c.pdf">http://www.digitrax.com/ftp/se8c.pdf</a>).
+  <p>
+  Do not enter a turnout name, like "LT257", in the number field.
   </dd>
 
 <dt>LDT LS-DEC</dt>
