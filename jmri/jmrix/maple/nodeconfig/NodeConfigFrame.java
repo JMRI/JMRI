@@ -7,14 +7,12 @@ import java.awt.*;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
-import javax.swing.table.*;
 import javax.swing.border.Border;
 
 import jmri.jmrix.maple.SerialTrafficController;
 import jmri.jmrix.maple.SerialNode;
 import jmri.jmrix.maple.InputBits;
 import jmri.jmrix.maple.OutputBits;
-import jmri.jmrix.maple.SerialSensorManager;
 
 /**
  * Frame for user configuration of Maple panel nodes
@@ -24,7 +22,7 @@ import jmri.jmrix.maple.SerialSensorManager;
  *
  * @author	Bob Jacobsen   Copyright (C) 2004, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2009
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 

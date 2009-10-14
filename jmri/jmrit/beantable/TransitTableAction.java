@@ -48,7 +48,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class TransitTableAction extends AbstractTableAction {
@@ -206,6 +206,7 @@ public class TransitTableAction extends AbstractTableAction {
 	private ArrayList<Section> sectionList = new ArrayList<Section>();
 	private int[] direction = new int[150];
 	private int[] sequence = new int[150];
+	@SuppressWarnings("raw")
 	private ArrayList[] action = new ArrayList[150]; 
 	private boolean[] alternate = new boolean[150];
 	private int maxSections = 150;  // must be equal to the dimension of the above arrays
@@ -603,6 +604,7 @@ public class TransitTableAction extends AbstractTableAction {
 				log.error("Trouble creating TransitSection");
 				return false;
 			}
+			@SuppressWarnings("raw")
 			ArrayList list = action[i];
 			for (int j=0; j<list.size(); j++) {
 				ts.addAction( (TransitSectionAction)(list.get(j)));
@@ -886,12 +888,12 @@ public class TransitTableAction extends AbstractTableAction {
 	private JmriJFrame addEditActionFrame = null;
 	private TransitSectionAction curTSA = null;
 	private JComboBox whenBox = new JComboBox();
-	private JTextField whenDataField = new JTextField(7);;
-	private JTextField whenStringField = new JTextField(17);;
+	private JTextField whenDataField = new JTextField(7);
+	private JTextField whenStringField = new JTextField(17);
 	private JComboBox whatBox = new JComboBox();
-	private JTextField whatData1Field = new JTextField(7);;
-	private JTextField whatData2Field = new JTextField(7);;
-	private JTextField whatStringField = new JTextField(17);;
+	private JTextField whatData1Field = new JTextField(7);
+	private JTextField whatData2Field = new JTextField(7);
+	private JTextField whatStringField = new JTextField(17);
 	private JButton updateActionButton = null;
 	private JButton createActionButton = null;
 	private JButton cancelAddEditActionButton = null;

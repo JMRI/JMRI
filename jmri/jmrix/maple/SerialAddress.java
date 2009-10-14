@@ -2,8 +2,6 @@
 
 package jmri.jmrix.maple;
 
-import jmri.jmrix.AbstractNode;
-
 /**
  * Utility Class supporting parsing and testing of addresses
  * <P>
@@ -16,7 +14,7 @@ import jmri.jmrix.AbstractNode;
  *		node number in the address.
   * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SerialAddress {
 
@@ -133,7 +131,7 @@ public class SerialAddress {
                                                                 +systemName);
             return (false);
         }
-		// This is a CLxxxx (or CTxxxx or CSxxxx) address 
+		// This is a KLxxxx (or KTxxxx or KSxxxx) address, make sure xxxx is OK 
 		int num;
 		try {
 			num = Integer.valueOf(systemName.substring(2)).intValue();

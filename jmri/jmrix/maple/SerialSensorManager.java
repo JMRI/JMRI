@@ -18,7 +18,7 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author                      Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {
@@ -74,19 +74,17 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         // Sensor system name is valid and Sensor doesn't exist, make a new one
         if (userName == null)
             s = new SerialSensor(sName);
-        else
-            s = new SerialSensor(sName, userName);
-		if (s!=null) {
-			// check configured
-            if (!SerialAddress.validSystemNameConfig(sName,'S')) {
-                log.warn("Sensor system Name '"+sName+"' does not address configured hardware.");
-				javax.swing.JOptionPane.showMessageDialog(null,"WARNING - The Sensor just added, "+
+        else 
+            s = new SerialSensor(sName, userName);			
+		// check configured
+		if (!SerialAddress.validSystemNameConfig(sName,'S')) {
+			log.warn("Sensor system Name '"+sName+"' does not address configured hardware.");
+			javax.swing.JOptionPane.showMessageDialog(null,"WARNING - The Sensor just added, "+
 					sName+", refers to an unconfigured input bit.","Configuration Warning",
 						javax.swing.JOptionPane.INFORMATION_MESSAGE,null);
-			}
-			// register this sensor 
-			InputBits.instance().registerSensor(s, bit-1);
 		}
+		// register this sensor 
+		InputBits.instance().registerSensor(s, bit-1);
 		return s;
     }
     
@@ -112,7 +110,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         java.util.Iterator<String> iter =
                                     getSystemNameList().iterator();
         // Iterate through the sensors
-        AbstractNode tNode = null;
         while (iter.hasNext()) {
             String sName = iter.next();
             if (sName==null) {

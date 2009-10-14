@@ -2,8 +2,6 @@
 
 package jmri.jmrix.maple;
 
-import jmri.jmrix.AbstractMRMessage;
-
 /**
  * Utility Class supporting output to Maple HMI's
  * <P>
@@ -19,7 +17,7 @@ import jmri.jmrix.AbstractMRMessage;
  *		address 1001.
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class OutputBits {
 
@@ -128,7 +126,7 @@ public class OutputBits {
         return m;
     }
 
-	public static OutputBits instance() {return mInstance;};
+	public static OutputBits instance() {return mInstance;}
 	private static OutputBits mInstance = null;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OutputBits.class.getName());

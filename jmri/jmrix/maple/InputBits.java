@@ -2,7 +2,6 @@
 
 package jmri.jmrix.maple;
 
-import jmri.jmrix.AbstractMRMessage;
 import jmri.Sensor;
 import jmri.JmriException;
 
@@ -24,7 +23,7 @@ import jmri.JmriException;
  *		address 1001.
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class InputBits {
 
@@ -170,7 +169,7 @@ public class InputBits {
         }
     }
 
-	public static InputBits instance() {return mInstance;};
+	public static InputBits instance() {return mInstance;}
 	private static InputBits mInstance = null;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InputBits.class.getName());
