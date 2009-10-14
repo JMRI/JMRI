@@ -25,7 +25,7 @@ import org.jdom.Element;
  * "signalelements" and "signalelement" respectively.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  * 
  * Revisions to add facing point sensors, approach lighting, 
  * and limited speed.                 Dick Bronson (RJB) 2006
@@ -117,9 +117,8 @@ public class BlockBossLogicXml implements XmlAdapter {
     }
 
     Element storeSensor(String name) {
-        Element e = new Element("sensor");
-        jmri.Sensor s = jmri.InstanceManager.sensorManagerInstance().getSensor(name);
-        e.setAttribute("systemName", s.getSystemName());
+        Element e = new Element("sensorname");
+        e.addContent(name);
         return e;
     }
 
@@ -146,11 +145,20 @@ public class BlockBossLogicXml implements XmlAdapter {
                 bb.setApproachSensor1(block.getAttributeValue("approachsensor1"));
             if (block.getAttribute("watchedsensor")!=null)   // for older XML files
                 bb.setSensor1(block.getAttributeValue("watchedsensor"));
+
+            // old form of sensors with system names
             List<Element> sl = block.getChildren("sensor");
-            if (sl.size()>=1 && sl.get(0)!= null) bb.setSensor1((sl.get(0)).getAttributeValue("systemName"));
-            if (sl.size()>=2 && sl.get(1)!= null) bb.setSensor2((sl.get(1)).getAttributeValue("systemName"));
-            if (sl.size()>=3 && sl.get(2)!= null) bb.setSensor3((sl.get(2)).getAttributeValue("systemName"));
-            if (sl.size()>=4 && sl.get(3)!= null) bb.setSensor4((sl.get(3)).getAttributeValue("systemName"));
+            if (sl.size()>=1 && sl.get(0)!= null) bb.setSensor1(sl.get(0).getAttributeValue("systemName"));
+            if (sl.size()>=2 && sl.get(1)!= null) bb.setSensor2(sl.get(1).getAttributeValue("systemName"));
+            if (sl.size()>=3 && sl.get(2)!= null) bb.setSensor3(sl.get(2).getAttributeValue("systemName"));
+            if (sl.size()>=4 && sl.get(3)!= null) bb.setSensor4(sl.get(3).getAttributeValue("systemName"));
+
+            // new form of sensors with system names
+            sl = block.getChildren("sensorname");
+            if (sl.size()>=1 && sl.get(0)!= null) bb.setSensor1(sl.get(0).getText());
+            if (sl.size()>=2 && sl.get(1)!= null) bb.setSensor2(sl.get(1).getText());
+            if (sl.size()>=3 && sl.get(2)!= null) bb.setSensor3(sl.get(2).getText());
+            if (sl.size()>=4 && sl.get(3)!= null) bb.setSensor4(sl.get(3).getText());
 
             try {
                 bb.setMode(block.getAttribute("mode").getIntValue());

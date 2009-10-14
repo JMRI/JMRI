@@ -8,6 +8,8 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.automat.Siglet;
+import jmri.util.NamedBeanHandle;
+
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -111,7 +113,7 @@ import java.util.Hashtable;
  * signal (along the track with the green signal).
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.31 $
+ * @version     $Revision: 1.32 $
  * 
  * Revisions to add facing point sensors, approach lighting, and check box
  * to limit speed. Dick Bronosn (RJB) 2006
@@ -140,8 +142,8 @@ public class BlockBossLogic extends Siglet {
         super(name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_BlockBossLogic"));
         this.name = name;
         if (log.isTraceEnabled()) log.trace("Create BBL "+name);
-        driveSignal = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-        if (driveSignal == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Signal_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
+        driveSignal = new NamedBeanHandle<SignalHead> (name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
+        if (driveSignal.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Signal_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
 
     /**
@@ -150,7 +152,7 @@ public class BlockBossLogic extends Siglet {
      * @return system name of the driven signal
      */
     public String getDrivenSignal() {
-        return driveSignal.getSystemName();
+        return driveSignal.getName();
     }
 
     public void setSensor1(String name) {
@@ -158,8 +160,8 @@ public class BlockBossLogic extends Siglet {
             watchSensor1 = null;
             return;
         }
-        watchSensor1 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchSensor1 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor1_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
+        watchSensor1 = new NamedBeanHandle<Sensor> (name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        if (watchSensor1.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor1_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
 
     public void setSensor2(String name) {
@@ -167,8 +169,8 @@ public class BlockBossLogic extends Siglet {
             watchSensor2 = null;
             return;
         }
-        watchSensor2 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchSensor2 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor2_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
+        watchSensor2 = new NamedBeanHandle<Sensor> (name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        if (watchSensor2.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor2_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
 
     public void setSensor3(String name) {
@@ -176,8 +178,8 @@ public class BlockBossLogic extends Siglet {
             watchSensor3 = null;
             return;
         }
-        watchSensor3 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchSensor3 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor3_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
+        watchSensor3 = new NamedBeanHandle<Sensor> (name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        if (watchSensor3.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor3_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
 
     public void setSensor4(String name) {
@@ -185,8 +187,8 @@ public class BlockBossLogic extends Siglet {
             watchSensor4 = null;
             return;
         }
-        watchSensor4 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchSensor4 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor4_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
+        watchSensor4 = new NamedBeanHandle<Sensor> (name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        if (watchSensor4.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor4_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
 
     /**
@@ -195,19 +197,19 @@ public class BlockBossLogic extends Siglet {
      */
     public String getSensor1() {
         if (watchSensor1 == null) return null;
-        return watchSensor1.getSystemName();
+        return watchSensor1.getName();
     }
     public String getSensor2() {
         if (watchSensor2 == null) return null;
-        return watchSensor2.getSystemName();
+        return watchSensor2.getName();
     }
     public String getSensor3() {
         if (watchSensor3 == null) return null;
-        return watchSensor3.getSystemName();
+        return watchSensor3.getName();
     }
     public String getSensor4() {
         if (watchSensor4 == null) return null;
-        return watchSensor4.getSystemName();
+        return watchSensor4.getName();
     }
 
     public void setTurnout(String name) {
@@ -215,8 +217,8 @@ public class BlockBossLogic extends Siglet {
             watchTurnout = null;
             return;
         }
-        watchTurnout = InstanceManager.turnoutManagerInstance().provideTurnout(name);
-        if (watchTurnout == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Turnout_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
+        watchTurnout = new NamedBeanHandle<Turnout>(name, InstanceManager.turnoutManagerInstance().provideTurnout(name));
+        if (watchTurnout.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Turnout_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
     
     /**
@@ -225,7 +227,7 @@ public class BlockBossLogic extends Siglet {
      */
     public String getTurnout() {
         if (watchTurnout == null) return null;
-        return watchTurnout.getSystemName();
+        return watchTurnout.getName();
     }
     public void setMode(int mode) {
         this.mode = mode;
@@ -243,8 +245,8 @@ public class BlockBossLogic extends Siglet {
             watchedSignal1 = null;
             return;
         }
-        watchedSignal1 = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-        if (watchedSignal1 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Signal_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
+        watchedSignal1 = new NamedBeanHandle<SignalHead>(name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
+        if (watchedSignal1.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Signal_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
         protectWithFlashing = useFlash;
     }
     /**
@@ -253,7 +255,7 @@ public class BlockBossLogic extends Siglet {
      */
     public String getWatchedSignal1() {
         if (watchedSignal1 == null) return null;
-        return watchedSignal1.getSystemName();
+        return watchedSignal1.getName();
     }
 
     public void setWatchedSignal1Alt(String name) {
@@ -261,8 +263,8 @@ public class BlockBossLogic extends Siglet {
             watchedSignal1Alt = null;
             return;
         }
-        watchedSignal1Alt = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-        if (watchedSignal1Alt == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Signal_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
+        watchedSignal1Alt = new NamedBeanHandle<SignalHead>(name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
+        if (watchedSignal1Alt.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Signal_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
     /**
      * Return the system name of the alternate signal being monitored for first route
@@ -270,7 +272,7 @@ public class BlockBossLogic extends Siglet {
      */
     public String getWatchedSignal1Alt() {
         if (watchedSignal1Alt == null) return null;
-        return watchedSignal1Alt.getSystemName();
+        return watchedSignal1Alt.getName();
     }
 
     public void setWatchedSignal2(String name) {
@@ -278,8 +280,8 @@ public class BlockBossLogic extends Siglet {
             watchedSignal2 = null;
             return;
         }
-        watchedSignal2 = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-        if (watchedSignal2 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Signal_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
+        watchedSignal2 = new NamedBeanHandle<SignalHead>(name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
+        if (watchedSignal2.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Signal_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
     /**
      * Return the system name of the signal being monitored for the 2nd route
@@ -287,7 +289,7 @@ public class BlockBossLogic extends Siglet {
      */
     public String getWatchedSignal2() {
         if (watchedSignal2 == null) return null;
-        return watchedSignal2.getSystemName();
+        return watchedSignal2.getName();
     }
 
     public void setWatchedSignal2Alt(String name) {
@@ -295,8 +297,8 @@ public class BlockBossLogic extends Siglet {
             watchedSignal2Alt = null;
             return;
         }
-        watchedSignal2Alt = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-        if (watchedSignal2Alt == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Signal_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
+        watchedSignal2Alt = new NamedBeanHandle<SignalHead>(name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
+        if (watchedSignal2Alt.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Signal_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
     /**
      * Return the system name of the secondary signal being monitored for the 2nd route
@@ -304,7 +306,7 @@ public class BlockBossLogic extends Siglet {
      */
     public String getWatchedSignal2Alt() {
         if (watchedSignal2Alt == null) return null;
-        return watchedSignal2Alt.getSystemName();
+        return watchedSignal2Alt.getName();
     }
 
     public void setWatchedSensor1(String name) {
@@ -312,17 +314,17 @@ public class BlockBossLogic extends Siglet {
             watchedSensor1 = null;
             return;
         }
-        watchedSensor1 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchedSensor1 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor1_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
+        watchedSensor1 = new NamedBeanHandle<Sensor>(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        if (watchedSensor1.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor1_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
         
     }
     /**
-     * Return the system name of the sensor being monitored
-     * @return system name; null if no sensor configured
+     * Return the original name of the sensor being monitored
+     * @return original name; null if no sensor configured
      */
     public String getWatchedSensor1() {
         if (watchedSensor1 == null) return null;
-        return watchedSensor1.getSystemName();
+        return watchedSensor1.getName();
     }
     
     public void setWatchedSensor1Alt(String name) {
@@ -330,8 +332,8 @@ public class BlockBossLogic extends Siglet {
             watchedSensor1Alt = null;
             return;
         }
-        watchedSensor1Alt = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchedSensor1Alt == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor1Alt_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
+        watchedSensor1Alt = new NamedBeanHandle<Sensor>(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        if (watchedSensor1Alt.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor1Alt_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
         
     }
     /**
@@ -340,7 +342,7 @@ public class BlockBossLogic extends Siglet {
      */
     public String getWatchedSensor1Alt() {
         if (watchedSensor1Alt == null) return null;
-        return watchedSensor1Alt.getSystemName();
+        return watchedSensor1Alt.getName();
     }
     
     public void setWatchedSensor2(String name) {
@@ -348,8 +350,8 @@ public class BlockBossLogic extends Siglet {
             watchedSensor2 = null;
             return;
         }
-        watchedSensor2 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchedSensor2 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor2_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
+        watchedSensor2 = new NamedBeanHandle<Sensor>(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        if (watchedSensor2.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor2_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
         
     }
     /**
@@ -358,7 +360,7 @@ public class BlockBossLogic extends Siglet {
      */
     public String getWatchedSensor2() {
         if (watchedSensor2 == null) return null;
-        return watchedSensor2.getSystemName();
+        return watchedSensor2.getName();
     }
     
     public void setWatchedSensor2Alt(String name) {
@@ -366,8 +368,8 @@ public class BlockBossLogic extends Siglet {
             watchedSensor2Alt = null;
             return;
         }
-        watchedSensor2Alt = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (watchedSensor2Alt == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor2Alt_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
+        watchedSensor2Alt = new NamedBeanHandle<Sensor>(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        if (watchedSensor2Alt.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor2Alt_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
         
     }
     /**
@@ -376,7 +378,7 @@ public class BlockBossLogic extends Siglet {
      */
     public String getWatchedSensor2Alt() {
         if (watchedSensor2Alt == null) return null;
-        return watchedSensor2Alt.getSystemName();
+        return watchedSensor2Alt.getName();
     }
     public void setLimitSpeed1(boolean d) { limitSpeed1 = d; }
     public boolean getLimitSpeed1() {
@@ -414,21 +416,21 @@ public class BlockBossLogic extends Siglet {
     }
     
     String name;
-    SignalHead driveSignal = null;
-    Sensor watchSensor1 = null;
-    Sensor watchSensor2 = null;
-    Sensor watchSensor3 = null;
-    Sensor watchSensor4 = null;
-    Turnout watchTurnout = null;
-    SignalHead watchedSignal1 = null;
-    SignalHead watchedSignal1Alt = null;
-    SignalHead watchedSignal2 = null;
-    SignalHead watchedSignal2Alt = null;
-    Sensor watchedSensor1 = null;
-    Sensor watchedSensor1Alt = null;
-    Sensor watchedSensor2 = null;
-    Sensor watchedSensor2Alt = null;
-    Sensor approachSensor1 = null;
+    NamedBeanHandle<SignalHead> driveSignal = null;
+    NamedBeanHandle<Sensor> watchSensor1 = null;
+    NamedBeanHandle<Sensor> watchSensor2 = null;
+    NamedBeanHandle<Sensor> watchSensor3 = null;
+    NamedBeanHandle<Sensor> watchSensor4 = null;
+    NamedBeanHandle<Turnout> watchTurnout = null;
+    NamedBeanHandle<SignalHead> watchedSignal1 = null;
+    NamedBeanHandle<SignalHead> watchedSignal1Alt = null;
+    NamedBeanHandle<SignalHead> watchedSignal2 = null;
+    NamedBeanHandle<SignalHead> watchedSignal2Alt = null;
+    NamedBeanHandle<Sensor> watchedSensor1 = null;
+    NamedBeanHandle<Sensor> watchedSensor1Alt = null;
+    NamedBeanHandle<Sensor> watchedSensor2 = null;
+    NamedBeanHandle<Sensor> watchedSensor2Alt = null;
+    NamedBeanHandle<Sensor> approachSensor1 = null;
     
     boolean limitSpeed1 = false;
     boolean limitSpeed2 = false;
@@ -440,8 +442,8 @@ public class BlockBossLogic extends Siglet {
             approachSensor1 = null;
             return;
         }
-        approachSensor1 = InstanceManager.sensorManagerInstance().provideSensor(name);
-        if (approachSensor1 == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Approach_Sensor1_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
+        approachSensor1 = new NamedBeanHandle<Sensor>(name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        if (approachSensor1.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Approach_Sensor1_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
         
     }
     /**
@@ -450,7 +452,7 @@ public class BlockBossLogic extends Siglet {
      */
     public String getApproachSensor1() {
         if (approachSensor1 == null) return null;
-        return approachSensor1.getSystemName();
+        return approachSensor1.getName();
     }
     
     /**
@@ -461,59 +463,59 @@ public class BlockBossLogic extends Siglet {
         int n = 0;
         
         if (watchTurnout!=null ) {
-            tempArray[n]= watchTurnout;
+            tempArray[n]= watchTurnout.getBean();
             n++;
         }
         if (watchSensor1 != null) {
-            tempArray[n]= watchSensor1;
+            tempArray[n]= watchSensor1.getBean();
             n++;
         }
         if (watchSensor2 != null) {
-            tempArray[n]= watchSensor2;
+            tempArray[n]= watchSensor2.getBean();
             n++;
         }
         if (watchSensor3 != null) {
-            tempArray[n]= watchSensor3;
+            tempArray[n]= watchSensor3.getBean();
             n++;
         }
         if (watchSensor4 != null) {
-            tempArray[n]= watchSensor4;
+            tempArray[n]= watchSensor4.getBean();
             n++;
         }
         if (watchedSignal1 != null) {
-            tempArray[n]= watchedSignal1;
+            tempArray[n]= watchedSignal1.getBean();
             n++;
         }
         if (watchedSignal1Alt != null) {
-            tempArray[n]= watchedSignal1Alt;
+            tempArray[n]= watchedSignal1Alt.getBean();
             n++;
         }
         if (watchedSignal2 != null) {
-            tempArray[n]= watchedSignal2;
+            tempArray[n]= watchedSignal2.getBean();
             n++;
         }
         if (watchedSignal2Alt != null) {
-            tempArray[n]= watchedSignal2Alt;
+            tempArray[n]= watchedSignal2Alt.getBean();
             n++;
         }
         if (watchedSensor1 != null) {
-            tempArray[n]= watchedSensor1;
+            tempArray[n]= watchedSensor1.getBean();
             n++;
         }
         if (watchedSensor1Alt != null) {
-            tempArray[n]= watchedSensor1Alt;
+            tempArray[n]= watchedSensor1Alt.getBean();
             n++;
         }
         if (watchedSensor2 != null) {
-            tempArray[n]= watchedSensor2;
+            tempArray[n]= watchedSensor2.getBean();
             n++;
         }
         if (watchedSensor2Alt != null) {
-            tempArray[n]= watchedSensor2Alt;
+            tempArray[n]= watchedSensor2Alt.getBean();
             n++;
         }
         if (approachSensor1 != null) {
-            tempArray[n]= approachSensor1;
+            tempArray[n]= approachSensor1.getBean();
             n++;
         }
         
@@ -522,14 +524,14 @@ public class BlockBossLogic extends Siglet {
         for (int i = 0; i< inputs.length; i++)
             inputs[i] = tempArray[i];
         
-        outputs = new NamedBean[]{driveSignal};
+        outputs = new NamedBean[]{driveSignal.getBean()};
         
         // also need to act if the _signal's_ "held"
         // parameter changes, but we don't want to 
         // act if the signals appearance changes (to 
         // avoid a loop, or avoid somebody changing appearance
         // manually and having it instantly recomputed & changed back
-        driveSignal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        driveSignal.getBean().addPropertyChangeListener(new java.beans.PropertyChangeListener() {
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     if (e.getPropertyName().equals(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Held")))
                         setOutput();
@@ -579,12 +581,12 @@ public class BlockBossLogic extends Siglet {
             result = SignalHead.GREEN;
         
         int val = result;
-        if (watchedSignal1!=null) val = watchedSignal1.getAppearance();
-        if (watchedSignal1!=null && watchedSignal1.getHeld()) val =  SignalHead.RED;  // if Held, act as if Red
+        if (watchedSignal1!=null) val = watchedSignal1.getBean().getAppearance();
+        if (watchedSignal1!=null && watchedSignal1.getBean().getHeld()) val =  SignalHead.RED;  // if Held, act as if Red
         
         int valAlt = result;
-        if (watchedSignal1Alt!=null) valAlt = watchedSignal1Alt.getAppearance();
-        if (watchedSignal1Alt!=null && watchedSignal1Alt.getHeld()) valAlt =  SignalHead.RED; // if Held, act as if Red
+        if (watchedSignal1Alt!=null) valAlt = watchedSignal1Alt.getBean().getAppearance();
+        if (watchedSignal1Alt!=null && watchedSignal1Alt.getBean().getHeld()) valAlt =  SignalHead.RED; // if Held, act as if Red
         
         return fasterOf(val, valAlt);
     }
@@ -596,12 +598,12 @@ public class BlockBossLogic extends Siglet {
             result = SignalHead.GREEN;
         
         int val = result;
-        if (watchedSignal2!=null) val = watchedSignal2.getAppearance();
-        if (watchedSignal2!=null && watchedSignal2.getHeld()) val =  SignalHead.RED;
+        if (watchedSignal2!=null) val = watchedSignal2.getBean().getAppearance();
+        if (watchedSignal2!=null && watchedSignal2.getBean().getHeld()) val =  SignalHead.RED;
         
         int valAlt = result;
-        if (watchedSignal2Alt!=null) valAlt = watchedSignal2Alt.getAppearance();
-        if (watchedSignal2Alt!=null && watchedSignal2Alt.getHeld()) valAlt =  SignalHead.RED;
+        if (watchedSignal2Alt!=null) valAlt = watchedSignal2Alt.getBean().getAppearance();
+        if (watchedSignal2Alt!=null && watchedSignal2Alt.getBean().getHeld()) valAlt =  SignalHead.RED;
         
         return fasterOf(val, valAlt);
     }
@@ -644,13 +646,13 @@ public class BlockBossLogic extends Siglet {
             appearance = slowerOf(appearance, SignalHead.YELLOW);
       
         // check for red overriding yellow or green
-        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE)
+        if (watchSensor1!=null && watchSensor1.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor2!=null && watchSensor2.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
-        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor3!=null && watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
-        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor4!=null && watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
 
         // check if signal if held, forcing a red aspect by this calculation
@@ -685,18 +687,18 @@ public class BlockBossLogic extends Siglet {
             appearance = slowerOf(appearance, SignalHead.YELLOW);
       
         // check for red overriding yellow or green
-        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE)
+        if (watchSensor1!=null && watchSensor1.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor2!=null && watchSensor2.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
-        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor3!=null && watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
-        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor4!=null && watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
             
-        if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.CLOSED)
+        if (watchTurnout!=null && watchTurnout.getBean().getKnownState() != Turnout.CLOSED)
             appearance = SignalHead.RED;
-        if (watchTurnout!=null && watchTurnout.getCommandedState() != Turnout.CLOSED)
+        if (watchTurnout!=null && watchTurnout.getBean().getCommandedState() != Turnout.CLOSED)
             appearance = SignalHead.RED;
 
         // check if signal if held, forcing a red aspect by this calculation
@@ -731,18 +733,18 @@ public class BlockBossLogic extends Siglet {
             appearance = slowerOf(appearance, SignalHead.YELLOW);
       
         // check for red overriding yellow or green
-        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE)
+        if (watchSensor1!=null && watchSensor1.getBean().getKnownState() != Sensor.INACTIVE)
             appearance = SignalHead.RED;
-        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor2!=null && watchSensor2.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
-        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor3!=null && watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
-        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor4!=null && watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
 
-        if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN)
+        if (watchTurnout!=null && watchTurnout.getBean().getKnownState() != Turnout.THROWN)
             appearance = SignalHead.RED;
-        if (watchTurnout!=null && watchTurnout.getCommandedState() != Turnout.THROWN)
+        if (watchTurnout!=null && watchTurnout.getBean().getCommandedState() != Turnout.THROWN)
             appearance = SignalHead.RED;
 
         // check if signal if held, forcing a red aspect by this calculation
@@ -765,9 +767,9 @@ public class BlockBossLogic extends Siglet {
         
         // find downstream appearance, being pessimistic if we're not sure of the state
         int s = SignalHead.GREEN;
-        if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN)
+        if (watchTurnout!=null && watchTurnout.getBean().getKnownState() != Turnout.THROWN)
             s = slowerOf(s, fastestColor1());
-        if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.CLOSED)
+        if (watchTurnout!=null && watchTurnout.getBean().getKnownState() != Turnout.CLOSED)
             s = slowerOf(s, fastestColor2());
 
         // check for yellow, flashing yellow overriding green
@@ -780,36 +782,37 @@ public class BlockBossLogic extends Siglet {
             appearance = s;
 
         // if limited speed and green or flashing yellow, reduce to yellow
-        if (watchTurnout!=null && limitSpeed1 && watchTurnout.getKnownState()!=Turnout.THROWN)
+        if (watchTurnout!=null && limitSpeed1 && watchTurnout.getBean().getKnownState()!=Turnout.THROWN)
             appearance = slowerOf(appearance, SignalHead.YELLOW);
 
-        if (watchTurnout!=null && limitSpeed2 && watchTurnout.getKnownState()!=Turnout.CLOSED)
+        if (watchTurnout!=null && limitSpeed2 && watchTurnout.getBean().getKnownState()!=Turnout.CLOSED)
             appearance = slowerOf(appearance, SignalHead.YELLOW);
            
 
         // check for red overriding yellow or green
-        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor1!=null && watchSensor1.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
-        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor2!=null && watchSensor2.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
-        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor3!=null && watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
-        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor4!=null && watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
 
-        if ((watchTurnout!=null && watchTurnout.getKnownState() == Turnout.CLOSED) && ((watchedSensor1!=null && watchedSensor1.getKnownState() != Sensor.INACTIVE)))
+        if ((watchTurnout!=null && watchTurnout.getBean().getKnownState() == Turnout.CLOSED) 
+                && ((watchedSensor1!=null && watchedSensor1.getBean().getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
-        if ((watchTurnout!=null && watchTurnout.getKnownState() == Turnout.CLOSED) && ((watchedSensor1Alt!=null && watchedSensor1Alt.getKnownState() != Sensor.INACTIVE)))
+        if ((watchTurnout!=null && watchTurnout.getBean().getKnownState() == Turnout.CLOSED) && ((watchedSensor1Alt!=null && watchedSensor1Alt.getBean().getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
-        if ((watchTurnout!=null && watchTurnout.getKnownState() == Turnout.THROWN) && ((watchedSensor2!=null && watchedSensor2.getKnownState() != Sensor.INACTIVE)))
+        if ((watchTurnout!=null && watchTurnout.getBean().getKnownState() == Turnout.THROWN) && ((watchedSensor2!=null && watchedSensor2.getBean().getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
-        if ((watchTurnout!=null && watchTurnout.getKnownState() == Turnout.THROWN) && ((watchedSensor2Alt!=null && watchedSensor2Alt.getKnownState() != Sensor.INACTIVE)))
+        if ((watchTurnout!=null && watchTurnout.getBean().getKnownState() == Turnout.THROWN) && ((watchedSensor2Alt!=null && watchedSensor2Alt.getBean().getKnownState() != Sensor.INACTIVE)))
             appearance = SignalHead.RED;
         
         // check if turnout in motion, if so force red
-        if (watchTurnout!=null && (watchTurnout.getKnownState() != watchTurnout.getCommandedState()) )
+        if (watchTurnout!=null && (watchTurnout.getBean().getKnownState() != watchTurnout.getBean().getCommandedState()) )
             appearance = SignalHead.RED;
-        if (watchTurnout!=null && (watchTurnout.getKnownState() != Turnout.THROWN) && (watchTurnout.getKnownState() != Turnout.CLOSED) )  // checking for other states
+        if (watchTurnout!=null && (watchTurnout.getBean().getKnownState() != Turnout.THROWN) && (watchTurnout.getBean().getKnownState() != Turnout.CLOSED) )  // checking for other states
             appearance = SignalHead.RED;
 
         // check if signal if held, forcing a red aspect by this calculation
@@ -828,12 +831,12 @@ public class BlockBossLogic extends Siglet {
      * Handle the approach lighting logic for all modes
      */
     void doApproach() {
-        if (approachSensor1 != null && approachSensor1.getKnownState() == Sensor.INACTIVE) {
+        if (approachSensor1 != null && approachSensor1.getBean().getKnownState() == Sensor.INACTIVE) {
             // should not be lit
-            if (driveSignal.getLit()) driveSignal.setLit(false);
+            if (driveSignal.getBean().getLit()) driveSignal.getBean().setLit(false);
         } else {
             // should be lit
-            if (!driveSignal.getLit()) driveSignal.setLit(true);
+            if (!driveSignal.getBean().getLit()) driveSignal.getBean().setLit(true);
         }            
         return;
     }
@@ -858,9 +861,9 @@ public class BlockBossLogic extends Siglet {
      * Ensure that this BlockBossLogic object is available for later retrieval
      */
     public void retain() {
-        smap.put(driveSignal.getSystemName(), this);
-        if (driveSignal.getUserName()!=null)
-            umap.put(driveSignal.getUserName(), this);
+        smap.put(driveSignal.getBean().getSystemName(), this);
+        if (driveSignal.getBean().getUserName()!=null)
+            umap.put(driveSignal.getBean().getUserName(), this);
     }
     
     /**
@@ -880,9 +883,9 @@ public class BlockBossLogic extends Siglet {
         }
         if (b != null) {
             // found an existing one, remove it from the map and stop its thread
-            smap.remove(b.driveSignal.getSystemName());
-            if (b.driveSignal.getUserName() != null) {
-                umap.remove(b.driveSignal.getUserName());
+            smap.remove(b.driveSignal.getBean().getSystemName());
+            if (b.driveSignal.getBean().getUserName() != null) {
+                umap.remove(b.driveSignal.getBean().getUserName());
             }
             b.stop();
             return b;
