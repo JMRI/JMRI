@@ -543,7 +543,9 @@ public class ThrottleFrame extends JDesktopPane  implements AddressListener, Thr
 		checkPosition(addressPanel);	
 	}
 
-	public void componentShown(ComponentEvent e) {		
+	public void componentShown(ComponentEvent e) {
+		throttleWindow.setCurentThrottleFrame(this);
+		throttleWindow.updateGUI();
 	}
 	
 	public void saveThrottle() {
