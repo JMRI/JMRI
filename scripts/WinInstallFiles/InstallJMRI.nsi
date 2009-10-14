@@ -332,6 +332,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$INSTDIR\smtp.jar"
     Delete "$INSTDIR\vecmath.jar"
     Delete "$INSTDIR\win32com.dll"
+    Delete "$INSTDIR\xercesImpl.jar"
     
     ; -- Delete old messages.log file from program folder
     Delete "$INSTDIR\messages.log"
