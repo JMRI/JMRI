@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009 -->
-<!-- Revision $Revision: 1.52 $ -->
+<!-- Revision $Revision: 1.53 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -60,7 +60,7 @@
     <pathelement location="../lib/ch.ntb.usb.jar" />
     <pathelement location="../lib/comm-rxtx.jar" />
     <pathelement location="../lib/comm.jar" />
-    <pathelement location="../lib/crimson.jar" />
+    <pathelement location="../lib/xercesImpl.jar" />
     <pathelement location="../lib/gluegen-rt.jar" />
     <pathelement location="../lib/javacsv.jar" />
     <pathelement location="../lib/jdom.jar" />
@@ -90,7 +90,7 @@
     <pathelement location="../lib/ch.ntb.usb.jar" />
     <pathelement location="../lib/comm-rxtx.jar" />
     <pathelement location="../lib/comm.jar" />
-    <pathelement location="../lib/crimson.jar" />
+    <pathelement location="../lib/xercesImpl.jar" />
     <pathelement location="../lib/gluegen-rt.jar" />
     <pathelement location="../lib/javacsv.jar" />
     <pathelement location="../lib/jdom.jar" />
