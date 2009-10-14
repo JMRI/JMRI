@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-7.dtd,v 1.4 2009-10-12 19:34:58 kevin-dickerson Exp $ -->
+<!-- $Id: layout-config-2-7-7.dtd,v 1.5 2009-10-14 00:27:59 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.7.7 development.  Do not modify it       -->
 <!-- after version 2.7.7 is released.  For more information,                -->
@@ -707,7 +707,7 @@
 <!ELEMENT signalelements (signalelement*) >
   <!ATTLIST signalelements class CDATA #REQUIRED> <!-- selects XML class that will handle -->
 
-<!ELEMENT signalelement (sensor*, comment?) >
+<!ELEMENT signalelement (sensorname*, comment?) >
   <!ATTLIST signalelement signal 			  CDATA #REQUIRED >
   <!ATTLIST signalelement mode				  CDATA #IMPLIED>
   <!ATTLIST signalelement approachsensor1     CDATA #IMPLIED>
@@ -725,6 +725,8 @@
   <!ATTLIST signalelement limitspeed1       (true|false) "false" >
   <!ATTLIST signalelement limitspeed2       (true|false) "false" >
   <!ATTLIST signalelement distantsignal     (true|false) "false" >
+
+<!ELEMENT sensorname (#PCDATA)>
 
 <!ELEMENT LayoutEditor (positionablelabel|sensoricon|layoutblock|
 			positionablepoint | securityelementicon | signalheadicon |
