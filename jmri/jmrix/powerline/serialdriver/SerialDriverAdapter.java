@@ -20,7 +20,7 @@ import javax.comm.SerialPortEventListener;
  * Derived from the oaktree code.
  * @author			Bob Jacobsen   Copyright (C) 2006, 2007, 2008
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -180,6 +180,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         } else if (opt1.equals("CP290")) {
             // create a CP290 port controller
             SerialTrafficController.checkInstance(new jmri.jmrix.powerline.cp290.SpecificTrafficController());
+        } else if (opt1.equals("Insteon 2412S")) {
+            // create a CP290 port controller
+            SerialTrafficController.checkInstance(new jmri.jmrix.powerline.insteon2412s.SpecificTrafficController());
         } else {
             // no connection at all - warn
             log.warn("protocol option "+opt1+" defaults to CM11");
@@ -195,6 +198,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         	jmri.InstanceManager.setSensorManager(new jmri.jmrix.powerline.cm11.SpecificSensorManager());
         } else if (opt1.equals("CP290")) {
         	jmri.InstanceManager.setSensorManager(new jmri.jmrix.powerline.cp290.SpecificSensorManager());
+        } else if (opt1.equals("Insteon 2412S")) {
+        	jmri.InstanceManager.setSensorManager(new jmri.jmrix.powerline.insteon2412s.SpecificSensorManager());
         }
 
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.powerline.SerialTurnoutManager());
@@ -204,6 +209,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             jmri.InstanceManager.setLightManager(new jmri.jmrix.powerline.cm11.SpecificLightManager());
         } else if (opt1.equals("CP290")) {
             jmri.InstanceManager.setLightManager(new jmri.jmrix.powerline.cp290.SpecificLightManager());
+        } else if (opt1.equals("Insteon 2412S")) {
+            jmri.InstanceManager.setLightManager(new jmri.jmrix.powerline.insteon2412s.SpecificLightManager());
         }   
 
         // declare up
@@ -246,6 +253,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         } else if (opt1.equals("CP290")) { 
             // set to 600 baud
             baud = 600;
+        } else if (opt1.equals("Insteon 2412S")) { 
+            // set to 600 baud
+            baud = 600;
         }
         
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
@@ -276,7 +286,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         super.configureBaudRate(rate);
     }
 
-    String[] stdOption1Values = new String[]{"CM11", "CP290"}; 
+    String[] stdOption1Values = new String[]{"CM11", "CP290", "Insteon 2412S"}; 
 
     /**
      * Option 1 is not used for anything
