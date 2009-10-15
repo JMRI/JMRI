@@ -3,7 +3,6 @@
 package jmri.jmrix.maple;
 
 import jmri.Sensor;
-import jmri.jmrix.AbstractNode;
 
 /**
  * Manage the specific Sensor implementation.
@@ -18,7 +17,7 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author                      Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {

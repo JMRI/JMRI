@@ -14,7 +14,7 @@ package jmri.jmrix.maple;
  *		node number in the address.
   * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SerialAddress {
 
@@ -132,6 +132,7 @@ public class SerialAddress {
             return (false);
         }
 		// This is a KLxxxx (or KTxxxx or KSxxxx) address, make sure xxxx is OK 
+		@SuppressWarnings("unused")
 		int num;
 		try {
 			num = Integer.valueOf(systemName.substring(2)).intValue();

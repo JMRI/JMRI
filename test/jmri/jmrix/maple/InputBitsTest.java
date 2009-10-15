@@ -8,12 +8,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.jmrix.AbstractMRMessage;
-
 /**
  * JUnit tests for the InputBits class
  * @author		Dave Duchamp  2009
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 public class InputBitsTest extends TestCase {
 		

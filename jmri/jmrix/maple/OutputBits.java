@@ -17,7 +17,7 @@ package jmri.jmrix.maple;
  *		address 1001.
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class OutputBits {
 
@@ -58,7 +58,6 @@ public class OutputBits {
         int byteNumber = (bitNumber-1)/8;
         // update the byte
         byte bit = (byte) (1<<((bitNumber-1) % 8));
-        byte oldByte = outputArray[byteNumber];
         if (state) outputArray[byteNumber] &= (~bit);
         else outputArray[byteNumber] |= bit;
     }	

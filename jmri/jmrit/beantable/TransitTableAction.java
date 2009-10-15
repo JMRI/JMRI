@@ -48,7 +48,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class TransitTableAction extends AbstractTableAction {
@@ -206,7 +206,7 @@ public class TransitTableAction extends AbstractTableAction {
 	private ArrayList<Section> sectionList = new ArrayList<Section>();
 	private int[] direction = new int[150];
 	private int[] sequence = new int[150];
-	@SuppressWarnings("raw")
+//	@SuppressWarnings("raw")
 	private ArrayList[] action = new ArrayList[150]; 
 	private boolean[] alternate = new boolean[150];
 	private int maxSections = 150;  // must be equal to the dimension of the above arrays
@@ -604,7 +604,7 @@ public class TransitTableAction extends AbstractTableAction {
 				log.error("Trouble creating TransitSection");
 				return false;
 			}
-			@SuppressWarnings("raw")
+//			@SuppressWarnings("raw")
 			ArrayList list = action[i];
 			for (int j=0; j<list.size(); j++) {
 				ts.addAction( (TransitSectionAction)(list.get(j)));
