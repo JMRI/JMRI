@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: BlockBossFrame.shtml,v 1.8 2008-11-01 17:49:58 jacobsen Exp $ -->
+<!-- $Id: BlockBossFrame.shtml,v 1.9 2009-10-15 02:17:37 jacobsen Exp $ -->
 <title>JMRI: SSL Documentation</title>
 
 <!-- Style -->
@@ -168,7 +168,12 @@ The Simple Signal Logic tool allows you to configure JMRI to
 use this basic ABS type of logic to set the appearance of a signal. 
 Using the panel, you enter information on:
 <UL>
-<li><b>Signal Named</b> The signal being driven.</li><li><b>Protects Sensor/s</b> Which sensors (occupancy detectors) cover the block
+<li><b>Signal Named</b> The signal being driven. Enter either the
+user name or system name of the signal you'd like to control,
+and hit return or enter.  The rest of the fields will be filled
+in with any control information that's already present.
+</li>
+<li><b>Protects Sensor/s</b> Which sensors (occupancy detectors) cover the block
 immediately past the signal. When any of these sensors show "active" the 
 signal will be set to red.</li>
 <li><b>Red When Turnout</b> If the block contains a turnout, 
