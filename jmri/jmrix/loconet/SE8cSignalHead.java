@@ -24,7 +24,7 @@ import jmri.implementation.DefaultSignalHead;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener {
 
@@ -42,11 +42,12 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
     
     void init(int pNumber) {
         mNumber = pNumber;
-        mAppearance = RED;  // start turned off
+        mAppearance = DARK;  // start turned off
         // At construction, register for messages
-        if (LnTrafficController.instance()!=null)
+        if (LnTrafficController.instance()!=null) {
             LnTrafficController.instance().addLocoNetListener(~0, this);
-        else
+            updateOutput();
+        } else
             log.warn("No LocoNet connection, signal head won't update");
     }
     
