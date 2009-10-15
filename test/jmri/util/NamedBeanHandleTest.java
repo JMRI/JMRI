@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.util.NamedBeanUtil class.
  * @author	Bob Jacobsen  Copyright 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class NamedBeanHandleTest extends TestCase {
 
@@ -26,7 +26,7 @@ public class NamedBeanHandleTest extends TestCase {
             protected void forwardCommandChangeToLayout(int s) {}
             protected void turnoutPushbuttonLockout(boolean b){}
         };
-        NamedBeanHandle n = new NamedBeanHandle<Turnout>("name", t);
+        NamedBeanHandle<Turnout> n = new NamedBeanHandle<Turnout>("name", t);
         
         Assert.assertEquals("same TO", t, n.getBean());
     }
