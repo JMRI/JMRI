@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.7.shtml,v 1.3 2009-10-05 15:20:02 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.7.shtml,v 1.4 2009-10-15 20:38:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -75,6 +75,15 @@ DecoderPro "Comprehensive" programmer format, you should change to using
 the "Advanced" format.  You select this at the bottom of the window when opening
 a locomotive for editing, or via the JMRI Preferences window.
 
+<p>
+Changes to the internal structure of the classes for the throttle windows (not the 
+throttle classes themselves) may cause trouble for scripts that were using them.
+
+<p>
+This release uses a different set of libraries for processing the XML panel files.
+In turn, this means that if you've created your own startup scripts, you may need
+to adjust them.
+
 <h3>Warnings from older versions:</h3>
 
 Starting in JMRI 2.7.6,
@@ -138,7 +147,61 @@ If you want those two panes, start using the new Advanced programmer format.
 "Advanced" is be the default programmer format, if you don't pick any other one.
 
 <p>
-Dan Boudreau protected the code against certain errors when reading old operations configuration files.
+Dan Boudreau protected the code against certain errors when reading old operations configuration files,
+fixed a minor shutdown bug, and an issue when counting cars.
+
+<p>
+David Duchamp fixed a problem with processing continuing sense when editing turnouts in Layout Editor
+
+<p>
+Dan Boudreau added a operations tool to show cars for locations and tracks.
+
+<p>
+Kevin Dickerson improved how Layout Editor windows are loaded; 
+changed the pop up to start and stop the clock so that it now works in the Layout Editor in the same way it does in the Panel Editor;
+added code to enable a circle and elipse to be drawn for a track segments.
+
+<p>
+David Duchamp extended the Maple interface so JMRI can run multiuple Maple input touchpanels.
+
+<p>
+David Duchamp added "<a href="http://jmri.org/help/en/package/jmri/jmrit/beantable/ViewSpecialActions.shtml">Special Actions</a>"
+to Transits.
+These are actions that can be initiated automatically as a train running in automatic mode traverses 
+the layout.
+
+<p>
+Fixed a problem loading SE8c signal head definitions that include comments.
+
+<p>
+Simple Signal Logic now remembers whether you entered a user name or system name, and will
+use that same information in the future.  Previously, it converted whatever you entered into
+a system name and remembered that.
+
+<p> 
+Lionel Jeanson made some more improvements to the throttle windows:
+He added a ThrottleToolBar in order to get all throttles in one window (this involved some changes
+to the internal structure of the code that may cause problems for scripts if they were using
+the internal interfaces of the Throttles; please check your scripts).
+He also added default background image for DCC addresses 0 and 3.
+
+<p>
+Update XML parsing routines to use Xerces-J library instead of Crimson.
+This may require users who have created their own startup scripts to reference
+the xercesImpl.jar file instead of crimson.jar.
+
+<p>
+David Duchamp fixed signal head placement problems in Layout Editor signal setup tool.
+
+<p>
+Kevin Dickerson added some text formatting options to the Layout Editor.
+
+<p>
+JMRI SignalHeads are supposed to start up DARK, so that whatever controls them can 
+then set their initial appearance.  SE8c SignalHeads were not doing that properly.
+Both the internal appearance (e.g. what shows on icons), and the actual signal, should
+now properly start at DARK.
+
 
 <!--#include virtual="/Footer" -->
 
