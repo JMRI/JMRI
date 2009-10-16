@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-7.dtd,v 1.6 2009-10-16 05:31:18 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-7-7.dtd,v 1.7 2009-10-16 07:15:40 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.7.7 development.  Do not modify it       -->
 <!-- after version 2.7.7 is released.  For more information,                -->
@@ -647,7 +647,7 @@
 <!ELEMENT blocks (block*) >
   <!ATTLIST blocks class CDATA #REQUIRED> <!-- selects XML class that will handle -->
 
-<!ELEMENT block (sensor?, path*) >
+<!ELEMENT block (comment?, sensor?, path*) >
     <!ATTLIST block systemName		CDATA #REQUIRED>
     <!ATTLIST block userName		CDATA #IMPLIED>
     <!ATTLIST block length		CDATA #IMPLIED>
@@ -730,8 +730,11 @@
   <!ATTLIST signalelement distantsignal     (true|false) "false" >
 
 <!ELEMENT sensorname (#PCDATA)>
+  <!ATTLIST sensorname defines 			      CDATA #IMPLIED >
 <!ELEMENT turnoutname (#PCDATA)>
+  <!ATTLIST turnoutname defines 			  CDATA #IMPLIED >
 <!ELEMENT signalheadname (#PCDATA)>
+  <!ATTLIST signalheadname defines 			  CDATA #IMPLIED >
 
 <!ELEMENT LayoutEditor (positionablelabel|sensoricon|layoutblock|
 			positionablepoint | securityelementicon | signalheadicon |
