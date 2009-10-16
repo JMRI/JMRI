@@ -20,69 +20,65 @@ import jmri.util.NamedBeanHandle;
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
-public class TripleTurnoutSignalHead extends DefaultSignalHead {
+public class TripleTurnoutSignalHead extends DoubleTurnoutSignalHead {
 
-    public TripleTurnoutSignalHead(String sys, String user, Turnout green, Turnout yellow, Turnout red) {
-        super(sys, user);
-        mRed = red;
+    public TripleTurnoutSignalHead(String sys, String user, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> yellow, NamedBeanHandle<Turnout> red) {
+        super(sys, user, green, red);
         mYellow = yellow;
-        mGreen = green;
     }
 
-    public TripleTurnoutSignalHead(String sys, Turnout green, Turnout yellow, Turnout red) {
-        super(sys);
-        mRed = red;
+    public TripleTurnoutSignalHead(String sys, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> yellow, NamedBeanHandle<Turnout> red) {
+        super(sys, green, red);
         mYellow = yellow;
-        mGreen = green;
     }
 	
 	@SuppressWarnings("fallthrough")
 	protected void updateOutput() {
 	    // assumes that writing a turnout to an existing state is cheap!
 		if (mLit == false) {
-            mRed.setCommandedState(Turnout.CLOSED);
-            mYellow.setCommandedState(Turnout.CLOSED);
-            mGreen.setCommandedState(Turnout.CLOSED);
+            mRed.getBean().setCommandedState(Turnout.CLOSED);
+            mYellow.getBean().setCommandedState(Turnout.CLOSED);
+            mGreen.getBean().setCommandedState(Turnout.CLOSED);
 			return;
         } else if ( !mFlashOn &&
             ( (mAppearance == FLASHGREEN) ||
             (mAppearance == FLASHYELLOW) ||
             (mAppearance == FLASHRED) ) ) {
                 // flash says to make output dark
-                mRed.setCommandedState(Turnout.CLOSED);
-                mYellow.setCommandedState(Turnout.CLOSED);
-                mGreen.setCommandedState(Turnout.CLOSED);
+                mRed.getBean().setCommandedState(Turnout.CLOSED);
+                mYellow.getBean().setCommandedState(Turnout.CLOSED);
+                mGreen.getBean().setCommandedState(Turnout.CLOSED);
 			    return;
 
 		} else {
         	switch (mAppearance) {
         		case RED:
         		case FLASHRED:
-            		mRed.setCommandedState(Turnout.THROWN);
-            		mYellow.setCommandedState(Turnout.CLOSED);
-            		mGreen.setCommandedState(Turnout.CLOSED);
+            		mRed.getBean().setCommandedState(Turnout.THROWN);
+            		mYellow.getBean().setCommandedState(Turnout.CLOSED);
+            		mGreen.getBean().setCommandedState(Turnout.CLOSED);
             		break;
         		case YELLOW:
         		case FLASHYELLOW:
-            		mRed.setCommandedState(Turnout.CLOSED);
-            		mYellow.setCommandedState(Turnout.THROWN);
-            		mGreen.setCommandedState(Turnout.CLOSED);
+            		mRed.getBean().setCommandedState(Turnout.CLOSED);
+            		mYellow.getBean().setCommandedState(Turnout.THROWN);
+            		mGreen.getBean().setCommandedState(Turnout.CLOSED);
             		break;
         		case GREEN:
         		case FLASHGREEN:
-            		mRed.setCommandedState(Turnout.CLOSED);
-            		mYellow.setCommandedState(Turnout.CLOSED);
-            		mGreen.setCommandedState(Turnout.THROWN);
+            		mRed.getBean().setCommandedState(Turnout.CLOSED);
+            		mYellow.getBean().setCommandedState(Turnout.CLOSED);
+            		mGreen.getBean().setCommandedState(Turnout.THROWN);
             		break;
         		default:
             		log.warn("Unexpected new appearance: "+mAppearance);
             		// go dark
         		case DARK:
-            		mRed.setCommandedState(Turnout.CLOSED);
-            		mYellow.setCommandedState(Turnout.CLOSED);
-            		mGreen.setCommandedState(Turnout.CLOSED);
+            		mRed.getBean().setCommandedState(Turnout.CLOSED);
+            		mYellow.getBean().setCommandedState(Turnout.CLOSED);
+            		mGreen.getBean().setCommandedState(Turnout.CLOSED);
             		break;
             }
         }
@@ -93,22 +89,14 @@ public class TripleTurnoutSignalHead extends DefaultSignalHead {
      * eventually be garbage-collected.
      */
     public void dispose() {
-        mRed = null;
         mYellow = null;
-        mGreen = null;
         super.dispose();
     }
 
-    Turnout mRed;
-    Turnout mYellow;
-    Turnout mGreen;
+    NamedBeanHandle<Turnout> mYellow;
 
-    public Turnout getRed() {return mRed;}
-    public Turnout getYellow() {return mYellow;}
-    public Turnout getGreen() {return mGreen;}
-	public void setRed(Turnout t) {mRed=t;}
-	public void setYellow(Turnout t) {mYellow=t;}
-	public void setGreen(Turnout t) {mGreen=t;}
+    public NamedBeanHandle<Turnout> getYellow() {return mYellow;}
+	public void setYellow(NamedBeanHandle<Turnout> t) {mYellow=t;}
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TripleTurnoutSignalHead.class.getName());
 }

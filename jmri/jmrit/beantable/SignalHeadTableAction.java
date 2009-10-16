@@ -22,6 +22,13 @@ import jmri.implementation.DoubleTurnoutSignalHead;
 import jmri.implementation.TripleTurnoutSignalHead;
 import jmri.implementation.QuadOutputSignalHead;
 import jmri.Turnout;
+
+import jmri.util.JmriJFrame;
+import jmri.util.NamedBeanHandle;
+
+import jmri.jmrix.acela.AcelaAddress;
+import jmri.jmrix.acela.AcelaNode;
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,17 +42,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 
-import jmri.jmrix.acela.AcelaAddress;
-import jmri.jmrix.acela.AcelaNode;
-import jmri.util.JmriJFrame;
-
 /**
  * Swing action to create and register a
  * SignalHeadTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.44 $
+ * @version     $Revision: 1.45 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -923,7 +926,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 return;
             }
             if (checkBeforeCreating(systemName.getText())) {
-                s = new jmri.implementation.QuadOutputSignalHead(systemName.getText(),userName.getText(),t1, t2, t3, t4);
+                s = new jmri.implementation.QuadOutputSignalHead(systemName.getText(),userName.getText(),
+            	    new NamedBeanHandle<Turnout>(to1.getText(),t1), 
+            	    new NamedBeanHandle<Turnout>(to2.getText(),t2), 
+            	    new NamedBeanHandle<Turnout>(to3.getText(),t3), 
+            	    new NamedBeanHandle<Turnout>(to4.getText(),t4));
                 InstanceManager.signalHeadManagerInstance().register(s);
                 
             }
@@ -939,7 +946,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 return;
             }
             if (checkBeforeCreating(systemName.getText())) {
-                s = new jmri.implementation.TripleTurnoutSignalHead(systemName.getText(),userName.getText(),t1, t2, t3);
+                s = new jmri.implementation.TripleTurnoutSignalHead(systemName.getText(),userName.getText(),
+            	    new NamedBeanHandle<Turnout>(to1.getText(),t1), 
+            	    new NamedBeanHandle<Turnout>(to2.getText(),t2), 
+            	    new NamedBeanHandle<Turnout>(to3.getText(),t3));
                 InstanceManager.signalHeadManagerInstance().register(s);
             }
         } else if (doubleTurnout.equals(typeBox.getSelectedItem())) {
@@ -952,7 +962,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 return;
             }
             if (checkBeforeCreating(systemName.getText())) {			
-            	s = new jmri.implementation.DoubleTurnoutSignalHead(systemName.getText(),userName.getText(),t1, t2);
+            	s = new jmri.implementation.DoubleTurnoutSignalHead(systemName.getText(),userName.getText(),
+            	    new NamedBeanHandle<Turnout>(to1.getText(),t1), 
+            	    new NamedBeanHandle<Turnout>(to2.getText(),t2));
                 s.setUserName(userName.getText());
                 InstanceManager.signalHeadManagerInstance().register(s);
             }
@@ -1235,19 +1247,19 @@ public class SignalHeadTableAction extends AbstractTableAction {
             ev1Label.setText(rb.getString("LabelGreenTurnoutNumber"));
             ev1Label.setVisible(true);
             eto1.setVisible(true);
-			eto1.setText(((TripleTurnoutSignalHead)curS).getGreen().getSystemName());
+			eto1.setText(((TripleTurnoutSignalHead)curS).getGreen().getName());
             ev2Label.setText(rb.getString("LabelYellowTurnoutNumber"));
             ev2Label.setVisible(true);
             eto2.setVisible(true);
-			eto2.setText(((TripleTurnoutSignalHead)curS).getYellow().getSystemName());
+			eto2.setText(((TripleTurnoutSignalHead)curS).getYellow().getName());
             ev3Label.setText(rb.getString("LabelRedTurnoutNumber"));
 			ev3Label.setVisible(true);
             eto3.setVisible(true);
-			eto3.setText(((TripleTurnoutSignalHead)curS).getRed().getSystemName());
+			eto3.setText(((TripleTurnoutSignalHead)curS).getRed().getName());
             ev4Label.setText(rb.getString("LabelLunarTurnoutNumber"));
 			ev4Label.setVisible(true);
             eto4.setVisible(true);
-			eto4.setText(((QuadOutputSignalHead)curS).getLunar().getSystemName());
+			eto4.setText(((QuadOutputSignalHead)curS).getLunar().getName());
 		}
 		else if (className.equals("jmri.implementation.TripleTurnoutSignalHead")) {
 			signalType.setText(tripleTurnout);
@@ -1258,15 +1270,15 @@ public class SignalHeadTableAction extends AbstractTableAction {
             ev1Label.setText(rb.getString("LabelGreenTurnoutNumber"));
             ev1Label.setVisible(true);
             eto1.setVisible(true);
-			eto1.setText(((TripleTurnoutSignalHead)curS).getGreen().getSystemName());
+			eto1.setText(((TripleTurnoutSignalHead)curS).getGreen().getName());
             ev2Label.setText(rb.getString("LabelYellowTurnoutNumber"));
             ev2Label.setVisible(true);
             eto2.setVisible(true);
-			eto2.setText(((TripleTurnoutSignalHead)curS).getYellow().getSystemName());
+			eto2.setText(((TripleTurnoutSignalHead)curS).getYellow().getName());
             ev3Label.setText(rb.getString("LabelRedTurnoutNumber"));
 			ev3Label.setVisible(true);
             eto3.setVisible(true);
-			eto3.setText(((TripleTurnoutSignalHead)curS).getRed().getSystemName());
+			eto3.setText(((TripleTurnoutSignalHead)curS).getRed().getName());
 		}
 		else if (className.equals("jmri.implementation.DoubleTurnoutSignalHead")) {
 			signalType.setText(doubleTurnout);
@@ -1277,11 +1289,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
             ev1Label.setText(rb.getString("LabelGreenTurnoutNumber"));
             ev1Label.setVisible(true);
             eto1.setVisible(true);
-			eto1.setText(((DoubleTurnoutSignalHead)curS).getGreen().getSystemName());
+			eto1.setText(((DoubleTurnoutSignalHead)curS).getGreen().getName());
             ev2Label.setText(rb.getString("LabelRedTurnoutNumber"));
             ev2Label.setVisible(true);
             eto2.setVisible(true);
-			eto2.setText(((DoubleTurnoutSignalHead)curS).getRed().getSystemName());
+			eto2.setText(((DoubleTurnoutSignalHead)curS).getRed().getName());
  		}
 		else if (className.equals("jmri.implementation.VirtualSignalHead")) {
 			signalType.setText(virtualHead);
@@ -1470,22 +1482,22 @@ public class SignalHeadTableAction extends AbstractTableAction {
 				noTurnoutMessage(ev1Label.getText(), eto1.getText());
 				return;
 			}
-			else ((QuadOutputSignalHead)curS).setGreen(t1);
+			else ((QuadOutputSignalHead)curS).setGreen(new NamedBeanHandle<Turnout>(eto1.getText(),t1));
             if (t2==null) {
 				noTurnoutMessage(ev2Label.getText(), eto2.getText());
 				return;
 			}
-			else ((QuadOutputSignalHead)curS).setYellow(t2);
+			else ((QuadOutputSignalHead)curS).setYellow(new NamedBeanHandle<Turnout>(eto2.getText(),t2));
             if (t3==null) {
 				noTurnoutMessage(ev3Label.getText(), eto3.getText());
 				return;
 			}
-			else ((QuadOutputSignalHead)curS).setRed(t3);
+			else ((QuadOutputSignalHead)curS).setRed(new NamedBeanHandle<Turnout>(eto3.getText(),t3));
             if (t4==null) {
 				noTurnoutMessage(ev4Label.getText(), eto4.getText());
 				return;
 			}
-			else ((QuadOutputSignalHead)curS).setLunar(t4);
+			else ((QuadOutputSignalHead)curS).setLunar(new NamedBeanHandle<Turnout>(eto4.getText(),t4));
 		}
 		else if (className.equals("jmri.implementation.TripleTurnoutSignalHead")) {
             Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(eto1.getText());
@@ -1495,17 +1507,17 @@ public class SignalHeadTableAction extends AbstractTableAction {
 				noTurnoutMessage(ev1Label.getText(), eto1.getText());
 				return;
 			}
-			else ((TripleTurnoutSignalHead)curS).setGreen(t1);
+			else ((TripleTurnoutSignalHead)curS).setGreen(new NamedBeanHandle<Turnout>(eto1.getText(),t1));
             if (t2==null) {
 				noTurnoutMessage(ev2Label.getText(), eto2.getText());
 				return;
 			}
-			else ((TripleTurnoutSignalHead)curS).setYellow(t2);
+			else ((TripleTurnoutSignalHead)curS).setYellow(new NamedBeanHandle<Turnout>(eto2.getText(),t2));
             if (t3==null) {
 				noTurnoutMessage(ev3Label.getText(), eto3.getText());
 				return;
 			}
-			else ((TripleTurnoutSignalHead)curS).setRed(t3);
+			else ((TripleTurnoutSignalHead)curS).setRed(new NamedBeanHandle<Turnout>(eto3.getText(),t3));
 		}
 		else if (className.equals("jmri.implementation.DoubleTurnoutSignalHead")) {
             Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(eto1.getText());
@@ -1514,12 +1526,12 @@ public class SignalHeadTableAction extends AbstractTableAction {
 				noTurnoutMessage(ev1Label.getText(), eto1.getText());
 				return;
 			}
-			else ((DoubleTurnoutSignalHead)curS).setGreen(t1);
+			else ((DoubleTurnoutSignalHead)curS).setGreen(new NamedBeanHandle<Turnout>(eto1.getText(),t1));
             if (t2==null) {
 				noTurnoutMessage(ev2Label.getText(), eto2.getText());
 				return;
 			}
-			else ((DoubleTurnoutSignalHead)curS).setRed(t2);
+			else ((DoubleTurnoutSignalHead)curS).setRed(new NamedBeanHandle<Turnout>(eto2.getText(),t2));
 		}
 		else if (className.equals("jmri.implementation.LsDecSignalHead")) {
 			Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(eto1.getText());

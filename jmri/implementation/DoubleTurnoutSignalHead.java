@@ -21,17 +21,17 @@ import jmri.util.NamedBeanHandle;
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class DoubleTurnoutSignalHead extends DefaultSignalHead {
 
-    public DoubleTurnoutSignalHead(String sys, String user, Turnout green, Turnout red) {
+    public DoubleTurnoutSignalHead(String sys, String user, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> red) {
         super(sys, user);
         mRed = red;
         mGreen = green;
     }
 
-    public DoubleTurnoutSignalHead(String sys, Turnout green, Turnout red) {
+    public DoubleTurnoutSignalHead(String sys, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> red) {
         super(sys);
         mRed = red;
         mGreen = green;
@@ -41,41 +41,41 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead {
 	protected void updateOutput() {
 	    // assumes that writing a turnout to an existing state is cheap!
 		if (mLit == false) {
-            mRed.setCommandedState(Turnout.CLOSED);
-            mGreen.setCommandedState(Turnout.CLOSED);
+            mRed.getBean().setCommandedState(Turnout.CLOSED);
+            mGreen.getBean().setCommandedState(Turnout.CLOSED);
 			return;
         } else if ( !mFlashOn &&
             ( (mAppearance == FLASHGREEN) ||
             (mAppearance == FLASHYELLOW) ||
             (mAppearance == FLASHRED) ) ) {
                 // flash says to make output dark
-                mRed.setCommandedState(Turnout.CLOSED);
-                mGreen.setCommandedState(Turnout.CLOSED);
+                mRed.getBean().setCommandedState(Turnout.CLOSED);
+                mGreen.getBean().setCommandedState(Turnout.CLOSED);
 			    return;
 
 		} else {
         	switch (mAppearance) {
         		case RED:
         		case FLASHRED:
-            		mRed.setCommandedState(Turnout.THROWN);
-            		mGreen.setCommandedState(Turnout.CLOSED);
+            		mRed.getBean().setCommandedState(Turnout.THROWN);
+            		mGreen.getBean().setCommandedState(Turnout.CLOSED);
             		break;
         		case YELLOW:
         		case FLASHYELLOW:
-            		mRed.setCommandedState(Turnout.THROWN);
-            		mGreen.setCommandedState(Turnout.THROWN);
+            		mRed.getBean().setCommandedState(Turnout.THROWN);
+            		mGreen.getBean().setCommandedState(Turnout.THROWN);
             		break;
         		case GREEN:
         		case FLASHGREEN:
-            		mRed.setCommandedState(Turnout.CLOSED);
-            		mGreen.setCommandedState(Turnout.THROWN);
+            		mRed.getBean().setCommandedState(Turnout.CLOSED);
+            		mGreen.getBean().setCommandedState(Turnout.THROWN);
             		break;
         		default:
             		log.warn("Unexpected new appearance: "+mAppearance);
             		// go dark
         		case DARK:
-            		mRed.setCommandedState(Turnout.CLOSED);
-            		mGreen.setCommandedState(Turnout.CLOSED);
+            		mRed.getBean().setCommandedState(Turnout.CLOSED);
+            		mGreen.getBean().setCommandedState(Turnout.CLOSED);
             		break;
             }
         }
@@ -91,13 +91,13 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead {
         super.dispose();
     }
 
-    Turnout mRed;
-    Turnout mGreen;
+    NamedBeanHandle<Turnout> mRed;
+    NamedBeanHandle<Turnout> mGreen;
 
-    public Turnout getRed() {return mRed;}
-    public Turnout getGreen() {return mGreen;}
-	public void setRed(Turnout t) {mRed=t;}
-	public void setGreen(Turnout t) {mGreen=t;}
+    public NamedBeanHandle<Turnout> getRed() {return mRed;}
+    public NamedBeanHandle<Turnout> getGreen() {return mGreen;}
+	public void setRed(NamedBeanHandle<Turnout> t) {mRed=t;}
+	public void setGreen(NamedBeanHandle<Turnout> t) {mGreen=t;}
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DoubleTurnoutSignalHead.class.getName());
 }

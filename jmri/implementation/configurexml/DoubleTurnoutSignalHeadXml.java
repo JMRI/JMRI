@@ -4,8 +4,10 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.implementation.DoubleTurnoutSignalHead;
 import jmri.Turnout;
+import jmri.util.NamedBeanHandle;
 
 import java.util.List;
+
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -13,7 +15,7 @@ import org.jdom.Element;
  * Handle XML configuration for DoubleTurnoutSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -36,12 +38,18 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
 
         storeCommon(p, element);
         
-        element.addContent(addTurnoutElement(p.getGreen()));
-        element.addContent(addTurnoutElement(p.getRed()));
+        element.addContent(addTurnoutElement(p.getGreen(), "green"));
+        element.addContent(addTurnoutElement(p.getRed(), "red"));
 
         return element;
     }
 
+    Element addTurnoutElement(NamedBeanHandle<Turnout> to, String which) {
+        Element el = new Element("turnoutname");
+        el.setAttribute("defines", which);
+        el.addContent(to.getName());
+        return el;
+    }
     Element addTurnoutElement(Turnout to) {
         String user = to.getUserName();
         String sys = to.getSystemName();
@@ -60,9 +68,10 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
      */
     @SuppressWarnings("unchecked")
 	public boolean load(Element element) {
-        List<Element> l = element.getChildren("turnout");
-        Turnout green = loadTurnout(l.get(0));
-        Turnout red = loadTurnout(l.get(1));
+        List<Element> l = element.getChildren("turnoutname");
+        if (l.size() == 0) l = element.getChildren("turnout");
+        NamedBeanHandle<Turnout> green = loadTurnout(l.get(0));
+        NamedBeanHandle<Turnout> red = loadTurnout(l.get(1));
         // put it together
         String sys = element.getAttribute("systemName").getValue();
         Attribute a = element.getAttribute("userName");
@@ -78,12 +87,30 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         return true;
     }
 
-    Turnout loadTurnout(Object o) {
+    /**
+     * Needs to handle two types of element:
+     *    turnoutname is new form
+     *    turnout is old form
+     */
+    NamedBeanHandle<Turnout> loadTurnout(Object o) {
         Element e = (Element)o;
-
-        // we don't create the Turnout, we just look it up.
-        String sys = e.getAttribute("systemName").getValue();
-        return InstanceManager.turnoutManagerInstance().getBySystemName(sys);
+        
+        if (e.getName().equals("turnout")) {
+            String name = e.getAttribute("systemName").getValue();
+            Turnout t;
+            if (e.getAttribute("userName")!=null && 
+                    !e.getAttribute("userName").getValue().equals("")) {
+                name = e.getAttribute("userName").getValue();
+                t = InstanceManager.turnoutManagerInstance().getTurnout(name);
+            } else {
+                t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
+            }
+            return new NamedBeanHandle<Turnout>(name, t);
+        } else {
+            String name = e.getText();
+            Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
+            return new NamedBeanHandle<Turnout>(name, t);
+        }
     }
 
     public void load(Element element, Object o) {

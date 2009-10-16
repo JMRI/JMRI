@@ -20,16 +20,16 @@ import jmri.util.NamedBeanHandle;
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
 
-    public QuadOutputSignalHead(String sys, String user, Turnout green, Turnout yellow, Turnout red, Turnout lunar) {
+    public QuadOutputSignalHead(String sys, String user, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> yellow, NamedBeanHandle<Turnout> red, NamedBeanHandle<Turnout> lunar) {
         super(sys, user, green, yellow, red);
         mLunar = lunar;
     }
 
-    public QuadOutputSignalHead(String sys, Turnout green, Turnout yellow, Turnout red, Turnout lunar) {
+    public QuadOutputSignalHead(String sys, NamedBeanHandle<Turnout> green, NamedBeanHandle<Turnout> yellow, NamedBeanHandle<Turnout> red, NamedBeanHandle<Turnout> lunar) {
         super(sys, green, yellow, red);
         mLunar = lunar;
     }
@@ -44,24 +44,24 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
             (mAppearance == FLASHRED) ||
             (mAppearance == FLASHLUNAR) ) ) {
                 // flash says to make output dark
-                mRed.setCommandedState(Turnout.CLOSED);
-                mYellow.setCommandedState(Turnout.CLOSED);
-                mGreen.setCommandedState(Turnout.CLOSED);
-                mLunar.setCommandedState(Turnout.CLOSED);
+                mRed.getBean().setCommandedState(Turnout.CLOSED);
+                mYellow.getBean().setCommandedState(Turnout.CLOSED);
+                mGreen.getBean().setCommandedState(Turnout.CLOSED);
+                mLunar.getBean().setCommandedState(Turnout.CLOSED);
 			    return;
 
 		} else {
         	switch (mAppearance) {
         		case LUNAR:
         		case FLASHLUNAR:
-            		mLunar.setCommandedState(Turnout.THROWN);
-                    mRed.setCommandedState(Turnout.CLOSED);
-                    mYellow.setCommandedState(Turnout.CLOSED);
-                    mGreen.setCommandedState(Turnout.CLOSED);
+            		mLunar.getBean().setCommandedState(Turnout.THROWN);
+                    mRed.getBean().setCommandedState(Turnout.CLOSED);
+                    mYellow.getBean().setCommandedState(Turnout.CLOSED);
+                    mGreen.getBean().setCommandedState(Turnout.CLOSED);
             		break;
         		default:
         		    // let parent handle rest of cases
-            		mLunar.setCommandedState(Turnout.CLOSED);
+            		mLunar.getBean().setCommandedState(Turnout.CLOSED);
             		super.updateOutput();
             		break;
             }
@@ -77,10 +77,10 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
         super.dispose();
     }
 
-    Turnout mLunar;
+    NamedBeanHandle<Turnout> mLunar;
 
-    public Turnout getLunar() {return mLunar;}
-	public void setLunar(Turnout t) {mLunar=t;}
+    public NamedBeanHandle<Turnout> getLunar() {return mLunar;}
+	public void setLunar(NamedBeanHandle<Turnout> t) {mLunar=t;}
 
     final static private java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
