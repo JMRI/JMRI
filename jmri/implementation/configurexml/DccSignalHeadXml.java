@@ -25,7 +25,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008, 2009
  * @author Petr Koud'a  Copyright: Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -40,7 +40,7 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
     public Element store(Object o) {
         DccSignalHead p = (DccSignalHead)o;
 
-        Element element = new Element("dccsignalhead");
+        Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
 
         // include contents
