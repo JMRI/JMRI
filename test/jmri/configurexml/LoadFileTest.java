@@ -18,7 +18,7 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class LoadFileTest extends TestCase {
 
@@ -26,6 +26,23 @@ public class LoadFileTest extends TestCase {
         // load file
         InstanceManager.configureManagerInstance()
             .load(new java.io.File("java/test/jmri/configurexml/LoadFileTest.xml"));
+    
+        // check existance of a few objects
+        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("IS1"));
+        Assert.assertNull(InstanceManager.sensorManagerInstance().getSensor("no sensor"));
+
+        Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
+        Assert.assertNull(InstanceManager.turnoutManagerInstance().getTurnout("no sensor"));
+        
+        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM1"));
+        Assert.assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
+        
+    }
+    
+    public void testLoad277() {
+        // load file
+        InstanceManager.configureManagerInstance()
+            .load(new java.io.File("java/test/jmri/configurexml/LoadFileTest277.xml"));
     
         // check existance of a few objects
         Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("IS1"));
@@ -56,7 +73,8 @@ public class LoadFileTest extends TestCase {
         // compare files, except for certain special lines
         BufferedReader inFileStream = new BufferedReader(
                 new InputStreamReader(
-                    new FileInputStream(inFile)));
+                    new FileInputStream(
+                        new java.io.File("java/test/jmri/configurexml/LoadFileTestRef.xml"))));
         BufferedReader outFileStream = new BufferedReader(
                 new InputStreamReader(
                     new FileInputStream(outFile)));
@@ -70,6 +88,66 @@ public class LoadFileTest extends TestCase {
         }
     }
         
+    public void testLoadStore277() throws Exception {
+        // load manager
+        java.io.File inFile = new java.io.File("java/test/jmri/configurexml/LoadFileTest277.xml");
+        
+        // load file
+        InstanceManager.configureManagerInstance()
+            .load(inFile);
+    
+        // store file
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
+        java.io.File outFile = new java.io.File(XmlFile.prefsDir()+"temp/LoadFileTest.xml");
+        InstanceManager.configureManagerInstance()
+            .storeConfig(outFile);
+        
+        // compare files, except for certain special lines
+        BufferedReader inFileStream = new BufferedReader(
+                new InputStreamReader(
+                    new FileInputStream(
+                        new java.io.File("java/test/jmri/configurexml/LoadFileTestRef.xml"))));
+        BufferedReader outFileStream = new BufferedReader(
+                new InputStreamReader(
+                    new FileInputStream(outFile)));
+        String inLine;
+        String outLine;
+        while ( (inLine = inFileStream.readLine())!=null && (outLine = outFileStream.readLine())!=null) {
+            if (!inLine.startsWith("  <!--Written by JMRI version")
+                && !inLine.startsWith("  <timebase")   // time changes from timezone to timezone
+                && !inLine.startsWith("<?xml-stylesheet"))   // Linux seems to put attributes in different order
+                    Assert.assertEquals(inLine, outLine);
+        }
+    }
+        
+    public void testValidateOne() {
+        validate(new java.io.File("java/test/jmri/configurexml/LoadFileTest.xml"));
+    }
+    
+    public void testValidate277() {
+        validate(new java.io.File("java/test/jmri/configurexml/LoadFileTest277.xml"));
+    }
+    
+    public void testValidateRef() {
+        validate(new java.io.File("java/test/jmri/configurexml/LoadFileTestRef.xml"));
+    }
+    
+    // testing services
+    public void validate(File file) {
+        boolean original = XmlFile.getVerify();
+        try {
+            XmlFile.setVerify(true);
+            XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
+            xf.rootFromFile(file);
+        } catch (Exception ex) {
+            XmlFile.setVerify(original);
+            Assert.fail(ex.toString());
+            return;
+        } finally {
+            XmlFile.setVerify(original);
+        }
+    }
+
     // from here down is testing infrastructure
 
     public LoadFileTest(String s) {

@@ -64,9 +64,9 @@
     </signalhead>
     <signalhead class="jmri.implementation.configurexml.TripleTurnoutSignalHeadXml" systemName="IH2" userName="Signal 2">
       <comment>Triple head</comment>
-      <turnoutname defines="green">IT23</turnoutname>
-      <turnoutname defines="yellow">IT22</turnoutname>
-      <turnoutname defines="red">IT21</turnoutname>
+      <turnoutname defines="green">For Signal IH2 G</turnoutname>
+      <turnoutname defines="yellow">For Signal IH2 Y</turnoutname>
+      <turnoutname defines="red">For Signal IH2 R</turnoutname>
     </signalhead>
   </signalheads>
   <routes class="jmri.configurexml.DefaultRouteManagerXml">
@@ -87,6 +87,6 @@
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 2.7.6 on Thu Oct 15 22:35:17 PDT 2009 $Id: LoadFileTest277.xml,v 1.1 2009-10-16 06:14:26 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.6 on Thu Oct 15 23:16:50 PDT 2009 $Id: LoadFileTest277.xml,v 1.2 2009-10-16 07:16:24 jacobsen Exp $-->
 </layout-config>
 
