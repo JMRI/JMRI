@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-7.dtd,v 1.5 2009-10-14 00:27:59 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-7-7.dtd,v 1.6 2009-10-16 05:31:18 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.7.7 development.  Do not modify it       -->
 <!-- after version 2.7.7 is released.  For more information,                -->
@@ -256,13 +256,15 @@
 <!ELEMENT signalheads (signalhead | dccsignalhead)*>
   <!ATTLIST signalheads class		CDATA #REQUIRED>
 
-  <!ELEMENT signalhead (comment?, turnout*) >     <!-- different actual types carry different contents -->
+  <!ELEMENT signalhead (comment?, turnout*, turnoutname*) >     
+                        <!-- different actual types carry different contents -->
+                        <!-- turnout* obsolete/deprecated, turnoutname* new in 2.7.7 -->
   	<!ATTLIST signalhead class	CDATA #REQUIRED>
     <!ATTLIST signalhead systemName	CDATA #REQUIRED>  
     <!ATTLIST signalhead userName	CDATA #IMPLIED>
     <!ATTLIST signalhead home    (yes|no) #IMPLIED>
 
-  <!ELEMENT dccsignalhead (comment?, turnout*) >     <!-- different actual types carry different contents -->
+  <!ELEMENT dccsignalhead (comment?) >     <!-- obsolete/deprecated in 2.7.7 -->
   	<!ATTLIST dccsignalhead class	CDATA #REQUIRED>
     <!ATTLIST dccsignalhead systemName	CDATA #REQUIRED>  
     <!ATTLIST dccsignalhead userName	CDATA #IMPLIED>
@@ -707,7 +709,8 @@
 <!ELEMENT signalelements (signalelement*) >
   <!ATTLIST signalelements class CDATA #REQUIRED> <!-- selects XML class that will handle -->
 
-<!ELEMENT signalelement (sensorname*, comment?) >
+<!ELEMENT signalelement (sensor*, sensorname*, comment?) >  
+                        <!-- sensor* obsolete/deprecated, sensorname new in 2.7.7 -->
   <!ATTLIST signalelement signal 			  CDATA #REQUIRED >
   <!ATTLIST signalelement mode				  CDATA #IMPLIED>
   <!ATTLIST signalelement approachsensor1     CDATA #IMPLIED>
@@ -727,6 +730,8 @@
   <!ATTLIST signalelement distantsignal     (true|false) "false" >
 
 <!ELEMENT sensorname (#PCDATA)>
+<!ELEMENT turnoutname (#PCDATA)>
+<!ELEMENT signalheadname (#PCDATA)>
 
 <!ELEMENT LayoutEditor (positionablelabel|sensoricon|layoutblock|
 			positionablepoint | securityelementicon | signalheadicon |
