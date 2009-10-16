@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -125,6 +125,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		opsGroup.add(interchangeRadioButton);
 		opsGroup.add(stageRadioButton);
 		
+		// Location name for tools menu
+		String locationName = null;
+		
 		if (_location != null){
 			enableButtons(true);
 			locationNameTextField.setText(_location.getName());
@@ -134,6 +137,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	      	interchangeModel.initTable(interchangeTable, location);
 	      	stagingModel.initTable(stagingTable, location);
 	      	_location.addPropertyChangeListener(this);
+	      	locationName = _location.getName();
 			if (_location.getLocationOps() == Location.NORMAL){
 				if (sidingModel.getRowCount()>0)
 					sidingRadioButton.setSelected(true);
@@ -246,7 +250,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
-		toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), null));
+		toolMenu.add(new ShowCarsByLocationAction(false, locationName, null));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);

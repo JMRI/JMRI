@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -180,6 +180,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addRadioButtonAction(roadNameInclude);
 		addRadioButtonAction(roadNameExclude);
 		
+		// track name for tools menu
+		String trackName = null;
+		
 		// load fields and enable buttons
 		if (_track !=null){
 			_track.addPropertyChangeListener(this);
@@ -187,6 +190,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			commentTextField.setText(_track.getComment());
 			trackLengthTextField.setText(Integer.toString(_track.getLength()));
 			enableButtons(true);
+			trackName = _track.getName();
 		} else {
 			enableButtons(false);
 		}
@@ -194,7 +198,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
-		toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), track.getName()));
+		toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), trackName));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		
