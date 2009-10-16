@@ -5,6 +5,7 @@ package jmri.jmrix.maple;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import junit.framework.Assert;
 
 import jmri.jmrix.AbstractMRMessage;
 
@@ -12,7 +13,7 @@ import jmri.jmrix.AbstractMRMessage;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
 public class SerialNodeTest extends TestCase {
 		

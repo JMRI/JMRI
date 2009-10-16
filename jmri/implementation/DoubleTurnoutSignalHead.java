@@ -3,6 +3,7 @@
 package jmri.implementation;
 
 import jmri.*;
+import jmri.util.NamedBeanHandle;
 
 /**
  * Drive a single signal head via two "Turnout" objects.
@@ -20,7 +21,7 @@ import jmri.*;
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class DoubleTurnoutSignalHead extends DefaultSignalHead {
 
