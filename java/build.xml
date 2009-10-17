@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009 -->
-<!-- Revision $Revision: 1.53 $ -->
+<!-- Revision $Revision: 1.54 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -40,7 +40,7 @@
 		
 		<!-- Set this to the directory where Findbugs is installed if you don't 
 		want to use the command line arguments -->
-		<!--property name="findbugs.home" value="C:/findbugs-1.3.8" /-->
+              <!--property name="findbugs.home" value="C:/findbugs-1.3.8" /-->
     
   <!-- You can specify a DecoderPro/PanelPro config file at runtime -->
   <!-- with e.g. "ant -Dantargline=DecoderProFile.xml decoderpro"   -->
@@ -422,6 +422,65 @@
     <!-- <exec executable="jar" dir="${jartarget}"> -->
     <!--	<arg line="i jmri.jar"/>                -->
     <!-- </exec>                                    -->
+  </target>
+
+  <target name="javadoc-uml" depends="init" description="create JavaDocs with UML">
+    <javadoc packagenames="jmri.*, apps.*"
+           maxmemory="512m"
+           sourcepath="${source}"
+           overview="src/jmri/overview.html"
+           defaultexcludes="yes"
+           destdir="${doctarget}"
+           additionalparam="-breakiterator"
+           author="true"
+           version="false"
+           use="true"
+           windowtitle="JMRI API">
+      <doclet name="org.umlgraph.doclet.UmlGraphDoc"
+	        		  path="../lib/UmlGraph-5.2.jar">
+	        	        <param name="-attributes" />
+	        	        <param name="-operations" />
+	        	        <param name="-qualify" />
+	        	        <param name="-types" />
+	        	        <param name="-visibility" />
+      </doclet>
+      <group title="Core" packages="jmri"/>
+      <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
+      <group title="Applications" packages="apps:apps.*"/>
+      <group title="Implementations" packages="jmri.implementation:jmri.managers:jmri.progdebugger:jmri.layout"/>
+      <group title="Utilities" packages="jmri.util:jmri.util.*"/>
+      <group title="XML persistance" packages="jmri.configurexml:apps.configurexml"/>
+      <!-- Layout Connections last because so large -->
+      <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
+	  
+      <classpath refid="project.class.path"    />
+      <doctitle><![CDATA[<h1>JMRI Library API</h1>]]></doctitle>
+      <bottom><![CDATA[<i>Copyright &copy; 1997 - 2009 JMRI Community. 
+                    <br>JMRI, DecoderPro, PanelPro, SoundPro, DispatcherPro and associated logos are our trademarks.</i>
+                       <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
+                       <br>Site hosted by: 
+                       <a href="http://sourceforge.net/projects/jmri">
+                       <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
+                ]]></bottom>
+      <link href="http://java.sun.com/j2se/1.5.0/docs/api/" />
+      <link href="http://java.sun.com/products/javacomm/reference/api/" />
+      <link href="http://users.frii.com/jarvi/rxtx/doc/" />
+      <link href="http://www.jdom.org/docs/apidocs/" />
+      <link href="http://javacsv.sourceforge.net/" />
+      <link href="http://logging.apache.org/log4j/1.2/apidocs/" />
+      <link href="http://java.sun.com/javase/technologies/desktop/java3d/forDevelopers/j3dapi/" />
+      <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public" />
+      <link href="http://java.sun.com/javase/6/docs/api/" />
+      <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public" />
+    </javadoc>
+		<apply executable="dot" dest="${doctarget}" parallel="false">
+		    <arg value="-Tpng"/>
+		    <arg value="-o"/>
+		     <targetfile/>
+		     <srcfile/>
+		     <fileset dir="${doctarget}" includes="*.dot"/>
+		     <mapper type="glob" from="*.dot" to="*.png"/>
+		  </apply>
   </target>
 
   <target name="javadoc" depends="init" description="create JavaDocs">
