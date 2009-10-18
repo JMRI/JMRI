@@ -42,7 +42,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.51 $
+ * @version             $Revision: 1.52 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -86,8 +86,6 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String NUMBERCARS_CHANGED_PROPERTY = "numberCarsMoves";
 	public static final String STATUS_CHANGED_PROPERTY = "status";
 	public static final String DEPARTURETIME_CHANGED_PROPERTY = "departureTime";
-	
-	private static final String LENGTH = "Length";
 	
 	// Train status
 	public static final String TERMINATED = rb.getString("Terminated");
@@ -425,13 +423,13 @@ public class Train implements java.beans.PropertyChangeListener {
 			return;
 		_skipLocationsList.add(0,locationId);
 		log.debug("train does not stop at "+locationId);
-		firePropertyChange (STOPS_CHANGED_PROPERTY, null, LENGTH);
+		firePropertyChange (STOPS_CHANGED_PROPERTY, _skipLocationsList.size()-1, _skipLocationsList.size());
 	}
 
 	public void deleteTrainSkipsLocation(String locationId){
 		_skipLocationsList.remove(locationId);
 		log.debug("train will stop at "+locationId);
-		firePropertyChange (STOPS_CHANGED_PROPERTY, null, LENGTH);
+		firePropertyChange (STOPS_CHANGED_PROPERTY, _skipLocationsList.size()+1, _skipLocationsList.size());
 	}
 
 	public boolean skipsLocation(String locationId){
@@ -464,7 +462,7 @@ public class Train implements java.beans.PropertyChangeListener {
     		return;
     	_typeList.add(0,type);
     	log.debug("train add car type "+type);
-    	firePropertyChange (TYPES_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (TYPES_CHANGED_PROPERTY, _typeList.size()-1, _typeList.size());
     }
     
     public void deleteTypeName(String type){
@@ -472,7 +470,7 @@ public class Train implements java.beans.PropertyChangeListener {
     		return;
     	_typeList.remove(type);
     	log.debug("train delete car type "+type);
-     	firePropertyChange (TYPES_CHANGED_PROPERTY, null, LENGTH);
+     	firePropertyChange (TYPES_CHANGED_PROPERTY, _typeList.size()+1, _typeList.size());
      }
     
     public boolean acceptsTypeName(String type){
@@ -519,7 +517,7 @@ public class Train implements java.beans.PropertyChangeListener {
     		return false;
     	_roadList.add(road);
     	log.debug("train (" +getName()+ ") add car road "+road);
-    	firePropertyChange (ROADS_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (ROADS_CHANGED_PROPERTY, _roadList.size()-1, _roadList.size());
     	return true;
     }
     
@@ -528,7 +526,7 @@ public class Train implements java.beans.PropertyChangeListener {
     		return false;
     	_roadList.remove(road);
     	log.debug("train (" +getName()+ ") delete car road "+road);
-    	firePropertyChange (ROADS_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (ROADS_CHANGED_PROPERTY, _roadList.size()+1, _roadList.size());
        	return true;
     }
     

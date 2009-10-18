@@ -18,7 +18,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -57,8 +57,6 @@ public class Location implements java.beans.PropertyChangeListener {
 	public static final String NAME_CHANGED_PROPERTY = "name";
 	public static final String SWITCHLIST_CHANGED_PROPERTY = "switchList";
 	public static final String DISPOSE_CHANGED_PROPERTY = "dispose";
-	
-	private static final String LENGTH = "Length";
 
 	public Location(String id, String name) {
 		log.debug("New location " + name + " " + id);
@@ -297,7 +295,7 @@ public class Location implements java.beans.PropertyChangeListener {
     		return;
     	list.add(0,type);
     	log.debug("location ("+getName()+") add rolling stock type "+type);
-    	firePropertyChange (TYPES_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (TYPES_CHANGED_PROPERTY, list.size()-1, list.size());
     }
     
     public void deleteTypeName(String type){
@@ -305,7 +303,7 @@ public class Location implements java.beans.PropertyChangeListener {
     		return;
     	list.remove(type);
     	log.debug("location ("+getName()+") delete rolling stock type "+type);
-     	firePropertyChange (TYPES_CHANGED_PROPERTY, null, LENGTH);
+     	firePropertyChange (TYPES_CHANGED_PROPERTY, list.size()+1, list.size());
      }
     
     public boolean acceptsTypeName(String type){
@@ -609,7 +607,7 @@ public class Location implements java.beans.PropertyChangeListener {
     				+ e.getPropertyName() + " from track (" +e.getSource()+") old: " + e.getOldValue() + " new: "
     				+ e.getNewValue());
     	// update length of tracks at this location if track length changes
-    	if(e.getPropertyName().equals("length")){
+    	if(e.getPropertyName().equals(Track.LENGTH_CHANGED_PROPERTY)){
     		setLength(getLength() - Integer.parseInt((String)e.getOldValue()) + Integer.parseInt((String)e.getNewValue()));
     	}
     }

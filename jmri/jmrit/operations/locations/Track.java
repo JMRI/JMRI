@@ -19,9 +19,9 @@ import jmri.jmrit.operations.routes.Route;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.28 $
+ * @version             $Revision: 1.29 $
  */
-public class Track implements java.beans.PropertyChangeListener {
+public class Track {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 
@@ -80,10 +80,9 @@ public class Track implements java.beans.PropertyChangeListener {
 	public static final String TYPES_CHANGED_PROPERTY = "types";
 	public static final String ROADS_CHANGED_PROPERTY = "roads";
 	public static final String NAME_CHANGED_PROPERTY = "name";
+	public static final String LENGTH_CHANGED_PROPERTY = "length";
 	public static final String SCHEDULE_CHANGED_PROPERTY = "schedule change";
 	public static final String DISPOSE_CHANGED_PROPERTY = "dispose";
-	
-	private static final String LENGTH = "Length";
 	
 	public Track(String id, String name, String type) {
 		log.debug("New track " + name + " " + id);
@@ -124,7 +123,7 @@ public class Track implements java.beans.PropertyChangeListener {
 		int old = _length;
 		_length = length;
 		if (old != length)
-			firePropertyChange("length", Integer.toString(old), Integer.toString(length));
+			firePropertyChange(LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
 	}
 
 	public int getLength() {
@@ -308,7 +307,7 @@ public class Track implements java.beans.PropertyChangeListener {
     		return;
     	_typeList.add(0,type);
     	log.debug("track (" +getName()+ ") add rolling stock type "+type);
-    	firePropertyChange (TYPES_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (TYPES_CHANGED_PROPERTY, _typeList.size()-1, _typeList.size());
     }
     
     public void deleteTypeName(String type){
@@ -316,7 +315,7 @@ public class Track implements java.beans.PropertyChangeListener {
     		return;
     	_typeList.remove(type);
     	log.debug("track (" +getName()+ ") delete rolling stock type "+type);
-    	firePropertyChange (TYPES_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (TYPES_CHANGED_PROPERTY, _typeList.size()+1, _typeList.size());
     }
     
     public boolean acceptsTypeName(String type){
@@ -374,13 +373,13 @@ public class Track implements java.beans.PropertyChangeListener {
     		return;
     	_roadList.add(road);
     	log.debug("track " +getName()+ " add car road "+road);
-    	firePropertyChange (ROADS_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (ROADS_CHANGED_PROPERTY, _roadList.size()-1, _roadList.size());
     }
     
     public void deleteRoadName(String road){
     	_roadList.remove(road);
     	log.debug("track " +getName()+ " delete car road "+road);
-    	firePropertyChange (ROADS_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (ROADS_CHANGED_PROPERTY, _roadList.size()+1, _roadList.size());
      }
     
     public boolean acceptsRoadName(String road){
@@ -769,11 +768,6 @@ public class Track implements java.beans.PropertyChangeListener {
     	return e;
     }
     
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-    	log.debug("track "+getName()+ " sees property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
-				+ e.getNewValue());
-    }
-
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(
 			this);
 

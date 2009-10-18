@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -61,7 +61,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	JComboBox locationBox = LocationManager.instance().getComboBox();
 
 	public static final String NAME = rb.getString("Name");
-	public static final String LENGTH = rb.getString("Length");
 	public static final String DISPOSE = "dispose" ;
 
 	public RouteEditFrame() {

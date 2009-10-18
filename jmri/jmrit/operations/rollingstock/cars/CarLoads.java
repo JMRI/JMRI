@@ -17,9 +17,9 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the loads that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
-public class CarLoads implements java.beans.PropertyChangeListener {
+public class CarLoads {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 	
@@ -30,8 +30,6 @@ public class CarLoads implements java.beans.PropertyChangeListener {
 	// for property change
 	public static final String LOAD_CHANGED_PROPERTY = "CarLoads Load";
 	public static final String LOAD_NAME_CHANGED_PROPERTY = "CarLoads Name";
-	
-	private static final String LENGTH = "Length";
     
 	public CarLoads() {
     }
@@ -113,7 +111,7 @@ public class CarLoads implements java.beans.PropertyChangeListener {
     	if (loads.contains(name))
     		return;
     	loads.add(0, name);
-    	firePropertyChange (LOAD_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (LOAD_CHANGED_PROPERTY, loads.size()-1, loads.size());
     }
     
     public void deleteName(String type, String name){
@@ -123,7 +121,7 @@ public class CarLoads implements java.beans.PropertyChangeListener {
     		return;
     	}
     	loads.remove(name);
-    	firePropertyChange (LOAD_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (LOAD_CHANGED_PROPERTY, loads.size()+1, loads.size());
     }
     
     public boolean containsName(String type, String name){
@@ -235,9 +233,6 @@ public class CarLoads implements java.beans.PropertyChangeListener {
         	}
         }
 	}
-    
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-    }
         
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {

@@ -27,9 +27,9 @@ import org.jdom.Element;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.28 $
+ * @version	$Revision: 1.29 $
  */
-public class CarManager implements java.beans.PropertyChangeListener {
+public class CarManager {
 	
 	// Edit car frame attributes
 	protected CarEditFrame _carEditFrame = null;
@@ -1120,15 +1120,6 @@ public class CarManager implements java.beans.PropertyChangeListener {
         values.addContent(e);
         return values;
     }
-    
-    /**
-     * The PropertyChangeListener interface in this class is
-     * intended to keep track of user name changes to individual NamedBeans.
-     */
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-    	log.debug("CarManager sees property change: " + e.getPropertyName() + " old: " + e.getOldValue() + " new " + e.getNewValue());
-    }
-
    
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     

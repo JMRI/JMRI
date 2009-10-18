@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.21 $
+ * @version             $Revision: 1.22 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -41,6 +41,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 	
 	// text box
 	javax.swing.JTextField addTextBox = new javax.swing.JTextField(10);
+	
+	// property change
+	public static final String DISPOSE = "dispose" ;
 
     public EngineAttributeEditFrame() {}
     
@@ -302,7 +305,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		EngineLengths.instance().removePropertyChangeListener(this);
     	CarOwners.instance().removePropertyChangeListener(this);
     	manager.removePropertyChangeListener(this);
-		firePcs ("dispose", null, _comboboxName);
+		firePcs (DISPOSE, _comboboxName, null);
         super.dispose();
     }
 

@@ -17,9 +17,9 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages the routes
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
-public class RouteManager implements java.beans.PropertyChangeListener {
+public class RouteManager {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLength"; 
     
 	public RouteManager() {
@@ -110,14 +110,6 @@ public class RouteManager implements java.beans.PropertyChangeListener {
         Integer oldSize = new Integer(_routeHashTable.size());
     	_routeHashTable.remove(route.getId());
         firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_routeHashTable.size()));
-    }
-
-    /**
-     * The PropertyChangeListener interface in this class is
-     * intended to keep track of user name changes to individual NamedBeans.
-     */
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-
     }
 
     /**

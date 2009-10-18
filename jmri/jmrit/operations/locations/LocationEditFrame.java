@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -87,7 +87,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
 	public static final String NAME = rb.getString("Name");
 	public static final int MAX_NAME_LENGTH = Control.MAX_LEN_STRING_LOCATION_NAME;
-	public static final String LENGTH = rb.getString("Length");
 	public static final String DISPOSE = "dispose" ;
 
 	public LocationEditFrame() {

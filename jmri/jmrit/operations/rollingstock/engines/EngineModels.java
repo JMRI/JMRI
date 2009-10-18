@@ -44,9 +44,9 @@ import jmri.jmrit.operations.setup.Control;
  * U28B		2800	60		Diesel
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
-public class EngineModels implements java.beans.PropertyChangeListener {
+public class EngineModels {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 
@@ -57,7 +57,6 @@ public class EngineModels implements java.beans.PropertyChangeListener {
 	private static final String ENGINETYPES = rb.getString("engineModelTypes");
 	
 	public static final String ENGINEMODELS_CHANGED_PROPERTY = "EngineModels";
-	private static final String LENGTH = "Length";
 	
 	protected Hashtable<String, String> _engineHorsepowerHashTable = new Hashtable<String, String>();
 	protected Hashtable<String, String> _engineLengthHashTable = new Hashtable<String, String>();
@@ -84,15 +83,6 @@ public class EngineModels implements java.beans.PropertyChangeListener {
 
     public void dispose() {
     	list.clear();
-    }
-    
-    /**
-     * The PropertyChangeListener interface in this class is
-     * intended to keep track of user name changes to individual NamedBeans.
-     * It is not completely implemented yet. In particular, listeners
-     * are not added to newly registered objects.
-     */
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
     }
 
     List<String> list = new ArrayList<String>();
@@ -122,12 +112,14 @@ public class EngineModels implements java.beans.PropertyChangeListener {
     	if (list.contains(model))
     		return;
     	list.add(0,model);
-    	firePropertyChange (ENGINEMODELS_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (ENGINEMODELS_CHANGED_PROPERTY, list.size()-1, list.size());
     }
     
     public void deleteName(String model){
+    	if (!list.contains(model))
+    		return;
     	list.remove(model);
-    	firePropertyChange (ENGINEMODELS_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (ENGINEMODELS_CHANGED_PROPERTY, list.size()+1, list.size());
      }
     
     public boolean containsName(String model){

@@ -9,12 +9,11 @@ import javax.swing.JComboBox;
 /**
  * Represents the owner names that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
-public class CarOwners implements java.beans.PropertyChangeListener {
+public class CarOwners {
 	
 	public static final String CAROWNERS_CHANGED_PROPERTY = "CarOwners";
-	private static final String LENGTH = "Length";
 	
     public CarOwners() {
     }
@@ -34,15 +33,6 @@ public class CarOwners implements java.beans.PropertyChangeListener {
 
     public void dispose() {
     	list.clear();
-    }
-    
-    /**
-     * The PropertyChangeListener interface in this class is
-     * intended to keep track of user name changes to individual NamedBeans.
-     * It is not completely implemented yet. In particular, listeners
-     * are not added to newly registered objects.
-     */
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
     }
 
     List<String> list = new ArrayList<String>();
@@ -67,12 +57,12 @@ public class CarOwners implements java.beans.PropertyChangeListener {
     	if (list.contains(owner))
     		return;
     	list.add(0,owner);
-    	firePropertyChange (CAROWNERS_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (CAROWNERS_CHANGED_PROPERTY, list.size()-1, list.size());
     }
     
     public void deleteName(String owner){
     	list.remove(owner);
-    	firePropertyChange (CAROWNERS_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (CAROWNERS_CHANGED_PROPERTY, list.size()+1, list.size());
     }
     
     public boolean containsName(String owner){

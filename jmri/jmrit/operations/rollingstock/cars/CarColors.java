@@ -12,15 +12,14 @@ import javax.swing.JComboBox;
 /**
  * Represents the colors that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
-public class CarColors implements java.beans.PropertyChangeListener {
+public class CarColors {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 
 	private static final String COLORS = rb.getString("carColors");
 	public static final String CARCOLORS_CHANGED_PROPERTY = "CarColors";
-	private static final String LENGTH = "Length";
 	
     public CarColors() {
     }
@@ -40,15 +39,6 @@ public class CarColors implements java.beans.PropertyChangeListener {
 
     public void dispose() {
     	list.clear();
-    }
-    
-    /**
-     * The PropertyChangeListener interface in this class is
-     * intended to keep track of user name changes to individual NamedBeans.
-     * It is not completely implemented yet. In particular, listeners
-     * are not added to newly registered objects.
-     */
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
     }
 
     List<String> list = new ArrayList<String>();
@@ -78,12 +68,12 @@ public class CarColors implements java.beans.PropertyChangeListener {
     	if (list.contains(color))
     		return;
     	list.add(0,color);
-    	firePropertyChange (CARCOLORS_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (CARCOLORS_CHANGED_PROPERTY, list.size()-1, list.size());
     }
     
     public void deleteName(String color){
     	list.remove(color);
-    	firePropertyChange (CARCOLORS_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (CARCOLORS_CHANGED_PROPERTY, list.size()+1, list.size());
     }
     
     public boolean containsName(String color){

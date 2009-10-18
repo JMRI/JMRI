@@ -27,7 +27,7 @@ import jmri.jmrit.operations.trains.TrainsByCarTypeFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.22 $
+ * @version             $Revision: 1.23 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -50,6 +50,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	
 	// text box
 	JTextField addTextBox = new JTextField(10);
+	
+	// property change
+	public static final String DISPOSE = "dispose" ;
 	
     public CarAttributeEditFrame() {}
     
@@ -398,12 +401,12 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		CarLengths.instance().removePropertyChangeListener(this);
     	CarOwners.instance().removePropertyChangeListener(this);
     	manager.removePropertyChangeListener(this);
-		firePcs ("dispose", null, _comboboxName);
+		firePcs (DISPOSE, _comboboxName, null);
         super.dispose();
     }
     
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug ("CarsAttributeFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
+		log.debug ("CarsAttributeFrame sees propertyChange "+e.getPropertyName()+" old: "+e.getOldValue()+" new: "+e.getNewValue());
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY))
 			CarRoads.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY))

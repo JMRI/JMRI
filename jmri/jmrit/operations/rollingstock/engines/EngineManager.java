@@ -24,9 +24,9 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  */
-public class EngineManager implements java.beans.PropertyChangeListener {
+public class EngineManager {
 	
 	// Edit engine frame attributes
 	protected EngineEditFrame _engineEditFrame = null;
@@ -847,15 +847,6 @@ public class EngineManager implements java.beans.PropertyChangeListener {
         return values;
     }
 
-    /**
-     * The PropertyChangeListener interface in this class is
-     * intended to keep track of user name changes to individual NamedBeans.
-     */
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-    	log.debug("EngineManager sees property change: " + e.getPropertyName() + " old: " + e.getOldValue() + " new " + e.getNewValue());
-    }
-
-   
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {

@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -69,7 +69,6 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 
 	public static final int MAX_NAME_LENGTH = 25;
 	public static final String NAME = rb.getString("Name");
-	public static final String LENGTH = rb.getString("Length");
 	public static final String DISPOSE = "dispose" ;
 
 	public ScheduleEditFrame() {

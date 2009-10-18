@@ -30,7 +30,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -90,7 +90,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 	public static final String LENGTH = rb.getString("Length");
 	public static final String OWNER = rb.getString("Owner");
 	public static final String CONSIST = rb.getString("Consist");
-	public static final String DISPOSE = "dispose" ;
+
 
 	public EngineEditFrame() {
 		super();
@@ -615,7 +615,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 			if (_engine != null)
 				locationBox.setSelectedItem(_engine.getLocation());
 		}
-		if (e.getPropertyName().equals(DISPOSE)){
+		if (e.getPropertyName().equals(EngineAttributeEditFrame.DISPOSE)){
 			editActive = false;
 		}
 	}

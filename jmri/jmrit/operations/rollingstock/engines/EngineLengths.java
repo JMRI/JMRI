@@ -12,15 +12,14 @@ import javax.swing.JComboBox;
 /**
  * Represents the lengths that engines can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
-public class EngineLengths implements java.beans.PropertyChangeListener {
+public class EngineLengths {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 	
 	private static final String LENGTHS = rb.getString("engineDefaultLengths");
 	public static final String ENGINELENGTHS_CHANGED_PROPERTY = "EngineLengths";
-	private static final String LENGTH = "Length";
 	
     public EngineLengths() {
     }
@@ -40,15 +39,6 @@ public class EngineLengths implements java.beans.PropertyChangeListener {
 
     public void dispose() {
     	list.clear();
-    }
-    
-    /**
-     * The PropertyChangeListener interface in this class is
-     * intended to keep track of user name changes to individual NamedBeans.
-     * It is not completely implemented yet. In particular, listeners
-     * are not added to newly registered objects.
-     */
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
     }
 
     List<String> list = new ArrayList<String>();
@@ -82,12 +72,12 @@ public class EngineLengths implements java.beans.PropertyChangeListener {
     	if (list.contains(length))
     		return;
     	list.add(0,length);
-    	firePropertyChange (ENGINELENGTHS_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (ENGINELENGTHS_CHANGED_PROPERTY, list.size()-1, list.size());
     }
     
     public void deleteName(String length){
     	list.remove(length);
-    	firePropertyChange (ENGINELENGTHS_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (ENGINELENGTHS_CHANGED_PROPERTY, list.size()+1, list.size());
     }
      
     public boolean containsName(String length){

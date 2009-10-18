@@ -13,9 +13,9 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the types of engines a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
-public class EngineTypes implements java.beans.PropertyChangeListener {
+public class EngineTypes {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 	private static final String TYPES = rb.getString("engineDefaultTypes"); 
@@ -23,7 +23,6 @@ public class EngineTypes implements java.beans.PropertyChangeListener {
 	// for property change
 	public static final String ENGINETYPES_LENGTH_CHANGED_PROPERTY = "EngineTypes Length";
 	public static final String ENGINETYPES_NAME_CHANGED_PROPERTY = "EngineTypes Name";
-	private static final String LENGTH = "Length";
     
 	public EngineTypes() {
     }
@@ -43,15 +42,6 @@ public class EngineTypes implements java.beans.PropertyChangeListener {
 
     public void dispose() {
     	list.clear();
-    }
-    
-    /**
-     * The PropertyChangeListener interface in this class is
-     * intended to keep track of user name changes to individual NamedBeans.
-     * It is not completely implemented yet. In particular, listeners
-     * are not added to newly registered objects.
-     */
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
     }
 
     List<String> list = new ArrayList<String>();
@@ -83,12 +73,14 @@ public class EngineTypes implements java.beans.PropertyChangeListener {
     	if (list.contains(type))
     		return;
     	list.add(0,type);
-    	firePropertyChange (ENGINETYPES_LENGTH_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (ENGINETYPES_LENGTH_CHANGED_PROPERTY, list.size()-1, list.size());
     }
     
     public void deleteName(String type){
+    	if (!list.contains(type))
+    		return;
     	list.remove(type);
-    	firePropertyChange (ENGINETYPES_LENGTH_CHANGED_PROPERTY, null, LENGTH);
+    	firePropertyChange (ENGINETYPES_LENGTH_CHANGED_PROPERTY, list.size()+1, list.size());
     }
     
     public boolean containsName(String type){
