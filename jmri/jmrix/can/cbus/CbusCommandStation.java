@@ -17,7 +17,7 @@ import jmri.jmrix.can.TrafficController;
  * station state should always be referred to.
  *
  * @author      Andrew Crosland Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class CbusCommandStation implements CommandStation, DccCommandStation, CanListener {
 
@@ -78,7 +78,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
      * Set loco speed and direction
      *
      * @param handle The handle of the session to which it applies
-     * @param speed Bit 7 is direction (1 = forward) 6:0 are speed
+     * @param speed_dir Bit 7 is direction (1 = forward) 6:0 are speed
      */
     public void setSpeedDir(int handle, int speed_dir) {
         CanMessage msg = new CanMessage(3);

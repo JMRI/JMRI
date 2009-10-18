@@ -14,13 +14,9 @@ import jmri.jmrix.can.CanListener;
 /**
  * CBUS implementation of a ThrottleManager.
  * <P>
- * Works in cooperation with the SlotManager, which actually
- * handles the communications.
- *
- * @see SlotManager
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author				Andrew Crosland  Copyright (C) 2009
- * @version 		$Revision: 1.2 $
+ * @version 		$Revision: 1.3 $
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener{
     private boolean _handleExpected = false;
