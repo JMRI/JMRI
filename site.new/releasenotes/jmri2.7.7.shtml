@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.7.shtml,v 1.4 2009-10-15 20:38:28 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.7.shtml,v 1.5 2009-10-18 23:54:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -201,6 +201,26 @@ JMRI SignalHeads are supposed to start up DARK, so that whatever controls them c
 then set their initial appearance.  SE8c SignalHeads were not doing that properly.
 Both the internal appearance (e.g. what shows on icons), and the actual signal, should
 now properly start at DARK.
+
+<p>
+Signal heads and Simple Signal Logic now remember whichever user name or system name you 
+provide.  Previously, names would be converted to system names before being stored.
+This is the first step in a general overhaul to get this behavior.
+
+<p>
+Paul Bender added a javadoc-uml build target to the Ant build.  
+This uses UmlGraph and GraphViz to build UML graphs to include in the Javadoc.  
+UmlGraph is included as a jar in lib, GraphViz will need to be installed.
+This requires Java 1.6.
+
+<p>
+Andrew Crosland updated the SPROG programmer to log an error if no programmer listener has 
+been provided to the programmer, for example in a script.
+
+<p>
+Andrew Crosland added support for the CBUS DCC command station and CV programmer.
+
+
 
 
 <!--#include virtual="/Footer" -->
