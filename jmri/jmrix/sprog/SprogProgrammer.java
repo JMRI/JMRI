@@ -15,7 +15,7 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the Sprog programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
@@ -281,9 +281,13 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         if (log.isDebugEnabled()) log.debug("notifyProgListenerEnd value "+value+" status "+status);
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_
-        jmri.ProgListener temp = _usingProgrammer;
-        _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        if (_usingProgrammer == null) {
+            log.error("No listener to notify");
+        } else {
+            jmri.ProgListener temp = _usingProgrammer;
+            _usingProgrammer = null;
+            temp.programmingOpReply(value, status);
+        }
     }
 
     SprogTrafficController _controller = null;
