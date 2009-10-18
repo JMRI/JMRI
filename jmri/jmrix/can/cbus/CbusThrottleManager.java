@@ -20,7 +20,7 @@ import jmri.jmrix.can.CanListener;
  * @see SlotManager
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author				Andrew Crosland  Copyright (C) 2009
- * @version 		$Revision: 1.1 $
+ * @version 		$Revision: 1.2 $
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener{
     private boolean _handleExpected = false;
@@ -102,6 +102,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                     _handleExpected = false;
                     log.debug("PLOC expected but received ERR");
                 }
+                break;
 
             default:
                 break;
