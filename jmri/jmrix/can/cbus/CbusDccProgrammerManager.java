@@ -1,4 +1,4 @@
-/* CbusProgrammerManager.java */
+/* CbusDccProgrammerManager.java */
 
 package jmri.jmrix.can.cbus;
 
@@ -10,46 +10,34 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Andrew crosland Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class CbusDccProgrammerManager  extends DefaultProgrammerManager {
 
-    public static final int SERVICE = 0;
-    public static final int OPS = 1;
-
-    //private Programmer localProgrammer;
-    private int mode;
-
     public CbusDccProgrammerManager(Programmer serviceModeProgrammer) {
         super(serviceModeProgrammer);
-        //localProgrammer = serviceModeProgrammer;
-        this.mode = SERVICE;
-    }
-
-    public CbusDccProgrammerManager(Programmer serviceModeProgrammer, int mode) {
-        super(serviceModeProgrammer);
-        //localProgrammer = serviceModeProgrammer;
-        this.mode = mode;
     }
 
     /**
-     * Classic SPROG is service mode only
-     * SPROG Command Station is Ops mode only
+     * MERG CAN_CMD supports ops mode 
+     *
      * @return true
      */
     public boolean isAddressedModePossible() {
-      if (mode == OPS) {return true;}
-      else return false;
+        return true;
     }
 
+    /**
+     * MERG CAN_CMD supports service mode
+     *
+     * @return true
+     */
     public boolean isGlobalProgrammerAvailable() {
-      if (mode == SERVICE) {return true;}
-      else return false;
+        return true;
     }
 
     public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
-//        return new CbusOpsModeProgrammer(pAddress, pLongAddress);
-        return null;
+        return new CbusDccOpsModeProgrammer(pAddress, pLongAddress);
     }
 
     public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {

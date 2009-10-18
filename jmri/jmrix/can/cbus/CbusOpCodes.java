@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractMessage;
  * Description:		methods to decode CBUS opcodes
  *
  * @author		Andrew Crosland   Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class CbusOpCodes {
     /**
@@ -68,15 +68,19 @@ public class CbusOpCodes {
         // Opcodes with no data
         result.put(0x02,"Bus Halt (HLT)");
         result.put(0x03,"Bus ON (BON)");
+        result.put(0x07,"System Reset (ARST)");
 
-        result.put(0x12,"CV No Acknowledge (CVNAK)");
-        result.put(0x13,"CV Write Acknowledge (CVACK)");
-
-        // Opcodes with 1 data
         result.put(0x10,"Read Node Parameters (RDPAR)");
 
+        // Opcodes with 1 data
+        result.put(0x21,"Release Engine (KLOC)");
+
         // Opcodes with 2 data
-        result.put(0x42,"Set Node Number (SNN) NN:,%n");
+        result.put(0x40,"Request Session (RLOC) Addr:,%2");
+        result.put(0x42,"Set Node Number (SNN) NN:,%2");
+        result.put(0x47,"Speed/Dir (DSPD) Handle:,%1, Speed/dir:,%1");
+        result.put(0x4C,"Service mode status (SSTAT) Handle:,%1, Status:,%1");
+        
         result.put(0x50,"NN Acknowledge (NNACK) NN:,%2");
         result.put(0x51,"NN Release (NNREL) NN:,%2");
         result.put(0x52,"Keep Alive (NNREF) NN:,%2");
@@ -85,16 +89,19 @@ public class CbusOpCodes {
         result.put(0x55,"Clear All Events (NNCLR) NN:,%2");
         result.put(0x56,"Request Event Space (NNEVN) NN:,%2");
 
-        result.put(0x61,"Read CV (QCVS) CV:,%2, Mode:,%1");
-        result.put(0x62,"Report CV (PCVS) CV:,%2, Data:,%1");
-
         // Opcodes with 3 data
+        result.put(0x60,"Set functions (DFUN) Handle:,%1, Range:,%1, Fn:,%1");
+        result.put(0x63,"Error (ERR) Addr:,%2, Error:,%1");
+
         result.put(0x70,"Event Space Reply (ENNLF) NN:,%2, Space:,%1");
         result.put(0x71,"Request Node Variable (NVRD) NN:,%2, NV:,%1");
 
-        result.put(0x81,"Write CV (WCVS) CV:,%2, Mode:,%1, Data:,%1");
-
         // Opcodes with 4 data
+        result.put(0x80,"DCC 3 byte pkt (RDCC3) Repeat:,%1, Byte 1:,%1, 2:,%1, 3:,%1");
+        result.put(0x82,"Write CV (WCVO) Handle:,%1, CV:,%2, Data:,%1");
+        result.put(0x84,"Read CV (QCVS) Handle:,%1, CV:,%2, Mode:,%1");
+        result.put(0x85,"Report CV (PCVS) Handle:,%1, CV:,%2, Data:,%1");
+
         result.put(0x90,"Accessory ON (ACON) NN:,%2, EV:,%2");
         result.put(0x91,"Accessory OFF (ACOF) NN:,%2, EV:,%2");
 
@@ -104,12 +111,16 @@ public class CbusOpCodes {
         result.put(0x97,"Returned Node Variable (NVANS) NN:,%2 NV:,%1 VAL:,%1");
 
         // Opcodes with 5 data
+        result.put(0xA2,"Write CV (WCVS) Handle:,%1, CV:,%2, Mode:,%1, Data:,%1");
 
         // Opcodes with 6 data
+        result.put(0xC1,"Write CV (WCVOA) Address:,%2, CV:,%2, Mode:,%1, Data:,%1");
+
         result.put(0xD2,"Teach Event (EVLRN) NN:,%2, EV:,%2, EV1:,%1, EV2:,%1");
         result.put(0xD3,"Returned Event (EVANS) NN:,%2, EV:,%2, EV1:,%1, EV2:,%1");
 
         // Opcodes with 7 data
+        result.put(0xE1,"Engine report (PLOC) Handle:,%1, Addr:,%2, Spd:,%1, F1:,%1, F2:,%1, F3:,%1");
 
         return Collections.unmodifiableMap(result);
     }

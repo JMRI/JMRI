@@ -15,28 +15,18 @@ import jmri.jmrix.can.*;
  * Implements the jmri.Programmer interface via commands for the CBUS programmer.
  *
  * @author      Andrew Crosland  Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class CbusDccProgrammer extends AbstractProgrammer implements CanListener {
 
     public CbusDccProgrammer() {
-//        // error if more than one constructed?
-//        if (self != null)
-//            log.error("Creating too many SprogProgrammer objects");
-
-//        // register this as the default, register as the Programmer
-//        self = this;
-//        jmri.InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(this));
     }
 
     /*
      * method to find the existing SprogProgrammer object, if need be creating one
      */
-    static public final CbusDccProgrammer instance() {
+    static public CbusDccProgrammer instance() {
         if (self == null) self = new CbusDccProgrammer();
-        // change default
-        if (jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible())
-            _mode = Programmer.OPSBYTEMODE;
 
         return self;
     }
@@ -74,28 +64,21 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
      * @return True if paged or direct or register mode
      */
     public boolean hasMode(int mode) {
-        if (jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()){
-            log.debug("hasMode request on mode "+mode+" returns false");
-            return false;
-        }else{
-            if ( mode == Programmer.DIRECTBITMODE ||
-                 mode == Programmer.DIRECTBYTEMODE ||
-                 mode == Programmer.REGISTERMODE ||
-                 mode == Programmer.PAGEMODE ) {
-                log.debug("hasMode request on mode "+mode+" returns true");
-                return true;
-            }
-            log.debug("hasMode request on mode "+mode+" returns false");
-            return false;
+        if ( mode == Programmer.DIRECTBITMODE ||
+             mode == Programmer.DIRECTBYTEMODE ||
+             mode == Programmer.REGISTERMODE ||
+             mode == Programmer.PAGEMODE ) {
+             log.debug("hasMode request on mode "+mode+" returns true");
+             return true;
         }
+        log.debug("hasMode request on mode "+mode+" returns false");
+        return false;
     }
+
     public int getMode() { return _mode; }
 
     public boolean getCanRead() {
-        if (jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible())
-            return false;
-        else 
-            return true;
+        return true;
     }
 
     // notify property listeners - see AbstractProgrammer for more
@@ -198,7 +181,8 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
             if (log.isDebugEnabled()) log.debug("reply in COMMANDSENT state");
             // operation done, capture result, then have to leave programming mode
             // check for errors
-            if (m.getElement(0) == CbusConstants.CBUS_CVNAK) {
+            if ((m.getElement(0) == CbusConstants.CBUS_SSTAT)
+                && (m.getElement(2) == CbusConstants.SSTAT_NO_ACK)){
                 if (log.isDebugEnabled()) log.debug("handle error reply "+m);
                 // perhaps no loco present? Fail back to end of programming
                 //controller().sendCanMessage(CbusMessage.getExitProgMode(), this);
@@ -209,13 +193,14 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
                 // see why waiting
                 if (_progRead && (m.getElement(0) == CbusConstants.CBUS_PCVS)) {
                     // read was in progress - received report CV message
-                    _val = m.getElement(3);
+                    _val = m.getElement(4);
                     progState = NOTPROGRAMMING;
                     stopTimer();
                     // if this was a read, we cached the value earlier.  If its a
                     // write, we're to return the original write value
                     notifyProgListenerEnd(_val, jmri.ProgListener.OK);
-                } else if ((!_progRead) && m.getElement(0) == CbusConstants.CBUS_CVACK) {
+                } else if ((!_progRead) && (m.getElement(0) == CbusConstants.CBUS_SSTAT)
+                                        && (m.getElement(2) == CbusConstants.SSTAT_WR_ACK)) {
                     // write was in progress - acknowledge received
                     progState = NOTPROGRAMMING;
                     stopTimer();
@@ -252,9 +237,13 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         if (log.isDebugEnabled()) log.debug("notifyProgListenerEnd value "+value+" status "+status);
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_
-        jmri.ProgListener temp = _usingProgrammer;
-        _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        if (_usingProgrammer == null) {
+            log.error("No listener to notify");
+        } else {
+            jmri.ProgListener temp = _usingProgrammer;
+            _usingProgrammer = null;
+            temp.programmingOpReply(value, status);
+        }
     }
 
     AbstractCanTrafficController _controller = null;

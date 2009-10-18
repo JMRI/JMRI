@@ -19,9 +19,6 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 
-import jmri.jmrix.can.cbus.CbusEventFilterFrame;
-import jmri.jmrix.can.cbus.CbusConstants;
-
 /**
  *
  * @author Andrew

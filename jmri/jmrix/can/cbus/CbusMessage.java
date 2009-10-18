@@ -15,7 +15,7 @@ import jmri.Programmer;
  * can message
  *
  * @author          Andrew Crosland Copyright (C) 2008
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class CbusMessage {
     /* Methods that take a CanMessage as argument */
@@ -149,40 +149,63 @@ public class CbusMessage {
      * CBUS programmer commands
     */
     static public CanMessage getReadCV(int cv, int mode) {
-        CanMessage m = new CanMessage(4);
+        CanMessage m = new CanMessage(5);
         m.setElement(0, CbusConstants.CBUS_QCVS);
-        m.setElement(1, cv/256);
-        m.setElement(2, cv & 0xff);
+        m.setElement(1, CbusConstants.SERVICE_HANDLE);
+        m.setElement(2, cv/256);
+        m.setElement(3, cv & 0xff);
         if (mode == Programmer.PAGEMODE) {
-          m.setElement(3, CbusConstants.CBUS_PROG_PAGED);
+          m.setElement(4, CbusConstants.CBUS_PROG_PAGED);
         } else if (mode == Programmer.DIRECTBITMODE) {
-          m.setElement(3, CbusConstants.CBUS_PROG_DIRECT_BIT);
+          m.setElement(4, CbusConstants.CBUS_PROG_DIRECT_BIT);
         } else if (mode == Programmer.DIRECTBYTEMODE) {
-          m.setElement(3, CbusConstants.CBUS_PROG_DIRECT_BYTE);
+          m.setElement(4, CbusConstants.CBUS_PROG_DIRECT_BYTE);
         } else {
-          m.setElement(3, CbusConstants.CBUS_PROG_REGISTER);
+          m.setElement(4, CbusConstants.CBUS_PROG_REGISTER);
         }
         setPri(m, 0xb);
         return m;
     }
 
     static public CanMessage getWriteCV(int cv, int val, int mode) {
-        CanMessage m = new CanMessage(5);
+        CanMessage m = new CanMessage(6);
         m.setElement(0, CbusConstants.CBUS_WCVS);
-        m.setElement(1, cv/256);
-        m.setElement(2, cv & 0xff);
+        m.setElement(1, CbusConstants.SERVICE_HANDLE);
+        m.setElement(2, cv/256);
+        m.setElement(3, cv & 0xff);
         if (mode == Programmer.PAGEMODE) {
-          m.setElement(3, CbusConstants.CBUS_PROG_PAGED);
+          m.setElement(4, CbusConstants.CBUS_PROG_PAGED);
         } else if (mode == Programmer.DIRECTBITMODE) {
-          m.setElement(3, CbusConstants.CBUS_PROG_DIRECT_BIT);
+          m.setElement(4, CbusConstants.CBUS_PROG_DIRECT_BIT);
         } else if (mode == Programmer.DIRECTBYTEMODE) {
-          m.setElement(3, CbusConstants.CBUS_PROG_DIRECT_BYTE);
+          m.setElement(4, CbusConstants.CBUS_PROG_DIRECT_BYTE);
         } else {
-          m.setElement(3, CbusConstants.CBUS_PROG_REGISTER);
+          m.setElement(4, CbusConstants.CBUS_PROG_REGISTER);
         }
-        m.setElement(4, val);
+        m.setElement(5, val);
         setPri(m, 0xb);
         return m;
     }
 
+    /**
+     * CBUS Ops mode programmer commands
+    */
+    static public CanMessage getOpsModeWriteCV(int mAddress, boolean mLongAddr, int cv, int val) {
+        CanMessage m = new CanMessage(7);
+        int address = mAddress;
+        m.setElement(0, CbusConstants.CBUS_WCVOA);
+        if (mLongAddr) {
+            address = address | 0xc000;
+        }
+        m.setElement(1, address/256);
+        m.setElement(2, address & 0xff);
+        m.setElement(3, cv/256);
+        m.setElement(4, cv & 0xff);
+        m.setElement(5, CbusConstants.CBUS_OPS_BYTE);
+        m.setElement(6, val);
+        setPri(m, 0xb);
+        return m;
+    }
+
+    
 }
