@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
-<!-- $Id: Lenz_Silver.xml,v 1.9 2008-03-08 22:52:36 jacobsen Exp $ -->
+<!-- $Id: Lenz_Silver.xml,v 1.10 2009-10-19 04:59:05 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,8 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+	<version author="Nigel Cliffe"
+				version="6" lastUpdated="20091016" />
 	<version author="Bob Jacobsen rgj1927@pacbell.net"
 				version="4" lastUpdated="20070411" />
 	<version author="Mark Schutzer mark.schutzer@sbcglobal.net"
@@ -26,12 +28,14 @@
                 <!-- Version 4 - high version now 75, as reported in DCC_UK group by Ken Weiss -->
                 <!-- Version 5 - Add Silver Direct to decoder family.  
                      Change high version for family to 78. (Paul Bender -->
+				<!-- Version 6 - Add Silver 21 Pin to decoder family.  
+                     Change high version for family to 82. (Nigel Cliffe) -->
 
 <!-- These are the Silver decoders, with "6th gen BEMF", "Precision Braking Control" -->
 <!-- and "Low Gear Switching Drive" -->
 
 <decoder>
-	<family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="78" lowVersionID="65"
+	<family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="82" lowVersionID="65"
 		comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" >
 		<model model="Silver" numOuts="4" numFns="12" 
                     nmraWarrant="yes" nmraWarrantStart="200604"
@@ -46,6 +50,15 @@
 		<model model="Silver Direct" numOuts="4" numFns="12" 
                         lowVersionID="78"
                         highVersionID="78" 
+			maxMotorCurrent="1.1A (peak=1.8A)" formFactor="HO">
+			<output name="1" label="A - White" />
+			<output name="2" label="B - Yellow" />
+			<output name="3" label="C - Green" />
+			<output name="4" label="D - Violet" />
+		</model>
+		<model model="Silver 21 Pin" numOuts="4" numFns="12" 
+                        lowVersionID="82"
+                        highVersionID="82" 
 			maxMotorCurrent="1.1A (peak=1.8A)" formFactor="HO">
 			<output name="1" label="A - White" />
 			<output name="2" label="B - Yellow" />
@@ -1049,3 +1062,5 @@
 
 </decoder-config>
 
+
+ 	  	 
