@@ -1,19 +1,19 @@
 package jmri.jmrit.throttle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import jmri.jmrit.XmlFile;
+import jmri.util.JmriJFrame;
 
 /**
  *  Interface for allocating and deallocating throttles frames. Not to be
  *  confused with ThrottleManager
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.17 $
+ * @version    $Revision: 1.18 $
  */
 public class ThrottleFrameManager
 {
@@ -27,11 +27,13 @@ public class ThrottleFrameManager
 	private ThrottleCyclingKeyListener throttleCycler;
 
 	private ArrayList<ThrottleWindow> throttleWindows;
+
 	private FunctionButtonPropertyEditor functionButtonEditor;
 	private ThrottleFramePropertyEditor throttleFramePropertyEditor;
 	
 	private ThrottlesPreferences throttlesPref ;
-
+	private JmriJFrame throttlesListFrame ;
+	private ThrottlesListPanel throttlesListPanel;
 
 	/**
 	 *  Constructor for the ThrottleFrameManager object
@@ -41,6 +43,11 @@ public class ThrottleFrameManager
 		throttleCycler = new ThrottleCyclingKeyListener();
 		throttleWindows = new ArrayList<ThrottleWindow>(0);
 		throttlesPref = new ThrottlesPreferences(XmlFile.prefsDir()+ "throttle" +File.separator+ "ThrottlesPreferences.xml");
+		
+		throttlesListFrame = new JmriJFrame("Throttles list");
+		throttlesListPanel = new ThrottlesListPanel();
+		throttlesListFrame.setContentPane(throttlesListPanel);
+		throttlesListFrame.pack();
 	}
 
 	/**
@@ -195,6 +202,15 @@ public class ThrottleFrameManager
 			else if (e.isShiftDown() && e.getKeyCode() == PREV_THROTTLE_KEY)
 				requestFocusForPreviousFrame();			
 		}
+	}
+	
+	public ThrottlesListPanel getThrottlesList() {
+		return throttlesListPanel ;
+
+	}
+
+	public void showThrottlesList() {
+		throttlesListFrame.setVisible( ! throttlesListFrame.isVisible() );
 	}
 	
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleFrameManager.class.getName());

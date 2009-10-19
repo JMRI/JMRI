@@ -24,7 +24,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  */
 public class AddressPanel extends JInternalFrame {
 
@@ -129,7 +129,7 @@ public class AddressPanel extends JInternalFrame {
 	 * @return RosterEntry or null
 	 */
 	public RosterEntry getRosterEntry(){
-		if ((rosterEntry == null) &&
+		if ((rosterEntry == null) && (throttle!=null) &&
 			(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()) &&	
 		    (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isEnablingRosterSearch()) && 
 		    addrSelector != null && addrSelector.getAddress() != null )

@@ -1,6 +1,8 @@
 package jmri.jmrit.throttle;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -9,13 +11,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -26,19 +26,17 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.powerpanel.PowerPane;
 import jmri.util.JmriJFrame;
-import jmri.util.RXCardLayout;
 
 import org.jdom.Element;
 
 // Should be named ThrottleFrame, but ThrottleFrame already exit, hence ThrottleWindow
-public class ThrottleWindow extends JmriJFrame implements java.beans.PropertyChangeListener {
+public class ThrottleWindow extends JmriJFrame {
 	private static final ResourceBundle throttleBundle = ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle");
 
     private JPanel throttlesPanel;
     private ThrottleFrame curentThrottleFrame;
-    private RXCardLayout throttlesLayout;
+    private CardLayout throttlesLayout;
     
     private JCheckBoxMenuItem viewControlPanel;
     private JCheckBoxMenuItem viewFunctionPanel;
@@ -47,19 +45,14 @@ public class ThrottleWindow extends JmriJFrame implements java.beans.PropertyCha
     
     private JButton jbPrevious = null;
     private JButton jbNext = null;
-    private JButton jbStop = null;
+    private JButton jbThrottleList = null;
     private JButton jbNew = null;
     private JButton jbClose = null;
      
     private String titleText = "";
-    private String titleTextType = "address";
+    private String titleTextType = "rosterID";
     
-    private PowerPane powerControl  = new PowerPane();
     private PowerManager powerMgr = null;
-    private JButton powerLight;
-    private NamedIcon powerXIcon;
-    private NamedIcon powerOffIcon;
-    private NamedIcon powerOnIcon;
     
     private ThrottlePanelCyclingKeyListener throttlePanelsCyclingKeyListener;
 	private static int NEXT_THROTTLE_KEY = KeyEvent.VK_RIGHT;
@@ -72,11 +65,9 @@ public class ThrottleWindow extends JmriJFrame implements java.beans.PropertyCha
     {
         super();
         throttlePanelsCyclingKeyListener = new ThrottlePanelCyclingKeyListener();
-        powerMgr = InstanceManager.powerManagerInstance();
-        if (powerMgr == null) {
+    	powerMgr = InstanceManager.powerManagerInstance();
+        if (powerMgr == null)
             log.info("No power manager instance found, panel not active");
-        }
-        else powerMgr.addPropertyChangeListener(this);
         initGUI();
     }
     
@@ -84,25 +75,17 @@ public class ThrottleWindow extends JmriJFrame implements java.beans.PropertyCha
     {
         setTitle("Throttle");
         setLayout(new BorderLayout());
-        throttlesLayout = new RXCardLayout();
+        throttlesLayout = new CardLayout();
         throttlesPanel = new JPanel(throttlesLayout);
         
         if ( (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) 
-        	&& ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isOneWindowForAll()) ) {
-        	powerOnIcon = new NamedIcon("resources/icons/throttles/PowerGreen24.png", "resources/icons/throttles/PowerGreen24.png");
-    		powerOffIcon = new NamedIcon("resources/icons/throttles/PowerRed24.png", "resources/icons/throttles/PowerRed24.png");
-    		powerXIcon = new NamedIcon("resources/icons/throttles/PowerYellow24.png", "resources/icons/throttles/PowerYellow24.png");
+        	&& ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isOneWindowForAll()) )
         	initializeToolbar();
-        }
-        else {
-        	powerOnIcon = new NamedIcon("resources/icons/throttles/GreenPowerLED.gif", "resources/icons/throttles/GreenPowerLED.gif");
-    		powerOffIcon = new NamedIcon("resources/icons/throttles/RedPowerLED.gif", "resources/icons/throttles/RedPowerLED.gif");
-    		powerXIcon = new NamedIcon("resources/icons/throttles/YellowPowerLED.gif", "resources/icons/throttles/YellowPowerLED.gif");
-        }
-        
+
         initializeMenu();
         
         curentThrottleFrame = new ThrottleFrame(this);
+        curentThrottleFrame.setTitle("default");
         throttlesPanel.add(curentThrottleFrame,"default");       
         add(throttlesPanel,BorderLayout.CENTER);
         KeyListenerInstaller.installKeyListenerOnAllComponents(throttlePanelsCyclingKeyListener, curentThrottleFrame);
@@ -128,7 +111,7 @@ public class ThrottleWindow extends JmriJFrame implements java.beans.PropertyCha
 		viewFunctionPanel.setSelected( curentThrottleFrame.getFunctionPanel().isVisible() );
     	// toolbar items
     	if (jbPrevious != null) // means toolbar enabled
-    		if ( throttlesLayout.size() > 1 ) {
+    		if ( cardCounter > 1 ) {
     			jbPrevious.setEnabled( true );
     			jbNext.setEnabled( true );
     			jbClose.setEnabled( true );
@@ -200,49 +183,26 @@ public class ThrottleWindow extends JmriJFrame implements java.beans.PropertyCha
     	
     	throttleToolBar.addSeparator();
     	
-    	jbStop = new JButton();
- //   	stop.setText(throttleBundle.getString("ThrottleToolBarStopAll"));
-    	jbStop.setIcon(new NamedIcon("resources/icons/throttles/Stop24.gif","resources/icons/throttles/Stop24.gif"));
-    	jbStop.setToolTipText(throttleBundle.getString("ThrottleToolBarStopAllToolTip"));
-    	jbStop.setVerticalTextPosition(JButton.BOTTOM);
-    	jbStop.setHorizontalTextPosition(JButton.CENTER);
-    	jbStop.addActionListener(new ActionListener() {
+    	throttleToolBar.add(new StopAllButton());
+    	
+		if (powerMgr != null)
+			throttleToolBar.add(new LargePowerManagerButton());
+		
+    	throttleToolBar.addSeparator();
+    	
+    	jbThrottleList = new JButton();
+ //   	stop.setText(throttleBundle.getString("ThrottleToolBarOpenThrottleList"));
+    	jbThrottleList.setIcon(new NamedIcon("resources/icons/throttles/Movie24.gif","resources/icons/throttles/Movie24.gif"));
+    	jbThrottleList.setToolTipText(throttleBundle.getString("ThrottleToolBarOpenThrottleListToolTip"));
+    	jbThrottleList.setVerticalTextPosition(JButton.BOTTOM);
+    	jbThrottleList.setHorizontalTextPosition(JButton.CENTER);
+    	jbThrottleList.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
-    			Iterator<JComponent> tpi = throttlesLayout.getIterator() ;
-    			while ( tpi.hasNext() )
-    			{
-    				ThrottleFrame tf = (ThrottleFrame) tpi.next();
-    				if (tf.getControlPanel() != null)
-    					tf.getControlPanel().stop();		
-    			}
+    			jmri.jmrit.throttle.ThrottleFrameManager.instance().showThrottlesList();
     		}
     	});
-    	throttleToolBar.add(jbStop);
-    	
-		if (powerMgr != null) {
-			powerLight = new JButton();
-			setPowerIcons();
-			// make the button itself invisible, just display the power LED
-			//powerLight.setBorderPainted(false);
-			powerLight.setContentAreaFilled(false);
-			powerLight.setFocusPainted(false);
-			throttleToolBar.add(powerLight);
-			powerLight.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					try {
-						if (powerMgr.getPower() == PowerManager.ON)
-							powerControl.offButtonPushed();
-						else if (powerMgr.getPower() == PowerManager.OFF)
-							powerControl.onButtonPushed();
-						else if (powerMgr.getPower() == PowerManager.UNKNOWN)
-							powerControl.offButtonPushed();
-					} catch (JmriException ex) {
-						powerLight.setIcon(powerXIcon);
-					}
-				}
-			});
-		}
-    	
+    	throttleToolBar.add(jbThrottleList);
+  
         add(throttleToolBar, BorderLayout.PAGE_START);
     }
     
@@ -326,7 +286,11 @@ public class ThrottleWindow extends JmriJFrame implements java.beans.PropertyCha
 			powerMenu.add(powerOn);
 			powerOn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					powerControl.onButtonPushed();
+					try {
+						powerMgr.setPower(PowerManager.ON);
+					} catch (JmriException e1) {
+						log.error("Error when setting power "+e1);
+					}
 				}
 			});
 
@@ -334,38 +298,21 @@ public class ThrottleWindow extends JmriJFrame implements java.beans.PropertyCha
 			powerMenu.add(powerOff);
 			powerOff.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					powerControl.offButtonPushed();
+					try {
+						powerMgr.setPower(PowerManager.OFF);
+					} catch (JmriException e1) {
+						log.error("Error when setting power "+e1);
+					}
 				}
 			});
 
 			this.getJMenuBar().add(powerMenu);
-			
-			if ( (! jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) 
-				|| ( ! jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isOneWindowForAll()) ) {
-				powerLight = new JButton();
-				setPowerIcons();
-				// make the button itself invisible, just display the power LED
-				powerLight.setBorderPainted(false);
-				powerLight.setContentAreaFilled(false);
-				powerLight.setFocusPainted(false);
-				this.getJMenuBar().add(powerLight);
-				powerLight.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						try {
-							if (powerMgr.getPower() == PowerManager.ON)
-								powerControl.offButtonPushed();
-							else if (powerMgr.getPower() == PowerManager.OFF)
-								powerControl.onButtonPushed();
-							else if (powerMgr.getPower() == PowerManager.UNKNOWN)
-								powerControl.offButtonPushed();
-						} catch (JmriException ex) {
-							powerLight.setIcon(powerXIcon);
-						}
-					}
-				});
-			}
-		}
 
+			if ( (! jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) 
+					|| ( ! jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isOneWindowForAll()) )
+				this.getJMenuBar().add(new SmallPowerManagerButton());
+		}
+		
 		// add help selection
 		addHelpMenu("package.jmri.jmrit.throttle.ThrottleFrame", true);
 	}
@@ -389,54 +336,15 @@ public class ThrottleWindow extends JmriJFrame implements java.beans.PropertyCha
 	 */
     public void dispose()
     {
-    	log.debug("Disposing");
-
-        if (powerMgr!=null) powerMgr.removePropertyChangeListener(this);
-
-        Iterator<JComponent> tpi = throttlesLayout.getIterator() ;
-        while ( tpi.hasNext() )
-        	((ThrottleFrame)tpi.next()).dispose();
+       Component[] comps = throttlesPanel.getComponents() ;
+       for (int i=0; i<comps.length; i++)
+    	   try {
+        	((ThrottleFrame)comps[i]).dispose();
+    	   } catch (Exception e) {
+    		   log.info("Got exception :"+e);
+    	   }
         
         super.dispose();
-    }
-    
-    /**
-     *  implement a property change listener to monitor the power state and change
-     *  the power LED displayed as appropriate
-     */
-    public void propertyChange(java.beans.PropertyChangeEvent ev) {
-        setPowerIcons();
-    }
-    
-
-    /**
-     *  change the power LED displayed as appropriate and set corresponding tooltip
-     *  
-     */
-    private void setPowerIcons() {
-    	if (powerMgr==null) return;
-        try {
-            if (powerMgr.getPower()==PowerManager.ON) {
-                powerLight.setIcon(powerOnIcon);
-                powerLight.setToolTipText("Layout Power On.  Click light to turn off, or use Power menu");
-            }
-            else if (powerMgr.getPower()==PowerManager.OFF) {
-                powerLight.setIcon(powerOffIcon);
-                powerLight.setToolTipText("Layout Power Off.  Click light to turn on, or use Power menu");
-            }
-            else if (powerMgr.getPower()==PowerManager.UNKNOWN) {
-                powerLight.setIcon(powerXIcon);
-                powerLight.setToolTipText("Layout Power state unknown.  Click light to turn off, or use Power menu");
-            }
-            else {
-                powerLight.setIcon(powerXIcon);
-                powerLight.setToolTipText("Layout Power state unknown.  Click light to turn off, or use Power menu");
-                log.error("Unexpected state value: +"+powerMgr.getPower());
-            }
-        } catch (JmriException ex) {
-            powerLight.setIcon(powerXIcon);
-            powerLight.setToolTipText("Layout Power state unknown.  Click light to turn off, or use Power menu");
-        }
     }
     
 	public JCheckBoxMenuItem getViewControlPanel() {
@@ -460,8 +368,9 @@ public class ThrottleWindow extends JmriJFrame implements java.beans.PropertyCha
 	}
 	
 	public void removeThrottleFrame(ThrottleFrame tf) {
-		if ( throttlesLayout.size() > 1 ) // we don't like empty ThrottleWindow
+		if ( cardCounter > 1 ) // we don't like empty ThrottleWindow
 		{
+			cardCounter--;
 			if (curentThrottleFrame == tf)	{
 				log.debug("Closing last created");
 			}
@@ -487,9 +396,11 @@ public class ThrottleWindow extends JmriJFrame implements java.beans.PropertyCha
 	}
 	
 	private int cardcounter = 0; // to generate unique names for each card
+	private int cardCounter = 1; // real counter
 	public void addThrottleFrame(ThrottleFrame tp) {
-		cardcounter++;
+		cardcounter++; cardCounter++;
 		String txt = "Card-"+cardcounter;
+		tp.setTitle(txt);
         throttlesPanel.add(tp,txt);
         throttlesLayout.show(throttlesPanel, txt);
 		updateGUI();
@@ -513,9 +424,9 @@ public class ThrottleWindow extends JmriJFrame implements java.beans.PropertyCha
         
         children.add(wp.getPreferences(this));
 
-        Iterator<JComponent> ite = throttlesLayout.getIterator() ;
-        while (ite.hasNext() )
-        	children.add( ((ThrottleFrame)ite.next()).getXml() );
+ //       Iterator<JComponent> ite = throttlesLayout.getIterator() ;
+ //       while (ite.hasNext() )
+        children.add( curentThrottleFrame.getXml() );
 
         me.setContent(children);        
         return me;
@@ -569,6 +480,13 @@ public class ThrottleWindow extends JmriJFrame implements java.beans.PropertyCha
 			}
 		}
 	}
-    
+
+	public void toFront(String throttleFrameTitle) {
+		throttlesLayout.show(throttlesPanel, throttleFrameTitle);
+		requestFocus();
+		toFront();
+	}
+	
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleWindow.class.getName());
+
 }

@@ -8,7 +8,6 @@ import java.awt.event.ComponentListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.util.ResourceBundle;
 
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
@@ -20,6 +19,8 @@ import javax.swing.event.InternalFrameEvent;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
+import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.RosterEntry;
@@ -31,7 +32,6 @@ import org.jdom.ProcessingInstruction;
 // Should be named ThrottlePanel but was already existing with that name and don't want to break dependancies (particularly in Jython code)
 public class ThrottleFrame extends JDesktopPane  implements AddressListener, ThrottleListener, ComponentListener
 {
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
     private final Integer BACKPANEL_LAYER = new Integer(Integer.MIN_VALUE);
     private final Integer PANEL_LAYER = new Integer(1);
     private static int NEXT_FRAME_KEY = KeyEvent.VK_RIGHT;
@@ -52,15 +52,17 @@ public class ThrottleFrame extends JDesktopPane  implements AddressListener, Thr
     private AddressPanel addressPanel;
     private BackgroundPanel backgroundPanel;
     
-    private DccThrottle throttle;
+    private DccThrottle throttle = null;
     
-    protected String _throttlesBasePath = XmlFile.prefsDir()+"throttle"+File.separator ;
+    private String _throttlesBasePath = XmlFile.prefsDir()+"throttle"+File.separator ;
+    private String title; 
             
     public ThrottleFrame(ThrottleWindow tw)
     {
         super();
         throttleWindow = tw;
         initGUI();
+		jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesList().addThrottleFrame(this);
     }
     
     public void setVisible(boolean b)
@@ -72,7 +74,32 @@ public class ThrottleFrame extends JDesktopPane  implements AddressListener, Thr
     public ControlPanel getControlPanel() { return controlPanel; }
     public FunctionPanel getFunctionPanel() { return functionPanel; }
     public AddressPanel getAddressPanel() { return addressPanel; }
-        
+    
+    public RosterEntry getRosterEntry() {
+    	return addressPanel.getRosterEntry();
+    }
+    
+    public LocoAddress getLocoAddress() {
+    	if (throttle == null) return null ;
+    	return throttle.getLocoAddress();
+    }
+    
+    public Throttle getThrottle() {
+    	return throttle;
+    }
+    
+    public void toFront() {
+    	if (throttleWindow == null) return;
+    	throttleWindow.toFront(title);
+    }
+    
+	public void setTitle(String txt) {
+		title = txt;
+	}
+	public String getTitle() {
+		return title;
+	}
+	
     /**
      * Get notification that a throttle has been found as you requested.
      * @param t An instantiation of the DccThrottle with the address requested.
@@ -80,7 +107,7 @@ public class ThrottleFrame extends JDesktopPane  implements AddressListener, Thr
     public void notifyThrottleFound(DccThrottle t)
     {
     	if (throttle == null){
-            this.throttle = t;
+            throttle = t;
             addressPanel.notifyThrottleFound(t);
             controlPanel.notifyThrottleFound(t);
             functionPanel.notifyThrottleFound(t);
@@ -89,7 +116,7 @@ public class ThrottleFrame extends JDesktopPane  implements AddressListener, Thr
         	if ((jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()) &&
             		(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isAutoLoading()) && 
             		(addressPanel !=null) && (addressPanel.getRosterEntry() != null ))
-            		loadThrottle( _throttlesBasePath+ addressPanel.getRosterEntry().getId() +".xml" );         
+            		loadThrottle( (_throttlesBasePath+ addressPanel.getRosterEntry().getId()).trim() +".xml" );         
     	} else {
             log.debug("Notify control panel to use consist throttle");
             controlPanel.notifyThrottleFound(t);
@@ -97,6 +124,8 @@ public class ThrottleFrame extends JDesktopPane  implements AddressListener, Thr
             if (backgroundPanel != null)
             	backgroundPanel.notifyConsistThrottleFound(t);
     	}
+    	setFrameTitle();
+    	jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesList().repaint();
     }
     
     /**
@@ -108,9 +137,7 @@ public class ThrottleFrame extends JDesktopPane  implements AddressListener, Thr
     	boolean requestOK =
     		InstanceManager.throttleManagerInstance().requestThrottle(address, isLong, this);
     	if (!requestOK)
-    		JOptionPane.showMessageDialog(this, "Address in use by another throttle.");   
-    	else
-    		setFrameTitle();
+    		JOptionPane.showMessageDialog(this, "Address in use by another throttle.");    		
     }
 
     /**
@@ -127,6 +154,7 @@ public class ThrottleFrame extends JDesktopPane  implements AddressListener, Thr
         if (backgroundPanel != null)
         	backgroundPanel.notifyThrottleDisposed();
         throttle = null;
+    	jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesList().repaint();
     }
     
     private void saveThrottle(String sfile) {
@@ -353,7 +381,8 @@ public class ThrottleFrame extends JDesktopPane  implements AddressListener, Thr
 	 * 
 	 */
     public void dispose() {
-    	log.debug("Disposing");
+    	log.debug("Disposing "+getTitle());
+		jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesList().removeThrottleFrame(this);
         // check for any special disposing in InternalFrames
         controlPanel.destroy();
         functionPanel.destroy();
@@ -511,10 +540,9 @@ public class ThrottleFrame extends JDesktopPane  implements AddressListener, Thr
      * setFrameTitle - set the frame title based on type, text and address
      */
     public void setFrameTitle() {
-    	String addr = "";
-    	if (throttle != null) {
-    		addr = throttle.getLocoAddress().toString();
-    	}
+    	String addr = "Throttle";
+    	if (throttle != null) 
+    		addr = throttle.getLocoAddress().toString();    	
     	if ( throttleWindow.getTitleTextType().compareTo("address") == 0) {
     		throttleWindow.setTitle(addr);
     	} else if (throttleWindow.getTitleTextType().compareTo("text") == 0) {
@@ -524,7 +552,8 @@ public class ThrottleFrame extends JDesktopPane  implements AddressListener, Thr
     	} else if (throttleWindow.getTitleTextType().compareTo("textAddress") == 0) {
     		throttleWindow.setTitle(throttleWindow.getTitleText() + " " + addr);
     	} else if (throttleWindow.getTitleTextType().compareTo("rosterID") == 0) {
-    		if ( (addressPanel.getRosterEntry() != null) && (addressPanel.getRosterEntry().getId() != null) )
+    		if ( (addressPanel.getRosterEntry() != null) && (addressPanel.getRosterEntry().getId() != null) 
+    				&& (addressPanel.getRosterEntry().getId().length()>0))
     			throttleWindow.setTitle(addressPanel.getRosterEntry().getId()) ;
     		else
     			throttleWindow.setTitle(addr);
@@ -549,7 +578,7 @@ public class ThrottleFrame extends JDesktopPane  implements AddressListener, Thr
 	}
 	
 	public void saveThrottle() {
-		 saveThrottle( _throttlesBasePath+ addressPanel.getRosterEntry().getId() +".xml" ); 		
+		 saveThrottle( (_throttlesBasePath+ addressPanel.getRosterEntry().getId()).trim() +".xml" ); 		
 	}
 	
 	public void notifyThrottleLost(DccLocoAddress dccAddress){
@@ -595,5 +624,5 @@ public class ThrottleFrame extends JDesktopPane  implements AddressListener, Thr
 		}
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleFrame.class.getName());	
 }
