@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.42 $ -->
+<!-- Revision $Revision: 1.43 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -99,7 +99,6 @@
     <delete defaultexcludes="no" dir="Windows/JMRI" includes="**/.cvsignore"/>
     <move todir="Windows/JMRI">
 		<fileset dir="Windows/JMRI/scripts" >
-      		<include name="*.bat"/>
       		<include name="default.lcf"/>
       		<include name="COPYING"/>
       	</fileset>
@@ -334,21 +333,21 @@
     <scp sftp="true" 
         keyfile="${user.home}/.ssh/id_dsa"
         password="${password}"
-        todir="${user.name},jmri@frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/${release}/" >
+        todir="${user.name},jmri@frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/" >
       <fileset dir="." includes="JMRI.${number}.tgz" />
     </scp>
 	<echo message="upload MacOS X file"/>
     <scp sftp="true" 
         keyfile="${user.home}/.ssh/id_dsa"
         password="${password}"
-        todir="${user.name},jmri@frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/${release}/" >
+        todir="${user.name},jmri@frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/" >
       <fileset dir="." includes="JMRI.${number}.dmg" />
     </scp>
 	<echo message="upload Windows file"/>
     <scp sftp="true" 
         keyfile="${user.home}/.ssh/id_dsa"
         password="${password}"
-        todir="${user.name},jmri@frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/${release}/" >
+        todir="${user.name},jmri@frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/" >
       <fileset dir="." includes="JMRI.${number}.exe" />
     </scp>
 </target>

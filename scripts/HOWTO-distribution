@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.102 $)
+distribution.  ($Revision: 1.103 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -208,8 +208,8 @@ To actually create the distribution:
 ( ) Complete all the above before continuing
 
 ( ) (Sf-upload doesn't work anymore; have to go back to manual, but once the file is up
-    there really isn't much more to do with the new system. I update sf-upload to version 11
-    for 2.7.6, but didnt' use it)
+    there really isn't much more to do with the new system. I updated sf-upload to version 11
+    for 2.7.5, but didnt' use it)
 
     Use sf-upload to create the SF.net release structures:  http://sf-upload.sourceforge.net/
 
@@ -334,4 +334,6 @@ To actually create the distribution:
 ( ) Commit back any changes made to this doc
 
 ( ) Take a break!
+
+===========   extra info =============
 
