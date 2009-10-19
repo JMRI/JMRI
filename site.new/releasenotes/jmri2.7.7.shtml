@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.7.shtml,v 1.5 2009-10-18 23:54:28 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.7.shtml,v 1.6 2009-10-19 06:58:48 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -8,7 +8,7 @@
  </title>
     <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <meta content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="java model railroad JMRI 2.7.6 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+    <meta name="keywords" content="java model railroad JMRI 2.7.7 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
 
 <!-- Style -->
   <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -220,8 +220,15 @@ been provided to the programmer, for example in a script.
 <p>
 Andrew Crosland added support for the CBUS DCC command station and CV programmer.
 
+<p>
+Peter Ulvestad provided a decoder definition for the MRC 1827.
+He also updated the MRC 1630, 1631, 1637, 1806, and 1819 definitions.
 
+<p>
+Nigel Cliffe added a definition for the Lenz Silver 21 Pin decoder.
 
+<p>
+Marc Fournier updated the Kato EM13 decoder definition file.
 
 <!--#include virtual="/Footer" -->
 
