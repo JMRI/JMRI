@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.7.shtml,v 1.6 2009-10-19 06:58:48 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.7.shtml,v 1.7 2009-10-19 17:26:26 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,7 +29,7 @@
       Release Notes for JMRI 2.7.7 release
       </h2>
 
-	<p>Date: MMM NN, 2009</p>
+	<p>Date: October 19, 2009</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.7.7 of JMRI/DecoderPro is available for download.
 
@@ -49,8 +49,10 @@ It contains
 many new features, including:
 
 <ul>
-<li>
-<li>
+<li>Additional formatting options for panel icons (both layout and panel editor types)
+<li>Multiple improvements to the throttle windows
+<LI>Support for CBUS DCC
+<li>Improvements to how user names are handled
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -209,9 +211,11 @@ This is the first step in a general overhaul to get this behavior.
 
 <p>
 Paul Bender added a javadoc-uml build target to the Ant build.  
-This uses UmlGraph and GraphViz to build UML graphs to include in the Javadoc.  
+This uses UmlGraph and GraphViz to build UML class diagrams to include in the Javadoc.  
 UmlGraph is included as a jar in lib, GraphViz will need to be installed.
-This requires Java 1.6.
+This requires Java 1.6. You can check out the results via the 
+<a href="http://jmri.org/uml">UML diagram listing</a>
+on the JMRI web page.
 
 <p>
 Andrew Crosland updated the SPROG programmer to log an error if no programmer listener has 
