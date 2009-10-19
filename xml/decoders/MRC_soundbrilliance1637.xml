@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005, 2006, 2007, 2008 All rights reserved -->
-<!-- $Id: MRC_soundbrilliance1637.xml,v 1.1 2009-09-26 22:29:24 jacobsen Exp $ -->
+<!-- $Id: MRC_soundbrilliance1637.xml,v 1.2 2009-10-19 04:52:53 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,11 +16,13 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
-		<version author="Peter Ulvestad" version="2" lastUpdated="20090904" />
+		<version author="Peter Ulvestad" version="3" lastUpdated="20091011"/>
+		<version author="Peter Ulvestad" version="2" lastUpdated="20090904"/>
 		<version author="Charles Dearden -charlied@comcen.com.au"
 			version="1" lastUpdated="20080530" />
 <!-- made from the MRC_1639 file by Richard Sauerbrun -->
 <!-- Version 2 - Added tooltips -->
+<!-- Version 3 - Added missing Consist direction -->
 
 <decoder>
 	<family name="Brilliance Sound Decoders" mfg="MRC"
@@ -85,7 +87,8 @@
 			</variable>
 
 		<variable label="Locomotive Direction In Consist" CV="19" 
-						mask="VXXXXXXX">
+						mask="VXXXXXXX"
+						item="Consist Direction">
 			<enumVal>
 				<enumChoice choice="Normal"></enumChoice>
 				<enumChoice choice="Reversed"></enumChoice>
@@ -225,13 +228,13 @@
 		</variable>
 
 		<variable label="Injector Volume" CV="61" tooltip="CV61 sets the Injector Volume [range 0-3]"
-						item="Sound Setting 9"
+						item="Sound Setting 11"
 						default="3">
 			<decVal max="3"/>
 		</variable>
 
 		<variable label="Coupling Volume" CV="62" tooltip="CV62 sets the Coupling Volume [range 0-3]"
-						item="Sound Setting 10"
+						item="Sound Setting 12"
 						default="3">
 			<decVal max="3"/>
 		</variable>
@@ -243,7 +246,7 @@
 		</variable>
 
 		<variable label="Air Pump Volume" CV="64" tooltip="CV64 sets the Air Pump Volume [range 0-3]"
-						item="Sound Setting 11"
+						item="Sound Setting 13"
 						default="3">
 			<decVal max="3"/>
 		</variable>
@@ -261,7 +264,7 @@
 		</variable>
 
 		<variable label="Conductor Volume" CV="112" tooltip="CV112 sets the Air Pump Volume [range 0-3]"
-						item="Sound Setting 12"
+						item="Sound Setting 14"
 						default="3">
 			<decVal max="3"/>
 		</variable>
@@ -282,25 +285,25 @@
 		</variable>
 
 		<variable label="Shoveling Volume" CV="118" tooltip="CV118 sets the Shoveling Volume [range 0-3]"
-						item="Sound Setting 13"
+						item="Sound Setting 15"
 						default="3">
 			<decVal max="3"/>
 		</variable>
 						
 		<variable label="Coupling Fire Volume" CV="119" tooltip="CV119 sets the Coupling Fire Volume [range 0-3]"
-						item="Sound Setting 14"
+						item="Sound Setting 16"
 						default="3">
 			<decVal max="3"/>
 		</variable>
 
 		<variable label="Chuff Rate" CV="120" tooltip="CV120 sets the Chuff Rate [range 0-30]"
-						item="Sound Setting 15"
+						item="Sound Setting 17"
 						default="0">
 			<decVal max="30"/>
 		</variable>
 
 		<variable label="Chuff Start Point" CV="121" tooltip="CV120 sets the Chuff Start Point [range 0-5]"
-						item="Sound Setting 16"
+						item="Sound Setting 18"
 						default="0">
 			<decVal max="5"/>
 		</variable>
@@ -322,5 +325,7 @@
 </decoder>
 
 </decoder-config>
+
+ 	  	 
 
  	  	 
