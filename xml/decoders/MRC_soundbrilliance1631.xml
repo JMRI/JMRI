@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
-<!-- $Id: MRC_soundbrilliance1631.xml,v 1.1 2008-05-07 05:23:58 billchown Exp $ -->
+<!-- $Id: MRC_soundbrilliance1631.xml,v 1.2 2009-10-19 04:54:46 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,12 +16,15 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
+		<version author="Peter Ulvestad"
+			version="3" lastUpdated="20091011" />
 		<version author="Bob Jacobsen"
 			version="2" lastUpdated="20071223" />
 		<version author="Bob Jacobsen"
 			version="1" lastUpdated="20060326" />
 <!-- made from the MRC_1626 file by Rick Beaber -->
 <!-- version 2 fixed a problem in CV 115/116 -->
+<!-- version 3 Moved consist functions to consist pane, added tooltips. -->
 
 <decoder>
 	<family name="Brilliance Sound Decoders" mfg="MRC"
@@ -48,60 +51,70 @@
 
 	<variables>
 
-		<variable label="Primary Address" CV="1" comment="Short address"
+		<variable label="Short Address" CV="1" tooltip="CV1 sets the Short, Primary or 2-digit address [range 1-127]"
 						item="Short Address"  default="3">
 			<shortAddressVal/></variable>
 
-		<variable label="Start Volts" CV="2" item="Vstart" default="0"
-				comment="Range 0-32">
+		<variable label="Start Voltage" CV="2" tooltip="CV2 sets the motor voltage at Speed Step 1 [range 0-32]"
+						item="Vstart" default="0">
 			<decVal max="32"/>
 			</variable>
 
-		<variable label="Acceleration momentum" CV="3" item="Accel" default="0"
-				comment="Range 0-32">
+		<variable label="Acceleration" CV="3" tooltip="CV3 sets the acceleration rate (delay) [range 0-32]"
+						item="Accel" default="0">
 			<decVal max="32"/>
 			</variable>
 
-		<variable label="Brake momentum" CV="4" item="Decel" default="0"
-				comment="Range 0-32">
-			<decVal max="32"/>
-			</variable>
-			
-		<variable label="Max Voltage" CV="5" item="Vhigh" default="0"
-				comment="Range 0-32">
+		<variable label="Deceleration" CV="4" tooltip="CV4 sets the deceleration rate (delay) [range 0-32]"
+						item="Decel" default="0">
 			<decVal max="32"/>
 			</variable>
 
-		<variable label="Version ID" CV="7" readOnly="yes"
-				item="Decoder Version" default="1">
+		<variable label="Top Voltage" CV="5" tooltip="CV5 sets the motor voltage at the top Speed Step [range 0-32]"
+						item="Vhigh" default="32">
+			<decVal max="32"/>
+			</variable>
+
+		<variable label="Version ID" CV="7" readOnly="yes" tooltip="CV7 is the Decoder ID,  Read Only"
+						item="Decoder Version">
 			<decVal/>
 			</variable>
 
-		<variable label="Manufacturer ID" CV="8" readOnly="yes"
-				item="Manufacturer" default="143">
+		<variable label="Manufacturer ID" CV="8" readOnly="yes" tooltip="CV8 is the Manufacturer ID, MRC-143, Read Only"
+						item="Manufacturer">
 			<decVal/>
 			</variable>
 
-		<variable label="Long Address" CV="17" item="Extended Address"
-		        comment="4 digit address (Range 0001-9999)">
+		<variable label="Long Address" CV="17" tooltip="CVs17 and 18 set the Extended (4 digit) address, [range 128-9999]"
+						item="Extended Address">
 			<longAddressVal/>
 			</variable>
 
-		<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
-			<decVal/>
+		<variable label="Advanced Consist Address" CV="19" tooltip="CV19 sets the Advanced Consist address, [range 0-127]"
+						mask="XVVVVVVV" 
+						item="Consist Address"
+						default="0">
+			<decVal max="127"/>
 			</variable>
 
-		<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
+		<variable label="Locomotive Direction In Consist" CV="19" 
+						mask="VXXXXXXX"
+						item="Consist Direction">
 			<enumVal>
 				<enumChoice choice="Normal"></enumChoice>
 				<enumChoice choice="Reversed"></enumChoice>
-				</enumVal></variable>
+			</enumVal>
+			</variable>
 
-        <variable label="Functions Respond To Address" CV="21" mask="XXXXXXXV">
-                <enumVal>
-                        <enumChoice choice="Locomotive Address Only"/>
-                        <enumChoice choice="Respond to Consist Address"/>
-                        </enumVal></variable>
+		<variable label="Consist Function" CV="21" tooltip="CV21 selects the address that functions will respond to"
+						mask="XXXXXXXV"
+						item="Functions Respond To" 
+						default="0">
+			<enumVal>
+				<enumChoice choice="Locomotive Address Only"/>
+				<enumChoice choice="Consist Address Only"/>
+			</enumVal>
+		</variable>
 
 		<variable label="Normal direction of motion" CV="29"
 				mask="XXXXXXXV"
@@ -328,11 +341,16 @@
 
 <pane name="MRC">
         <column>
-                <display item="Functions Respond To Address" />
-        </column>
+            <label label="MRC NOTE: Some DCC systems do not have enough power on the program track for programming"/>
+            <label label="sound decoders. If your system is one of these, There are Program Track Boosters available"/>
+            <label label="from aftermarket DCC suppliers."/>
+            <label label=" "/>
+	</column>
 </pane>
 
 </decoder-config>
 
 
 
+
+ 	  	 
