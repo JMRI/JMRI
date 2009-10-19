@@ -1,0 +1,195 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
+
+<!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
+<!-- $Id: Kato_em13.xml,v 1.1 2009-10-19 05:01:14 jacobsen Exp $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<decoder-config>
+	<version author="Dale A Tripp" version="1" lastUpdated="20090625"/>
+	<version author="Marc Fournier" version="1.1" lastUpdated="20091018"/>
+
+	<!-- Created from Digitrax_01x3 file -->
+	<!-- Correct variables statement error, file name corrected put K in caps, sort issue -->
+
+<decoder>
+	<family name="EM13, silent, readback" mfg="Kato" lowVersionID="49" highVersionID="51">
+		   <model model="EM13" numOuts="1" numFns="0" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="none" >
+			<output name="4" label="Violet" connection="contact"/>
+			<size length=".55" width=".36" height=".13" units="inches"/>
+			</model>
+	</family>
+
+	<programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
+
+	<variables>
+		<variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
+			<shortAddressVal/></variable>
+		<variable label="Start Volts" CV="2" item="Vstart" comment="A value of 255 corresponds to 100%">
+			<decVal/>
+			</variable>
+		<variable label="Acceleration Rate" CV="3" item="Accel">
+			<decVal max="31"/>
+			</variable>
+		<variable label="Deceleration Rate" CV="4" item="Decel">
+			<decVal max="31"/>
+			</variable>
+		<variable label="Max Volts" CV="5" item="Vhigh">
+			<decVal/>
+			</variable>
+		<variable label="Mid Volts" CV="6" item="Vmid">
+			<decVal/>
+			</variable>
+		<variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+				<decVal/>
+			</variable>
+		<variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
+				<decVal/>
+			</variable>
+
+		<variable label="Motor Drive Frequency" CV="9" item="Total PWM Period" default="0" comment="00 is fastest, 255 is slowest">
+				<decVal/>
+			</variable>
+
+		<variable label="Long Address" CV="17" item="Extended Address">
+			<longAddressVal/>
+			</variable>
+
+		<variable label="Advanced Consist direction" CV="19" item="Consist Direction" mask="VXXXXXXX" default="0">
+			<enumVal>
+				<enumChoice choice="forward"/>
+				<enumChoice choice="reverse"/>
+				</enumVal>
+			</variable>
+		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+			<enumVal>
+				<enumChoice choice="forward"/>
+				<enumChoice choice="reverse"/>
+				</enumVal>
+			</variable>
+		<variable label="Speed steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+			<enumVal>
+				<enumChoice choice="14"/>
+				<enumChoice choice="28/128"/>
+				</enumVal>
+			</variable>
+		<variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
+			<enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal>
+			</variable>
+		<variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
+			<enumVal>
+				<enumChoice choice="Use Vstart, Vmid, Vhigh"/>
+				<enumChoice choice="Use Table"/>
+				</enumVal>
+			</variable>
+		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
+			<enumVal>
+				<enumChoice choice="2 digit addressing"/>
+				<enumChoice choice="4 digit addressing"/>
+				</enumVal>
+			</variable>
+		<variable label="Solo operation droop compensation for speed stabilization" CV="57" mask="XXXXVVVV" default="6" item="EMF Droop Config" comment="0 is compenstation off, 15 is full on, typical value is 5">
+			<decVal max="15"/>
+			</variable>
+		<variable label="Advanced consist droop compensation for speed stabilization" CV="57" mask="VVVVXXXX" default="0" comment="0 is compenstation off, 15 is full on, typical value is 5">
+			<decVal max="15"/>
+			</variable>
+		<variable label="Speed Compensation Control" CV="61" mask="XXXVXXXX">
+			<enumVal>
+				<enumChoice choice="F5 has no effect on speed compensation"/>
+				<enumChoice choice="F5 On disables speed compensation"/>
+				</enumVal>
+			</variable>
+		<variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" tooltip="Activates Digitrax Transponding" item="Advanced Ack">
+			<enumVal>
+				<enumChoice choice="Off"/>
+				<enumChoice choice="On"/>
+				</enumVal></variable>
+
+		<variable label="Split field motor" CV="61" mask="XXXXXVXX">
+			<enumVal>
+				<enumChoice choice="Normal DC motor"/>
+				<enumChoice choice="Split field/AC motor"/>
+				</enumVal></variable>
+
+		<variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
+			<enumVal>
+				<enumChoice choice="Enabled"/>
+				<enumChoice choice="Disabled"/>
+				</enumVal>
+			</variable>
+		<variable label="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
+			<enumVal>
+				<enumChoice choice="Enabled"/>
+				<enumChoice choice="Disabled"/>
+				</enumVal>
+			</variable>
+		<variable label="Lamp keep-alive voltage" CV="62" mask="VVVVXXXX" item="Global lighting option 1" comment="0 is no keep-alive, use with LEDs">
+				<decVal max="15"/>
+			</variable>
+		<variable label="FX rate adjust" CV="62" mask="XXXXVVVV" item="Global lighting option 2" comment="0 is fast, 15 is slow, 4 is recommended for start">
+				<decVal max="15"/>
+			</variable>
+		<variable label="Ditch light hold-over time" CV="63" item="Global lighting option 3" comment="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
+				<decVal/>
+			</variable>
+		<variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="0">
+			<decVal/>
+			</variable>
+
+		<variable label="Kick Start" CV="65">
+			<decVal/>
+			</variable>
+
+
+		<variable label="User Private ID #1" CV="105" item="User Id #1">
+			<decVal/>
+			</variable>
+		<variable label="User Private ID #2" CV="106" item="User Id #2">
+			<decVal/>
+			</variable>
+		<variable label="Speed Table" CV="67">
+			<speedTableVal/>
+			</variable>
+
+	</variables>
+
+  		<resets>
+  			<factReset label="Reset All CVs" CV="8" default="8"/>
+  			<factReset label="Reset All CVs except speed table" CV="8" default="9"/>
+  		</resets>
+
+</decoder>
+
+<pane name="Digitrax">
+	<column>
+		<!--<display item="Advanced consist droop compensation for speed stabilization"/>-->
+		<display item="Speed Compensation Control"/>
+		<display item="Split field motor"/>
+		<display item="Vstart/Vmid/Vfull in 128 step mode"/>
+		<display item="Short-circuit protection"/>
+		<display item="Switching speed enabled by F6"/>
+		<display item="Torque compensation"/>
+		<display item="Decoder Lock Feature" tooltip="Activates Decoder Locking feature"/>
+		<display item="Decoder Lock ID number" tooltip="Set this decoder's unique locking ID number"/>
+
+	</column>
+</pane>
+
+</decoder-config>
+
+
+ 	  	 
