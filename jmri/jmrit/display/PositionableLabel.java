@@ -38,7 +38,7 @@ import javax.swing.JTextField;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.63 $
+ * @version $Revision: 1.64 $
  */
 
 public class PositionableLabel extends JLabel
@@ -464,7 +464,9 @@ public class PositionableLabel extends JLabel
 			popup.add("x= " + this.getX());
 			popup.add("y= " + this.getY());
 			popup.add("level= " + this.getDisplayLevel().intValue());
-            if (!_saveFixed) {  // this is user's setting
+        }
+        if (!_saveFixed) {  // this is user's setting
+            if (panelEditor!=null){
                 List <JComponent> list = panelEditor.getSelections();
                 if (list!=null) {
                     if (list.contains(this)) {
@@ -481,8 +483,8 @@ public class PositionableLabel extends JLabel
                     }
                 }
             }
+        }
 			popup.add(new PopupAction(name));
-		}
     }
 
     protected void alignGroup(boolean alignX) {
