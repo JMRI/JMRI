@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.50 $
+ * @version $Revision: 1.51 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -2861,12 +2861,12 @@ public class LayoutEditor extends JmriJFrame {
 			}
 			// check if clicking a sensor or a multiSensor
 			else if (!awaitingIconChange) {
-				MultiSensorIcon m = checkMultiSensors(dLoc);
+				/*MultiSensorIcon m = checkMultiSensors(dLoc);
 				if (m!=null) {
 					m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
 									(int)(dLoc.getY()-m.getY()));
 					whenReleased = event.getWhen();
-				}
+				}*/
 				LayoutSensorIcon s = checkSensorIcons(dLoc);
 				if (s!=null) {
 					whenReleased = event.getWhen();
@@ -2902,12 +2902,12 @@ public class LayoutEditor extends JmriJFrame {
 		}
 		// check if clicking on sensor or multisensor out of edit mode
 		else if ( (!isDragging) && (!awaitingIconChange) ) {
-			MultiSensorIcon m = checkMultiSensors(dLoc);
+			/*MultiSensorIcon m = checkMultiSensors(dLoc);
 			if (m!=null) {
 				m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
 									(int)(dLoc.getY()-m.getY()));
 				whenReleased = event.getWhen();
-			}
+			}*/
 			LayoutSensorIcon s = checkSensorIcons(dLoc);
 			if (s!=null) {
 				s.performMouseClicked(event);
@@ -3002,11 +3002,11 @@ public class LayoutEditor extends JmriJFrame {
 					(!awaitingIconChange) && (!event.isShiftDown()) && (!event.isControlDown()) ) {
 			calcLocation(event, dX, dY);
 			// check if on a multi sensor icon
-			MultiSensorIcon m = checkMultiSensors(dLoc);
+			/*MultiSensorIcon m = checkMultiSensors(dLoc);
 			if (m!=null) {
 				m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
 									(int)(dLoc.getY()-m.getY()));
-			}
+			}*/
 			LayoutSensorIcon s = checkSensorIcons(dLoc);
 			if (s!=null) {
 				s.performMouseClicked(event);
@@ -5562,7 +5562,6 @@ public class LayoutEditor extends JmriJFrame {
                     Point2D pt1 = getCoords(t.getConnect1(),t.getType1());
                     Point2D pt2 = getCoords(t.getConnect2(),t.getType2());
                     if((t.getTmpPt1()!=pt1) || (t.getTmpPt2()!=pt2)){
-//                        System.out.println("Not the same need to calculate");
                         t.setTmpPt1(pt1);
                         t.setTmpPt2(pt2);
                         setTrackStrokeWidth(g2,false);
