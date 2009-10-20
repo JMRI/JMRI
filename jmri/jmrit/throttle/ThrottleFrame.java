@@ -116,7 +116,7 @@ public class ThrottleFrame extends JDesktopPane  implements AddressListener, Thr
         	if ((jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()) &&
             		(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isAutoLoading()) && 
             		(addressPanel !=null) && (addressPanel.getRosterEntry() != null ))
-            		loadThrottle( (_throttlesBasePath+ addressPanel.getRosterEntry().getId()).trim() +".xml" );         
+            		loadThrottle( _throttlesBasePath+ addressPanel.getRosterEntry().getId().trim() +".xml" );         
     	} else {
             log.debug("Notify control panel to use consist throttle");
             controlPanel.notifyThrottleFound(t);
@@ -578,7 +578,7 @@ public class ThrottleFrame extends JDesktopPane  implements AddressListener, Thr
 	}
 	
 	public void saveThrottle() {
-		 saveThrottle( (_throttlesBasePath+ addressPanel.getRosterEntry().getId()).trim() +".xml" ); 		
+		 saveThrottle( _throttlesBasePath+ addressPanel.getRosterEntry().getId().trim() +".xml" ); 		
 	}
 	
 	public void notifyThrottleLost(DccLocoAddress dccAddress){
