@@ -19,11 +19,54 @@ import java.io.InputStream;
  * Tests for the XmlFile class.
  * <P>
  * Uses (creates, modifies, destroys) files in the local preferences directory
+ * and the custom <user.home>/temp/xml directory
  *
  * @author	    Bob Jacobsen  Copyright 2001
- * @version         $Revision: 1.15 $
+ * @version         $Revision: 1.16 $
  */
 public class XmlFileTest extends TestCase {
+
+    // file urls are relative to the 
+    // program directory
+    public void testProgIncludeRelative() {
+        validate(new File("temp/xml/ProgramMainRelative.xml"));
+    }
+    
+    public void testProgIncludeURL() {
+        validate(new File("temp/xml/ProgramMainURL.xml"));
+    }
+    
+    public void testDotDotDTD() {
+        validate(new File("temp/xml/DotDotDTD.xml"));
+    }
+    
+    public void testHttpURL() {
+        validate(new File("temp/xml/HttpURL.xml"));
+    }
+    
+    public void testJustFilename() {
+        validate(new File("temp/xml/JustFilename.xml"));
+    }
+    
+    public void testPathname() {
+        validate(new File("temp/xml/Pathname.xml"));
+    }
+    
+    public void validate(File file) {
+        boolean original = XmlFile.getVerify();
+        try {
+            XmlFile.setVerify(true);
+            XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
+            xf.rootFromFile(file);
+        } catch (Exception ex) {
+            XmlFile.setVerify(original);
+            Assert.fail(ex.toString());
+            return;
+        } finally {
+            XmlFile.setVerify(original);
+        }
+    }
+
 
     public void testCheckFile() {
         // XmlFile is abstract, so can't check ctor directly; use local class
@@ -98,7 +141,8 @@ public class XmlFileTest extends TestCase {
                 log.debug("invoked");
                 testFlag = true;
             }
-            protected Element getRootViaURI(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.FileNotFoundException {
+            protected Element getRootViaURI(boolean verify, InputStream stream) 
+                                    throws org.jdom.JDOMException, java.io.FileNotFoundException {
                 log.debug("getRootViaURI dummy");
                 throw new org.jdom.JDOMException("test dummy");
             }
@@ -128,7 +172,10 @@ public class XmlFileTest extends TestCase {
         return suite;
     }
 
-    // protected access for subclass
+    // The minimal setup for log4J
+    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    
     static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XmlFileTest.class.getName());
 
 }
