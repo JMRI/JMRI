@@ -15,7 +15,7 @@ import jmri.Turnout;
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005
  * @author J.M. (Mark) Knox Copyright (C) 2005
  *
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SprogCSTurnout extends AbstractTurnout {
 
@@ -25,7 +25,8 @@ public class SprogCSTurnout extends AbstractTurnout {
     public SprogCSTurnout(int number) {
         super("ST"+number);
         _number = number;
-        commandStation = (SprogSlotManager) jmri.InstanceManager.commandStationInstance();
+
+        commandStation = SprogSlotManager.instance();
     }
 
     public int getNumber() { return _number; }
@@ -41,12 +42,10 @@ public class SprogCSTurnout extends AbstractTurnout {
                 return;
             } else {
                 // send a CLOSED command
-                //sendMessage(true^getInverted());
                 commandStation.forwardCommandChangeToLayout(_number, true^getInverted());
             }
         } else {
             // send a THROWN command
-            //sendMessage(false^getInverted());
             commandStation.forwardCommandChangeToLayout(_number, false^getInverted());
         }
     }
@@ -60,56 +59,9 @@ public class SprogCSTurnout extends AbstractTurnout {
 		if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton ST"+_number);
     }
 
-    // data members
     int _number;   // turnout number
 
-    /*protected void sendMessage(boolean closed) {
-        // get the packet
-        byte[] bl = NmraPacket.accDecoderPkt(_number, closed);
-        if (log.isDebugEnabled()) log.debug("packet: "
-                                            +Integer.toHexString(0xFF & bl[0])
-                                            +" "+Integer.toHexString(0xFF & bl[1])
-                                            +" "+Integer.toHexString(0xFF & bl[2]));
-
-        SprogMessage m = new SprogMessage(10); // changes by J.M.Knox 20050411
-        int i = 0; // counter to make it easier to format the message
-        // changes by J.M.Knox 20050411
-        m.setElement(i++, 'O');  // "S02 " means send it twice
-        m.setElement(i++, ' ');
-        // m.setElement(i++, '2'); // not required?
-        String s = Integer.toHexString(bl[0]&0xFF).toUpperCase();
-        if (s.length() == 1) {
-            m.setElement(i++, '0');
-            m.setElement(i++, s.charAt(0));
-        } else {
-            m.setElement(i++, s.charAt(0));
-            m.setElement(i++, s.charAt(1));
-        }
-        m.setElement(i++, ' ');          // changes by J.M.Knox 20050411
-        s = Integer.toHexString(bl[1]&0xFF).toUpperCase();
-        if (s.length() == 1) {
-            m.setElement(i++, '0');
-            m.setElement(i++, s.charAt(0));
-        } else {
-            m.setElement(i++, s.charAt(0));
-            m.setElement(i++, s.charAt(1));
-        }
-        m.setElement(i++, ' ');          // changes by J.M.Knox 20050411
-        s = Integer.toHexString(bl[2]&0xFF).toUpperCase();
-        if (s.length() == 1) {
-            m.setElement(i++, '0');
-            m.setElement(i++, s.charAt(0));
-        } else {
-            m.setElement(i++, s.charAt(0));
-            m.setElement(i++, s.charAt(1));
-        }
-        commandStation.forwardCommandChangeToLayout(m)
-        SprogTrafficController.instance().sendSprogMessage(m, null);
-
-    }*/
-
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogCSTurnout.class.getName());
-
 }
 
 /* @(#)SprogCSTurnout.java */
