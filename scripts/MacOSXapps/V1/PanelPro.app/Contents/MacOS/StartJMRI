@@ -24,7 +24,7 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision: 1.10 $ (CVS maintains this line, do not edit please)
+# $Revision: 1.11 $ (CVS maintains this line, do not edit please)
 
 # define the class to be invoked
 CLASSNAME=apps.PanelPro.PanelPro
@@ -84,8 +84,8 @@ OPTIONS="${OPTIONS} -Djava.library.path=.:lib"
 # ddraw is disabled to get around Swing performance problems in Java 1.5.0
 OPTIONS="${OPTIONS} -Dsun.java2d.noddraw"
 # memory start and max limits
-OPTIONS="${OPTIONS} -Xms30m"
-OPTIONS="${OPTIONS} -Xmx200m"
+OPTIONS="${OPTIONS} -Xms96m"
+OPTIONS="${OPTIONS} -Xmx640m"
 # MacOS X specific options
 OPTIONS="${OPTIONS} -Dapple.laf.useScreenMenuBar=true"
 OPTIONS="${OPTIONS} -Dcom.apple.macos.useScreenMenuBar=true"
