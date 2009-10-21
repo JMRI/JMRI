@@ -32,7 +32,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.47 $
+ * @version	$Revision: 1.48 $
  */
 public abstract class XmlFile {
 
@@ -199,17 +199,11 @@ public abstract class XmlFile {
     @Deprecated
     private Element getRootViaRelative(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
 
-        // Invoke a utility service routine to provide the URL for DTDs
-        String dtdUrl = "file:xml"+File.separator+"DTD"+File.separator;
+        if (log.isDebugEnabled()) log.debug("getRootViaRelative");
 
-        if (log.isDebugEnabled()) log.debug("getRootViaRelative, DTD via:"+dtdUrl);
-
-        // Open and parse file
-        SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
+        SAXBuilder builder = getBuilder(verify);  // argument controls validation
         
-        builder.setEntityResolver(new jmri.util.JmriLocalEntityResolver());
-        
-        Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
+        Document doc = builder.build(new BufferedInputStream(stream));
 
         // find root
         return doc.getRootElement();
@@ -223,19 +217,11 @@ public abstract class XmlFile {
     @Deprecated
     private Element getRootViaURL(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
         
-        // Invoke a utility service routine to provide the URL for DTDs
-        String dtdpath = "xml"+File.separator+"DTD"+File.separator;
-        File dtdFile = new File(dtdpath);
-        String dtdUrl = jmri.util.FileUtil.getUrl(dtdFile);
+        if (log.isDebugEnabled()) log.debug("getRootViaURL");
 
-        if (log.isDebugEnabled()) log.debug("getRootViaURL, DTD URL:"+dtdUrl);
-
-        // Open and parse file
-        SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
+        SAXBuilder builder = getBuilder(verify);  // argument controls validation
         
-        builder.setEntityResolver(new jmri.util.JmriLocalEntityResolver());
-        
-        Document doc = builder.build(new BufferedInputStream(stream),dtdUrl);
+        Document doc = builder.build(new BufferedInputStream(stream));
 
         // find root
         return doc.getRootElement();
@@ -246,19 +232,12 @@ public abstract class XmlFile {
      * 
      */
     protected Element getRootViaURI(boolean verify, InputStream stream) throws org.jdom.JDOMException, java.io.IOException {
-        // Invoke a utility service routine to provide the URL for DTDs
-        String dtdpath = "xml"+File.separator+"DTD"+File.separator;
-        File dtdFile = new File(dtdpath);
-        String dtdUrl = jmri.util.FileUtil.getUrlViaUri(dtdFile);
 
-        if (log.isDebugEnabled()) log.debug("getRootViaURI, DTD URI:"+dtdUrl);
+        if (log.isDebugEnabled()) log.debug("getRootViaURI");
 
-        // Open and parse file
-        SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation
-        
-        builder.setEntityResolver(new jmri.util.JmriLocalEntityResolver());
+        SAXBuilder builder = getBuilder(verify);  // argument controls validation
 
-        Document doc = builder.build(new BufferedInputStream(stream), dtdUrl);
+        Document doc = builder.build(new BufferedInputStream(stream));
 
         // find root
         return doc.getRootElement();
@@ -543,7 +522,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.47 2009-10-12 19:20:40 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.48 2009-10-21 15:55:20 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
@@ -666,10 +645,17 @@ public abstract class XmlFile {
             String filter, String suffix1) {
         return userFileChooser(filter, suffix1, null);
     }
-        
-    // initialize SAXbuilder
-    //static private SAXBuilder builder = new SAXBuilder(verify);  // argument controls validation, on for now
 
+    SAXBuilder getBuilder(boolean verify) {
+        SAXBuilder builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser",verify);  // argument controls validation
+        
+        builder.setEntityResolver(new jmri.util.JmriLocalEntityResolver());
+        builder.setFeature("http://apache.org/xml/features/xinclude", true);
+        builder.setFeature("http://apache.org/xml/features/xinclude/fixup-base-uris", false);
+
+        return builder;
+    }
+    
     // initialize logging
     static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XmlFile.class.getName());
 
