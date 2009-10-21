@@ -7,13 +7,16 @@ package jmri.jmrix.ecos;
  * with JMRI.
  *
  * @author	Kevin Dickerson  Copyright (C) 2009
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 
 public class EcosPreferences {
  
     public EcosPreferences(){
-	_instance = this;
+       // instance();
+        /*if (jmri.InstanceManager.configureManagerInstance()!=null) {
+            jmri.InstanceManager.configureManagerInstance().registerConfig(this);
+         }*/
     }
     
      /**
@@ -120,7 +123,23 @@ public class EcosPreferences {
     public void setAdhocLocoFromEcos(int boo){
         _adhoclocofromecos = boo;
     }
-    
+
+        /**
+    * Stores the users preferance if a loco has been created ad-hoc,
+    * on the Throttle, should the entry created for it in the ECOS be deleted.
+    * Currently not implemented.
+    */
+
+    protected static String _defaultecosprotocol = "DCC128";
+
+    public String getDefaultEcosProtocol(){
+        return _defaultecosprotocol;
+    }
+
+    public void setDefaultEcosProtocol(String boo){
+        _defaultecosprotocol = boo;
+    }
+
     /**
     * Stores the users preferance for deleting a loco from the roster should it,
     * also be deleted from the ECOS.
@@ -214,17 +233,31 @@ public class EcosPreferences {
     public void setRemoveTurnoutsFromEcos(boolean boo){
         _removeturnoutsfromecos = boo;
     }
-    public void setInstance(){
+/*    public void setInstance(){
 
-    }
+    }*/
     public String name(){
         return null;
     }
-    static public EcosPreferences instance() {
+/*    static public synchronized EcosPreferences instance() {
        if (_instance == null) _instance = new EcosPreferences();
         return _instance; 
     }
-    static EcosPreferences _instance = null;
+    protected static EcosPreferences _instance = null;*/
+
+        static public EcosPreferences instance() {
+        if (self == null) {
+            if (log.isDebugEnabled()) log.debug("creating a new EcosPreferences object");
+            self = new EcosPreferences();
+            // set as command station too
+        }
+        return self;
+    }
+
+    static protected EcosPreferences self = null;
+    protected void setInstance() { self = this; }
+
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosPreferences.class.getName());
 
  }
  
