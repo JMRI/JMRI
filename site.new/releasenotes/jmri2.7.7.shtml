@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.7.shtml,v 1.8 2009-10-19 17:35:29 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.7.shtml,v 1.9 2009-10-21 16:00:48 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -70,6 +70,11 @@ see our
 
 <h3>New warnings for this version:</h3>
 
+You may have to go to the "Debug" menu and select "Recreate Decoder Index"
+to use the new decoder types that were added in this release.  This is due to
+a bug that will be fixed in JMRI 2.8.8.
+
+<p>
 If you're using the "Function Label" or "Roster Image" panes with the 
 DecoderPro "Comprehensive" programmer format, you should change to using
 the "Advanced" format.  You select this at the bottom of the window when opening
