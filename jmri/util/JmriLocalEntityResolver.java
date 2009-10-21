@@ -18,8 +18,8 @@ import java.net.URI;
  * Only the last of these is preferred now. The first two refer to
  * local files within the JMRI distributions in the xml/DTD directory.
  *
- * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.8 $
+ * @author Bob Jacobsen  Copyright 2007, 2009
+ * @version $Revision: 1.9 $
  */
 
 import org.xml.sax.EntityResolver;
@@ -27,7 +27,7 @@ import org.xml.sax.InputSource;
 
 public class JmriLocalEntityResolver implements EntityResolver {
     public InputSource resolveEntity (String publicId, String systemId) {
-        if (log.isDebugEnabled()) log.debug(" got DTD request "+systemId);
+        if (log.isDebugEnabled()) log.debug(" got entity request "+systemId);
         
         // find local file first
         try {
@@ -44,6 +44,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
             if (scheme.equals("http")) {
                 // type 3 - find local file if we can
                 String filename = path.substring(1);  // drop leading slash
+                if (log.isDebugEnabled()) log.debug("http finds filename: "+filename);
                 try {
                     return new InputSource(new java.io.FileReader(new File(filename)));
                 } catch (java.io.FileNotFoundException e2) {
@@ -53,6 +54,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
             } else if (path != null && path.startsWith("../DTD")) {
                 // type 1
                 String filename = "xml"+File.separator+"DTD"+File.separator+path;
+                if (log.isDebugEnabled()) log.debug("starts with ../DTD finds filename: "+filename);
                 try {
                     return new InputSource(new java.io.FileReader(new File(filename)));
                 } catch (java.io.FileNotFoundException e2) {
@@ -62,19 +64,55 @@ public class JmriLocalEntityResolver implements EntityResolver {
             } else if (path != null && path.indexOf("/")==-1) {  // path doesn't contain "/", so is just name
                 // type 2
                 String filename = "xml"+File.separator+"DTD"+File.separator+path;
+                if (log.isDebugEnabled()) log.debug("doesn't contain / finds filename: "+filename);
                 try {
                     return new InputSource(new java.io.FileReader(new File(filename)));
                 } catch (java.io.FileNotFoundException e2) {
-                    log.error("did not find type 2 DTD file: "+filename);
+                    log.error("did not find type 2 entity file: "+filename);
                     return null;
                 }
             } else if (scheme.equals("file")) {
-                // still looking for a local file, this must be absolute or full relative path
-                try {
-                    return new InputSource(new java.io.FileReader(new File(path)));
-                } catch (java.io.FileNotFoundException e2) {
-                    log.error("did not find direct DTD file: "+path);
-                    return null;
+                if (path != null ) {
+                    // still looking for a local file, this must be absolute or full relative path
+                    if (log.isDebugEnabled()) log.debug("scheme file finds path: "+path);
+                    try {
+                        // now we see if we've got a valid path
+                        File pFile = new File(path);
+                        if (pFile.exists()) {
+                            if (log.isDebugEnabled()) log.debug("file exists, used");
+                            return new InputSource(new java.io.FileReader(pFile));
+                        } else {
+                            if (path.lastIndexOf(File.separator+"DTD"+File.separator) >= 0) {
+                                if (log.isDebugEnabled()) log.debug("file not exist, DTD in name, insert xml directory");
+                                String modifiedPath = System.getProperty("user.dir")
+                                                      +File.separator+"xml"
+                                                      +path.substring(path.lastIndexOf(File.separator+"DTD"+File.separator), path.length());
+                                path = modifiedPath;
+                                if (log.isDebugEnabled()) log.debug("attempting : "+path);
+                                return new InputSource(new java.io.FileReader(path));
+                            } else {
+                                if (log.isDebugEnabled()) log.debug("file not exist, no DTD, insert xml/DTD directory");
+                                String modifiedPath = System.getProperty("user.dir")
+                                                      +File.separator+"xml"+File.separator+"DTD"
+                                                      +path.substring(path.lastIndexOf(File.separator), path.length());
+                                path = modifiedPath;
+                                if (log.isDebugEnabled()) log.debug("attempting : "+path);
+                                return new InputSource(new java.io.FileReader(path));
+                            }
+                        }
+                            
+                    } catch (java.io.FileNotFoundException e2) {
+                        log.error("did not find direct entity path: "+path);
+                        return null;
+                    }
+                } else {
+                    if (log.isDebugEnabled()) log.debug("schema file with null path");
+                    try {
+                        return new InputSource(new java.io.FileReader(new File(source)));
+                    } catch (java.io.FileNotFoundException e2) {
+                        log.error("did not find direct entity file: "+source);
+                        return null;
+                    }
                 }
             } else {
                 // not recognized type, return null to use default
