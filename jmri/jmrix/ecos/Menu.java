@@ -3,14 +3,14 @@
 package jmri.jmrix.ecos;
 
 import java.util.ResourceBundle;
-
+import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 
 /**
  * Create a "Systems" menu containing the Jmri ECOS-specific tools.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class Menu extends JMenu {
     public Menu(String name) {
@@ -30,6 +30,10 @@ public class Menu extends JMenu {
         add(new jmri.jmrix.ecos.swing.monitor.MonAction(rb.getString("MenuItemCommandMonitor")));
         add(new jmri.jmrix.ecos.swing.packetgen.PacketGenAction(rb.getString("MenuItemSendCommand")));
         add(new jmri.jmrix.ecos.swing.statusframe.StatusFrameAction("ECoS Info"));
+        add(new jmri.jmrix.ecos.swing.preferences.PreferencesFrameAction("ECoS Preferences"));
+        add(new jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableAction("ECoS Loco Database"));
+        AbstractAction addRostertoecos = new jmri.jmrix.ecos.utilities.AddRosterEntryToEcos("Add Roster Entry to ECoS");
+        add(addRostertoecos);
     }
 
 }
