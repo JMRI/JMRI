@@ -22,34 +22,40 @@ import java.io.InputStream;
  * and the custom <user.home>/temp/xml directory
  *
  * @author	    Bob Jacobsen  Copyright 2001
- * @version         $Revision: 1.16 $
+ * @version         $Revision: 1.17 $
  */
 public class XmlFileTest extends TestCase {
 
     // file urls are relative to the 
     // program directory
+    final static String testFileDir = "java"+File.separator
+                                    +"test"+File.separator
+                                    +"jmri"+File.separator
+                                    +"util"+File.separator
+                                    +"xml"+File.separator;
+    
     public void testProgIncludeRelative() {
-        validate(new File("temp/xml/ProgramMainRelative.xml"));
+        validate(new File(testFileDir+"ProgramMainRelative.xml"));
     }
     
     public void testProgIncludeURL() {
-        validate(new File("temp/xml/ProgramMainURL.xml"));
+        validate(new File(testFileDir+"ProgramMainURL.xml"));
     }
     
     public void testDotDotDTD() {
-        validate(new File("temp/xml/DotDotDTD.xml"));
+        validate(new File(testFileDir+"DotDotDTD.xml"));
     }
     
     public void testHttpURL() {
-        validate(new File("temp/xml/HttpURL.xml"));
+        validate(new File(testFileDir+"HttpURL.xml"));
     }
     
     public void testJustFilename() {
-        validate(new File("temp/xml/JustFilename.xml"));
+        validate(new File(testFileDir+"JustFilename.xml"));
     }
     
     public void testPathname() {
-        validate(new File("temp/xml/Pathname.xml"));
+        validate(new File(testFileDir+"Pathname.xml"));
     }
     
     public void validate(File file) {
