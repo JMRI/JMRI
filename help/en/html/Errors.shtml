@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: Errors.shtml,v 1.1 2008-07-29 07:29:00 jacobsen Exp $ -->
-<title>JMRI: Error Codes</title>
+<!-- $Id: Errors.shtml,v 1.2 2009-10-22 16:03:04 jacobsen Exp $ -->
+<title>JMRI: Error Messages and Codes</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -22,7 +22,7 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: Error Codes
+JMRI: Error Messages and Codes
 </h1>
 
 <dl>
