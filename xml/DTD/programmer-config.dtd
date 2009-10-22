@@ -1,7 +1,7 @@
-<!-- Defines XML documenting a CV programmer format -->
-<!-- $Revision: 1.23 $ -->
+<!-- Defines XML for a programmer layout for the JMRI tabbed programmer    -->
+<!-- $Revision: 1.24 $ -->
 
-<!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
+<!-- This DTD is part of JMRI. Copyright 2001-2009.                         -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,6 +12,8 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
+
+<!-- XInclude can be used to include the "programmer" or "pane" elements    -->
 
 <!ELEMENT programmer-config ( version*, xi:include?, programmer?)>
 <!ATTLIST programmer-config xmlns:xi CDATA #FIXED "http://www.w3.org/2001/XInclude">
@@ -40,7 +42,7 @@
 
 <!-- The programmer section defines the layout and contents of the  -->
 <!-- programmer window(s) -->
-<!ELEMENT programmer (pane*)>
+<!ELEMENT programmer ((xi:include?, pane?)*)>
 <!-- Show additional panes from decoder file? -->
 <!ATTLIST programmer decoderFilePanes (yes | no ) "yes">
 <!-- Suppress panes with no variables? -->
