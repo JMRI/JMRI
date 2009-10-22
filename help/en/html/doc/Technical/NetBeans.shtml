@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NetBeans.shtml,v 1.5 2008-05-24 17:08:42 jacobsen Exp $ -->
+<!-- $Id: NetBeans.shtml,v 1.6 2009-10-22 05:47:40 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -150,7 +150,31 @@ cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri -q update -dA
         the patches, along with an information header.
     </UL>
 
+<h2>Windows Details</h2>
+
+<pre>
+When running from within Netbeans on a Windows system, if JMRI can't find
+your layout connection this may be the problem.
+
+The problem is due to a different Java Runtime Environment (JRE) being
+used when run from within Netbeans as opposed to normal.
+
+Normally, the Windows installer deals with copying the necessary
+communications library files into the JRE - however, you'll need to do
+this manually in this instance.
+
+1. from C:\Program Files\Java\jre1.7.0\lib,<javax.comm.properties> into
+'C:\Program Files\Java\jdk1.7.0\jre\lib'
+
+2. from C:\Program Files\Java\jre1.7.0\lib\ext < Serialio.jar>
+into 'C:\Program Files\Java\jdk1.7.0\jre\lib\ext'
+
+3. from C:\Program Files\Java\jre1.7.0\bin <jspWin.dll> and <win32com.dll>
+into 'C:\Program Files\Java\jdk1.7.0\jre\bin'
+</pre>
+
 <!--#include virtual="/Footer" -->
+
 
       </div>
       <!-- closes #mainContent-->
