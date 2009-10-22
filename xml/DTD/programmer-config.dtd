@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a CV programmer format -->
-<!-- $Revision: 1.22 $ -->
+<!-- $Revision: 1.23 $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -13,7 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT programmer-config (version*, programmer)>
+<!ELEMENT programmer-config ( version*, xi:include?, programmer?)>
+<!ATTLIST programmer-config xmlns:xi CDATA #FIXED "http://www.w3.org/2001/XInclude">
 
 <!-- The version section identifies the file information.  Similar -->
 <!-- clauses appear in other DTD files; check consistency. -->
@@ -22,6 +23,20 @@
 <!ATTLIST version version     	CDATA #IMPLIED>
 <!ATTLIST version lastUpdated   	CDATA #IMPLIED>
 <!ATTLIST version comment     	CDATA #IMPLIED>
+
+<!-- Define XInclude element -->
+<!ELEMENT xi:include (xi:fallback?) >
+<!ATTLIST xi:include
+    xmlns:xi   CDATA       #FIXED    "http://www.w3.org/2001/XInclude"
+    href       CDATA       #IMPLIED
+    parse      (xml|text)  "xml"
+    xpointer   CDATA       #IMPLIED
+    encoding   CDATA       #IMPLIED 
+    accept     CDATA       #IMPLIED
+    accept-language CDATA  #IMPLIED >
+<!ELEMENT xi:fallback ANY>
+<!ATTLIST xi:fallback
+    xmlns:xi   CDATA   #FIXED   "http://www.w3.org/2001/XInclude" >
 
 <!-- The programmer section defines the layout and contents of the  -->
 <!-- programmer window(s) -->
