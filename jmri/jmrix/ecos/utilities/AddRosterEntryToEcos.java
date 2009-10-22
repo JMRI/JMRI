@@ -34,14 +34,12 @@ import jmri.jmrit.roster.RosterEntry;
  * for more details.
  * <P>
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class AddRosterEntryToEcos extends AbstractAction {
 
     /**
      * @param s Name of this action, e.g. in menus
-     * @param who Component that action is associated with, used
-     *              to ensure proper position in of dialog boxes
      */
     public AddRosterEntryToEcos(String s) {
         super(s);
