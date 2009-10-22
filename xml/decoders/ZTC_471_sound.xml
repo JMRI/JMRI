@@ -1202,6 +1202,7 @@
 				</enumVal>
 			</variable>
 
+		<!--  There are not any articulated engines in the ZTC sound sets !
 		<variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX"
 		    item="Sound Option 4" tooltip="CV112 bit 6">
 			<enumVal>
@@ -1209,6 +1210,7 @@
 				<enumChoice choice="Articulated Engine"/>
 				</enumVal>
 			</variable>
+		-->
 
 		<variable label="Cam Enable" CV="112" mask="VXXXXXXX"
 		    item="Sound Option 5" tooltip="CV112 bit 7">
@@ -1291,6 +1293,7 @@
 		</variable>
 
 
+		<!-- What these parameters (CV120-127) are used for is unclear, so commented out for now. 
 		<variable label="Processor Parameter 0" CV="120" default="0"  tooltip="CV120" >
 			<decVal max="255"/>
 		</variable>
@@ -1315,7 +1318,7 @@
 		<variable label="Processor Parameter 7" CV="127" default="0" tooltip="CV127" >
 			<decVal max="255"/>
 		</variable>
-		
+		-->
 		
 		<variable label="Master Volume" CV="128" mask="VVVVVVVV" default="192" 
 		    item="Sound Setting 3" tooltip="CV128">
@@ -2202,13 +2205,14 @@
   </column>
 </pane>
 
-	<pane name="Lock and Processor">
+	<pane name="Lock">
 		<column>
 			<label label=" CV 16 decoder lock.  If set, must match the lock by setting CV15 in single CV programmer  "/>
 			<display item="Decoder Lock"/>
 			<label label="  "/>
 			<separator/>
 			<label label= " " />
+			<!--
 			<label label= "Processor Parameters (CV120-127)" />
 			<label label= " " />
 			<display item="Processor Parameter 0" />
@@ -2219,6 +2223,7 @@
 			<display item="Processor Parameter 5" />
 			<display item="Processor Parameter 6" />
 			<display item="Processor Parameter 7" />
+			-->
 		</column>
 	</pane>
 			
