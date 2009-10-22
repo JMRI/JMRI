@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: getcode.shtml,v 1.4 2008-05-24 17:08:42 jacobsen Exp $ -->
+<!-- $Id: getcode.shtml,v 1.5 2009-10-22 05:51:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -106,6 +106,22 @@ you'd like to contribute back to the project.  This is where CVS has tremendous
 advantages; with the appropriate permissions and commands, you can merge your
 changes back into the common source automagically.  Contact us when you're ready to
 do that or see the <A HREF="index.shtml#contributing">info on contributing</a>.
+
+<h2>Windows Details</h2>
+
+<pre>
+Getting and updating the code with tortoisecvs
+To get a initial checkout from CVS for your own use after installing
+http://www.tortoisecvs.org/. Make a new directory for the project, by
+creating a folder named "JMRISourceCode". Right Click/Control Click on
+that folder and select CVS CVS Checkout". 
+For the CVSROOT enter < :pserver:jmri.cvs.sourceforge.net:/cvsroot/jmri>
+For the Server enter < jmri.cvs.sourceforge.net>
+
+Once you have performed the initial checkout from CVS in the folder, to
+update them select all of them and then Right Click/Control Click and
+select "CVS Update".
+</pre>
 
 <!--#include virtual="/Footer" -->
 
