@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalAddEdit.shtml,v 1.14 2009-10-14 13:41:20 jacobsen Exp $ -->
+<!-- $Id: SignalAddEdit.shtml,v 1.15 2009-10-22 05:42:42 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -94,7 +94,7 @@ choices for how the signal head is connected:
 <dt>Virtual</dt>
   <dd>
   This type doesn't connect to the layout at all.
-  Use it when you want to e.g. display a signal on a PanelPro panel,
+  Use it when you want to e.g. display a signal on a panel,
   but don't have a real one on the layout.
   </dd>
 
