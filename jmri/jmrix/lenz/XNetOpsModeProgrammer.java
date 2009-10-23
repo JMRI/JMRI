@@ -14,10 +14,10 @@ import jmri.*;
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
  * @author         Girgio Terdina Copyright (C) 2007
- * @version        $Revision: 2.10 $
+ * @version        $Revision: 2.11 $
 */
 
-public class XNetOpsModeProgrammer implements Programmer,XNetListener 
+public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements XNetListener 
 {
 
     private int _mode;
@@ -49,6 +49,7 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
         progListener=p;
         value=val;
         progState=XNetProgrammer.REQUESTSENT;
+        restartTimer(msg.getTimeout());
     }
 
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
@@ -106,17 +107,6 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
 		return(true);
     }
 
-    public String decodeErrorCode(int i) {
-                    return("");
-    }
-
-    public void addPropertyChangeListener(PropertyChangeListener p) {
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener p) {
-    }
-
-
     synchronized public void message(XNetReply l) {
 	if (progState == XNetProgrammer.NOTPROGRAMMING) {
            // We really don't care about any messages unless we send a 
@@ -125,28 +115,22 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
         } else if (progState==XNetProgrammer.REQUESTSENT) {
             if(l.isOkMessage()) {
                   progState=XNetProgrammer.NOTPROGRAMMING;
+                  stopTimer();
 	  	  progListener.programmingOpReply(value,jmri.ProgListener.OK);
 	    } else {
               /* this is an error */
-              if(l.getElement(0)==XNetConstants.LI_MESSAGE_RESPONSE_HEADER &&
-		((l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_UNKNOWN_DATA_ERROR ||
-		  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_CS_DATA_ERROR ||
-		  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR ||
-		  l.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR))) {   
-                     /* this is a communications error */
-	             progState=XNetProgrammer.NOTPROGRAMMING;
-                     progListener.programmingOpReply(value,jmri.ProgListener.FailedTimeout);
+              if(l.isRetransmittableErrorMsg()) {
+                return;  // just ignore this, since we are retransmitting 
+                         // the message.
 	      } else if(l.getElement(0)==XNetConstants.CS_INFO &&
 		        l.getElement(2)==XNetConstants.CS_NOT_SUPPORTED) {
 	                   progState=XNetProgrammer.NOTPROGRAMMING;
+                           stopTimer();
 		     	   progListener.programmingOpReply(value,jmri.ProgListener.NotImplemented);
-	      } else if(l.getElement(0)==XNetConstants.CS_INFO &&
-		        l.getElement(2)==XNetConstants.CS_BUSY) {
-	                   progState=XNetProgrammer.NOTPROGRAMMING;
-		     	   progListener.programmingOpReply(value,jmri.ProgListener.ProgrammerBusy);
               } else { 
                         /* this is an unknown error */
 	                progState=XNetProgrammer.NOTPROGRAMMING;
+                        stopTimer();
                    	progListener.programmingOpReply(value,jmri.ProgListener.UnknownError);
               }
             }
@@ -157,6 +141,12 @@ public class XNetOpsModeProgrammer implements Programmer,XNetListener
     public synchronized void message(XNetMessage l) {
     }
 
+
+    protected void timeout(){
+	progState=XNetProgrammer.NOTPROGRAMMING;
+        stopTimer();
+        progListener.programmingOpReply(value,jmri.ProgListener.FailedTimeout);
+    }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetOpsModeProgrammer.class.getName());
