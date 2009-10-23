@@ -19,7 +19,7 @@ import java.net.URI;
  * local files within the JMRI distributions in the xml/DTD directory.
  *
  * @author Bob Jacobsen  Copyright 2007, 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 import org.xml.sax.EntityResolver;
@@ -36,6 +36,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
             String scheme = uri.getScheme();
             String source = uri.getSchemeSpecificPart();
             String path = uri.getPath();
+
             if (log.isDebugEnabled()) log.debug("scheme: "+scheme);
             if (log.isDebugEnabled()) log.debug("source: "+source);
             if (log.isDebugEnabled()) log.debug("path: "+path);
@@ -81,20 +82,30 @@ public class JmriLocalEntityResolver implements EntityResolver {
                         if (pFile.exists()) {
                             if (log.isDebugEnabled()) log.debug("file exists, used");
                             return new InputSource(new java.io.FileReader(pFile));
-                        } else {
+                        } else { // file not exist
+                            // now do special case for Windows, which might use "/" or "\"
+                            // regardless of what File.separator says
+                            String realSeparator = File.separator;
+                                // guess! first form is right one
+                                if (File.separator.equals("\\") 
+                                    && (path.indexOf("\\") > 0 )
+                                    && ( (path.indexOf("/") < 0) || (path.indexOf("\\") < path.indexOf("/")) )  
+                                    )
+                                        realSeparator = "\\";
+                            // end special case
                             if (path.lastIndexOf(File.separator+"DTD"+File.separator) >= 0) {
                                 if (log.isDebugEnabled()) log.debug("file not exist, DTD in name, insert xml directory");
                                 String modifiedPath = System.getProperty("user.dir")
-                                                      +File.separator+"xml"
-                                                      +path.substring(path.lastIndexOf(File.separator+"DTD"+File.separator), path.length());
+                                                      +realSeparator+"xml"
+                                                      +path.substring(path.lastIndexOf(realSeparator+"DTD"+realSeparator), path.length());
                                 path = modifiedPath;
                                 if (log.isDebugEnabled()) log.debug("attempting : "+path);
                                 return new InputSource(new java.io.FileReader(path));
                             } else {
                                 if (log.isDebugEnabled()) log.debug("file not exist, no DTD, insert xml/DTD directory");
                                 String modifiedPath = System.getProperty("user.dir")
-                                                      +File.separator+"xml"+File.separator+"DTD"
-                                                      +path.substring(path.lastIndexOf(File.separator), path.length());
+                                                      +realSeparator+"xml"+File.separator+"DTD"
+                                                      +path.substring(path.lastIndexOf(realSeparator), path.length());
                                 path = modifiedPath;
                                 if (log.isDebugEnabled()) log.debug("attempting : "+path);
                                 return new InputSource(new java.io.FileReader(path));
