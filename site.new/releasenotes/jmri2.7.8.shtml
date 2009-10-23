@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.8.shtml,v 1.3 2009-10-21 16:00:48 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.8.shtml,v 1.4 2009-10-23 05:59:09 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -160,6 +160,22 @@ XML input processing has been reworked.  This shouldn't have any impact
 on users, but might effect people who have written scripts to 
 read or write XML files. See the XmlFile JavaDoc for more information.
 
+<p>
+Kevin Dickerson added geatures to add locos to the roster from an Ecos
+command station, and
+to add locos from the Ecos to the Roster.
+
+<p>
+Kevin Dickerson fixed a problem using an SPROG command station with 
+multiple layout connections.
+
+<p>
+Nigel Cliffe contributed an update for the CT Elektronik SL version 40
+decoder definition
+
+<p>
+Nigel Cliffe contributed an update for the ZTC 471
+decoder definition
 
 <!--#include virtual="/Footer" -->
 
