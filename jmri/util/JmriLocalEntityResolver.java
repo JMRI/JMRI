@@ -19,7 +19,7 @@ import java.net.URI;
  * local files within the JMRI distributions in the xml/DTD directory.
  *
  * @author Bob Jacobsen  Copyright 2007, 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 import org.xml.sax.EntityResolver;
@@ -86,14 +86,19 @@ public class JmriLocalEntityResolver implements EntityResolver {
                             // now do special case for Windows, which might use "/" or "\"
                             // regardless of what File.separator says
                             String realSeparator = File.separator;
-                                // guess! first form is right one
-                                if (File.separator.equals("\\") 
-                                    && (path.indexOf("\\") > 0 )
-                                    && ( (path.indexOf("/") < 0) || (path.indexOf("\\") < path.indexOf("/")) )  
-                                    )
-                                        realSeparator = "\\";
+                            // guess! first form is right one
+                            if (System.getProperty("user.dir").startsWith("Windows")) {
+                                int forIndex = path.indexOf("/");
+                                int backIndex = path.indexOf("\\");
+                                if (forIndex >= 0 && backIndex < 0) realSeparator = "/";
+                                else if (forIndex < 0 && backIndex >= 0) realSeparator = "\\";
+                                else if (forIndex > 0 && backIndex >= forIndex) realSeparator = "\\";
+                                else if (backIndex > 0 && forIndex >= backIndex) realSeparator = "/";
+                                log.debug(" forIndex "+forIndex+" backIndex "+backIndex);
+                            }
+                            log.debug("File.separator "+File.separator+" realSeparator "+realSeparator);
                             // end special case
-                            if (path.lastIndexOf(File.separator+"DTD"+File.separator) >= 0) {
+                            if (path.lastIndexOf(realSeparator+"DTD"+realSeparator) >= 0) {
                                 if (log.isDebugEnabled()) log.debug("file not exist, DTD in name, insert xml directory");
                                 String modifiedPath = System.getProperty("user.dir")
                                                       +realSeparator+"xml"
@@ -104,7 +109,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                             } else {
                                 if (log.isDebugEnabled()) log.debug("file not exist, no DTD, insert xml/DTD directory");
                                 String modifiedPath = System.getProperty("user.dir")
-                                                      +realSeparator+"xml"+File.separator+"DTD"
+                                                      +realSeparator+"xml"+realSeparator+"DTD"
                                                       +path.substring(path.lastIndexOf(realSeparator), path.length());
                                 path = modifiedPath;
                                 if (log.isDebugEnabled()) log.debug("attempting : "+path);
