@@ -7,7 +7,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import java.awt.Dimension;
-//import java.awt.Point;
+import java.awt.Point;
 import java.awt.Window;
 
 
@@ -16,7 +16,7 @@ import java.awt.Window;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class OperationsTrainsGuiTest extends TestCase {
 
@@ -33,14 +33,14 @@ public class OperationsTrainsGuiTest extends TestCase {
 	public void testTrainsTableFrame(){
 		TrainsTableFrame f = new TrainsTableFrame();
 		f.setVisible(true);
-		f.setLocation(10,20);
 		f.setSize(400,200);
-		
-		TrainManager tmanager = TrainManager.instance();
+		f.setLocation(10,20);		
 		f.sortByName.doClick();
 		f.saveButton.doClick();
+		
+		TrainManager tmanager = TrainManager.instance();
 		Assert.assertEquals("sort by 2", TrainsTableFrame.NAME, tmanager.getTrainFrameSortBy());
-		//Assert.assertEquals("location 1", new Point(10,20), tmanager.getTrainFramePosition());
+		Assert.assertEquals("location 1", new Point(10,20), tmanager.getTrainFramePosition());
 		Assert.assertEquals("size 1", new Dimension(400,200), tmanager.getTrainFrameSize());
 		Assert.assertFalse("Build Messages", tmanager.getBuildMessages());
 		Assert.assertFalse("Build Report", tmanager.getBuildReport());
@@ -50,22 +50,24 @@ public class OperationsTrainsGuiTest extends TestCase {
 		f.buildMsgBox.doClick();
 		f.buildReportBox.doClick();
 		f.saveButton.doClick();
-		f.setLocation(20,10);
 		f.setSize(610,250);
+		f.setLocation(20,10);
+		
 		Assert.assertEquals("sort by 3", TrainsTableFrame.TIME, tmanager.getTrainFrameSortBy());
 		Assert.assertTrue("Build Messages 2", tmanager.getBuildMessages());
 		Assert.assertTrue("Build Report 2", tmanager.getBuildReport());
 		Assert.assertFalse("Print Review 2", tmanager.getPrintPreview());
 
 		// frame location shouldn't have moved yet
-		//Assert.assertEquals("location 2", new Point(10,20), tmanager.getTrainFramePosition());
+		Assert.assertEquals("location 2", new Point(10,20), tmanager.getTrainFramePosition());
 		Assert.assertEquals("size 2", new Dimension(400,200), tmanager.getTrainFrameSize());
+		
 		f.sortById.doClick();
 		f.buildMsgBox.doClick();
 		f.printPreviewBox.doClick();
 		f.saveButton.doClick();
 		Assert.assertEquals("sort by 1", TrainsTableFrame.ID, tmanager.getTrainFrameSortBy());
-		//Assert.assertEquals("location 3", new Point(20,10), tmanager.getTrainFramePosition());
+		Assert.assertEquals("location 3", new Point(20,10), tmanager.getTrainFramePosition());
 		Assert.assertEquals("size 3", new Dimension(610,250), tmanager.getTrainFrameSize());
 		Assert.assertFalse("Build Messages 3", tmanager.getBuildMessages());
 		Assert.assertTrue("Build Report 3", tmanager.getBuildReport());
