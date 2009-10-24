@@ -9,7 +9,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import java.awt.Dimension;
-//import java.awt.Point;
+import java.awt.Point;
 import java.awt.Window;
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class OperationsTrainsGuiTest extends TestCase {
 
@@ -37,13 +37,15 @@ public class OperationsTrainsGuiTest extends TestCase {
 		TrainsTableFrame f = new TrainsTableFrame();
 		f.setVisible(true);
 		f.setSize(400,200);
-		f.setLocation(10,20);		
+		f.setLocation(10,20);
+		// frame location can move just a bit on MacOS
+		Point p = f.getLocation();
 		f.sortByName.doClick();
 		f.saveButton.doClick();
 		
 		TrainManager tmanager = TrainManager.instance();
 		Assert.assertEquals("sort by 2", TrainsTableFrame.NAME, tmanager.getTrainFrameSortBy());
-		//Assert.assertEquals("location 1", new Point(10,20), tmanager.getTrainFramePosition());
+		Assert.assertEquals("location 1", p, tmanager.getTrainFramePosition());
 		Assert.assertEquals("size 1", new Dimension(400,200), tmanager.getTrainFrameSize());
 		Assert.assertFalse("Build Messages", tmanager.getBuildMessages());
 		Assert.assertFalse("Build Report", tmanager.getBuildReport());
@@ -62,15 +64,17 @@ public class OperationsTrainsGuiTest extends TestCase {
 		Assert.assertFalse("Print Review 2", tmanager.getPrintPreview());
 
 		// frame location shouldn't have moved yet
-		//Assert.assertEquals("location 2", new Point(10,20), tmanager.getTrainFramePosition());
+		Assert.assertEquals("location 2", p, tmanager.getTrainFramePosition());
 		Assert.assertEquals("size 2", new Dimension(400,200), tmanager.getTrainFrameSize());
 		
 		f.sortById.doClick();
 		f.buildMsgBox.doClick();
 		f.printPreviewBox.doClick();
 		f.saveButton.doClick();
+		// frame location can move just a bit on MacOS
+		p = f.getLocation();
 		Assert.assertEquals("sort by 1", TrainsTableFrame.ID, tmanager.getTrainFrameSortBy());
-		//Assert.assertEquals("location 3", new Point(20,10), tmanager.getTrainFramePosition());
+		Assert.assertEquals("location 3", p, tmanager.getTrainFramePosition());
 		Assert.assertEquals("size 3", new Dimension(610,250), tmanager.getTrainFrameSize());
 		Assert.assertFalse("Build Messages 3", tmanager.getBuildMessages());
 		Assert.assertTrue("Build Report 3", tmanager.getBuildReport());
@@ -180,7 +184,9 @@ public class OperationsTrainsGuiTest extends TestCase {
 		trainEditFrame.setSize(650,600);
 		trainEditFrame.setLocation(25,30);
 		trainEditFrame.saveTrainButton.doClick();
-		//Assert.assertEquals("location 1", new Point(25,30), tmanager.getTrainEditFramePosition());
+		// frame location can move just a bit on MacOS
+		Point p = trainEditFrame.getLocation();
+		Assert.assertEquals("location 1", p, tmanager.getTrainEditFramePosition());
 		Assert.assertEquals("size 1", new Dimension(650,600), tmanager.getTrainEditFrameSize());
 		
 		// test delete button
@@ -200,9 +206,9 @@ public class OperationsTrainsGuiTest extends TestCase {
 			windows = trainEditFrame.getOwnedWindows();
 		}
 		// There is only one dialog window so take the first
-		Window p = windows[0];
+		Window w = windows[0];
 		// need to wait for dialog window to be in focus
-		while(!p.isFocused()){
+		while(!w.isFocused()){
 			Thread.yield();
 		}
 	
@@ -210,7 +216,7 @@ public class OperationsTrainsGuiTest extends TestCase {
 		//p.dispatchEvent(ae);
 		
 		// now we can kill it!
-		p.setVisible(false);
+		w.setVisible(false);
 		
 	}
 	
