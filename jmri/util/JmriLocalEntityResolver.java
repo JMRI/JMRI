@@ -19,7 +19,7 @@ import java.net.URI;
  * local files within the JMRI distributions in the xml/DTD directory.
  *
  * @author Bob Jacobsen  Copyright 2007, 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 import org.xml.sax.EntityResolver;
@@ -87,7 +87,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                             // regardless of what File.separator says
                             String realSeparator = File.separator;
                             // guess! first form is right one
-                            if (System.getProperty("user.dir").startsWith("Windows")) {
+                            if (System.getProperty("os.name").startsWith("Windows")) {
                                 int forIndex = path.indexOf("/");
                                 int backIndex = path.indexOf("\\");
                                 if (forIndex >= 0 && backIndex < 0) realSeparator = "/";
