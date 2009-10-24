@@ -14,8 +14,6 @@ import javax.swing.JComboBox;
 import org.jdom.Element;
 
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.operations.trains.Train;
@@ -24,7 +22,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.24 $
+ * @version	$Revision: 1.25 $
  */
 public class EngineManager {
 	
@@ -683,30 +681,14 @@ public class EngineManager {
     }
    
     /**
-	 * return a list available engines (no assigned train) on a route, engines are
+	 * return a list available engines (no assigned train) at the start of a route, engines are
 	 * ordered least recently moved to most recently moved.
 	 * 
 	 * @param train
 	 * @return Ordered list of engine ids not assigned to a train
 	 */
     public List<String> getEnginesAvailableTrainList(Train train) {
-    	Route route = train.getRoute();
-    	// get a list of locations served by this route
-    	List<String> routeList = route.getLocationsBySequenceList();
-    	// don't include engines at route destination
-    	RouteLocation destination = null;
-    	if (routeList.size()>1){
-    		destination = route.getLocationById(routeList.get(routeList.size()-1));
-    		// However, if the destination is visited at least once, must include all engines
-    		RouteLocation test;
-    		for (int i=0; i<routeList.size()-1; i++){
-    			test = route.getLocationById(routeList.get(i));
-    			if (destination.getName().equals(test.getName())){
-    				destination = null;
-    				break;
-    			}
-    		}
-    	}
+    	String departureName = train.getTrainDepartsName();
     	// get engines by moves list
     	List<String> enginesSortByMoves = getEnginesByMovesList();
     	// now build list of available engines for this route
@@ -715,14 +697,9 @@ public class EngineManager {
  
     	for (int i = 0; i < enginesSortByMoves.size(); i++) {
     		engine = getEngineById(enginesSortByMoves.get(i));
-       		// only use engines with a location
-    		if (engine.getLocationName().equals(""))
-    			continue;
-    		RouteLocation rl = route.getLastLocationByName(engine.getLocationName());
-    		// get engines that don't have an assigned train, or the assigned train is this one 
-    		if (rl != null && rl != destination && (engine.getTrain() == null || train.equals(engine.getTrain()))){
+    		// only use engines at start of route
+    		if((engine.getTrain()== null || engine.getTrain()==train) && engine.getLocationName().equals(departureName))
     			out.add(enginesSortByMoves.get(i));
-    		}
     	}
     	return out;
     }
@@ -735,7 +712,7 @@ public class EngineManager {
 	 */
     public List<String> getEnginesByTrainList(Train train) {
     	// get engines available list
-    	List<String> available = getEnginesAvailableTrainList(train);
+    	List<String> available = getEnginesByIdList();
     	List<String> inTrain = new ArrayList<String>();
     	Engine engine;
 

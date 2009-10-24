@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
  *   Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -862,13 +862,6 @@ public class OperationsCarsTest extends TestCase {
 
         // Need to clear out CarManager global variables
         CarManager manager = CarManager.instance();
-        
-        List<String> tempkernelList = manager.getKernelNameList();
-        for (int i = 0; i < tempkernelList.size(); i++) {
-            String kernelId = tempkernelList.get(i);
-            manager.deleteKernel(kernelId);
-        }
- 
         CarColors.instance().dispose();
         CarLengths.instance().dispose();
         CarLoads.instance().dispose();

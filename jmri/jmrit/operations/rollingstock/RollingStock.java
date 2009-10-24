@@ -16,11 +16,13 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
+	
+	private static final String DEFAULT_WEIGHT = "0";
 	
 	protected String _id = "";
 	protected String _number = "";
@@ -28,8 +30,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	protected String _type = "";
 	protected String _length = "";
 	protected String _color = "";
-	protected String _weight = "";
-	protected String _weightTons = "";
+	protected String _weight = DEFAULT_WEIGHT;
+	protected String _weightTons = DEFAULT_WEIGHT;
 	protected String _built = "";
 	protected String _owner = "";
 	protected String _comment = "";
@@ -162,7 +164,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	}
 
 	public String getWeightTons() {
-		if (!_weightTons.equals(""))
+		if (!_weightTons.equals(DEFAULT_WEIGHT))
 			return _weightTons;
 
 		double weight = 0;
@@ -638,9 +640,9 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		e.setAttribute("length", getLength());
 		if(!getColor().equals(""))
 			e.setAttribute("color", getColor());
-		if(!getWeight().equals(""))
+		if(!getWeight().equals(DEFAULT_WEIGHT))
 			e.setAttribute("weight", getWeight());
-		if (!getWeightTons().equals("0"))
+		if (!getWeightTons().equals(DEFAULT_WEIGHT))
 			e.setAttribute("weightTons", getWeightTons());
 		if (!getBuilt().equals(""))
 			e.setAttribute("built", getBuilt());

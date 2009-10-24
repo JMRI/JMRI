@@ -9,7 +9,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents an engine on the layout
  * 
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class Engine extends RollingStock {
 	
@@ -180,12 +180,17 @@ public class Engine extends RollingStock {
 		if ((a = e.getAttribute("type")) != null)
 			setType(a.getValue());
 		if ((a = e.getAttribute("consist")) != null){
-			setConsist(EngineManager.instance().getConsistByName(a.getValue()));
-			if ((a = e.getAttribute("leadConsist")) != null){
-				_consist.setLeadEngine(this);
-			}
-			if ((a = e.getAttribute("consistNum")) != null){
-				_consist.setConsistNumber(Integer.parseInt(a.getValue()));
+			Consist c = EngineManager.instance().getConsistByName(a.getValue());
+			if (c != null){
+				setConsist(c);
+				if ((a = e.getAttribute("leadConsist")) != null){
+					_consist.setLeadEngine(this);
+				}
+				if ((a = e.getAttribute("consistNum")) != null){
+					_consist.setConsistNumber(Integer.parseInt(a.getValue()));
+				}
+			} else {
+				log.error("Consist "+a.getValue()+" does not exist");
 			}
 		}
 		super.rollingStock(e); 

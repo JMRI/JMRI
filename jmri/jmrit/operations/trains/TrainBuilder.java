@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.57 $
+ * @version             $Revision: 1.58 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -152,7 +152,7 @@ public class TrainBuilder extends TrainCommon{
 			}
 			// if a location is skipped, no drops or pickups
 			else if(train.skipsLocation(rl.getId())){
-				addLine(fileOut, THREE, "Location (" +rl.getName()+ ") is skipped by train "+train.getName());
+				addLine(fileOut, THREE, "Location (" +rl.getName()+ ") is skipped by train ("+train.getName()+")");
 				rl.setCarMoves(rl.getMaxCarMoves());	// don't allow car moves for this location
 			}
 			// skip if a location doesn't allow drops or pickups
@@ -204,6 +204,11 @@ public class TrainBuilder extends TrainCommon{
 				addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildStagingHas"),new Object[]{
 						departStageTrack.getName(), Integer.toString(departStageTrack.getNumberEngines()),
 						Integer.toString(departStageTrack.getNumberCars())}));
+				// is the departure track available?
+				if (!checkDepartureStagingTrack(fileOut)){
+					departStageTrack = null;
+					continue;
+				}
 				// is the staging track direction correct for this train?
 				if ((departStageTrack.getTrainDirections() & train.getRoute().getLocationById(routeList.get(0)).getTrainDirection()) == 0){
 					addLine(fileOut, THREE, "Staging track ("+departStageTrack.getName()+") does not service this train's direction");
@@ -712,8 +717,13 @@ public class TrainBuilder extends TrainCommon{
 		}
 		// if leaving staging, use any number of engines if required number is 0
 		boolean leavingStaging = false;
-		if (departStageTrack != null && reqNumEngines == 0)
-			leavingStaging = true;
+		if (departStageTrack != null)
+			if (reqNumEngines == 0)
+				leavingStaging = true;
+			else if (departStageTrack.getNumberEngines() != reqNumEngines){
+				addLine(fileOut, THREE, "Staging track ("+departStageTrack.getName()+") doesn't have the required number of engines");
+				return false;
+			}
 		if (!leavingStaging && reqNumEngines == 0)
 			return true;
 
@@ -1199,6 +1209,39 @@ public class TrainBuilder extends TrainCommon{
 		addLine(file, FIVE, "Can't drop car ("+car.getRoad()+" "+car.getNumber()+") using "+rld.getTrainDirectionString()+"bound train,");
 		addLine(file, FIVE, " destination track ("+track+") does not service this direction");
 		return false;
+	}
+	
+	/**
+	 * Check departure staging track to see if engines and cars are available to
+	 * a new train.
+	 * 
+	 * @return true is there are engines and cars available.
+	 */
+	private boolean checkDepartureStagingTrack(PrintWriter file){
+		if (departStageTrack.getNumberRS()==0)
+			return false;
+		if (departStageTrack.getNumberEngines()>0){
+			List<String> engs = engineManager.getEnginesByIdList();
+			for (int i=0; i<engs.size(); i++){
+				Engine eng = engineManager.getEngineById(engs.get(i));
+				if (eng.getTrack() == departStageTrack && eng.getRouteLocation() != null){
+					addLine(file, ONE, MessageFormat.format(rb.getString("buildStagingDepart"),
+							new Object[]{departStageTrack.getName(), eng.getTrain().getName()}));
+					return false;
+				}
+			}
+		}else if (departStageTrack.getNumberCars()>0){
+			List<String> cars = carManager.getCarsByIdList();
+			for (int i=0; i<cars.size(); i++){
+				Car car = carManager.getCarById(cars.get(i));
+				if (car.getTrack() == departStageTrack && car.getRouteLocation() != null){
+					addLine(file, ONE, MessageFormat.format(rb.getString("buildStagingDepart"),
+							new Object[]{departStageTrack.getName(), car.getTrain().getName()}));
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	private void buildFailed(PrintWriter file, String string){

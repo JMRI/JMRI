@@ -19,7 +19,7 @@ import jmri.jmrit.operations.routes.Route;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.29 $
+ * @version             $Revision: 1.30 $
  */
 public class Track {
 	
@@ -203,7 +203,7 @@ public class Track {
 	
 	/**
 	 * 
-	 * @return The number of cars on this track
+	 * @return The number of engines on this track
 	 */
 	public int getNumberEngines() {
 		return _numberEngines;

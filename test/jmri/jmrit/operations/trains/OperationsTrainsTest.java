@@ -7,7 +7,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -59,7 +58,7 @@ import jmri.jmrit.operations.routes.RouteManager;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -326,8 +325,8 @@ public class OperationsTrainsTest extends TestCase {
 		et.addName("Diesel");
 
 		// Set up four engines in two consists 
-		Consist con1 = new Consist("C16");
-		Consist con2 = new Consist("C14");
+		Consist con1 = emanager.newConsist("C16");	
+		Consist con2 = emanager.newConsist("C14");
 
 		Engine e1 = new Engine("CP", "5016");
 		e1.setModel("GP40");
@@ -2168,7 +2167,7 @@ public class OperationsTrainsTest extends TestCase {
 		cmanager.register(c4);
 
 		// place two cars in a kernel
-		Kernel k1 = new Kernel("TwoCars");
+		Kernel k1 = cmanager.newKernel("TwoCars");
 				
 		Car c5 = new Car("UP", "S5");
 		c5.setType("Gon");
@@ -2987,7 +2986,7 @@ public class OperationsTrainsTest extends TestCase {
 		et.addName("Diesel");
 		
 		// place two engines in a consist
-		Consist con1 = new Consist("C1");
+		Consist con1 = emanager.newConsist("C1");
 		
 		Engine e1 = emanager.newEngine("UP", "1");
 		e1.setModel("GP40");
@@ -3723,6 +3722,7 @@ public class OperationsTrainsTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(OperationsTrainsTest.class);
+		suite.addTest(OperationsTrainsGuiTest.suite());
 		return suite;
 	}
 
