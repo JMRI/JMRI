@@ -32,7 +32,7 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.29 $
+ * @version             $Revision: 1.30 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -244,8 +244,6 @@ public class TrainsTableFrame extends OperationsFrame {
 		if (ae.getSource() == printSwitchButton){
 			TrainSwitchListEditFrame f = new TrainSwitchListEditFrame();
 			f.initComponents();
-			f.setTitle(rb.getString("TitleSwitchLists"));
-			f.setVisible(true);
 		}
 		if (ae.getSource() == terminateButton){
 			List<String> trains = getTrainList();

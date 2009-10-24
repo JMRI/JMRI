@@ -30,7 +30,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user selection of switch lists
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -117,8 +117,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         // add help menu to window
     	addHelpMenu("package.jmri.jmrit.operations.Operations_SwitchList", true);
 		// set frame size and train for display
-    	
-		pack();
+    	pack();
+		setTitle(rb.getString("TitleSwitchLists"));
+		setVisible(true);
 	}
 	
 	// Buttons 

@@ -2,13 +2,16 @@
 
 package jmri.jmrit.operations.trains;
 
+import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Location;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import java.awt.Dimension;
-import java.awt.Point;
+//import java.awt.Point;
 import java.awt.Window;
+import java.util.List;
 
 
 
@@ -16,7 +19,7 @@ import java.awt.Window;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class OperationsTrainsGuiTest extends TestCase {
 
@@ -40,7 +43,7 @@ public class OperationsTrainsGuiTest extends TestCase {
 		
 		TrainManager tmanager = TrainManager.instance();
 		Assert.assertEquals("sort by 2", TrainsTableFrame.NAME, tmanager.getTrainFrameSortBy());
-		Assert.assertEquals("location 1", new Point(10,20), tmanager.getTrainFramePosition());
+		//Assert.assertEquals("location 1", new Point(10,20), tmanager.getTrainFramePosition());
 		Assert.assertEquals("size 1", new Dimension(400,200), tmanager.getTrainFrameSize());
 		Assert.assertFalse("Build Messages", tmanager.getBuildMessages());
 		Assert.assertFalse("Build Report", tmanager.getBuildReport());
@@ -59,7 +62,7 @@ public class OperationsTrainsGuiTest extends TestCase {
 		Assert.assertFalse("Print Review 2", tmanager.getPrintPreview());
 
 		// frame location shouldn't have moved yet
-		Assert.assertEquals("location 2", new Point(10,20), tmanager.getTrainFramePosition());
+		//Assert.assertEquals("location 2", new Point(10,20), tmanager.getTrainFramePosition());
 		Assert.assertEquals("size 2", new Dimension(400,200), tmanager.getTrainFrameSize());
 		
 		f.sortById.doClick();
@@ -67,7 +70,7 @@ public class OperationsTrainsGuiTest extends TestCase {
 		f.printPreviewBox.doClick();
 		f.saveButton.doClick();
 		Assert.assertEquals("sort by 1", TrainsTableFrame.ID, tmanager.getTrainFrameSortBy());
-		Assert.assertEquals("location 3", new Point(20,10), tmanager.getTrainFramePosition());
+		//Assert.assertEquals("location 3", new Point(20,10), tmanager.getTrainFramePosition());
 		Assert.assertEquals("size 3", new Dimension(610,250), tmanager.getTrainFrameSize());
 		Assert.assertFalse("Build Messages 3", tmanager.getBuildMessages());
 		Assert.assertTrue("Build Report 3", tmanager.getBuildReport());
@@ -75,6 +78,9 @@ public class OperationsTrainsGuiTest extends TestCase {
 
 		// create the TrainEditFrame
 		f.addButton.doClick();
+		
+		// create the TrainSwichListEditFrame
+		f.printSwitchButton.doClick();
 	}
 	
 	TrainEditFrame trainEditFrame;
@@ -170,6 +176,13 @@ public class OperationsTrainsGuiTest extends TestCase {
 		trainEditFrame.saveTrainButton.doClick();
 		Assert.assertEquals("train requirements 4", Train.NONE, t.getRequirements());
 
+		// test frame size and location
+		trainEditFrame.setSize(650,600);
+		trainEditFrame.setLocation(25,30);
+		trainEditFrame.saveTrainButton.doClick();
+		//Assert.assertEquals("location 1", new Point(25,30), tmanager.getTrainEditFramePosition());
+		Assert.assertEquals("size 1", new Dimension(650,600), tmanager.getTrainEditFrameSize());
+		
 		// test delete button
 		// the delete opens a dialog window to confirm the delete which 
 		// in turn stops the thread, so create a new thread to this this.
@@ -228,6 +241,57 @@ public class OperationsTrainsGuiTest extends TestCase {
 		Assert.assertFalse("none selected", f.noneRadioButton.isSelected());
 		Assert.assertFalse("FRED selected", f.fredRadioButton.isSelected());
 		
+		// test frame size and location
+		//Assert.assertEquals("location 1", new Point(25,30), tmanager.getTrainEditFramePosition());
+		Assert.assertEquals("size 1", new Dimension(650,600), tmanager.getTrainEditFrameSize());
+	}
+	
+	public void testTrainModifyFrame(){
+		// confirm that train default accepts Boxcars
+		TrainManager tmanager = TrainManager.instance();
+		Train t = tmanager.getTrainByName("Test Train Name");
+		Assert.assertTrue("accepts Boxcar 1", t.acceptsTypeName("Boxcar"));
+				
+		TrainsByCarTypeFrame f = new TrainsByCarTypeFrame();
+		f.initComponents("Boxcar");
+		
+		// remove Boxcar from trains
+		f.clearButton.doClick();
+		f.saveButton.doClick();
+		Assert.assertFalse("accepts Boxcar 2", t.acceptsTypeName("Boxcar"));
+
+		// now add Boxcar to trains
+		f.setButton.doClick();
+		f.saveButton.doClick();
+		Assert.assertTrue("accepts Boxcar 3", t.acceptsTypeName("Boxcar"));
+	}
+	
+	public void testTrainSwitchListEditFrame(){
+		TrainSwitchListEditFrame f = new TrainSwitchListEditFrame();
+		f.initComponents();
+		
+		LocationManager lmanager = LocationManager.instance();
+		List<String> locations = lmanager.getLocationsByNameList();
+		
+		// default switch list will print all locations
+		for (int i=0; i<locations.size(); i++){
+			Location l = lmanager.getLocationById(locations.get(i));
+			Assert.assertTrue("print switchlist 1", l.getSwitchList());
+		}
+		// now clear all locations
+		f.clearButton.doClick();
+		f.saveButton.doClick();
+		for (int i=0; i<locations.size(); i++){
+			Location l = lmanager.getLocationById(locations.get(i));
+			Assert.assertFalse("print switchlist 2", l.getSwitchList());
+		}
+		// now set all locations
+		f.setButton.doClick();
+		f.saveButton.doClick();
+		for (int i=0; i<locations.size(); i++){
+			Location l = lmanager.getLocationById(locations.get(i));
+			Assert.assertTrue("print switchlist 3", l.getSwitchList());
+		}
 	}
 	
 	// Ensure minimal setup for log4J
