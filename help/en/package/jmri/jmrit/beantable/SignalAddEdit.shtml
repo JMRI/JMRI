@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalAddEdit.shtml,v 1.15 2009-10-22 05:42:42 jacobsen Exp $ -->
+<!-- $Id: SignalAddEdit.shtml,v 1.16 2009-10-25 12:28:24 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -148,7 +148,9 @@ choices for how the signal head is connected:
   decoder that uses the 
   <a href="http://www.nmra.org/standards/DCC/standards_rps/rp921.html#Extended%20Accessory%20Decoder%20Control%20Packet%20Format">DCC signal packets</a>
   defined by the 
-  <a href="http://www.nmra.org/standards/DCC/DCCHome.html">NMRA DCC Working Group</a>.
+  <a href="http://www.nmra.org/standards/DCC/DCCHome.html">NMRA DCC Working Group</a> for control.
+  This is a special protocol defined for driving signal heads, and is different from how
+  "accessory decoders" (e.g. turnout outputs) are controlled. 
   <p>
   Enter the DCC address as a number.
   </dd>
