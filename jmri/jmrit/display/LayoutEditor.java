@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -111,11 +111,11 @@ public class LayoutEditor extends JmriJFrame {
 	private JPanel topEditBar = null;
 	private JPanel helpBar = null;
 	protected boolean skipIncludedTurnout = false;
-    public ArrayList<LayoutPositionableLabel> backgroundImage = new ArrayList<LayoutPositionableLabel>();  // background images
-    public ArrayList<LayoutSensorIcon> sensorImage = new ArrayList<LayoutSensorIcon>();  // sensor images
-    public ArrayList<LayoutSignalHeadIcon> signalHeadImage = new ArrayList<LayoutSignalHeadIcon>();  // signal head images
+    public ArrayList<PositionableLabel> backgroundImage = new ArrayList<PositionableLabel>();  // background images
+    public ArrayList<SensorIcon> sensorImage = new ArrayList<SensorIcon>();  // sensor images
+    public ArrayList<SignalHeadIcon> signalHeadImage = new ArrayList<SignalHeadIcon>();  // signal head images
 	public ArrayList<LocoIcon> markerImage = new ArrayList<LocoIcon>(); // marker images
-	public ArrayList<LayoutPositionableLabel> labelImage = new ArrayList<LayoutPositionableLabel>(); // layout positionable label images
+	public ArrayList<PositionableLabel> labelImage = new ArrayList<PositionableLabel>(); // layout positionable label images
 	public ArrayList<AnalogClock2Display> clocks = new ArrayList<AnalogClock2Display>();  // fast clocks
 	public ArrayList<MultiSensorIcon> multiSensors = new ArrayList<MultiSensorIcon>(); // multi-sensor images
 	
@@ -263,8 +263,8 @@ public class LayoutEditor extends JmriJFrame {
 	private int numLayoutTurnouts = 0;
 	private int numLayoutTurntables = 0;
 	// Lists of items that facilitate tools and drawings
-	public ArrayList<LayoutSignalHeadIcon> signalList = new ArrayList<LayoutSignalHeadIcon>();  // Signal Head Icons
-	public ArrayList<LayoutMemoryIcon> memoryLabelList = new ArrayList<LayoutMemoryIcon>(); // Memory Label List
+	public ArrayList<SignalHeadIcon> signalList = new ArrayList<SignalHeadIcon>();  // Signal Head Icons
+	public ArrayList<MemoryIcon> memoryLabelList = new ArrayList<MemoryIcon>(); // Memory Label List
         
     // persistent instance variables - saved to disk with Save Panel
 	private int windowWidth = 0;
@@ -2266,16 +2266,16 @@ public class LayoutEditor extends JmriJFrame {
 						}
 						if (selectedObject!=null) {
 							selectedPointType = LAYOUT_POS_LABEL;
-							startDel.setLocation((((LayoutPositionableLabel)selectedObject).getX()-dLoc.getX()), 
-												(((LayoutPositionableLabel)selectedObject).getY()-dLoc.getY()));
+							startDel.setLocation((((PositionableLabel)selectedObject).getX()-dLoc.getX()), 
+												(((PositionableLabel)selectedObject).getY()-dLoc.getY()));
 							//selectedNeedsConnect = false;
 						}
 						else {
 							selectedObject = checkBackgrounds(dLoc);
 							if (selectedObject!=null) {
 								selectedPointType = LAYOUT_POS_LABEL;
-								startDel.setLocation((((LayoutPositionableLabel)selectedObject).getX()-dLoc.getX()), 
-													(((LayoutPositionableLabel)selectedObject).getY()-dLoc.getY()));
+								startDel.setLocation((((PositionableLabel)selectedObject).getX()-dLoc.getX()), 
+													(((PositionableLabel)selectedObject).getY()-dLoc.getY()));
 								//selectedNeedsConnect = false;
 							}
 						}
@@ -2607,10 +2607,10 @@ public class LayoutEditor extends JmriJFrame {
 		return null;
 	}
 	
-	private LayoutPositionableLabel checkBackgrounds(Point2D loc) {
+	private PositionableLabel checkBackgrounds(Point2D loc) {
 		// check background images, if any
 		for (int i=backgroundImage.size()-1; i>=0; i--) {
-			LayoutPositionableLabel b = backgroundImage.get(i);
+			PositionableLabel b = backgroundImage.get(i);
 			double x = b.getX();
 			double y = b.getY();
 			double w = b.maxWidth();
@@ -2625,10 +2625,10 @@ public class LayoutEditor extends JmriJFrame {
 		return null;
 	}
 	
-	private LayoutSensorIcon checkSensorIcons(Point2D loc) {
+	private SensorIcon checkSensorIcons(Point2D loc) {
 		// check sensor images, if any
 		for (int i=sensorImage.size()-1; i>=0; i--) {
-			LayoutSensorIcon s = sensorImage.get(i);
+			SensorIcon s = sensorImage.get(i);
 			double x = s.getX();
 			double y = s.getY();
 			double w = s.maxWidth();
@@ -2643,10 +2643,10 @@ public class LayoutEditor extends JmriJFrame {
 		return null;
 	}
 	
-	private LayoutSignalHeadIcon checkSignalHeadIcons(Point2D loc) {
+	private SignalHeadIcon checkSignalHeadIcons(Point2D loc) {
 		// check signal head images, if any
 		for (int i=signalHeadImage.size()-1; i>=0; i--) {
-			LayoutSignalHeadIcon s = signalHeadImage.get(i);
+			SignalHeadIcon s = signalHeadImage.get(i);
 			double x = s.getX();
 			double y = s.getY();
 			double w = s.maxWidth();
@@ -2662,10 +2662,10 @@ public class LayoutEditor extends JmriJFrame {
 	}
 	
 		
-	private LayoutPositionableLabel checkLabelImages(Point2D loc) {
+	private PositionableLabel checkLabelImages(Point2D loc) {
 		// check label images, if any
 		for (int i=labelImage.size()-1; i>=0; i--) {
-			LayoutPositionableLabel s = labelImage.get(i);
+			PositionableLabel s = labelImage.get(i);
 			double x = s.getX();
 			double y = s.getY();
 			double w = 10.0;
@@ -2867,7 +2867,7 @@ public class LayoutEditor extends JmriJFrame {
 									(int)(dLoc.getY()-m.getY()));
 					whenReleased = event.getWhen();
 				}*/
-				LayoutSensorIcon s = checkSensorIcons(dLoc);
+				SensorIcon s = checkSensorIcons(dLoc);
 				if (s!=null) {
 					whenReleased = event.getWhen();
 					s.performMouseClicked(event);
@@ -2908,7 +2908,7 @@ public class LayoutEditor extends JmriJFrame {
 									(int)(dLoc.getY()-m.getY()));
 				whenReleased = event.getWhen();
 			}*/
-			LayoutSensorIcon s = checkSensorIcons(dLoc);
+			SensorIcon s = checkSensorIcons(dLoc);
 			if (s!=null) {
 				s.performMouseClicked(event);
 				whenReleased = event.getWhen();
@@ -2947,7 +2947,7 @@ public class LayoutEditor extends JmriJFrame {
 				tr.showPopUp(event);
 			}
 			else {
-				LayoutSensorIcon s = checkSensorIcons(dLoc);
+				SensorIcon s = checkSensorIcons(dLoc);
 				if (s!=null) {
 					s.showPopUp(event);
 				}
@@ -2957,7 +2957,7 @@ public class LayoutEditor extends JmriJFrame {
 						lo.showPopUp(event);
 					}
 					else {
-						LayoutSignalHeadIcon sh = checkSignalHeadIcons(dLoc);
+						SignalHeadIcon sh = checkSignalHeadIcons(dLoc);
 						if (sh!=null) {
 							sh.showPopUp(event);
 						}
@@ -2972,12 +2972,12 @@ public class LayoutEditor extends JmriJFrame {
 									ms.showPopUp(event);
 								}
 								else {
-									LayoutPositionableLabel lb = checkLabelImages(dLoc);
+									PositionableLabel lb = checkLabelImages(dLoc);
 									if (lb!=null) {
 										lb.showPopUp(event);
 									}
 									else {
-										LayoutPositionableLabel b = checkBackgrounds(dLoc);
+										PositionableLabel b = checkBackgrounds(dLoc);
 										if (b!=null) {
 											b.showPopUp(event);
 										}
@@ -3007,7 +3007,7 @@ public class LayoutEditor extends JmriJFrame {
 				m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
 									(int)(dLoc.getY()-m.getY()));
 			}*/
-			LayoutSensorIcon s = checkSensorIcons(dLoc);
+			SensorIcon s = checkSensorIcons(dLoc);
 			if (s!=null) {
 				s.performMouseClicked(event);
 			}
@@ -3120,7 +3120,7 @@ public class LayoutEditor extends JmriJFrame {
 						isDragging = true;
 						break;
 					case LAYOUT_POS_LABEL:
-						LayoutPositionableLabel l = (LayoutPositionableLabel)selectedObject;
+						PositionableLabel l = (PositionableLabel)selectedObject;
 						if (l.getPositionable() && !l.getFixed()) {
 							int xint = (int)newPos.getX();
 							int yint = (int)newPos.getY();
@@ -3993,7 +3993,7 @@ public class LayoutEditor extends JmriJFrame {
 						rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-        LayoutSensorIcon l = new LayoutSensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
+        SensorIcon l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
         l.setActiveIcon(sensorIconEditor.getIcon(0));
         l.setInactiveIcon(sensorIconEditor.getIcon(1));
         l.setInconsistentIcon(sensorIconEditor.getIcon(2));
@@ -4009,7 +4009,17 @@ public class LayoutEditor extends JmriJFrame {
 		setDirty(true);
         putSensor(l);
     }
-    public void putSensor(LayoutSensorIcon l) {
+    /*public void putSensor(LayoutSensorIcon l) {
+        l.invalidate();
+        targetPanel.add(l, SENSORS);
+		l.connect(this);
+		sensorImage.add(l);	
+        contents.add(l);
+        // reshow the panel
+        targetPanel.validate();
+    }*/
+    
+    public void putSensor(SensorIcon l) {
         l.invalidate();
         targetPanel.add(l, SENSORS);
 		l.connect(this);
@@ -4043,7 +4053,7 @@ public class LayoutEditor extends JmriJFrame {
 			return;
 		}
 		// create and set up signal icon	
-        LayoutSignalHeadIcon l = new LayoutSignalHeadIcon();
+        SignalHeadIcon l = new SignalHeadIcon();
         l.setRedIcon(signalIconEditor.getIcon(0));
         l.setFlashRedIcon(signalIconEditor.getIcon(1));
         l.setYellowIcon(signalIconEditor.getIcon(2));
@@ -4064,7 +4074,7 @@ public class LayoutEditor extends JmriJFrame {
 		setDirty(true);
         putSignal(l);
     }
-    public void putSignal(LayoutSignalHeadIcon l) {
+    public void putSignal(SignalHeadIcon l) {
         l.invalidate();
         targetPanel.add(l, SIGNALS);
 		l.connect(this);
@@ -4079,7 +4089,7 @@ public class LayoutEditor extends JmriJFrame {
      * Add a label to the Draw Panel
      */
     void addLabel() {
-        LayoutPositionableLabel l = new LayoutPositionableLabel(
+        PositionableLabel l = new PositionableLabel(
 											textLabel.getText().trim());
         setNextLocation(l);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
@@ -4088,7 +4098,7 @@ public class LayoutEditor extends JmriJFrame {
         putLabel(l);
         l.setForeground(defaultTextColor);
     }
-    public void putLabel(LayoutPositionableLabel l) {
+    public void putLabel(PositionableLabel l) {
         l.invalidate();
         targetPanel.add(l, l.getDisplayLevel());
 		if ( !l.isBackground() ) {
@@ -4103,8 +4113,8 @@ public class LayoutEditor extends JmriJFrame {
         contents.add(l);
         targetPanel.validate();
     }
-
-    /**
+    
+     /**
      * Add a memory label to the Draw Panel
      */
     void addMemory() {
@@ -4113,7 +4123,7 @@ public class LayoutEditor extends JmriJFrame {
 						rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-        LayoutMemoryIcon l = new LayoutMemoryIcon();
+        MemoryIcon l = new MemoryIcon();
         l.setMemory(textMemory.getText().trim());
 		Memory xMemory = l.getMemory();
 		if (xMemory != null) {
@@ -4136,7 +4146,7 @@ public class LayoutEditor extends JmriJFrame {
 	 * Add a Reporter Icon to the panel
 	 */
     void addReporter(String textReporter,int xx,int yy) {
-        LayoutReporterIcon l = new LayoutReporterIcon();
+        ReporterIcon l = new ReporterIcon();
         l.setReporter(textReporter);
         l.setLocation(xx,yy);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
@@ -4151,7 +4161,7 @@ public class LayoutEditor extends JmriJFrame {
      * Add an icon to the target
      */
     void addIcon() {
-        LayoutPositionableLabel l = new LayoutPositionableLabel(iconEditor.getIcon(0) );
+        PositionableLabel l = new PositionableLabel(iconEditor.getIcon(0) );
         setNextLocation(l);
         l.setDisplayLevel(ICONS);
 		setDirty(true);
@@ -4213,7 +4223,7 @@ public class LayoutEditor extends JmriJFrame {
         
         // setup icon
         NamedIcon icon = NamedIcon.getIconByName(name);									   
-        LayoutPositionableLabel l = new LayoutPositionableLabel(icon);
+        PositionableLabel l = new PositionableLabel(icon);
         l.setFixed(true);
         l.setShowTooltip(false);
         l.setSize(icon.getIconWidth(), icon.getIconHeight());
@@ -4229,7 +4239,7 @@ public class LayoutEditor extends JmriJFrame {
 		int left = 0;
 		// place to right of background images, if any
 		for (int i=0; i<backgroundImage.size(); i++) {
-			LayoutPositionableLabel b = backgroundImage.get(i);
+			PositionableLabel b = backgroundImage.get(i);
 			int test = b.getX() + b.maxWidth();
 			if (test>left) left = test;
 		}
@@ -4239,7 +4249,7 @@ public class LayoutEditor extends JmriJFrame {
 	/**
 	 * Remove a background image from the list of background images
 	 */
-	protected void removeBackground(LayoutPositionableLabel b) {
+	protected void removeBackground(PositionableLabel b) {
 		for (int i=0; i<backgroundImage.size(); i++) {
 			if (b == backgroundImage.get(i)) {
 				backgroundImage.remove(i);
@@ -5727,7 +5737,7 @@ public class LayoutEditor extends JmriJFrame {
 		g2.setColor(defaultTrackColor);
 		g2.setStroke(new BasicStroke(1.0F,BasicStroke.CAP_BUTT,BasicStroke.JOIN_ROUND));
 		for (int i = 0;i<memoryLabelList.size();i++) {
-			LayoutMemoryIcon l = memoryLabelList.get(i);
+			MemoryIcon l = memoryLabelList.get(i);
 			g2.draw(new Rectangle2D.Double (l.getX(), l.getY(), l.getSize().width, l.getSize().height));
 		}
 	}

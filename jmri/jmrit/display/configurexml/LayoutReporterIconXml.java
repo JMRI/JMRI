@@ -1,17 +1,25 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.jmrit.display.LayoutEditor;
-import jmri.jmrit.display.LayoutReporterIcon;
+//import jmri.jmrit.display.LayoutEditor;
+//import jmri.jmrit.display.LayoutReporterIcon;
 
 import org.jdom.Element;
 
 /**
+ * Dummy class, just present so files that refer to this 
+ * class (e.g. pre JMRI 2.7.8 files) can still be read by
+ * deferring to the present class.
+ *
  * Handle configuration for display.LayoutReporterIcon objects.
  *
  * @author Dave Duchamp Copyright: Copyright (c) 2008
- * @version $Revision: 1.4 $
+ * @author Kevin Dickerson, Deprecated
+ * @version $Revision: 1.5 $
+ * @deprecated 2.7.8
  */
-public class LayoutReporterIconXml extends LayoutPositionableLabelXml {
+ 
+ @Deprecated
+public class LayoutReporterIconXml extends PositionableLabelXml {
 
     public LayoutReporterIconXml() {
     }
@@ -23,22 +31,9 @@ public class LayoutReporterIconXml extends LayoutPositionableLabelXml {
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-
-        LayoutReporterIcon p = (LayoutReporterIcon)o;
-
-        Element element = new Element("reportericon");
-
-        // include contents
-        element.setAttribute("reporter", p.getReporter().getSystemName());
-        element.setAttribute("x", ""+p.getX());
-        element.setAttribute("y", ""+p.getY());
-        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
-
-        storeTextInfo(p, element);
-        
-        element.setAttribute("class", "jmri.jmrit.display.configurexml.LayoutReporterIconXml");
-
-        return element;
+    
+        ReporterIconXml tmp = new ReporterIconXml();
+        return tmp.store(o);
     }
 
 
@@ -53,37 +48,10 @@ public class LayoutReporterIconXml extends LayoutPositionableLabelXml {
      * @param o  LayoutEditor as an Object
      */
     public void load(Element element, Object o) {
-        // create the objects
-        LayoutEditor p = (LayoutEditor)o;
-        LayoutReporterIcon l = new LayoutReporterIcon();
-
-        loadTextInfo(l, element);
-
-        l.setReporter(element.getAttribute("reporter").getValue());
-
-        // find coordinates
-        int x = 0;
-        int y = 0;
-        try {
-            x = element.getAttribute("x").getIntValue();
-            y = element.getAttribute("y").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.error("failed to convert positional attribute");
-        }
-        l.setLocation(x,y);
-
-        // find display level
-        int level = LayoutEditor.LABELS.intValue();
-        try {
-            level = element.getAttribute("level").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse level attribute!");
-        } catch ( NullPointerException e) {  // considered normal if the attribute not present
-        }
-        l.setDisplayLevel(level);
-
-        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        p.putLabel(l);
+    
+        ReporterIconXml tmp = new ReporterIconXml();
+        tmp.load(element, o);
+        // create the object
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutReporterIconXml.class.getName());

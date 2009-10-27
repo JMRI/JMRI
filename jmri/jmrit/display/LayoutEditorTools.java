@@ -33,7 +33,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class LayoutEditorTools 
@@ -1071,7 +1071,7 @@ public class LayoutEditorTools
 	 */
 	public void setSignalHeadOnPanel(int rotation, String headName,
 					int xLoc, int yLoc) {
-		LayoutSignalHeadIcon l = new LayoutSignalHeadIcon();
+		SignalHeadIcon l = new SignalHeadIcon();
         l.setRedIcon(signalIconEditor.getIcon(0));
         l.setFlashRedIcon(signalIconEditor.getIcon(1));
         l.setYellowIcon(signalIconEditor.getIcon(2));
@@ -1137,7 +1137,7 @@ public class LayoutEditorTools
 	 */
 	public boolean isHeadOnPanel(SignalHead head) 
 	{
-		LayoutSignalHeadIcon h = null;
+		SignalHeadIcon h = null;
 		for (int i=0;i<layoutEditor.signalList.size();i++) {
 			h = layoutEditor.signalList.get(i);
 			if (h.getSignalHead() == head) {
@@ -1285,7 +1285,7 @@ public class LayoutEditorTools
 		SignalHead head = jmri.InstanceManager.signalHeadManagerInstance().
 														getSignalHead(signalName);
 		removeAssignment(head);
-		LayoutSignalHeadIcon h = null;
+		SignalHeadIcon h = null;
 		int index = -1;
 		for (int i=0;(i<layoutEditor.signalList.size())&&(index==-1);i++) {
 			h = layoutEditor.signalList.get(i);

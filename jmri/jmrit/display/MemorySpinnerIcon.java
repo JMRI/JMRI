@@ -21,7 +21,7 @@ import javax.swing.event.ChangeListener;
  * Memory, preserving what it finds.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  * @since 2.7.2
  */
 
@@ -209,7 +209,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.
     public void mouseExited(MouseEvent e) {
         spinnerUpdated();
     }
-
+    
     public void dispose() {
         memory.removePropertyChangeListener(this);
         memory = null;

@@ -2,6 +2,7 @@ package jmri.jmrit.display.configurexml;
 
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
+import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.MemoryIcon;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -11,7 +12,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -32,11 +33,27 @@ public class MemoryIconXml extends PositionableLabelXml {
 
         // include attributes
         element.setAttribute("memory", p.getMemory().getSystemName());
-        element.setAttribute("x", ""+p.getX());
+        if (p.getOriginalX()!=0)
+            element.setAttribute("x", ""+p.getOriginalX());
+        else
+            element.setAttribute("x", ""+p.getX());
+        //element.setAttribute("x", ""+p.getX());
         element.setAttribute("y", ""+p.getY());
         element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
 
         storeTextInfo(p, element);
+        if(p.getJustification()!=0x00){
+            String just;
+            switch (p.getJustification()){
+                case 0x02 : just="right";
+                            break;
+                case 0x04 : just ="centre";
+                            break;
+                default :   just="left";
+                            break;
+                }
+            element.setAttribute("justification", just);
+        }
         
         element.setAttribute("selectable", (p.isSelectable()?"yes":"no"));
 
@@ -74,8 +91,22 @@ public class MemoryIconXml extends PositionableLabelXml {
      */
     @SuppressWarnings("unchecked")
 	public void load(Element element, Object o) {
+        // get object class and determine editor being used
+        String className = o.getClass().getName();
+		int lastDot = className.lastIndexOf(".");
+		PanelEditor pe = null;
+		LayoutEditor le = null;
+		String shortClass = className.substring(lastDot+1,className.length());
+		if (shortClass.equals("PanelEditor")) {
+			pe = (PanelEditor) o;
+		}
+		else if (shortClass.equals("LayoutEditor")) {
+			le = (LayoutEditor) o;
+		}
+		else {
+			log.error("Unrecognizable class - "+className);
+		}
         // create the objects
-        PanelEditor p = (PanelEditor)o;
         MemoryIcon l = new MemoryIcon();
 
         l.setMemory(jmri.InstanceManager.memoryManagerInstance().getMemory(
@@ -99,7 +130,10 @@ public class MemoryIconXml extends PositionableLabelXml {
             String keyValue = item.getAttribute("value").getValue();
         	l.addKeyAndIcon(NamedIcon.getIconByName(icon), keyValue);
 		}
-		
+        a = element.getAttribute("justification");
+        if(a!=null)
+            l.setJustification(a.getValue());
+        
         // find coordinates
         int x = 0;
         int y = 0;
@@ -109,7 +143,10 @@ public class MemoryIconXml extends PositionableLabelXml {
         } catch ( org.jdom.DataConversionException e) {
             log.error("failed to convert positional attribute");
         }
-        l.setLocation(x,y);
+        if ((l.getJustification()==0x00) || (l.getFixedWidth()!=0))
+            l.setLocation(x,y);
+        else
+            l.setOriginalLocation(x,y);
  
          // find display level
         int level = PanelEditor.MEMORIES.intValue();
@@ -121,9 +158,10 @@ public class MemoryIconXml extends PositionableLabelXml {
         }
         l.setDisplayLevel(level);
 
-        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        p.putLabel(l);
-            
+        if(pe!=null)
+            pe.putLabel(l);
+        else
+            le.putLabel(l);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryIconXml.class.getName());

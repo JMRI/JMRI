@@ -342,6 +342,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             PanelEditor panelEd;
 				public void windowClosing(java.awt.event.WindowEvent e) {
                     setAllPositionable(false);
+                    setAllEditable(false);
                     jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(panelEd);
                 }
                 java.awt.event.WindowAdapter init(PanelEditor pe) {

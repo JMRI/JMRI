@@ -5,6 +5,7 @@ package jmri.jmrit.display.configurexml;
 import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
+import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.SignalHeadIcon;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -13,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
@@ -77,7 +78,20 @@ public class SignalHeadIconXml extends PositionableLabelXml {
      */
     public void load(Element element, Object o) {
         // create the objects
-        PanelEditor p = (PanelEditor)o;
+        String className = o.getClass().getName();
+		int lastDot = className.lastIndexOf(".");
+		PanelEditor pe = null;
+		LayoutEditor le = null;
+		String shortClass = className.substring(lastDot+1,className.length());
+		if (shortClass.equals("PanelEditor")) {
+			pe = (PanelEditor) o;
+		}
+		else if (shortClass.equals("LayoutEditor")) {
+			le = (LayoutEditor) o;
+		}
+		else {
+			log.error("Unrecognizable class - "+className);
+		}
         String name;
 
         SignalHeadIcon l = new SignalHeadIcon();
@@ -214,7 +228,10 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         icon = loadIcon( l,"flashlunar", element);
         if (icon!=null) { l.setFlashLunarIcon(icon); }
 
-        p.putLabel(l);
+        if(pe!=null)
+            pe.putLabel(l);
+        else
+            le.putLabel(l);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadIconXml.class.getName());

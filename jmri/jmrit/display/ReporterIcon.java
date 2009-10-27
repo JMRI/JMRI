@@ -13,7 +13,7 @@ import javax.swing.*;
  * An icon to display info from a Reporter, e.g. transponder or RFID reader.<P>
  *
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class ReporterIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -21,7 +21,10 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
     public ReporterIcon() {
         // super ctor call to make sure this is a String label
         super("???");
-        setDisplayLevel(PanelEditor.LABELS);
+        if (getPanelEditor()!=null)
+            setDisplayLevel(PanelEditor.LABELS);
+        else
+            setDisplayLevel(LayoutEditor.LABELS);
         setText("???");
     }
 
@@ -94,12 +97,14 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
 
         checkLocationEditable(popup, getNameString());
         addFixedItem(popup);
+        
+        popup.add(makeBackgroundFontColorMenu());
 
-        popup.add(makeFontSizeMenu());
+        /*popup.add(makeFontSizeMenu());
 
         popup.add(makeFontStyleMenu());
 
-        popup.add(makeFontColorMenu());
+        popup.add(makeFontColorMenu());*/
         
         popup.add(new AbstractAction(rb.getString("EditIcon")) {
                 public void actionPerformed(ActionEvent e) {

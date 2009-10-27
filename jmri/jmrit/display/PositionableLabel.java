@@ -25,10 +25,15 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
+import java.awt.Dimension;
+import javax.swing.border.LineBorder;
+import java.util.ResourceBundle;
 
 /**
  * PositionableLabel is a JLabel that can be dragged around the
@@ -38,7 +43,7 @@ import javax.swing.JTextField;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.64 $
+ * @version $Revision: 1.65 $
  */
 
 public class PositionableLabel extends JLabel
@@ -52,6 +57,8 @@ public class PositionableLabel extends JLabel
         text = true;
         debug = log.isDebugEnabled();
         setProperToolTip();
+        setHorizontalAlignment(JLabel.CENTER);
+        setVerticalAlignment(JLabel.CENTER);
         connect();
     }
     public PositionableLabel(NamedIcon s) {
@@ -65,7 +72,17 @@ public class PositionableLabel extends JLabel
     }
 
     public void setProperToolTip() {
-        setToolTipText(rb.getString("IconToolTip"));
+        //setToolTipText(rb.getString("IconToolTip"));
+		int system = jmri.util.SystemType.getType();
+		if (system==jmri.util.SystemType.MACOSX) {
+			setToolTipText(rb.getString("ToolTipGenericMac"));
+		}
+		else if (system==jmri.util.SystemType.WINDOWS) {
+			setToolTipText(rb.getString("ToolTipGenericWin"));
+		}
+		else {
+			setToolTipText(rb.getString("ToolTipGeneric"));
+		}
     }
 
     public boolean isIcon() { return icon; }
@@ -82,6 +99,9 @@ public class PositionableLabel extends JLabel
         addMouseMotionListener(this);
         addMouseListener(this);
     }
+    public void connect(LayoutEditor panel) {
+		layoutPanel = panel;
+    }
 
    	LayoutEditor layoutPanel = null;
     /**
@@ -89,6 +109,10 @@ public class PositionableLabel extends JLabel
      */
     protected void setPanel(LayoutEditor panel) {
 		layoutPanel = panel;
+    }
+
+    public LayoutEditor getLayoutPanel(){
+        return layoutPanel;
     }
     
     PanelEditor panelEditor = null;
@@ -98,6 +122,102 @@ public class PositionableLabel extends JLabel
      */
     protected void setPanel(PanelEditor panel){
     	panelEditor = panel;
+    }
+
+    public PanelEditor getPanelEditor(){
+        return panelEditor;
+    }
+
+    /**
+     * This deals with the formating of the JLabel and text boxes.
+     *
+     */
+
+    private int borderSize=0;
+
+    public void setBorderSize(int border){
+        borderSize = border;
+        if(borderColor!=null){
+            setBorder(new LineBorder(borderColor, borderSize));
+            setSize(maxWidth(), maxHeight());
+            this.setHorizontalAlignment(JLabel.CENTER);
+        }
+    }
+
+    public int getBorderSize(){
+        return borderSize;
+    }
+
+    private Color borderColor=null;
+
+    public void setBorderColor(Color border){
+        borderColor = border;
+        if(borderSize!=0){
+            setBorder(new LineBorder(borderColor, borderSize));
+            setSize(maxWidth(), maxHeight());
+            this.setHorizontalAlignment(JLabel.CENTER);
+        }
+    }
+
+    public Color getBorderColor(){
+        return borderColor;
+    }
+
+
+    private int margin=0;
+
+    public void setMargin(int mar){
+        margin = mar;
+        this.setHorizontalAlignment(JLabel.CENTER);
+        updateSize();
+    }
+
+    public int getMargin(){
+        return margin;
+    }
+    
+    private boolean hidden = false;
+
+    public void setHidden(boolean boo){
+        hidden=boo;
+    }
+    
+
+    public boolean getHidden(){
+        return hidden;
+    }
+
+
+    private int fixedWidth=0;
+    private int fixedHeight=0;
+
+    public int getFixedWidth(){
+        return fixedWidth;
+    }
+
+    public int getFixedHeight(){
+        return fixedHeight;
+    }
+
+    public void setFixedSize(int width, int height){
+        fixedWidth=width;
+        fixedHeight=height;
+        if ((width!=0) && (height!=0)){
+            setSize(fixedWidth, fixedHeight);
+        } else if ((width!=0) && (height==0)){
+            setSize(fixedWidth, maxHeight());
+        } else if ((width==0) && (height!=0)){
+            setSize(maxWidth(), fixedHeight);
+        } else
+            setSize(maxWidth(), maxHeight());
+    }
+
+    public void setBackground(Color color){
+        if (text){
+            setOpaque(true);
+            super.setBackground(color);
+            updateSize();
+        }
     }
 
     /**
@@ -110,10 +230,36 @@ public class PositionableLabel extends JLabel
     }
 
     protected int maxWidth(){
-        return namedIcon.getIconWidth();
+        if ((fixedWidth==0) && (margin==0)){
+            if(text)
+                return ((javax.swing.JLabel)this).getMaximumSize().width;
+            else
+                return namedIcon.getIconWidth(); // defer to superclass
+        }else if ((fixedWidth==0) && (margin!=0)){
+            if(text)
+                return ((javax.swing.JLabel)this).getMaximumSize().width+(margin*2);
+            else
+                return namedIcon.getIconWidth()+(margin*2);
+        }else if ((fixedWidth!=0) && (margin!=0)){
+            return fixedWidth-(margin*2);
+        }
+        return fixedWidth;
     }
     protected int maxHeight(){
-        return namedIcon.getIconHeight();
+        if ((fixedHeight==0) && (margin==0)){
+            if(text)
+                return ((javax.swing.JLabel)this).getMaximumSize().height;
+            else
+                return namedIcon.getIconHeight(); // defer to superclass
+        }else if ((fixedHeight==0) && (margin!=0)){
+            if (text)
+                return ((javax.swing.JLabel)this).getMaximumSize().height+(margin*2);
+            else
+                return namedIcon.getIconHeight()+(margin*2);
+        } else if ((fixedHeight!=0) && (margin!=0)){
+            return fixedHeight-(margin*2);
+        }
+        return fixedHeight;
     }
 
     private Integer displayLevel;
@@ -127,6 +273,9 @@ public class PositionableLabel extends JLabel
     }
     public void setDisplayLevel(int l) { setDisplayLevel(new Integer(l)); }
     public Integer getDisplayLevel() { return displayLevel; }
+    
+	public boolean isBackground() { return (displayLevel.intValue() == LayoutEditor.BKG.intValue());
+    }
 
     // cursor location reference for this move (relative to object)
     int xClick = 0;
@@ -179,6 +328,10 @@ public class PositionableLabel extends JLabel
     }
 
     public void mouseClicked(MouseEvent e) {
+		if (layoutPanel!=null) {
+			layoutPanel.handleMouseClicked(e, this.getX(), this.getY());
+			return;
+		}
         if (panelEditor!=null) {
              List <JComponent> list = panelEditor.getSelections();
              log.debug("mouseClicked "+(list!=null && list.contains(this)));
@@ -192,6 +345,7 @@ public class PositionableLabel extends JLabel
             showPopUp(e);
         }
     }
+
     public void mouseExited(MouseEvent e) {
         // if (debug) log.debug("Exited:  "+where(e));
     }
@@ -297,6 +451,7 @@ public class PositionableLabel extends JLabel
                     }
                 });
 
+            popup.add(setHiddenMenu());
             popup.add(new AbstractAction(rb.getString("Remove")) {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -307,16 +462,60 @@ public class PositionableLabel extends JLabel
             popup = new JPopupMenu();
             
             checkLocationEditable(popup, getText());
-            popup.add(makeFontSizeMenu());
 
-            popup.add(makeFontStyleMenu());
+            if (fixedWidth==0)
+                popup.add("Width= Auto");
+            else
+                popup.add("Width= " + this.maxWidth());
 
-            popup.add(makeFontColorMenu());
+            if (fixedHeight==0)
+                popup.add("Height= Auto");
+            else
+                popup.add("Height= " + this.maxHeight());
 
+            if((fixedHeight==0)||(fixedWidth==0))
+                popup.add("Margin= " + this.getMargin());
+            if (hidden) popup.add(rb.getString("Hidden"));
+            else popup.add(rb.getString("NotHidden"));
+            
+            popup.addSeparator();
+
+			if (layoutPanel!=null){
+	            popup.add(new AbstractAction("Set x & y") {
+					public void actionPerformed(ActionEvent e) {
+						String name = getText();
+						displayCoordinateEdit(name);
+					}
+				});
+		}
+			popup.add(new AbstractAction(rb.getString("SetFixedSize")) {
+				public void actionPerformed(ActionEvent e) {
+					String name = getText();
+					fixedSizeEdit(name);
+				}
+			});
+            if((fixedHeight==0)||(fixedWidth==0)){
+                popup.add(new AbstractAction(rb.getString("SetMarginSize")) {
+                    public void actionPerformed(ActionEvent e) {
+                        String name = getText();
+                        marginSizeEdit(name);
+                    }
+                });
+            }
+            //popup.add(makeFontSizeMenu());
+
+            //popup.add(makeFontStyleMenu());
+
+            //popup.add(makeFontColorMenu());
+
+            popup.add(makeBackgroundFontColorMenu());
+
+            popup.add(textBorderMenu(getText()));
+            popup.add(setHiddenMenu());
             addFixedItem(popup);
             addShowTooltipItem(popup);
             
-            addTextEditEntry(popup);
+            addTextEditEntry(popup, true);
             popup.add(new AbstractAction(rb.getString("Remove")) {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -329,6 +528,33 @@ public class PositionableLabel extends JLabel
         // show the result
         if (popup != null) popup.show(e.getComponent(), e.getX(), e.getY());
     }
+
+    ButtonGroup hiddenButtonGroup;
+    
+    JMenu setHiddenMenu(){
+        JMenu hiddenMenu = new JMenu("Hide");
+        
+        hiddenButtonGroup = new ButtonGroup();
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem("Hide");
+        r.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { setHidden(true); }
+        });
+        hiddenButtonGroup.add(r);
+        if (getHidden()) r.setSelected(true);
+        else r.setSelected(false);
+        hiddenMenu.add(r);
+        
+        r = new JRadioButtonMenuItem("Visible");
+        r.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { setHidden(false); }
+        });
+        hiddenButtonGroup.add(r);
+        if (!getHidden()) r.setSelected(true);
+        else r.setSelected(false);
+        hiddenMenu.add(r);
+        
+        return hiddenMenu;
+	}
 
     JFrame _editorFrame;
     IconAdder _editor;
@@ -372,7 +598,7 @@ public class PositionableLabel extends JLabel
     }
 
     protected JMenu makeFontSizeMenu() {
-        JMenu sizeMenu = new JMenu("Font size");
+        JMenu sizeMenu = new JMenu("Font Size");
         fontButtonGroup = new ButtonGroup();
         addFontMenuEntry(sizeMenu, 6);
         addFontMenuEntry(sizeMenu, 8);
@@ -389,6 +615,20 @@ public class PositionableLabel extends JLabel
         return sizeMenu;
     }
     
+    JMenu textBorderMenu(final String name) {
+        JMenu borderMenu = new JMenu("Border Menu");
+        borderMenu.add("Border Size= " + borderSize);
+        borderMenu.addSeparator();
+        borderMenu.add(new AbstractAction(rb.getString("SetBorderSize")) {
+				public void actionPerformed(ActionEvent e) {
+					displayBorderEdit(name);
+				}
+			});
+
+        borderMenu.add(makeBorderColorMenu());
+        return borderMenu;
+    }
+
     void addFontMenuEntry(JMenu menu, final int size) {
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(""+size);
         r.addActionListener(new ActionListener() {
@@ -403,7 +643,8 @@ public class PositionableLabel extends JLabel
 
     public void setFontSize(float newSize) {
         setFont(jmri.util.FontUtil.deriveFont(getFont(), newSize));
-        setSize(getPreferredSize().width, getPreferredSize().height);
+        //setSize(getPreferredSize().width, getPreferredSize().height);
+        updateSize();
     }
 
     void setItalic() {
@@ -440,7 +681,46 @@ public class PositionableLabel extends JLabel
         return styleMenu;     
     }
 
-    protected void checkLocationEditable(JPopupMenu popup,  String name) {    
+    /*JMenu makeFontStyleMenu() {
+        JMenu styleMenu = new JMenu(rb.getString("FontStyle"));
+        styleMenu.add(italic = newStyleMenuItem(new AbstractAction(rb.getString("Italic")) {
+            public void actionPerformed(ActionEvent e) {
+                if (log.isDebugEnabled())
+                    log.debug("When style item selected "+((String)getValue(NAME))
+                                +" italic state is "+italic.isSelected());
+                if (italic.isSelected()) setFontStyle(Font.ITALIC, 0);
+                else setFontStyle(0, Font.ITALIC);
+            }
+          }, Font.ITALIC));
+
+        styleMenu.add(bold = newStyleMenuItem(new AbstractAction(rb.getString("Bold")) {
+            public void actionPerformed(ActionEvent e) {
+                if (log.isDebugEnabled())
+                    log.debug("When style item selected "+((String)getValue(NAME))
+                                +" bold state is "+bold.isSelected());
+                if (bold.isSelected()) setFontStyle(Font.BOLD, 0);
+                else setFontStyle(0, Font.BOLD);
+            }
+          }, Font.BOLD));
+         return styleMenu;
+    }
+    
+    public JMenuItem newStyleMenuItem(AbstractAction a, int mask) {
+        // next two lines needed because JCheckBoxMenuItem(AbstractAction) not in 1.1.8
+        JCheckBoxMenuItem c = new JCheckBoxMenuItem((String)a.getValue(AbstractAction.NAME));
+        c.addActionListener(a);
+        if (log.isDebugEnabled()) log.debug("When creating style item "+((String)a.getValue(AbstractAction.NAME))
+                                            +" mask was "+mask+" state was "+getFont().getStyle());
+        if ( (mask & getFont().getStyle()) == mask ) c.setSelected(true);
+        return c;
+    }*/
+
+    protected void checkLocationEditable(JPopupMenu popup,  String name) {
+		if (layoutPanel!=null){
+			popup.add("x= " + this.getX());
+			popup.add("y= " + this.getY());
+	}
+			
 		if (getViewCoordinates()) {
             if (icon) {
                 /*
@@ -487,6 +767,8 @@ public class PositionableLabel extends JLabel
 			popup.add(new PopupAction(name));
     }
 
+
+
     protected void alignGroup(boolean alignX) {
         List <JComponent> list = panelEditor.getSelections();
         int sum = 0;
@@ -532,16 +814,61 @@ public class PositionableLabel extends JLabel
         }
     }
 
+    public void displayBorderEdit(String name){
+    	if (log.isDebugEnabled())
+			log.debug("make Border Edit menu");
+        TextBorderSizeEdit f = new TextBorderSizeEdit();
+		f.addHelpMenu("package.jmri.jmrit.display.TextBorderSizeEdit", true);
+		try {
+			f.initComponents(this, name);
+			}
+		catch (Exception ex) {
+			log.error("Exception: "+ex.toString());
+			}
+		f.setVisible(true);
+
+    }
+
+    public void fixedSizeEdit(String name) {
+		if (log.isDebugEnabled())
+			log.debug("make new coordinate menu");
+        FixedSizeEdit f = new FixedSizeEdit();
+
+		f.addHelpMenu("package.jmri.jmrit.display.fixedSizeEdit", true);
+		try {
+			f.initComponents(this, name);
+			}
+		catch (Exception ex) {
+			log.error("Exception: "+ex.toString());
+			}
+		f.setVisible(true);
+	}
+
+    public void marginSizeEdit(String name) {
+		if (log.isDebugEnabled())
+			log.debug("make new coordinate menu");
+         TextMarginSizeEdit f = new TextMarginSizeEdit();
+		
+		f.addHelpMenu("package.jmri.jmrit.display.marginSizeEdit", true);
+		try {
+			f.initComponents(this, name);
+			}
+		catch (Exception ex) {
+			log.error("Exception: "+ex.toString());
+			}
+		f.setVisible(true);
+	}
+
     public void displayCoordinateEdit(String name) {
 		if (log.isDebugEnabled())
 			log.debug("make new coordinate menu");
-		CoordinateEdit f = new CoordinateEdit();
-		f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
+        CoordinateEdit f = new CoordinateEdit();
+        f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
 		f.initComponents(this, name);
 		f.setVisible(true);	
 	}
-
-    protected JMenu makeFontColorMenu() {
+    
+    /*protected JMenu makeFontColorMenu() {
         JMenu colorMenu = new JMenu(rb.getString("FontColor"));
         colorButtonGroup = new ButtonGroup();
         addColorMenuEntry(colorMenu, rb.getString("Black"), Color.black);
@@ -556,9 +883,114 @@ public class PositionableLabel extends JLabel
         addColorMenuEntry(colorMenu, rb.getString("Blue"),Color.blue);
         addColorMenuEntry(colorMenu, rb.getString("Magenta"),Color.magenta);
         return colorMenu;
+    }*/
+
+    protected JMenu makeBorderColorMenu() {
+        JMenu colorMenu = new JMenu(rb.getString("ColorMenu"));
+        colorBorderButtonGroup = new ButtonGroup();
+        addColorMenuEntry(colorMenu, rb.getString("Black"), Color.black, 0x02);
+        addColorMenuEntry(colorMenu, rb.getString("DarkGray"),Color.darkGray, 0x02);
+        addColorMenuEntry(colorMenu, rb.getString("Gray"),Color.gray, 0x02);
+        addColorMenuEntry(colorMenu, rb.getString("LightGray"),Color.lightGray, 0x02);
+        addColorMenuEntry(colorMenu, rb.getString("White"),Color.white, 0x02);
+        addColorMenuEntry(colorMenu, rb.getString("Red"),Color.red, 0x02);
+        addColorMenuEntry(colorMenu, rb.getString("Orange"),Color.orange, 0x02);
+        addColorMenuEntry(colorMenu, rb.getString("Yellow"),Color.yellow, 0x02);
+        addColorMenuEntry(colorMenu, rb.getString("Green"),Color.green, 0x02);
+        addColorMenuEntry(colorMenu, rb.getString("Blue"),Color.blue, 0x02);
+        addColorMenuEntry(colorMenu, rb.getString("Magenta"),Color.magenta, 0x02);
+        return colorMenu;
+    }
+
+    protected JMenu makeFontColorMenu() {
+        JMenu colorMenu = new JMenu(rb.getString("FontColor"));
+        colorButtonGroup = new ButtonGroup();
+        addColorMenuEntry(colorMenu, rb.getString("Black"), Color.black, 0x00);
+        addColorMenuEntry(colorMenu, rb.getString("DarkGray"),Color.darkGray, 0x00);
+        addColorMenuEntry(colorMenu, rb.getString("Gray"),Color.gray, 0x00);
+        addColorMenuEntry(colorMenu, rb.getString("LightGray"),Color.lightGray, 0x00);
+        addColorMenuEntry(colorMenu, rb.getString("White"),Color.white, 0x00);
+        addColorMenuEntry(colorMenu, rb.getString("Red"),Color.red, 0x00);
+        addColorMenuEntry(colorMenu, rb.getString("Orange"),Color.orange, 0x00);
+        addColorMenuEntry(colorMenu, rb.getString("Yellow"),Color.yellow, 0x00);
+        addColorMenuEntry(colorMenu, rb.getString("Green"),Color.green, 0x00);
+        addColorMenuEntry(colorMenu, rb.getString("Blue"),Color.blue, 0x00);
+        addColorMenuEntry(colorMenu, rb.getString("Magenta"),Color.magenta, 0x00);
+        return colorMenu;
+    }
+
+    protected JMenu makeBackgroundFontColorMenu() {
+        JMenu colorMenu = new JMenu(rb.getString("FontBackgroundColor"));
+        colorBackButtonGroup = new ButtonGroup();
+        addColorMenuEntry(colorMenu, rb.getString("Black"), Color.black, 0x01);
+        addColorMenuEntry(colorMenu, rb.getString("DarkGray"),Color.darkGray, 0x01);
+        addColorMenuEntry(colorMenu, rb.getString("Gray"),Color.gray, 0x01);
+        addColorMenuEntry(colorMenu, rb.getString("LightGray"),Color.lightGray, 0x01);
+        addColorMenuEntry(colorMenu, rb.getString("White"),Color.white, 0x01);
+        addColorMenuEntry(colorMenu, rb.getString("Red"),Color.red, 0x01);
+        addColorMenuEntry(colorMenu, rb.getString("Orange"),Color.orange, 0x01);
+        addColorMenuEntry(colorMenu, rb.getString("Yellow"),Color.yellow, 0x01);
+        addColorMenuEntry(colorMenu, rb.getString("Green"),Color.green, 0x01);
+        addColorMenuEntry(colorMenu, rb.getString("Blue"),Color.blue, 0x01);
+        addColorMenuEntry(colorMenu, rb.getString("Magenta"),Color.magenta, 0x01);
+        addColorMenuEntry(colorMenu, rb.getString("Clear"), null, 0x01);
+        return colorMenu;
+    }
+
+    void addColorMenuEntry(JMenu menu, final String name, final Color color, final int foreground) {
+        ActionListener a = new ActionListener() {
+            //final String desiredName = name;
+            final Color desiredColor = color;
+            public void actionPerformed(ActionEvent e) {
+                if (foreground==0x00) setForeground(desiredColor);
+                else if (foreground==0x01){
+                    if(color==null){
+                        setOpaque(false);
+                        //We need to force a redisplay when going to clear as the area
+                        //doesn't always go transparent on the first click.
+                        Point p = getLocation();
+                        int w = getWidth();
+                        int h = getHeight();
+                        Container parent = getParent();
+                        // force redisplay
+                        parent.validate();
+                        parent.repaint(p.x,p.y,w,h);
+                    }
+                    else
+                        setBackground(desiredColor);
+                }
+                else setBorderColor(desiredColor);
+            }
+        };
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
+        r.addActionListener(a);
+        if (foreground==0x00){
+            colorButtonGroup.add(r);
+            if (getForeground().getRGB() == color.getRGB())  r.setSelected(true);
+            else r.setSelected(false);
+        }
+        else if (foreground==0x01){
+            colorBackButtonGroup.add(r);
+            if (color==null){
+                if (!isOpaque())
+                    r.setSelected(true);
+                else
+                    r.setSelected(false);
+            } else if (getBackground().getRGB() == color.getRGB()) r.setSelected(true);
+            else r.setSelected(false);
+        }
+        else{
+            colorBorderButtonGroup.add(r);
+            if( getBorderColor()!=null)
+                if (getBorderColor().getRGB() == color.getRGB())  r.setSelected(true);
+            else r.setSelected(false);
+        }
+        //if (getForeground().getRGB() == color.getRGB())  r.setSelected(true);
+        //else r.setSelected(false);
+        menu.add(r);
     }
         
-    void addColorMenuEntry(JMenu menu, final String name, final Color color) {
+    /*void addColorMenuEntry(JMenu menu, final String name, final Color color) {
         ActionListener a = new ActionListener() {
             //final String desiredName = name;
             final Color desiredColor = color;
@@ -570,11 +1002,11 @@ public class PositionableLabel extends JLabel
         if (getForeground().getRGB() == color.getRGB())  r.setSelected(true);
         else r.setSelected(false);
         menu.add(r);
-    }
+    }*/
 
     JCheckBoxMenuItem showTooltipItem = null;
     void addShowTooltipItem(JPopupMenu popup) {
-        showTooltipItem = new JCheckBoxMenuItem("Tooltip");
+        showTooltipItem = new JCheckBoxMenuItem(rb.getString("Tooltip"));
         showTooltipItem.setSelected(getShowTooltip());
         popup.add(showTooltipItem);
         showTooltipItem.addActionListener(new ActionListener(){
@@ -742,17 +1174,19 @@ public class PositionableLabel extends JLabel
         });
     }
 
-    void addTextEditEntry(JPopupMenu popup) {
+    void addTextEditEntry(JPopupMenu popup, boolean change) {
         JMenu edit = new JMenu(rb.getString("EditText"));
         popup.add(edit);
         edit.add(makeFontSizeMenu());
         edit.add(makeFontStyleMenu());
         edit.add(makeFontColorMenu());
-        edit.add(new AbstractAction(rb.getString("ChangeText")) {
-                public void actionPerformed(ActionEvent e) {
-                    changeText(e);
-                }
-            });
+        if (change){
+            edit.add(new AbstractAction(rb.getString("ChangeText")) {
+                    public void actionPerformed(ActionEvent e) {
+                        changeText(e);
+                    }
+                });
+        }
     }
 
     void changeText(ActionEvent e) {
@@ -767,7 +1201,9 @@ public class PositionableLabel extends JLabel
     JCheckBoxMenuItem bold = null;
     ButtonGroup fontButtonGroup = null;
     ButtonGroup colorButtonGroup = null;
- 
+    ButtonGroup colorBackButtonGroup = null;
+    ButtonGroup colorBorderButtonGroup = null;
+
     public void setFontStyle(int addStyle, int dropStyle) {
         int styleValue = (getFont().getStyle() & ~dropStyle) | addStyle;
         if (log.isDebugEnabled())
@@ -777,7 +1213,8 @@ public class PositionableLabel extends JLabel
         if (italic != null) italic.setSelected( (styleValue & Font.ITALIC) != 0);
         setFont(jmri.util.FontUtil.deriveFont(getFont(),styleValue));
 
-        setSize(getPreferredSize().width, getPreferredSize().height);
+        //setSize(getPreferredSize().width, getPreferredSize().height);
+		updateSize();
     }
 
     String where(MouseEvent e) {
@@ -794,7 +1231,14 @@ public class PositionableLabel extends JLabel
     public boolean getViewCoordinates() { return viewCoordinates; }
     private boolean viewCoordinates = false;
 
-    public void setEditable(boolean enabled) {editable = enabled;}
+    //public void setEditable(boolean enabled) {editable = enabled;}
+    public void setEditable(boolean enabled) {
+        editable = enabled;
+        if((hidden) && (editable))
+            setVisible(true);
+        else if ((hidden) && (!editable))
+            setVisible(false);
+        }
     public boolean getEditable() { return editable; }
     private boolean editable = true;
 
@@ -804,7 +1248,12 @@ public class PositionableLabel extends JLabel
     }
 
     protected void doSetFixed(boolean enabled) {
-        if (panelEditor!=null) {
+        if (layoutPanel!=null) {
+	        fixed = enabled;
+	        if (showFixedItem!=null) showFixedItem.setSelected(getFixed());
+			return;
+		}
+		if (panelEditor!=null) {
             List <JComponent> list = panelEditor.getSelections();
             if (list!=null && list.contains(this)) {
                 for (int i=0; i<list.size(); i++) {
@@ -865,12 +1314,22 @@ public class PositionableLabel extends JLabel
         if (popup != null) popup.removeAll();
         fontButtonGroup = null;
         colorButtonGroup = null;
+        colorBackButtonGroup = null;
+        colorBorderButtonGroup = null;
         popup = null;
         italic = null;
         bold = null;
         ours = null;
     }
 
+    public void updateLevel(){
+        if (layoutPanel!=null) layoutPanel.removeObject(this);
+        Container parent = this.getParent();
+        parent.remove(this);
+        parent.validate();
+        if (layoutPanel!=null) layoutPanel.putLabel(this);
+    }
+    
     /**
      * Removes this object from display and persistance
      */

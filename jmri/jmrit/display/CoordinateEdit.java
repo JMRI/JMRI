@@ -15,7 +15,7 @@ import jmri.util.JmriJFrame;
  * positionable labels
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
@@ -86,7 +86,6 @@ public class CoordinateEdit extends JmriJFrame {
 		lTextField.setToolTipText("Enter display level");
 		lTextField.setMaximumSize(new Dimension(
 				lTextField.getMaximumSize().width, lTextField.getPreferredSize().height));
-
 		okButton.setText("  Set  ");
 		okButton.setVisible(true);
 // 		tool tips get in the way of using this panel		

@@ -1,6 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.jmrit.display.PanelEditor;
+import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.ReporterIcon;
 
 import org.jdom.Element;
@@ -9,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for display.ReporterIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class ReporterIconXml extends PositionableLabelXml {
 
@@ -53,8 +54,21 @@ public class ReporterIconXml extends PositionableLabelXml {
      * @param o  PanelEditor as an Object
      */
     public void load(Element element, Object o) {
-        // create the objects
-        PanelEditor p = (PanelEditor)o;
+        // get object class and determine editor being used
+		String className = o.getClass().getName();
+		int lastDot = className.lastIndexOf(".");
+		PanelEditor pe = null;
+		LayoutEditor le = null;
+		String shortClass = className.substring(lastDot+1,className.length());
+		if (shortClass.equals("PanelEditor")) {
+			pe = (PanelEditor) o;
+		}
+		else if (shortClass.equals("LayoutEditor")) {
+			le = (LayoutEditor) o;
+		}
+		else {
+			log.error("Unrecognizable class - "+className);
+		}
         ReporterIcon l = new ReporterIcon();
 
         loadTextInfo(l, element);
@@ -74,7 +88,11 @@ public class ReporterIconXml extends PositionableLabelXml {
         l.setLocation(x,y);
 
         // find display level
-        int level = PanelEditor.REPORTERS.intValue();
+        int level; 
+        if(pe!=null)
+            level = PanelEditor.REPORTERS.intValue();
+        else
+            level = LayoutEditor.LABELS.intValue();
         try {
             level = element.getAttribute("level").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
@@ -84,7 +102,10 @@ public class ReporterIconXml extends PositionableLabelXml {
         l.setDisplayLevel(level);
 
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        p.putLabel(l);
+        if(pe!=null)
+            pe.putLabel(l);
+        else
+            le.putLabel(l);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ReporterIconXml.class.getName());

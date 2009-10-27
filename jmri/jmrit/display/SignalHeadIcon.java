@@ -3,6 +3,7 @@
 package jmri.jmrit.display;
 
 import jmri.SignalHead;
+import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +25,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -52,6 +53,22 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         }
         mHead = sh;
         if (mHead != null) {
+            displayState(headState());
+            mHead.addPropertyChangeListener(this);
+            setProperToolTip();
+        }
+    }
+    
+     /**
+     * Taken from the layout editor
+     * Attached a numbered element to this display item
+     * @param pName Used as a system/user name to lookup the SignalHead object
+     */
+    public void setSignalHead(String pName) {
+        mHead = InstanceManager.signalHeadManagerInstance().getBySystemName(pName);
+        if (mHead == null) mHead = InstanceManager.signalHeadManagerInstance().getByUserName(pName);
+        if (mHead == null) log.warn("did not find a SignalHead named "+pName);
+        else {
             displayState(headState());
             mHead.addPropertyChangeListener(this);
             setProperToolTip();
@@ -332,6 +349,8 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             }
         });
 
+        popup.add(setHiddenMenu());
+        
         popup.show(e.getComponent(), e.getX(), e.getY());
     }
 
