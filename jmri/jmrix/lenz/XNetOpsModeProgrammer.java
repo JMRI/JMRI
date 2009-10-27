@@ -14,7 +14,7 @@ import jmri.*;
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
  * @author         Girgio Terdina Copyright (C) 2007
- * @version        $Revision: 2.12 $
+ * @version        $Revision: 2.13 $
 */
 
 public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements XNetListener 
@@ -120,7 +120,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
                try{
                   this.wait(250);
                } catch(java.lang.InterruptedException ie){
-                     log.debug("Interupted Durring Delay").
+                     log.debug("Interupted Durring Delay");
                }
                   progState=XNetProgrammer.NOTPROGRAMMING;
                   stopTimer();
