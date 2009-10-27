@@ -44,8 +44,9 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
+// GT - 12-Oct-2009 - Added "Entry Block" column in entryPointTable
 
 public class SectionTableAction extends AbstractTableAction {
 
@@ -367,12 +368,18 @@ public class SectionTableAction extends AbstractTableAction {
 			entryPointTableModel = new EntryPointTableModel();
 			JTable entryPointTable = new JTable(entryPointTableModel);
 			entryPointTable.setRowSelectionAllowed(false);
-			entryPointTable.setPreferredScrollableViewportSize(new java.awt.Dimension(400,100));
+			entryPointTable.setPreferredScrollableViewportSize(new java.awt.Dimension(550,100)); // GT - 12-Oct-2009
 			TableColumnModel entryPointColumnModel = entryPointTable.getColumnModel();
 			TableColumn fromBlockColumn = entryPointColumnModel.getColumn(EntryPointTableModel.BLOCK_COLUMN);
 			fromBlockColumn.setResizable(true);
 			fromBlockColumn.setMinWidth(250);
 			fromBlockColumn.setMaxWidth(310);
+// GT - 12-Oct-2009 - start			
+			TableColumn toBlockColumn = entryPointColumnModel.getColumn(EntryPointTableModel.TO_BLOCK_COLUMN);
+			toBlockColumn.setResizable(true);
+			toBlockColumn.setMinWidth(150);
+			toBlockColumn.setMaxWidth(210);
+// GT - 12-Oct-2009 - end			
 			JComboBox directionCombo = new JComboBox();
 			directionCombo.addItem(rbx.getString("SectionForward"));
 			directionCombo.addItem(rbx.getString("SectionReverse"));
@@ -1067,7 +1074,9 @@ public class SectionTableAction extends AbstractTableAction {
 
 		public static final int BLOCK_COLUMN = 0;
 
-		public static final int DIRECTION_COLUMN = 1;
+		public static final int TO_BLOCK_COLUMN = 1;	// GT - 12-Oct-2009
+
+		public static final int DIRECTION_COLUMN = 2;	// GT - 12-Oct-2009
 
 		public EntryPointTableModel() {
 			super();
@@ -1080,7 +1089,7 @@ public class SectionTableAction extends AbstractTableAction {
 		}
 
 		public int getColumnCount() {
-			return 2;
+			return 3;	// GT - 12-Oct-2009
 		}
 
 		public int getRowCount() {
@@ -1103,6 +1112,10 @@ public class SectionTableAction extends AbstractTableAction {
 			switch (col) {
 			case BLOCK_COLUMN:
 				return rbx.getString("FromBlock");
+
+			case TO_BLOCK_COLUMN:					// GT - 12-Oct-2009
+				return rbx.getString("ToBlock");	// GT - 12-Oct-2009
+				
 			case DIRECTION_COLUMN:
 				return rbx.getString("TravelDirection");
 			default:
@@ -1111,8 +1124,8 @@ public class SectionTableAction extends AbstractTableAction {
 		}
 
 		public int getPreferredWidth(int col) {
-			if (col == BLOCK_COLUMN)
-				return new JTextField(37).getPreferredSize().width;
+			if (col == BLOCK_COLUMN || col == TO_BLOCK_COLUMN)		// GT - 12-Oct-2009
+				return new JTextField(37).getPreferredSize().width; // GT - 12-Oct-2009
 			if (col == DIRECTION_COLUMN)
 				return new JTextField(9).getPreferredSize().width;
 			return new JTextField(5).getPreferredSize().width;
@@ -1126,6 +1139,17 @@ public class SectionTableAction extends AbstractTableAction {
 			switch (c) {
 				case BLOCK_COLUMN:
 					return entryPointList.get(rx).getFromBlockName();
+					
+// GT - 12-Oct-2009 - start
+				case TO_BLOCK_COLUMN:
+					String s = entryPointList.get(rx).getBlock().getSystemName();
+					String u = entryPointList.get(rx).getBlock().getUserName();
+					if ((u!=null) && (!u.equals(""))) {
+						s = s+"( "+u+" )";
+					}
+					return s;
+// GT - 12-Oct-2009 - end
+					
 				case DIRECTION_COLUMN: //
 					if (entryPointList.get(rx).isForwardType()) {
 						return rbx.getString("SectionForward");
