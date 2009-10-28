@@ -7,19 +7,22 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.util.JUnitUtil;
+
 /**
  * MemoryIconTest.java
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2007
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class MemoryIconTest extends TestCase {
 
     MemoryIcon to = null;
 
-	public void testShow() {
+	public void testShowContent() {
         JFrame jf = new JFrame();
+        jf.setTitle("Expect data");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
         to = new MemoryIcon();
@@ -32,8 +35,31 @@ public class MemoryIconTest extends TestCase {
             }
         };
         Assert.assertNotNull("Instance exists", i );
+        jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue("data");
         to.setMemory("IM1");
-        jmri.InstanceManager.memoryManagerInstance().getMemory("IM1").setValue("data");
+
+        jf.pack();
+        jf.setVisible(true);
+
+	}
+
+	public void testShowEmpty() {
+        JFrame jf = new JFrame();
+        jf.setTitle("Expect empty");
+        jf.getContentPane().setLayout(new java.awt.FlowLayout());
+
+        to = new MemoryIcon();
+        jf.getContentPane().add(to);
+        
+        jmri.InstanceManager i = new jmri.InstanceManager(){
+            protected void init() {
+                super.init();
+                root = this;
+            }
+        };
+        Assert.assertNotNull("Instance exists", i );
+        jmri.InstanceManager.memoryManagerInstance().provideMemory("IM2");
+        to.setMemory("IM2");
 
         jf.pack();
         jf.setVisible(true);
@@ -59,8 +85,17 @@ public class MemoryIconTest extends TestCase {
 	}
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() throws Exception { 
+        super.setUp();
+        apps.tests.Log4JFixture.setUp(); 
+        JUnitUtil.resetInstanceManager();
+    }
+    
+    protected void tearDown() throws Exception { 
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.resetInstanceManager();
+    }
 
 	// static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutIconTest.class.getName());
 
