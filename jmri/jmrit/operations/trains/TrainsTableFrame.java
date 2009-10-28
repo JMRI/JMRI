@@ -32,7 +32,7 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.30 $
+ * @version             $Revision: 1.31 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -271,9 +271,7 @@ public class TrainsTableFrame extends OperationsFrame {
 		List<String> trains = getTrainList();
 		for (int i=0; i<trains.size(); i++){
 			Train train = trainManager.getTrainById(trains.get(i));
-			boolean build = train.buildIfSelected();
-			if (build)
-				setModifiedFlag(true);
+			train.buildIfSelected();
 		}
 	}
 	

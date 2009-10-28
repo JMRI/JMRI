@@ -13,13 +13,11 @@ import java.awt.Point;
 import java.awt.Window;
 import java.util.List;
 
-
-
 /**
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class OperationsTrainsGuiTest extends TestCase {
 
@@ -212,12 +210,9 @@ public class OperationsTrainsGuiTest extends TestCase {
 			Thread.yield();
 		}
 	
-		//AWTEvent ae = new AWTEvent();
-		//p.dispatchEvent(ae);
-		
-		// now we can kill it!
 		w.setVisible(false);
-		
+		w.dispose();
+
 	}
 	
 	public void testTrainEditFrameRead(){

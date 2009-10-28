@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.18 $
+ * @version   $Revision: 1.19 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -256,7 +256,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     private void buildTrain (int row){
      	Train train = manager.getTrainById(sysList.get(row));
      	if (!train.getBuilt()){
-     		frame.setModifiedFlag(true);
      		train.build();
      	} else {
      		if (TrainManager.instance().getBuildReport())
@@ -269,8 +268,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	Train train = manager.getTrainById(sysList.get(row));
     	if (!train.getBuildFailed()){
     		if (log.isDebugEnabled()) log.debug("Move train ("+train.getName()+")");
-    		frame.setModifiedFlag(true);
-    		train.move();
+     		train.move();
     	} else {
     		train.printBuildReport();
     	}
@@ -278,12 +276,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     public void propertyChange(PropertyChangeEvent e) {
     	if(Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
+       	if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)){
+       		frame.setModifiedFlag(true);
+       	}
     	if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||
     			e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY)) {
     		updateList();
     		fireTableDataChanged();
-    	}
-    	else {
+    	} else {
     		String trainId = ((Train) e.getSource()).getId();
     		int row = sysList.indexOf(trainId);
     		if(Control.showProperty && log.isDebugEnabled()) log.debug("Update train table row: "+row + " id: " + trainId);
