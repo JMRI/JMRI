@@ -13,7 +13,7 @@ import java.awt.Color;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -48,23 +48,24 @@ public class SensorIconXml extends PositionableLabelXml {
             element.setAttribute("icon", "no");
             element.setAttribute("size", ""+p.getFont().getSize());
             element.setAttribute("style", ""+p.getFont().getStyle());
-            if (!p.getBackgroundActive().equals(new Color(238, 238, 238))) {
+            if (p.getBackgroundActive()!=null) {
                 element.setAttribute("redActiveBack", ""+p.getBackgroundActive().getRed());
                 element.setAttribute("greenActiveBack", ""+p.getBackgroundActive().getGreen());
                 element.setAttribute("blueActiveBack", ""+p.getBackgroundActive().getBlue());
             }
-            if(!p.getBackgroundInActive().equals(new Color(238, 238, 238))){
+            //if(p.getBackgroundInActive().equals(new Color(238, 238, 238))){
+            if(p.getBackgroundInActive()!=null){
                 element.setAttribute("redInActiveBack", ""+p.getBackgroundInActive().getRed());
                 element.setAttribute("greenInActiveBack", ""+p.getBackgroundInActive().getGreen());
                 element.setAttribute("blueInActiveBack", ""+p.getBackgroundInActive().getBlue());
             }
-            if(!p.getBackgroundUnknown().equals(new Color(238, 238, 238))){
+            if(p.getBackgroundUnknown()!=null){
                 element.setAttribute("redUnknownBack", ""+p.getBackgroundUnknown().getRed());
                 element.setAttribute("greenUnknownBack", ""+p.getBackgroundUnknown().getGreen());
                 element.setAttribute("blueUnknownBack", ""+p.getBackgroundUnknown().getBlue());
             }
 
-            if(!p.getBackgroundUnknown().equals(new Color(238, 238, 238))){
+            if(p.getBackgroundUnknown()!=null){
                 element.setAttribute("redInconsistentBack", ""+p.getBackgroundInconsistent().getRed());
                 element.setAttribute("greenInconsistentBack", ""+p.getBackgroundInconsistent().getGreen());
                 element.setAttribute("blueInconsistentBack", ""+p.getBackgroundInconsistent().getBlue());
@@ -117,11 +118,12 @@ public class SensorIconXml extends PositionableLabelXml {
         element.setAttribute("unknown", p.getUnknownIcon().getURL());
         element.setAttribute("inconsistent", p.getInconsistentIcon().getURL());
         element.setAttribute("rotate", String.valueOf(p.getActiveIcon().getRotation()));
-        
-        element.addContent(storeIcon("active", p.getActiveIcon()));
-        element.addContent(storeIcon("inactive", p.getInactiveIcon()));
-        element.addContent(storeIcon("unknown", p.getUnknownIcon()));
-        element.addContent(storeIcon("inconsistent", p.getInconsistentIcon()));
+        if(p.getLayoutPanel()==null){
+            element.addContent(storeIcon("active", p.getActiveIcon()));
+            element.addContent(storeIcon("inactive", p.getInactiveIcon()));
+            element.addContent(storeIcon("unknown", p.getUnknownIcon()));
+            element.addContent(storeIcon("inconsistent", p.getInconsistentIcon()));
+        }
     }
 
     public boolean load(Element element) {
