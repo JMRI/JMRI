@@ -36,8 +36,11 @@ import jmri.managers.AbstractSignalHeadManager;
     super.tearDown();
 </pre></code>
 
+ * Note that memory managers and some others are completely
+ * internal, and will be reset when you reset the instance manager.
+ *
  * @author Bob Jacobsen  Copyright 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @since 2.5.3
  */
 
