@@ -27,22 +27,33 @@ import javax.swing.JLabel;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
     public MemoryIcon() {
+
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/misc/X-red.gif",
                             "resources/icons/misc/X-red.gif"));
-                            
         setDisplayLevel(PanelEditor.LABELS);
         // have to do following explicitly, after the ctor
         resetDefaultIcon();
-        
         icon = true;
         text = false;
+    }
+
+    public MemoryIcon(LayoutEditor panel) {
+        // super ctor call to make sure this is an icon label
+        super(new String("   "));
+        setDisplayLevel(LayoutEditor.LABELS);
+        // have to do following explicitly, after the ctor
+        resetDefaultIcon();
+        setPanel(panel);
+        icon = false;
+        text = true;
+        updateSize();
     }
 
     private void resetDefaultIcon() {
@@ -64,7 +75,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 	}
 	
 	NamedIcon defaultIcon = null;
-
+    String defaultText = "  ";
     // the associated Memory object
     Memory memory = null;
     
@@ -296,7 +307,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     void displayState() {
         log.debug("displayState");
     	if (memory == null) {  // use default if not connected yet
-    		setIcon(defaultIcon);
+            setIcon(defaultIcon);
     		updateSize();
     		return;
     	}
@@ -306,45 +317,45 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 		        // no map, attempt to show object directly
                 Object val = memory.getValue();
                 if (val instanceof String) {
-                    setText((String) val);
+                    if ((memory.getValue().equals("")) && (getLayoutPanel()!=null))
+                        setText(defaultText);
+                    else
+                        setText((String) memory.getValue());
+
+                    //setText((String) memory.getValue());
                     setIcon(null);
                     text = true;
                     icon = false;
     		        updateSize();
                     return;
                 } else if (val instanceof javax.swing.ImageIcon) {
-                    setIcon((javax.swing.ImageIcon) val);
+                    setIcon((javax.swing.ImageIcon) memory.getValue());
                     setText(null);
                     text = false;
                     icon = true;
     		        updateSize();
                     return;
                 } else if (val instanceof Integer) {
-                    setText(((Integer) val).toString());
+                    setText(((Integer) memory.getValue()).toString());
                     setIcon(null);
                     text = true;
                     icon = false;
     		        updateSize();
                     return;
                 } else if (val instanceof Float) {
-                    setText(((Float) val).toString());
+                    setText(((Float) memory.getValue()).toString());
                     setIcon(null);
                     text = true;
                     icon = false;
     		        updateSize();
                     return;
-                } else log.info("Unexpected type for current value of "+memory.getSystemName()+
-                                ", val= "+val+", converted to text");
-                    setText(val.toString());
-                    setIcon(null);
-                    text = true;
-                    icon = false;
-    		        updateSize();
-                    return;
+                } else log.warn("can't display current value of "+memory.getSystemName()+
+                                ", val= "+val);
 		    } else {
 		        // map exists, use it
 			    NamedIcon newicon = map.get(key.toString());
 			    if (newicon!=null) {
+                    
                     setText(null);
 				    super.setIcon(newicon);
                     text = false;
@@ -354,6 +365,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 			    } else {
 			        // no match, use default
 		            setIcon(defaultIcon);
+                    
                     setText(null);
                     text = false;
                     icon = true;
@@ -362,10 +374,17 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 		    }
 		} else {
 		    // If fall through to here, no Memory value, set icon to default.
-		    setIcon(defaultIcon);
-            setText(null);
-            text = false;
-            icon = true;
+            if (getLayoutPanel()!=null) {
+                setIcon(null);
+                setText(defaultText);
+                text = true;
+                icon = false;
+            } else {
+                setIcon(defaultIcon);
+                setText(null);
+                text = false;
+                icon = true;
+            }
     		updateSize();
         }
     }
@@ -519,14 +538,14 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         }
     }
     
-
-    String defaultText = "  ";
-    
     /**
      * This may be called during the superclass ctor, so before 
      * construction of this object is complete.  Be careful about that!
      */
     protected int maxHeight() {
+        if(isIcon()){
+            return namedIcon.getIconHeight();
+        }
         if ((getFixedHeight()==0) && (getMargin()==0))
             return ((javax.swing.JLabel)this).getMaximumSize().height;  // defer to superclass
         else if ((getFixedHeight()==0) && (getMargin()!=0))
@@ -542,6 +561,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      * construction of this object is complete.  Be careful about that!
      */
     protected int maxWidth() {
+        if(isIcon()){
+            return namedIcon.getIconWidth();
+        }
         if ((getFixedWidth()==0) && (getMargin()==0))
             return ((javax.swing.JLabel)this).getMaximumSize().width;  // defer to superclass
         else if ((getFixedWidth()==0) && (getMargin()!=0))
@@ -585,15 +607,19 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     
     public void updateSize() {
 
-        if (getFixedWidth()==0){
-            switch (justification){
-                case RIGHT :    super.setLocation(this.getOriginalX()-this.maxWidth(), this.getOriginalY());
-                                break;
-                case CENTRE :   super.setLocation(this.getOriginalX()-(this.maxWidth()/2), this.getOriginalY());
-                                break;
+        if(isIcon()){
+            setSize(this.maxWidth(), this.maxHeight());
+        } else {
+            if (getFixedWidth()==0){
+                switch (justification){
+                    case RIGHT :    super.setLocation(this.getOriginalX()-this.maxWidth(), this.getOriginalY());
+                                    break;
+                    case CENTRE :   super.setLocation(this.getOriginalX()-(this.maxWidth()/2), this.getOriginalY());
+                                    break;
+                }
             }
+            this.setSize(this.maxWidth(), this.maxHeight());
         }
-        this.setSize(this.maxWidth(), this.maxHeight());
     }
     
     public void mouseClicked(java.awt.event.MouseEvent e) {
