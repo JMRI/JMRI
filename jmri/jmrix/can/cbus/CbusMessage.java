@@ -15,7 +15,7 @@ import jmri.Programmer;
  * can message
  *
  * @author          Andrew Crosland Copyright (C) 2008
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class CbusMessage {
     /* Methods that take a CanMessage as argument */
@@ -79,8 +79,17 @@ public class CbusMessage {
             return "x"+m.toString().replaceAll(" ","");
         }      
     }
-    
-       
+
+    public static boolean isRequestTrackOff(CanMessage m) {
+        if (m.getOpCode() == CbusConstants.CBUS_RTOF) return true;
+        return false;
+    }
+
+    public static boolean isRequestTrackOn(CanMessage m) {
+        if (m.getOpCode() == CbusConstants.CBUS_RTON) return true;
+        return false;
+    }
+
     /* 
      * Methods that take a CanReply as argument
      */
@@ -145,6 +154,21 @@ public class CbusMessage {
         }      
     }
     
+    public static boolean isTrackOff(CanReply m) {
+        if (m.getOpCode() == CbusConstants.CBUS_TOF) return true;
+        return false;
+    }
+
+    public static boolean isTrackOn(CanReply m) {
+        if (m.getOpCode() == CbusConstants.CBUS_TON) return true;
+        return false;
+    }
+
+    public static boolean isArst(CanReply m) {
+        if (m.getOpCode() == CbusConstants.CBUS_ARST) return true;
+        return false;
+    }
+
     /**
      * CBUS programmer commands
     */
@@ -207,5 +231,21 @@ public class CbusMessage {
         return m;
     }
 
-    
+    /**
+     * CBUS Ppower commands
+     */
+    static public CanMessage getRequestTrackOn() {
+        CanMessage m = new CanMessage(1);
+        m.setElement(0, CbusConstants.CBUS_RTON);
+        setPri(m, 0xb);
+        return m;
+    }
+
+    static public CanMessage getRequestTrackOff() {
+        CanMessage m = new CanMessage(1);
+        m.setElement(0, CbusConstants.CBUS_RTOF);
+        setPri(m, 0xb);
+        return m;
+    }
+
 }

@@ -8,7 +8,7 @@ package jmri.jmrix.can.cbus;
  * Description:		Constants to represent CBUS protocol
  *
  * @author		Andrew Crosland   Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public final class CbusConstants {
     /**
@@ -19,7 +19,12 @@ public final class CbusConstants {
     /**
      * CBUS Opcodes
      */
+    public static final int CBUS_TOF = 0x04;
+    public static final int CBUS_TON = 0x05;
+
     public static final int CBUS_ARST = 0x07;
+    public static final int CBUS_RTOF = 0x08;
+    public static final int CBUS_RTON = 0x09;
 
     public static final int CBUS_KLOC = 0x21;
 

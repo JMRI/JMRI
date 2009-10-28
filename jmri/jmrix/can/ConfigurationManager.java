@@ -10,7 +10,7 @@ package jmri.jmrix.can;
  * method for redirecting to classes in particular subpackages.
  *
  * @author		Bob Jacobsen  Copyright (C) 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class ConfigurationManager {
 
@@ -33,6 +33,7 @@ public class ConfigurationManager {
             jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.can.cbus.CbusDccProgrammerManager(
                     new jmri.jmrix.can.cbus.CbusDccProgrammer()));
             jmri.InstanceManager.setThrottleManager(new jmri.jmrix.can.cbus.CbusThrottleManager());
+            jmri.InstanceManager.setPowerManager(new jmri.jmrix.can.cbus.CbusPowerManager());
             jmri.jmrix.can.cbus.ActiveFlag.setActive();
 
         } if (options[1].equals(option)) {
