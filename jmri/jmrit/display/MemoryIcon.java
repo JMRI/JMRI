@@ -27,7 +27,7 @@ import javax.swing.JLabel;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -306,35 +306,41 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 		        // no map, attempt to show object directly
                 Object val = memory.getValue();
                 if (val instanceof String) {
-                    setText((String) memory.getValue());
+                    setText((String) val);
                     setIcon(null);
                     text = true;
                     icon = false;
     		        updateSize();
                     return;
                 } else if (val instanceof javax.swing.ImageIcon) {
-                    setIcon((javax.swing.ImageIcon) memory.getValue());
+                    setIcon((javax.swing.ImageIcon) val);
                     setText(null);
                     text = false;
                     icon = true;
     		        updateSize();
                     return;
                 } else if (val instanceof Integer) {
-                    setText(((Integer) memory.getValue()).toString());
+                    setText(((Integer) val).toString());
                     setIcon(null);
                     text = true;
                     icon = false;
     		        updateSize();
                     return;
                 } else if (val instanceof Float) {
-                    setText(((Float) memory.getValue()).toString());
+                    setText(((Float) val).toString());
                     setIcon(null);
                     text = true;
                     icon = false;
     		        updateSize();
                     return;
-                } else log.warn("can't display current value of "+memory.getSystemName()+
-                                ", val= "+val);
+                } else log.info("Unexpected type for current value of "+memory.getSystemName()+
+                                ", val= "+val+", converted to text");
+                    setText(val.toString());
+                    setIcon(null);
+                    text = true;
+                    icon = false;
+    		        updateSize();
+                    return;
 		    } else {
 		        // map exists, use it
 			    NamedIcon newicon = map.get(key.toString());
