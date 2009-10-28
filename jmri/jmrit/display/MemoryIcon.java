@@ -27,7 +27,7 @@ import javax.swing.JLabel;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -315,35 +315,34 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 		if (key != null) {
 		    if (map == null) {
 		        // no map, attempt to show object directly
-                Object val = memory.getValue();
+                Object val = key;
                 if (val instanceof String) {
-                    if ((memory.getValue().equals("")) && (getLayoutPanel()!=null))
+                    if ((val.equals("")) && (getLayoutPanel()!=null))
                         setText(defaultText);
                     else
-                        setText((String) memory.getValue());
+                        setText((String) val);
 
-                    //setText((String) memory.getValue());
                     setIcon(null);
                     text = true;
                     icon = false;
     		        updateSize();
                     return;
                 } else if (val instanceof javax.swing.ImageIcon) {
-                    setIcon((javax.swing.ImageIcon) memory.getValue());
+                    setIcon((javax.swing.ImageIcon) val);
                     setText(null);
                     text = false;
                     icon = true;
     		        updateSize();
                     return;
                 } else if (val instanceof Integer) {
-                    setText(((Integer) memory.getValue()).toString());
+                    setText(((Integer) val).toString());
                     setIcon(null);
                     text = true;
                     icon = false;
     		        updateSize();
                     return;
                 } else if (val instanceof Float) {
-                    setText(((Float) memory.getValue()).toString());
+                    setText(((Float) val).toString());
                     setIcon(null);
                     text = true;
                     icon = false;
