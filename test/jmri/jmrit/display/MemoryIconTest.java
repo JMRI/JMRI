@@ -14,7 +14,7 @@ import jmri.util.JUnitUtil;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2007
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class MemoryIconTest extends TestCase {
 
@@ -22,9 +22,10 @@ public class MemoryIconTest extends TestCase {
 
 	public void testShowContent() {
         JFrame jf = new JFrame();
-        jf.setTitle("Expect data");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
+        jf.getContentPane().add(new javax.swing.JLabel("Expect \"data\" text:"));
+        
         to = new MemoryIcon();
         jf.getContentPane().add(to);
         
@@ -43,11 +44,13 @@ public class MemoryIconTest extends TestCase {
 
 	}
 
-	public void testShowEmpty() {
+	public void testShowBlank() {
         JFrame jf = new JFrame();
-        jf.setTitle("Expect empty");
+        jf.setTitle("Expect blank");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
+        jf.getContentPane().add(new javax.swing.JLabel("Expect blank: "));
+        
         to = new MemoryIcon();
         jf.getContentPane().add(to);
         
@@ -58,8 +61,33 @@ public class MemoryIconTest extends TestCase {
             }
         };
         Assert.assertNotNull("Instance exists", i );
-        jmri.InstanceManager.memoryManagerInstance().provideMemory("IM2");
+        jmri.InstanceManager.memoryManagerInstance().provideMemory("IM2").setValue("");
         to.setMemory("IM2");
+
+        jf.pack();
+        jf.setVisible(true);
+
+	}
+
+	public void testShowEmpty() {
+        JFrame jf = new JFrame();
+        jf.setTitle("Expect empty");
+        jf.getContentPane().setLayout(new java.awt.FlowLayout());
+
+        jf.getContentPane().add(new javax.swing.JLabel("Expect red X default icon: "));
+        
+        to = new MemoryIcon();
+        jf.getContentPane().add(to);
+        
+        jmri.InstanceManager i = new jmri.InstanceManager(){
+            protected void init() {
+                super.init();
+                root = this;
+            }
+        };
+        Assert.assertNotNull("Instance exists", i );
+        jmri.InstanceManager.memoryManagerInstance().provideMemory("IM3");
+        to.setMemory("IM3");
 
         jf.pack();
         jf.setVisible(true);
