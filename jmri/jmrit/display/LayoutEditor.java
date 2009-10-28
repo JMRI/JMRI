@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.52 $
+ * @version $Revision: 1.53 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -483,7 +483,7 @@ public class LayoutEditor extends JmriJFrame {
 		signalBox.setToolTipText(rb.getString("SignalBoxToolTip"));
         top4.add (nextSignalHead);
 		nextSignalHead.setToolTipText(rb.getString("SignalIconToolTip"));		
-        signalIconEditor = new MultiIconEditor(8);
+        signalIconEditor = new MultiIconEditor(10);
 		signalIconEditor.setIcon(0, "Red:","resources/icons/smallschematics/searchlights/left-red-short.gif");
 		signalIconEditor.setIcon(1, "Flash red:", "resources/icons/smallschematics/searchlights/left-flashred-short.gif");
 		signalIconEditor.setIcon(2, "Yellow:", "resources/icons/smallschematics/searchlights/left-yellow-short.gif");
@@ -492,6 +492,8 @@ public class LayoutEditor extends JmriJFrame {
 		signalIconEditor.setIcon(5, "Flash green:","resources/icons/smallschematics/searchlights/left-flashgreen-short.gif");
 		signalIconEditor.setIcon(6, "Dark:","resources/icons/smallschematics/searchlights/left-dark-short.gif");
 		signalIconEditor.setIcon(7, "Held:","resources/icons/smallschematics/searchlights/left-held-short.gif");
+        signalIconEditor.setIcon(8, "Lunar","resources/icons/smallschematics/searchlights/left-lunar-short-marker.gif");
+        signalIconEditor.setIcon(9, "Flash Lunar","resources/icons/smallschematics/searchlights/left-flashlunar-short-marker.gif");
         signalIconEditor.complete();
         signalFrame = new JFrame(rb.getString("EditSignalIcons"));
 		signalFrame.getContentPane().add(new JLabel("  "+rb.getString("IconChangeInfo")+"  "),BorderLayout.NORTH);
@@ -4053,7 +4055,7 @@ public class LayoutEditor extends JmriJFrame {
 			return;
 		}
 		// create and set up signal icon	
-        SignalHeadIcon l = new SignalHeadIcon();
+        SignalHeadIcon l = new SignalHeadIcon(this);
         l.setRedIcon(signalIconEditor.getIcon(0));
         l.setFlashRedIcon(signalIconEditor.getIcon(1));
         l.setYellowIcon(signalIconEditor.getIcon(2));
@@ -4062,6 +4064,8 @@ public class LayoutEditor extends JmriJFrame {
         l.setFlashGreenIcon(signalIconEditor.getIcon(5));
         l.setDarkIcon(signalIconEditor.getIcon(6));
         l.setHeldIcon(signalIconEditor.getIcon(7));
+        l.setLunarIcon(signalIconEditor.getIcon(8));
+        l.setFlashLunarIcon(signalIconEditor.getIcon(9));
         l.setSignalHead(nextSignalHead.getText().trim());
 		SignalHead xSignal = l.getSignalHead();
 		if (xSignal != null) {
@@ -4123,7 +4127,7 @@ public class LayoutEditor extends JmriJFrame {
 						rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-        MemoryIcon l = new MemoryIcon();
+        MemoryIcon l = new MemoryIcon(this);
         l.setMemory(textMemory.getText().trim());
 		Memory xMemory = l.getMemory();
 		if (xMemory != null) {

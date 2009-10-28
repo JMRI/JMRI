@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
@@ -49,18 +49,18 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         element.setAttribute("rotate", String.valueOf(p.getGreenIcon().getRotation()));
         element.setAttribute("clickmode", ""+p.getClickMode());
         element.setAttribute("litmode", ""+p.getLitMode());
-
-        element.addContent(storeIcon("held", p.getHeldIcon()));
-        element.addContent(storeIcon("dark", p.getDarkIcon()));
-        element.addContent(storeIcon("red", p.getRedIcon()));
-        element.addContent(storeIcon("yellow", p.getYellowIcon()));
-        element.addContent(storeIcon("flashyellow", p.getFlashYellowIcon()));
-        element.addContent(storeIcon("green", p.getGreenIcon()));
-        element.addContent(storeIcon("lunar", p.getLunarIcon()));
-        element.addContent(storeIcon("flashred", p.getFlashRedIcon()));
-        element.addContent(storeIcon("flashgreen", p.getFlashGreenIcon()));
-        element.addContent(storeIcon("flashlunar", p.getFlashLunarIcon()));
-
+        if (p.getLayoutPanel()==null){
+            element.addContent(storeIcon("held", p.getHeldIcon()));
+            element.addContent(storeIcon("dark", p.getDarkIcon()));
+            element.addContent(storeIcon("red", p.getRedIcon()));
+            element.addContent(storeIcon("yellow", p.getYellowIcon()));
+            element.addContent(storeIcon("flashyellow", p.getFlashYellowIcon()));
+            element.addContent(storeIcon("green", p.getGreenIcon()));
+            element.addContent(storeIcon("lunar", p.getLunarIcon()));
+            element.addContent(storeIcon("flashred", p.getFlashRedIcon()));
+            element.addContent(storeIcon("flashgreen", p.getFlashGreenIcon()));
+            element.addContent(storeIcon("flashlunar", p.getFlashLunarIcon()));
+        }
         element.setAttribute("class", "jmri.jmrit.display.configurexml.SignalHeadIconXml");
         return element;
     }
@@ -82,19 +82,23 @@ public class SignalHeadIconXml extends PositionableLabelXml {
 		int lastDot = className.lastIndexOf(".");
 		PanelEditor pe = null;
 		LayoutEditor le = null;
+        SignalHeadIcon l;
 		String shortClass = className.substring(lastDot+1,className.length());
 		if (shortClass.equals("PanelEditor")) {
 			pe = (PanelEditor) o;
+            l = new SignalHeadIcon();
 		}
 		else if (shortClass.equals("LayoutEditor")) {
 			le = (LayoutEditor) o;
+            l = new SignalHeadIcon(le);
 		}
 		else {
 			log.error("Unrecognizable class - "+className);
+            l = new SignalHeadIcon();
 		}
         String name;
 
-        SignalHeadIcon l = new SignalHeadIcon();
+        //SignalHeadIcon l = new SignalHeadIcon();
         // handle old format!
         Attribute attr = element.getAttribute("signalhead"); 
         if (attr == null) {

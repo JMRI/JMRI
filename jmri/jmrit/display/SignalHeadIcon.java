@@ -25,7 +25,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -37,7 +37,40 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         icon = true;
         text = false;
         setDisplayLevel(PanelEditor.SIGNALS);
+        displayState(SignalHead.RED);
+    }
+    
+    public SignalHeadIcon(LayoutEditor panel){
+        // super ctor call to make sure this is an icon label
+        super(new NamedIcon("resources/icons/smallschematics/searchlights/left-red-short.gif",
+                            "resources/icons/smallschematics/searchlights/left-red-short.gif"));
+        icon = true;
+        text = false;
 
+        //Set the default signal heads for the layout editor
+        redName = "resources/icons/smallschematics/searchlights/left-red-short.gif";
+        flashRedName = "resources/icons/smallschematics/searchlights/left-flashred-short.gif";
+        yellowName = "resources/icons/smallschematics/searchlights/left-yellow-short.gif";
+        flashYellowName = "resources/icons/smallschematics/searchlights/left-flashyellow-short.gif";
+        greenName = "resources/icons/smallschematics/searchlights/left-green-short.gif";
+        flashGreenName = "resources/icons/smallschematics/searchlights/left-flashgreen-short.gif";
+        darkName = "resources/icons/smallschematics/searchlights/left-dark-short.gif";
+        heldName = "resources/icons/smallschematics/searchlights/left-held-short.gif";
+        lunarName = "resources/icons/smallschematics/searchlights/left-lunar-short-marker.gif";
+        flashLunarName = "resources/icons/smallschematics/searchlights/left-flashlunar-short-marker.gif";
+        
+        red = new NamedIcon(redName, redName);
+        flashRed = new NamedIcon(flashRedName, flashRedName);
+        yellow = new NamedIcon(yellowName, yellowName);
+        flashYellow = new NamedIcon(flashYellowName, flashYellowName);
+        green = new NamedIcon(greenName, greenName);
+        flashGreen = new NamedIcon(flashGreenName, flashGreenName);
+        lunar = new NamedIcon(lunarName, lunarName);
+        flashLunar = new NamedIcon(flashLunarName, flashLunarName);
+        dark = new NamedIcon(darkName, darkName);
+        held = new NamedIcon(heldName, heldName);
+
+        setDisplayLevel(LayoutEditor.SIGNALS);
         displayState(SignalHead.RED);
     }
 
