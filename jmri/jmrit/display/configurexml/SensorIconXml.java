@@ -13,7 +13,7 @@ import java.awt.Color;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -165,7 +165,7 @@ public class SensorIconXml extends PositionableLabelXml {
 
         if (pe!=null)
             loadCommonAttributes(l, PanelEditor.SENSORS.intValue(), element);
-        else
+        else if (le!=null)
             loadCommonAttributes(l, LayoutEditor.SENSORS.intValue(), element);
 
             
@@ -185,7 +185,7 @@ public class SensorIconXml extends PositionableLabelXml {
        // p.putLabel(l);
         if(pe!=null)
             pe.putLabel(l);
-        else
+        else if (le!=null)
             le.putLabel(l);
     }
     

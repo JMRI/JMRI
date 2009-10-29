@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
@@ -234,7 +234,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
 
         if(pe!=null)
             pe.putLabel(l);
-        else
+        else if (le!=null)
             le.putLabel(l);
     }
 

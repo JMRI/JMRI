@@ -12,7 +12,7 @@ import org.jdom.Element;
  * This module handles configuration for display.TrackSegment objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class TrackSegmentXml implements XmlAdapter {
 
@@ -100,8 +100,8 @@ public class TrackSegmentXml implements XmlAdapter {
             }
         } catch ( NullPointerException e) { }//considered normal if the attribute is not present }
         if (l.getArc()){
-            int angle = 0;
-            int startangle = 0;
+            //int angle = 0;
+            //int startangle = 0;
             try {
                 if (element.getAttribute("flip").getValue().equals("yes"))
                     l.setFlip(true);

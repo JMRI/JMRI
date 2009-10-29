@@ -19,7 +19,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -44,6 +44,7 @@ public class PositionableLabelXml implements XmlAdapter {
         element.setAttribute("showtooltip", p.getShowTooltip()?"true":"false");
         
         if (p.isText())
+            if (p.getText()!=null) element.setAttribute("text", p.getText());
             storeTextInfo(p, element);
         
         if (p.isIcon() && p.getIcon()!=null) {
@@ -67,7 +68,7 @@ public class PositionableLabelXml implements XmlAdapter {
      * formatting.
      */
     protected void storeTextInfo(PositionableLabel p, Element element) {
-        if (p.getText()!=null) element.setAttribute("text", p.getText());
+        //if (p.getText()!=null) element.setAttribute("text", p.getText());
         element.setAttribute("size", ""+p.getFont().getSize());
         element.setAttribute("style", ""+p.getFont().getStyle());
         if (!p.getForeground().equals(Color.black)) {
@@ -191,7 +192,7 @@ public class PositionableLabelXml implements XmlAdapter {
         }
         if(pe!=null)
             loadCommonAttributes(l, PanelEditor.LABELS.intValue(), element);
-        else
+        else if (le!=null)
             loadCommonAttributes(l, LayoutEditor.LABELS.intValue(), element);
 
         Attribute a = element.getAttribute("fixed");
@@ -209,7 +210,7 @@ public class PositionableLabelXml implements XmlAdapter {
         
         if(pe!=null)
             pe.putLabel(l);
-        else
+        else if (le!=null)
             le.putLabel(l);
     }
 

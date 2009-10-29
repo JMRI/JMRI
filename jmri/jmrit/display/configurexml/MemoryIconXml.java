@@ -12,7 +12,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -96,18 +96,22 @@ public class MemoryIconXml extends PositionableLabelXml {
 		int lastDot = className.lastIndexOf(".");
 		PanelEditor pe = null;
 		LayoutEditor le = null;
+        MemoryIcon l;
 		String shortClass = className.substring(lastDot+1,className.length());
 		if (shortClass.equals("PanelEditor")) {
 			pe = (PanelEditor) o;
+            l = new MemoryIcon();
 		}
 		else if (shortClass.equals("LayoutEditor")) {
 			le = (LayoutEditor) o;
+            l = new MemoryIcon(le);
+            le.memoryLabelList.add(l);
 		}
 		else {
 			log.error("Unrecognizable class - "+className);
+            l = new MemoryIcon();
 		}
         // create the objects
-        MemoryIcon l = new MemoryIcon();
 
         l.setMemory(jmri.InstanceManager.memoryManagerInstance().getMemory(
             element.getAttribute("memory").getValue()));
@@ -160,7 +164,7 @@ public class MemoryIconXml extends PositionableLabelXml {
 
         if(pe!=null)
             pe.putLabel(l);
-        else
+        else if (le!=null)
             le.putLabel(l);
     }
 

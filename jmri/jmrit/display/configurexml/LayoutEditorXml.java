@@ -13,7 +13,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class LayoutEditorXml implements XmlAdapter {
 
@@ -405,7 +405,6 @@ public class LayoutEditorXml implements XmlAdapter {
 
         // register the resulting panel for later configuration
         InstanceManager.configureManagerInstance().registerUser(panel);
-
         return result;
     }
 
