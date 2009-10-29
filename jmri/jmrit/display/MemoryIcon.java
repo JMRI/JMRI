@@ -27,7 +27,7 @@ import javax.swing.JLabel;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -321,7 +321,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                         setText(defaultText);
                     else
                         setText((String) val);
-
                     setIcon(null);
                     text = true;
                     icon = false;

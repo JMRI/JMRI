@@ -14,24 +14,24 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import java.util.List;
-import java.util.ResourceBundle;
+//import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.ButtonGroup;
-import javax.swing.JCheckBoxMenuItem;
+//import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
+//import javax.swing.JMenuItem;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
-import java.awt.Dimension;
+//import java.awt.Dimension;
 import javax.swing.border.LineBorder;
 import java.util.ResourceBundle;
 
@@ -43,7 +43,7 @@ import java.util.ResourceBundle;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.65 $
+ * @version $Revision: 1.66 $
  */
 
 public class PositionableLabel extends JLabel
@@ -214,8 +214,13 @@ public class PositionableLabel extends JLabel
 
     public void setBackground(Color color){
         if (text){
-            setOpaque(true);
-            super.setBackground(color);
+            if(color==null){
+                setOpaque(false);
+            }
+            else {
+                setOpaque(true);
+                super.setBackground(color);
+            }
             updateSize();
         }
     }
