@@ -11,8 +11,8 @@ public class RemoveObjectFromEcos implements EcosListener{
     private int ecosretry;
     
     private EcosTrafficController tc;
-    
-    public void RemoveObjectFromEcos(String ecosObject){
+    //Need to deal with the fact this method has a contructor name.
+    public void removeObjectFromEcos(String ecosObject){
         _ecosObject = ecosObject;
         tc = EcosTrafficController.instance();
         String message = "request("+ _ecosObject +", control, view)";

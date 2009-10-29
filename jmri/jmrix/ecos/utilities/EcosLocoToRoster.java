@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JDesktopPane;
 
 import java.util.Enumeration;
-import jmri.jmrit.symbolicprog.*;
+
 import jmri.jmrix.ecos.EcosLocoAddressManager;
 import jmri.jmrix.ecos.EcosLocoAddress;
 import jmri.jmrix.ecos.*;
@@ -12,23 +12,21 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.DccLocoAddressSelector;
-import jmri.jmrit.decoderdefn.*;
-import jmri.DccLocoAddress;
-import jmri.Programmer;
+
+
+
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.tree.TreeNode;
-import java.io.File;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
+
+
 import javax.swing.tree.TreePath;
-import jmri.jmrit.decoderdefn.IdentifyDecoder;
-import java.awt.*;
 
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -55,8 +53,8 @@ public class EcosLocoToRoster implements EcosListener {
     JFrame frame;
     
     public EcosLocoToRoster(){}
-       
-    public void EcosLocoToRoster(String ecosObject){
+    //Same Name as the constructor need to sort it out!
+    public void ecosLocoToRoster(String ecosObject){
         frame = new JFrame();
         _ecosObject = ecosObject;
         _ecosObjectInt = Integer.parseInt(_ecosObject);
@@ -88,10 +86,12 @@ public class EcosLocoToRoster implements EcosListener {
     public void reply(EcosReply m) {
         int startval;
         int endval;
-        int addr;
-        String description;
-        String protocol;
-        String strde;
+        
+        
+        //int addr;
+        //String description;
+        //String protocol;
+        //String strde;
         String msg = m.toString();
         String[] lines = msg.split("\n");
         if (lines[lines.length-1].contains("<END 0 (OK)>")){
@@ -108,8 +108,8 @@ public class EcosLocoToRoster implements EcosListener {
                             int cvnum = Integer.parseInt(lines[i].substring(startcvnum, endcvnum));
                             int startcvval = (lines[i].substring(endcvnum)).indexOf(", ")+endcvnum+2;
                             int endcvval = (lines[i].substring(startcvval)).indexOf("]")+startcvval;
-                            int cvval = Integer.parseInt(lines[i].substring(startcvval, endcvval));
-                            String strcvnum = "CV"+cvnum;
+                            //int cvval = Integer.parseInt(lines[i].substring(startcvval, endcvval));
+                            //String strcvnum = "CV"+cvnum;
                         }
                      }
                 }
@@ -125,7 +125,7 @@ public class EcosLocoToRoster implements EcosListener {
         Roster.instance().addEntry(re);
         ecosLoco.setRosterId(re.getId());
         re.ensureFilenameExists();
-        String filename = re.getFileName();
+        
 
         re.writeFile(null, null, null);
         
@@ -211,7 +211,10 @@ public class EcosLocoToRoster implements EcosListener {
         re.setRoadNumber("");
         re.setMfg("");
         re.setModel("");
-        re.setOwner("");
+        if (RosterEntry.getDefaultOwner()==null)
+            re.setOwner("");
+        else
+            re.setOwner(RosterEntry.getDefaultOwner());
         re.setComment("Automatically Imported from the Ecos");
         re.setDecoderComment("");    
         re.putAttribute("EcosObject", _ecosObject);

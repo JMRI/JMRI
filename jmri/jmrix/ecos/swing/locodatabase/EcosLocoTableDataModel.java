@@ -10,8 +10,8 @@ import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.Roster;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
-import java.awt.Font;
+
+
 import jmri.jmrix.ecos.utilities.EcosLocoToRoster;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Table data model for display of jmri.jmrix.ecos.EcosLocoAddressManager manager contents
  * @author		Kevin Dickerson   Copyright (C) 2009
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -121,7 +121,7 @@ abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractT
         }
     }
 
-    public Class getColumnClass(int col) {
+    public Class<?> getColumnClass(int col) {
         switch (col) {
         case ECOSOBJECTCOL:
             return String.class;
@@ -194,7 +194,7 @@ abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractT
             //log.error("internal state inconsistent with table requst for "+row+" "+col);
             return null;
         }
-    };
+    }
     
     JComboBox selections;
     
@@ -271,7 +271,7 @@ abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractT
     void addToRoster(int row, int col){
         if (getByEcosObject(ecosObjectIdList.get(row)).getRosterId()==null){
             EcosLocoToRoster addLoco = new EcosLocoToRoster();
-            addLoco.EcosLocoToRoster(ecosObjectIdList.get(row));
+            addLoco.ecosLocoToRoster(ecosObjectIdList.get(row));
             updateNameList();
         }
         else
@@ -318,7 +318,7 @@ abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractT
      * @param sample Typical button, used for size
      */
     void setColumnToHoldButton(JTable table, int column, JButton sample) {
-        TableColumnModel tcm = table.getColumnModel();
+        //TableColumnModel tcm = table.getColumnModel();
         // install a button renderer & editor
         ButtonRenderer buttonRenderer = new ButtonRenderer();
 		table.setDefaultRenderer(JButton.class,buttonRenderer);

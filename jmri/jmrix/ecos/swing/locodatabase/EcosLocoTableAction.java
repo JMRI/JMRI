@@ -26,6 +26,7 @@ public class EcosLocoTableAction extends AbstractTableAction {
     void createModel() {
     
         m = new EcosLocoTableDataModel() {
+
     		public int getColumnCount(){ return NUMCOLUMN;}
 
             public void clickOn(jmri.jmrix.ecos.EcosLocoAddressManager m) {}
@@ -38,9 +39,9 @@ public class EcosLocoTableAction extends AbstractTableAction {
             public String getValue(String s) {
                 return "Set";
             }
-            public JButton configureButton() {
+            /*public JButton configureButton() {
                 return new JButton(" Set ");
-            }
+            }*/
         };
     }
 

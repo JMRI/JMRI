@@ -8,9 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import jmri.jmrix.ecos.EcosPreferences;
 
-import java.awt.Component;
-import java.awt.Container;
-
 
 
 import javax.swing.*;
@@ -19,7 +16,7 @@ import javax.swing.*;
  * Pane to show ECoS preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class PreferencesPane extends javax.swing.JPanel {
 

@@ -6,13 +6,12 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
 
 import jmri.util.JTableUtil;
 import jmri.util.com.sun.TableSorter;
 
-import jmri.util.davidflanagan.HardcopyWriter;
+//import jmri.util.davidflanagan.HardcopyWriter;
 
 
 /**
@@ -31,7 +30,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class EcosLocoTableFrame extends jmri.util.JmriJFrame {
 
@@ -67,8 +66,8 @@ public class EcosLocoTableFrame extends jmri.util.JmriJFrame {
 
         // add save menu item
         JMenuBar menuBar = new JMenuBar();
-        ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
-        /*JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
+        /*ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
+        JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
         menuBar.add(fileMenu);
         //fileMenu.add(new jmri.configurexml.SaveMenu());
         
