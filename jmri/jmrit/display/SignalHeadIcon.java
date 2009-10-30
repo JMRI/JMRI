@@ -25,7 +25,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.48 $
+ * @version $Revision: 1.49 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -276,19 +276,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
 
         if (icon) popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
-                    green.setRotation(green.getRotation()+1, ours);
-                    red.setRotation(red.getRotation()+1, ours);
-                    yellow.setRotation(yellow.getRotation()+1, ours);
-                    lunar.setRotation(lunar.getRotation()+1, ours);
-                    if (flashGreen !=null) flashGreen.setRotation(flashGreen.getRotation()+1, ours);
-                    if (flashRed !=null) flashRed.setRotation(flashRed.getRotation()+1, ours);
-                    if (flashYellow !=null) flashYellow.setRotation(flashYellow.getRotation()+1, ours);
-                    if (flashLunar !=null) flashLunar.setRotation(flashLunar.getRotation()+1, ours);
-                    if (dark !=null) dark.setRotation(dark.getRotation()+1, ours);
-                    if (held !=null) held.setRotation(held.getRotation()+1, ours);
-                    displayState(headState());
-                    // bug fix, must repaint icons that have same width and height
-                    repaint();
+                    setRotation(green.getRotation()+1);
                 }
             });
         checkLocationEditable(popup, getNameString());
@@ -385,6 +373,24 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         popup.add(setHiddenMenu());
         
         popup.show(e.getComponent(), e.getX(), e.getY());
+    }
+    
+    public void setRotation(int x){
+        ours = this;
+        green.setRotation(x, ours);
+        red.setRotation(x, ours);
+        yellow.setRotation(x, ours);
+        lunar.setRotation(x, ours);
+        if (flashGreen !=null) flashGreen.setRotation(x, ours);
+        if (flashRed !=null) flashRed.setRotation(x, ours);
+        if (flashYellow !=null) flashYellow.setRotation(x, ours);
+        if (flashLunar !=null) flashLunar.setRotation(x, ours);
+        if (dark !=null) dark.setRotation(x, ours);
+        if (held !=null) held.setRotation(x, ours);
+        displayState(headState());
+        // bug fix, must repaint icons that have same width and height
+        repaint();
+    
     }
 
     void scale(int s) {
