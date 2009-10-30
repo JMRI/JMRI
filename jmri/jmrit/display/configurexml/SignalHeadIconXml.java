@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
@@ -33,9 +33,9 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
         Element element = new Element("signalheadicon");
-        storeCommonAttributes(p, element);
+        
         element.setAttribute("signalhead", ""+p.getSignalHead().getSystemName());
-
+        storeCommonAttributes(p, element);
         element.setAttribute("held", p.getHeldIcon().getURL());
         element.setAttribute("dark", p.getDarkIcon().getURL());
         element.setAttribute("red", p.getRedIcon().getURL());
@@ -164,12 +164,15 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         a = element.getAttribute("flashlunar");
         if (a!=null) 
             l.setFlashLunarIcon(flashlunar = NamedIcon.getIconByName(a.getValue()));
+        else
+            flashlunar = l.getFlashLunarIcon();
         
         try {
             a = element.getAttribute("rotate");
             if (a!=null) {
                 int rotation = a.getIntValue();
-                red.setRotation(rotation, l);
+                l.setRotation(rotation);
+                /*red.setRotation(rotation, l);
                 yellow.setRotation(rotation, l);
                 green.setRotation(rotation, l);
                 if (lunar!=null) lunar.setRotation(rotation, l);
@@ -178,7 +181,8 @@ public class SignalHeadIconXml extends PositionableLabelXml {
                 if (flashgreen!=null) flashgreen.setRotation(rotation, l);
                 if (flashlunar!=null) flashlunar.setRotation(rotation, l);
                 if (dark!=null) dark.setRotation(rotation, l);
-                if (held!=null) held.setRotation(rotation, l);
+                if (held!=null) held.setRotation(rotation, l);*/
+                
             }
         } catch (org.jdom.DataConversionException e) {}
 
@@ -200,42 +204,45 @@ public class SignalHeadIconXml extends PositionableLabelXml {
             log.error("Failed on litmode attribute: "+e);
         }
 
-        loadCommonAttributes(l, PanelEditor.SIGNALS.intValue(), element);
+        
+        if (pe!=null){
+            loadCommonAttributes(l, PanelEditor.SIGNALS.intValue(), element);
+            NamedIcon icon = loadIcon( l,"red", element);
+            if (icon!=null) { l.setRedIcon(icon); }
 
-        NamedIcon icon = loadIcon( l,"red", element);
-        if (icon!=null) { l.setRedIcon(icon); }
+            icon = loadIcon( l,"yellow", element);
+            if (icon!=null) { l.setYellowIcon(icon); }
 
-        icon = loadIcon( l,"yellow", element);
-        if (icon!=null) { l.setYellowIcon(icon); }
+            icon = loadIcon( l,"green", element);
+            if (icon!=null) { l.setGreenIcon(icon); }
 
-        icon = loadIcon( l,"green", element);
-        if (icon!=null) { l.setGreenIcon(icon); }
+            icon = loadIcon( l,"lunar", element);
+            if (icon!=null) { l.setLunarIcon(icon); }
 
-        icon = loadIcon( l,"lunar", element);
-        if (icon!=null) { l.setLunarIcon(icon); }
+            icon = loadIcon( l,"held", element);
+            if (icon!=null) { l.setHeldIcon(icon); }
 
-        icon = loadIcon( l,"held", element);
-        if (icon!=null) { l.setHeldIcon(icon); }
+            icon = loadIcon( l,"dark", element);
+            if (icon!=null) { l.setDarkIcon(icon); }
 
-        icon = loadIcon( l,"dark", element);
-        if (icon!=null) { l.setDarkIcon(icon); }
+            icon = loadIcon( l,"flashred", element);
+            if (icon!=null) { l.setFlashRedIcon(icon); }
 
-        icon = loadIcon( l,"flashred", element);
-        if (icon!=null) { l.setFlashRedIcon(icon); }
+            icon = loadIcon( l,"flashyellow", element);
+            if (icon!=null) { l.setFlashYellowIcon(icon); }
 
-        icon = loadIcon( l,"flashyellow", element);
-        if (icon!=null) { l.setFlashYellowIcon(icon); }
+            icon = loadIcon( l,"flashgreen", element);
+            if (icon!=null) { l.setFlashGreenIcon(icon); }
 
-        icon = loadIcon( l,"flashgreen", element);
-        if (icon!=null) { l.setFlashGreenIcon(icon); }
-
-        icon = loadIcon( l,"flashlunar", element);
-        if (icon!=null) { l.setFlashLunarIcon(icon); }
-
-        if(pe!=null)
+            icon = loadIcon( l,"flashlunar", element);
+            if (icon!=null) { l.setFlashLunarIcon(icon); }
             pe.putLabel(l);
-        else if (le!=null)
-            le.putLabel(l);
+        }
+        else if (le!=null){
+            loadCommonAttributes(l, LayoutEditor.SIGNALS.intValue(), element);
+            l.displayState(l.headState());
+            le.putSignal(l);
+        }
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadIconXml.class.getName());
