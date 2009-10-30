@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.53 $
+ * @version $Revision: 1.54 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -5569,12 +5569,16 @@ public class LayoutEditor extends JmriJFrame {
 				LayoutBlock b = t.getLayoutBlock();
 				if (b!=null) g2.setColor(b.getBlockColor());
 				else g2.setColor(defaultTrackColor);
-				setTrackStrokeWidth(g2,mainline);
+				//setTrackStrokeWidth(g2,mainline);
                 
                 if(t.getArc()){
 //                    setTrackStrokeWidth(g2,false);
                     Point2D pt1 = getCoords(t.getConnect1(),t.getType1());
                     Point2D pt2 = getCoords(t.getConnect2(),t.getType2());
+                    if (t.getFlip()){
+                        pt1 = getCoords(t.getConnect2(),t.getType2());
+                        pt2 = getCoords(t.getConnect1(),t.getType1());
+                    }
                     if((t.getTmpPt1()!=pt1) || (t.getTmpPt2()!=pt2)){
                         t.setTmpPt1(pt1);
                         t.setTmpPt2(pt2);
@@ -5583,17 +5587,10 @@ public class LayoutEditor extends JmriJFrame {
                         double pt2y;
                         double pt1x;
                         double pt1y;
-                        if (t.getFlip()){
-                            pt2x = pt1.getX();
-                            pt2y = pt1.getY();
-                            pt1x = pt2.getX();
-                            pt1y = pt2.getY();
-                        } else {
-                            pt2x = pt2.getX();
-                            pt2y = pt2.getY();
-                            pt1x = pt1.getX();
-                            pt1y = pt1.getY();
-                        }
+                        pt2x = pt2.getX();
+                        pt2y = pt2.getY();
+                        pt1x = pt1.getX();
+                        pt1y = pt1.getY();
 
                         if (t.getAngle() == 0)
                             t.setTmpAngle(90);
@@ -5644,16 +5641,20 @@ public class LayoutEditor extends JmriJFrame {
                     // Make sure stroke width get restored!
 					}
                     main = !mainline;
-                    setTrackStrokeWidth(g2, mainline);
+                    setTrackStrokeWidth(g2, main);
                     g2.draw(new Arc2D.Double(t.getCX(), t.getCY(), t.getCW(), t.getCH(), t.getStartadj(), t.getTmpAngle(), Arc2D.OPEN));
                     if((editMode) && (t.getCircle())){
                         g2.setStroke(new BasicStroke(1.0F,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
                         g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
                         g2.draw(new Line2D.Double(getCoords(t.getConnect2(),t.getType2()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
+                        setTrackStrokeWidth(g2, main);
                     }
+                    //setTrackStrokeWidth(g2, mainline);
 				} 
-                else
+                else {
+                    setTrackStrokeWidth(g2, mainline);
                     g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), getCoords(t.getConnect2(),t.getType2())));
+                }
 			}
 		}
 	}	
