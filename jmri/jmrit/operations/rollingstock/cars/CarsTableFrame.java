@@ -32,7 +32,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.17 $
+ * @version             $Revision: 1.18 $
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener{
 	
@@ -193,8 +193,9 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
     	
     	pack();
-    	if ((getWidth()<Control.panelWidth)) setSize(Control.panelWidth, getHeight());
-    	
+    	if ((getWidth()<Control.panelWidth)) 
+    		setSize(Control.panelWidth, getHeight());
+		setVisible(true);
     }
     
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
@@ -266,7 +267,6 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 			f = new CarEditFrame();
 			f.initComponents();
 			f.setTitle(rb.getString("TitleCarAdd"));
-			f.setVisible(true);
 		}
 	}
 

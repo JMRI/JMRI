@@ -32,7 +32,7 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.31 $
+ * @version             $Revision: 1.32 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -208,6 +208,8 @@ public class TrainsTableFrame extends OperationsFrame {
 			trainsModel.setSort(trainsModel.SORTBYTIME);
 		}
 	}
+	
+	TrainSwitchListEditFrame tslef;
  
 	// add, build, print, switch lists, terminate, and save buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
@@ -242,8 +244,10 @@ public class TrainsTableFrame extends OperationsFrame {
 			}
 		}
 		if (ae.getSource() == printSwitchButton){
-			TrainSwitchListEditFrame f = new TrainSwitchListEditFrame();
-			f.initComponents();
+			if (tslef != null)
+				tslef.dispose();
+			tslef = new TrainSwitchListEditFrame();
+			tslef.initComponents();
 		}
 		if (ae.getSource() == terminateButton){
 			List<String> trains = getTrainList();

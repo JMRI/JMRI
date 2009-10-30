@@ -4,6 +4,7 @@ package jmri.jmrit.operations.trains;
 
 
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -25,12 +26,14 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.setup.Control;
 
+import java.beans.PropertyChangeEvent;
+
 
 /**
  * Frame for user selection of switch lists
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -162,26 +165,31 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		}
 	}
 	
+	// name change or number of locations has changed
 	private void updateLocationCheckboxes(){
-		List<String> locations = manager.getLocationsByNameList();
-		for (int i =0; i<locations.size(); i++){
-			Location l = manager.getLocationById(locations.get(i));
-			l.removePropertyChangeListener(this);
+		List<String> locations = manager.getLocationsByNameList();		
+		synchronized (this) {
+			for (int i =0; i<locations.size(); i++){
+				Location l = manager.getLocationById(locations.get(i));
+				l.removePropertyChangeListener(this);
+			}
 		}
+		
 		locationCheckBoxes.clear();
 		locationPanelCheckBoxes.removeAll();
 		int y = 0;		// vertical position in panel
-		
+
 		for (int i =0; i<locations.size(); i++){
 			Location l = manager.getLocationById(locations.get(i));
 			JCheckBox checkBox = new JCheckBox();
 			locationCheckBoxes.add(checkBox);
 			checkBox.setSelected(l.getSwitchList());
-			checkBox.setText(l.toString());
+			checkBox.setText(l.getName());
 			addLocationCheckBoxAction(checkBox);
 			addItemLeft(locationPanelCheckBoxes, checkBox, 0, y++);
 			l.addPropertyChangeListener(this);
 		}
+
 
 		Border border = BorderFactory.createEtchedBorder();
 		locationPanelCheckBoxes.setBorder(border);
@@ -189,16 +197,28 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		pack();
 		repaint();
 	}
+	
+	// The print switch list for a location has changed
+	private void changeLocationCheckboxes(PropertyChangeEvent e){
+		Location l = (Location)e.getSource();
+		for (int i=0; i<locationCheckBoxes.size(); i++){
+			JCheckBox checkBox = locationCheckBoxes.get(i);
+			if (checkBox.getText().equals(l.getName())){
+				checkBox.setSelected(l.getSwitchList());
+				break;
+			}
+		}
+	}
 
 	private void addLocationCheckBoxAction(JCheckBox b) {
 		b.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				locationCheckBoxActionPerformed(e);
 			}
 		});
 	}
 
-	public void locationCheckBoxActionPerformed(java.awt.event.ActionEvent ae) {
+	public void locationCheckBoxActionPerformed(ActionEvent ae) {
 		JCheckBox b =  (JCheckBox)ae.getSource();
 		log.debug("checkbox change "+ b.getText());
 		Location l = manager.getLocationByName(b.getText());
@@ -215,12 +235,15 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		super.dispose();
 	}
 
- 	public void propertyChange(java.beans.PropertyChangeEvent e) {
+	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-		if(e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY) || e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY))
+		if(e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY)) 
+			changeLocationCheckboxes(e);
+		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY))
 			updateLocationCheckboxes();
 	}
- 	
+
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 	.getLogger(TrainSwitchListEditFrame.class.getName());
 }

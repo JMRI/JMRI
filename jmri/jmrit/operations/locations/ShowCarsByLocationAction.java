@@ -13,7 +13,7 @@ import javax.swing.AbstractAction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ShowCarsByLocationAction extends AbstractAction {
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
@@ -35,8 +35,7 @@ public class ShowCarsByLocationAction extends AbstractAction {
 
 	public void actionPerformed(ActionEvent e) {
 		// create a car table frame
-		CarsTableFrame f = new CarsTableFrame(showAllCars, locationName, trackName);
-		f.setVisible(true);
+		new CarsTableFrame(showAllCars, locationName, trackName);
 	}
 }
 

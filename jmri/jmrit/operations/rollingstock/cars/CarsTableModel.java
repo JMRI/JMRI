@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.18 $
+ * @version   $Revision: 1.19 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -421,7 +421,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     		cef.initComponents();
 	    	cef.loadCar(car);
 	    	cef.setTitle(rb.getString("TitleCarEdit"));
-	    	cef.setVisible(true);
 	    	cef.setExtendedState(Frame.NORMAL);
 	    	focusCef = true;
         	break;
