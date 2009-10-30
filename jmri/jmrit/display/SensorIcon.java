@@ -23,7 +23,7 @@ import java.awt.Color;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -41,7 +41,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         unknown = new NamedIcon(unknownName, unknownName);
         setDisplayLevel(PanelEditor.SENSORS);
         displayState(sensorState());
-        
+
     }
     //Used by Layout Editor
     public SensorIcon(NamedIcon s) {
@@ -57,7 +57,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         setOpaque(false);
         displayState(sensorState());
     }
-    
+
     //Used by Layout Editor
     public SensorIcon(String s){
         super(s);
@@ -100,7 +100,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                     inconsistentText=userName;
                 if (unknownText==null)
                     unknownText=userName;
-            } else{  
+            } else{
                 if (activeText==null)
                     activeText=rb.getString("SensorActive");
                 if (inactiveText==null)
@@ -148,7 +148,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                     inconsistentText=userName;
                 if (unknownText==null)
                     unknownText=userName;
-            } else{  
+            } else{
                 if (activeText==null)
                     activeText=rb.getString("SensorActive");
                 if (inactiveText==null)
@@ -226,6 +226,12 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         if (e.getPropertyName().equals("KnownState")) {
             int now = ((Integer) e.getNewValue()).intValue();
             displayState(now);
+            if (getLayoutPanel()!=null){
+                //super.layoutPanel.resetAwaitingIconChange();
+                getLayoutPanel().resetAwaitingIconChange();
+                getLayoutPanel().redrawPanel();
+            }
+            
         }
     }
 
@@ -256,7 +262,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         //This is if statement is from the layoutSensorIcon
         if (getHidden()) popup.add(rb.getString("Hidden"));
         else popup.add(rb.getString("NotHidden"));
-        
+
         if (icon) {
             popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
@@ -303,12 +309,12 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                 stateColor.add(stateMenu(rb.getString("SensorInactive"), 0x04)); //Inactive
                 stateColor.add(stateMenu(rb.getString("Inconsistent"), 0x06)); //Inconsistent
             popup.add(stateColor);
-            
+
             popup.add(textBorderMenu(getNameString()));
             addFixedItem(popup);
             addShowTooltipItem(popup);
         }
-        
+
         checkLocationEditable(popup, getNameString());
         addFixedItem(popup);
 
@@ -345,7 +351,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 				}
 			});
         }
-            
+
         popup.show(e.getComponent(), e.getX(), e.getY());
 
     }
@@ -365,9 +371,9 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         inconsistent.rotate(deg, this);
         displayState(sensorState());
     }
-    
+
     JCheckBoxMenuItem momentaryItem;
-    
+
     /**
      * Drive the current state of the display from the state of the
      * turnout.
@@ -480,7 +486,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         text = true;
         super.setText(s);
     }
-    
+
     //Replace with new code from the layout editor.
     /*protected int maxHeight() {
         return Math.max(
@@ -510,7 +516,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             log.error("No sensor connection, can't process click");
             return false;
         }
-        return true;        
+        return true;
     }
 
     public void mousePressed(MouseEvent e) {
@@ -522,13 +528,27 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                 sensor.setKnownState(jmri.Sensor.ACTIVE);
             } catch (jmri.JmriException reason) {
                 log.warn("Exception setting momentary sensor: "+reason);
-            }        
+            }
         }
         // do rest of mouse processing - From Layout Editor
         super.mousePressed(e);
     }
 
     public void mouseReleased(MouseEvent e) {
+        if (getLayoutPanel()!=null){
+            if (getMomentary() && buttonLive()) {
+            // this is a momentary button
+                try {
+                    sensor.setKnownState(jmri.Sensor.INACTIVE);
+                } catch (jmri.JmriException reason) {
+                    log.warn("Exception setting momentary sensor: "+reason);
+                }
+            }
+            // do rest of mouse processing
+            super.mouseReleased(e);
+            return;
+
+        }
         super.mouseReleased(e);
         if (e.isMetaDown() || e.isAltDown() ) return;
         if (buttonLive()) {
@@ -538,7 +558,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                     sensor.setKnownState(jmri.Sensor.INACTIVE);
                 } catch (jmri.JmriException reason) {
                     log.warn("Exception setting momentary sensor: "+reason);
-                }        
+                }
             } else {
                 try {
                     if (sensor.getKnownState()==jmri.Sensor.INACTIVE)
@@ -551,7 +571,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             }
         }
     }
- 
+
     public void dispose() {
         sensor.removePropertyChangeListener(this);
         sensor = null;
@@ -563,76 +583,82 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 
         super.dispose();
     }
-    
+
     // The code below here is from the layoutsensoricon.
-    
+
     Color textColorActive;
     //Color clear = new Color(238,238,238);
-    
+
     public void setTextActive(Color color){
         textColorActive=color;
+        displayState(sensorState());
     }
-    
+
     public Color getTextActive(){
         return textColorActive;
     }
-    
+
     Color textColorInActive;
-    
+
     public void setTextInActive(Color color){
         textColorInActive=color;
+        displayState(sensorState());
     }
 
     public Color getTextInActive(){
         return textColorInActive;
     }
-    
+
     Color textColorUnknown;
     public void setTextUnknown(Color color){
         textColorUnknown=color;
+        displayState(sensorState());
     }
-    
+
     public Color getTextUnknown(){
         return textColorUnknown;
     }
-    
+
     Color textColorInconsistent;
     public void setTextInconsistent(Color color){
         textColorInconsistent=color;
+        displayState(sensorState());
     }
-    
+
     public Color getTextInconsistent(){
         return textColorInconsistent;
     }
-    
+
     Color backgroundColorActive = null;
-    
+
     public void setBackgroundActive(Color color){
         if (color==null)
             setOpaque(false);
         else
             setOpaque(true);
         backgroundColorActive=color;
+        displayState(sensorState());
     }
-    
+
     public Color getBackgroundActive(){
         return backgroundColorActive;
     }
-    
+
     Color backgroundColorInActive = null;
-    
+
     public void setBackgroundInActive(Color color){
         if (color==null)
             setOpaque(false);
         else
             setOpaque(true);
         backgroundColorInActive=color;
+        displayState(sensorState());
     }
 
     public Color getBackgroundInActive(){
         return backgroundColorInActive;
     }
-    
+
     Color backgroundColorUnknown = null;
     public void setBackgroundUnknown(Color color){
         if (color==null)
@@ -640,12 +666,13 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         else
             setOpaque(true);
         backgroundColorUnknown=color;
+        displayState(sensorState());
     }
-    
+
     public Color getBackgroundUnknown(){
         return backgroundColorUnknown;
     }
-    
+
     Color backgroundColorInconsistent = null;
     public void setBackgroundInconsistent(Color color){
         if (color==null)
@@ -653,20 +680,21 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         else
             setOpaque(true);
         backgroundColorInconsistent=color;
+        displayState(sensorState());
     }
-    
+
     public Color getBackgroundInconsistent(){
         return backgroundColorInconsistent;
     }
-    
+
         String activeText;
 
     String inactiveText;
 
     String inconsistentText;
-    
+
     String unknownText;
-    
+
     public String getActiveText() { return activeText; }
     public void setActiveText(String i) {
         activeText = i;
@@ -690,7 +718,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         unknownText = i;
         displayState(sensorState());
     }
-    
+
     ButtonGroup colorButtonGroup = null;
     ButtonGroup colorBackButtonGroup = null;
     ButtonGroup colorUnknownButtonGroup = null;
@@ -709,8 +737,8 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         menu.add(makeBackgroundFontColorMenu(state+1));
         return menu;
     }
-    
-    
+
+
     protected JMenu makeFontColorMenu(int state) {
         JMenu colorMenu = new JMenu(rb.getString("FontColor"));
         colorButtonGroup = new ButtonGroup();
@@ -727,7 +755,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         addColorMenuEntry(colorMenu, rb.getString("Magenta"),Color.magenta, state);
         return colorMenu;
     }
-    
+
     protected JMenu makeBackgroundFontColorMenu(int state) {
         JMenu colorMenu = new JMenu(rb.getString("FontBackgroundColor"));
         colorBackButtonGroup = new ButtonGroup();
@@ -746,7 +774,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         addColorMenuEntry(colorMenu, rb.getString("Clear"),null, state);
         return colorMenu;
     }
-    
+
     protected JMenu makeBorderColorMenu() {
         JMenu colorMenu = new JMenu(rb.getString("ColorMenu"));
         colorBorderButtonGroup = new ButtonGroup();
@@ -764,14 +792,14 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         addColorMenuEntry(colorMenu, rb.getString("Clear"),null, 0x08);
         return colorMenu;
     }
-    
+
     void addColorMenuEntry(JMenu menu, final String name, final Color color, final int state) {
-        //state foreground - 0x00 Unknown, 0x02 Active, 0x04 InActive, 0x06 Inconsistant, 0x08 border, 
+        //state foreground - 0x00 Unknown, 0x02 Active, 0x04 InActive, 0x06 Inconsistant, 0x08 border,
         //background 0x01 Unknown, 0x03 Active, 0x05 Inactive, 0x07 Inconsistant.
         ActionListener a = new ActionListener() {
             //final String desiredName = name;
             final Color desiredColor = color;
-            public void actionPerformed(ActionEvent e) { 
+            public void actionPerformed(ActionEvent e) {
                 switch (state){
                     case 0x00 : setTextUnknown(desiredColor); break;
                     case 0x01 : setBackgroundUnknown(desiredColor); break;
@@ -787,21 +815,24 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         };
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
         r.addActionListener(a);
-        
+
         switch (state) {
             case 0x00 : colorUnknownButtonGroup = new ButtonGroup();
                         colorUnknownButtonGroup.add(r);
                         if (getTextUnknown().getRGB() == color.getRGB())  r.setSelected(true);
                         else r.setSelected(false);
                         break;
-                        
+
             case 0x01 : colorUnknownBackButtonGroup = new ButtonGroup();
                         colorUnknownBackButtonGroup.add(r);
-                        if (color!=null){
+                        if ((color!=null) && (getBackgroundUnknown()!=null)){
                             if (getBackgroundUnknown().getRGB() == color.getRGB())  r.setSelected(true);
                             else r.setSelected(false);
+                        } else {
+                            if ((getBackgroundUnknown() == null)&& (color==null))  r.setSelected(true);
+                            else r.setSelected(false);
                         }
-                        break;          
+                        break;
 
             case 0x02 : colorActiveButtonGroup = new ButtonGroup();
                         colorActiveButtonGroup.add(r);
@@ -810,29 +841,32 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                         break;
             case 0x03 : colorActiveBackButtonGroup = new ButtonGroup();
                         colorActiveBackButtonGroup.add(r);
-                        if (color!=null){
+                        if ((color!=null) && (getBackgroundActive()!=null)){
                             if (getBackgroundActive().getRGB() == color.getRGB())  r.setSelected(true);
+                            else r.setSelected(false);
+                        } else {
+                            if ((getBackgroundActive() == null)&& (color==null))  r.setSelected(true);
                             else r.setSelected(false);
                         }
                         break;
-            
+
             case 0x04 : colorInActiveButtonGroup = new ButtonGroup();
                         colorInActiveButtonGroup.add(r);
                         if (getTextInActive().getRGB() == color.getRGB())  r.setSelected(true);
                         else r.setSelected(false);
                         break;
-                        
+
             case 0x05 : colorInActiveBackButtonGroup = new ButtonGroup();
                         colorInActiveBackButtonGroup.add(r);
-                        if (color!=null){
+                        if ((color!=null) && (getBackgroundInActive()!=null)){
                             if (getBackgroundInActive().getRGB() == color.getRGB())  r.setSelected(true);
                             else r.setSelected(false);
                         } else {
-                            if (getBackgroundInActive() == null)  r.setSelected(true);
+                            if ((getBackgroundInActive() == null)&& (color==null))  r.setSelected(true);
                             else r.setSelected(false);
                         }
                         break;
-            
+
             case 0x06 : colorInconsistentButtonGroup = new ButtonGroup();
                         colorInconsistentButtonGroup.add(r);
                         if (getTextInconsistent().getRGB() == color.getRGB())  r.setSelected(true);
@@ -841,15 +875,15 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 
             case 0x07 : colorInconsistentBackButtonGroup = new ButtonGroup();
                         colorInconsistentBackButtonGroup.add(r);
-                        if (color!=null){
+                        if ((color!=null) && (getBackgroundInconsistent()!=null)){
                             if (getBackgroundInconsistent().getRGB() == color.getRGB())  r.setSelected(true);
                             else r.setSelected(false);
                         } else {
-                            if (getBackgroundInconsistent() == null)  r.setSelected(true);
+                            if ((getBackgroundInconsistent() == null) && (color==null))  r.setSelected(true);
                             else r.setSelected(false);
                         }
                         break;
-                  
+
             case 0x08 : colorBorderButtonGroup = new ButtonGroup();
                         colorBorderButtonGroup.add(r);
                         if( getBorderColor()!=null)
@@ -865,7 +899,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         else
             new SensorChangeType(this, getPanelEditor());
     }
-    
+
     public void SensorTextEdit(String name) {
 		if (log.isDebugEnabled())
 			log.debug("make new coordinate menu");
@@ -877,9 +911,9 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 		catch (Exception ex) {
 			log.error("Exception: "+ex.toString());
 			}
-		f.setVisible(true);	
+		f.setVisible(true);
 	}
-    
+
     protected int maxHeight() {
         if(icon) return Math.max(
                 Math.max( (active!=null) ? active.getIconHeight() : 0,
@@ -909,20 +943,20 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             else if ((getFixedWidth()==0) && (getMargin()!=0))
                 return ((javax.swing.JLabel)this).getMaximumSize().width+(getMargin()*2);
             return getFixedWidth();
-        
-        }//return 
+
+        }//return
     }
-    
-    
+
+
     /**
      * (Temporarily) change occupancy on click
      * @param e
      */
     public void mouseClicked(java.awt.event.MouseEvent e) {
         if (getLayoutPanel()!=null)
-            super.layoutPanel.handleMouseClicked(e, getX(), getY());	
+            super.layoutPanel.handleMouseClicked(e, getX(), getY());
 	}
-	
+
 	protected void performMouseClicked(java.awt.event.MouseEvent e) {
         if(getLayoutPanel()!=null){
             if (e.isAltDown() || e.isMetaDown()) return;
