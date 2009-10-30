@@ -10,7 +10,7 @@ package jmri.jmrix.lenz.hornbyelite;
  * from a Lenz command station.
  *
  * @author			Paul Bender Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class HornbyEliteCommandStation extends jmri.jmrix.lenz.LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.CommandStation {
 
@@ -20,9 +20,9 @@ public class HornbyEliteCommandStation extends jmri.jmrix.lenz.LenzCommandStatio
     public boolean getHasServiceMode() {return false;}
 
     /**
-     * The Hornby Elite does NOT support Ops Mode programming
+     * The Hornby Elite does support Ops Mode programming
      */
-    public boolean isOpsModePossible() {return false;}
+    public boolean isOpsModePossible() {return true;}
 
     /*
      * We need to register for logging
