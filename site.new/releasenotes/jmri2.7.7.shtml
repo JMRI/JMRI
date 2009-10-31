@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.7.shtml,v 1.9 2009-10-21 16:00:48 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.7.shtml,v 1.10 2009-10-31 16:33:40 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -225,7 +225,7 @@ Andrew Crosland updated the SPROG programmer to log an error if no programmer li
 been provided to the programmer, for example in a script.
 
 <p>
-Andrew Crosland added support for the CBUS DCC command station and CV programmer.
+Andrew Crosland added support for the CBUS DCC command station, CV programmer and layout power manager.
 
 <p>
 Peter Ulvestad provided a decoder definition for the MRC 1827.
