@@ -40,7 +40,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.42 $
+ * @version   $Revision: 1.43 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -382,8 +382,16 @@ public class RosterEntry {
         e.setAttribute("dccAddress",getDccAddress());
         e.setAttribute("comment",getComment());
         // file path are saved without default xml config path
-        e.setAttribute("imageFilePath", getImagePath().substring( _resourcesBasePath.length() ));
+        try {
+        	e.setAttribute("imageFilePath", getImagePath().substring( _resourcesBasePath.length() ));
+        } catch (java.lang.StringIndexOutOfBoundsException ex) {
+        	e.setAttribute("imageFilePath","");
+        }
+        try {
         e.setAttribute("iconFilePath", getIconPath().substring( _resourcesBasePath.length() ));
+        } catch (java.lang.StringIndexOutOfBoundsException ex) {
+        	e.setAttribute("iconFilePath","");
+        }
         e.setAttribute("URL", getURL());
 
         org.jdom.Element d = new org.jdom.Element("decoder");

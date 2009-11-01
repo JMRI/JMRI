@@ -11,6 +11,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -27,6 +28,10 @@ import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
+import jmri.util.iharder.dnd.FileDrop;
+import jmri.util.iharder.dnd.FileDrop.Listener;
+import jmri.util.jynstrument.Jynstrument;
+import jmri.util.jynstrument.JynstrumentFactory;
 
 import org.jdom.Element;
 
@@ -48,10 +53,11 @@ public class ThrottleWindow extends JmriJFrame {
     private JButton jbThrottleList = null;
     private JButton jbNew = null;
     private JButton jbClose = null;
-     
+    private JToolBar throttleToolBar;
+    
     private String titleText = "";
     private String titleTextType = "rosterID";
-    
+   
     private PowerManager powerMgr = null;
     
     private ThrottlePanelCyclingKeyListener throttlePanelsCyclingKeyListener;
@@ -125,7 +131,7 @@ public class ThrottleWindow extends JmriJFrame {
     
     private void initializeToolbar()
     {
-    	JToolBar throttleToolBar = new JToolBar("Throttles toolbar");
+    	throttleToolBar = new JToolBar("Throttles toolbar");
     	
     	jbPrevious = new JButton();
  //   	previous.setText(throttleBundle.getString("ThrottleToolBarPrev"));
@@ -202,10 +208,26 @@ public class ThrottleWindow extends JmriJFrame {
     		}
     	});
     	throttleToolBar.add(jbThrottleList);
-  
-        add(throttleToolBar, BorderLayout.PAGE_START);
+
+    	new FileDrop(throttleToolBar, new Listener() {
+    		public void filesDropped(File[] files) {
+    			instrument(files[0].getPath());
+    		}
+    	});
+
+    	add(throttleToolBar, BorderLayout.PAGE_START);
     }
-    
+
+    private void instrument(String path) {
+    	Jynstrument it = JynstrumentFactory.createInstrument(path, this);
+    	if (it == null) {
+    		log.error("Error while creating Jynstrument "+path);
+    		return ;
+    	}
+    	it.setVisible(true);
+    	throttleToolBar.add(it);
+    }
+
     /**
      *  Set up View, Edit and Power Menus
      */
@@ -269,7 +291,7 @@ public class ThrottleWindow extends JmriJFrame {
 		editMenu.add(saveFuncButtonsItem);
 		saveFuncButtonsItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				curentThrottleFrame.saveRosterChanges();
+			//	curentThrottleFrame.saveRosterChanges(); TODO
 		        if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) {
 		        	curentThrottleFrame.saveThrottle();
 		        }
@@ -488,5 +510,4 @@ public class ThrottleWindow extends JmriJFrame {
 	}
 	
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleWindow.class.getName());
-
 }

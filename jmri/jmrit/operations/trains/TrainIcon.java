@@ -21,7 +21,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class TrainIcon extends LocoIcon {
@@ -112,11 +112,11 @@ public class TrainIcon extends LocoIcon {
 			if (JOptionPane.showConfirmDialog(null,
 					"Send function commands to lead loco?", "Consist Throttle",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				tf.notifyRosterEntryChosen(entry);			 	// first notify for func button
+				tf.getAddressPanel().setRosterEntry(entry);			 	// first notify for func button
 			}
-			tf.notifyAddressChosen(getConsistNumber(), false);	// second notify for consist address
+			tf.getAddressPanel().setAddress(getConsistNumber(), false);	// second notify for consist address
 		} else {
-			tf.notifyRosterEntryChosen(entry);
+			tf.getAddressPanel().setRosterEntry(entry);
 		}
 		tf.setVisible(true);
     }

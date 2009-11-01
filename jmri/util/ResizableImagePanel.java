@@ -21,7 +21,7 @@ import javax.imageio.*;
  *
  * @author Lionel Jeanson - Copyright 2009
  */
-public class DnDImagePanel extends JPanel implements FileDrop.Listener, ComponentListener {
+public class ResizableImagePanel extends JPanel implements FileDrop.Listener, ComponentListener {
 
     /**
 	 * 
@@ -39,7 +39,7 @@ public class DnDImagePanel extends JPanel implements FileDrop.Listener, Componen
      * Default constructor.
      *
      */
-    public DnDImagePanel() {
+    public ResizableImagePanel() {
         super();
         setDnd(false);
         setBackground(BackGroundColor);
@@ -53,11 +53,11 @@ public class DnDImagePanel extends JPanel implements FileDrop.Listener, Componen
      *
      * @param imagePath Path to image to display 
      */
-    public DnDImagePanel(String imagePath) {
+    public ResizableImagePanel(String imagePath) {
         super();
         setBackground(BackGroundColor);
         setImagePath(imagePath);
-        setDnd(true);
+        setDnd(false);
     }
 
     /** 
@@ -67,14 +67,13 @@ public class DnDImagePanel extends JPanel implements FileDrop.Listener, Componen
      * @param w Panel width
      * @param h Panel height
      */
-    public DnDImagePanel(String imagePath, int w, int h) {
+    public ResizableImagePanel(String imagePath, int w, int h) {
         super();
         setPreferredSize(new Dimension(w, h));
         setSize(w, h);
         setBackground(BackGroundColor);
         setImagePath(imagePath);
-        setDnd(true);
-        setVisible(true);
+        setDnd(false);
     }
     
     /**
@@ -129,7 +128,10 @@ public class DnDImagePanel extends JPanel implements FileDrop.Listener, Componen
     }
 
     public void setImagePath(String s) {
-        _imagePath = s;
+    	if (s==null)
+    		_imagePath = (new File(_imagePath)).getParent() ; 
+    	else
+    		_imagePath = s;
         loadImage();
     }
 
@@ -152,7 +154,7 @@ public class DnDImagePanel extends JPanel implements FileDrop.Listener, Componen
 	private boolean loadImage() {
         try {
             image = ImageIO.read(new File(_imagePath));
-        } catch (IOException ex) {
+        } catch (Exception ex) {
         	if (log.isDebugEnabled())
         		log.debug(_imagePath + " is not a valid image file, exception: " + ex);
             unsetImage();
@@ -185,7 +187,7 @@ public class DnDImagePanel extends JPanel implements FileDrop.Listener, Componen
     {
     	image = null;
         scaledImage = null;
-        setVisible(false);
+        repaint();
     }
 
 	//override paintComponent
@@ -245,9 +247,14 @@ public class DnDImagePanel extends JPanel implements FileDrop.Listener, Componen
         }
         
         File orig = new File(_imagePath);
-        File dest = new File(orig.getParent() + File.separatorChar + files[0].getName());
+        String parent;
+        if (orig.isDirectory()) 
+        	parent = orig.getPath();
+        else
+        	parent = orig.getParent();
+        File dest = new File(parent + File.separatorChar + files[0].getName());
         try {
-            if (orig.getParent().compareTo(files[0].getParent()) != 0) {
+            if (parent.compareTo(files[0].getParent()) != 0) {
                 copyFile(files[0], dest);
             }
         } catch (Exception ex) {
@@ -257,5 +264,5 @@ public class DnDImagePanel extends JPanel implements FileDrop.Listener, Componen
         setImagePath(dest.getPath());
     }
 
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DnDImagePanel.class.getName());
+    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ResizableImagePanel.class.getName());
 }

@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ResourceBundle;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
@@ -35,7 +36,7 @@ import org.jdom.Element;
 public class FunctionButton extends JToggleButton implements ActionListener
 {
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
-    private FunctionListener listener;
+    private ArrayList<FunctionListener> listeners = new ArrayList<FunctionListener>();
     private int identity; // F0, F1, etc?
     private boolean isOn;
     private boolean isLockable = true;
@@ -143,7 +144,8 @@ public class FunctionButton extends JToggleButton implements ActionListener
     public void setIsLockable(boolean isLockable)
     {
         this.isLockable = isLockable;
-        listener.notifyFunctionLockableChanged(identity, isLockable);
+		for (int i=0; i<listeners.size();i++)
+            listeners.get(i).notifyFunctionLockableChanged(identity, isLockable);
     }
 
     /**
@@ -218,10 +220,8 @@ public class FunctionButton extends JToggleButton implements ActionListener
         }
         isOn = newState;
 		this.setSelected(isOn);
-        if (listener != null)
-        {
-            listener.notifyFunctionStateChanged(identity, isOn);
-        }
+		for (int i=0; i<listeners.size();i++)
+            listeners.get(i).notifyFunctionStateChanged(identity, isOn);       
     }
 
 
@@ -230,11 +230,28 @@ public class FunctionButton extends JToggleButton implements ActionListener
      * @param l The FunctionListener that wants notifications via the
      * FunctionListener.notifyFunctionStateChanged.
      */
-    public void setFunctionListener(FunctionListener l)
-    {
-        this.listener = l;
+    public void setFunctionListener(FunctionListener l) {
+        addFunctionListener(l);
     }
-
+    
+    /**
+     * Add a listener to this button, probably some sort of keypad panel.
+     * @param l The FunctionListener that wants notifications via the
+     * FunctionListener.notifyFunctionStateChanged.
+     */
+    public void addFunctionListener(FunctionListener l) {
+		if (!listeners.contains(l))
+			listeners.add(l);
+    }
+    
+    /**
+     * Remove a listener from this button.
+     * @param l The FunctionListener to be removed
+     */
+    public void removeFunctionListener(FunctionListener l) {
+    	if (listeners.contains(l))
+    		listeners.remove(l);
+    }
     /**
      * A PopupListener to handle mouse clicks and releases. Handles
      * the popup menu.

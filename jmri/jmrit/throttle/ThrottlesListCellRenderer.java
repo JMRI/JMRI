@@ -11,7 +11,6 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.BevelBorder;
 
-import jmri.DccLocoAddress;
 import jmri.jmrit.roster.RosterIconFactory;
 
 public class ThrottlesListCellRenderer extends JLabel implements ListCellRenderer {
@@ -33,14 +32,14 @@ public class ThrottlesListCellRenderer extends JLabel implements ListCellRendere
 			icon = rosterIconFactory.getIcon( tf.getAddressPanel().getRosterEntry() );
 			text = tf.getAddressPanel().getRosterEntry().getId();
 		} else 
-			if (tf.getLocoAddress() != null)
+			if ((tf.getAddressPanel().getCurrentAddress() != null) && (tf.getAddressPanel().getThrottle() != null))
 			{
-				if ( ((DccLocoAddress)tf.getLocoAddress()).getNumber() == 0)
-					text = throttleBundle.getString("ThrottleDCControl")+" - "+tf.getLocoAddress();
-				else if ( ((DccLocoAddress)tf.getLocoAddress()).getNumber() == 3)
-					text = throttleBundle.getString("ThrottleDCCControl")+" - "+tf.getLocoAddress();
+				if ( tf.getAddressPanel().getCurrentAddress().getNumber() == 0)
+					text = throttleBundle.getString("ThrottleDCControl")+" - "+tf.getAddressPanel().getCurrentAddress();
+				else if ( tf.getAddressPanel().getCurrentAddress().getNumber() == 3)
+					text = throttleBundle.getString("ThrottleDCCControl")+" - "+tf.getAddressPanel().getCurrentAddress();
 				else
-					text = throttleBundle.getString("ThrottleAddress")+" "+tf.getLocoAddress();
+					text = throttleBundle.getString("ThrottleAddress")+" "+tf.getAddressPanel().getCurrentAddress();
 			}
 			else
 				text = throttleBundle.getString("ThrottleNotAssigned");

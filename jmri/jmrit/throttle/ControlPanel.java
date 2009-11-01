@@ -1,10 +1,5 @@
 package jmri.jmrit.throttle;
 
-import jmri.DccThrottle;
-import jmri.util.SwingUtil;
-import java.util.ResourceBundle;
-import jmri.util.MouseInputAdapterInstaller;
-
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -19,27 +14,31 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-
-import javax.swing.event.MouseInputAdapter;
+import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
-import javax.swing.JPopupMenu;
-import javax.swing.JMenuItem;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.MouseInputAdapter;
 
-import org.jdom.Element;
+import jmri.DccThrottle;
+import jmri.util.MouseInputAdapterInstaller;
+import jmri.util.SwingUtil;
+
 import org.jdom.Attribute;
+import org.jdom.Element;
 
 /**
  *  A JInternalFrame that contains a JSlider to control loco speed, and buttons
@@ -51,9 +50,9 @@ import org.jdom.Attribute;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.67 $
+ * @version    $Revision: 1.68 $
  */
-public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener,ActionListener
+public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
     
@@ -151,13 +150,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         initGUI();
     }
     
-    public void notifyThrottleDisposed()
-    {
-        this.setEnabled(false);
-        this.throttle.removePropertyChangeListener(this);
-        throttle = null;
-    }
-    
     public void destroy()
     {
         if (throttle != null)
@@ -165,28 +157,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 throttle.setSpeedSetting(0);
             }
     }
-    
-    /**
-     *  Get notification that a throttle has been found as we requested.
-     *
-     * @param  t  An instantiation of the DccThrottle with the address requested.
-     */
-    public void notifyThrottleFound(DccThrottle t)
-    {
-        if(log.isDebugEnabled()) log.debug("control panel received new throttle");
-        this.throttle = t;
-        this.setEnabled(true);
-        this.setIsForward(throttle.getIsForward());
-        this.setSpeedValues((int) throttle.getSpeedIncrement(),
-                            (int) throttle.getSpeedSetting());
-        this.setSpeedSteps(throttle.getSpeedStepMode());
-        this.throttle.addPropertyChangeListener(this);
-        if(log.isDebugEnabled()) {
-           jmri.DccLocoAddress Address=(jmri.DccLocoAddress)throttle.getLocoAddress();
-           log.debug("new address is " +Address.toString());
-        }
-   }
-    
+	
     /**
      *  Enable/Disable all buttons and slider.
      *
@@ -755,7 +726,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.67 $
+     * @version    $Revision: 1.68 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -1018,8 +989,32 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         WindowPreferences wp = new WindowPreferences();
         wp.setPreferences(this, window);
     }
-    
+
+	public void notifyAddressChosen(int newAddress, boolean isLong) {	
+	}
+
+	public void notifyAddressReleased(int address, boolean isLong) {
+        this.setEnabled(false);
+        this.throttle.removePropertyChangeListener(this);
+        throttle = null;		
+	}
+
+	public void notifyAddressThrottleFound(DccThrottle t) {
+        if(log.isDebugEnabled()) log.debug("control panel received new throttle");
+        this.throttle = t;
+        this.setEnabled(true);
+        this.setIsForward(throttle.getIsForward());
+        this.setSpeedValues((int) throttle.getSpeedIncrement(),
+                            (int) throttle.getSpeedSetting());
+        this.setSpeedSteps(throttle.getSpeedStepMode());
+        this.throttle.addPropertyChangeListener(this);
+        if(log.isDebugEnabled()) {
+           jmri.DccLocoAddress Address=(jmri.DccLocoAddress)throttle.getLocoAddress();
+           log.debug("new address is " +Address.toString());
+        }		
+	}
+	    
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControlPanel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControlPanel.class.getName());    	
 }
 

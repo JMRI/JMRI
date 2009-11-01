@@ -17,10 +17,11 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import jmri.DccThrottle;
 import jmri.jmrit.catalog.NamedIcon;
 
 
-public class ThrottlesListPanel extends JPanel {
+public class ThrottlesListPanel extends JPanel implements AddressListener {
 	private static final ResourceBundle throttleBundle = ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle");
 
 	private DefaultListModel throttleFramesLM;
@@ -82,4 +83,15 @@ public class ThrottlesListPanel extends JPanel {
 	}
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottlesListPanel.class.getName());
+
+	public void notifyAddressChosen(int newAddress, boolean isLong) {		
+	}
+
+	public void notifyAddressReleased(int address, boolean isLong) {
+		repaint();
+	}
+
+	public void notifyAddressThrottleFound(DccThrottle throttle) {
+		repaint();
+	}
 }

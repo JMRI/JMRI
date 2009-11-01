@@ -2,12 +2,14 @@ package jmri.jmrit.throttle;
 
 import java.util.EventListener;
 
+import jmri.DccThrottle;
+
 /**
  * Interface for classes that wish to get notification that a new
  * decoder address has been selected.
  *
  * @author     glen   Copyright (C) 2002
- * @version    $Revision: 1.6 $
+ * @version    $Revision: 1.7 $
  */
 public interface AddressListener extends EventListener
 {
@@ -23,4 +25,9 @@ public interface AddressListener extends EventListener
 	 */
 	public void notifyAddressReleased(int address, boolean isLong);
 	
+	/**
+	 * Receive notification that a throttle has been found
+	 * @param throttle The throttle
+	 */	
+	public void notifyAddressThrottleFound(DccThrottle throttle);
 }

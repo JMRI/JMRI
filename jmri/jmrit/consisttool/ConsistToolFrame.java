@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Frame object for manipulating consists.
  *
  * @author               Paul Bender Copyright (C) 2003-2008
- * @version              $Revision: 1.26 $
+ * @version              $Revision: 1.27 $
  */
 public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.ConsistListener{
 
@@ -331,37 +331,36 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     	}
 
     public void throttleButtonActionPerformed(java.awt.event.ActionEvent e) {
-	if(adrSelector.getAddress()==null) {
-           	javax.swing.JOptionPane.showMessageDialog(this,
-						"No Consist Address Selected");
-		return;
-		}
-	  // make sure any new locomotives are added to the consist.
-	  addLocoButtonActionPerformed(e);
-	  // Create a throttle object with the 
-	  jmri.jmrit.throttle.ThrottleFrame tf=
-		jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
-	  DccLocoAddress address=adrSelector.getAddress();
-
-          /* get the lead locomotive from the list of locomotives so we can 
-             register function button bindings in the throttle. */
-          Consist tempConsist = ConsistMan.getConsist(address);
-          ArrayList<DccLocoAddress> addressList = tempConsist.getConsistList();
-          DccLocoAddress locoaddress=addressList.get(0);
-          if(address!=locoaddress){
-                if(log.isDebugEnabled()) log.debug("Consist Address " + 
-                                                    address.toString() +
-                                                   ", Lead Locomoitve  " +
-                                                   locoaddress.toString());
-                // the consist address and the lead locomotive address differ,
-                // register so the function buttons trigger the lead locomotive 
-	        tf.notifyAddressChosen(locoaddress.getNumber(), 
-                                       locoaddress.isLongAddress());
-          }
-          // Notify the throttle of the selected consist address
-	  tf.notifyAddressChosen(address.getNumber(), address.isLongAddress());
-	  tf.setVisible(true);
+    	if(adrSelector.getAddress()==null) {
+    		javax.swing.JOptionPane.showMessageDialog(this,
+    				"No Consist Address Selected");
+    		return;
     	}
+    	// make sure any new locomotives are added to the consist.
+    	addLocoButtonActionPerformed(e);
+    	// Create a throttle object with the 
+    	jmri.jmrit.throttle.ThrottleFrame tf=
+    		jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
+    	DccLocoAddress address=adrSelector.getAddress();
+
+    	/* get the lead locomotive from the list of locomotives so we can 
+             register function button bindings in the throttle. */
+    	Consist tempConsist = ConsistMan.getConsist(address);
+    	ArrayList<DccLocoAddress> addressList = tempConsist.getConsistList();
+    	DccLocoAddress locoaddress=addressList.get(0);
+    	if(address!=locoaddress){
+    		if(log.isDebugEnabled()) log.debug("Consist Address " + 
+    				address.toString() +
+    				", Lead Locomoitve  " +
+    				locoaddress.toString());
+    		// the consist address and the lead locomotive address differ,
+    		// register so the function buttons trigger the lead locomotive 
+    		tf.getAddressPanel().setCurrentAddress(locoaddress);
+    	}
+    	// Notify the throttle of the selected consist address
+    	tf.getAddressPanel().setCurrentAddress(address);
+    	tf.setVisible(true);
+    }
 
     public void consistSelected() {
 	if(log.isDebugEnabled()) log.debug("Consist Selected");

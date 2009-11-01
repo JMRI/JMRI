@@ -1,6 +1,5 @@
 package jmri.jmrit.throttle;
 
-import jmri.DccThrottle;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.KeyAdapter;
@@ -10,17 +9,19 @@ import java.util.ResourceBundle;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+import javax.swing.JToggleButton;
 
-import org.jdom.Element;
-
+import jmri.DccThrottle;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+
+import org.jdom.Element;
 
 
 /**
  * A JInternalFrame that contains buttons for each decoder function.
  */
-public class FunctionPanel extends JInternalFrame implements FunctionListener,java.beans.PropertyChangeListener
+public class FunctionPanel extends JInternalFrame implements FunctionListener, java.beans.PropertyChangeListener, AddressListener
 {
 	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
 	
@@ -29,8 +30,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
     private DccThrottle throttle;
 
     private FunctionButton functionButton[];
-    javax.swing.JToggleButton alt1Button = new javax.swing.JToggleButton();
-    javax.swing.JToggleButton alt2Button = new javax.swing.JToggleButton();
+    private JToggleButton alt1Button = new JToggleButton();
+    private JToggleButton alt2Button = new JToggleButton();
+    
+    private AddressPanel addressPanel = null; // to access roster infos
 
     /**
      * Constructor
@@ -75,84 +78,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 			throttle.setF27(false);
 			throttle.setF28(false);
 		}
-	}
-
-    /**
-     * Get notification that a throttle has been found as we requested.
-     * Use reflection to find the proper getF? method for each button.
-     *
-     * @param t An instantiation of the DccThrottle with the address requested.
-     */
-    public void notifyThrottleFound(DccThrottle t)
-    {
-        if (log.isDebugEnabled()) log.debug("Throttle found");
-        this.throttle = t;
-        RosterEntry rosterEntry = null;
-        if (addressPanel != null)
-        	rosterEntry = addressPanel.getRosterEntry();
-/*        if (rosterEntry != null){
-        	if (log.isDebugEnabled()) log.debug("RosterEntry found");*/
-        initGUI();	// need to rebuild panel in all cases to update button texts
-        int maxi = 0;
-        for (int i=0; i<this.NUM_FUNCTION_BUTTONS; i++)
-        {
-           try
-           {
-                int functionNumber = functionButton[i].getIdentity();
-                java.lang.reflect.Method getter =
-                        throttle.getClass().getMethod("getF"+functionNumber,(Class[])null);
-                Boolean state = (Boolean)getter.invoke(throttle, (Object[])null);
-                functionButton[i].setState(state.booleanValue());
-                if (rosterEntry != null){
-                	String text = rosterEntry.getFunctionLabel(functionNumber);
-                	if (text != null){
-                		functionButton[i].setText(text);
-                		// adjust button width for text
-                		int butWidth = functionButton[i].getFontMetrics(functionButton[i].getFont()).stringWidth(text);
-                		butWidth = butWidth + 20;	// pad out the width a bit
-                		if (butWidth < FunctionButton.BUT_WDTH) butWidth = FunctionButton.BUT_WDTH;
-                		functionButton[i].setPreferredSize(new Dimension(butWidth,FunctionButton.BUT_HGHT));
-                		functionButton[i].setIsLockable(rosterEntry.getFunctionLockable(functionNumber));
-                		maxi = i;
-                	}
-                	else
-                		if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() &&
-                        	 jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isHidingUndefinedFuncButt() ) {
-                			functionButton[i].setDisplay(false);
-                			functionButton[i].setVisible(false);
-                		}
-                }
-           }
-           catch (java.lang.NoSuchMethodException ex1)
-           {
-               log.warn("Exception in notifyThrottleFound: "+ex1);
-           }
-           catch (java.lang.IllegalAccessException ex2)
-           {
-               log.warn("Exception in notifyThrottleFound: "+ex2);
-           }
-           catch (java.lang.reflect.InvocationTargetException ex3)
-           {
-               log.warn("Exception in notifyThrottleFound: "+ex3);
-           }
-        }
-        alt1Button.setVisible(true);
-        alt2Button.setVisible(true);
-		if ( (rosterEntry != null) && (maxi < NUM_FUNC_BUTTONS_INIT) &&
-			 jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() &&
-           	 jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isHidingUndefinedFuncButt() ) {
-	        alt1Button.setVisible(false);
-	        alt2Button.setVisible(false);		
-		}
-        this.setEnabled(true);
-        this.throttle.addPropertyChangeListener(this);
-    }
-
-	public void notifyThrottleDisposed()
-	{
-		this.setEnabled(false);
-		this.throttle.removePropertyChangeListener(this);
-		throttle = null;
 	}
 
     public FunctionButton[] getFunctionButtons() { return functionButton; }
@@ -260,7 +185,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
         alt2Button.setEnabled(isEnabled);
     }
     
-    AddressPanel addressPanel = null;
     public void setAddressPanel(AddressPanel addressPanel){
     	this.addressPanel = addressPanel; 
     }
@@ -386,7 +310,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 		}
 	}
 
-
     /**
      * Make sure that all function buttons are being displayed
      */
@@ -406,7 +329,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.48 $
+	 * @version $Revision: 1.49 $
 	 */
     class FunctionButtonKeyListener extends KeyAdapter {
     	private boolean keyReleased = true;
@@ -519,7 +442,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 		}
 	}
 
-
     /**
      * Collect the prefs of this object into XML Element
      * <ul>
@@ -571,6 +493,87 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener,ja
 	        }
         }
     }
+
+    /**
+     * Get notification that a throttle has been found as we requested.
+     * Use reflection to find the proper getF? method for each button.
+     *
+     * @param t An instantiation of the DccThrottle with the address requested.
+     */
+    public void notifyAddressThrottleFound(DccThrottle t)
+    {
+        if (log.isDebugEnabled()) log.debug("Throttle found");
+        this.throttle = t;
+        RosterEntry rosterEntry = null;
+        if (addressPanel != null)
+        	rosterEntry = addressPanel.getRosterEntry();
+        if ((rosterEntry != null) && (log.isDebugEnabled()))
+        	log.debug("RosterEntry found: "+rosterEntry.getId());
+        initGUI();	// need to rebuild panel in all cases to update button texts
+        int maxi = 0;
+        for (int i=0; i<this.NUM_FUNCTION_BUTTONS; i++)
+        {
+           try
+           {
+                int functionNumber = functionButton[i].getIdentity();
+                java.lang.reflect.Method getter =
+                        throttle.getClass().getMethod("getF"+functionNumber,(Class[])null);
+                Boolean state = (Boolean)getter.invoke(throttle, (Object[])null);
+                functionButton[i].setState(state.booleanValue());
+                if (rosterEntry != null){
+                	String text = rosterEntry.getFunctionLabel(functionNumber);
+                	if (text != null){
+                		functionButton[i].setText(text);
+                		// adjust button width for text
+                		int butWidth = functionButton[i].getFontMetrics(functionButton[i].getFont()).stringWidth(text);
+                		butWidth = butWidth + 20;	// pad out the width a bit
+                		if (butWidth < FunctionButton.BUT_WDTH) butWidth = FunctionButton.BUT_WDTH;
+                		functionButton[i].setPreferredSize(new Dimension(butWidth,FunctionButton.BUT_HGHT));
+                		functionButton[i].setIsLockable(rosterEntry.getFunctionLockable(functionNumber));
+                		maxi = i;
+                	}
+                	else
+                		if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() &&
+                        	 jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isHidingUndefinedFuncButt() ) {
+                			functionButton[i].setDisplay(false);
+                			functionButton[i].setVisible(false);
+                		}
+                }
+           }
+           catch (java.lang.NoSuchMethodException ex1)
+           {
+               log.warn("Exception in notifyThrottleFound: "+ex1);
+           }
+           catch (java.lang.IllegalAccessException ex2)
+           {
+               log.warn("Exception in notifyThrottleFound: "+ex2);
+           }
+           catch (java.lang.reflect.InvocationTargetException ex3)
+           {
+               log.warn("Exception in notifyThrottleFound: "+ex3);
+           }
+        }
+        alt1Button.setVisible(true);
+        alt2Button.setVisible(true);
+		if ( (rosterEntry != null) && (maxi < NUM_FUNC_BUTTONS_INIT) &&
+			 jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() &&
+           	 jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isHidingUndefinedFuncButt() ) {
+	        alt1Button.setVisible(false);
+	        alt2Button.setVisible(false);		
+		}
+        this.setEnabled(true);
+        this.throttle.addPropertyChangeListener(this);
+    }
+
+	public void notifyAddressReleased(int address, boolean isLong)
+	{
+		this.setEnabled(false);
+		this.throttle.removePropertyChangeListener(this);
+		throttle = null;
+	}
+
+	public void notifyAddressChosen(int newAddress, boolean isLong) {
+	}
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FunctionPanel.class.getName());
 }
