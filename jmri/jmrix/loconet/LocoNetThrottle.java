@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractThrottle;
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
  * @author  Stephen Williams  Copyright (C) 2008
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -26,6 +26,9 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private int layout_spd;
     private int layout_dirf;
     private int layout_snd;
+    
+    // slot status to be warned if slot released or dispatched
+    private int slotStatus;
 
     /**
      * Constructor
@@ -86,6 +89,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         this.address      = slot.locoAddr();
         this.isForward    = slot.isForward();
+        this.slotStatus   = slot.slotStatus();
 
         switch(slot.decoderType())
         {
@@ -296,7 +300,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
     /**
      * Get notified when underlying slot information changes
-     */
+     */    
     public void notifyChangedSlot(LocoNetSlot pSlot) {
         if (slot!=pSlot) log.error("notified of change in different slot");
 
@@ -306,7 +310,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         layout_spd  = slot.speed();
         layout_dirf = slot.dirf();
         layout_snd  = slot.snd();
-
+        
         // handle change in each state
         if (this.speedSetting != floatSpeed(slot.speed())) {
           Float newSpeed = new Float( floatSpeed(slot.speed() ) ) ;
@@ -321,7 +325,17 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             this.isForward = slot.isForward();
             notifyPropertyChangeListener("IsForward", new Boolean(temp), new Boolean(slot.isForward()));
         }
+        
+        // Slot status        
+        if (slotStatus != slot.slotStatus()) {
+        	int newStat = slot.slotStatus();
+        	if (log.isDebugEnabled())
+        		log.debug("Slot status changed from "+LnConstants.LOCO_STAT(slotStatus)+" to "+LnConstants.LOCO_STAT(newStat) );
+        	notifyPropertyChangeListener("SlotStatus", slotStatus, newStat);
+        	slotStatus = newStat;
+        }
 
+        // Functions
         if (this.f0 != slot.isF0()) {
             temp = this.f0;
             this.f0 = slot.isF0();

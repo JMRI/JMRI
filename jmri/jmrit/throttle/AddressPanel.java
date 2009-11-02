@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
 import java.util.*;
 import java.util.List;
 import java.io.File;
@@ -12,6 +13,7 @@ import jmri.*;
 import jmri.jmrit.roster.*;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
+import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.nce.consist.NceConsistRoster;
 import jmri.jmrix.nce.consist.NceConsistRosterEntry;
 
@@ -24,9 +26,9 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  */
-public class AddressPanel extends JInternalFrame implements ThrottleListener {
+public class AddressPanel extends JInternalFrame implements ThrottleListener, java.beans.PropertyChangeListener {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
 	private DccThrottle throttle;
@@ -101,6 +103,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener {
 	 */
 	public void notifyThrottleFound(DccThrottle t) {
 		throttle = t;
+		throttle.addPropertyChangeListener(this);
 		releaseButton.setEnabled(true);
 		currentAddress = (DccLocoAddress) t.getLocoAddress();
 		addrSelector.setAddress(currentAddress);
@@ -134,6 +137,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener {
 	 */
 	public void notifyConsistThrottleFound(DccThrottle t) {
 		this.consistThrottle = t;
+		consistThrottle.addPropertyChangeListener(this);
 		// TODO: notify controlPanel? functionPanel? everybody?
 	}
 
@@ -414,6 +418,18 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener {
 		notifyThrottleDisposed();
 	}
 
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getPropertyName().compareTo("SlotStatus") == 0)
+		{
+			int oldStatus = (Integer) evt.getOldValue() ;
+			int newStatus = (Integer) evt.getNewValue() ;
+			if (log.isDebugEnabled())
+				log.debug("Slot status changed from "+LnConstants.LOCO_STAT(oldStatus)+" to "+LnConstants.LOCO_STAT(newStatus) );
+        	if ( newStatus == LnConstants.LOCO_COMMON )
+        		notifyThrottleDisposed();
+		}
+	}
+	
 	private void notifyListenersOfThrottleRelease() {
 		if (listeners != null) {
 			for (int i = 0; i < listeners.size(); i++) {
