@@ -136,6 +136,8 @@
 
 <mapID target="manual.Main_GrapeVine" url="manual/Main_GrapeVine.shtml"/>
 
+<mapID target="html.tools.scripting.Jynstruments" url="html/tools/scripting/Jynstruments.shtml"/>
+
 <mapID target="html.hardware.tchtech.index" url="html/hardware/tchtech/index.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_BuildReportDetails" url="package/jmri/jmrit/operations/Operations.shtml#BuildReportDetails"/>

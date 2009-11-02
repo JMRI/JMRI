@@ -296,6 +296,8 @@
 
    <tocitem text="AppleScript " target="html.tools.scripting.AppleScript"/>
 
+   <tocitem text="Jynstruments " target="html.tools.scripting.Jynstruments"/>
+
   </tocitem>
   <tocitem text="Sections ">
    <tocitem text="Section Add/Edit " target="package.jmri.jmrit.beantable.SectionAddEdit"/>

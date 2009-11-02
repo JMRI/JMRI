@@ -146,6 +146,8 @@
 
  <indexitem text="JUnit " target="html.doc.Technical.JUnit"/>
 
+ <indexitem text="Jynstruments " target="html.tools.scripting.Jynstruments"/>
+
  <indexitem text="Layout Editor " target="package.jmri.jmrit.display.LayoutEditor"/>
 
  <indexitem text="LDT signals " target="html.tools.signaling.ldt.output"/>
