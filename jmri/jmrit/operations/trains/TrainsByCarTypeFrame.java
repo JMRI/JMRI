@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * Frame to display which trains service certain car types
  * 
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -147,7 +147,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 				train.deleteTypeName((String)typeComboBox.getSelectedItem());
 			}
 		}
-		TrainManagerXml.instance().writeOperationsTrainFile();
+		manager.save();	// save files
 		updateTrains();
 	}
 	

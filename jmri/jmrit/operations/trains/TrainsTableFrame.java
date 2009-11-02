@@ -22,17 +22,14 @@ import javax.swing.ScrollPaneConstants;
 
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.routes.RouteManagerXml;
 
 /**
  * Frame for adding and editing the train roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.32 $
+ * @version             $Revision: 1.33 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -44,12 +41,9 @@ public class TrainsTableFrame extends OperationsFrame {
 	public static final String TIME = rb.getString("Time");
 	public static final String ID = rb.getString("Id");
 
-	CarManagerXml carMangerXml = CarManagerXml.instance();			
-	EngineManagerXml engineMangerXml = EngineManagerXml.instance();
+	CarManagerXml carManagerXml = CarManagerXml.instance();	// load cars		
 	TrainManager trainManager = TrainManager.instance();
 	TrainManagerXml trainManagerXml = TrainManagerXml.instance();
-	LocationManagerXml locationManagerXml = LocationManagerXml.instance();
-	RouteManagerXml routeManagerXml = RouteManagerXml.instance();
 
 	TrainsTableModel trainsModel = new TrainsTableModel();
 	javax.swing.JTable trainsTable = new javax.swing.JTable(trainsModel);
@@ -261,8 +255,7 @@ public class TrainsTableFrame extends OperationsFrame {
 					}
 				train.terminateIfSelected();
 			}
-		}
-		
+		}		
 		if (ae.getSource() == saveButton){
 			storeValues();
 		}
@@ -326,11 +319,7 @@ public class TrainsTableFrame extends OperationsFrame {
 		else if (sortByTime.isSelected())
 			sortBy = TIME;
 		trainManager.setTrainFrameSortBy(sortBy);			//save how the table is sorted
-		engineMangerXml.writeOperationsEngineFile();		//Need to save train assignments
-		carMangerXml.writeOperationsCarFile();				//Need to save train assignments
-		trainManagerXml.writeOperationsTrainFile();			//Need to save train status
-		locationManagerXml.writeFileIfDirty();				//Need to save "moves" for track location 
-		routeManagerXml.writeFileIfDirty(); 				//Only if user used setX&Y
+		trainManager.save();
 		setModifiedFlag(false);
 	}
 

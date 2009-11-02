@@ -13,9 +13,13 @@ import javax.swing.JComboBox;
 
 import org.jdom.Element;
 
+import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
+import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
+import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsXml;
 
@@ -24,7 +28,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
@@ -383,6 +387,17 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			Train train = getTrainById(trains.get(i));
 			box.addItem(train);
 		}
+    }
+    
+    /**
+     * Save all xml files that a train can modify.
+     */
+    public void save(){
+		EngineManagerXml.instance().writeOperationsEngineFile();		//save train assignments
+		CarManagerXml.instance().writeOperationsCarFile();				//save train assignments
+		TrainManagerXml.instance().writeOperationsTrainFile();			//save train changes
+		LocationManagerXml.instance().writeFileIfDirty();				//Need to save "moves" for track location 
+		RouteManagerXml.instance().writeFileIfDirty(); 				//Only if user used setX&Y
     }
   
     /**

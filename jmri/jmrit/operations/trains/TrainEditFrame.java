@@ -49,7 +49,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -416,7 +416,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			enableButtons(false);
 			
 			// save train file
-			managerXml.writeOperationsTrainFile();
+			manager.save();
 		}
 		if (ae.getSource() == addTrainButton){
 			Train train = manager.getTrainByName(trainNameTextField.getText());
@@ -575,7 +575,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		manager.setTrainEditFrame(this);
 
 		// save train file
-		managerXml.writeOperationsTrainFile();
+		manager.save();
 	}
 	
 
