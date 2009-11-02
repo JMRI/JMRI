@@ -19,19 +19,36 @@ To use it simply drag'n drop the Light.jyn folder into a JMRI Throttle control w
 ****************************
 * How to write a Jynstrument?
 *****************************
-Jynstrument must override the following methods:
+Once again the Light.jyn sample is a good starting point.
 
-	public abstract String getExpectedContextClassName();
-		Return a string indicating the class that shall be used as context. (java.lang.Object will open all doors)
+Your Jynstrument must inherit from the Jynstrument class like that:
+
+import jmri.util.jynstrument.Jynstrument as Jynstrument
+class Test(Jynstrument):
+
+
+Your Jynstrument must override the following methods:
+
+    def getExpectedContextClassName(self):
+        return "java.lang.Object"
+        
+		Returns a string indicating the class that shall be used as context. (java.lang.Object will open all doors)
 			
-	public abstract void init();
+    def init(self):
 		This method will be called by instrumented class once all Jynstrument has been instantiated and internally initiated.
 	
-	public abstract void quit();
-		This method will be called when the Jynstrument is quiting (particularly to unregister from used listerners)
+    def quit(self):
+		This method will be called when the Jynstrument is quitting (particularly to unregister from used listeners)
 		
 		
-**********************************
-* How to get code Jynstrumentable?
-**********************************
-Please see class jmri.jmrit.throttle.ThrottleFrame code and search for #JYNSTRUMENT#
+Your Jynstrument will have the following methods available:
+	self.getContext() : Access a JMRI object instance, it is set by the Jynstrumented code, and usually is of the class defined by getExpectedContextClassName(self).
+
+	self.getFolder() : Returns a string containing the folder from where the Jython was loaded (useful to load resources files)
+	
+		
+		
+********************************************
+* How to get some Java code Jynstrumentable?
+********************************************
+Please see class jmri.jmrit.throttle.ThrottleFrame code and search for #JYNSTRUMENT#, that's where the Light.jyn sample is loaded and executed.
