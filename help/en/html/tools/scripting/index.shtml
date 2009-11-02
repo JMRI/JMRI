@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.1 2008-02-17 04:52:52 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2009-11-02 20:10:52 jacobsen Exp $ -->
 <title>JMRI: Scripting</title>
 
 <!-- Style -->
@@ -36,6 +36,7 @@ Information is available on
 <LI><A HREF="Python.shtml">The language itself</a>
 <LI><A HREF="Examples.shtml">Examples</a>
 <LI><A HREF="FAQ.shtml">Frequently asked questions</a>
+<LI><A HREF="Jynstruments.shtml">Modifying the GUI with Jynstruments</a>
 </OL>
 
 <!--#include virtual="/Footer" -->
