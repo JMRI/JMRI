@@ -5,10 +5,11 @@ This folder contains Jynstruments sorted by the place they extend.
 * What's a Jynstrument?
 ***********************
 A Jynstrument is a bundle of Jython code and other resources packaged in a a .jyn folder.
+
 They're intended to extend the UI of JMRI and to be easily customizable by advanced end users without modifying the Java JMRI code.
 
 For example a XYZ Jynstrument would look like this:
-XYZ.jyn folder containing a XYZ.py file in which is defined a XYZ class derived from the jmri.util.jynstrument.Jynstrument class.
+XYZ.jyn folder containing a XYZ.py file in which is defined a XYZ class derived from the jmri.jmrit.jython.Jynstrument class.
 	
 The Light.jyn Jynstrument is a good starting point, it simply adds a control to Function 0 for a Throttle.
 
@@ -23,16 +24,15 @@ Once again the Light.jyn sample is a good starting point.
 
 Your Jynstrument must inherit from the Jynstrument class like that:
 
-import jmri.util.jynstrument.Jynstrument as Jynstrument
+import jmri.jmrit.jython.Jynstrument as Jynstrument
 class Test(Jynstrument):
 
+The Jynstrument class itself inherits from javax.swing.JPanel .
 
-Your Jynstrument must override the following methods:
+Your Jynstrument *must* define the following methods:
 
-    def getExpectedContextClassName(self):
-        return "java.lang.Object"
-        
-		Returns a string indicating the class that shall be used as context. (java.lang.Object will open all doors)
+    def getExpectedContextClassName(self):   
+		Must returns a string indicating the class that shall be expected as context. (java.lang.Object will open all doors)
 			
     def init(self):
 		This method will be called by instrumented class once all Jynstrument has been instantiated and internally initiated.

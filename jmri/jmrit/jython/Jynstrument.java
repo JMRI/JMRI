@@ -1,4 +1,4 @@
-package jmri.util.jynstrument;
+package jmri.jmrit.jython;
 
 import javax.swing.JPanel;
 

@@ -18,11 +18,11 @@ import javax.swing.event.InternalFrameEvent;
 
 import jmri.DccThrottle;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.jython.Jynstrument;
+import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.iharder.dnd.FileDrop;
 import jmri.util.iharder.dnd.FileDrop.Listener;
-import jmri.util.jynstrument.Jynstrument;
-import jmri.util.jynstrument.JynstrumentFactory;
 
 import org.jdom.Document;
 import org.jdom.Element;

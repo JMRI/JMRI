@@ -1,4 +1,4 @@
-import jmri.util.jynstrument.Jynstrument as Jynstrument
+import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.awt.CardLayout as CardLayout
 import jmri.util.ResizableImagePanel as ResizableImagePanel
 import java.awt.event.MouseListener as MouseListener
@@ -7,7 +7,8 @@ import jmri.jmrit.throttle.AddressListener as AddressListener
 import jmri.jmrit.throttle.FunctionListener as FunctionListener
 
 class Light(Jynstrument, PropertyChangeListener, AddressListener, MouseListener, FunctionListener):
-#Jynstrument part
+# Jynstrument mandatory part
+# Here this JYnstrument like to be in a ThrottleFrame and no anywhere else
     def getExpectedContextClassName(self):
         return "jmri.jmrit.throttle.ThrottleFrame"
 
@@ -25,28 +26,34 @@ class Light(Jynstrument, PropertyChangeListener, AddressListener, MouseListener,
         self.updateThrottle()
         self.setIcon()
 
-    def quit(self):
+    def quit(self):   # very important to clean up everything to make sure GC will collect us
         self.cleanThrottle()
+        self.getContext().removeThrottleListener(self)
         self.getContext().getAddressPanel().removeAddressListener(self)
 
+# this is a good way to make sure that we're are actaully GCed 
+# using memory watcher in development menu, we can force a GC from there
+    def __del__(self):  
+        print "in destructor"
+
 #Inner workings:
-    def updateThrottle(self):
+    def updateThrottle(self):    # update throttle informations when a new one is detected
         if self.throttle != None :
             self.throttle.addPropertyChangeListener(self)
         self.getContext().getFunctionPanel().getFunctionButtons()[0].addFunctionListener(self)
         
-    def cleanThrottle(self):
+    def cleanThrottle(self):     # clean up throttle information when it is deconnected
         if self.throttle != None :
             self.throttle.removePropertyChangeListener(self)
         self.getContext().getFunctionPanel().getFunctionButtons()[0].removeFunctionListener(self)
         self.throttle = None
 
-    def switch(self):
+    def switch(self):      # actually do function value change
         if self.throttle != None :
-            self.throttle.setF0( not self.throttle.getF0() )
+            self.throttle.setF0( not self.throttle.getF0() )   # HERE!
         self.setIcon()
 
-    def setIcon(self):
+    def setIcon(self):     # update appearance
         cl = self.getLayout()
         if self.throttle == None :
             cl.show(self, "off")
@@ -55,19 +62,19 @@ class Light(Jynstrument, PropertyChangeListener, AddressListener, MouseListener,
         else :
             cl.show(self, "off")
 
-#FunctionListener
+#FunctionListener: to listen for Function 0 changes from the AddressPanel itself
     def notifyFunctionStateChanged(self, functionNumber, isOn):
         self.setIcon()
 
     def notifyFunctionLockableChanged(self, functionNumber, isLockable):
         pass
 
-#PropertyChangeListener part
+#PropertyChangeListener part:: to listen for Function 0 changes from everywhere else
     def propertyChange(self, event):
         if event.getPropertyName() == "F0" :
             self.setIcon()
 
-#AddressListener part
+#AddressListener part: to listen for address changes in address panel (release, acquired)
     def notifyAddressChosen(self, address, isLong):
         pass
 
@@ -80,7 +87,7 @@ class Light(Jynstrument, PropertyChangeListener, AddressListener, MouseListener,
         self.cleanThrottle()
         self.setIcon()
 
-#MouseListener part
+#MouseListener part: to listen for mouse events
     def mouseReleased(self, event):
         self.switch()
 

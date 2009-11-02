@@ -27,11 +27,11 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.jython.Jynstrument;
+import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.util.JmriJFrame;
 import jmri.util.iharder.dnd.FileDrop;
 import jmri.util.iharder.dnd.FileDrop.Listener;
-import jmri.util.jynstrument.Jynstrument;
-import jmri.util.jynstrument.JynstrumentFactory;
 
 import org.jdom.Element;
 
