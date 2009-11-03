@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractThrottle;
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
  * @author  Stephen Williams  Copyright (C) 2008
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -207,8 +207,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         	mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
         	mRefreshTimer.start();
         }
-        
-        notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
+        if (oldSpeed != this.speedSetting)
+        	notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
     }
 
     /**
@@ -220,7 +220,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     	boolean old = isForward;
         isForward = forward;
         sendFunctionGroup1();
-        notifyPropertyChangeListener("IsForward", old, this.isForward);
+        if (old != this.isForward)
+        	notifyPropertyChangeListener("IsForward", old, this.isForward);
     }
 
     /**
