@@ -43,7 +43,7 @@ import java.util.ResourceBundle;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.66 $
+ * @version $Revision: 1.67 $
  */
 
 public class PositionableLabel extends JLabel
@@ -100,6 +100,8 @@ public class PositionableLabel extends JLabel
         addMouseListener(this);
     }
     public void connect(LayoutEditor panel) {
+        //addMouseMotionListener(this);
+        //addMouseListener(this);
 		layoutPanel = panel;
     }
 
@@ -180,13 +182,12 @@ public class PositionableLabel extends JLabel
 
     public void setHidden(boolean boo){
         hidden=boo;
+        //this.setVisible(!boo);
     }
     
-
     public boolean getHidden(){
         return hidden;
     }
-
 
     private int fixedWidth=0;
     private int fixedHeight=0;
@@ -233,7 +234,7 @@ public class PositionableLabel extends JLabel
     protected void updateSize(){
         setSize(maxWidth(), maxHeight());
     }
-
+    //@TODO Need to do math.max on this to return the greatest width, as an icon can also contain text.
     protected int maxWidth(){
         if ((fixedWidth==0) && (margin==0)){
             if(text)
@@ -250,6 +251,7 @@ public class PositionableLabel extends JLabel
         }
         return fixedWidth;
     }
+    //@TODO Need to do math.max on this to return the greatest width, as an icon can also contain text.
     protected int maxHeight(){
         if ((fixedHeight==0) && (margin==0)){
             if(text)
@@ -434,7 +436,7 @@ public class PositionableLabel extends JLabel
         if (!getEditable()) return;
         ours = this;
         if (icon) {
-            popup = new JPopupMenu();                                    
+            popup = new JPopupMenu();
              
             popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
@@ -724,31 +726,33 @@ public class PositionableLabel extends JLabel
 		if (layoutPanel!=null){
 			popup.add("x= " + this.getX());
 			popup.add("y= " + this.getY());
-	}
-			
+            popup.add(new PopupAction(name));
+        }
+        else if (icon) {
+            /*
+            popup.add(new AbstractAction(rb.getString("shear")) {
+                    public void actionPerformed(ActionEvent e) {
+                        tranform(e, BOX_TYPE_SHEAR);
+                    }
+                });
+            */
+            popup.add(new AbstractAction(rb.getString("rotate")) {
+                    public void actionPerformed(ActionEvent e) {
+                        tranform(e, BOX_TYPE_ROTATE);
+                    }
+            });
+            popup.add(new AbstractAction(rb.getString("scale")) {
+                    public void actionPerformed(ActionEvent e) {
+                        tranform(e, BOX_TYPE_SCALE);
+                    }
+            });
+        }
 		if (getViewCoordinates()) {
-            if (icon) {
-                /*
-                popup.add(new AbstractAction(rb.getString("shear")) {
-                        public void actionPerformed(ActionEvent e) {
-                            tranform(e, BOX_TYPE_SHEAR);
-                        }
-                    });
-                */
-                popup.add(new AbstractAction(rb.getString("rotate")) {
-                        public void actionPerformed(ActionEvent e) {
-                            tranform(e, BOX_TYPE_ROTATE);
-                        }
-                    });
-                popup.add(new AbstractAction(rb.getString("scale")) {
-                        public void actionPerformed(ActionEvent e) {
-                            tranform(e, BOX_TYPE_SCALE);
-                        }
-                    });
-            }
+
 			popup.add("x= " + this.getX());
 			popup.add("y= " + this.getY());
 			popup.add("level= " + this.getDisplayLevel().intValue());
+            popup.add(new PopupAction(name));
         }
         if (!_saveFixed) {  // this is user's setting
             if (panelEditor!=null){
@@ -769,7 +773,7 @@ public class PositionableLabel extends JLabel
                 }
             }
         }
-			popup.add(new PopupAction(name));
+		
     }
 
 
@@ -1239,14 +1243,24 @@ public class PositionableLabel extends JLabel
     //public void setEditable(boolean enabled) {editable = enabled;}
     public void setEditable(boolean enabled) {
         editable = enabled;
-        if((hidden) && (editable))
-            setVisible(true);
-        else if ((hidden) && (!editable))
-            setVisible(false);
+        if (layoutPanel!=null) {
+            if((hidden) && (editable))
+                setVisible(true);
+            else if ((hidden) && (!editable))
+                setVisible(false);
         }
+    }
+    
     public boolean getEditable() { return editable; }
     private boolean editable = true;
 
+    public void setVisible(boolean enabled){
+        if (hidden)
+            super.setVisible(enabled);
+    }
+    
+    public boolean getVisible(){ return super.isVisible(); }
+    
     public void setFixed(boolean enabled) {
         fixed = enabled;
         if (showFixedItem!=null) showFixedItem.setSelected(getFixed());
@@ -1385,6 +1399,7 @@ public class PositionableLabel extends JLabel
         _editorFrame.setVisible(true);
         _editorFrame.pack();
     }
+    
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableLabel.class.getName());
 
