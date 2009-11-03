@@ -19,7 +19,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -315,8 +315,10 @@ public class PositionableLabelXml implements XmlAdapter {
         }
         l.setDisplayLevel(level);
         a = element.getAttribute("hidden");
-        if ( (a!=null) && a.getValue().equals("yes"))
+        if ( (a!=null) && a.getValue().equals("yes")){
             l.setHidden(true);
+            l.setVisible(false);
+        }
         //l.updateSize();
     }
 

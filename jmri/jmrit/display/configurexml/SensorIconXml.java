@@ -13,7 +13,7 @@ import java.awt.Color;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -36,8 +36,12 @@ public class SensorIconXml extends PositionableLabelXml {
         storeCommonAttributes(p, element);
         element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
         element.setAttribute("momentary", p.getMomentary()?"true":"false");
-        if (p.isIcon())
+        if (p.isIcon()){
+            element.setAttribute("icon", "yes");
             storeIconInfo(p, element);
+        } else
+            element.setAttribute("icon", "no");
+        // An icon can have text with it.
         if (p.isText())
             storeTextInfo(p, element);
         element.setAttribute("class", "jmri.jmrit.display.configurexml.SensorIconXml");
@@ -45,9 +49,18 @@ public class SensorIconXml extends PositionableLabelXml {
     }
     
     protected void storeTextInfo(SensorIcon p, Element element) {
-            element.setAttribute("icon", "no");
             element.setAttribute("size", ""+p.getFont().getSize());
             element.setAttribute("style", ""+p.getFont().getStyle());
+            if (p.getText()!=null)
+                element.setAttribute("text", p.getText());
+            if(p.getActiveText()!=null)
+                element.setAttribute("activeText", p.getActiveText());
+            if(p.getInactiveText()!=null)
+                element.setAttribute("inactiveText", p.getInactiveText());
+            if(p.getUnknownText()!=null)
+                element.setAttribute("unknownText", p.getUnknownText());
+            if(p.getInconsistentText()!=null)
+                element.setAttribute("inconsistentText", p.getInconsistentText());
             if (p.getBackgroundActive()!=null) {
                 element.setAttribute("redActiveBack", ""+p.getBackgroundActive().getRed());
                 element.setAttribute("greenActiveBack", ""+p.getBackgroundActive().getGreen());
@@ -92,11 +105,6 @@ public class SensorIconXml extends PositionableLabelXml {
                 element.setAttribute("blueInconsistent", ""+p.getTextInconsistent().getBlue());
             }
             
-            
-            element.setAttribute("active", p.getActiveText());
-            element.setAttribute("inactive", p.getInactiveText());
-            element.setAttribute("unknown", p.getUnknownText());
-            element.setAttribute("inconsistent", p.getInconsistentText());
             if (p.getMargin()!=0)
                 element.setAttribute("margin", ""+p.getMargin());
                     if (p.getBorderSize()!=0){
@@ -112,7 +120,6 @@ public class SensorIconXml extends PositionableLabelXml {
     }
     
     protected void storeIconInfo(SensorIcon p, Element element) {
-        element.setAttribute("icon", "yes");
         element.setAttribute("active", p.getActiveIcon().getURL());
         element.setAttribute("inactive", p.getInactiveIcon().getURL());
         element.setAttribute("unknown", p.getUnknownIcon().getURL());
@@ -155,13 +162,26 @@ public class SensorIconXml extends PositionableLabelXml {
 		}
 
         SensorIcon l;
+        boolean icon=true;
+        if (element.getAttribute("icon") != null){
+            String yesno = element.getAttribute("icon").getValue();
+            if ( (yesno!=null) && (!yesno.equals("")) ) {
+                if (yesno.equals("yes")) icon=true;
+                else if (yesno.equals("no")) icon=false;
+            }
+        }
         
-        if (element.getAttribute("icon")!=null){
+        if (icon){
+            l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
+        } else {
+            l = new SensorIcon(new String("  "));
+        }   
+/*        if (element.getAttribute("icon")!=null){
             if (element.getAttribute("icon").getValue().equals("no"))
                 l = new SensorIcon(new String("  "));
             else l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
         } else
-            l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
+            l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"));*/
 
         if (pe!=null)
             loadCommonAttributes(l, PanelEditor.SENSORS.intValue(), element);
@@ -177,8 +197,7 @@ public class SensorIconXml extends PositionableLabelXml {
             
         if (l.isIcon())
             loadIconInfo(l, element);
-        else
-            loadTextInfo(l, element);
+        loadTextInfo(l, element);
         
         l.setSensor(element.getAttribute("sensor").getValue());
 
@@ -234,24 +253,9 @@ public class SensorIconXml extends PositionableLabelXml {
     
     void loadTextInfo(SensorIcon l, Element element){
         String name;
-        if (element.getAttribute("active")!=null){
-            name = element.getAttribute("active").getValue();
-            l.setActiveText(name);
-        }
-        
-        if (element.getAttribute("inactive")!=null){
-            name = element.getAttribute("inactive").getValue();
-            l.setInactiveText(name);
-        }
-        
-        if (element.getAttribute("unknown")!=null){
-            name = element.getAttribute("unknown").getValue();
-            l.setUnknownText(name);
-        }
-        
-        if (element.getAttribute("inconsistent")!=null){
-            name = element.getAttribute("inconsistent").getValue();
-            l.setInconsistentText(name);
+        if (element.getAttribute("text")!=null){
+            name = element.getAttribute("text").getValue();
+            l.setText(name);
         }
         Attribute a = element.getAttribute("size");
         try {
@@ -261,13 +265,53 @@ public class SensorIconXml extends PositionableLabelXml {
         } catch (DataConversionException ex) {
             log.warn("invalid size attribute value");
         }
+
         a = element.getAttribute("style");
+        try {
+            if (a!=null){
+                int style = a.getIntValue();
+                int drop = 0;
+                switch (style){
+                    case 0: drop = 1; //0 Normal
+                            break;
+                    case 2: drop = 1; //italic
+                            break;
+                }
+                l.setFontStyle(style, drop);
+            }
+        } catch (DataConversionException ex) {
+            log.warn("invalid style attribute value");
+        }
+        if (!l.isIcon()){
+            if (element.getAttribute("active")!=null){
+                name = element.getAttribute("active").getValue();
+                l.setActiveText(name);
+            }
+            
+            if (element.getAttribute("inactive")!=null){
+                name = element.getAttribute("inactive").getValue();
+                l.setInactiveText(name);
+            }
+            
+            if (element.getAttribute("unknown")!=null){
+                name = element.getAttribute("unknown").getValue();
+                l.setUnknownText(name);
+            }
+            
+            if (element.getAttribute("inconsistent")!=null){
+                name = element.getAttribute("inconsistent").getValue();
+                l.setInconsistentText(name);
+            }
+        }
+        
+
+        /*a = element.getAttribute("style");
         try {
             if (a!=null)
                 l.setFontStyle(a.getIntValue(), 0);  // label is created plain, so don't need to drop
         } catch (DataConversionException ex) {
             log.warn("invalid style attribute value");
-        }
+        }*/
         try {
             int red = element.getAttribute("redActiveBack").getIntValue();
             int blue = element.getAttribute("blueActiveBack").getIntValue();
@@ -380,22 +424,6 @@ public class SensorIconXml extends PositionableLabelXml {
         } catch ( org.jdom.DataConversionException e) {
             log.warn("Could not parse level attribute!");
         } catch ( NullPointerException e) {  // considered normal if the attribute not present
-        }
-        a = element.getAttribute("style");
-        try {
-            if (a!=null){
-                int style = a.getIntValue();
-                int drop = 0;
-                switch (style){
-                    case 0: drop = 1; //0 Normal
-                            break;
-                    case 2: drop = 1; //italic
-                            break;
-                }
-                l.setFontStyle(style, drop);
-            }
-        } catch (DataConversionException ex) {
-            log.warn("invalid style attribute value");
         }
     }
     
