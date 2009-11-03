@@ -29,7 +29,7 @@ import javax.swing.JSeparator;
  * if you move this.
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -529,6 +529,10 @@ public class SecurityElementIcon extends JPanel
     String where(MouseEvent e) {
         return ""+e.getX()+","+e.getY();
     }
+
+    /* Get & Set visible isn't required*/
+    public boolean getVisible(){ return true; }
+    public void getVisible(boolean boo){ }
 
     /**
      * Clean up when this object is no longer needed.  Should not

@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * <p>Time code copied in part from code for the Nixie clock by Bob Jacobsen </p>
  *
  * @author  Howard G. Penny - Copyright (C) 2005
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class AnalogClock2Display extends PositionableJComponent {
 
@@ -413,6 +413,10 @@ public class AnalogClock2Display extends PositionableJComponent {
     public Integer getDisplayLevel() {
         return displayLevel;
     }
+
+    /* Get & Set visible isn't required*/
+    public boolean getVisible(){ return true; }
+    public void getVisible(boolean boo){ }
 
     public boolean getRun() {
         return clock.getRun();

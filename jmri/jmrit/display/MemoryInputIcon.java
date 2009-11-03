@@ -26,7 +26,7 @@ import javax.swing.SpinnerNumberModel;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  * @since 2.7.2
  */
 
@@ -119,6 +119,9 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         return name;
     }
 
+    /* Get & Set visible isn't required*/
+    public boolean getVisible(){ return true; }
+    public void getVisible(boolean boo){ }
 
     public void setSelectable(boolean b) {selectable = b;}
     public boolean isSelectable() { return selectable;}
