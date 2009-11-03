@@ -17,7 +17,7 @@ import java.util.Vector;
  * it has some DCC-specific content.
  *
  * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
@@ -371,148 +371,206 @@ abstract public class AbstractThrottle implements DccThrottle {
     // functions - note that we use the naming for DCC, though that's not the implication;
     // see also DccThrottle interface
     public void setF0(boolean f0) {
+    	boolean old = this.f0;
         this.f0 = f0;
         sendFunctionGroup1();
+        notifyPropertyChangeListener("F0", old, this.f0 );
     }
 
     public void setF1(boolean f1) {
+    	boolean old = this.f1;
         this.f1 = f1;
         sendFunctionGroup1();
+        notifyPropertyChangeListener("F1", old, this.f1 );
     }
 
     public void setF2(boolean f2) {
+    	boolean old = this.f2;
         this.f2 = f2;
         sendFunctionGroup1();
+        notifyPropertyChangeListener("F2", old, this.f2 );
     }
 
     public void setF3(boolean f3) {
+    	boolean old = this.f3;
         this.f3 = f3;
         sendFunctionGroup1();
+        notifyPropertyChangeListener("F3", old, this.f3 );
     }
 
     public void setF4(boolean f4) {
+    	boolean old = this.f4;
         this.f4 = f4;
         sendFunctionGroup1();
+        notifyPropertyChangeListener("F4", old, this.f4 );
     }
 
     public void setF5(boolean f5) {
+    	boolean old = this.f5;
         this.f5 = f5;
         sendFunctionGroup2();
+        notifyPropertyChangeListener("F5", old, this.f5 );
     }
 
     public void setF6(boolean f6) {
+    	boolean old = this.f6;
         this.f6 = f6;
         sendFunctionGroup2();
+        notifyPropertyChangeListener("F6", old, this.f6 );
     }
 
     public void setF7(boolean f7) {
+    	boolean old = this.f7;
         this.f7 = f7;
         sendFunctionGroup2();
+        notifyPropertyChangeListener("F7", old, this.f7 );
     }
 
     public void setF8(boolean f8) {
+    	boolean old = this.f8;
         this.f8 = f8;
         sendFunctionGroup2();
+        notifyPropertyChangeListener("F8", old, this.f8 );
     }
 
     public void setF9(boolean f9) {
+    	boolean old = this.f9;
         this.f9 = f9;
         sendFunctionGroup3();
+        notifyPropertyChangeListener("F9", old, this.f9 );
     }
 
     public void setF10(boolean f10) {
+    	boolean old = this.f10;
         this.f10 = f10;
         sendFunctionGroup3();
+        notifyPropertyChangeListener("F10", old, this.f10 );
     }
 
     public void setF11(boolean f11) {
+    	boolean old = this.f11;
         this.f11 = f11;
         sendFunctionGroup3();
+        notifyPropertyChangeListener("F11", old, this.f11 );
     }
 
     public void setF12(boolean f12) {
+    	boolean old = this.f12;
         this.f12 = f12;
         sendFunctionGroup3();
+        notifyPropertyChangeListener("F12", old, this.f12 );
     }
     
     public void setF13(boolean f13) {
+    	boolean old = this.f13;
         this.f13 = f13;
         sendFunctionGroup4();
+        notifyPropertyChangeListener("F13", old, this.f13 );
     }
     
     public void setF14(boolean f14) {
+    	boolean old = this.f14;
         this.f14 = f14;
         sendFunctionGroup4();
+        notifyPropertyChangeListener("F14", old, this.f14 );
     }
     
     public void setF15(boolean f15) {
+    	boolean old = this.f15;
         this.f15 = f15;
         sendFunctionGroup4();
+        notifyPropertyChangeListener("F15", old, this.f15 );
     }
     
     public void setF16(boolean f16) {
+    	boolean old = this.f16;
         this.f16 = f16;
         sendFunctionGroup4();
+        notifyPropertyChangeListener("F16", old, this.f16 );
     }
     
     public void setF17(boolean f17) {
+    	boolean old = this.f17;
         this.f17 = f17;
         sendFunctionGroup4();
+        notifyPropertyChangeListener("F17", old, this.f17 );
     }
     
     public void setF18(boolean f18) {
+    	boolean old = this.f18;
         this.f18 = f18;
         sendFunctionGroup4();
+        notifyPropertyChangeListener("F18", old, this.f18 );
     }
     
     public void setF19(boolean f19) {
+    	boolean old = this.f19;
         this.f19 = f19;
         sendFunctionGroup4();
+        notifyPropertyChangeListener("F19", old, this.f19 );
     }
     
     public void setF20(boolean f20) {
+    	boolean old = this.f20;
         this.f20 = f20;
         sendFunctionGroup4();
+        notifyPropertyChangeListener("F20", old, this.f20 );
     }
     
     public void setF21(boolean f21) {
+    	boolean old = this.f21;
         this.f21 = f21;
         sendFunctionGroup5();
+        notifyPropertyChangeListener("F21", old, this.f21 );
     }
     
     public void setF22(boolean f22) {
+    	boolean old = this.f22;
         this.f22 = f22;
         sendFunctionGroup5();
+        notifyPropertyChangeListener("F22", old, this.f22 );
     }
     
     public void setF23(boolean f23) {
+    	boolean old = this.f23;
         this.f23 = f23;
         sendFunctionGroup5();
+        notifyPropertyChangeListener("F23", old, this.f23 );
     }
     
     public void setF24(boolean f24) {
+    	boolean old = this.f24;
         this.f24 = f24;
         sendFunctionGroup5();
+        notifyPropertyChangeListener("F24", old, this.f24 );
     }
     
     public void setF25(boolean f25) {
+    	boolean old = this.f25;
         this.f25 = f25;
         sendFunctionGroup5();
+        notifyPropertyChangeListener("F25", old, this.f25 );
     }
     
     public void setF26(boolean f26) {
+    	boolean old = this.f26;
         this.f26 = f26;
         sendFunctionGroup5();
+        notifyPropertyChangeListener("F26", old, this.f26 );
     }
     
     public void setF27(boolean f27) {
+    	boolean old = this.f27;
         this.f27 = f27;
         sendFunctionGroup5();
+        notifyPropertyChangeListener("F27", old, this.f27 );
     }
     
     public void setF28(boolean f28) {
+    	boolean old = this.f28;
         this.f28 = f28;
         sendFunctionGroup5();
+        notifyPropertyChangeListener("F28", old, this.f28 );
     }
 
 

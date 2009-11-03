@@ -4,9 +4,8 @@ import jmri.util.ResizableImagePanel as ResizableImagePanel
 import java.awt.event.MouseListener as MouseListener
 import java.beans.PropertyChangeListener as PropertyChangeListener
 import jmri.jmrit.throttle.AddressListener as AddressListener
-import jmri.jmrit.throttle.FunctionListener as FunctionListener
 
-class Bell(Jynstrument, PropertyChangeListener, AddressListener, MouseListener, FunctionListener):
+class Bell(Jynstrument, PropertyChangeListener, AddressListener, MouseListener):
 # Jynstrument mandatory part
 # Here this JYnstrument like to be in a ThrottleFrame and no anywhere else
     def getExpectedContextClassName(self):
@@ -35,12 +34,10 @@ class Bell(Jynstrument, PropertyChangeListener, AddressListener, MouseListener, 
     def updateThrottle(self):    # update throttle informations when a new one is detected
         if self.throttle != None :
             self.throttle.addPropertyChangeListener(self)
-        self.getContext().getFunctionPanel().getFunctionButtons()[1].addFunctionListener(self)
         
     def cleanThrottle(self):     # clean up throttle information when it is deconnected
         if self.throttle != None :
             self.throttle.removePropertyChangeListener(self)
-        self.getContext().getFunctionPanel().getFunctionButtons()[1].removeFunctionListener(self)
         self.throttle = None
 
     def switch(self):      # actually do function value change
@@ -56,13 +53,6 @@ class Bell(Jynstrument, PropertyChangeListener, AddressListener, MouseListener, 
             cl.show(self, "on")
         else :
             cl.show(self, "off")
-
-#FunctionListener: to listen for Function changes from the AddressPanel itself
-    def notifyFunctionStateChanged(self, functionNumber, isOn):
-        self.setIcon()
-
-    def notifyFunctionLockableChanged(self, functionNumber, isLockable):
-        pass
 
 #PropertyChangeListener part:: to listen for Function 0 changes from everywhere else
     def propertyChange(self, event):

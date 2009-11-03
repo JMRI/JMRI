@@ -13,7 +13,6 @@ import jmri.*;
 import jmri.jmrit.roster.*;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
-import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.nce.consist.NceConsistRoster;
 import jmri.jmrix.nce.consist.NceConsistRosterEntry;
 
@@ -26,7 +25,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, java.beans.PropertyChangeListener {
 
@@ -419,13 +418,14 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, ja
 	}
 
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().compareTo("SlotStatus") == 0)
+		if (evt.getPropertyName().compareTo("ThrottleStatus") == 0)
 		{
-			int oldStatus = (Integer) evt.getOldValue() ;
-			int newStatus = (Integer) evt.getNewValue() ;
+			String oldStatus = (String) evt.getOldValue() ;
+			String newStatus = (String) evt.getNewValue() ;
+			if (newStatus == null) return;
 			if (log.isDebugEnabled())
-				log.debug("Slot status changed from "+LnConstants.LOCO_STAT(oldStatus)+" to "+LnConstants.LOCO_STAT(newStatus) );
-        	if ( newStatus == LnConstants.LOCO_COMMON )
+				log.debug("Throttle status changed from "+oldStatus+" to "+newStatus );
+        	if ( newStatus.compareTo("Common")==0 )
         		notifyThrottleDisposed();
 		}
 	}

@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractThrottle;
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
  * @author  Stephen Williams  Copyright (C) 2008
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -187,6 +187,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      */
     public void setSpeedSetting(float speed)
     {
+    	float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         if (speed<0) this.speedSetting = -1.f;
 
@@ -206,6 +207,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         	mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
         	mRefreshTimer.start();
         }
+        
+        notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
     }
 
     /**
@@ -214,8 +217,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      */
     public void setIsForward(boolean forward)
     {
+    	boolean old = isForward;
         isForward = forward;
         sendFunctionGroup1();
+        notifyPropertyChangeListener("IsForward", old, this.isForward);
     }
 
     /**
@@ -292,10 +297,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * Internal routine to resend the speed on a timeout
      */
     synchronized protected void timeout() {
-	// clear the last known layout_spd so that we will actually send the
-	// message.
-	layout_spd = -1;
-        setSpeedSetting(speedSetting);
+    	// clear the last known layout_spd so that we will actually send the
+    	// message.
+    	layout_spd = -1;
+    	setSpeedSetting(speedSetting);
     }
 
     /**
@@ -331,7 +336,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         	int newStat = slot.slotStatus();
         	if (log.isDebugEnabled())
         		log.debug("Slot status changed from "+LnConstants.LOCO_STAT(slotStatus)+" to "+LnConstants.LOCO_STAT(newStat) );
-        	notifyPropertyChangeListener("SlotStatus", slotStatus, newStat);
+        	notifyPropertyChangeListener("ThrottleStatus", LnConstants.LOCO_STAT(slotStatus), LnConstants.LOCO_STAT(newStat));
         	slotStatus = newStat;
         }
 
