@@ -99,6 +99,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     JTextField nextY = new JTextField(rb.getString("DefaultY"),4);
 
     JCheckBox editableBox = new JCheckBox(rb.getString("CheckBoxEditable"));
+    JCheckBox hiddenBox = new JCheckBox(rb.getString("CheckBoxHidden"));
     JCheckBox positionableBox = new JCheckBox(rb.getString("CheckBoxPositionable"));
     JCheckBox showCoordinatesBox = new JCheckBox(rb.getString("CheckBoxShowCoordinates"));
     JCheckBox controllingBox = new JCheckBox(rb.getString("CheckBoxControlling"));
@@ -131,7 +132,8 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         common.add(new JLabel(" y:"));
         common.add(nextY);
         this.getContentPane().add(common);
-
+        setAllEditable(false);
+        setAllHidden(false);
         // add menu - not using PanelMenu, because it now
         // has other stuff in it?
         JMenuBar menuBar = new JMenuBar();
@@ -273,7 +275,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                     setAllEditable(editableBox.isSelected());
                 }
             });
-
+            
             this.getContentPane().add(p = new JPanel());
             p.setLayout(new FlowLayout());
             p.add(positionableBox);
@@ -293,7 +295,15 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                 	setShowCoordinates(showCoordinatesBox.isSelected());
                 }
             });
-
+            this.getContentPane().add(p = new JPanel());
+            p.setLayout(new FlowLayout());
+            p.add(hiddenBox);
+            hiddenBox.setSelected(false);
+            hiddenBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setAllHidden(hiddenBox.isSelected());
+                }
+            });
             this.getContentPane().add(p = new JPanel());
             p.setLayout(new FlowLayout());
             p.add(controllingBox);
@@ -342,7 +352,6 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             PanelEditor panelEd;
 				public void windowClosing(java.awt.event.WindowEvent e) {
                     setAllPositionable(false);
-                    setAllEditable(false);
                     jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(panelEd);
                 }
                 java.awt.event.WindowAdapter init(PanelEditor pe) {
@@ -1277,6 +1286,19 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         if (editableBox.isSelected()!=state) editableBox.setSelected(state);
         for (int i = 0; i<contents.size(); i++) {
             ((Positionable)contents.get(i)).setEditable(state);
+        }
+    }
+    
+     /**
+     *  Control whether target panel hidden items are visible or not.
+     *  Does this by invoke the {@link Positionable#setVisible} function of
+     *  each item on the target panel.
+     * @param state true for Visible.
+     */
+    public void setAllHidden(boolean state) {
+        if (hiddenBox.isSelected()!=state) hiddenBox.setSelected(state);
+        for (int i = 0; i<contents.size(); i++) {
+            ((Positionable)contents.get(i)).setVisible(state);
         }
     }
     
