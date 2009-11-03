@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Jynstruments.shtml,v 1.1 2009-11-02 20:10:52 jacobsen Exp $ -->
+<!-- $Id: Jynstruments.shtml,v 1.2 2009-11-03 06:02:42 jacobsen Exp $ -->
 <title>JMRI: Jynstruments</title>
 
 <!-- Style -->
@@ -37,6 +37,7 @@ This object will be instantiated by the instrumented JMRI code itself
 and then is event driven.
 
 <p>
+<a href="SuperCool.jpg"><img src="SuperCool.jpg" height="215" width="312" align="right"></a>
 Have a look at the 
 <a href="http://jmri.org/jython">Jython folder</a> 
 in your source tree, 
@@ -47,6 +48,7 @@ with a
 and a 
 <a href="http://jmri.org/jython/Jynstruments/ThrottleFrame/Light.jyn">ThrottleFrame/Light.jyn</a>
 to be tried on the JMRI Throttle window. 
+The image to the right shows them in use (the diamond buttons).
 
 <p>
 See ThrottleFrame.java for how to make code instrumentable; 
