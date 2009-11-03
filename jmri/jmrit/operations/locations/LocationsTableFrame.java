@@ -26,7 +26,7 @@ import javax.swing.ScrollPaneConstants;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.16 $
+ * @version             $Revision: 1.17 $
  */
 public class LocationsTableFrame extends OperationsFrame {
 	
@@ -126,7 +126,6 @@ public class LocationsTableFrame extends OperationsFrame {
 			LocationEditFrame f = new LocationEditFrame();
 			f.initComponents(null);
 			f.setTitle("Add Location");
-			f.setVisible(true);
 		}
 	}
 

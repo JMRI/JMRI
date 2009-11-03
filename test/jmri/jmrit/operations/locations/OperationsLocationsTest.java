@@ -5,6 +5,7 @@ package jmri.jmrit.operations.locations;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+
 import java.util.List;
 import java.io.File;
 import javax.swing.JComboBox;
@@ -37,7 +38,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -1363,6 +1364,7 @@ public class OperationsLocationsTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(OperationsLocationsTest.class);
+		suite.addTest(OperationsLocationsGuiTest.suite());
 		return suite;
 	}
 

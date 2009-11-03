@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -38,8 +38,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	Track _track = null;
 
 	// labels
-	//JLabel textName = new JLabel();
-	JLabel textComment = new JLabel();
+	JLabel textComment = new JLabel("Comment");
 
 	// major buttons
 	JButton addTypeButton = new JButton();
@@ -58,11 +57,6 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	// text field
 	JTextField scheduleNameTextField = new JTextField(20);
 	JTextField commentTextField = new JTextField(35);
-
-	// for padding out panel
-	JLabel space1 = new JLabel();
-	JLabel space2 = new JLabel();
-	JLabel space3 = new JLabel();
 	
 	// combo boxes
 	JComboBox typeBox = new JComboBox();
@@ -84,13 +78,6 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		// load managers
 		manager = ScheduleManager.instance();
 		managerXml = LocationManagerXml.instance();
-		
-		textComment.setText(rb.getString("Comment"));
-		textComment.setVisible(true);
-		space1.setText("     ");
-		space1.setVisible(true);
-		space2.setText("     ");
-		space2.setVisible(true);
 
 		deleteScheduleButton.setText(rb.getString("DeleteSchedule"));
 		deleteScheduleButton.setVisible(true);

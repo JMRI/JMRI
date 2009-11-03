@@ -19,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.14 $
+ * @version   $Revision: 1.15 $
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -28,14 +28,14 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     LocationManager manager;						// There is only one manager
  
     // Defines the columns
-    private static final int IDCOLUMN   = 0;
-    private static final int NAMECOLUMN   = 1;
-    private static final int LENGTHCOLUMN = 2;
-    private static final int USEDLENGTHCOLUMN = 3;
-    private static final int ROLLINGSTOCK = 4;
-    private static final int PICKUPS = 5;
-    private static final int DROPS = 6;
-    private static final int EDITCOLUMN = 7;
+    public static final int IDCOLUMN   = 0;
+    public static final int NAMECOLUMN   = 1;
+    public static final int LENGTHCOLUMN = 2;
+    public static final int USEDLENGTHCOLUMN = 3;
+    public static final int ROLLINGSTOCK = 4;
+    public static final int PICKUPS = 5;
+    public static final int DROPS = 6;
+    public static final int EDITCOLUMN = 7;
     
     private static final int HIGHESTCOLUMN = EDITCOLUMN+1;
 

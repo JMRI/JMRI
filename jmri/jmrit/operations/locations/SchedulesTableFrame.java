@@ -20,7 +20,7 @@ import javax.swing.ScrollPaneConstants;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class SchedulesTableFrame extends OperationsFrame {
 	
@@ -115,7 +115,6 @@ public class SchedulesTableFrame extends OperationsFrame {
 			ScheduleEditFrame f = new ScheduleEditFrame();
 			f.setTitle(MessageFormat.format(rb.getString("TitleScheduleAdd"), new Object[]{"Track Name"}));
 			f.initComponents(null, null, null);
-			f.setVisible(true);
 		}
 	}
 
