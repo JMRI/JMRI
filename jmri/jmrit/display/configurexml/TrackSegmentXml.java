@@ -12,7 +12,7 @@ import org.jdom.Element;
  * This module handles configuration for display.TrackSegment objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class TrackSegmentXml implements XmlAdapter {
 
@@ -47,7 +47,7 @@ public class TrackSegmentXml implements XmlAdapter {
         if(p.getArc()){
             element.setAttribute("flip", ""+(p.getFlip()?"yes":"no"));
             element.setAttribute("circle", ""+(p.getCircle()?"yes":"no"));
-            if((p.getCircle())&& (p.getAngle()!=0))
+            if((p.getCircle())&& (p.getAngle()!=0.0D))
                 element.setAttribute("angle", ""+(p.getAngle()));
         }
         element.setAttribute("class", "jmri.jmrit.display.configurexml.TrackSegmentXml");
@@ -112,7 +112,7 @@ public class TrackSegmentXml implements XmlAdapter {
             } catch ( NullPointerException e) { }
             if(l.getCircle()){
                 try {
-                    l.setAngle(element.getAttribute("angle").getIntValue());
+                    l.setAngle(element.getAttribute("angle").getDoubleValue());
                 } catch (org.jdom.DataConversionException e) {
                     log.error("failed to convert tracksegment attribute");
                 } catch ( NullPointerException e) {  // considered normal if the attribute not present

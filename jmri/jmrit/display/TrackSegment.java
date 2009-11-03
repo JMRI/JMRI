@@ -30,7 +30,7 @@ import javax.swing.*;
  *		may be hidden when the panel is not in EditMode. 
  *
  * @author Dave Duchamp Copyright (c) 2004-2009
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class TrackSegment 
@@ -58,7 +58,7 @@ public class TrackSegment
 	private boolean hidden = false;
     private boolean arc = false;
     private boolean flip = false;
-    private int angle =0;
+    private double angle =0.0D;
     private boolean circle=false;
 	
     public TrackSegment(String id, Object c1, int t1, Object c2, int t2, boolean dash,
@@ -90,7 +90,7 @@ public class TrackSegment
 		mainline = main;
         arc = false;
         flip = false;
-        angle = 0;
+        angle = 0.0D;
         circle = false;
     }
 	// alternate constructor for loading layout editor panels
@@ -131,14 +131,14 @@ public class TrackSegment
 	public void setFlip(boolean boo) {flip = boo;}
     //public int getStartAngle() {return startangle;}
 	//public void setStartAngle(int x) {startangle = x;} 
-    public int getAngle() {return angle;}
-	public void setAngle(int x) {
+    public double getAngle() {return angle;}
+	public void setAngle(double x) {
 // GT 8-OCT-2009 ==== Changed arcs maths : Start
 //        if (angle>180) // ???
-        if (x>180)
-            x=180;
-		else if (x < 0)
-			x = 0;
+        if (x>180.0D)
+            x=180.0D;
+		else if (x < 0.0D)
+			x = 0.0D;
 // GT 8-OCT-2009 ==== Changed arcs maths : End
         angle = x;
     }
@@ -300,15 +300,15 @@ public class TrackSegment
     void changeType(int choice){
         switch (choice){
             case 0 :    setArc(false);
-                        setAngle(0);
+                        setAngle(0.0D);
                         setCircle(false);
                         break;
             case 1 :    setArc(true);
-                        setAngle(90);
+                        setAngle(90.0D);
                         setCircle(true);
                         break;
             case 2 :    setArc(true);
-                        setAngle(90);
+                        setAngle(90.0D);
                         setCircle(false);
                         break;
         }
@@ -494,8 +494,16 @@ public class TrackSegment
 		boolean oldHidden = hidden;
 		hidden = hiddenBox.isSelected();
         if(getArc()){
-            setAngle(Integer.parseInt(arcField.getText()));
-            needsRedraw = true;
+            //setAngle(Integer.parseInt(arcField.getText()));
+            //needsRedraw = true;
+			try {
+				double newAngle = Double.parseDouble(arcField.getText());
+				setAngle(newAngle);	            
+				needsRedraw = true;
+			}
+			catch (NumberFormatException e) {
+				arcField.setText(""+getAngle());
+			}
         }
 		// check if anything changed
 		if ( (oldDashed!=dashed) || (oldMainline!=mainline) || (oldHidden!=hidden) )
@@ -646,12 +654,12 @@ public class TrackSegment
         centreY = CentreY;
     }
     
-    private int tmpangle;
+    private double tmpangle;
     public double getTmpAngle(){
         return tmpangle;
     }
     
-    public void setTmpAngle(int TmpAngle){
+    public void setTmpAngle(double TmpAngle){
         tmpangle = TmpAngle;
     }
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackSegment.class.getName());

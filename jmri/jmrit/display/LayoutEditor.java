@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.54 $
+ * @version $Revision: 1.55 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -2629,7 +2629,7 @@ public class LayoutEditor extends JmriJFrame {
 	
 	private SensorIcon checkSensorIcons(Point2D loc) {
 		// check sensor images, if any
-		for (int i=sensorImage.size()-1; i>=0; i--) {
+ 		for (int i=sensorImage.size()-1; i>=0; i--) {
 			SensorIcon s = sensorImage.get(i);
 			double x = s.getX();
 			double y = s.getY();
@@ -3013,6 +3013,7 @@ public class LayoutEditor extends JmriJFrame {
 			if (s!=null) {
 				s.performMouseClicked(event);
 			}
+            
 		}
 		else if ( event.isPopupTrigger() ) {
 			calcLocation(event, dX, dY);
@@ -5592,8 +5593,8 @@ public class LayoutEditor extends JmriJFrame {
                         pt1x = pt1.getX();
                         pt1y = pt1.getY();
 
-                        if (t.getAngle() == 0)
-                            t.setTmpAngle(90);
+                        if (t.getAngle() == 0.0D)
+                            t.setTmpAngle(90.0D);
                         else
                             t.setTmpAngle(t.getAngle());
                         // Convert angle to radiants in order to speed up maths
