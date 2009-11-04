@@ -357,11 +357,6 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         // dispose of this last because it will release and destroy throttle.
         addressPanel.destroy();
     }
-       
-    public void resetFuncButtons(){
-    	functionPanel.initGUI();
-    	functionPanel.setEnabled(false);
-    }
     
     public void saveRosterChanges(){
     	RosterEntry rosterEntry = addressPanel.getRosterEntry();
@@ -376,8 +371,6 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 			return;
 		}
 		functionPanel.saveFunctionButtonsToRoster(rosterEntry);
-        if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() )
-        	backgroundPanel.saveImageToRoster(rosterEntry);
     }
     
     /**
@@ -467,6 +460,8 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         children.add(controlPanel.getXml());
         children.add(functionPanel.getXml());
         children.add(addressPanel.getXml());
+        //TODO Save Jynstruments
+        
         me.setContent(children);
         return me;
     }

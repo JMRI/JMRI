@@ -25,7 +25,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.45 $
+ * @version $Revision: 1.46 $
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, java.beans.PropertyChangeListener {
 
@@ -54,16 +54,12 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, ja
 		initGUI();
 	}
 
-	public void destroy() {
-        // Handle disposing of the throttle
-        if (throttle != null)
-            {
-                DccLocoAddress l = (DccLocoAddress) throttle.getLocoAddress();
-                InstanceManager.throttleManagerInstance().
-                    cancelThrottleRequest(l.getNumber(), this);
-            }
-		if (throttle != null)
+	public void destroy() { // Handle disposing of the throttle
+		if (throttle != null) {
+			DccLocoAddress l = (DccLocoAddress) throttle.getLocoAddress();
+			InstanceManager.throttleManagerInstance().cancelThrottleRequest(l.getNumber(), this);
 			throttle.release();
+		}
 		if (consistThrottle != null)
 			consistThrottle.release();
 	}

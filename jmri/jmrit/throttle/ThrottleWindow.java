@@ -232,9 +232,9 @@ public class ThrottleWindow extends JmriJFrame {
      *  Set up View, Edit and Power Menus
      */
     private void initializeMenu() {                
-		JMenu viewMenu = new JMenu("View");
+		JMenu viewMenu = new JMenu(throttleBundle.getString("ThrottleMenuView"));
 		
-		viewAddressPanel = new JCheckBoxMenuItem("Address Panel");
+		viewAddressPanel = new JCheckBoxMenuItem(throttleBundle.getString("ThrottleMenuViewAddressPanel"));
 		viewAddressPanel.setSelected(true);
 		viewAddressPanel.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -243,7 +243,7 @@ public class ThrottleWindow extends JmriJFrame {
 			}
 		});
 
-		viewControlPanel = new JCheckBoxMenuItem("Control Panel");
+		viewControlPanel = new JCheckBoxMenuItem(throttleBundle.getString("ThrottleMenuViewControlPanel"));
 		viewControlPanel.setSelected(true);
 		viewControlPanel.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -251,7 +251,7 @@ public class ThrottleWindow extends JmriJFrame {
 						.setVisible(e.getStateChange() == ItemEvent.SELECTED);
 			}
 		});
-		viewFunctionPanel = new JCheckBoxMenuItem("Function Panel");
+		viewFunctionPanel = new JCheckBoxMenuItem(throttleBundle.getString("ThrottleMenuViewFunctionPanel"));
 		viewFunctionPanel.setSelected(true);
 		viewFunctionPanel.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -260,7 +260,7 @@ public class ThrottleWindow extends JmriJFrame {
 			}
 		});
 
-		viewAllButtons = new JMenuItem("Show All Function Buttons");
+		viewAllButtons = new JMenuItem(throttleBundle.getString("ThrottleMenuViewAllFunctionButtons"));
 		viewAllButtons.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent ev) {
 				getCurentThrottleFrame().getFunctionPanel().showAllFnButtons();
@@ -272,28 +272,29 @@ public class ThrottleWindow extends JmriJFrame {
 		viewMenu.add(viewFunctionPanel);
 		viewMenu.add(viewAllButtons);
 
-		JMenu editMenu = new JMenu("Edit");
-		JMenuItem preferencesItem = new JMenuItem("Frame Properties");
+		JMenu editMenu = new JMenu(throttleBundle.getString("ThrottleMenuEdit"));
+		JMenuItem preferencesItem = new JMenuItem(throttleBundle.getString("ThrottleMenuEditFrameProperties"));
 		editMenu.add(preferencesItem);
 		preferencesItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				editPreferences();
 			}
 		});
-		JMenuItem resetFuncButtonsItem = new JMenuItem("Reset Function Buttons");
+		JMenuItem resetFuncButtonsItem = new JMenuItem(throttleBundle.getString("ThrottleMenuEditResetFunctionButtons"));
 		editMenu.add(resetFuncButtonsItem);
 		resetFuncButtonsItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				curentThrottleFrame.resetFuncButtons();
+				getCurentThrottleFrame().getFunctionPanel().initGUI();
+				getCurentThrottleFrame().getFunctionPanel().setEnabled(false);
 			}
 		});
-		JMenuItem saveFuncButtonsItem = new JMenuItem("Export Customizations To Roster");
+		JMenuItem saveFuncButtonsItem = new JMenuItem(throttleBundle.getString("ThrottleMenuEditSaveCustoms"));
 		editMenu.add(saveFuncButtonsItem);
 		saveFuncButtonsItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			//	curentThrottleFrame.saveRosterChanges(); TODO
+			//	curentThrottleFrame.saveRosterChanges(); TODO: would save updated button entries, but do we really want to modify the roster file from there?
 		        if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) {
-		        	curentThrottleFrame.saveThrottle();
+		        	getCurentThrottleFrame().saveThrottle();
 		        }
 			}
 		});
@@ -303,8 +304,8 @@ public class ThrottleWindow extends JmriJFrame {
 		this.getJMenuBar().add(editMenu);
 
 		if (powerMgr != null) {
-			JMenu powerMenu = new JMenu("  Power");
-			JMenuItem powerOn = new JMenuItem("Power On");
+			JMenu powerMenu = new JMenu(throttleBundle.getString("ThrottleMenuPower"));
+			JMenuItem powerOn = new JMenuItem(throttleBundle.getString("ThrottleMenuPowerOn"));
 			powerMenu.add(powerOn);
 			powerOn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -316,7 +317,7 @@ public class ThrottleWindow extends JmriJFrame {
 				}
 			});
 
-			JMenuItem powerOff = new JMenuItem("Power Off");
+			JMenuItem powerOff = new JMenuItem(throttleBundle.getString("ThrottleMenuPowerOff"));
 			powerMenu.add(powerOff);
 			powerOff.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -446,6 +447,7 @@ public class ThrottleWindow extends JmriJFrame {
         
         children.add(wp.getPreferences(this));
 
+ // TODO: save all throttlesFrame inside this Window
  //       Iterator<JComponent> ite = throttlesLayout.getIterator() ;
  //       while (ite.hasNext() )
         children.add( curentThrottleFrame.getXml() );
