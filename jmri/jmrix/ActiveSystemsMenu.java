@@ -19,7 +19,7 @@ import javax.swing.JMenuBar;
  * @see SystemsMenu
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.28 $
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
@@ -45,6 +45,10 @@ public class ActiveSystemsMenu extends JMenu {
 
         if (jmri.jmrix.acela.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.acela.AcelaMenu"));
+        if (jmri.jmrix.can.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.can.CanMenu"));
+        if (jmri.jmrix.can.cbus.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.can.cbus.CbusMenu"));
         if (jmri.jmrix.cmri.serial.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.cmri.CMRIMenu"));
         if (jmri.jmrix.easydcc.ActiveFlag.isActive())
@@ -86,10 +90,6 @@ public class ActiveSystemsMenu extends JMenu {
         
         m.add(new javax.swing.JSeparator());
         
-        if (jmri.jmrix.can.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.can.CanMenu"));
-        if (jmri.jmrix.can.cbus.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.can.cbus.CbusMenu"));
         if (jmri.jmrix.can.nmranet.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.can.nmranet.NmranetMenu"));
 
