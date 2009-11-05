@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.8.shtml,v 1.6 2009-10-31 16:33:40 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.8.shtml,v 1.7 2009-11-05 05:47:11 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -161,7 +161,7 @@ on users, but might effect people who have written scripts to
 read or write XML files. See the XmlFile JavaDoc for more information.
 
 <p>
-Kevin Dickerson added geatures to add locos to the roster from an Ecos
+Kevin Dickerson added features to add locos to the roster from an Ecos
 command station, and
 to add locos from the Ecos to the Roster.
 
@@ -195,6 +195,32 @@ Kevin Dickerson added lunar signals to the Layout Editor.
 
 <p>
 Paul Bender added ops mode programming for the Hornby command station.
+
+<p>
+Lionel Jeanson added initial support for "Jynstruments", a 
+was to extend the JMRI user interface with scripts.
+For more information, see the 
+<a href="http://jmri.org/jython/Jynstruments/README">README file</a>.
+
+<p>
+Lionel Jeanson added a button so you can remove images from a roster entry.
+
+<p>
+Lionel Jeanson did some code cleanup and minor fixes in the throttle GUI.
+
+<p>
+Lionel Jeanson improved the way release/dispatch is handled for multiple LocoNet throttles.
+
+<p>
+John Plocher improved the DS54 help page.
+
+<p>
+Lionel Jeanson fixed the multi-throttle release issue in LocoNet by 
+better monitoring slot status in LocoNet Throttle.
+
+<p>
+Kevin Dickerson made a number of internal changes to the layout and panel editors.
+
 
 <!--#include virtual="/Footer" -->
 
