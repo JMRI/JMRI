@@ -50,7 +50,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.68 $
+ * @version    $Revision: 1.69 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
@@ -424,7 +424,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                                   if (doIt) {
                                                       float newSpeed = (speedSlider.getValue() / ( MAX_SPEED * 1.0f ) ) ;
                                                       if (log.isDebugEnabled()) {log.debug( "stateChanged: slider pos: " + speedSlider.getValue() + " speed: " + newSpeed );}
-                                                      throttle.setSpeedSetting( newSpeed );
+                                                      if (sliderPanel.isVisible()) {
+                                                          throttle.setSpeedSetting( newSpeed );
+                                                      }
                                                       if(speedSpinner!=null)
                                                           speedSpinnerModel.setValue(new Integer(speedSlider.getValue()));
                                                   }
@@ -454,7 +456,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                                        float newSpeed = ((Integer)speedSpinner.getValue()).floatValue() / ( MAX_SPEED * 1.0f );
                                                        if (log.isDebugEnabled()) {log.debug( "stateChanged: spinner pos: " + speedSpinner.getValue() + " speed: " + newSpeed );}
                                                        if (throttle != null) {
-                                                           throttle.setSpeedSetting( newSpeed );
+                                                           if (spinnerPanel.isVisible()) {
+                                                               throttle.setSpeedSetting( newSpeed );
+                                                           }
                                                            speedSlider.setValue(((Integer)speedSpinner.getValue()).intValue());
                                                        } else {
                                                            log.warn("no throttle object in stateChanged, ignoring change of speed to "+newSpeed);
@@ -726,7 +730,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.68 $
+     * @version    $Revision: 1.69 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
