@@ -2,12 +2,24 @@ package jmri.jmrit.jython;
 
 import javax.swing.JPanel;
 
+/**
+ * A Jynstrument is a Jython script and associated
+ * other resources that can decorate a Java class.
+ *
+ * @see JynstrumentFactory
+ * @author Lionel Jeanson  Copyright 2009
+ * @since 2.7.8
+ */
 public abstract class Jynstrument extends JPanel {	
 	private Object mContext;		// Object being extended
 	private String jythonFile;		// Name of the Jython file being run
 	private String jynstrumentFolder;	// Folder where the script seats (to retrieve resources)
 	private String className; // name of the JYnstrument class
 
+    /**
+     * Access to the context object to which this
+     * Jynstrument was attached when it was created.
+     */
 	public Object getContext() {
 		return mContext;
 	}
@@ -22,6 +34,10 @@ public abstract class Jynstrument extends JPanel {
 		this.jythonFile = jythonFile;
 	}
 
+    /**
+     * Access to folder containing defining Jython
+     * script, e.g. for other resources
+     */
 	public String getFolder() {
 		return jynstrumentFolder;
 	}

@@ -4,6 +4,14 @@ import java.io.File;
 
 import org.python.util.PythonInterpreter;
 
+/**
+ * A JynstrumentFactory handles instantiation and 
+ * connection of {@link Jynstrument} instances
+ *
+ * @see Jynstrument
+ * @author Lionel Jeanson  Copyright 2009
+ * @since 2.7.8
+ */
 public class JynstrumentFactory {
 	private static final String instanceName = "jynstrumentObjectInstance";
 
