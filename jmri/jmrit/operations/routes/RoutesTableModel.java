@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
  */
 public class RoutesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -29,10 +29,10 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     RouteManager manager;						// There is only one manager
  
     // Defines the columns
-    private static final int IDCOLUMN   = 0;
-    private static final int NAMECOLUMN   = IDCOLUMN+1;
-    private static final int STATUSCOLUMN   = NAMECOLUMN+1;
-    private static final int EDITCOLUMN = STATUSCOLUMN+1;
+    public static final int IDCOLUMN   = 0;
+    public static final int NAMECOLUMN   = IDCOLUMN+1;
+    public static final int STATUSCOLUMN   = NAMECOLUMN+1;
+    public static final int EDITCOLUMN = STATUSCOLUMN+1;
     
     private static final int HIGHESTCOLUMN = EDITCOLUMN+1;
 
@@ -130,8 +130,12 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     		focusRef = false;
     		ref.requestFocus();
     	}
+    	if (row > sysList.size())
+    		return "ERROR unknown "+row;
     	String locId = sysList.get(row);
     	Route r = manager.getRouteById(locId);
+    	if (r == null)
+    		return "ERROR route unknown "+row;
         switch (col) {
         case IDCOLUMN: return r.getId();
         case NAMECOLUMN: return r.getName();

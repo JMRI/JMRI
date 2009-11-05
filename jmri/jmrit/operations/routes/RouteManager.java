@@ -16,8 +16,8 @@ import jmri.jmrit.operations.setup.OperationsXml;
 /**
  * Manages the routes
  * @author      Bob Jacobsen Copyright (C) 2003
- * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.13 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2009
+ * @version	$Revision: 1.14 $
  */
 public class RouteManager {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLength"; 
@@ -43,6 +43,7 @@ public class RouteManager {
 
     public void dispose() {
         _routeHashTable.clear();
+        _id = 0;
     }
     
     //  stores known Route instances by id
@@ -68,7 +69,7 @@ public class RouteManager {
     }
  
     /**
-     * Finds an exsisting route or creates a new route if needed
+     * Finds an existing route or creates a new route if needed
      * requires route's name creates a unique id for this route
      * @param name
      * 

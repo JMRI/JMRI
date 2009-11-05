@@ -2,7 +2,6 @@
 
 package jmri.jmrit.operations.routes;
  
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ResourceBundle;
 
@@ -12,9 +11,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JRadioButton;
 
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.setup.Control;
 
 
 
@@ -22,27 +23,26 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for adding and editing the route roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.11 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2009
+ * @version             $Revision: 1.12 $
  */
 public class RoutesTableFrame extends OperationsFrame {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
 
 	RoutesTableModel routesModel = new RoutesTableModel();
-	javax.swing.JTable routesTable = new javax.swing.JTable(routesModel);
-	JScrollPane routesPane;
+
 	
 	// labels
-	javax.swing.JLabel textSort = new javax.swing.JLabel();
-	javax.swing.JLabel textSep = new javax.swing.JLabel();
+	JLabel textSort = new JLabel(rb.getString("SortBy"));
+	JLabel textSep = new javax.swing.JLabel("          ");
 	
 	// radio buttons
-    javax.swing.JRadioButton sortByName = new javax.swing.JRadioButton(rb.getString("Name"));
-    javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(rb.getString("Id"));
+    JRadioButton sortByName = new JRadioButton(rb.getString("Name"));
+    JRadioButton sortById = new JRadioButton(rb.getString("Id"));
 
 	// major buttons
-	javax.swing.JButton addButton = new javax.swing.JButton();
+	JButton addButton = new JButton(rb.getString("Add"));
 
     public RoutesTableFrame() {
         super(ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle").getString("TitleRoutesTable"));
@@ -51,7 +51,8 @@ public class RoutesTableFrame extends OperationsFrame {
         getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
     	// Set up the jtable in a Scroll Pane..
-    	routesPane = new JScrollPane(routesTable);
+    	javax.swing.JTable routesTable = new javax.swing.JTable(routesModel);
+    	JScrollPane routesPane = new JScrollPane(routesTable);
     	routesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
        	routesModel.initTable(routesTable);
      	getContentPane().add(routesPane);
@@ -60,18 +61,13 @@ public class RoutesTableFrame extends OperationsFrame {
     	JPanel controlPanel = new JPanel();
     	controlPanel.setLayout(new FlowLayout());
     	
-    	textSort.setText("Sort by");
     	controlPanel.add(textSort);
     	controlPanel.add(sortByName);
-    	sortByName.setSelected(true);
     	controlPanel.add(sortById);
-    	textSep.setText("          ");
     	controlPanel.add(textSep);
-
-		addButton.setText(rb.getString("Add"));
-		addButton.setVisible(true);
-		controlPanel.add (addButton);
-		controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
+    	controlPanel.add (addButton);
+    	
+       	sortByName.setSelected(true);
 		
 	   	getContentPane().add(controlPanel);
 	   	
@@ -92,7 +88,6 @@ public class RoutesTableFrame extends OperationsFrame {
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true);
     	
     	pack();
-    	setSize(450, getHeight());
     	
     }
     
@@ -112,7 +107,7 @@ public class RoutesTableFrame extends OperationsFrame {
     
 	// add button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-//		log.debug("route button actived");
+//		log.debug("route button activated");
 		if (ae.getSource() == addButton){
 			RouteEditFrame f = new RouteEditFrame();
 			f.initComponents(null);
