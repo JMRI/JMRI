@@ -43,7 +43,7 @@ import java.util.ResourceBundle;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.67 $
+ * @version $Revision: 1.68 $
  */
 
 public class PositionableLabel extends JLabel
@@ -182,7 +182,7 @@ public class PositionableLabel extends JLabel
 
     public void setHidden(boolean boo){
         hidden=boo;
-        //this.setVisible(!boo);
+        showHidden();
     }
     
     public boolean getHidden(){
@@ -237,15 +237,15 @@ public class PositionableLabel extends JLabel
     //@TODO Need to do math.max on this to return the greatest width, as an icon can also contain text.
     protected int maxWidth(){
         if ((fixedWidth==0) && (margin==0)){
-            if(text)
-                return ((javax.swing.JLabel)this).getMaximumSize().width;
-            else
+            if(icon)
                 return namedIcon.getIconWidth(); // defer to superclass
-        }else if ((fixedWidth==0) && (margin!=0)){
-            if(text)
-                return ((javax.swing.JLabel)this).getMaximumSize().width+(margin*2);
             else
+                return ((javax.swing.JLabel)this).getMaximumSize().width;
+        }else if ((fixedWidth==0) && (margin!=0)){
+            if(icon)
                 return namedIcon.getIconWidth()+(margin*2);
+            else
+                return ((javax.swing.JLabel)this).getMaximumSize().width+(margin*2);
         }else if ((fixedWidth!=0) && (margin!=0)){
             return fixedWidth-(margin*2);
         }
@@ -254,15 +254,15 @@ public class PositionableLabel extends JLabel
     //@TODO Need to do math.max on this to return the greatest width, as an icon can also contain text.
     protected int maxHeight(){
         if ((fixedHeight==0) && (margin==0)){
-            if(text)
-                return ((javax.swing.JLabel)this).getMaximumSize().height;
-            else
+            if(icon)
                 return namedIcon.getIconHeight(); // defer to superclass
-        }else if ((fixedHeight==0) && (margin!=0)){
-            if (text)
-                return ((javax.swing.JLabel)this).getMaximumSize().height+(margin*2);
             else
+                return ((javax.swing.JLabel)this).getMaximumSize().height;
+        }else if ((fixedHeight==0) && (margin!=0)){
+            if (icon)
                 return namedIcon.getIconHeight()+(margin*2);
+            else
+                return ((javax.swing.JLabel)this).getMaximumSize().height+(margin*2);
         } else if ((fixedHeight!=0) && (margin!=0)){
             return fixedHeight-(margin*2);
         }
@@ -494,7 +494,7 @@ public class PositionableLabel extends JLabel
 						displayCoordinateEdit(name);
 					}
 				});
-		}
+            }
 			popup.add(new AbstractAction(rb.getString("SetFixedSize")) {
 				public void actionPerformed(ActionEvent e) {
 					String name = getText();
@@ -726,7 +726,7 @@ public class PositionableLabel extends JLabel
 		if (layoutPanel!=null){
 			popup.add("x= " + this.getX());
 			popup.add("y= " + this.getY());
-            popup.add(new PopupAction(name));
+            //popup.add(new PopupAction(name));
         }
         else if (icon) {
             /*
@@ -1100,7 +1100,7 @@ public class PositionableLabel extends JLabel
 */
         JButton button = new JButton(rb.getString("Done"));
         button.addActionListener(new ActionListener() {
-                int type;
+            int type;
             public void actionPerformed(ActionEvent a) {
                 switch (type) {
                     case BOX_TYPE_TEXT:
@@ -1244,23 +1244,55 @@ public class PositionableLabel extends JLabel
     public void setEditable(boolean enabled) {
         editable = enabled;
         if (layoutPanel!=null) {
-            if((hidden) && (editable))
-                setVisible(true);
+            //viewable = enabled;
+            /*if((hidden) && (editable))
+                showHidden(true);
             else if ((hidden) && (!editable))
-                setVisible(false);
+                showHidden(false);*/
+            //if (hidden)
+            //   showHidden();
+            //The next if statement, prevents the tooltip from displaying for a simple text label in the layout editor
+            //this could be better done elsewhere possibly.
+            if(text){
+                String tooltip;
+                int system = jmri.util.SystemType.getType();
+                if (system==jmri.util.SystemType.MACOSX) {
+                    tooltip=rb.getString("ToolTipGenericMac");
+                }
+                else if (system==jmri.util.SystemType.WINDOWS) {
+                    tooltip=rb.getString("ToolTipGenericWin");
+                }
+                else {
+                    tooltip="";
+                }
+                if(getToolTipText()!=null){ //Extra check for when a label is loaded.
+                    if(getToolTipText().equals(tooltip))
+                        setShowTooltip(enabled);
+                } else
+                    setShowTooltip(enabled);
+            }
         }
     }
     
     public boolean getEditable() { return editable; }
     private boolean editable = true;
 
-    public void setVisible(boolean enabled){
-        if (hidden)
-            super.setVisible(enabled);
+    //Viewable is mainly used in the panel editor
+    private boolean viewable = true;
+    
+    public void setViewable(boolean boo){ 
+        viewable = boo;
+        showHidden();
     }
     
-    public boolean getVisible(){ return super.isVisible(); }
-    
+    void showHidden(){
+        // In the layout editor icons are visible if we are in edit mode.
+        /*if ((layoutPanel!=null) && (hidden))
+            super.setVisible(editable);*/
+        if (hidden)
+            super.setVisible(viewable);
+    }
+
     public void setFixed(boolean enabled) {
         fixed = enabled;
         if (showFixedItem!=null) showFixedItem.setSelected(getFixed());

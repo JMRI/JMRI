@@ -23,7 +23,7 @@ import java.awt.Color;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -260,9 +260,17 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 
         popup.add(new JMenuItem(getNameString()));
         //This is if statement is from the layoutSensorIcon
+        checkLocationEditable(popup, getNameString());
         if (getHidden()) popup.add(rb.getString("Hidden"));
         else popup.add(rb.getString("NotHidden"));
-
+        if (layoutPanel!=null){
+            popup.add(new AbstractAction("Set x & y") {
+                public void actionPerformed(ActionEvent e) {
+                    String name = getText();
+                    displayCoordinateEdit(name);
+                }
+            });
+        }
         if (icon) {
             popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
@@ -317,7 +325,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             addShowTooltipItem(popup);
         }
 
-        checkLocationEditable(popup, getNameString());
+        //checkLocationEditable(popup, getNameString());
         addFixedItem(popup);
 
         addDisableMenuEntry(popup);
@@ -442,6 +450,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         if (getLayoutPanel()==null){
             setIconTextGap (-(getWidth()+getPreferredSize().width)/2);
             setSize(getPreferredSize().width, getPreferredSize().height);
+            //setSize(maxWidth(), getPreferredSize().height);
         }
         return;
     }
@@ -952,6 +961,12 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         }
     }
     protected int maxWidth() {
+        /*if((icon) && (text)) return Math.max(((javax.swing.JLabel)this).getMaximumSize().width,Math.max(
+                Math.max((active!=null) ? active.getIconWidth() : 0,
+                        (inactive!=null) ? inactive.getIconWidth() : 0),
+                Math.max((unknown!=null) ? unknown.getIconWidth() : 0,
+                        (inconsistent!=null) ? inconsistent.getIconWidth() : 0)
+            ));*/
         if(icon) return Math.max(
                 Math.max((active!=null) ? active.getIconWidth() : 0,
                         (inactive!=null) ? inactive.getIconWidth() : 0),

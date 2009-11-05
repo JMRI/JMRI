@@ -21,7 +21,7 @@ import javax.swing.event.ChangeListener;
  * Memory, preserving what it finds.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  * @since 2.7.2
  */
 
@@ -109,10 +109,6 @@ public class MemorySpinnerIcon extends PositionableJPanel implements java.beans.
             name = memory.getSystemName();
         return name;
     }
-
-    /* Get & Set visible isn't required*/
-    public boolean getVisible(){ return true; }
-    public void getVisible(boolean boo){ }
 
     public void setSelectable(boolean b) {selectable = b;}
     public boolean isSelectable() { return selectable;}

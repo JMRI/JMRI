@@ -20,7 +20,7 @@ import java.awt.event.MouseListener;
  *
  * <p>Copyright: Bob Jacobsen Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public interface Positionable  {
     public void setPositionable(boolean enabled);
@@ -29,8 +29,7 @@ public interface Positionable  {
     public void setEditable(boolean enabled);
     public boolean getEditable();
     
-    public void setVisible(boolean enabled);
-    public boolean getVisible();
+    public void setViewable(boolean enabled);
 
     public void setViewCoordinates(boolean enabled);
     public boolean getViewCoordinates();

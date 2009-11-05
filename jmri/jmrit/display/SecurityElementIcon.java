@@ -29,7 +29,7 @@ import javax.swing.JSeparator;
  * if you move this.
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class SecurityElementIcon extends JPanel
@@ -530,9 +530,8 @@ public class SecurityElementIcon extends JPanel
         return ""+e.getX()+","+e.getY();
     }
 
-    /* Get & Set visible isn't required*/
-    public boolean getVisible(){ return true; }
-    public void getVisible(boolean boo){ }
+    /* Set viewable isn't required*/
+    public void setViewable(boolean enabled){ }
 
     /**
      * Clean up when this object is no longer needed.  Should not

@@ -27,7 +27,7 @@ import javax.swing.JLabel;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -195,7 +195,41 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         
         popup.add(new JMenuItem(getNameString()));
         checkLocationEditable(popup, getNameString());
-		
+		if (layoutPanel!=null){
+            popup.add(new AbstractAction("Set x & y") {
+                public void actionPerformed(ActionEvent e) {
+                    String name = getText();
+                    displayCoordinateEdit(name);
+                }
+            });
+        }
+        if(text){
+            if (getFixedWidth()==0)
+                popup.add("Width= Auto");
+            else
+                popup.add("Width= " + this.fixedWidth);
+
+            if (getFixedHeight()==0)
+                popup.add("Height= Auto");           
+            else
+                popup.add("Height= " + this.fixedHeight);
+
+            if (((fixedHeight==0) || (fixedWidth==0))&&(text))
+               popup.add("Margin= " + this.getMargin());
+               
+        }
+        if (getHidden()) popup.add(rb.getString("Hidden"));
+        else popup.add(rb.getString("NotHidden"));
+        
+        popup.addSeparator();
+        if (layoutPanel!=null){
+            popup.add(new AbstractAction("Set x & y") {
+                public void actionPerformed(ActionEvent e) {
+                    String name = getText();
+                    displayCoordinateEdit(name);
+                }
+            });
+        }
         if (icon) {
             popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
@@ -223,23 +257,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
             //popup.add(makeFontColorMenu());
             //New Entry
-            if (getFixedWidth()==0)
-                popup.add("Width= Auto");
-            else
-                popup.add("Width= " + this.fixedWidth);
-
-            if (getFixedHeight()==0)
-                popup.add("Height= Auto");           
-            else
-                popup.add("Height= " + this.fixedHeight);
-
-            if (((fixedHeight==0) || (fixedWidth==0))&&(text))
-               popup.add("Margin= " + this.getMargin());
-               
-            if (getHidden()) popup.add(rb.getString("Hidden"));
-            else popup.add(rb.getString("NotHidden"));
-
-        popup.addSeparator();
             addTextEditEntry(popup, false);
             popup.add(makeTextJustificationMenu());
             popup.add(makeBackgroundFontColorMenu());
@@ -295,6 +312,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 });
             }
         }  // end of selectable
+
         popup.add(setHiddenMenu());
 
         popup.show(e.getComponent(), e.getX(), e.getY());

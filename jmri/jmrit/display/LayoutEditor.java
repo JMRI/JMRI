@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -2092,6 +2092,7 @@ public class LayoutEditor extends JmriJFrame {
         editMode = visible;
         topEditBar.setVisible(visible);
         setAllEditable(visible);
+        setAllHidden(visible);
         if (visible) {
         	setScroll(SCROLL_BOTH);
         	savedSliders = restoreScroll;
@@ -2773,7 +2774,8 @@ public class LayoutEditor extends JmriJFrame {
 	}			
 
     protected void handleMouseReleased(MouseEvent event,int dX,int dY)
-    {
+    {   
+        
 		// initialize mouse position
 		calcLocation(event, dX, dY);
         if (editMode) {
@@ -3003,7 +3005,7 @@ public class LayoutEditor extends JmriJFrame {
 		if ( (!event.isMetaDown()) && (!event.isPopupTrigger()) && (!event.isAltDown()) &&
 					(!awaitingIconChange) && (!event.isShiftDown()) && (!event.isControlDown()) ) {
 			calcLocation(event, dX, dY);
-			// check if on a multi sensor icon
+            			// check if on a multi sensor icon
 			/*MultiSensorIcon m = checkMultiSensors(dLoc);
 			if (m!=null) {
 				m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
@@ -3012,8 +3014,19 @@ public class LayoutEditor extends JmriJFrame {
 			SensorIcon s = checkSensorIcons(dLoc);
 			if (s!=null) {
 				s.performMouseClicked(event);
-			}
-            
+			} else {
+                SignalHeadIcon sh = checkSignalHeadIcons(dLoc);
+                if (sh!=null) {
+                    sh.performMouseClicked(event);
+                } else {
+                    MultiSensorIcon m = checkMultiSensors(dLoc);
+                    if (m!=null) {
+                    m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
+									(int)(dLoc.getY()-m.getY()));
+                    }
+                
+                }
+            }
 		}
 		else if ( event.isPopupTrigger() ) {
 			calcLocation(event, dX, dY);
@@ -4393,6 +4406,18 @@ public class LayoutEditor extends JmriJFrame {
         }
     }
 
+    /**
+     *  Control whether target panel hidden items are visible or not.
+     *  Does this by invoke the {@link Positionable#setViewable} function of
+     *  each item on the target panel.
+     * @param state true for Visible.
+     */
+    public void setAllHidden(boolean state) {
+        for (int i = 0; i<contents.size(); i++) {
+            ((Positionable)contents.get(i)).setViewable(state);
+        }
+    }
+    
     /**
      *  Control whether target panel items are controlling layout items.
      *  Does this by invoke the {@link Positionable#setControlling} function of

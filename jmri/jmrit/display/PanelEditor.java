@@ -1291,14 +1291,14 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     
      /**
      *  Control whether target panel hidden items are visible or not.
-     *  Does this by invoke the {@link Positionable#setVisible} function of
+     *  Does this by invoke the {@link Positionable#setViewable} function of
      *  each item on the target panel.
      * @param state true for Visible.
      */
     public void setAllHidden(boolean state) {
         if (hiddenBox.isSelected()!=state) hiddenBox.setSelected(state);
         for (int i = 0; i<contents.size(); i++) {
-            ((Positionable)contents.get(i)).setVisible(state);
+            ((Positionable)contents.get(i)).setViewable(state);
         }
     }
     
@@ -1386,6 +1386,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     void configureItem(Positionable item) {
         item.setPositionable(this.isPositionable());
         item.setEditable(this.isEditable());
+        item.setViewable(this.isShowHidden());
         item.setViewCoordinates(this.isShowCoordinates());
         item.setControlling(this.isControlling());
     }
@@ -1401,6 +1402,9 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     }
     public boolean isControlling() {
         return controllingBox.isSelected();
+    }
+    public boolean isShowHidden() {
+        return hiddenBox.isSelected();
     }
 
     public boolean hasPanelMenu() {

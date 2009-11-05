@@ -29,7 +29,7 @@ import javax.swing.JCheckBoxMenuItem;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 abstract class PositionableJPanel extends JPanel
                         implements MouseMotionListener, MouseListener,
@@ -486,6 +486,12 @@ abstract class PositionableJPanel extends JPanel
     public boolean isActive() {
         return active;
     }
+    
+    /**
+     * For over-riding in the using classes
+     */
+    
+    public void setViewable(boolean enabled){ }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableJPanel.class.getName());
 }

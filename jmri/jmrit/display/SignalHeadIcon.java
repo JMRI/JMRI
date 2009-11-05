@@ -25,7 +25,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.49 $
+ * @version $Revision: 1.50 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -283,6 +283,14 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
 
         addFixedItem(popup);
         addDisableMenuEntry(popup);
+        if (layoutPanel!=null){
+            popup.add(new AbstractAction("Set x & y") {
+                public void actionPerformed(ActionEvent e) {
+                    String name = getText();
+                    displayCoordinateEdit(name);
+                }
+            });
+        }
 
         // add menu to select action on click
         JMenu clickMenu = new JMenu(rb.getString("WhenClicked"));
@@ -590,6 +598,14 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      // Was mouseClicked, changed to mouseRelease to workaround touch screen driver limitation
     public void mouseReleased(java.awt.event.MouseEvent e) {
         super.mouseReleased(e);
+        if (panelEditor!=null)
+            performMouseClicked(e);
+    }
+    
+    /** 
+     * This was added in so that the layout editor can handle the mouseclicked when zoomed in
+    */
+    public void performMouseClicked(java.awt.event.MouseEvent e){
         if (!getControlling()) return;
         if (getForceControlOff()) return;
         if (e.isMetaDown() || e.isAltDown() ) return;
@@ -625,8 +641,63 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             return;
         default:
             log.error("Click in mode "+clickMode);
+        //}
         }
+    
+    
     }
+    
+        /**
+     * Change the SignalHead state when the icon is clicked.
+     * Note that this change may not be permanent if there is
+     * logic controlling the signal head.
+     * @param e
+     */
+    /*public void mouseClicked(java.awt.event.MouseEvent e) {
+        System.out.println("MouseClicked - SignalHead Icon");
+        if (layoutPanel!=null){
+        if (!getControlling()) return;
+        if (getForceControlOff()) return;
+        if (e.isMetaDown() || e.isAltDown() ) return;
+        if (mHead==null) {
+            log.error("No Signal Head connection, can't process click");
+            return;
+        }
+        switch (clickMode) {
+        case 0 :
+            switch (mHead.getAppearance()) {
+            case jmri.SignalHead.RED:
+            case jmri.SignalHead.FLASHRED:
+                mHead.setAppearance(jmri.SignalHead.YELLOW);
+                break;
+            case jmri.SignalHead.YELLOW:
+            case jmri.SignalHead.FLASHYELLOW:
+                mHead.setAppearance(jmri.SignalHead.GREEN);
+                break;
+            case jmri.SignalHead.GREEN:
+            case jmri.SignalHead.FLASHGREEN:
+                mHead.setAppearance(jmri.SignalHead.RED);
+                break;
+            default:
+                mHead.setAppearance(jmri.SignalHead.RED);
+                break;
+            }
+            return;
+        case 1 :
+            mHead.setLit(!mHead.getLit());
+            return;
+        case 2 : 
+            mHead.setHeld(!mHead.getHeld());
+            return;
+        default:
+            log.error("Click in mode "+clickMode);
+        }
+        }
+    }*/
+    public void mouseClicked(java.awt.event.MouseEvent e) {
+        if (getLayoutPanel()!=null)
+            super.layoutPanel.handleMouseClicked(e, getX(), getY());
+	}
 
     //private static boolean warned = false;
 
