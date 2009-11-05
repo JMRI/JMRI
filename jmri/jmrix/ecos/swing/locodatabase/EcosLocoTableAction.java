@@ -2,8 +2,8 @@ package jmri.jmrix.ecos.swing.locodatabase;
 
 
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
+
 import jmri.jmrix.ecos.EcosLocoAddress;
 import jmri.jmrix.ecos.EcosLocoAddressManager;
 

@@ -1,10 +1,9 @@
 //LayoutSensorChangeType
 package jmri.jmrit.display;
 
-import jmri.Sensor;
-import jmri.jmrit.catalog.NamedIcon;
 import java.awt.Color;
-//import jmri.jmrit.display.LayoutEditor;
+
+import jmri.jmrit.catalog.NamedIcon;
 
 public class SensorChangeType {
 

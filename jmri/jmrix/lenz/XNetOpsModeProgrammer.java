@@ -2,9 +2,9 @@
 
 package jmri.jmrix.lenz;
 
-import java.beans.*;
-
-import jmri.*;
+import jmri.ProgListener;
+import jmri.Programmer;
+import jmri.ProgrammerException;
 
 /**
  * Provides an Ops mode programing interface for XPressNet
@@ -14,7 +14,7 @@ import jmri.*;
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003
  * @author         Girgio Terdina Copyright (C) 2007
- * @version        $Revision: 2.13 $
+ * @version        $Revision: 2.14 $
 */
 
 public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements XNetListener 

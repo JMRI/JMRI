@@ -2,13 +2,11 @@
 
 package jmri.util;
 
-import java.util.Locale;
-
 /**
  * Utility class for managing access to a NamedBean
  *
  * @author Bob Jacobsen  Copyright 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class NamedBeanHandle<T> {

@@ -1,10 +1,17 @@
 package jmri.jmrix.ecos.utilities;
 
-import jmri.jmrix.ecos.*;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.decoderdefn.*;
 import java.util.List;
+
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrix.ecos.EcosListener;
+import jmri.jmrix.ecos.EcosLocoAddress;
+import jmri.jmrix.ecos.EcosLocoAddressManager;
+import jmri.jmrix.ecos.EcosMessage;
+import jmri.jmrix.ecos.EcosPreferences;
+import jmri.jmrix.ecos.EcosReply;
+import jmri.jmrix.ecos.EcosTrafficController;
 
 public class RosterToEcos implements EcosListener{
 

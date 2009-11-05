@@ -1,9 +1,6 @@
 package jmri.jmrit.display;
 
-import jmri.jmrit.XmlFile;
-
 import java.io.File;
-import java.io.FileWriter;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -15,13 +12,13 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class PanelEditorTest extends TestCase {
 
     TurnoutIcon to = null;
 
-	public void testShow() throws java.io.IOException {
+	public void testShow() {
 	    // reset instance manager, configuration manager
         jmri.InstanceManager i = new jmri.InstanceManager(){
             protected void init() {

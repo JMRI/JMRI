@@ -1,39 +1,44 @@
 package jmri.jmrix.ecos.utilities;
 
-import javax.swing.JOptionPane;
-import javax.swing.JDesktopPane;
-
+import java.awt.BorderLayout;
+import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Enumeration;
-
-import jmri.jmrix.ecos.EcosLocoAddressManager;
-import jmri.jmrix.ecos.EcosLocoAddress;
-import jmri.jmrix.ecos.*;
-import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.XmlFile;
-import jmri.jmrit.DccLocoAddressSelector;
-
-
-
 import java.util.List;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.tree.TreeNode;
-
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import jmri.jmrit.decoderdefn.DecoderFile;
-import jmri.jmrit.decoderdefn.DecoderIndexFile;
-
-
-import javax.swing.tree.TreePath;
-
-
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JToggleButton;
+import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
+
+import jmri.jmrit.DccLocoAddressSelector;
+import jmri.jmrit.XmlFile;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrix.ecos.EcosListener;
+import jmri.jmrix.ecos.EcosLocoAddress;
+import jmri.jmrix.ecos.EcosLocoAddressManager;
+import jmri.jmrix.ecos.EcosMessage;
+import jmri.jmrix.ecos.EcosReply;
+import jmri.jmrix.ecos.EcosTrafficController;
 
 public class EcosLocoToRoster implements EcosListener {
     

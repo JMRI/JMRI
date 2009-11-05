@@ -3,10 +3,7 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.LayoutEditor;
-import jmri.jmrit.display.SignalHeadIcon;
-import org.jdom.Attribute;
+
 import org.jdom.Element;
 
 /**
@@ -18,7 +15,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
  * @author Kevin Dickerson, Deprecated
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  * @deprecated 2.7.8
  */
   @Deprecated

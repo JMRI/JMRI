@@ -2,8 +2,6 @@
 
 package jmri.jmrix.powerline;
 
-import jmri.Sensor;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -12,7 +10,7 @@ import junit.framework.TestSuite;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003, 2007, 2008
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
 public class SerialNodeTest extends TestCase {
 

@@ -1,3 +1,5 @@
+package jmri.util.javaworld;
+
 // From http://www.javaworld.com/javaworld/javatips/javatip121/GridLayout2.java
 // Javaworld article by Bogdan Dorohonceanu
 //

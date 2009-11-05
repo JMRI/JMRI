@@ -17,7 +17,7 @@ import jmri.jmrix.can.TrafficController;
  * station state should always be referred to.
  *
  * @author      Andrew Crosland Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class CbusCommandStation implements CommandStation, DccCommandStation, CanListener {
 
@@ -138,7 +138,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
     public String getVersionString() {
         return new String("0.0");
     }
-    ;
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusCommandStation.class.getName());
 }
 

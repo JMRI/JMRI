@@ -1,13 +1,8 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.XmlAdapter;
-import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.LayoutEditor;
-import jmri.jmrit.display.SensorIcon;
-import org.jdom.DataConversionException;
-import org.jdom.Attribute;
+
 import org.jdom.Element;
-import java.awt.Color;
 
 /**
  * Dummy class, just present so files that refer to this 
@@ -16,7 +11,7 @@ import java.awt.Color;
  *
  * @author David Duchamp Copyright (c) 2007
  * @author Kevin Dickerson, Deprecated
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  * @deprecated 2.7.8
  */
  

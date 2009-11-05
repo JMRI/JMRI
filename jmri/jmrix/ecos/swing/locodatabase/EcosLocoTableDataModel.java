@@ -4,30 +4,28 @@ package jmri.jmrix.ecos.swing.locodatabase;
 
 //import jmri.jmrix.ecos.EcosLocoAddressManager;
 
+import java.beans.PropertyChangeListener;
+import java.util.List;
+
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
+
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrix.ecos.utilities.EcosLocoToRoster;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import jmri.util.davidflanagan.HardcopyWriter;
-import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.roster.Roster;
-import java.beans.PropertyChangeListener;
-
-
-import jmri.jmrix.ecos.utilities.EcosLocoToRoster;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.table.*;
-import javax.swing.DefaultCellEditor;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumnModel;
-import javax.swing.JComboBox;
-
-import java.util.List;
 
 /**
  * Table data model for display of jmri.jmrix.ecos.EcosLocoAddressManager manager contents
  * @author		Kevin Dickerson   Copyright (C) 2009
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
 abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {

@@ -2,14 +2,14 @@
 
 package jmri.jmrix.ecos.swing.preferences;
 
-import jmri.jmrix.ecos.*;
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 
 
 /**
  * Frame for ECoS preferences
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class PreferencesFrame extends jmri.util.JmriJFrame {
 

@@ -2,15 +2,15 @@
 
 package jmri.jmrit.display;
 
-import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.util.ResourceBundle;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JComponent;
 
 import jmri.util.JmriJFrame;
-
-import java.util.ResourceBundle;
 
 /**
  * Displays and allows user to modify the text display used in a sensor
@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Kevin Dickerson (SensorTextEditor version);
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class SensorTextEdit extends JmriJFrame 
