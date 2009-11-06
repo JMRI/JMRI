@@ -13,7 +13,7 @@ import java.awt.Color;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -53,14 +53,16 @@ public class SensorIconXml extends PositionableLabelXml {
             element.setAttribute("style", ""+p.getFont().getStyle());
             if (p.getText()!=null)
                 element.setAttribute("text", p.getText());
-            if(p.getActiveText()!=null)
-                element.setAttribute("activeText", p.getActiveText());
-            if(p.getInactiveText()!=null)
-                element.setAttribute("inactiveText", p.getInactiveText());
-            if(p.getUnknownText()!=null)
-                element.setAttribute("unknownText", p.getUnknownText());
-            if(p.getInconsistentText()!=null)
-                element.setAttribute("inconsistentText", p.getInconsistentText());
+            if (!p.isIcon()){
+                if(p.getActiveText()!=null)
+                    element.setAttribute("active", p.getActiveText());
+                if(p.getInactiveText()!=null)
+                    element.setAttribute("inactive", p.getInactiveText());
+                if(p.getUnknownText()!=null)
+                    element.setAttribute("unknown", p.getUnknownText());
+                if(p.getInconsistentText()!=null)
+                    element.setAttribute("inconsistent", p.getInconsistentText());
+            }
             if (p.getBackgroundActive()!=null) {
                 element.setAttribute("redActiveBack", ""+p.getBackgroundActive().getRed());
                 element.setAttribute("greenActiveBack", ""+p.getBackgroundActive().getGreen());
@@ -183,11 +185,12 @@ public class SensorIconXml extends PositionableLabelXml {
         } else
             l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"));*/
 
-        if (pe!=null)
+        if (pe!=null){
             loadCommonAttributes(l, PanelEditor.SENSORS.intValue(), element);
-        else if (le!=null)
+        }else if (le!=null){
+            l.setPanel(le);
             loadCommonAttributes(l, LayoutEditor.SENSORS.intValue(), element);
-
+        }
             
         Attribute a = element.getAttribute("momentary");
         if ( (a!=null) && a.getValue().equals("true"))

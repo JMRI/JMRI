@@ -43,7 +43,7 @@ import java.util.ResourceBundle;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.68 $
+ * @version $Revision: 1.69 $
  */
 
 public class PositionableLabel extends JLabel
@@ -99,17 +99,19 @@ public class PositionableLabel extends JLabel
         addMouseMotionListener(this);
         addMouseListener(this);
     }
+    
     public void connect(LayoutEditor panel) {
         //addMouseMotionListener(this);
         //addMouseListener(this);
 		layoutPanel = panel;
+        //updateSize();
     }
 
    	LayoutEditor layoutPanel = null;
     /**
      * Set panel (called from Layout Editor)
      */
-    protected void setPanel(LayoutEditor panel) {
+    public void setPanel(LayoutEditor panel) {
 		layoutPanel = panel;
     }
 

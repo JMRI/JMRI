@@ -12,7 +12,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -106,6 +106,7 @@ public class MemoryIconXml extends PositionableLabelXml {
 			le = (LayoutEditor) o;
             l = new MemoryIcon(le);
             le.memoryLabelList.add(l);
+            l.setPanel(le);
 		}
 		else {
 			log.error("Unrecognizable class - "+className);

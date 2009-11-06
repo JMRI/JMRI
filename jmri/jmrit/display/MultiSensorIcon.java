@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -121,14 +121,14 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         }
     }
 
-   	LayoutEditor layoutPanel = null;
+   	/*LayoutEditor layoutPanel = null;*/
     /**
      * Set panel (called from Layout Editor)
      */
-    protected void setPanel(LayoutEditor panel) {
+    /*protected void setPanel(LayoutEditor panel) {
 		super.setPanel(panel);
 		layoutPanel = panel;
-    }
+    }*/
 
     public void setProperToolTip() {
         setToolTipText(getNameString());

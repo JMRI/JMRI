@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
@@ -115,57 +115,55 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         }
 
 
-        NamedIcon red;
+        //NamedIcon red;
         name = element.getAttribute("red").getValue();
-        l.setRedIcon(red = NamedIcon.getIconByName(name));
+        l.setRedIcon(NamedIcon.getIconByName(name));
 
-        NamedIcon yellow;
+        //NamedIcon yellow;
         name = element.getAttribute("yellow").getValue();
-        l.setYellowIcon(yellow = NamedIcon.getIconByName(name));
+        l.setYellowIcon(NamedIcon.getIconByName(name));
 
-        NamedIcon green;
+        //NamedIcon green;
         name = element.getAttribute("green").getValue();
-        l.setGreenIcon(green = NamedIcon.getIconByName(name));
+        l.setGreenIcon(NamedIcon.getIconByName(name));
 
-        NamedIcon lunar=null;
+        //NamedIcon lunar=null;
         if (element.getAttribute("lunar") != null) {
             name = element.getAttribute("lunar").getValue();
-            l.setLunarIcon(lunar = NamedIcon.getIconByName(name));
+            l.setLunarIcon(NamedIcon.getIconByName(name));
         }
 
         Attribute a; 
 
-        NamedIcon held = null;
+        //NamedIcon held = null;
         a = element.getAttribute("held");
         if (a!=null) 
-            l.setHeldIcon(held = NamedIcon.getIconByName(a.getValue()));
+            l.setHeldIcon(NamedIcon.getIconByName(a.getValue()));
 
-        NamedIcon dark = null;
+        //NamedIcon dark = null;
         a = element.getAttribute("dark");
         if (a!=null) 
-            l.setDarkIcon(dark = NamedIcon.getIconByName(a.getValue()));
+            l.setDarkIcon(NamedIcon.getIconByName(a.getValue()));
 
-        NamedIcon flashred = null;
+        //NamedIcon flashred = null;
         a = element.getAttribute("flashred");
         if (a!=null) 
-            l.setFlashRedIcon(flashred = NamedIcon.getIconByName(a.getValue()));
+            l.setFlashRedIcon(NamedIcon.getIconByName(a.getValue()));
 
-        NamedIcon flashyellow = null;
+        //NamedIcon flashyellow = null;
         a = element.getAttribute("flashyellow");
         if (a!=null) 
-            l.setFlashYellowIcon(flashyellow = NamedIcon.getIconByName(a.getValue()));
+            l.setFlashYellowIcon(NamedIcon.getIconByName(a.getValue()));
 
-        NamedIcon flashgreen = null;
+        //NamedIcon flashgreen = null;
         a = element.getAttribute("flashgreen");
         if (a!=null) 
-            l.setFlashGreenIcon(flashgreen = NamedIcon.getIconByName(a.getValue()));
+            l.setFlashGreenIcon(NamedIcon.getIconByName(a.getValue()));
         
-        NamedIcon flashlunar = null;
+        //NamedIcon flashlunar = null;
         a = element.getAttribute("flashlunar");
         if (a!=null) 
-            l.setFlashLunarIcon(flashlunar = NamedIcon.getIconByName(a.getValue()));
-        else
-            flashlunar = l.getFlashLunarIcon();
+            l.setFlashLunarIcon(NamedIcon.getIconByName(a.getValue()));
         
         try {
             a = element.getAttribute("rotate");

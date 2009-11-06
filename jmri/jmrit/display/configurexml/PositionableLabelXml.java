@@ -19,7 +19,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -190,10 +190,12 @@ public class PositionableLabelXml implements XmlAdapter {
         	log.error("PositionableLabel is null!");
         	return;
         }
-        if(pe!=null)
+        if(pe!=null){
             loadCommonAttributes(l, PanelEditor.LABELS.intValue(), element);
-        else if (le!=null)
+        } else if (le!=null) {
+            l.setPanel(le);
             loadCommonAttributes(l, LayoutEditor.LABELS.intValue(), element);
+        }
 
         Attribute a = element.getAttribute("fixed");
         if ( (a!=null) && a.getValue().equals("true"))

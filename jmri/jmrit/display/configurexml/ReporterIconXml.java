@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for display.ReporterIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class ReporterIconXml extends PositionableLabelXml {
 
@@ -55,7 +55,9 @@ public class ReporterIconXml extends PositionableLabelXml {
      */
     public void load(Element element, Object o) {
         // get object class and determine editor being used
-		String className = o.getClass().getName();
+		ReporterIcon l = new ReporterIcon();
+        
+        String className = o.getClass().getName();
 		int lastDot = className.lastIndexOf(".");
 		PanelEditor pe = null;
 		LayoutEditor le = null;
@@ -65,11 +67,11 @@ public class ReporterIconXml extends PositionableLabelXml {
 		}
 		else if (shortClass.equals("LayoutEditor")) {
 			le = (LayoutEditor) o;
+            l.setPanel(le);
 		}
 		else {
 			log.error("Unrecognizable class - "+className);
 		}
-        ReporterIcon l = new ReporterIcon();
 
         loadTextInfo(l, element);
 
@@ -93,6 +95,7 @@ public class ReporterIconXml extends PositionableLabelXml {
             level = PanelEditor.REPORTERS.intValue();
         else
             level = LayoutEditor.LABELS.intValue();
+
         try {
             level = element.getAttribute("level").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
@@ -104,7 +107,7 @@ public class ReporterIconXml extends PositionableLabelXml {
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         if(pe!=null)
             pe.putLabel(l);
-        else
+        else if (le!=null)
             le.putLabel(l);
     }
 

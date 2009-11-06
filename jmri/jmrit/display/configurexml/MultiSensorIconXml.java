@@ -13,7 +13,7 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class MultiSensorIconXml extends PositionableLabelXml {
 
@@ -117,10 +117,12 @@ public class MultiSensorIconXml extends PositionableLabelXml {
         else
             l.setUpDown(false);
             
-		if (pe!=null)
+		if (pe!=null){
             loadCommonAttributes(l, PanelEditor.SENSORS.intValue(), element);
-		else if (le!=null)
+		} else if (le!=null) {
+            l.setPanel(le);
             loadCommonAttributes(l, LayoutEditor.SENSORS.intValue(), element);
+        }
 
         // get the icon pairs & load
         List<Element> items = element.getChildren();
