@@ -329,7 +329,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.49 $
+	 * @version $Revision: 1.50 $
 	 */
     class FunctionButtonKeyListener extends KeyAdapter {
     	private boolean keyReleased = true;
@@ -568,7 +568,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	public void notifyAddressReleased(int address, boolean isLong)
 	{
 		this.setEnabled(false);
-		this.throttle.removePropertyChangeListener(this);
+		if (throttle != null)
+			throttle.removePropertyChangeListener(this);
 		throttle = null;
 	}
 

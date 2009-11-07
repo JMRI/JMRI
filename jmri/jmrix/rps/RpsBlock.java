@@ -14,7 +14,7 @@ import java.util.List;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class RpsBlock implements java.beans.PropertyChangeListener, jmri.ThrottleListener {
 
@@ -120,7 +120,7 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
     }
 
     //This function is redundant here
-    public void notifyThrottleLost(jmri.DccLocoAddress dccAddress){
+    public void notifyThrottleLost(jmri.LocoAddress dccAddress){
     //This function is redundant but is in the throttle listener
     }
 

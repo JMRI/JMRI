@@ -34,5 +34,5 @@ public interface ThrottleListener extends EventListener
      * the decoder.
      * @param dccAddress The decoder address lost.
      */
-    public void notifyThrottleLost(DccLocoAddress dccAddress);
+    public void notifyThrottleLost(LocoAddress dccAddress);
 }

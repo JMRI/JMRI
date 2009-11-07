@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 	
@@ -24,7 +24,14 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 	 * objects.  This allows more than one to request a throttle
 	 * at a time, but @see{singleUse}.
 	 */
-    private HashMap<DccLocoAddress,ArrayList<ThrottleListener>> throttleListeners;
+    private HashMap<DccLocoAddress,ArrayList<ThrottleListener>> throttleListeners = new HashMap<DccLocoAddress,ArrayList<ThrottleListener>>(5);
+
+	/**
+	 * activeThrottleListeners is indexed by the address, and
+	 * contains as elements an ArrayList of ThrottleListener
+	 * objects on already allocated throttles
+	 */
+    private HashMap<LocoAddress,ArrayList<ThrottleListener>> activeTrottlesListeners = new HashMap<LocoAddress,ArrayList<ThrottleListener>>(5);
 
 	/**
 	 * Does this DCC system allow a Throttle (e.g. an address) to be used
@@ -44,9 +51,6 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      */
     public boolean requestThrottle(int address, boolean isLongAddress, ThrottleListener l) {
         boolean throttleFree = true;
-        if (throttleListeners == null) {
-            throttleListeners = new HashMap<DccLocoAddress,ArrayList<ThrottleListener>>(5);
-        }
 
 		// put the list in if not present
 		DccLocoAddress la = new DccLocoAddress(address, isLongAddress);
@@ -159,6 +163,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
       	 	ThrottleListener l = a.get(i);
             log.debug("Notify listener");
             l.notifyThrottleFound(throttle);
+            addActiveTrottlesListener(addr, l);
         }
         throttleListeners.remove(addr);
     }
@@ -181,17 +186,45 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     /**
      * Handle throttle feedback information on whether we have lost
      * control of a decoder address.
-     **/
-    
-    public void lostThrottle(DccLocoAddress dccAddress){
-        //Integer addressKey = new Integer(address);        
-        ArrayList<ThrottleListener> a = throttleListeners.get(dccAddress);
+     **/    
+    public void lostThrottle(LocoAddress dccAddress){
+        ArrayList<ThrottleListener> a = activeTrottlesListeners.get(dccAddress);
         if (a==null) return;
         for (int i = 0; i<a.size(); i++) {
             a.get(i).notifyThrottleLost(dccAddress);
         }
-        
     }
-
+    
+    public void addActiveTrottlesListener(LocoAddress add, ThrottleListener lst) {
+    	if ((lst == null) || (add==null)) return;
+    	ArrayList<ThrottleListener> a = activeTrottlesListeners.get(add);
+    	if (a == null) a = new ArrayList<ThrottleListener>(2);
+    	a.add(lst);
+    	activeTrottlesListeners.put(add, a);
+    }
+    
+    public void removeActiveTrottlesListener(LocoAddress add, ThrottleListener lst) {
+    	if ((lst == null) || (add==null)) return;
+    	ArrayList<ThrottleListener> a = activeTrottlesListeners.get(add);
+    	if ((a == null) || (!a.contains(lst))) return;
+    	a.remove(lst);
+    	if (a.size()>0)
+    		activeTrottlesListeners.put(add, a);
+    	else
+    		activeTrottlesListeners.remove(add);
+    }
+    
+    public void removeActiveTrottlesListeners(LocoAddress add) {
+    	if (add==null) return;
+    	activeTrottlesListeners.remove(add);
+    }
+    
+    public int numberActiveTrottlesListeners(LocoAddress add) {
+    	if (add==null) return 0;
+    	ArrayList<ThrottleListener> a = activeTrottlesListeners.get(add);
+    	if (a==null) return 0;
+    	return a.size();
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractThrottleManager.class.getName());
 }

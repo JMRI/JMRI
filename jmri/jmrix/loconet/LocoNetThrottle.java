@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractThrottle;
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
  * @author  Stephen Williams  Copyright (C) 2008
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -337,7 +337,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         	int newStat = slot.slotStatus();
         	if (log.isDebugEnabled())
         		log.debug("Slot status changed from "+LnConstants.LOCO_STAT(slotStatus)+" to "+LnConstants.LOCO_STAT(newStat) );
-        	notifyPropertyChangeListener("ThrottleStatus", LnConstants.LOCO_STAT(slotStatus), LnConstants.LOCO_STAT(newStat));
+        	// PropertyChangeLsistern notification: changed to see bellow
+        	// notifyPropertyChangeListener("ThrottleStatus", LnConstants.LOCO_STAT(slotStatus), LnConstants.LOCO_STAT(newStat));
+        	
+        	// AbstractThrottleManager notification:
+        	if (((slotStatus & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_IN_USE) && ((newStat & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_COMMON))
+        		jmri.InstanceManager.throttleManagerInstance().lostThrottle( getLocoAddress() );
         	slotStatus = newStat;
         }
 
