@@ -8,10 +8,13 @@ import java.awt.FlowLayout;
 import javax.swing.*;
 
 /**
- * User interface for sending a problem report via email
+ * User interface for sending a problem report via email.
+ * <p>
+ * The report is sent to a dedicated Google group, from which 
+ * people can retrieve it.  
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2009
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class ReportPanel extends JPanel {
 
@@ -20,7 +23,6 @@ public class ReportPanel extends JPanel {
     // member declarations
     JButton sendButton;
     JTextField emailField = new JTextField(40);
-    JTextField hostField = new JTextField(40);
     JTextField summaryField = new JTextField(40);
     JTextArea descField = new JTextArea(5,40);
     JCheckBox checkContext;
@@ -49,16 +51,6 @@ public class ReportPanel extends JPanel {
 
         p1 = new JPanel();
         p1.setLayout(new FlowLayout());
-        l = new JLabel(rb.getString("LabelHost"));
-        l.setToolTipText(rb.getString("TooltipHost"));
-        p1.add(l);
-        hostField.setToolTipText(rb.getString("TooltipHost"));
-        hostField.setText(rb.getString("MailHost"));
-        p1.add(hostField);
-        add(p1);
-
-        p1 = new JPanel();
-        p1.setLayout(new FlowLayout());
         l = new JLabel(rb.getString("LabelSummary"));
         l.setToolTipText(rb.getString("TooltipSummary"));
         p1.add(l);
@@ -75,13 +67,16 @@ public class ReportPanel extends JPanel {
         p1.add(descField);
         add(p1);
 
+        p1 = new JPanel();
+        p1.setLayout(new FlowLayout());
         checkContext = new JCheckBox(rb.getString("CheckContext"));
         checkContext.setSelected(true);
-        add(checkContext);
+        p1.add(checkContext);
         
         checkLog = new JCheckBox(rb.getString("CheckLog"));
         checkLog.setSelected(true);
-        add(checkLog);
+        p1.add(checkLog);
+        add(p1);
         
         sendButton = new javax.swing.JButton(rb.getString("ButtonSend"));
         sendButton.setToolTipText(rb.getString("TooltipSend"));
@@ -100,13 +95,16 @@ public class ReportPanel extends JPanel {
         // create message
         MailMessage msg = new MailMessage(
                                rb.getString("Destination"),
-                               hostField.getText(),
+                               rb.getString("MailHost"),
                                summaryField.getText());
         msg.setFrom(emailField.getText());
         msg.prepare();
         
+        // add from line
+        msg.setText("Original poster: "+emailField.getText()+"\n");
+        
         // add user reason
-        msg.setText(descField.getText());
+        msg.setText(descField.getText()+"\n");
         
         // add the context if OK
         if (checkContext.isSelected()) {

@@ -17,7 +17,7 @@ package jmri.util.javamail;
  * Check for //! comments
  *
  * @author Bob Jacobsen    Copyright 2008, 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * 
  */
 
@@ -77,7 +77,7 @@ public class MailMessage {
     String mailhost;
     String subject;
     
-    String from = "jake@physics.berkeley.edu";  //! null
+    String from = "jmri.problem.report@gmail.com";  //! null
     String cc = null;
     String bcc = null;
     String url = null;  // "store-url"
@@ -85,8 +85,10 @@ public class MailMessage {
     String file = "default.lcf"; //! null;  // "attach-file"
     String protocol = null;
     String host = null;
-    String user = null;
-    String password = null;
+    
+    String user = "jmri.problem.report@gmail.com";
+    String password = "Hgytht756%gfA@f9";
+    
     String record = null;   // name of folder in which to record mail
     
     public MailMessage(String to, String mailhost, String subject) {
@@ -108,11 +110,17 @@ public class MailMessage {
             Properties props = System.getProperties();
             // XXX - could use Session.getTransport() and Transport.connect()
             // XXX - assume we're using SMTP
+            props.put("mail.transport.protocol", "smtp");
+            props.put("mail.smtp.starttls.enable","true");
             if (mailhost != null) {
                 props.put("mail.smtp.host", mailhost);
             }
+            props.put("mail.smtp.auth", "true");
+            
+            Authenticator auth = new SMTPAuthenticator();
+            
             // Get a Session object
-            session = Session.getInstance(props, null);
+            session = Session.getInstance(props, auth);
             if (log.isDebugEnabled())
                 session.setDebug(true);
             
@@ -218,6 +226,17 @@ public class MailMessage {
             e.printStackTrace();
         }
     }
+
+	/**
+	 * SimpleAuthenticator is used to do simple authentication when the SMTP
+	 * server requires it.
+	 */
+	private class SMTPAuthenticator extends javax.mail.Authenticator {
+	
+		public PasswordAuthentication getPasswordAuthentication() {
+			return new PasswordAuthentication(user, password);
+		}
+	}
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MailMessage.class.getName());
 }
