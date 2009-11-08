@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.8.shtml,v 1.7 2009-11-05 05:47:11 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.8.shtml,v 1.8 2009-11-08 21:11:26 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -206,7 +206,8 @@ For more information, see the
 Lionel Jeanson added a button so you can remove images from a roster entry.
 
 <p>
-Lionel Jeanson did some code cleanup and minor fixes in the throttle GUI.
+Lionel Jeanson did some code cleanup and minor fixes in the throttle GUI,
+and in the abstract throttle internal code.
 
 <p>
 Lionel Jeanson improved the way release/dispatch is handled for multiple LocoNet throttles.
@@ -221,6 +222,14 @@ better monitoring slot status in LocoNet Throttle.
 <p>
 Kevin Dickerson made a number of internal changes to the layout and panel editors.
 
+<p>
+The "Send Problem Report" option in the main Help menu now works.
+The messages are filed in a  
+<a href="http://groups.google.com/group/jmri-problem-reports">dedicated Google group</a>.
+
+<p>
+Kevin Dickerson improved the file-load dialog so that it doesn't give 
+an error message if the user cancels the load.
 
 <!--#include virtual="/Footer" -->
 
