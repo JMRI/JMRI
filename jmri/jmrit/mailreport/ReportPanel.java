@@ -4,6 +4,8 @@ package jmri.jmrit.mailreport;
 
 import jmri.util.javamail.MailMessage;
 
+import jmri.util.javaworld.GridLayout2;
+
 import java.awt.FlowLayout;
 import javax.swing.*;
 
@@ -14,7 +16,7 @@ import javax.swing.*;
  * people can retrieve it.  
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2009
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class ReportPanel extends JPanel {
 
@@ -24,7 +26,7 @@ public class ReportPanel extends JPanel {
     JButton sendButton;
     JTextField emailField = new JTextField(40);
     JTextField summaryField = new JTextField(40);
-    JTextArea descField = new JTextArea(5,40);
+    JTextArea descField = new JTextArea(8,40);
     JCheckBox checkContext;
     JCheckBox checkLog;
 
@@ -40,33 +42,30 @@ public class ReportPanel extends JPanel {
         p1.add(new JLabel(rb.getString("LabelTop")));
         add(p1);
         
+        // grid of options
         p1 = new JPanel();
-        p1.setLayout(new FlowLayout());
+        p1.setLayout(new GridLayout2(3,2));
+        add(p1);
+        
         JLabel l = new JLabel(rb.getString("LabelEmail"));
         l.setToolTipText(rb.getString("TooltipEmail"));
         p1.add(l);
         emailField.setToolTipText(rb.getString("TooltipEmail"));
         p1.add(emailField);
-        add(p1);
 
-        p1 = new JPanel();
-        p1.setLayout(new FlowLayout());
         l = new JLabel(rb.getString("LabelSummary"));
         l.setToolTipText(rb.getString("TooltipSummary"));
         p1.add(l);
         summaryField.setToolTipText(rb.getString("TooltipSummary"));
         p1.add(summaryField);
-        add(p1);
 
-        p1 = new JPanel();
-        p1.setLayout(new FlowLayout());
         l = new JLabel(rb.getString("LabelDescription"));
         p1.add(l);
         descField.setLineWrap(true);
         descField.setWrapStyleWord(true);
         p1.add(descField);
-        add(p1);
 
+        // buttons on bottom
         p1 = new JPanel();
         p1.setLayout(new FlowLayout());
         checkContext = new JCheckBox(rb.getString("CheckContext"));
