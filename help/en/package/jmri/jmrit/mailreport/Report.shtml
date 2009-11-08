@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: Report.shtml,v 1.1 2009-04-01 05:05:11 jacobsen Exp $ -->
+<!-- $Id: Report.shtml,v 1.2 2009-11-08 18:05:13 jacobsen Exp $ -->
 <title>JMRI: Send Problem Report</title>
 
 <!-- Style -->
@@ -32,7 +32,7 @@ of the information on your JMRI installation, including the
 log from the most recent running of the program,
 but doesn't contain any of your private information.
 You can see previous problem reports in the 
-<a href="https://sourceforge.net/mailarchive/forum.php?forum_name=jmri-reports">archive on SourceForge</a>.
+<a href="http://groups.google.com/group/jmri-problem-reports">jmri-problem-reports Google group</a>.
 
 <p>
 To make the report most useful, you should 
