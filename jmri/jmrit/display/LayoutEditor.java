@@ -20,7 +20,7 @@ import java.awt.event.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.Math;
+//import java.lang.Math;
 
 import javax.swing.*;
 
@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.56 $
+ * @version $Revision: 1.57 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -5667,15 +5667,16 @@ public class LayoutEditor extends JmriJFrame {
                     // Make sure stroke width get restored!
 					}
                     main = !mainline;
-                    setTrackStrokeWidth(g2, main);
+                    setTrackStrokeWidth(g2, mainline);
                     g2.draw(new Arc2D.Double(t.getCX(), t.getCY(), t.getCW(), t.getCH(), t.getStartadj(), t.getTmpAngle(), Arc2D.OPEN));
                     if((editMode) && (t.getCircle())){
+                        setTrackStrokeWidth(g2, main);
                         g2.setStroke(new BasicStroke(1.0F,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
                         g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
                         g2.draw(new Line2D.Double(getCoords(t.getConnect2(),t.getType2()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
-                        setTrackStrokeWidth(g2, main);
+                        
                     }
-                    //setTrackStrokeWidth(g2, mainline);
+                    setTrackStrokeWidth(g2, mainline);
 				} 
                 else {
                     setTrackStrokeWidth(g2, mainline);
