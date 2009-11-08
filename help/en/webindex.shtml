@@ -940,6 +940,12 @@
 
  
 <li>
+<a href="package/jmri/jmrit/mailreport/Report.shtml">Send Problem Report </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="html/tools/Sensors.shtml">Sensor </a>
 <ul>
   
