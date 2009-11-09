@@ -1766,6 +1766,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 					if (il.isActive()) {
 						il.remove();
 						il.dispose();
+						i--;	// backup
 					}
 				}
 			} catch (Exception e) {
