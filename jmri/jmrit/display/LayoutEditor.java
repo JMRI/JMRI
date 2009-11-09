@@ -20,7 +20,7 @@ import java.awt.event.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//import java.lang.Math;
+import java.lang.Math;
 
 import javax.swing.*;
 
@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.57 $
+ * @version $Revision: 1.58 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -4936,8 +4936,10 @@ public class LayoutEditor extends JmriJFrame {
 						g2.draw(new Line2D.Double(t.getCoordsA(),
 												midpoint(t.getCoordsA(),t.getCoordsB())));
 						setTrackStrokeWidth(g2,false);
+                        if (b!=null) g2.setColor(b.getBlockTrackColor());
 						g2.draw(new Line2D.Double(t.getCoordsA(),
 												third(t.getCoordsA(),t.getCoordsC())));
+                                                
 						b = t.getLayoutBlockB();
 						if (b!=null) g2.setColor(b.getBlockColor());
 						else g2.setColor(defaultTrackColor);
@@ -4945,17 +4947,21 @@ public class LayoutEditor extends JmriJFrame {
 						g2.draw(new Line2D.Double(t.getCoordsB(),
 												midpoint(t.getCoordsA(),t.getCoordsB())));
 						setTrackStrokeWidth(g2,false);
+                        if (b!=null) g2.setColor(b.getBlockTrackColor());
 						g2.draw(new Line2D.Double(t.getCoordsB(),
 												third(t.getCoordsB(),t.getCoordsD())));
+                                                
 						b = t.getLayoutBlockC();
 						if (b!=null) g2.setColor(b.getBlockColor());
 						else g2.setColor(defaultTrackColor);
-						setTrackStrokeWidth(g2,t.isMainlineC());
+                        setTrackStrokeWidth(g2,t.isMainlineC());
 						g2.draw(new Line2D.Double(t.getCoordsC(),
 												midpoint(t.getCoordsC(),t.getCoordsD())));
 						setTrackStrokeWidth(g2,false);
+                        if (b!=null) g2.setColor(b.getBlockTrackColor());
 						g2.draw(new Line2D.Double(t.getCoordsC(),
 												third(t.getCoordsC(),t.getCoordsA())));
+                                                
 						b = t.getLayoutBlockD();
 						if (b!=null) g2.setColor(b.getBlockColor());
 						else g2.setColor(defaultTrackColor);
@@ -4963,39 +4969,50 @@ public class LayoutEditor extends JmriJFrame {
 						g2.draw(new Line2D.Double(t.getCoordsD(),
 												midpoint(t.getCoordsC(),t.getCoordsD())));
 						setTrackStrokeWidth(g2,false);
+                        if (b!=null) g2.setColor(b.getBlockTrackColor());
 						g2.draw(new Line2D.Double(t.getCoordsD(),
 												third(t.getCoordsD(),t.getCoordsB())));
 					}
 					else if (state == Turnout.THROWN) {
 						// diverting (crossed) path 
+                        if (b!=null) g2.setColor(b.getBlockTrackColor());
 						setTrackStrokeWidth(g2,t.isMainlineA());
 						g2.draw(new Line2D.Double(t.getCoordsA(),
 												third(t.getCoordsA(),t.getCoordsB())));
 						setTrackStrokeWidth(g2,false);
+                        if (b!=null) g2.setColor(b.getBlockColor());
 						g2.draw(new Line2D.Double(t.getCoordsA(),t.getCoordsCenter()));
+                        
 						b = t.getLayoutBlockB();
-						if (b!=null) g2.setColor(b.getBlockColor());
+						if (b!=null) g2.setColor(b.getBlockTrackColor());
 						else g2.setColor(defaultTrackColor);
 						setTrackStrokeWidth(g2,t.isMainlineB());
 						g2.draw(new Line2D.Double(t.getCoordsB(),
 												third(t.getCoordsB(),t.getCoordsA())));
 						setTrackStrokeWidth(g2,false);
+                        if (b!=null) g2.setColor(b.getBlockColor());
+                        
 						g2.draw(new Line2D.Double(t.getCoordsB(),t.getCoordsCenter()));
-						b = t.getLayoutBlockC();
-						if (b!=null) g2.setColor(b.getBlockColor());
+						
+                        b = t.getLayoutBlockC();
+                        if (b!=null) g2.setColor(b.getBlockTrackColor());
 						else g2.setColor(defaultTrackColor);
 						setTrackStrokeWidth(g2,t.isMainlineC());
 						g2.draw(new Line2D.Double(t.getCoordsC(),
 												third(t.getCoordsC(),t.getCoordsD())));
 						setTrackStrokeWidth(g2,false);
+                        if (b!=null) g2.setColor(b.getBlockColor());
 						g2.draw(new Line2D.Double(t.getCoordsC(),t.getCoordsCenter()));
-						b = t.getLayoutBlockD();
-						if (b!=null) g2.setColor(b.getBlockColor());
+						
+                        b = t.getLayoutBlockD();
+						
+                        if (b!=null) g2.setColor(b.getBlockTrackColor());
 						else g2.setColor(defaultTrackColor);
 						setTrackStrokeWidth(g2,t.isMainlineD());
 						g2.draw(new Line2D.Double(t.getCoordsD(),
 												third(t.getCoordsD(),t.getCoordsC())));
 						setTrackStrokeWidth(g2,false);
+                        if (b!=null) g2.setColor(b.getBlockColor());
 						g2.draw(new Line2D.Double(t.getCoordsD(),t.getCoordsCenter()));
 					}
 					else {
@@ -5102,6 +5119,7 @@ public class LayoutEditor extends JmriJFrame {
 												midpoint(t.getCoordsA(),t.getCoordsB())));
 						if (ttype == LayoutTurnout.RH_XOVER) {										
 							setTrackStrokeWidth(g2,false);
+                            if (b!=null) g2.setColor(b.getBlockTrackColor());
 							g2.draw(new Line2D.Double(t.getCoordsCenter(),
 									third(t.getCoordsCenter(),midpoint(t.getCoordsA(),t.getCoordsB()))));
 						}
@@ -5113,6 +5131,7 @@ public class LayoutEditor extends JmriJFrame {
 												midpoint(t.getCoordsA(),t.getCoordsB())));
 						if (ttype == LayoutTurnout.LH_XOVER) {										
 							setTrackStrokeWidth(g2,false);
+                            if (b!=null) g2.setColor(b.getBlockTrackColor());
 							g2.draw(new Line2D.Double(t.getCoordsCenter(),
 									third(t.getCoordsCenter(),midpoint(t.getCoordsA(),t.getCoordsB()))));
 						}
@@ -5124,6 +5143,7 @@ public class LayoutEditor extends JmriJFrame {
 												midpoint(t.getCoordsC(),t.getCoordsD())));
 						if (ttype == LayoutTurnout.RH_XOVER) {										
 							setTrackStrokeWidth(g2,false);
+                            if (b!=null) g2.setColor(b.getBlockTrackColor());
 							g2.draw(new Line2D.Double(t.getCoordsCenter(),
 									third(t.getCoordsCenter(),midpoint(t.getCoordsC(),t.getCoordsD()))));
 						}
@@ -5135,6 +5155,7 @@ public class LayoutEditor extends JmriJFrame {
 												midpoint(t.getCoordsC(),t.getCoordsD())));
 						if (ttype == LayoutTurnout.LH_XOVER) {										
 							setTrackStrokeWidth(g2,false);
+                            if (b!=null) g2.setColor(b.getBlockTrackColor());
 							g2.draw(new Line2D.Double(t.getCoordsCenter(),
 									third(t.getCoordsCenter(),midpoint(t.getCoordsC(),t.getCoordsD()))));
 						}
@@ -5285,6 +5306,7 @@ public class LayoutEditor extends JmriJFrame {
 								setTrackStrokeWidth(g2,t.isMainlineB());
 								g2.draw(new Line2D.Double(t.getCoordsB(),t.getCoordsCenter()));
 								setTrackStrokeWidth(g2,t.isMainlineC());
+                                if (b!=null) g2.setColor(b.getBlockTrackColor());
 								g2.draw(new Line2D.Double(t.getCoordsC(),
 											midpoint(t.getCoordsCenter(),t.getCoordsC())));
 							}
@@ -5292,6 +5314,7 @@ public class LayoutEditor extends JmriJFrame {
 								setTrackStrokeWidth(g2,t.isMainlineC());
 								g2.draw(new Line2D.Double(t.getCoordsC(),t.getCoordsCenter()));
 								setTrackStrokeWidth(g2,t.isMainlineB());
+                                if (b!=null) g2.setColor(b.getBlockTrackColor());
 								g2.draw(new Line2D.Double(t.getCoordsB(),
 											midpoint(t.getCoordsCenter(),t.getCoordsB())));
 							}
@@ -5301,6 +5324,7 @@ public class LayoutEditor extends JmriJFrame {
 								setTrackStrokeWidth(g2,t.isMainlineB());
 								g2.draw(new Line2D.Double(t.getCoordsB(),t.getCoordsCenter()));
 								setTrackStrokeWidth(g2,t.isMainlineC());
+                                if (b!=null) g2.setColor(b.getBlockTrackColor());
 								g2.draw(new Line2D.Double(t.getCoordsC(),
 											midpoint(t.getCoordsCenter(),t.getCoordsC())));
 							}
@@ -5308,6 +5332,7 @@ public class LayoutEditor extends JmriJFrame {
 								setTrackStrokeWidth(g2,t.isMainlineC());
 								g2.draw(new Line2D.Double(t.getCoordsC(),t.getCoordsCenter()));
 								setTrackStrokeWidth(g2,t.isMainlineB());
+                                if (b!=null) g2.setColor(b.getBlockTrackColor());
 								g2.draw(new Line2D.Double(t.getCoordsB(),
 											midpoint(t.getCoordsCenter(),t.getCoordsB())));
 							}
@@ -5316,7 +5341,7 @@ public class LayoutEditor extends JmriJFrame {
 							// inconsistent or unknown
 							setTrackStrokeWidth(g2,t.isMainlineC());
 							g2.draw(new Line2D.Double(t.getCoordsC(),
-											midpoint(t.getCoordsCenter(),t.getCoordsC())));							
+											midpoint(t.getCoordsCenter(),t.getCoordsC())));
 							setTrackStrokeWidth(g2,t.isMainlineB());
 							g2.draw(new Line2D.Double(t.getCoordsB(),
 											midpoint(t.getCoordsCenter(),t.getCoordsB())));
@@ -5667,16 +5692,15 @@ public class LayoutEditor extends JmriJFrame {
                     // Make sure stroke width get restored!
 					}
                     main = !mainline;
-                    setTrackStrokeWidth(g2, mainline);
+                    setTrackStrokeWidth(g2, main);
                     g2.draw(new Arc2D.Double(t.getCX(), t.getCY(), t.getCW(), t.getCH(), t.getStartadj(), t.getTmpAngle(), Arc2D.OPEN));
                     if((editMode) && (t.getCircle())){
-                        setTrackStrokeWidth(g2, main);
                         g2.setStroke(new BasicStroke(1.0F,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
                         g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
                         g2.draw(new Line2D.Double(getCoords(t.getConnect2(),t.getType2()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
-                        
+                        setTrackStrokeWidth(g2, main);
                     }
-                    setTrackStrokeWidth(g2, mainline);
+                    //setTrackStrokeWidth(g2, mainline);
 				} 
                 else {
                     setTrackStrokeWidth(g2, mainline);
