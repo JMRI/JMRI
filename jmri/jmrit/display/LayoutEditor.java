@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.58 $
+ * @version $Revision: 1.59 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -5615,6 +5615,7 @@ public class LayoutEditor extends JmriJFrame {
 	private void drawSolidTrack(Graphics2D g2, boolean mainline)
 	{
 		for (int i = 0; i<trackList.size();i++) {
+            setTrackStrokeWidth(g2, mainline);
 			TrackSegment t = trackList.get(i);
 			if ( (!t.getHidden()) && (!t.getDashed()) && (mainline == t.getMainline()) ) {		
 				LayoutBlock b = t.getLayoutBlock();
@@ -5633,7 +5634,7 @@ public class LayoutEditor extends JmriJFrame {
                     if((t.getTmpPt1()!=pt1) || (t.getTmpPt2()!=pt2)){
                         t.setTmpPt1(pt1);
                         t.setTmpPt2(pt2);
-                        setTrackStrokeWidth(g2,false);
+                        //setTrackStrokeWidth(g2,false);
                         double pt2x;
                         double pt2y;
                         double pt1x;
@@ -5691,19 +5692,17 @@ public class LayoutEditor extends JmriJFrame {
                         }
                     // Make sure stroke width get restored!
 					}
-                    main = !mainline;
-                    setTrackStrokeWidth(g2, main);
+                    //main = !mainline;
+                    
                     g2.draw(new Arc2D.Double(t.getCX(), t.getCY(), t.getCW(), t.getCH(), t.getStartadj(), t.getTmpAngle(), Arc2D.OPEN));
-                    if((editMode) && (t.getCircle())){
-                        g2.setStroke(new BasicStroke(1.0F,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
-                        g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
-                        g2.draw(new Line2D.Double(getCoords(t.getConnect2(),t.getType2()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
-                        setTrackStrokeWidth(g2, main);
-                    }
+                    //if((editMode) && (t.getCircle())){
+                       // drawTrackArcConstruction(g2, t);
+                        //setTrackStrokeWidth(g2, mainline);
+                   //}
                     //setTrackStrokeWidth(g2, mainline);
 				} 
                 else {
-                    setTrackStrokeWidth(g2, mainline);
+                    //setTrackStrokeWidth(g2, mainline);
                     g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), getCoords(t.getConnect2(),t.getType2())));
                 }
 			}
@@ -5735,6 +5734,11 @@ public class LayoutEditor extends JmriJFrame {
 				if (b!=null) g2.setColor(b.getBlockColor());
 				else g2.setColor(defaultTrackColor);
                 g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), getCoords(t.getConnect2(),t.getType2())));
+                if (t.getCircle()){
+                    g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
+                    g2.draw(new Line2D.Double(getCoords(t.getConnect2(),t.getType2()), new Point2D.Double(t.getCentreX(),t.getCentreY())));
+
+                }
 			}
 		}
 	}
