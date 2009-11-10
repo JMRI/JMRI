@@ -27,7 +27,7 @@ import javax.swing.JLabel;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -257,8 +257,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
             //popup.add(makeFontColorMenu());
             //New Entry
-            addTextEditEntry(popup, false);
-            popup.add(makeTextJustificationMenu());
+            addTextEditEntry(popup);
+            //popup.add(makeTextJustificationMenu());
             popup.add(makeBackgroundFontColorMenu());
             
             popup.add(textBorderMenu(getNameString()));
@@ -316,6 +316,15 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         popup.add(setHiddenMenu());
 
         popup.show(e.getComponent(), e.getX(), e.getY());
+    }
+    
+    void addTextEditEntry(JPopupMenu popup) {
+        JMenu edit = new JMenu(rb.getString("EditText"));
+        popup.add(edit);
+        edit.add(makeFontSizeMenu());
+        edit.add(makeFontStyleMenu());
+        edit.add(makeFontColorMenu());
+        edit.add(makeTextJustificationMenu());
     }
 
     /**

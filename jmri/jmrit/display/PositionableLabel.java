@@ -25,7 +25,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
-//import javax.swing.JMenuItem;
+import javax.swing.JMenuItem;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -43,7 +43,7 @@ import java.util.ResourceBundle;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.69 $
+ * @version $Revision: 1.70 $
  */
 
 public class PositionableLabel extends JLabel
@@ -524,7 +524,7 @@ public class PositionableLabel extends JLabel
             addFixedItem(popup);
             addShowTooltipItem(popup);
             
-            addTextEditEntry(popup, true);
+            addTextEditEntry(popup);
             popup.add(new AbstractAction(rb.getString("Remove")) {
                 public void actionPerformed(ActionEvent e) {
                     remove();
@@ -657,22 +657,25 @@ public class PositionableLabel extends JLabel
     }
 
     void setItalic() {
+        System.out.println("SetItalicCalled");
         if (log.isDebugEnabled())
             log.debug("When style item selected italic state is "+italic.isSelected());
         if (italic.isSelected()) setFontStyle(Font.ITALIC, 0);
         else setFontStyle(0, Font.ITALIC);
     }
     void setBold() {
+        System.out.println("SetBoldCalled");
         if (log.isDebugEnabled())
             log.debug("When style item selected bold state is "+bold.isSelected());
         if (bold.isSelected()) setFontStyle(Font.BOLD, 0);
         else setFontStyle(0, Font.BOLD);
     }
-    protected JMenu makeFontStyleMenu() {
+    /*protected JMenu makeFontStyleMenu() {
         JMenu styleMenu = new JMenu(rb.getString("FontStyle"));
         italic = new JCheckBoxMenuItem(rb.getString("Italic"));
         italic.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                System.out.println("Call Set Italic");
                 italic.setSelected(!italic.isSelected());
                 setItalic();
             }
@@ -681,6 +684,7 @@ public class PositionableLabel extends JLabel
         bold = new JCheckBoxMenuItem(rb.getString("Bold"));
         bold.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                System.out.println("Call Set Bold");
                 bold.setSelected(!bold.isSelected());
                 setBold();
             }
@@ -688,9 +692,9 @@ public class PositionableLabel extends JLabel
         setFontStyle(0, 0);
         styleMenu.add(bold);
         return styleMenu;     
-    }
+    }*/
 
-    /*JMenu makeFontStyleMenu() {
+    protected JMenu makeFontStyleMenu() {
         JMenu styleMenu = new JMenu(rb.getString("FontStyle"));
         styleMenu.add(italic = newStyleMenuItem(new AbstractAction(rb.getString("Italic")) {
             public void actionPerformed(ActionEvent e) {
@@ -722,7 +726,7 @@ public class PositionableLabel extends JLabel
                                             +" mask was "+mask+" state was "+getFont().getStyle());
         if ( (mask & getFont().getStyle()) == mask ) c.setSelected(true);
         return c;
-    }*/
+    }
 
     protected void checkLocationEditable(JPopupMenu popup,  String name) {
 		if (layoutPanel!=null){
@@ -1185,19 +1189,19 @@ public class PositionableLabel extends JLabel
         });
     }
 
-    void addTextEditEntry(JPopupMenu popup, boolean change) {
+    void addTextEditEntry(JPopupMenu popup) {
         JMenu edit = new JMenu(rb.getString("EditText"));
         popup.add(edit);
         edit.add(makeFontSizeMenu());
         edit.add(makeFontStyleMenu());
         edit.add(makeFontColorMenu());
-        if (change){
+        //if (change){
             edit.add(new AbstractAction(rb.getString("ChangeText")) {
                     public void actionPerformed(ActionEvent e) {
                         changeText(e);
                     }
                 });
-        }
+        //}
     }
 
     void changeText(ActionEvent e) {
@@ -1208,8 +1212,10 @@ public class PositionableLabel extends JLabel
         tranform(e, BOX_TYPE_TEXT);
     }
     
-    JCheckBoxMenuItem italic = null;
-    JCheckBoxMenuItem bold = null;
+    //JCheckBoxMenuItem italic = null;
+    //JCheckBoxMenuItem bold = null;
+    JMenuItem italic = null;
+    JMenuItem bold = null;
     ButtonGroup fontButtonGroup = null;
     ButtonGroup colorButtonGroup = null;
     ButtonGroup colorBackButtonGroup = null;

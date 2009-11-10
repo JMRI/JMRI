@@ -23,7 +23,7 @@ import java.awt.Color;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -263,6 +263,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         checkLocationEditable(popup, getNameString());
         if (getHidden()) popup.add(rb.getString("Hidden"));
         else popup.add(rb.getString("NotHidden"));
+        popup.addSeparator();
         if (layoutPanel!=null){
             popup.add(new AbstractAction("Set x & y") {
                 public void actionPerformed(ActionEvent e) {
@@ -289,7 +290,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                 }
             });
             if (getLayoutPanel()==null)
-                addTextEditEntry(popup, true);
+                addTextEditEntry(popup);
         } else { //This else statement is from the layoutSensorIcon
             popup.add(new AbstractAction(rb.getString("SetFixedSize")) {
 				public void actionPerformed(ActionEvent e) {
@@ -305,14 +306,15 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                     }
                 });
             }
-            popup.add(new AbstractAction(rb.getString("SetSensorText")) {
+            /*popup.add(new AbstractAction(rb.getString("SetSensorText")) {
 				public void actionPerformed(ActionEvent e) {
 					String name = getNameString();
 					SensorTextEdit(name);
 				}
-			});
-            popup.add(makeFontSizeMenu());
-            popup.add(makeFontStyleMenu());
+			});*/
+            //popup.add(makeFontSizeMenu());
+            //popup.add(makeFontStyleMenu());
+            addTextEditEntry(popup);
             JMenu stateColor = new JMenu(rb.getString("StateColors"));
                 stateColor.add(stateMenu(rb.getString("Unknown"), 0x00)); //Unknown
                 stateColor.add(stateMenu(rb.getString("SensorActive"), 0x02)); //Active
@@ -364,7 +366,19 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         popup.add(setHiddenMenu());
 
         popup.show(e.getComponent(), e.getX(), e.getY());
-
+    }
+    
+    void addTextEditEntry(JPopupMenu popup) {
+        JMenu edit = new JMenu(rb.getString("EditText"));
+        popup.add(edit);
+        edit.add(makeFontSizeMenu());
+        edit.add(makeFontStyleMenu());
+        edit.add(new AbstractAction(rb.getString("SetSensorText")) {
+				public void actionPerformed(ActionEvent e) {
+					String name = getNameString();
+					SensorTextEdit(name);
+				}
+			});
     }
 
     void scale(int s) {
