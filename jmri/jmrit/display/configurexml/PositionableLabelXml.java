@@ -19,7 +19,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -223,9 +223,25 @@ public class PositionableLabelXml implements XmlAdapter {
         } catch (DataConversionException ex) {
             log.warn("invalid size attribute value");
         }
-        a = element.getAttribute("style");
+        /*a = element.getAttribute("style");
         try {
             if (a!=null) l.setFontStyle(a.getIntValue(), Font.BOLD);  // label is created bold, so drop bold
+        } catch (DataConversionException ex) {
+            log.warn("invalid style attribute value");
+        }*/
+        a = element.getAttribute("style");
+        try {
+            if (a!=null){
+                int style = a.getIntValue();
+                int drop = 0;
+                switch (style){
+                    case 0: drop = 1; //0 Normal
+                            break;
+                    case 2: drop = 1; //italic
+                            break;
+                }
+                l.setFontStyle(style, drop);
+            }
         } catch (DataConversionException ex) {
             log.warn("invalid style attribute value");
         }
