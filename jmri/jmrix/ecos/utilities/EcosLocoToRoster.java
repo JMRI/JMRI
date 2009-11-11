@@ -80,6 +80,7 @@ public class EcosLocoToRoster implements EcosListener {
         if (decoder.size()==1){
             DecoderFile pDecoderFile;
             pDecoderFile=decoder.get(0);
+            System.out.println(decoder.get(0));
             SelectedDecoder(pDecoderFile);
             
         } else {
@@ -198,14 +199,12 @@ public class EcosLocoToRoster implements EcosListener {
     }
     
     private void okayButton(){
-                    pDecoderFile=DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
+                pDecoderFile=DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
                 SelectedDecoder(pDecoderFile);
                 frame.dispose();
     }
     
     private void SelectedDecoder(DecoderFile pDecoderFile) {
-        pDecoderFile=DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
-        System.out.println("Selected Decoder");
         re.setDecoderModel(pDecoderFile.getModel());
         re.setDecoderFamily(pDecoderFile.getFamily());    
 
