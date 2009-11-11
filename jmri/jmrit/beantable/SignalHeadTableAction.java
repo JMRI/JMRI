@@ -48,7 +48,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.45 $
+ * @version     $Revision: 1.46 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -411,7 +411,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 }
             });
         }
-        typeBox.setSelectedIndex(1);  // force GUI status consistent
+        typeBox.setSelectedIndex(2);  // force GUI status consistent Default set to Double Head
         addFrame.pack();
         addFrame.setVisible(true);
     }
@@ -819,7 +819,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 		JOptionPane.showMessageDialog(addFrame, msg,
 				AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
 	}
-
+    //@TODO We could do with checking the to make sure that the user has entered a turnout into a turnout field if it has been presented. Otherwise an error is recorded in the console window
     @SuppressWarnings("fallthrough")
     void okPressed(ActionEvent e) {
         if (!checkUserName(userName.getText()))
@@ -1656,7 +1656,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 	}
     
     boolean checkUserName(String nam){
-        if (!((nam==null) || (nam==""))) {
+        if (!((nam==null) || (nam.equals("")))) {
             // user name changed, check if new name already exists
             NamedBean nB = InstanceManager.signalHeadManagerInstance().getByUserName(nam);
             if (nB != null) {
