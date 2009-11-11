@@ -25,7 +25,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.50 $
+ * @version $Revision: 1.51 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -246,6 +246,11 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         if (log.isDebugEnabled()) log.debug("property change: "+e.getPropertyName()
                                             +" current state: "+headState());
         displayState(headState());
+        if (getLayoutPanel()!=null){
+            //super.layoutPanel.resetAwaitingIconChange();
+            getLayoutPanel().resetAwaitingIconChange();
+            getLayoutPanel().redrawPanel();
+        }
     }
 
     public void setProperToolTip() {
@@ -613,6 +618,8 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             log.error("No turnout connection, can't process click");
             return;
         }
+        if (layoutPanel!=null)
+            layoutPanel.setAwaitingIconChange();
         switch (clickMode) {
         case 0 :
             switch (mHead.getAppearance()) {
@@ -643,8 +650,6 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             log.error("Click in mode "+clickMode);
         //}
         }
-    
-    
     }
     
         /**
