@@ -7,6 +7,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -19,7 +20,7 @@ import java.util.List;
  * Tests for the Operations Locations GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class OperationsLocationsGuiTest extends TestCase {
 	
@@ -111,6 +112,10 @@ public class OperationsLocationsGuiTest extends TestCase {
 	}
 	
 	public void testInterchangeEditFrame(){
+		// add UP road name
+		CarRoads cr = CarRoads.instance();
+		cr.addName("UP");
+		
 		LocationManager lManager = LocationManager.instance();
 		Location l = lManager.getLocationByName("Test Loc C");
 		InterchangeEditFrame f = new InterchangeEditFrame();

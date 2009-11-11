@@ -20,7 +20,7 @@ import java.util.List;
  * Tests for the Operations Cars GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class OperationsCarsGuiTest extends TestCase {
 
@@ -35,6 +35,11 @@ public class OperationsCarsGuiTest extends TestCase {
 	}
 	
 	public void testCarsTableFrame(){
+		// add Owner1 and Owner2
+		CarOwners co = CarOwners.instance();
+		co.addName("Owner1");
+		co.addName("Owner2");
+		
 		CarsTableFrame ctf = new CarsTableFrame(true, null, null);	
 		// show all cars?
 		Assert.assertTrue("show all cars",ctf.showAllCars);
@@ -209,7 +214,7 @@ public class OperationsCarsGuiTest extends TestCase {
 		
 	}
 
-	public void testCarEditFrame(){
+	public void testCarEditFrame(){	
 		CarEditFrame f = new CarEditFrame();
 		f.setTitle("Test Add Car Frame");
 		f.initComponents();
@@ -315,6 +320,10 @@ public class OperationsCarsGuiTest extends TestCase {
 	}
 	
 	public void testCarAttributeEditFrameKernel(){
+		// create TwoCars kernel
+		CarManager cm = CarManager.instance();
+		cm.newKernel("TwoCars");
+		
 		CarAttributeEditFrame f = new CarAttributeEditFrame();
 		f.initComponents(CarEditFrame.KERNEL);
 		// confirm that space and TwoCar kernel exists
