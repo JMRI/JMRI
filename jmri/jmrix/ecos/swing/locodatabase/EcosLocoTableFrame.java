@@ -30,7 +30,7 @@ import jmri.util.com.sun.TableSorter;
  * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class EcosLocoTableFrame extends jmri.util.JmriJFrame {
 
@@ -113,7 +113,7 @@ public class EcosLocoTableFrame extends jmri.util.JmriJFrame {
         bottomBox.add(Box.createHorizontalGlue());	// stays at end of box
         bottomBoxIndex = 0;
         
-        getContentPane().add(bottomBox);
+        //getContentPane().add(bottomBox);
         
         // add extras, if desired by subclass
         extras();

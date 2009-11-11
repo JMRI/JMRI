@@ -25,7 +25,7 @@ import jmri.util.table.ButtonRenderer;
 /**
  * Table data model for display of jmri.jmrix.ecos.EcosLocoAddressManager manager contents
  * @author		Kevin Dickerson   Copyright (C) 2009
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  */
 abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -198,7 +198,7 @@ abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractT
     
     public void setUpRosterIdCol(TableColumn Rosterid){
         selections = Roster.instance().fullRosterComboBoxGlobal();
-        selections.insertItemAt("",0);
+        selections.insertItemAt(" ",0);
         selections.setSelectedIndex(-1);
         Rosterid.setCellEditor(new DefaultCellEditor(selections));
         
@@ -240,26 +240,34 @@ abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractT
     public void setValueAt(Object value, int row, int col) {
     
         if (col==ROSTERIDCOL) {
-          
-            if (value==""){
-                List<RosterEntry> c = Roster.instance().getEntriesWithAttributeKeyValue("EcosObject", ecosObjectIdList.get(row));
-                if(c.size()!=0){
-                    c.get(0).deleteAttribute("EcosObject");
+            List<RosterEntry> l;
+            if (value==null)
+                return;
+            if (value.equals(" ")){
+                System.out.println(ecosObjectIdList.get(row));
+                l = Roster.instance().getEntriesWithAttributeKeyValue("EcosObject", ecosObjectIdList.get(row));
+                System.out.println(l.size());
+                if(l.size()!=0){
+                    l.get(0).deleteAttribute("EcosObject");
                     getByEcosObject(ecosObjectIdList.get(row)).setRosterId((String) value);
+                    l.get(0).updateFile();
                 }
             } else{
-                List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, (String) value);
+                l = Roster.instance().matchingList(null, null, null, null, null, null, (String) value);
                 for (int i = 0; i < l.size(); i++) {
                     if ((l.get(i).getAttribute("EcosObject")==null)||(l.get(i).getAttribute("EcosObject").equals(""))){
                         l.get(i).putAttribute("EcosObject", ecosObjectIdList.get(row));
                         getByEcosObject(ecosObjectIdList.get(row)).setRosterId((String) value);
                     } else{
                         value=null;
-                        return;
+                        //return;
                     }
+                    l.get(i).updateFile();
                 }
             }
             fireTableRowsUpdated(row, row);
+            Roster.instance().writeRosterFile();
+
         }  else if (col==ADDTOROSTERCOL) {
             // button fired, delete Bean
             addToRoster(row, col);
@@ -271,9 +279,8 @@ abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractT
             EcosLocoToRoster addLoco = new EcosLocoToRoster();
             addLoco.ecosLocoToRoster(ecosObjectIdList.get(row));
             updateNameList();
+            fireTableRowsUpdated(row, row);
         }
-        else
-            System.out.println("already added");
     }
 
 	boolean noWarnDelete = false;
