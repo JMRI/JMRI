@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.58 $
+ * @version             $Revision: 1.59 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -269,13 +269,13 @@ public class TrainBuilder extends TrainCommon{
     		// all cars in staging must be accepted, so don't exclude if in staging
     		if (departStageTrack == null || !c.getTrack().getName().equals(departStageTrack.getName())){
     			if (!train.acceptsRoadName(c.getRoad())){
-    				addLine(fileOut, THREE, "Exclude car ("+c.getRoad()+" "+c.getNumber()+") road ("+c.getRoad()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
+    				addLine(fileOut, FIVE, "Exclude car ("+c.getRoad()+" "+c.getNumber()+") road ("+c.getRoad()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
     				carList.remove(carList.get(carIndex));
     				carIndex--;
     				continue;
     			}
     			if (!train.acceptsTypeName(c.getType())){
-    				addLine(fileOut, THREE, "Exclude car ("+c.getRoad()+" "+c.getNumber()+") type ("+c.getType()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
+    				addLine(fileOut, FIVE, "Exclude car ("+c.getRoad()+" "+c.getNumber()+") type ("+c.getType()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
     				carList.remove(carList.get(carIndex));
     				carIndex--;
     				continue;
@@ -1213,7 +1213,7 @@ public class TrainBuilder extends TrainCommon{
 	
 	/**
 	 * Check departure staging track to see if engines and cars are available to
-	 * a new train.
+	 * a new train.  Also confirm that the car type and road are accepted by the train.
 	 * 
 	 * @return true is there are engines and cars available.
 	 */
@@ -1234,15 +1234,31 @@ public class TrainBuilder extends TrainCommon{
 			List<String> cars = carManager.getCarsByIdList();
 			for (int i=0; i<cars.size(); i++){
 				Car car = carManager.getCarById(cars.get(i));
-				if (car.getTrack() == departStageTrack && car.getRouteLocation() != null){
-					addLine(file, ONE, MessageFormat.format(rb.getString("buildStagingDepart"),
-							new Object[]{departStageTrack.getName(), car.getTrain().getName()}));
-					return false;
+				if (car.getTrack() == departStageTrack){
+					// has track been assigned to another train?
+					if (car.getRouteLocation() != null){
+						addLine(file, ONE, MessageFormat.format(rb.getString("buildStagingDepart"),
+								new Object[]{departStageTrack.getName(), car.getTrain().getName()}));
+						return false;
+					}
+					// does the train accept the car type from the staging track?
+					if (!train.acceptsTypeName(car.getType())){
+						addLine(file, THREE, MessageFormat.format(rb.getString("buildStagingDepartCarType"),
+								new Object[]{departStageTrack.getName(), car.getRoad()+" "+car.getNumber(), car.getType(), train.getName()}));
+						return false;
+					}
+					// does the train accept the car road from the staging track?
+					if (!train.acceptsRoadName(car.getRoad())){
+						addLine(file, THREE, MessageFormat.format(rb.getString("buildStagingDepartCarRoad"),
+								new Object[]{departStageTrack.getName(), car.getRoad()+" "+car.getNumber(), car.getRoad(), train.getName()}));
+						return false;
+					}
 				}
+
 			}
 		}
-		return true;
-	}
+	return true;
+}
 
 	private void buildFailed(PrintWriter file, String string){
 		train.setStatus(BUILDFAILED);

@@ -58,7 +58,7 @@ import jmri.jmrit.operations.routes.RouteManager;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.40 $
+ * @version $Revision: 1.41 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -397,9 +397,8 @@ public class OperationsTrainsTest extends TestCase {
 		cmanager.register(c6);
 		
 		Car c7 = new Car("CP", "777");
-		c7.setType("Boxcar");
+		c7.setType("Flat");
 		c7.setLength("50");
-		// should not pick this car up, moves = 6 vs 0 for c8
 		c7.setMoves(6);	
 		Assert.assertEquals("Box Car 777 Length", "50", c7.getLength());
 		cmanager.register(c7);
@@ -626,9 +625,6 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Train Name", "Southbound Through Freight", train1.getName());
 		train1.setRequirements(Train.CABOOSE);
 		train1.setCabooseRoad("CP");
-		//train1.addTypeName("Caboose");
-		//train1.addTypeName("Boxcar");
-		//train1.addTypeName("Diesel");
 		train1.deleteTypeName("Flat");
 		train1.setRoadOption("All");
 		train1.setRoute(r1);
@@ -638,10 +634,9 @@ public class OperationsTrainsTest extends TestCase {
 		Train train2 = new Train("2", "Southbound Fast Freight");
 		Assert.assertEquals("Train Id", "2", train2.getId());
 		Assert.assertEquals("Train Name", "Southbound Fast Freight", train2.getName());
-		train2.deleteTypeName("Caboose");
+		// there are boxcars waiting in staging so build should fail
 		train2.deleteTypeName("Boxcar");
 		train2.deleteTypeName("Flat");
-		//train2.addTypeName("Diesel");
 		train2.setRoute(r1);
 		train2.setDepartureTime("22", "45");
 		tmanager.register(train2);
@@ -666,9 +661,14 @@ public class OperationsTrainsTest extends TestCase {
 		// Try building without engines
 		train1.build();
 		train2.build();
-		// both should build
+		//Only train 1 should build
 		Assert.assertEquals("Train 1 After 1st Build without engines", true, train1.getBuilt());
-		Assert.assertEquals("Train 2 After 1st Build without engines", true, train2.getBuilt());
+		Assert.assertEquals("Train 2 After 1st Build exclude Boxcar", false, train2.getBuilt());
+		 
+		// now allow train 2 to service Boxcars
+		train2.addTypeName("Boxcar");
+		train2.build();
+		Assert.assertEquals("Train 2 After Build include Boxcar", true, train2.getBuilt());
 		
 		// check train 1
 		Assert.assertEquals("Car c1 After Build without engines should be assigned to Train 1", train1, c1.getTrain());
@@ -1073,29 +1073,23 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Engine e3 After Build should be assigned to Train 2", train2, e3.getTrain());
 		Assert.assertEquals("Engine e4 After Build should be assigned to Train 2", train2, e4.getTrain());
 		Assert.assertEquals("Car c2 After Build should be assigned to Train 2", train2, c2.getTrain());
+		Assert.assertEquals("Car c3 After Build should be assigned to Train 2", train2, c3.getTrain());
 		Assert.assertEquals("Car c5 After Build should be assigned to Train 2", train2, c5.getTrain());
 		Assert.assertEquals("Car c6 After Build should be assigned to Train 2", train2, c6.getTrain());
-		// train 2 does not accept Boxcars or Flat
-		Assert.assertEquals("Car c3 After Build should NOT be assigned to Train 2", null, c3.getTrain());
+		// train 2 does not accept Flat
 		Assert.assertEquals("Car c7 After Build should NOT be assigned to Train 2", null, c7.getTrain());
 		Assert.assertEquals("Car c9 After Build should NOT be assigned to Train 2", null, c9.getTrain());
-		// now allow Boxcars
-		train2.addTypeName("Boxcar");
-		train2.build();
-		// c3 has less moves than c7, and c9 is a Flat
-		Assert.assertEquals("Car c3 After Build 2 should be assigned to Train 2", train2, c3.getTrain());
-		Assert.assertEquals("Car c7 After Build 2 should NOT be assigned to Train 2", null, c7.getTrain());
-		Assert.assertEquals("Car c9 After Build 2 should NOT be assigned to Train 2", null, c9.getTrain());
+
 		// now allow Flat
 		train2.addTypeName("Flat");
 		train2.build();
-		// c9 has less moves than c3 and c7, but there's not enough room for c9 at destination
-		Assert.assertEquals("Car c3 After Build 3 should be assigned to Train 2", train2, c3.getTrain());
-		Assert.assertEquals("Car c7 After Build 3 should NOT be assigned to Train 2", null, c7.getTrain());
+		// c9 and c7 have less moves than c3, but there's not enough room for c9 at destination
+		Assert.assertEquals("Car c3 After Build 3 should be assigned to Train 2", null, c3.getTrain());
+		Assert.assertEquals("Car c7 After Build 3 should NOT be assigned to Train 2", train2, c7.getTrain());
 		Assert.assertEquals("Car c9 After Build 3 should NOT be assigned to Train 2", null, c9.getTrain());
-		// c3 is assigned to Staging Track South End 1 its load will swap
-		Assert.assertEquals("Car c3 After Build 3 destination", "South End 1", c3.getDestinationTrackName());
-		Assert.assertEquals("Car c3 load After Build 3", "E", c3.getLoad());
+		// c7 is assigned to Staging Track South End 1 its load will swap
+		Assert.assertEquals("Car c7 After Build 3 destination", "South End 1", c7.getDestinationTrackName());
+		Assert.assertEquals("Car c7 load After Build 3", "E", c7.getLoad());
 		// increase the size of staging
 		l3s1.setLength(400);
 		// allow default load swaps
