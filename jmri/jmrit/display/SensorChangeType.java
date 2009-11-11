@@ -61,6 +61,7 @@ public class SensorChangeType {
         boolean momentary;
         boolean forceControl;
         boolean icon;
+        boolean text;
         NamedIcon active;
         NamedIcon inconsistent;
         NamedIcon inactive;
@@ -90,7 +91,8 @@ public class SensorChangeType {
         momentary = l.getMomentary();
         forceControl = l.getForceControlOff();
         icon = l.isIcon();
-        if (l.getOriginalText()==null)
+        text = l.isText();
+        if ((l.getOriginalText()==null) && (l.isIcon())&&(l.isText()))
             strText = l.getText();
         else
             strText = l.getOriginalText();
