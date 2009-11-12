@@ -10,6 +10,7 @@ import jmri.SignalHeadManager;
 import jmri.TurnoutManager;
 import jmri.NamedBean;
 import jmri.Manager;
+import jmri.jmrit.logix.OBlockManager;
 import jmri.util.NamedBeanComparator;
 
 import java.beans.PropertyChangeListener;
@@ -22,6 +23,32 @@ import java.util.TreeSet;
 import javax.swing.table.AbstractTableModel;
 
 /**
+ * Abstract class to make pick lists for NamedBeans.
+ * <P>
+ * Concrete pick list classe for many beans are include at the end of
+ * this file.  This class also has instantiation methods serve as a factory
+ * for those classes.
+ * <P>
+ * Note: Extensions of this class must call init() after instantiation.
+ *
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ * <P>
+ *
+ * @author      Pete Cressman Copyright (C) 2009
+ * @version
+ */
+/**
 * Table model for pick lists in IconAdder
 */
 public abstract class PickListModel extends AbstractTableModel implements PropertyChangeListener {
@@ -32,10 +59,16 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     public static final int UNAME_COLUMN = 1;
     public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
+    /**
+    * Default constructor makes a table sorted by System Name.
+    */
     public PickListModel() {
         super();
     }
 
+    /**
+    * Subclasses MUST call this method at creation
+    */
     public void init() {
         //log.debug("manager "+getManager());
         getManager().addPropertyChangeListener(this);   // for adds and deletes
@@ -48,7 +81,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
 
     public int getIndexOf(NamedBean bean) {
         for (int i=0; i<_pickList.size(); i++) {
-            if (bean.getSystemName().equals(_pickList.get(i).getSystemName())) {
+            if (_pickList.get(i).equals(bean)) {
                 return i;
             }
         }
@@ -66,14 +99,14 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
                 _pickList.get(i).removePropertyChangeListener(this);
             }
         }
+        List <String> systemNameList = getManager().getSystemNameList();
         TreeSet <NamedBean>ts = new TreeSet<NamedBean>(new NamedBeanComparator());
 
-        List <String> systemNameList = getManager().getSystemNameList();
         Iterator <String> iter = systemNameList.iterator();
         while (iter.hasNext()) {
             ts.add(getBySystemName(iter.next()));
         }
-        _pickList = new ArrayList <NamedBean> (ts.size());
+        _pickList = new ArrayList <NamedBean> (systemNameList.size());
 
         Iterator <NamedBean> it = ts.iterator();
         while(it.hasNext()) {
@@ -148,23 +181,26 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         getManager().removePropertyChangeListener(this);
     }
 
-    static PickListModel turnoutPickModelInstance() {
+    public static PickListModel turnoutPickModelInstance() {
         return new TurnoutPickModel();
     }
-    static PickListModel sensorPickModelInstance() {
+    public static PickListModel sensorPickModelInstance() {
         return new SensorPickModel();
     }
-    static PickListModel signalPickModelInstance() {
+    public static PickListModel signalPickModelInstance() {
         return new SignalPickModel();
     }
-    static PickListModel memoryPickModelInstance() {
+    public static PickListModel memoryPickModelInstance() {
         return new MemoryPickModel();
     }
-    static PickListModel reporterPickModelInstance() {
+    public static PickListModel reporterPickModelInstance() {
         return new ReporterPickModel();
     }
-    static PickListModel lightPickModelInstance() {
+    public static PickListModel lightPickModelInstance() {
         return new LightPickModel();
+    }
+    public static PickListModel oBlockPickModelInstance() {
+        return new OBlockPickModel();
     }
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PickListModel.class.getName());
@@ -251,7 +287,6 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         }
     }
 
-
     class LightPickModel extends PickListModel {
         LightManager manager;
         LightPickModel () {
@@ -267,3 +302,20 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
             return manager.provideLight(name);
         }
     }
+
+    class OBlockPickModel extends PickListModel {
+        OBlockManager manager;
+        OBlockPickModel () {
+            manager = InstanceManager.oBlockManagerInstance();
+        }
+        public Manager getManager() {
+            return manager;
+        }
+        public NamedBean getBySystemName(String name) {
+            return manager.getBySystemName(name);
+        }
+        public NamedBean addBean(String name) {
+            return manager.provideOBlock(name);
+        }
+    }
+

@@ -6,10 +6,8 @@ import jmri.Light;
 import jmri.Turnout;
 import jmri.Sensor;
 import jmri.SignalHead;
-//import jmri.Manager;
 import jmri.Memory;
 import jmri.Reporter;
-//import jmri.NamedBean;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.Roster;
@@ -1557,7 +1555,11 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         		removeMarkers();
             }
         });
-         
+
+        if (jmri.InstanceManager.oBlockManagerInstance().getSystemNameList().size() > 1) {
+            menuBar.add(jmri.jmrit.logix.WarrantTableAction.makeWarrantMenu());
+        }
+
         targetFrame.addHelpMenu("package.jmri.jmrit.display.PanelTarget", true);
 
         // show menubar?
@@ -1572,8 +1574,8 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         setScrollable(SCROLL_BOTH);
 
         return targetFrame;
-
     }
+
     BasicStroke DASHED_LINE = new BasicStroke(1f, BasicStroke.CAP_BUTT, 
                                     BasicStroke.JOIN_BEVEL,
                                     10f, new float[] {10f, 10f}, 0f);

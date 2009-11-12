@@ -590,7 +590,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (log.isDebugEnabled()) log.debug("Bounds: r.x= "+r.x+", r.y= "+r.y+", r.width= "+
                                             r.width+", r.height= "+r.height);
         _waitDialog.repaint(0, r.x, r.y, r.width, r.height);
-        _waitDialog.validate();
         _waitDialog.setVisible(false);
         _waitDialog.pack();
         return waitText;
