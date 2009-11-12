@@ -21,7 +21,7 @@ import java.util.Hashtable;
  * Table Model for edit of schedules used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.7 $
+ * @version   $Revision: 1.8 $
  */
 public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -143,7 +143,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     		focusSef = false;
     		sef.requestFocus();
     	}
-       	if (row > sysList.size())
+       	if (row >= sysList.size())
     		return "ERROR row "+row;
     	String id = sysList.get(row);
     	Schedule s = manager.getScheduleById(id);

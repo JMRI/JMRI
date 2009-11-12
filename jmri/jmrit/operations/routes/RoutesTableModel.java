@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.10 $
+ * @version   $Revision: 1.11 $
  */
 public class RoutesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -130,7 +130,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     		focusRef = false;
     		ref.requestFocus();
     	}
-    	if (row > sysList.size())
+    	if (row >= sysList.size())
     		return "ERROR unknown "+row;
     	String locId = sysList.get(row);
     	Route r = manager.getRouteById(locId);

@@ -19,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.11 $
+ * @version   $Revision: 1.12 $
  */
 public class TrackTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -156,7 +156,7 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     		focusEditFrame = false;
     		tef.requestFocus();
     	}
-    	if(row > tracksList.size())
+    	if(row >= tracksList.size())
     		return "ERROR row "+row;
     	String tracksId = tracksList.get(row);
     	Track track = _location.getTrackById(tracksId);

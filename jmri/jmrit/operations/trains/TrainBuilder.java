@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.59 $
+ * @version             $Revision: 1.60 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -74,7 +74,7 @@ public class TrainBuilder extends TrainCommon{
 	 * 3. Optional, train must depart with the required number of moves (cars)
 	 * 4. Add caboose or car with FRED to train if required
 	 * 5. All cars and engines must leave staging tracks
-	 * 6  When departing staging find a track matching engine requirements
+	 * 6  When departing staging find a track matching train requirements
 	 * 7. If a train is assigned to staging, all cars and engines must go there  
 	 * 8. Service locations based on train direction, location car types and roads
 	 * 9. Ignore track direction when train is a local (serves one location)
@@ -182,7 +182,7 @@ public class TrainBuilder extends TrainCommon{
 			addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildTerminateStaging"),new Object[]{terminateLocation.getName(), Integer.toString(stagingTracksTerminate.size())}));
 			for (int i=0; i<stagingTracksTerminate.size(); i++){
 				terminateStageTrack = terminateLocation.getTrackById(stagingTracksTerminate.get(i));
-				if (terminateStageTrack.getNumberRS() == 0 && terminateStageTrack.getDropRS() == 0){
+				if (checkTerminateStagingTrack(fileOut)){
 					addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildStagingAvail"),new Object[]{terminateStageTrack.getName(), terminateLocation.getName()}));
 					break;
 				} 
@@ -690,10 +690,13 @@ public class TrainBuilder extends TrainCommon{
 		log.debug("Done building train "+train.getName());
 	}
 	
-	// get the engines for this train. If departStageTrack != null, then engines must
-	// come from that track location (staging).  Returns true if engines found, else false.
-	// This routine will also pick the destination track if the train is
-	// terminating into staging, therefore this routine should only be called once when return is true.
+	/**
+	 * Get the engines for this train. If departing from staging
+	 * (departStageTrack != null) engines must come from that track.
+	 * 
+	 * @param fileOut
+	 * @return true if engines found.
+	 */
 	private boolean getEngines(PrintWriter fileOut){
 		// show engine types that this train will service
 		String[] engineTypes = EngineTypes.instance().getNames();
@@ -805,24 +808,26 @@ public class TrainBuilder extends TrainCommon{
 			}
 		}
 		// now load the number of engines into the train
-		Track terminateTrack = null;
+		Track terminateTrack = terminateStageTrack;
 		for (int indexEng=0; indexEng<engineList.size(); indexEng++){
 			Engine engine = engineManager.getEngineById(engineList.get(indexEng));
 			train.setLeadEngine(engine);	//load lead engine
 			// find a track for engine(s) at destination
-			List<String> destTracks = terminateLocation.getTracksByMovesList(null);
-			for (int s = 0; s < destTracks.size(); s++){
-				terminateTrack = terminateLocation.getTrackById(destTracks.get(s));
-				if (terminateTrack.getLocType().equals(Track.STAGING) && (terminateTrack.getNumberRS()>0 || terminateTrack.getDropRS()>0)){
+			if (terminateTrack == null){
+				List<String> destTracks = terminateLocation.getTracksByMovesList(null);
+				for (int s = 0; s < destTracks.size(); s++){
+					terminateTrack = terminateLocation.getTrackById(destTracks.get(s));
+					if (terminateTrack.getLocType().equals(Track.STAGING) && (terminateTrack.getNumberRS()>0 || terminateTrack.getDropRS()>0)){
+						terminateTrack = null;
+						continue;
+					}
+					String status = engine.testDestination(terminateLocation, terminateTrack);
+					if(status == Engine.OKAY){
+						break;
+					} 
+					addLine(fileOut, FIVE, "Can't drop engine ("+engine.getRoad()+" "+engine.getNumber()+") to track (" +terminateTrack.getName()+") due to "+status);
 					terminateTrack = null;
-					continue;
 				}
-				String status = engine.testDestination(terminateLocation, terminateTrack);
-				if(status == Engine.OKAY){
-					break;
-				} 
-				addLine(fileOut, FIVE, "Can't drop engine ("+engine.getRoad()+" "+engine.getNumber()+") to track (" +terminateTrack.getName()+") due to "+status);
-				terminateTrack = null;
 			}
 			if (terminateTrack == null && (reqNumEngines>0 || leavingStaging)){
 				addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildNoDestEngine"),new Object[]{engine.getRoad()+" "+engine.getNumber(),
@@ -1257,8 +1262,43 @@ public class TrainBuilder extends TrainCommon{
 
 			}
 		}
-	return true;
-}
+		return true;
+	}
+	
+	/**
+	 * Checks to see if staging track can accept train.
+	 * @param file
+	 * @return true if staging track is empty, not reserved, and accepts
+	 * car and engine types and roads.
+	 */
+	private boolean checkTerminateStagingTrack(PrintWriter file){
+		if (terminateStageTrack.getNumberRS() != 0 || terminateStageTrack.getDropRS() != 0){
+			addLine(file, FIVE, "Staging track ("+terminateStageTrack.getName()+") is not available");
+			return false;
+		}
+		// check go see if location/track will accept the train's car and engine types
+		String[] types = train.getTypeNames();
+		for (int i=0; i<types.length; i++){
+			if (!terminateLocation.acceptsTypeName(types[i])){
+				addLine(file, FIVE, "Location ("+terminateLocation.getName()+") does not accept type ("+types[i]+")");
+				return false;			
+			}
+			if (!terminateStageTrack.acceptsTypeName(types[i])){
+				addLine(file, FIVE, "Staging track ("+terminateStageTrack.getName()+") does not accept type ("+types[i]+")");
+				return false;			
+			}
+		}
+		// check go see if track will accept the train's car and engine roads
+		if (train.getRoadOption().equals(train.INCLUDEROADS)){
+			String[] roads = train.getRoadNames();
+			for (int i=0; i<roads.length; i++){
+				if (!terminateStageTrack.acceptsTypeName(roads[i]))
+					addLine(file, FIVE, "Staging track ("+terminateStageTrack.getName()+") does not accept raod ("+roads[i]+")");
+				return false;
+			}
+		}
+		return true;	
+	}
 
 	private void buildFailed(PrintWriter file, String string){
 		train.setStatus(BUILDFAILED);
