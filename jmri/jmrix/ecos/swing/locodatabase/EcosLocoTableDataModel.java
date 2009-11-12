@@ -25,7 +25,7 @@ import jmri.util.table.ButtonRenderer;
 /**
  * Table data model for display of jmri.jmrix.ecos.EcosLocoAddressManager manager contents
  * @author		Kevin Dickerson   Copyright (C) 2009
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  */
 abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -94,12 +94,13 @@ abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractT
 	 * <P>
 	 * Note that events will come both from the jmri.jmrix.ecos.EcosLocoAddressManagers and also from the manager
 	 */
-	boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-//		return (e.getPropertyName().indexOf("Start Signal")>=0 || e.getPropertyName().indexOf("Appearance")>=0 
+    boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+//		return (e.getPropertyName().indexOf("Start Signal")>=0 || e.getPropertyName().indexOf("Appearance")>=0
 //		        || e.getPropertyName().indexOf("Finish Signal")>=0);
-    	return (e.getPropertyName().indexOf("Start Signal")>=0 || e.getPropertyName().indexOf("Finish Signal")>=0);
-
-	}
+    	//return (e.getPropertyName().indexOf("Start Signal")>=0 || e.getPropertyName().indexOf("Finish Signal")>=0);
+        refreshSelections();
+        return true;
+    }
 
     public int getRowCount() {
         return ecosObjectIdList.size();
@@ -206,11 +207,15 @@ abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractT
                 new DefaultTableCellRenderer();
         renderer.setToolTipText("Click for combo box");
         Rosterid.setCellRenderer(renderer);
-
-    
-    
     }
-    
+
+    public void refreshSelections(){
+        System.out.println("Refresh of combo list " + ecosObjectIdList.size());
+        Roster.instance().updateComboBoxGlobal(selections);
+        selections.insertItemAt(" ",0);
+        selections.setSelectedIndex(-1);
+        fireTableRowsUpdated(0, getRowCount());
+    }
     public int getPreferredWidth(int col) {
         switch (col) {
         case ECOSOBJECTCOL:
