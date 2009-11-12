@@ -60,7 +60,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class Maintenance
@@ -514,7 +514,7 @@ public class Maintenance
                     if (v.getName().equals(sysName) || v.getName().equals(userName))
                     {
                         tempText = tempText + MessageFormat.format(rbm.getString("VariableReference"),
-                                        new Object[] { "\t\t", v.getTypeString(), v.getDataString()});
+                                        new Object[] { "\t\t", v.getTestTypeString(), v.getDataString()});
                         found = true;
                         referenceCount++;
                     }
@@ -1081,7 +1081,7 @@ public class Maintenance
                 if (v.getName().equals(sysName) || v.getName().equals(userName))
                 {
                     tempText = tempText + MessageFormat.format(rbm.getString("VariableReference"),
-                                    new Object[] { "\t", v.getTypeString(), v.getDataString()});
+                                    new Object[] { "\t", v.getTestTypeString(), v.getDataString()});
                     found = true;
                     //referenceCount++; Don't count, this conditional is orphaned by logix(es)
                 }
