@@ -10,6 +10,7 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.Timer;
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;
+import jmri.jmrit.logix.Warrant;
 import jmri.util.PythonInterp;
 
  /**
@@ -30,10 +31,12 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
+
+    public static final boolean PARKS_DEBUG = false;
 
 	static final ResourceBundle rbx = ResourceBundle
 			.getBundle("jmri.jmrit.beantable.LogixTableBundle");
@@ -55,6 +58,18 @@ public class DefaultConditional extends AbstractNamedBean
     protected ArrayList <ConditionalAction> _actionList = new ArrayList<ConditionalAction>();
 
 	private int _currentState = Conditional.UNKNOWN;
+
+    /**
+    *  Inverse map
+    */
+    public static int getIndexInTable(int[] table, int entry) {
+        for (int i=0; i<table.length; i++) {
+            if (entry == table[i]) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
 	/**
 	 * Get antecedent (boolean expression) of Conditional
@@ -142,15 +157,11 @@ public class DefaultConditional extends AbstractNamedBean
 	}		
 	
     /**
-	 * Calculate this Conditional, triggering either or both actions if the user 
-	 *   specified conditions are met, and the Logix is enabled.
-	 * Note: if any state variable evaluates false, the Conditional calculates
-	 *   to false.  If all state variables evaluate true, the Conditional 
-	 *   calculates to true.  So, the first false state variable results in 
-	 *   a false state for the conditional.
-	 * Sets the state of the conditional.
-	 * Returns the calculated state of this Conditional.
-	 */
+	 * Calculate this Conditional. 
+    * When _enabled is false, Conditional.calculate will compute the state of the conditional,
+    * but will not trigger its actions. When _enabled is true, the state is computed
+    * and if the state has changed, will trigger all its actions.
+    */
 	public int calculate (boolean enabled, PropertyChangeEvent evt) {
 		// check if  there are no state variables
 		if (_variableList.size()==0) {
@@ -202,6 +213,9 @@ public class DefaultConditional extends AbstractNamedBean
 		int newState = FALSE;
         if (log.isDebugEnabled()) log.debug("Conditional \""+getUserName()+"\" ("+getSystemName()+") has calculated its state to be "+
                   result+". current state is "+_currentState+".  enabled= "+enabled);
+        if (PARKS_DEBUG) { System.out.println("Conditional \""+getUserName()+"\" ("+getSystemName()+") has calculated its state to be "+
+                  result+". current state is "+_currentState+".  enabled= "+enabled);
+        }
 		if (result) newState = TRUE;
         if (newState != _currentState) {
             setState(newState);
@@ -482,7 +496,7 @@ public class DefaultConditional extends AbstractNamedBean
         int currentState = _currentState;
 		for (int i = 0; i < _actionList.size(); i++) {
             ConditionalAction action = _actionList.get(i);
-            //log.debug("Actual! currentState= "+_currentState+" action = "+action.getOptionString()+" "+action.getTypeString()+" "+action.getActionString());
+            int neededAction = actionNeeded; 
             int option = action.getOption();
 			if ( ((currentState==TRUE) && (option==ACTION_OPTION_ON_CHANGE_TO_TRUE)) ||
 				((currentState==FALSE) && (option==ACTION_OPTION_ON_CHANGE_TO_FALSE)) ||
@@ -492,6 +506,7 @@ public class DefaultConditional extends AbstractNamedBean
 				SignalHead h = null;
 				Logix x = null;	
 				Light lgt = null;
+                Warrant w = null;
                 int value = 0;
                 Timer timer = null;
                 int type = action.getType(); 
@@ -527,7 +542,7 @@ public class DefaultConditional extends AbstractNamedBean
 							if (timer==null) {
 								action.setListener(new TimeTurnout(i));
 								timer = new Timer(2000, action.getListener());
-								timer.setRepeats(false);
+								timer.setRepeats(true);
 							}
 							// Start the Timer to set the turnout
                             value = getIntegerValue(action);
@@ -685,7 +700,7 @@ public class DefaultConditional extends AbstractNamedBean
 							if (timer==null) {
 								action.setListener(new TimeSensor(i));
 								timer = new Timer(2000, action.getListener());
-								timer.setRepeats(false);
+								timer.setRepeats(true);
 							}
 							// Start the Timer to set the turnout
                             value = getIntegerValue(action);
@@ -860,51 +875,51 @@ public class DefaultConditional extends AbstractNamedBean
 						InstanceManager.timebaseInstance().setRun(false);
                         actionCount++;
 						break;
-                                        case Conditional.ACTION_CONTROL_AUDIO:
-                                                Audio audio = InstanceManager.audioManagerInstance().getAudio(action.getDeviceName());
-                                                if (audio.getSubType()==Audio.SOURCE) {
-                                                    AudioSource audioSource = (AudioSource) audio;
-                                                    switch (action.getActionData()) {
-                                                        case Audio.CMD_PLAY:
-                                                            audioSource.play();
-                                                            break;
-                                                        case Audio.CMD_STOP:
-                                                            audioSource.stop();
-                                                            break;
-                                                        case Audio.CMD_PLAY_TOGGLE:
-                                                            audioSource.togglePlay();
-                                                            break;
-                                                        case Audio.CMD_PAUSE:
-                                                            audioSource.pause();
-                                                            break;
-                                                        case Audio.CMD_RESUME:
-                                                            audioSource.resume();
-                                                            break;
-                                                        case Audio.CMD_PAUSE_TOGGLE:
-                                                            audioSource.togglePause();
-                                                            break;
-                                                        case Audio.CMD_REWIND:
-                                                            audioSource.rewind();
-                                                            break;
-                                                        case Audio.CMD_FADE_IN:
-                                                            audioSource.fadeIn();
-                                                            break;
-                                                        case Audio.CMD_FADE_OUT:
-                                                            audioSource.fadeOut();
-                                                            break;
-                                                        case Audio.CMD_RESET_POSITION:
-                                                            audioSource.resetCurrentPosition();
-                                                            break;
-                                                    }
-                                                } else if (audio.getSubType()==Audio.LISTENER) {
-                                                    AudioListener audioListener = (AudioListener) audio;
-                                                    switch (action.getActionData()) {
-                                                        case Audio.CMD_RESET_POSITION:
-                                                            audioListener.resetCurrentPosition();
-                                                            break;
-                                                    }
-                                                }
-                                                break;
+                    case Conditional.ACTION_CONTROL_AUDIO:
+                            Audio audio = InstanceManager.audioManagerInstance().getAudio(action.getDeviceName());
+                            if (audio.getSubType()==Audio.SOURCE) {
+                                AudioSource audioSource = (AudioSource) audio;
+                                switch (action.getActionData()) {
+                                    case Audio.CMD_PLAY:
+                                        audioSource.play();
+                                        break;
+                                    case Audio.CMD_STOP:
+                                        audioSource.stop();
+                                        break;
+                                    case Audio.CMD_PLAY_TOGGLE:
+                                        audioSource.togglePlay();
+                                        break;
+                                    case Audio.CMD_PAUSE:
+                                        audioSource.pause();
+                                        break;
+                                    case Audio.CMD_RESUME:
+                                        audioSource.resume();
+                                        break;
+                                    case Audio.CMD_PAUSE_TOGGLE:
+                                        audioSource.togglePause();
+                                        break;
+                                    case Audio.CMD_REWIND:
+                                        audioSource.rewind();
+                                        break;
+                                    case Audio.CMD_FADE_IN:
+                                        audioSource.fadeIn();
+                                        break;
+                                    case Audio.CMD_FADE_OUT:
+                                        audioSource.fadeOut();
+                                        break;
+                                    case Audio.CMD_RESET_POSITION:
+                                        audioSource.resetCurrentPosition();
+                                        break;
+                                }
+                            } else if (audio.getSubType()==Audio.LISTENER) {
+                                AudioListener audioListener = (AudioListener) audio;
+                                switch (action.getActionData()) {
+                                    case Audio.CMD_RESET_POSITION:
+                                        audioListener.resetCurrentPosition();
+                                        break;
+                                }
+                            }
+                            break;
 					case Conditional.ACTION_JYTHON_COMMAND:
 						if (!(action.getActionString().equals(""))) {
 					        PythonInterp.getPythonInterpreter();
@@ -927,11 +942,91 @@ public class DefaultConditional extends AbstractNamedBean
 							actionCount++;
 						}
 						break;
+                    case Conditional.ACTION_ALLOCATE_WARRANT_ROUTE:
+                        w = InstanceManager.warrantManagerInstance().getWarrant(action.getDeviceName());
+						if (w == null) {
+							log.error("invalid Warrant name in action - "+action.getDeviceName());
+						}
+						else {
+                            int idx = w.allocateRoute();
+							if (idx >= 0) {
+                                log.error("unable to allocate Warrant Route - "+action.getDeviceName()+
+                                          " at Block index "+idx);
+                            }
+                            actionCount++;
+						}
+                        break;
+                    case Conditional.ACTION_DEALLOCATE_WARRANT_ROUTE:
+                        w = InstanceManager.warrantManagerInstance().getWarrant(action.getDeviceName());
+						if (w == null) {
+							log.error("invalid Warrant name in action - "+action.getDeviceName());
+						}
+						else {
+							w.deAllocate();
+                            actionCount++;
+                        }
+                        break;
+                    case Conditional.ACTION_SET_ROUTE_TURNOUTS:
+                        w = InstanceManager.warrantManagerInstance().getWarrant(action.getDeviceName());
+						if (w == null) {
+							log.error("invalid Warrant name in action - "+action.getDeviceName());
+						}
+						else {
+                            int idx = w.setRoute(0, null);
+							if (idx >= 0) {
+                                log.error("Only the first "+(idx+1)+" turnouts were set on on warrant route - "+action.getDeviceName());
+                            }
+                            actionCount++;
+						}
+                        break; 
+                    case Conditional.ACTION_SET_TRAIN_ID:
+                        w = InstanceManager.warrantManagerInstance().getWarrant(action.getDeviceName());
+						if (w == null) {
+							log.error("invalid Warrant name in action - "+action.getDeviceName());
+						}
+						else {
+                            if (!w.setTrainId(action.getActionString())) {
+                                log.error("Unable to find train Id "+action.getActionString()+" in Roster  - "+action.getDeviceName());
+                            }
+                            actionCount++;
+						}
+                        break;
+                    case Conditional.ACTION_RUN_WARRANT:
+                        w = InstanceManager.warrantManagerInstance().getWarrant(action.getDeviceName());
+						if (w == null) {
+							log.error("invalid Warrant name in action - "+action.getDeviceName());
+						}
+						else {
+                            w.runAutoTrain(true);   // error message, if any, logged by warrant
+                            actionCount++;
+						}
+                        break;
+                    case Conditional.ACTION_CONTROL_TRAIN:
+                        w = InstanceManager.warrantManagerInstance().getWarrant(action.getDeviceName());
+						if (w == null) {
+							log.error("invalid Warrant name in action - "+action.getDeviceName());
+						}
+						else {
+                            if (!w.controlRunTrain(action.getActionData())) {
+                                log.info("Train "+w.getTrainId()+" not running  - "+action.getDeviceName());
+                            }
+                            actionCount++;
+						}
+                        break;
 				}
 			}
+            if (PARKS_DEBUG) { System.out.println("Global state= "+_currentState+" Local state= "+currentState+
+                                                 " - Action "+(actionNeeded>neededAction ? "WAS" : "NOT")+
+                                                 " taken for action = "+action.getTypeString()+" "+action.getActionString()+
+                                                 " for device "+action.getDeviceName()+" "+action.getOptionString());
+            }
 		}
         if (log.isDebugEnabled()) log.debug("Conditional \""+getUserName()+"\" ("+getSystemName()+") has taken "+actionCount
                   +" actions of "+actionNeeded+" actions needed on change to "+currentState);
+        if (PARKS_DEBUG) { System.out.println("Conditional \""+getUserName()+"\" ("+getSystemName()+" has "+_actionList.size()+
+                                             " actions and has executed "+actionCount
+                  +" actions of "+actionNeeded+" actions needed on state change to "+currentState);
+        }
 	}
 
 	/**

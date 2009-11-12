@@ -82,7 +82,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  * @author  Dave Duchamp Copywright (C) 2009
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
@@ -219,7 +219,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
     /**
      * Handles Block sensor going INACTIVE: this block is empty
      */
-    void goingInactive() {
+    public void goingInactive() {
         if (log.isDebugEnabled()) log.debug("Block "+getSystemName()+" goes UNOCCUPIED");
         setValue(null);
         setDirection(Path.NONE);
@@ -232,7 +232,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
      * Handles Block sensor going ACTIVE: this block is now occupied, 
      * figure out from who and copy their value.
      */
-	void goingActive() {
+	public void goingActive() {
         // index through the paths, counting
         int count = 0;
         Path next = null;

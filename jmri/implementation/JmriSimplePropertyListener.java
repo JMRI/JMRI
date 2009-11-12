@@ -75,6 +75,11 @@ public class JmriSimplePropertyListener implements PropertyChangeListener
         _clients.get(idx).calculate(_enabled, evt);
     }	
 	
+    /**
+    * When _enabled is false, Conditional.calculate will compute the state of the conditional,
+    * but will not trigger its actions. When _enabled is true, Conditional.calculates its
+    * state and trigger its actions if its state has changed.
+    */
     public void propertyChange(PropertyChangeEvent evt) {
         //log.debug("\""+_varName+"\" sent PropertyChangeEvent "+evt.getPropertyName()+
         //    ", old value =\""+evt.getOldValue()+"\", new value =\""+evt.getNewValue()+

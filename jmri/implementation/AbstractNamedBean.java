@@ -10,7 +10,7 @@ import jmri.*;
  * Implements the parameter binding support.
  *
  * @author      Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public abstract class AbstractNamedBean implements NamedBean, java.io.Serializable {
 
@@ -49,6 +49,15 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     }
     private String comment;
 
+    public String getDisplayName() {
+        String name = getUserName();
+        if (name != null && name.length() > 0) {
+            return name;
+        } else {
+            return getSystemName();
+        }
+    }
+
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
     //		public void firePropertyChange(String propertyName,
@@ -74,6 +83,10 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         return pcs.getPropertyChangeListeners().length;
     }
 
+    public synchronized java.beans.PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
     public String getSystemName() {return mSystemName;}
     public String getUserName() {return mUserName;}
     public void   setUserName(String s) {
@@ -85,7 +98,9 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     private String mUserName;
     private String mSystemName;
 
-    protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
+    protected void firePropertyChange(String p, Object old, Object n) { 
+        if (pcs!=null) pcs.firePropertyChange(p,old,n);
+    }
 
     public void dispose() {
         pcs = null;

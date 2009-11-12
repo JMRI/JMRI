@@ -8,7 +8,7 @@ import jmri.*;
  * Abstract class providing the basic logic of the SignalHead interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public abstract class AbstractSignalHead extends AbstractNamedBean
     implements SignalHead, java.io.Serializable {
@@ -96,7 +96,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
     }
     
     final static private ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
-    final static private int[] validStates = new int[]{
+    final static public int[] validStates = new int[]{
         DARK, 
         RED, 
         YELLOW,
@@ -107,7 +107,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         FLASHGREEN,
         FLASHLUNAR
     };
-    final static private String[] validStateNames = new String[]{
+    final static public String[] validStateNames = new String[]{
         rb.getString("SignalHeadStateDark"),
         rb.getString("SignalHeadStateRed"),
         rb.getString("SignalHeadStateYellow"),

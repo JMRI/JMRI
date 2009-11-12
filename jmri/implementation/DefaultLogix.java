@@ -7,6 +7,7 @@ import jmri.Sensor;
 import jmri.Turnout;
 import jmri.SignalHead;
 import jmri.Memory;
+import jmri.jmrit.logix.Warrant;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -14,7 +15,7 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -305,7 +306,14 @@ public class DefaultLogix extends AbstractNamedBean
                             break;
                         case Conditional.TYPE_MEMORY_EQUALS:
                         case Conditional.TYPE_MEMORY_COMPARE:
+                        case Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE:
+                        case Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE:
                             varListenerType = LISTENER_TYPE_MEMORY;
+                            break;
+                        case Conditional.TYPE_ROUTE_FREE:
+                        case Conditional.TYPE_ROUTE_OCCUPIED:
+                        case Conditional.TYPE_ROUTE_ALLOCATED:
+                            varListenerType = LISTENER_TYPE_WARRANT;
                             break;
                         case Conditional.TYPE_FAST_CLOCK_RANGE:
                             varListenerType = LISTENER_TYPE_FASTCLOCK;
@@ -397,6 +405,10 @@ public class DefaultLogix extends AbstractNamedBean
                                 listener = new JmriSimplePropertyListener("value", LISTENER_TYPE_MEMORY, 
                                                                           varName, varType, conditional);
                                 break;
+                            case LISTENER_TYPE_WARRANT:
+                                listener = new JmriSimplePropertyListener("value", LISTENER_TYPE_WARRANT, 
+                                                                          varName, varType, conditional);
+                                break;
                             case LISTENER_TYPE_FASTCLOCK:
                                 listener = new JmriClockPropertyListener("minutes", LISTENER_TYPE_FASTCLOCK, 
                                                                          varName, varType, conditional,
@@ -432,6 +444,7 @@ public class DefaultLogix extends AbstractNamedBean
                             case LISTENER_TYPE_CONDITIONAL:
                             case LISTENER_TYPE_LIGHT:
                             case LISTENER_TYPE_MEMORY:
+                            case LISTENER_TYPE_WARRANT:
                                 listener = _listeners.get(positionOfListener);
                                 listener.addConditional(conditional);
                                 break;
@@ -697,6 +710,15 @@ public class DefaultLogix extends AbstractNamedBean
 				}
 				m.addPropertyChangeListener (listener);
 				return;
+            case LISTENER_TYPE_WARRANT:
+				Warrant w = InstanceManager.warrantManagerInstance().
+										provideWarrant(listener.getDevName());
+				if (w==null) {
+					msg= "warrant";
+					break;
+				}
+				w.addPropertyChangeListener (listener);
+                return;
             case LISTENER_TYPE_FASTCLOCK:
                 Timebase tb = InstanceManager.timebaseInstance();
 				tb.addMinuteChangeListener (listener);
@@ -772,6 +794,16 @@ public class DefaultLogix extends AbstractNamedBean
                     }
                     // remove listener for this Memory
                     m.removePropertyChangeListener(listener);
+                    return;
+                case LISTENER_TYPE_WARRANT:
+                    Warrant w = InstanceManager.warrantManagerInstance().
+                                            provideWarrant(listener.getDevName());
+                    if (w==null) {
+                        msg= "warrant";
+                        break;
+                    }
+                    // remove listener for this Memory
+                    w.removePropertyChangeListener(listener);
                     return;
                 case LISTENER_TYPE_FASTCLOCK:
                     Timebase tb = InstanceManager.timebaseInstance();

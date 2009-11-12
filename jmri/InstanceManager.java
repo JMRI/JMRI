@@ -4,6 +4,8 @@ package jmri;
 
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.display.LayoutBlockManager;
+import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.roster.RosterIconFactory;
 
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ import jmri.managers.DefaultRouteManager;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.49 $
+ * @version			$Revision: 1.50 $
  */
 public class InstanceManager {
 
@@ -115,6 +117,22 @@ public class InstanceManager {
         // This must be replaced when we start registering specific implementations
         instance().blockManager = new BlockManager();
         return instance().blockManager;
+    }
+
+    static public OBlockManager oBlockManagerInstance()  {
+        if (instance().oBlockManager != null) return instance().oBlockManager;
+        // As a convenience, we create a default object if none was provided explicitly.
+        // This must be replaced when we start registering specific implementations
+        instance().oBlockManager = new OBlockManager();
+        return instance().oBlockManager;
+    }
+
+    static public WarrantManager warrantManagerInstance()  {
+        if (instance().warrantManager != null) return instance().warrantManager;
+        // As a convenience, we create a default object if none was provided explicitly.
+        // This must be replaced when we start registering specific implementations
+        instance().warrantManager = new WarrantManager();
+        return instance().warrantManager;
     }
 
     static public SectionManager sectionManagerInstance()  {
@@ -293,6 +311,9 @@ public class InstanceManager {
     }
 
     private BlockManager blockManager = null;
+	
+    private OBlockManager oBlockManager = null;
+    private WarrantManager warrantManager = null;
 	
 	private SectionManager sectionManager = null;
 	

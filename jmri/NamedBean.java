@@ -26,7 +26,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, 2002, 2003, 2004
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  * @see         jmri.Manager
  */
 public interface NamedBean {
@@ -54,6 +54,11 @@ public interface NamedBean {
      * information.
      */
     public String getSystemName();
+
+    /*
+    * return user name if it exists, otherwise return System name
+    */
+    public String getDisplayName();
 
     /**
      * Request a call-back when a bound property changes.

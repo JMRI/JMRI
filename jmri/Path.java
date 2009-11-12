@@ -30,7 +30,7 @@ import java.util.List;
  * been extended from the initial implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class Path  {
 
@@ -68,6 +68,10 @@ public class Path  {
     public List<BeanSetting> getSettings() {
 		return _beans;
     }
+	
+	public void removeSetting(BeanSetting t) {
+	    _beans.remove(t);
+	}
 	
 	public void clearSettings() {
 		for (int i = _beans.size();i>0;i--) {

@@ -4,6 +4,7 @@ import jmri.*;
 import jmri.ConditionalAction;
 import jmri.jmrit.Sound;
 import jmri.jmrit.beantable.LogixTableAction;
+import jmri.jmrit.logix.Warrant;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.Timer;
@@ -19,7 +20,7 @@ import javax.swing.Timer;
  *
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 
@@ -198,7 +199,7 @@ public class DefaultConditionalAction implements ConditionalAction {
 	 * return String name of this consequent type
 	 */
 	public String getTypeString() {
-        return getTypeString(_type);
+        return getActionTypeString(_type);
     }
 
 	/**
@@ -212,10 +213,45 @@ public class DefaultConditionalAction implements ConditionalAction {
         return getActionDataString(_type, _actionData);
     }
 
+
+	/**
+	 * Convert Variable Type to Text String
+	 */
+	public static String getItemTypeString(int t) {
+		switch (t) {
+            case Conditional.ITEM_TYPE_SENSOR:
+                return (rbx.getString("Sensor"));
+            case Conditional.ITEM_TYPE_TURNOUT:
+                return (rbx.getString("Turnout"));
+            case Conditional.ITEM_TYPE_LIGHT:
+                return (rbx.getString("Light"));
+            case Conditional.ITEM_TYPE_SIGNALHEAD:
+                return (rbx.getString("SignalHead"));
+            case Conditional.ITEM_TYPE_SIGNALMAST:
+                return (rbx.getString("SignalMast"));
+            case Conditional.ITEM_TYPE_MEMORY:
+                return (rbx.getString("Memory"));
+            case Conditional.ITEM_TYPE_LOGIX:
+                return (rbx.getString("Logix"));
+            case Conditional.ITEM_TYPE_WARRANT:
+                return (rbx.getString("Warrant"));
+            case Conditional.ITEM_TYPE_CLOCK:
+                return (rbx.getString("FastClock"));
+            case Conditional.ITEM_TYPE_AUDIO:
+                return (rbx.getString("Audio"));
+            case Conditional.ITEM_TYPE_SCRIPT:
+                return (rbx.getString("Script"));
+            case Conditional.ITEM_TYPE_OTHER:
+                return (rbx.getString("Other"));
+        }
+        return "";
+    }
+
+
 	/**
 	 * Convert Consequent Type to Text String
 	 */
-	public static String getTypeString(int t) {
+	public static String getActionTypeString(int t) {
 		switch (t) {
     		case Conditional.ACTION_NONE:
     			return (rbx.getString("ActionNone"));
@@ -277,8 +313,21 @@ public class DefaultConditionalAction implements ConditionalAction {
                 return (rbx.getString("ActionControlAudio"));
             case Conditional.ACTION_JYTHON_COMMAND:
             	return (rbx.getString("ActionJythonCommand"));
+    		case Conditional.ACTION_ALLOCATE_WARRANT_ROUTE:
+    			return (rbx.getString("ActionAllocateWarrant"));
+    		case Conditional.ACTION_DEALLOCATE_WARRANT_ROUTE:
+    			return (rbx.getString("ActionDeallocateWarrant"));
+    		case Conditional.ACTION_SET_ROUTE_TURNOUTS:
+    			return (rbx.getString("ActionSetWarrantTurnouts"));
+    		case Conditional.ACTION_RUN_WARRANT:
+    			return (rbx.getString("ActionRunWarrant"));
+    		case Conditional.ACTION_CONTROL_TRAIN:
+    			return (rbx.getString("ActionControlTrain"));
+           case Conditional.ACTION_SET_TRAIN_ID:
+               return (rbx.getString("ActionSetTrainId"));
+                
 		}
-        log.warn("Unexpected parameter to getTypeString("+t+")");
+        log.warn("Unexpected parameter to getActionTypeString("+t+")");
 		return ("");
 	}
 
@@ -307,7 +356,7 @@ public class DefaultConditionalAction implements ConditionalAction {
         if (str != null)
         {
             for (int i = 1; i <= Conditional.NUM_ACTION_TYPES; i++) {
-                if (str.equals(getTypeString(i))) {
+                if (str.equals(getActionTypeString(i))) {
                     return (i);
                 }
             }
@@ -383,6 +432,12 @@ public class DefaultConditionalAction implements ConditionalAction {
         else if (str.equals(rbx.getString("AppearanceFlashGreen"))) {
             return SignalHead.FLASHGREEN;
         }
+        else if (str.equals(rbx.getString("AppearanceLunar"))) {
+            return SignalHead.LUNAR;
+        }
+        else if (str.equals(rbx.getString("AppearanceFlashLunar"))) {
+            return SignalHead.FLASHLUNAR;
+        }
         else if (str.equals(rbx.getString("AudioSourcePlay"))) {
             return Audio.CMD_PLAY;
         }
@@ -430,8 +485,10 @@ public class DefaultConditionalAction implements ConditionalAction {
                     return (rbx.getString("TurnoutClosed"));
                 } else if (data == Turnout.THROWN) {
                     return (rbx.getString("TurnoutThrown"));
-                } else
+                } else if (data == Route.TOGGLE) {
                     return (rbx.getString("Toggle"));
+                }
+                break;
             case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
                 return DefaultSignalHead.getDefaultStateName(data);
     		case Conditional.ACTION_SET_SENSOR:
@@ -441,22 +498,28 @@ public class DefaultConditionalAction implements ConditionalAction {
                     return (rbx.getString("SensorActive"));
                 } else if (data == Sensor.INACTIVE) {
                     return (rbx.getString("SensorInactive"));
-                } else
+                } else if (data == Route.TOGGLE) {
                     return (rbx.getString("Toggle"));
+                }
+                break;
     		case Conditional.ACTION_SET_LIGHT:
                 if (data == Light.ON) {
                     return (rbx.getString("LightOn"));
                 } else if (data == Light.OFF) {
                     return (rbx.getString("LightOff"));
-                } else
+                }  else if (data == Route.TOGGLE) {
                     return (rbx.getString("Toggle"));
+                }
+                break;
     		case Conditional.ACTION_LOCK_TURNOUT:
                 if (data == Turnout.UNLOCKED) {
                     return (rbx.getString("TurnoutUnlock"));
                 } else if (data == Turnout.LOCKED) {
                     return (rbx.getString("TurnoutLock"));
-                } else
+                } else if (data == Route.TOGGLE) {
                     return (rbx.getString("Toggle"));
+                }
+                break;
             case Conditional.ACTION_CONTROL_AUDIO:
                 switch (data) {
                     case Audio.CMD_PLAY:
@@ -480,12 +543,61 @@ public class DefaultConditionalAction implements ConditionalAction {
                     case Audio.CMD_RESET_POSITION:
                         return (rbx.getString("AudioResetPosition"));
                 }
-                
+                break;
+            case Conditional.ACTION_CONTROL_TRAIN:
+                if (data == Warrant.HALT) {
+                    return (rbx.getString("WarrantHalt"));
+                } else if (data == Warrant.RESUME) {
+                    return (rbx.getString("WarrantResume"));
+                } else
+                    return (rbx.getString("WarrantAbort"));
+            //case Conditional.ACTION_SET_TRAIN_ID:
+            //    return (rbx.getString("WarrantAbort"));
 		}
-//        log.warn("Unexpected parameters to getActionDataString("+t+", "+data+
-//                  ")  type= "+getTypeString(t));
         return "";
     }
+
+/*
+    public String toString() {
+        String option = getActionTypeString(_type);
+        int itemType = Conditional.TEST_TO_ITEM[_type];
+        String type = getTypeString();
+		switch (itemType) {
+            case Conditional.ITEM_TYPE_SENSOR:
+                if ((_type==Conditional.ACTION_RESET_DELAYED_SENSOR) || 
+                                (_type==Conditional.ACTION_DELAYED_SENSOR)) {
+                    return java.text.MessageFormat.format(rbx.getString("actionDescrpt"),
+                             new Object[] {rbx.getString("Sensor"), _deviceName, type} );
+                }
+                if ((_type==Conditional.ACTION_SET_SENSOR) || (_type==Conditional.ACTION_DELAYED_SENSOR)
+                                || (_type==Conditional.ACTION_RESET_DELAYED_SENSOR)) {
+                }
+            case Conditional.ITEM_TYPE_TURNOUT:
+                return (rbx.getString("Turnout"));
+            case Conditional.ITEM_TYPE_LIGHT:
+                return (rbx.getString("Light"));
+            case Conditional.ITEM_TYPE_SIGNALHEAD:
+                return (rbx.getString("SignalHead"));
+            case Conditional.ITEM_TYPE_SIGNALMAST:
+                return (rbx.getString("SignalMast"));
+            case Conditional.ITEM_TYPE_MEMORY:
+                return (rbx.getString("Memory"));
+            case Conditional.ITEM_TYPE_LOGIX:
+                return (rbx.getString("Logix"));
+            case Conditional.ITEM_TYPE_WARRANT:
+                return (rbx.getString("Warrant"));
+            case Conditional.ITEM_TYPE_CLOCK:
+                return (rbx.getString("FastClock"));
+            case Conditional.ITEM_TYPE_AUDIO:
+                return (rbx.getString("Audio"));
+            case Conditional.ITEM_TYPE_SCRIPT:
+                return (rbx.getString("Script"));
+            case Conditional.ITEM_TYPE_OTHER:
+                return (rbx.getString("Other"));
+        }
+        return "";
+    }
+*/
 
     public String toString() {
         String str = getOptionString()+", "+ getTypeString();
@@ -504,7 +616,13 @@ public class DefaultConditionalAction implements ConditionalAction {
                 case Conditional.ACTION_COPY_MEMORY:
                 case Conditional.ACTION_SET_LIGHT_INTENSITY:
                 case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
-                    str = str + ", " + _deviceName;
+                case Conditional.ACTION_ALLOCATE_WARRANT_ROUTE:
+                case Conditional.ACTION_DEALLOCATE_WARRANT_ROUTE:
+                    str = str + ", \""+ _deviceName+"\".";
+                    break;
+                case Conditional.ACTION_SET_ROUTE_TURNOUTS:
+                case Conditional.ACTION_RUN_WARRANT:
+                    str = str +" "+rbx.getString("onWarrant")+", \""+ _deviceName+"\".";
                     break;
                 case Conditional.ACTION_SET_SENSOR:
                 case Conditional.ACTION_SET_TURNOUT:
@@ -516,8 +634,12 @@ public class DefaultConditionalAction implements ConditionalAction {
                 case Conditional.ACTION_DELAYED_TURNOUT:
                 case Conditional.ACTION_DELAYED_SENSOR:
                 case Conditional.ACTION_CONTROL_AUDIO:
-                    str = str + ", " + _deviceName + " " + rbx.getString("to")
+                    str = str + ", \""+ _deviceName +"\" " + rbx.getString("to")
                           + " " + getActionDataString();
+                    break;
+                case Conditional.ACTION_CONTROL_TRAIN:
+                    str = str +" "+rbx.getString("onWarrant")+" \""+ _deviceName +"\" "
+                          +rbx.getString("to")+ " " + getActionDataString();
                     break;
             }
         }
@@ -558,6 +680,10 @@ public class DefaultConditionalAction implements ConditionalAction {
                     break;
                 case Conditional.ACTION_JYTHON_COMMAND:
                     str = str + " " + rbx.getString("ExecJythonCmd")+ " "+ _actionString+ ".";
+                    break;
+                case Conditional.ACTION_SET_TRAIN_ID:
+                    str = str + ", \""+_actionString+"\" "+rbx.getString("onWarrant")+
+                        " \""+_deviceName+"\".";
                     break;
             }
         }
