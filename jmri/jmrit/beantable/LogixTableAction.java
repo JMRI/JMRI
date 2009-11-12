@@ -19,13 +19,12 @@ import jmri.SignalHead;
 import jmri.implementation.DefaultSignalHead;
 import jmri.Route;
 import jmri.Memory;
-import jmri.implementation.DefaultConditional;
 import jmri.implementation.AbstractSignalHead;
+import jmri.implementation.DefaultConditional;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 
 import java.awt.FlowLayout;
-import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -77,7 +76,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.49 $
+ * @version $Revision: 1.50 $
  */
 
 public class LogixTableAction extends AbstractTableAction {

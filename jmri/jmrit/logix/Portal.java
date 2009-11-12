@@ -1,11 +1,9 @@
 package jmri.jmrit.logix;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import jmri.Block;
-import jmri.NamedBean;
 import jmri.SignalHead;
 //import jmri.Path;
 

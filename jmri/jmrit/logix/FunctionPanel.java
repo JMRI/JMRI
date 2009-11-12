@@ -8,7 +8,6 @@ import java.awt.event.KeyEvent;
 import java.util.ResourceBundle;
 
 import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
@@ -315,7 +314,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.1 $
+	 * @version $Revision: 1.2 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{

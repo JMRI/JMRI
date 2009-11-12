@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.beans.PropertyChangeListener;
 
-import jmri.Block;
 import jmri.Path;
 import jmri.Sensor;
 import jmri.SignalHead;
@@ -131,10 +130,10 @@ public class OBlock extends jmri.Block {
     */
     public void removePortal(Portal portal) {
         int oldSize = _portals.size();
-        String name = portal.getName();
-        ArrayList list = (ArrayList)getPaths();
+        ArrayList <Path> list = (ArrayList <Path>)getPaths();
         int oldPathSize = list.size();
         if (portal != null){
+            String name = portal.getName();
             Iterator <Path> iter = getPaths().iterator();
             while (iter.hasNext()) {
                 OPath path = (OPath)iter.next();
@@ -200,7 +199,7 @@ public class OBlock extends jmri.Block {
     */
     public void addPath(OPath path) {
         String pName = path.getName();
-        List list = getPaths();
+        List <Path> list = getPaths();
         for (int i=0; i<list.size(); i++) {
             if (pName.equals(((OPath)list.get(i)).getName())) {
                 return;

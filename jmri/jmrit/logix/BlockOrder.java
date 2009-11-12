@@ -1,12 +1,7 @@
 
 package jmri.jmrit.logix;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import jmri.BeanSetting;
-import jmri.Block;
-import jmri.Path;
+//import jmri.Path;
 import jmri.SignalHead;
 
 /**

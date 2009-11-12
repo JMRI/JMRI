@@ -15,7 +15,6 @@ import java.util.ResourceBundle;
 //import java.awt.FlowLayout;
 
 import javax.swing.AbstractAction;
-import javax.swing.AbstractCellEditor;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -33,9 +32,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.event.CellEditorListener;
 
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;

@@ -2,7 +2,6 @@ package jmri.jmrit.logix;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 import jmri.BeanSetting;
@@ -89,6 +88,7 @@ public class OPath extends jmri.Path  {
         Portal portal = ((OBlock)getBlock()).getPortalByName(name);
         if (portal==null) {
             log.warn("portal \""+portal+"\" not found in block for path: "+toString());
+            return false;
         }
         return portal.isValid();
     }

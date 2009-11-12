@@ -3,7 +3,6 @@ package jmri.jmrit.logix;
 import jmri.DccThrottle;
 import jmri.util.SwingUtil;
 import java.util.ResourceBundle;
-import jmri.util.MouseInputAdapterInstaller;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -11,32 +10,22 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
-import javax.swing.event.MouseInputAdapter;
-
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
-import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-//import javax.swing.event.InternalFrameAdapter;
-import javax.swing.event.InternalFrameEvent;
 
 /**
  *  A JInternalFrame that contains a JSlider to control loco speed, and buttons
@@ -48,7 +37,7 @@ import javax.swing.event.InternalFrameEvent;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.1 $
+ * @version    $Revision: 1.2 $
  */
 public class ControlPanel extends JInternalFrame
 {
@@ -77,7 +66,7 @@ public class ControlPanel extends JInternalFrame
      */
     
     private boolean trackSlider = false;
-    private boolean trackSliderDefault = false;
+    //private boolean trackSliderDefault = false;
     private long trackSliderMinInterval = 200;          // milliseconds
     private long lastTrackedSliderMovementTime = 0;
     
@@ -85,7 +74,7 @@ public class ControlPanel extends JInternalFrame
     private int MAX_SPEED = 126;
     
     // Save the speed step mode to aid in storage of the throttle.
-    private int _speedStepMode = DccThrottle.SpeedStepMode128;
+    //private int _speedStepMode = DccThrottle.SpeedStepMode128;
     /**
      *  Constructor.
      */
@@ -196,7 +185,7 @@ public class ControlPanel extends JInternalFrame
             SpeedStep128Button.setSelected(true);
             MAX_SPEED=126;
         }
-        _speedStepMode=steps;
+        //_speedStepMode=steps;
         
         // rescale the speed slider to match the new speed step mode
         speedSlider.setMaximum(MAX_SPEED);

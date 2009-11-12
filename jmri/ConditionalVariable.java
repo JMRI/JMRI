@@ -1,7 +1,6 @@
 package jmri;
 
 import jmri.jmrit.beantable.LogixTableAction;
-import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import java.util.Date;
 import java.util.ResourceBundle;
