@@ -15,13 +15,11 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.DefaultCellEditor;
-import javax.swing.DropMode;
+//import javax.swing.DropMode;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
@@ -32,17 +30,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.ListSelectionModel;
-import javax.swing.Renderer;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableColumn;
@@ -55,11 +49,8 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 
 import jmri.InstanceManager;
-import jmri.BeanSetting;
-import jmri.Block;
 import jmri.DccThrottle;
 import jmri.DccLocoAddress;
-import jmri.NamedBean;
 import jmri.Path;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -67,9 +58,6 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.display.PickListModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-
-import jmri.jmrit.throttle.ThrottleFrame;
-import jmri.jmrit.throttle.ThrottleFrameManager;
 
 /**
  * An WarrantAction contains the operating permissions and directives needed for
@@ -415,7 +403,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         if (text != null && text.length()>0) {
             setTitle(java.text.MessageFormat.format(rb.getString("TitleWarrant"), text));
         }
-        if (!text.equals(_warrant.getUserName())) {
+        if (text != null && !text.equals(_warrant.getUserName())) {
             if (JOptionPane.showConfirmDialog(this, java.text.MessageFormat.format(
                 rb.getString("makeCopy"), _warrant.getUserName(), text),
                     rb.getString("QuestionTitle"), JOptionPane.YES_NO_OPTION, 
@@ -638,7 +626,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         blockBox.setDragEnabled(true);
         blockBox.setTransferHandler(new DnDImportHandler());
         blockBox.setColumns(15);
-        blockBox.setDropMode(DropMode.USE_SELECTION);
+        //blockBox.setDropMode(DropMode.USE_SELECTION);
         blockBox.setSize(blockBox.getPreferredSize());
         boxPanel.add(blockBox);
         return boxPanel;
@@ -696,13 +684,43 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         DnDImportHandler() {
         }
 
-        public boolean canImport(TransferHandler.TransferSupport support) {
-            if (!support.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-                return false;
+        /////////////////////import
+        public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
+            if (log.isDebugEnabled()) log.debug("DnDImportHandler.canImport ");
+
+            boolean canDoIt = false;
+            for (int k=0; k<transferFlavors.length; k++){
+                if (transferFlavors[k].equals(DataFlavor.stringFlavor)) {
+                    return true;
+                }
             }
-            return true;
+            return false;
         }
 
+        public boolean importData(JComponent comp, Transferable tr) {
+            if (log.isDebugEnabled()) log.debug("DnDImportHandler.importData ");
+            DataFlavor[] flavors = new DataFlavor[] {DataFlavor.stringFlavor};
+
+            if (!canImport(comp, flavors)) {
+                return false;
+            }
+
+            try {
+                if (tr.isDataFlavorSupported(DataFlavor.stringFlavor) ) {
+                    String data = (String)tr.getTransferData(DataFlavor.stringFlavor);
+                    JTextField field = (JTextField)comp;
+                    field.setText(data);
+                    actionPerformed(new ActionEvent(field, _thisActionEventId, data));
+                    return true;
+                }
+            } catch (UnsupportedFlavorException ufe) {
+                log.warn("DnDImportHandler.importData: "+ufe.getMessage());
+            } catch (IOException ioe) {
+                log.warn("DnDImportHandler.importData: "+ioe.getMessage());
+            }
+            return false;
+        }
+        /* OB4
         public boolean importData(TransferHandler.TransferSupport support) {
             if (!canImport(support)) {
                 return false;
@@ -710,7 +728,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             Transferable t = support.getTransferable();
             String data = null;
             try {
-                data = (String)t.getTransferData(DataFlavor.stringFlavor);
+                data = (String)tr.getTransferData(DataFlavor.stringFlavor);
             } catch (UnsupportedFlavorException ufe) {
                 log.warn("DnDImportHandler.importData: "+ufe.getMessage());
             } catch (IOException ioe) {
@@ -721,6 +739,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             actionPerformed(new ActionEvent(field, _thisActionEventId, data));
             return true;
         }
+        */
     }
 
     class DnDExportHandler extends TransferHandler{
@@ -862,7 +881,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         if (portalBox!=null) {
             portalBox.removeAllItems();
         }
-        List list = block.getPaths();
+        List <Path> list = block.getPaths();
         if (list.size()==0) {
             JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                     rb.getString("NoPaths"), block.getDisplayName()),
@@ -1272,8 +1291,10 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     protected void StopRunTrain() {
         _warrant.setRunMode(Warrant.MODE_NONE, null, null, null, false);
         _warrant.removePropertyChangeListener(this);
-        _learnThrottle.dispose();
-        _learnThrottle = null;
+        if (_learnThrottle!=null) {
+            _learnThrottle.dispose();
+            _learnThrottle = null;
+        }
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -1587,7 +1608,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                         String str = ((String)value).toUpperCase();
                         if ( str.equals("SYNCH") || str.equals("SYNC")) {
                             if (_runBlind.isSelected()) {
-                                msg = msg = java.text.MessageFormat.format(rb.getString("CannotSynchBlind"),
+                                msg = java.text.MessageFormat.format(rb.getString("CannotSynchBlind"),
                                                                            _warrant.getDisplayName());
                             } else {
                                 ts.setTime("Synch");
@@ -1601,7 +1622,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                 case COMMAND_COLUMN:
                     String cmd = null;
                     if ((String)value == null){
-                        msg = rb.getString("badCommand");;
+                        msg = rb.getString("badCommand");
+                        break;
                     } else {
                         cmd = ((String)value).trim().toUpperCase();
                     }

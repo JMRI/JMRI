@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 
 import java.text.DecimalFormat;
@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.TreeSet;
 
 import javax.swing.Action;
 import javax.swing.ActionMap;
@@ -27,18 +26,17 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.AbstractAction;
 import javax.swing.DefaultCellEditor;
-import javax.swing.DropMode;
+//import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -48,16 +46,16 @@ import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JTable.DropLocation;
+import javax.swing.table.TableModel;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.TransferHandler;
-import javax.swing.TransferHandler.TransferSupport;
 
 import java.awt.datatransfer.Transferable; 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.datatransfer.StringSelection;
+
+import java.awt.dnd.*;
 import java.io.IOException;
 
 import jmri.BeanSetting;
@@ -72,8 +70,6 @@ import jmri.Turnout;
 
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import jmri.util.NamedBeanComparator;
-import jmri.util.JmriJFrame;
 import jmri.util.com.sun.TransferActionListener;
 import jmri.jmrit.display.PickListModel;
 
@@ -109,7 +105,6 @@ import jmri.jmrit.logix.OBlockManager;
 
 public class OBlockTableAction extends AbstractAction {
 
-    private ArrayList <OBlock> _blockList = new ArrayList <OBlock>();
     private ArrayList <Portal> _portalList = new ArrayList <Portal>();
 
     static int ROW_HEIGHT;
@@ -332,7 +327,7 @@ public class OBlockTableAction extends AbstractAction {
                         openPathTurnoutFrame(pathTurnoutName);
                     }
                 };
-                List list = block.getPaths();
+                List <Path> list = block.getPaths();
                 Iterator <Path> iter = block.getPaths().iterator();
                 while (iter.hasNext()) {
                     OPath path = (OPath)iter.next();
@@ -351,7 +346,7 @@ public class OBlockTableAction extends AbstractAction {
             JInternalFrame frame = new JInternalFrame(rbx.getString("TitleBlockTable"), true, false, false, true);
             _oBlockModel = new OBlockTableModel(this);
             _oBlockModel.init();
-            JTable blockTable = new JTable(_oBlockModel);
+            JTable blockTable = new DnDJTable(_oBlockModel);
             blockTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
             blockTable.getColumnModel().getColumn(OBlockTableModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));
             blockTable.getColumnModel().getColumn(OBlockTableModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
@@ -367,7 +362,7 @@ public class OBlockTableAction extends AbstractAction {
             }
             blockTable.sizeColumnsToFit(-1);
             blockTable.setDragEnabled(true);
-            blockTable.setDropMode(DropMode.USE_SELECTION);
+            //blockTable.setDropMode(DropMode.USE_SELECTION);
             blockTable.setTransferHandler(new DnDHandler(BLOCK_TABLE));
             setActionMappings(blockTable);
             ROW_HEIGHT = blockTable.getRowHeight();
@@ -422,7 +417,7 @@ public class OBlockTableAction extends AbstractAction {
             JInternalFrame frame = new JInternalFrame(rbx.getString("TitlePortalTable"), true, false, false, true);
             _portalModel = new PortalTableModel();
             _portalModel.init();
-            JTable portalTable = new JTable(_portalModel);
+            JTable portalTable = new DnDJTable(_portalModel);
             portalTable.getColumnModel().getColumn(_portalModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
             portalTable.getColumnModel().getColumn(_portalModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
             portalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -432,7 +427,7 @@ public class OBlockTableAction extends AbstractAction {
             }
             portalTable.sizeColumnsToFit(-1);
             portalTable.setDragEnabled(true);
-            portalTable.setDropMode(DropMode.USE_SELECTION);
+            //portalTable.setDropMode(DropMode.USE_SELECTION);
             portalTable.setTransferHandler(new DnDHandler(PORTAL_TABLE));
             setActionMappings(portalTable);
             int tableWidth = portalTable.getPreferredSize().width;
@@ -456,7 +451,7 @@ public class OBlockTableAction extends AbstractAction {
         JInternalFrame makeBlockPortalFrame() {
             JInternalFrame frame = new JInternalFrame(rbx.getString("TitleBlockPortalXRef"), true, false, false, true);
             _blockPortalXRefModel = new BlockPortalTableModel();
-            JTable blockPortalTable = new JTable(_blockPortalXRefModel);
+            JTable blockPortalTable = new DnDJTable(_blockPortalXRefModel);
             blockPortalTable.setDefaultRenderer(String.class, new jmri.jmrit.symbolicprog.ValueRenderer());
             blockPortalTable.setDefaultEditor(String.class, new jmri.jmrit.symbolicprog.ValueEditor());
             blockPortalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -511,7 +506,7 @@ public class OBlockTableAction extends AbstractAction {
             frame.init (block, this);
             BlockPathTableModel blockPathModel = frame.getModel();
             blockPathModel.init();
-            JTable blockPathTable = new JTable(blockPathModel);
+            JTable blockPathTable = new DnDJTable(blockPathModel);
             //blockPathTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
             blockPathTable.getColumnModel().getColumn(blockPathModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));
             blockPathTable.getColumnModel().getColumn(blockPathModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
@@ -519,7 +514,7 @@ public class OBlockTableAction extends AbstractAction {
             blockPathTable.getColumnModel().getColumn(blockPathModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
             blockPathTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             blockPathTable.setDragEnabled(true);
-            blockPathTable.setDropMode(DropMode.USE_SELECTION);
+            //blockPathTable.setDropMode(DropMode.USE_SELECTION);
             blockPathTable.setTransferHandler(new DnDHandler(BLOCK_PATH_TABLE));
             setActionMappings(blockPathTable);
             for (int i=0; i<blockPathModel.getColumnCount(); i++) {
@@ -556,7 +551,7 @@ public class OBlockTableAction extends AbstractAction {
             if (path==null) { return null; }
             PathTurnoutTableModel PathTurnoutModel = new PathTurnoutTableModel(path);
             PathTurnoutModel.init();
-            JTable PathTurnoutTable = new JTable(PathTurnoutModel);
+            JTable PathTurnoutTable = new DnDJTable(PathTurnoutModel);
             JComboBox box = new JComboBox(turnoutStates);
             //PathTurnoutTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
             PathTurnoutTable.getColumnModel().getColumn(PathTurnoutModel.SETTINGCOLUMN).setCellEditor(new DefaultCellEditor(box));
@@ -569,7 +564,7 @@ public class OBlockTableAction extends AbstractAction {
             }
             PathTurnoutTable.sizeColumnsToFit(-1);
             PathTurnoutTable.setDragEnabled(true);
-            PathTurnoutTable.setDropMode(DropMode.USE_SELECTION);
+            //PathTurnoutTable.setDropMode(DropMode.USE_SELECTION);
             PathTurnoutTable.setTransferHandler(new DnDHandler(TURNOUT_TABLE));
             setActionMappings(PathTurnoutTable);
             int tableWidth = PathTurnoutTable.getPreferredSize().width;
@@ -1374,6 +1369,9 @@ public class OBlockTableAction extends AbstractAction {
         private void deleteBlock(OBlock block) {
             if (log.isDebugEnabled()) log.debug("deleteBlock: "+
                                    (block!=null ? block.getDisplayName() : null)+" and its portals.");
+            if (block==null) {
+                return;
+            }
             List <Portal> list = block.getPortals();
             for (int i=0; i<list.size(); i++) {
                 Portal portal = list.get(i);
@@ -1449,11 +1447,14 @@ public class OBlockTableAction extends AbstractAction {
             List <NamedBean> list = _oBlockModel.getBeanList();
             int count = 0;
             int idx = 0;
-            while (count <= row)  {
-                count += ((OBlock)list.get(idx++)).getPortals().size();
+            OBlock block = null;
+            if (list.size() > 0) {
+                while (count <= row)  {
+                    count += ((OBlock)list.get(idx++)).getPortals().size();
+                }
+                block = (OBlock)list.get(--idx);
+                idx = row - (count - block.getPortals().size());
             }
-            OBlock block = (OBlock)list.get(--idx);
-            idx = row - (count - block.getPortals().size());
             if (col==BLOCK_NAME_COLUMN) {
                 if (idx==0) {
                     return (block!=null ? block.getDisplayName() : null);
@@ -1528,7 +1529,7 @@ public class OBlockTableAction extends AbstractAction {
 
         public void checkPathPortals() {
             // warn user of incomplete portals
-            List list = _block.getPaths();
+            List <Path> list = _block.getPaths();
             for (int i=0; i<list.size(); i++) {
                 OPath path = (OPath)list.get(i);
                 OBlock block = (OBlock)path.getBlock();
@@ -1950,16 +1951,16 @@ public class OBlockTableAction extends AbstractAction {
     /************************* DnD ******************************/
 
     public static final String TableCellFlavorMime = DataFlavor.javaJVMLocalObjectMimeType +
-               ";class=jmri.jmrit.beantable.OBlockTableAction.TableCellStringSelection";
+               ";class=jmri.jmrit.beantable.OBlockTableAction.TableCellSelection";
     public static DataFlavor TABLECELL_FLAVOR = new DataFlavor(
-                jmri.jmrit.beantable.OBlockTableAction.TableCellStringSelection.class,
-                "application/x-jmri.jmrit.beantable.OBlockTableAction.TableCellStringSelection");
+                jmri.jmrit.beantable.OBlockTableAction.TableCellSelection.class,
+                "application/x-jmri.jmrit.beantable.OBlockTableAction.TableCellSelection");
 
-    public class TableCellStringSelection extends StringSelection {
+    public class TableCellSelection extends StringSelection {
         int _row;
         int _col;
         int _who;
-        TableCellStringSelection( String data, int row, int col, int who) {
+        TableCellSelection( String data, int row, int col, int who) {
             super(data);
             _row = row;
             _col = col;
@@ -1971,8 +1972,8 @@ public class OBlockTableAction extends AbstractAction {
     }
 
     public class TableCellTransferable implements Transferable {
-        TableCellStringSelection _tcss;
-        TableCellTransferable(TableCellStringSelection tcss) {
+        TableCellSelection _tcss;
+        TableCellTransferable(TableCellSelection tcss) {
             _tcss = tcss;
         }
         public DataFlavor[] getTransferDataFlavors() {
@@ -2003,6 +2004,10 @@ public class OBlockTableAction extends AbstractAction {
             _type = t;
         }
 
+        public int getType() {
+            return _type;
+        }
+
         //////////////export
         public int getSourceActions(JComponent c) {
             return COPY;
@@ -2015,136 +2020,229 @@ public class OBlockTableAction extends AbstractAction {
             if (col<0 || row<0) {
                 return null;
             }
-            if (log.isDebugEnabled()) log.debug("TransferHandler.createTransferable: at table "+
+            if (log.isDebugEnabled()) log.debug("DnDHandler.createTransferable: at table "+
                                                 _type+" from ("+row+", "+col+") data= \""
                                                 +table.getModel().getValueAt(row, col)+"\"");
-            TableCellStringSelection tcss = new TableCellStringSelection(
+            TableCellSelection tcss = new TableCellSelection(
                                 (String)table.getModel().getValueAt(row, col), row, col, _type);
             return new TableCellTransferable(tcss);
         }
 
         public void exportDone(JComponent c, Transferable t, int action) {
-            if (log.isDebugEnabled()) log.debug("TransferHandler.exportDone at table "+_type);
+            if (log.isDebugEnabled()) log.debug("DnDHandler.exportDone at table "+_type);
         }
 
         /////////////////////import
-        public boolean canImport(TransferHandler.TransferSupport support) {
-            if (support.isDataFlavorSupported(TABLECELL_FLAVOR)) {
-                return true;
-            } else if (support.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-                return true;
-            }
-            JTable table = null;
-            AbstractTableModel model = null;
-            try {
-                table = (JTable)support.getComponent();
-                model = (AbstractTableModel)table.getModel();
-            } catch (Exception e) {
-                log.warn("TransferHandler.importData: at table "+_type+" e= "+e);
-            }
-            int row = -1;
-            int col = -1;
-            if (support.isDrop()) { //DnD
-                JTable.DropLocation dl = (JTable.DropLocation)support.getDropLocation();
-                row = dl.getRow();
-                col = dl.getColumn();
-            } else { //CCP
-                row = table.getSelectedRow();
-                col = table.getSelectedColumn();
-            }
-            if (col<0 || row<0) {
-                return false;
-            }
-            switch (_type) {
-                case BLOCK_TABLE:
-                    if ((col==OBlockTableModel.SYSNAMECOL) ||
-                        (col==OBlockTableModel.DELETE_COL) || 
-                        (col==OBlockTableModel.EDIT_COL)) {  return false; }
-                    break;
-                case PORTAL_TABLE:
-                    if ((col==PortalTableModel.DELETE_COL)) {  return false; }
-                    break;
-                case BLOCK_PATH_TABLE:
-                    if ((col==BlockPathTableModel.DELETE_COL) || 
-                        (col==BlockPathTableModel.EDIT_COL)) {  return false; }
-                    break;
-                case XREF_TABLE:
-                    return false;
-                case TURNOUT_TABLE:
-                    if (col==PathTurnoutTableModel.SETTINGCOLUMN) { return false; }
-                    break;
-            }
-            Transferable t = support.getTransferable();
-            String data = null;
-            if (t.isDataFlavorSupported(TABLECELL_FLAVOR)) {
-                try {
-                    // don't allow a cell import back into the cell exported from 
-                    TableCellStringSelection tcss = (TableCellStringSelection)t.getTransferData(TABLECELL_FLAVOR);
-                    if (row==tcss.getRow() && col==tcss.getCol() && _type==tcss.getWho()) {
-                        return false;
+        public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
+            if (log.isDebugEnabled()) log.debug("DnDHandler.canImport ");
+
+            boolean canDoIt = false;
+            for (int k=0; k<transferFlavors.length; k++){
+                if (transferFlavors[k].equals(TABLECELL_FLAVOR) || 
+                    transferFlavors[k].equals(DataFlavor.stringFlavor)) {
+                    if (comp instanceof JTable) { 
+                        canDoIt = true; 
+                        break;
                     }
                 }
-                catch (UnsupportedFlavorException ufe) { 
-                    log.warn("TransferHandler.importData: at table "+_type+" e= "+ufe);
-                    return false; 
+            }
+            if (!canDoIt) { return false; }
+            return true;
+        }
+
+        public boolean importData(JComponent comp, Transferable tr) {
+            if (log.isDebugEnabled()) log.debug("DnDHandler.importData ");
+            DataFlavor[] flavors = new DataFlavor[] {TABLECELL_FLAVOR, DataFlavor.stringFlavor};
+
+            if (!canImport(comp, flavors)) {
+                return false;
+            }
+
+            try {
+                if (tr.isDataFlavorSupported(TABLECELL_FLAVOR) ||
+                            tr.isDataFlavorSupported(DataFlavor.stringFlavor) ) {
+                    DnDJTable table = (DnDJTable)comp;
+                    AbstractTableModel model = (AbstractTableModel)table.getModel();
+                    int col = table.getSelectedColumn();
+                    int row = table.getSelectedRow();
+                    if (col>=0 && row>=0) {
+                        String data = (String)tr.getTransferData(DataFlavor.stringFlavor);
+                        model.setValueAt(data, row, col);
+                        model.fireTableDataChanged();
+                        if (log.isDebugEnabled()) 
+                            log.debug("DnDHandler.canImport: data= "+data+" dropped at ("+row+", "+col+")");
+                        return true;
+                    }
                 }
-                catch (IOException ioe) { 
-                    log.warn("TransferHandler.importData: at table "+_type+" e= "+ioe);
-                    return false;
-                }
+            }
+            catch (UnsupportedFlavorException ufe) { 
+                log.warn("DnDHandler.importData: at table e= "+ufe);
+            }
+            catch (IOException ioe) { 
+                log.warn("DnDHandler.importData: at table e= "+ioe);
             }
             return false;
         }
+    }
 
-        public boolean importData(TransferHandler.TransferSupport support) {
-            if (!canImport(support)) {
-                return false;
-            }
-            JTable table = null;
-            AbstractTableModel model = null;
-            try {
-                table = (JTable)support.getComponent();
-                model = (AbstractTableModel)table.getModel();
-            } catch (Exception e) {
-                log.warn("TransferHandler.importData: at table "+_type+" e= "+e);
-            }
-            int row = -1;
-            int col = -1;
-            if (support.isDrop()) { //DnD
-                JTable.DropLocation dl = (JTable.DropLocation)support.getDropLocation();
-                row = dl.getRow();
-                col = dl.getColumn();
-            } else { //CCP
-                row = table.getSelectedRow();
-                col = table.getSelectedColumn();
-            }
-            if (col<0 || row<0) {
-                return false;
-            }
-            // Get the string that is being dropped.
-            Transferable t = support.getTransferable();
-            String data = null;
-            if (t.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-                try {
-                    data = (String)t.getTransferData(DataFlavor.stringFlavor);
+    class DnDJTable extends JTable implements DropTargetListener,  
+                    DragGestureListener, DragSourceListener, Transferable {
+        Point _dropPoint;
+
+        DnDJTable (TableModel model) {
+            super (model);
+            DragSource dragSource = DragSource.getDefaultDragSource();
+            dragSource.createDefaultDragGestureRecognizer(this,
+                        DnDConstants.ACTION_COPY_OR_MOVE, this);
+            DropTarget dropTarget = new DropTarget(this, DnDConstants.ACTION_COPY, this);
+        }
+
+        Point getDropPoint() {
+            return _dropPoint;
+        }
+
+        private boolean dropOK(DropTargetDragEvent evt) {
+            Transferable tr = evt.getTransferable();
+            if (tr.isDataFlavorSupported(TABLECELL_FLAVOR) ||
+                            tr.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                _dropPoint = evt.getLocation();
+                DnDHandler handler = (DnDHandler)getTransferHandler();
+                int col = columnAtPoint(_dropPoint);
+                int row = rowAtPoint(_dropPoint);
+                int type = handler.getType();
+                switch (type) {
+                    case BLOCK_TABLE:
+                        if ((col==OBlockTableModel.SYSNAMECOL) ||
+                            (col==OBlockTableModel.DELETE_COL) || 
+                            (col==OBlockTableModel.EDIT_COL)) {  return false; }
+                        break;
+                    case PORTAL_TABLE:
+                        if ((col==PortalTableModel.DELETE_COL)) {  return false; }
+                        break;
+                    case BLOCK_PATH_TABLE:
+                        if ((col==BlockPathTableModel.DELETE_COL) || 
+                            (col==BlockPathTableModel.EDIT_COL)) { return false; }
+                        break;
+                    case XREF_TABLE:
+                        return false;
+                    case TURNOUT_TABLE:
+                        if (col==PathTurnoutTableModel.SETTINGCOLUMN) { return false; }
+                        break;
                 }
-                catch (UnsupportedFlavorException ufe) { 
-                    log.warn("TransferHandler.importData: at table "+_type+" e= "+ufe);
-                    return false; 
-                }
-                catch (IOException ioe) { 
-                    log.warn("TransferHandler.importData: at table "+_type+" e= "+ioe);
-                    return false;
+                if (tr.isDataFlavorSupported(TABLECELL_FLAVOR)) {
+                    try {
+                        // don't allow a cell import back into the cell exported from 
+                        TableCellSelection tcss = (TableCellSelection)tr.getTransferData(TABLECELL_FLAVOR);
+                        if (row==tcss.getRow() && col==tcss.getCol() && type==tcss.getWho()) {
+                            return false;
+                        }
+                    }
+                    catch (UnsupportedFlavorException ufe) { 
+                        log.warn("DnDJTable.importData: at table "+type+" e= "+ufe);
+                        return false; 
+                    }
+                    catch (IOException ioe) { 
+                        log.warn("DnDJTable.importData: at table "+type+" e= "+ioe);
+                        return false;
+                    }
                 }
             } else {
-                log.warn("TransferHandler.importData: supported DataFlavors not avaialable at table "+
-                                                _type+" from "+t.getClass().getName());
                 return false;
             }
-            if (log.isDebugEnabled()) log.debug("TransferHandler.importData: at table "+_type+" for ("+row+", "
-                                                +col+") data= \""+data+"\"");
-            model.setValueAt(data, row, col);
             return true;
+        }
+        /*************************** DropTargetListener ************************/
+        public void dragExit(DropTargetEvent evt) {
+            //if (log.isDebugEnabled()) log.debug("DnDJTable.dragExit ");
+            //evt.getDropTargetContext().acceptDrag(DnDConstants.ACTION_COPY);
+        }
+        public void dragEnter(DropTargetDragEvent evt) {
+            //if (log.isDebugEnabled()) log.debug("DnDJTable.dragEnter ");
+            if (!dropOK(evt)) {
+                evt.rejectDrag();
+            }
+        }
+        public void dragOver(DropTargetDragEvent evt) {
+            if (!dropOK(evt)) {
+                evt.rejectDrag();
+            }
+        }
+        public void dropActionChanged(DropTargetDragEvent dtde) {
+            //if (log.isDebugEnabled()) log.debug("DnDJTable.dropActionChanged ");
+        }
+        public void drop(DropTargetDropEvent evt) {
+            try {
+                Point pt = evt.getLocation();
+                String data = null;
+                Transferable tr = evt.getTransferable();
+                if (tr.isDataFlavorSupported(TABLECELL_FLAVOR) ||
+                            tr.isDataFlavorSupported(DataFlavor.stringFlavor) ) {
+                    AbstractTableModel model = (AbstractTableModel)getModel();
+                    int col = columnAtPoint(pt);
+                    int row = rowAtPoint(pt);
+                    if (col>=0 && row>=0) {
+                        TableCellSelection sel = (TableCellSelection)tr.getTransferData(TABLECELL_FLAVOR);
+                        data = (String)sel.getTransferData(DataFlavor.stringFlavor);
+                        model.setValueAt(data, row, col);
+                        model.fireTableDataChanged();
+                        if (log.isDebugEnabled()) 
+                            log.debug("DnDJTable.drop: data= "+data+" dropped at ("+row+", "+col+")");
+                        evt.dropComplete(true);
+                        return;
+                    }
+                } else {
+                    log.warn("TransferHandler.importData: supported DataFlavors not avaialable at table from "
+                             +tr.getClass().getName());
+                }
+            } catch(IOException ioe) {
+                ioe.printStackTrace();
+            } catch(UnsupportedFlavorException ufe) {
+                ufe.printStackTrace();
+            }
+            if (log.isDebugEnabled()) log.debug("DropJTree.drop REJECTED!");
+            evt.rejectDrop();
+        }
+        /**************** DragGestureListener ***************/
+        public void dragGestureRecognized(DragGestureEvent e) {
+            if (log.isDebugEnabled()) log.debug("DnDJTable.dragGestureRecognized ");
+            //Transferable t = getTransferable(this);
+            //e.startDrag(DragSource.DefaultCopyDrop, this, this); 
+        }
+        /**************** DragSourceListener ************/
+        public void dragDropEnd(DragSourceDropEvent e) {
+            if (log.isDebugEnabled()) log.debug("DnDJTable.dragDropEnd ");
+            }
+        public void dragEnter(DragSourceDragEvent e) {
+            //if (log.isDebugEnabled()) log.debug("DnDJTable.DragSourceDragEvent ");
+            }
+        public void dragExit(DragSourceEvent e) {
+            //if (log.isDebugEnabled()) log.debug("DnDJTable.dragExit ");
+            }
+        public void dragOver(DragSourceDragEvent e) {
+            //if (log.isDebugEnabled()) log.debug("DnDJTable.dragOver ");
+            }
+        public void dropActionChanged(DragSourceDragEvent e) {
+            //if (log.isDebugEnabled()) log.debug("DnDJTable.dropActionChanged ");
+            }
+        /*************** Transferable *********************/
+        public DataFlavor[] getTransferDataFlavors() {
+            //if (log.isDebugEnabled()) log.debug("DnDJTable.getTransferDataFlavors ");
+            return new DataFlavor[] { TABLECELL_FLAVOR };
+        }
+        public boolean isDataFlavorSupported(DataFlavor flavor) {
+            //if (log.isDebugEnabled()) log.debug("DragJLabel.isDataFlavorSupported ");
+            return TABLECELL_FLAVOR.equals(flavor);
+        }
+        public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {
+            if (log.isDebugEnabled()) log.debug("DnDJTable.getTransferData ");
+            if (isDataFlavorSupported(TABLECELL_FLAVOR)) {
+                int row = getSelectedRow();
+                int col = getSelectedColumn();
+                if (col>=0 && row>=0) {
+                    return getValueAt(row, col);
+                }
+            }
+            return null;
         }
     }
 
