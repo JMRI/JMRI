@@ -3,6 +3,8 @@
 package jmri.jmrit.beantable;
 
 import junit.framework.*;
+import junit.extensions.jfcunit.*;
+import junit.extensions.jfcunit.finder.*;
 
 import java.util.ResourceBundle;
 
@@ -25,29 +27,16 @@ import jmri.util.JUnitUtil;
  * 
  * @author	Pete Cressman  Copyright 2009
  */
-public class LogixTableActionTest extends jmri.util.SwingTestCase {
-
-    String[] _varNames = new String[] {"is1", "Sensor2", "it1", "Turnout1", "C1", "C2",
-                                       "il1", "Light2", "IMemory1", "FastClock", "Signal1", "Signal2",
-                                       "Signal3", "Signal4", "Signal5", "Signal6", "Signal7", "Signal8", 
-                                       "Signal9"};
-
-    String[] _actNames = new String[] {"Turnout10", "Signal10",  "Signal11",  "Signal12", "Signal13", "Signal14", 
-                                        "Route1", "Sensor10", "Sensor11", "Light10", "IMemory10", "IXTX", "IXTX", 
-                                        "SoundFile", "ScriptFile", "Turnout4", "Turnout5", "Sensor5", "Sensor6",
-                                        "Turnout11", "Turnout12", "FastClock", "FastClock", "FastClock",
-                                        "IMemory11", "Light15", "Light16"};
-
-    String[] _strData = new String[] {"", "",  "",  "", "", "", "", "", "10", "9:30", "IMemory5", "", "", 
-                                       "SoundFile.wav", "jython/Sensor-sound.py", "13", "", "15", "",
-                                        "22", "", "3:30", "", "", "IMemory19", "50", "100"};
-
-	static final ResourceBundle rbx = ResourceBundle
-			.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+public class LogixTableActionTest extends jmri.util.SwingTestCase 
+{
+    static final int NUM_STATE_VARS = 20;
+    static final int NUM_ACTIONS = 27;
+	static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     private static LogixTableAction _logixTable;
 
     public void testCreateLogix() throws Exception {
+        try {
         _logixTable.actionPerformed(null);
         _logixTable.addPressed(null);
         _logixTable._addUserName.setText("TestLogix");    
@@ -60,49 +49,108 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
         //_logixTable.helpPressed(null);
         _logixTable.conditionalUserName.setText("TestConditional");
         _logixTable.updateConditionalPressed(null);
+
+        // now close window
+        TestHelper.disposeWindow(_logixTable.editConditionalFrame,this);
+
         _logixTable.conditionalTableModel.setValueAt(null, 0, LogixTableAction.ConditionalTableModel.BUTTON_COLUMN);
-        _logixTable.addVariablePressed(null);
-        _logixTable.cancelEditVariablePressed();
-        for (int i=0; i<Conditional.NUM_STATE_VARIABLE_TYPES; i++)
-        {
+        Thread.sleep(1000);     // let Conditional window open
+
+        for (int i=0; i<2; i++){
             _logixTable.addVariablePressed(null);
-            _logixTable._variableTypeBox.setSelectedIndex(i);
-            _logixTable._variableNameField.setText(_varNames[i]);
-            _logixTable._variableData1Field.setText(_strData[i]);
-            _logixTable._variableData2Field.setText("11");
+            _logixTable._variableTypeBox.setSelectedIndex(Conditional.ITEM_TYPE_SENSOR);
+            _logixTable._variableStateBox.setSelectedIndex(i);
+            _logixTable._variableNameField.setText("IS"+i);
             _logixTable.updateVariablePressed();
         }
+        for (int i=0; i<2; i++){
+            _logixTable.addVariablePressed(null);
+            _logixTable._variableTypeBox.setSelectedIndex(Conditional.ITEM_TYPE_TURNOUT);
+            _logixTable._variableStateBox.setSelectedIndex(i);
+            _logixTable._variableNameField.setText("Turnout"+i);
+            _logixTable.updateVariablePressed();
+        }
+        for (int i=0; i<2; i++){
+            _logixTable.addVariablePressed(null);
+            _logixTable._variableTypeBox.setSelectedIndex(Conditional.ITEM_TYPE_LIGHT);
+            _logixTable._variableStateBox.setSelectedIndex(i);
+            _logixTable._variableNameField.setText("IL"+i);
+            _logixTable.updateVariablePressed();
+        }
+        for (int i=0; i<2; i++){
+            _logixTable.addVariablePressed(null);
+            _logixTable._variableTypeBox.setSelectedIndex(Conditional.ITEM_TYPE_CONDITIONAL);
+            _logixTable._variableStateBox.setSelectedIndex(i);
+            _logixTable._variableNameField.setText("C"+i);
+            _logixTable.updateVariablePressed();
+        }
+        for (int i=0; i<9; i++){
+            if (i==3 || i==7) {        // lunar aspects
+                continue;
+            }
+            _logixTable.addVariablePressed(null);
+            _logixTable._variableTypeBox.setSelectedIndex(Conditional.ITEM_TYPE_SIGNALHEAD);
+            _logixTable._variableStateBox.setSelectedIndex(i);
+            _logixTable._variableNameField.setText("Signal"+i);
+            _logixTable.updateVariablePressed();
+        }
+
         _logixTable.addActionPressed(null);
         _logixTable.cancelEditActionPressed();
-        for (int i=0; i<Conditional.NUM_ACTION_TYPES-3; i++)
-        {
-            _logixTable.addActionPressed(null);
-            _logixTable._actionTypeBox.setSelectedIndex(i+1);
-            _logixTable._actionOptionBox.setSelectedIndex(i%3);
-            _logixTable._actionNameField.setText(_actNames[i]);
-            _logixTable._actionTurnoutSetBox.setSelectedIndex(i%3);
-            _logixTable._actionSensorSetBox.setSelectedIndex(i%3);
-            _logixTable._actionLightSetBox.setSelectedIndex(i%3);
-            _logixTable._actionLockSetBox.setSelectedIndex(i%3);
-            _logixTable._actionSignalSetBox.setSelectedIndex(i%7);
-            _logixTable._actionStringField.setText(_strData[i]);
-            _logixTable.updateActionPressed();
-        }
-        _logixTable.updateConditionalPressed(null);
-        Assert.assertEquals(_logixTable._curLogix.getNumConditionals(),1);
 
-        _logixTable.donePressed(null);
+        _logixTable.addActionPressed(null);
+        _logixTable._actionItemTypeBox.setSelectedIndex(Conditional.ITEM_TYPE_TURNOUT);
+        _logixTable._actionTypeBox.setSelectedIndex(1);         // ACTION_SET_TURNOUT
+        _logixTable._actionOptionBox.setSelectedIndex(2);       // on false
+        _logixTable._actionNameField.setText("Turnout3");
+        _logixTable._actionBox.setSelectedIndex(0);             // Turnout.CLOSED
+        _logixTable.updateActionPressed();
+/*
+        // Test is done and turnoutManagerInstance gone by the time the timer goes off
+        _logixTable.addActionPressed(null);
+        _logixTable._actionItemTypeBox.setSelectedIndex(Conditional.ITEM_TYPE_TURNOUT);
+        _logixTable._actionTypeBox.setSelectedIndex(2);         // ACTION_DELAYED_TURNOUT
+        _logixTable._actionOptionBox.setSelectedIndex(1);       // on false
+        _logixTable._actionNameField.setText("IT4");
+        _logixTable._actionBox.setSelectedIndex(1);             // Turnout.THROWN
+        _logixTable._shortActionString.setText("1");           // delay 10 sec
+        _logixTable.updateActionPressed();
+*/
+        _logixTable.addActionPressed(null);
+        _logixTable._actionItemTypeBox.setSelectedIndex(Conditional.ITEM_TYPE_TURNOUT);
+        _logixTable._actionTypeBox.setSelectedIndex(3);         // ACTION_LOCK_TURNOUT
+        _logixTable._actionOptionBox.setSelectedIndex(0);       // on false
+        _logixTable._actionNameField.setText("Turnout5");
+        _logixTable._actionBox.setSelectedIndex(2);
+        _logixTable.updateActionPressed();
+
+        _logixTable.updateConditionalPressed(null);
+        // now close window
+        TestHelper.disposeWindow(_logixTable.editConditionalFrame,this);
+
+        assertEquals("State Variable count", 15, _logixTable._curConditional.getCopyOfStateVariables().size());
+        assertEquals("Action count", 2, _logixTable._curConditional.getCopyOfActions().size());
+        _logixTable.newConditionalPressed(null);
+        //_logixTable.helpPressed(null);
+        _logixTable.conditionalUserName.setText("SecondConditional");
+        _logixTable.updateConditionalPressed(null);
+
+        Assert.assertEquals("Conditional count", 2, _logixTable._curLogix.getNumConditionals());
+        //_logixTable.donePressed(null);
 
         // note: _logixTable.m.EDITCOL = BeanTableDataModel.DELETECOL
-        _logixTable.m.setValueAt(rbx.getString("ButtonEdit"), 0, BeanTableDataModel.DELETECOL);
+        //_logixTable.m.setValueAt(rbx.getString("ButtonEdit"), 0, BeanTableDataModel.DELETECOL);
         _logixTable.conditionalTableModel.setValueAt(null, 0, LogixTableAction.ConditionalTableModel.BUTTON_COLUMN);
         _logixTable.conditionalUserName.setText("FirstConditional");
-        assertEquals( 
-                _logixTable._curConditional.getCopyOfStateVariables().size(), Conditional.NUM_STATE_VARIABLE_TYPES);
-        assertEquals(_logixTable._curConditional.getCopyOfActions().size(), Conditional.NUM_ACTION_TYPES-3);
-        //_logixTable.updateConditionalPressed(null);
+        _logixTable.updateConditionalPressed(null);
 
         _logixTable.calculatePressed(null);
+        _logixTable.donePressed(null);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
     }
 
     // from here down is testing infrastructure
@@ -128,17 +176,17 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase {
         apps.tests.Log4JFixture.setUp(); 
 
         super.setUp();
-
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
 
         _logixTable = new LogixTableAction();
         assertNotNull("LogixTableAction is null!", _logixTable);        // test has begun
         _logixTable._suppressReminder = true;
 
-        for (int i=1; i<20; i++)
+        for (int i=0; i<10; i++)
         {
             Sensor s = InstanceManager.sensorManagerInstance().newSensor("IS"+i, "Sensor"+i);
             assertNotNull(i+"th Sensor is null!", s);

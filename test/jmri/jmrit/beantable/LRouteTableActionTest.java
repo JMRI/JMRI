@@ -26,8 +26,8 @@ import jmri.util.JUnitUtil;
  * Tests for the jmri.jmrit.beantable.LRouteTableAction class
  * @author	Pete Cressman  Copyright 2009
  */
-public class LRouteTableActionTest extends jmri.util.SwingTestCase {
-
+public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase // jmri.util.SwingTestCase 
+{
 	static final ResourceBundle rbx = ResourceBundle
 			.getBundle("jmri.jmrit.beantable.LRouteTableBundle");
 
@@ -40,26 +40,28 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase {
         _lRouteTable._userName.setText("TestLRoute");    
         _lRouteTable._systemName.setText("T");
         _lRouteTable._alignList.get(5).setIncluded(true);
-        for (int i=0; i<20; i++)
+        for (int i=0; i<25; i++)
         {
             _lRouteTable._inputList.get(3*i).setIncluded(true);
             _lRouteTable._outputList.get(3*i+1).setIncluded(true);
         }
         _lRouteTable.createPressed(null);
         java.util.List<String> l = InstanceManager.logixManagerInstance().getSystemNameList();
-        assertEquals(1, l.size());
+        assertEquals("Logix Count", 1, l.size());
 
         _lRouteTable.m.setValueAt(rbx.getString("ButtonEdit"), 0, 
                                   LRouteTableAction.LBeanTableDataModel.EDITCOL);
+        // now close window
+        //TestHelper.disposeWindow(_lRouteTable._addFrame,this);
     }
-    
+/*
     @SuppressWarnings("unchecked")
-	public void XtestPrompt() {
+	public void testPrompt() {
         assertNotNull("LRouteTableAction is null!", _lRouteTable);        // test has begun
         _lRouteTable.addPressed(null);
-        _lRouteTable._userName.setText("TestLRoute");    
-        _lRouteTable._systemName.setText("T");
-        for (int i=0; i<20; i++)
+        _lRouteTable._userName.setText("TestLRoute2");    
+        _lRouteTable._systemName.setText("T2");
+        for (int i=0; i<25; i++)
         {
             _lRouteTable._inputList.get(3*i).setIncluded(true);
             _lRouteTable._outputList.get(3*i).setIncluded(true);
@@ -79,12 +81,13 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase {
         // cancel the Reminder dialog
         DialogFinder dFinder = new DialogFinder( "Reminder" );
         java.util.List<JDialog> showingDialogs = dFinder.findAll();
-        Assert.assertEquals( "Number of dialogs showing is wrong", 1, showingDialogs.size( ) );
+        //Assert.assertEquals( "Number of dialogs showing is wrong", 1, showingDialogs.size( ) );
         JDialog dialog = showingDialogs.get( 0 );
         Assert.assertEquals( "Wrong dialog showing up", "Reminder", dialog.getTitle( ) );
         getHelper().disposeWindow( dialog, this );
+        
     }
-
+*/
     // from here down is testing infrastructure
 
     public LRouteTableActionTest(String s) {
@@ -112,6 +115,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
 
         _lRouteTable = new LRouteTableAction("LRoute");
         assertNotNull("LRouteTableAction is null!", _lRouteTable);        // test has begun

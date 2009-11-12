@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for classes in the jmri.jmrit.beantable package
  * @author	Bob Jacobsen  Copyright 2004
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class BeanTableTest extends TestCase {
 
@@ -34,11 +34,11 @@ public class BeanTableTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(BeanTableTest.class);
-		//suite.addTest(jmri.jmrit.beantable.LogixTableActionTest.suite());
-		//suite.addTest(jmri.jmrit.beantable.LRouteTableActionTest.suite());
         suite.addTest(SignalHeadTableActionTest.suite());
         suite.addTest(RouteTableActionTest.suite());
         suite.addTest(BlockTableActionTest.suite());
+		suite.addTest(jmri.jmrit.beantable.LogixTableActionTest.suite());
+		suite.addTest(jmri.jmrit.beantable.LRouteTableActionTest.suite());
         return suite;
     }
     
