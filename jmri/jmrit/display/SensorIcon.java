@@ -23,7 +23,7 @@ import java.awt.Color;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.48 $
+ * @version $Revision: 1.49 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -373,12 +373,22 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         popup.add(edit);
         edit.add(makeFontSizeMenu());
         edit.add(makeFontStyleMenu());
-        edit.add(new AbstractAction(rb.getString("SetSensorText")) {
+        if ((icon) && (layoutPanel==null)){
+        edit.add(new AbstractAction(rb.getString("ChangeText")) {
+				public void actionPerformed(ActionEvent e) {
+					String name = getNameString();
+					changeText(e);
+				}
+			});
+        } else if (text) {
+            edit.add(new AbstractAction(rb.getString("SetSensorText")) {
 				public void actionPerformed(ActionEvent e) {
 					String name = getNameString();
 					SensorTextEdit(name);
 				}
 			});
+
+        }
     }
 
     void scale(int s) {
@@ -946,7 +956,8 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 
     public void SensorTextEdit(String name) {
 		if (log.isDebugEnabled())
-			log.debug("make new coordinate menu");
+			log.debug("make text edit menu");
+
 		SensorTextEdit f = new SensorTextEdit();
 		f.addHelpMenu("package.jmri.jmrit.display.SensorTextEdit", true);
 		try {
