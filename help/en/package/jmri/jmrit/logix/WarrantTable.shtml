@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: WarrantTable.shtml,v 1.1 2009-11-12 00:04:54 pete_cressman Exp $ -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: Panel Editor Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Pete Cressman" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Panel Editor">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Creating and Editing Warrants</H1>
+
+A Warrant contains the information needed to run a train. This includes
+the DCC address of the locomotive(s), 
+the route train will take, the settings of the turnouts
+to traverse the route and the throttle commands to use
+at various points along the route - e.g. speed, when to show lights, sound horns,
+bells or other sound effects.
+<ul>
+        <b>NOTE:</b> Warrants can only be created if the PanelPro configuration 
+        has at least two OBlocks defined.
+</ul>
+There are three steps in creating a warrant, define the route, select a 
+train and record the throttle commands.
+</p>
+<H2>Defining a Warrant Route</H2>
+
+<H3>Origin, Destination and Via Blocks</H3>
+A warrant route is created by selecting the the Block and path where
+the train will begin its trip and the portal by which it should leave.  Then
+select the Bock and path where the train should end its trip.
+Press the <b>Calculate Route</b> button and the the computer will determine all the
+intermediate paths needed to make the trip.
+<ul>
+        <b>NOTE:</b> in the upper right hand portion of the Create/Edit 
+        Warrant frome is a table listing all the OBlocks you have defined.
+        Either the System Name or the User Name can be dragged and dropped
+        into the location blocks on the upper left hand side of the frame.
+</ul>
+<ul>
+        <li><b>Originating Location</b>: - Consists of a text field for the
+        originating <b>Block Name</b>, a drop down menu to choose the starting
+        <b>Path Name</b> and a drop down menu to select the <b>Exit Portal
+        Name</b>.
+        <br>Note that the block may have several paths and the default path
+        showing may not be the one where you intend the train to start.
+        <br> 
+        Also, Since paths usually have two portals, the default portal
+        showing may not be the one the train should pass through.
+        <p>
+        Setting the Exit Portal determines the direction the train will
+        take.  There is no further need to specify direction, since the 
+        algorithm will provide the route.</li>
+
+        <li><b>Destination Location</b>: - Consists of a text field for the
+        destination <b>Block Name</b> and a drop down menu for the terminating
+        <b>Path Name</b>.
+        <br>Note that the block may have several paths and the default path
+        showing may not be the one where you intend the train to finish its run.
+        </li>
+        <li><b>Via Location</b>: - Consists of a text field for the
+        destination <b>Via Name</b> and a drop down menu for the terminating
+        <b>Path Name</b>.
+        <br>Typically, it is not necessary to enter any block name in this 
+        field, since it likely the algorithm will detect the route
+        you want.  This group of entries is used when there are multiple 
+        routes possible from origin to destination.   Entering a block and
+        path will make the computer contimue its search for a route that 
+        passes through the selected block and path.
+        </li>
+</ul>
+More information about <b>OBlocks</b>, <b>Portals</b> and <b>OPaths</b>
+can be found at <a href="OBlockTable.shtml">The Occupancy Block Tables</a>.
+</p>
+<H3>Calculate and Debug</H3>
+After the origin and destination blocks and paths have been chosen, press
+the <b>Calculate Route</b> button.  If a route is found, the Route Table is
+filled out indicating each block, path and portals used to traverse the route.
+</p><p>
+If the message "No Route found 
+from "Origin Block', path ..." etc. is displayed
+and you have checked the blocks, paths and exit portal, and believe them to be 
+correct, press the <b>Debug Route</b> button.</p>
+</p><p>  
+The same message will be displayed
+but after dismissing it, a window with a tree is opened.  Tracing through the
+tree by clicking on nodes will show the blocks and paths the computer has tried
+to make a route.  At the end of each branch, the leaf node will be the point 
+where it could not continue.  This is the place where you may find an error or
+omission that you made when defining the OBlocks, OPaths and Portals.
+</p>
+
+<H2>Choosing a train</H2>
+If you have defined an JMRI engine roster, the train names are displayed in
+the <b>Engine Roster</b> drop down ComboBox.  Selecting a name from this list
+will fill in the text fields:
+<b>Train Name</b>, <b>Road Name</b> and <b>Number</b>, <b>DCC Adddress</b>.
+<p>
+You may also choose a train by entering a DCC address in the <b>DCC Adddress</b>
+text field.  This address will be used whether or not it is found in the
+IJMRI engine roster. 
+</p>
+
+<H2>Learn Mode</H2>
+Throttle commands are created by recording the commands you send to a train
+while operating it manually from a screen throttle in <b>Learn Mode</b>.
+
+<H3>"Teaching" a Train</H3>
+Pressing the <b>Start</b> button in the <b>Learn Mode</b> box
+will display a throttle on the screen.  
+Operate the train just as you would with any other throttle.  All speed 
+changes and button presses on the throttle are recorded in the Throttle 
+Command Table.
+<p>
+Pressing the <b>Stop</b> button will end the recording.
+</p> 
+<H3>Throttle Command Table</H3>
+The Throttle Command Table has the following columns:
+<ul>
+        <li><b>ET(msec)</b>: - The elapsed time in milliseconds to wait after 
+        a command is sent before issuing the next throttle command.</li>
+        <li><b>Command</b>: - The throttle command that was recorded (direction, speed, 
+        or button press or release).</li>
+        <li><b>Value</b>: - The value of the command.</li> 
+        <li><b>Block</b>: - The block the train has last entered when the throttle
+        command was recorded.</li>
+        <li><b>Delete</b>: - Deletes the command.  Note that this will also remove 
+        some of the elapsed time between the previous and next commands of the deleted 
+        command.</li>
+</ul>
+All of the columns in the Throttle Command Table can be edited.  Perhaps you want to
+touch up the horn blasts or modify the speeds.
+</p>
+
+<H3>Synchronizing Commands to Block boundaries.</H3>
+If the consist of a train changes, or if power is changed, the recorded elapsed times
+may not allow the throttle commands to execute at the same points on the route where
+the "Learn Mode" train recorded them.
+<p>
+If this is the case, Enter the word "<b>Synch</b>" in the "ET" (elapsed time) column.  
+When the train
+is run in "Run Mode", it will hold back a "Synch" command until it reaches and enters
+the block specified in the "Block" column of the command.
+<ul>
+        <b>NOTE:</b>Be sure that the block named in the "Block" of a "Synch" command
+        has not been entered by the train.  If the train has already reached that
+        block, the command will not be issued.
+        <p>
+        Also, if block ahead of the train becomes occupied before the train can enter it,
+        a "Synch" command may execute prematurely.  This can happen if a "rouge train"
+        enters a block on the route ahead of the train.
+</ul>
+</p>
+
+<H3>Running Trains on Dark Blocks.</H3>
+The Learn mode and Run Mode functions can be used on blocks that do not have detection sensors.
+However, without detection, other than the initial setting of turnouts and signals,
+turnouts and signals cannot be set on the fly while the train is enroute.  This means
+there is no protection from rouge trains fouling the route or from turnouts being changed
+while the train is enroute.  Therefore use these features
+with caution over dark blocks.  "Synch" may not be used as well.
+
+<H2>Run Mode</H2>
+Pressing the <b>Run</b> button in the <b>Run Train</b> box
+will send the throttle commands to the train specified in the warrant.
+<ul>  
+        <b>NOTE:</b>Be sure that the train is located on the Path of the Origin block 
+        of the route and the direction of the engine is compatible with the first direction
+        specified in the throttle commands.
+</ul>
+The <b>Run Train</b> box will display each block entered by the train as it traverses
+the route.  Each time an auto running train enters a block it check the succeeding two 
+blocks for occupancy.  Depending on what is detected, signals are set for clear, approach
+or stop and the current speed is modified accordingly (normal, limited or stop).  This
+check for occupancy will also reset the turnouts for the route, if they have been 
+inadvertently changed from another source.
+<\p><p>
+The occupancy detection and synchronized commands used to notify a train when it enters
+a block depends on accuracte occupancy detection.  If the layout does not have reliable 
+occupancy detection, automated trains may run with unexpected consequences.  Trains may
+wait indefititely when false detection occurs.  The block
+protection done when entering a block can be disabled.  The following radio buttons set 
+this:
+<ul>
+        <li><b>Run with block Protection</b>: - Runs the train with the occupancy detection
+        when entering blocks and with the synchroniation features.</li>
+        <li><b>Run with blocks dark</b>: - Runs the train as described for Dark Blocks.</li>
+</ul>
+
+<H3>Controls</H3>
+The <b>Run Train</b> box also is a drop down ComboBox that has the following commands
+that can be sent to the train.
+<ul>
+        <li><b>Halt</b>: - Stops the train.</li>
+        <li><b>Resume</b>: - Restarts the train at the speed setting it had when stopped.</li>
+        <li><b>Abort</b>: - Terminates the automated run.</li> 
+</ul>
+
+<H2>Save Etc.</H2>
+There are three buttons at the bottom of the window.
+
+<ul>
+        <li><b>Save</b>: - Saves a permanent copy of the warrant when the panel is
+        saved to the Configuration file.  Closing the window</li>
+        <li><b>Cancel</b>: - Cancels any editing that may have been done.</li>
+        <li><b>Delete</b>: - Deletes the warrant when the panel is
+        saved to the Configuration file.</li> 
+</ul>
+<br>
+<!--#include virtual="/Footer" -->
+</BODY>
+</HTML>

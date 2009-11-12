@@ -326,6 +326,8 @@
 
 <mapID target="package.jmri.jmrix.loconet.locogen.LocoGenFrame" url="package/jmri/jmrix/loconet/locogen/LocoGenFrame.shtml"/>
 
+<mapID target="package.jmri.jmrit.logix.Warrant" url="package/jmri/jmrit/logix/Warrant.shtml"/>
+
 <mapID target="manual.Main_RPS_ReceiverControl" url="manual/Main_RPS.shtml#ReceiverControl"/>
 
 <mapID target="html.doc.Technical.XmlUsage" url="html/doc/Technical/XmlUsage.shtml"/>
@@ -592,6 +594,8 @@
 
 <mapID target="package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame" url="package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml"/>
 
+<mapID target="package.jmri.jmrit.logix.OBlockTable" url="package/jmri/jmrit/logix/OBlockTable.shtml"/>
+
 <mapID target="html.hardware.loconet.LocoNetClasses" url="html/hardware/loconet/LocoNetClasses.shtml"/>
 
 <mapID target="manual.Main_Debug_log" url="manual/Main_Debug.shtml#log"/>
@@ -856,6 +860,8 @@
 
 <mapID target="html.tools.Signals" url="html/tools/Signals.shtml"/>
 
+<mapID target="package.jmri.jmrit.logix.OBlockEdit" url="package/jmri/jmrit/logix/OBlockEdit.shtml"/>
+
 <mapID target="manual.Basic_Programming_Write Data" url="manual/Basic_Programming.shtml#Write Data"/>
 
 <mapID target="html.apps.DecoderPro.MoreInfo" url="html/apps/DecoderPro/MoreInfo.shtml"/>
@@ -971,6 +977,8 @@
 <mapID target="manual.Basic_Programming_SelectDecoder" url="manual/Basic_Programming.shtml#SelectDecoder"/>
 
 <mapID target="package.jmri.jmrit.ussctc.CodeButtonFrame" url="package/jmri/jmrit/ussctc/CodeButtonFrame.shtml"/>
+
+<mapID target="package.jmri.jmrit.logix.WarrantTable" url="package/jmri/jmrit/logix/WarrantTable.shtml"/>
 
 <mapID target="manual.Main_Roster_Export" url="manual/Main_Roster.shtml#Export"/>
 
