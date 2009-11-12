@@ -5,12 +5,10 @@ package jmri.jmrit.beantable;
 
 import junit.framework.*;
 
-import junit.extensions.jfcunit.*;
-import junit.extensions.jfcunit.finder.*;
+//import junit.extensions.jfcunit.*;
+//import junit.extensions.jfcunit.finder.*;
 
 import java.util.ResourceBundle;
-
-import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.Conditional;

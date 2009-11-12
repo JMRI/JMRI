@@ -3,12 +3,9 @@ package jmri.jmrit.logix.configurexml;
 import jmri.jmrit.XmlFile;
 
 //import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Iterator;
-import java.io.File;
 
-import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Attribute;
 
@@ -32,8 +29,6 @@ import jmri.jmrit.logix.ThrottleSetting;
  */
 public class WarrantManagerXml extends XmlFile
                     implements jmri.configurexml.XmlAdapter {
-
-	private static String defaultFileName = XmlFile.prefsDir()+"catalogTrees.xml";
 
     public WarrantManagerXml() {
     }

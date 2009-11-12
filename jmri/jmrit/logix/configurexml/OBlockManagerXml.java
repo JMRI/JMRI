@@ -7,14 +7,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Iterator;
-import java.io.File;
 
-import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Attribute;
 
 import jmri.InstanceManager;
 import jmri.BeanSetting;
+import jmri.Path;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
@@ -35,8 +34,6 @@ import jmri.jmrit.logix.Portal;
  */
 public class OBlockManagerXml extends XmlFile
                     implements jmri.configurexml.XmlAdapter {
-
-	private static String defaultFileName = XmlFile.prefsDir()+"catalogTrees.xml";
 
     public OBlockManagerXml() {
     }
@@ -305,7 +302,7 @@ public class OBlockManagerXml extends XmlFile
             	block = it.next();
                 String name = block.getSystemName();
             	if(fromName.equals(name) || toName.equals(name)) {
-                    List list = block.getPaths();
+                    List <Path> list = block.getPaths();
                     for (int i=0; i<list.size(); i++) {
                         portal.addPath( (OPath)list.get(i));
                     }

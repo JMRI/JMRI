@@ -9,7 +9,6 @@ import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.PositionableLabel;
 import java.awt.Color;
-import java.awt.Font;
 
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
@@ -19,7 +18,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
