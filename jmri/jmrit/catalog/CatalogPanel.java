@@ -143,16 +143,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
         _dTree.addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent e) {
-                if (!_dTree.isSelectionEmpty() && _dTree.getSelectionPath()!=null ) {
-                    try {
-                        _previewLabel.setText(setIcons());
-                    } catch (OutOfMemoryError oome) {
-                        resetPanel();
-                        if (log.isDebugEnabled()) log.debug("setIcons threw OutOfMemoryError "+oome);
-                    }
-                } else {
-                    _previewLabel.setText(" ");
-                }
+                updatePanel();
             }
         });
         jmri.util.JTreeUtil.setExpandsSelectedPaths(_dTree, true);
@@ -160,6 +151,21 @@ public class CatalogPanel extends JPanel implements MouseListener {
         _treePane.getViewport().setPreferredSize(new Dimension(250, 200));
         add(_treePane, 1);
         setupPanel();
+    }
+
+    private void updatePanel() {
+        if (log.isDebugEnabled()) log.debug("updatePanel: _dTree.isSelectionEmpty()= "+_dTree.isSelectionEmpty()
+                                            +", _dTree.getSelectionPath() is null "+(_dTree.getSelectionPath()==null));
+        if (!_dTree.isSelectionEmpty() && _dTree.getSelectionPath()!=null ) {
+            try {
+                _previewLabel.setText(setIcons());
+            } catch (OutOfMemoryError oome) {
+                resetPanel();
+                if (log.isDebugEnabled()) log.debug("setIcons threw OutOfMemoryError "+oome);
+            }
+        } else {
+            _previewLabel.setText(" ");
+        }
     }
 
     /**
@@ -330,6 +336,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         node.setUserObject(name);
         tree.nodeChanged(cNode);
         _model.nodeChanged(node);
+        updatePanel();
         ImageIndexEditor._indexChanged = true;
         return true;
     }
@@ -635,6 +642,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
     void delete(NamedIcon icon) {
         CatalogTreeNode node = getSelectedNode();
         node.deleteLeaf(icon.getName(), icon.getURL());
+        updatePanel();
     }
 
     void rename(NamedIcon icon) {
@@ -648,6 +656,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
                 leaf.setName(name);
             }
             IconAdder.getParentFrame(this).invalidate();
+            updatePanel();
         }
     }
 

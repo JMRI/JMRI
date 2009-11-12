@@ -80,6 +80,15 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     }
     private String comment;
 
+    public String getDisplayName() {
+        String name = getUserName();
+        if (name != null && name.length() > 0) {
+            return name;
+        } else {
+            return getSystemName();
+        }
+    }
+
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
     //		public void firePropertyChange(String propertyName,

@@ -44,8 +44,8 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
        int h = icon.getIconHeight();
        for (int i=0; i<_leaves.size(); i++) {
            CatalogTreeLeaf leaf = _leaves.get(i);
-           if (h > leaf.getSize()) {
-               _leaves.add(i, new CatalogTreeLeaf(name, path, h));
+           if (h < leaf.getSize()) {
+               _leaves.add(i+1, new CatalogTreeLeaf(name, path, h));
                return;
            }
        }
