@@ -15,7 +15,7 @@ import java.util.*;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2008
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.32 $
+ * @version     $Revision: 1.33 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -53,6 +53,7 @@ public class ToolsMenu extends JMenu {
         tableMenu.add(new jmri.jmrit.beantable.RouteTableAction(rb.getString("MenuItemRouteTable")));
         tableMenu.add(new jmri.jmrit.beantable.LRouteTableAction(rb.getString("MenuItemLRouteTable")));
         tableMenu.add(new jmri.jmrit.beantable.LogixTableAction(rb.getString("MenuItemLogixTable")));
+        tableMenu.add(new jmri.jmrit.beantable.OBlockTableAction(rb.getString("MenuItemOBlockTable")));
         tableMenu.add(new jmri.jmrit.beantable.BlockTableAction(rb.getString("MenuItemBlockTable")));
         tableMenu.add(new jmri.jmrit.beantable.SectionTableAction(rb.getString("MenuItemSectionTable")));
         tableMenu.add(new jmri.jmrit.beantable.TransitTableAction(rb.getString("MenuItemTransitTable")));
