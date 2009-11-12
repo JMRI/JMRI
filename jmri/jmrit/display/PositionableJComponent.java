@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 abstract class PositionableJComponent extends JComponent
                         implements MouseMotionListener, MouseListener,
@@ -148,9 +148,6 @@ abstract class PositionableJComponent extends JComponent
     protected void addToPopup() { }
 
     protected void showPopUp(MouseEvent e) {
-        System.out.println("showPopUp in Positionable");
-    
-    
 //        if (!getPopupEnabled()) return;  // We need to distinguish between popup and editable
         if (!getEditable()) return;
         if (popup == null) {
