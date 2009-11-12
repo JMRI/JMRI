@@ -43,8 +43,8 @@ public class FunctionButton extends JToggleButton implements ActionListener
     private boolean isDisplayed = true;
     private boolean dirty = false;
 	private int actionKey;
-	static int BUT_HGHT = 30;
-	static int BUT_WDTH = 56;
+	public static int BUT_HGHT = 30;
+	public static int BUT_WDTH = 56;
 
     static {
         JButton sample = new JButton(" Light ");
