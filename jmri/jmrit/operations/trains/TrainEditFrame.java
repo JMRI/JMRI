@@ -49,7 +49,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.52 $
+ * @version $Revision: 1.53 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -977,7 +977,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			EngineModels.instance().updateComboBox(modelEngineBox);
 			modelEngineBox.insertItemAt("",0);
 			modelEngineBox.setSelectedIndex(0);
-			modelEngineBox.setSelectedItem(_train.getEngineModel());
+			if (_train != null)
+				modelEngineBox.setSelectedItem(_train.getEngineModel());
 		}
 	}
  	
