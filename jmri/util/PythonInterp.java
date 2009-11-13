@@ -21,7 +21,7 @@ import java.io.*;
  * on Windows machines where it might normally appear in a filename.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class PythonInterp {
 
@@ -68,12 +68,12 @@ public class PythonInterp {
             try {
                 log.error("InvocationTargetException while invoking command "+command
                     +": "+e2.getCause());
-                outputlog.append("Error: "+e2.getCause());
+                getOutputArea().append("Error: "+e2.getCause());
             } catch (java.lang.NoSuchMethodError e3) {
                 // most likely, this is 1.1.8 JVM
                 log.error("InvocationTargetException while invoking command "+command
                     +": "+e2.getTargetException());
-                outputlog.append("Error: "+e2.getTargetException());
+                getOutputArea().append("Error: "+e2.getTargetException());
             }
         } catch (NoSuchMethodException e1) {
             log.error("NoSuchMethod error while invoking command "+command);
