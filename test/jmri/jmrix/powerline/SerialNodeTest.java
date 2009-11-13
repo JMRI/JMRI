@@ -10,14 +10,14 @@ import junit.framework.TestSuite;
  * JUnit tests for the SerialNode class
  * @author		Bob Jacobsen  Copyright 2003, 2007, 2008
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.7 $
+ * @version		$Revision: 1.8 $
  */
 public class SerialNodeTest extends TestCase {
 
     public void testMarkChanges() {
-        SerialSensor s1 = new SerialSensor("PSA1","a");
-        SerialSensor s2 = new SerialSensor("PSA2","ab");
-        SerialSensor s3 = new SerialSensor("PSA3","abc");
+        //SerialSensor s1 = new SerialSensor("PSA1","a");
+        //SerialSensor s2 = new SerialSensor("PSA2","ab");
+        //SerialSensor s3 = new SerialSensor("PSA3","abc");
 
         SerialReply r = new jmri.jmrix.powerline.cm11.SpecificReply();
         r.setElement(0, 0x02);
