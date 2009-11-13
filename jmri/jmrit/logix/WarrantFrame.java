@@ -12,6 +12,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.FlowLayout;
 import java.beans.PropertyChangeListener;
 
@@ -71,12 +72,14 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle");
     static int STRUT_SIZE = 10;
+    static int ROW_HEIGHT;
 
     JMenu _warrantMenu;
 
     private Warrant             _warrant;
     private RouteTableModel     _routeModel;
     private ThrottleTableModel  _commandModel;
+    private JScrollPane _throttlePane;
     private boolean     _create;    
 
     private ArrayList <BlockOrder> _orders = new ArrayList <BlockOrder>();
@@ -200,16 +203,17 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             int width = _commandModel.getPreferredWidth(i);
             commandTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
-        tablePane = new JScrollPane(commandTable);
+        _throttlePane = new JScrollPane(commandTable);
+        ROW_HEIGHT = commandTable.getRowHeight();
         dim = commandTable.getPreferredSize();
-        dim.height = commandTable.getRowHeight()*8;
-        tablePane.getViewport().setPreferredSize(dim);
+        dim.height = ROW_HEIGHT*8;
+        _throttlePane.getViewport().setPreferredSize(dim);
 
         JPanel cmdPanel = new JPanel();
         cmdPanel.setLayout(new BoxLayout(cmdPanel, BoxLayout.Y_AXIS));
         title = new JLabel(rb.getString("CommandTableTitle"));
         cmdPanel.add(title, BorderLayout.NORTH);
-        cmdPanel.add(tablePane);
+        cmdPanel.add(_throttlePane);
 
         JPanel midPanel = new JPanel();
         midPanel.setLayout(new BoxLayout(midPanel, BoxLayout.X_AXIS));
@@ -351,6 +355,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         _statusBox.setText(status);
         _controlBox = new JComboBox(new String[] {"", rb.getString("Halt"), 
                                             rb.getString("Resume"), rb.getString("Abort")} );
+        _controlBox.setFont(new Font(null, Font.PLAIN, 12));
         _controlBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int idx = _controlBox.getSelectedIndex();
@@ -688,7 +693,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
             if (log.isDebugEnabled()) log.debug("DnDImportHandler.canImport ");
 
-            boolean canDoIt = false;
             for (int k=0; k<transferFlavors.length; k++){
                 if (transferFlavors[k].equals(DataFlavor.stringFlavor)) {
                     return true;
@@ -831,7 +835,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         if (obj instanceof JTextField)
         {
             JTextField box = (JTextField)obj;
-            String text = box.getText();
+            //String text = box.getText();
             if (box == _originBlockBox) {
                 setOriginBlock();
             } else if (box == _destBlockBox) {
@@ -1104,7 +1108,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         // build tree of paths until a branch leaf is the destination 
         DefaultMutableTreeNode root = new DefaultMutableTreeNode(_originBlockOrder);
         DefaultTreeModel tree = new DefaultTreeModel(root);
-        ArrayList <String> usedPortals = new ArrayList <String>();
         _needViaPath = (_viaBlockOrder!=null);
         _viaLevel = 0;
         DefaultMutableTreeNode destNode = findDestination(root, tree, _viaLevel);
@@ -1339,6 +1342,12 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         }
         _throttleCommands.add(new ThrottleSetting(time, cmd, value, bName));
         _commandModel.fireTableDataChanged();
+
+        int setRow = _commandModel.getRowCount() - 4;
+        if (setRow < 0) {
+            setRow = 0;
+        }
+        _throttlePane.getVerticalScrollBar().setValue(setRow*ROW_HEIGHT);
     }
 
     private DccLocoAddress getLocoAddress() {
@@ -1450,7 +1459,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             return "";
         }
 
-
         public boolean isCellEditable(int row, int col) {
             return false;
         }
@@ -1506,12 +1514,13 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     /************************* Throttle Table ******************************/
 
     class ThrottleTableModel extends AbstractTableModel {
-        public static final int TIME_COLUMN = 0;
-        public static final int COMMAND_COLUMN =1;
-        public static final int VALUE_COLUMN =2;
-        public static final int BLOCK_COLUMN = 3;
-        public static final int DELETE_COLUMN = 4;
-        public static final int NUMCOLS = 5;
+        public static final int ROW_NUM = 0;
+        public static final int TIME_COLUMN = 1;
+        public static final int COMMAND_COLUMN =2;
+        public static final int VALUE_COLUMN =3;
+        public static final int BLOCK_COLUMN = 4;
+        public static final int DELETE_COLUMN = 5;
+        public static final int NUMCOLS = 6;
 
         public ThrottleTableModel() {
             super();
@@ -1527,6 +1536,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
 
         public String getColumnName(int col) {
             switch (col) {
+                case ROW_NUM: return "#";
                 case TIME_COLUMN: return rb.getString("TimeCol");
                 case COMMAND_COLUMN: return rb.getString("CommandCol");
                 case VALUE_COLUMN: return rb.getString("ValueCol");
@@ -1537,6 +1547,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
 
 
         public boolean isCellEditable(int row, int col) {
+            if (row==ROW_NUM) { return false; }
             return true;
         }
 
@@ -1549,6 +1560,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
 
         public int getPreferredWidth(int col) {
             switch (col) {
+                case ROW_NUM: 
+                    return new JTextField(2).getPreferredSize().width;
                 case TIME_COLUMN: 
                     return new JTextField(7).getPreferredSize().width;
                 case COMMAND_COLUMN: 
@@ -1566,6 +1579,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         public Object getValueAt(int row, int col) {
             ThrottleSetting ts = _throttleCommands.get(row);
             switch (col) {
+                case ROW_NUM:
+                    return row+1;
                 case TIME_COLUMN:
                     return ts.getTime().toString();
                 case COMMAND_COLUMN: 
@@ -1633,7 +1648,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                         try {
                             int cmdNum = Integer.parseInt(cmd.substring(1));
                             if (cmdNum < 0 || 28 < cmdNum) {
-                                msg = rb.getString("badFunctionNum");;
+                                msg = rb.getString("badFunctionNum");
                             } else {
                                 ts.setCommand((String)value);
                             }
@@ -1644,7 +1659,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                         try {
                             int cmdNum = Integer.parseInt(cmd.substring(5));
                             if (cmdNum < 0 || 28 < cmdNum) {
-                                msg = rb.getString("badLockFNum");;
+                                msg = rb.getString("badLockFNum");
                             } else {
                                 ts.setCommand((String)value);
                             }
@@ -1691,27 +1706,27 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                         ts.setValue(Integer.toString(stepMode));
                     } else if ("FORWARD".equalsIgnoreCase(cmd)) {
                         try {
-                            boolean isTrue = Boolean.parseBoolean((String)value);
+                            Boolean.parseBoolean((String)value);
                         } catch (Exception e) {
                             msg = rb.getString("invalidBoolean");
                         }
                         ts.setValue((String)value);
                     } else if (cmd.startsWith("F")) {
                         try {
-                            boolean isTrue = Boolean.parseBoolean((String)value);
+                            Boolean.parseBoolean((String)value);
                         } catch (Exception e) {
                             msg = rb.getString("invalidBoolean");
                         }
                         ts.setValue((String)value);
                     } else if (cmd.startsWith("LOCKF")) {
                         try {
-                            boolean isTrue = Boolean.parseBoolean((String)value);
+                            Boolean.parseBoolean((String)value);
                         } catch (Exception e) {
                             msg = rb.getString("invalidBoolean");
                         }
                         ts.setValue((String)value);
                     } else {
-                        msg = rb.getString("badCommand");;
+                        msg = rb.getString("badCommand");
                     }
                     if (msg!=null) {
                         JOptionPane.showMessageDialog(null, msg,
