@@ -205,7 +205,7 @@ public class Portal  {
     /**
     * Get the paths to the portal within the connected Block
     * i.e. the paths in this (the param) block through the Portal
-    * @param Block 
+    * @param block 
     * @return null if portal does not connect to block
     */
     public List <OPath> getPathsWithinBlock(OBlock block) { 
@@ -235,7 +235,7 @@ public class Portal  {
     * Get the paths from the portal in the next connected Block
     * i.e. paths in the block on the other side of the portal
     * from this (the param) block
-    * @param Block 
+    * @param block 
     * @return null if portal does not connect to block
     */
     public List <OPath> getPathsFromOpposingBlock(OBlock block) { 

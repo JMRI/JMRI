@@ -250,7 +250,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     /**
     * Starts or ends an automated train run.
     * setRoute nust be called before calling this method.
-    * @param set Run throttle command or Stop 
+    * @param run set Run throttle command or Stop 
     * @return returns an error message (or null on success)
     */
     public String runAutoTrain(boolean run) {
