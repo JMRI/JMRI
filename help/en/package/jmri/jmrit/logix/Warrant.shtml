@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Warrant.shtml,v 1.1 2009-11-12 00:04:54 pete_cressman Exp $ -->
+<!-- $Id: Warrant.shtml,v 1.2 2009-11-13 21:57:06 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Help</TITLE>
@@ -191,13 +191,17 @@ using the Warrant state variables and actions found in Logix.
 
 <H3>Warrant State Variables</H3>
 <ul>
+        <li><b>Route is Free</b>: - True when all blocks in the warrant route are not allocated
+        to anyone and are not occipied.  False otherwise.</li>
+        <li><b>Route is Set</b>: - True when all blocks in the warrant route are allocated and the
+        turnouts set for this warrant.  False otherwise.</li>
+        <li><b>Route is Allocated</b>: - True when all blocks in the warrant route are allocated
+        to this warrant.  False otherwise.</li>
         <li><b>Route is Occupied</b>: - True when none of the blocks in the warrant route, other
         than the origin block, are occipied.  (Assumes the train of this warrant is occupying
         the origin block).  False otherwise. </li>
-        <li><b>Route is Allocated</b>: - True when all blocks in the warrant route are allocated
-        to this warrant.  False otherwise.</li>
-        <li><b>Route is Free</b>: - True when all blocks in the warrant route are not allocated
-        to anyone and are not occipied.  False otherwise.</li>
+        <li><b>Train Running</b>: - True when the train specified in the warrant is running 
+        either in Learn Mode or Auto Run Mode.  False otherwise.</li>
 </ul>
 
 <H3>Warrant Actions</H3>

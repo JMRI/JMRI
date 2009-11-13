@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: WarrantTable.shtml,v 1.1 2009-11-12 00:04:54 pete_cressman Exp $ -->
+<!-- $Id: WarrantTable.shtml,v 1.2 2009-11-13 21:57:06 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
@@ -189,7 +189,7 @@ blocks for occupancy.  Depending on what is detected, signals are set for clear,
 or stop and the current speed is modified accordingly (normal, limited or stop).  This
 check for occupancy will also reset the turnouts for the route, if they have been 
 inadvertently changed from another source.
-<\p><p>
+<p>
 The occupancy detection and synchronized commands used to notify a train when it enters
 a block depends on accuracte occupancy detection.  If the layout does not have reliable 
 occupancy detection, automated trains may run with unexpected consequences.  Trains may
@@ -215,8 +215,9 @@ that can be sent to the train.
 There are three buttons at the bottom of the window.
 
 <ul>
-        <li><b>Save</b>: - Saves a permanent copy of the warrant when the panel is
-        saved to the Configuration file.  Closing the window</li>
+        <li><b>Save</b>: - Saves the warrant so it can be shown in the list of warrants on the
+        Warrant Table.  A permanent copy of the warrant is saved when the panel is
+        saved to the Configuration file.</li>
         <li><b>Cancel</b>: - Cancels any editing that may have been done.</li>
         <li><b>Delete</b>: - Deletes the warrant when the panel is
         saved to the Configuration file.</li> 
