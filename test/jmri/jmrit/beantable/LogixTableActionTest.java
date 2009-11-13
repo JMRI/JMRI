@@ -3,7 +3,7 @@
 package jmri.jmrit.beantable;
 
 import junit.framework.*;
-//import junit.extensions.jfcunit.*;
+import junit.extensions.jfcunit.*;
 //import junit.extensions.jfcunit.finder.*;
 
 import java.util.ResourceBundle;
