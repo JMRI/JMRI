@@ -11,7 +11,7 @@ import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Common routines for trains
- * @author Daniel Boudreau (C) Copyright 2008
+ * @author Daniel Boudreau (C) Copyright 2008, 2009
  *
  */
 public class TrainCommon {
@@ -55,14 +55,14 @@ public class TrainCommon {
 		String carLength = (Setup.isShowCarLengthEnabled() ? " "+car.getLength()+ LENGTHABV : "");
 		String carLoad = (Setup.isShowCarLoadEnabled()& !car.isCaboose()  ? " "+car.getLoad() : "");
 		String carColor = (Setup.isShowCarColorEnabled() ? " "+car.getColor() : "");
-		String carDestination = (Setup.isShowCarDestinationEnabled() ? ", destination "+splitLocationName(car.getDestinationName()) : "");
+		String carDestination = (Setup.isShowCarDestinationEnabled() ? ", destination "+splitString(car.getDestinationName()) : "");
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
 		addLine(file, BOX + rb.getString("Pickup")+" " + car.getRoad() + " "
 				+ carNumber[0] + " " + carType[0]
 				+ carLength + carLoad + carColor 
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+")" : "")
 				+ (car.hasFred() ? " ("+rb.getString("FRED")+")" : "") + " " + rb.getString("from")+ " "
-				+ car.getTrackName() + carDestination + carComment);
+				+ splitString(car.getTrackName()) + carDestination + carComment);
 	}
 	
 	protected void dropCar(PrintWriter file, Car car){
@@ -76,7 +76,7 @@ public class TrainCommon {
 				+ carNumber[0] + " " + carType[0]
 				+ carLength + carLoad + carColor
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
-				+ rb.getString("to") + " " + car.getDestinationTrackName()
+				+ rb.getString("to") + " " + splitString(car.getDestinationTrackName())
 				+ carComment);
 	}
 	
@@ -101,12 +101,12 @@ public class TrainCommon {
 	}
 	
 	/**
-	 * Splits a location name as long as the second part of
-	 * the name is a number
+	 * Splits a string (example-number) as long as the second part of
+	 * the string is an integer.
 	 * @param name
-	 * @return First half of a location name
+	 * @return First half the string.
 	 */
-	protected String splitLocationName(String name){
+	protected String splitString(String name){
 		String[] fullname = name.split("-");
 		String parsedName = fullname[0];
 		// is the hyphen followed by a number?

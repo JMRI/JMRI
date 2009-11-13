@@ -32,8 +32,8 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Builds a train and creates the train's manifest. 
  * 
- * @author Daniel Boudreau  Copyright (C) 2008
- * @version             $Revision: 1.60 $
+ * @author Daniel Boudreau  Copyright (C) 2008, 2009
+ * @version             $Revision: 1.61 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1360,8 +1360,7 @@ public class TrainBuilder extends TrainCommon{
 		}
 		
 		if (engine != null){
-			String engineLocation = splitLocationName(engine.getLocationName());
-			addLine(fileOut, rb.getString("PickupEngineAt")+ " "+engineLocation+", "+engine.getTrackName());
+			addLine(fileOut, rb.getString("PickupEngineAt")+ " "+splitString(engine.getLocationName())+", "+engine.getTrackName());
 		}
 		
 		List<String> carList = carManager.getCarsByTrainDestinationList(train);
@@ -1371,7 +1370,7 @@ public class TrainBuilder extends TrainCommon{
 		for (int r = 0; r < routeList.size(); r++) {
 			RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));
 			newLine(fileOut);
-			String routeLocationName = splitLocationName(rl.getName());
+			String routeLocationName = splitString(rl.getName());
 			if (r == 0)
 				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
 						+", "+rb.getString("departureTime")+" "+train.getDepartureTime());
@@ -1403,7 +1402,7 @@ public class TrainBuilder extends TrainCommon{
 						+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
 			} else {
 				if(engine != null)
-					addLine(fileOut, BOX +rb.getString("DropEngineTo")+ " "+ engine.getDestinationTrackName()); 
+					addLine(fileOut, BOX +rb.getString("DropEngineTo")+ " "+ splitString(engine.getDestinationTrackName())); 
 				addLine(fileOut, rb.getString("TrainTerminatesIn")+ " " + routeLocationName);
 			}
 		}
