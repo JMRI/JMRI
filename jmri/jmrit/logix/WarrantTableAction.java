@@ -266,6 +266,7 @@ public class WarrantTableAction extends AbstractAction {
                 int width = _model.getPreferredWidth(i);
                 table.getColumnModel().getColumn(i).setPreferredWidth(width);
             }
+            table.setRowHeight(box.getPreferredSize().height);
             JScrollPane tablePane = new JScrollPane(table);
             Dimension dim = table.getPreferredSize();
             dim.height = table.getRowHeight()*12;
