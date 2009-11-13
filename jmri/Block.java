@@ -82,7 +82,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  * @author  Dave Duchamp Copywright (C) 2009
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
@@ -119,8 +119,10 @@ public class Block extends jmri.implementation.AbstractNamedBean {
             _sensor.addPropertyChangeListener(_sensorListener = new java.beans.PropertyChangeListener() {
                 public void propertyChange(java.beans.PropertyChangeEvent e) { handleSensorChange(e); }
             });
+            _current = _sensor.getState();
+        } else {
+            _current = UNOCCUPIED;    // return to default state at init.
         }
-		_current = _sensor.getState();
     }
     public Sensor getSensor() { return _sensor; }
     

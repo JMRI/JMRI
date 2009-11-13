@@ -41,18 +41,19 @@ public class OBlock extends jmri.Block {
 
     static final public int ALLOCATED = 0x10;   // reserve the block for subsequent use by a train
     static final public int SHORTED = 0x08;     // duplicate of INCONSISTENT = 0x08
+    static final public int DARK = 0x20;        // Block has no Sensor
     
     public OBlock(String systemName) {
         super(systemName);
         if (getSensor()==null) {
-            setState(UNKNOWN);
+            setState(DARK);
         }
     }
 
     public OBlock(String systemName, String userName) {
         super(systemName, userName);
         if (getSensor()==null) {
-            setState(UNKNOWN);
+            setState(DARK);
         }
     }
 
@@ -117,11 +118,9 @@ public class OBlock extends jmri.Block {
                 return;
             }
         }
-        int oldSize = _portals.size();
         _portals.add(portal);
         if (log.isDebugEnabled()) log.debug("addPortal: portal= \""+portal.getName()+
                                             "\", to Block= \""+getDisplayName()+"\"." ); 
-        //firePropertyChange("portalCount", new Integer(oldSize), new Integer(_portals.size()));
     }
 
     /**
