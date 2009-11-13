@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.48 2009-09-19 16:06:18 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.49 2009-11-13 16:05:20 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -452,18 +452,22 @@ off cars at an interchange track.</P>
 A staging track allows you to have all cars and engines in a train
 delivered to one track. When terminating a train into staging, the
 program will search for a completely empty track, one with no engines or
-cars. Trains can not share staging tracks; the program will only place
-one train per track. When departing a location with a staging track, all
-cars and engines on one track will be assigned to the train. A location
-can have multiple staging tracks, but can't have any other types of
-tracks, sidings, yards, etc. Staging tracks can be at the start of a
-route, the end of the route, or both. Staging tracks in the middle of a
-route are ignored by the program.
+cars. The staging track must also service all of the train's car and
+engine types. Trains can not share staging tracks; the program will only
+place one train per track. When departing a location with a staging
+track, all cars and engines on one track will be assigned to the train.
+A location can have multiple staging tracks, but can't have any other
+types of tracks, sidings, yards, etc. Staging tracks can be at the start
+of a route, the end of the route, or both. Staging tracks in the middle
+of a route are ignored by the program.
 
 <p>Note if you are running a train to and from the same staging
 track, you must define two staging tracks for the program, one to depart
 on and one to return on. Physically the two staging tracks can be the
-same one.</p>
+same one. If you want to use the same name for your staging tracks, the
+program allows you to name the staging tracks using a hyphen and a
+number as a suffix. The hyphen and number are not printed on the switch
+lists or manifests.</p>
 
 <P>If you require a train leaving staging to have a certain number
 of engines, engine model, or road name; the program will search all
