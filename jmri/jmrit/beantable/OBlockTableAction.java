@@ -327,7 +327,6 @@ public class OBlockTableAction extends AbstractAction {
                         openPathTurnoutFrame(pathTurnoutName);
                     }
                 };
-                List <Path> list = block.getPaths();
                 Iterator <Path> iter = block.getPaths().iterator();
                 while (iter.hasNext()) {
                     OPath path = (OPath)iter.next();
@@ -833,37 +832,38 @@ public class OBlockTableAction extends AbstractAction {
                         JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
                             rbx.getString("CreateDuplBlockErr"), name),
                             AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
-                        return;
                     }
-                    if (tempRow[SENSORCOL] != null) {
-                        Sensor sensor = null;
-                        try {
-                            sensor = InstanceManager.sensorManagerInstance().provideSensor(tempRow[SENSORCOL]);
-                            if (sensor!=null) {
-                                block.setSensor(sensor);
+                    if (block!=null) {
+                        if (tempRow[SENSORCOL] != null) {
+                            Sensor sensor = null;
+                            try {
+                                sensor = InstanceManager.sensorManagerInstance().provideSensor(tempRow[SENSORCOL]);
+                                if (sensor!=null) {
+                                    block.setSensor(sensor);
+                                }
+                            } catch (Exception ex) {
+                                log.error("provideSensor("+(String)value+") threw exception: "+ ex);
                             }
-                        } catch (Exception ex) {
-                            log.error("provideSensor("+(String)value+") threw exception: "+ ex);
+                            if (sensor==null) {
+                                JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
+                                    rbx.getString("NoSuchSensorErr"), tempRow[SENSORCOL]),
+                                    AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                            }
                         }
-                        if (sensor==null) {
-                            JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                                rbx.getString("NoSuchSensorErr"), tempRow[SENSORCOL]),
-                                AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
-                            return;
-                        }
-                    }
-                    block.setComment(tempRow[COMMENTCOL]);
-                    float len = Float.valueOf(tempRow[LENGTHCOL]).floatValue();
-                    if (_inches) 
-                        block.setLength(len*25.4f);
-                    else
-                        block.setLength(len*10.0f);
-                    if (tempRow[CURVECOL].equals(noneText)) block.setCurvature(Block.NONE);
-                    else if (tempRow[CURVECOL].equals(gradualText)) block.setCurvature(Block.GRADUAL);
-                    else if (tempRow[CURVECOL].equals(tightText)) block.setCurvature(Block.TIGHT);
-                    else if (tempRow[CURVECOL].equals(severeText)) block.setCurvature(Block.SEVERE);
+                        block.setComment(tempRow[COMMENTCOL]);
+                        float len = Float.valueOf(tempRow[LENGTHCOL]).floatValue();
+                        if (_inches) 
+                            block.setLength(len*25.4f);
+                        else
+                            block.setLength(len*10.0f);
+                        if (tempRow[CURVECOL].equals(noneText)) block.setCurvature(Block.NONE);
+                        else if (tempRow[CURVECOL].equals(gradualText)) block.setCurvature(Block.GRADUAL);
+                        else if (tempRow[CURVECOL].equals(tightText)) block.setCurvature(Block.TIGHT);
+                        else if (tempRow[CURVECOL].equals(severeText)) block.setCurvature(Block.SEVERE);
+                    }  
                     //fireTableRowsUpdated(row,row);
                     initTempRow();
+                    fireTableDataChanged();
                 } else {
                     tempRow[col] = (String)value;
                 }
@@ -887,10 +887,15 @@ public class OBlockTableAction extends AbstractAction {
                     return;
                 case SENSORCOL:
                     try {
-                        Sensor s = InstanceManager.sensorManagerInstance().provideSensor((String)value);
-                        if (s!=null) {
-                            block.setSensor(s);
-                            fireTableRowsUpdated(row,row);
+                        if (((String)value).trim().length()==0) {
+                            block.setSensor(null);
+                            block.setState(OBlock.DARK);
+                        } else {
+                            Sensor s = InstanceManager.sensorManagerInstance().provideSensor((String)value);
+                            if (s!=null) {
+                                block.setSensor(s);
+                                fireTableRowsUpdated(row,row);
+                            }
                         }
                         return;
                     } catch (Exception ex) {
@@ -1445,23 +1450,24 @@ public class OBlockTableAction extends AbstractAction {
 
         public Object getValueAt(int row, int col) {
             List <NamedBean> list = _oBlockModel.getBeanList();
-            int count = 0;
-            int idx = 0;
-            OBlock block = null;
             if (list.size() > 0) {
+                int count = 0;
+                int idx = 0;
+                OBlock block = null;
                 while (count <= row)  {
                     count += ((OBlock)list.get(idx++)).getPortals().size();
                 }
                 block = (OBlock)list.get(--idx);
                 idx = row - (count - block.getPortals().size());
-            }
-            if (col==BLOCK_NAME_COLUMN) {
-                if (idx==0) {
-                    return (block!=null ? block.getDisplayName() : null);
+                if (col==BLOCK_NAME_COLUMN) {
+                    if (idx==0) {
+                        return (block!=null ? block.getDisplayName() : null);
+                    }
+                    return "";
                 }
-                return "";
+                return block.getPortals().get(idx).getName();
             }
-            return block.getPortals().get(idx).getName();
+            return null;
         }
 
 
@@ -1869,7 +1875,6 @@ public class OBlockTableAction extends AbstractAction {
             }
 
             BeanSetting bs = _path.getSettings().get(row);
-            String msg = null;
 
             switch(col) {
                 case TURNOUT_NAME_COL:
