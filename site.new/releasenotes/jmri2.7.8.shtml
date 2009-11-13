@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.8.shtml,v 1.8 2009-11-08 21:11:26 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.8.shtml,v 1.9 2009-11-13 20:05:52 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -230,6 +230,13 @@ The messages are filed in a
 <p>
 Kevin Dickerson improved the file-load dialog so that it doesn't give 
 an error message if the user cancels the load.
+
+<p>
+Dan Boudreau made a small change in how operations staging works.  
+Previously any car in staging could be assigned to a train.  
+Now the cars in staging must also be serviced by the train being built.
+Also, users can name tracks using -number suffix.  
+Suffix isn't printed for manifests or switch lists.
 
 <!--#include virtual="/Footer" -->
 
