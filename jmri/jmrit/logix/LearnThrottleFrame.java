@@ -34,7 +34,6 @@ import javax.swing.JRadioButtonMenuItem;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.powerpanel.PowerPane;
 import jmri.util.JmriJFrame;
-import jmri.jmrit.DccLocoAddressSelector;
 
 //import org.jdom.Element;
 
@@ -52,7 +51,7 @@ import jmri.jmrit.throttle.KeyListenerInstaller;
  * @author     Bob Jacobsen    Copyright 2008
  
  * @author     Pete Cressman   Copyright 2009
- * @version    $Revision: 1.2 $
+ * @version    $Revision: 1.3 $
  */
 
 public class LearnThrottleFrame extends JmriJFrame implements java.beans.PropertyChangeListener
@@ -364,7 +363,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.2 $
+     * @version    $Revision: 1.3 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {

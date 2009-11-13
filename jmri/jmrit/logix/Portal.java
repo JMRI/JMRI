@@ -17,13 +17,6 @@ import jmri.SignalHead;
  */
 public class Portal  {
 
-	/**
-	 * Constants representing the Direction of the Entry Point.
-	 */ 
-	public static final int UNKNOWN = jmri.EntryPoint.UNKNOWN;  //0x02;
-	public static final int FORWARD = jmri.EntryPoint.FORWARD;  //0x04;
-	public static final int REVERSE = jmri.EntryPoint.REVERSE;  //0x08;
-
     private ArrayList <OPath> _fromPaths = new ArrayList <OPath>();
     private OBlock _fromBlock;
     private SignalHead _fromSignal;

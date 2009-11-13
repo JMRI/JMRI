@@ -6,7 +6,6 @@ import javax.swing.Timer;
 
 import jmri.BeanSetting;
 import jmri.Block;
-import jmri.Path;
 import jmri.Turnout;
 
 /**

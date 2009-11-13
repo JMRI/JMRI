@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 import jmri.DccThrottle;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
-import jmri.Path;
+//import jmri.Path;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
@@ -128,6 +128,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
 
     public BlockOrder getCurrentBlockOrder() {
         return getBlockOrderAt(_idxCurrentOrder);
+    }
+
+    public int getCurrentOrderIndex() {
+        return _idxCurrentOrder;
     }
 
 
@@ -320,7 +324,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 log.error(msg);
                 return msg;
             }
-            if (!runBlind && (getBlockStateAt(0) & (OBlock.OCCUPIED|OBlock.UNKNOWN))==0) {
+            // start is OK if block 0 is occupied (or dark - in which case user is responsible)
+            if (!runBlind && (getBlockStateAt(0) & (OBlock.OCCUPIED|OBlock.DARK))==0) {
                 if(log.isDebugEnabled()) log.debug("Block "+getBlockAt(0).getDisplayName()+", state= "+getBlockStateAt(0));
                 msg = java.text.MessageFormat.format(rb.getString("badStart"),getDisplayName());
                 log.error(msg);
@@ -713,7 +718,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 ThrottleSetting ts = _throttleCommands.get(_idxCurrentCommand+1);
                 Object time = ts.getTime();
                 String command = ts.getCommand().toUpperCase();
-                String value = ts.getValue();
                 _orderIndex = getIndexOfBlock(InstanceManager.oBlockManagerInstance().
                                               provideOBlock(ts.getBlockName()));
                 if (_orderIndex < 0) {

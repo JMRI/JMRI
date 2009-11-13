@@ -21,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
-import javax.swing.JMenuItem;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
@@ -37,7 +36,7 @@ import javax.swing.event.ChangeListener;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.2 $
+ * @version    $Revision: 1.3 $
  */
 public class ControlPanel extends JInternalFrame
 {
