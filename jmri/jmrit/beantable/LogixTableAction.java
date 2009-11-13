@@ -16,7 +16,6 @@ import jmri.ConditionalManager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.SignalHead;
-import jmri.implementation.DefaultSignalHead;
 import jmri.Route;
 import jmri.Memory;
 import jmri.implementation.AbstractSignalHead;
@@ -76,7 +75,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.50 $
+ * @version $Revision: 1.51 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -2645,11 +2644,11 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
-                SignalHead sm = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+               /*SignalHead sm = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
                if (actionType==Conditional.ACTION_SET_SIGNAL_APPEARANCE) {
                    _actionBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                                 AbstractSignalHead.validStates, _curAction.getActionData()));
-               }
+               }*/
                break;
             case Conditional.ITEM_TYPE_CLOCK:
                 _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(

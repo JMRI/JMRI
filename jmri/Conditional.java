@@ -89,9 +89,12 @@ public interface Conditional extends NamedBean {
 	public static final int TYPE_SIGNAL_HEAD_FLASHLUNAR = 22;
 	public static final int TYPE_MEMORY_EQUALS_INSENSITIVE = 23;
     public static final int TYPE_MEMORY_COMPARE_INSENSITIVE = 24;
+    // Warrant variables
     public static final int TYPE_ROUTE_FREE = 25;
     public static final int TYPE_ROUTE_OCCUPIED = 26;
     public static final int TYPE_ROUTE_ALLOCATED = 27;
+    public static final int TYPE_ROUTE_SET = 28;
+    public static final int TYPE_TRAIN_RUNNING = 29;
 	
 	// action definitions
 	public static final int ACTION_OPTION_ON_CHANGE_TO_TRUE = 1;
@@ -216,6 +219,8 @@ public interface Conditional extends NamedBean {
                                     ITEM_TYPE_WARRANT,      // TYPE_ROUTE_FREE          25
                                     ITEM_TYPE_WARRANT,      // TYPE_ROUTE_OCCUPIED      26
                                     ITEM_TYPE_WARRANT,      // TYPE_ROUTE_ALLOCATED     27
+                                    ITEM_TYPE_WARRANT,      // TYPE_ROUTE_SET           28
+                                    ITEM_TYPE_WARRANT       // TYPE_TRAIN_RUNNING       29
                                     };
 
     // Map Signal comboBox items to Signal Head Conditional variable types
@@ -244,7 +249,8 @@ public interface Conditional extends NamedBean {
     public static int[] ITEM_TO_LIGHT_TEST = {TYPE_LIGHT_ON, TYPE_LIGHT_OFF};
 
     // Map Warrant state comboBox items to Warrant ConditionalVariable types
-    public static int[] ITEM_TO_WARRANT_TEST = {TYPE_ROUTE_FREE, TYPE_ROUTE_OCCUPIED, TYPE_ROUTE_ALLOCATED};
+    public static int[] ITEM_TO_WARRANT_TEST = {TYPE_ROUTE_FREE, TYPE_ROUTE_SET, TYPE_ROUTE_ALLOCATED,
+                                                        TYPE_ROUTE_OCCUPIED, TYPE_TRAIN_RUNNING};
 
     // Map Memory Compare Type comboBox items to Memory ConditionalVariable types
     public static int[] ITEM_TO_MEMORY_TEST = {TYPE_MEMORY_EQUALS, TYPE_MEMORY_EQUALS_INSENSITIVE,

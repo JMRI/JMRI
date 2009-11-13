@@ -373,6 +373,13 @@ public class ConditionalVariable {
                     case Conditional.TYPE_ROUTE_ALLOCATED:
                         result = w.isAllocated(); 
                         break;
+                    case Conditional.TYPE_ROUTE_SET:
+                        result = w.hasRouteSet(); 
+                        break;
+                    case Conditional.TYPE_TRAIN_RUNNING:
+                        // not in either RUN or LEARN state
+                        result = !(w.getRunMode() == Warrant.MODE_NONE); 
+                        break;
                     default:
                         result = false;
                 }
@@ -581,6 +588,10 @@ public class ConditionalVariable {
                 return (rbx.getString("stateRouteOccupied"));
             case Conditional.TYPE_ROUTE_ALLOCATED:
                 return (rbx.getString("StateRouteReserved"));
+            case Conditional.TYPE_ROUTE_SET:
+                return (rbx.getString("StateRouteIsSet"));
+            case Conditional.TYPE_TRAIN_RUNNING:
+                return (rbx.getString("StateTrainRunning"));
         }
         return "";
     }
@@ -646,6 +657,10 @@ public class ConditionalVariable {
                 return (rbx.getString("TypeWarrantRouteOccuoied"));
             case Conditional.TYPE_ROUTE_ALLOCATED:
                 return (rbx.getString("TypeWarrantRouteAllocated"));
+            case Conditional.TYPE_ROUTE_SET:
+                return (rbx.getString("TypeRouteIsSet"));
+            case Conditional.TYPE_TRAIN_RUNNING:
+                return (rbx.getString("TypeTrainRunning"));
         }
         return ("");
     }
