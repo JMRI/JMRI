@@ -246,7 +246,7 @@ public class WarrantTableAction extends AbstractAction {
             table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
             table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
             JComboBox box = new JComboBox(controls);
-            box.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
+            box.setFont(new Font(null, Font.PLAIN, 12));
             table.getColumnModel().getColumn(WarrantTableModel.CONTROL_COLUMN).setCellEditor(new DefaultCellEditor(box));
             table.getColumnModel().getColumn(WarrantTableModel.ROUTE_COLUMN).setCellEditor(new ComboBoxCellEditor(new JComboBox()));
             table.getColumnModel().getColumn(WarrantTableModel.ALLOCATE_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
@@ -303,7 +303,7 @@ public class WarrantTableAction extends AbstractAction {
         }
         ComboBoxCellEditor(JComboBox comboBox) {
             super(comboBox);
-            comboBox.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
+            comboBox.setFont(new Font(null, Font.PLAIN, 12));
         }
         public Component getTableCellEditorComponent(JTable table, Object value, 
                                          boolean isSelected, int row, int column) 
