@@ -15,7 +15,7 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -313,6 +313,8 @@ public class DefaultLogix extends AbstractNamedBean
                         case Conditional.TYPE_ROUTE_FREE:
                         case Conditional.TYPE_ROUTE_OCCUPIED:
                         case Conditional.TYPE_ROUTE_ALLOCATED:
+                        case Conditional.TYPE_ROUTE_SET:
+                        case Conditional.TYPE_TRAIN_RUNNING:
                             varListenerType = LISTENER_TYPE_WARRANT;
                             break;
                         case Conditional.TYPE_FAST_CLOCK_RANGE:
