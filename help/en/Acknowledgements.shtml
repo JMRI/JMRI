@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.85 2009-10-21 06:24:58 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.86 2009-11-14 19:11:52 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -127,7 +127,8 @@
 	<LI>Bob Coleman added the CTI Acela support and did a huge
 	amount of work on the operations code tests.
     <li>Peter Cressman provided a major improvement to Logix, improved
-    Sensor Groups, and fixed some problems in Routes.
+    Sensor Groups, fixed some problems in Routes,
+    and provided the Warrant system for scripted running
 	<LI>Andrew Crosland create the SPROG implementation, SPROG programming
 	tools, 
 	has generously contributed lots of time for SPROG users,
@@ -142,8 +143,9 @@
 	<LI>Kevin Dickerson, who figured out the ECoS protocol so JMRI
 	could connect to one and wrote code for ECoS throttles and turnouts,
 	added turnout monitoring to the ECoS support,
-    fixed a problem what would sometimes result in improperly disabled Logix and Conditionals,
-    and worked on improving the throttles.
+    fixed a problem what would sometimes improperly disable Logix and Conditionals,
+    worked on improving the throttles, 
+    and fixed problems in the SPROG and multisensor icons.
 	<LI>Robert Doss, who provided ID information for the MRC 330 decoder
 	<LI>David Duchamp, who has added diagnostics to the C/MRI code, 
 	did much of the customization work for the fast clock, 
@@ -222,8 +224,10 @@
 	<LI>John Jabour, who created the excellent LocoBuffer and thereby made 
 	reliable LocoNet communications routine
 	<LI>Bob Jacobsen, who wrote some of the early code and does packaging and user support
-    <LI>Lionel Jeanson, who added images to the roster and updated the throttle
-        to add preferences for displaying them
+    <LI>Lionel Jeanson, who added images to the roster,
+        updated the throttle to add preferences for displaying them,
+        cleaned up some code problems in the throttle,
+        and created Jynstruments for improving the GUI
 	<LI>Robert Johnson, who provided info on the DZ123 decoder
 	<LI>Colin Jones, who first recognized the LocoButter
 	<LI>Randy Jones, who provided identification info for several Quantum decoders
