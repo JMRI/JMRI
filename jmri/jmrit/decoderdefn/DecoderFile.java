@@ -4,10 +4,12 @@ package jmri.jmrit.decoderdefn;
 
 import java.io.*;
 import java.util.List;
+import java.util.Iterator;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.ResetTableModel;
 import org.jdom.Element;
+import org.jdom.filter.ElementFilter;
 
 // try to limit the JDOM to this class, so that others can manipulate...
 
@@ -20,7 +22,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.19 $
+ * @version   $Revision: 1.20 $
  * @see       jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
@@ -195,9 +197,11 @@ public class DecoderFile extends XmlFile {
         //Element decoderID = decoderElement.getChild("id");
 
         // load variables to table
-        List<Element> varList = decoderElement.getChild("variables").getChildren("variable");
-        for (int i=0; i<varList.size(); i++) {
-            Element e = varList.get(i);
+        Iterator<Element> iter = decoderElement.getChild("variables")
+                                    .getDescendants(new ElementFilter("variable"));
+        int index = 0;
+        while (iter.hasNext()) {
+            Element e = iter.next();
             try {
                 // if its associated with an inconsistent number of functions,
                 // skip creating it
@@ -216,12 +220,14 @@ public class DecoderFile extends XmlFile {
                          +e.getAttribute("item")+" exception: "+ex);
             }
             // load each row
-            variableModel.setRow(i, e);
+            variableModel.setRow(index++, e);
         }
         // load constants to table
-        List<Element> consList = decoderElement.getChild("variables").getChildren("constant");
-        for (int i=0; i<consList.size(); i++) {
-            Element e = consList.get(i);
+        iter = decoderElement.getChild("variables")
+                                    .getDescendants(new ElementFilter("constant"));
+        index = 0;
+        while (iter.hasNext()) {
+            Element e = iter.next();
             try {
                 // if its associated with an inconsistent number of functions,
                 // skip creating it
@@ -242,11 +248,12 @@ public class DecoderFile extends XmlFile {
             // load each row
             variableModel.setConstant(e);
         }
+        iter = decoderElement.getChild("variables")
+                                    .getDescendants(new ElementFilter("ivariable"));
+        index = 0;
         int row = 0;
-        List<Element> iVarList = decoderElement.getChild("variables").getChildren("ivariable");
-        log.debug("iVarList has "+iVarList.size()+" entries, now row = "+row);
-        for (int i=0; i<iVarList.size(); i++) {
-            Element e = iVarList.get(i);
+        while (iter.hasNext()) {
+            Element e = iter.next();
             try {
                 if (log.isDebugEnabled()) log.debug("process iVar "+e.getAttribute("CVname"));
                 // if its associated with an inconsistent number of functions,

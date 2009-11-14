@@ -10,12 +10,13 @@ import javax.swing.*;
 
 import java.util.*;
 import org.jdom.*;
+import org.jdom.filter.*;
 
 /**
  * Check the names in an XML decoder file against the names.xml definitions
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  * @see jmri.jmrit.XmlFile
  */
 public class NameCheckAction extends AbstractAction {
@@ -51,14 +52,17 @@ public class NameCheckAction extends AbstractAction {
                     log.warn("Does not appear to be a decoder file");
                     return;
                 }
-                List<Element> varList = root.getChild("decoder").getChild("variables").getChildren("variable");
-                if (log.isDebugEnabled()) log.debug("found "+varList.size()+" variables");
+
+                Iterator<Element> iter = root.getChild("decoder").getChild("variables")
+                                            .getDescendants(new ElementFilter("variable"));
+
                 jmri.jmrit.symbolicprog.NameFile nfile = jmri.jmrit.symbolicprog.NameFile.instance();
                 
                 String warnings = "";
                 
-                for (int i=0; i<varList.size(); i++) {
-                    Element varElement = varList.get(i);
+                while (iter.hasNext()) {
+                    Element varElement = iter.next();
+
                     // for each variable, see if can find in names file
                     Attribute labelAttr = varElement.getAttribute("label");
                     String label = null;
