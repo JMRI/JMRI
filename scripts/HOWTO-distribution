@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.103 $)
+distribution.  ($Revision: 1.104 $)
 
 Start with a directory, typically called "Distributions", that
 contains "scripts" and "java" (from CVS) as subdirectories, and:
@@ -124,34 +124,34 @@ Add something about copyright notices on changed files
 To actually create the distribution:
 
 ( ) Go to your working directory and
-	cvs -Q tag -F Release-2-7-6 
+	cvs -Q tag -F Release-2-7-7 
 
 ( ) Create a new working directory, if you haven't already:
     
     cd <project directory>
     mkdir X-Y-Z-cand
     cd X-Y-Z-cand
-    cvs co -r Release-2-7-6 all
+    cvs co -r Release-2-7-7 all
     
     This gives it a sticky tag.  If your working directory
     already has that name, just
     
-    cvs -q update -r Release-2-7-6
+    cvs -q update -r Release-2-7-7
     
     to make sure it's got the tag
     
 ( ) Come back to Distributions and 
     cd scripts
-	cvs -Q tag -F Release-2-7-6
+	cvs -Q tag -F Release-2-7-7
     cd ../java
-	cvs -Q tag -F Release-2-7-6
+	cvs -Q tag -F Release-2-7-7
     cd ..
     
 ( ) Announce the tag to jmri-developers list, wait for comments
 
 ( ) Start the actual build! In the Distributions directory:
 
-	ant -f dist.xml -Drelease=Release-2-7-6 -Dnumber=2.7.6 release1
+	ant -f dist.xml -Drelease=Release-2-7-7 -Dnumber=2.7.7 release1
 	
 	Ensure tests pass
 	
@@ -173,7 +173,7 @@ To actually create the distribution:
     (The dist.xml file needs to have "test\ release" vs "production\ release"
     edited as needed - this should be automated)
 
-    ant -f dist.xml -Drelease=Release-2-7-6 -Dnumber=2.7.6 -Duser.name=jacobsen release2
+    ant -f dist.xml -Drelease=Release-2-7-7 -Dnumber=2.7.7 -Duser.name=jacobsen release2
 
     (The user.name only needs to be provided if your SourceForge.net ID 
      is different than your current login ID)
@@ -198,10 +198,10 @@ To actually create the distribution:
 ( ) Any time after release1 is complete, create and upload the JavaDocs
     and XSLT'd decoder pages
     
-	ant -f dist.xml -Drelease=Release-2-7-6 -Dnumber=2.7.6 release3
+	ant -f dist.xml -Drelease=Release-2-7-7 -Dnumber=2.7.7 release3
 	
 	Older manual form:
-	rsync -n -avz --delete --rsh="ssh -l jacobsen" Release-2-7-6/java/doc jacobsen,jmri@web.sourceforge.net:htdocs/JavaDoc/doc
+	rsync -n -avz --delete --rsh="ssh -l jacobsen" Release-2-7-7/java/doc jacobsen,jmri@web.sourceforge.net:htdocs/JavaDoc/doc
 		
 ( ) Format the release note page, change date, etc
 
@@ -216,7 +216,7 @@ To actually create the distribution:
     If you "ssh -t jacobsen,jmri@shell.sourceforge.net create", the files ended up in "uploads"
     
     Go to release manager with Safari
-    Create a "JMRI 2.7.6" directory in "test files"
+    Create a "JMRI 2.7.7" directory in "test files"
     Upload the three files via the web
     (Only set default platform for production version, controls download)
     (That seems to be it)
@@ -226,15 +226,15 @@ To actually create the distribution:
     
     For test release:
     bbedit notesfile*.txt changefile.txt
-    sf-upload -g 26788 -packageid 49077 -r "JMRI 2.7.6 test version for Linux" -nf notesfileLin.txt  -cf changefile.txt -f JMRI.2.7.6.tgz -type ".gz" -noupload
-    sf-upload -g 26788 -packageid 49077 -r "JMRI 2.7.6 test version for Mac OS X" -nf notesfileMac.txt  -cf changefile.txt -f JMRI.2.7.6.dmg -type ".dmg" -noupload
-    sf-upload -g 26788 -packageid 49077 -r "JMRI 2.7.6 test version for Windows" -nf notesfileWin.txt  -cf changefile.txt -f JMRI.2.7.6.exe -type ".exe (32-bit Windows)" -noupload
+    sf-upload -g 26788 -packageid 49077 -r "JMRI 2.7.7 test version for Linux" -nf notesfileLin.txt  -cf changefile.txt -f JMRI.2.7.7.tgz -type ".gz" -noupload
+    sf-upload -g 26788 -packageid 49077 -r "JMRI 2.7.7 test version for Mac OS X" -nf notesfileMac.txt  -cf changefile.txt -f JMRI.2.7.7.dmg -type ".dmg" -noupload
+    sf-upload -g 26788 -packageid 49077 -r "JMRI 2.7.7 test version for Windows" -nf notesfileWin.txt  -cf changefile.txt -f JMRI.2.7.7.exe -type ".exe (32-bit Windows)" -noupload
 
     For production release:
     bbedit notesProdRel*.txt changefile.txt
-    sf-upload -g 26788 -packageid 33771 -r "JMRI 2.7.6 production release for Linux" -nf notesProdRelLin.txt  -cf changefile.txt -f JMRI.2.7.6.tgz -type ".gz" -noupload
-    sf-upload -g 26788 -packageid 33771 -r "JMRI 2.7.6 production release for Mac OS X" -nf notesProdRelMac.txt  -cf changefile.txt -f JMRI.2.7.6.dmg -type ".dmg" -noupload
-    sf-upload -g 26788 -packageid 33771 -r "JMRI 2.7.6 production release for Windows" -nf notesProdRelWin.txt  -cf changefile.txt -f JMRI.2.7.6.exe -type ".exe (32-bit Windows)" -noupload
+    sf-upload -g 26788 -packageid 33771 -r "JMRI 2.7.7 production release for Linux" -nf notesProdRelLin.txt  -cf changefile.txt -f JMRI.2.7.7.tgz -type ".gz" -noupload
+    sf-upload -g 26788 -packageid 33771 -r "JMRI 2.7.7 production release for Mac OS X" -nf notesProdRelMac.txt  -cf changefile.txt -f JMRI.2.7.7.dmg -type ".dmg" -noupload
+    sf-upload -g 26788 -packageid 33771 -r "JMRI 2.7.7 production release for Windows" -nf notesProdRelWin.txt  -cf changefile.txt -f JMRI.2.7.7.exe -type ".exe (32-bit Windows)" -noupload
 
     (have to have a ~/.sfuploadrc file)
     
@@ -252,18 +252,18 @@ To actually create the distribution:
 		Mac OS X
 		Windows
 		
-	The name convention is "JMRI 2.7.6 test version for Linux"
+	The name convention is "JMRI 2.7.7 test version for Linux"
         or "JMRI 2.2 production release for Linux"
         
     The note says:
 
-        The JMRI 2.7.6 test version is now available for download. 
+        The JMRI 2.7.7 test version is now available for download. 
         This is the specific version for Windows users. 
-        For more information, please see the release note at http://jmri.sf.net/releasenotes/jmri2.7.6.shtml
+        For more information, please see the release note at http://jmri.sf.net/releasenotes/jmri2.7.7.shtml
 
     The change log says:
     
-        The complete list of changes is in the release note at http://jmri.sf.net/releasenotes/jmri2.7.6.shtml
+        The complete list of changes is in the release note at http://jmri.sf.net/releasenotes/jmri2.7.7.shtml
 
 	Don't select "preserve preformatted text"
 	
@@ -292,7 +292,7 @@ To actually create the distribution:
 ( ) Wait for update on JMRI web server
 
 ( ) Mail announcement to jmriusers@yahoogroups.com
-    Subject is "Test version 2.7.6 of JMRI/DecoderPro is available for download"
+    Subject is "Test version 2.7.7 of JMRI/DecoderPro is available for download"
 
 ( ) Mail announcement to jmri-announce@lists.sourceforge.net
 
@@ -300,7 +300,7 @@ To actually create the distribution:
 
 ( ) News item from JMRI sourceforge page, Summary tab
 
-	Title is of the form "JMRI 2.7.6 test version is available";
+	Title is of the form "JMRI 2.7.7 test version is available";
 	text is pretty much directly taken from the release note
 
 ( ) If a production version, update the SF automatic download icon by selecting default in FRS
