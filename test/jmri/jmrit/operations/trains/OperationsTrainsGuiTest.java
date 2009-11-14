@@ -4,6 +4,8 @@ package jmri.jmrit.operations.trains;
 
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -17,7 +19,7 @@ import java.util.List;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class OperationsTrainsGuiTest extends TestCase {
 
@@ -29,6 +31,19 @@ public class OperationsTrainsGuiTest extends TestCase {
 		catch (InterruptedException e) {
 			Assert.fail("failed due to InterruptedException");
 		}
+	}
+	
+	/**
+	 * Adds some cars for the various tests in this suite
+	 */
+	public void testTrainsAddCars(){
+		CarManager cm = CarManager.instance();
+		// add caboose to the roster
+		Car c = cm.newCar("NH", "687");
+		c.setCaboose(true);
+		c = cm.newCar("CP", "435");
+		c.setCaboose(true);
+		
 	}
 	
 	public void testTrainsTableFrame(){
@@ -122,8 +137,8 @@ public class OperationsTrainsGuiTest extends TestCase {
 		Assert.assertEquals("train comment", "15:45", t.getDepartureTime());
 		
 		// test route field
-		trainEditFrame.routeBox.setSelectedIndex(6);	// the 6th item should be "Route 1 East"
-		Assert.assertEquals("train route 2", "Route 1 East", t.getRoute().getName());
+		trainEditFrame.routeBox.setSelectedIndex(3);	// the 3rd item should be "Test Route C"
+		Assert.assertEquals("train route 2", "Test Route C", t.getRoute().getName());
 		// test route edit button
 		trainEditFrame.editButton.doClick();
 		

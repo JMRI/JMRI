@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
  *   Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -883,7 +883,6 @@ public class OperationsCarsTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(OperationsCarsTest.class);
-		suite.addTest(OperationsCarsGuiTest.suite());
 		return suite;
 	}
 

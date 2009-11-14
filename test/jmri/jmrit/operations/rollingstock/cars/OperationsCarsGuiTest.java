@@ -20,7 +20,7 @@ import java.util.List;
  * Tests for the Operations Cars GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class OperationsCarsGuiTest extends TestCase {
 
@@ -35,10 +35,18 @@ public class OperationsCarsGuiTest extends TestCase {
 	}
 	
 	public void testCarsTableFrame(){
+		// remove previous cars
+		CarManager.instance().dispose();
 		// add Owner1 and Owner2
 		CarOwners co = CarOwners.instance();
 		co.addName("Owner1");
 		co.addName("Owner2");
+		// add road names
+		CarRoads cr = CarRoads.instance();
+		cr.addName("NH");
+		cr.addName("UP");
+		cr.addName("AA");
+		cr.addName("SP");
 		
 		CarsTableFrame ctf = new CarsTableFrame(true, null, null);	
 		// show all cars?
@@ -223,8 +231,8 @@ public class OperationsCarsGuiTest extends TestCase {
 		f.roadComboBox.setSelectedItem("SP");
 		f.roadNumberTextField.setText("6");
 		f.typeComboBox.setSelectedItem("Caboose");
-		f.lengthComboBox.setSelectedItem("36");
-		f.colorComboBox.setSelectedItem("Green");
+		f.lengthComboBox.setSelectedItem("38");
+		f.colorComboBox.setSelectedItem("Black");
 		f.loadComboBox.setSelectedItem("L");
 		f.builtTextField.setText("1999");
 		f.ownerComboBox.setSelectedItem("Owner1");
@@ -236,8 +244,8 @@ public class OperationsCarsGuiTest extends TestCase {
 		
 		Assert.assertNotNull("Car did not create", c6);
 		Assert.assertEquals("car type", "Caboose", c6.getType());
-		Assert.assertEquals("car length", "36", c6.getLength());
-		Assert.assertEquals("car color", "Green", c6.getColor());
+		Assert.assertEquals("car length", "38", c6.getLength());
+		Assert.assertEquals("car color", "Black", c6.getColor());
 		Assert.assertEquals("car load", "L", c6.getLoad());
 		Assert.assertEquals("car built", "1999", c6.getBuilt());
 		Assert.assertEquals("car owner", "Owner1", c6.getOwner());
@@ -313,8 +321,8 @@ public class OperationsCarsGuiTest extends TestCase {
 		Assert.assertEquals("new color","Pink",f.comboBox.getItemAt(0));
 		
 		f.deleteButton.doClick();
-		// black is the first default color
-		Assert.assertEquals("old color","Black",f.comboBox.getItemAt(0));
+		// red is the first default color
+		Assert.assertEquals("old color","Red",f.comboBox.getItemAt(0));
 		
 		testReplace(f);	
 	}

@@ -38,7 +38,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -1364,7 +1364,6 @@ public class OperationsLocationsTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(OperationsLocationsTest.class);
-		suite.addTest(OperationsLocationsGuiTest.suite());
 		return suite;
 	}
 

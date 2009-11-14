@@ -30,7 +30,7 @@ import javax.swing.JComboBox;
  *   RouteLocation: XML read/write
  * 
  * @author	Bob Coleman     Copyright (C) 2008, 2009
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class OperationsRoutesTest extends TestCase {
 
@@ -661,7 +661,6 @@ public class OperationsRoutesTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(OperationsRoutesTest.class);
-		suite.addTest(OperationsRoutesGuiTest.suite());
 		return suite;
 	}
 

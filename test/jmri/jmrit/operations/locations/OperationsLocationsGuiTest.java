@@ -20,7 +20,7 @@ import java.util.List;
  * Tests for the Operations Locations GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class OperationsLocationsGuiTest extends TestCase {
 	
@@ -37,8 +37,10 @@ public class OperationsLocationsGuiTest extends TestCase {
 	}
 	
 	public void testLocationsTableFrame(){
+		// clear out previous locations
+		LocationManager.instance().dispose();	
 		// create 5 locations
-		LocationManager lManager = LocationManager.instance();
+		LocationManager lManager = LocationManager.instance();		
 		Location l1 = lManager.newLocation("Test Loc E");
 		l1.setLength(1001);
 		Location l2 = lManager.newLocation("Test Loc D");
@@ -409,12 +411,12 @@ public class OperationsLocationsGuiTest extends TestCase {
 		// now add some car types to the schedule
 		f.typeBox.setSelectedItem("Boxcar");
 		f.addTypeButton.doClick();
-		f.typeBox.setSelectedItem("Flatcar");
+		f.typeBox.setSelectedItem("Flat");
 		f.addTypeButton.doClick();
-		f.typeBox.setSelectedItem("Coilcar");
+		f.typeBox.setSelectedItem("Coil Car");
 		f.addTypeButton.doClick();
 		// put Gondola at start of list
-		f.typeBox.setSelectedItem("Gondola");
+		f.typeBox.setSelectedItem("Tanker");
 		f.addLocAtTop.doClick();
 		f.addTypeButton.doClick();
 		f.saveScheduleButton.doClick();
@@ -423,13 +425,13 @@ public class OperationsLocationsGuiTest extends TestCase {
 		Assert.assertEquals("number of items", 4, list.size());
 		
 		ScheduleItem si = s.getItemById(list.get(0));		
-		Assert.assertEquals("1st type", "Gondola", si.getType());
+		Assert.assertEquals("1st type", "Tanker", si.getType());
 		si = s.getItemById(list.get(1));		
 		Assert.assertEquals("2nd type", "Boxcar", si.getType());
 		si = s.getItemById(list.get(2));		
-		Assert.assertEquals("3rd type", "Flatcar", si.getType());
+		Assert.assertEquals("3rd type", "Flat", si.getType());
 		si = s.getItemById(list.get(3));		
-		Assert.assertEquals("3rd type", "Coilcar", si.getType());
+		Assert.assertEquals("3rd type", "Coil Car", si.getType());
 		
 		f.deleteScheduleButton.doClick();
 		s = m.getScheduleByName("Test Schedule A");	
@@ -455,7 +457,6 @@ public class OperationsLocationsGuiTest extends TestCase {
 		LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
 		LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
 		TrainManagerXml.setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
-
 	}
 
 	public OperationsLocationsGuiTest(String s) {

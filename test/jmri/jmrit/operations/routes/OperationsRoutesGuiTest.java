@@ -20,7 +20,7 @@ import java.util.List;
  * Tests for the Operations Routes GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class OperationsRoutesGuiTest extends TestCase {
 	
@@ -35,6 +35,8 @@ public class OperationsRoutesGuiTest extends TestCase {
 	}
 	
 	public void testRoutesTableFrame(){
+		// remove previous routes
+		RouteManager.instance().dispose();
 		// create 5 routes
 		RouteManager rManager = RouteManager.instance();
 		Route r1 = rManager.newRoute("Test Route E");

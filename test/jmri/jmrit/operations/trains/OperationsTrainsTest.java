@@ -58,7 +58,7 @@ import jmri.jmrit.operations.routes.RouteManager;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -3716,7 +3716,6 @@ public class OperationsTrainsTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite(OperationsTrainsTest.class);
-		suite.addTest(OperationsTrainsGuiTest.suite());
 		return suite;
 	}
 
