@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.8.shtml,v 1.9 2009-11-13 20:05:52 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.8.shtml,v 1.10 2009-11-14 04:38:22 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -237,6 +237,28 @@ Previously any car in staging could be assigned to a train.
 Now the cars in staging must also be serviced by the train being built.
 Also, users can name tracks using -number suffix.  
 Suffix isn't printed for manifests or switch lists.
+
+<p>
+Pete Cressman modified the create/edit dialogs for state variables and actions in Logix 
+to organize them according to item type (e.g. Senors, turnouts, etc.).  
+The column expandability  has been somewhat improved.
+
+<p>
+Pete Cressman added new sub-menu under "Tools - Tables" called "Occupancy Blocks".
+This is a sub-system for defining  elements needed to run trains with 
+automated commands through 
+"<a href="http://jmri.org/help/en/package/jmri/jmrit/logix/Warrant.shtml">Warrants</a>".  
+Some of the features of Warrants are:
+<ol>
+  <li>Routes can be determined by merely choosing the start and end points.
+  <li>Throttle commands are recorded in a "Learn Mode" that are then played back 
+        for automated running.
+  <li>Turnout and Signals are set automatically for automated running.
+</ol>
+Warrants need to have the layout decribed in terms of the elements defined by the 
+Occupancy Block Table.
+Although intended to operate with block detection, warrants can run trains without it, 
+however in this case, there is no protection against misaligned turnouts or cornfield meets.  Detailed information can be found in the Help files on the Occupancy Block Table menu.
 
 <!--#include virtual="/Footer" -->
 
