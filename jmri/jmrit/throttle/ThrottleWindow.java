@@ -444,10 +444,8 @@ public class ThrottleWindow extends JmriJFrame {
         me.setAttribute("title", titleText);
         me.setAttribute("titleType", titleTextType);	
         
-        java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1);
-        WindowPreferences wp = new WindowPreferences();
-        
-        children.add(wp.getPreferences(this));
+        java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1);        
+        children.add(WindowPreferences.getPreferences(this));
 
  // TODO: save all throttlesFrame inside this Window
  //       Iterator<JComponent> ite = throttlesLayout.getIterator() ;
@@ -480,8 +478,7 @@ public class ThrottleWindow extends JmriJFrame {
         setTitleTextType ( e.getAttribute("titleType").getValue()) ;
         
         Element window = e.getChild("window");
-        WindowPreferences wp = new WindowPreferences();
-        wp.setPreferences(this, window);		
+        WindowPreferences.setPreferences(this, window);		
 	}
 	
 	/**

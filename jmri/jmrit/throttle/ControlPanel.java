@@ -50,7 +50,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.70 $
+ * @version    $Revision: 1.71 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
@@ -730,7 +730,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.70 $
+     * @version    $Revision: 1.71 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -920,10 +920,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         me.setAttribute("trackSlider", String.valueOf(this.trackSlider));
         me.setAttribute("trackSliderMinInterval", String.valueOf(this.trackSliderMinInterval));
         //Element window = new Element("window");
-        WindowPreferences wp = new WindowPreferences();
-        java.util.ArrayList<Element> children =
-            new java.util.ArrayList<Element>(1);
-        children.add(wp.getPreferences(this));
+        java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1);
+        children.add(WindowPreferences.getPreferences(this));
         me.setContent(children);
         return me;
     }
@@ -990,8 +988,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             trackSliderMinInterval = trackSliderMinIntervalDefault;
         }
         Element window = e.getChild("window");
-        WindowPreferences wp = new WindowPreferences();
-        wp.setPreferences(this, window);
+        WindowPreferences.setPreferences(this, window);
     }
 
 	public void notifyAddressChosen(int newAddress, boolean isLong) {	

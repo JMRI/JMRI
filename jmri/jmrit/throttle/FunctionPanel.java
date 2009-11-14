@@ -329,7 +329,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.50 $
+	 * @version $Revision: 1.51 $
 	 */
     class FunctionButtonKeyListener extends KeyAdapter {
     	private boolean keyReleased = true;
@@ -453,14 +453,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     public Element getXml()
     {
         Element me = new Element("FunctionPanel");
-        WindowPreferences wp = new WindowPreferences();
-        java.util.ArrayList<Element> children =
-                new java.util.ArrayList<Element>(1);
-        children.add(wp.getPreferences(this));
-        for (int i=0; i<this.NUM_FUNCTION_BUTTONS; i++)
-        {
-            children.add(functionButton[i].getXml());
-        }
+        java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1+this.NUM_FUNCTION_BUTTONS);
+        children.add(WindowPreferences.getPreferences(this));
+        for (int i=0; i<this.NUM_FUNCTION_BUTTONS; i++)       
+            children.add(functionButton[i].getXml());       
         me.setContent(children);
         return me;
     }
@@ -477,8 +473,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	public void setXml(Element e)
     {
         Element window = e.getChild("window");
-        WindowPreferences wp = new WindowPreferences();
-        wp.setPreferences(this, window);
+        WindowPreferences.setPreferences(this, window);
 
         java.util.List<Element> buttonElements =
                 e.getChildren("FunctionButton");

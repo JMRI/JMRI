@@ -24,7 +24,7 @@ public class WindowPreferences
      * <li> isIcon
      * </ul>
      */
-    public Element getPreferences(JInternalFrame c)
+    public static Element getPreferences(JInternalFrame c)
     {
         Element window = getPreferences((Container)c);
         window.setAttribute("isIconified", String.valueOf( c.isIcon() ) );
@@ -43,7 +43,7 @@ public class WindowPreferences
      * <li> isIcon
      * </ul>
      */
-    public void setPreferences(JInternalFrame c, Element e)
+    public static void setPreferences(JInternalFrame c, Element e)
     {
     	setPreferences((Container)c, e);
         try
@@ -69,7 +69,7 @@ public class WindowPreferences
      * <li> height
      * </ul>
      */
-    public Element getPreferences(Container c)
+    public static Element getPreferences(Container c)
     {
         Element window = new Element("window");
         window.setAttribute("x", String.valueOf(c.getLocation().x));
@@ -91,7 +91,7 @@ public class WindowPreferences
      * <li> height
      * </ul>
      */
-    public void setPreferences(Container c, Element e, boolean ignorePosition)
+    public static void setPreferences(Container c, Element e, boolean ignorePosition)
     {
         try
         {
@@ -108,7 +108,7 @@ public class WindowPreferences
         }
     }
     
-    public void setPreferences(Container c, Element e) {
+    public static void setPreferences(Container c, Element e) {
     	 setPreferences(c, e, false);
     }
 }

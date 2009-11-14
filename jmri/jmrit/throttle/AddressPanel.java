@@ -26,7 +26,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.48 $
+ * @version $Revision: 1.49 $
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
@@ -442,9 +442,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	public Element getXml() {
 		Element me = new Element("AddressPanel");
 		//Element window = new Element("window");
-		WindowPreferences wp = new WindowPreferences();
 		java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1);
-		children.add(wp.getPreferences(this));
+		children.add(WindowPreferences.getPreferences(this));
 		children.add((new jmri.configurexml.LocoAddressXml())
 				.store(addrSelector.getAddress()));
 		children.add((new jmri.configurexml.LocoAddressXml())
@@ -462,8 +461,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	@SuppressWarnings("unchecked")
 	public void setXml(Element e) {
 		Element window = e.getChild("window");
-		WindowPreferences wp = new WindowPreferences();
-		wp.setPreferences(this, window);
+		WindowPreferences.setPreferences(this, window);
 
 		Element addressElement = e.getChild("address");
 		if (addressElement != null) {
