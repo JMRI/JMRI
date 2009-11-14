@@ -14,7 +14,7 @@ import jmri.ThrottleListener;
  * originally created from.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 
 public class Transmitter implements ThrottleListener {
@@ -65,9 +65,5 @@ public class Transmitter implements ThrottleListener {
     public void notifyThrottleFound(DccThrottle t) {
         needReqThrottle = false;
         throttle = t;
-    }
-    
-    public void notifyThrottleLost(jmri.LocoAddress dccAddress){
-    //This function is redundant but is in the throttle listener}
     }
 }

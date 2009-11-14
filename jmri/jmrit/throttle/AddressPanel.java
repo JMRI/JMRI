@@ -4,6 +4,8 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 import java.util.List;
 import java.io.File;
@@ -24,9 +26,9 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
-public class AddressPanel extends JInternalFrame implements ThrottleListener {
+public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
 	private DccThrottle throttle;
@@ -56,12 +58,16 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener {
 	public void destroy() { // Handle disposing of the throttle
 		if (throttle != null) {
 			DccLocoAddress l = (DccLocoAddress) throttle.getLocoAddress();
-			InstanceManager.throttleManagerInstance().removeActiveTrottlesListener(l, this);
+			throttle.removePropertyChangeListener(this);
 			InstanceManager.throttleManagerInstance().cancelThrottleRequest(l.getNumber(), this);
 			throttle.release();
+			throttle = null;
 		}
 		if (consistThrottle != null)
+		{
 			consistThrottle.release();
+			consistThrottle = null;
+		}
 	}
 
 	/**
@@ -101,7 +107,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener {
 		releaseButton.setEnabled(true);
 		currentAddress = (DccLocoAddress) t.getLocoAddress();
 		addrSelector.setAddress(currentAddress);
-		InstanceManager.throttleManagerInstance().addActiveTrottlesListener(currentAddress, this);
+		throttle.addPropertyChangeListener(this);
 		if (InstanceManager.throttleManagerInstance().hasDispatchFunction()) {
 			dispatchButton.setEnabled(true);
 		}
@@ -138,6 +144,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener {
 	 * Receive notification that an address has been release or dispatched.
 	 */
 	public void notifyThrottleDisposed() {
+		log.debug("notifyThrottleDisposed");
 		dispatchButton.setEnabled(false);
 		releaseButton.setEnabled(false);
 		progButton.setEnabled(false);
@@ -145,14 +152,11 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener {
 		addrSelector.setEnabled(true);
 		rosterBox.setEnabled(true);
 		conRosterBox.setEnabled(true);
+		if (throttle != null)
+			throttle.removePropertyChangeListener(this);
 		throttle = null;
 		rosterEntry = null;
-		InstanceManager.throttleManagerInstance().removeActiveTrottlesListener(currentAddress, this);
 		notifyListenersOfThrottleRelease();
-	}
-
-	public void notifyThrottleLost(LocoAddress dccAddress) {
-		notifyThrottleDisposed();
 	}
 	
 	/**
@@ -524,4 +528,15 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener {
 	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AddressPanel.class.getName());
+
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt == null) return;
+		if ("ThrottleConnected".compareTo(evt.getPropertyName()) == 0) {
+			if ( ( true == (Boolean) evt.getOldValue()) && ( false == (Boolean) evt.getNewValue()) )
+			{
+				log.debug("propertyChange: ThrottleConnected to false");
+				notifyThrottleDisposed();
+			}
+		}
+	}
 }

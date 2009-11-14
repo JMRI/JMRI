@@ -103,6 +103,7 @@ public class ThrottleWindow extends JmriJFrame {
                                    {
                                 	   ThrottleWindow me = (ThrottleWindow)e.getSource();
                                        ThrottleFrameManager.instance().requestThrottleFrameDestruction(me);
+                                       
                                    }
                                });
         updateGUI();
@@ -366,7 +367,8 @@ public class ThrottleWindow extends JmriJFrame {
     	   } catch (Exception e) {
     		   log.info("Got exception :"+e);
     	   }
-        
+        throttlesPanel.removeAll();
+        removeAll();
         super.dispose();
     }
     
@@ -397,8 +399,8 @@ public class ThrottleWindow extends JmriJFrame {
 			if (curentThrottleFrame == tf)	{
 				log.debug("Closing last created");
 			}
-			throttlesPanel.remove( curentThrottleFrame );
-			curentThrottleFrame.dispose();
+			throttlesPanel.remove( tf );
+			tf.dispose();
 			throttlesLayout.invalidateLayout(throttlesPanel);
 		}
 		updateGUI();

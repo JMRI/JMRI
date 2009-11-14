@@ -14,7 +14,7 @@ import java.util.List;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class RpsBlock implements java.beans.PropertyChangeListener, jmri.ThrottleListener {
 
@@ -117,11 +117,6 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
     
     public void dispose() {
         sensor.removePropertyChangeListener(this);
-    }
-
-    //This function is redundant here
-    public void notifyThrottleLost(jmri.LocoAddress dccAddress){
-    //This function is redundant but is in the throttle listener
     }
 
     static java.util.Hashtable<Integer,DccThrottle> throttleTable = new java.util.Hashtable<Integer,DccThrottle>();

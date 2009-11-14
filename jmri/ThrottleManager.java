@@ -27,7 +27,7 @@ package jmri;
  * <P>
  * @author			Glen Oberhauser
  * @author			Bob Jacobsen Copyright 2006
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public interface ThrottleManager {
 
@@ -102,16 +102,4 @@ public interface ThrottleManager {
      * interface
      */
     public int supportedSpeedModes();
-    
-    /**
-     * Handle throttle feedback information on whether we have lost
-     * control of a decoder address.
-     **/
-    public void lostThrottle(LocoAddress address);
-    
-    
-    public void addActiveTrottlesListener(LocoAddress address, ThrottleListener lst);
-    public void removeActiveTrottlesListener(LocoAddress address, ThrottleListener lst);
-    public void removeActiveTrottlesListeners(LocoAddress address);
-    public int numberActiveTrottlesListeners(LocoAddress address);
 }

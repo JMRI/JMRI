@@ -29,10 +29,4 @@ public interface ThrottleListener extends EventListener
      */
     public void notifyThrottleFound(DccThrottle t);
 
-    /**
-     * Provides notification that the controlling throttle has lost control of
-     * the decoder.
-     * @param dccAddress The decoder address lost.
-     */
-    public void notifyThrottleLost(LocoAddress dccAddress);
 }

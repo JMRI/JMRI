@@ -17,7 +17,7 @@ import java.util.Vector;
  * it has some DCC-specific content.
  *
  * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
@@ -685,148 +685,235 @@ abstract public class AbstractThrottle implements DccThrottle {
     // though that's not the implication;
     // see also DccThrottle interface
     public void setF0Momentary(boolean f0Momentary) {
+    	boolean old = this.f0Momentary;
         this.f0Momentary = f0Momentary;
         sendMomentaryFunctionGroup1();
+        if (old != this.f0Momentary)
+        	notifyPropertyChangeListener("F0Momentary", old, this.f0Momentary );
     }
 
     public void setF1Momentary(boolean f1Momentary) {
+    	boolean old = this.f1Momentary;
         this.f1Momentary = f1Momentary;
         sendMomentaryFunctionGroup1();
+        if (old != this.f1Momentary)
+        	notifyPropertyChangeListener("F1Momentary", old, this.f1Momentary );
     }
 
     public void setF2Momentary(boolean f2Momentary) {
+    	boolean old = this.f2Momentary;
         this.f2Momentary = f2Momentary;
         sendMomentaryFunctionGroup1();
+        if (old != this.f2Momentary)
+        	notifyPropertyChangeListener("F2Momentary", old, this.f2Momentary );
     }
 
     public void setF3Momentary(boolean f3Momentary) {
+    	boolean old = this.f3Momentary;
         this.f3Momentary = f3Momentary;
         sendMomentaryFunctionGroup1();
+        if (old != this.f3Momentary)
+        	notifyPropertyChangeListener("F3Momentary", old, this.f3Momentary );
     }
 
     public void setF4Momentary(boolean f4Momentary) {
+    	boolean old = this.f4Momentary;
         this.f4Momentary = f4Momentary;
         sendMomentaryFunctionGroup1();
+        if (old != this.f4Momentary)
+        	notifyPropertyChangeListener("F4Momentary", old, this.f4Momentary );
     }
 
     public void setF5Momentary(boolean f5Momentary) {
+    	boolean old = this.f5Momentary;
         this.f5Momentary = f5Momentary;
         sendMomentaryFunctionGroup2();
+        if (old != this.f5Momentary)
+        	notifyPropertyChangeListener("F5Momentary", old, this.f5Momentary );
     }
 
     public void setF6Momentary(boolean f6Momentary) {
+    	boolean old = this.f6Momentary;
         this.f6Momentary = f6Momentary;
         sendMomentaryFunctionGroup2();
+        if (old != this.f6Momentary)
+        	notifyPropertyChangeListener("F6Momentary", old, this.f6Momentary );
     }
 
     public void setF7Momentary(boolean f7Momentary) {
+    	boolean old = this.f7Momentary;
         this.f7Momentary = f7Momentary;
         sendMomentaryFunctionGroup2();
+        if (old != this.f7Momentary)
+        	notifyPropertyChangeListener("F7Momentary", old, this.f7Momentary );
     }
 
     public void setF8Momentary(boolean f8Momentary) {
+    	boolean old = this.f8Momentary;
         this.f8Momentary = f8Momentary;
         sendMomentaryFunctionGroup2();
+        if (old != this.f8Momentary)
+        	notifyPropertyChangeListener("F8Momentary", old, this.f8Momentary );
     }
 
     public void setF9Momentary(boolean f9Momentary) {
+    	boolean old = this.f9Momentary;
         this.f9Momentary = f9Momentary;
         sendMomentaryFunctionGroup3();
+        if (old != this.f9Momentary)
+        	notifyPropertyChangeListener("F9Momentary", old, this.f9Momentary );
     }
 
     public void setF10Momentary(boolean f10Momentary) {
+    	boolean old = this.f10Momentary;
         this.f10Momentary = f10Momentary;
         sendMomentaryFunctionGroup3();
+        if (old != this.f10Momentary)
+        	notifyPropertyChangeListener("F10Momentary", old, this.f10Momentary );
     }
 
     public void setF11Momentary(boolean f11Momentary) {
+    	boolean old = this.f11Momentary;
         this.f11Momentary = f11Momentary;
         sendMomentaryFunctionGroup3();
+        if (old != this.f11Momentary)
+        	notifyPropertyChangeListener("F11Momentary", old, this.f11Momentary );
     }
 
     public void setF12Momentary(boolean f12Momentary) {
+    	boolean old = this.f12Momentary;
         this.f12Momentary = f12Momentary;
         sendMomentaryFunctionGroup3();
+        if (old != this.f12Momentary)
+        	notifyPropertyChangeListener("F12Momentary", old, this.f12Momentary );
     }
 
     public void setF13Momentary(boolean f13Momentary) {
+    	boolean old = this.f13Momentary;
         this.f13Momentary = f13Momentary;
         sendMomentaryFunctionGroup4();
+        if (old != this.f13Momentary)
+        	notifyPropertyChangeListener("F13Momentary", old, this.f13Momentary );
     }
 
     public void setF14Momentary(boolean f14Momentary) {
+    	boolean old = this.f14Momentary;
         this.f14Momentary = f14Momentary;
         sendMomentaryFunctionGroup4();
+        if (old != this.f14Momentary)
+        	notifyPropertyChangeListener("F14Momentary", old, this.f14Momentary );
     }
 
     public void setF15Momentary(boolean f15Momentary) {
+    	boolean old = this.f15Momentary;
         this.f15Momentary = f15Momentary;
         sendMomentaryFunctionGroup4();
+        if (old != this.f15Momentary)
+        	notifyPropertyChangeListener("F15Momentary", old, this.f15Momentary );
     }
 
     public void setF16Momentary(boolean f16Momentary) {
+    	boolean old = this.f16Momentary;
         this.f16Momentary = f16Momentary;
         sendMomentaryFunctionGroup4();
+        if (old != this.f16Momentary)
+        	notifyPropertyChangeListener("F16Momentary", old, this.f16Momentary );
     }
 
     public void setF17Momentary(boolean f17Momentary) {
+    	boolean old = this.f17Momentary;
         this.f17Momentary = f17Momentary;
         sendMomentaryFunctionGroup4();
+        if (old != this.f17Momentary)
+        	notifyPropertyChangeListener("F17Momentary", old, this.f17Momentary );
     }
 
     public void setF18Momentary(boolean f18Momentary) {
+    	boolean old = this.f18Momentary;
         this.f18Momentary = f18Momentary;
         sendMomentaryFunctionGroup4();
+        if (old != this.f18Momentary)
+        	notifyPropertyChangeListener("F18Momentary", old, this.f18Momentary );
     }
 
     public void setF19Momentary(boolean f19Momentary) {
+    	boolean old = this.f19Momentary;
         this.f19Momentary = f19Momentary;
         sendMomentaryFunctionGroup4();
+        if (old != this.f19Momentary)
+        	notifyPropertyChangeListener("F19Momentary", old, this.f19Momentary );
     }
 
     public void setF20Momentary(boolean f20Momentary) {
+    	boolean old = this.f20Momentary;
         this.f20Momentary = f20Momentary;
         sendMomentaryFunctionGroup4();
+        if (old != this.f20Momentary)
+        	notifyPropertyChangeListener("F20Momentary", old, this.f20Momentary );
     }
 
     public void setF21Momentary(boolean f21Momentary) {
+    	boolean old = this.f21Momentary;
         this.f21Momentary = f21Momentary;
         sendMomentaryFunctionGroup5();
+        if (old != this.f21Momentary)
+        	notifyPropertyChangeListener("F21Momentary", old, this.f21Momentary );
     }
 
     public void setF22Momentary(boolean f22Momentary) {
+    	boolean old = this.f22Momentary;
         this.f22Momentary = f22Momentary;
         sendMomentaryFunctionGroup5();
+        if (old != this.f22Momentary)
+        	notifyPropertyChangeListener("F22Momentary", old, this.f22Momentary );
     }
 
     public void setF23Momentary(boolean f23Momentary) {
+    	boolean old = this.f23Momentary;
         this.f23Momentary = f23Momentary;
         sendMomentaryFunctionGroup5();
+        if (old != this.f23Momentary)
+        	notifyPropertyChangeListener("F23Momentary", old, this.f23Momentary );
     }
 
     public void setF24Momentary(boolean f24Momentary) {
+    	boolean old = this.f24Momentary;
         this.f24Momentary = f24Momentary;
         sendMomentaryFunctionGroup5();
+        if (old != this.f24Momentary)
+        	notifyPropertyChangeListener("F24Momentary", old, this.f24Momentary );
     }
 
     public void setF25Momentary(boolean f25Momentary) {
+    	boolean old = this.f25Momentary;
         this.f25Momentary = f25Momentary;
         sendMomentaryFunctionGroup5();
+        if (old != this.f25Momentary)
+        	notifyPropertyChangeListener("F25Momentary", old, this.f25Momentary );
     }
 
     public void setF26Momentary(boolean f26Momentary) {
+    	boolean old = this.f26Momentary;
         this.f26Momentary = f26Momentary;
         sendMomentaryFunctionGroup5();
+        if (old != this.f26Momentary)
+        	notifyPropertyChangeListener("F26Momentary", old, this.f26Momentary );
     }
 
     public void setF27Momentary(boolean f27Momentary) {
+    	boolean old = this.f27Momentary;
         this.f27Momentary = f27Momentary;
         sendMomentaryFunctionGroup5();
+        if (old != this.f27Momentary)
+        	notifyPropertyChangeListener("F27Momentary", old, this.f27Momentary );
     }
 
     public void setF28Momentary(boolean f28Momentary) {
+    	boolean old = this.f28Momentary;
         this.f28Momentary = f28Momentary;
         sendMomentaryFunctionGroup5();
+        if (old != this.f28Momentary)
+        	notifyPropertyChangeListener("F28Momentary", old, this.f28Momentary );
     }
 
     /**
