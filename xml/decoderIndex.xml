@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.7.7 on Tue Oct 20 09:15:37 PDT 2009 $Id: decoderIndex.xml,v 1.152 2009-10-20 17:31:02 jacobsen Exp $-->
-  <decoderIndex version="178">
+  <!--Written by JMRI version 2.7.8 on Sat Nov 14 09:42:20 PST 2009 $Id: decoderIndex.xml,v 1.153 2009-11-14 17:45:08 jacobsen Exp $-->
+  <decoderIndex version="180">
     <mfgList nmraListDate="2009-07-30" updated="2009-10-20" lastadd="54">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -117,10 +117,12 @@
         <model model="Raw CVs 1-255" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
       <family name="Four Function Dual Mode" mfg="Atlas" lowVersionID="46" highVersionID="46" type="locomotive" file="Atlas_342.xml">
-        <model model="Four Function Dual Mode" numOuts="4" numFns="8" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
+        <model model="Four Function Dual Mode" numOuts="4" numFns="8" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="2.88" width="0.68" height="0.26" units="inches" />
+        </model>
       </family>
       <family name="Four Function #345" mfg="Atlas" lowVersionID="46" highVersionID="46" type="locomotive" file="Atlas_345.xml">
-        <model model="Four Function #345" numOuts="4" numFns="4" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
+        <model model="Four Function #345 H15-44/H16-44" numOuts="4" numFns="4" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
       <family name="Dual Mode" mfg="Atlas" lowVersionID="45" highVersionID="45" type="locomotive" file="Atlas_DualMode.xml">
         <model model="Dual Mode" numOuts="2" numFns="0" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
@@ -789,6 +791,9 @@
           <size length="2.158" width="0.58" height="0.135" units="inches" />
         </model>
         <model model="DZ123" numOuts="2" numFns="8" lowVersionID="36" highVersionID="64" maxMotorCurrent="1A (peak=2A)" formFactor="Z" connector="9pin" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0.55" width="0.36" height="0.13" units="inches" />
+        </model>
+        <model model="DZ123MO" numOuts="2" numFns="8" lowVersionID="36" highVersionID="64" maxMotorCurrent="1A (peak=2A)" formFactor="Z" connector="9pin" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
           <size length="0.55" width="0.36" height="0.13" units="inches" />
         </model>
         <model model="DZ143" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65" maxMotorCurrent="1.25A (peak=2A)" formFactor="Z" connector="9pin" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
