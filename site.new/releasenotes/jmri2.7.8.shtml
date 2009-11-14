@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.8.shtml,v 1.12 2009-11-14 05:01:35 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.8.shtml,v 1.13 2009-11-14 18:46:27 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -49,8 +49,14 @@ It contains
 many new features, including:
 
 <ul>
-<li>
-<li>
+<li>Many improvements to JMRI throttles
+<li>New 
+    <a href="http://jmri.org/help/en/package/jmri/jmrit/logix/Warrant.shtml">Warrant</a>
+    feature for scripted running of trains
+<li>Support for lunar (4th aspect) signals
+<li>New 
+    "<a href="http://jmri.org/help/en/html/tools/scripting/Jynstruments.shtml">Jynstruments</a>"
+    capability for extending JMRI tools
 </ul>
 along with lots of other changes.  See the complete list below.
 
