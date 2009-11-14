@@ -602,6 +602,18 @@
 </li>
  
 <li>
+<a href="package/jmri/jmrit/logix/Warrant.shtml">Warrants </a>
+<ul></ul>
+</li>
+
+ 
+<li>
+<a href="html/Errors.shtml">Error Codes </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="html/apps/SoundPro/SoundPro.shtml">SoundPro </a>
 <ul>
   
@@ -613,12 +625,6 @@
  
 </ul>
 </li>
- 
-<li>
-<a href="html/Errors.shtml">Error Codes </a>
-<ul></ul>
-</li>
-
  
 <li>
 <a href="html/tools/index.shtml">Tools </a>

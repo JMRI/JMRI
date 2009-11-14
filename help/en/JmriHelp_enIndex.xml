@@ -408,6 +408,8 @@
   <indexitem text="Turnout Lever " target="package.jmri.jmrit.ussctc.TurnoutLeverFrame"/>
 
  </indexitem>
+ <indexitem text="Warrants " target="package.jmri.jmrit.logix.Warrant"/>
+
  <indexitem text="Web " target="html.web.index"/>
 
  <indexitem text="XML " target="html.apps.DecoderPro.IntroXML">
