@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.8.shtml,v 1.10 2009-11-14 04:38:22 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.8.shtml,v 1.11 2009-11-14 04:42:40 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -70,7 +70,10 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-(none yet)
+XML input processing has been reworked.  This shouldn't have any impact
+on users, but might effect people who have written scripts to 
+read or write XML files. See the XmlFile JavaDoc for more information.
+
 
 <h3>Warnings from older versions:</h3>
 
@@ -223,7 +226,9 @@ better monitoring slot status in LocoNet Throttle.
 Kevin Dickerson made a number of internal changes to the layout and panel editors.
 
 <p>
-The "Send Problem Report" option in the main Help menu now works.
+The 
+"<a href="http://jmri.org/help/en/package/jmri/jmrit/mailreport/Report.shtml">Send Problem Report</a>"
+option in the main Help menu now works.
 The messages are filed in a  
 <a href="http://groups.google.com/group/jmri-problem-reports">dedicated Google group</a>.
 
