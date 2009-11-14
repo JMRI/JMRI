@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.8.shtml,v 1.11 2009-11-14 04:42:40 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.8.shtml,v 1.12 2009-11-14 05:01:35 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -219,11 +219,19 @@ Lionel Jeanson improved the way release/dispatch is handled for multiple LocoNet
 John Plocher improved the DS54 help page.
 
 <p>
+Peter Ulvestad added the Digitrax DZ123MO decoder.
+
+<p>
 Lionel Jeanson fixed the multi-throttle release issue in LocoNet by 
 better monitoring slot status in LocoNet Throttle.
 
 <p>
 Kevin Dickerson made a number of internal changes to the layout and panel editors.
+
+<p>
+Peter Ulvestad updated the Atlas Dual Mode and four function (342 and 345)
+decoder definitions to add
+the factory reset and update some limits and defaults.
 
 <p>
 The 
@@ -264,6 +272,7 @@ Warrants need to have the layout decribed in terms of the elements defined by th
 Occupancy Block Table.
 Although intended to operate with block detection, warrants can run trains without it, 
 however in this case, there is no protection against misaligned turnouts or cornfield meets.  Detailed information can be found in the Help files on the Occupancy Block Table menu.
+
 
 <!--#include virtual="/Footer" -->
 
