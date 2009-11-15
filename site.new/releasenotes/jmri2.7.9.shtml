@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.9.shtml,v 1.1 2009-11-14 05:28:30 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.9.shtml,v 1.2 2009-11-15 23:24:18 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -149,7 +149,7 @@ as the program will update them to the new format upon storing them.
 
 <h3>Changes since test version 2.7.8</h3>
 
-
+Giorgio Terdina provided screen icons for German signals.
 
 
 

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.8.shtml,v 1.13 2009-11-14 18:46:27 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.8.shtml,v 1.14 2009-11-15 23:24:18 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,7 +29,7 @@
       Release Notes for JMRI 2.7.8 release
       </h2>
 
-	<p>Date: MMM NN, 2009</p>
+	<p>Date: November 15, 2009</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.7.8 of JMRI/DecoderPro is available for download.
 
@@ -80,6 +80,13 @@ XML input processing has been reworked.  This shouldn't have any impact
 on users, but might effect people who have written scripts to 
 read or write XML files. See the XmlFile JavaDoc for more information.
 
+<p>
+Linux users might encounter a problem with certain "Look and Feel" 
+selections in the preferences.
+We've had reports of problems with "Nimbus" and "GTK+".
+"Metal" and "CDE/Motif" seem to be OK.
+If you get odd errors while loading panels, try opening the preferences
+and selecting another appearance.  We're working on a more basic fix for this.
 
 <h3>Warnings from older versions:</h3>
 
