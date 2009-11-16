@@ -20,7 +20,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author			Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SaveThrottlePreferencesAction extends AbstractAction {
 
@@ -46,8 +46,11 @@ public class SaveThrottlePreferencesAction extends AbstractAction {
 	 * @param e The event causing the action.
 	 */
 	public void actionPerformed(ActionEvent e) {
-		
-		int throttles = ThrottleFrameManager.instance().getNumberThrottles();
+		// TODO: was called from commented out Throttle tool menu entry ("MenuItemSaveThrottlePreferences")
+		// throttles are saved: linked to roster entry or in global throttle layout
+		// to rework for a "save as" throttle menu option
+		// actionner to be moved in throttle window tool bar
+		int throttles = ThrottleFrameManager.instance().getNumberThrottleWindows();
 		
 		if (throttles == 0){
 			javax.swing.JOptionPane.showMessageDialog(null, rb
@@ -86,7 +89,7 @@ public class SaveThrottlePreferencesAction extends AbstractAction {
 			ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
 			doc.addContent(0,p);
 
-			Iterator<ThrottleWindow> i = ThrottleFrameManager.instance().getThrottleFrames();
+			Iterator<ThrottleWindow> i = ThrottleFrameManager.instance().getThrottleWindows();
 			ThrottleWindow f = i.next();
 			Element throttleElement = f.getXml();
 			// don't save the loco address or consist address

@@ -77,6 +77,7 @@ public class WindowPreferences
         Dimension size = c.getSize();
         window.setAttribute("width", String.valueOf(size.width));
         window.setAttribute("height", String.valueOf(size.height));
+        window.setAttribute("isVisible", String.valueOf(c.isVisible()));
         return window;
     }
 
@@ -102,6 +103,8 @@ public class WindowPreferences
             if ( ! ignorePosition)
             	c.setLocation(x, y);
             c.setSize(width, height);
+            if (e.getAttribute("isVisible")!=null)
+            	c.setVisible(e.getAttribute("isVisible").getBooleanValue());
         }
         catch (org.jdom.DataConversionException ex) {
             System.out.println(ex);

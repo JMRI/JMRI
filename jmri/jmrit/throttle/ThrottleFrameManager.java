@@ -13,7 +13,7 @@ import jmri.util.JmriJFrame;
  *  confused with ThrottleManager
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.18 $
+ * @version    $Revision: 1.19 $
  */
 public class ThrottleFrameManager
 {
@@ -64,17 +64,24 @@ public class ThrottleFrameManager
 
 
 	/**
-	 *  Tell this manager that a new ThrottleFrame was created.
-	 * @return The newly created ThrottleFrame
+	 *  Tell this manager that a new ThrottleWindow was created.
+	 * @return The newly created ThrottleWindow
 	 */
-	public ThrottleFrame createThrottleFrame()
-	{
+	public ThrottleWindow createThrottleWindow() {
 		ThrottleWindow tw = new ThrottleWindow();
 		tw.pack();
 		KeyListenerInstaller.installKeyListenerOnAllComponents(throttleCycler, tw);
 		throttleWindows.add(tw);
 		activeFrame = throttleWindows.indexOf(tw);
-		return tw.getCurentThrottleFrame() ;
+		return tw ;
+	}
+	
+	/**
+	 *  Tell this manager that a new ThrottleFrame was created.
+	 * @return The newly created ThrottleFrame
+	 */
+	public ThrottleFrame createThrottleFrame() {
+		return createThrottleWindow().getCurentThrottleFrame() ;
 	}
 	
 	/**
@@ -82,12 +89,12 @@ public class ThrottleFrameManager
 	 *
 	 * @param  frame  The to-be-destroyed ThrottleFrame
 	 */
-	public void requestThrottleFrameDestruction(ThrottleWindow frame)
+	public void requestThrottleWindowDestruction(ThrottleWindow frame)
 	{
 		if (frame != null)
 		{
 			throttleWindows.remove(throttleWindows.indexOf(frame));
-			destroyThrottleFrame(frame);
+			destroyThrottleWindow(frame);
 			if (throttleWindows.size() > 0)
 			{
 				requestFocusForNextFrame();
@@ -95,12 +102,12 @@ public class ThrottleFrameManager
 		}
 	}
 
-	public void requestAllThrottleFramesDestroyed()
+	public void requestAllThrottleWindowsDestroyed()
 	{
 		for (Iterator<ThrottleWindow> i = throttleWindows.iterator(); i.hasNext();)
 		{
 			ThrottleWindow frame = i.next();
-			destroyThrottleFrame(frame);
+			destroyThrottleWindow(frame);
 		}
 		throttleWindows = new ArrayList<ThrottleWindow>(0);
 	}
@@ -108,11 +115,11 @@ public class ThrottleFrameManager
 	/**
 	 * Perform the destruction of a ThrottleFrame. This method will not
 	 * affect the throttleFrames list, thus ensuring no synchronozation problems.
-	 * @param frame The ThrottleFrame to be destroyed.
+	 * @param window The ThrottleFrame to be destroyed.
 	 */
-	private void destroyThrottleFrame(ThrottleWindow frame)
+	private void destroyThrottleWindow(ThrottleWindow window)
 	{
-		frame.dispose();
+		window.dispose();
 	}
 
 	/**
@@ -120,7 +127,7 @@ public class ThrottleFrameManager
 	 *
 	 * @return    The Iterator on the list of ThrottleFrames.
 	 */
-	public Iterator<ThrottleWindow> getThrottleFrames()
+	public Iterator<ThrottleWindow> getThrottleWindows()
 	{
 		return throttleWindows.iterator();
 	}
@@ -151,7 +158,7 @@ public class ThrottleFrameManager
 		return throttleFramePropertyEditor;
 	}
 	
-	public int getNumberThrottles(){
+	public int getNumberThrottleWindows(){
 		return throttleWindows.size();
 	}
 
@@ -204,7 +211,7 @@ public class ThrottleFrameManager
 		}
 	}
 	
-	public ThrottlesListPanel getThrottlesList() {
+	public ThrottlesListPanel getThrottlesListPanel() {
 		return throttlesListPanel ;
 
 	}

@@ -20,7 +20,7 @@ public class StopAllButton extends JButton {
 		setHorizontalTextPosition(JButton.CENTER);
 		addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Enumeration<ThrottleFrame> tpi = jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesList().getEnumeration() ;
+				Enumeration<ThrottleFrame> tpi = jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesListPanel().getEnumeration() ;
 				while ( tpi.hasMoreElements() )
 					tpi.nextElement().getControlPanel().stop();
 			}

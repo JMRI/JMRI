@@ -17,7 +17,7 @@ import org.jdom.output.*;
  *
  * @author			Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class StoreXmlThrottleAction extends AbstractAction {
 
@@ -62,10 +62,13 @@ public class StoreXmlThrottleAction extends AbstractAction {
 			ProcessingInstruction p = new ProcessingInstruction(
 					"xml-stylesheet", m);
 			doc.addContent(0, p);
-
 			java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(5);
-			for (Iterator<ThrottleWindow> i = ThrottleFrameManager.instance()
-					.getThrottleFrames(); i.hasNext();) {
+			
+			// throttle list window
+			children.add(ThrottleFrameManager.instance().getThrottlesListPanel().getXml() );
+			
+			// throttle windows
+			for (Iterator<ThrottleWindow> i = ThrottleFrameManager.instance().getThrottleWindows(); i.hasNext();) {
 				ThrottleWindow f = i.next();
 				Element throttleElement = f.getXml();
 				children.add(throttleElement);

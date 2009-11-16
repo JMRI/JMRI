@@ -26,7 +26,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.49 $
+ * @version $Revision: 1.50 $
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
@@ -165,14 +165,13 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	 */
 	public RosterEntry getRosterEntry(){
 		if ((rosterEntry == null) && (throttle!=null) &&
-			(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()) &&	
-		    (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isEnablingRosterSearch()) && 
-		    addrSelector != null && addrSelector.getAddress() != null )
-		{
+				(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()) &&	
+				(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isEnablingRosterSearch()) && 
+				addrSelector != null && addrSelector.getAddress() != null )	{
+			rosterEntry = null;
 			List<RosterEntry> l = Roster.instance().matchingList(null, null, ""+addrSelector.getAddress().getNumber(), null, null, null, null);
-			if (l.size()>0) {
-				rosterEntry = l.get(0);				
-			}
+			if (l.size()>0) 
+				rosterEntry = l.get(0);							
 		}			
 		return rosterEntry;
 	}
@@ -473,7 +472,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 		}
 		
 		List<Element> elementList = e.getChildren("locoaddress");
-		if (elementList.size() > 0){
+		if ((elementList.size() > 0) && (getThrottle() == null)) {
 			log.debug("found " + elementList.size() +" locoaddress");
 			addrSelector.setAddress((DccLocoAddress) (new jmri.configurexml.LocoAddressXml())
 					.getAddress(elementList.get(0)));

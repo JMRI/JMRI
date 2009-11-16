@@ -15,7 +15,7 @@ import java.util.*;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2008
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.33 $
+ * @version     $Revision: 1.34 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -64,7 +64,7 @@ public class ToolsMenu extends JMenu {
         throttleMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(rb.getString("MenuItemNewThrottle" )));
         throttleMenu.add(new jmri.jmrit.throttle.StoreXmlThrottleAction(rb.getString("MenuItemSaveThrottleLayout" )));
         throttleMenu.add(new jmri.jmrit.throttle.LoadXmlThrottleAction(rb.getString("MenuItemLoadThrottleLayout")));
-        throttleMenu.add(new jmri.jmrit.throttle.SaveThrottlePreferencesAction(rb.getString("MenuItemSaveThrottlePreferences")));
+//        throttleMenu.add(new jmri.jmrit.throttle.SaveThrottlePreferencesAction(rb.getString("MenuItemSaveThrottlePreferences")));
         throttleMenu.add(new jmri.jmrit.throttle.ThrottlesPreferencesAction(rb.getString("MenuItemThrottlesPreferences")));
         add(throttleMenu);
 

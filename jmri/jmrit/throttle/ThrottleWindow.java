@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
@@ -102,7 +103,7 @@ public class ThrottleWindow extends JmriJFrame {
                                    public void windowClosing(WindowEvent e)
                                    {
                                 	   ThrottleWindow me = (ThrottleWindow)e.getSource();
-                                       ThrottleFrameManager.instance().requestThrottleFrameDestruction(me);
+                                       ThrottleFrameManager.instance().requestThrottleWindowDestruction(me);
                                        
                                    }
                                });
@@ -438,20 +439,30 @@ public class ThrottleWindow extends JmriJFrame {
 		return curentThrottleFrame;
 	}
 
-	public Element getXml() {
-    	
-		Element me  = new Element("ThrottleFrame");
+	public Element getXml() { 	
+		Element me  = new Element("ThrottleWindow");
         me.setAttribute("title", titleText);
         me.setAttribute("titleType", titleTextType);	
         
         java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1);        
         children.add(WindowPreferences.getPreferences(this));
 
- // TODO: save all throttlesFrame inside this Window
- //       Iterator<JComponent> ite = throttlesLayout.getIterator() ;
- //       while (ite.hasNext() )
-        children.add( curentThrottleFrame.getXml() );
-
+        Component[] cmps = throttlesPanel.getComponents();
+        if (cmps!=null) {
+        	for (int i=0; i<cmps.length; i++)
+        	try {
+        		if (cmps[i] instanceof ThrottleFrame) {
+	        		ThrottleFrame tf = (ThrottleFrame) cmps[i];
+	        		Element tfe = tf.getXmlFile();
+	        		if (tfe == null)
+	        			tfe =  tf.getXml();
+	        		children.add( tfe ); 
+        		}
+        	} catch (Exception ex) {
+        		log.debug("Got exception (no panic): "+ex);
+        	}
+        }
+        
         me.setContent(children);        
         return me;
 	}
@@ -472,13 +483,27 @@ public class ThrottleWindow extends JmriJFrame {
 		this.titleTextType = titleTextType;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void setXml(Element e) {
     	setTitle(e.getAttribute("title").getValue());
         setTitleText ( e.getAttribute("title").getValue() );
         setTitleTextType ( e.getAttribute("titleType").getValue()) ;
+              
+        List<Element> tfes = e.getChildren("ThrottleFrame");
+        if ((tfes == null) || (tfes.size()==0))
+        	curentThrottleFrame.setXml(e);
+        else
+        	for (int i=0; i<tfes.size(); i++) {
+        		ThrottleFrame tf;
+        		if (i == 0)
+        			tf = getCurentThrottleFrame();
+        		else
+        			tf = addThrottleFrame();
+        		tf.setXml(tfes.get(i));
+        	}
         
         Element window = e.getChild("window");
-        WindowPreferences.setPreferences(this, window);		
+        WindowPreferences.setPreferences(this, window);
 	}
 	
 	/**

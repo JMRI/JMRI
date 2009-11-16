@@ -17,6 +17,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.jdom.Element;
+
 import jmri.DccThrottle;
 import jmri.jmrit.catalog.NamedIcon;
 
@@ -93,5 +95,19 @@ public class ThrottlesListPanel extends JPanel implements AddressListener {
 
 	public void notifyAddressThrottleFound(DccThrottle throttle) {
 		repaint();
+	}
+
+	public Element getXml() {
+		Element me  = new Element("ThrottlesListPanel");
+        java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1);        
+        children.add(WindowPreferences.getPreferences(this.getTopLevelAncestor()));       
+        me.setContent(children);        
+        return me;
+	}
+
+	public void setXml(Element tlp) {
+        Element window = tlp.getChild("window");
+        if (window!=null)
+        	WindowPreferences.setPreferences(this.getTopLevelAncestor(), window);		
 	}
 }

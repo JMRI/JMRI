@@ -17,7 +17,7 @@ import org.jdom.Element;
  *  Load throttles from XML
  *
  * @author     Glen Oberhauser 2004
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class LoadXmlThrottleAction extends AbstractAction {
 	ResourceBundle rb = ResourceBundle
@@ -62,7 +62,7 @@ public class LoadXmlThrottleAction extends AbstractAction {
 		}
 
 		// if exising frames are open ask to destroy those or merge.
-		if (ThrottleFrameManager.instance().getThrottleFrames().hasNext()) {
+		if (ThrottleFrameManager.instance().getThrottleWindows().hasNext()) {
 			Object[] possibleValues = { rb.getString("LabelMerge"),
 					rb.getString("LabelReplace"), rb.getString("LabelCancel") };
 			int selectedValue = JOptionPane.showOptionDialog(null, rb
@@ -73,8 +73,7 @@ public class LoadXmlThrottleAction extends AbstractAction {
 					possibleValues[0]);
 			if (selectedValue == JOptionPane.NO_OPTION) {
 				// replace chosen - close all then load
-				ThrottleFrameManager.instance()
-						.requestAllThrottleFramesDestroyed();
+				ThrottleFrameManager.instance().requestAllThrottleWindowsDestroyed();
 			}
 		}
 		try {
@@ -96,13 +95,25 @@ public class LoadXmlThrottleAction extends AbstractAction {
 			ThrottlePrefs prefs = new ThrottlePrefs();
 			Element root = prefs.rootFromFile(f);
 			List<Element> throttles = root.getChildren("ThrottleFrame");
-			for (java.util.Iterator<Element> i = throttles.iterator(); i.hasNext();) {
-				ThrottleFrame tf = ThrottleFrameManager.instance()
-						.createThrottleFrame();
-				tf.setXml(i.next());
-				tf.setVisible(true);
+			if ((throttles != null) && (throttles.size()>0)) { // OLD FORMAT				
+				for (java.util.Iterator<Element> i = throttles.iterator(); i.hasNext();) {
+					ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
+					tf.setXml(i.next());
+					tf.setVisible(true);
+				}
 			}
-
+			else {
+				throttles = root.getChildren("ThrottleWindow");
+				for (java.util.Iterator<Element> i = throttles.iterator(); i.hasNext();) {
+					ThrottleWindow tw = ThrottleFrameManager.instance().createThrottleWindow();
+					tw.setXml(i.next());
+					tw.setVisible(true);
+				}
+				Element tlp = root.getChild("ThrottlesListPanel");
+				if (tlp!=null) {
+					ThrottleFrameManager.instance().getThrottlesListPanel().setXml(tlp);
+				}
+			}
 		} catch (org.jdom.JDOMException ex) {
 			log.warn("Loading Throttles exception",ex);
 			return false;
@@ -114,7 +125,7 @@ public class LoadXmlThrottleAction extends AbstractAction {
 	 * An extension of the abstract XmlFile. No changes made to that class.
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.20 $
+	 * @version $Revision: 1.21 $
 	 */
 	class ThrottlePrefs extends XmlFile {
 

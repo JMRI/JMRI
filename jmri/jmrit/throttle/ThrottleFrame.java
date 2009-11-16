@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
@@ -14,6 +15,7 @@ import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
@@ -37,6 +39,8 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     private static int NEXT_FRAME_KEY = KeyEvent.VK_RIGHT;
     private static int PREV_FRAME_KEY = KeyEvent.VK_LEFT;
     
+    private static Color TRANS_COLOR = new Color(200,200,200,75);
+    
     private static int ADDRESS_PANEL_INDEX = 0;
     private static int CONTROL_PANEL_INDEX = 1;
     private static int FUNCTION_PANEL_INDEX = 2;
@@ -55,13 +59,15 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         
     private String _throttlesBasePath = XmlFile.prefsDir()+"throttle"+File.separator ;
     private String title;
+    
+    private String lastUsedSaveFile = null;
                 
     public ThrottleFrame(ThrottleWindow tw)
     {
         super();
         throttleWindow = tw;
         initGUI();
-		jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesList().addThrottleFrame(this);
+		jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesListPanel().addThrottleFrame(this);
     }
 
     public void setVisible(boolean b)
@@ -126,13 +132,14 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 			doc.addContent(0,p);
 			Element throttleElement = getXml();
 			// don't save the loco address or consist address
-			throttleElement.getChild("AddressPanel").removeChild("locoaddress");
-			throttleElement.getChild("AddressPanel").removeChild("locoaddress");
-		    // don't save function buttons labels, they're in roster entry
-			throttleElement.getChild("FunctionPanel").removeChildren("FunctionButton");
+//			throttleElement.getChild("AddressPanel").removeChild("locoaddress");
+//			throttleElement.getChild("AddressPanel").removeChild("locoaddress");
+			if (this.getRosterEntry() != null) // don't save function buttons labels, they're in roster entry		    
+				throttleElement.getChild("FunctionPanel").removeChildren("FunctionButton");
 			
 			root.setContent(throttleElement);
 			xf.writeXML(file, doc);
+			setLastUsedSaveFile(sfile);
 		}
 		catch (Exception ex){
     		log.warn("Exception in storing throttles preferences xml: "+ex);
@@ -146,14 +153,17 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 			File f=new File(sfile);
 			Element root = xf.rootFromFile(f);
 			Element conf = root.getChild("ThrottleFrame");
-	    	// File looks ok, close all existing Jynstruments
+	    	// File looks ok
+			setLastUsedSaveFile(sfile);
+			// close all existing Jynstruments
 	        Component[] cmps = getComponents();
 	        for (int i=0; i<cmps.length; i++) {
 	        	try {
-	        		JInternalFrame jyf = (JInternalFrame) cmps[i];
-	        		Jynstrument ins = (Jynstrument) jyf.getContentPane();
-	        		if (ins!= null) 
-	        			jyf.dispose();
+	        		if (cmps[i] instanceof JInternalFrame) {
+	        			JInternalFrame jyf = (JInternalFrame) cmps[i];
+	        			if (jyf.getContentPane() instanceof Jynstrument) 
+	        				jyf.dispose();	        			
+	        		}
 	        	} catch (Exception ex) {
 	        		log.debug("Got exception (no panic) "+ex);
 	        	}
@@ -170,19 +180,22 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 
 	private void setTransparent(JComponent jcomp)
 	{
-		jcomp.setOpaque(false);
+		if (jcomp instanceof JPanel) //OS X: Jpanel components are enough
+		{
+			jcomp.setBackground(TRANS_COLOR);//new Color(0,0,0,0));
+			jcomp.setOpaque(false);
+		}
 		setTransparent ( jcomp.getComponents() );
 	}
 	
 	private void setTransparent(Component[] comps)
 	{
-		JComponent jcmp2;
 		for (int i=0; i<comps.length; i++)
 		{
 			try
 			{
-				jcmp2 = (JComponent) comps[i];
-				setTransparent( jcmp2 );
+				if (comps[i] instanceof JComponent)
+					setTransparent( (JComponent) comps[i] );
 			}
 			catch(Exception e)
 			{ // Do nothing, just go on
@@ -253,7 +266,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         addressPanel.addAddressListener(controlPanel);
         addressPanel.addAddressListener(functionPanel);
         addressPanel.addAddressListener(this);
-        addressPanel.addAddressListener(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesList());
+        addressPanel.addAddressListener(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesListPanel());
 
         add(controlPanel, PANEL_LAYER);
         add(functionPanel, PANEL_LAYER);
@@ -352,7 +365,8 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 		Component[] cmps = getComponents();
 		for (int i=0; i<cmps.length; i++) {
 			try {
-				checkPosition ( (JInternalFrame) cmps[i] );
+				if (cmps[i] instanceof JInternalFrame)
+					checkPosition ( (JInternalFrame) cmps[i] );
 			} catch (Exception ex) {
 				log.debug("Got exception (no panic) "+ex);
 			}
@@ -374,7 +388,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 	 */
     public void dispose() {
     	log.debug("Disposing "+getTitle());
-		jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesList().removeThrottleFrame(this);
+		jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesListPanel().removeThrottleFrame(this);
         // check for any special disposing in InternalFrames
         controlPanel.destroy();
         functionPanel.destroy();
@@ -429,9 +443,10 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
                     functionPanel.setVisible(false);
                 }
             else {
-            	try { // #JYNSTRUMENT#, Very important, DO NOT FORGET, clean the Jynstrument
-            		Jynstrument jyns = (Jynstrument) ((JInternalFrame) e.getSource()).getContentPane() ;
-            		jyns.quit();
+            	try { // #JYNSTRUMENT#, Very important, DO NOT FORGET, clean the Jynstrument            		
+            		if ( (e.getSource() instanceof JInternalFrame) 
+            				&& (((JInternalFrame) e.getSource()).getContentPane() instanceof Jynstrument) )
+            			((Jynstrument) ((JInternalFrame) e.getSource()).getContentPane()).quit();               	
             	} catch (Exception exc) {
             		if (log.isDebugEnabled())
             			log.debug("Got exception, can ignore :"+exc);
@@ -488,21 +503,33 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         Component[] cmps = getComponents();
         for (int i=0; i<cmps.length; i++) {
         	try {
-        		JInternalFrame intFr = (JInternalFrame) cmps[i];
-        		Jynstrument ins = (Jynstrument) intFr.getContentPane();
-        		if (ins!= null) {
-        			Element elt = new Element("Jynstrument");
-        			elt.setAttribute("JynstrumentFolder", ins.getFolder());
-        	        java.util.ArrayList<Element> jychildren = new java.util.ArrayList<Element>(1);
-        	        jychildren.add(WindowPreferences.getPreferences(intFr));
-        	        elt.setContent(jychildren);
-        			children.add(elt);
+        		if (cmps[i] instanceof JInternalFrame) {
+        			JInternalFrame intFr = (JInternalFrame) cmps[i];
+        			if (intFr.getContentPane() instanceof Jynstrument) {
+        				Jynstrument ins = (Jynstrument) intFr.getContentPane();
+        				if (ins!= null) {
+        					Element elt = new Element("Jynstrument");
+        					elt.setAttribute("JynstrumentFolder", ins.getFolder().substring( System.getProperty("user.dir").length() )  );
+        					java.util.ArrayList<Element> jychildren = new java.util.ArrayList<Element>(1);
+        					jychildren.add(WindowPreferences.getPreferences(intFr));
+        					elt.setContent(jychildren);
+        					children.add(elt);
+        				}
+        			}
         		}
         	} catch (Exception ex) {
         		log.debug("Got exception (no panic) "+ex);
         	}
         }
         me.setContent(children);
+        return me;
+    }
+    
+    public Element getXmlFile() {
+    	if (getLastUsedSaveFile() == null)
+    		return null;
+        Element me = new Element("ThrottleFrame");
+        me.setAttribute("ThrottleXMLFile", getLastUsedSaveFile().substring(_throttlesBasePath.length()) );
         return me;
     }
     
@@ -521,6 +548,14 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
      */
     @SuppressWarnings("unchecked")
 	public void setXml(Element e) {
+    	if (e == null) return;
+
+    	String sfile = e.getAttributeValue("ThrottleXMLFile");
+        if (sfile != null) {
+        	loadThrottle(_throttlesBasePath+sfile);
+        	return;
+        }
+        
     	int bSize = 23;
         // Get InternalFrame border size
         if (e.getAttribute("border") != null) bSize = Integer.parseInt((e.getAttribute("border").getValue()));
@@ -541,7 +576,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 		List<Element> jinsts = e.getChildren("Jynstrument");
         if ((jinsts != null) && (jinsts.size()>0)) {
         	for (int i=0; i<jinsts.size(); i++) {
-        		JInternalFrame jif = ynstrument(jinsts.get(i).getAttributeValue("JynstrumentFolder"));
+        		JInternalFrame jif = ynstrument(System.getProperty("user.dir")+jinsts.get(i).getAttributeValue("JynstrumentFolder"));
                 Element window = jinsts.get(i).getChild("window");
                 if ((window !=null) && (jif!=null))
                 	WindowPreferences.setPreferences(jif, window);
@@ -634,6 +669,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 	}
 
 	public void notifyAddressReleased(int address, boolean isLong) {
+		setLastUsedSaveFile(null);
 		setFrameTitle();		
 	}
 
@@ -646,4 +682,12 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 	}
 	
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleFrame.class.getName());
+
+	public String getLastUsedSaveFile() {
+		return lastUsedSaveFile;
+	}
+
+	public void setLastUsedSaveFile(String lastUsedSaveFile) {
+		this.lastUsedSaveFile = lastUsedSaveFile;
+	}
 }

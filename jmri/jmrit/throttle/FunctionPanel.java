@@ -190,6 +190,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     }
     
     public void saveFunctionButtonsToRoster (RosterEntry rosterEntry){
+    	log.debug("saveFunctionButtonsToRoster");
     	if (rosterEntry == null)
     		return;
     	for (int i=0; i < NUM_FUNCTION_BUTTONS; i++){
@@ -329,7 +330,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.51 $
+	 * @version $Revision: 1.52 $
 	 */
     class FunctionButtonKeyListener extends KeyAdapter {
     	private boolean keyReleased = true;
