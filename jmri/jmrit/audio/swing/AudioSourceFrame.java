@@ -23,6 +23,7 @@ import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.InstanceManager;
+import jmri.jmrit.audio.AudioBuffer;
 import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
 
@@ -44,11 +45,13 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class AudioSourceFrame extends AbstractAudioFrame {
 
     private static int counter = 1;
+
+    private boolean _newSource;
 
     // UI components for Add/Edit Source
     JLabel assignedBufferLabel = new JLabel(rba.getString("LabelAssignedBuffer"));
@@ -260,6 +263,8 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     public void resetFrame() {
         sysName.setText("IAS"+counter++);
         userName.setText(null);
+        assignedBuffer.setSelectedIndex(0);
+        loopInfinite.setSelected(false);
         loopMin.setValue(AudioSource.LOOP_NONE);
         loopMax.setValue(AudioSource.LOOP_NONE);
 //        loopMinDelay.setValue(0);
@@ -273,6 +278,8 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         rollOffFactor.setValue(1.0f);
         fadeInTime.setValue(1000);
         fadeOutTime.setValue(1000);
+
+        this._newSource = true;
     }
 
     /**
@@ -282,7 +289,10 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     public void populateFrame(Audio a) {
         super.populateFrame(a);
         AudioSource s = (AudioSource) a;
-        assignedBuffer.setSelectedItem(s.getAssignedBufferName());
+        AudioManager am = InstanceManager.audioManagerInstance();
+        String ab = s.getAssignedBufferName();
+        Audio b = am.getAudio(ab);
+        assignedBuffer.setSelectedItem(b.getUserName()==null?ab:b.getUserName());
         loopInfinite.setSelected((s.getMinLoops()==AudioSource.LOOP_CONTINUOUS));
         loopMin.setValue(loopInfinite.isSelected()?0:s.getMinLoops());
         loopMax.setValue(loopInfinite.isSelected()?0:s.getMaxLoops());
@@ -297,6 +307,8 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         rollOffFactor.setValue(s.getRollOffFactor());
         fadeInTime.setValue(s.getFadeIn());
         fadeOutTime.setValue(s.getFadeOut());
+
+        this._newSource = false;
     }
 
     public void updateBufferList() {
@@ -321,6 +333,12 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         try {
             AudioManager am = InstanceManager.audioManagerInstance();
             s = (AudioSource) am.provideAudio(sName);
+            if (s==null) throw new AudioException("Problem creating source");
+            if (_newSource && am.getByUserName(user)!=null) {
+                am.deregister(s);
+                counter--;
+                throw new AudioException("Duplicate user name - please modify");
+            }
             s.setUserName(user);
             if (assignedBuffer.getSelectedIndex() > 0) {
                 Audio a = am.getAudio((String) assignedBuffer.getSelectedItem());
@@ -331,6 +349,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
 //            s.setMinLoopDelay((Integer) loopMinDelay.getValue());
 //            s.setMaxLoopDelay((Integer) loopMaxDelay.getValue());
             s.setPosition(position.getValue());
+            s.setVelocity(velocity.getValue());
             s.setGain(gain.getValue());
             s.setPitch(pitch.getValue());
             s.setReferenceDistance((Float) refDistance.getValue());

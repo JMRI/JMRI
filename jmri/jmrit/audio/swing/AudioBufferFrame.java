@@ -20,6 +20,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import jmri.Audio;
 import jmri.AudioException;
+import jmri.AudioManager;
 import jmri.InstanceManager;
 import jmri.jmrit.audio.AudioBuffer;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
@@ -44,11 +45,13 @@ import jmri.util.FileUtil;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class AudioBufferFrame extends AbstractAudioFrame {
 
     private static int counter = 1;
+
+    private boolean _newBuffer;
 
     // UI components for Add/Edit Buffer
     JLabel urlLabel = new JLabel(rba.getString("LabelURL"));
@@ -154,6 +157,8 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 //        format.setText(null);
         loopStart.setValue(new Long(0));
         loopEnd.setValue(new Long(0));
+
+        this._newBuffer = true;
     }
 
     /**
@@ -167,6 +172,12 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 //        format.setText(b.toString());
         loopStart.setValue(b.getStartLoopPoint());
         loopEnd.setValue(b.getEndLoopPoint());
+        loopStart.setEnabled(true);
+        loopStartLabel.setEnabled(true);
+        loopEnd.setEnabled(true);
+        loopEndLabel.setEnabled(true);
+
+        this._newBuffer = false;
     }
 
     void browsePressed(ActionEvent e) {
@@ -184,7 +195,10 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         // Process selection
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            url.setText(FileUtil.getPortableFilename(file));
+            String fileName = new String();
+            if (!url.getText().equals((fileName=FileUtil.getPortableFilename(file)))) {
+                url.setText(fileName);
+            }
         }
     }
 
@@ -194,12 +208,26 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         String sName = sysName.getText().toUpperCase();
         AudioBuffer b;
         try {
-            b = (AudioBuffer) InstanceManager.audioManagerInstance().provideAudio(sName);
+            AudioManager am = InstanceManager.audioManagerInstance();
+            b = (AudioBuffer) am.provideAudio(sName);
             if (b==null) throw new AudioException("Problem creating buffer");
+            if (_newBuffer && am.getByUserName(user)!=null) {
+                am.deregister(b);
+                counter--;
+                throw new AudioException("Duplicate user name - please modify");
+            }
             b.setUserName(user);
-            b.setURL(url.getText());
-            b.setStartLoopPoint((Long)loopStart.getValue());
-            b.setEndLoopPoint((Long)loopEnd.getValue());
+            if (_newBuffer || !b.getURL().equals(url.getText())) {
+                b.setURL(url.getText());
+                log.debug("After load, end loop point = " + b.getEndLoopPoint());
+                //b.setStartLoopPoint((Long)loopStart.getValue());
+                //b.setEndLoopPoint((Long)loopEnd.getValue());
+            } else {
+                if (!b.getURL().equals(url.getText())) {
+                    log.debug("Sound changed from: " + b.getURL());
+                    b.setURL(url.getText());
+                }
+            }
 
             // Notify changes
             model.fireTableDataChanged();
@@ -208,7 +236,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         }
     }
 
-    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AudioBufferFrame.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AudioBufferFrame.class.getName());
 
 }
 

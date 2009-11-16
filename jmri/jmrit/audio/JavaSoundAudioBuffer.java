@@ -37,7 +37,7 @@ import jmri.util.FileUtil;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
 
@@ -215,6 +215,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
             log.debug("Loaded buffer: " + this.getSystemName());
             log.debug(" from file: " + this.getURL());
             log.debug(" format: " + parseFormat() + ", " + _freq + " Hz");
+            log.debug(" length: " + _audioInputStream.getFrameLength());
         }
         return true;
 

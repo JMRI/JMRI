@@ -30,7 +30,7 @@ import jmri.managers.AbstractAudioManager;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class DefaultAudioManager extends AbstractAudioManager {
 
@@ -57,6 +57,11 @@ public class DefaultAudioManager extends AbstractAudioManager {
         }
 
         Audio a = null;
+
+        log.debug("sysName: " + systemName + " userName: " + userName);
+        if (userName!=null && _tuser.containsKey(userName)) {
+            throw new AudioException("Duplicate name");
+        }
 
         switch (systemName.charAt(2)) {
 
