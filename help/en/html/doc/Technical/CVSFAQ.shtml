@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CVSFAQ.shtml,v 1.5 2008-05-24 17:08:42 jacobsen Exp $ -->
+<!-- $Id: CVSFAQ.shtml,v 1.6 2009-11-16 17:06:01 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -103,7 +103,7 @@ as needed.  If you already have a release checked out and want to update it
 to a specific release, change the "co" command to "update -d"
 
 <A name="refid">
-<h3>What are those lines like <i>$Revision: 1.5 $</i> and <i>$Id: CVSFAQ.shtml,v 1.5 2008-05-24 17:08:42 jacobsen Exp $</i>?</h3>
+<h3>What are those lines like <i>$Revision: 1.6 $</i> and <i>$Id: CVSFAQ.shtml,v 1.6 2009-11-16 17:06:01 jacobsen Exp $</i>?</h3>
 </a>
 
 Those are automatically updated by CVS every time a new version of the 
@@ -154,6 +154,30 @@ note that we do not use branches for normal development.
 can be used by individual developers to keep track of what they're doing.  All
 we ask is that you start a tag with your initials.
 </OL>
+
+<A name="structure">
+<h3>How is JMRI stored in CVS?</h3>
+
+JMRI consists of two large code trees, and a number of auxiliary directories.
+The code is divided into "jmri", the main JMRI code, and "test", the set of
+automated tests.  These are kept separate so that it's easy to build just
+the distributed software, without including the test code.
+(If you directly look at the CVS repository, you'll also see "jmrit" and
+"jmrix" directories; these are obsolete, and kept only for historical reasons.)
+<p>
+Similarly, auxilary information is kept in separate "lib", "xml", 
+"resources", "jython", etc. directories.
+<p>
+Finally, there's a bunch of information that's not part of the 
+application development areas, including the "scripts" directory
+of tools for building releases, the web site, and others.
+<p>
+We store all these separately in CVS so that you can check out just the
+ones you need.
+<p>
+To simplify checking out a development tree, we provide a 
+CVS module named "all".  This checks out the necessary directories and puts 
+them in the required places for a straight-forward build.
 
 <!--#include virtual="/Footer" -->
 
