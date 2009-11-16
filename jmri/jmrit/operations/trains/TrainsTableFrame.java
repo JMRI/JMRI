@@ -29,7 +29,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.33 $
+ * @version             $Revision: 1.34 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -39,6 +39,9 @@ public class TrainsTableFrame extends OperationsFrame {
 	
 	public static final String NAME = rb.getString("Name");	// Sort by choices
 	public static final String TIME = rb.getString("Time");
+	public static final String DEPARTS = rb.getString("Departs");
+	public static final String TERMINATES = rb.getString("Terminates");
+	public static final String ROUTE = rb.getString("Route");
 	public static final String ID = rb.getString("Id");
 
 	CarManagerXml carManagerXml = CarManagerXml.instance();	// load cars		
@@ -57,6 +60,9 @@ public class TrainsTableFrame extends OperationsFrame {
 	// radio buttons
     JRadioButton sortByName = new JRadioButton(NAME);
     JRadioButton sortByTime = new JRadioButton(TIME);
+    JRadioButton sortByDeparts = new JRadioButton(DEPARTS);
+    JRadioButton sortByTerminates = new JRadioButton(TERMINATES);
+    JRadioButton sortByRoute = new JRadioButton(ROUTE);
     JRadioButton sortById = new JRadioButton(ID);
      
 	// major buttons
@@ -108,8 +114,11 @@ public class TrainsTableFrame extends OperationsFrame {
     	//row 1
     	JPanel cp1 = new JPanel();
     	cp1.add(textSort);
-    	cp1.add(sortByName);
     	cp1.add(sortByTime);
+    	cp1.add(sortByName);
+    	cp1.add(sortByRoute);
+    	cp1.add(sortByDeparts);
+    	cp1.add(sortByTerminates);
     	cp1.add(sortById);
     	cp1.add(textSep1);
     	cp1.add(buildMsgBox);
@@ -156,12 +165,18 @@ public class TrainsTableFrame extends OperationsFrame {
 		addButtonAction(saveButton);
 		
 	   	ButtonGroup sortGroup = new ButtonGroup();
+	   	sortGroup.add(sortByTime);
     	sortGroup.add(sortByName);
-    	sortGroup.add(sortByTime);
+    	sortGroup.add(sortByDeparts);
+    	sortGroup.add(sortByTerminates);
+    	sortGroup.add(sortByRoute);
     	sortGroup.add(sortById);
     	sortByName.setSelected(true);
+    	addRadioButtonAction(sortByTime);
 		addRadioButtonAction(sortByName);
-		addRadioButtonAction(sortByTime);
+		addRadioButtonAction(sortByDeparts);
+		addRadioButtonAction(sortByTerminates);
+		addRadioButtonAction(sortByRoute);
 		addRadioButtonAction(sortById);
 		
 		buildMsgBox.setSelected(trainManager.getBuildMessages());
@@ -200,6 +215,15 @@ public class TrainsTableFrame extends OperationsFrame {
 		}
 		if (ae.getSource() == sortByTime){
 			trainsModel.setSort(trainsModel.SORTBYTIME);
+		}
+		if (ae.getSource() == sortByDeparts){
+			trainsModel.setSort(trainsModel.SORTBYDEPARTS);
+		}
+		if (ae.getSource() == sortByTerminates){
+			trainsModel.setSort(trainsModel.SORTBYTERMINATES);
+		}
+		if (ae.getSource() == sortByRoute){
+			trainsModel.setSort(trainsModel.SORTBYROUTE);
 		}
 	}
 	
@@ -292,8 +316,35 @@ public class TrainsTableFrame extends OperationsFrame {
 			sortById.setSelected(true);
 			trainsModel.setSort(trainsModel.SORTBYID);
 		}
+		if(sortBy.equals(DEPARTS)){
+			sortByDeparts.setSelected(true);
+			trainsModel.setSort(trainsModel.SORTBYDEPARTS);
+		}
+		if(sortBy.equals(TERMINATES)){
+			sortByTerminates.setSelected(true);
+			trainsModel.setSort(trainsModel.SORTBYTERMINATES);
+		}
+		if(sortBy.equals(ROUTE)){
+			sortByRoute.setSelected(true);
+			trainsModel.setSort(trainsModel.SORTBYROUTE);
+		}
 	}
 	
+	private String getSortBy(){
+		String sortBy = NAME;
+		if (sortById.isSelected())
+			sortBy = ID;
+		else if (sortByTime.isSelected())
+			sortBy = TIME;
+		else if (sortByDeparts.isSelected())
+			sortBy = DEPARTS;
+		else if (sortByTerminates.isSelected())
+			sortBy = TERMINATES;
+		else if (sortByRoute.isSelected())
+			sortBy = ROUTE;
+		return sortBy;
+	}
+
 	public List<String> getSortByList(){
 		return trainsModel.getSelectedTrainList();
 	}
@@ -313,16 +364,11 @@ public class TrainsTableFrame extends OperationsFrame {
 	
 	protected void storeValues(){
 		trainManager.setTrainFrame(this);					//save frame size and location
-		String sortBy = NAME;
-		if (sortById.isSelected())
-			sortBy = ID;
-		else if (sortByTime.isSelected())
-			sortBy = TIME;
-		trainManager.setTrainFrameSortBy(sortBy);			//save how the table is sorted
+		trainManager.setTrainFrameSortBy(getSortBy());		//save how the table is sorted
 		trainManager.save();
 		setModifiedFlag(false);
 	}
-
+	
     public void dispose() {
     	trainsModel.dispose();
     	trainManager.setTrainFrame(null);

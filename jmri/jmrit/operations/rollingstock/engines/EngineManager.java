@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.25 $
+ * @version	$Revision: 1.26 $
  */
 public class EngineManager {
 	
@@ -239,33 +239,7 @@ public class EngineManager {
      * @return list of engine ids ordered by road name
      */
     public List<String> getEnginesByRoadNameList() {
-       	// first get by id list
-    	List<String> sortById = getEnginesByIdList();
-
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-    	String engineRoad = "";
-    	boolean engineAdded = false;
-    	Engine engine;
-
-    	for (int i=0; i<sortById.size(); i++){
-    		engineAdded = false;
-    		engine = getEngineById (sortById.get(i));
-    		engineRoad = engine.getRoad();
-    		for (int j=0; j<out.size(); j++ ){
-    			engine = getEngineById (out.get(j));
-    			String outEngineRoad = engine.getRoad();
-    			if (engineRoad.compareToIgnoreCase(outEngineRoad)<0){
-    				out.add(j, sortById.get(i));
-    				engineAdded = true;
-    				break;
-    			}
-    		}
-    		if (!engineAdded){
-    			out.add(sortById.get(i));
-    		}
-    	}
-    	return out;
+    	return getEnginesByList(getEnginesByIdList(), ENGINES_BY_ROAD);
     }
     
     private static final int pageSize = 64;
@@ -373,33 +347,7 @@ public class EngineManager {
      * @return list of engine ids ordered by engine model
      */
     public List<String> getEnginesByModelList() {
-    	// first get by road list
-    	List<String> sortByRoad = getEnginesByRoadNameList();
-
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-    	String engineModel = "";
-    	boolean engineAdded = false;
-    	Engine engine;
-
-    	for (int i=0; i<sortByRoad.size(); i++){
-    		engineAdded = false;
-    		engine = getEngineById (sortByRoad.get(i));
-    		engineModel = engine.getModel();
-    		for (int j=0; j<out.size(); j++ ){
-    			engine = getEngineById (out.get(j));
-    			String outEngineModel = engine.getModel();
-    			if (engineModel.compareToIgnoreCase(outEngineModel)<0){
-    				out.add(j, sortByRoad.get(i));
-    				engineAdded = true;
-    				break;
-    			}
-    		}
-    		if (!engineAdded){
-    			out.add(sortByRoad.get(i));
-    		}
-    	}
-    	return out;
+    	return getEnginesByList(getEnginesByRoadNameList(), ENGINES_BY_MODEL);
     }
     
     /**
@@ -407,68 +355,15 @@ public class EngineManager {
      * @return list of engine ids ordered by engine consist
      */
     public List<String> getEnginesByConsistList() {
-    	// first get by road list
-    	List<String> sortByRoad = getEnginesByRoadNameList();
-
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-    	String engineConsistName = "";
-    	boolean engineAdded = false;
-    	Engine engine;
-
-    	for (int i=0; i<sortByRoad.size(); i++){
-    		engineAdded = false;
-    		engine = getEngineById (sortByRoad.get(i));
-    		engineConsistName = engine.getConsistName();
-    		for (int j=0; j<out.size(); j++ ){
-    			engine = getEngineById (out.get(j));
-    			String outEngineConsistName = engine.getConsistName();
-    			if (engineConsistName.compareToIgnoreCase(outEngineConsistName)<0){
-    				out.add(j, sortByRoad.get(i));
-    				engineAdded = true;
-    				break;
-    			}
-    		}
-    		if (!engineAdded){
-    			out.add(sortByRoad.get(i));
-    		}
-    	}
-    	return out;
+    	return getEnginesByList(getEnginesByRoadNameList(), ENGINES_BY_CONSIST);
     }
-
-    
+  
     /**
      * Sort by engine location
      * @return list of engine ids ordered by engine location
      */
     public List<String> getEnginesByLocationList() {
-    	// first get by road list
-    	List<String> sortByRoad = getEnginesByRoadNameList();
-
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-    	String engineLocation = "";
-    	boolean engineAdded = false;
-    	Engine engine;
-
-    	for (int i=0; i<sortByRoad.size(); i++){
-    		engineAdded = false;
-    		engine = getEngineById (sortByRoad.get(i));
-    		engineLocation = engine.getLocationName()+engine.getTrackName();
-    		for (int j=0; j<out.size(); j++ ){
-    			engine = getEngineById (out.get(j));
-    			String outEngineLocation = engine.getLocationName()+engine.getTrackName();
-    			if (engineLocation.compareToIgnoreCase(outEngineLocation)<0){
-    				out.add(j, sortByRoad.get(i));
-    				engineAdded = true;
-    				break;
-    			}
-    		}
-    		if (!engineAdded){
-    			out.add(sortByRoad.get(i));
-    		}
-    	}
-    	return out;
+    	return getEnginesByList(getEnginesByRoadNameList(), ENGINES_BY_LOCATION);
     }
     
     /**
@@ -476,33 +371,7 @@ public class EngineManager {
      * @return list of engine ids ordered by engine destination
      */
     public List<String> getEnginesByDestinationList() {
-    	// first get by location list
-    	List<String> sortByLocation = getEnginesByLocationList();
-
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-    	String engineDestination = "";
-    	boolean engineAdded = false;
-    	Engine engine;
-
-    	for (int i=0; i<sortByLocation.size(); i++) {
-			engineAdded = false;
-			engine = getEngineById(sortByLocation.get(i));
-			engineDestination = engine.getDestinationName()+engine.getDestinationTrackName();
-			for (int j=0; j<out.size(); j++) {
-				engine = getEngineById(out.get(j));
-				String outEngineDestination = engine.getDestinationName()+engine.getDestinationTrackName();
-				if (engineDestination.compareToIgnoreCase(outEngineDestination) < 0 ) {
-					out.add(j, sortByLocation.get(i));
-					engineAdded = true;
-					break;
-				}
-			}
-			if (!engineAdded) {
-				out.add(sortByLocation.get(i));
-    		}
-    	}
-    	return out;
+    	return getEnginesByList(getEnginesByLocationList(), ENGINES_BY_DESTINATION);
     }
     
     /**
@@ -510,36 +379,7 @@ public class EngineManager {
      * @return list of engine ids ordered by trains
      */
     public List<String> getEnginesByTrainList() {
-    	// first get by road list
-    	List<String> sortByRoad = getEnginesByLocationList();
-
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-     	boolean engineAdded = false;
-    	Engine engine;
-
-    	for (int i=0; i<sortByRoad.size(); i++){
-    		engineAdded = false;
-    		engine = getEngineById (sortByRoad.get(i));
-    		String engineTrainName = "";
-    		if(engine.getTrain() != null)
-    			engineTrainName = engine.getTrain().getName();
-    		for (int j=0; j<out.size(); j++ ){
-    			engine = getEngineById (out.get(j));
-    			String outEngineTrainName = "";
-    			if(engine.getTrain() != null)
-    				outEngineTrainName = engine.getTrain().getName();
-    			if (engineTrainName.compareToIgnoreCase(outEngineTrainName)<0){
-    				out.add(j,sortByRoad.get(i));
-    				engineAdded = true;
-    				break;
-    			}
-    		}
-    		if (!engineAdded){
-    			out.add(sortByRoad.get(i));
-    		}
-    	}
-    	return out;
+    	return getEnginesByList(getEnginesByLocationList(), ENGINES_BY_TRAIN);
     }
     
     /**
@@ -584,33 +424,7 @@ public class EngineManager {
      * @return list of engine ids ordered by owner name
      */
     public List<String> getEnginesByOwnerList() {
-       	// first get by id list
-    	List<String> sortById = getEnginesByIdList();
-
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-    	String engineOwner = "";
-    	boolean engineAdded = false;
-    	Engine engine;
-
-    	for (int i=0; i<sortById.size(); i++){
-    		engineAdded = false;
-    		engine = getEngineById (sortById.get(i));
-    		engineOwner = engine.getOwner();
-    		for (int j=0; j<out.size(); j++ ){
-    			engine = getEngineById (out.get(j));
-    			String outEngineOwner = engine.getOwner();
-    			if (engineOwner.compareToIgnoreCase(outEngineOwner)<0){
-    				out.add(j, sortById.get(i));
-    				engineAdded = true;
-    				break;
-    			}
-    		}
-    		if (!engineAdded){
-    			out.add(sortById.get(i));
-    		}
-    	}
-    	return out;
+    	return getEnginesByList(getEnginesByIdList(), ENGINES_BY_OWNER);
     }
     
     /**
@@ -618,33 +432,7 @@ public class EngineManager {
      * @return list of engine ids ordered by built date
      */
     public List<String> getEnginesByBuiltList() {
-       	// first get by id list
-    	List<String> sortById = getEnginesByIdList();
-
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-    	String engineBuilt = "";
-    	boolean engineAdded = false;
-    	Engine engine;
-
-    	for (int i=0; i<sortById.size(); i++){
-    		engineAdded = false;
-    		engine = getEngineById (sortById.get(i));
-    		engineBuilt = engine.getBuilt();
-    		for (int j=0; j<out.size(); j++ ){
-    			engine = getEngineById (out.get(j));
-    			String outEngineBuilt = engine.getBuilt();
-    			if (engineBuilt.compareToIgnoreCase(outEngineBuilt)<0){
-    				out.add(j, sortById.get(i));
-    				engineAdded = true;
-    				break;
-    			}
-    		}
-    		if (!engineAdded){
-    			out.add(sortById.get(i));
-    		}
-    	}
-    	return out;
+    	return getEnginesByList(getEnginesByIdList(), ENGINES_BY_BUILT);
     }
     
     /**
@@ -652,34 +440,63 @@ public class EngineManager {
      * @return list of engine ids ordered by RFIDs
      */
     public List<String> getEnginesByRfidList() {
-      	// first get by id list
-    	List<String> sortById = getEnginesByIdList();
-    	// now re-sort
+    	return getEnginesByList(getEnginesByIdList(), ENGINES_BY_RFID);
+    }
+    
+    private List<String> getEnginesByList(List<String> sortIn, int attribute) {
     	List<String> out = new ArrayList<String>();
-    	String engineRfid = "";
-    	boolean engineAdded = false;
-    	Engine engine;
-
-    	for (int i=0; i<sortById.size(); i++){
-    		engineAdded = false;
-    		engine = getEngineById (sortById.get(i));
-    		engineRfid = engine.getRfid();
+    	for (int i=0; i<sortIn.size(); i++){
+    		boolean engineAdded = false;
+    		String engineIn = (String)getEngineAttribute(getEngineById(sortIn.get(i)), attribute);
     		for (int j=0; j<out.size(); j++ ){
-    			engine = getEngineById (out.get(j));
-    			String outEngineRfid = engine.getRfid();
-    			if (engineRfid.compareToIgnoreCase(outEngineRfid)<0){
-    				out.add(j, sortById.get(i));
+    			String engineOut = (String)getEngineAttribute(getEngineById(out.get(j)), attribute);
+    			if (engineIn.compareToIgnoreCase(engineOut)<0){
+    				out.add(j, sortIn.get(i));
     				engineAdded = true;
     				break;
     			}
     		}
     		if (!engineAdded){
-    			out.add(sortById.get(i));
+    			out.add(sortIn.get(i));
     		}
     	}
     	return out;
     }
    
+    // The various sort options for cars
+    private static final int ENGINES_BY_NUMBER = 0;
+    private static final int ENGINES_BY_ROAD = 1;
+    private static final int ENGINES_BY_TYPE = 2;
+    private static final int ENGINES_BY_COLOR = 3;
+    private static final int ENGINES_BY_MODEL = 4;
+    private static final int ENGINES_BY_CONSIST = 5;
+    private static final int ENGINES_BY_LOCATION = 6;
+    private static final int ENGINES_BY_DESTINATION = 7;
+    private static final int ENGINES_BY_TRAIN = 8;
+    private static final int ENGINES_BY_MOVES = 9;
+    private static final int ENGINES_BY_BUILT = 10;
+    private static final int ENGINES_BY_OWNER = 11;
+    private static final int ENGINES_BY_RFID = 12;
+    
+    private Object getEngineAttribute(Engine eng, int attribute){
+    	switch (attribute){
+    	case ENGINES_BY_NUMBER: return eng.getNumber();
+    	case ENGINES_BY_ROAD: return eng.getRoad();
+    	case ENGINES_BY_TYPE: return eng.getType();
+    	case ENGINES_BY_COLOR: return eng.getColor(); 
+    	case ENGINES_BY_MODEL: return eng.getModel(); 
+    	case ENGINES_BY_CONSIST: return eng.getConsistName();
+    	case ENGINES_BY_LOCATION: return eng.getLocationName() + eng.getTrackName();
+    	case ENGINES_BY_DESTINATION: return eng.getDestinationName() + eng.getDestinationTrackName();
+    	case ENGINES_BY_TRAIN: return eng.getTrainName();
+    	case ENGINES_BY_MOVES: return eng.getMoves(); // returns an integer
+    	case ENGINES_BY_BUILT: return eng.getBuilt();
+    	case ENGINES_BY_OWNER: return eng.getOwner();
+    	case ENGINES_BY_RFID: return eng.getRfid();
+    	default: return "unknown";	
+    	}
+    }
+    
     /**
 	 * return a list available engines (no assigned train) at the start of a route, engines are
 	 * ordered least recently moved to most recently moved.

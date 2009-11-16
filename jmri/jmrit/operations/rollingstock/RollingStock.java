@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -476,6 +476,12 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _train;
 	}
 	
+	public String getTrainName(){
+		if (getTrain() != null)
+			return getTrain().getName();
+		return "";
+	}
+	
 	public void setRouteLocation (RouteLocation routeLocation){
 		if(_location == null){
 			log.debug("WARNING rolling stock ("+getId()+") does not have an assigned location");
@@ -662,13 +668,13 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			e.setAttribute("lastRouteId", getSavedRouteId());
 		if (verboseStore){
 			e.setAttribute("location", getLocationName());
-			e.setAttribute("secLocation", getTrackName());
+			e.setAttribute("track", getTrackName());
 			e.setAttribute("destination", getDestinationName());
-			e.setAttribute("secDestination", getDestinationTrackName());
+			e.setAttribute("desTrack", getDestinationTrackName());
 		}
 		e.setAttribute("moves", Integer.toString(getMoves()));
-		if (getTrain() != null)
-			e.setAttribute("train",	getTrain().getName());
+		if (!getTrainName().equals(""))
+			e.setAttribute("train",	getTrainName());
 		if (!getOwner().equals(""))
 			e.setAttribute("owner", getOwner());
 		if (!getComment().equals("") )

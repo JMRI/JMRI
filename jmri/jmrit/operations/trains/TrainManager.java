@@ -27,8 +27,8 @@ import jmri.jmrit.operations.setup.OperationsXml;
 /**
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
- * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.24 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2009
+ * @version	$Revision: 1.25 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
@@ -45,8 +45,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	protected Dimension _editFrameDimension = null;
 	protected Point _editFramePosition = null;
 	
-	
-    
 	public TrainManager() {
 		CarTypes.instance().addPropertyChangeListener(this);
 		CarRoads.instance().addPropertyChangeListener(this);
@@ -168,7 +166,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
  
     /**
-     * Finds an exsisting train or creates a new train if needed
+     * Finds an existing train or creates a new train if needed
      * requires train's name creates a unique id for this train
      * @param name
      * 
@@ -247,33 +245,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * @return list of train ids ordered by name
      */
     public List<String> getTrainsByNameList() {
-		// first get id list
-		List<String> sortList = getList();
-		// now re-sort
-		List<String> out = new ArrayList<String>();
-		String trainName = "";
-		boolean trainAdded = false;
-		Train train;
-
-		for (int i = 0; i < sortList.size(); i++) {
-			trainAdded = false;
-			train = getTrainById(sortList.get(i));
-			trainName = train.getName();
-			for (int j = 0; j < out.size(); j++) {
-				train = getTrainById(out.get(j));
-				String outTrainName = train.getName();
-				if (trainName.compareToIgnoreCase(outTrainName) < 0) {
-					out.add(j,sortList.get(i));
-					trainAdded = true;
-					break;
-				}
-			}
-			if (!trainAdded) {
-				out.add(sortList.get(i));
-			}
-		}
-		return out;
-
+    	return getTrainsByList(getList(), GET_TRAIN_NAME);
 	}
     
     /**
@@ -281,23 +253,51 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * @return list of train ids ordered by departure time
      */
     public List<String> getTrainsByTimeList() {
-		// first get train by name list
-		List<String> sortList = getTrainsByNameList();
-		// now re-sort
+    	return getTrainsByIntList(getTrainsByNameList(), GET_TRAIN_TIME);
+	}
+    
+    /**
+     * Sort by train departure name
+     * @return list of train ids ordered by departure name
+     */
+    public List<String> getTrainsByDepartureList() {
+    	return getTrainsByList(getTrainsByNameList(), GET_TRAIN_DEPARTES_NAME);
+	}
+    
+    /**
+     * Sort by train termination name
+     * @return list of train ids ordered by termination name
+     */
+    public List<String> getTrainsByTerminatesList() {
+    	return getTrainsByList(getTrainsByNameList(), GET_TRAIN_TERMINATES_NAME);
+	}
+    
+    /**
+     * Sort by train route name
+     * @return list of train ids ordered by route name
+     */
+    public List<String> getTrainsByRouteList() {
+    	return getTrainsByList(getTrainsByNameList(), GET_TRAIN_ROUTE_NAME);
+	}
+       
+    /**
+	 * Sort by train id
+	 * @return list of train ids ordered by id
+	 */
+    public List<String> getTrainsByIdList() {
+    	return getTrainsByIntList(getList(), GET_TRAIN_ID);
+    }
+    
+    private List<String> getTrainsByList(List<String> sortList, int attribute){
 		List<String> out = new ArrayList<String>();
-		int trainTime;
-		int outTrainTime;
-		boolean trainAdded = false;
-		Train train;
-
 		for (int i = 0; i < sortList.size(); i++) {
-			trainAdded = false;
-			train = getTrainById(sortList.get(i));
-			trainTime = train.getDepartTimeMinutes();
+			boolean trainAdded = false;
+			Train train = getTrainById(sortList.get(i));
+			String inTrainAttribute = (String)getTrainAttribute(train, attribute);
 			for (int j = 0; j < out.size(); j++) {
 				train = getTrainById(out.get(j));
-				outTrainTime = train.getDepartTimeMinutes();
-				if (trainTime < outTrainTime) {
+				String outTrainAttribute = (String)getTrainAttribute(train, attribute);
+				if (inTrainAttribute.compareToIgnoreCase(outTrainAttribute) < 0) {
 					out.add(j,sortList.get(i));
 					trainAdded = true;
 					break;
@@ -308,43 +308,22 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			}
 		}
 		return out;
-
-	}
+    }
     
-    /**
-	 * Sort by train number, number can alpha numeric
-	 * 
-	 * @return list of train ids ordered by number
-	 */
-    public List<String> getTrainsByIdList() {
-    	// first get id list
-    	List<String> sortList = getList();
-    	// now re-sort
+    private List<String> getTrainsByIntList(List<String> sortList, int attribute) {
     	List<String> out = new ArrayList<String>();
-    	int trainNumber = 0;
-    	boolean trainAdded = false;
-    	Train train;
-    	
     	for (int i=0; i<sortList.size(); i++){
-    		trainAdded = false;
-    		train = getTrainById (sortList.get(i));
-    		try{
-    			trainNumber = Integer.parseInt (train.getId());
-    		}catch (NumberFormatException e) {
-    			log.debug("train id number isn't a number");
-    		}
+    		boolean trainAdded = false;
+    		Train train = getTrainById (sortList.get(i));
+    		int inTrainAttribute = (Integer)getTrainAttribute(train, attribute); 
     		for (int j=0; j<out.size(); j++ ){
     			train = getTrainById (out.get(j));
-        		try{
-        			int outTrainNumber = Integer.parseInt (train.getId());
-        			if (trainNumber < outTrainNumber){
-        				out.add(j,sortList.get(i));
-        				trainAdded = true;
-        				break;
-        			}
-        		}catch (NumberFormatException e) {
-        			log.debug("list out id number isn't a number");
-        		}
+    			int outTrainAttribute = (Integer)getTrainAttribute(train, attribute);
+    			if (inTrainAttribute < outTrainAttribute){
+    				out.add(j,sortList.get(i));
+    				trainAdded = true;
+    				break;
+    			}
     		}
     		if (!trainAdded){
     			out.add(sortList.get(i));
@@ -353,6 +332,26 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         return out;
     }
     
+    // the various sort options for trains
+    private static final int GET_TRAIN_DEPARTES_NAME = 0;
+    private static final int GET_TRAIN_NAME = 1;
+    private static final int GET_TRAIN_ROUTE_NAME = 2;
+    private static final int GET_TRAIN_TERMINATES_NAME = 3;
+    private static final int GET_TRAIN_TIME = 4;
+    private static final int GET_TRAIN_ID = 5;
+      
+    private Object getTrainAttribute(Train train, int attribute){
+    	switch (attribute){
+    	case GET_TRAIN_DEPARTES_NAME: return train.getTrainDepartsName();
+    	case GET_TRAIN_NAME: return train.getName();
+    	case GET_TRAIN_ROUTE_NAME: return train.getTrainRouteName();
+    	case GET_TRAIN_TERMINATES_NAME: return train.getTrainTerminatesName(); 
+       	case GET_TRAIN_TIME: return train.getDepartTimeMinutes();
+    	case GET_TRAIN_ID: return Integer.parseInt(train.getId());
+    	default: return "unknown";
+    	}
+    }
+ 
     private List<String> getList() {
 		if (!trainsloaded)
 			log.error("TrainManager getList called before trains completely loaded!");

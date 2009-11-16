@@ -27,7 +27,7 @@ import org.jdom.Element;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.29 $
+ * @version	$Revision: 1.30 $
  */
 public class CarManager {
 	
@@ -292,48 +292,13 @@ public class CarManager {
         return out;
     }
     
-    private static final int pageSize = 64;
+
     /**
      * Sort by car road name
      * @return list of car ids ordered by road name
      */
     public List<String> getCarsByRoadNameList() {
-    	//log.debug("start car sort by road name list");
-      	// first get by id list
-    	List<String> sortIn = getCarsByIdList();
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-    	String carRoad = "";
-    	String outCarRoad = "";
-    	boolean carAdded = false;
-
-    	for (int i=0; i<sortIn.size(); i++){
-    		carAdded = false;
-    		carRoad = getCarById(sortIn.get(i)).getRoad();
-    		int start = 0;
-    		// page to improve performance.  Most cars have id = road+number
-      		int divisor = out.size()/pageSize;
-      		for (int k=divisor; k>0; k--){
-      			outCarRoad = getCarById(out.get((out.size()-1)*k/divisor)).getRoad();
-      			if (carRoad.compareToIgnoreCase(outCarRoad)>=0){
-      				start = (out.size()-1)*k/divisor;
-      				break;
-      			}
-      		}
-      		for (int j=start; j<out.size(); j++ ){
-    			outCarRoad = getCarById(out.get(j)).getRoad();
-    			if (carRoad.compareToIgnoreCase(outCarRoad)<0){
-    				out.add(j, sortIn.get(i));
-    				carAdded = true;
-    				break;
-    			}
-    		}
-    		if (!carAdded){
-    			out.add(sortIn.get(i));
-    		}
-    	}
-    	//log.debug("end car sort by road name list");
-    	return out;
+    	return getCarsByList(getCarsByIdList(), CARS_BY_ROAD);
     }
     
     /**
@@ -439,43 +404,7 @@ public class CarManager {
      * @return list of car ids ordered by car type
      */
     public List<String> getCarsByTypeList() {
-    	//log.debug("start car sort by type list");
-    	// first get by road list
-    	List<String> sortIn = getCarsByRoadNameList();
-
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-    	String carType = "";
-    	String outCarType = "";
-    	boolean carAdded = false;
-
-    	for (int i=0; i<sortIn.size(); i++){
-    		carAdded = false;
-    		carType = getCarById(sortIn.get(i)).getType();
-       		int start = 0;
-    		// page to improve sort performance. 
-       		int divisor = out.size()/pageSize;
-       		for (int k=divisor; k>0; k--){
-       			outCarType = getCarById(out.get((out.size()-1)*k/divisor)).getType();
-       			if (carType.compareToIgnoreCase(outCarType)>=0){
-       				start = (out.size()-1)*k/divisor;
-       				break;
-       			}
-       		}
-    		for (int j=start; j<out.size(); j++ ){
-    			outCarType = getCarById(out.get(j)).getType();
-    			if (carType.compareToIgnoreCase(outCarType)<0){
-    				out.add(j, sortIn.get(i));
-    				carAdded = true;
-    				break;
-    			}
-    		}
-    		if (!carAdded){
-    			out.add(sortIn.get(i));
-    		}
-    	}
-    	//log.debug("end car sort by type list");
-    	return out;
+    	return getCarsByList(getCarsByRoadNameList(), CARS_BY_TYPE);
     }
     
     /**
@@ -483,41 +412,7 @@ public class CarManager {
      * @return list of car ids ordered by car color
      */
     public List<String> getCarsByColorList() {
-    	// first get by type list
-    	List<String> sortByType = getCarsByTypeList();
-
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-    	String carColor = "";
-    	String outCarColor = "";
-    	boolean carAdded = false;
-
-    	for (int i=0; i<sortByType.size(); i++){
-    		carAdded = false;
-    		carColor = getCarById(sortByType.get(i)).getColor();
-      		int start = 0;
-       		// page to improve sort performance. 
-      		int divisor = out.size()/pageSize;
-      		for (int k=divisor; k>0; k--){
-      			outCarColor = getCarById(out.get((out.size()-1)*k/divisor)).getColor();
-      			if (carColor.compareToIgnoreCase(outCarColor)>=0){
-      				start = (out.size()-1)*k/divisor;
-      				break;
-      			}
-      		}
-      		for (int j=start; j<out.size(); j++ ){
-    			outCarColor = getCarById(out.get(j)).getColor();
-    			if (carColor.compareToIgnoreCase(outCarColor)<0){
-    				out.add(j, sortByType.get(i));
-    				carAdded = true;
-    				break;
-    			}
-    		}
-    		if (!carAdded){
-    			out.add(sortByType.get(i));
-    		}
-    	}
-    	return out;
+    	return getCarsByList(getCarsByTypeList(), CARS_BY_COLOR);
     }
     
     /**
@@ -525,88 +420,15 @@ public class CarManager {
      * @return list of car ids ordered by car kernel
      */
     public List<String> getCarsByKernelList() {
-    	// first get by number list
-    	List<String> sortIn = getCarsByNumberList();
-
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-    	String carKernelName = "";
-    	String outCarKernelName = "";
-    	boolean carAdded = false;
-
-    	for (int i=0; i<sortIn.size(); i++){
-    		carAdded = false;
-    		carKernelName = getCarById(sortIn.get(i)).getKernelName();
-     		int start = 0;
-       		// page to improve sort performance. 
-      		int divisor = out.size()/pageSize;
-      		for (int k=divisor; k>0; k--){
-      			outCarKernelName = getCarById(out.get((out.size()-1)*k/divisor)).getKernelName();
-      			if (carKernelName.compareToIgnoreCase(outCarKernelName)>=0){
-      				start = (out.size()-1)*k/divisor;
-      				break;
-      			}
-      		}
-      		for (int j=start; j<out.size(); j++ ){
-    			outCarKernelName = getCarById(out.get(j)).getKernelName();
-    			if (carKernelName.compareToIgnoreCase(outCarKernelName)<0){
-    				out.add(j, sortIn.get(i));
-    				carAdded = true;
-    				break;
-    			}
-    		}
-    		if (!carAdded){
-    			out.add(sortIn.get(i));
-    		}
-    	}
-    	return out;
+    	return getCarsByList(getCarsByNumberList(), CARS_BY_KERNEL);
     }
-
-    
+ 
     /**
      * Sort by car location
      * @return list of car ids ordered by car location
      */
     public List<String> getCarsByLocationList() {
-    	// first get by number list
-    	List<String> sortIn = getCarsByNumberList();
-
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-    	String carLocation = "";
-    	String outCarLocation = "";
-    	boolean carAdded = false;
-    	Car c;
-
-    	for (int i=0; i<sortIn.size(); i++){
-    		carAdded = false;
-    		c = getCarById (sortIn.get(i));
-    		carLocation = c.getLocationName()+c.getTrackName();
-     		int start = 0;
-       		// page to improve sort performance. 
-      		int divisor = out.size()/pageSize;
-      		for (int k=divisor; k>0; k--){
-      			c = getCarById (out.get((out.size()-1)*k/divisor));
-      			outCarLocation = c.getLocationName()+c.getTrackName();
-      			if (carLocation.compareToIgnoreCase(outCarLocation)>=0){
-      				start = (out.size()-1)*k/divisor;
-      				break;
-      			}
-      		}
-      		for (int j=start; j<out.size(); j++ ){
-    			c = getCarById (out.get(j));
-    			outCarLocation = c.getLocationName()+c.getTrackName();
-    			if (carLocation.compareToIgnoreCase(outCarLocation)<0){
-    				out.add(j, sortIn.get(i));
-    				carAdded = true;
-    				break;
-    			}
-    		}
-    		if (!carAdded){
-    			out.add(sortIn.get(i));
-    		}
-    	}
-    	return out;
+    	return getCarsByList(getCarsByNumberList(), CARS_BY_LOCATION);
     }
     
     /**
@@ -614,45 +436,7 @@ public class CarManager {
      * @return list of car ids ordered by car destination
      */
     public List<String> getCarsByDestinationList() {
-    	// first get by location list
-    	List<String> sortIn = getCarsByLocationList();
-
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-    	String carDestination = "";
-    	String outCarDestination = "";
-    	boolean carAdded = false;
-    	Car c;
-
-    	for (int i = 0; i < sortIn.size(); i++) {
-			carAdded = false;
-			c = getCarById(sortIn.get(i));
-			carDestination = c.getDestinationName()+c.getDestinationTrackName();
-    		int start = 0;
-       		// page to improve sort performance. 
-      		int divisor = out.size()/pageSize;
-      		for (int k=divisor; k>0; k--){
-      			c = getCarById (out.get((out.size()-1)*k/divisor));
-      			outCarDestination = c.getDestinationName()+c.getDestinationTrackName();
-      			if (carDestination.compareToIgnoreCase(outCarDestination)>=0){
-      				start = (out.size()-1)*k/divisor;
-      				break;
-      			}
-      		}
-      		for (int j=start; j<out.size(); j++ ){
-				c = getCarById(out.get(j));
-				outCarDestination = c.getDestinationName()+c.getDestinationTrackName();
-				if (carDestination.compareToIgnoreCase(outCarDestination) < 0 ) {
-					out.add(j, sortIn.get(i));
-					carAdded = true;
-					break;
-				}
-			}
-			if (!carAdded) {
-				out.add(sortIn.get(i));
-    		}
-    	}
-    	return out;
+    	return getCarsByList(getCarsByLocationList(), CARS_BY_DESTINATION);
     }
     
     /**
@@ -660,49 +444,7 @@ public class CarManager {
      * @return list of car ids ordered by trains
      */
     public List<String> getCarsByTrainList() {
-    	// first get by location list
-    	List<String> sortIn = getCarsByLocationList();
-
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-     	boolean carAdded = false;
-    	Car c;
-
-    	for (int i=0; i<sortIn.size(); i++){
-    		carAdded = false;
-    		c = getCarById (sortIn.get(i));
-    		String carTrainName = "";
-    		if(c.getTrain() != null)
-    			carTrainName = c.getTrain().getName();
-       		int start = 0;
-       		// page to improve sort performance. 
-      		int divisor = out.size()/pageSize;
-      		for (int k=divisor; k>0; k--){
-      			c = getCarById(out.get((out.size()-1)*k/divisor));
-      			String outCarTrainName = "";
-      			if(c.getTrain() != null)
-      				outCarTrainName = c.getTrain().getName();
-      			if (carTrainName.compareToIgnoreCase(outCarTrainName)>=0){
-      				start = (out.size()-1)*k/divisor;
-      				break;
-      			}
-      		}
-    		for (int j=start; j<out.size(); j++ ){
-    			c = getCarById (out.get(j));
-    			String outCarTrainName = "";
-    			if(c.getTrain() != null)
-    				outCarTrainName = c.getTrain().getName();
-    			if (carTrainName.compareToIgnoreCase(outCarTrainName)<0){
-    				out.add(j, sortIn.get(i));
-    				carAdded = true;
-    				break;
-    			}
-    		}
-    		if (!carAdded){
-    			out.add(sortIn.get(i));
-    		}
-    	}
-    	return out;
+    	return getCarsByList(getCarsByLocationList(), CARS_BY_TRAIN);
     }
     
     /**
@@ -710,41 +452,7 @@ public class CarManager {
      * @return list of car ids ordered by car loads
      */
     public List<String> getCarsByLoadList() {
-    	// first get by location list
-    	List<String> sortIn = getCarsByLocationList();
-
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-    	String carLoadName = "";
-    	String outCarLoadName = "";
-     	boolean carAdded = false;
-
-    	for (int i=0; i<sortIn.size(); i++){
-    		carAdded = false;
-    		carLoadName = getCarById(sortIn.get(i)).getLoad();
-    		int start = 0;
-       		// page to improve sort performance. 
-      		int divisor = out.size()/pageSize;
-      		for (int k=divisor; k>0; k--){
-      			outCarLoadName = getCarById(out.get((out.size()-1)*k/divisor)).getLoad();
-      			if (carLoadName.compareToIgnoreCase(outCarLoadName)>=0){
-      				start = (out.size()-1)*k/divisor;
-      				break;
-      			}
-      		}
-      		for (int j=start; j<out.size(); j++ ){
-    			outCarLoadName = getCarById(out.get(j)).getLoad();
-    			if (carLoadName.compareToIgnoreCase(outCarLoadName)<0){
-    				out.add(j, sortIn.get(i));
-    				carAdded = true;
-    				break;
-    			}
-    		}
-    		if (!carAdded){
-    			out.add(sortIn.get(i));
-    		}
-    	}
-    	return out;
+    	return getCarsByList(getCarsByLocationList(), CARS_BY_LOAD);
     }
     
     /**
@@ -798,31 +506,46 @@ public class CarManager {
      * @return list of car ids ordered by car built date
      */
     public List<String> getCarsByBuiltList() {
-    	// first get by type list
-    	List<String> sortIn = getCarsByIdList();
-
-    	// now re-sort
+    	return getCarsByList(getCarsByIdList(), CARS_BY_BUILT);
+    }
+    
+    /**
+     * Sort by car owner
+     * @return list of car ids ordered by car owner
+     */
+    public List<String> getCarsByOwnerList() {
+    	return getCarsByList(getCarsByIdList(), CARS_BY_OWNER);
+    }
+   
+    /**
+     * Sort by car RFID
+     * @return list of car ids ordered by RFIDs
+     */
+    public List<String> getCarsByRfidList() {
+    	return getCarsByList(getCarsByIdList(), CARS_BY_RFID);
+    }
+    
+    private static final int pageSize = 64;
+    
+    private List<String> getCarsByList(List<String> sortIn, int attribute) {
     	List<String> out = new ArrayList<String>();
-    	String carBuilt = "";
-    	String outCarBuilt = "";
-    	boolean carAdded = false;
-
+    	String carIn;
     	for (int i=0; i<sortIn.size(); i++){
-    		carAdded = false;
-    		carBuilt = getCarById (sortIn.get(i)).getBuilt();
-      		int start = 0;
-    		// page to improve sort performance. 
+    		boolean carAdded = false;
+    		carIn = (String)getCarAttribute(getCarById(sortIn.get(i)), attribute);
+    		int start = 0;
+    		// page to improve performance.  Most cars have id = road+number
       		int divisor = out.size()/pageSize;
       		for (int k=divisor; k>0; k--){
-      			outCarBuilt = getCarById(out.get((out.size()-1)*k/divisor)).getBuilt();
-      			if (carBuilt.compareToIgnoreCase(outCarBuilt)>=0){
+      			String carOut = (String)getCarAttribute(getCarById(out.get((out.size()-1)*k/divisor)), attribute);
+      			if (carIn.compareToIgnoreCase(carOut)>=0){
       				start = (out.size()-1)*k/divisor;
       				break;
       			}
       		}
       		for (int j=start; j<out.size(); j++ ){
-    			outCarBuilt = getCarById (out.get(j)).getBuilt();
-    			if (carBuilt.compareToIgnoreCase(outCarBuilt)<0){
+    			String carOut = (String)getCarAttribute(getCarById(out.get(j)), attribute);
+    			if (carIn.compareToIgnoreCase(carOut)<0){
     				out.add(j, sortIn.get(i));
     				carAdded = true;
     				break;
@@ -835,88 +558,41 @@ public class CarManager {
     	return out;
     }
     
-    /**
-     * Sort by car owner
-     * @return list of car ids ordered by car owner
-     */
-    public List<String> getCarsByOwnerList() {
-    	// first get by type list
-    	List<String> sortIn = getCarsByIdList();
-
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-    	String carOwner = "";
-    	String outCarOwner = "";
-    	boolean carAdded = false;
-
-    	for (int i=0; i<sortIn.size(); i++){
-    		carAdded = false;
-    		carOwner = getCarById(sortIn.get(i)).getOwner();
-      		int start = 0;
-    		// page to improve sort performance. 
-      		int divisor = out.size()/pageSize;
-      		for (int k=divisor; k>0; k--){
-      			outCarOwner = getCarById(out.get((out.size()-1)*k/divisor)).getOwner();
-      			if (carOwner.compareToIgnoreCase(outCarOwner)>=0){
-      				start = (out.size()-1)*k/divisor;
-      				break;
-      			}
-      		}
-      		for (int j=start; j<out.size(); j++ ){
-    			outCarOwner = getCarById(out.get(j)).getOwner();
-    			if (carOwner.compareToIgnoreCase(outCarOwner)<0){
-    				out.add(j, sortIn.get(i));
-    				carAdded = true;
-    				break;
-    			}
-    		}
-    		if (!carAdded){
-    			out.add(sortIn.get(i));
-    		}
+    // The various sort options for cars
+    private static final int CARS_BY_NUMBER = 0;
+    private static final int CARS_BY_ROAD = 1;
+    private static final int CARS_BY_TYPE = 2;
+    private static final int CARS_BY_COLOR = 3;
+    private static final int CARS_BY_LOAD = 4;
+    private static final int CARS_BY_KERNEL = 5;
+    private static final int CARS_BY_LOCATION = 6;
+    private static final int CARS_BY_DESTINATION = 7;
+    private static final int CARS_BY_TRAIN = 8;
+    private static final int CARS_BY_MOVES = 9;
+    private static final int CARS_BY_BUILT = 10;
+    private static final int CARS_BY_OWNER = 11;
+    private static final int CARS_BY_RFID = 12;
+    
+    private Object getCarAttribute(Car car, int attribute){
+    	switch (attribute){
+    	case CARS_BY_NUMBER: return car.getNumber();
+    	case CARS_BY_ROAD: return car.getRoad();
+    	case CARS_BY_TYPE: return car.getType();
+    	case CARS_BY_COLOR: return car.getColor();
+    	case CARS_BY_LOAD: return car.getLoad();
+    	case CARS_BY_KERNEL: return car.getKernelName();
+    	case CARS_BY_LOCATION: return car.getLocationName() + car.getTrackName();
+    	case CARS_BY_DESTINATION: return car.getDestinationName() + car.getDestinationTrackName();
+    	case CARS_BY_TRAIN: return car.getTrainName();
+    	case CARS_BY_MOVES: return car.getMoves(); // returns an integer
+    	case CARS_BY_BUILT: return car.getBuilt();
+    	case CARS_BY_OWNER: return car.getOwner();
+    	case CARS_BY_RFID: return car.getRfid();
+    	default: return "unknown";	
     	}
-    	return out;
     }
-   
-    /**
-     * Sort by car RFID
-     * @return list of car ids ordered by RFIDs
-     */
-    public List<String> getCarsByRfidList() {
-      	// first get by id list
-    	List<String> sortIn = getCarsByIdList();
-    	// now re-sort
-    	List<String> out = new ArrayList<String>();
-    	String carRfid = "";
-    	String outCarRfid = "";
-    	boolean carAdded = false;
-
-    	for (int i=0; i<sortIn.size(); i++){
-    		carAdded = false;
-    		carRfid = getCarById (sortIn.get(i)).getRfid();
-      		int start = 0;
-    		// page to improve sort performance. 
-      		int divisor = out.size()/pageSize;
-      		for (int k=divisor; k>0; k--){
-      			outCarRfid = getCarById(out.get((out.size()-1)*k/divisor)).getRfid();
-      			if (carRfid.compareToIgnoreCase(outCarRfid)>=0){
-      				start = (out.size()-1)*k/divisor;
-      				break;
-      			}
-      		}
-    		for (int j=start; j<out.size(); j++ ){
-    			outCarRfid = getCarById(out.get(j)).getRfid();
-    			if (carRfid.compareToIgnoreCase(outCarRfid)<0){
-    				out.add(j, sortIn.get(i));
-    				carAdded = true;
-    				break;
-    			}
-    		}
-    		if (!carAdded){
-    			out.add(sortIn.get(i));
-    		}
-    	}
-    	return out;
-    }
+    
+    
     
     /**
 	 * Return a list available cars (no assigned train or cars already assigned

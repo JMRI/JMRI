@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.21 $
+ * @version   $Revision: 1.22 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -54,7 +54,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     
     public final int SORTBYNAME = 1;
     public final int SORTBYTIME = 2;
-    public final int SORTBYID = 3;
+    public final int SORTBYDEPARTS = 3;
+    public final int SORTBYTERMINATES = 4;
+    public final int SORTBYROUTE = 5;
+    public final int SORTBYID = 6;
     
     private int _sort = SORTBYNAME;
     
@@ -75,12 +78,15 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			sysList = manager.getTrainsByNameList();
 		else if (_sort == SORTBYTIME)
 			sysList = manager.getTrainsByTimeList();
-		// and add them back in
-		for (int i = 0; i < sysList.size(); i++){
-//			log.debug("route ids: " + (String) sysList.get(i));
-			manager.getTrainById(sysList.get(i))
-					.addPropertyChangeListener(this);
-		}
+		else if (_sort == SORTBYDEPARTS)
+			sysList = manager.getTrainsByDepartureList();
+		else if (_sort == SORTBYTERMINATES)
+			sysList = manager.getTrainsByTerminatesList();
+		else if (_sort == SORTBYROUTE)
+			sysList = manager.getTrainsByRouteList();
+		
+		// and add listeners back in
+		addPropertyChangeTrains();
 	}
     
     public List<String> getSelectedTrainList(){
@@ -300,12 +306,24 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	if (sysList != null) {
     		for (int i = 0; i < sysList.size(); i++) {
     			// if object has been deleted, it's not here; ignore it
-    			Train l = manager.getTrainById(sysList.get(i));
-    			if (l != null)
-    				l.removePropertyChangeListener(this);
+    			Train t = manager.getTrainById(sysList.get(i));
+    			if (t != null)
+    				t.removePropertyChangeListener(this);
     		}
     	}
     }
+    
+    private void addPropertyChangeTrains() {
+    	if (sysList != null) {
+    		for (int i = 0; i < sysList.size(); i++) {
+    			// if object has been deleted, it's not here; ignore it
+    			Train t = manager.getTrainById(sysList.get(i));
+    			if (t != null)
+    				t.addPropertyChangeListener(this);
+    		}
+    	}
+    }
+
 
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
