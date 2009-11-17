@@ -43,7 +43,7 @@ import java.util.ResourceBundle;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.71 $
+ * @version $Revision: 1.72 $
  */
 
 public class PositionableLabel extends JLabel
@@ -54,6 +54,7 @@ public class PositionableLabel extends JLabel
     
     public PositionableLabel(String s) {
         super(s);
+        icon = false;
         text = true;
         debug = log.isDebugEnabled();
         setProperToolTip();
@@ -64,8 +65,9 @@ public class PositionableLabel extends JLabel
     public PositionableLabel(NamedIcon s) {
         super(s);
         icon = true;
+        text = false;
         namedIcon = s;
-        updateSize();
+        //updateSize();
         debug = log.isDebugEnabled();
         setProperToolTip();
         connect();
@@ -100,12 +102,12 @@ public class PositionableLabel extends JLabel
         addMouseListener(this);
     }
     
-    public void connect(LayoutEditor panel) {
+    /*public void connect(LayoutEditor panel) {
         //addMouseMotionListener(this);
         //addMouseListener(this);
 		layoutPanel = panel;
         //updateSize();
-    }
+    }*/
 
    	LayoutEditor layoutPanel = null;
     /**
@@ -113,6 +115,7 @@ public class PositionableLabel extends JLabel
      */
     public void setPanel(LayoutEditor panel) {
 		layoutPanel = panel;
+        updateSize();
     }
 
     public LayoutEditor getLayoutPanel(){
@@ -124,8 +127,9 @@ public class PositionableLabel extends JLabel
      * Set panel (called from Panel Editor)
      * @param panel
      */
-    protected void setPanel(PanelEditor panel){
+    public void setPanel(PanelEditor panel){
     	panelEditor = panel;
+        updateSize();
     }
 
     public PanelEditor getPanelEditor(){
@@ -203,28 +207,31 @@ public class PositionableLabel extends JLabel
     }
 
     public void setFixedSize(int width, int height){
+        //System.out.println("fixed width " + width + ", " + height);
         fixedWidth=width;
         fixedHeight=height;
-        if ((width!=0) && (height!=0)){
+        updateSize();
+        /*if ((width!=0) && (height!=0)){
             setSize(fixedWidth, fixedHeight);
         } else if ((width!=0) && (height==0)){
             setSize(fixedWidth, maxHeight());
         } else if ((width==0) && (height!=0)){
             setSize(maxWidth(), fixedHeight);
         } else
-            setSize(maxWidth(), maxHeight());
+            setSize(maxWidth(), maxHeight());*/
     }
 
-    public void setBackground(Color color){
+    public void setBackgroundColor(Color color){
         if (text){
+            // We consider that if the value passed is null, then the background is clear.
             if(color==null){
                 setOpaque(false);
             }
             else {
                 setOpaque(true);
-                super.setBackground(color);
+                setBackground(color);
             }
-            updateSize();
+            //updateSize();  Should be no need to update size if we are changing the background colour
         }
     }
 
@@ -234,12 +241,23 @@ public class PositionableLabel extends JLabel
      * is changed
      */
     protected void updateSize(){
-        setSize(maxWidth(), maxHeight());
+        //There is no point in updating the size until an editor has been assigned.
+        if (!(panelEditor==null && layoutPanel==null))
+            setSize(maxWidth(), maxHeight());
+            
+            if (icon && text && panelEditor!=null){
+                //we have a combined icon/text therefore the icon is central to the text.
+                setIconTextGap (-(getWidth()+getPreferredSize().width)/2);
+                setSize(getPreferredSize().width, getPreferredSize().height);
+            }
     }
     //@TODO Need to do math.max on this to return the greatest width, as an icon can also contain text.
     protected int maxWidth(){
         if ((fixedWidth==0) && (margin==0)){
-            if(icon)
+            if(icon && text){
+                System.out.println(namedIcon.getIconWidth() + " " + ((javax.swing.JLabel)this).getMaximumSize().width);
+                return Math.max(namedIcon.getIconWidth(), ((javax.swing.JLabel)this).getMaximumSize().width);
+            }else if (icon)
                 return namedIcon.getIconWidth(); // defer to superclass
             else
                 return ((javax.swing.JLabel)this).getMaximumSize().width;
@@ -275,9 +293,16 @@ public class PositionableLabel extends JLabel
     public void setDisplayLevel(Integer l) {
     	Integer oldDisplayLevel = displayLevel;
     	displayLevel = l;
-    	if (oldDisplayLevel!=null && oldDisplayLevel!=l && panelEditor!=null){
-    		log.debug("Changing label display level");
-    		panelEditor.setDisplayLevel(this);
+    	if (oldDisplayLevel!=null && oldDisplayLevel!=l){
+            log.debug("Changing label display level");
+            if(panelEditor!=null){
+    			panelEditor.setDisplayLevel(this);
+            }
+            else if (layoutPanel !=null){
+                layoutPanel.setDisplayLevel(this);
+                }
+            else
+                log.debug("Changing label failed, this item is not associated with any panel");
     	}
     }
     public void setDisplayLevel(int l) { setDisplayLevel(new Integer(l)); }
@@ -657,14 +682,12 @@ public class PositionableLabel extends JLabel
     }
 
     void setItalic() {
-        System.out.println("SetItalicCalled");
         if (log.isDebugEnabled())
             log.debug("When style item selected italic state is "+italic.isSelected());
         if (italic.isSelected()) setFontStyle(Font.ITALIC, 0);
         else setFontStyle(0, Font.ITALIC);
     }
     void setBold() {
-        System.out.println("SetBoldCalled");
         if (log.isDebugEnabled())
             log.debug("When style item selected bold state is "+bold.isSelected());
         if (bold.isSelected()) setFontStyle(Font.BOLD, 0);
@@ -972,7 +995,7 @@ public class PositionableLabel extends JLabel
                         parent.repaint(p.x,p.y,w,h);
                     }
                     else
-                        setBackground(desiredColor);
+                        setBackgroundColor(desiredColor);
                 }
                 else setBorderColor(desiredColor);
             }
@@ -1111,8 +1134,9 @@ public class PositionableLabel extends JLabel
                 switch (type) {
                     case BOX_TYPE_TEXT:
                         setText(_textBox.getText());
-                        setIconTextGap (-(getWidth()+getPreferredSize().width)/2);
-                        setSize(getPreferredSize().width, getPreferredSize().height);
+                        /*setIconTextGap (-(getWidth()+getPreferredSize().width)/2);
+                        setSize(getPreferredSize().width, getPreferredSize().height);*/
+                        updateSize();
                         break;
 /*                    case BOX_TYPE_SHEAR:
                         int x = 0;

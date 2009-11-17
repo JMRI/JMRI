@@ -27,7 +27,7 @@ import javax.swing.JLabel;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -37,22 +37,25 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/misc/X-red.gif",
                             "resources/icons/misc/X-red.gif"));
-        setDisplayLevel(PanelEditor.LABELS);
-        // have to do following explicitly, after the ctor
-        resetDefaultIcon();
         icon = true;
         text = false;
+        setDisplayLevel(PanelEditor.MEMORIES);
+        // have to do following explicitly, after the ctor
+        resetDefaultIcon();
+
+        updateSize();
     }
 
-    public MemoryIcon(LayoutEditor panel) {
+    public MemoryIcon(LayoutEditor panel) {  //The layout editor memory is based upon a text label not an icon
         // super ctor call to make sure this is an icon label
         super(new String("   "));
+        icon = false;
+        text = true;
         setDisplayLevel(LayoutEditor.LABELS);
         // have to do following explicitly, after the ctor
         resetDefaultIcon();
-        setPanel(panel);
-        icon = false;
-        text = true;
+        //setPanel(panel);
+
         updateSize();
     }
 
@@ -110,9 +113,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         }
         memory = m;
         if (memory != null) {
-            displayState();
             memory.addPropertyChangeListener(this);
             setProperToolTip();
+            //displayState();
         }
     }
 
@@ -207,14 +210,16 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             if (getFixedWidth()==0)
                 popup.add("Width= Auto");
             else
-                popup.add("Width= " + this.fixedWidth);
+                popup.add("Width= " + getFixedWidth());
+                //popup.add("Width= " + this.fixedWidth);
 
             if (getFixedHeight()==0)
                 popup.add("Height= Auto");           
             else
-                popup.add("Height= " + this.fixedHeight);
+                popup.add("Height= " + getFixedHeight());
+                //popup.add("Height= " + this.fixedHeight);
 
-            if (((fixedHeight==0) || (fixedWidth==0))&&(text))
+            if (((getFixedHeight()==0) || (getFixedWidth()==0))&&(text))
                popup.add("Margin= " + this.getMargin());
                
         }
@@ -392,18 +397,21 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 		    }
 		} else {
 		    // If fall through to here, no Memory value, set icon to default.
-            if (getLayoutPanel()!=null) {
-                setIcon(null);
-                setText(defaultText);
-                text = true;
-                icon = false;
-            } else {
-                setIcon(defaultIcon);
-                setText(null);
-                text = false;
-                icon = true;
+            // We only want to set the icon to default once a panel or layout editor has been set.
+            if (getLayoutPanel()!=null || getPanelEditor()!=null) {
+                if (getLayoutPanel()!=null) {
+                    setIcon(null);
+                    setText(defaultText);
+                    text = true;
+                    icon = false;
+                } else {
+                    setIcon(defaultIcon);
+                    setText(null);
+                    text = false;
+                    icon = true;
+                }
+                updateSize();
             }
-    		updateSize();
         }
     }
 
@@ -493,8 +501,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                                 break;
                 default     :   this.setHorizontalAlignment(JLabel.CENTER);
             }
-        
-        }    
+        }
     }
     
     public void setOriginalLocation(int x, int y){
@@ -514,7 +521,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     public int getOriginalY(){
         return originalY;
     }
-    private int fixedWidth=0;
+    /*private int fixedWidth=0;
     private int fixedHeight=0;
     
     public int getFixedWidth(){
@@ -523,9 +530,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     
     public int getFixedHeight(){
         return fixedHeight;
-    }
+    }*/
     
-    public void setFixedSize(int width, int height){
+    /*public void setFixedSize(int width, int height){
         
         fixedWidth=width;
         fixedHeight=height;
@@ -540,7 +547,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         } else {
             setSize(maxWidth(), maxHeight());
         }
-    }
+    }*/
  
     public void setLocation(int x, int y){
 
@@ -561,7 +568,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      * construction of this object is complete.  Be careful about that!
      */
     protected int maxHeight() {
-        if(isIcon()){
+        if(isIcon() && namedIcon!=null){
             return namedIcon.getIconHeight();
         }
         if ((getFixedHeight()==0) && (getMargin()==0))
@@ -579,7 +586,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      * construction of this object is complete.  Be careful about that!
      */
     protected int maxWidth() {
-        if(isIcon()){
+        if(isIcon() && namedIcon!=null){
             return namedIcon.getIconWidth();
         }
         if ((getFixedWidth()==0) && (getMargin()==0))
@@ -624,7 +631,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
     
     public void updateSize() {
-
         if(isIcon()){
             setSize(this.maxWidth(), this.maxHeight());
         } else {

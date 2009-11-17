@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.59 $
+ * @version $Revision: 1.60 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -2901,7 +2901,19 @@ public class LayoutEditor extends JmriJFrame {
                 AnalogClock2Display c = checkClocks(dLoc);
                 if (c!=null){
                     c.showPopUp(event);
-                }
+                } /*else {
+                    for (int i = 0; i<turnoutList.size();i++) {
+                        LayoutTurnout t = turnoutList.get(i);
+                        // check the center point
+                        Point2D pt = t.getCoordsCenter();
+                        Rectangle2D r = new Rectangle2D.Double(
+                                pt.getX()-(SIZE2*2.0),pt.getY()-(SIZE2*2.0),4.0*SIZE2,4.0*SIZE2);
+                        if (r.contains(dLoc)) {
+                            t.showIdPopUp(event);
+                            break;
+                        }
+                    }
+                }*/
             }
 		}
 		// check if clicking on sensor or multisensor out of edit mode
@@ -2917,7 +2929,7 @@ public class LayoutEditor extends JmriJFrame {
 				s.performMouseClicked(event);
 				whenReleased = event.getWhen();
 			}
-		}		
+		} 
 		if (selectedObject!=null) {
 			// An object was selected, deselect it
 			prevSelectedObject = selectedObject;
@@ -3018,6 +3030,7 @@ public class LayoutEditor extends JmriJFrame {
                 SignalHeadIcon sh = checkSignalHeadIcons(dLoc);
                 if (sh!=null) {
                     sh.performMouseClicked(event);
+                    //repaint();
                 } else {
                     MultiSensorIcon m = checkMultiSensors(dLoc);
                     if (m!=null) {
@@ -4038,7 +4051,8 @@ public class LayoutEditor extends JmriJFrame {
     public void putSensor(SensorIcon l) {
         l.invalidate();
         targetPanel.add(l, SENSORS);
-		l.connect(this);
+        l.setPanel(this);
+		//l.connect(this);
 		sensorImage.add(l);	
         contents.add(l);
         // reshow the panel
@@ -4095,7 +4109,8 @@ public class LayoutEditor extends JmriJFrame {
     public void putSignal(SignalHeadIcon l) {
         l.invalidate();
         targetPanel.add(l, SIGNALS);
-		l.connect(this);
+        l.setPanel(this);
+		//l.connect(this);
 		signalHeadImage.add(l);
         contents.add(l);
 		signalList.add(l);
@@ -4120,14 +4135,15 @@ public class LayoutEditor extends JmriJFrame {
         l.invalidate();
         targetPanel.add(l, l.getDisplayLevel());
 		if ( !l.isBackground() ) {
-			l.connect(this);
+			//l.connect(this);
 			labelImage.add(l);
 		}
 		else {
 			backgroundImage.add(l);
 			targetPanel.moveToFront(l);
-			l.setPanel(this);
-		}	
+			//l.setPanel(this);
+		}
+        l.setPanel(this);
         contents.add(l);
         targetPanel.validate();
     }
@@ -4184,6 +4200,12 @@ public class LayoutEditor extends JmriJFrame {
         l.setDisplayLevel(ICONS);
 		setDirty(true);
         putLabel(l);
+    }
+    
+    public void setDisplayLevel(PositionableLabel l){
+    	targetPanel.remove(l);
+    	targetPanel.add(l, l.getDisplayLevel());
+    	targetPanel.validate();
     }
     
     /**

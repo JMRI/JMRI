@@ -13,7 +13,7 @@ import java.awt.Color;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -172,12 +172,13 @@ public class SensorIconXml extends PositionableLabelXml {
                 else if (yesno.equals("no")) icon=false;
             }
         }
-        
+
         if (icon){
             l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
+            loadIconInfo(l, element);
         } else {
             l = new SensorIcon(new String("  "));
-        }   
+        }
 /*        if (element.getAttribute("icon")!=null){
             if (element.getAttribute("icon").getValue().equals("no"))
                 l = new SensorIcon(new String("  "));
@@ -186,21 +187,20 @@ public class SensorIconXml extends PositionableLabelXml {
             l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"));*/
 
         if (pe!=null){
+            //l.setPanel(pe);
             loadCommonAttributes(l, PanelEditor.SENSORS.intValue(), element);
         }else if (le!=null){
-            l.setPanel(le);
+            //l.setPanel(le);
             loadCommonAttributes(l, LayoutEditor.SENSORS.intValue(), element);
         }
-            
+        
+        loadTextInfo(l, element);
+        
         Attribute a = element.getAttribute("momentary");
         if ( (a!=null) && a.getValue().equals("true"))
             l.setMomentary(true);
         else
             l.setMomentary(false);
-            
-        if (l.isIcon())
-            loadIconInfo(l, element);
-        loadTextInfo(l, element);
         
         l.setSensor(element.getAttribute("sensor").getValue());
 
@@ -417,7 +417,8 @@ public class SensorIconXml extends PositionableLabelXml {
             log.warn("Could not parse color attributes!");
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
-        l.setFixedSize(fixedWidth, fixedHeight);
+        if (!(fixedWidth==0 && fixedHeight==0))
+            l.setFixedSize(fixedWidth, fixedHeight);
         try {
             l.setBorderSize(element.getAttribute("borderSize").getIntValue());
             int red = element.getAttribute("redBorder").getIntValue();

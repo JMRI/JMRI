@@ -15,7 +15,7 @@ import jmri.util.JmriJFrame;
  * positionable labels
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
@@ -184,8 +184,8 @@ public class CoordinateEdit extends JmriJFrame {
 					l = l - 1;
 			}
 		}
-		if (l < 1) {
-			l = 1;
+		if (l < 0) {
+			l = 0;
 		} else if (l > 10) {
 				l = 10;
 		}
