@@ -23,7 +23,7 @@ import java.awt.Color;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.49 $
+ * @version $Revision: 1.50 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -173,7 +173,14 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     public Sensor getSensor() {
         return sensor;
     }
-
+    /*public void setFixedSize(int width, int height){
+        super.setFixedSize(width, height);
+        if(getLayoutPanel()!=null){
+            getLayoutPanel().redrawPanel();
+            System.out.println("redraw");
+        } else
+            System.out.println("failed redraw");
+    }*/
     // display icons
     String activeName = "resources/icons/smallschematics/tracksegments/circuit-occupied.gif";
     NamedIcon active = new NamedIcon(activeName, activeName);
@@ -436,12 +443,12 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 
         return;*/
         //Replacement code from layout editor
-        updateSize();
+        
         switch (state) {
             case Sensor.UNKNOWN:
                 if (icon) super.setIcon(unknown);
                 else if (text) {super.setText(unknownText);
-                            super.setBackground(backgroundColorUnknown);
+                            super.setBackgroundColor(backgroundColorUnknown);
                             super.setForeground(textColorUnknown);
                             //super.setOpaque(true);
                             }
@@ -449,7 +456,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             case Sensor.ACTIVE:
                 if (icon) super.setIcon(active);
                 else if (text) {super.setText(activeText);
-                            super.setBackground(backgroundColorActive);
+                            super.setBackgroundColor(backgroundColorActive);
                             super.setForeground(textColorActive);
                             //super.setOpaque(true);
                             }
@@ -457,7 +464,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             case Sensor.INACTIVE:
                 if (icon) super.setIcon(inactive);
                 else if (text) {super.setText(inactiveText);
-                            super.setBackground(backgroundColorInActive);
+                            super.setBackgroundColor(backgroundColorInActive);
                             super.setForeground(textColorInActive);
                             //super.setOpaque(true);
                             }
@@ -465,17 +472,18 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             default:
                 if (icon) super.setIcon(inconsistent);
                 else if (text) {super.setText(inconsistentText);
-                            super.setBackground(backgroundColorInconsistent);
+                            super.setBackgroundColor(backgroundColorInconsistent);
                             super.setForeground(textColorInconsistent);
                             //super.setOpaque(true);
                             }
                 break;
         }
-        if (getLayoutPanel()==null){
+        updateSize();
+        /*if (getLayoutPanel()==null){
             setIconTextGap (-(getWidth()+getPreferredSize().width)/2);
             setSize(getPreferredSize().width, getPreferredSize().height);
             //setSize(maxWidth(), getPreferredSize().height);
-        }
+        }*/
         return;
     }
 
@@ -529,8 +537,12 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     public String getOriginalText() { return originalText; }
     
     public void setText(String s) {
-        text = true;
+        if (s==null || s.equals(""))
+            text = false;
+        else
+            text = true;
         super.setText(s);
+        updateSize();
     }
 
     //Replace with new code from the layout editor.
