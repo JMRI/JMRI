@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.87 2009-11-15 02:16:56 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.88 2009-11-17 15:00:25 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -373,6 +373,7 @@
     <a href="html/doc/Technical/XmlEditors.shtml">page on XML editors</a>,
     and has done a large amount of work on decoder definitions.
 <a name="V"></A>
+    <li>Tjeerd Verhage, who provided the logo for our SourceForge.net page
     <li>Didrik Voss, who provided the configuration information, including the default values, for the Hornby R8215 decoder
 <a name="W"></A>
     <LI>Marshall Wales investigated how to display the throttle ID in the LocoNet Slot Monitor
