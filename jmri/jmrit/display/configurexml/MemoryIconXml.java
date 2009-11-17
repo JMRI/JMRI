@@ -12,7 +12,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -106,25 +106,31 @@ public class MemoryIconXml extends PositionableLabelXml {
 			le = (LayoutEditor) o;
             l = new MemoryIcon(le);
             le.memoryLabelList.add(l);
-            l.setPanel(le);
+            //l.setPanel(le);
 		}
 		else {
 			log.error("Unrecognizable class - "+className);
             l = new MemoryIcon();
 		}
-        // create the objects
-
+        loadTextInfo(l, element);
+        
         l.setMemory(jmri.InstanceManager.memoryManagerInstance().getMemory(
             element.getAttribute("memory").getValue()));
-
-        Attribute a = element.getAttribute("defaulticon");
-        if (a!=null) l.setDefaultIcon(NamedIcon.getIconByName(a.getValue()));
         
-        a = element.getAttribute("selectable");
+         // find display level
+        //int level = PanelEditor.MEMORIES.intValue();
+        try {
+            int level = element.getAttribute("level").getIntValue();
+            l.setDisplayLevel(level);
+        } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse level attribute!");
+        } catch ( NullPointerException e) {  // considered normal if the attribute not present
+        }
+        
+        
+        Attribute a = element.getAttribute("selectable");
         if (a!=null && a.getValue().equals("yes")) l.setSelectable(true);
         else l.setSelectable(false);
-        
-        loadTextInfo(l, element);
         
         // get the icon pairs
         List<Element> items = element.getChildren();
@@ -152,16 +158,9 @@ public class MemoryIconXml extends PositionableLabelXml {
             l.setLocation(x,y);
         else
             l.setOriginalLocation(x,y);
- 
-         // find display level
-        int level = PanelEditor.MEMORIES.intValue();
-        try {
-            level = element.getAttribute("level").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse level attribute!");
-        } catch ( NullPointerException e) {  // considered normal if the attribute not present
-        }
-        l.setDisplayLevel(level);
+            
+        a = element.getAttribute("defaulticon");
+        if (a!=null) l.setDefaultIcon(NamedIcon.getIconByName(a.getValue()));
 
         if(pe!=null)
             pe.putLabel(l);

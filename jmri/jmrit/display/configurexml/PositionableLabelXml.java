@@ -18,7 +18,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -207,8 +207,6 @@ public class PositionableLabelXml implements XmlAdapter {
             l.setShowTooltip(false);
         else
             l.setShowTooltip(true);
-            
-        
         if(pe!=null)
             pe.putLabel(l);
         else if (le!=null)
@@ -260,10 +258,11 @@ public class PositionableLabelXml implements XmlAdapter {
             int red = element.getAttribute("redBack").getIntValue();
             int blue = element.getAttribute("blueBack").getIntValue();
             int green = element.getAttribute("greenBack").getIntValue();
-            l.setBackground(new Color(red, green, blue));
+            l.setBackgroundColor(new Color(red, green, blue));
          } catch ( org.jdom.DataConversionException e) {
             log.warn("Could not parse background color attributes!");
-        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+        } catch ( NullPointerException e) {  
+            l.setBackgroundColor(null);// if the attributes are not listed, we consider the background as clear.
         }
         
         int fixedWidth=0;
@@ -281,7 +280,8 @@ public class PositionableLabelXml implements XmlAdapter {
             log.warn("Could not parse fixed Width attribute!");
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
-        l.setFixedSize(fixedWidth, fixedHeight);
+        if (!(fixedWidth==0 && fixedHeight==0))
+            l.setFixedSize(fixedWidth, fixedHeight);
         int margin=0;
         if ((l.getFixedWidth()==0) || (l.getFixedHeight()==0)){
             try {
