@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.8.shtml,v 1.14 2009-11-15 23:24:18 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.8.shtml,v 1.15 2009-11-18 20:34:03 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -33,7 +33,9 @@
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.7.8 of JMRI/DecoderPro is available for download.
 
+<!-- 
 <br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
 
 <h3>Notes:</h3>
 
@@ -53,7 +55,7 @@ many new features, including:
 <li>New 
     <a href="http://jmri.org/help/en/package/jmri/jmrit/logix/Warrant.shtml">Warrant</a>
     feature for scripted running of trains
-<li>Support for lunar (4th aspect) signals
+<li>Support for lunar (4th appearance) signals
 <li>New 
     "<a href="http://jmri.org/help/en/html/tools/scripting/Jynstruments.shtml">Jynstruments</a>"
     capability for extending JMRI tools
