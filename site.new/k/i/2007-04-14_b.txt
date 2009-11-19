@@ -1,0 +1,31 @@
+As of April 13th, the court hadn't yet issued a ruling from the January 19th hearing. 
+So the only news is that there is no news regarding that ruling.
+<P>
+But there has been other news. 
+We have been watching Mr. Katzer's activities at the Patent Office. 
+There were three continuation applications that were pending. 
+One issued as a patent recently, but should not have. 
+It was the exact same claims that were in its parent application, 
+and the exact same patent specification. 
+The only difference was the 5000+ pages of references which Mr. Katzer 
+submitted in response to our charges of inequitable conduct. 
+However, under 35 U.S.C. 101, Mr. Katzer was not entitled to get 
+another patent with claims that were the exact same as the 
+claims of an earlier patent. 
+The examiner apparently made a mistake.
+ 
+<P>
+The good news is that, after wading through all 5000 pages of 
+another continuation application, another examiner 
+rejected all claims and questioned whether anything was 
+patentable in the application. 
+As a result, Mr. Katzer abandoned that application. 
+While it is possible to revive an abandoned application, 
+it was great news to see that no patent issued from that application.
+
+<P>
+We'll post any other news
+here and send it to the 
+<A HREF="https://lists.sourceforge.net/lists/listinfo/jmri-legal-announce">jmri-legal-announce</a>
+mailing list when it happens.
+

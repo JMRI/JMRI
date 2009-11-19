@@ -1,0 +1,42 @@
+There are some recent events in our copyright appeal to the Court of Appeals
+for the Federal Circuit in Washington DC.
+
+<p>
+On April 4th, 2008, Creative Commons Corp, The Linux Foundation, 
+The Open Source Initiative, Software Freedom Law Center, 
+Yet Another Society and Wikimedia Foundation 
+filed a 
+<a href="/k/docket/cafc-pi-1/30.pdf">request to be allowed to participate in oral argument</a>
+at the hearing
+on May 7, 2008 in Washington DC.
+Katzer promptly filed an 
+<a href="/k/docket/cafc-pi-1/32.pdf">opposition</a>. 
+We filed a 
+<a href="/k/docket/cafc-pi-1/34.pdf">reply</a> which argued that
+the amici have useful things to say, and requested that the
+court allow them to present their views.
+The amici also filed a 
+<a href="/k/docket/cafc-pi-1/36.pdf">reply</a> 
+describing how they would be presenting
+information the Court would find useful.
+Unfortunately, the Court
+<a href="/k/docket/cafc-pi-1/37.pdf">denied the request</a>.
+
+<p>
+Separately, also on April 4th, Katzer filed a
+"<a href="/k/docket/cafc-pi-1/33.pdf">Notice of Supplemental Authority</a>".
+This is a way to bring a recently-decided case to the
+attention of the court. Katzer cited
+<a href="/k/docket/cafc-pi-1/33-1.pdf">Netbula v. Storage Technology</a>,
+which is about two companies that negotiated a contract so Storage Tech
+could use copyrighted material that belonged to Netbula.  
+When that deal went bad, Netbula accused
+Storage Tech of copyright infringement, but the Judge in the case
+found for Storage Tech.  
+We've filed a 
+<a href="/k/docket/cafc-pi-1/35.pdf">reply</a>, arguing that this case is very different from ours.
+In our case, we didn't negotiate a contract, and Katzer never did anything
+to accept one; no contract exists or has ever existed between us, so 
+Katzer is clearly an infringer.  Katzer seems to be citing this case
+to attempt to befuddle the Court about the facts, not to update them
+on the law.

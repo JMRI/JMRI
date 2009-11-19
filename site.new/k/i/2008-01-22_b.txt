@@ -1,0 +1,6 @@
+The U.S. Court of Appeals for the Federal Circuit has accepted the 
+<a href="2007-12-28.shtml">amicus brief filed by six free and open source organizations</a>.
+This means that the Federal Circuit will consider
+arguments from the amicus brief when the judges hear 
+the case later this spring.
+

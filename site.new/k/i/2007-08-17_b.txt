@@ -1,0 +1,69 @@
+On August 17th, the 
+<a href="/k/docket/158.pdf">Court ruled</a>
+on the motions from the 
+<a href="2007-01-19.shtml">January 19th hearing</a>.  
+We won on perhaps the most important issue, but lost on several others. 
+Perhaps the most striking part was the Court's decision to deny our 
+<a href="/k/docket/index.shtml#preliminjunction1">request for a preliminary injunction</a>. 
+You can read the reasoning on 
+<a href="/k/docket/158.pdf">pages 8 through 11 of the ruling</a>, 
+but the conclusion is:
+
+<blockquote>
+The condition that the user insert a prominent notice of attribution 
+does not limit the scope of the license. 
+Rather, Defendants' alleged violation of the conditions of the 
+license may have constituted a breach of the nonexclusive license, 
+but does not create liability for copyright infringement where it would 
+not otherwise exist. 
+Therefore, based on the current record before the Court, 
+the Court finds that Plaintiff's claim properly sounds in contract and 
+therefore Plaintiff has not met his burden of demonstrating likelihood 
+of success on the merit of his copyright claim and is therefore not 
+entitled to a presumption of irreparable harm.
+</blockquote>
+
+This is very troubling, both for us and for Open Source efforts in general.
+<ul>
+<li>The facts in this case are the strongest imaginable:  
+Katzer admitted copying the JMRI files, 
+admitted removing their copyright notifications, 
+admitted being aware that JMRI was distributed under license, 
+admitted redistribution of the modified version, 
+and admitted doing it in violation of the license terms.  
+This kind of problem could happen to any open source project.
+
+<li>The ruling rests on the Court's uncertainty that 
+an Open Source organization will <u>ever</u> be able to 
+enforce copyright on software that can be downloaded from the Internet. 
+The Court's reading of the law in this area expressed uncertainty, 
+but in the end decided that our "claim properly sounds in contract", 
+and therefore denied the preliminary injunction.
+
+<li>This ruling is particularly troublesome, 
+because the logic it contains can be used for any project 
+which freely distributes software using something that 
+can be construed as a "nonexclusive license".
+</ul>
+
+<p>We are carefully considering an appeal of this decision. 
+As long as the Court's logic stands, we can't enforce our copyrights.  
+Further, we need to get the strongest possible decision from an appeal, 
+because the "uncertain law" will be clarified by that appeal and 
+will apply to other cases in the future. 
+We're going to need help to do that, and we're actively looking for that help.
+
+<p>
+The Court also dismissed our claim
+against Katzer for 
+<a href="/k/UDRP/index.shtml">cybersquatting</a>.
+The Court apparently misunderstood the reasoning behind our argument, 
+and decided that we had waived our claim by saying that we were
+only asking for the return of decoderpro.com "in rem".  On the 
+contrary, we want Katzer held responsible under the law for 
+his illegal actions, beyond just being forced to return our domain
+name (which we now have back 
+<a href="#2007-08-06">due to the WIPO</a>, not the Court), and
+we said so in the hearing.
+We are considering
+how to go about getting this claim reinstated.

@@ -1,0 +1,24 @@
+We had a hearing before the Judge on December 19th, 2008. Three
+motions were addressed:
+
+<ul>
+<li>Katzer's <a href="http://jmri.sourceforge.net/k/docket/203.pdf">Motion to Dismiss</a> 
+the patent actions for mootness
+
+<li>Katzer's <a href="http://jmri.sourceforge.net/k/docket/192.pdf">Motion to Dismiss</a>
+the DMCA and contract causes of action, and strike certain damages
+
+<li>Bob Jacobsen's <a href="http://jmri.sourceforge.net/k/docket/236.pdf">Motion for Preliminary Injunction</a> to prevent
+further copyright violations
+</ul>
+
+Two days before, the Court provided a 
+<a href="http://jmri.sourceforge.net/k/docket/279.pdf">Notice of Tentative Ruling and Questions</a>, 
+which provided some background for what was going to
+happen.
+
+<p>
+The Judge quizzed both sides about the questions he'd previously
+provided, plus some additional questions. There was about 90 minutes
+of discussion. He then took the case under submission, which means
+he'll give his decision in a written ruling at a later date.

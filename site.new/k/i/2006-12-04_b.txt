@@ -1,0 +1,44 @@
+On November 9th, Katzer filed his 
+<A href="/k/docket/124.pdf">Memorandum in Opposition</a>
+to our motion for a preliminary injunction to prevent further violations of
+the copyright in the JMRI decoder definition files.
+Included with it was a 
+<a href="/k/docket/124-1.pdf">declaration by Matt Katzer</a>.
+He argues that he shouldn't be held responsible for the actions of
+KAM Industries, his company, and repeated the previous arguments
+that copyright law doesn't apply.
+Katzer also argued that he had stopped distributing any products with JMRI materials, 
+and thus the Court should not order him to stop infringing.
+<P>
+Not that it matters - once someone breaks the law and has shown that he will continue to, 
+he can't get out of an injunction just by saying that he stopped breaking the law. 
+Nevertheless, we tried to confirm whether Katzer was telling the truth, 
+but his product wouldn't work 
+and so we couldn't tell if he had stopped using JMRI copyrighted materials.
+<P>
+On November 17th, we filed a 
+<A href="/k/docket/129.pdf">reply</a> to this, along with declarations from
+<A href="/k/docket/130.pdf">Paul Bender</a>,
+<A href="/k/docket/131.pdf">Bob Jacobsen</a> (<A href="/k/docket/index.shtml#131">exhibits</a>) and
+<A href="/k/docket/132.pdf">Alex Shepherd</a> (<A href="/k/docket/index.shtml#132">exhibits</a>),
+to set the record straight.
+<P>
+Also on November 17th, Katzer filed his
+<a href="/k/docket/127/pdf">reply</a>
+to our memorandum opposing his motions to dismiss.
+He backed off his challenge to our copyright right claim - at least for the time being.
+<P>
+On December 4th, we filed a
+<a href="/k/docket/137.pdf">Motion for Leave to File Surreply to Defendant's Reply Memorandum</a>.
+
+This is the legal mechanism to ask the Court to file a response to a Reply brief. 
+Normally, once the Reply has been filed, the parties can't file anything else. 
+However, under certain circumstances, the Court will consider a 'Surreply'.  
+We believe that because Katzer misstated case law and brought up new facts 
+that we should be permitted to respond to those, 
+which is why we sought 'leave' (that is, permission) to file the Surreply 
+and then attached the 
+<a href="/k/docket/137.pdf">Surreply</a>.
+The Court will first decide whether to consider it, and if
+so, then take it into account.
+

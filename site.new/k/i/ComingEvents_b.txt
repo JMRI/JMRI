@@ -1,0 +1,68 @@
+<!-- We currently have no hearings scheduled. -->
+
+<!-- We're waiting  -->
+<!-- for decisions from the District Court on the motions discussed at the -->
+<!-- <a href="#2008-12-19">December 19, 2008 hearing</a>. We'll post those  -->
+<!-- when they become available. -->
+
+Our next district court hearing is scheduled 
+for 9AM on Friday December 4th 2009
+at the U.S. District Court for the Northern District of
+California courthouse,
+450 Golden Gate Ave,
+17th floor, courtroom 2
+(nearest BART stop is Civic Center).
+For those of you in the San Francisco area, it would be great
+if you could come out and attend the hearing to <u>respectfully</u>
+support open-source software.
+
+
+<!-- On the morning of April 11th, 2008, the District Court in San Francisco will hold a  -->
+<!-- hearing on Katzer's motion to dismiss and strike parts of our action related to DMCA and contract,  -->
+<!-- and on Katzer's motion to declare the patent parts of the lawsuit moot.  -->
+<!-- There will also be another Case Management Conference that day.  -->
+<!-- There are some filings due April 4, 2008 relating to the case management conference,  -->
+<!-- and those will be made available on the  -->
+<!-- <a href="docket/index.shtml">docket page</a> -->
+<!-- after they are filed. -->
+
+<!-- -->
+<!-- For those of you in the San Francisco area, it would be great  -->
+<!-- if you could come out and attend the hearing to <u>respectfully</u>  -->
+<!-- support open-source software.  -->
+<!-- The hearing will be held at 9AM in  -->
+<!-- Judge Jeffrey S. White's courtroom, -->
+<!-- Courtroom 2 on the 17th floor of the Federal Court Building,  -->
+<!-- 450 Golden Gate Ave., San Francisco. -->
+
+
+<!-- <p> -->
+<!-- On Wednesday, May 7, 2008 at 10 a.m. in Courtroom 201 at the Federal Circuit,  -->
+<!-- we will argue our copyright appeal in Washington, D.C.  -->
+<!-- For those in the Washington, D.C. area,  -->
+<!-- the Federal Circuit, 717 Madison Place,  -->
+<!-- is on the Eastern side of Lafayette Square  -->
+<!-- (The White House is on the Southern side of Lafayette Square).   -->
+<!-- We'll post more information on that to the  -->
+<!-- <A HREF="https://lists.sourceforge.net/lists/listinfo/jmri-legal-announce">jmri-legal-announce</a>  -->
+<!-- mailing list at SourceForge.net as it become available. -->
+<!-- For those of you in the Washington area, it would be great -->
+<!-- if you could come out and attend the hearing to <u>respectfully</u> -->
+<!-- support open-source software. -->
+
+<!-- The ongoing content ends here -->
+
+The navigation bar to the upper left has links to more information, 
+or you can go back to the 
+<a href="/k/index.html">main page</a>
+for an overview.
+<p>
+<p>
+If you'd like to get email when we update these pages, please subscribe to the 
+<A HREF="https://lists.sourceforge.net/lists/listinfo/jmri-legal-announce">jmri-legal-announce</a>
+mailing list at SourceForge.net.  
+This will carry short announcements occasionally as news happens.
+There won't be a lot of traffic. 
+It's not a list for discussion and strategizing; for various reasons, 
+we can't do that on a public list.
+

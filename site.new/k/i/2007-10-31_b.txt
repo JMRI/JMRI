@@ -1,0 +1,51 @@
+On October 31st, 2007, we filed a 
+<a href="/k/docket/index.shtml#174">motion</a> 
+requesting leave 
+to file a second amended complaint.  This is a necessary step,
+<a href="/k/docket/166.pdf">ordered</a> by the Court, toward getting 
+the new complaint before the Court.  
+The motion includes two proposed versions.  We believe that our
+<a href="2007-09-05.shtml">cybersquatting claim for Katzer's misuse of the
+decoderpro.com domain name</a> is a valid one, and we now have the
+hearing transcript that proves we did not waive this claim.
+We're therefore asking the Court to allow us to file a 
+<a href="/k/docket/174-2.pdf">version which includes cybersquating</a>.  
+In the interest of time, however, 
+we've also included a 
+<a href="/k/docket/174-2.pdf">version without that claim</a>
+if the Court continues 
+to believe that we've waived it.
+In that case, we're asking the Court to allow us to go forward
+with the version of the complaint without the cybersquatting claim, and
+to declare the decision on that final so that we can appeal it.
+
+<p>
+We included a claim under the Digital Millennium Copyright Act (DMCA). 
+You might wonder what DMCA has to do with open source software. 
+DMCA has two main statutes. 
+Section 1201 is the one which has to do with circumvention, 
+and it is used more frequently of the two statutes.  
+Many people in open-source and free software communities hate this section, 
+for good reason.  
+We are NOT suing under section 1201.
+Then there's 
+<a href="http://www.law.cornell.edu/uscode/html/uscode17/usc_sec_17_00001202----000-.html">Section 1202</a>,
+rarely used so far, 
+which forbids providing false copyright management information 
+or removing copyright management information. 
+We believe that 
+<a href="/k/copycomparison.html">Katzer's removal of JMRI copyright notices, author's names, and license terms</a> 
+-- which qualify as copyright management information -- from 
+our machine-readable XML decoder definitions is a violation of Sec. 1202.  
+We believe this section is a great weapon we can use against Katzer to 
+protect our intellectual property rights, 
+so we charged Katzer and his company with a violation of this section.  
+If we succeed, it will allow other open source groups to invoke this section
+to defend their intellectual property,
+and to obtain statutory damages and attorneys fees. 
+
+<p>
+Katzer's lawyer has already said he doesn't object to either version,
+so we expect this will be straight-forward.
+
+

@@ -1,0 +1,17 @@
+Normally, when one party makes a motion, the other party
+gets to file an "Opposition", the original party gets to 
+reply to that opposition, and that's it.  There's then
+a hearing and the Court decides.  The side making the motion is supposed to put all
+their arguments in the original motion.
+<p>
+In the case of two most recent motions, however,
+Katzer raised new arguments in his replies.  
+The only place we get a chance to refute those new arguments is
+via a "surreply", but we have to ask the Court for permission to file that.
+Because Katzer raised new arguments in his reply for each of two motions,
+we've asked the court for permission to file a 
+<a href="/k/docket/index.shtml#217">surreply for the copyright motion</a> and a 
+<a href="/k/docket/index.shtml#215">surreply for the patent motion</a>.
+These include the surreplies themselves
+(<a href="/k/docket/217-2.pdf">copyright surreply</a>,
+<a href="/k/docket/215-2.pdf">patent surreply</a>), if you'd like to read them.

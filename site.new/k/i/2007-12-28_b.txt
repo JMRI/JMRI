@@ -1,0 +1,25 @@
+On December 28, 2007, a 
+<a href="/k/docket/cafc-pi-1/ccc_mtn.pdf">motion to file an amicus brief</a>, 
+along with the
+<a href="/k/docket/cafc-pi-1/ccc_brf.pdf">brief itself</a>,
+was filed in our appeal by
+<ul>
+<li>Creative Commons Corp, 
+<li>The Linux Foundation,
+<li>The Open Source Initiative, 
+<li>The Software Freedom Law Center, 
+<li>Yet Another Society (Perl Foundation), and 
+<li>The Wikimedia Foundation.
+</ul>
+An "amicus brief" is a way for a "friend of the Court"
+to explain to the Court the larger issues involved in a case.
+They can be very helpful in making sure that decisions
+with far-reaching consequences are made properly.
+Here, the amici clearly laid
+out how copyright protection is key to the success of open source and free software,
+and educated the Court on why that matters.
+It's a very strong argument, which should be widely read.
+<p>
+Katzer's deadline to oppose entry of this brief has now passed, and we hope that 
+the Court will accept it soon.
+
