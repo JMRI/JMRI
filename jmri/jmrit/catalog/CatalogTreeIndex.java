@@ -2,6 +2,7 @@
 
 package jmri.jmrit.catalog;
 
+import java.util.HashMap;
 
 /**
  * TreeModel used by CatalogPanel to create a tree of resources.
@@ -45,6 +46,19 @@ public class CatalogTreeIndex extends AbstractCatalogTree {
         insertNodes(rootName, pathToRoot, root);
     }
    */
+    public void setParameter(Object key, Object value) {
+        if (parameters == null) 
+            parameters = new HashMap<Object, Object>();
+        parameters.put(key, value);
+    }
+    
+    public Object getParameter(Object key) {
+        if (parameters == null) return null;
+        return parameters.get(key);
+    }
+
+    HashMap<Object, Object> parameters = null;
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CatalogTreeIndex.class.getName());
 }
 

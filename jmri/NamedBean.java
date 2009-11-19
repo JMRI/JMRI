@@ -26,7 +26,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, 2002, 2003, 2004
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  * @see         jmri.Manager
  */
 public interface NamedBean {
@@ -131,6 +131,21 @@ public interface NamedBean {
      * @param comment Null means no comment associated.
      */
     public void setComment(String comment);
+
+    /**
+     * Attach a key/value pair to the 
+     * NamedBean, which can be retrieved later.
+     * These are not bound parameters as yet, 
+     * and don't throw events on modification.
+     * Key must not be null.
+     */
+    public void setParameter(Object key, Object value);
+    
+    /**
+     * Retrieve the value associated with a key.
+     * If no value has been set for that key, returns null.
+     */
+    public Object getParameter(Object key);
 }
 
 /* @(#)NamedBean.java */
