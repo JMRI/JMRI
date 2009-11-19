@@ -1778,8 +1778,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 		}
 	}
     
-    javax.swing.JLabel text = new javax.swing.JLabel();
-    javax.swing.JComboBox rosterBox = Roster.instance().fullRosterComboBox();
+    javax.swing.JComboBox rosterBox;
     JmriJFrame locoRosterFrame = null;
     
     void locoMarkerFromRoster(){
@@ -1787,19 +1786,23 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 			locoRosterFrame = new JmriJFrame();
 			locoRosterFrame.getContentPane().setLayout(new FlowLayout());
 			locoRosterFrame.setTitle("Loco Marker from Roster");
+			javax.swing.JLabel text = new javax.swing.JLabel();
 			text.setText("Select loco:");
 			locoRosterFrame.getContentPane().add(text);
-			rosterBox.insertItemAt("", 0);
-			rosterBox.setSelectedIndex(0);
-			rosterBox.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					selectLoco();
-				}
-			});
+			if (rosterBox == null){
+				rosterBox = Roster.instance().fullRosterComboBox();
+				rosterBox.insertItemAt("", 0);
+				rosterBox.setSelectedIndex(0);
+				rosterBox.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent e) {
+						selectLoco();
+					}
+				});
+			}
 			locoRosterFrame.getContentPane().add(rosterBox);
 			locoRosterFrame.addWindowListener(new java.awt.event.WindowAdapter() {
 					public void windowClosing(java.awt.event.WindowEvent e) {
-						locoRosterFrame.dispose();
+						//locoRosterFrame.dispose(); // don't need to do this
 						locoRosterFrame = null;
 					}
 				});			
@@ -1807,9 +1810,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 		}
     	locoRosterFrame.setVisible(true);	
     }
-    
-    javax.swing.JLabel textId = new javax.swing.JLabel();
-    javax.swing.JButton okay = new javax.swing.JButton();
+       
     javax.swing.JTextField locoId = new javax.swing.JTextField(7);
     JmriJFrame locoFrame = null;
     
@@ -1818,9 +1819,11 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 			locoFrame = new JmriJFrame();
 			locoFrame.getContentPane().setLayout(new FlowLayout());
 			locoFrame.setTitle("Enter Loco Marker");
+			javax.swing.JLabel textId = new javax.swing.JLabel();
 			textId.setText("Loco ID:");
 			locoFrame.getContentPane().add(textId);
 			locoFrame.getContentPane().add(locoId);
+			javax.swing.JButton okay = new javax.swing.JButton();
 			okay.setText("OK");
 			okay.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -1830,7 +1833,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
 			locoFrame.getContentPane().add(okay);
 			locoFrame.addWindowListener(new java.awt.event.WindowAdapter() {
 					public void windowClosing(java.awt.event.WindowEvent e) {
-						locoFrame.dispose();
+						// locoFrame.dispose(); // don't need to do this
 						locoFrame = null;
 					}
 				});			
