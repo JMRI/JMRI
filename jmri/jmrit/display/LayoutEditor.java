@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.60 $
+ * @version $Revision: 1.61 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -1150,27 +1150,31 @@ public class LayoutEditor extends JmriJFrame {
 		repaint();
 	}
 	// operational variables for marker from roster
-    javax.swing.JLabel mtext = new javax.swing.JLabel();
-    javax.swing.JComboBox rosterBox = Roster.instance().fullRosterComboBox();
+    
+    javax.swing.JComboBox rosterBox;
     JmriJFrame locoRosterFrame = null;    
     private void locoMarkerFromRoster(){
     	if (locoRosterFrame == null) {
 			locoRosterFrame = new JmriJFrame();
 			locoRosterFrame.getContentPane().setLayout(new FlowLayout());
 			locoRosterFrame.setTitle(rbx.getString("LocoFromRoster"));
+			javax.swing.JLabel mtext = new javax.swing.JLabel();
 			mtext.setText(rbx.getString("SelectLoco")+":");
 			locoRosterFrame.getContentPane().add(mtext);
-			rosterBox.insertItemAt("", 0);
-			rosterBox.setSelectedIndex(0);
-			rosterBox.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					selectLoco();
-				}
-			});
+			if (rosterBox == null){
+				rosterBox = Roster.instance().fullRosterComboBox();
+				rosterBox.insertItemAt("", 0);
+				rosterBox.setSelectedIndex(0);
+				rosterBox.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent e) {
+						selectLoco();
+					}
+				});
+			}
 			locoRosterFrame.getContentPane().add(rosterBox);
 			locoRosterFrame.addWindowListener(new java.awt.event.WindowAdapter() {
 					public void windowClosing(java.awt.event.WindowEvent e) {
-						locoRosterFrame.dispose();
+						//locoRosterFrame.dispose();	// not necessary
 						locoRosterFrame = null;
 					}
 				});			
@@ -1192,9 +1196,7 @@ public class LayoutEditor extends JmriJFrame {
 			l.setRosterEntry(entry);
 		}
 	}
-	// operational variables for add loco from input
-    javax.swing.JLabel textId = new javax.swing.JLabel();
-    javax.swing.JButton okay = new javax.swing.JButton();
+	// operational variables for add loco from input  
     javax.swing.JTextField locoId = new javax.swing.JTextField(7);
     JmriJFrame locoFrame = null;
     private void locoMarkerFromInput() {
@@ -1202,11 +1204,13 @@ public class LayoutEditor extends JmriJFrame {
 			locoFrame = new JmriJFrame();
 			locoFrame.getContentPane().setLayout(new FlowLayout());
 			locoFrame.setTitle(rbx.getString("EnterLocoMarker"));
+			javax.swing.JLabel textId = new javax.swing.JLabel();
 			textId.setText(rbx.getString("LocoID")+":");
 			locoFrame.getContentPane().add(textId);
 			locoFrame.getContentPane().add(locoId);
 			locoId.setText("");
 			locoId.setToolTipText(rbx.getString("EnterLocoID"));
+			javax.swing.JButton okay = new javax.swing.JButton();
 			okay.setText(rbx.getString("OK"));
 			okay.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -1216,7 +1220,7 @@ public class LayoutEditor extends JmriJFrame {
 			locoFrame.getContentPane().add(okay);
 			locoFrame.addWindowListener(new java.awt.event.WindowAdapter() {
 					public void windowClosing(java.awt.event.WindowEvent e) {
-						locoFrame.dispose();
+						//locoFrame.dispose();	// not necessary
 						locoFrame = null;
 					}
 				});			
