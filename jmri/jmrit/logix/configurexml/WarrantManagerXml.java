@@ -207,20 +207,6 @@ public class WarrantManagerXml extends XmlFile
             for (int k=0; k<throttleCmds.size(); k++) {
                 warrant.addThrottleCommand(loadThrottleCommand(throttleCmds.get(k)));
             }
-            if (elem.getAttribute("trainId") != null) {
-                warrant.setTrainId(elem.getAttribute("trainId").getValue());
-            }
-            if (elem.getAttribute("dccAddress") != null) {
-                int address = 0;
-                try {
-                   address = elem.getAttribute("dccAddress").getIntValue();
-                } catch (org.jdom.DataConversionException dce) {}
-                boolean isLong = true;
-                if (elem.getAttribute("dccType") != null) {
-                    isLong = elem.getAttribute("dccType").getValue().equals("L");
-                }
-                warrant.setDccAddress(new DccLocoAddress(address, isLong));
-            }
             List<Element> trains = elem.getChildren("train");
             for (int k=0; k<trains.size(); k++) {
                 loadTrain(trains.get(k), warrant);
