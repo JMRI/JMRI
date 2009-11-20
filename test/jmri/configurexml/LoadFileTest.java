@@ -18,9 +18,9 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
-public class LoadFileTest extends TestCase {
+public class LoadFileTest extends LoadFileTestBase {
 
     public void testLoadOne() {
         // load file
@@ -100,22 +100,6 @@ public class LoadFileTest extends TestCase {
         validate(new java.io.File("java/test/jmri/configurexml/LoadFileTestRef.xml"));
     }
 
-    // testing services
-    public void validate(File file) {
-        boolean original = XmlFile.getVerify();
-        try {
-            XmlFile.setVerify(true);
-            XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
-            xf.rootFromFile(file);
-        } catch (Exception ex) {
-            XmlFile.setVerify(original);
-            Assert.fail(ex.toString());
-            return;
-        } finally {
-            XmlFile.setVerify(original);
-        }
-    }
-
     // from here down is testing infrastructure
 
     public LoadFileTest(String s) {
@@ -135,23 +119,4 @@ public class LoadFileTest extends TestCase {
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadFileTest.class.getName());
-
-    // The minimal setup for log4J
-    protected void setUp() throws Exception { 
-        super.setUp();
-        apps.tests.Log4JFixture.setUp(); 
-        JUnitUtil.resetInstanceManager();
-        InstanceManager.setConfigureManager(new ConfigXmlManager());
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
-        JUnitUtil.initInternalSensorManager();
-        InstanceManager.configureManagerInstance().registerConfig(
-                InstanceManager.memoryManagerInstance());
-    }
-    
-    protected void tearDown() throws Exception { 
-        JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown(); 
-    }
 }
