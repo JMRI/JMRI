@@ -18,7 +18,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -162,34 +162,36 @@ public class PositionableLabelXml implements XmlAdapter {
 		else {
 			log.error("Unrecognizable class - "+className);
 		}
-        if (element.getAttribute("text")!=null) {
+        if (element.getAttribute("icon")!=null) {
+            if (le!=null) {
+                String name = element.getAttribute("icon").getValue();
+                NamedIcon icon = NamedIcon.getIconByName(name);
+                l = new PositionableLabel(icon);
+                try {
+                    Attribute a = element.getAttribute("rotate");
+                    if (a!=null) {
+                        int rotation = element.getAttribute("rotate").getIntValue();
+                        icon.setRotation(rotation, l);
+                    }
+                } catch (org.jdom.DataConversionException e) {}
+                l.setIcon(icon);
+            } else if(pe!=null) {
+                l = loadIcon("icon", element);
+                if (l==null) {
+                    return;
+                }
+                l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+            }
+        } else if (element.getAttribute("text")!=null) {
             l = new PositionableLabel(element.getAttribute("text").getValue());
             loadTextInfo(l, element);
         
-        } else if (element.getAttribute("icon")!=null) {
-            String name = element.getAttribute("icon").getValue();
-            NamedIcon icon = NamedIcon.getIconByName(name);
-            l = new PositionableLabel(icon);
-            try {
-                Attribute a = element.getAttribute("rotate");
-                if (a!=null) {
-                    int rotation = element.getAttribute("rotate").getIntValue();
-                    icon.setRotation(rotation, l);
-                }
-            } catch (org.jdom.DataConversionException e) {}
-            NamedIcon nIcon = loadIcon( l,"icon", element);
-            if (nIcon!=null) {
-                l.setIcon(nIcon);
-            } else {
-                l.setIcon(icon);
-            }
-            l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        } else {
+            if(l==null)
+                log.error("PositionableLabel is null!");
+                return;
         }
-        if(l==null){
-        	log.error("PositionableLabel is null!");
-        	return;
-        }
-        if(pe!=null){
+        if(pe!=null) {
             loadCommonAttributes(l, PanelEditor.LABELS.intValue(), element);
         } else if (le!=null) {
             l.setPanel(le);
@@ -339,7 +341,42 @@ public class PositionableLabelXml implements XmlAdapter {
         //l.updateSize();
     }
 
-
+    @SuppressWarnings("unchecked")
+	public PositionableLabel loadIcon(String attrName, Element element) {
+        NamedIcon icon = null;
+        List<Element> iconList = element.getChildren(attrName);
+        if (log.isDebugEnabled()) log.debug("Found "+iconList.size()+" "+attrName+" objects");
+        if (iconList.size()>0) {
+            Element elem = iconList.get(0);
+            String name = elem.getAttribute("url").getValue();
+            icon = NamedIcon.getIconByName(name);
+            try {
+                PositionableLabel l = new PositionableLabel(icon);
+                l.setIcon(icon);
+                Attribute a = elem.getAttribute("rotate");
+                if (a!=null) {
+                    int rotation = a.getIntValue();
+                    icon.setRotation(rotation, l);
+                }
+                double scale = 1.0;
+                int deg = 0;
+                a = elem.getAttribute("degrees");
+                if (a!=null) {
+                    deg = a.getIntValue();
+                }
+                a =  elem.getAttribute("scale");
+                if (a!=null) {
+                    scale = elem.getAttribute("scale").getDoubleValue();
+                }
+                icon.setLoad(deg, scale, l);
+                return l;
+            } catch (org.jdom.DataConversionException dce) {}
+        } else {
+            log.debug("loadIcon \""+attrName+"\" not found.");
+        }
+        return null;
+    }
+    
     @SuppressWarnings("unchecked")
 	public NamedIcon loadIcon(PositionableLabel l, String attrName, Element element) {
         NamedIcon icon = null;
@@ -364,30 +401,12 @@ public class PositionableLabelXml implements XmlAdapter {
                     {
                         scale = elem.getAttribute("scale").getDoubleValue();
                     }
+                    l.setIcon(icon);
                     icon.setLoad(deg, scale, l);
                 }
             } catch (org.jdom.DataConversionException dce) {}
-            /*
-            List<Element> coordList = elem.getChildren("transform");
-            if (coordList.size()>0) {
-                Element e = coordList.get(0);
-                try {
-                    AffineTransform t = new AffineTransform(e.getAttribute("m00").getDoubleValue(),
-                                                            e.getAttribute("m10").getDoubleValue(),
-                                                            e.getAttribute("m01").getDoubleValue(),
-                                                            e.getAttribute("m11").getDoubleValue(),
-                                                            e.getAttribute("m02").getDoubleValue(),
-                                                            e.getAttribute("m12").getDoubleValue());
-                    icon.setTransform(t);
-                    icon.initFromLoad();
-                    //icon.transformImage(icon.getIconWidth(), icon.getIconHeight(), t, l);
-                } catch (org.jdom.DataConversionException dce) {}
-            } else {
-            log.debug("icon \""+attrName+"\" for \""+l.getName()+"\" has no transform.");
-            }
-            */
         } else {
-            log.debug("icon \""+attrName+"\" for \""+l.getName()+"\" not found.");
+            log.debug("loadIcon: \""+attrName+"\" for \""+l.getName()+"\" not found.");
         }
         return icon;
     }
