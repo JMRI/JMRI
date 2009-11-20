@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-8.dtd,v 1.2 2009-11-20 07:07:25 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-7-8.dtd,v 1.3 2009-11-20 18:12:37 pete_cressman Exp $ -->
 
 <!-- This DTD is part of version 2.7.8 development.  Do not modify it       -->
 <!-- after version 2.7.8 is released.  For more information,                -->
@@ -648,6 +648,102 @@
     <!ATTLIST securityelementicon height	CDATA #IMPLIED> <!-- deprecated -->
     <!ATTLIST securityelementicon width		CDATA #IMPLIED> <!-- deprecated -->
 
+<!ELEMENT oblocks (oblock*) >
+  <!ATTLIST oblocks class CDATA #REQUIRED> <!-- selects XML class that will handle -->
+
+<!-- An OBlock without at least one path and one portal is useless.  Dark OBlocks are permitted -->
+<!ELEMENT oblock (sensor?, path+, portal+) >
+    <!ATTLIST block systemName		CDATA #REQUIRED>
+    <!ATTLIST block userName		CDATA #IMPLIED>
+    <!ATTLIST block length		    CDATA #IMPLIED>
+    <!ATTLIST block curve		    CDATA #IMPLIED>
+    
+    <!ELEMENT sensor EMPTY>
+        <!ATTLIST sensor systemName		CDATA #REQUIRED>
+
+    <!ELEMENT path (setting?) >
+        <!ATTLIST path pathName		    CDATA #REQUIRED>
+        <!ATTLIST path fromDirection    CDATA #IMPLIED>
+        <!ATTLIST path toDirection		CDATA #IMPLIED>
+        <!ATTLIST path fromPortal		CDATA #IMPLIED>
+        <!ATTLIST path toPortal		    CDATA #IMPLIED>
+        
+        <!ELEMENT setting EMPTY >
+            <!ATTLIST setting set		CDATA #REQUIRED>
+            <!ATTLIST setting turnout	CDATA #REQUIRED>
+
+    <!ELEMENT portal (fromBlock, toBlock, fromSignal?, toSignal?) >
+        <!ATTLIST portal portalName	CDATA #REQUIRED>
+        
+        <!ELEMENT fromBlock (path) >
+            <!ATTLIST fromBlock blockName	CDATA #REQUIRED>
+
+            <!ELEMENT path (setting?) >
+                <!ATTLIST path pathName		    CDATA #REQUIRED>
+                <!ATTLIST path fromDirection    CDATA #IMPLIED>
+                <!ATTLIST path toDirection		CDATA #IMPLIED>
+                <!ATTLIST path fromPortal		CDATA #IMPLIED>
+                <!ATTLIST path toPortal		    CDATA #IMPLIED>
+        
+                <!ELEMENT setting EMPTY >
+                    <!ATTLIST setting set		CDATA #REQUIRED>
+                    <!ATTLIST setting turnout	CDATA #REQUIRED>
+
+        <!ELEMENT toBlock (path) >
+            <!ATTLIST toBlock blockName	CDATA #REQUIRED>
+
+            <!ELEMENT path (setting?) >
+                <!ATTLIST path pathName		    CDATA #REQUIRED>
+                <!ATTLIST path fromDirection    CDATA #IMPLIED>
+                <!ATTLIST path toDirection		CDATA #IMPLIED>
+                <!ATTLIST path fromPortal		CDATA #IMPLIED>
+                <!ATTLIST path toPortal		    CDATA #IMPLIED>
+        
+                <!ELEMENT setting EMPTY >
+                    <!ATTLIST setting set		CDATA #REQUIRED>
+                    <!ATTLIST setting turnout	CDATA #REQUIRED>
+
+        <!ELEMENT fromSignal EMPTY >
+            <!ATTLIST signalName set		CDATA #REQUIRED>
+
+        <!ELEMENT toSignal EMPTY >
+            <!ATTLIST signalName set		CDATA #REQUIRED>
+
+<!ELEMENT warrants (warrant*) >
+  <!ATTLIST warrants class CDATA #REQUIRED> <!-- selects XML class that will handle -->
+
+<!ELEMENT warrant (blockOrder?, viaOrder?, throttleCommand?, train?) >
+    <!ATTLIST warrant systemName		CDATA #REQUIRED>
+    <!ATTLIST warrant userName		    CDATA #IMPLIED>
+
+    <!ELEMENT blockOrder (block) >
+        <!ATTLIST blockOrder pathName	CDATA #REQUIRED>
+        <!ATTLIST blockOrder entryName	CDATA #IMPLIED>
+        <!ATTLIST blockOrder exitName	CDATA #IMPLIED>
+        
+        <!ELEMENT block #PCDATA >
+            <!ATTLIST block systemName	CDATA #REQUIRED>
+
+    <!ELEMENT viaOrder (block) >
+        <!ATTLIST viaOrder pathName	    CDATA #REQUIRED>
+        <!ATTLIST viaOrder entryName	CDATA #IMPLIED>
+        <!ATTLIST viaOrder exitName	    CDATA #IMPLIED>
+        
+        <!ELEMENT block #PCDATA >
+            <!ATTLIST block systemName	CDATA #REQUIRED>
+
+    <!ELEMENT throttleCommand #PCDATA >
+        <!ATTLIST throttleCommand time	    CDATA #REQUIRED>
+        <!ATTLIST throttleCommand command	CDATA #REQUIRED>
+        <!ATTLIST throttleCommand value	    CDATA #REQUIRED>
+        <!ATTLIST throttleCommand block	    CDATA #REQUIRED>
+        
+    <!ELEMENT train #PCDATA >
+        <!ATTLIST warrant trainId		    CDATA #IMPLIED>
+        <!ATTLIST warrant dccAddress	    CDATA #IMPLIED>
+        <!ATTLIST warrant dccType		    CDATA #IMPLIED>
+        <!ATTLIST warrant runBlind		    CDATA #IMPLIED>
+    
 <!ELEMENT blocks (block*) >
   <!ATTLIST blocks class CDATA #REQUIRED> <!-- selects XML class that will handle -->
 
@@ -664,17 +760,6 @@
 
         <!ELEMENT beansetting (turnout) >
             <!ATTLIST beansetting setting	CDATA #REQUIRED>
-
-<!ELEMENT oblocks (oblock*) >
-  <!ATTLIST oblocks class CDATA #REQUIRED> <!-- selects XML class that will handle -->
-
-<!ELEMENT oblock (comment?, sensor?, portal*) >
-    <!ATTLIST block systemName		CDATA #REQUIRED>
-    <!ATTLIST block userName		CDATA #IMPLIED>
-    <!ATTLIST block length		CDATA #IMPLIED>
-    <!ATTLIST block curve		CDATA #IMPLIED>
-
-<!ELEMENT portal (fromBlock*, fromSignal*, toBlock*, toSignal*) >
 
 <!ELEMENT sections (section*) >
   <!ATTLIST sections class CDATA #REQUIRED> <!-- selects XML class that will handle -->
