@@ -18,7 +18,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -42,9 +42,10 @@ public class PositionableLabelXml implements XmlAdapter {
         element.setAttribute("fixed", p.getFixed()?"true":"false");
         element.setAttribute("showtooltip", p.getShowTooltip()?"true":"false");
         
-        if (p.isText())
+        if (p.isText()) {
             if (p.getText()!=null) element.setAttribute("text", p.getText());
             storeTextInfo(p, element);
+        }
         
         if (p.isIcon() && p.getIcon()!=null) {
             NamedIcon icon = (NamedIcon)p.getIcon();
