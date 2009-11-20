@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-8.dtd,v 1.1 2009-10-19 05:08:11 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-7-8.dtd,v 1.2 2009-11-20 07:07:25 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.7.8 development.  Do not modify it       -->
 <!-- after version 2.7.8 is released.  For more information,                -->
@@ -20,7 +20,7 @@
 
 <!ELEMENT layout-config (connection | gui | programmer | roster | perform |
 			preferences | audio | turnouts | sensors | lights | blocks | signals | routes |
-			securityelements | aspectgenerator | sections |
+			securityelements | aspectgenerator | sections | oblocks |
 			paneleditor | LayoutEditor |
 			signalheads | conditionals | logixs | application | signalelements | reporters |
 			memories | memorys | timebase |
@@ -425,7 +425,7 @@
   <!ATTLIST paneleditor panelmenu	(yes|no) "yes" >  <!-- menu present on panel window -->
   <!ATTLIST paneleditor scrollable	(none|both|horizontal|vertical) "both" >  <!-- scrollbars present on panel window -->
 
-  <!ELEMENT positionablelabel EMPTY>
+  <!ELEMENT positionablelabel (icon*)>
     <!ATTLIST positionablelabel class	CDATA #REQUIRED>
     <!ATTLIST positionablelabel x		CDATA #REQUIRED>
     <!ATTLIST positionablelabel y		CDATA #REQUIRED>
@@ -456,7 +456,11 @@
     <!ATTLIST positionablelabel showtooltip	(true|false) "true">
     <!ATTLIST positionablelabel hidden	    (yes|no) "no">
     
-    
+  <!ELEMENT icon EMPTY>
+    <!ATTLIST icon url		    CDATA #IMPLIED>
+    <!ATTLIST icon rotate		CDATA #IMPLIED>
+    <!ATTLIST icon degrees		CDATA #IMPLIED>
+    <!ATTLIST icon scale		CDATA #IMPLIED>
 
   <!ELEMENT sensoricon EMPTY>
     <!ATTLIST sensoricon class		CDATA #REQUIRED>
@@ -660,6 +664,17 @@
 
         <!ELEMENT beansetting (turnout) >
             <!ATTLIST beansetting setting	CDATA #REQUIRED>
+
+<!ELEMENT oblocks (oblock*) >
+  <!ATTLIST oblocks class CDATA #REQUIRED> <!-- selects XML class that will handle -->
+
+<!ELEMENT oblock (comment?, sensor?, portal*) >
+    <!ATTLIST block systemName		CDATA #REQUIRED>
+    <!ATTLIST block userName		CDATA #IMPLIED>
+    <!ATTLIST block length		CDATA #IMPLIED>
+    <!ATTLIST block curve		CDATA #IMPLIED>
+
+<!ELEMENT portal (fromBlock*, fromSignal*, toBlock*, toSignal*) >
 
 <!ELEMENT sections (section*) >
   <!ATTLIST sections class CDATA #REQUIRED> <!-- selects XML class that will handle -->
