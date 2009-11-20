@@ -304,6 +304,7 @@ public class OBlockTableAction extends AbstractAction {
             String[] sysNames = manager.getSystemNameArray();
             for (int i = 0; i < sysNames.length; i++) {
                 OBlock block = manager.getBySystemName(sysNames[i]);
+                checkPathPortals(block);
                 JMenuItem mi = new JMenuItem(java.text.MessageFormat.format(
                         rbx.getString("OpenPathMenu"), block.getDisplayName()));
                 mi.setActionCommand(sysNames[i]);
@@ -338,6 +339,54 @@ public class OBlockTableAction extends AbstractAction {
                 }
             }
             _openMenu.add(openTurnoutPath);
+        }
+
+        /**
+        *  Validation of paths within a block
+        */
+        public void checkPathPortals(OBlock b) {
+            // warn user of incomplete portals
+            List <Path> list = b.getPaths();
+            for (int i=0; i<list.size(); i++) {
+                OPath path = (OPath)list.get(i);
+                OBlock block = (OBlock)path.getBlock();
+                if  (block==null || !block.equals(b)) {
+                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
+                            rbx.getString("PathWithBadBlock"), path.getName(), b.getDisplayName()),
+                            AbstractTableAction.rb.getString("WarningTitle"),
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+                String msg = null;
+                boolean hasPortal = false;
+                Portal portal = block.getPortalByName(path.getFromPortalName());
+                if (portal!=null) {
+                    if (!portal.isValid()){
+                        msg = path.getFromPortalName();
+                    }
+                    hasPortal = true;
+                    portal.addPath(path);
+                }
+                portal = block.getPortalByName(path.getToPortalName());
+                if (portal!=null) {
+                     if (!portal.isValid()) {
+                         msg = path.getToPortalName();
+                     }
+                     hasPortal = true;
+                     portal.addPath(path);
+                }
+                if (msg != null ) {
+                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
+                            rbx.getString("PortalNeedsBlock"), msg),
+                            AbstractTableAction.rb.getString("WarningTitle"),
+                            JOptionPane.WARNING_MESSAGE);
+                } else if (!hasPortal) {
+                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
+                            rbx.getString("PathNeedsPortal"), path.getName()),
+                            AbstractTableAction.rb.getString("WarningTitle"),
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
         }
 
         /***********************  BlockFrame ******************************/
@@ -651,7 +700,7 @@ public class OBlockTableAction extends AbstractAction {
                       frame.getSize().getWidth()+", "+frame.getSize().getHeight()+")");
             if (name!=null && name.startsWith("OB")){
                 _blockPathMap.remove(name);
-                ((BlockPathFrame)frame).getModel().checkPathPortals();
+                checkPathPortals(((BlockPathFrame)frame).getModel().getBlock());
                 ((BlockPathFrame)frame).getModel().removeListener();
             } else {
                 _PathTurnoutMap.remove(name);
@@ -672,7 +721,7 @@ public class OBlockTableAction extends AbstractAction {
                       frame.getTitle()+", name= "+name+" size ("+
                       frame.getSize().getWidth()+", "+frame.getSize().getHeight()+")");
             if (name!=null && name.startsWith("OB")){
-                ((BlockPathFrame)frame).getModel().checkPathPortals();
+                checkPathPortals(((BlockPathFrame)frame).getModel().getBlock());
             }
         }
 
@@ -842,7 +891,7 @@ public class OBlockTableAction extends AbstractAction {
                                     block.setSensor(sensor);
                                 }
                             } catch (Exception ex) {
-                                log.error("provideSensor("+(String)value+") threw exception: "+ ex);
+                                log.error("No Sensor named \""+(String)value+"\" found. threw exception: "+ ex);
                             }
                             if (sensor==null) {
                                 JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
@@ -1189,7 +1238,14 @@ public class OBlockTableAction extends AbstractAction {
                                                     .provideOBlock(tempRow[TO_BLOCK_COLUMN]);
                         SignalHead toSignal = InstanceManager.signalHeadManagerInstance()
                                                     .getSignalHead(tempRow[TO_SIGNAL_COL]);
-                        if (name != null && name.length()>0) {
+                        if (fromBlock != null && 
+                                fromBlock.equals(toBlock)) {
+                            JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
+                                rbx.getString("SametoFromBlock"), (String)value, fromBlock.getDisplayName()),
+                                    AbstractTableAction.rb.getString("WarningTitle"),
+                                    JOptionPane.WARNING_MESSAGE);
+                            tempRow[FROM_SIGNAL_COL] = null;
+                        } else if (name != null && name.length()>0) {
                             Portal portal = new Portal(fromSignal, fromBlock, name, toBlock, toSignal);
                             _portalList.add(portal);
                             makeList();
@@ -1229,9 +1285,14 @@ public class OBlockTableAction extends AbstractAction {
                             rbx.getString("NoSuchBlock"), (String)value);
                         break;
                     }
+                    if (block.equals(portal.getToBlock())){
+                        msg = java.text.MessageFormat.format(
+                                rbx.getString("SametoFromBlock"), (String)value, block.getDisplayName());
+                        break;
+                    }
                     if ( !portal.setFromBlock(block, false)) {
                         int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
-                            rbx.getString("BlockPathsConflict"), (String)value, portal.getFromBlockName()),
+                            rbx.getString("BlockPathsConflict"), value, portal.getFromBlockName()),
                             AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
                             JOptionPane.WARNING_MESSAGE);
                         if (response==JOptionPane.NO_OPTION) {
@@ -1263,9 +1324,14 @@ public class OBlockTableAction extends AbstractAction {
                             rbx.getString("NoSuchBlock"), (String)value);
                         break;
                     }
+                    if (block.equals(portal.getFromBlock())){
+                        msg = java.text.MessageFormat.format(
+                                rbx.getString("SametoFromBlock"), (String)value, block.getDisplayName());
+                        break;
+                    }
                     if ( !portal.setToBlock(block, false)) {
                         int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
-                            rbx.getString("BlockPathsConflict"), (String)value, portal.getToBlockName()),
+                            rbx.getString("BlockPathsConflict"), value, portal.getToBlockName()),
                             AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
                             JOptionPane.WARNING_MESSAGE);
                         if (response==JOptionPane.NO_OPTION) {
@@ -1388,7 +1454,7 @@ public class OBlockTableAction extends AbstractAction {
                                                 _portalList.size()+" rows.");
             fireTableDataChanged();
         }
-
+/*
         private void removePortalFromPaths(Portal portal, List <OPath> list) {
             String name = portal.getName();
             for (int j=0; j<list.size(); j++) {
@@ -1405,7 +1471,7 @@ public class OBlockTableAction extends AbstractAction {
                 }
             }
         }
-
+*/
         public void propertyChange(PropertyChangeEvent e) {
             String property = e.getPropertyName();
             if (property.equals("length") || property.equals("portalCount")
@@ -1461,7 +1527,7 @@ public class OBlockTableAction extends AbstractAction {
                 idx = row - (count - block.getPortals().size());
                 if (col==BLOCK_NAME_COLUMN) {
                     if (idx==0) {
-                        return (block!=null ? block.getDisplayName() : null);
+                        return block.getDisplayName();
                     }
                     return "";
                 }
@@ -1533,45 +1599,11 @@ public class OBlockTableAction extends AbstractAction {
             }
         }
 
-        public void checkPathPortals() {
-            // warn user of incomplete portals
-            List <Path> list = _block.getPaths();
-            for (int i=0; i<list.size(); i++) {
-                OPath path = (OPath)list.get(i);
-                OBlock block = (OBlock)path.getBlock();
-                String msg = null;
-                boolean hasPortal = false;
-                Portal portal = block.getPortalByName(path.getFromPortalName());
-                if (portal!=null) {
-                    if (!portal.isValid()){
-                        msg = path.getFromPortalName();
-                    }
-                    hasPortal = true;
-                    portal.addPath(path);
-                }
-                portal = block.getPortalByName(path.getToPortalName());
-                if (portal!=null) {
-                     if (!portal.isValid()) {
-                         msg = path.getToPortalName();
-                     }
-                     hasPortal = true;
-                     portal.addPath(path);
-                }
-                if (msg != null ) {
-                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                            rbx.getString("PortalNeedsBlock"), msg),
-                            AbstractTableAction.rb.getString("WarningTitle"),
-                            JOptionPane.WARNING_MESSAGE);
-                } else if (!hasPortal) {
-                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                            rbx.getString("PathNeedsPortal"), path.getName()),
-                            AbstractTableAction.rb.getString("WarningTitle"),
-                            JOptionPane.WARNING_MESSAGE);
-                }
-            }
+        protected OBlock getBlock() {
+            return _block;
         }
 
-        void initTempRow() {
+         void initTempRow() {
             for (int i=0; i<NUMCOLS; i++) {
                 tempRow[i] = null;
             }
@@ -1656,7 +1688,7 @@ public class OBlockTableAction extends AbstractAction {
                     Portal portal = _block.getPortalByName((String)value);
                     if (portal == null && !_portalList.contains(portal)) {
                         int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
-                            rbx.getString("BlockPortalConflict"), (String)value, _block.getDisplayName()),
+                            rbx.getString("BlockPortalConflict"), value, _block.getDisplayName()),
                             AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
                             JOptionPane.WARNING_MESSAGE);
                         if (response==JOptionPane.NO_OPTION) {
@@ -1680,7 +1712,7 @@ public class OBlockTableAction extends AbstractAction {
                     portal = _block.getPortalByName((String)value);
                     if (portal == null && !_portalList.contains(portal)) {
                         int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
-                            rbx.getString("BlockPortalConflict"), (String)value, _block.getDisplayName()),
+                            rbx.getString("BlockPortalConflict"), value, _block.getDisplayName()),
                             AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
                             JOptionPane.WARNING_MESSAGE);
                         if (response==JOptionPane.NO_OPTION) {
@@ -2099,7 +2131,7 @@ public class OBlockTableAction extends AbstractAction {
             DragSource dragSource = DragSource.getDefaultDragSource();
             dragSource.createDefaultDragGestureRecognizer(this,
                         DnDConstants.ACTION_COPY_OR_MOVE, this);
-            DropTarget dropTarget = new DropTarget(this, DnDConstants.ACTION_COPY, this);
+            new DropTarget(this, DnDConstants.ACTION_COPY, this);
         }
 
         Point getDropPoint() {
