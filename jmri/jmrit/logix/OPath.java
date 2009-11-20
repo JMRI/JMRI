@@ -1,6 +1,5 @@
 package jmri.jmrit.logix;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Timer;
 
@@ -180,7 +179,7 @@ public class OPath extends jmri.Path  {
 	}
 
     public String toString() {
-        return "Path \""+_name+"\"on block \""+getBlock().getDisplayName()+"\" from portal "+getFromPortalName()+" to portal "+ getToPortalName();
+        return "Path \""+_name+"\"on block \""+(getBlock()!=null ? getBlock().getDisplayName(): "null")+"\" from portal "+getFromPortalName()+" to portal "+ getToPortalName();
     }
        
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OPath.class.getName());

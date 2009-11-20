@@ -1159,6 +1159,11 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                 OPath path = paths.get(i);
                 String exitName = path.getOppositePortalName(pName);
                 BlockOrder nOrder = new BlockOrder((OBlock)path.getBlock(), path.getName(), pName, exitName);
+                if (nOrder==null) {
+                    log.error(path.toString()+" is INVALID - please correct. Expect entry at "+pName+
+                              " and exit at "+exitName);
+                    continue;
+                }
                 DefaultMutableTreeNode node = new DefaultMutableTreeNode(nOrder);
                 tree.insertNodeInto(node, parent, parent.getChildCount());
                 //nodes.add(node);

@@ -395,8 +395,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         //_engineer.notify();
                         break;
                     case ABORT:
-                        _engineer.abort();
                         _engineer.notifyAll();
+                        _engineer.abort();
                         break;
                 }
             } catch (java.lang.IllegalMonitorStateException imse) {
@@ -752,6 +752,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                                 log.error("InterruptedException "+ie);
                             }
                         }
+                        if (_abort) { break; }
                         float speed = Float.parseFloat(ts.getValue());
                         setSpeed(speed);
                     } else if (command.equals("SPEEDSTEP")) {

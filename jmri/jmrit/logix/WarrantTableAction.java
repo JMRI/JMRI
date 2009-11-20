@@ -556,7 +556,7 @@ public class WarrantTableAction extends AbstractAction {
                         DccLocoAddress address = w.getDccAddress();
                         if (address == null) {
                             msg = java.text.MessageFormat.format(
-                                WarrantTableAction.rb.getString("NoAddress"), w.getDisplayName());;
+                                WarrantTableAction.rb.getString("NoAddress"), w.getDisplayName());
                             break;
                         }
                         if (w.getThrottleCommands().size() == 0) {
