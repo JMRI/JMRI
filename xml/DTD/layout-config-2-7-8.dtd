@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-8.dtd,v 1.3 2009-11-20 18:12:37 pete_cressman Exp $ -->
+<!-- $Id: layout-config-2-7-8.dtd,v 1.4 2009-11-20 18:47:51 pete_cressman Exp $ -->
 
 <!-- This DTD is part of version 2.7.8 development.  Do not modify it       -->
 <!-- after version 2.7.8 is released.  For more information,                -->
@@ -658,8 +658,8 @@
     <!ATTLIST block length		    CDATA #IMPLIED>
     <!ATTLIST block curve		    CDATA #IMPLIED>
     
-    <!ELEMENT sensor EMPTY>
-        <!ATTLIST sensor systemName		CDATA #REQUIRED>
+<!--    <!ELEMENT sensor EMPTY>
+        <!ATTLIST sensor systemName		CDATA #REQUIRED>     -->
 
     <!ELEMENT path (setting?) >
         <!ATTLIST path pathName		    CDATA #REQUIRED>
@@ -678,7 +678,7 @@
         <!ELEMENT fromBlock (path) >
             <!ATTLIST fromBlock blockName	CDATA #REQUIRED>
 
-            <!ELEMENT path (setting?) >
+<!--            <!ELEMENT path (setting?) >
                 <!ATTLIST path pathName		    CDATA #REQUIRED>
                 <!ATTLIST path fromDirection    CDATA #IMPLIED>
                 <!ATTLIST path toDirection		CDATA #IMPLIED>
@@ -687,12 +687,12 @@
         
                 <!ELEMENT setting EMPTY >
                     <!ATTLIST setting set		CDATA #REQUIRED>
-                    <!ATTLIST setting turnout	CDATA #REQUIRED>
+                    <!ATTLIST setting turnout	CDATA #REQUIRED>   -->
 
         <!ELEMENT toBlock (path) >
             <!ATTLIST toBlock blockName	CDATA #REQUIRED>
 
-            <!ELEMENT path (setting?) >
+<!--            <!ELEMENT path (setting?) >
                 <!ATTLIST path pathName		    CDATA #REQUIRED>
                 <!ATTLIST path fromDirection    CDATA #IMPLIED>
                 <!ATTLIST path toDirection		CDATA #IMPLIED>
@@ -701,7 +701,7 @@
         
                 <!ELEMENT setting EMPTY >
                     <!ATTLIST setting set		CDATA #REQUIRED>
-                    <!ATTLIST setting turnout	CDATA #REQUIRED>
+                    <!ATTLIST setting turnout	CDATA #REQUIRED>   -->
 
         <!ELEMENT fromSignal EMPTY >
             <!ATTLIST signalName set		CDATA #REQUIRED>
@@ -721,24 +721,24 @@
         <!ATTLIST blockOrder entryName	CDATA #IMPLIED>
         <!ATTLIST blockOrder exitName	CDATA #IMPLIED>
         
-        <!ELEMENT block #PCDATA >
-            <!ATTLIST block systemName	CDATA #REQUIRED>
+<!--        <!ELEMENT block (#PCDATA) >
+            <!ATTLIST block systemName	CDATA #REQUIRED>  -->
 
     <!ELEMENT viaOrder (block) >
         <!ATTLIST viaOrder pathName	    CDATA #REQUIRED>
         <!ATTLIST viaOrder entryName	CDATA #IMPLIED>
         <!ATTLIST viaOrder exitName	    CDATA #IMPLIED>
         
-        <!ELEMENT block #PCDATA >
-            <!ATTLIST block systemName	CDATA #REQUIRED>
+<!--        <!ELEMENT block (#PCDATA) >
+            <!ATTLIST block systemName	CDATA #REQUIRED>  -->
 
-    <!ELEMENT throttleCommand #PCDATA >
+    <!ELEMENT throttleCommand (#PCDATA) >
         <!ATTLIST throttleCommand time	    CDATA #REQUIRED>
         <!ATTLIST throttleCommand command	CDATA #REQUIRED>
         <!ATTLIST throttleCommand value	    CDATA #REQUIRED>
         <!ATTLIST throttleCommand block	    CDATA #REQUIRED>
         
-    <!ELEMENT train #PCDATA >
+    <!ELEMENT train (#PCDATA) >
         <!ATTLIST warrant trainId		    CDATA #IMPLIED>
         <!ATTLIST warrant dccAddress	    CDATA #IMPLIED>
         <!ATTLIST warrant dccType		    CDATA #IMPLIED>
