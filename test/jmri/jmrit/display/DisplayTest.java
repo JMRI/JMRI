@@ -2,8 +2,8 @@
  * DisplayTest.java
  *
  * Description:	    tests for the jmrit.display package
- * @author			Bob Jacobsen
- * @version         $Revision: 1.7 $
+ * @author			Bob Jacobsen  Copyright 2008, 2009
+ * @version         $Revision: 1.8 $
  */
 
 package jmri.jmrit.display;
@@ -35,6 +35,7 @@ public class DisplayTest extends TestCase {
 		suite.addTest(jmri.jmrit.display.MemorySpinnerIconTest.suite());
 		suite.addTest(jmri.jmrit.display.ReporterIconTest.suite());
 		suite.addTest(jmri.jmrit.display.RpsPositionIconTest.suite());
+		suite.addTest(jmri.jmrit.display.configurexml.ConfigureXmlTest.suite());
 		return suite;
 	}
 
