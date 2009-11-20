@@ -75,7 +75,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -2563,7 +2563,6 @@ public class LogixTableAction extends AbstractTableAction {
     * set display to show current action (curAction) parameters
     */
 	void initializeActionVariables() {
-        String name = _curAction.getDeviceName();
         int actionType = _curAction.getType();
         int itemType = Conditional.ACTION_TO_ITEM[actionType];
         if (log.isDebugEnabled()) log.debug("initializeActionVariables: itemType= "+itemType+", actionType= "+actionType); 
