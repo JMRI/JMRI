@@ -7,32 +7,32 @@
     <sensor systemName="ISCLOCKRUNNING" inverted="false" />
   </sensors>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory systemName="IMCURRENTTIME" value="2:45 PM" />
+    <memory systemName="IMCURRENTTIME" value="12:11 AM" />
   </memories>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Nov 19 14:34:10 PST 2009" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
   <paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml" name="Scaled Icon Test" x="379" y="270" height="327" width="358" editable="yes" positionable="yes" showcoordinates="no" controlling="yes" hide="no" panelmenu="yes" scrollable="both">
-    <positionablelabel x="242" y="98" level="3" forcecontroloff="false" fixed="false" showtooltip="true" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/smallschematics/tracksegments/block.gif" rotate="1" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="242" y="98" level="3" forcecontroloff="false" fixed="false" showtooltip="true" icon="program:resources/icons/smallschematics/tracksegments/block.gif" rotate="1" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" rotate="1" degrees="0" scale="1.0" />
     </positionablelabel>
-    <positionablelabel x="188" y="149" level="3" forcecontroloff="false" fixed="false" showtooltip="true" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/smallschematics/tracksegments/block.gif" rotate="0" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="188" y="149" level="3" forcecontroloff="false" fixed="false" showtooltip="true" icon="program:resources/icons/smallschematics/tracksegments/block.gif" rotate="0" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" rotate="0" degrees="0" scale="1.0" />
     </positionablelabel>
-    <positionablelabel x="116" y="98" level="3" forcecontroloff="false" fixed="false" showtooltip="true" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/smallschematics/tracksegments/block.gif" rotate="1" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="116" y="98" level="3" forcecontroloff="false" fixed="false" showtooltip="true" icon="program:resources/icons/smallschematics/tracksegments/block.gif" rotate="1" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" rotate="1" degrees="0" scale="1.0" />
     </positionablelabel>
-    <positionablelabel x="68" y="148" level="3" forcecontroloff="false" fixed="false" showtooltip="true" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/icons/smallschematics/tracksegments/block.gif" rotate="0" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="68" y="148" level="3" forcecontroloff="false" fixed="false" showtooltip="true" icon="program:resources/icons/smallschematics/tracksegments/block.gif" rotate="0" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" rotate="0" degrees="0" scale="1.0" />
     </positionablelabel>
-    <positionablelabel x="26" y="38" level="3" forcecontroloff="false" fixed="false" showtooltip="true" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/PanelPro.gif" rotate="3" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="26" y="38" level="3" forcecontroloff="false" fixed="false" showtooltip="true" icon="program:resources/PanelPro.gif" rotate="3" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/PanelPro.gif" rotate="3" degrees="0" scale="0.75" />
     </positionablelabel>
     <positionablelabel x="43" y="16" level="5" forcecontroloff="false" fixed="false" showtooltip="true" text="Scaled to 75%" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="173" y="80" level="3" forcecontroloff="false" fixed="false" showtooltip="true" size="12" style="1" red="51" green="51" blue="51" icon="program:resources/jmri48x48.gif" rotate="3" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="173" y="80" level="3" forcecontroloff="false" fixed="false" showtooltip="true" icon="program:resources/jmri48x48.gif" rotate="3" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/jmri48x48.gif" rotate="3" degrees="0" scale="1.5" />
     </positionablelabel>
     <positionablelabel x="168" y="42" level="5" forcecontroloff="false" fixed="false" showtooltip="true" text="Scaled to 150%" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
   </paneleditor>
-  <!--Written by JMRI version 2.7.8-Pete#3 on Thu Nov 19 14:45:49 PST 2009 $Id: ScaledIconTest.xml,v 1.1 2009-11-20 07:16:38 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.8-Pete#4 on Fri Nov 20 00:11:09 PST 2009 $Id: ScaledIconTest.xml,v 1.2 2009-11-20 18:13:28 pete_cressman Exp $-->
 </layout-config>
 
