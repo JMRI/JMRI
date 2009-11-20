@@ -18,7 +18,7 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
 
@@ -47,10 +47,17 @@ public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
         String inLine;
         String outLine;
         while ( (inLine = inFileStream.readLine())!=null && (outLine = outFileStream.readLine())!=null) {
-            if (!inLine.startsWith("  <!--Written by JMRI version")
+            while (inLine.startsWith("    <memory")) {
+                inLine = inFileStream.readLine();
+            }
+            while (outLine.startsWith("    <memory")) {
+                outLine = outFileStream.readLine();
+            }
+            if (inLine!=null && outLine!=null
+                && !inLine.startsWith("  <!--Written by JMRI version")
                 && !inLine.startsWith("  <timebase")   // time changes from timezone to timezone
                 && !inLine.startsWith("<?xml-stylesheet")   // Linux seems to put attributes in different order
-                && !inLine.contains("IMCURRENTTIME"))   // time changes
+                && !inLine.startsWith("    <memory"))   // time changes
                     Assert.assertEquals(inLine, outLine);
         }
     }
