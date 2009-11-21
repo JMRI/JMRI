@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-7-8.dtd,v 1.4 2009-11-20 18:47:51 pete_cressman Exp $ -->
+<!-- $Id: layout-config-2-7-8.dtd,v 1.5 2009-11-21 20:20:57 pete_cressman Exp $ -->
 
 <!-- This DTD is part of version 2.7.8 development.  Do not modify it       -->
 <!-- after version 2.7.8 is released.  For more information,                -->
@@ -661,7 +661,7 @@
 <!--    <!ELEMENT sensor EMPTY>
         <!ATTLIST sensor systemName		CDATA #REQUIRED>     -->
 
-    <!ELEMENT path (setting?) >
+<!--    <!ELEMENT path (setting?) >
         <!ATTLIST path pathName		    CDATA #REQUIRED>
         <!ATTLIST path fromDirection    CDATA #IMPLIED>
         <!ATTLIST path toDirection		CDATA #IMPLIED>
@@ -670,7 +670,7 @@
         
         <!ELEMENT setting EMPTY >
             <!ATTLIST setting set		CDATA #REQUIRED>
-            <!ATTLIST setting turnout	CDATA #REQUIRED>
+            <!ATTLIST setting turnout	CDATA #REQUIRED>    -->
 
     <!ELEMENT portal (fromBlock, toBlock, fromSignal?, toSignal?) >
         <!ATTLIST portal portalName	CDATA #REQUIRED>
