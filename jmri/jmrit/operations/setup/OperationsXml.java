@@ -12,7 +12,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores the operation setup using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class OperationsXml extends XmlFile {
 	
@@ -36,7 +36,7 @@ public class OperationsXml extends XmlFile {
 	                log.error("Exception during operations file reading",e);
 	            }
 		}
-		if (log.isDebugEnabled()) log.debug("OperationsXml returns instance "+_instance);
+		if (Control.showInstance && log.isDebugEnabled()) log.debug("OperationsXml returns instance "+_instance);
 		return _instance;
 	}
 	

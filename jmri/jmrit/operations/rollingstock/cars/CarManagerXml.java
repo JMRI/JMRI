@@ -12,6 +12,7 @@ import org.jdom.ProcessingInstruction;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsXml;
 
 /**
@@ -20,7 +21,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * and car kernels.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class CarManagerXml extends XmlFile {
 	
@@ -42,7 +43,7 @@ public class CarManagerXml extends XmlFile {
 	                log.error("Exception during operations car file reading: "+e);
 	            }
 		}
-		if (log.isDebugEnabled()) log.debug("CarManagerXml returns instance "+_instance);
+		if (Control.showInstance && log.isDebugEnabled()) log.debug("CarManagerXml returns instance "+_instance);
 		return _instance;
 	}
 	
@@ -313,8 +314,13 @@ public class CarManagerXml extends XmlFile {
     }
 
     private boolean dirty = false;
-    void setDirty(boolean b) {dirty = b;}
+    public void setDirty(boolean b) {dirty = b;}
     boolean isDirty() {return dirty;}
+    
+    public void writeFileIfDirty(){
+    	if(isDirty())
+    		writeOperationsCarFile();
+    }
 
     
     // Operation files always use the same directory

@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.List;
 
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsXml;
 
 import org.jdom.Document;
@@ -15,8 +16,8 @@ import org.jdom.ProcessingInstruction;
 /**
  * Loads and stores routes using xml files. 
  * 
- * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2009
+ * @version $Revision: 1.17 $
  */
 public class RouteManagerXml extends XmlFile {
 	
@@ -39,7 +40,7 @@ public class RouteManagerXml extends XmlFile {
 	            }
 				log.debug("Routes have been loaded!");
 		}
-		if (log.isDebugEnabled()) log.debug("RouteManagerXml returns instance "+_instance);
+		if (Control.showInstance && log.isDebugEnabled()) log.debug("RouteManagerXml returns instance "+_instance);
 		return _instance;
 	}
 	
@@ -64,11 +65,6 @@ public class RouteManagerXml extends XmlFile {
 	        
 	        //Check the Comment and Decoder Comment fields for line breaks and
 	        //convert them to a processor directive for storage in XML
-	        //Note: this is also done in the LocoFile.java class to do
-	        //the same thing in the indidvidual locomotive roster files
-	        //Note: these changes have to be undone after writing the file
-	        //since the memory version of the roster is being changed to the
-	        //file version for writing
 	        RouteManager manager = RouteManager.instance();
 	        List<String> routeList = manager.getRoutesByIdList();
 	        
@@ -140,8 +136,8 @@ public class RouteManagerXml extends XmlFile {
 	/**
      * Store the all of the operation route objects in the default place, including making a backup if needed
      */
-    public static void writeOperationsRouteFile() {
-    	RouteManagerXml.instance().makeBackupFile(defaultOperationsFilename());
+    public void writeOperationsRouteFile() {
+    	makeBackupFile(defaultOperationsFilename());
         try {
           	 if(!RouteManagerXml.instance().checkFile(defaultOperationsFilename()))
              {
@@ -200,8 +196,7 @@ public class RouteManagerXml extends XmlFile {
             //any <?p?> processor directives and change them to back \n characters
             for (int i = 0; i < routeList.size(); i++) {
                 //Get a RosterEntry object for this index
-            	String routeId = routeList.get(i);
-	        	Route route = manager.getRouteById(routeId);
+	        	Route route = manager.getRouteById(routeList.get(i));
 
                 //Extract the Comment field and create a new string for output
                 String tempComment = route.getComment();
@@ -227,9 +222,9 @@ public class RouteManagerXml extends XmlFile {
         }
     }
 
-    private static boolean dirty = false;
-    public static void setDirty(boolean b) {dirty = b;}
-    public static boolean isDirty() {return dirty;}
+    private boolean dirty = false;
+    public void setDirty(boolean b) {dirty = b;}
+    public boolean isDirty() {return dirty;}
 
     // Operation files always use the same directory
     public static String defaultOperationsFilename() { 

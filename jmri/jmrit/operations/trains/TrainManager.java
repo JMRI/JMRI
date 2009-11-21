@@ -28,7 +28,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.25 $
+ * @version	$Revision: 1.26 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
@@ -390,14 +390,24 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
     
     /**
+     * Report that the train, car and engine databases are dirty.
+     */
+    public void setFilesDirty(){
+    	log.debug("train files dirty");
+    	CarManagerXml.instance().setDirty(true);
+    	EngineManagerXml.instance().setDirty(true);
+    	TrainManagerXml.instance().setDirty(true);
+    }
+    
+    /**
      * Save all xml files that a train can modify.
      */
     public void save(){
-		EngineManagerXml.instance().writeOperationsEngineFile();		//save train assignments
-		CarManagerXml.instance().writeOperationsCarFile();				//save train assignments
-		TrainManagerXml.instance().writeOperationsTrainFile();			//save train changes
-		LocationManagerXml.instance().writeFileIfDirty();				//Need to save "moves" for track location 
-		RouteManagerXml.instance().writeFileIfDirty(); 				//Only if user used setX&Y
+		LocationManagerXml.instance().writeFileIfDirty();		//Need to save "moves" for track location 
+		RouteManagerXml.instance().writeFileIfDirty(); 			//Only if user used setX&Y
+		CarManagerXml.instance().writeFileIfDirty();			//save train assignments		
+		EngineManagerXml.instance().writeFileIfDirty();			//save train assignments
+		TrainManagerXml.instance().writeOperationsTrainFile();	//save train changes
     }
   
     /**

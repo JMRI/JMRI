@@ -8,11 +8,13 @@ import java.util.ResourceBundle;
 
 import javax.swing.JComboBox;
 
+import jmri.jmrit.operations.setup.Control;
+
 
 /**
  * Represents the lengths that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class CarLengths implements java.beans.PropertyChangeListener {
 	
@@ -33,7 +35,7 @@ public class CarLengths implements java.beans.PropertyChangeListener {
 			// create and load
 			_instance = new CarLengths();
 		}
-		if (log.isDebugEnabled()) log.debug("CarLengths returns instance "+_instance);
+		if (Control.showInstance && log.isDebugEnabled()) log.debug("CarLengths returns instance "+_instance);
 		return _instance;
 	}
 

@@ -19,7 +19,7 @@ import jmri.jmrit.operations.routes.Route;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.30 $
+ * @version             $Revision: 1.31 $
  */
 public class Track {
 	
@@ -35,10 +35,10 @@ public class Track {
 	protected int _numberEngines = 0;				// number of engines
 	protected int _pickupRS = 0;					// number of pickups by trains
 	protected int _dropRS = 0;						// number of drops by trains
-	protected int _length = 0;						//length of tracks at this location
-	protected int _reserved = 0;					//length of track reserved by trains
-	protected int _usedLength = 0;					//length of track filled by cars and engines 
-	protected int _moves = 0;						//count of the pickups and drops since creation
+	protected int _length = 0;						// length of tracks at this location
+	protected int _reserved = 0;					// length of track reserved by trains
+	protected int _usedLength = 0;					// length of track filled by cars and engines 
+	protected int _moves = 0;						// count of the drops since creation
 	protected String _comment = "";
 	
 	// schedule options
@@ -722,7 +722,7 @@ public class Track {
     	e.setAttribute("locType", getLocType());
     	e.setAttribute("dir", Integer.toString(getTrainDirections()));
     	e.setAttribute("length", Integer.toString(getLength()));
-    	e.setAttribute("moves", Integer.toString(getMoves()));
+    	e.setAttribute("moves", Integer.toString(getMoves()-getDropRS()));
     	// build list of car types for this track
     	String[] types = getTypeNames();
     	String typeNames ="";

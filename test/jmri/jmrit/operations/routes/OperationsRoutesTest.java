@@ -30,7 +30,7 @@ import javax.swing.JComboBox;
  *   RouteLocation: XML read/write
  * 
  * @author	Bob Coleman     Copyright (C) 2008, 2009
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class OperationsRoutesTest extends TestCase {
 
@@ -606,8 +606,7 @@ public class OperationsRoutesTest extends TestCase {
 */
                 
 
-                RouteManagerXml.writeOperationsRouteFile();
-//              RouteManagerXml.instance().writeOperationsRouteFile();
+                RouteManagerXml.instance().writeOperationsRouteFile();
 
                 // Add some more engines and write file again
                 // so we can test the backup facility
@@ -616,8 +615,7 @@ public class OperationsRoutesTest extends TestCase {
                 manager.newRoute("Test Number 6");
 //                manager.getRouteByRoadAndNumber("ACL", "Test Number 2").setComment("Test Engine 2 Changed Comment");
                 
-                RouteManagerXml.writeOperationsRouteFile();
-//              RouteManagerXml.instance().writeOperationsRouteFile();
+                RouteManagerXml.instance().writeOperationsRouteFile();
         }
 
 	// TODO: Add tests for Route location track location

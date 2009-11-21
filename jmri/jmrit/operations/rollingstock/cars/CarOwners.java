@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
 
+import jmri.jmrit.operations.setup.Control;
+
 /**
  * Represents the owner names that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class CarOwners {
 	
@@ -27,7 +29,7 @@ public class CarOwners {
 			// create and load
 			_instance = new CarOwners();
 		}
-		if (log.isDebugEnabled()) log.debug("CarOwners returns instance "+_instance);
+		if (Control.showInstance && log.isDebugEnabled()) log.debug("CarOwners returns instance "+_instance);
 		return _instance;
 	}
 

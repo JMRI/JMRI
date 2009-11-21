@@ -8,11 +8,13 @@ import java.util.ResourceBundle;
 
 import javax.swing.JComboBox;
 
+import jmri.jmrit.operations.setup.Control;
+
 
 /**
  * Represents the road names that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class CarRoads {
 	
@@ -34,7 +36,7 @@ public class CarRoads {
 			// create and load
 			_instance = new CarRoads();
 		}
-		if (log.isDebugEnabled()) log.debug("CarRoads returns instance "+_instance);
+		if (Control.showInstance && log.isDebugEnabled()) log.debug("CarRoads returns instance "+_instance);
 		return _instance;
 	}
 

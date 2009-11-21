@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -562,6 +562,25 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _comment;
 	}
 	
+	public void moveRollingStock(RouteLocation old, RouteLocation next){
+		if(old == getRouteLocation()){	
+			// Arriving at terminal?
+			if(getRouteLocation() == getRouteDestination()){
+				log.debug("Rolling stock ("+getId()+") has arrived at destination ("+getDestination()+")");
+				Location destination = getDestination();
+				Track destTrack = getDestinationTrack();
+				setDestination(null, null); 	// this also clears the route locations
+				setLocation(destination, destTrack);
+				setTrain(null);
+			}else{
+				log.debug("Rolling stock ("+getId()+") is in train (" +_train.getName()+") leaves location ("+old.getName()+") arrives ("+next.getName()+")");
+				Location nextLocation = locationManager.getLocationByName(next.getName());
+				setLocation(nextLocation, null);
+				setRouteLocation(next);
+			}
+		}
+	}
+	
 	/**
 	 * Remove rolling stock.  Releases all listeners.
 	 */
@@ -615,7 +634,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		if ((a = e.getAttribute("moves")) != null)
 			_moves = Integer.parseInt(a.getValue());
 		if ((a = e.getAttribute("train")) != null){
-			_train = TrainManager.instance().getTrainByName(a.getValue());
+			setTrain(TrainManager.instance().getTrainByName(a.getValue()));
 			if (_train != null && _train.getRoute() != null && (a = e.getAttribute("routeLocationId")) != null){
 				_routeLocation = _train.getRoute().getLocationById(a.getValue());
 				if((a = e.getAttribute("routeDestinationId")) != null)
@@ -686,7 +705,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	
 	// rolling stock listens for changes in a location name or if a location is deleted
     public void propertyChange(PropertyChangeEvent e) {
-    	// if (log.isDebugEnabled()) log.debug("Property change for rolling stock: " + getId()+ " property name: " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
+    	//if (log.isDebugEnabled()) log.debug("Property change for rolling stock: " + getId()+ " property name: " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
     	// notify if track or location name changes
     	if (e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY)){
         	if (log.isDebugEnabled()) log.debug("Property change for rolling stock: " + getId()+ " property name: " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
@@ -710,14 +729,24 @@ public class RollingStock implements java.beans.PropertyChangeListener{
     	    if (e.getSource() == _trackDestination){
         	   	if (log.isDebugEnabled()) log.debug("delete destination for rolling stock: " + getId());
     	    	setDestination(_destination, null);
-    	    }
-    	    	
+    	    }  	    	
     	}
-    	if (e.getPropertyName().equals(Train.DISPOSE_CHANGED_PROPERTY)){
-    		if (e.getSource() == _train){
-        	   	if (log.isDebugEnabled()) log.debug("delete train for rolling stock: " + getId());
-        	   	setTrain(null);
-    		}
+    	if (e.getPropertyName().equals(Train.DISPOSE_CHANGED_PROPERTY) &&
+    			e.getSource() == _train){
+    		if (log.isDebugEnabled()) log.debug("delete train for rolling stock: " + getId());
+    		setTrain(null);
+    	}
+    	if (e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY) &&
+    			e.getSource() == _train){
+    		if (log.isDebugEnabled()) log.debug("Rolling stock (" +getId()+") is serviced by train ("+_train.getName()+")");
+    		moveRollingStock((RouteLocation)e.getOldValue(),(RouteLocation)e.getNewValue());
+    	}
+    	if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY) &&
+    			e.getNewValue().equals(Train.TRAINRESET) &&
+    			e.getSource() == _train){
+    		if (log.isDebugEnabled()) log.debug("Rolling stock (" +getId()+") is removed from train ("+_train.getName()+") by reset");
+    		setTrain(null);
+    		setDestination(null, null);
     	}
     }
 

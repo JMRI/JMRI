@@ -18,7 +18,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -233,12 +233,14 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * Decrements the number of cars and or engines that will be droped off by trains at this
+	 * Decrements the number of cars and or engines that will be dropped off by trains at this
 	 * location.
 	 */
 	public void deleteDropRS() {
 		int old = _dropRS;
 		_dropRS--;
+	   	// set dirty
+    	LocationManagerXml.instance().setDirty(true);
 		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
 	}
 	
@@ -526,7 +528,7 @@ public class Location implements java.beans.PropertyChangeListener {
  	
    /**
      * Construct this Entry from XML. This member has to remain synchronized with the
-     * detailed DTD in operations-location.dtd
+     * detailed DTD in operations-locations.dtd
      *
      * @param e  Consist XML element
      */
@@ -567,7 +569,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /**
      * Create an XML element to represent this Entry. This member has to remain synchronized with the
-     * detailed DTD in operations-config.xml.
+     * detailed DTD in operations-locations.dtd.
      * @return Contents in a JDOM Element
      */
     public org.jdom.Element store() {

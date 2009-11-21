@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages the routes
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class RouteManager {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLength"; 
@@ -167,7 +167,7 @@ public class RouteManager {
     		try{
     			routeNumber = Integer.parseInt (route.getId());
     		}catch (NumberFormatException e) {
-    			log.debug("route id number isn't a number");
+    			log.error("route id number isn't a number");
     		}
     		for (int j=0; j<out.size(); j++ ){
     			route = getRouteById (out.get(j));
@@ -179,7 +179,7 @@ public class RouteManager {
         				break;
         			}
         		}catch (NumberFormatException e) {
-        			log.debug("list out id number isn't a number");
+        			log.error("list out id number isn't a number");
         		}
     		}
     		if (!routeAdded){

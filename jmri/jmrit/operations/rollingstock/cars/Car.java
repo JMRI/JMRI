@@ -1,27 +1,24 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import java.beans.PropertyChangeEvent;
 import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.ScheduleManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.Schedule;
 import jmri.jmrit.operations.locations.ScheduleItem;
-import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 
 /**
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.24 $
+ * @version             $Revision: 1.25 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
 	CarLoads carLoads = CarLoads.instance();
-	LocationManager locationManager = LocationManager.instance();
+	//LocationManager locationManager = LocationManager.instance();
 	
 	protected boolean _hazardous = false;
 	protected boolean _caboose = false;
@@ -363,43 +360,6 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		}
 		return e;
 	}
-	
-	// car listens for changes in a location name or if a location is deleted
-    public void propertyChange(PropertyChangeEvent e) {
-    	// if (log.isDebugEnabled()) log.debug("Property change for car: " + getId()+ " property name: " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-    	// notify if track or location name changes
-    	if (e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY)){
-        	if (log.isDebugEnabled()) log.debug("Property change for car: " + getId()+ " property name: " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-    		firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
-    	}
-    	if (e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)){
-    	    if (e.getSource() == _location){
-        	   	if (log.isDebugEnabled()) log.debug("delete location for car: " + getId());
-    	    	setLocation(null, null);
-    	    }
-    	    if (e.getSource() == _destination){
-        	   	if (log.isDebugEnabled()) log.debug("delete destination for car: " + getId());
-    	    	setDestination(null, null);
-    	    }
-     	}
-    	if (e.getPropertyName().equals(Track.DISPOSE_CHANGED_PROPERTY)){
-    	    if (e.getSource() == _trackLocation){
-        	   	if (log.isDebugEnabled()) log.debug("delete location for car: " + getId());
-    	    	setLocation(_location, null);
-    	    }
-    	    if (e.getSource() == _trackDestination){
-        	   	if (log.isDebugEnabled()) log.debug("delete destination for car: " + getId());
-    	    	setDestination(_destination, null);
-    	    }
-    	    	
-    	}
-    	if (e.getPropertyName().equals(Train.DISPOSE_CHANGED_PROPERTY)){
-    		if (e.getSource() == _train){
-        	   	if (log.isDebugEnabled()) log.debug("delete train for car: " + getId());
-        	   	setTrain(null);
-    		}
-    	}
-    }
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 	.getLogger(Car.class.getName());

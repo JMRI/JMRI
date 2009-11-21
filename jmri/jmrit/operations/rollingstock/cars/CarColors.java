@@ -8,11 +8,13 @@ import java.util.ResourceBundle;
 
 import javax.swing.JComboBox;
 
+import jmri.jmrit.operations.setup.Control;
+
 
 /**
  * Represents the colors that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class CarColors {
 	
@@ -33,7 +35,7 @@ public class CarColors {
 			// create and load
 			_instance = new CarColors();
 		}
-		if (log.isDebugEnabled()) log.debug("CarColors returns instance "+_instance);
+		if (Control.showInstance && log.isDebugEnabled()) log.debug("CarColors returns instance "+_instance);
 		return _instance;
 	}
 

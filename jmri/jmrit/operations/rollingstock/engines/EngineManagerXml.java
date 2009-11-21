@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.List;
 
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsXml;
 
 import org.jdom.Document;
@@ -17,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * models, engine types, engine lengths, and engine consist names.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class EngineManagerXml extends XmlFile {
 	
@@ -39,7 +40,7 @@ public class EngineManagerXml extends XmlFile {
 	                log.error("Exception during operations engine file reading: "+e);
 	            }
 		}
-		if (log.isDebugEnabled()) log.debug("EngineManagerXml returns instance "+_instance);
+		if (Control.showInstance && log.isDebugEnabled()) log.debug("EngineManagerXml returns instance "+_instance);
 		return _instance;
 	}
 	
@@ -64,23 +65,16 @@ public class EngineManagerXml extends XmlFile {
 	        
 	        //Check the Comment and Decoder Comment fields for line breaks and
 	        //convert them to a processor directive for storage in XML
-	        //Note: this is also done in the LocoFile.java class to do
-	        //the same thing in the indidvidual locomotive roster files
-	        //Note: these changes have to be undone after writing the file
-	        //since the memory version of the roster is being changed to the
-	        //file version for writing
 	        EngineManager manager = EngineManager.instance();
 	        List<String> engineList = manager.getEnginesByRoadNameList();
 	        
 	        for (int i=0; i<engineList.size(); i++){
-
 	            //Extract the RosterEntry at this index and inspect the Comment and
 	            //Decoder Comment fields to change any \n characters to <?p?> processor
 	            //directives so they can be stored in the xml file and converted
 	            //back when the file is read.
-	        	String engineId = engineList.get(i);
-	        	Engine c = manager.getEngineById(engineId);
-	            String tempComment = c.getComment();
+	        	Engine e = manager.getEngineById(engineList.get(i));
+	            String tempComment = e.getComment();
 	            String xmlComment = new String();
 
 	            //transfer tempComment to xmlComment one character at a time, except
@@ -93,7 +87,7 @@ public class EngineManagerXml extends XmlFile {
 	                    xmlComment = xmlComment + tempComment.substring(k, k + 1);
 	                }
 	            }
-	            c.setComment(xmlComment);
+	            e.setComment(xmlComment);
 	        }
 	        //All Comments and Decoder Comment line feeds have been changed to processor directives
 
@@ -281,9 +275,13 @@ public class EngineManagerXml extends XmlFile {
     }
 
     private boolean dirty = false;
-    void setDirty(boolean b) {dirty = b;}
+    public void setDirty(boolean b) {dirty = b;}
     boolean isDirty() {return dirty;}
 
+    public void writeFileIfDirty(){
+    	if(isDirty())
+    		writeOperationsEngineFile();
+    }
     
     // Operation files always use the same directory
     public static String defaultOperationsFilename() { 

@@ -49,7 +49,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.53 $
+ * @version $Revision: 1.54 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -404,6 +404,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			Train train = manager.getTrainByName(trainNameTextField.getText());
 			if (train == null)
 				return;
+			if(!_train.reset()){			
+				JOptionPane.showMessageDialog(this,
+						"Train is in route to "+_train.getTrainTerminatesName(), "Can not delete train!",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			if (JOptionPane.showConfirmDialog(this,
 					MessageFormat.format(rb.getString("deleteMsg"),new Object[]{train.getName()}),
 					rb.getString("deleteTrain"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
@@ -438,7 +444,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == resetButton){
 			if (_train != null)
 				if(!_train.reset())			
-					JOptionPane.showMessageDialog(null,
+					JOptionPane.showMessageDialog(this,
 							"Train is in route to "+_train.getTrainTerminatesName(), "Can not reset train!",
 							JOptionPane.ERROR_MESSAGE);
 		}
@@ -965,7 +971,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			updateLocationCheckboxes();
 			packFrame();
 		}
-		if (e.getPropertyName().equals(Train.NUMBERCARS_CHANGED_PROPERTY) || 
+		if (e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY) || 
 				e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)){
 			updateNumberCars();
 		}

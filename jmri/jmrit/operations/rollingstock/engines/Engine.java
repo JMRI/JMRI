@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 
@@ -9,7 +8,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents an engine on the layout
  * 
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class Engine extends RollingStock {
 	
@@ -42,7 +41,7 @@ public class Engine extends RollingStock {
 	
 	/**
 	 * Set the engine type for this engine's model
-	 * @param type Engine type: Steam, Diesel, Traction, etc.
+	 * @param type Engine type: Steam, Diesel, Gas Turbine, etc.
 	 */
 	public void setType (String type){
 		if(getModel().equals(""))
@@ -159,11 +158,9 @@ public class Engine extends RollingStock {
 		super.dispose();
 	}
 	
-	LocationManager locationManager = LocationManager.instance();
-	
 	/**
 	 * Construct this Entry from XML. This member has to remain synchronized
-	 * with the detailed DTD in operations-engine.dtd
+	 * with the detailed DTD in operations-engines.dtd
 	 * 
 	 * @param e
 	 *            Engine XML element
@@ -200,7 +197,7 @@ public class Engine extends RollingStock {
 
 	/**
 	 * Create an XML element to represent this Entry. This member has to remain
-	 * synchronized with the detailed DTD in operations-engine.dtd.
+	 * synchronized with the detailed DTD in operations-engines.dtd.
 	 * 
 	 * @return Contents in a JDOM Element
 	 */

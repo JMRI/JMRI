@@ -8,11 +8,13 @@ import java.util.ResourceBundle;
 
 import javax.swing.JComboBox;
 
+import jmri.jmrit.operations.setup.Control;
+
 
 /**
  * Represents the lengths that engines can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class EngineLengths {
 	
@@ -33,7 +35,7 @@ public class EngineLengths {
 			// create and load
 			_instance = new EngineLengths();
 		}
-		if (log.isDebugEnabled()) log.debug("EngineLengths returns instance "+_instance);
+		if (Control.showInstance && log.isDebugEnabled()) log.debug("EngineLengths returns instance "+_instance);
 		return _instance;
 	}
 

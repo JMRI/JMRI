@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009
- * @version             $Revision: 1.62 $
+ * @version             $Revision: 1.63 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -670,7 +670,7 @@ public class TrainBuilder extends TrainCommon{
 				Integer.toString(moves), Integer.toString(saveReqMoves), rl.getName(), train.getName()}));
 			}
 		}
-
+		// done finding cars for this train!
 		train.setCurrentLocation(train.getTrainDepartsRouteLocation());
 		if (numberCars < requested){
 			train.setStatus(PARTIALBUILT + train.getNumberCarsWorked() +"/" + requested + " "+ rb.getString("cars"));
@@ -732,14 +732,28 @@ public class TrainBuilder extends TrainCommon{
 
 		// get list of engines for this route		
 		List<String> engineList = engineManager.getEnginesAvailableTrainList(train);
-		// remove engines not at departure, wrong road name, or part of consist (not lead)
+		// remove engines that are the wrong type, wrong track, wrong road name, or part of consist (not lead)
 		for (int indexEng=0; indexEng<engineList.size(); indexEng++){
 			Engine engine = engineManager.getEngineById(engineList.get(indexEng));
 			addLine(fileOut, FIVE, "Engine ("+engine.getRoad()+" "+engine.getNumber()+") road ("+engine.getRoad()+") model ("+engine.getModel()+") type ("+engine.getType()+")");
-			addLine(fileOut, FIVE, " at location ("+engine.getLocationName()+", "+engine.getTrackName()+")");
-			// remove engines with types that train does not service
+			addLine(fileOut, SEVEN, " at location ("+engine.getLocationName()+", "+engine.getTrackName()+")");
+			// remove engines types that train does not service
 			if (!train.acceptsTypeName(engine.getType())){
 				addLine(fileOut, THREE, "Exclude engine ("+engine.getRoad()+" "+engine.getNumber()+"), type ("+engine.getType()+") is not serviced by this train");
+				engineList.remove(indexEng);
+				indexEng--;
+				continue;
+			}
+			// remove engines models that train does not service
+			if (!train.getEngineModel().equals("") && !engine.getModel().equals(train.getEngineModel())){
+				addLine(fileOut, THREE, "Exclude engine ("+engine.getRoad()+" "+engine.getNumber()+"), model ("+engine.getModel()+") is not serviced by this train");
+				engineList.remove(indexEng);
+				indexEng--;
+				continue;
+			}
+			// remove engines with roads that train does not service
+			if (!train.getEngineRoad().equals("") && !engine.getRoad().equals(train.getEngineRoad())){
+				addLine(fileOut, THREE, "Exclude engine ("+engine.getRoad()+" "+engine.getNumber()+"), road ("+engine.getRoad()+") is not serviced by this train");
 				engineList.remove(indexEng);
 				indexEng--;
 				continue;
@@ -757,38 +771,46 @@ public class TrainBuilder extends TrainCommon{
 				indexEng--;
 				continue;
 			}
-			// determine if engine is departing from staging track (departStageTrack != null if staging) 
-			if(engine.getLocationName().equals(train.getTrainDepartsName()) && (departStageTrack == null || engine.getTrackName().equals(departStageTrack.getName()))){
-				if ((train.getEngineRoad().equals("") || engine.getRoad().equals(train.getEngineRoad())) && (train.getEngineModel().equals("") || engine.getModel().equals(train.getEngineModel()))){
-					// is this engine part of a consist?  Keep only lead engines in consist if required number is correct.
-					if (engine.getConsist() != null){
-						if (!engine.getConsist().isLeadEngine(engine)){
-							addLine(fileOut, THREE, "Engine ("+engine.getRoad()+" "+engine.getNumber()+") is part of consist ("+engine.getConsist().getName()+") and has " + engine.getConsist().getEngines().size() + " engines");
-							// only use lead engines
-							engineList.remove(indexEng);
-							indexEng--;
-						}else{
-							addLine(fileOut, THREE, "Engine ("+engine.getRoad()+" "+engine.getNumber()+") is lead engine for consist ("+engine.getConsist().getName()+") and has " + engine.getConsist().getEngines().size() + " engines");
-							List<Engine> cEngines = engine.getConsist().getEngines();
-							if (cEngines.size() == reqNumEngines || leavingStaging){
-								log.debug("Consist ("+engine.getConsist().getName()+") has the required number of engines");
-							}else{
-								log.debug("Consist ("+engine.getConsist().getName()+") doesn't have the required number of engines");
-								addLine(fileOut, THREE, "Exclude consist ("+engine.getConsist().getName()+")");
-								engineList.remove(indexEng);
-								indexEng--;
-							}
-						}
-						continue;
-						// Single engine, does train require a consist?
-					} else if (reqNumEngines <= 1)
-						continue;	// no keep this engine
-				} 
+			// remove engines that aren't departing from the selected staging track (departStageTrack != null if staging)
+			if(!engine.getLocationName().equals(train.getTrainDepartsName()) || ((departStageTrack != null && !engine.getTrackName().equals(departStageTrack.getName())))){
+				addLine(fileOut, THREE, "Exclude engine ("+engine.getRoad()+" "+engine.getNumber()+") not on departure track");
+				engineList.remove(indexEng);
+				indexEng--;
+				continue;
 			}
-			// engine not on the departure track
-			addLine(fileOut, THREE, "Exclude engine ("+engine.getRoad()+" "+engine.getNumber()+")");
-			engineList.remove(indexEng);
-			indexEng--;
+			// is this engine part of a consist?  
+			if (engine.getConsist() == null){
+				// single engine, but does the train require a consist?
+				if (reqNumEngines > 1){
+					addLine(fileOut, THREE, "Exclude single engine ("+engine.getRoad()+" "+engine.getNumber()+") train requires "+ reqNumEngines +" engines");
+					engineList.remove(indexEng);
+					indexEng--;
+					continue;
+				}
+			// engine is part of a consist
+			}else{
+				// Keep only lead engines in consist if required number is correct.
+				if (!engine.getConsist().isLeadEngine(engine)){
+					addLine(fileOut, THREE, "Engine ("+engine.getRoad()+" "+engine.getNumber()+") is part of consist ("+engine.getConsist().getName()+") and has " + engine.getConsist().getEngines().size() + " engines");
+					// remove non-lead engines
+					engineList.remove(indexEng);
+					indexEng--;
+					continue;
+				// lead engine in consist
+				}else{
+					addLine(fileOut, THREE, "Engine ("+engine.getRoad()+" "+engine.getNumber()+") is lead engine for consist ("+engine.getConsist().getName()+") and has " + engine.getConsist().getEngines().size() + " engines");
+					List<Engine> cEngines = engine.getConsist().getEngines();
+					if (cEngines.size() == reqNumEngines || leavingStaging){
+						log.debug("Consist ("+engine.getConsist().getName()+") has the required number of engines");
+					}else{
+						log.debug("Consist ("+engine.getConsist().getName()+") doesn't have the required number of engines");
+						addLine(fileOut, THREE, "Exclude consist ("+engine.getConsist().getName()+") wrong number of engines");
+						engineList.remove(indexEng);
+						indexEng--;
+						continue;
+					}
+				}
+			} 
 		}
 		// departing staging with 0 engines?
 		// test to see if departure track has engines assigned to another train
@@ -923,10 +945,11 @@ public class TrainBuilder extends TrainCommon{
 		} 
 		return nE;
 	}
+	
 	/**
 	 * Adds a caboose or car with FRED to the train if needed.  Caboose or
 	 * car with FRED must travel with the train to the last location in the
-	 * route.
+	 * route.  Also removes all cabooses and cars with FRED that aren't needed by train.
 	 * @param fileOut
 	 * @return true if the correct caboose or car with FRED is found and accepted by
 	 * last location in route.
@@ -1035,8 +1058,8 @@ public class TrainBuilder extends TrainCommon{
 										return false;
 									}
 								}
+							// terminate into staging
 							} else {
-								// terminate into staging
 								String status = c.testDestination(terminateLocation, train.getTrainTerminatesRouteLocation().getStagingTrack());
 								if (status.equals(Car.OKAY)){
 									boolean carAdded = addCarToTrain(fileOut, c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, train.getTrainTerminatesRouteLocation().getStagingTrack());

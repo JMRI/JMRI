@@ -22,9 +22,6 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteManagerXml;
-
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.LocationManager;
 
 import jmri.jmrit.operations.setup.Setup;
@@ -41,15 +38,15 @@ import jmri.jmrit.display.LayoutEditor;
 /**
  * Represents a train on the layout
  * 
- * @author Daniel Boudreau
- * @version             $Revision: 1.52 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2009
+ * @version $Revision: 1.53 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
 	// WARNING DO NOT LOAD CAR OR ENGINE MANAGERS WHEN Train.java IS CREATED
 	// IT CAUSES A RECURSIVE LOOP AT LOAD TIME, SEE EXAMPLES BELOW
-	//CarManager carManager = CarManager.instance();
-	//EngineManager engineManager = EngineManager.instance();
+	// CarManager carManager = CarManager.instance();
+	// EngineManager engineManager = EngineManager.instance();
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
@@ -75,21 +72,20 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _comment = "";
 	
 	// property change names
-	public static final String DISPOSE_CHANGED_PROPERTY = "dispose";
-	public static final String STOPS_CHANGED_PROPERTY = "stops";
-	public static final String TYPES_CHANGED_PROPERTY = "Types";
-	public static final String ROADS_CHANGED_PROPERTY = "Road";
-	public static final String LENGTH_CHANGED_PROPERTY = "length";
-	public static final String NAME_CHANGED_PROPERTY = "train name";
-	public static final String DESCRIPTION_CHANGED_PROPERTY = "description";
-	public static final String ENGINELOCATION_CHANGED_PROPERTY = "EngineLocation";
-	public static final String NUMBERCARS_CHANGED_PROPERTY = "numberCarsMoves";
-	public static final String STATUS_CHANGED_PROPERTY = "status";
-	public static final String DEPARTURETIME_CHANGED_PROPERTY = "departureTime";
+	public static final String DISPOSE_CHANGED_PROPERTY = "TrainDispose";
+	public static final String STOPS_CHANGED_PROPERTY = "TrainStops";
+	public static final String TYPES_CHANGED_PROPERTY = "TrainTypes";
+	public static final String ROADS_CHANGED_PROPERTY = "TrainRoad";
+	public static final String NAME_CHANGED_PROPERTY = "TrainName";
+	public static final String DESCRIPTION_CHANGED_PROPERTY = "TrainDescription";
+	public static final String STATUS_CHANGED_PROPERTY = "TrainStatus";
+	public static final String DEPARTURETIME_CHANGED_PROPERTY = "TrainDepartureTime";
+	public static final String TRAIN_LOCATION_CHANGED_PROPERTY = "TrainLocation";
 	
 	// Train status
 	public static final String TERMINATED = rb.getString("Terminated");
 	public static final String TRAINRESET = rb.getString("TrainReset");
+	public static final String TRAININROUTE = rb.getString("TrainInRoute");
 	
 	public static final int NONE = 0;		// train requirements
 	public static final int CABOOSE = 1;
@@ -342,7 +338,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		return null;
 	}
 
-    //  Train's current route location
+	/**
+	 * Set train's current route location
+	 */
 	public void setCurrentLocation(RouteLocation location) {
 		RouteLocation old = _current;
 		_current = location;
@@ -350,20 +348,26 @@ public class Train implements java.beans.PropertyChangeListener {
 			firePropertyChange("current", old, location);
 		}
 	}
-	
-	// Train's current route location name
+
+	/**
+	 * @return Train's current route location name
+	 */
 	public String getCurrentLocationName() {
 		if (_current == null)
 			return "";
 		return _current.getName();
 	}
 	
-	// Train's current route location
+	/**
+	 * @return Train's current route location
+	 */
 	public RouteLocation getCurrentLocation(){
 		return _current;
 	}
 	
-	// Train's next route location name
+	/**
+	 * @return Train's next route location name
+	 */
 	public String getNextLocationName(){
 		List<String> routeList = getRoute().getLocationsBySequenceList();
 		for (int i=0; i<routeList.size(); i++){
@@ -389,10 +393,18 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return Train's status
+	 */
 	public String getStatus() {
 		return _status;
 	}
 	
+	/**
+	 * 
+	 * @return true if train is in route
+	 */
 	public boolean isTrainInRoute() {
 		return getCurrentLocationName() != "" && getTrainDepartsRouteLocation() != getCurrentLocation();
 	}
@@ -512,6 +524,12 @@ public class Train implements java.beans.PropertyChangeListener {
    		return roads;
     }
     
+    /**
+     * Add a road name that the train will
+     * either service or exclude.  See setRoadOption
+     * @return true if road name was added, false if road name
+     * wasn't in the list.
+     */
     public boolean addRoadName(String road){
      	if (_roadList.contains(road))
     		return false;
@@ -521,6 +539,12 @@ public class Train implements java.beans.PropertyChangeListener {
     	return true;
     }
     
+    /**
+     * Delete a road name that the train will
+     * either service or exclude.  See setRoadOption
+     * @return true if road name was removed, false if road name
+     * wasn't in the list.
+     */
     public boolean deleteRoadName(String road){
      	if (!_roadList.contains(road))
     		return false;
@@ -530,6 +554,11 @@ public class Train implements java.beans.PropertyChangeListener {
        	return true;
     }
     
+    /**
+     * Determine if train will service a specific road name.
+     * @param road the road name to check.
+     * @return true if train will service this road name.
+     */
     public boolean acceptsRoadName(String road){
     	if (_roadOption.equals(ALLROADS)){
     		return true;
@@ -541,7 +570,8 @@ public class Train implements java.beans.PropertyChangeListener {
        	return !_roadList.contains(road);
     }
     /**
-     * The number of cars worked by this train
+     * 
+     * @return The number of cars worked by this train
      */
     public int getNumberCarsWorked(){
     	List<String> cars = CarManager.instance().getCarsByTrainList(this);
@@ -571,10 +601,18 @@ public class Train implements java.beans.PropertyChangeListener {
 		_numberEngines = number;
 	}
 
+	/**
+	 * 
+	 * @return The number of engines that this train requires.
+	 */
 	public String getNumberEngines() {
 		return _numberEngines;
 	}
 	
+	/**
+	 * 
+	 * @param road The road name of engines servicing this train.
+	 */
 	public void setEngineRoad(String road) {
 		_engineRoad = road;
 	}
@@ -583,6 +621,10 @@ public class Train implements java.beans.PropertyChangeListener {
 		return _engineRoad;
 	}
 	
+	/**
+	 * 
+	 * @param model The model name of engines servicing this train.
+	 */
 	public void setEngineModel(String model) {
 		_engineModel = model;
 	}
@@ -591,6 +633,10 @@ public class Train implements java.beans.PropertyChangeListener {
 		return _engineModel;
 	}
 	
+	/**
+	 * 
+	 * @param road The road name of the caboose servicing this train.
+	 */
 	public void setCabooseRoad(String road) {
 		_cabooseRoad = road;
 	}
@@ -615,6 +661,10 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return true if the train was successfully built.
+	 */
 	public boolean getBuilt() {
 		return _built;
 	}
@@ -808,7 +858,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (Setup.isTrainIconCordEnabled()){
 			trainIconRl.setTrainIconX(trainIcon.getX());
 			trainIconRl.setTrainIconY(trainIcon.getY());
-			RouteManagerXml.setDirty(true);
+			RouteManagerXml.instance().setDirty(true);
 			return true;
 		}
 		return false;
@@ -840,14 +890,15 @@ public class Train implements java.beans.PropertyChangeListener {
 			RouteLocation rl = getRoute().getLocationById(routeList.get(i));
 			if (getCurrentLocation() == rl) {
 				i++;
-				RouteLocation rlNew = rl;	// use current if end of route
+				RouteLocation rlNew = null;	// use null if end of route
 				if (i < routeList.size()) {
 					rlNew = getRoute().getLocationById(routeList.get(i));
-					setCurrentLocation(rlNew);		// note, _current becomes null after all cars moved at terminate
 				} 
-				moveEngines(rl, rlNew);
-				moveCars(rl, rlNew);
+				setCurrentLocation(rlNew);
+				updateStatus(rl, rlNew);
 				moveTrainIcon(rlNew);
+				// cars and engines will move via property change
+				firePropertyChange(TRAIN_LOCATION_CHANGED_PROPERTY, rl, rlNew);
 				break;
 			}
 		}
@@ -870,8 +921,10 @@ public class Train implements java.beans.PropertyChangeListener {
 				trainIcon.setToolTipText(getDescription() + " "+TERMINATED+" ("+ getTrainTerminatesName()+")");
 			else
 				trainIcon.setToolTipText(getDescription() + " at " + getCurrentLocationName() + " next "+getNextLocationName());
-			if (rl.getTrainIconX()!=0 || rl.getTrainIconY()!=0){
-				trainIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
+			if (rl != null){
+				if (rl.getTrainIconX()!=0 || rl.getTrainIconY()!=0){
+					trainIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
+				}
 			}
 		} 
 	}
@@ -979,78 +1032,14 @@ public class Train implements java.beans.PropertyChangeListener {
 	
 	LocationManager locationManager = LocationManager.instance();
 
-	private void moveEngines(RouteLocation old, RouteLocation next){
-		EngineManager engineManager = EngineManager.instance();
-		List<String> engines = engineManager.getEnginesByTrainList();
-		for (int i=0; i<engines.size(); i++){
-			Engine engine = engineManager.getEngineById(engines.get(i));
-			if(this == engine.getTrain() && old == engine.getRouteLocation()){
-				log.debug("engine ("+engine.getId()+") is in train (" +getName()+") leaves location ("+old.getName()+") arrives ("+next.getName()+")");
-				if(engine.getRouteLocation() == engine.getRouteDestination()){
-					log.debug("engine ("+engine.getId()+") has arrived at destination");
-					Location destination = engine.getDestination();
-					Track destTrack = engine.getDestinationTrack();
-					engine.setDestination(null, null); 	// this also clears the route locations
-					engine.setLocation(destination, destTrack);
-					engine.setTrain(null);
-				}else{
-					Location nextLocation = locationManager.getLocationByName(next.getName());
-					engine.setLocation(nextLocation, null);
-					engine.setRouteLocation(next);
-				}
-			}
-		}
-		firePropertyChange(ENGINELOCATION_CHANGED_PROPERTY, old.getName(), next.getName());
-	}
-
-	private void moveCars(RouteLocation old, RouteLocation next){
-		log.debug("Move cars in train ("+getName()+")");
-		CarManager carManager = CarManager.instance();
-		List<String> cars = carManager.getCarsByTrainList(this);
-		int oldNum = cars.size();
-		int dropCars = 0;
-		int pickupCars = 0;
-		int departCars = 0;
-		for (int i=0; i<cars.size(); i++){
-			Car car = carManager.getCarById(cars.get(i));
-			if(this == car.getTrain() && old == car.getRouteLocation()){
-				log.debug("car ("+car.getId()+") is in train (" +getName()+") leaves location ("+old.getName()+") arrives ("+next.getName()+")");
-				if(car.getRouteLocation() == car.getRouteDestination()){
-					log.debug("car ("+car.getId()+") has arrived at destination");
-					Location destination = car.getDestination();
-					Track destTrack = car.getDestinationTrack();
-					car.setDestination(null, null); 	// this also clears the route locations
-					String status = car.setLocation(destination, destTrack);
-					if (!status.equals(Car.OKAY)){
-						car.setLocation(destination, null); // can't place car at destination track
-						log.error("Can't drop car ("+car.getId()+") on track " + destTrack + " due to " +status);
-					}
-					
-					car.setTrain(null);
-					dropCars++;
-				}else{
-					Location nextLocation = locationManager.getLocationByName(next.getName());
-					if (car.getTrack() != null)
-						pickupCars++;
-					car.setLocation(nextLocation, null);
-					car.setRouteLocation(next);
-					departCars++;
-				}
-			}
-		}
-		if (old == next && dropCars == 0 && pickupCars == 0 && departCars == 0){
+	private void updateStatus(RouteLocation old, RouteLocation next){
+		if (next != null){
+			setStatus(TRAININROUTE);
+		}else{
 			log.debug("Train ("+getName()+")terminated");
 			setStatus(TERMINATED);
-			setCurrentLocation(null);
 			setBuilt(false);
-		}else{
-			log.debug(dropCars+ " Drop " +pickupCars+ " Add " +departCars+ " Cars");
-			if (departCars > 0 || dropCars == 0)
-				setStatus(departCars+ " "+rb.getString("Cars"));
-			else
-				setStatus(rb.getString("Drop")+" " +dropCars+ " "+rb.getString("Cars"));
 		}
-		firePropertyChange(NUMBERCARS_CHANGED_PROPERTY, Integer.toString(oldNum), Integer.toString(getNumberCarsWorked()));
 	}
 	
 	/**
@@ -1063,38 +1052,17 @@ public class Train implements java.beans.PropertyChangeListener {
 			log.info("Train has started its route, can not reset");
 			return false;
 		}
-		// remove engines assigned to this train
-		EngineManager engineManager = EngineManager.instance();
-		List<String> engines = engineManager.getEnginesByIdList();
-		for (int i=0; i<engines.size(); i++){
-			Engine engine = engineManager.getEngineById(engines.get(i));
-			if(this == engine.getTrain() && engine.getRouteLocation()!=null){
-				engine.setTrain(null);
-				engine.setDestination(null, null);
-			}
-		}
-		// remove all cars assigned to this train
-		CarManager carManager = CarManager.instance();
-		List<String> cars = carManager.getCarsByIdList();
-		int oldNum = getNumberCarsWorked();
-		for (int i=0; i<cars.size(); i++){
-			Car car = carManager.getCarById(cars.get(i));
-			if(this == car.getTrain() && car.getRouteLocation()!=null){
-				car.setTrain(null);
-				car.setDestination(null, null);
-			}
-		}
-		setStatus(TRAINRESET);
 		setCurrentLocation(null);
 		setBuilt(false);
 		setBuildFailed(false);
 		setPrinted(false);
+		// remove cars and engines from this train via property change
+		setStatus(TRAINRESET);
 		// remove train icon
 		if (trainIcon != null && trainIcon.isActive()) {
 			trainIcon.remove();
 			trainIcon.dispose();
 		}
-		firePropertyChange(NUMBERCARS_CHANGED_PROPERTY, Integer.toString(oldNum), Integer.toString(0));
 		return true;
 	}
 
@@ -1107,7 +1075,7 @@ public class Train implements java.beans.PropertyChangeListener {
  	
    /**
      * Construct this Entry from XML. This member has to remain synchronized with the
-     * detailed DTD in operations-config.xml
+     * detailed DTD in operations-trains.dtd
      *
      * @param e  Consist XML element
      */
@@ -1127,8 +1095,10 @@ public class Train implements java.beans.PropertyChangeListener {
         		setDepartureTime(hour, minute);
         	}
         }
-        
-        if ((a = e.getAttribute("route")) != null ) {
+        // try and first get the route by id then by name
+        if ((a = e.getAttribute("routeId")) != null ) {
+       		setRoute(RouteManager.instance().getRouteById(a.getValue()));
+        }else if ((a = e.getAttribute("route")) != null ) {
        		setRoute(RouteManager.instance().getRouteByName(a.getValue()));
         }
         if ((a = e.getAttribute("skip")) != null ) {
@@ -1181,7 +1151,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Create an XML element to represent this Entry. This member has to remain synchronized with the
-     * detailed DTD in operations-config.xml.
+     * detailed DTD in operations-trains.dtd.
      * @return Contents in a JDOM Element
      */
     public org.jdom.Element store() {
@@ -1192,10 +1162,10 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("departHour", getDepartureTimeHour());
         e.setAttribute("departMinute", getDepartureTimeMinute());
         Route route = getRoute();
-        if (route != null)
-        	e.setAttribute("route", getRoute().toString());
-        else
-        	e.setAttribute("route", "");
+        if (route != null){
+        	e.setAttribute("route", getRoute().getName());
+        	e.setAttribute("routeId", getRoute().getId());
+        }
         // build list of locations that this train skips
         String[] locationIds = getTrainSkipsLocations();
         String names ="";
