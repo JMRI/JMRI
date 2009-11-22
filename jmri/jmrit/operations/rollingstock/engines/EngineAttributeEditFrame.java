@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.22 $
+ * @version             $Revision: 1.23 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -231,7 +231,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 	}
 	
 	private void replaceItem (String oldItem, String newItem){
-		List<String> engines = manager.getEnginesByNumberList();
+		List<String> engines = manager.getEnginesByIdList();
 		for (int i=0; i<engines.size(); i++){
 			Engine engine = manager.getEngineById(engines.get(i));
 
@@ -240,8 +240,22 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 					engine.setRoad(newItem);
 			}
 			if(_comboboxName == EngineEditFrame.MODEL){
-				if (engine.getModel().equals(oldItem))
-					engine.setModel(newItem);
+				if (engine.getModel().equals(oldItem)){
+					// Has this model been configured?
+					if(EngineModels.instance().getModelLength(newItem) != null){
+						engine.setModel(newItem);
+					} else {
+						// get the old configuration for this model
+						String length = engine.getLength();
+						String hp = engine.getHp();
+						String type = engine.getType();
+						// now update the new model
+						engine.setModel(newItem);
+						engine.setLength(length);
+						engine.setHp(hp);
+						engine.setType(type);
+					}
+				}
 			}
 			if(_comboboxName == EngineEditFrame.TYPE){
 				if (engine.getType().equals(oldItem))
