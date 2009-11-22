@@ -17,7 +17,7 @@ import org.jdom.Element;
  *  Load throttles from XML
  *
  * @author     Glen Oberhauser 2004
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class LoadXmlThrottlesLayoutAction extends AbstractAction {
 	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
@@ -50,7 +50,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		if (fileChooser == null) {
 			fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
-			fileChooser.setCurrentDirectory(new File(StoreXmlThrottlesLayoutAction.defaultThrottleDirectory()));
+			fileChooser.setCurrentDirectory(new File(ThrottleFrame.getDefaultThrottleFolder()));
 		}
 		int retVal = fileChooser.showOpenDialog(null);
 		if (retVal != JFileChooser.APPROVE_OPTION) {
@@ -121,7 +121,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
 	 * An extension of the abstract XmlFile. No changes made to that class.
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.1 $
+	 * @version $Revision: 1.2 $
 	 */
 	class ThrottlePrefs extends XmlFile {}
 

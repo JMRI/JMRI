@@ -1,6 +1,7 @@
 package jmri.jmrit.jython;
 
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 /**
  * A Jynstrument is a Jython script and associated
@@ -15,7 +16,8 @@ public abstract class Jynstrument extends JPanel {
 	private String jythonFile;		// Name of the Jython file being run
 	private String jynstrumentFolder;	// Folder where the script seats (to retrieve resources)
 	private String className; // name of the JYnstrument class
-
+	private JPopupMenu myPopUpMenu; // a popup menu
+	
     /**
      * Access to the context object to which this
      * Jynstrument was attached when it was created.
@@ -69,4 +71,11 @@ public abstract class Jynstrument extends JPanel {
 	public abstract void quit();
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Jynstrument.class.getName());
+
+	public JPopupMenu getPopUpMenu() {
+		return myPopUpMenu;
+	}
+	public void setPopUpMenu(JPopupMenu myPopUpMenu) {
+		this.myPopUpMenu = myPopUpMenu;
+	}
 }

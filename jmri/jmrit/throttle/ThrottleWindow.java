@@ -30,6 +30,7 @@ import jmri.PowerManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
+import jmri.jmrit.jython.JynstrumentPopupMenu;
 import jmri.util.JmriJFrame;
 import jmri.util.iharder.dnd.FileDrop;
 import jmri.util.iharder.dnd.FileDrop.Listener;
@@ -86,7 +87,7 @@ public class ThrottleWindow extends JmriJFrame {
         setLayout(new BorderLayout());
         throttlesLayout = new CardLayout();
         throttlesPanel = new JPanel(throttlesLayout);
-        
+        throttlesPanel.setDoubleBuffered(true);
         if ( (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) 
         	&& ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isOneWindowForAll()) )
         	initializeToolbar();
@@ -217,23 +218,25 @@ public class ThrottleWindow extends JmriJFrame {
 
     	new FileDrop(throttleToolBar, new Listener() {
     		public void filesDropped(File[] files) {
-    			jynstrument(files[0].getPath());
+    			ynstrument(files[0].getPath());
     		}
     	});
 
     	add(throttleToolBar, BorderLayout.PAGE_START);
     }
 
-    private void jynstrument(String path) {
+    private void ynstrument(String path) {
     	Jynstrument it = JynstrumentFactory.createInstrument(path, this);
     	if (it == null) {
     		log.error("Error while creating Jynstrument "+path);
     		return ;
     	}
     	it.setVisible(true);
+    	it.setPopUpMenu(new JynstrumentPopupMenu(it, throttleToolBar));
     	throttleToolBar.add(it);
+    	throttleToolBar.repaint();
     }
-
+    
     /**
      *  Set up View, Edit and Power Menus
      */

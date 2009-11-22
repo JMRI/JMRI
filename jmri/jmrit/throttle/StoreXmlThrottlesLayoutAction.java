@@ -17,12 +17,11 @@ import org.jdom.output.*;
  *
  * @author			Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 
-	ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.throttle.ThrottleBundle");
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
 
 	/**
 	 * Constructor
@@ -43,7 +42,7 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
-		fileChooser.setCurrentDirectory(new File(defaultThrottleDirectory()));
+		fileChooser.setCurrentDirectory(new File( ThrottleFrame.getDefaultThrottleFolder()));
 		java.io.File file = StoreXmlConfigAction.getFileName(fileChooser);
 		if (file == null)
 			return;
@@ -86,12 +85,7 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 		}
 	}
 
-	public static String defaultThrottleDirectory() {
-		return XmlFile.prefsDir() + "throttles";
-	}
-
 	// initialize logging
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(StoreXmlThrottlesLayoutAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(StoreXmlThrottlesLayoutAction.class.getName());
 
 }
