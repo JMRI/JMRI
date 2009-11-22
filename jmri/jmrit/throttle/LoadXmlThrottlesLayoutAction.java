@@ -17,18 +17,17 @@ import org.jdom.Element;
  *  Load throttles from XML
  *
  * @author     Glen Oberhauser 2004
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.1 $
  */
-public class LoadXmlThrottleAction extends AbstractAction {
-	ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.throttle.ThrottleBundle");
+public class LoadXmlThrottlesLayoutAction extends AbstractAction {
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
 
 	/**
 	 *  Constructor
 	 *
 	 * @param  s  Name for the action.
 	 */
-	public LoadXmlThrottleAction(String s) {
+	public LoadXmlThrottlesLayoutAction(String s) {
 		super(s);
 		// disable the ourselves if there is no throttle Manager
 		if (jmri.InstanceManager.throttleManagerInstance() == null) {
@@ -36,7 +35,7 @@ public class LoadXmlThrottleAction extends AbstractAction {
 		}
 	}
 
-	public LoadXmlThrottleAction() {
+	public LoadXmlThrottlesLayoutAction() {
 		this("Load Throttle");
 	}
 
@@ -50,10 +49,8 @@ public class LoadXmlThrottleAction extends AbstractAction {
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if (fileChooser == null) {
-			fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb
-					.getString("PromptXmlFileTypes"), "xml");
-			fileChooser.setCurrentDirectory(new File(StoreXmlThrottleAction
-					.defaultThrottleDirectory()));
+			fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
+			fileChooser.setCurrentDirectory(new File(StoreXmlThrottlesLayoutAction.defaultThrottleDirectory()));
 		}
 		int retVal = fileChooser.showOpenDialog(null);
 		if (retVal != JFileChooser.APPROVE_OPTION) {
@@ -63,8 +60,7 @@ public class LoadXmlThrottleAction extends AbstractAction {
 
 		// if exising frames are open ask to destroy those or merge.
 		if (ThrottleFrameManager.instance().getThrottleWindows().hasNext()) {
-			Object[] possibleValues = { rb.getString("LabelMerge"),
-					rb.getString("LabelReplace"), rb.getString("LabelCancel") };
+			Object[] possibleValues = { rb.getString("LabelMerge"),	rb.getString("LabelReplace"), rb.getString("LabelCancel") };
 			int selectedValue = JOptionPane.showOptionDialog(null, rb
 					.getString("DialogMergeOrReplace"), rb
 					.getString("OptionLoadingThrottles"),
@@ -77,7 +73,7 @@ public class LoadXmlThrottleAction extends AbstractAction {
 			}
 		}
 		try {
-		    loadThrottles(fileChooser.getSelectedFile());
+		    loadThrottlesLayout(fileChooser.getSelectedFile());
 	    } catch (java.io.IOException e1) {
 	        log.warn("Exception while reading file", e1);
 	    }
@@ -90,7 +86,7 @@ public class LoadXmlThrottleAction extends AbstractAction {
 	 * @param  f  The XML file containing throttles.
 	 */
 	@SuppressWarnings("unchecked")
-	public boolean loadThrottles(java.io.File f) throws java.io.IOException {
+	public boolean loadThrottlesLayout(java.io.File f) throws java.io.IOException {
 		try {
 			ThrottlePrefs prefs = new ThrottlePrefs();
 			Element root = prefs.rootFromFile(f);
@@ -125,14 +121,11 @@ public class LoadXmlThrottleAction extends AbstractAction {
 	 * An extension of the abstract XmlFile. No changes made to that class.
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.21 $
+	 * @version $Revision: 1.1 $
 	 */
-	class ThrottlePrefs extends XmlFile {
-
-	}
+	class ThrottlePrefs extends XmlFile {}
 
 	// initialize logging
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(LoadXmlThrottleAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadXmlThrottlesLayoutAction.class.getName());
 
 }

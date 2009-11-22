@@ -12,7 +12,6 @@
 <!-- for more details.                                                      -->
 
 <!ELEMENT throttles-preferences (throttlePreferences)>
-<!ATTLIST throttle-preferences>
 
 <!ATTLIST throttlesPreferences isUsingExThrottle CDATA #REQUIRED>
 <!ATTLIST throttlesPreferences isOneWindowForAll CDATA #REQUIRED>

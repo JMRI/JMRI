@@ -17,9 +17,9 @@ import org.jdom.output.*;
  *
  * @author			Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.1 $
  */
-public class StoreXmlThrottleAction extends AbstractAction {
+public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 
 	ResourceBundle rb = ResourceBundle
 			.getBundle("jmri.jmrit.throttle.ThrottleBundle");
@@ -28,7 +28,7 @@ public class StoreXmlThrottleAction extends AbstractAction {
 	 * Constructor
 	 * @param s Name for the action.
 	 */
-	public StoreXmlThrottleAction(String s) {
+	public StoreXmlThrottlesLayoutAction(String s) {
 		super(s);
 		// disable this ourselves if there is no throttle Manager
 		if (jmri.InstanceManager.throttleManagerInstance() == null) {
@@ -42,26 +42,24 @@ public class StoreXmlThrottleAction extends AbstractAction {
 	 * @param e The event causing the action.
 	 */
 	public void actionPerformed(ActionEvent e) {
-		JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb
-				.getString("PromptXmlFileTypes"), "xml");
+		JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
 		fileChooser.setCurrentDirectory(new File(defaultThrottleDirectory()));
 		java.io.File file = StoreXmlConfigAction.getFileName(fileChooser);
 		if (file == null)
 			return;
 
 		try {
-			Element root = new Element("throttle-config");
-			Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation
-					+ "throttle-config.dtd");
+			Element root = new Element("throttle-layout-config");
+			Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation+ "throttle-layout-config.dtd");
 
 			// add XSLT processing instruction
-			// <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>
-			java.util.Map<String,String> m = new java.util.HashMap<String,String>();
+			// <?xml-stylesheet type="text/xsl" href="XSLT/throttle-layout-config.xsl"?>
+/*TODO			java.util.Map<String,String> m = new java.util.HashMap<String,String>();
 			m.put("type", "text/xsl");
-			m.put("href", jmri.jmrit.XmlFile.xsltLocation + "throttle.xsl");
-			ProcessingInstruction p = new ProcessingInstruction(
-					"xml-stylesheet", m);
-			doc.addContent(0, p);
+			m.put("href", jmri.jmrit.XmlFile.xsltLocation + "throttle-layout-config.xsl");
+			ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
+			doc.addContent(0, p); */
+			
 			java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(5);
 			
 			// throttle list window
@@ -94,6 +92,6 @@ public class StoreXmlThrottleAction extends AbstractAction {
 
 	// initialize logging
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(StoreXmlThrottleAction.class.getName());
+	.getLogger(StoreXmlThrottlesLayoutAction.class.getName());
 
 }

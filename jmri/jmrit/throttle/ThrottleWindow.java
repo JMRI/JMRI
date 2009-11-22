@@ -48,6 +48,8 @@ public class ThrottleWindow extends JmriJFrame {
     private JCheckBoxMenuItem viewFunctionPanel;
     private JCheckBoxMenuItem viewAddressPanel;
     private JMenuItem viewAllButtons;
+    private JMenuItem fileMenuSave;
+    private JMenuItem editMenuExportRoster;
     
     private JButton jbPrevious = null;
     private JButton jbNext = null;
@@ -91,11 +93,11 @@ public class ThrottleWindow extends JmriJFrame {
 
         initializeMenu();
         
-        curentThrottleFrame = new ThrottleFrame(this);
-        curentThrottleFrame.setTitle("default");
-        throttlesPanel.add(curentThrottleFrame,"default");       
+        setCurentThrottleFrame ( new ThrottleFrame(this) );
+        getCurentThrottleFrame().setTitle("default");
+        throttlesPanel.add(getCurentThrottleFrame(),"default");       
         add(throttlesPanel,BorderLayout.CENTER);
-        KeyListenerInstaller.installKeyListenerOnAllComponents(throttlePanelsCyclingKeyListener, curentThrottleFrame);
+        KeyListenerInstaller.installKeyListenerOnAllComponents(throttlePanelsCyclingKeyListener, getCurentThrottleFrame());
         
         this.addWindowListener(
                                new WindowAdapter()
@@ -112,11 +114,13 @@ public class ThrottleWindow extends JmriJFrame {
     
     public void updateGUI() {
     	// title bar
-    	curentThrottleFrame.setFrameTitle();
+    	getCurentThrottleFrame().setFrameTitle();
     	// menu items
-		viewAddressPanel.setSelected( curentThrottleFrame.getAddressPanel().isVisible() );
-		viewControlPanel.setSelected( curentThrottleFrame.getControlPanel().isVisible() );
-		viewFunctionPanel.setSelected( curentThrottleFrame.getFunctionPanel().isVisible() );
+    	viewAddressPanel.setSelected( getCurentThrottleFrame().getAddressPanel().isVisible() );
+		viewControlPanel.setSelected( getCurentThrottleFrame().getControlPanel().isVisible() );
+		viewFunctionPanel.setSelected( getCurentThrottleFrame().getFunctionPanel().isVisible() );
+		fileMenuSave.setEnabled( getCurentThrottleFrame().getLastUsedSaveFile() != null || getCurentThrottleFrame().getRosterEntry() != null);
+		editMenuExportRoster.setEnabled( getCurentThrottleFrame().getRosterEntry() != null);
     	// toolbar items
     	if (jbPrevious != null) // means toolbar enabled
     		if ( cardCounter > 1 ) {
@@ -213,14 +217,14 @@ public class ThrottleWindow extends JmriJFrame {
 
     	new FileDrop(throttleToolBar, new Listener() {
     		public void filesDropped(File[] files) {
-    			instrument(files[0].getPath());
+    			jynstrument(files[0].getPath());
     		}
     	});
 
     	add(throttleToolBar, BorderLayout.PAGE_START);
     }
 
-    private void instrument(String path) {
+    private void jynstrument(String path) {
     	Jynstrument it = JynstrumentFactory.createInstrument(path, this);
     	if (it == null) {
     		log.error("Error while creating Jynstrument "+path);
@@ -233,9 +237,32 @@ public class ThrottleWindow extends JmriJFrame {
     /**
      *  Set up View, Edit and Power Menus
      */
-    private void initializeMenu() {                
-		JMenu viewMenu = new JMenu(throttleBundle.getString("ThrottleMenuView"));
+    private void initializeMenu() {       
+		JMenu fileMenu = new JMenu(throttleBundle.getString("ThrottleFileMenu"));
+		JMenuItem fileMenuLoad = new JMenuItem(throttleBundle.getString("ThrottleFileMenuLoadThrottle"));
+		fileMenuLoad.addActionListener(new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				getCurentThrottleFrame().loadThrottle(null);
+			}
+		});
+		fileMenuSave = new JMenuItem(throttleBundle.getString("ThrottleFileMenuSaveThrottle"));
+		fileMenuSave.addActionListener(new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				getCurentThrottleFrame().saveThrottle();
+			}
+		});
+		JMenuItem fileMenuSaveAs = new JMenuItem(throttleBundle.getString("ThrottleFileMenuSaveAsThrottle"));
+		fileMenuSaveAs.addActionListener(new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				getCurentThrottleFrame().saveThrottleAs();
+			}
+		});
+
+		fileMenu.add(fileMenuLoad);
+		fileMenu.add(fileMenuSave);
+		fileMenu.add(fileMenuSaveAs);
 		
+		JMenu viewMenu = new JMenu(throttleBundle.getString("ThrottleMenuView"));		
 		viewAddressPanel = new JCheckBoxMenuItem(throttleBundle.getString("ThrottleMenuViewAddressPanel"));
 		viewAddressPanel.setSelected(true);
 		viewAddressPanel.addItemListener(new ItemListener() {
@@ -290,20 +317,21 @@ public class ThrottleWindow extends JmriJFrame {
 				getCurentThrottleFrame().getFunctionPanel().setEnabled(false);
 			}
 		});
-		JMenuItem saveFuncButtonsItem = new JMenuItem(throttleBundle.getString("ThrottleMenuEditSaveCustoms"));
-		editMenu.add(saveFuncButtonsItem);
-		saveFuncButtonsItem.addActionListener(new ActionListener() {
+		editMenuExportRoster = new JMenuItem(throttleBundle.getString("ThrottleMenuEditSaveCustoms"));
+		editMenu.add(editMenuExportRoster);
+		editMenuExportRoster.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			//	curentThrottleFrame.saveRosterChanges(); TODO: would save updated button entries, but do we really want to modify the roster file from there?
-		        if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) {
+				getCurentThrottleFrame().saveRosterChanges();
+/*		        if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) {
 		        	getCurentThrottleFrame().saveThrottle();
-		        }
+		        }*/
 			}
 		});
 
 		this.setJMenuBar(new JMenuBar());
-		this.getJMenuBar().add(viewMenu);
+		this.getJMenuBar().add(fileMenu);
 		this.getJMenuBar().add(editMenu);
+		this.getJMenuBar().add(viewMenu);
 
 		if (powerMgr != null) {
 			JMenu powerMenu = new JMenu(throttleBundle.getString("ThrottleMenuPower"));
@@ -390,6 +418,9 @@ public class ThrottleWindow extends JmriJFrame {
 	}
 
 	public void setCurentThrottleFrame(ThrottleFrame tf) {
+		if (getCurentThrottleFrame() != null)
+			log.debug("setCurentThrottleFrame from "+ getCurentThrottleFrame().getAddressPanel().getCurrentAddress()+" to "+ tf.getAddressPanel().getCurrentAddress());
+		pcs.firePropertyChange("ThrottleFrame", getCurentThrottleFrame(), tf);
 		curentThrottleFrame = tf;
 	}
 	
@@ -397,7 +428,7 @@ public class ThrottleWindow extends JmriJFrame {
 		if ( cardCounter > 1 ) // we don't like empty ThrottleWindow
 		{
 			cardCounter--;
-			if (curentThrottleFrame == tf)	{
+			if (getCurentThrottleFrame() == tf)	{
 				log.debug("Closing last created");
 			}
 			throttlesPanel.remove( tf );
@@ -433,10 +464,10 @@ public class ThrottleWindow extends JmriJFrame {
 	}
 	
 	public ThrottleFrame addThrottleFrame() {
-		curentThrottleFrame = new ThrottleFrame(this);
-        KeyListenerInstaller.installKeyListenerOnAllComponents(throttlePanelsCyclingKeyListener, curentThrottleFrame);
-		addThrottleFrame(curentThrottleFrame);
-		return curentThrottleFrame;
+		setCurentThrottleFrame ( new ThrottleFrame(this) );
+        KeyListenerInstaller.installKeyListenerOnAllComponents(throttlePanelsCyclingKeyListener, getCurentThrottleFrame() );
+		addThrottleFrame(getCurentThrottleFrame());
+		return getCurentThrottleFrame();
 	}
 
 	public Element getXml() { 	
@@ -485,14 +516,15 @@ public class ThrottleWindow extends JmriJFrame {
 
 	@SuppressWarnings("unchecked")
 	public void setXml(Element e) {
-    	setTitle(e.getAttribute("title").getValue());
-        setTitleText ( e.getAttribute("title").getValue() );
-        setTitleTextType ( e.getAttribute("titleType").getValue()) ;
+		if (e.getAttribute("title") != null)
+			setTitle(e.getAttribute("title").getValue());
+		if (e.getAttribute("title") != null)
+			setTitleText ( e.getAttribute("title").getValue() );
+		if (e.getAttribute("titleType") != null)
+			setTitleTextType ( e.getAttribute("titleType").getValue()) ;
               
         List<Element> tfes = e.getChildren("ThrottleFrame");
-        if ((tfes == null) || (tfes.size()==0))
-        	curentThrottleFrame.setXml(e);
-        else
+        if ((tfes != null) && (tfes.size()>0))
         	for (int i=0; i<tfes.size(); i++) {
         		ThrottleFrame tf;
         		if (i == 0)
@@ -503,7 +535,8 @@ public class ThrottleWindow extends JmriJFrame {
         	}
         
         Element window = e.getChild("window");
-        WindowPreferences.setPreferences(this, window);
+        if (window != null)
+        	WindowPreferences.setPreferences(this, window);
 	}
 	
 	/**
@@ -534,6 +567,14 @@ public class ThrottleWindow extends JmriJFrame {
 		requestFocus();
 		toFront();
 	}
+	
+    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
+    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+    }
 	
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleWindow.class.getName());
 }

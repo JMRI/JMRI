@@ -1,5 +1,5 @@
 
-<!ELEMENT throttle-layout-config (ThrottleWindow*, ThrottlesListPanel)>
+<!ELEMENT throttle-layout-config (ThrottlesListPanel, ThrottleWindow*)>
 
 <!ELEMENT ThrottlesListPanel (window) >
 
@@ -9,7 +9,7 @@
 
 <!--TODO Here it would be good to include this as throttle-config-2.dtd -->
 <!-- <!ENTITY % throttle-config SYSTEM "throttle-config-2.dtd"> ?? not working ?? -->
-<!ELEMENT ThrottleFrame ( (ControlPanel, FunctionPanel, AddressPanel, Jnstrument*)? ) >
+<!ELEMENT ThrottleFrame ( (ControlPanel, FunctionPanel, AddressPanel, Jynstrument*)? ) >
 <!ATTLIST ThrottleFrame ThrottleXMLFile CDATA #IMPLIED>
 
 <!ELEMENT ControlPanel (window) >
@@ -38,6 +38,9 @@
 <!ELEMENT dcclocoaddress EMPTY >
 <!ATTLIST dcclocoaddress number      CDATA #IMPLIED>
 <!ATTLIST dcclocoaddress longaddress ( yes | no) "no">
+
+<!ELEMENT Jynstrument (window) >
+<!ATTLIST Jynstrument JynstrumentFolder CDATA #IMPLIED>
 
 <!--TODO Here it would be good to include this as a window.dtd -->
 <!-- <!ENTITY % window SYSTEM "window.dtd"> ?? not working ?? -->

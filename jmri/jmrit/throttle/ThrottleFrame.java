@@ -10,9 +10,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
+import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,6 +22,8 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
 import jmri.DccThrottle;
+import jmri.configurexml.LoadXmlConfigAction;
+import jmri.configurexml.StoreXmlConfigAction;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
@@ -29,11 +33,12 @@ import jmri.util.iharder.dnd.FileDrop.Listener;
 
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.ProcessingInstruction;
 
 // Should be named ThrottlePanel but was already existing with that name and don't want to break dependancies (particularly in Jython code)
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
+	private static final ResourceBundle throttleBundle = ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle");
+
     private final Integer BACKPANEL_LAYER = new Integer(Integer.MIN_VALUE);
     private final Integer PANEL_LAYER = new Integer(1);
     private static int NEXT_FRAME_KEY = KeyEvent.VK_RIGHT;
@@ -57,7 +62,14 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     private BackgroundPanel backgroundPanel;
     private FrameListener frameListener;
         
-    private String _throttlesBasePath = XmlFile.prefsDir()+"throttle"+File.separator ;
+    public static String getDefaultThrottleFolder() {
+    	return XmlFile.prefsDir()+"throttle"+File.separator ;
+    }
+    private static String ThrottleFileName = "JMRI_ThrottlePreference.xml";
+    public static String getDefaultThrottleFilename() { 
+    	return getDefaultThrottleFolder()+ThrottleFileName;
+    }
+
     private String title;
     
     private String lastUsedSaveFile = null;
@@ -125,11 +137,11 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 			Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation+"throttle-config.dtd");
 			// add XSLT processing instruction
 			// <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>
-			java.util.Map<String,String> m = new java.util.HashMap<String,String>();
+/*			java.util.Map<String,String> m = new java.util.HashMap<String,String>();
 			m.put("type", "text/xsl");
 			m.put("href", jmri.jmrit.XmlFile.xsltLocation+"throttle.xsl");
 			ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
-			doc.addContent(0,p);
+			doc.addContent(0,p);*/
 			Element throttleElement = getXml();
 			// don't save the loco address or consist address
 //			throttleElement.getChild("AddressPanel").removeChild("locoaddress");
@@ -146,8 +158,15 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     	}
 	}
     
-    private void loadThrottle(String sfile) {
-    	
+    public void loadThrottle(String sfile) {
+    	if (sfile == null) {
+    		JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(throttleBundle.getString("PromptXmlFileTypes"), "xml");
+    		fileChooser.setCurrentDirectory(new File(getDefaultThrottleFolder()));
+    		java.io.File file = LoadXmlConfigAction.getFile(fileChooser);
+    		if (file == null) return;
+    		sfile = file.getAbsolutePath();
+    		if (sfile == null) return;
+    	}
 		try {
 			XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
 			File f=new File(sfile);
@@ -399,13 +418,10 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     public void saveRosterChanges(){
     	RosterEntry rosterEntry = addressPanel.getRosterEntry();
     	if (rosterEntry == null){
-			JOptionPane.showMessageDialog(this, "Select loco using roster menu in Address Panel", "No Loco Roster Entry Selected",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, throttleBundle.getString("ThrottleFrameNoRosterItemMessageDialog"), throttleBundle.getString("ThrottleFrameNoRosterItemTitleDialog"),	JOptionPane.ERROR_MESSAGE);
     		return;
     	}
-		if (JOptionPane.showConfirmDialog(this,
-				"Save function buttons and loco image to your loco's roster?", "Update Roster Entry",
-				JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+		if (JOptionPane.showConfirmDialog(this, throttleBundle.getString(""), throttleBundle.getString(""), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 			return;
 		}
 		functionPanel.saveFunctionButtonsToRoster(rosterEntry);
@@ -494,7 +510,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         
         java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1);
         
-        children.add(WindowPreferences.getPreferences(this));
+//        children.add(WindowPreferences.getPreferences(this));  // not required as it is in ThrottleWindow
         children.add(controlPanel.getXml());
         children.add(functionPanel.getXml());
         children.add(addressPanel.getXml());
@@ -526,10 +542,13 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     }
     
     public Element getXmlFile() {
-    	if (getLastUsedSaveFile() == null)
+    	if ((getLastUsedSaveFile() == null) || (getRosterEntry()==null))
     		return null;
         Element me = new Element("ThrottleFrame");
-        me.setAttribute("ThrottleXMLFile", getLastUsedSaveFile().substring(_throttlesBasePath.length()) );
+        if (getLastUsedSaveFile().startsWith(getDefaultThrottleFolder()))
+        	me.setAttribute("ThrottleXMLFile", getLastUsedSaveFile().substring(getDefaultThrottleFolder().length()) );
+        else
+        	me.setAttribute("ThrottleXMLFile", getLastUsedSaveFile());
         return me;
     }
     
@@ -552,14 +571,15 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 
     	String sfile = e.getAttributeValue("ThrottleXMLFile");
         if (sfile != null) {
-        	loadThrottle(_throttlesBasePath+sfile);
+        	loadThrottle(getDefaultThrottleFolder()+sfile);
         	return;
         }
         
     	int bSize = 23;
         // Get InternalFrame border size
         if (e.getAttribute("border") != null) bSize = Integer.parseInt((e.getAttribute("border").getValue()));
-
+        if (e.getChild("window") != null) // Old format
+        	throttleWindow.setXml(e);
         Element controlPanelElement = e.getChild("ControlPanel");
         controlPanel.setXml(controlPanelElement);
         if (((javax.swing.plaf.basic.BasicInternalFrameUI) controlPanel.getUI()).getNorthPane() != null)
@@ -625,7 +645,20 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 	}
 	
 	public void saveThrottle() {
-		 saveThrottle( _throttlesBasePath+ addressPanel.getRosterEntry().getId().trim() +".xml" ); 		
+		if (getRosterEntry() != null)
+			saveThrottle( getDefaultThrottleFolder()+ addressPanel.getRosterEntry().getId().trim() +".xml" ); 
+		else
+			if (getLastUsedSaveFile() != null)
+				saveThrottle( getLastUsedSaveFile() );
+	}
+	
+	public void saveThrottleAs() {
+		JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(throttleBundle.getString("PromptXmlFileTypes"), "xml");
+		fileChooser.setCurrentDirectory(new File(getDefaultThrottleFolder()));
+		java.io.File file = StoreXmlConfigAction.getFileName(fileChooser);
+		if (file == null)
+			return;
+		saveThrottle( file.getAbsolutePath() );
 	}
 
     /**
@@ -670,24 +703,27 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 
 	public void notifyAddressReleased(int address, boolean isLong) {
 		setLastUsedSaveFile(null);
-		setFrameTitle();		
+		setFrameTitle();
+		throttleWindow.updateGUI();
 	}
 
 	public void notifyAddressThrottleFound(DccThrottle throttle) {
 		if ((jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()) &&
 				(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isAutoLoading()) && 
 				(addressPanel !=null) && (addressPanel.getRosterEntry() != null ))
-			loadThrottle( _throttlesBasePath+ addressPanel.getRosterEntry().getId().trim() +".xml" );
+			loadThrottle( getDefaultThrottleFolder()+ addressPanel.getRosterEntry().getId().trim() +".xml" );
 		setFrameTitle();
+		throttleWindow.updateGUI();
 	}
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleFrame.class.getName());
-
 	public String getLastUsedSaveFile() {
 		return lastUsedSaveFile;
 	}
 
-	public void setLastUsedSaveFile(String lastUsedSaveFile) {
-		this.lastUsedSaveFile = lastUsedSaveFile;
+	public void setLastUsedSaveFile(String lusf) {
+		lastUsedSaveFile = lusf;
+		throttleWindow.updateGUI();
 	}
+
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleFrame.class.getName());
 }

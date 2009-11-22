@@ -5,21 +5,20 @@ import java.io.File;
 
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.ProcessingInstruction;
 
 import jmri.jmrit.XmlFile;
 
 public class ThrottlesPreferences {
-    private boolean _useExThrottle = false;	
-    private boolean _1Win4all = false;
+    private boolean _useExThrottle = true;	
+    private boolean _1Win4all = true;
     private boolean _resizeWinImg = false;
     private boolean _useAdvTransition = false;
     private boolean _useRosterImage = true;
     private boolean _useTransparentCtl = false;
-    private boolean _enableRosterSearch = false;
-    private boolean _enableAutoLoad = false;
+    private boolean _enableRosterSearch = true;
+    private boolean _enableAutoLoad = true;
     private boolean _hideUndefinedFunButton = false;
-    private boolean _ignoreThrottlePosition = false;
+    private boolean _ignoreThrottlePosition = true;
     private Dimension _winDim = new Dimension(800,600);
     private String prefFile;
     
@@ -136,11 +135,11 @@ public class ThrottlesPreferences {
     		Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation+"throttles-preferences.dtd");
     		// add XSLT processing instruction
     		// <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>
-    		java.util.Map<String,String> m = new java.util.HashMap<String,String>();
+/*TODO    		java.util.Map<String,String> m = new java.util.HashMap<String,String>();
     		m.put("type", "text/xsl");
     		m.put("href", jmri.jmrit.XmlFile.xsltLocation+"throttles-preferences.xsl");
     		ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
-    		doc.addContent(0,p);
+    		doc.addContent(0,p);*/
     		root.setContent( store() );
     		xf.writeXML(file, doc);
     	}       

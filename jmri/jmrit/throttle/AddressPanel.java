@@ -26,7 +26,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.50 $
+ * @version $Revision: 1.51 $
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
@@ -111,11 +111,20 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 		if (InstanceManager.throttleManagerInstance().hasDispatchFunction()) {
 			dispatchButton.setEnabled(true);
 		}
-
+		// update GUI
 		setButton.setEnabled(false);
 		addrSelector.setEnabled(false);
 		rosterBox.setEnabled(false);
 		conRosterBox.setEnabled(false);
+		// can we find a roster entry?
+		if ((rosterEntry == null) &&
+				(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()) &&	
+				(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isEnablingRosterSearch()) && 
+				addrSelector.getAddress() != null )	{
+			List<RosterEntry> l = Roster.instance().matchingList(null, null, ""+addrSelector.getAddress().getNumber(), null, null, null, null);
+			if (l.size()>0) 
+				rosterEntry = l.get(0);							
+		}
 		// send notification of new address
 		for (int i = 0; i < listeners.size(); i++) {
 			AddressListener l = listeners.get(i);
@@ -163,16 +172,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	 * Get the RosterEntry if there's one for this throttle.
 	 * @return RosterEntry or null
 	 */
-	public RosterEntry getRosterEntry(){
-		if ((rosterEntry == null) && (throttle!=null) &&
-				(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()) &&	
-				(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isEnablingRosterSearch()) && 
-				addrSelector != null && addrSelector.getAddress() != null )	{
-			rosterEntry = null;
-			List<RosterEntry> l = Roster.instance().matchingList(null, null, ""+addrSelector.getAddress().getNumber(), null, null, null, null);
-			if (l.size()>0) 
-				rosterEntry = l.get(0);							
-		}			
+	public RosterEntry getRosterEntry(){			
 		return rosterEntry;
 	}
 	
@@ -463,7 +463,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 		WindowPreferences.setPreferences(this, window);
 
 		Element addressElement = e.getChild("address");
-		if (addressElement != null) {
+		if ((addressElement != null) && ( this.getRosterEntry() == null)){
 			String address = addressElement.getAttribute("value").getValue();
 			addrSelector.setAddress(new DccLocoAddress(Integer
 					.parseInt(address), false)); // guess at the short/long

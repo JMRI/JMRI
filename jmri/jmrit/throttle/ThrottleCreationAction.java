@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
  * Create a new throttle.
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class ThrottleCreationAction extends AbstractAction {
 
@@ -35,16 +35,15 @@ public class ThrottleCreationAction extends AbstractAction {
      */
     public void actionPerformed(ActionEvent e) {
     	// load throttle preference 
-    	LoadXmlThrottleAction lxta = new LoadXmlThrottleAction();
+    	LoadXmlThrottlesLayoutAction lxta = new LoadXmlThrottlesLayoutAction();
     	try {
-            if (lxta.loadThrottles(new File(SaveThrottlePreferencesAction.getDefaultThrottleFilename())))
+            if (lxta.loadThrottlesLayout(new File(ThrottleFrame.getDefaultThrottleFilename())))
                 return;
         } catch (java.io.IOException ex) { 
             // we ignore I/O exception here, just have to keep processing below
         }
 		// need to create a new one
-    	ThrottleFrame tf =
-			ThrottleFrameManager.instance().createThrottleFrame();
+    	ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
 		tf.setVisible(true);
     }
 
