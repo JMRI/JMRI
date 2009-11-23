@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009
- * @version             $Revision: 1.64 $
+ * @version             $Revision: 1.65 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -697,18 +697,7 @@ public class TrainBuilder extends TrainCommon{
 	 * @param fileOut
 	 * @return true if engines found.
 	 */
-	private boolean getEngines(PrintWriter fileOut){
-		// show engine types that this train will service
-		String[] engineTypes = EngineTypes.instance().getNames();
-		String typeNames ="";
-    	for (int i=0; i<engineTypes.length; i++){
-    		if (train.acceptsTypeName(engineTypes[i]))
-    			typeNames = typeNames + engineTypes[i]+", ";
-    	}
-    	addLine(fileOut, FIVE, "Train ("+train.getName()+") services engine types: "+typeNames);
-		// show engine requirements for this train
-		addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildTrainReqEngine"),new Object[]{train.getNumberEngines(), train.getEngineModel(), train.getEngineRoad()}));
-				
+	private boolean getEngines(PrintWriter fileOut){				
 		numberEngines = 0;
 		int reqNumEngines = 0; 	
 		int engineLength = 0;
@@ -718,6 +707,26 @@ public class TrainBuilder extends TrainCommon{
 		} else {
 			reqNumEngines = Integer.parseInt(train.getNumberEngines());
 		}
+		
+		// show engine types that this train will service
+		if (reqNumEngines >0){
+			String[] engineTypes = EngineTypes.instance().getNames();
+			String typeNames ="";
+			for (int i=0; i<engineTypes.length; i++){
+				if (train.acceptsTypeName(engineTypes[i]))
+					typeNames = typeNames + engineTypes[i]+", ";
+			}
+			addLine(fileOut, FIVE, "Train ("+train.getName()+") services engine types: "+typeNames);
+		}
+		
+		// show engine requirements for this train
+		if (reqNumEngines == 0)
+			addLine(fileOut, ONE, rb.getString("buildTrainReq0Engine"));
+		else if (reqNumEngines == 1)
+			addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildTrainReq1Engine"),new Object[]{train.getEngineModel(), train.getEngineRoad()}));
+		else
+			addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildTrainReqEngine"),new Object[]{train.getNumberEngines(), train.getEngineModel(), train.getEngineRoad()}));
+		
 		// if leaving staging, use any number of engines if required number is 0
 		boolean leavingStaging = false;
 		if (departStageTrack != null)
