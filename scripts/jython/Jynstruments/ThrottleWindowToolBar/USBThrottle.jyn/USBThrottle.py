@@ -6,7 +6,8 @@ import java.beans.PropertyChangeListener as PropertyChangeListener
 import jmri.jmrit.throttle.AddressListener as AddressListener
 import javax.swing.Timer as Timer
 import java.awt.event.ActionListener as ActionListener
-import synchronize
+import java.util.Calendar as Calendar
+import thread
 
 # Use a USB device as a throttle
 #
@@ -22,26 +23,28 @@ valuePreviousThrottleFrame = 1
 
 componentSpeed = "x"  # Analog axis component for curent throttle speed
 valueSpeedTrigger = 0.1
-valueSpeedDivider = 10
+valueSpeedDivider = 15
 valueSpeedTimerRepeat = 100 # repeat time in ms for speed set task
 
 componentDirection = "rz" # Analog axis component for curent throttle direction
 valueDirectionForward = 1
 valueDirectionBackward = -1
 
-componentStopSpeed = "0" # Preset speed button
+componentStopSpeed = "0" # Preset speed button stop
 valueStopSpeed = 1
 speedStopSpeed = 0
+delay4EStop = 250 # max delay in ms for double tap => EStop
+EStopSpeed = -1
 
-componentSlowSpeed = "1" # Preset speed button
+componentSlowSpeed = "1" # Preset speed button slow
 valueSlowSpeed = 1 
 speedSlowSpeed = 0.3
 
-componentCruiseSpeed = "2" # Preset speed button
+componentCruiseSpeed = "2" # Preset speed button cruise
 valueCruiseSpeed = 1
 speedCruiseSpeed = 0.8
 
-componentMaxSpeed = "3" # Preset speed button
+componentMaxSpeed = "3" # Preset speed button max
 valueMaxSpeed = 1
 speedMaxSpeed = 1
 
@@ -58,40 +61,9 @@ componentF3 = "7" # Function button
 valueF3 = 1
 
 class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
-    def getExpectedContextClassName(self):
-        return "jmri.jmrit.throttle.ThrottleWindow"
-    
-    def init(self):
-        self.getContext().addPropertyChangeListener(self) #ThrottleFrame change
-        self.getContext().getCurentThrottleFrame().getAddressPanel().addAddressListener(self) # change of throttle in curent frame
-        self.throttle = self.getContext().getCurentThrottleFrame().getAddressPanel().getThrottle() # the throttle
-        self.speedAction =  SpeedAction()  #Speed increase thread
-        self.speedAction.setThrottle( self.throttle )
-        self.speedTimer = Timer(valueSpeedTimerRepeat, self.speedAction )
-        self.speedTimer.setRepeats(True)
-        self.label = ResizableImagePanel(self.getFolder() + "/USBControl.png",20,20 ) #label
-        self.add(self.label)
-        self.model = jmri.jmrix.jinput.TreeModel.instance() # USB
-        self.model.addPropertyChangeListener(self) 
-       
-    def quit(self):
-        self.speedTimer.stop() 
-        self.speedAction = None
-        self.speedTimer = None
-        self.throttle = None
-        self.getContext().removePropertyChangeListener(self)
-        self.model.removePropertyChangeListener(self)
-        self.getContext().getCurentThrottleFrame().getAddressPanel().removeAddressListener(self)
-
 #Property listener part: USB value
     def propertyChange(self, event):
-        if (event.propertyName == "ThrottleFrame") :  # Curent throttle frame changed
-            self.speedTimer.stop()
-            event.oldValue.getAddressPanel().removeAddressListener(self)
-            self.throttle = event.newValue.getAddressPanel().getThrottle()
-            self.speedAction.setThrottle( self.throttle )
-            event.newValue.getAddressPanel().addAddressListener(self)
-
+        # Cutomize bellow for controls
         if (event.propertyName == "Value") :  # USB
             if (event.oldValue.getController().getName() == desiredControllerName ) :
                 component = event.oldValue.getComponent().toString()
@@ -120,6 +92,9 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                 # Speed presets
                 if ((component == componentStopSpeed) and (value == valueStopSpeed) and (self.throttle != None)) :
                     self.throttle.setSpeedSetting(speedStopSpeed)
+                    if ( Calendar.getInstance().getTimeInMillis() - self.lastTimeStopButton < delay4EStop ) : # EStop
+                        self.throttle.setSpeedSetting(EStopSpeed)
+                    self.lastTimeStopButton = Calendar.getInstance().getTimeInMillis()
                 if ((component == componentSlowSpeed) and (value == valueSlowSpeed) and (self.throttle != None)) :
                     self.throttle.setSpeedSetting(speedSlowSpeed)
                 if ((component == componentCruiseSpeed) and (value == valueCruiseSpeed) and (self.throttle != None)) :
@@ -135,6 +110,40 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                     self.throttle.setF2( not self.throttle.getF2() )
                 if ((component == componentF3) and (value == valueF3) and (self.throttle != None)) :
                     self.throttle.setF3( not self.throttle.getF3() )
+        # Nothing to customize bellow this point
+        if (event.propertyName == "ThrottleFrame") :  # Curent throttle frame changed
+            self.speedTimer.stop()
+            event.oldValue.getAddressPanel().removeAddressListener(self)
+            self.throttle = event.newValue.getAddressPanel().getThrottle()
+            self.speedAction.setThrottle( self.throttle )
+            event.newValue.getAddressPanel().addAddressListener(self)
+
+#Jynstrument main and mandatory methods
+    def getExpectedContextClassName(self):
+        return "jmri.jmrit.throttle.ThrottleWindow"
+    
+    def init(self):
+        self.getContext().addPropertyChangeListener(self) #ThrottleFrame change
+        self.getContext().getCurentThrottleFrame().getAddressPanel().addAddressListener(self) # change of throttle in curent frame
+        self.throttle = self.getContext().getCurentThrottleFrame().getAddressPanel().getThrottle() # the throttle
+        self.speedAction =  SpeedAction()  #Speed increase thread
+        self.speedAction.setThrottle( self.throttle )
+        self.speedTimer = Timer(valueSpeedTimerRepeat, self.speedAction ) # Very important to use swing Timer object (see Swing and multithreading doc)
+        self.speedTimer.setRepeats(True)
+        self.label = ResizableImagePanel(self.getFolder() + "/USBControl.png",20,20 ) #label
+        self.add(self.label)
+        self.model = jmri.jmrix.jinput.TreeModel.instance() # USB
+        self.model.addPropertyChangeListener(self)
+        self.lastTimeStopButton = Calendar.getInstance().getTimeInMillis()
+       
+    def quit(self):
+        self.speedTimer.stop() 
+        self.speedAction = None
+        self.speedTimer = None
+        self.throttle = None
+        self.getContext().removePropertyChangeListener(self)
+        self.model.removePropertyChangeListener(self)
+        self.getContext().getCurentThrottleFrame().getAddressPanel().removeAddressListener(self)
 
 #AddressListener part: to listen for address changes in address panel (release, acquired)
     def notifyAddressChosen(self, address, isLong):
@@ -152,25 +161,32 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                 
 # Speed timer class, to increase speed regularly once button pushed
 class SpeedAction(ActionListener):
-    def SpeedTimer(self):
+    def __init__(self):
+        self.sync = thread.allocate_lock() # Protects properties getter and setter 
         self.speedIncrement = 0
         self.throttle = None
 
     def setSpeedIncrement(self, si):
+        self.sync.acquire()
         self.speedIncrement = si
-    setSpeedIncrement = synchronize.make_synchronized(setSpeedIncrement) 
+        self.sync.release()
 
     def getSpeedIncrement(self):
-        return self.speedIncrement
-    getSpeedIncrement = synchronize.make_synchronized(getSpeedIncrement) 
+        self.sync.acquire()
+        si = self.speedIncrement
+        self.sync.release()
+        return si
 
     def setThrottle(self, throt):
+        self.sync.acquire()
         self.throttle = throt
-    setThrottle = synchronize.make_synchronized(setThrottle) 
+        self.sync.release()
     
     def getThrottle(self):
+        self.sync.acquire()
+        throt = self.throttle
+        self.sync.release()
         return self.throttle
-    getThrottle = synchronize.make_synchronized(getThrottle) 
 
     def actionPerformed(self, e):
         throttle = self.getThrottle()
