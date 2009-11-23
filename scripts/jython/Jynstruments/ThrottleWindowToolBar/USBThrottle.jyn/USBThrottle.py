@@ -22,9 +22,9 @@ valueNextThrottleFrame = 0.5
 valuePreviousThrottleFrame = 1
 
 componentSpeed = "x"  # Analog axis component for curent throttle speed
-valueSpeedTrigger = 0.1
-valueSpeedDivider = 15
-valueSpeedTimerRepeat = 100 # repeat time in ms for speed set task
+valueSpeedTrigger = 0.05
+valueSpeedDivider = 10
+valueSpeedTimerRepeat = 125 # repeat time in ms for speed set task
 
 componentDirection = "rz" # Analog axis component for curent throttle direction
 valueDirectionForward = 1
@@ -186,7 +186,7 @@ class SpeedAction(ActionListener):
         self.sync.acquire()
         throt = self.throttle
         self.sync.release()
-        return self.throttle
+        return throt
 
     def actionPerformed(self, e):
         throttle = self.getThrottle()
