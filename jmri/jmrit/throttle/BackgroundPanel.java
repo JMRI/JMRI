@@ -37,7 +37,6 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
 	}
 
 	public void notifyAddressReleased(int address, boolean isLong)  {
-		setDnd(false);
 		unsetImage();
 		setVisible(false);
 	}

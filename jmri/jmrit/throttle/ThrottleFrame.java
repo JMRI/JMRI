@@ -85,7 +85,8 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     public void setVisible(boolean b)
     {
     	super.setVisible(b);
-    	throttleWindow.setVisible(b);
+    	if (b)
+    		throttleWindow.setVisible(b);
     }
     
     public ControlPanel getControlPanel() {
@@ -391,11 +392,6 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 			}
 		}
 	}
-	
-    // overwritten in order to be able to check sub windows positions
-    public void pack() {
-    	checkPosition();
-    }
 
     /**
 	 * Handle my own destruction.
