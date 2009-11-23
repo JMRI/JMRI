@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.9.shtml,v 1.2 2009-11-15 23:24:18 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.9.shtml,v 1.3 2009-11-23 03:47:34 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -151,7 +151,23 @@ as the program will update them to the new format upon storing them.
 
 Giorgio Terdina provided screen icons for German signals.
 
+<p>
+Tjeerd Verhage provided an icon for our SourceForge.net page
 
+<p>
+Dan Boudreau added three additional sort options for trains in the operations code:  by route, departure, and destination.
+
+<p>
+Matt Harris updated the Audio package.
+
+<p>
+Dan Boudreau fixed a marker bug:  Opening and closing marker frames caused the number of markers created to increase by one each time the marker frame was reopened.
+
+<p>
+Dan Boudreau made an Operations enhancement.  When replacing an existing engine model with a new model, the new model will now take the old model's attributes of length, type, and horsepower. He also improved some of the build messages with regards to cabooses and cars with FRED, and made a minor improvement in build messages for engines.  Note that if the train requires 2 or more engines that they be in a consist.
+
+<p>
+Lionel Jeanson added a first Jynstrument for throttle tool bar, allows for USB devices throttle frame browsing and throttle pilot.
 
 <!--#include virtual="/Footer" -->
 
