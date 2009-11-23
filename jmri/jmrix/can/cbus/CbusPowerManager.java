@@ -14,7 +14,7 @@ import jmri.jmrix.can.CanMessage;
  *
  * @author	Bob Jacobsen    Copyright (C) 2001
  * @author	Andrew CRosland Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class CbusPowerManager implements PowerManager, CanListener {
 
@@ -25,7 +25,7 @@ public class CbusPowerManager implements PowerManager, CanListener {
         tc.addCanListener(this);
     }
 
-    int power = UNKNOWN;
+    int power = ON;
 
     public void setPower(int v) throws JmriException {
         power = UNKNOWN; // while waiting for reply
