@@ -23,7 +23,7 @@ import java.awt.Color;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.50 $
+ * @version $Revision: 1.51 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -64,7 +64,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         icon=false;
         text=true;
         setDisplayLevel(LayoutEditor.SENSORS);
-        setHorizontalAlignment(JLabel.CENTER);
+        //setHorizontalAlignment(JLabel.CENTER);
         displayState(sensorState());
     }
 
@@ -120,7 +120,6 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                 textColorInconsistent=Color.blue;
             displayState(sensorState());
         }
-
     }
     /**
      * Attached a named sensor to this display item
@@ -446,7 +445,8 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         
         switch (state) {
             case Sensor.UNKNOWN:
-                if (icon) super.setIcon(unknown);
+                //if (icon) super.setIcon(unknown);
+                if (icon) updateIcon(unknown);
                 else if (text) {super.setText(unknownText);
                             super.setBackgroundColor(backgroundColorUnknown);
                             super.setForeground(textColorUnknown);
@@ -454,7 +454,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                             }
                 break;
             case Sensor.ACTIVE:
-                if (icon) super.setIcon(active);
+                if (icon) updateIcon(active);
                 else if (text) {super.setText(activeText);
                             super.setBackgroundColor(backgroundColorActive);
                             super.setForeground(textColorActive);
@@ -462,7 +462,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                             }
                 break;
             case Sensor.INACTIVE:
-                if (icon) super.setIcon(inactive);
+                if (icon) updateIcon(inactive);
                 else if (text) {super.setText(inactiveText);
                             super.setBackgroundColor(backgroundColorInActive);
                             super.setForeground(textColorInActive);
@@ -470,7 +470,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                             }
                 break;
             default:
-                if (icon) super.setIcon(inconsistent);
+                if (icon) updateIcon(inconsistent);
                 else if (text) {super.setText(inconsistentText);
                             super.setBackgroundColor(backgroundColorInconsistent);
                             super.setForeground(textColorInconsistent);
@@ -981,7 +981,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 		f.setVisible(true);
 	}
 
-    protected int maxHeight() {
+    /*protected int maxHeight() {
         if(icon) return Math.max(
                 Math.max( (active!=null) ? active.getIconHeight() : 0,
                         (inactive!=null) ? inactive.getIconHeight() : 0),
@@ -996,15 +996,15 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             return getFixedHeight();
         //return ((javax.swing.JLabel)this).getMaximumSize().height;
         }
-    }
-    protected int maxWidth() {
+    }*/
+    //protected int maxWidth() {
         /*if((icon) && (text)) return Math.max(((javax.swing.JLabel)this).getMaximumSize().width,Math.max(
                 Math.max((active!=null) ? active.getIconWidth() : 0,
                         (inactive!=null) ? inactive.getIconWidth() : 0),
                 Math.max((unknown!=null) ? unknown.getIconWidth() : 0,
                         (inconsistent!=null) ? inconsistent.getIconWidth() : 0)
             ));*/
-        if(icon) return Math.max(
+    /*    if(icon) return Math.max(
                 Math.max((active!=null) ? active.getIconWidth() : 0,
                         (inactive!=null) ? inactive.getIconWidth() : 0),
                 Math.max((unknown!=null) ? unknown.getIconWidth() : 0,
@@ -1018,7 +1018,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             return getFixedWidth();
 
         }//return
-    }
+    }*/
 
 
     /**

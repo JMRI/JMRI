@@ -16,14 +16,12 @@ public class SensorChangeType {
 
         if(!icon) {
             nl = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
-            putValuesIntoNew();
-            p.putSensor(nl);
-            
         } else {
             nl = new SensorIcon(new String("   "));
-            putValuesIntoNew();
-            p.putSensor(nl);
         }
+        p.putSensor(nl);
+        putValuesIntoNew();
+        
         
         //We shall remove the old ones once we have created the new
         l.remove();
@@ -38,15 +36,12 @@ public class SensorChangeType {
         
         if(!icon) {
             nl = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
-            putValuesIntoNew();
-            p.putLabel(nl);
-            
         } else {
             nl = new SensorIcon(new String("   "));
-            putValuesIntoNew();
-            p.putLabel(nl);
         }
         
+         p.putLabel(nl);
+         putValuesIntoNew();
         //We shall remove the old ones once we have created the new
         l.remove();
         l.dispose();

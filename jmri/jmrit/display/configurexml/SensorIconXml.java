@@ -13,7 +13,7 @@ import java.awt.Color;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -175,9 +175,18 @@ public class SensorIconXml extends PositionableLabelXml {
 
         if (icon){
             l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
+            if(pe!=null)
+                pe.putLabel(l);
+            else if (le!=null)
+                le.putSensor(l);
             loadIconInfo(l, element);
         } else {
             l = new SensorIcon(new String("  "));
+            if(pe!=null)
+                pe.putLabel(l);
+            else if (le!=null)
+                le.putSensor(l);
+
         }
 /*        if (element.getAttribute("icon")!=null){
             if (element.getAttribute("icon").getValue().equals("no"))
@@ -203,12 +212,10 @@ public class SensorIconXml extends PositionableLabelXml {
             l.setMomentary(false);
         
         l.setSensor(element.getAttribute("sensor").getValue());
-
-       // p.putLabel(l);
-        if(pe!=null)
+        /*if(pe!=null)
             pe.putLabel(l);
         else if (le!=null)
-            le.putSensor(l);
+            le.putSensor(l);*/
     }
     
     void loadIconInfo(SensorIcon l, Element element){
@@ -255,11 +262,6 @@ public class SensorIconXml extends PositionableLabelXml {
     }
     
     void loadTextInfo(SensorIcon l, Element element){
-        String name;
-        if (element.getAttribute("text")!=null){
-            name = element.getAttribute("text").getValue();
-            l.setText(name);
-        }
         Attribute a = element.getAttribute("size");
         try {
             if (a!=null){ 
@@ -284,6 +286,11 @@ public class SensorIconXml extends PositionableLabelXml {
             }
         } catch (DataConversionException ex) {
             log.warn("invalid style attribute value");
+        }
+        String name;
+        if (element.getAttribute("text")!=null){
+            name = element.getAttribute("text").getValue();
+            l.setText(name);
         }
         if (!l.isIcon()){
             if (element.getAttribute("active")!=null){

@@ -18,7 +18,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -154,17 +154,20 @@ public class PositionableLabelXml implements XmlAdapter {
 		PanelEditor pe = null;
 		LayoutEditor le = null;
 		String shortClass = className.substring(lastDot+1,className.length());
-		if (shortClass.equals("PanelEditor")) {
+		int level=5;
+        if (shortClass.equals("PanelEditor")) {
 			pe = (PanelEditor) o;
+            level = PanelEditor.LABELS.intValue();
 		}
 		else if (shortClass.equals("LayoutEditor")) {
 			le = (LayoutEditor) o;
+            level = LayoutEditor.LABELS.intValue();
 		}
 		else {
 			log.error("Unrecognizable class - "+className);
 		}
         if (element.getAttribute("icon")!=null) {
-            if (le!=null) {
+            /*if (le!=null) {
                 String name = element.getAttribute("icon").getValue();
                 NamedIcon icon = NamedIcon.getIconByName(name);
                 l = new PositionableLabel(icon);
@@ -182,9 +185,39 @@ public class PositionableLabelXml implements XmlAdapter {
                     return;
                 }
                 l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-            }
+            }*/
+
+            String name = element.getAttribute("icon").getValue();
+            NamedIcon icon = NamedIcon.getIconByName(name);
+            l = new PositionableLabel(icon);
+            /*if(pe!=null)
+                pe.putLabel(l);
+            else if (le!=null)
+                le.putLabel(l);*/
+            loadCommonAttributes(l, level, element);
+            try {
+                Attribute a = element.getAttribute("rotate");
+                if (a!=null) {
+                    int rotation = element.getAttribute("rotate").getIntValue();
+                    icon.setRotation(rotation, l);
+                }
+            } catch (org.jdom.DataConversionException e) {}
+
+            NamedIcon nIcon = loadIcon(l,"icon", element);
+
+            if (nIcon!=null) {
+                l.updateIcon(nIcon);
+            } /*else {
+                l.updateIcon(Icon);
+            }*/
+            //l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         } else if (element.getAttribute("text")!=null) {
             l = new PositionableLabel(element.getAttribute("text").getValue());
+            /*if(pe!=null)
+                pe.putLabel(l);
+            else if (le!=null)
+                le.putLabel(l);*/
+            loadCommonAttributes(l, level, element);
             loadTextInfo(l, element);
         
         } else {
@@ -192,12 +225,12 @@ public class PositionableLabelXml implements XmlAdapter {
                 log.error("PositionableLabel is null!");
                 return;
         }
-        if(pe!=null) {
+        /*if(pe!=null) {
             loadCommonAttributes(l, PanelEditor.LABELS.intValue(), element);
         } else if (le!=null) {
             l.setPanel(le);
             loadCommonAttributes(l, LayoutEditor.LABELS.intValue(), element);
-        }
+        }*/
 
         Attribute a = element.getAttribute("fixed");
         if ( (a!=null) && a.getValue().equals("true"))
@@ -402,7 +435,7 @@ public class PositionableLabelXml implements XmlAdapter {
                     {
                         scale = elem.getAttribute("scale").getDoubleValue();
                     }
-                    l.setIcon(icon);
+                    //l.setIcon(icon);
                     icon.setLoad(deg, scale, l);
                 }
             } catch (org.jdom.DataConversionException dce) {}

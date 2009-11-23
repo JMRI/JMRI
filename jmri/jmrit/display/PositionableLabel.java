@@ -43,7 +43,7 @@ import java.util.ResourceBundle;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.72 $
+ * @version $Revision: 1.73 $
  */
 
 public class PositionableLabel extends JLabel
@@ -242,24 +242,24 @@ public class PositionableLabel extends JLabel
      */
     protected void updateSize(){
         //There is no point in updating the size until an editor has been assigned.
-        if (!(panelEditor==null && layoutPanel==null))
+        if (!(panelEditor==null && layoutPanel==null)){
             setSize(maxWidth(), maxHeight());
-            
             if (icon && text && panelEditor!=null){
                 //we have a combined icon/text therefore the icon is central to the text.
-                setIconTextGap (-(getWidth()+getPreferredSize().width)/2);
-                setSize(getPreferredSize().width, getPreferredSize().height);
+                //setIconTextGap (-(namedIcon.getIconWidth()+getPreferredSize().width)/2);
+                setIconTextGap (-(namedIcon.getIconWidth()+maxWidth())/2);
+                //setSize(getPreferredSize().width, getPreferredSize().height);
             }
+        }
     }
     //@TODO Need to do math.max on this to return the greatest width, as an icon can also contain text.
     protected int maxWidth(){
         if ((fixedWidth==0) && (margin==0)){
             if(icon && text){
-                System.out.println(namedIcon.getIconWidth() + " " + ((javax.swing.JLabel)this).getMaximumSize().width);
                 return Math.max(namedIcon.getIconWidth(), ((javax.swing.JLabel)this).getMaximumSize().width);
-            }else if (icon)
+            }else if (icon){
                 return namedIcon.getIconWidth(); // defer to superclass
-            else
+            }else
                 return ((javax.swing.JLabel)this).getMaximumSize().width;
         }else if ((fixedWidth==0) && (margin!=0)){
             if(icon)
@@ -456,6 +456,11 @@ public class PositionableLabel extends JLabel
 
     protected JPopupMenu popup = null;
     protected JLabel ours;
+    public void updateIcon(NamedIcon s){
+        namedIcon = s;
+        setIcon(namedIcon);
+        updateSize();
+    }
     /**
      * For over-riding in the using classes: only provides icon rotation
      */
@@ -468,8 +473,9 @@ public class PositionableLabel extends JLabel
             popup.add(new AbstractAction(rb.getString("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
                     namedIcon.setRotation(namedIcon.getRotation()+1, ours);
-                    updateSize();
+                    
                     setIcon(namedIcon);
+                    updateSize();
                     // bug fix, must repaint icons that have same width and height
                     repaint();
                 }
