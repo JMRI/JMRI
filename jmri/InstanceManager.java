@@ -43,7 +43,7 @@ import jmri.managers.DefaultRouteManager;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.50 $
+ * @version			$Revision: 1.51 $
  */
 public class InstanceManager {
 
@@ -216,7 +216,7 @@ public class InstanceManager {
     }
 
     static public MemoryManager memoryManagerInstance()  { 
-    	if (instance().memoryManager == null) instance().memoryManager = DefaultMemoryManager.instance();
+    	if (instance().memoryManager == null) instance().memoryManager = new DefaultMemoryManager();
     	return instance().memoryManager; 
     }
 
