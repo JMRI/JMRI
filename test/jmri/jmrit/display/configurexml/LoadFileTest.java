@@ -18,7 +18,7 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
 
@@ -69,6 +69,9 @@ public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
 
     // from here down is testing infrastructure
 
+    // Note setup() and teardown are provided from base class, and 
+    // need to be invoked if you add methods here
+    
     public LoadFileTest(String s) {
         super(s);
     }
