@@ -19,7 +19,7 @@ import java.util.List;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class OperationsTrainsGuiTest extends TestCase {
 
@@ -51,10 +51,11 @@ public class OperationsTrainsGuiTest extends TestCase {
 		f.setVisible(true);
 		f.setSize(400,200);
 		f.setLocation(10,20);
-		// frame location can move just a bit on MacOS
-		Point p = f.getLocation();
 		f.sortByName.doClick();
 		f.saveButton.doClick();
+		
+		// frame location can move just a bit on MacOS
+		Point p = f.getLocation();
 		
 		TrainManager tmanager = TrainManager.instance();
 		Assert.assertEquals("sort by 2", TrainsTableFrame.NAME, tmanager.getTrainFrameSortBy());
