@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.implementation.MergSD2SignalHead;
 import jmri.Turnout;
+import jmri.util.NamedBeanHandle;
 
 import java.util.List;
 import org.jdom.Attribute;
@@ -28,7 +29,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Kevin Dickerson  Copyright: Copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -53,17 +54,17 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         
         storeCommon(p, element);
         int aspects = p.getAspects();
-        
+        //@TODO could re-arange this so that it falls through
         switch (aspects){
-        case 2 :    element.addContent(addSingleTurnoutElement(p.getInput1()));
+        case 2 :    element.addContent(addTurnoutElement(p.getInput1(), "input1"));
                     if(!p.getHome()) element.setAttribute("home", "no");
                     break;
-        case 3 :    element.addContent(addSingleTurnoutElement(p.getInput1()));
-                    element.addContent(addSingleTurnoutElement(p.getInput2()));
+        case 3 :    element.addContent(addTurnoutElement(p.getInput1(), "input1"));
+                    element.addContent(addTurnoutElement(p.getInput2(), "input2"));
                     break;
-        case 4 :    element.addContent(addSingleTurnoutElement(p.getInput1()));
-                    element.addContent(addSingleTurnoutElement(p.getInput2()));
-                    element.addContent(addSingleTurnoutElement(p.getInput3()));
+        case 4 :    element.addContent(addTurnoutElement(p.getInput1(), "input1"));
+                    element.addContent(addTurnoutElement(p.getInput2(), "input2"));
+                    element.addContent(addTurnoutElement(p.getInput3(), "input3"));
                     break;
         }
         
@@ -71,6 +72,12 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
     }
 
 
+    Element addTurnoutElement(NamedBeanHandle<Turnout> to, String which) {
+        Element el = new Element("turnoutname");
+        el.setAttribute("defines", which);
+        el.addContent(to.getName());
+        return el;
+    }
     
     Element addSingleTurnoutElement(Turnout to) {
         String user = to.getUserName();
@@ -90,10 +97,15 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
      */
     @SuppressWarnings("unchecked")
 	public boolean load(Element element) {
-        List<Element> l = element.getChildren("turnout");
-        Turnout input1 = null;
-        Turnout input2 = null;
-        Turnout input3 = null;
+        int aspects=2;
+        List<Element> l = element.getChildren("turnoutname");
+        if (l.size() == 0){
+            l = element.getChildren("turnout");
+            aspects = l.size()+1;
+        }
+        NamedBeanHandle<Turnout> input1 = null;
+        NamedBeanHandle<Turnout> input2 = null;
+        NamedBeanHandle<Turnout> input3 = null;
         String yesno ="";
         boolean feather = false;
         boolean home = true;
@@ -116,10 +128,16 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
             if (yesno.equals("yes")) home=true;
             else if (yesno.equals("no")) home=false;
         }
+        try {
+            aspects = element.getAttribute("aspects").getIntValue();
+        } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse level attribute!");
+        } catch ( NullPointerException e) {  // considered normal if the attribute not present
+        }
         
         SignalHead h;
-        int aspects = Integer.parseInt(element.getAttribute("aspects").getValue());
-        
+        //int aspects = l.size()+1;  //Number of aspects is equal to the number of turnouts used plus 1.
+        //@TODO could re-arange this so that it falls through
         switch (aspects){
             case 2: input1 = loadTurnout(l.get(0));
                     break;
@@ -142,12 +160,25 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         return true;
     }
 
-    Turnout loadTurnout(Object o) {
+    NamedBeanHandle<Turnout> loadTurnout(Object o) {
         Element e = (Element)o;
 
-        // we don't create the Turnout, we just look it up.
-        String sys = e.getAttribute("systemName").getValue();
-        return InstanceManager.turnoutManagerInstance().getBySystemName(sys);
+        if (e.getName().equals("turnout")) {
+            String name = e.getAttribute("systemName").getValue();
+            Turnout t;
+            if (e.getAttribute("userName")!=null && 
+                    !e.getAttribute("userName").getValue().equals("")) {
+                name = e.getAttribute("userName").getValue();
+                t = InstanceManager.turnoutManagerInstance().getTurnout(name);
+            } else {
+                t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
+            }
+            return new NamedBeanHandle<Turnout>(name, t);
+        } else {
+            String name = e.getText();
+            Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
+            return new NamedBeanHandle<Turnout>(name, t);
+        }
     }
 
     public void load(Element element, Object o) {
