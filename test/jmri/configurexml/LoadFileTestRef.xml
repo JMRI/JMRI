@@ -39,12 +39,11 @@
     <memory systemName="IM1" userName="Memory 1" value="Value 1">
       <comment>Has value</comment>
     </memory>
-    <memory systemName="IM2" userName="Memory 2" value="0.89">
+    <memory systemName="IM2" userName="Memory 2">
       <comment>null value</comment>
     </memory>
     <memory systemName="IM3" userName="Memory 3" />
     <memory systemName="IMCURRENTTIME" value="12:01 PM" />
-    <memory systemName="IMDUMMY" />
   </memories>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jun 05 23:42:04 PDT 2009" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
   <logixs class="jmri.configurexml.DefaultLogixManagerXml">
@@ -87,6 +86,6 @@
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 2.7.6 on Thu Oct 15 23:16:50 PDT 2009 $Id: LoadFileTestRef.xml,v 1.3 2009-11-14 05:19:41 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.8 on Tue Nov 24 23:12:54 PST 2009 $Id: LoadFileTestRef.xml,v 1.4 2009-11-25 07:23:59 jacobsen Exp $-->
 </layout-config>
 
