@@ -12,6 +12,7 @@
 // FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 // for more details.
 
+
 package jmri.jmrit.beantable;
 
 import jmri.InstanceManager;
@@ -48,7 +49,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.46 $
+ * @version     $Revision: 1.47 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -341,6 +342,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
                     typeChanged();
                 }
             });
+            //typeBox.setSelectedIndex(7);
+            //typeChanged();
             JPanel p;
             p = new JPanel(); p.setLayout(new FlowLayout());
             p.add(systemNameLabel);
@@ -925,6 +928,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 log.warn("skipping creation of signal "+systemName.getText()+" due to error");
                 return;
             }
+
             if (checkBeforeCreating(systemName.getText())) {
                 s = new jmri.implementation.QuadOutputSignalHead(systemName.getText(),userName.getText(),
             	    new NamedBeanHandle<Turnout>(to1.getText(),t1), 
@@ -950,6 +954,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             	    new NamedBeanHandle<Turnout>(to1.getText(),t1), 
             	    new NamedBeanHandle<Turnout>(to2.getText(),t2), 
             	    new NamedBeanHandle<Turnout>(to3.getText(),t3));
+
                 InstanceManager.signalHeadManagerInstance().register(s);
             }
         } else if (doubleTurnout.equals(typeBox.getSelectedItem())) {
@@ -1045,7 +1050,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 if(ukSignalTypeFromBox(mstBox).equals("Distant")) home=false;
                 else home=true;
 
-                s = new jmri.implementation.MergSD2SignalHead(systemName.getText(), ukSignalAspectsFromBox(msaBox), t1, t2, t3, false, home);
+                s = new jmri.implementation.MergSD2SignalHead(systemName.getText(), ukSignalAspectsFromBox(msaBox), new NamedBeanHandle<Turnout>(to3.getText(),t1), new NamedBeanHandle<Turnout>(to4.getText(),t2), new NamedBeanHandle<Turnout>(to5.getText(),t3), false, home);
                 s.setUserName(userName.getText());
                 InstanceManager.signalHeadManagerInstance().register(s);
 
@@ -1433,17 +1438,17 @@ public class SignalHeadTableAction extends AbstractTableAction {
             ev3Label.setText("Input1");
             ev3Label.setVisible(true);
             eto3.setVisible(true);
-            eto3.setText(((jmri.implementation.MergSD2SignalHead)curS).getInput1().getSystemName());
+            eto3.setText(((jmri.implementation.MergSD2SignalHead)curS).getInput1().getName());
             ev4Label.setText("Input2");
             ev4Label.setVisible(true);
             eto4.setVisible(true);
             if(((jmri.implementation.MergSD2SignalHead)curS).getInput2()!=null)
-                eto4.setText(((jmri.implementation.MergSD2SignalHead)curS).getInput2().getSystemName());
+                eto4.setText(((jmri.implementation.MergSD2SignalHead)curS).getInput2().getName());
             ev5Label.setText("Input3");
             ev5Label.setVisible(true);
             eto5.setVisible(true);
             if(((jmri.implementation.MergSD2SignalHead)curS).getInput3()!=null)
-                eto5.setText(((jmri.implementation.MergSD2SignalHead)curS).getInput3().getSystemName());
+                eto5.setText(((jmri.implementation.MergSD2SignalHead)curS).getInput3().getName());
             emsaBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     ukAspectChange(true);
@@ -1626,21 +1631,21 @@ public class SignalHeadTableAction extends AbstractTableAction {
                             noTurnoutMessage(ev5Label.getText(), eto5.getText());
                             return;
                             }
-                        else ((jmri.implementation.MergSD2SignalHead)curS).setInput3(t3);
+                        else ((jmri.implementation.MergSD2SignalHead)curS).setInput3(new NamedBeanHandle<Turnout>(eto5.getText(),t3));
                         // fall through
                 case 3: Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout(eto4.getText());
                         if (t2==null) {
                             noTurnoutMessage(ev4Label.getText(), eto4.getText());
                             return;
                             }
-                        else ((jmri.implementation.MergSD2SignalHead)curS).setInput2(t2);
+                        else ((jmri.implementation.MergSD2SignalHead)curS).setInput2(new NamedBeanHandle<Turnout>(eto4.getText(),t2));
                         // fall through
                 case 2: Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(eto3.getText());
                         if (t1==null) {
                             noTurnoutMessage(ev3Label.getText(), eto3.getText());
                             return;
                             }
-                        else ((jmri.implementation.MergSD2SignalHead)curS).setInput1(t1);
+                        else ((jmri.implementation.MergSD2SignalHead)curS).setInput1(new NamedBeanHandle<Turnout>(eto3.getText(),t1));
                         ((jmri.implementation.MergSD2SignalHead)curS).setAspects(ukSignalAspectsFromBox(emsaBox));
                         if(ukSignalTypeFromBox(emstBox)=="Distant") ((jmri.implementation.MergSD2SignalHead)curS).setHome(false);
                         else ((jmri.implementation.MergSD2SignalHead)curS).setHome(true);
