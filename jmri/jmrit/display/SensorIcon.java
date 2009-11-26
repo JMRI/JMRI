@@ -16,14 +16,14 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JLabel;
+//import javax.swing.JLabel;
 import java.awt.Color;
 
 /**
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -981,8 +981,15 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 		f.setVisible(true);
 	}
 
-    /*protected int maxHeight() {
-        if(icon) return Math.max(
+    protected int maxHeight() {
+        //We use the super class method to get the greatest value for the text
+            return Math.max(super.maxHeight(), Math.max(
+            Math.max((active!=null) ? active.getIconHeight() : 0,
+                    (inactive!=null) ? inactive.getIconHeight() : 0),
+            Math.max((unknown!=null) ? unknown.getIconHeight() : 0,
+                    (inconsistent!=null) ? inconsistent.getIconHeight() : 0)
+        ));
+        /*if(icon) return Math.max(
                 Math.max( (active!=null) ? active.getIconHeight() : 0,
                         (inactive!=null) ? inactive.getIconHeight() : 0),
                 Math.max((unknown!=null) ? unknown.getIconHeight() : 0,
@@ -995,16 +1002,22 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                 return ((javax.swing.JLabel)this).getMaximumSize().height+(getMargin()*2);
             return getFixedHeight();
         //return ((javax.swing.JLabel)this).getMaximumSize().height;
-        }
-    }*/
-    //protected int maxWidth() {
+        }*/
+    }
+    protected int maxWidth() {
+        return Math.max(super.maxWidth(), Math.max(
+            Math.max((active!=null) ? active.getIconWidth() : 0,
+                    (inactive!=null) ? inactive.getIconWidth() : 0),
+            Math.max((unknown!=null) ? unknown.getIconWidth() : 0,
+                    (inconsistent!=null) ? inconsistent.getIconWidth() : 0)
+        ));
         /*if((icon) && (text)) return Math.max(((javax.swing.JLabel)this).getMaximumSize().width,Math.max(
                 Math.max((active!=null) ? active.getIconWidth() : 0,
                         (inactive!=null) ? inactive.getIconWidth() : 0),
                 Math.max((unknown!=null) ? unknown.getIconWidth() : 0,
                         (inconsistent!=null) ? inconsistent.getIconWidth() : 0)
-            ));*/
-    /*    if(icon) return Math.max(
+            ));
+        if(icon) return Math.max(
                 Math.max((active!=null) ? active.getIconWidth() : 0,
                         (inactive!=null) ? inactive.getIconWidth() : 0),
                 Math.max((unknown!=null) ? unknown.getIconWidth() : 0,
@@ -1017,8 +1030,8 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                 return ((javax.swing.JLabel)this).getMaximumSize().width+(getMargin()*2);
             return getFixedWidth();
 
-        }//return
-    }*/
+        }*///return
+    }
 
 
     /**

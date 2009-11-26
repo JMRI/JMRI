@@ -43,7 +43,7 @@ import java.util.ResourceBundle;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.73 $
+ * @version $Revision: 1.74 $
  */
 
 public class PositionableLabel extends JLabel
@@ -254,7 +254,18 @@ public class PositionableLabel extends JLabel
     }
     //@TODO Need to do math.max on this to return the greatest width, as an icon can also contain text.
     protected int maxWidth(){
-        if ((fixedWidth==0) && (margin==0)){
+        if (fixedWidth==0){
+            if(icon && text){
+                return Math.max(namedIcon.getIconWidth()+(margin*2), ((javax.swing.JLabel)this).getMaximumSize().width)+(margin*2);
+            }else if (icon){
+                return namedIcon.getIconWidth()+(margin*2); // defer to superclass
+            }else
+                return (((javax.swing.JLabel)this).getMaximumSize().width)+(margin*2);
+        }
+        else {
+            return fixedWidth-(margin*2);
+        }
+        /*if ((fixedWidth==0) && (margin==0)){
             if(icon && text){
                 return Math.max(namedIcon.getIconWidth(), ((javax.swing.JLabel)this).getMaximumSize().width);
             }else if (icon){
@@ -268,12 +279,23 @@ public class PositionableLabel extends JLabel
                 return ((javax.swing.JLabel)this).getMaximumSize().width+(margin*2);
         }else if ((fixedWidth!=0) && (margin!=0)){
             return fixedWidth-(margin*2);
-        }
-        return fixedWidth;
+        }*/
+        //return fixedWidth;
     }
     //@TODO Need to do math.max on this to return the greatest width, as an icon can also contain text.
     protected int maxHeight(){
-        if ((fixedHeight==0) && (margin==0)){
+        if (fixedHeight==0){
+            if(icon && text){
+                return Math.max(namedIcon.getIconHeight()+(margin*2), ((javax.swing.JLabel)this).getMaximumSize().height)+(margin*2);
+            }else if (icon){
+                return namedIcon.getIconHeight()+(margin*2); // defer to superclass
+            }else
+                return (((javax.swing.JLabel)this).getMaximumSize().height)+(margin*2);
+        }
+        else {
+            return fixedHeight-(margin*2);
+        }
+        /*if ((fixedHeight==0) && (margin==0)){
             if(icon)
                 return namedIcon.getIconHeight(); // defer to superclass
             else
@@ -286,7 +308,7 @@ public class PositionableLabel extends JLabel
         } else if ((fixedHeight!=0) && (margin!=0)){
             return fixedHeight-(margin*2);
         }
-        return fixedHeight;
+        return fixedHeight;*/
     }
 
     private Integer displayLevel;
@@ -456,11 +478,13 @@ public class PositionableLabel extends JLabel
 
     protected JPopupMenu popup = null;
     protected JLabel ours;
+
     public void updateIcon(NamedIcon s){
         namedIcon = s;
         setIcon(namedIcon);
         updateSize();
     }
+
     /**
      * For over-riding in the using classes: only provides icon rotation
      */
