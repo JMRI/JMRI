@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PR3.shtml,v 1.5 2008-06-03 22:42:32 jacobsen Exp $ -->
+<!-- $Id: PR3.shtml,v 1.6 2009-11-26 06:21:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -77,6 +77,17 @@ and the
 in the 
 <a href="http://www.digitrax.com/kb/index.php">Digitrax Knowledge Base</a>.
 
+<h3>Drivers</h3>
+The PR3 needs to have a driver installed when used with
+Microsoft Windows.  See the 
+<a href="http://digitrax.com/prd_compint_pr3.php">Digitrax PR3 page</a>
+for more information.  Make sure to follow the instructions
+exactly, particularly about the order of installing the drivers
+and plugging in the device.
+
+<p>
+You don't need to install a separate
+driver when using current versions of Mac OS X or Linux.
 
 <h2>Using the PR3 as a LocoNet Interface</h2>
 
