@@ -23,7 +23,7 @@ import jmri.util.NamedBeanHandle;
  * and Bob Jacobsen.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SE8cSignalHead extends DefaultSignalHead {
 
@@ -39,6 +39,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
         super(makeSystemName(lowTO,highTO), userName);
         this.lowTurnout = lowTO;
         this.highTurnout = highTO;
+        systemName = makeSystemName(lowTO,highTO);
         init();
     }
 
@@ -53,6 +54,38 @@ public class SE8cSignalHead extends DefaultSignalHead {
         super(makeSystemName(lowTO,highTO));
         this.lowTurnout = lowTO;
         this.highTurnout = highTO;
+        systemName = makeSystemName(lowTO,highTO);
+        init();
+    }
+
+    /**
+     * Ctor for specifying system name
+     * @parameter lowTO Lower-numbered Turnout reference
+     * @parameter highTO higher-numbered Turnout reference
+     */
+    public SE8cSignalHead(String sname, NamedBeanHandle<Turnout> lowTO, 
+                            NamedBeanHandle<Turnout> highTO,
+                            String userName) {
+        // create systemname
+        super(sname, userName);
+        this.lowTurnout = lowTO;
+        this.highTurnout = highTO;
+        systemName = sname;
+        init();
+    }
+
+    /**
+     * Ctor for specifying system name
+     * @parameter lowTO Lower-numbered Turnout reference
+     * @parameter highTO higher-numbered Turnout reference
+     */
+    public SE8cSignalHead(String sname, NamedBeanHandle<Turnout> lowTO, 
+                            NamedBeanHandle<Turnout> highTO) {
+        // create systemname
+        super(sname);
+        this.lowTurnout = lowTO;
+        this.highTurnout = highTO;
+        systemName = sname;
         init();
     }
 
@@ -62,7 +95,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
      */
     static String makeSystemName(NamedBeanHandle<Turnout> lowTO, 
                             NamedBeanHandle<Turnout> highTO) {
-        return "IH:SE8c:\""+lowTO.getName()+"\";\""+highTO.getName()+"\"";
+        return ("IH:SE8c:\""+lowTO.getName()+"\";\""+highTO.getName()+"\"").toUpperCase();
     }
     
     /**
@@ -70,7 +103,11 @@ public class SE8cSignalHead extends DefaultSignalHead {
      * @parameter pNumber number (address) of low turnout
      */
     public SE8cSignalHead(int pNumber, String userName) {
-        this(makeHandle(pNumber), makeHandle(pNumber+1), userName);
+        super("LH"+pNumber, userName);
+        this.lowTurnout = makeHandle(pNumber);
+        this.highTurnout = makeHandle(pNumber+1);
+        systemName = "LH"+pNumber;
+        init();
     }
     
     /** 
@@ -90,7 +127,11 @@ public class SE8cSignalHead extends DefaultSignalHead {
      * @parameter pNumber number (address) of low turnout
      */
     public SE8cSignalHead(int pNumber) {
-        this(makeHandle(pNumber), makeHandle(pNumber+1));
+        super("LH"+pNumber);
+        this.lowTurnout = makeHandle(pNumber);
+        this.highTurnout = makeHandle(pNumber+1);
+        systemName = "LH"+pNumber;
+        init();
     }
 
     NamedBeanHandle<Turnout> lowTurnout;
@@ -101,11 +142,11 @@ public class SE8cSignalHead extends DefaultSignalHead {
         updateOutput();
     }
 
-    //public int getNumber() { return mNumber; }
     public String getSystemName() { 
-        return makeSystemName(lowTurnout,highTurnout);
+        return systemName;
     }
-
+    String systemName;
+    
     // Handle a request to change state by sending a LocoNet command
     protected void updateOutput()  {
         boolean closed = false;
@@ -142,7 +183,10 @@ public class SE8cSignalHead extends DefaultSignalHead {
             }
         }
     }
-        
+    
+    public NamedBeanHandle<Turnout> getLow() { return lowTurnout; }
+    public NamedBeanHandle<Turnout> getHigh() { return highTurnout; }
+
     public void dispose() {
     }
     

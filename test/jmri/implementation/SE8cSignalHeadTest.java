@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the SE8cSignalHead implmentation
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SE8cSignalHeadTest extends TestCase {
 
@@ -31,7 +31,7 @@ public class SE8cSignalHeadTest extends TestCase {
             new NamedBeanHandle<Turnout>("11", it11),
             new NamedBeanHandle<Turnout>("12", it12));
         
-        Assert.assertEquals("system name", "IH:SE8c:\"11\";\"12\"", s.getSystemName());
+        Assert.assertEquals("system name", "IH:SE8C:\"11\";\"12\"", s.getSystemName());
 
         Assert.assertEquals("to low", Turnout.UNKNOWN, it11.getCommandedState());
         Assert.assertEquals("to high", Turnout.CLOSED, it12.getCommandedState());  // dark
@@ -46,7 +46,7 @@ public class SE8cSignalHeadTest extends TestCase {
             "user name"
             );
         
-        Assert.assertEquals("system name", "IH:SE8c:\"11\";\"12\"", s.getSystemName());
+        Assert.assertEquals("system name", "IH:SE8C:\"11\";\"12\"", s.getSystemName());
         Assert.assertEquals("user name", "user name", s.getUserName());
 
         Assert.assertEquals("to low", Turnout.UNKNOWN, it11.getCommandedState());
@@ -54,16 +54,18 @@ public class SE8cSignalHeadTest extends TestCase {
 	}
 
 	public void testCtor3() {
+	    // original ctor from number and user name
 	    SE8cSignalHead s = new SE8cSignalHead(11,"user name");
         
-        Assert.assertEquals("system name", "IH:SE8c:\"11\";\"12\"", s.getSystemName());
+        Assert.assertEquals("system name", "LH11", s.getSystemName());
         Assert.assertEquals("user name", "user name", s.getUserName());
 	}
 
 	public void testCtor4() {
+	    // original ctor from number and user name
 	    SE8cSignalHead s = new SE8cSignalHead(11);
         
-        Assert.assertEquals("system name", "IH:SE8c:\"11\";\"12\"", s.getSystemName());
+        Assert.assertEquals("system name", "LH11", s.getSystemName());
 	}
 
 	public void testRedState() {

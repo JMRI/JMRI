@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle XML configuration for loconet.SE8cSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -65,9 +65,9 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         Attribute a = element.getAttribute("userName");
         SignalHead h;
         if (a == null)
-            h = new SE8cSignalHead(turnout);
+            h = new jmri.implementation.SE8cSignalHead(turnout);
         else
-            h = new SE8cSignalHead(turnout, a.getValue());
+            h = new jmri.implementation.SE8cSignalHead(turnout, a.getValue());
 
         loadCommon(h, element);
         

@@ -49,7 +49,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.47 $
+ * @version     $Revision: 1.48 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -421,36 +421,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 
     void typeChanged() {
         if (se8c4Aspect.equals(typeBox.getSelectedItem())) {
-            systemNameLabel.setVisible(false);
-            systemName.setVisible(false);
-            userNameLabel.setText(rb.getString("LabelUserName"));
-            v1Label.setText(rb.getString("LabelTurnoutNumber"));
-            v1Label.setVisible(true);
-            to1.setVisible(true);
-            s1Box.setVisible(false);
-            v2Label.setVisible(false);
-            to2.setVisible(false);
-            s2Box.setVisible(false);
-            v3Label.setVisible(false);
-            to3.setVisible(false);
-            s3Box.setVisible(false);
-            v4Label.setVisible(false);
-            to4.setVisible(false);
-            s4Box.setVisible(false);
-            v5Label.setVisible(false);
-            to5.setVisible(false);
-            s5Box.setVisible(false);
-            v6Label.setVisible(false);
-            to6.setVisible(false);
-            s6Box.setVisible(false);
-            v7Label.setVisible(false);
-            to7.setVisible(false);
-            s7Box.setVisible(false);
-            vtLabel.setVisible(false);
-            stBox.setVisible(false);
-            mstBox.setVisible(false);
-            msaBox.setVisible(false);
-
+            handleSE8cTypeChanged();
         } else if (grapevine.equals(typeBox.getSelectedItem())) {  //Need to see how this works with username
             systemNameLabel.setText(rb.getString("LabelSystemName"));
             systemNameLabel.setVisible(true);
@@ -804,15 +775,14 @@ public class SignalHeadTableAction extends AbstractTableAction {
 	}
     
     public boolean checkIntegerOnly(String s) {  
-    String allowed =
-      "0123456789";
-    boolean result=true;
-    //String result = "";
-    for ( int i = 0; i < s.length(); i++ ) {
-        if ( allowed.indexOf(s.charAt(i)) == -1 )
-            result=false;
-    }
-    return result;
+        String allowed = "0123456789";
+        boolean result=true;
+        //String result = "";
+        for ( int i = 0; i < s.length(); i++ ) {
+            if ( allowed.indexOf(s.charAt(i)) == -1 )
+                result=false;
+        }
+        return result;
     }
 	
 	void addTurnoutMessage(String s1, String s2) {
@@ -823,33 +793,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
 				AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
 	}
     //@TODO We could do with checking the to make sure that the user has entered a turnout into a turnout field if it has been presented. Otherwise an error is recorded in the console window
-    @SuppressWarnings("fallthrough")
+    //@SuppressWarnings("fallthrough")
     void okPressed(ActionEvent e) {
         if (!checkUserName(userName.getText()))
             return;
         SignalHead s;
         if (se8c4Aspect.equals(typeBox.getSelectedItem())) {
-            // the turnout field can hold either a NNN number or a system name
-            String num = to1.getText().toUpperCase();
-            int number;
-            if(num.length()>2){
-                if (num.substring(0,2).equals("LT"))
-                    number = Integer.parseInt(num.substring(2,num.length()));
-                else if(checkIntegerOnly(num))
-                        number = Integer.parseInt(num);
-                else{
-                    String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-                        .getString("se8c4SkippingCreation"), new Object[] { to1.getText() });
-                    JOptionPane.showMessageDialog(addFrame, msg,
-                        AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            } else
-                number = Integer.parseInt(num);
-			if (checkBeforeCreating("LH"+number)) {
-				s = new jmri.jmrix.loconet.SE8cSignalHead(number,userName.getText());
-				InstanceManager.signalHeadManagerInstance().register(s);
-			}
+            handleSE8cOkPressed();
         } else if (acelaAspect.equals(typeBox.getSelectedItem())) {
             String inputusername = userName.getText();
             String inputsysname = to1.getText().toUpperCase();
@@ -1016,47 +966,142 @@ public class SignalHeadTableAction extends AbstractTableAction {
 				InstanceManager.signalHeadManagerInstance().register(s);
 			}
         } else if (mergSignalDriver.equals(typeBox.getSelectedItem())){
-            // Add code here for adding Merg Signal Driver.
-            Turnout t3 = null;
-            Turnout t2 = null;
-            Turnout t1 = null;
-
-            switch(ukSignalAspectsFromBox(msaBox)){
-                case 4: t3 = InstanceManager.turnoutManagerInstance().provideTurnout(to5.getText());
-                        if (t3==null) {
-                            addTurnoutMessage(v5Label.getText(), to5.getText());
-                            log.warn("skipping creation of signal "+systemName.getText()+" due to error");
-                            return;
-                        }
-                        // fall through
-                case 3: t2 = InstanceManager.turnoutManagerInstance().provideTurnout(to4.getText());
-                        if (t2==null) {
-                            addTurnoutMessage(v4Label.getText(), eto4.getText());
-                            log.warn("skipping creation of signal "+systemName.getText()+" due to error");
-                            return;
-                        }
-                        // fall through
-                case 2: t1 = InstanceManager.turnoutManagerInstance().provideTurnout(to3.getText());
-                        if (t1==null) {
-                            addTurnoutMessage(v3Label.getText(), eto3.getText());
-                            log.warn("skipping creation of signal "+systemName.getText()+" due to error");
-                            return;
-                        }
-            }
-                        if (checkBeforeCreating(systemName.getText())) {
-            }
-            if (checkBeforeCreating(systemName.getText())) {
-                boolean home;
-                if(ukSignalTypeFromBox(mstBox).equals("Distant")) home=false;
-                else home=true;
-
-                s = new jmri.implementation.MergSD2SignalHead(systemName.getText(), ukSignalAspectsFromBox(msaBox), new NamedBeanHandle<Turnout>(to3.getText(),t1), new NamedBeanHandle<Turnout>(to4.getText(),t2), new NamedBeanHandle<Turnout>(to5.getText(),t3), false, home);
-                s.setUserName(userName.getText());
-                InstanceManager.signalHeadManagerInstance().register(s);
-
-            }
+            handleMergSignalDriverOkPressed();
         }else log.error("Unexpected type: "+typeBox.getSelectedItem());
     }
+	
+	void handleSE8cOkPressed() {
+        SignalHead s;
+        // the turnout field can hold either a NNN number or a system name
+        String num1 = to1.getText().toUpperCase();
+        String num2 = to2.getText().toUpperCase();
+        if (checkIntegerOnly(num1)) {
+            // input is number, handle that way
+            int number = Integer.parseInt(num1);
+            num2 = ""+(number+1);
+            Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(num1);
+            Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout(num2);
+            s = new jmri.implementation.SE8cSignalHead(
+                new NamedBeanHandle<Turnout>(num1, t1),
+                new NamedBeanHandle<Turnout>(num2, t2),
+                userName.getText());
+            InstanceManager.signalHeadManagerInstance().register(s);
+        } else {
+            // hopefully, this is a turnout name, as is 2nd field
+            Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(num1);
+            Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout(num2);
+            // check validity
+            if (t1 != null && t2 != null) {
+                // OK process
+                s = new jmri.implementation.SE8cSignalHead(
+                    new NamedBeanHandle<Turnout>(num1, t1),
+                    new NamedBeanHandle<Turnout>(num2, t2),
+                    userName.getText());
+                InstanceManager.signalHeadManagerInstance().register(s);
+            } else {
+                // couldn't create turnouts, error
+                String msg = java.text.MessageFormat.format(AbstractTableAction.rb
+                    .getString("se8c4SkippingCreation"), new Object[] { to1.getText() });
+                JOptionPane.showMessageDialog(addFrame, msg,
+                    AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+	}
+	
+    void handleSE8cTypeChanged() {
+        systemNameLabel.setVisible(false);
+        systemName.setVisible(false);
+        userNameLabel.setText(rb.getString("LabelUserName"));
+        v1Label.setText(rb.getString("LabelTurnoutNumber"));
+        v1Label.setVisible(true);
+        to1.setVisible(true);
+        s1Box.setVisible(false);
+        v2Label.setVisible(true);
+        v2Label.setText(rb.getString("LabelSecondNumber"));
+        to2.setVisible(true);
+        s2Box.setVisible(false);
+        v3Label.setVisible(false);
+        to3.setVisible(false);
+        s3Box.setVisible(false);
+        v4Label.setVisible(false);
+        to4.setVisible(false);
+        s4Box.setVisible(false);
+        v5Label.setVisible(false);
+        to5.setVisible(false);
+        s5Box.setVisible(false);
+        v6Label.setVisible(false);
+        to6.setVisible(false);
+        s6Box.setVisible(false);
+        v7Label.setVisible(false);
+        to7.setVisible(false);
+        s7Box.setVisible(false);
+        vtLabel.setVisible(false);
+        stBox.setVisible(false);
+        mstBox.setVisible(false);
+        msaBox.setVisible(false);
+    }
+    
+	void handleSE8cEditSignal() {
+        signalType.setText(se8c4Aspect);
+        eSystemNameLabel.setText(rb.getString("LabelSystemName"));
+        eSysNameLabel.setText(curS.getSystemName());
+        eUserNameLabel.setText(rb.getString("LabelUserName"));
+        eUserNameLabel.setVisible(true);
+        eUserName.setVisible(true);
+        eUserName.setText(curS.getUserName());
+        eSystemNameLabel.setText(rb.getString("LabelSystemName"));
+        eSysNameLabel.setText(curS.getSystemName());
+        //eSysNameLabel.setVisible(true);
+	}
+	
+	void handleSE8cUpdatePressed() {
+        // user name handled by common code; notthing else to change
+	}
+	
+    @SuppressWarnings("fallthrough")
+	void handleMergSignalDriverOkPressed() {
+        SignalHead s;
+        // Adding Merg Signal Driver.
+        Turnout t3 = null;
+        Turnout t2 = null;
+        Turnout t1 = null;
+
+        switch(ukSignalAspectsFromBox(msaBox)){
+            case 4: t3 = InstanceManager.turnoutManagerInstance().provideTurnout(to5.getText());
+                    if (t3==null) {
+                        addTurnoutMessage(v5Label.getText(), to5.getText());
+                        log.warn("skipping creation of signal "+systemName.getText()+" due to error");
+                        return;
+                    }
+                    // fall through
+            case 3: t2 = InstanceManager.turnoutManagerInstance().provideTurnout(to4.getText());
+                    if (t2==null) {
+                        addTurnoutMessage(v4Label.getText(), eto4.getText());
+                        log.warn("skipping creation of signal "+systemName.getText()+" due to error");
+                        return;
+                    }
+                    // fall through
+            case 2: t1 = InstanceManager.turnoutManagerInstance().provideTurnout(to3.getText());
+                    if (t1==null) {
+                        addTurnoutMessage(v3Label.getText(), eto3.getText());
+                        log.warn("skipping creation of signal "+systemName.getText()+" due to error");
+                        return;
+                    }
+        }
+                    if (checkBeforeCreating(systemName.getText())) {
+        }
+        if (checkBeforeCreating(systemName.getText())) {
+            boolean home;
+            if(ukSignalTypeFromBox(mstBox).equals("Distant")) home=false;
+            else home=true;
+
+            s = new jmri.implementation.MergSD2SignalHead(systemName.getText(), ukSignalAspectsFromBox(msaBox), new NamedBeanHandle<Turnout>(to3.getText(),t1), new NamedBeanHandle<Turnout>(to4.getText(),t2), new NamedBeanHandle<Turnout>(to5.getText(),t3), false, home);
+            s.setUserName(userName.getText());
+            InstanceManager.signalHeadManagerInstance().register(s);
+
+        }
+	}
 	
     // variables for edit of signal heads
     boolean editingHead = false;
@@ -1079,7 +1124,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
     JLabel eSystemNameLabel = new JLabel("");
     JLabel eUserNameLabel = new JLabel("");
     JLabel eSysNameLabel = new JLabel ("");
-    JLabel eNumLabel = new JLabel ("");
     JLabel ev1Label = new JLabel("");
     JLabel ev2Label = new JLabel("");
     JLabel ev3Label = new JLabel("");
@@ -1144,7 +1188,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
             p = new JPanel(); p.setLayout(new FlowLayout());
             p.add(ev1Label);
             p.add(eto1);
-			p.add(eNumLabel);
             p.add(es1Box);
             p.add(emsaBox);
             editFrame.getContentPane().add(p);
@@ -1216,7 +1259,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
         eUserName.setVisible(true);
 		ev1Label.setVisible(false);
 		eto1.setVisible(false);
-		eNumLabel.setVisible(false);
 		es1Box.setVisible(false);
 		ev2Label.setVisible(false);
 		eto2.setVisible(false);
@@ -1356,21 +1398,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
             es7Box.setVisible(true);
 			setTurnoutStateInBox(es7Box, ((jmri.implementation.LsDecSignalHead)curS).getDarkState(), turnoutStateValues);
 		}
-		else if (className.equals("jmri.jmrix.loconet.SE8cSignalHead")) {
-			signalType.setText(se8c4Aspect);
-            eSystemNameLabel.setText(rb.getString("LabelSystemName"));
-			eSysNameLabel.setText(curS.getSystemName());
-            eUserNameLabel.setText(rb.getString("LabelUserName"));
-			eUserNameLabel.setVisible(true);
-			eUserName.setVisible(true);
-			eUserName.setText(curS.getUserName());
-            eSystemNameLabel.setText(rb.getString("LabelSystemName"));
-            eSysNameLabel.setText(curS.getSystemName());
-            //eSysNameLabel.setVisible(true);
-            ev1Label.setText(rb.getString("LabelTurnoutNumber"));
-            ev1Label.setVisible(true);
-            eNumLabel.setVisible(true);
-			eNumLabel.setText(" "+((jmri.jmrix.loconet.SE8cSignalHead)curS).getNumber());
+		else if (className.equals("jmri.implementation.SE8cSignalHead")) {
+            handleSE8cEditSignal();
 		}
 		else if (className.equals("jmri.jmrix.grapevine.SerialSignalHead")) {
 			signalType.setText(grapevine);
@@ -1589,13 +1618,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
 			((jmri.implementation.LsDecSignalHead)curS).setFlashRedState(turnoutStateFromBox(es6Box));
 			((jmri.implementation.LsDecSignalHead)curS).setDarkState(turnoutStateFromBox(es7Box));    
 		}
-		else if (className.equals("jmri.jmrix.loconet.SE8cSignalHead")) {
-			/*String nam = eUserName.getText();
-			// check if user name changed
-			if (!((curS.getUserName()!=null) && (curS.getUserName().equals(nam)))) {
-                if(checkUserName(nam))
-                    curS.setUserName(nam);
-			}*/
+		else if (className.equals("jmri.implementation.SE8cSignalHead")) {
+            handleSE8cUpdatePressed();
 		}
 		else if (className.equals("jmri.jmrix.grapevine.SerialSignalHead")) {
 			/*String nam = eUserName.getText();
