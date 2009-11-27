@@ -27,7 +27,6 @@ class Light(Jynstrument, PropertyChangeListener, AddressListener, MouseListener)
 
     def quit(self):   # very important to clean up everything to make sure GC will collect us
         self.cleanThrottle()
-        self.getContext().removeThrottleListener(self)
         self.getContext().getAddressPanel().removeAddressListener(self)
 
 # this is a good way to make sure that we're are actaully GCed 

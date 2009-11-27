@@ -58,8 +58,8 @@ public class ThrottlesListPanel extends JPanel implements AddressListener {
 	    jbNew.setHorizontalTextPosition(JButton.CENTER);
 	    jbNew.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
-	    		ThrottleFrame tw = ThrottleFrameManager.instance().createThrottleFrame();
-	    		tw.setVisible(true);
+	    		ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
+	    		tf.toFront();
 	    	}
 	    });
 	    throttleToolBar.add(jbNew);

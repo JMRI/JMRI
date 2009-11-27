@@ -17,7 +17,7 @@ import org.jdom.output.*;
  *
  * @author			Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 
@@ -34,6 +34,10 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 			setEnabled(false);
 		}
 	}
+	
+    public StoreXmlThrottlesLayoutAction() {
+        this("Save default throttle layout...");
+    }
 
 	/**
 	 * The action is performed. Let the user choose the file to save to.
@@ -46,6 +50,10 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 		java.io.File file = StoreXmlConfigAction.getFileName(fileChooser);
 		if (file == null)
 			return;
+		saveThrottlesLayout(file);
+	}
+	
+	public void saveThrottlesLayout(java.io.File f) {
 
 		try {
 			Element root = new Element("throttle-layout-config");
@@ -66,13 +74,13 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 			
 			// throttle windows
 			for (Iterator<ThrottleWindow> i = ThrottleFrameManager.instance().getThrottleWindows(); i.hasNext();) {
-				ThrottleWindow f = i.next();
-				Element throttleElement = f.getXml();
+				ThrottleWindow tw = i.next();
+				Element throttleElement = tw.getXml();
 				children.add(throttleElement);
 			}
 			root.setContent(children);
 
-			FileOutputStream o = new java.io.FileOutputStream(file);
+			FileOutputStream o = new java.io.FileOutputStream(f);
 			XMLOutputter fmt = new XMLOutputter();
 			fmt.setFormat(org.jdom.output.Format.getPrettyFormat());
 			fmt.output(doc, o);

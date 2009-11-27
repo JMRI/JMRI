@@ -67,7 +67,12 @@ public class ThrottleWindow extends JmriJFrame {
     private ThrottlePanelCyclingKeyListener throttlePanelsCyclingKeyListener;
 	private static int NEXT_THROTTLE_KEY = KeyEvent.VK_RIGHT;
 	private static int PREV_THROTTLE_KEY = KeyEvent.VK_LEFT;
-   
+	
+	private int cardCounterID = 0; // to generate unique names for each card
+	private int cardCounterNB = 1; // real counter
+	
+    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+	
     /**
      *  Default constructor
      */
@@ -124,7 +129,7 @@ public class ThrottleWindow extends JmriJFrame {
 		editMenuExportRoster.setEnabled( getCurentThrottleFrame().getRosterEntry() != null);
     	// toolbar items
     	if (jbPrevious != null) // means toolbar enabled
-    		if ( cardCounter > 1 ) {
+    		if ( cardCounterNB > 1 ) {
     			jbPrevious.setEnabled( true );
     			jbNext.setEnabled( true );
     			jbClose.setEnabled( true );
@@ -231,9 +236,10 @@ public class ThrottleWindow extends JmriJFrame {
     		log.error("Error while creating Jynstrument "+path);
     		return ;
     	}
+    	ThrottleFrame.setTransparent(it);
     	it.setVisible(true);
-    	it.setPopUpMenu(new JynstrumentPopupMenu(it, throttleToolBar));
     	throttleToolBar.add(it);
+    	it.setPopUpMenu(new JynstrumentPopupMenu(it));
     	throttleToolBar.repaint();
     }
     
@@ -428,9 +434,9 @@ public class ThrottleWindow extends JmriJFrame {
 	}
 	
 	public void removeThrottleFrame(ThrottleFrame tf) {
-		if ( cardCounter > 1 ) // we don't like empty ThrottleWindow
+		if ( cardCounterNB > 1 ) // we don't like empty ThrottleWindow
 		{
-			cardCounter--;
+			cardCounterNB--;
 			if (getCurentThrottleFrame() == tf)	{
 				log.debug("Closing last created");
 			}
@@ -454,12 +460,10 @@ public class ThrottleWindow extends JmriJFrame {
 	public void removeThrottleFrame() {
 		removeThrottleFrame( getCurentThrottleFrame() );
 	}
-	
-	private int cardcounter = 0; // to generate unique names for each card
-	private int cardCounter = 1; // real counter
+
 	public void addThrottleFrame(ThrottleFrame tp) {
-		cardcounter++; cardCounter++;
-		String txt = "Card-"+cardcounter;
+		cardCounterID++; cardCounterNB++;
+		String txt = "Card-"+cardCounterID;
 		tp.setTitle(txt);
         throttlesPanel.add(tp,txt);
         throttlesLayout.show(throttlesPanel, txt);
@@ -473,6 +477,29 @@ public class ThrottleWindow extends JmriJFrame {
 		return getCurentThrottleFrame();
 	}
 
+	public void toFront(String throttleFrameTitle) {
+		throttlesLayout.show(throttlesPanel, throttleFrameTitle);
+		setVisible(true);
+		requestFocus();
+		toFront();
+	}
+
+	public String getTitleTextType() {
+		return titleTextType;
+	}
+
+	public String getTitleText() {
+		return titleText;
+	}
+
+	public void setTitleText(String titleText) {
+		this.titleText = titleText;
+	}
+
+	public void setTitleTextType(String titleTextType) {
+		this.titleTextType = titleTextType;
+	}
+	
 	public Element getXml() { 	
 		Element me  = new Element("ThrottleWindow");
         me.setAttribute("title", titleText);
@@ -499,22 +526,6 @@ public class ThrottleWindow extends JmriJFrame {
         
         me.setContent(children);        
         return me;
-	}
-
-	public String getTitleTextType() {
-		return titleTextType;
-	}
-
-	public String getTitleText() {
-		return titleText;
-	}
-
-	public void setTitleText(String titleText) {
-		this.titleText = titleText;
-	}
-
-	public void setTitleTextType(String titleTextType) {
-		this.titleTextType = titleTextType;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -565,13 +576,6 @@ public class ThrottleWindow extends JmriJFrame {
 		}
 	}
 
-	public void toFront(String throttleFrameTitle) {
-		throttlesLayout.show(throttlesPanel, throttleFrameTitle);
-		requestFocus();
-		toFront();
-	}
-	
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }

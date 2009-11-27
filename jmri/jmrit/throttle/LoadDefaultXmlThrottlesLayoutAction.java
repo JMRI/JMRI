@@ -1,22 +1,23 @@
 package jmri.jmrit.throttle;
 
 import java.awt.event.ActionEvent;
+import java.io.File;
 
 import javax.swing.AbstractAction;
 
 /**
  * Create a new throttle.
  *
- * @author			Glen Oberhauser
- * @version     $Revision: 1.15 $
+ * @author		Lionel Jeanson
+ * @version    
  */
-public class ThrottleCreationAction extends AbstractAction {
+public class LoadDefaultXmlThrottlesLayoutAction extends AbstractAction {
 
     /**
      * Constructor
      * @param s Name for the action.
      */
-    public ThrottleCreationAction(String s) {
+    public LoadDefaultXmlThrottlesLayoutAction(String s) {
         super(s);
     // disable the ourselves if there is no throttle Manager
         if (jmri.InstanceManager.throttleManagerInstance()==null) {
@@ -24,8 +25,8 @@ public class ThrottleCreationAction extends AbstractAction {
         }         
     }
 
-    public ThrottleCreationAction() {
-        this("New Throttle...");
+    public LoadDefaultXmlThrottlesLayoutAction() {
+        this("Load default throttle layout...");
     }
 
     /**
@@ -33,6 +34,15 @@ public class ThrottleCreationAction extends AbstractAction {
      * @param e The event causing the action.
      */
     public void actionPerformed(ActionEvent e) {
+    	// load throttle preference 
+    	LoadXmlThrottlesLayoutAction lxta = new LoadXmlThrottlesLayoutAction();
+    	try {
+            if (lxta.loadThrottlesLayout(new File(ThrottleFrame.getDefaultThrottleFilename())))
+                return;
+        } catch (java.io.IOException ex) { 
+        	log.error("No default throttle layout, creating an empty throttle window");
+        }
+		// need to create a new one
     	ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
 		tf.toFront();
     }

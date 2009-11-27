@@ -27,7 +27,6 @@ class Horn(Jynstrument, PropertyChangeListener, AddressListener, MouseListener):
 
     def quit(self):   # very important to clean up everything to make sure GC will collect us
         self.cleanThrottle()
-        self.getContext().removeThrottleListener(self)
         self.getContext().getAddressPanel().removeAddressListener(self)
 
 #Inner workings:
@@ -40,9 +39,14 @@ class Horn(Jynstrument, PropertyChangeListener, AddressListener, MouseListener):
             self.throttle.removePropertyChangeListener(self)
         self.throttle = None
 
-    def switch(self):      # actually do function value change
+    def switchOn(self):      # actually do function value change
         if self.throttle != None :
-            self.throttle.setF2( not self.throttle.getF2() )   # HERE!
+            self.throttle.setF2( True )   # HERE!
+        self.setIcon()
+
+    def switchOff(self):      # actually do function value change
+        if self.throttle != None :
+            self.throttle.setF2( False )   # HERE!
         self.setIcon()
 
     def setIcon(self):     # update appearance
@@ -74,10 +78,10 @@ class Horn(Jynstrument, PropertyChangeListener, AddressListener, MouseListener):
 
 #MouseListener part: to listen for mouse events
     def mouseReleased(self, event):
-        self.switch()
+        self.switchOff()
 
     def mousePressed(self, event):
-        self.switch()
+        self.switchOn()
         
     def mouseClicked(self, event):
         pass

@@ -21,7 +21,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class TrainIcon extends LocoIcon {
@@ -118,7 +118,7 @@ public class TrainIcon extends LocoIcon {
 		} else {
 			tf.getAddressPanel().setRosterEntry(entry);
 		}
-		tf.setVisible(true);
+		tf.toFront();
     }
     
     private JMenu makeTrainRouteMenu(){

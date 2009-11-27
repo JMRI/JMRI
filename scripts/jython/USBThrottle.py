@@ -4,7 +4,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 
 #
 # Set the name of the controller you're using
@@ -62,7 +62,7 @@ componentF8 = ""    # F8 follows this
 
 # open a throttle window and get components
 tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame()
-tf.setVisible(True)
+tf.toFront()
 controlPanel = tf.getControlPanel()
 functionPanel = tf.getFunctionPanel()
 

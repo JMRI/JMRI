@@ -1,5 +1,6 @@
 package jmri.jmrit.jython;
 
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,14 +13,14 @@ import javax.swing.JPopupMenu;
 
 public class JynstrumentPopupMenu extends JPopupMenu {
 	private static final ResourceBundle jythonBundle = ResourceBundle.getBundle("jmri/jmrit/jython/JythonBundle");
-
-	Jynstrument jynstrument;
-	Container container;
-
-	public JynstrumentPopupMenu(Jynstrument it, Container cont) {
+	
+	Jynstrument jynstrument; // The jynstrument itself
+	Component component;     // The component in which it is hosted (can be itself)
+	
+	public JynstrumentPopupMenu(Jynstrument it, Component comp) {
 		super(it.getName());
 		jynstrument = it;
-		container = cont;
+		component = comp;
 		initMenu();
 		it.addMouseListener(new MouseAdapter(){
     		public void mousePressed(MouseEvent e) {
@@ -37,8 +38,11 @@ public class JynstrumentPopupMenu extends JPopupMenu {
     	        	it.getPopUpMenu().show(e.getComponent(),e.getX(), e.getY());
     	        }
     	    }
-    	});
-		
+    	});		
+	}
+
+	public JynstrumentPopupMenu(Jynstrument it) {
+		this(it, it);
 	}
 	
 	private void initMenu() {
@@ -46,11 +50,13 @@ public class JynstrumentPopupMenu extends JPopupMenu {
 		JMenuItem quitMenuItem = new JMenuItem(jythonBundle.getString("JynstrumentPopupMenuQuit"));
 		quitMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				jynstrument.quit();
-				container.remove(jynstrument);
+				Container cnt = component.getParent(); 
+				cnt.remove(component);
+				cnt.repaint();
+				jynstrument.quit();				
 				jynstrument.setPopUpMenu(null);
 				jynstrument = null;
-				container.repaint();
+				component = null;
 			} 
 		} );
 		add(quitMenuItem);  		

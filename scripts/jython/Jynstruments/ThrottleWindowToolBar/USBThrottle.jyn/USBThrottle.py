@@ -1,7 +1,6 @@
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.awt.CardLayout as CardLayout
 import jmri.util.ResizableImagePanel as ResizableImagePanel
-import java.awt.event.MouseListener as MouseListener
 import java.beans.PropertyChangeListener as PropertyChangeListener
 import jmri.jmrit.throttle.AddressListener as AddressListener
 import javax.swing.Timer as Timer
@@ -60,56 +59,72 @@ valueF2 = 1
 componentF3 = "7" # Function button
 valueF3 = 1
 
+componentF4 = "8" # Function button
+valueF2 = 1
+
+componentF5 = "9" # Function button
+valueF3 = 1
+
 class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
 #Property listener part: USB value
     def propertyChange(self, event):
-        # Cutomize bellow for controls
+        # Customize bellow for controls
         if (event.propertyName == "Value") :  # USB
             if (event.oldValue.getController().getName() == desiredControllerName ) :
                 component = event.oldValue.getComponent().toString()
                 value = event.newValue
-                # ThrottleFrames
+                # Change curent ThrottleFrame
                 if (component == componentThrottleFrame) :
                     if (value == valueNextThrottleFrame) : #NEXT
                         self.getContext().nextThrottleFrame()
                     if (value == valuePreviousThrottleFrame) : #PREVIOUS
                         self.getContext().previousThrottleFrame()
-                # Speed
-                if (component == componentSpeed) :
-                    self.speedAction.setSpeedIncrement(value / valueSpeedDivider)
-                    if (( abs(value) > valueSpeedTrigger) and (self.throttle != None)) :
-                        self.speedTimer.start()
+                # From there; curent throttle control, hence require a throttle
+                if (self.throttle != None) :
+                    # Speed
+                    if (component == componentSpeed) :
+                        self.speedAction.setSpeedIncrement(value / valueSpeedDivider)
+                        if ( abs(value) > valueSpeedTrigger ) :
+                            self.speedTimer.start()
+                        else :
+                            self.speedTimer.stop()
                     else :
-                        self.speedTimer.stop()
-                else :
-                    self.speedTimer.stop() # just in case, stop it
-                # Direction
-                if ((component == componentDirection) and (self.throttle != None)) :
-                    if (value == valueDirectionForward) :
-                        self.throttle.setIsForward(True)
-                    if (value == valueDirectionBackward) :
-                        self.throttle.setIsForward(False)
-                # Speed presets
-                if ((component == componentStopSpeed) and (value == valueStopSpeed) and (self.throttle != None)) :
-                    self.throttle.setSpeedSetting(speedStopSpeed)
-                    if ( Calendar.getInstance().getTimeInMillis() - self.lastTimeStopButton < delay4EStop ) : # EStop
-                        self.throttle.setSpeedSetting(EStopSpeed)
-                    self.lastTimeStopButton = Calendar.getInstance().getTimeInMillis()
-                if ((component == componentSlowSpeed) and (value == valueSlowSpeed) and (self.throttle != None)) :
-                    self.throttle.setSpeedSetting(speedSlowSpeed)
-                if ((component == componentCruiseSpeed) and (value == valueCruiseSpeed) and (self.throttle != None)) :
-                    self.throttle.setSpeedSetting(speedCruiseSpeed)
-                if ((component == componentMaxSpeed) and (value == valueMaxSpeed) and (self.throttle != None)) :
-                    self.throttle.setSpeedSetting(speedMaxSpeed)
-                # Functions
-                if ((component == componentF0) and (value == valueF0) and (self.throttle != None)) :
-                    self.throttle.setF0( not self.throttle.getF0() )
-                if ((component == componentF1) and (value == valueF1) and (self.throttle != None)) :
-                    self.throttle.setF1( not self.throttle.getF1() )
-                if ((component == componentF2) and (value == valueF2) and (self.throttle != None)) :
-                    self.throttle.setF2( not self.throttle.getF2() )
-                if ((component == componentF3) and (value == valueF3) and (self.throttle != None)) :
-                    self.throttle.setF3( not self.throttle.getF3() )
+                        self.speedTimer.stop() # just in case, stop it
+                        
+                    # Direction
+                    if (component == componentDirection) :
+                        if (value == valueDirectionForward) :
+                            self.throttle.setIsForward(True)
+                        if (value == valueDirectionBackward) :
+                            self.throttle.setIsForward(False)
+                            
+                    # Speed presets
+                    if ((component == componentStopSpeed) and (value == valueStopSpeed)) :
+                        self.throttle.setSpeedSetting(speedStopSpeed)
+                        if ( Calendar.getInstance().getTimeInMillis() - self.lastTimeStopButton < delay4EStop ) : # EStop on double tap
+                            self.throttle.setSpeedSetting(EStopSpeed)
+                        self.lastTimeStopButton = Calendar.getInstance().getTimeInMillis()
+                    if ((component == componentSlowSpeed) and (value == valueSlowSpeed)) :
+                        self.throttle.setSpeedSetting(speedSlowSpeed)
+                    if ((component == componentCruiseSpeed) and (value == valueCruiseSpeed)) :
+                        self.throttle.setSpeedSetting(speedCruiseSpeed)
+                    if ((component == componentMaxSpeed) and (value == valueMaxSpeed)) :
+                        self.throttle.setSpeedSetting(speedMaxSpeed)
+                        
+                    # Functions
+                    if ((component == componentF0) and (value == valueF0)) :
+                        self.throttle.setF0( not self.throttle.getF0() )
+                    if ((component == componentF1) and (value == valueF1)) :
+                        self.throttle.setF1( not self.throttle.getF1() )
+                    if ((component == componentF2) and (value == valueF2)) :
+                        self.throttle.setF2( not self.throttle.getF2() )
+                    if ((component == componentF3) and (value == valueF3)) :
+                        self.throttle.setF3( not self.throttle.getF3() )
+                    if ((component == componentF4) and (value == valueF4)) :
+                        self.throttle.setF4( not self.throttle.getF4() )
+                    if ((component == componentF5) and (value == valueF5)) :
+                        self.throttle.setF5( not self.throttle.getF5() )
+                        
         # Nothing to customize bellow this point
         if (event.propertyName == "ThrottleFrame") :  # Curent throttle frame changed
             self.speedTimer.stop()
@@ -159,10 +174,10 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
         self.throttle = None
         self.speedAction.setThrottle( self.throttle )
                 
-# Speed timer class, to increase speed regularly once button pushed
+# Speed timer class, to increase speed regularly once button pushed, thread stopped on button release
 class SpeedAction(ActionListener):
     def __init__(self):
-        self.sync = thread.allocate_lock() # Protects properties getter and setter 
+        self.sync = thread.allocate_lock() # Protects properties getter and setter
         self.speedIncrement = 0
         self.throttle = None
 
@@ -191,10 +206,12 @@ class SpeedAction(ActionListener):
     def actionPerformed(self, e):
         throttle = self.getThrottle()
         spi = self.getSpeedIncrement()
-        if ( throttle != None):
+        if (throttle != None) :
             ns =  throttle.getSpeedSetting() + spi
             if (ns < 0 ) :
                 ns = 0
             if (ns > 1 ) :
                 ns = 1
             throttle.setSpeedSetting( ns )
+
+

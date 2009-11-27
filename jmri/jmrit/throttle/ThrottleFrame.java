@@ -27,6 +27,7 @@ import jmri.configurexml.StoreXmlConfigAction;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
+import jmri.jmrit.jython.JynstrumentPopupMenu;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.iharder.dnd.FileDrop;
 import jmri.util.iharder.dnd.FileDrop.Listener;
@@ -34,7 +35,7 @@ import jmri.util.iharder.dnd.FileDrop.Listener;
 import org.jdom.Document;
 import org.jdom.Element;
 
-// Should be named ThrottlePanel but was already existing with that name and don't want to break dependancies (particularly in Jython code)
+// Should be named ThrottlePanel but was already existing with that name and don't want to break dependencies (particularly in Jython code)
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
 	private static final ResourceBundle throttleBundle = ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle");
@@ -61,18 +62,18 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     private AddressPanel addressPanel;
     private BackgroundPanel backgroundPanel;
     private FrameListener frameListener;
-        
+
+    private String title;    
+    private String lastUsedSaveFile = null;
+    private static String DefaultThrottleFileName = "JMRI_ThrottlePreference.xml";
+
     public static String getDefaultThrottleFolder() {
     	return XmlFile.prefsDir()+"throttle"+File.separator ;
     }
-    private static String ThrottleFileName = "JMRI_ThrottlePreference.xml";
-    public static String getDefaultThrottleFilename() { 
-    	return getDefaultThrottleFolder()+ThrottleFileName;
-    }
 
-    private String title;
-    
-    private String lastUsedSaveFile = null;
+    public static String getDefaultThrottleFilename() { 
+    	return getDefaultThrottleFolder()+DefaultThrottleFileName;
+    }
                 
     public ThrottleFrame(ThrottleWindow tw)
     {
@@ -81,12 +82,9 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         initGUI();
 		jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesListPanel().addThrottleFrame(this);
     }
-
-    public void setVisible(boolean b)
-    {
-    	super.setVisible(b);
-    	if (b)
-    		throttleWindow.setVisible(b);
+    
+    public ThrottleWindow getThrottleWindow() {
+    	return throttleWindow;
     }
     
     public ControlPanel getControlPanel() {
@@ -196,31 +194,6 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 		}
     	checkPosition();
 		return ;
-	}
-
-	private void setTransparent(JComponent jcomp)
-	{
-		if (jcomp instanceof JPanel) //OS X: Jpanel components are enough
-		{
-			jcomp.setBackground(TRANS_COLOR);//new Color(0,0,0,0));
-			jcomp.setOpaque(false);
-		}
-		setTransparent ( jcomp.getComponents() );
-	}
-	
-	private void setTransparent(Component[] comps)
-	{
-		for (int i=0; i<comps.length; i++)
-		{
-			try
-			{
-				if (comps[i] instanceof JComponent)
-					setTransparent( (JComponent) comps[i] );
-			}
-			catch(Exception e)
-			{ // Do nothing, just go on
-			}
-		}
 	}
     
     /**
@@ -349,6 +322,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     	newiFrame.setResizable(true);
     	newiFrame.setClosable(true);
     	newiFrame.setIconifiable(true);
+    	it.setPopUpMenu(new JynstrumentPopupMenu(it, newiFrame));
     	if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() &&
     			jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingTransparentCtl() )
     		setTransparent(newiFrame);
@@ -721,5 +695,31 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 		throttleWindow.updateGUI();
 	}
 
+// some utilities to turn a component background transparent
+	public static void setTransparent(JComponent jcomp)
+	{
+		if (jcomp instanceof JPanel) //OS X: Jpanel components are enough
+		{
+			jcomp.setBackground(TRANS_COLOR);//new Color(0,0,0,0));
+			jcomp.setOpaque(false);
+		}
+		setTransparent ( jcomp.getComponents() );
+	}
+	
+	private static void setTransparent(Component[] comps)
+	{
+		for (int i=0; i<comps.length; i++)
+		{
+			try
+			{
+				if (comps[i] instanceof JComponent)
+					setTransparent( (JComponent) comps[i] );
+			}
+			catch(Exception e)
+			{ // Do nothing, just go on
+			}
+		}
+	}
+	
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleFrame.class.getName());
 }

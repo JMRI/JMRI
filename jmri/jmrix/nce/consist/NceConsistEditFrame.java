@@ -55,7 +55,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007 2008
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
@@ -455,7 +455,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 				tf.getAddressPanel().setAddress(locoAddr, isLong); 	// first notify for func button
 			}
 			tf.getAddressPanel().setAddress(consistNum, false);	// second notify for consist address
-			tf.setVisible(true);
+			tf.toFront();
 			return;
 		}
 		// clear or cancel button

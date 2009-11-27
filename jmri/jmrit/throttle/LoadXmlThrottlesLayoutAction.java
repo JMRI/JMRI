@@ -17,7 +17,7 @@ import org.jdom.Element;
  *  Load throttles from XML
  *
  * @author     Glen Oberhauser 2004
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class LoadXmlThrottlesLayoutAction extends AbstractAction {
 	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
@@ -95,7 +95,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
 				for (java.util.Iterator<Element> i = throttles.iterator(); i.hasNext();) {
 					ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
 					tf.setXml(i.next());
-					tf.setVisible(true);
+					tf.toFront();
 				}
 			}
 			else {
@@ -121,7 +121,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
 	 * An extension of the abstract XmlFile. No changes made to that class.
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.2 $
+	 * @version $Revision: 1.3 $
 	 */
 	class ThrottlePrefs extends XmlFile {}
 
