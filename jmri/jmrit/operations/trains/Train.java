@@ -1,3 +1,5 @@
+// Train.java
+
 package jmri.jmrit.operations.trains;
 
 import java.awt.Frame;
@@ -39,7 +41,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.53 $
+ * @version $Revision: 1.54 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -909,6 +911,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			moveTrainIcon(_current);
 	}
 	
+	private boolean animation = true;	// when true use animation for icon moves
 	protected void moveTrainIcon(RouteLocation rl){
 		trainIconRl = rl;
 		// create train icon if at departure or if program has been restarted
@@ -923,7 +926,10 @@ public class Train implements java.beans.PropertyChangeListener {
 				trainIcon.setToolTipText(getDescription() + " at " + getCurrentLocationName() + " next "+getNextLocationName());
 			if (rl != null){
 				if (rl.getTrainIconX()!=0 || rl.getTrainIconY()!=0){
-					trainIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
+					if (animation)
+						new TrainIconAnimation(trainIcon, rl);
+					else
+						trainIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
 				}
 			}
 		} 
