@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MacOSX.html,v 1.31 2009-11-26 06:21:25 jacobsen Exp $ -->
+<!-- $Id: MacOSX.html,v 1.32 2009-11-27 04:16:22 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -200,6 +200,16 @@
     <p>
     Your next step will be to set the preferences for your particular layout connection.
     
+    <p>
+    MacOS X uses names like "/dev/cu.SomeName" and "/dev/tty.SomeName" for 
+    devices, including USB-attached devices like USB-serial converters, LocoBuffer-USBs and similar.
+    Generally, you'll want to use the one that starts with "/dev/cu" if it's present,
+    but see the specific installation page for your particular type of device.  
+    Sometimes you can recognize your interface from the right-hand part of the name.
+    If not, the easiest way to find the name for your interface is to disconnect it, 
+    start JMRI, write down the list of available devices, close JMRI, reconnect the interface, 
+    start JMRI again, and look to see which extra name has appeared.
+    That's the name one you want.
 	</OL>
 
 <h2>Customizing Your JMRI Installation</h2>
