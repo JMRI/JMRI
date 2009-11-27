@@ -18,7 +18,7 @@ import jmri.util.com.sun.TableSorter;
  * Java 1.1.8 system, or at least try to fake it.
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class JTableUtil {
@@ -48,8 +48,10 @@ public class JTableUtil {
                 sorter.setTableHeader(dataTable.getTableHeader());
         } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
             // nothing to do here
+            log.error("Unexpected error: "+e);
         }
         return dataTable;
     }
 
+    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JTableUtil.class.getName());
 }
