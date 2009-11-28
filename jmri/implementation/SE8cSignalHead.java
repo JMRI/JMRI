@@ -23,7 +23,7 @@ import jmri.util.NamedBeanHandle;
  * and Bob Jacobsen.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SE8cSignalHead extends DefaultSignalHead {
 
@@ -138,6 +138,11 @@ public class SE8cSignalHead extends DefaultSignalHead {
     NamedBeanHandle<Turnout> highTurnout;
 
     void init() {
+        // basic operation, nothing but ON messages needed
+        lowTurnout.getBean().setBinaryOutput(true);
+        highTurnout.getBean().setBinaryOutput(true);
+
+        // ensure default appearance
         mAppearance = DARK;  // start turned off
         updateOutput();
     }
