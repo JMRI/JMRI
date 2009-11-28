@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -107,16 +107,20 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     	
     	yardPane = new JScrollPane(yardTable);
     	yardPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	yardPane.setBorder(BorderFactory.createTitledBorder(""));
         	
     	sidingPane = new JScrollPane(sidingTable);
     	sidingPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
- 	    
+    	sidingPane.setBorder(BorderFactory.createTitledBorder(""));
+    	
     	interchangePane = new JScrollPane(interchangeTable);
     	interchangePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
- 
+    	interchangePane.setBorder(BorderFactory.createTitledBorder(""));
+    	
     	stagingPane = new JScrollPane(stagingTable);
     	stagingPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
- 		
+    	stagingPane.setBorder(BorderFactory.createTitledBorder(""));
+    	
     	// button group
 		ButtonGroup opsGroup = new ButtonGroup();
 		opsGroup.add(sidingRadioButton);

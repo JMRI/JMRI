@@ -11,7 +11,6 @@ import jmri.jmrit.operations.OperationsFrame;
 import java.awt.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
@@ -21,7 +20,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -87,7 +86,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	   	// Set up the jtable in a Scroll Pane..
     	routePane = new JScrollPane(routeTable);
     	routePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-
+    	routePane.setBorder(BorderFactory.createTitledBorder(""));
  		
 		if (_route != null){
 			routeNameTextField.setText(_route.getName());
@@ -113,6 +112,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		// row 2
     	JPanel p3 = new JPanel();
     	p3.setLayout(new GridBagLayout());
+    	p3.setBorder(BorderFactory.createTitledBorder(""));
     	addItem(p3, locationBox, 0, 1);
     	addItem(p3, addLocationButton, 1, 1);
     	addItem(p3, addLocAtTop, 2, 1);
@@ -120,8 +120,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     	group.add(addLocAtTop);
     	group.add(addLocAtBottom);
     	addLocAtBottom.setSelected(true);
-		Border border = BorderFactory.createEtchedBorder();
-		p3.setBorder(border);
+    	
     	
 		// row 11 comment
 	   	JPanel pC = new JPanel();
