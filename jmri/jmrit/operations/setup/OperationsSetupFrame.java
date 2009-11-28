@@ -31,7 +31,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -162,6 +162,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		JPanel panel = new JPanel();
 		JScrollPane panelPane = new JScrollPane(panel);
 		panel.setLayout(new GridBagLayout());
+		panelPane.setBorder(BorderFactory.createTitledBorder(""));
 		addItem (panel, textRailroadName, 0, 1);
 		addItemWidth (panel, railroadNameTextField, 3, 1, 1);
 		
