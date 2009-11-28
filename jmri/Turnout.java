@@ -45,6 +45,14 @@ package jmri;
  * can be used for any purpose.  The "system" name is provided by the system-specific
  * implementations, and provides a unique mapping to the layout control system
  * (e.g. LocoNet, NCE, etc) and address within that system.
+ * <p>
+ * Turnouts exhibit some complex behaviors.  At the same time, they
+ * are sometimes used as generic binary outputs where those get in the
+ * way.  Eventually, we need to have a separate e.g. Output class, but
+ * for now you can defeat much of the advanced behaviors with the
+ * setBinaryOutput(true) method.  This is a configuration property;
+ * changing it on the fly may give unexpected results. It's value is 
+ * not persisted.
  * <P>
  * This file is part of JMRI.
  * <P>
@@ -60,7 +68,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.26 $
+ * @version	$Revision: 1.27 $
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
  * @see         jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
@@ -391,6 +399,10 @@ public interface Turnout extends NamedBean {
 	 */
     public void setDecoderName(String decoderName); 
     
+    /**
+	 * Turn this object into just a binary output.
+	 */
+    public void setBinaryOutput(boolean state);
     
 }
 

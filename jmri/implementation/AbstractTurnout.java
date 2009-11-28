@@ -27,7 +27,7 @@ import jmri.*;
  * interface
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -632,6 +632,11 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 			return;
 	}
 
+	public void setBinaryOutput(boolean state) {
+	    binaryOutput = true;
+	}
+	protected boolean binaryOutput = false;
+	
 	public void dispose() {
 		if (_firstSensor != null) {
 			_firstSensor.removePropertyChangeListener(this);
