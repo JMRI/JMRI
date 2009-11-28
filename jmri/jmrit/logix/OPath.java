@@ -97,28 +97,13 @@ public class OPath extends jmri.Path  {
     
     public void setFromPortalName(String p) { 
         _fromPortalName = p;
-        //addPath(p);
     }
-    
     public String getFromPortalName() { return _fromPortalName; }
     
     public void setToPortalName(String p) {
         _toPortalName = p;
-        //addPath(p);
     }
-
     public String getToPortalName() { return _toPortalName; }
-
-    // Portal uses its own designation for 'to' and 'from'
-    private void addPath(String p) {
-        OBlock block = (OBlock)getBlock();
-        if (block!=null) { 
-            Portal portal = block.getPortalByName(p);
-            if (portal!=null) {
-                portal.addPath(this);
-            }
-        }
-    }
 
     public void setTurnouts(int delay) {
         if(delay>0) {

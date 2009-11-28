@@ -1251,15 +1251,14 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             if (log.isDebugEnabled()) log.debug("findDestination node: block "+pBlock.getSystemName()
                                             +" path "+pOrder.getPathName()+" exits through portal "+pName
                                                 +" with "+paths.size()+" paths into next block.");
+            if (paths.size()==0) {
+                log.error("Portal \""+pName+"\" does not any exit paths into the next block! (\""+
+                          exitPortal.getOpposingBlock(pBlock)+"\").");
+            }
             for (int i=0; i<paths.size(); i++) {
                 OPath path = paths.get(i);
                 String exitName = path.getOppositePortalName(pName);
                 BlockOrder nOrder = new BlockOrder((OBlock)path.getBlock(), path.getName(), pName, exitName);
-                if (nOrder==null) {
-                    log.error(path.toString()+" is INVALID - please correct. Expect entry at "+pName+
-                              " and exit at "+exitName);
-                    continue;
-                }
                 DefaultMutableTreeNode node = new DefaultMutableTreeNode(nOrder);
                 tree.insertNodeInto(node, parent, parent.getChildCount());
                 //nodes.add(node);

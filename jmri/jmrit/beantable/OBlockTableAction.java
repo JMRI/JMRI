@@ -1208,7 +1208,7 @@ public class OBlockTableAction extends AbstractAction {
                         if (fromBlock != null && 
                                 fromBlock.equals(toBlock)) {
                             JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                                rbx.getString("SametoFromBlock"), (String)value, fromBlock.getDisplayName()),
+                                rbx.getString("SametoFromBlock"), value, fromBlock.getDisplayName()),
                                     AbstractTableAction.rb.getString("WarningTitle"),
                                     JOptionPane.WARNING_MESSAGE);
                             tempRow[FROM_SIGNAL_COL] = null;
@@ -1254,7 +1254,7 @@ public class OBlockTableAction extends AbstractAction {
                     }
                     if (block.equals(portal.getToBlock())){
                         msg = java.text.MessageFormat.format(
-                                rbx.getString("SametoFromBlock"), (String)value, block.getDisplayName());
+                                rbx.getString("SametoFromBlock"), value, block.getDisplayName());
                         break;
                     }
                     if ( !portal.setFromBlock(block, false)) {
@@ -1293,7 +1293,7 @@ public class OBlockTableAction extends AbstractAction {
                     }
                     if (block.equals(portal.getFromBlock())){
                         msg = java.text.MessageFormat.format(
-                                rbx.getString("SametoFromBlock"), (String)value, block.getDisplayName());
+                                rbx.getString("SametoFromBlock"), value, block.getDisplayName());
                         break;
                     }
                     if ( !portal.setToBlock(block, false)) {
