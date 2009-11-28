@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: BlockBossFrame.shtml,v 1.9 2009-10-15 02:17:37 jacobsen Exp $ -->
+<!-- $Id: BlockBossFrame.shtml,v 1.10 2009-11-28 17:19:13 jacobsen Exp $ -->
 <title>JMRI: SSL Documentation</title>
 
 <!-- Style -->
@@ -215,24 +215,19 @@ to be taken.</p>
 <a name="start"><h2>Getting Started</h2></a>
 
 <p>Follow the following steps to create a signal and become familiar
-with how the SSL user interface works.
+with how the SSL user interface works.  This example defines a "virtual" signal
+head that doesn't really exist on the layout, so it can work with any kind of layout hardware.
+See the page on 
+<a href="../../../../html/tools/signaling/index.shtml#table">signals</a>
+for information on how to set up your real signals.
 </p><ol>
-<li> Select <b>Turnout Table</b> in the <b>Tools</b> menu.
-</li><li> Check to be sure that the output lines (turnouts) that will control your signal are in the table. If not, click the <b>Add</b> button at the bottom of the Turnout Table.
-</li><li> In the Add New Turnout window that appears, enter a system name, (E.g. LT1)
-and "test" for user name, then click <b>OK</b>. <i>Note:</i> System names must start 
-with CT, IT, LT, NT, XT, etc. and be followed by the actual hardware number of the turnout.
-</li> <li> Clicking on the correct <b>Closed/Thrown</b> entries in the Turnout Table should now cause your signal to change.
-</li><li> Next select <b>Signal Table</b> in the <b>Tools</b> menu.
+</li><li> Select <b>Signal Table</b> in the <b>Tools</b> menu.
 </li><li> In the Signal Table window that appears, click <b>Add</b> to begin defining a new signal head.
-</li><li> In the Add New Signal window that appears choose the correct signal type to 
-match your hardware. The required item boxes will appear.
-</li><li> Enter a system name. For example LH152. <i>Note:</i> System names must start 
-with CH, IH, LH, NH, XH, etc. and be followed by the number of this head.
-</li><li> Next enter one or more turnout numbers that will control this signal. <i>Note:</i> In the case of
-SE8c style signals just enter the first turnout number of each pair. The second is automatically known. 
+</li><li> In the Add New Signal window that appears choose the "Virtual Signal" type.
+</li><li> Enter a system name such as IH1000.
 </li><li> Click <b>OK</b> to enter this head into the Signal Table.  
-</li><li> Enter all the signal heads that you will be using for this test.
+</li><li> Enter all the signal heads that you will be using for this test, using different names.
+The actual name doesn't matter, they just have to be different.
 <li> Now select <b>Simple Signal Logic</b> in the <b>Tools</b> menu.
 </li>
 <li> Fill in the various entries to match your signals requirements as 
