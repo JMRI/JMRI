@@ -3,7 +3,6 @@
 package jmri.implementation;
 
 import jmri.*;
-import jmri.implementation.*;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -13,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the NamedBean interface
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class NamedBeanTest extends TestCase {
 
@@ -22,6 +21,8 @@ public class NamedBeanTest extends TestCase {
 	        public int getState() {return 0;}
 	        public void setState(int i) {}
 	    };
+
+	    n.setParameter("foo", "bar");
 	}
 
 	public void testGetParameter() {

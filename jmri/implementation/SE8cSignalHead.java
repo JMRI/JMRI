@@ -23,7 +23,7 @@ import jmri.util.NamedBeanHandle;
  * and Bob Jacobsen.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SE8cSignalHead extends DefaultSignalHead {
 
@@ -149,7 +149,6 @@ public class SE8cSignalHead extends DefaultSignalHead {
     
     // Handle a request to change state by sending a LocoNet command
     protected void updateOutput()  {
-        boolean closed = false;
         if (!mLit) {
             highTurnout.getBean().setCommandedState(Turnout.CLOSED);
         } else if ( !mFlashOn &&
