@@ -158,7 +158,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     /**
     * Call is only valid when in MODE_LEARN and MODE_RUN
     */
-    private OBlock getBlockAt(int idx) {
+    protected OBlock getBlockAt(int idx) {
 
         BlockOrder bo = getBlockOrderAt(idx);
         if (bo!=null) {
@@ -297,6 +297,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 } catch (Exception e) {
                     // null pointer catch and maybe other such.
                     log.warn("Throttle release and cancel threw: "+e);
+                }
+                for (int i=0; i<_orders.size(); i++) {
+                    OBlock block = _orders.get(i).getBlock();
+                    Sensor sensor = block.getSensor();
+                    if (sensor != null ) {
+                        sensor.removePropertyChangeListener(this);
+                    }
                 }
             }
             if (_engineer != null) {
@@ -454,24 +461,22 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     * @return index of block that failed to be allocated to this warrant
     * @return -1 if entire route is allocated to this warrant
     */
-    public int allocateRoute() {
+    public String allocateRoute() {
         if (_allocated) {
-            return -1;
+            return null;
         }
-        int ret = -1;
         for (int i=0; i<_orders.size(); i++) {
             BlockOrder bo = _orders.get(i);
             OBlock block = bo.getBlock();
-            if (!block.allocate(this)) {
-                log.warn("Unable to Allocate block \""+block.getDisplayName()+
-                         "\" for Warrant \""+getDisplayName()+"\".");
-                if (ret == -1) {
-                    ret = i;        // retain first block not owned
-                }
+            String name = block.allocate(this);
+            if (name != null) {
+                _allocated = false;
+                return java.text.MessageFormat.format(rb.getString("BlockNotAllocated"), 
+                                name, getBlockOrderAt(i).getBlock().getDisplayName());
             }
         }
-        _allocated = (ret == -1);
-        return ret;
+        _allocated = true;
+        return null;
     }
 
     /**
@@ -495,7 +500,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     * @return index of block that failed allocation to this warrant
     * @return -1 if entire route is allocated to this warrant
     */
-    public int setRoute(int delay, List <BlockOrder> orders) {
+    public String setRoute(int delay, List <BlockOrder> orders) {
         // we assume our train is occupying the first block
         _routeSet = false;
         if (orders==null) {
@@ -505,12 +510,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         if (log.isDebugEnabled()) log.debug("setRoute: _orders.size()= "+_orders.size());
         if (_orders.size()==0) {
-            return -1;
+            return java.text.MessageFormat.format(rb.getString("NoRouteSet"),"here","there");
         }
         for (int i=0; i<_orders.size(); i++) {
             BlockOrder bo = _orders.get(i);
             OBlock block = bo.getBlock();
-            if (block.allocate(this)) {
+            String name = block.allocate(this); 
+            if (name==null) {
                 if (log.isDebugEnabled()) log.debug("setRoute: block state= "+block.getState()+", "+bo.toString());
                 if (((block.getState() & OBlock.OCCUPIED) == 0)) {
                     bo.setPathAndSignalProtection(delay, SignalHead.GREEN, SignalHead.YELLOW);
@@ -518,13 +524,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     bo.setPathAndSignalProtection(delay, SignalHead.RED, SignalHead.YELLOW);
                 }
             } else {
-                return i;
+                return java.text.MessageFormat.format(rb.getString("BlockNotAllocated"), 
+                                name, getBlockOrderAt(i).getBlock().getDisplayName());
             }
         }
         _orders.get(0).setPathAndSignalProtection(delay, SignalHead.RED, SignalHead.GREEN);
         _allocated = true;
         _routeSet = true;
-        return -1;
+        return null;
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -642,7 +649,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             BlockOrder nextBO = getBlockOrderAt(_idxCurrentOrder+1);
             if (nextBO != null) {
                 OBlock nextBlock = nextBO.getBlock();
-                if ( nextBlock.allocate(this)) {
+                if ( nextBlock.allocate(this)==null) {
                     _engineer.setSpeedRestriction(SignalMast.MEDIUM_SPEED);
                     currentBO.setPathAndSignalProtection(0, SignalHead.RED, SignalHead.YELLOW);
                     nextBO.setPathAndSignalProtection(0, SignalHead.YELLOW, SignalHead.RED);
@@ -662,15 +669,20 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             BlockOrder beyondBO = getBlockOrderAt(_idxCurrentOrder+2);
             if (nextBO != null) {
                 OBlock nextBlock = nextBO.getBlock();
-                if (nextBlock.allocate(this)) {
+                if (nextBlock.allocate(this)==null) {
                     if (beyondBO != null) {
                         OBlock beyondBlock = beyondBO.getBlock();
-                        if (beyondBlock.allocate(this)) {
+                        if (beyondBlock.allocate(this)==null) {
                             // own at least 3 blocks (current, next and beyond
                             currentBO.setPathAndSignalProtection(0, SignalHead.RED, SignalHead.GREEN);
                             _engineer.setSpeedRestriction(SignalMast.NORMAL_SPEED);
-                            nextBO.setPathAndSignalProtection(0, SignalHead.GREEN, SignalHead.YELLOW);
-                            beyondBO.setPathAndSignalProtection(0, SignalHead.YELLOW, SignalHead.RED);
+                            if ((getBlockStateAt(_idxCurrentOrder+3) & OBlock.OCCUPIED) == 0) {
+                                nextBO.setPathAndSignalProtection(0, SignalHead.GREEN, SignalHead.YELLOW);
+                                beyondBO.setPathAndSignalProtection(0, SignalHead.GREEN, SignalHead.GREEN);
+                            } else {
+                                nextBO.setPathAndSignalProtection(0, SignalHead.GREEN, SignalHead.YELLOW);
+                                beyondBO.setPathAndSignalProtection(0, SignalHead.YELLOW, SignalHead.RED);
+                            }
                         } else {
                             _engineer.setSpeedRestriction(SignalMast.MEDIUM_SPEED);
                             currentBO.setPathAndSignalProtection(0, SignalHead.RED, SignalHead.YELLOW);
@@ -689,6 +701,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
         }
         return canRun;
+    }
+
+    public int getCurrentCommandIndex() {
+        if (_engineer != null) {
+            return _engineer.getCurrentCommandIndex();
+        }
+        return -1;
     }
 
     /************************** Thread running the train *****************/
@@ -723,20 +742,22 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 if (_orderIndex < 0) {
                     log.error("\""+ts.getBlockName()+"\" is not a block in this route!");
                 }
-                synchronized(this) {
-                    try {
-                        if (time instanceof Long) {
-                            long t = ((Long)time).longValue();
-                            if (t > 0){
-                                wait(t);
+                if (!command.equals("NOOP"))  {
+                    synchronized(this) {
+                        try {
+                            if (time instanceof Long) {
+                                long t = ((Long)time).longValue();
+                                if (t > 0){
+                                    wait(t);
+                                }
+                            } else if (time.toString().equals ("Synch")) {
+                                wait();
                             }
-                        } else if (time.toString().equals ("Synch")) {
-                            wait();
+                        } catch (InterruptedException ie) {
+                            log.error("InterruptedException "+ie);
+                        } catch (java.lang.IllegalArgumentException iae) {
+                            log.error("IllegalArgumentException "+iae);
                         }
-                    } catch (InterruptedException ie) {
-                        log.error("InterruptedException "+ie);
-                    } catch (java.lang.IllegalArgumentException iae) {
-                        log.error("IllegalArgumentException "+iae);
                     }
                 }
                 if (_abort) { break; }
@@ -770,6 +791,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         boolean isTrue = Boolean.parseBoolean(ts.getValue());
                         setLockFunction(cmdNum, isTrue);
                     }
+                    firePropertyChange("Command", new Integer(_idxCurrentCommand-1), new Integer(_idxCurrentCommand));
                     et = System.currentTimeMillis()-et;
                     if (log.isDebugEnabled()) log.debug("Command #"+_idxCurrentCommand+": "+
                                                         ts.toString()+" et= "+et);
@@ -838,6 +860,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     _minSpeed = 1.0f/127;
                     break;
             }
+        }
+
+        public int getCurrentCommandIndex() {
+            return _idxCurrentCommand;
         }
 
         /**

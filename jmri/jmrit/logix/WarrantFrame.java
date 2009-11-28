@@ -27,6 +27,7 @@ import javax.swing.tree.TreeNode;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -567,7 +568,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         buttonPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
 
         buttonPanel.add(makeTextBoxPanel(false, _statusBox, "Status", false));
-        buttonPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
+        _statusBox.setMinimumSize(new Dimension(300, _statusBox.getPreferredSize().height));
         return buttonPanel;
     }
 
@@ -579,8 +580,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         }
         panel.add(new JLabel(rb.getString(label)));
-        textField.setMaximumSize(new Dimension(150, textField.getPreferredSize().height));
-        textField.setMinimumSize(new Dimension(40, textField.getPreferredSize().height));
+        textField.setMaximumSize(new Dimension(300, textField.getPreferredSize().height));
+        textField.setMinimumSize(new Dimension(100, textField.getPreferredSize().height));
         textField.setEditable(editable);
         if (editable) {
             textField.setBackground(Color.white);        
@@ -890,7 +891,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                     rb.getString("NoPaths"), block.getDisplayName()),
                     rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            pack();
+            //pack();
             return false;
         }
         for (int i=0; i<list.size(); i++) {
@@ -930,7 +931,12 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                 return true; 
             }
             _originBlockOrder = new BlockOrder(block);
-            setPathBox(_originPathBox, _originPortalBox, block);
+            if (!setPathBox(_originPathBox, _originPortalBox, block)) {
+                _originPathBox.removeAllItems();
+                _originPortalBox.removeAllItems();
+                _originBlockBox.setText("");
+                return false;
+            }
         }
         return true; 
     }
@@ -945,7 +951,11 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                 return true;
             }
             _destBlockOrder = new BlockOrder(block);
-            setPathBox(_destPathBox, null, block);
+            if (!setPathBox(_destPathBox, null, block)) {
+                _destPathBox.removeAllItems();
+                _destBlockBox.setText("");
+                return false;
+            }
         }
         return true;
     }
@@ -961,7 +971,11 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                 return true;
             }
             _viaBlockOrder = new BlockOrder(block);
-            setPathBox(_viaPathBox, null, block);
+            if (!setPathBox(_viaPathBox, null, block)) {
+                _viaPathBox.removeAllItems();
+                _viaBlockBox.setText("");
+                return false;
+            }
         }
         return false;
     }
@@ -1093,12 +1107,86 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         javax.swing.JTree dTree = new javax.swing.JTree(tree);
         dTree.setShowsRootHandles(true);
         dTree.setScrollsOnExpand(true);
-        jmri.util.JTreeUtil.setExpandsSelectedPaths(dTree, true);
+        dTree.setExpandsSelectedPaths(true);
         JScrollPane treePane = new JScrollPane(dTree);
         treePane.getViewport().setPreferredSize(new Dimension(500, 300));
         _debugFrame.getContentPane().add(treePane);
         _debugFrame.setVisible(true);
         _debugFrame.pack();
+    }
+
+    private void pickRoute(List <DefaultMutableTreeNode> destNodes, DefaultTreeModel tree) {
+        if (log.isDebugEnabled()) {
+            log.debug("pickRoute: has "+destNodes.size()+" routes.");
+        }
+        JDialog dialog = new JDialog(this, rb.getString("DialogTitle"), false);
+        java.awt.Container contentPane = dialog.getContentPane();  
+        contentPane.setLayout(new BorderLayout(5,5));
+        contentPane.add(new JLabel(java.text.MessageFormat.format(
+                    rb.getString("NumberRoutes"), new Integer(destNodes.size()))), BorderLayout.NORTH);
+        ButtonGroup buttons = new ButtonGroup();
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        for (int i=0; i<destNodes.size(); i++) {
+            JRadioButton button = new JRadioButton(java.text.MessageFormat.format(
+                    rb.getString("RouteSize"), new Integer(i+1), 
+                    new Integer(destNodes.get(i).getLevel())) );
+            button.setActionCommand(""+i);
+            buttons.add(button);
+            panel.add(button);
+        }
+        contentPane.add(panel, BorderLayout.CENTER);
+        JButton ok = new JButton(rb.getString("ButtonSelect"));
+        ok.addActionListener(new ActionListener() {
+                ButtonGroup buttons;
+                JDialog dialog;
+                List <DefaultMutableTreeNode> destNodes;
+                DefaultTreeModel tree;
+                public void actionPerformed(ActionEvent e) {
+                    int i = Integer.parseInt(buttons.getSelection().getActionCommand());
+                    showRoute(destNodes.get(i), tree);
+                    dialog.dispose();
+                }
+                ActionListener init(ButtonGroup bg, JDialog d, List <DefaultMutableTreeNode> dn,
+                                    DefaultTreeModel t) {
+                    buttons = bg;
+                    dialog = d;
+                    destNodes = dn;
+                    tree = t;
+                    return this;
+                }
+            }.init(buttons, dialog, destNodes, tree));
+        ok.setMaximumSize(ok.getPreferredSize());
+        JButton show = new JButton(rb.getString("ButtonReview"));
+        show.addActionListener(new ActionListener() {
+                ButtonGroup buttons;
+                List <DefaultMutableTreeNode> destNodes;
+                DefaultTreeModel tree;
+                public void actionPerformed(ActionEvent e) {
+                    int i = Integer.parseInt(buttons.getSelection().getActionCommand());
+                    showRoute(destNodes.get(i), tree);
+                }
+                ActionListener init(ButtonGroup bg, List <DefaultMutableTreeNode> dn,
+                                    DefaultTreeModel t) {
+                    buttons = bg;
+                    destNodes = dn;
+                    tree = t;
+                    return this;
+                }
+            }.init(buttons, destNodes, tree));
+        show.setMaximumSize(show.getPreferredSize());
+        panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+        panel.add(show);
+        panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+        panel.add(ok);
+        panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+        contentPane.add(panel, BorderLayout.SOUTH);
+        dialog.setLocationRelativeTo(this);
+        dialog.pack();
+        dialog.setVisible(true);
     }
 
     private DefaultTreeModel calculate(boolean debug)
@@ -1110,41 +1198,49 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         DefaultTreeModel tree = new DefaultTreeModel(root);
         _needViaPath = (_viaBlockOrder!=null);
         _viaLevel = 0;
-        DefaultMutableTreeNode destNode = findDestination(root, tree, _viaLevel);
+        ArrayList <DefaultMutableTreeNode> destNodes = new ArrayList <DefaultMutableTreeNode>();
+        findDestination(root, tree, _viaLevel, destNodes);
 
         if (log.isDebugEnabled()) {
             log.debug("calculate:\n_originBlockOrder= "+_originBlockOrder.toString()+
                       "\n_destBlockOrder = "+_destBlockOrder.toString()+
                       "\n_viaBlockOrder = "+(_viaBlockOrder!=null ? _viaBlockOrder.toString() : null));
         }
-
-        if (destNode==null && !debug) {
-            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
-                rb.getString("NoRoute"),  new Object[] {_originBlockOrder.getBlock().getDisplayName(), 
-                                                        _originBlockOrder.getPathName(), 
-                                                        _originBlockOrder.getExitName(),
-                                                        _destBlockOrder.getBlock().getDisplayName(),
-                                                        _destBlockOrder.getPathName() }),
-                    rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+        if (destNodes.size()==0) {
+            if (!debug) {
+                JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
+                    rb.getString("NoRoute"),  new Object[] {_originBlockOrder.getBlock().getDisplayName(), 
+                                                            _originBlockOrder.getPathName(), 
+                                                            _originBlockOrder.getExitName(),
+                                                            _destBlockOrder.getBlock().getDisplayName(),
+                                                            _destBlockOrder.getPathName() }),
+                        rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            }
             return tree; 
+        } else if (destNodes.size()==1) {
+            showRoute(destNodes.get(0), tree);
+        } else {
+            pickRoute(destNodes, tree);
         }
+        return tree; 
+    }
 
+    private void showRoute(DefaultMutableTreeNode destNode, DefaultTreeModel tree) {
         TreeNode[] nodes = tree.getPathToRoot(destNode);
-        //for (int i=nodes.length-1; i<=0; i--) {
+        _orders.clear();
         for (int i=0; i<nodes.length; i++) {
             _orders.add((BlockOrder)((DefaultMutableTreeNode)nodes[i]).getUserObject());
         }
         _routeModel.fireTableDataChanged();
-        if (log.isDebugEnabled()) log.debug("findRoute: Warrant has "+_orders.size()+" orders.");
-        return tree; 
+        if (log.isDebugEnabled()) log.debug("showRoute: Route has "+_orders.size()+" orders.");
     }
 
     boolean _needViaPath;
     int _viaLevel;
 
     @SuppressWarnings("unchecked")
-    private DefaultMutableTreeNode findDestination( 
-                                DefaultMutableTreeNode parent, DefaultTreeModel tree, int depth) {
+    private void findDestination(DefaultMutableTreeNode parent, DefaultTreeModel tree, 
+                                 int depth, List <DefaultMutableTreeNode> destNodes) {
         depth++;
         BlockOrder pOrder = (BlockOrder)parent.getUserObject();
         OBlock pBlock = pOrder.getBlock();
@@ -1181,7 +1277,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                 if (!_needViaPath) {
                     if (_destBlockOrder.getBlock() == nOrder.getBlock() && 
                     _destBlockOrder.getPathName().equals(path.getName()) ) {
-                        return node;
+                        destNodes.add(node);
+                        break;
                     }
                 }
             }
@@ -1191,8 +1288,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             Enumeration <DefaultMutableTreeNode> en = parent.children();
             while (en.hasMoreElements()) {
                 DefaultMutableTreeNode n = en.nextElement();
-                DefaultMutableTreeNode node = findDestination(n, tree, depth);
-                if (node != null) { return node; }
+                findDestination(n, tree, depth, destNodes);
             }
         }
         if (log.isDebugEnabled()) log.debug("Dead branch: needVia= "+_needViaPath+", _viaLevel= "
@@ -1200,7 +1296,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         if (depth < _viaLevel) {
             _needViaPath = (_viaBlockOrder!=null);
         }
-        return null;
     }
     
     protected RosterEntry getTrain() {
@@ -1246,10 +1341,17 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             }
         }
         if (msg==null) {
-            int idx = _warrant.setRoute(0, _orders);
-            if (idx==0) {
-                msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString("OriginBlockNotSet"), 
-                        _orders.get(0).getBlock().getDisplayName());
+            msg = _warrant.setRoute(0, _orders);
+            if (msg!=null) {
+                if (_warrant.getBlockAt(0).allocate(_warrant)!=null) {
+                    msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString("OriginBlockNotSet"), 
+                            _warrant.getBlockAt(0).getDisplayName());
+                } else if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this,
+                            java.text.MessageFormat.format(WarrantTableAction.rb.getString("OkToRun"),
+                            msg), WarrantTableAction.rb.getString("WarningTitle"), 
+                            JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+                    msg = null;
+                }
             }
         }
         if (msg!=null) {
@@ -1304,15 +1406,30 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             _learnThrottle = null;
         }
     }
-
+    
+    /**
+    * Property names from Warrant:
+    *   "save" - from clearall
+    *   "runMode" - from setRunMode
+    *   "controlChange" - from controlRunTrain
+    *   "blockChange" - from goingActive
+    *   "Command" - from Engineer run
+    *   
+    */
+	@SuppressWarnings("fallthrough")
     public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (log.isDebugEnabled()) log.debug("propertyChange of \""+e.getPropertyName());
         String item = "";
         switch (_warrant.getRunMode()) {
             case Warrant.MODE_NONE:
                 _warrant.removePropertyChangeListener(this);
-                item = WarrantTableAction.rb.getString("Idle");
+                item = rb.getString("Idle");
                 break;
             case Warrant.MODE_LEARN:
+                if (e.getPropertyName().equals("blockChange")) {
+                    setThrottleCommand("NoOp", rb.getString("Mark"));
+                }
+            // fall through
             case Warrant.MODE_RUN:
                 String key;
                 if (_warrant.isWaiting()) {
@@ -1321,23 +1438,25 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                     key = "Issued";
                 }
                 BlockOrder bo = _warrant.getCurrentBlockOrder();
+                int idx = _warrant.getCurrentCommandIndex();
                 if (bo!=null) {
                     item = java.text.MessageFormat.format(rb.getString(key),
-                                bo.getBlock().getDisplayName());
+                                bo.getBlock().getDisplayName(), idx);
+                    scrollCommandTable(idx);
                 } else {
                     log.error("Current BlockOrder is null!");
                 }
                 break;
         }
         _statusBox.setText(item);
-        if (log.isDebugEnabled()) log.debug("propertyChange of \""+e.getPropertyName()+
-                                            "\" for "+e.getSource().toString());
     }
 
     protected void setThrottleCommand(String cmd, String value) {
         long endTime = System.currentTimeMillis();
         Long time = new Long(endTime - _startTime);
-        _startTime = endTime;
+        if (!cmd.equals("NoOp")) {
+            _startTime = endTime;
+        }
         BlockOrder bo = _warrant.getCurrentBlockOrder();
         String bName; 
         if (bo==null) {
@@ -1348,7 +1467,12 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         _throttleCommands.add(new ThrottleSetting(time, cmd, value, bName));
         _commandModel.fireTableDataChanged();
 
-        int setRow = _commandModel.getRowCount() - 4;
+        scrollCommandTable(_commandModel.getRowCount());
+    }
+
+    private void scrollCommandTable(int row) {
+
+        int setRow = row - 4;
         if (setRow < 0) {
             setRow = 0;
         }
@@ -1601,6 +1725,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                                 return Integer.toString(28);
                         }                    
                         return Integer.toString(128);
+                    } else if ("Mark".equalsIgnoreCase(ts.getValue())) {
+                        return rb.getString("Mark");
                     }
                     return ts.getValue();
                 case BLOCK_COLUMN:
@@ -1647,7 +1773,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                     } else {
                         cmd = ((String)value).trim().toUpperCase();
                     }
-                    if ("SPEED".equals(cmd) || "SPEEDSTEP".equals(cmd) || "FORWARD".equalsIgnoreCase(cmd)) {
+                    if ("SPEED".equals(cmd) || "SPEEDSTEP".equals(cmd) || "FORWARD".equals(cmd)) {
                         ts.setCommand((String)value);
                     } else if (cmd.startsWith("F")) {
                         try {

@@ -77,6 +77,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.WarrantTableAction;
 
 /**
  * GUI to define OBlocks, OPaths and Portals 
@@ -145,7 +146,6 @@ public class OBlockTableAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         OBlockTableFrame f = new OBlockTableFrame();
         f.initComponents();
-        f.setVisible(true);
     }
 
     class OBlockTableFrame extends jmri.util.JmriJFrame implements InternalFrameListener {
@@ -232,6 +232,7 @@ public class OBlockTableAction extends AbstractAction {
             setLocation(10,30);
             setVisible(true);
             pack();
+            errorCheck();
         }
 
         /**
@@ -245,8 +246,19 @@ public class OBlockTableAction extends AbstractAction {
         }
 
         public void windowClosing(java.awt.event.WindowEvent e) {
+            errorCheck();
             setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
             if (log.isDebugEnabled()) log.debug("windowClosing: "+toString());
+        }
+
+        private void errorCheck() {
+            WarrantTableAction.initPathPortalCheck();
+            OBlockManager manager = InstanceManager.oBlockManagerInstance();
+            String[] sysNames = manager.getSystemNameArray();
+            for (int i = 0; i < sysNames.length; i++) {
+                WarrantTableAction.checkPathPortals(manager.getBySystemName(sysNames[i]));
+            }
+            WarrantTableAction.showPathPortalErrors();
         }
 
         void updateOpenMenu() {
@@ -304,7 +316,6 @@ public class OBlockTableAction extends AbstractAction {
             String[] sysNames = manager.getSystemNameArray();
             for (int i = 0; i < sysNames.length; i++) {
                 OBlock block = manager.getBySystemName(sysNames[i]);
-                checkPathPortals(block);
                 JMenuItem mi = new JMenuItem(java.text.MessageFormat.format(
                         rbx.getString("OpenPathMenu"), block.getDisplayName()));
                 mi.setActionCommand(sysNames[i]);
@@ -339,54 +350,6 @@ public class OBlockTableAction extends AbstractAction {
                 }
             }
             _openMenu.add(openTurnoutPath);
-        }
-
-        /**
-        *  Validation of paths within a block
-        */
-        public void checkPathPortals(OBlock b) {
-            // warn user of incomplete portals
-            List <Path> list = b.getPaths();
-            for (int i=0; i<list.size(); i++) {
-                OPath path = (OPath)list.get(i);
-                OBlock block = (OBlock)path.getBlock();
-                if  (block==null || !block.equals(b)) {
-                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                            rbx.getString("PathWithBadBlock"), path.getName(), b.getDisplayName()),
-                            AbstractTableAction.rb.getString("WarningTitle"),
-                            JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-                String msg = null;
-                boolean hasPortal = false;
-                Portal portal = block.getPortalByName(path.getFromPortalName());
-                if (portal!=null) {
-                    if (!portal.isValid()){
-                        msg = path.getFromPortalName();
-                    }
-                    hasPortal = true;
-                    portal.addPath(path);
-                }
-                portal = block.getPortalByName(path.getToPortalName());
-                if (portal!=null) {
-                     if (!portal.isValid()) {
-                         msg = path.getToPortalName();
-                     }
-                     hasPortal = true;
-                     portal.addPath(path);
-                }
-                if (msg != null ) {
-                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                            rbx.getString("PortalNeedsBlock"), msg),
-                            AbstractTableAction.rb.getString("WarningTitle"),
-                            JOptionPane.WARNING_MESSAGE);
-                } else if (!hasPortal) {
-                    JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                            rbx.getString("PathNeedsPortal"), path.getName()),
-                            AbstractTableAction.rb.getString("WarningTitle"),
-                            JOptionPane.WARNING_MESSAGE);
-                }
-            }
         }
 
         /***********************  BlockFrame ******************************/
@@ -700,8 +663,10 @@ public class OBlockTableAction extends AbstractAction {
                       frame.getSize().getWidth()+", "+frame.getSize().getHeight()+")");
             if (name!=null && name.startsWith("OB")){
                 _blockPathMap.remove(name);
-                checkPathPortals(((BlockPathFrame)frame).getModel().getBlock());
+                WarrantTableAction.initPathPortalCheck();
+                WarrantTableAction.checkPathPortals(((BlockPathFrame)frame).getModel().getBlock());
                 ((BlockPathFrame)frame).getModel().removeListener();
+                WarrantTableAction.showPathPortalErrors();
             } else {
                 _PathTurnoutMap.remove(name);
             }
@@ -721,7 +686,9 @@ public class OBlockTableAction extends AbstractAction {
                       frame.getTitle()+", name= "+name+" size ("+
                       frame.getSize().getWidth()+", "+frame.getSize().getHeight()+")");
             if (name!=null && name.startsWith("OB")){
-                checkPathPortals(((BlockPathFrame)frame).getModel().getBlock());
+                WarrantTableAction.initPathPortalCheck();
+                WarrantTableAction.checkPathPortals(((BlockPathFrame)frame).getModel().getBlock());
+                WarrantTableAction.showPathPortalErrors();
             }
         }
 

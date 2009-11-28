@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 //import java.util.EventObject;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -19,6 +20,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JDialog;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -31,12 +33,14 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.Path;
 import jmri.jmrit.display.PickListModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -57,6 +61,9 @@ public class WarrantTableAction extends AbstractAction {
     static JMenu _warrantMenu;
     private static HashMap <String, WarrantFrame> _frameMap = new HashMap <String, WarrantFrame> ();
     private static TableFrame _tableFrame;
+    private static JTextArea _textArea;
+    private static boolean _hasErrors = false;
+    private static JDialog _errorDialog;
 
     public WarrantTableAction(String menuOption) {
 	    super(rb.getString(menuOption));
@@ -70,8 +77,10 @@ public class WarrantTableAction extends AbstractAction {
                 try {
                     _tableFrame.initComponents();
                 } catch (Exception ex ) {/*bogus*/ }
+            } else {
+                _tableFrame.setVisible(true);
+                _tableFrame.pack();
             }
-            _tableFrame.setVisible(true);
         } else if (rb.getString("CreateWarrant").equals(command)){
             CreateWarrantFrame f = new CreateWarrantFrame();
             try {
@@ -79,6 +88,14 @@ public class WarrantTableAction extends AbstractAction {
             } catch (Exception ex ) {/*bogus*/ }
             f.setVisible(true);
         }
+        initPathPortalCheck();
+        OBlockManager manager = InstanceManager.oBlockManagerInstance();
+        String[] sysNames = manager.getSystemNameArray();
+        for (int i = 0; i < sysNames.length; i++) {
+            OBlock block = manager.getBySystemName(sysNames[i]);
+            checkPathPortals(block);
+        }
+        showPathPortalErrors();
     }
 
     synchronized public static void updateWarrantMenu() {
@@ -124,6 +141,136 @@ public class WarrantTableAction extends AbstractAction {
         if (log.isDebugEnabled()) log.debug("openWarrantFrame for "+key+", size= "+_frameMap.size());
         frame.setVisible(true);
         frame.toFront();
+    }
+
+    synchronized public WarrantFrame getOpenWarrantFrame(String key) {
+        return _frameMap.get(key);
+    }
+
+    public static void initPathPortalCheck() {
+        if (_errorDialog!=null) {
+            _hasErrors = false;
+            _textArea = null;
+            _errorDialog.dispose();
+        }        
+    }
+    /**
+    *  Validation of paths within a block.
+    *  Gathers messages in a text area that can be displayed after all
+    * are written.
+    */
+    public static void checkPathPortals(OBlock b) {
+        // warn user of incomplete blocks and portals
+        if (_textArea==null) {
+            _textArea = new javax.swing.JTextArea(25, 50);
+            _textArea.setEditable(false);
+            _textArea.setTabSize(4);
+            _textArea.append("The following errors and warnings were found:");
+            _textArea.append("\n\n");
+        }
+        List <Path> pathList = b.getPaths();
+        if (pathList.size()==0) {
+            _textArea.append(java.text.MessageFormat.format(
+                                rb.getString("NoPaths"), b.getDisplayName()));
+            _textArea.append("\n");
+            _hasErrors = true;
+            return;
+        }
+        List <Portal> pList = b.getPortals();
+        ArrayList <String> portalList =new ArrayList <String>();
+        for (int i=0; i<pList.size(); i++) {
+            portalList.add(pList.get(i).getName());
+        }
+        for (int i=0; i<pathList.size(); i++) {
+            OPath path = (OPath)pathList.get(i);
+            OBlock block = (OBlock)path.getBlock();
+            if  (block==null || !block.equals(b)) {
+                _textArea.append(java.text.MessageFormat.format(
+                        rb.getString("PathWithBadBlock"), path.getName(), b.getDisplayName()));
+                _textArea.append("\n");
+                _hasErrors = true;
+                return;
+            }
+            String msg = null;
+            boolean hasPortal = false;
+            Portal portal = block.getPortalByName(path.getFromPortalName());
+            if (portal!=null) {
+                if (!portal.isValid()){
+                    msg = path.getFromPortalName();
+                }
+                hasPortal = true;
+                portalList.remove(portal.getName());
+                //portal.addPath(path);
+            }
+            portal = block.getPortalByName(path.getToPortalName());
+            if (portal!=null) {
+                 if (!portal.isValid()) {
+                     msg = path.getToPortalName();
+                 }
+                 hasPortal = true;
+                 portalList.remove(portal.getName());
+                 //portal.addPath(path);
+            }
+            if (msg != null ) {
+                _textArea.append(java.text.MessageFormat.format(
+                        rb.getString("PortalNeedsBlock"), msg));
+                _textArea.append("\n");
+                _hasErrors = true;
+            } else if (!hasPortal) {
+                _textArea.append(java.text.MessageFormat.format(
+                        rb.getString("PathNeedsPortal"), path.getName(), b.getDisplayName()));
+                _textArea.append("\n");
+                _hasErrors = true;
+            }
+        }
+        if (portalList.size() > 0) {
+            _textArea.append(java.text.MessageFormat.format(
+                    rb.getString("BlockPortalNoPath"), portalList.get(0), b.getDisplayName()));
+            _textArea.append("\n");
+            _hasErrors = true;
+        }            
+    }
+    public static void showPathPortalErrors() {
+        if (!_hasErrors) { return; }
+        if (_textArea==null) {
+            log.error("_textArea is null!.");
+            return;
+        }
+        JScrollPane scrollPane = new JScrollPane(_textArea);
+        _errorDialog = new JDialog();
+        _errorDialog.setTitle(rb.getString("ErrorDialogTitle"));
+        JButton ok = new JButton(rb.getString("ButtonOK"));
+        class myListener extends java.awt.event.WindowAdapter implements ActionListener {
+           /*  java.awt.Window _w;
+             myListener(java.awt.Window w) {
+                 _w = w;
+             }  */
+             public void actionPerformed(ActionEvent e) {
+                 _hasErrors = false;
+                 _textArea = null;
+                 _errorDialog.dispose();
+             }
+             public void windowClosing(java.awt.event.WindowEvent e) {
+                 _hasErrors = false;
+                 _textArea = null;
+                 _errorDialog.dispose();
+             }
+        }
+        ok.addActionListener(new myListener());
+        ok.setMaximumSize(ok.getPreferredSize());
+
+        java.awt.Container contentPane = _errorDialog.getContentPane();  
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.add(scrollPane, BorderLayout.CENTER);
+        contentPane.add(Box.createVerticalStrut(5));
+        contentPane.add(Box.createVerticalGlue());
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.add(ok);
+        contentPane.add(panel, BorderLayout.SOUTH);
+        _errorDialog.addWindowListener( new myListener());
+        _errorDialog.pack();
+        _errorDialog.setVisible(true);
     }
 
     /******************* CreateWarrant ***********************/
@@ -203,7 +350,7 @@ public class WarrantTableAction extends AbstractAction {
                 }
             }
             if (failed) {
-                JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
+                JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                                 rb.getString("WarrantExists"), userName, sysName), 
                                 rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
             } else {
@@ -506,8 +653,12 @@ public class WarrantTableAction extends AbstractAction {
                             } else { 
                                 key = "Issued";
                             }
-                            return java.text.MessageFormat.format(WarrantTableAction.rb.getString(key),
-                                                       w.getCurrentBlockOrder().getBlock().getDisplayName());
+                            bo = w.getCurrentBlockOrder();
+                            int idx = w.getCurrentCommandIndex();
+                            if (bo!=null) {
+                                return java.text.MessageFormat.format(WarrantTableAction.rb.getString(key),
+                                            bo.getBlock().getDisplayName(), idx);
+                            }
                     }
                     break;
                 case EDIT_COLUMN:
@@ -529,11 +680,7 @@ public class WarrantTableAction extends AbstractAction {
                 case ADDRESS_COLUMN:
                     return;
                 case ALLOCATE_COLUMN:
-                    int blockIdx = w.allocateRoute();
-                    if (blockIdx > -1) {
-                        msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString("BlockNotAllocated"), 
-                                w.getBlockOrderAt(blockIdx).getBlock().getDisplayName());
-                    }
+                    msg = w.allocateRoute();
                     break;
                 case DEALLOC_COLUMN:
                     if (w.getRunMode() == Warrant.MODE_NONE) {
@@ -544,12 +691,7 @@ public class WarrantTableAction extends AbstractAction {
                     }
                     break;
                 case SET_COLUMN:
-                    blockIdx = w.setRoute(0, null);
-                    if (blockIdx > -1) {
-                        BlockOrder bo = w.getBlockOrderAt(blockIdx);
-                        msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString("RouteNotSet"),
-                                            bo.getPathName(), bo.getBlock().getDisplayName());
-                    }
+                    msg = w.setRoute(0, null);
                     break;
                 case RUN_TRAIN_COLUMN:
                     if (w.getRunMode() == Warrant.MODE_NONE) {
@@ -568,13 +710,25 @@ public class WarrantTableAction extends AbstractAction {
                             msg = WarrantTableAction.rb.getString("EmptyRoute");
                             break;
                         }
-                        blockIdx = w.setRoute(0, null);
-                        if (blockIdx==0) {
-                            msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString("OriginBlockNotSet"), 
-                                    w.getBlockOrderAt(blockIdx).getBlock().getDisplayName());
-                            break;
+                        msg = w.setRoute(0, null);
+                        if (msg!=null) {
+                            if (w.getBlockAt(0).allocate(w)!=null) {
+                                msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString("OriginBlockNotSet"), 
+                                        w.getBlockAt(0).getDisplayName());
+                                break;
+                            }
+                            if (JOptionPane.YES_OPTION != JOptionPane.showConfirmDialog(null,
+                                        java.text.MessageFormat.format(WarrantTableAction.rb.getString("OkToRun"),
+                                        msg), WarrantTableAction.rb.getString("WarningTitle"), 
+                                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+                                break;
+                            }
                         }
                         msg = w.runAutoTrain(true);
+                        WarrantFrame frame = getOpenWarrantFrame(w.getDisplayName());
+                        if (frame !=null) {
+                            w.addPropertyChangeListener(frame);
+                        }
                     } else {
                         msg = java.text.MessageFormat.format(
                                 WarrantTableAction.rb.getString("TrainRunning"), w.getDisplayName());

@@ -57,7 +57,7 @@ public class Portal  {
         }
         if (!_portalName.equals(path.getFromPortalName()) &&
                 !_portalName.equals(path.getToPortalName()) ){
-            if (log.isDebugEnabled()) log.debug("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
+            log.error("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
                 "\" does not pass through Portal \""+_portalName+"\".");
             return false;
         }
@@ -70,8 +70,8 @@ public class Portal  {
                 return addPath(_toPaths, path);
             }
         } else {
-            if (log.isDebugEnabled()) log.debug("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
-                "\" does not pass through Portal \""+_portalName+"\".");
+            log.error("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
+                "\" is not in either of the blocks of Portal \""+_portalName+"\".");
         }
         return false;
     }
@@ -321,7 +321,7 @@ public class Portal  {
     }
     
     public String toString() {
-        return ("Portal "+_portalName+" from block "+getFromBlockName()+" to block "+getToBlockName()); 
+        return ("Portal \""+_portalName+"\" from block \""+getFromBlockName()+"\" to block \""+getToBlockName()+"\""); 
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Portal.class.getName());

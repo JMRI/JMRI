@@ -70,17 +70,21 @@ public class OBlock extends jmri.Block {
     * Note the block may be OCCUPIED by a non-warranted train.
     * @return false if block is already allocated to another warrant
     */
-    public boolean allocate(Object value) {
+    public String allocate(Object value) {
         if (value==null) {
-            return false;
+            return "Error";
         } else if (getValue()!=null && !value.equals(getValue())) {
             // allocated to another warrant
-            return false;
+            if (getValue() instanceof jmri.implementation.AbstractNamedBean) {
+                return ((jmri.implementation.AbstractNamedBean)getValue()).getDisplayName();
+            } else {
+                return getValue().getClass().getName();
+            }
         }
         setState(getState() | ALLOCATED);
         setValue(value);
         // firePropertyChange signaled in super.setState()
-        return true;
+        return null;
     }
 
     /**

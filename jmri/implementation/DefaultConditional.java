@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -948,10 +948,9 @@ public class DefaultConditional extends AbstractNamedBean
 							log.error("invalid Warrant name in action - "+action.getDeviceName());
 						}
 						else {
-                            int idx = w.allocateRoute();
-							if (idx >= 0) {
-                                log.error("unable to allocate Warrant Route - "+action.getDeviceName()+
-                                          " at Block index "+idx);
+                            String msg = w.allocateRoute();
+							if (msg !=null) {
+                                log.error(action.getDeviceName()+" - "+msg);
                             }
                             actionCount++;
 						}
@@ -972,9 +971,9 @@ public class DefaultConditional extends AbstractNamedBean
 							log.error("invalid Warrant name in action - "+action.getDeviceName());
 						}
 						else {
-                            int idx = w.setRoute(0, null);
-							if (idx >= 0) {
-                                log.error("Only the first "+(idx+1)+" turnouts were set on on warrant route - "+action.getDeviceName());
+                            String msg = w.setRoute(0, null);
+							if (msg!=null) {
+                                log.error(action.getDeviceName()+" unable to Set Route - "+msg);
                             }
                             actionCount++;
 						}

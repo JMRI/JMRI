@@ -97,14 +97,14 @@ public class OPath extends jmri.Path  {
     
     public void setFromPortalName(String p) { 
         _fromPortalName = p;
-        addPath(p);
+        //addPath(p);
     }
     
     public String getFromPortalName() { return _fromPortalName; }
     
     public void setToPortalName(String p) {
         _toPortalName = p;
-        addPath(p);
+        //addPath(p);
     }
 
     public String getToPortalName() { return _toPortalName; }
