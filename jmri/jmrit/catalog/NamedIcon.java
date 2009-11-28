@@ -26,7 +26,7 @@ import javax.swing.JComponent;
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -76,7 +76,7 @@ public class NamedIcon extends ImageIcon {
 
     /**
      * Find the NamedIcon corresponding to a name. Understands the 
-     * <a href="http://jmri.org/help/en/html/doc/Technial/FileNames.shtml">standard portable filename prefixes</a>.
+     * <a href="http://jmri.org/help/en/html/doc/Technical/FileNames.shtml">standard portable filename prefixes</a>.
      * 
      * @param pName The name string, possibly starting with file: or resource:
      * @return the desired icon with this same pName as its name.
