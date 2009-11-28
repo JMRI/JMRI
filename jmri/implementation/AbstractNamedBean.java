@@ -12,7 +12,7 @@ import java.util.HashMap;
  * Implements the parameter binding support.
  *
  * @author      Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public abstract class AbstractNamedBean implements NamedBean, java.io.Serializable {
 
@@ -108,13 +108,13 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         pcs = null;
     }
 
-    public void setParameter(Object key, Object value) {
+    public void setProperty(Object key, Object value) {
         if (parameters == null) 
             parameters = new HashMap<Object, Object>();
         parameters.put(key, value);
     }
     
-    public Object getParameter(Object key) {
+    public Object getProperty(Object key) {
         if (parameters == null) return null;
         return parameters.get(key);
     }

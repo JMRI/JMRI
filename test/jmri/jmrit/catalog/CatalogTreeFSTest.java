@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the CatalogTreeFS class
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class CatalogTreeFSTest extends TestCase {
 
@@ -25,6 +25,8 @@ public class CatalogTreeFSTest extends TestCase {
 	        public int getState() {return 0;}
 	        public void setState(int i) {}
 	    };
+
+	    n.setProperty("foo", "bar");
 	}
 
 	public void testGetParameter() {
@@ -33,8 +35,8 @@ public class CatalogTreeFSTest extends TestCase {
 	        public void setState(int i) {}
 	    };
 	    
-	    n.setParameter("foo", "bar");
-	    Assert.assertEquals("bar", n.getParameter("foo"));
+	    n.setProperty("foo", "bar");
+	    Assert.assertEquals("bar", n.getProperty("foo"));
 	}
 
 	public void testGetSetNull() {
@@ -43,10 +45,10 @@ public class CatalogTreeFSTest extends TestCase {
 	        public void setState(int i) {}
 	    };
 	    
-	    n.setParameter("foo", "bar");
-	    Assert.assertEquals("bar", n.getParameter("foo"));
-	    n.setParameter("foo", null);
-	    Assert.assertEquals(null, n.getParameter("foo"));
+	    n.setProperty("foo", "bar");
+	    Assert.assertEquals("bar", n.getProperty("foo"));
+	    n.setProperty("foo", null);
+	    Assert.assertEquals(null, n.getProperty("foo"));
 	}
 
 	// from here down is testing infrastructure

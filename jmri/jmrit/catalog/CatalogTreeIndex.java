@@ -46,13 +46,13 @@ public class CatalogTreeIndex extends AbstractCatalogTree {
         insertNodes(rootName, pathToRoot, root);
     }
    */
-    public void setParameter(Object key, Object value) {
+    public void setProperty(Object key, Object value) {
         if (parameters == null) 
             parameters = new HashMap<Object, Object>();
         parameters.put(key, value);
     }
     
-    public Object getParameter(Object key) {
+    public Object getProperty(Object key) {
         if (parameters == null) return null;
         return parameters.get(key);
     }

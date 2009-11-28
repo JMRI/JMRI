@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the NamedBean interface
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class NamedBeanTest extends TestCase {
 
@@ -22,7 +22,7 @@ public class NamedBeanTest extends TestCase {
 	        public void setState(int i) {}
 	    };
 
-	    n.setParameter("foo", "bar");
+	    n.setProperty("foo", "bar");
 	}
 
 	public void testGetParameter() {
@@ -31,8 +31,8 @@ public class NamedBeanTest extends TestCase {
 	        public void setState(int i) {}
 	    };
 	    
-	    n.setParameter("foo", "bar");
-	    Assert.assertEquals("bar", n.getParameter("foo"));
+	    n.setProperty("foo", "bar");
+	    Assert.assertEquals("bar", n.getProperty("foo"));
 	}
 
 	public void testGetSetNull() {
@@ -41,10 +41,10 @@ public class NamedBeanTest extends TestCase {
 	        public void setState(int i) {}
 	    };
 	    
-	    n.setParameter("foo", "bar");
-	    Assert.assertEquals("bar", n.getParameter("foo"));
-	    n.setParameter("foo", null);
-	    Assert.assertEquals(null, n.getParameter("foo"));
+	    n.setProperty("foo", "bar");
+	    Assert.assertEquals("bar", n.getProperty("foo"));
+	    n.setProperty("foo", null);
+	    Assert.assertEquals(null, n.getProperty("foo"));
 	}
 
 	// from here down is testing infrastructure
