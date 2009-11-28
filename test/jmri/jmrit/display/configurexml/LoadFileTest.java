@@ -10,7 +10,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.util.JUnitUtil;
 import jmri.InstanceManager;
 
 /**
@@ -18,7 +17,7 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
 
