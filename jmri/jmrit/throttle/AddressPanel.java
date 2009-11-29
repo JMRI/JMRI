@@ -26,7 +26,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
@@ -394,7 +394,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	/**
 	 * Dispatch the current address for use by other throttles
 	 */
-	private void dispatchAddress() {
+	public void dispatchAddress() {
 		throttle.dispatch();
 		if (consistThrottle != null) {
 			consistThrottle.dispatch();
@@ -406,7 +406,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	/**
 	 * Release the current address.
 	 */
-	private void releaseAddress() {
+	public void releaseAddress() {
 		throttle.release();
 		if (consistThrottle != null) {
 			consistThrottle.release();

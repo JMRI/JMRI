@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009 -->
-<!-- Revision $Revision: 1.54 $ -->
+<!-- Revision $Revision: 1.55 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -66,6 +66,7 @@
     <pathelement location="../lib/jdom.jar" />
     <pathelement location="../lib/jhall.jar" />
     <pathelement location="../lib/jinput.jar" />
+    <pathelement location="../lib/jmdns.jar" />
     <pathelement location="../lib/joal.jar" />
     <pathelement location="../lib/jython.jar" />
     <pathelement location="../lib/log4j.jar" />
@@ -96,6 +97,7 @@
     <pathelement location="../lib/jdom.jar" />
     <pathelement location="../lib/jhall.jar" />
     <pathelement location="../lib/jinput.jar" />
+    <pathelement location="../lib/jmdns.jar" />
     <pathelement location="../lib/joal.jar" />
     <pathelement location="../lib/jython.jar" />
     <pathelement location="../lib/log4j.jar" />
