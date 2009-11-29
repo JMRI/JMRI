@@ -1,13 +1,10 @@
-
 package jmri.jmrit.withrottle;
 
 /**
- *  WiThrottle
+ *  WiThrottle GUI
  *
  *  @author Brett Hoffman   Copyright (C) 2009
- *  @author Created by Brett Hoffman on:
- *  @author 11/07/09.
- *  @version $Revision: 1.1 $
+ *  @version $Revision: 1.2 $
  *
  */
 
@@ -21,7 +18,7 @@ public class WiThrottleCreationAction extends AbstractAction{
 
     /**
      * Create a new network server.
-     * @param String name
+     * @param name Labels frame in GUI
      */
     public WiThrottleCreationAction(String name) {
         super(name);

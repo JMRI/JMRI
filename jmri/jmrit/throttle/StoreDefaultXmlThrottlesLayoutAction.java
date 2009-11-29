@@ -9,8 +9,8 @@ import javax.swing.AbstractAction;
 /**
  * Save throttles to XML
  *
- * @author
- * @version
+ *  @author		Lionel Jeanson      Copyright 2009
+ *  @version $Revision: 1.2 $
  */
 public class StoreDefaultXmlThrottlesLayoutAction extends AbstractAction {
 

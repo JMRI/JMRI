@@ -23,14 +23,14 @@ import jmri.util.NamedBeanHandle;
  * and Bob Jacobsen.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SE8cSignalHead extends DefaultSignalHead {
 
     /**
      * Primary ctor
-     * @parameter lowTO Lower-numbered Turnout reference
-     * @parameter highTO higher-numbered Turnout reference
+     * @param lowTO Lower-numbered Turnout reference
+     * @param highTO higher-numbered Turnout reference
      */
     public SE8cSignalHead(NamedBeanHandle<Turnout> lowTO, 
                             NamedBeanHandle<Turnout> highTO,
@@ -45,8 +45,8 @@ public class SE8cSignalHead extends DefaultSignalHead {
 
     /**
      * Primary ctor without user name
-     * @parameter lowTO Lower-numbered Turnout reference
-     * @parameter highTO higher-numbered Turnout reference
+     * @param lowTO Lower-numbered Turnout reference
+     * @param highTO higher-numbered Turnout reference
      */
     public SE8cSignalHead(NamedBeanHandle<Turnout> lowTO, 
                             NamedBeanHandle<Turnout> highTO) {
@@ -60,8 +60,8 @@ public class SE8cSignalHead extends DefaultSignalHead {
 
     /**
      * Ctor for specifying system name
-     * @parameter lowTO Lower-numbered Turnout reference
-     * @parameter highTO higher-numbered Turnout reference
+     * @param lowTO Lower-numbered Turnout reference
+     * @param highTO higher-numbered Turnout reference
      */
     public SE8cSignalHead(String sname, NamedBeanHandle<Turnout> lowTO, 
                             NamedBeanHandle<Turnout> highTO,
@@ -76,8 +76,8 @@ public class SE8cSignalHead extends DefaultSignalHead {
 
     /**
      * Ctor for specifying system name
-     * @parameter lowTO Lower-numbered Turnout reference
-     * @parameter highTO higher-numbered Turnout reference
+     * @param lowTO Lower-numbered Turnout reference
+     * @param highTO higher-numbered Turnout reference
      */
     public SE8cSignalHead(String sname, NamedBeanHandle<Turnout> lowTO, 
                             NamedBeanHandle<Turnout> highTO) {
@@ -100,7 +100,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
     
     /**
      * Compatibility ctor
-     * @parameter pNumber number (address) of low turnout
+     * @param pNumber number (address) of low turnout
      */
     public SE8cSignalHead(int pNumber, String userName) {
         super("LH"+pNumber, userName);
@@ -124,7 +124,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
     
     /**
      * Compatibility ctor
-     * @parameter pNumber number (address) of low turnout
+     * @param pNumber number (address) of low turnout
      */
     public SE8cSignalHead(int pNumber) {
         super("LH"+pNumber);

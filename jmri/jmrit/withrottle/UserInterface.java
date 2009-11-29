@@ -8,9 +8,9 @@ package jmri.jmrit.withrottle;
 /**
  *	UserInterface.java
  *	Create a window for WiThrottle information, advertise service, and create a thread for it to run in.
+ *
  *	@author Brett Hoffman   Copyright (C) 2009
- *      @author Created by Brett Hoffman on: 7/20/09.
- *	@version $Revision: 1.3 $
+ *	@version $Revision: 1.4 $
  */
 
 import java.awt.event.*;
