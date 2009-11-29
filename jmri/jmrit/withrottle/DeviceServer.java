@@ -10,7 +10,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Created by Brett Hoffman on:
  *	@author 7/20/09.
- *	@version $Revision: 1.1 $
+ *	@version $Revision: 1.2 $
  *
  *	Thread with input and output streams for each connected device.
  *	Creates an invisible throttle window for each.
@@ -24,7 +24,6 @@ import java.util.ArrayList;
 
 import jmri.DccThrottle;
 import jmri.jmrit.throttle.ThrottleFrame;
-import jmri.jmrit.throttle.LoadXmlThrottlesLayoutAction;
 import jmri.jmrit.throttle.AddressListener;
 
 public class DeviceServer implements Runnable, AddressListener {
@@ -36,7 +35,6 @@ public class DeviceServer implements Runnable, AddressListener {
     String deviceName = "Unknown";
     String deviceAddress = "Not Set";
 
-    LoadXmlThrottlesLayoutAction xmlThrottle;
     ThrottleFrame throttleFrame;
     ThrottleController throttleController;
     private boolean keepReading;
@@ -57,12 +55,6 @@ public class DeviceServer implements Runnable, AddressListener {
 
         // Create a throttle instance for each device connected
         if (jmri.InstanceManager.throttleManagerInstance() != null){
-            xmlThrottle = new LoadXmlThrottlesLayoutAction();
-            try {
-                if (xmlThrottle.loadThrottlesLayout(new File(jmri.jmrit.throttle.ThrottleFrame.getDefaultThrottleFilename())))
-                    return;
-            } catch (java.io.IOException ex) {
-            }
             throttleFrame = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
             throttleController = new ThrottleController(throttleFrame);
             throttleFrame.getAddressPanel().addAddressListener(this);
