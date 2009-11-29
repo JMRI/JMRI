@@ -111,6 +111,10 @@ Joal 1.1.2
       libjoal_native.so
       libgluegen-rt.so
 
+
+jmdns.jar 
+    from http://sourceforge.net/projects/jmdns
+
 Older:
 
 JMRI 1.9/2.0 had the jakarta-regexp-1.5.jar present in this directory
