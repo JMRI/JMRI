@@ -48,8 +48,9 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
+
 
 public class TransitTableAction extends AbstractTableAction {
 
@@ -207,7 +208,8 @@ public class TransitTableAction extends AbstractTableAction {
 	private int[] direction = new int[150];
 	private int[] sequence = new int[150];
 //	@SuppressWarnings("raw")
-	private ArrayList[] action = new ArrayList[150]; 
+	@SuppressWarnings("unchecked")
+	private ArrayList<TransitSectionAction>[] action = new ArrayList[150]; 
 	private boolean[] alternate = new boolean[150];
 	private int maxSections = 150;  // must be equal to the dimension of the above arrays
 	private ArrayList<Section> primarySectionBoxList = new ArrayList<Section>();
@@ -605,9 +607,9 @@ public class TransitTableAction extends AbstractTableAction {
 				return false;
 			}
 //			@SuppressWarnings("raw")
-			ArrayList list = action[i];
+			ArrayList<TransitSectionAction> list = action[i];
 			for (int j=0; j<list.size(); j++) {
-				ts.addAction( (TransitSectionAction)(list.get(j)));
+				ts.addAction(list.get(j));
 			}
 			curTransit.addTransitSection(ts);
 		}
@@ -1406,12 +1408,12 @@ public class TransitTableAction extends AbstractTableAction {
 		blockBox.setSelectedIndex(0);	
 	}
 	private void editAction(int r) {
-		curTSA = (TransitSectionAction)(action[activeRow].get(r));
+		curTSA = action[activeRow].get(r);
 		editActionMode = true;
 		addEditActionWindow();
 	}
 	private void deleteAction(int r) {
-		TransitSectionAction tsa = (TransitSectionAction)(action[activeRow].get(r));
+		TransitSectionAction tsa = action[activeRow].get(r);
 		action[activeRow].remove(r);
 		tsa.dispose();
 		actionTableModel.fireTableDataChanged();
@@ -1421,7 +1423,7 @@ public class TransitTableAction extends AbstractTableAction {
 	 *        A TransitSectionAction must be available for this row. 
 	 */ 
 	private String getWhenText(int r) {
-		TransitSectionAction tsa = (TransitSectionAction)(action[activeRow].get(r));
+		TransitSectionAction tsa = action[activeRow].get(r);
 		switch (tsa.getWhenCode()) {
 			case TransitSectionAction.ENTRY:
 				if (tsa.getDataWhen()>0) 
@@ -1480,7 +1482,7 @@ public class TransitTableAction extends AbstractTableAction {
 	 *        A TransitSectionAction must be available for this row.
 	 */ 
 	private String getWhatText(int r) {
-		TransitSectionAction tsa = (TransitSectionAction)(action[activeRow].get(r));
+		TransitSectionAction tsa = action[activeRow].get(r);
 		switch (tsa.getWhatCode()) {
 			case TransitSectionAction.PAUSE:
 				return java.text.MessageFormat.format(rbx.getString("PauseFull"),  

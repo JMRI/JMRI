@@ -23,7 +23,6 @@ import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.InstanceManager;
-import jmri.jmrit.audio.AudioBuffer;
 import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
 
@@ -45,7 +44,7 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class AudioSourceFrame extends AbstractAudioFrame {
 

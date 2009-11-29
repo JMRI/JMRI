@@ -109,10 +109,10 @@ public class EcosLocoToRoster implements EcosListener {
                 if (object==_ecosObjectInt){
                     for(int i =1; i<lines.length-1; i++) {
                             if(lines[i].contains("cv[")){
-                            int startcvnum = lines[i].indexOf("[")+1;
-                            int endcvnum = (lines[i].substring(startcvnum)).indexOf(",")+startcvnum;
-                            int cvnum = Integer.parseInt(lines[i].substring(startcvnum, endcvnum));
-                            int startcvval = (lines[i].substring(endcvnum)).indexOf(", ")+endcvnum+2;
+                            //int startcvnum = lines[i].indexOf("[")+1;
+                            //int endcvnum = (lines[i].substring(startcvnum)).indexOf(",")+startcvnum;
+                            //int cvnum = Integer.parseInt(lines[i].substring(startcvnum, endcvnum));
+                            //int startcvval = (lines[i].substring(endcvnum)).indexOf(", ")+endcvnum+2;
                             //int endcvval = (lines[i].substring(startcvval)).indexOf("]")+startcvval;
                             //int cvval = Integer.parseInt(lines[i].substring(startcvval, endcvval));
                             //String strcvnum = "CV"+cvnum;
