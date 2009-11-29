@@ -10,7 +10,7 @@ package jmri.jmrit.withrottle;
  *	Create a window for WiThrottle information, advertise service, and create a thread for it to run in.
  *	@author Brett Hoffman   Copyright (C) 2009
  *      @author Created by Brett Hoffman on: 7/20/09.
- *	@version $Revision: 1.2 $
+ *	@version $Revision: 1.3 $
  */
 
 import java.awt.event.*;
@@ -171,6 +171,10 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
 		setVisible(true);
                 this.setJMenuBar(new JMenuBar());
 		this.getJMenuBar().add(new WindowMenu(this));
+
+        // add help menu
+        addHelpMenu("package.jmri.jmrit.withrottle.UserInterface", true);
+
 	}
 
 	public void listen(){
