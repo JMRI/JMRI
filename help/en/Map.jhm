@@ -884,6 +884,8 @@
 
 <mapID target="html.tools.throttle.ThrottleChapter4_SaveMultiple" url="html/tools/throttle/ThrottleChapter4.shtml#SaveMultiple"/>
 
+<mapID target="package.jmri.jmrit.withrottle.UserInterface" url="package/jmri/jmrit/withrottle/UserInterface.shtml"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_BackupRestore" url="package/jmri/jmrit/operations/Operations.shtml#BackupRestore"/>
 
 <mapID target="manual.Main_Panels_PanelEditor" url="manual/Main_Panels.shtml#PanelEditor"/>
