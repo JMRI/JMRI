@@ -20,7 +20,7 @@ import javax.comm.SerialPortEventListener;
  * Derived from the oaktree code.
  * @author			Bob Jacobsen   Copyright (C) 2006, 2007, 2008
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -181,7 +181,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             // create a CP290 port controller
             SerialTrafficController.checkInstance(new jmri.jmrix.powerline.cp290.SpecificTrafficController());
         } else if (opt1.equals("Insteon 2412S")) {
-            // create a CP290 port controller
+            // create an Insteon 2412s port controller
             SerialTrafficController.checkInstance(new jmri.jmrix.powerline.insteon2412s.SpecificTrafficController());
         } else {
             // no connection at all - warn
@@ -254,8 +254,8 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
             // set to 600 baud
             baud = 600;
         } else if (opt1.equals("Insteon 2412S")) { 
-            // set to 600 baud
-            baud = 600;
+            // set to 19200 baud
+            baud = 19200;
         }
         
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
