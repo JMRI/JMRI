@@ -16,7 +16,7 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
 
@@ -53,6 +53,7 @@ public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
             }
             if (!inLine.startsWith("  <!--Written by JMRI version")
                 && !inLine.startsWith("  <timebase")   // time changes from timezone to timezone
+                && !inLine.startsWith("<!DOCTYPE layout-config")   // DTD versions change
                 && !inLine.startsWith("<?xml-stylesheet")   // Linux seems to put attributes in different order
                 && !inLine.startsWith("    <memory"))   // time changes
                     Assert.assertEquals(inLine, outLine);
