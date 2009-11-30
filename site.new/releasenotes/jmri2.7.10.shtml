@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.9.shtml,v 1.6 2009-11-30 05:03:12 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.10.shtml,v 1.1 2009-11-30 05:03:12 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
- JMRI: Release Notes for 2.7.9
+ JMRI: Release Notes for 2.7.10
  
  </title>
     <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -26,12 +26,12 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h2>
-      Release Notes for JMRI 2.7.9 release
+      Release Notes for JMRI 2.7.10 release
       </h2>
 
 	<p>Date: MMM NN, 2009</p>
 	<p>From: Bob Jacobsen</p>
-	<p>Subject: Test version 2.7.9 of JMRI/DecoderPro is available for download.
+	<p>Subject: Test version 2.7.10 of JMRI/DecoderPro is available for download.
 
 <br><b>This is a draft release note only; the download links do not yet work</b>
 
@@ -41,9 +41,9 @@
 And please back up your JMRI files before installing this, in case you want to go 
 back to an earlier version.
 
-<p>This is the nineth in a series of test versions. We expect this series
-to end in a JMRI 2.8 production release in December 2009. This test version is
-(intended to be) the last that contains new features.
+<p>This is the tenth, and hopefully last, in a series of test versions. 
+We expect this series
+to end in a JMRI 2.8 production release in December 2009. 
 
 <p>
 It contains 
@@ -140,76 +140,16 @@ as the program will update them to the new format upon storing them.
 <p>Please use these links for downloading:
 
 <p>MacOS X:
-     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.9.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.9.dmg/download</a>
+     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.10.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.10.dmg/download</a>
 
 <p>Windows:
-     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.9.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.9.exe/download</a>
+     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.10.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.10.exe/download</a>
 
 <p>Linux:
-     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.9.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.9.tgz/download</a>
+     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.10.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.10.tgz/download</a>
 
-<h3>Changes since test version 2.7.8</h3>
+<h3>Changes since test version 2.7.9</h3>
 
-Giorgio Terdina provided screen icons for German signals.
-
-<p>
-Tjeerd Verhage provided an icon for our SourceForge.net page
-
-<p>
-Dan Boudreau added three additional sort options for trains in the operations code:  by route, departure, and destination.
-
-<p>
-Matt Harris updated the Audio package.
-
-<p>
-Dan Boudreau fixed a marker bug:  Opening and closing marker frames caused the number of markers created to increase by one each time the marker frame was reopened.
-
-<p>
-Dan Boudreau made an Operations enhancement.  When replacing an existing engine model with a new model, the new model will now take the old model's attributes of length, type, and horsepower. He also improved some of the build messages with regards to cabooses and cars with FRED, and made a minor improvement in build messages for engines.  Note that if the train requires 2 or more engines that they be in a consist.
-
-<p>
-Lionel Jeanson added a first Jynstrument for throttle tool bar, allows for USB devices throttle frame browsing and throttle pilot.
-
-<p>
-Kevin Dickerson fixed a bug in sensor icons.  When the icon was using
-different size images for the four states, these used to be centered. 
-Starting in JMRI 2.7.4, this was inadvertantly changed so that they were
-aligned in the upper left corner.  This bug is now fixed, and the
-images have been moved back.  This won't effect you if you're using
-the (recommended) same-size icons, but if you're using different size 
-icons and have created a panel since JMRI 2.7.4, you may have to revisit it.
-
-<p>
-Andrew Crosland changed the default power manager state for CBUS to agree
-with the hardware.
-
-<p>
-Kevin Dickerson updated the eCos support to now include S88 sensors.
-
-<p>
-SE8c Signal Heads can now work with non-Digitrax layout connections.
-There have been a number of changes to make this possible. 
-In particular, the convention for system names for SE8c signal heads has
-changed.  Existing ones (from saved layout files) will stay the same, but
-newly-added signal heads will have the new names.
-
-<p>
-Added a sample script to run the Heljan container crane from the screen.
-
-<p>
-Brett Hoffman added support for mobile devices to control throttles 
-through a wi-fi connection. 
-The first use of this is the
-<a nref="http://withrottle.com">WiThrottle</a>
-for iPhone and iPod Touch.
-
-<p>
-For better Snow Leopard compatibility, on Mac OS X the JMRI applications
-now pass the "-d32" option to the Java startup.
-This will (usually) force Java into 32-bit mode.
-
-<p>
-Peter Ulvestad provided a decoder definition for the MRC Rapido Turbotrain.
 
 <!--#include virtual="/Footer" -->
 
