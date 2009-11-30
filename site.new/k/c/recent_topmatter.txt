@@ -1,0 +1,11 @@
+<h2>JMRI Defense: Recent Events</h2>
+
+This page describes recent events, 
+in most-recent-at-the-top order.
+Other information and arrangements 
+are available from the left-side menu.
+The entire story, in historical order
+(read from the beginning through to now)
+is on a 
+<a href="History.shtml">separate page</a>.
+<p>

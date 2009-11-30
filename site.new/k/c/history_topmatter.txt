@@ -1,0 +1,14 @@
+<h2>JMRI Defense: Our Story So Far</h2>
+
+This page describes the entire history, starting
+from the beginning and going to the most recent
+events.  It's a long story.
+<p>
+If you want just the most recent events, they're
+also available on a 
+<a href="Recent.shtml">shorter page</a>.
+<p>
+Other information and arrangements 
+are available from the left-side menu.
+
+<p>
