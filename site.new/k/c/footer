@@ -1,0 +1,35 @@
+
+
+  <hr class="hide">
+<!-- Footer -->
+    <hr class="hide">
+    <div id="footer">
+	<ul id="bn">
+	<li><a href="/contact/">Contact Us</a></li>
+	</ul>
+
+	<p>Thanks and congratulations to
+	   <A href="/help/en/Acknowledgements.shtml" title="Who is JMRI">
+	   	all who contributed</A>! </p>
+
+	<p>Copyright &copy; 2005 - 2009 JMRI Community. 
+	<P>JMRI, DecoderPro&reg;, PanelPro, DispatcherPro and associated logos are our trademarks.
+	<P><A href="/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a></p>
+    
+       <BR/>Site hosted by: <BR/>
+<a href="http://sourceforge.net/projects/jmri"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
+<br/>
+<a href="http://www2.clustrmaps.com/counter/maps.php?url=http://jmri.sourceforge.net/k/updates.html" id="clustrMapsLink"><img src="http://www2.clustrmaps.com/counter/index2.php?url=http://jmri.sourceforge.net/k/updates.html" style="border:1px solid;" alt="Locations of visitors to this page" title="Locations of visitors to this page" id="clustrMapsImg" onError="this.onError=null; this.src='http://clustrmaps.com/images/clustrmaps-back-soon.jpg'; document.getElementById('clustrMapsLink').href='http://clustrmaps.com'" />
+</a>
+
+    <IMG src="ksummary.ico" height="1" width="1"/>
+    </div>
+<!-- /Footer -->
+
+ </div> <!-- closes #mainContent-->
+</div> <!-- closes #mBody--> 
+</div> <!-- closes #container --> 
+</body>
+
+
+
