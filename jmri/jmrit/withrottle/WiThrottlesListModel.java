@@ -8,7 +8,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Created by Brett Hoffman on:
  *	@author 11/11/09.
- *	@version $Revision: 1.1 $
+ *	@version $Revision: 1.2 $
  */
 
 import javax.swing.table.AbstractTableModel;
@@ -56,7 +56,13 @@ public class WiThrottlesListModel extends AbstractTableModel{
         }
 
     public String getValueAt(int row, int col) {
-        if (deviceList.size() < 1) return null;
+        if (deviceList.size() < 1) 
+        	return null;
+        // some error checking
+        if (row >= deviceList.size()){
+        	log.debug("row is greater than device list size");
+        	return null;
+        }
         if (col == 0){
             return deviceList.get(row).getName();
         }else{

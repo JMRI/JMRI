@@ -16,7 +16,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of Lenz Command Station Stack information.
  *
  * @author              Paul Bender Copyright (c) 2008
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 
 public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
@@ -83,6 +83,11 @@ JButton());
 
         public Object getValueAt(int row, int col) {
            log.debug("getValueAt called for row: " +row +" column: " +col);
+           // some error checking
+           if (row >= _addressList.size()){
+        	   log.debug("row is greater thant address list size");
+        	   return("Error");
+           }
            switch(col) {
               case ADDRCOLUMN: return (_addressList.get(row));
               case TYPECOLUMN: return(_typeList.get(_addressList.get(row)));

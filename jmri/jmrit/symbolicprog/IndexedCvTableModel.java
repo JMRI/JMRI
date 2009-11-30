@@ -19,7 +19,7 @@ import jmri.*;
  *
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version   $Revision: 1.15 $
+ * @version   $Revision: 1.16 $
  */
 public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -167,6 +167,11 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
     public CvValue getCvByNumber(int row) { return _indxCvAllVector.elementAt(row); }
 
     public Object getValueAt(int row, int col) {
+    	// some error checking
+    	if (row >= _indxCvDisplayVector.size()){
+    		log.debug("row greater than cv index");
+    		return "Error";
+    	}
         switch (col) {
             case NAMECOLUMN:
                 return ""+(_indxCvDisplayVector.elementAt(row)).cvName();

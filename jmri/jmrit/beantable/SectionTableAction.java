@@ -44,7 +44,7 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 // GT - 12-Oct-2009 - Added "Entry Block" column in entryPointTable
 
@@ -103,6 +103,11 @@ public class SectionTableAction extends AbstractTableAction {
      		}
 
     		public Object getValueAt(int row, int col) {
+    			// some error checking
+    			if (row >= sysNameList.size()){
+    				log.debug("row is greater than name list");
+    				return "";
+    			}
 	   			if (col==BEGINBLOCKCOL) {
             		Section z = (Section)getBySystemName(sysNameList.get(row));
                     if (z != null) {

@@ -25,7 +25,7 @@ import jmri.util.table.ButtonRenderer;
 /**
  * Table data model for display of jmri.jmrix.ecos.EcosLocoAddressManager manager contents
  * @author		Kevin Dickerson   Copyright (C) 2009
- * @version		$Revision: 1.5 $
+ * @version		$Revision: 1.6 $
  */
 abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -156,8 +156,13 @@ abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractT
             return false;
         }
     }
-
+    
     public Object getValueAt(int row, int col) {
+    	// some error checking
+    	if (row >= ecosObjectIdList.size()){
+    		log.debug("row is greater than list size");
+    		return null;
+    	}
         jmri.jmrix.ecos.EcosLocoAddress b;
         switch (col) {
         case ECOSOBJECTCOL:

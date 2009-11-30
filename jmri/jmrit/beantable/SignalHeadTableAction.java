@@ -49,7 +49,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.48 $
+ * @version     $Revision: 1.49 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -105,6 +105,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
     			else return super.isCellEditable(row,col);
 			}
     		public Object getValueAt(int row, int col) {
+     			// some error checking
+    			if (row >= sysNameList.size()){
+    				log.debug("row is greater than name list");
+    				return "error";
+    			}
     		    String name = sysNameList.get(row);
                 SignalHead s = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
                 if (s==null) return new Boolean(false); // if due to race condition, the device is going away

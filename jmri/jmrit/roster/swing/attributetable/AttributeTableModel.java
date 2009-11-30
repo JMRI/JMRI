@@ -14,7 +14,7 @@ import jmri.jmrit.roster.*;
  * and only shows some of the fields.  But it's a start....
  *
  * @author              Bob Jacobsen   Copyright (C) 2009
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  * @since 2.7.5
  */
 public class AttributeTableModel extends javax.swing.table.AbstractTableModel {
@@ -46,11 +46,14 @@ public class AttributeTableModel extends javax.swing.table.AbstractTableModel {
     public Object getValueAt(int row, int col) {
         // get column key
         String key = getColumnName(col);
-        // get rosterentry for row
+        // get roster entry for row
         RosterEntry re = Roster.instance().getEntry(row);
+        if (re == null)
+        	return "";
         String retval = re.getAttribute(key);
-        if (retval != null) return retval;
-        else return "";
+        if (retval != null) 
+        	return retval;
+        return "";
     }
 
     public void setValueAt(Object value, int row, int col) {

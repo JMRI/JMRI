@@ -12,7 +12,7 @@ import java.beans.PropertyChangeListener;
  * @author Bob Jacobsen Copyright (C) 2007 
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class SensorTableModel extends BeanTableModel implements PropertyChangeListener
@@ -46,7 +46,7 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
     }
 
     public Object getValueAt (int r,int c) {
-        if (r>_sysNameList.length) {
+        if (r >=_sysNameList.length) {
             return null;
         }
         switch (c) {

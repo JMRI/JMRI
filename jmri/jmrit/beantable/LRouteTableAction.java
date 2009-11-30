@@ -2096,6 +2096,11 @@ public class LRouteTableAction extends AbstractTableAction {
             else {
                 inputList = _includedInputList;
             }
+            // some error checking
+            if (r >= inputList.size()){
+            	log.debug("row out of range");
+            	return null;
+            }
             switch (c) {
                 case SNAME_COLUMN:
                     return inputList.get(r).getSysName();
@@ -2158,6 +2163,11 @@ public class LRouteTableAction extends AbstractTableAction {
             else {
                 outputList = _includedOutputList;
             }
+            // some error checking
+            if (r >= outputList.size()){
+            	log.debug("row out of range");
+            	return null;
+            }
             switch (c) {
                 case SNAME_COLUMN:  // slot number
                     return outputList.get(r).getSysName();
@@ -2219,6 +2229,11 @@ public class LRouteTableAction extends AbstractTableAction {
             }
             else {
                 alignList = _includedAlignList;
+            }
+            // some error checking
+            if (r >= alignList.size()){
+            	log.debug("row out of range");
+            	return null;
             }
             switch (c) {
                 case SNAME_COLUMN:  // slot number

@@ -20,7 +20,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of consist information.
  * 
  * @author		Paul Bender Copyright (c) 2004-2005
- * @version		$Revision: 1.9 $
+ * @version		$Revision: 1.10 $
  */
 
 public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
@@ -108,6 +108,11 @@ public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
 					log.debug("Consist not defined");
 					return(null);
 				}
+ 	   // some error checking
+ 	   if (row >= _consist.getConsistList().size()){
+ 		   log.debug("row is greater than consist list size");
+ 		   return null;
+ 	   }
 	   switch(col) {
 	      case ADDRCOLUMN: return(_consist.getConsistList().get(row).toString());
 	      /*case ROSTERCOLUMN: javax.swing.JComboBox RosterBox = Roster.instance().matchingComboBox(null,null,null,null,null,null,null);

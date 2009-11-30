@@ -583,6 +583,11 @@ public class WarrantTableAction extends AbstractAction {
         public Object getValueAt(int row, int col) {
             //if (log.isDebugEnabled()) log.debug("getValueAt: row= "+row+", column= "+col);
             Warrant w = (Warrant)getBeanAt(row);
+            // some error checking
+            if (w == null){
+            	log.debug("Warrant is null!");
+            	return "";
+            }
             JRadioButton allocButton = new JRadioButton();
             JRadioButton deallocButton = new JRadioButton();
             ButtonGroup group = new ButtonGroup();

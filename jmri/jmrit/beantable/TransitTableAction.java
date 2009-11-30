@@ -48,7 +48,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 
@@ -112,6 +112,11 @@ public class TransitTableAction extends AbstractTableAction {
 
     		public Object getValueAt(int row, int col) {
 				if (col==VALUECOL) {
+	     			// some error checking
+	    			if (row >= sysNameList.size()){
+	    				log.debug("row is greater than name list");
+	    				return "";
+	    			}
             		Transit z = (Transit)getBySystemName(sysNameList.get(row));
                     if (z == null) {
 						return "";

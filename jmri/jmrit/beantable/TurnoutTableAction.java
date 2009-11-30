@@ -41,7 +41,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.60 $
+ * @version     $Revision: 1.61 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -173,9 +173,18 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }    		
                 
     		public Object getValueAt(int row, int col) {
+     			// some error checking
+    			if (row >= sysNameList.size()){
+    				log.debug("row is greater than name list");
+    				return "error";
+    			}
                     String name = sysNameList.get(row);
                     TurnoutManager manager = InstanceManager.turnoutManagerInstance();
                     Turnout t = manager.getBySystemName(name);
+                    if (t == null){
+                    	log.debug("error null turnout!");
+                    	return "error";
+                    }
                     if (col==INVERTCOL) {
                         boolean val = t.getInverted();
                         return new Boolean(val);

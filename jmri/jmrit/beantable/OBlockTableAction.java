@@ -1815,7 +1815,17 @@ public class OBlockTableAction extends AbstractAction {
             if (_path.getSettings().size() == rowIndex) {
                 return tempRow[columnIndex];
             }
+            // some error checking
+            if (rowIndex >= _path.getSettings().size()){
+            	log.debug("row greater than bean list size");
+            	return "Error bean list";
+            }
             BeanSetting bs = _path.getSettings().get(rowIndex);
+            // some error checking
+            if (bs == null){
+            	log.debug("bean is null");
+            	return "Error no bean";
+            }
             switch(columnIndex) {
                 case TURNOUT_NAME_COL:
                     return bs.getBean().getDisplayName();

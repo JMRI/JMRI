@@ -24,7 +24,7 @@ import jmri.util.JmriJFrame;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -101,6 +101,11 @@ public class SensorTableAction extends AbstractTableAction {
 
     		public Object getValueAt(int row, int col) {
     			if (col==INVERTCOL) {
+         			// some error checking
+        			if (row >= sysNameList.size()){
+        				log.debug("row is greater than name list");
+        				return "";
+        			}
     				String name = sysNameList.get(row);
     				boolean val = InstanceManager.sensorManagerInstance().getBySystemName(name).getInverted();
 					return new Boolean(val);

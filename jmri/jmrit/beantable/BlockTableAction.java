@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -100,6 +100,11 @@ public class BlockTableAction extends AbstractTableAction {
      		}
 
     		public Object getValueAt(int row, int col) {
+    			// some error checking
+    			if (row >= sysNameList.size()){
+    				super.log.debug("requested getValueAt(\""+row+"\"), row outside of range");
+    				return "Error table size";
+    			}
 				Block b = (Block)getBySystemName(sysNameList.get(row));
 				if (b == null) {
 					super.log.debug("requested getValueAt(\""+row+"\"), Block doesn't exist");

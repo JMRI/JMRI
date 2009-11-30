@@ -149,6 +149,11 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         return _pickList.size();
     }
     public Object getValueAt (int r,int c) {
+    	// some error checking
+    	if (r >= _pickList.size()){
+    		log.debug("row is greater than picklist size");
+    		return null;
+    	}
         if (c == SNAME_COLUMN) {
             return _pickList.get(r).getSystemName();
         } else if (c == UNAME_COLUMN) {

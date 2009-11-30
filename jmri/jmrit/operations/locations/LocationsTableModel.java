@@ -19,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.16 $
+ * @version   $Revision: 1.17 $
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -145,7 +145,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     		focusLef = false;
     		lef.requestFocus();
     	}
-    	if (row > sysList.size())
+    	if (row >= sysList.size())
     		return "ERROR row "+row;
     	String locId = sysList.get(row);
     	Location l = manager.getLocationById(locId);

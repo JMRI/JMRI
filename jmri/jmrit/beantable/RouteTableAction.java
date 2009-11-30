@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.51 $
+ * @version     $Revision: 1.52 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -1716,6 +1716,11 @@ public class RouteTableAction extends AbstractTableAction {
             else {
                 turnoutList = _includedTurnoutList;
             }
+            // some error checking
+            if (r >= turnoutList.size()){
+            	log.debug("row is greater than turnout list size");
+            	return null;
+            }
             switch (c) {
                 case INCLUDE_COLUMN:
                     return new Boolean(turnoutList.get(r).isIncluded());
@@ -1771,6 +1776,11 @@ public class RouteTableAction extends AbstractTableAction {
             }
             else {
                 sensorList = _includedSensorList;
+            }
+            // some error checking
+            if (r >= sensorList.size()){
+            	log.debug("row is greater than turnout list size");
+            	return null;
             }
             switch (c) {
                 case INCLUDE_COLUMN:

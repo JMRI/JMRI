@@ -18,7 +18,7 @@ import javax.swing.JTextField;
  *
  * @author              Bob Jacobsen   Copyright (C) 2009
  * @author              Kevin Dickerson   Copyright (C) 2009
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  * @since 2.7.5
  */
 public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel {
@@ -98,9 +98,12 @@ public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel 
      * Provides the empty String if attribute doesn't exist.
      */
     public Object getValueAt(int row, int col) {
-        // get rosterentry for row
+        // get roster entry for row
         RosterEntry re = Roster.instance().getEntry(row);
-        
+        if (re == null){
+        	log.debug("roster entry is null!");
+        	return "Error";
+        }
         switch (col) {
         case IDCOL:         return re.getId();
         case ROADNUMBERCOL: return re.getRoadNumber();

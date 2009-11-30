@@ -1600,7 +1600,17 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         }
 
         public Object getValueAt(int row, int col) {
+        	// some error checking
+        	if (row >= _orders.size()){
+        		log.debug("row is greater than _orders");
+        		return "";
+        	}
             BlockOrder bo = _orders.get(row);
+          	// some error checking
+        	if (bo == null){
+        		log.debug("BlockOrder is null");
+        		return "";
+        	}
             switch (col) {
                 case BLOCK_COLUMN: 
                     return bo.getBlock().getDisplayName();
@@ -1705,7 +1715,16 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         }
 
         public Object getValueAt(int row, int col) {
+        	// some error checking
+        	if (row >= _throttleCommands.size()){
+        		log.debug("row is greater than throttle command size");
+        		return "";
+        	}
             ThrottleSetting ts = _throttleCommands.get(row);
+            if (ts == null){
+            	log.debug("Throttle setting is null!");
+            	return "";
+            }
             switch (col) {
                 case ROW_NUM:
                     return row+1;

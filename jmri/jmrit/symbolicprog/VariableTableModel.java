@@ -24,7 +24,7 @@ import org.jdom.Element;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2006
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version   $Revision: 1.40 $
+ * @version   $Revision: 1.41 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -129,7 +129,15 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     public Object getValueAt(int row, int col) {
         // if (log.isDebugEnabled()) log.debug("getValueAt "+row+" "+col);
-        VariableValue v = rowVector.elementAt(row);
+    	if (row >= rowVector.size()){
+    		log.debug("row greater than row vector");
+    		return "Error";
+    	}
+    	VariableValue v = rowVector.elementAt(row);
+        if (v == null){
+        	log.debug("v is null!");
+        	return "Error value";
+        }
         if (headers[col].equals("Value"))
             return v.getValue();
         else if (headers[col].equals("Read"))
