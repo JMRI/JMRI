@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.9.shtml,v 1.4 2009-11-30 02:48:14 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.9.shtml,v 1.5 2009-11-30 04:14:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -202,6 +202,13 @@ The first use of this is the
 <a nref="http://withrottle.com">WiThrottle</a>
 for iPhone and iPod Touch.
 
+<p>
+For better Snow Leopard compatibility, on Mac OS X the JMRI applications
+now pass the "-d32" option to the Java startup.
+This will (usually) force Java into 32-bit mode.
+
+<p>
+Peter Ulvestad provided a decoder definition for the MRC Rapido Turbotrain.
 
 <!--#include virtual="/Footer" -->
 
