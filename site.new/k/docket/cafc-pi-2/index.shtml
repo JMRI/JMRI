@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.1 2009-03-14 22:01:45 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2009-11-30 08:19:02 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -37,7 +37,7 @@ our second appeal to the Court of Appeals for the Federal Circuit, located in
 Washington DC.
 This is taking place during 2009.  
 If you're interested
-in papers from the second appeal, during 2008, they're on a 
+in papers from the first appeal, during 2008, they're on a 
 <a href="../cafc-pi-1/index.shtml">separate page</a>.
 
 <h2>Key Appeal Documents</h2>
@@ -45,595 +45,68 @@ in papers from the second appeal, during 2008, they're on a
 Note that these are presented in a "logical" order, not 
 necessarily the chronological order in which they were filed.
 This is to intended to make it easier to understand how the 
-key documents are interrelated.  The complete
-chronological listing is 
-<a href="#docketlisting">below</a>.
+key documents are interrelated. 
+
 <UL>
-<li>The <a href="">original decision</a> of the Northern District Court
+<li>The <a href="../284.pdf">original decision</a> of the Northern District Court
 which is being appealed.
+
 <li>Katzer's <a href="Katzer_Motion_to_Transfer_to_Ninth_Circuit_3-10-09.pdf">motion to transfer</a>
 the appeal from the Court of Appeals for the Federal Circuit to the 9th Circuit Court of Appeals.
+    <UL>
+    <LI>Jacobsen's opposition to the motion to transfer.
+    <LI>Katzer's <a href="KatzerReplyMotionToTransfer.pdf">reply to the opposition</a>.
+    <LI><a href="Denial_of_Motion_to_Transfer.pdf">Order</a>denying petition to transfer
+    </UL>
+
+<li>Software Freedom Law Center (SFLC) <a href="Motion-for-Leave-to-File-SFLC-amicus-brief-6-15-09.pdf">motion to file Amicus Brief</a>, 
+    including the <a href="SFLC-amicus-brief-6-15-09.pdf">actual brief</a>.
+    <ul>
+    <li>Katzer's <a href="Katzer-response-in-opposition-to-amicus-brief.pdf">opposition to the SFLC amicus brief</a>
+    <li><a href="Order-Granting-SFLC-Permission-to-File-Amicus-Brief.pdf">Order</a> granting permission to file brief
+    </ul>
+
+<li>Association for Competitive Technology (ACT) motion to file Amicus Brief, 
+    including the <a href="ACT-Amicus-Brief-Filed-Version.pdf">actual brief</a>.
+    <ul>
+    <li>Order granting permission to file brief
+    </ul>
+
+<li>Jacobsen's Appellant Brief
+
+<li>Katzer's <a href="2009-1221.eb.final.pdf">Appellee Brief</a>
+
+<li>Jacobsen's Appellant Reply Brief
 
 </UL><!-- end of summary index -->
+
+
+<h2>Hearing</h2>
+
+The hearing is currently set for 10AM Monday January 4th 
+in Courtroom 201 of the Court of Appeals for the Federal Circuit.
+
+<p>
+The Court's address is 
+<a href="http://www.cafc.uscourts.gov/locator.html">717 Madison Pl, Washington, DC</a>.
+
+
 
 <A ID="docketlisting"/>
 <h2>The Complete Appeal Docket</h2>
 
-The following is automatically made from the 
-Court's "Docket", a complete listing of the activities and 
-documents in the case in time order.  Some of the
-links for minor documents may not work; if you'd like one, please 
-let us know and we'll update it by hand.
+The Court of Appeals for the Federal Circuit mostly works with paper documents.
+The Court of Appeals only uses the PACER system for lists of documents, and
+an occasional formal certification.  We provide copies of the relevant
+PACER index pages from this case below.  The primary documents are available 
+above.
+
+<ul>
+<li><a href="CaseSummaryScreen.html">Case Summary Screen</a>
+<li><a href="CaseDetailsScreen.html">Case Details Screen</a>
+<li><a href="TheBriefsScreen.html">Briefs Screen</a>
+</ul>
 
-
-
-<!----------------------------------------------------------------------------------->
-<!-------------- Listing of Briefs page --------------------------------------------->
-<!----------------------------------------------------------------------------------->
-
-<h3>Briefs Page</h3>
-
-There are no briefs filed for this case.
-
-<!----------------------------------------------------------------------------------->
-<!-------------- Case Details page -------------------------------------------------->
-<!----------------------------------------------------------------------------------->
-
-<h3>Case Details Page</h3>
-
- <table DATASRC="PACER" DATAPAGESIZE="5" width="660" border="0" cellspacing="2" cellpadding="0">
-    <tr>
-      <td width="145">
-		  <hr />
-      </td>
-      <td width="645"><hr />
-      </td>
-    </tr>
-
-    <tr>
-      <td width="145" align="left"><strong><small><u>Date</u></small></strong></td>
-      <td width="645" align="left"><strong><small><u>History</u></small></strong></td>
-    </tr>
-
-    <tr>
-      <td width="145" align="left"><font size="-1">--- </font></td>
-      <td width="645" align="left"><font size="-1">.</font></td>
-    </tr>
-
-    <tr>
-      <td width="145" align="left"><font size="-1">/ / </font></td>
-      <td width="645" align="left"><font size="-1">Appellant Principal Brief Filing Date</font></td>
-    </tr>
-
-    <tr>
-      <td width="145" align="left"><font size="-1">/ / </font></td>
-      <td width="645" align="left"><font size="-1">Appellee or Cross Appellant Principal Brief Filing Date</font></td>
-    </tr>
-
-    <tr>
-      <td width="145" align="left"><font size="-1">/ / </font></td>
-      <td width="645" align="left"><font size="-1">Appellant Reply Brief Filing Date</font></td>
-    </tr>
-
-    <tr>
-      <td width="145" align="left"><font size="-1">/ / </font></td>
-      <td width="645" align="left"><font size="-1">Cross Appellant Reply Brief Filing Date</font></td>
-    </tr>
-
-    <tr>
-      <td width="145" align="left"><font size="-1">/ / </font></td>
-      <td width="645" align="left"><font size="-1">Appendix Filing Date</font></td>
-    </tr>
-
-    <tr>
-      <td width="145" align="left"><font size="-1">/ / </font></td>
-      <td width="645" align="left"><font size="-1">Disposition:                                                                                 ; by      </font></td>
-    </tr>
-
-    <tr>
-      <td width="145" align="left"><font size="-1">/ / </font></td>
-      <td width="645" align="left"><font size="-1">Mandated on</font></td>
-    </tr>
-
-    <tr>
-      <td width="145" align="left"><font size="-1">>></font></td>
-      <td width="645" align="left"><font size="-1"><i>Please Note: The briefs above are only the most current.</i> << </font></td>
-    </tr>
-    <tr>
-      <td width="145" align="left"><hr />
-
-      </td>
-      <td width="645" align="left"><hr />
-      </td>
-    </tr>
-
-
-<!--
-
-    <tr>
-      <td width="100" align="left" height="30"><font size="-1">---</font> </td>
-      <td width="645" align="left"><font size="-2"> - Motions Filed</font></td>
-    </tr>
-
--->
-<!--
-    <tr>
-      <td width="100" align="left" height="18"><font size="-1">---</font> </td>
-      <td width="645" align="left"><em><font size="-1" face="Arial, Helvetica, sans-serif">-
-      - - - -</font></em><b><font face="Arial, Helvetica, sans-serif" color="#FF0000" size="3">Notice
-        to Users of PACER</font></b><em><font size="-1" face="Arial, Helvetica, sans-serif">-
-      - - - -</font></em>
-      <br />
-        <font size="2" color="#000000"><span style="font-family: Arial;"><b>Entry
-        Numbers</b> may be different due to upgrades made recently to the case
-        management system.</span></font>
-
-        <span style="font-size:12.0pt;font-family:Arial;
-mso-fareast-font-family:&quot;Times New Roman&quot;;mso-bidi-font-family:&quot;Times New Roman&quot;;
-mso-ansi-language:EN-US;mso-fareast-language:EN-US;mso-bidi-language:AR-SA">.</span>
-
-      </td>
-    </tr>
-
-
--->
-
-  <tr>
-    <td width="655" align="left" colspan="2"><font size="2"><b>MOTIONS AND OTHER ENTRIES</b></font></td>
-  </tr>  
-  <tr>
-    <td width="655" align="left" colspan="2"><b><font size="1">>> </font><font size="-1"> Please Note: Motions are listed first. Entries are listed last.</font><font size="1"><<</font></b>
-      </td>
-  </tr>
-
-<!--
-  <td height="29" align="left">
-  <br>
--->
-
-
-    <tr>
-      <td width="100" align="left" valign="top"><font size="-1">3/11/2009 </font>  </td>
-      <td width="645" align="left"><font size="-1"><strong>MOTION: </strong>Entry 6    :by Appellee         - Motion to transfer venue to the US Court of Appeals for the Ninth Circuit.                                                                                                                                                                                 <strong>SERVICE :</strong> by Mail                 on 3/10/2009 </font></td>
-    </tr>
-    <tr>
-      
-    </tr>
-    <tr>
-      
-    </tr>
-    <tr>
-      
-
-    </tr>
-
-<!-- -------------------------------------------------SEPERATION-LINE---------------- -->
-
-
-    <tr>
-      <td width="100"><br />
-
-<!-- -------------------------------------------------SEPERATION-LINE---------------- -->
-
-<!--  <td> <br /> </td> -->
-  <tr>
-    <td width="645" align="left" colspan="2">
-     <b><font size="1">>> </font><font size="2">Entries for Case Number: 2009-1221 </font><font size="1"> <<</font></b></td>
-  </tr>
-
-    <tr>
-      <td width="100" align="left" valign="top"><font size="-1"><strong>Entry </strong>5   : </font>
-      </td>
-      <td width="645" align="left"><font size="-1">3/6/2009&nbsp;: &nbsp;Docketing Statement for plaintiff-appellant, Robert Jacobsen.                                                                                                                                                                                             </font></td>
-    </tr>
-
-    <tr>
-      <td width="100" align="left"><font size="-1">.</font> </td>
-      <td width="645" align="left"><font size="-1"><strong>SERVICE : </strong>by Mail  on 3/6/2009</font></td>
-    </tr>
-
-
-    <tr>
-      <td width="100"><br />
-
-<!-- -------------------------------------------------SEPERATION-LINE---------------- -->
-
-    <tr>
-      <td width="100" align="left" valign="top"><font size="-1"><strong>Entry </strong>4   : </font>
-      </td>
-      <td width="645" align="left"><font size="-1">3/6/2009&nbsp;: &nbsp;Certificate of Interest for plaintiff-appellant, Robert Jacobsen.                                                                                                                                                                                         </font></td>
-    </tr>
-
-    <tr>
-      <td width="100" align="left"><font size="-1">.</font> </td>
-      <td width="645" align="left"><font size="-1"><strong>SERVICE : </strong>by Mail  on 3/6/2009</font></td>
-    </tr>
-
-    <tr>
-      <td width="100" align="left"><font size="-1">.</font> </td>
-      <td width="645" align="left"><font size="-1"><strong>DOC : </strong> <a href="Jacobsen-3.6.09-COI.pdf" target="_blank">  : Jacobsen 2009-1221 (3.6.09 COI ROBERT GIBBS JACOBSEN).PDF                                           </a> </font></td>
-    </tr>
-
-
-    <tr>
-      <td width="100"><br />
-
-<!-- -------------------------------------------------SEPERATION-LINE---------------- -->
-
-    <tr>
-      <td width="100" align="left" valign="top"><font size="-1"><strong>Entry </strong>3   : </font>
-      </td>
-      <td width="645" align="left"><font size="-1">3/6/2009&nbsp;: &nbsp;Entry of Appearance for Victoria K. Hall as principal counsel on behalf of plaintiff-appellant, Robert Jacobsen.                                                                                                                                          </font></td>
-    </tr>
-
-    <tr>
-      <td width="100" align="left"><font size="-1">.</font> </td>
-      <td width="645" align="left"><font size="-1"><strong>SERVICE : </strong>by Mail  on 3/6/2009</font></td>
-    </tr>
-
-    <tr>
-      <td width="100" align="left"><font size="-1">.</font> </td>
-      <td width="645" align="left"><font size="-1"><strong>DOC : </strong> <a href="Jacobsen-3.6.09-EOA-HALL.pdf" target="_blank">  : Jacobsen 2009-1221 (3.6.09 EOA HALL).PDF                                                            </a> </font></td>
-    </tr>
-
-
-    <tr>
-      <td width="100"><br />
-
-<!-- -------------------------------------------------SEPERATION-LINE---------------- -->
-
-    <tr>
-      <td width="100" align="left" valign="top"><font size="-1"><strong>Entry </strong>2   : </font>
-      </td>
-      <td width="645" align="left"><font size="-1">2/25/2009&nbsp;: &nbsp;Official Caption.                                                                                                                                                                                                                                         </font></td>
-    </tr>
-
-    <tr>
-      <td width="100" align="left"><font size="-1">.</font> </td>
-      <td width="645" align="left"><font size="-1"><strong>SERVICE : </strong>by Court on 2/25/2009</font></td>
-    </tr>
-
-    <tr>
-      <td width="100" align="left"><font size="-1">.</font> </td>
-      <td width="645" align="left"><font size="-1"><strong>DOC : </strong> <a href="Jacobsen-2.25.09-CAPTION.pdf" target="_blank">  : Jacobsen 2009-1221 (2.25.09 CAPTION).pdf                                                            </a> </font></td>
-    </tr>
-
-
-    <tr>
-      <td width="100"><br />
-      </td>
-    </tr>
-  </table>
-<!--END MAIN TABLE with Data-->
-
-      </td>
-    </tr>
-
-    <tr>
-      <td width="390">
-</td>
-    </tr>
-  </table>
-
-
-<!----------------------------------------------------------------------------------->
-<!-------------- Case Summary page -------------------------------------------------->
-<!----------------------------------------------------------------------------------->
-
-<h3>Case Summary Page</h3>
-
-  <div align="left"><table DATASRC="PACER" DATAPAGESIZE="5" width="950" border="0" cellspacing="2" cellpadding="0">
-
-    <tr>
-      <td colspan="2" width="200" align="left" nowrap><font size="-1">Short Case Title (Name) : </font> </td>
-      <td colspan="1" width="195" align="left" nowrap><font face="Arial, Helvetica, sans-serif" size="-1">JACOBSEN V KATZER                  </font></td>
-      <td colspan="1" width="170"><font size="-1">Docket Number : 2009-1221</font></td>
-      <td colspan="2" width="165"></td> 
-    </tr>
-    <tr>
-
-      <td colspan="2" width="200"><font size="-1">Lower Court/ Agency : </font> </td>
-        
-        <td colspan="1" width="190" align="left"><font size="-1">DCT  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Division&nbsp;:ND/CA                          </font></td>
-             
-
-      <td colspan="1" width="170" align="left"><font size="-1"> Stand Alone Case </font></td>
-         
-
-    </tr>
-    
-
-    <tr>
-   
-      <td colspan="2" width="200" align="left" nowrap><font size="-1">Lower Court# :</font>  </td>
-
-   
-    <td colspan="1" width="190" align="left"><font size="-1">06-CV-1905           </font></td>
-     
-<!--  JOINed w/ the Misc Case Section Below -->
-
-   
-      <td colspan="1" width="165"></td> 
-       
-
-    </tr>
-
-    <tr>
-      <td colspan="2" width="200" align="left" nowrap><font size="-1">Notice of Appeal Received:</font>  </td>
-      <td colspan="2" width="160" align="left"><font size="-1">2/24/2009</font></td>
-      <td colspan="1" width="199"></td>
-      <td colspan="2" width="75"></td>
-    </tr>
-
-    <tr>
-      <td colspan="2" width="200" align="left" nowrap><font size="-1"> Notice of Appeal Docketed :</font>  </td>
-      <td colspan="2" width="170" align="left"><font size="-1">2/25/2009</font></td>
-      <td colspan="1" width="199"></td>
-      <td colspan="2" width="75"></td>
-    </tr>
-
-    <tr>
-      <td colspan="2" width="200" align="left" nowrap><font size="-1">Certified List Filed:</font>  </td>
-      <td colspan="2" width="170" align="left"><font size="-1">2/25/2009 </font></td>
-      <td colspan="1" width="199"></td>
-      <td colspan="2" width="75"></td>
-    </tr>
-
-    <tr>
-      <td colspan="2" width="200" align="left" nowrap><font size="-1">Notice of Appeal Filed : </font> </td>
-      <td colspan="2" width="564" align="left"><font size="-1">2/4/2009 </font></td>
-      <td colspan="1" width="199"></td>
-      <td colspan="2" width="75"></td>
-    </tr>
-    <tr>
-      <td colspan="2" width="200" align="left" nowrap><font size="-1">Fee Paid : </font> </td>
-      <td colspan="3" width="827"><font face="Arial, Helvetica, sans-serif" size="-1">PD &nbsp;&nbsp;
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Fee
-      Amount : $455.00&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      Receipt No : 28425     </font></td>
-    </tr>
-
-<!-- END THE DKT database BEGIN THE ATTORNEY database -->
-  </table>
-  </div>
-
-  <hr />
-  <p style="text-align: center">ATTORNEYS BY PARTY AS LISTED FOR THIS CASE</p>
-  <table DATASRC="PACER" DATAPAGESIZE="5" width="763" border="0" cellspacing="2" cellpadding="0">
-	
-   <tr>
-      <td width="238" align="left"><font size="-1"> Kamind Associates, Inc. (d/b/a KAM Industries)                                             </font></td>
-      <td width="510" align="left"><font size="-1">PRINCIPAL ATTORNEY </font> </td>
-      <td width="50" align="right"><font size="-10">1</font></td>
-    </tr>
-
-    <tr>
-      <td width="238" align="left"><font size="-1">Defendant-Appellee                                               </font></td>
-      <td width="510" align="left"><small>JERGER, ROBERT SCOTT</small>  </td>
-      <td width="50"></td>
-    </tr>
-    
-<!--Gov't Atty -or- Private Atty-->
-
-    <tr>
-      <td width="238" align="left"></td>
-      <td width="510" align="left"><font size="-1">                                                   Firm : Field and Jerger, LLP              </font></td>
-      <td width="50"></td>
-    </tr>
-
-    <tr>
-      <td width="238" align="left"></td>
-      <td width="510" align="left"><font size="-1">610 S.W. Alder Street,&nbsp;Suite 910,&nbsp;Portland,&nbsp;OR&nbsp;97205      </font> </td>
-      <td width="50"></td>
-    </tr>
-    <tr>
-      <td width="238" align="left"></td>
-      <td width="510" align="left"><font size="-1">(503)542-2015  - Tel ; ext.    </font>  </td>
-      <td width="50"></td>
-    </tr>
-    <tr>
-      <td width="238" align="left"></td>
-      <td width="510" align="left"><font size="-1">(503)225-0276   - Fax </font>  </td>
-      <td width="50"></td>
-    </tr>
-
- 
-    <tr>
-      <td width="238" align="left"></td>
-      <td width="510" align="left"><font size="-1">Note:<i> This attorney did not make an appearance for this case.</i></font></td>
-      <td width="50"></td>
-    </tr>
-
-         
-    <tr>
-      <td width="238"><br />
-	
-   <tr>
-      <td width="238" align="left"><font size="-1"> Matthew Katzer                                                                             </font></td>
-      <td width="510" align="left"><font size="-1">PRINCIPAL ATTORNEY </font> </td>
-      <td width="50" align="right"><font size="-10">2</font></td>
-    </tr>
-
-    <tr>
-      <td width="238" align="left"><font size="-1">Defendant-Appellee                                               </font></td>
-      <td width="510" align="left"><small>JERGER, ROBERT SCOTT</small>  </td>
-      <td width="50"></td>
-    </tr>
-    
-<!--Gov't Atty -or- Private Atty-->
-
-    <tr>
-      <td width="238" align="left"></td>
-      <td width="510" align="left"><font size="-1">                                                   Firm : Field and Jerger, LLP              </font></td>
-      <td width="50"></td>
-    </tr>
-
-    <tr>
-      <td width="238" align="left"></td>
-      <td width="510" align="left"><font size="-1">610 S.W. Alder Street,&nbsp;Suite 910,&nbsp;Portland,&nbsp;OR&nbsp;97205      </font> </td>
-      <td width="50"></td>
-    </tr>
-    <tr>
-      <td width="238" align="left"></td>
-      <td width="510" align="left"><font size="-1">(503)542-2015  - Tel ; ext.    </font>  </td>
-      <td width="50"></td>
-    </tr>
-    <tr>
-      <td width="238" align="left"></td>
-      <td width="510" align="left"><font size="-1">(503)225-0276   - Fax </font>  </td>
-      <td width="50"></td>
-    </tr>
-
- 
-    <tr>
-      <td width="238" align="left"></td>
-      <td width="510" align="left"><font size="-1">Note:<i> This attorney did not make an appearance for this case.</i></font></td>
-      <td width="50"></td>
-    </tr>
-
-         
-    <tr>
-      <td width="238"><br />
-	
-   <tr>
-      <td width="238" align="left"><font size="-1"> Robert Jacobsen                                                                            </font></td>
-      <td width="510" align="left"><font size="-1">PRINCIPAL ATTORNEY </font> </td>
-      <td width="50" align="right"><font size="-10">3</font></td>
-    </tr>
-
-    <tr>
-      <td width="238" align="left"><font size="-1">Plaintiff-Appellant                                              </font></td>
-      <td width="510" align="left"><small>HALL, VICTORIA K.</small>  </td>
-      <td width="50"></td>
-    </tr>
-    
-<!--Gov't Atty -or- Private Atty-->
-
-    <tr>
-      <td width="238" align="left"></td>
-      <td width="510" align="left"><font size="-1">                                                   Firm :                                    </font></td>
-      <td width="50"></td>
-    </tr>
-
-    <tr>
-      <td width="238" align="left"></td>
-      <td width="510" align="left"><font size="-1">3 Bethesda Metro,&nbsp;Suite 700,&nbsp;Bethesda,&nbsp;MD&nbsp;20814      </font> </td>
-      <td width="50"></td>
-    </tr>
-    <tr>
-      <td width="238" align="left"></td>
-      <td width="510" align="left"><font size="-1">(301)280-5925  - Tel ; ext.    </font>  </td>
-      <td width="50"></td>
-    </tr>
-    <tr>
-      <td width="238" align="left"></td>
-      <td width="510" align="left"><font size="-1">(240)536-9142   - Fax </font>  </td>
-      <td width="50"></td>
-    </tr>
-
-
-    <tr>
-      <td width="238" align="left"></td>
-      <td width="510" align="left"><font size="-1">EOA Filed :3/6/2009</font></td>
-      <td width="50"></td>
-    </tr>
-      
-    <tr>
-      <td width="238"><br />
-      </td>
-    </tr>
-  </table>
-
-<!-- <center> -->
-   <hr />
-   <p style="text-align: center">ADDITIONAL PARTY INFORMATION</p>
-<!-- </center> -->
-  <table DATASRC="PACER" DATAPAGESIZE="5" width="763" border="0" cellspacing="2" cellpadding="0">
-
-    <tr>
-      <td width="238" align="left"><font size="-1"><b>PARTY </b></font></td>
-      <td width="510" align="left"><font size="-1"><b>ADDITIONAL INFO</b></font> </td>
-      <td width="50" align="right"><font size="-10">.</font></td>
-    </tr>
-
-    <tr>
-      <td width="238" align="left"><font size="-1"> Kamind Associates, Inc. (d/b/a KAM Industries)                                             </font></td>
-      <td width="510" align="left"><font size="-1">Defendant-Appellee                                               </font> </td>
-      <td width="50" align="right"><font size="-10">.</font></td>
-    </tr>
-    
-
-    <tr>
-      <td width="238"><br />
-
-    <tr>
-      <td width="238" align="left"><font size="-1"> Matthew Katzer                                                                             </font></td>
-      <td width="510" align="left"><font size="-1">Defendant-Appellee                                               </font> </td>
-      <td width="50" align="right"><font size="-10">.</font></td>
-    </tr>
-    
-
-    <tr>
-      <td width="238"><br />
-
-    <tr>
-      <td width="238" align="left"><font size="-1"> Robert Jacobsen                                                                            </font></td>
-      <td width="510" align="left"><font size="-1">Plaintiff-Appellant                                              </font> </td>
-      <td width="50" align="right"><font size="-10">.</font></td>
-    </tr>
-    
-
-    <tr>
-      <td width="238"><br />
-      </td>
-    </tr>
-  </table>
-<font face="Arial, Helvetica, sans-serif" SIZE="1">
-  <input type="hidden" name="puid" value="" /></font>
-</form>
-
-<p style="text-align: center">&nbsp;</p>
-    
-
-
-<form method="POST" action="casesmry.asp" webbot-action="--WEBBOT-SELF--">
-  <input TYPE="hidden" NAME="VTI-GROUP" VALUE="0" />
-  <p style="text-align: center">&nbsp;</p>
-</form>
-
-<table>
-
-
-
-
-<!--rs(29)="C" AND rs(29)<>"L"-->
-
-<tr>
-
-          <td width="600" align="center"><b><font><small>2009-1221</small></font></b> </td>
-
-</tr>
-
-
-  <tr>
-    <td><font COLOR="GREEN" SIZE="-2"><br />
-     -  -  -  </font></td>
-  </tr>
-  <tr>
-    <td>
-</td>
-  </tr>
-</table>
-
-
-<!-------------- End Pacer pages --------------------->
-<hr>
-
-<!--#include virtual="/Footer" -->
-
- </div> <!-- closes #mainContent-->
-</div> <!-- closes #mBody--> 
-</div> <!-- closes #container --> 
 </body>
 </html>
 
