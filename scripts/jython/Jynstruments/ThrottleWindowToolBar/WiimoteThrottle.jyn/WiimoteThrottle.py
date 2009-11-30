@@ -1,3 +1,42 @@
+# Author: Lionel Jeanson copyright 2009
+# Part of the JMRI distribution
+#
+# Use a Nintendo Wiimote device as a throttle
+# You need to have Bluecove and WiiRemoteJ jars in your Java classpath, JMRI lib folder is a good place for that (copy both jars there)
+# See: http://bluecove.org/ and http://www.world-of-cha0s.hostrocket.com/WiiRemoteJ/  (despite hostname in URL, works great)
+#
+# once Jynstrument started (aka WiimoteThrottle.jyn **FOLDER** (no the py file) dropped into a throttle window toolbar
+# press 1+2 on the Wiimote you want to use, it should connect
+# connection will be validated by Wiimote vibrating and one of the LED turned on
+#
+# See JMRI output or log in case of issue.
+#
+# Customize at will.
+# Unfortunately, this is only a classic remote, nothing with movements
+#
+# Default control:
+#   left / right : browse through throttles in instrumented window
+#   home   : lights
+#    +/-   : direction
+#     A    : brake
+#     B    : accelerate
+#     1       : jump speed to "Cruise speed"
+#     1 twice : jump speed to "Max speed" 
+#     2       : jump speed to "Slow Speed"
+#     2 twice : jump speed to "Stop Speed"
+#    1+2      : EStop 
+
+speedEStopSpeed = -1
+speedStopSpeed = 0
+speedSlowSpeed = 0.3
+speedCruiseSpeed = 0.8
+speedMaxSpeed = 1
+
+valueSpeedTimerRepeat = 125 # repeat time in ms for speed set task
+valueSpeedIncrement = 0.05
+
+delay4double = 500 # delay for double tap on button (ms)
+
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.awt.CardLayout as CardLayout
 import jmri.util.ResizableImagePanel as ResizableImagePanel
@@ -14,23 +53,6 @@ import wiiremotej.event.WiiDeviceDiscoveryListener as WiiDeviceDiscoveryListener
 import wiiremotej.WiiRemoteJ as WiiRemoteJ
 import wiiremotej.event.WRButtonEvent as WRButtonEvent
 
-# Use a Nintendo Wiimote device as a throttle
-# You need to have Bluecove and WiiRemoteJ jars in classpath, JMRI lib folder is best place for that
-# See: http://bluecove.org/ and http://www.world-of-cha0s.hostrocket.com/WiiRemoteJ/
-#
-# Author: Lionel Jeanson copyright 2009
-# Part of the JMRI distribution
-
-valueSpeedTimerRepeat = 125 # repeat time in ms for speed set task
-valueSpeedIncrement = 0.05
-
-delay4double = 500 # delay for double tap on button (ms)
-speedEStopSpeed = -1
-speedStopSpeed = 0
-speedSlowSpeed = 0.3
-speedCruiseSpeed = 0.8
-speedMaxSpeed = 1
-
 class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiDeviceDiscoveryListener, WiiRemoteListener, Runnable):
     #Wiimote discoverer events
     def findFinished(self, nb):
@@ -40,13 +62,13 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
         print "Found a Wiimote, number: ", evt.getNumber()
         self.wiiDevice = evt.getWiiDevice()
         ledLights = [False, False, False, False]
-        ledLights[evt.getNumber()] = True
+        ledLights[evt.getNumber()%4] = True
         self.wiiDevice.setLEDLights(ledLights)
         self.wiiDevice.addWiiRemoteListener(self)
 
     #Wiimote events        
     def buttonInputReceived(self, evt):
-        print("Wiimote Button event: ", evt)
+#        print("Wiimote Button event: ", evt)
         self.sync.acquire()
         self.evt = evt
         self.sync.release()
