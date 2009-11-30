@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.9.shtml,v 1.3 2009-11-23 03:47:34 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.9.shtml,v 1.4 2009-11-30 02:48:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -168,6 +168,40 @@ Dan Boudreau made an Operations enhancement.  When replacing an existing engine 
 
 <p>
 Lionel Jeanson added a first Jynstrument for throttle tool bar, allows for USB devices throttle frame browsing and throttle pilot.
+
+<p>
+Kevin Dickerson fixed a bug in sensor icons.  When the icon was using
+different size images for the four states, these used to be centered. 
+Starting in JMRI 2.7.4, this was inadvertantly changed so that they were
+aligned in the upper left corner.  This bug is now fixed, and the
+images have been moved back.  This won't effect you if you're using
+the (recommended) same-size icons, but if you're using different size 
+icons and have created a panel since JMRI 2.7.4, you may have to revisit it.
+
+<p>
+Andrew Crosland changed the default power manager state for CBUS to agree
+with the hardware.
+
+<p>
+Kevin Dickerson updated the eCos support to now include S88 sensors.
+
+<p>
+SE8c Signal Heads can now work with non-Digitrax layout connections.
+There have been a number of changes to make this possible. 
+In particular, the convention for system names for SE8c signal heads has
+changed.  Existing ones (from saved layout files) will stay the same, but
+newly-added signal heads will have the new names.
+
+<p>
+Added a sample script to run the Heljan container crane from the screen.
+
+<p>
+Brett Hoffman added support for mobile devices to control throttles 
+through a wi-fi connection. 
+The first use of this is the
+<a nref="http://withrottle.com">WiThrottle</a>
+for iPhone and iPod Touch.
+
 
 <!--#include virtual="/Footer" -->
 
