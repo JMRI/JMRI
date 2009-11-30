@@ -1,5 +1,7 @@
 package jmri.jmrit.jython;
 
+import java.awt.Container;
+
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
@@ -53,6 +55,17 @@ public abstract class Jynstrument extends JPanel {
 	public void setClassName(String className) {
 		this.className = className;
 	}
+	
+	public void exit() {
+		Container cnt = getParent();
+		log.debug("getParent() is "+cnt);
+		if (cnt != null) {
+			cnt.remove(this);
+			cnt.repaint();
+		}
+		setPopUpMenu(null);
+		quit();
+	}
 		
 	public boolean validateContext() {
 		if (getExpectedContextClassName() == null || mContext == null)
@@ -68,7 +81,7 @@ public abstract class Jynstrument extends JPanel {
 	
 	public abstract String getExpectedContextClassName();	
 	public abstract void init();
-	public abstract void quit();
+	protected abstract void quit();
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Jynstrument.class.getName());
 

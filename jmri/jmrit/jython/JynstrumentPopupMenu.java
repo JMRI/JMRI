@@ -1,7 +1,5 @@
 package jmri.jmrit.jython;
 
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -15,12 +13,10 @@ public class JynstrumentPopupMenu extends JPopupMenu {
 	private static final ResourceBundle jythonBundle = ResourceBundle.getBundle("jmri/jmrit/jython/JythonBundle");
 	
 	Jynstrument jynstrument; // The jynstrument itself
-	Component component;     // The component in which it is hosted (can be itself)
 	
-	public JynstrumentPopupMenu(Jynstrument it, Component comp) {
+	public JynstrumentPopupMenu(Jynstrument it) {
 		super(it.getName());
 		jynstrument = it;
-		component = comp;
 		initMenu();
 		it.addMouseListener(new MouseAdapter(){
     		public void mousePressed(MouseEvent e) {
@@ -40,23 +36,14 @@ public class JynstrumentPopupMenu extends JPopupMenu {
     	    }
     	});		
 	}
-
-	public JynstrumentPopupMenu(Jynstrument it) {
-		this(it, it);
-	}
 	
 	private void initMenu() {
 		// Quit option
 		JMenuItem quitMenuItem = new JMenuItem(jythonBundle.getString("JynstrumentPopupMenuQuit"));
 		quitMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Container cnt = component.getParent(); 
-				cnt.remove(component);
-				cnt.repaint();
-				jynstrument.quit();				
-				jynstrument.setPopUpMenu(null);
+				jynstrument.exit();
 				jynstrument = null;
-				component = null;
 			} 
 		} );
 		add(quitMenuItem);  		
@@ -81,14 +68,7 @@ public class JynstrumentPopupMenu extends JPopupMenu {
 		reloadMenuItem.setEnabled(false);
 		add(reloadMenuItem);  		
 		// Debug option
-		JMenuItem debugMenuItem = new JMenuItem(jythonBundle.getString("JynstrumentPopupMenuDebug"));
-		debugMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				log.debug("Not implemented"); // TODO
-			} 
-		} );
-		debugMenuItem.setEnabled(false);
-		add(debugMenuItem);
+		add(new jmri.jmrit.jython.JythonWindow(jythonBundle.getString("JynstrumentPopupMenuDebug")));
 	}
 	
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JynstrumentPopupMenu.class.getName());

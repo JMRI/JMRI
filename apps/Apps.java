@@ -6,9 +6,14 @@ import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
 import jmri.util.FileUtil;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.jython.Jynstrument;
+import jmri.jmrit.jython.JynstrumentFactory;
+import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrix.ConnectionStatus;
 
 import jmri.util.WindowMenu; // * GT 28-AUG-2008 Added window menu
+import jmri.util.iharder.dnd.FileDrop;
+import jmri.util.iharder.dnd.FileDrop.Listener;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -38,7 +43,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.86 $
+ * @version     $Revision: 1.87 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -49,6 +54,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         super(true);
 
         setButtonSpace();
+        setJynstrumentSpace();
 
         // load preference file
         if (configFilename != null) {
@@ -115,7 +121,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         add(statusPanel());
         log.debug("Done with statusPanel, start buttonSpace");
         add(buttonSpace());
-
+        add(_jynstrumentSpace);
         log.debug("End constructor");
     }
     
@@ -129,6 +135,31 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     protected void setButtonSpace() {
         _buttonSpace = new JPanel();
         _buttonSpace.setLayout(new FlowLayout());
+    }
+
+    static JComponent _jynstrumentSpace = null;
+
+    protected void setJynstrumentSpace() {
+        _jynstrumentSpace = new JPanel();
+        _jynstrumentSpace.setLayout(new FlowLayout());
+    	new FileDrop(_jynstrumentSpace, new Listener() {
+    		public void filesDropped(File[] files) {
+    			for (int i=0; i<files.length; i++)
+    				ynstrument(files[i].getPath());
+    		}
+    	});
+    }
+    
+    private void ynstrument(String path) {
+    	Jynstrument it = JynstrumentFactory.createInstrument(path, _jynstrumentSpace);
+    	if (it == null) {
+    		log.error("Error while creating Jynstrument "+path);
+    		return ;
+    	}
+    	ThrottleFrame.setTransparent(it);
+    	it.setVisible(true);
+    	_jynstrumentSpace.setVisible(true);
+    	_jynstrumentSpace.add(it);
     }
 
     protected void setResourceBundle() {
@@ -577,7 +608,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         return _buttonSpace;
     }
     static JComponent _buttonSpace = null;
-
+    
     static protected JmriJFrame prefsFrame = null;
     static protected ResourceBundle rb;
 

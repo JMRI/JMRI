@@ -2,10 +2,13 @@ package jmri.jmrit.throttle;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.ContainerEvent;
+import java.awt.event.ContainerListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -27,7 +30,6 @@ import jmri.configurexml.StoreXmlConfigAction;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
-import jmri.jmrit.jython.JynstrumentPopupMenu;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.iharder.dnd.FileDrop;
 import jmri.util.iharder.dnd.FileDrop.Listener;
@@ -174,23 +176,28 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 	    	// File looks ok
 			setLastUsedSaveFile(sfile);
 			// close all existing Jynstruments
-	        Component[] cmps = getComponents();
-	        for (int i=0; i<cmps.length; i++) {
-	        	try {
-	        		if (cmps[i] instanceof JInternalFrame) {
-	        			JInternalFrame jyf = (JInternalFrame) cmps[i];
-	        			if (jyf.getContentPane() instanceof Jynstrument) 
-	        				jyf.dispose();	        			
-	        		}
-	        	} catch (Exception ex) {
-	        		log.debug("Got exception (no panic) "+ex);
-	        	}
-	        }
+			Component[] cmps = getComponents();
+			for (int i=0; i<cmps.length; i++) {
+				try {
+					if (cmps[i] instanceof JInternalFrame) {
+						JInternalFrame jyf = (JInternalFrame) cmps[i];
+						Component[] cmps2 = jyf.getContentPane().getComponents();
+						for (int j=0; j<cmps2.length; j++) {
+							if (cmps2[j] instanceof Jynstrument) {
+								((Jynstrument)cmps2[j]).exit();
+								jyf.dispose();
+							}
+						}
+					}
+				} catch (Exception ex) {
+					log.debug("Got exception (no panic) "+ex);
+				}
+			}
 	    	// and finally load all preferences
 			setXml(conf);
 		} catch (Exception ex) {
 			if (log.isDebugEnabled())
-				log.debug("Loading throttle exception ",ex);
+				log.debug("Loading throttle exception: " + ex.getMessage());
 		}
     	checkPosition();
 		return ;
@@ -310,22 +317,33 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     // #JYNSTRUMENT# here instantiate the Jynstrument, put it in a component, initialize the context and start it
     private JInternalFrame ynstrument(String path) {
     	if (path == null) return null;
-    	Jynstrument it = JynstrumentFactory.createInstrument(path, this ); // everything is there
+       	Jynstrument it = JynstrumentFactory.createInstrument(path, this); // everything is there
     	if (it == null) {
     		log.error("Error while creating Jynstrument "+path);
     		return null;
     	}
     	JInternalFrame newiFrame = new JInternalFrame(it.getClassName());
+    	newiFrame.add(it);
     	newiFrame.addInternalFrameListener(frameListener);
-    	newiFrame.setContentPane(it);	// put it in a JInternalFrame
     	newiFrame.setDoubleBuffered(true);
     	newiFrame.setResizable(true);
     	newiFrame.setClosable(true);
     	newiFrame.setIconifiable(true);
-    	it.setPopUpMenu(new JynstrumentPopupMenu(it, newiFrame));
     	if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() &&
     			jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingTransparentCtl() )
     		setTransparent(newiFrame);
+    	newiFrame.getContentPane().addContainerListener(new ContainerListener() {
+			public void componentAdded(ContainerEvent e) {				
+			}
+			public void componentRemoved(ContainerEvent e) {
+				Container c = e.getContainer();
+				while ( ! (c instanceof JInternalFrame))
+					c = c.getParent();
+				c.setVisible(false);
+				remove(c);
+				repaint();
+			}
+    	});   	
     	newiFrame.pack();
     	add(newiFrame, PANEL_LAYER);
     	newiFrame.setVisible(true);
@@ -337,20 +355,24 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 		if ( (this.getWidth()<1) || (this.getHeight()<1)) return;
 		
 		Rectangle pos = comp.getBounds();
+
+		if (pos.width > this.getWidth()) { // Component largest than container
+			pos.width = this.getWidth() - 2;
+			pos.x = 1;
+		}		
+		if (pos.x + pos.width > this.getWidth())  // Component to large
+			pos.x = this.getWidth() - pos.width - 1;
+		if (pos.x < 0) // Component to far on the left
+			pos.x = 1;
 		
-		if (pos.width > this.getWidth())
-			pos.width = this.getWidth() - 8;
-		if (pos.height > this.getHeight())
-			pos.height = this.getHeight() - 48;
-		
-		if ( ( pos.x < 0 ) || (pos.x + pos.width > this.getWidth()) )
-			pos.x = this.getWidth() - pos.width - 8;
-		if (pos.x < 1)
-			pos.x = 10;
-		if ( ( pos.y < 0 ) || (pos.y + pos.height > this.getHeight()) )
-			pos.y = this.getHeight() - pos.height - 48;
-		if (pos.y < 1)
-			pos.y = 10;
+		if (pos.height > this.getHeight()) { // Component higher than container
+			pos.height = this.getHeight() - 2;
+			pos.y = 1;
+		}		
+		if (pos.y + pos.height > this.getHeight()) // Component to low
+			pos.y = this.getHeight() - pos.height - 1;
+		if ( pos.y < 0 ) // Coponent to high
+			pos.y = 1;
 		
 		comp.setBounds(pos);
 	}
@@ -429,10 +451,15 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
                     functionPanel.setVisible(false);
                 }
             else {
-            	try { // #JYNSTRUMENT#, Very important, DO NOT FORGET, clean the Jynstrument            		
-            		if ( (e.getSource() instanceof JInternalFrame) 
-            				&& (((JInternalFrame) e.getSource()).getContentPane() instanceof Jynstrument) )
-            			((Jynstrument) ((JInternalFrame) e.getSource()).getContentPane()).quit();               	
+            	try { // #JYNSTRUMENT#, Very important, clean the Jynstrument
+            		if ( (e.getSource() instanceof JInternalFrame) ) {
+            			Component[] cmps = ((JInternalFrame) e.getSource()).getContentPane().getComponents();
+            			int i=0;
+            			while ((i<cmps.length) && (! (cmps[i] instanceof Jynstrument)))
+            				i++;
+            			if ((i<cmps.length) && (cmps[i] instanceof Jynstrument))
+            				((Jynstrument) cmps[i]).exit();     
+            		}
             	} catch (Exception exc) {
             		if (log.isDebugEnabled())
             			log.debug("Got exception, can ignore :"+exc);
@@ -680,7 +707,8 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 	public void notifyAddressThrottleFound(DccThrottle throttle) {
 		if ((jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()) &&
 				(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isAutoLoading()) && 
-				(addressPanel !=null) && (addressPanel.getRosterEntry() != null ))
+				(addressPanel !=null) && (addressPanel.getRosterEntry() != null )  && 
+				( (getLastUsedSaveFile()==null) || (getLastUsedSaveFile().compareTo( getDefaultThrottleFolder()+ addressPanel.getRosterEntry().getId().trim() +".xml" ) !=0)) )
 			loadThrottle( getDefaultThrottleFolder()+ addressPanel.getRosterEntry().getId().trim() +".xml" );
 		setFrameTitle();
 		throttleWindow.updateGUI();
