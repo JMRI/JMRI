@@ -10,7 +10,7 @@ class Throttles(Jynstrument):
     
     def init(self):
         jbNew= JButton( LoadDefaultXmlThrottlesLayoutAction() )
-        jbNew.setIcon( NamedIcon("resources/logo.gif","resources/logo.gif") )
+        jbNew.setIcon( NamedIcon("file://"+self.getFolder() +"/Throttles.png", "Throttles.png") )
         jbNew.setToolTipText( jbNew.getText() )
         jbNew.setText( None )
         self.add(jbNew)
