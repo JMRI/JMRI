@@ -64,6 +64,7 @@ import javax.swing.table.*;
  * @author Brendon McLean
  * @author Dan van Enckevort
  * @author Parwinder Sekhon
+ * @author Daniel Boudreau 2009
  * @version 2.0 02/27/04
  */
 
@@ -90,6 +91,7 @@ public class TableSorter extends AbstractTableModel {
 
     private Row[] viewToModel;
     private int[] modelToView;
+    private boolean clearSortingState = true; // New flag added by Boudreau
 
     private JTableHeader tableHeader;
     private MouseListener mouseListener;
@@ -114,7 +116,10 @@ public class TableSorter extends AbstractTableModel {
     }
 
     private void clearSortingState() {
-        viewToModel = null;
+    	clearSortingState = true;
+    							// Boudreau
+        //viewToModel = null;	// setting viewToModel to null can cause an NPE
+    							// see getGetViewToModel() below.
         modelToView = null;
     }
 
@@ -226,8 +231,29 @@ public class TableSorter extends AbstractTableModel {
         return LEXICAL_COMPARATOR;
     }
 
+    /* Original code replaced by Boudreau
     private Row[] getViewToModel() {
         if (viewToModel == null) {
+            int tableModelRowCount = tableModel.getRowCount();
+            viewToModel = new Row[tableModelRowCount];
+            for (int row = 0; row < tableModelRowCount; row++) {
+                viewToModel[row] = new Row(row);
+            }
+
+            if (isSorting()) {
+                Arrays.sort(viewToModel);
+            }
+        }
+        return viewToModel;
+    }
+    */
+    /* Modified code by Boudreau.  Uses a flag to determine if
+     * viewToModel is to be reloaded.  This eliminates the NPE that
+     * can occur by the OS asynchronously refreshing the displayed table.
+     */ 
+    private Row[] getViewToModel() {
+        if (clearSortingState) {
+        	clearSortingState = false;
             int tableModelRowCount = tableModel.getRowCount();
             viewToModel = new Row[tableModelRowCount];
             for (int row = 0; row < tableModelRowCount; row++) {
