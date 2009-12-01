@@ -53,17 +53,3 @@ support open-source software.
 
 <!-- The ongoing content ends here -->
 
-The navigation bar to the upper left has links to more information, 
-or you can go back to the 
-<a href="/k/index.html">main page</a>
-for an overview.
-<p>
-<p>
-If you'd like to get email when we update these pages, please subscribe to the 
-<A HREF="https://lists.sourceforge.net/lists/listinfo/jmri-legal-announce">jmri-legal-announce</a>
-mailing list at SourceForge.net.  
-This will carry short announcements occasionally as news happens.
-There won't be a lot of traffic. 
-It's not a list for discussion and strategizing; for various reasons, 
-we can't do that on a public list.
-
