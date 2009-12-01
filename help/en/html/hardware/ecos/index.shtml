@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: kevin-dickerson $) 2008 -->
-<!-- $Id: index.shtml,v 1.4 2009-07-27 22:15:34 kevin-dickerson Exp $ -->
+<!-- $Id: index.shtml,v 1.5 2009-12-01 17:51:29 kevin-dickerson Exp $ -->
 <title>JMRI: ESU ECoS Support</title>
 
 <!-- Style -->
@@ -38,28 +38,36 @@ To configure the connection:
 </ul>
 
 <p>
-Initially, only turnout, a basic throttle and power support is available for 
+Turnout, Sensor and a basic throttle and power support is available for 
 a JMRI-connected ECoS unit.
-
 <p>
+
 <H2>Turnouts</H2>
 ECoS-connected turnouts have names like "UT123", where "U"
 is the system name for esU ecos, "T" means turnout, and
 "123" is the address.
-
 <p>
+
 <H2>Throttles</H2>
 Only basic support for throttles via the Ecos is supported.  When an entry from the roster, or a DCC address is directly
 entered into the address field, JMRI will check the existing list of ECoS locos for a match on the first DCC address it comes across.
 If there is no match, the throttle will create an entry in the Ecos which will be listed as "Created By JMRI" with a default of 128 speed steps.
 When you release the loco or close the throttle the entry is currently left in the Ecos.
 
-
+<H2>Sensors</H2>
+ECoS-connected senors on the s88 bus have names like "US100:01", where "U" is the system name for esU ecos,
+"S" means sensor, "100" is the s88 board address registered in the Ecos, and "01" is the port on that board.
 <p>
-<H2>Ecos Initialisation</H2>
-When JMRI first starts up, it reads the turnout and loco information
-from the ECoS, which might take a couple seconds.
 
+<H2>Ecos Initialisation</H2>
+When JMRI first starts up, it reads the turnout, sensor and loco information
+from the ECoS, which might take a couple seconds.
+<p>
+
+<H2>Ecos Loco Database</H2>
+The Ecos Loco Database allows you to view all the locos that are configured on the Ecos.  From here you can assign a JMRI roster entry to the loco or import the 
+loco in to the JMRI roster.  When importing the loco to JMRI, it currently only creates a skeleton record, that contains the loco Name along with the 
+decoder type if selected.  This process does not currently import any CV values stored on the Ecos into JMRI.
 <p>
 Additional information on the ECoS can be found
 on the 
@@ -71,6 +79,9 @@ Support for ECoS was first available in
 
 Support for the ECoS throttle was first available in 
 <a href="http://jmri.sf.net/releasenotes/jmri2.7.4.shtml">JMRI 2.7.4</a>.
+
+Support for the ECoS s88 Feedback Sensors was first available in 
+<a href="http://jmri.sf.net/releasenotes/jmri2.7.9.shtml">JMRI 2.7.9</a>.
     
 <!--#include virtual="/Footer" -->
 </body>
