@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: index.shtml,v 1.1 2009-12-01 04:26:06 jacobsen Exp $ -->
+<html lang="en">
+
+<head>
+ <TITLE>JMRI Defense: Keeping an Open-Source Project Alive</TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META name="keywords" content="JMRI Jacobsen open-source patent defense copyright trademark">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body class="secondlevel">
+<div id="container">
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="/k/Sidebar" -->
+ <div id="mainContent">
+  <div class="list">
+    <h2>JMRI Defense: Keeping an Open-Source Project Alive</h2>
+ 
+ <!-- the content goes here -->
+ 
+JMRI is an open-source project for developers
+to write software for model railroads.
+It has achieved wide-spread acceptance, with more than a hundred
+people writing parts, and users on every continent
+except Antarctica (and we're working on that one!)
+<P>
+As an open-source project, JMRI software is distributed free of charge.
+Our 
+<A HREF="/Copyright.html#license">licensing terms</a>
+allow people to redistribute the software, provided they
+abide by certain simple restrictions.
+It's not hard for 
+anyone to understand and live up to those - except
+one person.
+
+<P>
+For the last three years JMRI has been under attack
+by Matt Katzer and his attorney Kevin Russell.
+They have been using various coercive tactics, some of
+which we believe are 
+illegal, in an attempt
+to put a stop to JMRI's work
+or to extract money from JMRI.
+
+<P>
+Katzer, through his attorney Russell,
+obtained a patent on 
+model railroad technology that other people
+had developed years before.
+Using a
+"continuation" application, they applied for a patent that
+covered JMRI <i>after</i> JMRI had openly published its code.
+Because Katzer and Russell didn't provide the prior art to the
+Patent Office, the patent was promptly issued.
+
+<P>
+After the patent issued, 
+Katzer and Russell first demanded $19, and later $29 in royalties
+per downloaded copy of JMRI.
+We believed that the patent was invalid because of prior art, 
+and if they had provided the prior art in their possession 
+to the patent examiner, 
+that it would not have been granted in the first place.  
+Russell sent Bob Jacobsen, one of the JMRI developers,
+bills for more than $200,000 on 
+a roughly monthly basis from August 2005 to January 2006.
+
+<P>
+When that harassment 
+wasn't enough to stop the project, 
+Katzer and Russell 
+<a href="http://jmri.sourceforge.net/k/correspondence/FOIA-20051027.pdf">contacted Bob's employer</a>
+in an attempt to intimidate him.  
+
+<P>
+In March 2006, we couldn't allow this to go on, and filed a 
+<A HREF="docket/1.pdf">"Declaratory Judgment"</A> 
+action
+in Federal Court to get a legal determination
+on our rights.
+
+<P>
+While we sought to hold Katzer and Russell responsible for certain of their
+actions, such as contacting Bob's employer re the patents,
+the Court sided with
+Katzer and Russell and ruled that they
+<A HREF="c/2006-08-13.shtml">cannot be held responsible</a>
+for them.
+Those are no longer present in the complaint.
+
+<P>
+On the other hand, we've found 
+<a href="copycomparison.shtml">compelling evidence</a> 
+that Katzer took JMRI decoder definition files 
+and included them in his
+products, thereby thereby claiming them as his own, 
+in violation of the JMRI license. 
+We've therefore added copyright claims to the case by filing an
+<A HREF="docket/96.pdf">amended complaint</a>
+and asked for a preliminary injunction to stop
+Katzer's misuse of our work.
+In a motion to dismiss, Katzer
+<A HREF="c/2006-09-27.shtml">has argued</a>
+that we can't use our copyrights to hold him responsible 
+for his violations of the JMRI open-source license.
+We <A HREF="c/2006-11-03.shtml">replied</a> 
+to show
+that open-source licenses are valid and enforceable.
+The District Court 
+<A HREF="c/2007-08-17.shtml">ruled</a>
+that Katzer was right, and that we were not likely
+to succeed on the merits of our copyright claim.
+We disagreed emphatically with this, for 
+<A HREF="c/2007-08-17.shtml">multiple reasons</a>, 
+and 
+<a href="c/2007-09-13.shtml">appealed</a>
+the ruling.  Our first
+<a href="docket/cafc-pi-1/AppellantsBrief.pdf">brief</a>, 
+presents our side of the issue.
+A strong consortium of free and open source
+advocates, including 
+Creative Commons Corp,
+The Linux Foundation,
+The Open Source Initiative,
+The Software Freedom Law Center,
+Yet Another Society (Perl Foundation), and
+The Wikimedia Foundation, 
+filed a 
+<a href="c/2007-12-28.shtml">"friend of the Court" brief</a>
+supporting out position.
+On August 13, 2008, the Appeals Court
+<a href="docket/cafc-pi-1/08-1001.pdf">ruled entirely in our favor</a>, vacated
+the District Court's decision, and remanded the case for
+further proceedings.
+There is still much to do regarding Katzer's copyright infringement, 
+but we believe we will eventually win.
+
+<P>
+Katzer also improperly registered one of our
+trademarks, DecoderPro,
+as the domain name "decoderpro.com".
+The World Intellectual Property Organization (WIPO)
+has 
+<A HREF="http://www.wipo.int/amc/en/domains/decisions/html/2007/d2007-0763.html">ordered it returned to us</a>,
+and wrote an entire section of the order on
+"<a href="c/2007-08-06.shtml">Katzer's bad faith</a>".
+We think it's important to have the Court order Katzer not to 
+repeat this type of misbehavior against JMRI or anybody else,
+but the Court originally told us to remove the corresponding cybersquatting section.
+After a 
+<a href="c/2007-12-11.shtml">series of motions</a>,
+the Court has allowed us to include it in our 
+<a href="docket/index.shtml#191">Second Amended Complaint</a>, which 
+is currently moving forward.
+
+<P>
+These pages provide more detail on
+what's happened so far
+and
+how we're defending against Katzer's actions.  
+The navigation bar at the left will take
+you to specific types of information. 
+
+<P>
+If this is your first encounter with us and our struggle to defend
+our Open Source project, 
+you might want to 
+learn more by either reading our longer
+<A HREF="History.shtml">history to date</a>, or
+see the 
+<A HREF="news.shtml">"Articles by Others"</a> 
+page to see what people not connected to JMRI are saying about this.
+
+<P>
+If you'd like to read all the legal filings, 
+we've got them all available on a 
+<A HREF="docket/index.shtml">separate page</a>.
+
+<P>
+If you're outraged by this situation, there are several things
+you can do to help:
+<UL>
+<LI>
+<a href="/donations.shtml">
+ <img src="http://images.sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="RIGHT" alt="Donate to JMRI" />
+</a> 
+<A HREF="donations.shtml">Contribute</a>
+to help pay for legal expenses. JMRI gets no commercial revenue, and
+patent litigation has costs for court fees, stenographers, etc.  
+<LI><A HREF="priorart.shtml">Help with prior art</a>.
+We know about lots of examples of "prior art" which can be used
+to invalidate these patents.  We'd appreciate help finding more.
+More importantly, we'd like help writing all of these up; it's a big
+task to turn technical documentation into legal writing that can convince
+a non-technical judge or jury. There's 
+<A HREF="priorart.shtml">another page</a>
+with info on how to help with this.
+</UL>
+
+<P>
+If you'd like to get email when we update these pages, please subscribe to the 
+<A HREF="https://lists.sourceforge.net/lists/listinfo/jmri-legal-announce">jmri-legal-announce</a>
+mailing list at SourceForge.net.  
+This will carry short announcements occasionally as news happens.
+There won't be a lot of traffic.  
+It's not a list for discussion and strategizing; for various reasons, 
+we can't do that on a public list.
+ 
+ <!-- The content ends here -->
+   </div> <!-- closes .list -->
+
+
+  <hr class="hide">
+<!--#include virtual="/Footer" -->
+
+ </div> <!-- closes #mainContent-->
+</div> <!-- closes #mBody--> 
+</div> <!-- closes #container --> 
+</body>
+</html>
+

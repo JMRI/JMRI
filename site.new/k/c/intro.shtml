@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: intro.shtml,v 1.1 2009-12-01 04:29:54 jacobsen Exp $ -->
+<html lang="en">
+
+<!--#include virtual="header1"-->
+<!--#include virtual="../Sidebar"-->
+<!--#include virtual="header2"-->
+
+<table width="100%"><tr>
+<td align="left">
+<A HREF="dummy.shtml">Previous (<!--#include virtual="../i/dummy_h.txt"-->)</a>
+</td>
+<td align="right">
+<A HREF="2006-03-13.shtml">Next (<!--#include virtual="../i/2006-03-13_h.txt"-->)</a>
+</td>
+</tr></table>
+
+<h2><!--#include virtual="../i/intro_d.txt"-->: <!--#include virtual="../i/intro_h.txt"--></h2>
+<!--#include virtual="../i/intro_b.txt"-->
+
+<table width="100%"><tr>
+<td align="left">
+<A HREF="dummy.shtml">Previous (<!--#include virtual="../i/dummy_h.txt"-->)</a>
+</td>
+<td align="right">
+<A HREF="2006-03-13.shtml">Next (<!--#include virtual="../i/2006-03-13_h.txt"-->)</a>
+</td>
+</tr></table>
+
+<!--#include virtual="footer"-->
+
+</html>
+
