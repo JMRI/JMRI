@@ -306,11 +306,20 @@ public class ThrottleWindow extends JmriJFrame {
 				getCurentThrottleFrame().getFunctionPanel().showAllFnButtons();
 			}
 		});
+		
+		JMenuItem makeAllComponentsInBounds = new JMenuItem(throttleBundle.getString("ThrottleMenuViewMakeAllComponentsInBounds"));
+		makeAllComponentsInBounds.addActionListener(new AbstractAction() {
+			public void actionPerformed(ActionEvent ev) {
+				getCurentThrottleFrame().makeAllComponentsInBounds();
+			}
+		});
 
 		viewMenu.add(viewAddressPanel);
 		viewMenu.add(viewControlPanel);
 		viewMenu.add(viewFunctionPanel);
+		viewMenu.addSeparator();
 		viewMenu.add(viewAllButtons);
+		viewMenu.add(makeAllComponentsInBounds);
 
 		JMenu editMenu = new JMenu(throttleBundle.getString("ThrottleMenuEdit"));
 		JMenuItem preferencesItem = new JMenuItem(throttleBundle.getString("ThrottleMenuEditFrameProperties"));
@@ -333,9 +342,6 @@ public class ThrottleWindow extends JmriJFrame {
 		editMenuExportRoster.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				getCurentThrottleFrame().saveRosterChanges();
-/*		        if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) {
-		        	getCurentThrottleFrame().saveThrottle();
-		        }*/
 			}
 		});
 

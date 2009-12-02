@@ -43,7 +43,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.87 $
+ * @version     $Revision: 1.88 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -160,6 +160,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     	it.setVisible(true);
     	_jynstrumentSpace.setVisible(true);
     	_jynstrumentSpace.add(it);
+    	if ((this.getTopLevelAncestor() != null) && (this.getTopLevelAncestor() instanceof JFrame) && (this.getTopLevelAncestor().isVisible()))
+    		((JFrame)this.getTopLevelAncestor()).pack();
     }
 
     protected void setResourceBundle() {

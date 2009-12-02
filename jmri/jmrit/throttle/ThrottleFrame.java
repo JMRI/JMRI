@@ -147,7 +147,8 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 			// don't save the loco address or consist address
 //			throttleElement.getChild("AddressPanel").removeChild("locoaddress");
 //			throttleElement.getChild("AddressPanel").removeChild("locoaddress");
-			if (this.getRosterEntry() != null) // don't save function buttons labels, they're in roster entry		    
+			if ((this.getRosterEntry() != null) && (getDefaultThrottleFolder()+ addressPanel.getRosterEntry().getId().trim() +".xml").compareTo(sfile)==0) 
+				// don't save function buttons labels, they're in roster entry	
 				throttleElement.getChild("FunctionPanel").removeChildren("FunctionButton");
 			
 			root.setContent(throttleElement);
@@ -199,7 +200,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 			if (log.isDebugEnabled())
 				log.debug("Loading throttle exception: " + ex.getMessage());
 		}
-    	checkPosition();
+//    	checkPosition();
 		return ;
 	}
     
@@ -371,13 +372,13 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 		}		
 		if (pos.y + pos.height > this.getHeight()) // Component to low
 			pos.y = this.getHeight() - pos.height - 1;
-		if ( pos.y < 0 ) // Coponent to high
+		if ( pos.y < 0 ) // Component to high
 			pos.y = 1;
 		
 		comp.setBounds(pos);
 	}
 	
-	private void checkPosition() {
+	public void makeAllComponentsInBounds() {
 		Component[] cmps = getComponents();
 		for (int i=0; i<cmps.length; i++) {
 			try {
@@ -413,7 +414,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 			JOptionPane.showMessageDialog(this, throttleBundle.getString("ThrottleFrameNoRosterItemMessageDialog"), throttleBundle.getString("ThrottleFrameNoRosterItemTitleDialog"),	JOptionPane.ERROR_MESSAGE);
     		return;
     	}
-		if (JOptionPane.showConfirmDialog(this, throttleBundle.getString(""), throttleBundle.getString(""), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+		if (JOptionPane.showConfirmDialog(this, throttleBundle.getString("ThrottleFrameRosterChangeMesageDialog"), throttleBundle.getString("ThrottleFrameRosterChangeTitleDialog"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 			return;
 		}
 		functionPanel.saveFunctionButtonsToRoster(rosterEntry);
@@ -633,7 +634,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 	}
 
 	public void componentResized(ComponentEvent e) {
-		checkPosition ();
+//		checkPosition ();
 	}
 
 	public void componentShown(ComponentEvent e) {
