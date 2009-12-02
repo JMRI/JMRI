@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.9.shtml,v 1.6 2009-11-30 05:03:12 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.9.shtml,v 1.7 2009-12-02 16:35:34 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,7 +29,7 @@
       Release Notes for JMRI 2.7.9 release
       </h2>
 
-	<p>Date: MMM NN, 2009</p>
+	<p>Date: December 2, 2009</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.7.9 of JMRI/DecoderPro is available for download.
 
@@ -50,8 +50,9 @@ It contains
 many new features, including:
 
 <ul>
-<li>
-<li>
+<li>Improved throttle customization possibilities
+<li>SE8c signal decoders can now be used with non-Digitrax DCC systems
+<li>S88 sensors on eCos systems can now be used
 </ul>
 along with lots of other changes.  See the complete list below.
 
