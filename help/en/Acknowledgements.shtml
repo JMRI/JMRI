@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.88 2009-11-17 15:00:25 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.89 2009-12-02 16:39:09 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -216,6 +216,8 @@
 	<LI>Rob Heikens, who created ESU decoder definitions and programmer pages
 	<LI>Freek Heite, who located some important XpressNet info
     <LI>William Hipple, who registered the JMRI.org and DecoderPro.org domains for us
+    <li>Brett Hoffman, who provided support for zero-config ("Bonjour"-like) networking 
+        and WiFi access to throttles.
 <a name="I"></A>
 	<LI>AJ Ireland of Digitrax, who loaned equipment, answered questions
 	and made valuable suggestions
