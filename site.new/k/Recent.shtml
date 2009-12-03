@@ -9,6 +9,9 @@
 <a id="ComingEvents">
 <H3><!--#include virtual="/k/i/ComingEvents_d.txt"-->: <!--#include virtual="/k/i/ComingEvents_h.txt"--></H3>
 <!--#include virtual="/k/i/ComingEvents_b.txt"-->
+<a id="2009-12-03">
+<H3><!--#include virtual="/k/i/2009-12-03_d.txt"-->: <!--#include virtual="/k/i/2009-12-03_h.txt"--></H3>
+<!--#include virtual="/k/i/2009-12-03_b.txt"-->
 <a id="2009-11-25">
 <H3><!--#include virtual="/k/i/2009-11-25_d.txt"-->: <!--#include virtual="/k/i/2009-11-25_h.txt"--></H3>
 <!--#include virtual="/k/i/2009-11-25_b.txt"-->
