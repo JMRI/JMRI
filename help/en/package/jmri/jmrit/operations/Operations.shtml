@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.49 2009-11-13 16:05:20 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.50 2009-12-03 00:22:00 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -983,15 +983,16 @@ trains is also created each time the "Save Train" button is pressed.
 <H2>Building Trains</H2>
 
 To build one train, press the "Build" button in the row for the desired
-train in the "Trains" panel. The button will become "Print" after the
-train is built. If you want to review how the train was built, select
-the "Build Reports" before pressing the "Print" button for the desired
-train. If the "Preview Manifest" checkbox is selected, the program will
-generate the build report and manifest and present them in preview
-windows. If you want to build several trains without having to press
-individual buttons for each train, select the trains that you want built
-and press the "Build" button found at the bottom of the trains panel.
-The program will then build manifests for all of the selected trains.
+train in the "Trains" panel. The button will become "Print" or "Preview"
+after the train is built. If you want to review how the train was built,
+select the "Build Reports" before pressing the "Print" or "Preview"
+button for the desired train. If the "Preview Manifest" checkbox is
+selected, the program will generate the build report and manifest and
+present them in preview windows. If you want to build several trains
+without having to press individual buttons for each train, select the
+trains that you want built and press the "Build" button found at the
+bottom of the trains panel. The program will then build manifests for
+all of the selected trains.
 
 <P>If a train fails to build, the "Move" button will change its text
 to "Report". Pressing "Report" will print or preview the build report
@@ -1015,19 +1016,21 @@ detail level.
 <P>
 <img src="images/BuildReport.png">
 
+
 <H3>Printing Manifests</H3>
 
-After building a train, the "Build" button will become "Print". Pressing
-the "Print" button will then print the manifest for that train. If you
-want to print manifests for several trains, select the trains you want
-in the build column and then press the "Print" button found at the
-bottom of the trains panel. The program will then print manifests for
-all of the selected trains. 
+After building a train, the "Build" button will become "Print" or
+"Preview" depending on the state of the checkbox called "Preview
+Manifests" located in the lower right corner of the Trains window.
+Pressing the "Print" button will print the manifest for that train.
+Pressing the "Preview" button will produce a window in which you can
+review the manifest. If you want to print manifests for several trains,
+select the trains you want in the build column and then press the
+"Print" or "Preview" button found at the bottom of the trains panel. The
+program will then print or preview manifests for all of the selected
+trains.
 
-<P>
-<img src="images/Manifest.png">
-
-<A NAME="SwitchList"></A>
+<P><img src="images/Manifest.png"> <A NAME="SwitchList"></A>
 <H3>Switch Lists</H3>
 
 Press the "Print Switch List" button if you want a switch list for a
