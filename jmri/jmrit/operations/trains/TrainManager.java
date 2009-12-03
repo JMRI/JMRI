@@ -28,10 +28,10 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.26 $
+ * @version	$Revision: 1.27 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
-	public static final String LISTLENGTH_CHANGED_PROPERTY = "listLength";
+	
 	// Train frame attributes
 	protected String _sortBy = "";
 	protected boolean _buildMessages = true;	// when true, show build messages
@@ -40,10 +40,15 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	protected TrainsTableFrame _trainFrame = null;
 	protected Dimension _frameDimension = new Dimension(Control.panelWidth,Control.panelHeight);
 	protected Point _framePosition = new Point();
+	
 	// Edit Train frame attributes
 	protected TrainEditFrame _trainEditFrame = null;
 	protected Dimension _editFrameDimension = null;
 	protected Point _editFramePosition = null;
+	
+	// property changes
+	public static final String LISTLENGTH_CHANGED_PROPERTY = "TrainsListLength";
+	public static final String PRINTPREVIEW_CHANGED_PROPERTY = "TrainsPrintPreview";
 	
 	public TrainManager() {
 		CarTypes.instance().addPropertyChangeListener(this);
@@ -73,6 +78,10 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		log.debug("Trains have been loaded!");
 	}
  
+	/**
+	 * 
+	 * @return true if build messages are enabled
+	 */
     public boolean getBuildMessages(){
     	return _buildMessages;
     }
@@ -81,6 +90,10 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	_buildMessages = messages;
     }
     
+    /**
+     * 
+     * @return true if build reports are enabled
+     */
     public boolean getBuildReport(){
     	return _buildReport;
     }
@@ -89,12 +102,18 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	_buildReport = report;
     }
     
+    /**
+     * 
+     * @return true if print preview is enabled
+     */
     public boolean getPrintPreview(){
     	return _printPreview;
     }
     
     public void setPrintPreview(boolean preview){
+    	boolean old = _printPreview;
     	_printPreview = preview;
+    	firePropertyChange(PRINTPREVIEW_CHANGED_PROPERTY, old?"Preview":"Print", preview?"Preview":"Print");
     }
     
     public void setTrainFrame(TrainsTableFrame frame){

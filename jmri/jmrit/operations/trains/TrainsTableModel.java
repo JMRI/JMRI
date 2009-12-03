@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.23 $
+ * @version   $Revision: 1.24 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -114,17 +114,17 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
 		// set column preferred widths
 		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
-		table.getColumnModel().getColumn(BUILDBOXCOLUMN).setPreferredWidth(40);
-		table.getColumnModel().getColumn(BUILDCOLUMN).setPreferredWidth(64);
+		table.getColumnModel().getColumn(BUILDBOXCOLUMN).setPreferredWidth(38);
+		table.getColumnModel().getColumn(BUILDCOLUMN).setPreferredWidth(72);
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(100);
-		table.getColumnModel().getColumn(DESCRIPTIONCOLUMN).setPreferredWidth(125);
+		table.getColumnModel().getColumn(DESCRIPTIONCOLUMN).setPreferredWidth(120);
 		table.getColumnModel().getColumn(ROUTECOLUMN).setPreferredWidth(100);
 		table.getColumnModel().getColumn(DEPARTSCOLUMN).setPreferredWidth(100);
 		table.getColumnModel().getColumn(CURRENTCOLUMN).setPreferredWidth(100);
 		table.getColumnModel().getColumn(TERMINATESCOLUMN).setPreferredWidth(100);
 		table.getColumnModel().getColumn(STATUSCOLUMN).setPreferredWidth(100);
 		table.getColumnModel().getColumn(MOVECOLUMN).setPreferredWidth(66);
-		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(64);
+		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(60);
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
@@ -219,7 +219,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         case STATUSCOLUMN: return train.getStatus();
         case BUILDCOLUMN: {
         	if (train.getBuilt())
-        		return rb.getString("Print");
+        		if (manager.getPrintPreview())
+        			return rb.getString("Preview");
+        		else
+        			return rb.getString("Print");
         	return rb.getString("Build");
         }
         case MOVECOLUMN: {
@@ -292,6 +295,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
        		frame.setModifiedFlag(true);
        	}
     	if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||
+    			e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY) ||
     			e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY)) {
     		updateList();
     		fireTableDataChanged();

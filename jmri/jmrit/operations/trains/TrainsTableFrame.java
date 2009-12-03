@@ -29,7 +29,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.34 $
+ * @version             $Revision: 1.35 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -126,14 +126,16 @@ public class TrainsTableFrame extends OperationsFrame {
     	cp1.add(printPreviewBox);
     	
     	//row 2
-    	//tool tips
+    	//tool tips, see setPrintButtonText() for more tool tips
     	addButton.setToolTipText(rb.getString("AddTrain"));
-		buildButton.setToolTipText(rb.getString("BuildSelected"));
-		printButton.setToolTipText(rb.getString("PrintSelected"));
+		buildButton.setToolTipText(rb.getString("BuildSelectedTip"));
 		printSwitchButton.setToolTipText(rb.getString("PreviewPrintSwitchLists"));
-		terminateButton.setToolTipText(rb.getString("TerminateSelected"));
+		terminateButton.setToolTipText(rb.getString("TerminateSelectedTip"));
 		saveButton.setToolTipText(rb.getString("SaveBuildsTip"));
-
+		
+		buildMsgBox.setToolTipText(rb.getString("BuildMessagesTip"));
+		printPreviewBox.setToolTipText(rb.getString("PreviewTip"));
+		
     	JPanel cp2 = new JPanel();
 		cp2.add (addButton);
 		cp2.add (buildButton);
@@ -185,6 +187,9 @@ public class TrainsTableFrame extends OperationsFrame {
     	addCheckBoxAction(buildMsgBox);
 		addCheckBoxAction(buildReportBox);
 		addCheckBoxAction(printPreviewBox);
+		
+		// Set the button text to Print or Preview
+		setPrintButtonText();
     	
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
@@ -349,6 +354,19 @@ public class TrainsTableFrame extends OperationsFrame {
 		return trainsModel.getSelectedTrainList();
 	}
 	
+	// Modifies button text and tool tips 
+	private void setPrintButtonText(){
+		if (printPreviewBox.isSelected()){
+			printButton.setText(rb.getString("Preview"));
+			printButton.setToolTipText(rb.getString("PreviewSelectedTip"));
+			buildReportBox.setToolTipText(rb.getString("BuildReportPreviewTip"));
+		}else{
+			printButton.setText(rb.getString("Print"));
+			printButton.setToolTipText(rb.getString("PrintSelectedTip"));
+			buildReportBox.setToolTipText(rb.getString("BuildReportPrintTip"));
+		}
+	}
+	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		setModifiedFlag(true);
 		if (ae.getSource() == buildMsgBox){
@@ -359,6 +377,7 @@ public class TrainsTableFrame extends OperationsFrame {
 		}
 		if (ae.getSource() == printPreviewBox){
 			trainManager.setPrintPreview(printPreviewBox.isSelected());
+			setPrintButtonText();	// set the button text for Print or Preview
 		}
 	}
 	
