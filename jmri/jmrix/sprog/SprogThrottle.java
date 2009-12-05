@@ -8,13 +8,13 @@ import jmri.jmrix.AbstractThrottle;
 /**
  * An implementation of DccThrottle with code specific to an SPROG connection.
  * <P>
- * Addresses of 99 and below are considered short addresses, and
- * over 100 are considered long addresses.
+ * Addresses of 127 and below are considered short addresses, and
+ * 128 and over are considered long addresses.
  * <P>
  * Based on the {@link jmri.jmrix.nce.NceThrottle} implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SprogThrottle extends AbstractThrottle
 {
@@ -52,7 +52,7 @@ public class SprogThrottle extends AbstractThrottle
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
      */
     protected void sendFunctionGroup1() {
-        byte[] result = jmri.NmraPacket.function0Through4Packet(address, (address>=100),
+        byte[] result = jmri.NmraPacket.function0Through4Packet(address, (address>=128),
                                          getF0(), getF1(), getF2(), getF3(), getF4());
 
         station.sendPacket(result, 1);
@@ -64,7 +64,7 @@ public class SprogThrottle extends AbstractThrottle
      */
     protected void sendFunctionGroup2() {
 
-        byte[] result = jmri.NmraPacket.function5Through8Packet(address, (address>=100),
+        byte[] result = jmri.NmraPacket.function5Through8Packet(address, (address>=128),
                                          getF5(), getF6(), getF7(), getF8());
 
         station.sendPacket(result, 1);
@@ -76,7 +76,7 @@ public class SprogThrottle extends AbstractThrottle
      */
     protected void sendFunctionGroup3() {
 
-        byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address>=100),
+        byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address>=128),
                                          getF9(), getF10(), getF11(), getF12());
 
         station.sendPacket(result, 1);
