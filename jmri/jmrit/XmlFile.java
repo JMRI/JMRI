@@ -32,7 +32,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.48 $
+ * @version	$Revision: 1.49 $
  */
 public abstract class XmlFile {
 
@@ -522,7 +522,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.48 2009-10-21 15:55:20 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.49 2009-12-05 23:05:08 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
@@ -653,6 +653,18 @@ public abstract class XmlFile {
         builder.setFeature("http://apache.org/xml/features/xinclude", true);
         builder.setFeature("http://apache.org/xml/features/xinclude/fixup-base-uris", false);
 
+        // for schema validation. Not needed for DTDs, so continue if not found now
+        try {
+            builder.setFeature("http://apache.org/xml/features/validation/schema", true);
+            builder.setFeature("http://apache.org/xml/features/validation/schema-full-checking", true);
+
+            // parse namespaces, including the noNamespaceSchema
+            builder.setFeature("http://xml.org/sax/features/namespaces", true);
+
+        } catch (Exception e) {
+            log.warn("Could not set schema validation feature: "+e);
+        }
+        
         return builder;
     }
     
