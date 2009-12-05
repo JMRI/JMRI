@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Test schema for JMRI I/O support. Not for use before JMRI 2.9.1        -->
+
+<!-- This is an experimental organization,                                  -->
+<!-- and will certainly be changed in the near future                       -->
+
+<!-- $Id: JMRItypes.xsd,v 1.1 2009-12-05 22:35:21 jacobsen Exp $ -->
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="layout-config">
+    <xs:complexType>
+      <xs:sequence>
+
+        <xs:element name="gui" minOccurs="0" maxOccurs="unbounded">
+            <xs:complexType>
+                <xs:attribute name="LAFclass" type="xs:string"/>
+                <xs:attribute name="class" type="xs:string"/>
+                <xs:attribute name="LocaleLanguage" type="xs:string"/>
+                <xs:attribute name="LocaleCountry" type="xs:string"/>
+                <xs:attribute name="LocaleVariant" type="xs:string"/>
+            </xs:complexType>
+        </xs:element>
+      
+        <xs:element name="connection" minOccurs="0" maxOccurs="unbounded">
+            <xs:complexType>
+                <xs:attribute name="class" type="xs:string"/>
+            </xs:complexType>
+        </xs:element>
+      
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
