@@ -1,5 +1,16 @@
 The briefing papers for the December 4, 2009 
 Summary Judgement hearing have all been filed.
+
+<p>
+Juries decide whether disputed facts are true.
+Summary Judgement is a procedure where the Court can
+rule on legal questions where all the facts are settled, and
+therefore the facts don't need to go to the jury.
+The Court looks at evidence and argument about whether there is a 
+real dispute about the facts, so that it can first rule 
+whether facts are undisputed, and if so, decide
+what they mean under the law.
+
 <p>
 There are two motions 
 for Summary Judgement. In ours, we're requesting

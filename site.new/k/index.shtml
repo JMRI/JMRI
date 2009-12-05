@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.1 2009-12-01 04:26:06 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2009-12-05 08:21:10 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -44,7 +44,7 @@ one person.
 
 <P>
 For the last three years JMRI has been under attack
-by Matt Katzer and his attorney Kevin Russell.
+by Matt Katzer.
 They have been using various coercive tactics, some of
 which we believe are 
 illegal, in an attempt
@@ -52,7 +52,7 @@ to put a stop to JMRI's work
 or to extract money from JMRI.
 
 <P>
-Katzer, through his attorney Russell,
+Katzer, through his attorney Kevin Russell,
 obtained a patent on 
 model railroad technology that other people
 had developed years before.
@@ -91,14 +91,13 @@ on our rights.
 <P>
 While we sought to hold Katzer and Russell responsible for certain of their
 actions, such as contacting Bob's employer re the patents,
-the Court sided with
-Katzer and Russell and ruled that they
+the Court ruled that Katzer and Russell
 <A HREF="c/2006-08-13.shtml">cannot be held responsible</a>
 for them.
 Those are no longer present in the complaint.
 
 <P>
-On the other hand, we've found 
+On the other hand, we found 
 <a href="copycomparison.shtml">compelling evidence</a> 
 that Katzer took JMRI decoder definition files 
 and included them in his
@@ -141,11 +140,25 @@ On August 13, 2008, the Appeals Court
 <a href="docket/cafc-pi-1/08-1001.pdf">ruled entirely in our favor</a>, vacated
 the District Court's decision, and remanded the case for
 further proceedings.
-There is still much to do regarding Katzer's copyright infringement, 
-but we believe we will eventually win.
 
 <P>
-Katzer also improperly registered one of our
+In the Fall of 2008, there was another round of motions.
+After a 
+<a href="/k/History.shtml#2008-12-19">hearing on December 19th</a>,
+the Court issued a mixed ruling. 
+We still didn't get an injunction, but the Court did require
+Katzer to finally (after years!) 
+<a href="/k/History.shtml#2009-02-11">answer</a>
+our complaint. That answer came with a 
+counterclaim for $6 million, for using phrases
+from QSI manuals to make the decoder definitions
+Katzer copied!  Katzer had bought the rights 
+to a QSI manual from QSI for $500 so he could do this.
+Clearly, this is just another of Katzer's depradations
+that we have to fight.
+
+<P>
+In addtion to all that, Katzer also improperly registered one of our
 trademarks, DecoderPro,
 as the domain name "decoderpro.com".
 The World Intellectual Property Organization (WIPO)
@@ -161,6 +174,16 @@ After a
 the Court has allowed us to include it in our 
 <a href="docket/index.shtml#191">Second Amended Complaint</a>, which 
 is currently moving forward.
+
+<p>
+The copyright and cybersquatting parts of the case are proceeding
+toward a trial scheduled 
+for March 2010.
+In December 2009, there was a 
+<a href="/k/Recent.shtml#2009-12-04">hearing</a> on 
+<a href="/k/Recent.shtml#2009-11-25">Summary Judgement motions</a>
+that will decide many aspects of the case.  A ruling is expected 
+sometime soon.
 
 <P>
 These pages provide more detail on

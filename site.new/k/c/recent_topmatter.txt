@@ -1,6 +1,6 @@
 <h2>JMRI Defense: Recent Events</h2>
 
-This page describes recent events, 
+This page describes recent events in the main case, 
 in most-recent-at-the-top order.
 Other information and arrangements 
 are available from the left-side menu.

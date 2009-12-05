@@ -1,21 +1,20 @@
 <a id="nexthearing">
 <!-- We currently have no hearings scheduled. -->
 
-<!-- We're waiting  -->
-<!-- for decisions from the District Court on the motions discussed at the -->
-<!-- <a href="#2008-12-19">December 19, 2008 hearing</a>. We'll post those  -->
-<!-- when they become available. -->
+We're waiting 
+for decisions from the District Court on the motions discussed at the
+<a href="/k/Recent.shtml#2009-12-04">December 4, 2009 hearing</a>. We'll post those 
+when they become available.
 
+<!-- 
 Our next district court hearing is scheduled 
 for 9AM on Friday December 4th 2009
-at the U.S. District Court for the Northern District of
-California courthouse,
-450 Golden Gate Ave,
-17th floor, courtroom 2
-(nearest BART stop is Civic Center).
+at the U.S. District Court for the Northern District of California courthouse,
+450 Golden Gate Ave, 19th floor (nearest BART stop is Civic Center).
 For those of you in the San Francisco area, it would be great
 if you could come out and attend the hearing to <u>respectfully</u>
 support open-source software.
+ -->
 
 
 <!-- On the morning of April 11th, 2008, the District Court in San Francisco will hold a  -->
@@ -32,8 +31,8 @@ support open-source software.
 <!-- if you could come out and attend the hearing to <u>respectfully</u>  -->
 <!-- support open-source software.  -->
 <!-- The hearing will be held at 9AM in  -->
-<!-- Judge Jeffrey S. White's courtroom, -->
-<!-- Courtroom 2 on the 17th floor of the Federal Court Building,  -->
+<!-- Judge Jeffrey S. White's courtroom -->
+<!-- on the 19th floor of the Federal Court Building,  -->
 <!-- 450 Golden Gate Ave., San Francisco. -->
 
 
