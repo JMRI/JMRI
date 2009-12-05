@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.10.shtml,v 1.1 2009-11-30 05:03:12 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.10.shtml,v 1.2 2009-12-05 20:44:31 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -149,6 +149,14 @@ as the program will update them to the new format upon storing them.
      <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.10.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.7.10.tgz/download</a>
 
 <h3>Changes since test version 2.7.9</h3>
+
+Ken Cameron updated the RobotThrottle2 sample script.
+
+<p>
+Andrew Crosland changed the standard/extended address boundary in the SPROG throttle software to match the SPROG hardware.
+
+<p>
+Kevin Dickerson improved the code for saving panel files.
 
 
 <!--#include virtual="/Footer" -->
