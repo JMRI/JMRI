@@ -25,13 +25,14 @@ import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 
 
 /**
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -393,11 +394,13 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 				if (!Setup.getCarTypes().equals(Setup.DESCRIPTIVE)){
 					CarTypes.instance().changeDefaultNames(Setup.DESCRIPTIVE);
 					Setup.setCarTypes(Setup.DESCRIPTIVE);
+					CarManagerXml.instance().writeOperationsCarFile();
 				}
 			} else {
 				if (!Setup.getCarTypes().equals(Setup.AAR)){
 					CarTypes.instance().changeDefaultNames(Setup.AAR);
 					Setup.setCarTypes(Setup.AAR);
+					CarManagerXml.instance().writeOperationsCarFile();
 				}
 			}
 			// main menu enabled?

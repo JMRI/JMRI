@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.50 2009-12-03 00:22:00 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.51 2009-12-05 15:40:44 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -141,10 +141,7 @@ assign the proper NMRA weight for a car based on scale and length.
 The program has two sets of car types for you to use. Descriptive
 provides type names like "Boxcar" and "Tankcar", and AAR provides type
 names like "XM" and "T" for boxcars and tank cars respectively. Select
-the one that you prefer. Note that if you change the car types after
-you've entered cars, locations, or trains, press the "Save" button at
-the bottom of the Operation Settings panel and also press the "Save
-Builds" button on the train panel to update all of your files.
+the one that you prefer.
 
 <H3>Owner Name</H3>
 
