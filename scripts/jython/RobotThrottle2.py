@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.21 $
+# $Revision: 1.22 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -166,6 +166,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     
     def init(self):
         #print("start begin:.\n")
+        self.setName("RB2: no loco")
         self.setup()
         #print("start end:.\n")
         return
@@ -855,6 +856,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             isOk = False
         else :
             self.scriptFrame.setTitle("Run Loco " + self.locoAddress.text)
+            self.setName("RB2: " + self.locoAddress.text)
             if (self.locoAddress.text != self.oldLocoAddress) :
                 self.oldLocoAddress = self.locoAddress.text
                 if (self.loadFromRoster.isSelected() == True) :
