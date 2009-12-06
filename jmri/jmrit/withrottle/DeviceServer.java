@@ -10,7 +10,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Created by Brett Hoffman on:
  *	@author 7/20/09.
- *	@version $Revision: 1.3 $
+ *	@version $Revision: 1.4 $
  *
  *	Thread with input and output streams for each connected device.
  *	Creates an invisible throttle window for each.
@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 import jmri.DccThrottle;
 import jmri.jmrit.throttle.ThrottleFrame;
+import jmri.jmrit.throttle.ThrottleWindow;
 import jmri.jmrit.throttle.AddressListener;
 
 public class DeviceServer implements Runnable, AddressListener {
@@ -36,6 +37,7 @@ public class DeviceServer implements Runnable, AddressListener {
     String deviceAddress = "Not Set";
 
     ThrottleFrame throttleFrame;
+    ThrottleWindow throttleWindow;
     ThrottleController throttleController;
     private boolean keepReading;
 
@@ -55,7 +57,8 @@ public class DeviceServer implements Runnable, AddressListener {
 
         // Create a throttle instance for each device connected
         if (jmri.InstanceManager.throttleManagerInstance() != null){
-            throttleFrame = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
+            throttleWindow = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleWindow();
+            throttleFrame = throttleWindow.getCurentThrottleFrame();
             throttleController = new ThrottleController(throttleFrame);
             throttleFrame.getAddressPanel().addAddressListener(this);
 
@@ -138,7 +141,7 @@ public class DeviceServer implements Runnable, AddressListener {
         }while (keepReading);	//	'til we tell it to stop
         log.debug("Ending thread run loop for device");
         if (throttleController != null) throttleController.shutdownThrottle();
-        throttleFrame.dispose();
+        throttleWindow.dispose();
         throttleController = null;
         for (int i = 0; i < listeners.size(); i++) {
             DeviceListener l = listeners.get(i);
