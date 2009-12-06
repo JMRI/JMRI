@@ -1,5 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright Bob Jacobsen 2008 --><!-- $Id: Jynstruments.shtml,v 1.3 2009-12-06 18:06:40 hebbos Exp $ --><title>JMRI: Jynstruments</title><!-- Style -->
+<html lang="en"><head>
+<!-- Copyright Bob Jacobsen 2008 --><!-- $Id: Jynstruments.shtml,v 1.4 2009-12-06 19:58:19 hebbos Exp $ --><title>JMRI: Jynstruments</title><!-- Style -->
 
 
 
@@ -11,7 +12,9 @@
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+<body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
@@ -34,7 +37,7 @@ This object will be instantiated by the instrumented JMRI code itself
 and then is event driven.
 
 </p><p>
-<a href="SuperCool.jpg"><img src="SuperCool.jpg" align="right" height="215" width="312"></a>
+<a href="images/throttleWindowJynstrumented.png"><img style="border: 0px solid ; width: 369px; height: 215px;" alt="Fully Jysntrumented Throttle Window" src="images/throttleWindowJynstrumented.png" align="right"></a>
 Have a look at the 
 <a href="http://jmri.org/jython">Jython folder</a> 
 in your source tree, 
@@ -63,8 +66,11 @@ but won't accept the Lights.jyn).
 </p>
 <p>Once the Jynstrument is started, the GUI will update, a Jynstrument
 property menu is accesible by right clicking on the Jynstrument or its
-border. From this menu you can Quit the Jynstrument, or view its Ouput.<br>
+border. From this menu you can Remove the Jynstrument, or view its Ouput.<br>
 </p>
+<p><img style="width: 355px; height: 216px;" src="images/mainWindowJynstrumentContextMenu.png" alt="mainWindowJynstrumentContextMenu.png" align="left">
+</p>
+
 <p>See the content of the Jynstrument itself (comments in the .py file) for specific informations about them.<br>
 </p>
 <p>Several parts of JMRI are Jynstrumentable today:<br>
@@ -77,6 +83,8 @@ border. From this menu you can Quit the Jynstrument, or view its Ouput.<br>
   </li>
 </ul>
 <p></p>
-<p><!--#include virtual="/Footer" -->
+<p>
 </p>
-</div></body></html>
+</div>
+<!--#include virtual="/Footer" -->
+</body></html>
