@@ -64,9 +64,9 @@ public class ThrottlesListPanel extends JPanel implements AddressListener {
 	    });
 	    throttleToolBar.add(jbNew);
 	    throttleToolBar.addSeparator();
-	    throttleToolBar.add(new LargePowerManagerButton());
 	    throttleToolBar.add(new StopAllButton());
-		
+	    throttleToolBar.add(new LargePowerManagerButton());
+
 	    add( throttleToolBar, BorderLayout.PAGE_START);
 	    add( scrollPane1, BorderLayout.CENTER);
 	}

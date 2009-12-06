@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+
+
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type" >
+
+<title>How to build a throttle oriented JMRI interface</title>
+<meta name="keywords"
+	content="JMRI decoderpro dcc nmra throttle throttlepro" >
+<meta name="Description"
+	content="Throttle documentation for JMRI project" >
+<meta name="Keywords" content="JMRI" >
+<meta name="Author" content="Lionel Jeanson" >
+<meta name="Language" content="EN" >
+<meta name="Robots" content="Index, Follow" >
+<meta name="Revisit-After" content="7 Days" >
+<!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+<!-- are an arbitrary design pattern used by the update.pl script to -->
+<!-- easily replace the common header/footer code for all the web pages -->
+
+<!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+<!-- or change them to reflect your alternative logo -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" >
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+	media="screen" >
+<link rel="stylesheet" type="text/css" href="/css/print.css"
+	media="print" >
+<link rel="icon" href="/images/jmri.ico" type="image/png" >
+<link rel="home" title="Home" href="/" >
+<!-- /Style -->
+</head>
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+<h1>How to build a throttle oriented JMRI interface</h1>
+<h2>1) Prepare your rosters entry</h2>
+First step is to fill in the Media and Functions labels panes in
+DecoderPro.<br >
+<br >
+Once this is done and all functions label are defined for your rosters,
+you can enable the option to hide the undefined function buttons, you
+can also enable the option to use roster image as a background for a
+throttle window.<br >
+<h2>2) Design your throttle panes</h2>
+At this step, when you open a throttle and select a roster (or enter an
+addess that match a roster (there is a preference setting to enable that
+look back)), the background image should be there, and the funv<br >
+<br >
+<h2>3) Customize with Jynstruments</h2>
+<br >
+<br >
+<h2>4) Design your throttles layout</h2>
+
+<br >
+<br >
+<h2>5) Get more control with Jynstruments</h2>
+<br >
+<br >
+<br >
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

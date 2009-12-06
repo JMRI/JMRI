@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en"><head>  
+  
+  <meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
+  <meta name="Description" content="Throttle documentation for JMRI project">
+  <meta name="Keywords" content="JMRI">
+  <meta name="Author" content="Lionel Jeanson">
+  <meta name="Language" content="EN">
+  <meta name="Robots" content="Index, Follow">
+  <meta name="Revisit-After" content="7 Days"><!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+  
+  <title>Advanced throttle control</title></head><body>
+  <!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<h1>Advanced control of a throttle</h1>
+<h2>Keyboard control</h2>You can browse through:<br>
+
+<div style="margin-left: 40px;">Throttles in curent Window : Alt + left/right<br>
+
+
+Throttle Windows : Shift + left/right<br>
+
+
+</div>
+
+<br><br>
+You can operate the Throttle using your keyboard:<br>
+<h3>Speed control</h3>
+
+<dl style="margin-left: 40px;">
+  <dt>Numeric Keypad +</dt>
+  <dd>Increase Speed
+  </dd>
+  <dt>Numeric Keypad -</dt>
+  <dd>Decrease Speed
+  </dd>
+  <dt>Left Arrow</dt>
+  <dd>Increase Speed
+  </dd>
+  <dt>Right Arrow</dt>
+  <dd>Decrease Speed
+  </dd>
+  <dt>Page Up</dt>
+  <dd>Big Increase Speed (approximately 10% for each press of the key) 
+  </dd>
+  <dt>Page Down</dt>
+  <dd>Big Decrease Speed (approximately 10% for each press of the key)</dd>
+  <dt>Numeric Pad *</dt>
+  <dd>Idle (set speed to 0, any speed momentum is enabled)</dd>
+  <dt>Numeric Pad /</dt>
+  <dd>Emergency Stop! (instantly halts the locomotive)</dd>
+</dl>
+<h3>Direction control</h3>
+
+<dl style="margin-left: 40px;">
+  <dt>Up Arrow</dt>
+  <dd>Reverse
+  </dd>
+  <dt>Down Arrow</dt>
+  <dd>Forward
+  </dd>
+</dl>
+<h3>Functions control</h3>
+
+<dl style="margin-left: 40px;">
+  <dt>Numeric Keypad 0 - 9</dt>
+  <dd>Functions 0 to 9
+  </dd>
+  <dt>Numeric Keypad .</dt>
+  <dd>Function 10
+  </dd>
+  <dt>F11 - F24</dt>
+  <dd>Function 11 to Function 24</dd>
+</dl><br>
+<h2>Jynstruments</h2>See <a href="../scripting/Jynstruments.shtml">there for more informations about Jynstruments</a>.<br>
+<br><a href="http://jmri.org/jython/Jynstruments/ThrottleWindowToolBar/">
+Both Jynstruments</a> provided bellow allows for controlling already
+assigned throttles, the Throttle Window you will control has to be set
+up before. Then it's only a matter of drag'n dropping a folder on the
+<a href="ThrottleToolBar.shtml">Throttle Window <span style="font-weight: bold;">toolbar</span></a>.<br>
+<br>
+<span style="font-style: italic;">Note that Throttle Window content is
+Jynstrumentable too, so here we drop the Jynstruments on the toolbar
+itself, not on the window content.</span><br>
+<h3>USB Joypad (USBControl.jyn)</h3>
+
+
+There is a Jynstrument named USBControl.jyn to be dropped on a Throttle
+Window toolbar to get control of that Window with a joypad. See the .py
+file for default button settings, and possible cusomizations,
+particularly you need to change the desiredControllerName variable at
+the start of the code, use the one you can see in JMRI Jinput USB Input
+Control window (accessible from Debug menu), it might have to be done
+for components names too.<br>
+<br>
+<span style="font-style: italic;">Note that a classic Jython file exists to take control of a Throttle Window with a USB device, it's just done a different way.</span><br>
+<br>
+<h3>
+Nintendo Wiimote (WiimoteThrottle.jyn)</h3>There is a Jynstrument named WiimoteThrottle.jyn to be dropped on a Throttle
+Window toolbar to get control of that Window with a Nintendo Wiimote device. See the .py
+file for default button settings and set up.<br>
+<br>
+  
+<h2>RailDriver</h2>
+Please, <a href="../../hardware/raildriver/index.shtml">see there.</a><br>
+<br>
+<br>
+<br>
+<br>
+
+<br>
+<br>
+<!--#include virtual="/Footer" -->
+</body></html>
