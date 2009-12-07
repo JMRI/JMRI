@@ -1,5 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><title>Basic throttle window usage</title>
+<html lang="en">
+<head><title>Basic throttle window usage</title>
 
 
 
@@ -44,10 +45,12 @@
   <link rel="icon" href="/images/jmri.ico" type="image/png">
 
   
-  <link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head><body>
 <!--#include virtual="/Header" -->
-
 <!--#include virtual="Sidebar" -->
+<div id="mainContent">
 <h1>Throttle window usage</h1>
 
 <img src="images/BasicThrottleWindow.png" alt="BasicThrottleWindow.png"><br>
@@ -299,5 +302,6 @@ Jynstrumentable too, so here we drop the Jynstruments on </span><span style="fon
 itself, not on the toolbar.<br>
 <br>
 </span>
+</div>
 <!--#include virtual="/Footer" -->
 </body></html>
