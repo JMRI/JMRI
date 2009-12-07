@@ -378,6 +378,8 @@
   <indexitem text="Turnout Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
 
  </indexitem>
+ <indexitem text="Throttles " target="html.tools.throttle.ThrottleMain"/>
+
  <indexitem text="Tracker " target="html.tools.tracker.index"/>
 
  <indexitem text="Transits " target="package.jmri.jmrit.beantable.TransitTable">

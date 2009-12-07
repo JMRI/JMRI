@@ -8,9 +8,9 @@
 
 <mapID target="manual.Basic_Programming_Setting Up" url="manual/Basic_Programming.shtml#Setting Up"/>
 
-<mapID target="html.doc.Technical.IntroStructure" url="html/doc/Technical/IntroStructure.shtml"/>
-
 <mapID target="manual.Main_Panels_LayoutEditor" url="manual/Main_Panels.shtml#LayoutEditor"/>
+
+<mapID target="html.doc.Technical.IntroStructure" url="html/doc/Technical/IntroStructure.shtml"/>
 
 <mapID target="package.jmri.jmrit.beantable.TurnoutTable_decodercol" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#decodercol"/>
 
@@ -116,6 +116,8 @@
 
 <mapID target="html.apps.DecoderPro.FnMapping" url="html/apps/DecoderPro/FnMapping.shtml"/>
 
+<mapID target="html.tools.throttle.ThrottleWindowMenus_ViewMenu" url="html/tools/throttle/ThrottleWindowMenus.shtml#ViewMenu"/>
+
 <mapID target="html.apps.LocoTools.index_locoio" url="html/apps/LocoTools/index.shtml#locoio"/>
 
 <mapID target="manual.Main_LocoNet_DS64" url="manual/Main_LocoNet.shtml#DS64"/>
@@ -134,6 +136,8 @@
 
 <mapID target="package.jmri.jmrit.beantable.TransitTable" url="package/jmri/jmrit/beantable/TransitTable.shtml"/>
 
+<mapID target="html.tools.throttle.ThrottleToolBar" url="html/tools/throttle/ThrottleToolBar.shtml"/>
+
 <mapID target="manual.Main_GrapeVine" url="manual/Main_GrapeVine.shtml"/>
 
 <mapID target="html.tools.scripting.Jynstruments" url="html/tools/scripting/Jynstruments.shtml"/>
@@ -149,6 +153,8 @@
 <mapID target="html.hardware.loconet.DS54" url="html/hardware/loconet/DS54.shtml"/>
 
 <mapID target="html.tools.Sensors" url="html/tools/Sensors.shtml"/>
+
+<mapID target="html.tools.throttle.AdvancedThrottleControl" url="html/tools/throttle/AdvancedThrottleControl.shtml"/>
 
 <mapID target="package.jmri.jmrix.sprog.packetgen.SprogPacketGenFrame" url="package/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame.shtml"/>
 
@@ -222,6 +228,8 @@
 
 <mapID target="html.tools.scripting.ex_set_turnouts" url="html/tools/scripting/ex_set_turnouts.shtml"/>
 
+<mapID target="html.tools.throttle.ThrottleWindowMenus_EditMenu" url="html/tools/throttle/ThrottleWindowMenus.shtml#EditMenu"/>
+
 <mapID target="package.jmri.jmrit.blockboss.BlockBossFrame" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_Locations" url="package/jmri/jmrit/operations/Operations.shtml#Locations"/>
@@ -249,6 +257,8 @@
 <mapID target="html.apps.DecoderPro.FAQ" url="html/apps/DecoderPro/FAQ.shtml"/>
 
 <mapID target="html.hardware.acela.Names" url="html/hardware/acela/Names.shtml"/>
+
+<mapID target="html.tools.throttle.BasicThrottleWindow" url="html/tools/throttle/BasicThrottleWindow.shtml"/>
 
 <mapID target="manual.index_Advanced Programmer" url="manual/index.shtml#Advanced Programmer"/>
 
@@ -350,6 +360,8 @@
 
 <mapID target="manual.Main_Roster_CreateGroup" url="manual/Main_Roster.shtml#CreateGroup"/>
 
+<mapID target="html.tools.throttle.HowToJMRIOrientedThrottle" url="html/tools/throttle/HowToJMRIOrientedThrottle.shtml"/>
+
 <mapID target="html.tools.signaling.ldt.output" url="html/tools/signaling/ldt/output.shtml"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter4_CloseThrottle" url="html/tools/throttle/ThrottleChapter4.shtml#CloseThrottle"/>
@@ -399,6 +411,8 @@
 <mapID target="manual.Basic_Programming" url="manual/Basic_Programming.shtml"/>
 
 <mapID target="html.tools.throttle.ThrottleMain" url="html/tools/throttle/ThrottleMain.shtml"/>
+
+<mapID target="html.tools.throttle.ThrottlesPreferencesPane" url="html/tools/throttle/ThrottlesPreferencesPane.shtml"/>
 
 <mapID target="package.jmri.jmrit.beantable.MemoryAddEdit" url="package/jmri/jmrit/beantable/MemoryAddEdit.shtml"/>
 
@@ -587,6 +601,8 @@
 <mapID target="html.tools.LRoutes" url="html/tools/LRoutes.shtml"/>
 
 <mapID target="manual.Main_Panels" url="manual/Main_Panels.shtml"/>
+
+<mapID target="html.tools.throttle.ThrottlesListWindow" url="html/tools/throttle/ThrottlesListWindow.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_EditCarAttributes" url="package/jmri/jmrit/operations/Operations.shtml#EditCarAttributes"/>
 
@@ -1012,6 +1028,8 @@
 
 <mapID target="package.jmri.jmrit.dispatcher.AllocatedSections" url="package/jmri/jmrit/dispatcher/AllocatedSections.shtml"/>
 
+<mapID target="html.tools.throttle.ToolsMenuThrottleEntry" url="html/tools/throttle/ToolsMenuThrottleEntry.shtml"/>
+
 <mapID target="package.jmri.jmrit.dispatcher.Options" url="package/jmri/jmrit/dispatcher/Options.shtml"/>
 
 <mapID target="html.hardware.grapevine.index" url="html/hardware/grapevine/index.shtml"/>
@@ -1122,6 +1140,8 @@
 
 <mapID target="Acknowledgements_B" url="Acknowledgements.shtml#B"/>
 
+<mapID target="html.tools.throttle.RostersMediaPane" url="html/tools/throttle/RostersMediaPane.shtml"/>
+
 <mapID target="html.hardware.loconet.LocoNetServer" url="html/hardware/loconet/LocoNetServer.shtml"/>
 
 <mapID target="Acknowledgements_E" url="Acknowledgements.shtml#E"/>
@@ -1160,9 +1180,9 @@
 
 <mapID target="package.jmri.jmrit.beantable.TurnoutTable" url="package/jmri/jmrit/beantable/TurnoutTable.shtml"/>
 
-<mapID target="html.doc.Technical.Poll2007" url="html/doc/Technical/Poll2007.shtml"/>
-
 <mapID target="manual.Main_Roster" url="manual/Main_Roster.shtml"/>
+
+<mapID target="html.doc.Technical.Poll2007" url="html/doc/Technical/Poll2007.shtml"/>
 
 <mapID target="manual.Main_XpressNet_Info" url="manual/Main_XpressNet.shtml#Info"/>
 
@@ -1224,6 +1244,8 @@
 
 <mapID target="package.jmri.jmrit.display.SetSignalsAtTurnout" url="package/jmri/jmrit/display/SetSignalsAtTurnout.shtml"/>
 
+<mapID target="html.tools.throttle.ThrottleWindowMenus_FileMenu" url="html/tools/throttle/ThrottleWindowMenus.shtml#FileMenu"/>
+
 <mapID target="html.hardware.loconet.Fleischmann" url="html/hardware/loconet/Fleischmann.shtml"/>
 
 <mapID target="manual.Main_Roster_InputDialog" url="manual/Main_Roster.shtml#InputDialog"/>
@@ -1275,6 +1297,8 @@
 <mapID target="html.tools.automation.viaJava" url="html/tools/automation/viaJava.shtml"/>
 
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_window" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#window"/>
+
+<mapID target="html.tools.throttle.ThrottleWindowMenus" url="html/tools/throttle/ThrottleWindowMenus.shtml"/>
 
 <mapID target="manual.Main_XpressNet_LZV100" url="manual/Main_XpressNet.shtml#LZV100"/>
 
