@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PR3.shtml,v 1.6 2009-11-26 06:21:10 jacobsen Exp $ -->
+<!-- $Id: PR3.shtml,v 1.7 2009-12-07 15:06:47 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -91,11 +91,11 @@ driver when using current versions of Mac OS X or Linux.
 
 <h2>Using the PR3 as a LocoNet Interface</h2>
 
+<img src="images/PR3toCommandStation.png" align="right" height="120" width="426">
+
 To use the PR3 as an interface, connect a LocoNet cable to the
-LocoNet connector on the PR3.  If you'll be using the PR3
-without a command station, you need to connec it to a power supply.
-(Although not required, it's a good idea to do this even if you're
-using the PR3 as an interface to a LocoNet with a command station).
+LocoNet connector on the PR3.  
+(Although not required, it's also OK to connect a power supply to the PR3).
 Finally, connect a USB cable between the PR3 and your computer.
 
 <h3>Recommended setup</h3>
@@ -131,7 +131,8 @@ station connected.
 
 <h2>Using the PR3 Programming Track</h2>
 
-<p>
+<img src="images/PR3StandAlone.png" align="right" height="194" width="399">
+
 To use the PR3 programming track, 
 connect the PR3 to its power supply and to a 
 dedicated piece of track which you'll use as the programming track.
