@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.10.shtml,v 1.5 2009-12-08 16:38:58 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.10.shtml,v 1.6 2009-12-08 16:48:11 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -171,6 +171,9 @@ car descriptions in setup
 
 <p>
 Peter Ulvestad improved the decoder definition for the MRC 1663 Atlas S2/S4 decoder.
+
+<p>
+Dan Boudreau updated the operations featuer to allow users to reset a train after they've modified the train's route to cause a failure.
 
 <!--#include virtual="/Footer" -->
 
