@@ -1,90 +1,65 @@
-import jmri.jmrit.jython.Jynstrument as Jynstrument
-import java.awt.CardLayout as CardLayout
-import jmri.util.ResizableImagePanel as ResizableImagePanel
-import java.beans.PropertyChangeListener as PropertyChangeListener
-import jmri.jmrit.throttle.AddressListener as AddressListener
-import javax.swing.Timer as Timer
-import java.awt.event.ActionListener as ActionListener
-import java.util.Calendar as Calendar
-import thread
-
+#
 # Use a USB device as a throttle
 #
 # Author: Lionel Jeanson, adapted from Bob Jacobsen, copyright 2008/2009
 # Part of the JMRI distribution
+#
+# The list of available devices is accessible by right clicking on the Jysntrument icon once started.
+#
+# You want to have a look at the driver file this script will look for you hardware
+# If required; copy default.py to XYZ.py where XYZ is from the line "Driver "XYZ" not found, loading default one" from the trace
+# Then customize your XYZ.py to match your device layout 
+# Use JMRI Debug->USB Input Control to check each device component name and possible values
+#
+# The customizable part bellow are the throttles calls
+#
 
-# Set the name of the controller you're using
-desiredControllerName = "Thrustmaster dual analog 3.2"
+import jmri.jmrit.jython.Jynstrument as Jynstrument
+import jmri.util.ResizableImagePanel as ResizableImagePanel
+import java.beans.PropertyChangeListener as PropertyChangeListener
+import jmri.jmrit.throttle.AddressListener as AddressListener
+import javax.swing.Timer as Timer
+import java.util.Calendar as Calendar
+import thread
+import sys
+import net.java.games.input.Controller as Controller
+import javax.swing.JCheckBoxMenuItem as JCheckBoxMenuItem
 
-componentThrottleFrame = "pov"  # Component for throttle frames browsing
-valueNextThrottleFrame = 0.5
-valuePreviousThrottleFrame = 1
-
-componentSpeed = "x"  # Analog axis component for curent throttle speed
-valueSpeedTrigger = 0.05
-valueSpeedDivider = 10
-valueSpeedTimerRepeat = 125 # repeat time in ms for speed set task
-
-componentDirection = "rz" # Analog axis component for curent throttle direction
-valueDirectionForward = 1
-valueDirectionBackward = -1
-
-componentStopSpeed = "0" # Preset speed button stop
-valueStopSpeed = 1
+# Some default speeds that will be used in the program
+speedMaxSpeed = 1
+speedCruiseSpeed = 0.8   # this is one is customizable
+speedSlowSpeed = 0.3     # that one too
 speedStopSpeed = 0
-delay4EStop = 250 # max delay in ms for double tap => EStop
 EStopSpeed = -1
 
-componentSlowSpeed = "1" # Preset speed button slow
-valueSlowSpeed = 1 
-speedSlowSpeed = 0.3
-
-componentCruiseSpeed = "2" # Preset speed button cruise
-valueCruiseSpeed = 1
-speedCruiseSpeed = 0.8
-
-componentMaxSpeed = "3" # Preset speed button max
-valueMaxSpeed = 1
-speedMaxSpeed = 1
-
-componentF0 = "4" # Function button
-valueF0 = 1
-
-componentF1 = "5" # Function button
-valueF1 = 1 
-
-componentF2 = "6" # Function button
-valueF2 = 1
-
-componentF3 = "7" # Function button
-valueF3 = 1
-
-componentF4 = "8" # Function button
-valueF2 = 1
-
-componentF5 = "9" # Function button
-valueF3 = 1
+# Some constants used by the program
+valueSpeedTimerRepeat = 200 # repeat time in ms for speed set task
+valueSpeedDivider = 10      # a divider for the value given by the pad, then used to increment speed
+delay4EStop = 250           # max delay in ms for double tap => EStop
 
 class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
 #Property listener part: USB value
     def propertyChange(self, event):
-        # Customize bellow for controls
+        # Customize bellow for throttles calls:
         if (event.propertyName == "Value") :  # USB
-            if (event.oldValue.getController().getName() == desiredControllerName ) :
+            if (event.oldValue.getController() == self.desiredController ) :
                 component = event.oldValue.getComponent().toString()
                 value = event.newValue
+
                 # Change curent ThrottleFrame
-                if (component == componentThrottleFrame) :
-                    if (value == valueNextThrottleFrame) : #NEXT
+                if (component == self.driver.componentThrottleFrame) :
+                    if (value == self.driver.valueNextThrottleFrame) : #NEXT
                         self.getContext().nextThrottleFrame()
-                    if (value == valuePreviousThrottleFrame) : #PREVIOUS
+                    if (value == self.driver.valuePreviousThrottleFrame) : #PREVIOUS
                         self.getContext().previousThrottleFrame()
+
                 # From there; curent throttle control, hence require a throttle
                 if (self.throttle != None) :
+
                     # Speed
-                    if (component == componentSpeed) :
+                    if (component == self.driver.componentSpeed) :
                         self.speedAction.setSpeedIncrement(value / valueSpeedDivider)
-                        if ( abs(value) > valueSpeedTrigger ) :
+                        if ( abs(value) > self.driver.valueSpeedTrigger ) :
                             self.speedTimer.start()
                         else :
                             self.speedTimer.stop()
@@ -92,38 +67,44 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                         self.speedTimer.stop() # just in case, stop it
                         
                     # Direction
-                    if (component == componentDirection) :
-                        if (value == valueDirectionForward) :
+                    if (component == self.driver.componentDirection) :
+                        if (value == self.driver.valueDirectionForward) :
                             self.throttle.setIsForward(True)
-                        if (value == valueDirectionBackward) :
+                        if (value == self.driver.valueDirectionBackward) :
                             self.throttle.setIsForward(False)
                             
                     # Speed presets
-                    if ((component == componentStopSpeed) and (value == valueStopSpeed)) :
+                    if ((component == self.driver.componentStopSpeed) and (value == self.driver.valueStopSpeed)) :
                         self.throttle.setSpeedSetting(speedStopSpeed)
                         if ( Calendar.getInstance().getTimeInMillis() - self.lastTimeStopButton < delay4EStop ) : # EStop on double tap
                             self.throttle.setSpeedSetting(EStopSpeed)
                         self.lastTimeStopButton = Calendar.getInstance().getTimeInMillis()
-                    if ((component == componentSlowSpeed) and (value == valueSlowSpeed)) :
+                    if ((component == self.driver.componentSlowSpeed) and (value == self.driver.valueSlowSpeed)) :
                         self.throttle.setSpeedSetting(speedSlowSpeed)
-                    if ((component == componentCruiseSpeed) and (value == valueCruiseSpeed)) :
+                    if ((component == self.driver.componentCruiseSpeed) and (value == self.driver.valueCruiseSpeed)) :
                         self.throttle.setSpeedSetting(speedCruiseSpeed)
-                    if ((component == componentMaxSpeed) and (value == valueMaxSpeed)) :
+                    if ((component == self.driver.componentMaxSpeed) and (value == self.driver.valueMaxSpeed)) :
                         self.throttle.setSpeedSetting(speedMaxSpeed)
                         
                     # Functions
-                    if ((component == componentF0) and (value == valueF0)) :
+                    if ((component == self.driver.componentF0) and (value == self.driver.valueF0)) :
                         self.throttle.setF0( not self.throttle.getF0() )
-                    if ((component == componentF1) and (value == valueF1)) :
+                    if ((component == self.driver.componentF1) and (value == self.driver.valueF1)) :
                         self.throttle.setF1( not self.throttle.getF1() )
-                    if ((component == componentF2) and (value == valueF2)) :
+                    if ((component == self.driver.componentF2) and (value == self.driver.valueF2)) :
                         self.throttle.setF2( not self.throttle.getF2() )
-                    if ((component == componentF3) and (value == valueF3)) :
+                    if ((component == self.driver.componentF3) and (value == self.driver.valueF3)) :
                         self.throttle.setF3( not self.throttle.getF3() )
-                    if ((component == componentF4) and (value == valueF4)) :
+                    if ((component == self.driver.componentF4) and (value == self.driver.valueF4)) :
                         self.throttle.setF4( not self.throttle.getF4() )
-                    if ((component == componentF5) and (value == valueF5)) :
+                    if ((component == self.driver.componentF5) and (value == self.driver.valueF5)) :
                         self.throttle.setF5( not self.throttle.getF5() )
+                    if ((component == self.driver.componentF6) and (value == self.driver.valueF6)) :
+                        self.throttle.setF6( not self.throttle.getF6() )
+                    if ((component == self.driver.componentF7) and (value == self.driver.valueF7)) :
+                        self.throttle.setF7( not self.throttle.getF7() )
+                    if ((component == self.driver.componentF8) and (value == self.driver.valueF8)) :
+                        self.throttle.setF8( not self.throttle.getF8() )
                         
         # Nothing to customize bellow this point
         if (event.propertyName == "ThrottleFrame") :  # Curent throttle frame changed
@@ -148,17 +129,57 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
         self.label = ResizableImagePanel(self.getFolder() + "/USBControl.png",20,20 ) #label
         self.add(self.label)
         self.model = jmri.jmrix.jinput.TreeModel.instance() # USB
+        self.desiredController = None
+        self.ctrlMenuItem = []
+        self.USBDriver = None
+        self.driver = None
+        for ctrl in self.model.controllers(): # The selection bellow might have to be modified
+            if ((ctrl.getType() == Controller.Type.GAMEPAD) or (ctrl.getType() == Controller.Type.STICK)) :
+                mi =  JCheckBoxMenuItem (ctrl.getName())
+                self.getPopUpMenu().add( mi )
+                mi.addItemListener( ControllerItemListener(ctrl, self) )
+                self.ctrlMenuItem.append(mi)
+        if ( len(self.ctrlMenuItem) == 0 ):
+            print "No matching USB device found"
+        else:
+            self.ctrlMenuItem[0].setSelected(True)  # by default connect to the first one
         self.model.addPropertyChangeListener(self)
         self.lastTimeStopButton = Calendar.getInstance().getTimeInMillis()
-       
+
+# On quit clean up resources       
     def quit(self):
-        self.speedTimer.stop() 
+        self.speedTimer.stop()
+        for mi in self.ctrlMenuItem :
+            self.getPopUpMenu().remove( mi )
+        self.ctrlMenuItem = None
         self.speedAction = None
         self.speedTimer = None
         self.throttle = None
+        self.driver = None
+        self.USBDriver = None
         self.getContext().removePropertyChangeListener(self)
         self.model.removePropertyChangeListener(self)
         self.getContext().getCurentThrottleFrame().getAddressPanel().removeAddressListener(self)
+
+# Menu entry changed for curent controller and update driver
+    def setSelectedController(self, ctrl, item):
+        for mi in self.ctrlMenuItem :
+            if ( mi != item ):  # Force deselection of other ones
+                mi.setSelected(False)
+        self.desiredController = ctrl
+        sys.path.append(self.getFolder()) # Load a driver
+        try:
+            del self.driver
+            del self.USBDriver
+            dd=ctrl.getName()
+            dd=dd.replace(" ", "")
+            dd=dd.replace(".", "")
+            self.USBDriver = __import__(dd)
+        except ImportError:  # On error load a default one
+            print "Driver  \""+ dd +"\" not found, loading default one"
+            self.USBDriver =  __import__("Default")
+        sys.path.remove(self.getFolder())
+        self.driver = self.USBDriver.USBDriver()
 
 #AddressListener part: to listen for address changes in address panel (release, acquired)
     def notifyAddressChosen(self, address, isLong):
@@ -173,11 +194,21 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
         self.speedTimer.stop()
         self.throttle = None
         self.speedAction.setThrottle( self.throttle )
+
+# Item listeners for the PopUp menu
+class ControllerItemListener( java.awt.event.ItemListener):
+    def __init__(self, ctrl, jyns):
+        self.ctrl = ctrl
+        self.jyns = jyns
+
+    def itemStateChanged(self, evt):
+        if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED ):
+            self.jyns.setSelectedController( self.ctrl, evt.getItem() )		
                 
 # Speed timer class, to increase speed regularly once button pushed, thread stopped on button release
-class SpeedAction(ActionListener):
+class SpeedAction( java.awt.event.ActionListener):
     def __init__(self):
-        self.sync = thread.allocate_lock() # Protects properties getter and setter
+        self.sync = thread.allocate_lock() # Protects properties getters and setters
         self.speedIncrement = 0
         self.throttle = None
 
@@ -213,5 +244,3 @@ class SpeedAction(ActionListener):
             if (ns > 1 ) :
                 ns = 1
             throttle.setSpeedSetting( ns )
-
-
