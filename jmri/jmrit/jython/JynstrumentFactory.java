@@ -42,8 +42,8 @@ public class JynstrumentFactory {
 		}
 		jyns.setJythonFile(jyFile);
 		jyns.setFolder(path);
-		jyns.init();  // GO!
 		jyns.setPopUpMenu(new JynstrumentPopupMenu(jyns));
+		jyns.init();  // GO!
 		return jyns;
 	}
 	

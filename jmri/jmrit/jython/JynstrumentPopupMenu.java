@@ -48,7 +48,7 @@ public class JynstrumentPopupMenu extends JPopupMenu {
 		} );
 		add(quitMenuItem);  		
 		// Edit option
-		JMenuItem editMenuItem = new JMenuItem(jythonBundle.getString("JynstrumentPopupMenuEdit"));
+/*		JMenuItem editMenuItem = new JMenuItem(jythonBundle.getString("JynstrumentPopupMenuEdit"));
 		editMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 //			if (!java.awt.Desktop.isDesktopSupported()) //TODO: Need Java 6
@@ -66,11 +66,13 @@ public class JynstrumentPopupMenu extends JPopupMenu {
 			} 
 		} );
 		reloadMenuItem.setEnabled(false);
-		add(reloadMenuItem);  		
+		add(reloadMenuItem);*/  		
 		// Debug option
 		add(new jmri.jmrit.jython.JythonWindow(jythonBundle.getString("JynstrumentPopupMenuDebug")));
+		// A separator to differentiate Jynstrument private menu items
+		addSeparator();
 	}
-	
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JynstrumentPopupMenu.class.getName());
 }
 
