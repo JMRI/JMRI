@@ -63,8 +63,8 @@ public abstract class Jynstrument extends JPanel {
 			cnt.remove(this);
 			cnt.repaint();
 		}
-		setPopUpMenu(null);
 		quit();
+		setPopUpMenu(null);
 	}
 		
 	public boolean validateContext() {
