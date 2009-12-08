@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.10.shtml,v 1.3 2009-12-07 05:34:13 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.10.shtml,v 1.4 2009-12-08 16:29:33 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -160,6 +160,10 @@ Kevin Dickerson improved the code for saving panel files.
 
 <p>
 Brett Hoffman updated the WiFi communications code.
+
+<p>
+Lionel Jeanson improved the <a href="http://jmri.org/help/en/package/jmri/jmrit/throttle/ThrottleFrame.shtml">throttle help pages</a>
+to include much more information about advanced features.
 
 <p>
 Dan Boudreau made a minor operations code improvement to save the car file when the user changes the 
