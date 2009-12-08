@@ -41,7 +41,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.54 $
+ * @version $Revision: 1.55 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -355,16 +355,21 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return Train's current route location name
 	 */
 	public String getCurrentLocationName() {
-		if (_current == null)
+		if (getCurrentLocation() == null)
 			return "";
-		return _current.getName();
+		return getCurrentLocation().getName();
 	}
 	
 	/**
 	 * @return Train's current route location
 	 */
 	public RouteLocation getCurrentLocation(){
-		return _current;
+		if (getRoute() == null)
+			return null;
+		if (_current == null)
+			return null;
+		// this will verify that the current location still exists
+		return getRoute().getLocationById(_current.getId());
 	}
 	
 	/**
@@ -907,8 +912,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	public void loadTrainIcon(){
-		if (_current != null)
-			moveTrainIcon(_current);
+		if (getCurrentLocation() != null)
+			moveTrainIcon(getCurrentLocation());
 	}
 	
 	private boolean animation = true;	// when true use animation for icon moves
