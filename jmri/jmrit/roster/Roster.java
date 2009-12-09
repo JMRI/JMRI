@@ -46,7 +46,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.47 $
+ * @version	$Revision: 1.48 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -416,6 +416,7 @@ public class Roster extends XmlFile {
             }
             root.addContent(rosterGroup);
         }
+
         writeXML(file, doc);
 
         //Now that the roster has been rewritten in file form we need to
@@ -457,6 +458,7 @@ public class Roster extends XmlFile {
 
         // done - roster now stored, so can't be dirty
         setDirty(false);
+        firePropertyChange("saved", null, null);
     }
 
     /**
