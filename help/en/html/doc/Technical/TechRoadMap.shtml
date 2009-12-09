@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TechRoadMap.shtml,v 1.8 2009-11-12 03:01:32 jacobsen Exp $ -->
+<!-- $Id: TechRoadMap.shtml,v 1.9 2009-12-09 23:23:55 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -179,8 +179,8 @@ however.
 <tr><td>2.1.*<br>2.2</td>    <td>Aug 2008</td><td>1.4</td><td>Windows 98 1st Ed</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td></tr>
 <tr><td>2.3.*<br>2.4</td>    <td>Dec 2008</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td></td></tr>
 <tr><td>2.5.*<br>2.6</td>    <td>Aug 2009</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td></td></tr>
-<tr><td>2.7.*<br>2.6</td>    <td>Dec 2009</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td></td></tr>
-<tr><td>2.9.*<br>2.6</td>    <td>Aug 2009</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td></td></tr>
+<tr><td>2.7.*<br>2.8</td>    <td>Dec 2009</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td><td>1.5</td><td>Windows 98 2nd Ed<br>MacOS X 10.4</td></td></tr>
+<tr><td>2.9.*<br>2.10/3.0</td><td>Aug 2009</td><td>1.5</td><td>???<br>???</td><td>1.5</td><td>???<br>???</td></td></tr>
 
 </table>
 

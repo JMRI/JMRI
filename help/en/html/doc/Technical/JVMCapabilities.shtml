@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JVMCapabilities.shtml,v 1.4 2009-07-29 04:45:46 jacobsen Exp $ -->
+<!-- $Id: JVMCapabilities.shtml,v 1.5 2009-12-09 23:23:55 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -70,7 +70,8 @@ including the needed JVM and library support.
 <tr><td>printf, Formatter</td><td>1.5</td>  <td>1.5</td></tr>
 <tr><td>generics</td>       <td>1.5</td>    <td>1.5</td></tr>
 <tr><td>Desktop class</td>  <td>1.6</td>    <td>1.6</td></tr>
-<tr><td>Browser integration</td><td>1.6</td>    <td>1.6</td></tr>
+<tr><td>Browser integration</td><td>1.6</td><td>1.6</td></tr>
+<tr><td>Toolbars</td>           <td>1.6</td><td>1.6</td></tr>
 
 
 </table>
