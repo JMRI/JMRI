@@ -44,7 +44,7 @@
 
 <p><img src="images/ThrottleListWindow.png" alt="" ></p>
 
-This list is accessible from the <a href="file:///Volumes/KEO/src/throttle/ThrottleToolBar.shtml">Throttle Window toolbar.</a><br >
+This list is accessible from the <a href="ThrottleToolBar.shtml">Throttle Window toolbar.</a><br >
 <span style="font-weight: bold;"><br >
 </span>The list shows all curently opened throttles in JMRI, if an <a href="RostersMediaPane.shtml">icon is available for the rosters in their DB</a> it will be automatically used.<br >
 <br >
