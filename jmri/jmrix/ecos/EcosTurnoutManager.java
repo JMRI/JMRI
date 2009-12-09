@@ -14,7 +14,7 @@ import jmri.Turnout;
  * System names are "UTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                 implements EcosListener {
@@ -326,7 +326,6 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     public void dispose(){
         //List<String> list = getEcosObjectList();
         Enumeration<Integer> en = _tecos.keys();
-        int i=0;
         EcosMessage em;
         while (en.hasMoreElements()) {
             int ecosObject = en.nextElement();
