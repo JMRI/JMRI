@@ -14,7 +14,7 @@ import java.util.List;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -567,7 +567,6 @@ public class SensorIconXml extends PositionableLabelXml {
     @SuppressWarnings("unchecked")
     private void loadSensorTextState(String state, SensorIcon l, Element element){
         String name = null;
-        String textString;
         Color clrText=null;
         Color clrBackground=null;
         List<Element> textList = element.getChildren(state.toLowerCase()+"Text");
