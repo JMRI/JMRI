@@ -232,6 +232,8 @@
 
 <mapID target="package.jmri.jmrit.blockboss.BlockBossFrame" url="package/jmri/jmrit/blockboss/BlockBossFrame.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_PrintOptions" url="package/jmri/jmrit/operations/Operations.shtml#PrintOptions"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_Locations" url="package/jmri/jmrit/operations/Operations.shtml#Locations"/>
 
 <mapID target="manual.Main_RPS_SpeedSound" url="manual/Main_RPS.shtml#SpeedSound"/>
@@ -462,8 +464,6 @@
 
 <mapID target="manual.Main_NCE_ClockMon" url="manual/Main_NCE.shtml#ClockMon"/>
 
-<mapID target="html.tools.throttle.ThrottleMain_HowToUse" url="html/tools/throttle/ThrottleMain.shtml#HowToUse"/>
-
 <mapID target="manual.DecoderPro_index" url="manual/DecoderPro.shtml#index"/>
 
 <mapID target="manual.index_Basic Programmer" url="manual/index.shtml#Basic Programmer"/>
@@ -600,9 +600,9 @@
 
 <mapID target="html.tools.LRoutes" url="html/tools/LRoutes.shtml"/>
 
-<mapID target="manual.Main_Panels" url="manual/Main_Panels.shtml"/>
-
 <mapID target="html.tools.throttle.ThrottlesListWindow" url="html/tools/throttle/ThrottlesListWindow.shtml"/>
+
+<mapID target="manual.Main_Panels" url="manual/Main_Panels.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_EditCarAttributes" url="package/jmri/jmrit/operations/Operations.shtml#EditCarAttributes"/>
 
@@ -929,8 +929,6 @@
 <mapID target="html.hardware.loconet.LocoNetworking" url="html/hardware/loconet/LocoNetworking.shtml"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter2_StructWin" url="html/tools/throttle/ThrottleChapter2.shtml#StructWin"/>
-
-<mapID target="html.tools.throttle.ThrottleChapter1_HowToFind" url="html/tools/throttle/ThrottleChapter1.shtml#HowToFind"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_CarsEdit" url="package/jmri/jmrit/operations/Operations.shtml#CarsEdit"/>
 

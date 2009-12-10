@@ -19,7 +19,7 @@ import org.jdom.ProcessingInstruction;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.65 $
+ * @version $Revision: 1.66 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -28,7 +28,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Define the current DTD version string for the layout-config DTD.
      * See the <A HREF="package-summary.html#DTD">DTD versioning discussion</a>
      */
-    static final public String dtdVersion = "2-7-9";
+    static final public String dtdVersion = "2-7-10";
     
     public ConfigXmlManager() {
     }

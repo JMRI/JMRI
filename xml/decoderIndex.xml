@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.7.9 on Sun Nov 29 19:41:53 PST 2009 $Id: decoderIndex.xml,v 1.154 2009-11-30 03:43:04 jacobsen Exp $-->
-  <decoderIndex version="182">
+  <!--Written by JMRI version 2.7.10 on Wed Dec 09 18:48:58 PST 2009 $Id: decoderIndex.xml,v 1.155 2009-12-10 02:51:40 jacobsen Exp $-->
+  <decoderIndex version="184">
     <mfgList nmraListDate="2009-07-30" updated="2009-10-20" lastadd="54">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1632,7 +1632,7 @@
         </model>
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1663.xml">
-        <model model="Synch Diesel Sound 1663 for S2/S4" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no">
+        <model model="Synch Diesel Sound 1663 - Atlas S2/S4" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no">
           <!-- Functions F0 to F28 are NMRA compatible -->
           <size length="95" width="14" height="9" units="mm" />
         </model>
