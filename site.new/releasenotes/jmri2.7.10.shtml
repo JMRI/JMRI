@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.7.10.shtml,v 1.7 2009-12-10 07:06:12 jacobsen Exp $ -->
+<!-- $Id: jmri2.7.10.shtml,v 1.8 2009-12-10 15:57:53 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -159,15 +159,14 @@ Brett Hoffman updated the WiFi communications code.
 Lionel Jeanson improved the <a href="http://jmri.org/help/en/package/jmri/jmrit/throttle/ThrottleFrame.shtml">throttle help pages</a>
 to include much more information about advanced features.
 
-<p>
-Dan Boudreau made a minor operations code improvement to save the car file when the user changes the 
-car descriptions in setup
+<p>Dan Boudreau made several improvements to the operations code.
+You can now print your manifests using colors for the car drops and
+pickups. You can now reset a train if you've modified the train's route
+after you've built the train. And the car database is automatically
+saved when you change the Car Types (Descriptive or AAR codes) in setup.
 
 <p>
 Peter Ulvestad improved the decoder definition for the MRC 1663 Atlas S2/S4 decoder.
-
-<p>
-Dan Boudreau updated the operations featuer to allow users to reset a train after they've modified the train's route to cause a failure.
 
 <!--#include virtual="/Footer" -->
 
