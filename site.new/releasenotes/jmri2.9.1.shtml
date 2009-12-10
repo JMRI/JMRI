@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.1 2009-12-05 21:01:43 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.2 2009-12-10 04:28:55 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -81,6 +81,13 @@ see our
      <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.1.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.1.tgz/download</a>
 
 <h3>Changes since production version 2.8</h3>
+
+Kevin Dickerson added a way for systems to perform specific actions when the program is shutting down.
+
+<p>
+Kevin Dickerson made various changes in the eCons support to handle turnout events better
+and potentially reduce CPU overhead.
+Also handles double slip and three way points better.
 
 
 <!--#include virtual="/Footer" -->
