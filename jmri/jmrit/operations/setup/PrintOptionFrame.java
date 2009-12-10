@@ -23,7 +23,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -147,6 +147,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true);
 
 		pack();
+		setSize(getWidth(), getHeight()+25);	// pad out a bit
 		setVisible(true);
 	}
 	
