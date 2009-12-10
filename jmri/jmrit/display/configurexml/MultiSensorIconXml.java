@@ -13,7 +13,7 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.16 $
  */
 public class MultiSensorIconXml extends PositionableLabelXml {
 
@@ -34,19 +34,17 @@ public class MultiSensorIconXml extends PositionableLabelXml {
         Element element = new Element("multisensoricon");
         storeCommonAttributes(p, element);
 
-        /*element.setAttribute("inactive", p.getInactiveIcon().getURL());
+        element.setAttribute("inactive", p.getInactiveIcon().getURL());
         element.setAttribute("unknown", p.getUnknownIcon().getURL());
         element.setAttribute("inconsistent", p.getInconsistentIcon().getURL());
-        element.setAttribute("rotate", String.valueOf(p.getUnknownIcon().getRotation()));*/
+        element.setAttribute("rotate", String.valueOf(p.getUnknownIcon().getRotation()));
         element.setAttribute("updown", p.getUpDown()?"true":"false");
 
         for (int i = 0; i < p.getNumEntries(); i++) {
-            Element e = storeIcon("active", p.getSensorIcon(i));
-            e.setAttribute("sensor", p.getSensorName(i));
-            /*Element e = new Element("multisensoriconentry");
+            Element e = new Element("multisensoriconentry");
             e.setAttribute("sensor", p.getSensorName(i));
             e.setAttribute("icon", p.getSensorIcon(i).getURL());
-            element.addContent(storeIcon("active", p.getSensorIcon(i)));*/
+            element.addContent(storeIcon("active", p.getSensorIcon(i)));
             element.addContent(e);
         }
         element.addContent(storeIcon("inactive", p.getInactiveIcon()));
@@ -89,21 +87,21 @@ public class MultiSensorIconXml extends PositionableLabelXml {
         String name;
 
         MultiSensorIcon l = new MultiSensorIcon();
+
+        NamedIcon inactive;
+        name = element.getAttribute("inactive").getValue();
+        l.setInactiveIcon(inactive = NamedIcon.getIconByName(name));
+
+        NamedIcon unknown;
+        name = element.getAttribute("unknown").getValue();
+        l.setUnknownIcon(unknown = NamedIcon.getIconByName(name));
+
+        NamedIcon inconsistent;
+        name = element.getAttribute("inconsistent").getValue();
+        l.setInconsistentIcon(inconsistent = NamedIcon.getIconByName(name));
+
         int rotation = 0;
-        //This try, is to load up from previous versions of the xml file.
         try {
-            NamedIcon inactive;
-            name = element.getAttribute("inactive").getValue();
-            l.setInactiveIcon(inactive = NamedIcon.getIconByName(name));
-
-            NamedIcon unknown;
-            name = element.getAttribute("unknown").getValue();
-            l.setUnknownIcon(unknown = NamedIcon.getIconByName(name));
-
-            NamedIcon inconsistent;
-            name = element.getAttribute("inconsistent").getValue();
-            l.setInconsistentIcon(inconsistent = NamedIcon.getIconByName(name));
-            
             Attribute a = element.getAttribute("rotate");
             if (a!=null) {
                 rotation = element.getAttribute("rotate").getIntValue();
@@ -111,9 +109,7 @@ public class MultiSensorIconXml extends PositionableLabelXml {
                 inconsistent.setRotation(rotation, l);
                 unknown.setRotation(rotation, l);
             }
-        } catch (org.jdom.DataConversionException e) {
-        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-        }
+        } catch (org.jdom.DataConversionException e) {}
 
         Attribute a = element.getAttribute("updown");
         if ( (a!=null) && a.getValue().equals("true"))
@@ -135,41 +131,16 @@ public class MultiSensorIconXml extends PositionableLabelXml {
             Element item = items.get(i);
             if (item.getAttribute("sensor")!=null) {
                 String sensor = item.getAttribute("sensor").getValue();
-                NamedIcon icon;
-                if (item.getAttribute("url")!=null) {
-                    name = item.getAttribute("url").getValue();
-                    icon = NamedIcon.getIconByName(name);
-                    try {
-                        a = item.getAttribute("rotate");
-                        if (a!=null) {
-                            rotation = a.getIntValue();
-                            icon.setRotation(rotation, l);
-                        }
-                        a = item.getAttribute("degrees");
-                        if (a!=null) {
-                            int deg = a.getIntValue();
-                            double scale = 1.0;
-                            a =  item.getAttribute("scale");
-                            if (a!=null)
-                            {
-                                scale = item.getAttribute("scale").getDoubleValue();
-                            }
-                            //l.setIcon(icon);
-                            icon.setLoad(deg, scale, l);
-                        }
-                    } catch (org.jdom.DataConversionException dce) {}
-                } else {
-                    name = item.getAttribute("icon").getValue();
-                    icon = NamedIcon.getIconByName(name);
-                    if (rotation!=0) icon.setRotation(rotation, l);
-                }
-                l.addEntry(sensor, icon);
-/*                NamedIcon aicon = loadIcon( l,"active", item);
+                String icon = item.getAttribute("icon").getValue();
+                NamedIcon nicon = NamedIcon.getIconByName(icon);
+                if (rotation!=0) nicon.setRotation(rotation, l);
+
+                NamedIcon aicon = loadIcon( l,"active", item);
                 if (aicon!=null) { 
                     l.addEntry(sensor, aicon); 
                 } else {
                     l.addEntry(sensor, nicon);
-                }*/
+                }
             }
         }
 		

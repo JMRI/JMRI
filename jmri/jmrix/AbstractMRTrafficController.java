@@ -26,7 +26,7 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
- * @version         $Revision: 1.68 $
+ * @version         $Revision: 1.67 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -44,8 +44,6 @@ abstract public class AbstractMRTrafficController {
     // it's not the instance() variable, which is static
     // and done in individual subclasses.
     private AbstractMRTrafficController selfLock;  // this is needed for synchronization
-    
-    public AbstractMRTrafficController getSelfLock(){ return selfLock; }
     
     // set the instance variable
     abstract protected void setInstance();
