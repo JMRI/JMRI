@@ -1,4 +1,4 @@
-// RouteCopyAction.java
+// LoadDemoAction.java
 
 package jmri.jmrit.operations.setup;
 
@@ -11,11 +11,11 @@ import javax.swing.JOptionPane;
 import apps.Apps;
 
 /**
- * Swing action to create and register a RouteCopyFrame object.
+ * Swing action to load the operation demo files.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LoadDemoAction extends AbstractAction {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
@@ -57,4 +57,4 @@ public class LoadDemoAction extends AbstractAction {
 	.getLogger(LoadDemoAction.class.getName());
 }
 
-/* @(#)RouteCopyAction.java */
+/* @(#)LoadDemoAction.java */

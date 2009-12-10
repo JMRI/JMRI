@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.Frame;
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -41,7 +42,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -836,6 +837,27 @@ public class Train implements java.beans.PropertyChangeListener {
 				} else {
 					log.debug("ERROR first characters of build report not valid ("
 									+ line + ")");
+				}
+			// printing the train manifest
+			}else{
+				Color c = null;
+				// determine if line is a pickup or drop
+				if(line.startsWith(TrainCommon.BOX + rb.getString("Pickup"))){
+					//log.debug("found a pickup line");
+					c = Setup.getPickupColor();
+				}
+				if(line.startsWith(TrainCommon.BOX + rb.getString("Drop"))){
+					//log.debug("found a drop line");
+					c = Setup.getDropColor();
+				}
+				if (c != null){
+					try {
+						writer.write(c, line + newLine);
+						continue;
+					} catch (IOException e) {
+						log.debug("Print write color failed");
+						break;
+					}
 				}
 			}
 			try {

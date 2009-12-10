@@ -18,7 +18,7 @@ public class TrainCommon {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	private static final String LENGTHABV = Setup.LENGTHABV;
-	private static final String BOX = " [ ] ";
+	protected static final String BOX = " [ ] ";
 	
 	protected static final String ONE = Setup.BUILD_REPORT_MINIMAL;
 	protected static final String THREE = Setup.BUILD_REPORT_NORMAL;

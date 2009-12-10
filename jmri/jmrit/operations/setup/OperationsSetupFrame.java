@@ -32,7 +32,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -49,9 +49,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	JLabel textMoveTime = new JLabel(rb.getString("MoveTime"));
 	JLabel textTravelTime = new JLabel(rb.getString("TravelTime"));
 	JLabel textOwner = new JLabel(" "+rb.getString("Owner"));
-	JLabel textPrinter = new JLabel(rb.getString("PrinterFont"));
-	JLabel textBuildReport = new JLabel(rb.getString("BuildReport"));
-	JLabel textManifest = new JLabel(rb.getString("Manifest"));
 	JLabel textPanel = new JLabel(" "+rb.getString("Panel"));
 	JLabel textIconNorth = new JLabel(rb.getString("IconNorth"));
 	JLabel textIconSouth = new JLabel(rb.getString("IconSouth"));
@@ -81,24 +78,11 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
     
     JRadioButton typeDesc = new JRadioButton(rb.getString("Descriptive"));
     JRadioButton typeAAR = new JRadioButton(rb.getString("AAR"));
-		
-    JRadioButton mono = new JRadioButton(rb.getString("Monospaced"));
-    JRadioButton sanSerif = new JRadioButton(rb.getString("SansSerif"));
-    
-    JRadioButton buildReportMin = new JRadioButton(rb.getString("Minimal"));
-    JRadioButton buildReportNor = new JRadioButton(rb.getString("Normal"));
-    JRadioButton buildReportMax = new JRadioButton(rb.getString("Detailed"));
-    JRadioButton buildReportVD = new JRadioButton(rb.getString("VeryDetailed"));
-    
+		    
     // check boxes
     JCheckBox eastCheckBox = new JCheckBox(rb.getString("eastwest"));
 	JCheckBox northCheckBox = new JCheckBox(rb.getString("northsouth"));
 	JCheckBox mainMenuCheckBox = new JCheckBox(rb.getString("MainMenu"));
-	JCheckBox showLengthCheckBox = new JCheckBox(rb.getString("ShowCarLength"));
-	JCheckBox showLoadCheckBox = new JCheckBox(rb.getString("ShowCarLoad"));
-	JCheckBox showColorCheckBox = new JCheckBox(rb.getString("ShowCarColor"));
-	JCheckBox showDestinationCheckBox = new JCheckBox(rb.getString("ShowCarDestination"));
-	JCheckBox appendCommentCheckBox = new JCheckBox(rb.getString("CarComment"));
 	JCheckBox iconCheckBox = new JCheckBox(rb.getString("trainIcon"));
 	JCheckBox appendCheckBox = new JCheckBox(rb.getString("trainIconAppend"));
 	JCheckBox rfidCheckBox = new JCheckBox(rb.getString("EnableRfid"));
@@ -146,11 +130,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		rfidCheckBox.setSelected(Setup.isRfidEnabled());
 		iconCheckBox.setSelected(Setup.isTrainIconCordEnabled());
 		appendCheckBox.setSelected(Setup.isTrainIconAppendEnabled());		
-		showLengthCheckBox.setSelected(Setup.isShowCarLengthEnabled());
-		showLoadCheckBox.setSelected(Setup.isShowCarLoadEnabled());
-		showColorCheckBox.setSelected(Setup.isShowCarColorEnabled());
-		showDestinationCheckBox.setSelected(Setup.isShowCarDestinationEnabled());		
-		appendCommentCheckBox.setSelected(Setup.isAppendCarCommentEnabled());
 
 		// add tool tips
 		backupButton.setToolTipText(rb.getString("BackupToolTip"));
@@ -241,40 +220,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		options.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptions")));
 		addItem (options, mainMenuCheckBox, 1,7);
 		addItem (options, rfidCheckBox, 1,8);		
-			
-		// Printer panel
-		JPanel pPrinter = new JPanel();
-		pPrinter.setLayout(new GridBagLayout());
-		pPrinter.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPrintOptions")));
-		ButtonGroup printerGroup = new ButtonGroup();
-		printerGroup.add(mono);
-		printerGroup.add(sanSerif);
-		ButtonGroup buildReportGroup = new ButtonGroup();
-		buildReportGroup.add(buildReportMin);
-		buildReportGroup.add(buildReportNor);
-		buildReportGroup.add(buildReportMax);
-		buildReportGroup.add(buildReportVD);
-		
-		// manifest options
-		addItem (pPrinter, textPrinter, 0, 8);
-		addItemLeft (pPrinter, mono, 1, 8);
-		addItemLeft (pPrinter, sanSerif, 2, 8);
-		addItem (pPrinter, textManifest, 0, 12);
-		addItemLeft (pPrinter, showLengthCheckBox, 1, 12);
-		addItemLeft (pPrinter, showLoadCheckBox, 2, 12);
-		addItemLeft (pPrinter, showColorCheckBox, 3, 12);
-		addItemLeft (pPrinter, showDestinationCheckBox, 4, 12);
-		addItemWidth (pPrinter, appendCommentCheckBox, 2, 1, 14);
-		// build report options
-		addItem (pPrinter, textBuildReport, 0, 16);
-		addItemLeft (pPrinter, buildReportMin, 1, 16);
-		addItemLeft (pPrinter, buildReportNor, 2, 16);
-		addItemLeft (pPrinter, buildReportMax, 3, 16);
-		addItemLeft (pPrinter, buildReportVD, 4, 16);
-
-			
-		setPrinterFontRadioButton();
-		setBuildReportRadioButton();
 
 		// Icon panel
 		JPanel pIcon = new JPanel();
@@ -321,7 +266,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		
 		getContentPane().add(panelPane);
 		getContentPane().add(options);
-		getContentPane().add(pPrinter);
 		getContentPane().add(pIconPane);
 		getContentPane().add(pControl);
 
@@ -335,6 +279,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
+		toolMenu.add(new PrintOptionAction(rb.getString("TitlePrintOptions")));
 		toolMenu.add(new LoadDemoAction(rb.getString("LoadDemo")));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
@@ -407,27 +352,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			Setup.setMainMenuEnabled(mainMenuCheckBox.isSelected());
 			// RFID enabled?
 			Setup.setRfidEnabled(rfidCheckBox.isSelected());
-			// set printer font
-			if (mono.isSelected())
-				Setup.setFontName(Setup.MONOSPACED);
-			else
-				Setup.setFontName(Setup.SANSERIF);
-			// show car attributes
-			Setup.setShowCarLengthEnabled(showLengthCheckBox.isSelected());
-			Setup.setShowCarLoadEnabled(showLoadCheckBox.isSelected());
-			Setup.setShowCarColorEnabled(showColorCheckBox.isSelected());
-			Setup.setShowCarDestinationEnabled(showDestinationCheckBox.isSelected());
-			// append car comment
-			Setup.setAppendCarCommentEnabled(appendCommentCheckBox.isSelected());
-			// build report level
-			if (buildReportMin.isSelected())
-				Setup.setBuildReportLevel(Setup.BUILD_REPORT_MINIMAL);
-			else if (buildReportNor.isSelected())
-				Setup.setBuildReportLevel(Setup.BUILD_REPORT_NORMAL);
-			else if (buildReportMax.isSelected())
-				Setup.setBuildReportLevel(Setup.BUILD_REPORT_DETAILED);
-			else if (buildReportVD.isSelected())
-				Setup.setBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
 			// add panel name to setup
 			Setup.setPanelName(panelTextField.getText());
 			// train Icon X&Y
@@ -573,19 +497,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
     		comboBox.addItem(colors[i]);
     	}
 	}
-	
-	private void setPrinterFontRadioButton(){
-		mono.setSelected(Setup.getFontName().equals(Setup.MONOSPACED));
-		sanSerif.setSelected(Setup.getFontName().equals(Setup.SANSERIF));
-	}
-	
-	private void setBuildReportRadioButton(){
-		buildReportMin.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_MINIMAL));
-		buildReportNor.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL));
-		buildReportMax.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED));
-		buildReportVD.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED));
-	}
-	
+		
 	private void packFrame(){
 		pack();
 		if (Setup.getOperationsSetupFrameSize()!= null){

@@ -5,6 +5,7 @@ package jmri.util.davidflanagan;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
 import java.util.Date;
@@ -26,7 +27,7 @@ import jmri.util.JmriJFrame;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.16 $
+ * @version             $Revision: 1.17 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -55,6 +56,7 @@ public class HardcopyWriter extends Writer {
     protected int charnum = 0, linenum = 0;
     protected int charoffset =0;
     protected int pagenum = 0;
+    protected Color color = Color.black;
     
     protected static boolean isPreview;
     protected Graphics previewedPage;
@@ -279,6 +281,18 @@ public class HardcopyWriter extends Writer {
         }
     }
     
+    /**
+     * Write the String with the desired color.  Returns the text color
+     * back to the default after the string is written. 
+     * @param c the color desired for this String
+     * @param s the String
+     * @throws IOException
+     */
+    public void write(Color c, String s)throws IOException{
+    	page.setColor(c);
+    	write(s);
+    	page.setColor(color);	// reset color
+    }
 
     public void flush() {}
 
@@ -337,6 +351,14 @@ public class HardcopyWriter extends Writer {
 				page.setFont(font);
 		}
 	}
+    
+    /**
+     * sets the default text color 
+     * @param c the new default text color
+     */
+    public void setTextColor(Color c){
+    	color = c;
+    }
 
     /** End the current page. Subsequent output will be on a new page */
     public void pageBreak() { synchronized(this.lock) { newpage(); } }
@@ -378,7 +400,7 @@ public class HardcopyWriter extends Writer {
             page.setColor(Color.white);
             page.fillRect(0, 0, previewImage.getWidth(previewPanel),
                     previewImage.getHeight(previewPanel));
-            page.setColor(Color.black);
+            page.setColor(color);
             }
         pagenum++;
         linenum = 0; charnum = 0;

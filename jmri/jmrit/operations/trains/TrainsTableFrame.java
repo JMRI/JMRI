@@ -23,13 +23,14 @@ import javax.swing.ScrollPaneConstants;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.setup.PrintOptionAction;
 
 /**
  * Frame for adding and editing the train roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.35 $
+ * @version             $Revision: 1.36 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -196,6 +197,7 @@ public class TrainsTableFrame extends OperationsFrame {
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
 		toolMenu.add(new PrintTrainsAction(rb.getString("MenuItemPrint"), new Frame(), false, this));
 		toolMenu.add(new PrintTrainsAction(rb.getString("MenuItemPreview"), new Frame(), true, this));
+		toolMenu.add(new PrintOptionAction(rb.getString("TitlePrintOptions")));
 		toolMenu.add(new ModifyTrainsAction(rb.getString("TitleModifyTrains")));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);

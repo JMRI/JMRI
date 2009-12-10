@@ -4,10 +4,11 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.List;
@@ -105,6 +106,11 @@ public class Setup {
 	public static final String BUILD_REPORT_DETAILED = "5";
 	public static final String BUILD_REPORT_VERY_DETAILED = "7";
 	
+	public static final String BLACK = "Black";	// the supported pickup and drop colors
+	public static final String BLUE = "Blue";
+	public static final String GREEN = "Green";
+	public static final String RED = "Red";
+	
 	private static int scale = HO_SCALE;	// Default scale	
 	private static int ratio = HO_RATIO;
 	private static int ratioTons = HO_RATIO_TONS;
@@ -118,6 +124,8 @@ public class Setup {
 	private static String carTypes = DESCRIPTIVE;
 	private static String ownerName ="";
 	private static String fontName = MONOSPACED;
+	private static String pickupColor = BLACK;
+	private static String dropColor = BLACK;
 	private static String panelName ="Panel";
 	private static String buildReportLevel = BUILD_REPORT_NORMAL;
 	private static int carSwitchTime = 3;		// how long it take to move a car
@@ -367,6 +375,43 @@ public class Setup {
 		fontName = name;
 	}
 	
+	public static String getDropTextColor(){
+		return dropColor;
+	}
+	
+	public static void setDropTextColor(String color){
+		dropColor = color;
+	}
+	
+	public static String getPickupTextColor(){
+		return pickupColor;
+	}
+	
+	public static void setPickupTextColor(String color){
+		pickupColor = color;
+	}
+	
+	
+	public static Color getPickupColor(){
+		if (pickupColor.equals(BLUE))
+			return Color.blue;
+		if (pickupColor.equals(GREEN))
+			return Color.green;
+		if (pickupColor.equals(RED))
+			return Color.red;
+		return Color.black;	// default
+	}
+	
+	public static Color getDropColor(){
+		if (dropColor.equals(BLUE))
+			return Color.blue;
+		if (dropColor.equals(GREEN))
+			return Color.green;
+		if (dropColor.equals(RED))
+			return Color.red;
+		return Color.black;	// default
+	}
+	
 	public static String getOwnerName(){
 		return ownerName;
 	}
@@ -478,6 +523,25 @@ public class Setup {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return the available text colors used for printing
+	 */
+	public static JComboBox getPrintColorComboBox(){
+		JComboBox box = new JComboBox();
+		box.addItem(BLACK);
+		box.addItem(BLUE);
+		box.addItem(GREEN);
+		box.addItem(RED);
+		return box;
+	}
+	
+	/**
+	 * 
+	 * @return JComboBox loaded with the strings (North, South, East,
+	 *         West) showing the available train directions for this
+	 *         railroad
+	 */
     public static JComboBox getComboBox (){
     	JComboBox box = new JComboBox();
     	if ((traindir & EAST)>0)
@@ -570,6 +634,10 @@ public class Setup {
  
        	e.addContent(values = new Element("fontName"));
     	values.setAttribute("name", getFontName());
+    	
+      	e.addContent(values = new Element("manifestColors"));
+    	values.setAttribute("dropColor", getDropTextColor());
+    	values.setAttribute("pickupColor", getPickupTextColor());
     	
     	e.addContent(values = new Element("buildReport"));
     	values.setAttribute("level", getBuildReportLevel());
@@ -717,6 +785,18 @@ public class Setup {
         	String font = a.getValue();
            	if (log.isDebugEnabled()) log.debug("fontName: "+font);
            	Setup.setFontName(font);
+        }
+        if ((operations.getChild("manifestColors") != null)){ 
+        	if((a = operations.getChild("manifestColors").getAttribute("dropColor"))!= null){
+        		String dropColor = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("dropColor: "+dropColor);
+        		Setup.setDropTextColor(dropColor);
+        	}
+        	if((a = operations.getChild("manifestColors").getAttribute("pickupColor"))!= null){
+        		String pickupColor = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("pickupColor: "+pickupColor);
+        		Setup.setPickupTextColor(pickupColor);
+        	}
         }
         if ((operations.getChild("buildReport") != null)
 				&& (a = operations.getChild("buildReport").getAttribute("level")) != null) {
