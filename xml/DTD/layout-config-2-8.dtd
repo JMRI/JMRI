@@ -1,9 +1,9 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-8.dtd,v 1.6 2009-11-30 03:28:13 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-8.dtd,v 1.7 2009-12-10 03:05:33 jacobsen Exp $ -->
 
-<!-- This DTD is part of version 2.8 development.  Do not modify it       -->
-<!-- after version 2.8 is released.  For more information,                -->
+<!-- This DTD is part of JMRI version 2.8.  Do not modify it                -->
+<!-- after version 2.8 is released.  For more information,                  -->
 <!-- see http://jmri.sf.net/help/en/html/doc/Technical/XmlPersistance.shtml -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2009.                         -->
@@ -425,7 +425,7 @@
   <!ATTLIST paneleditor panelmenu	(yes|no) "yes" >  <!-- menu present on panel window -->
   <!ATTLIST paneleditor scrollable	(none|both|horizontal|vertical) "both" >  <!-- scrollbars present on panel window -->
 
-  <!ELEMENT positionablelabel (icon*)>
+  <!ELEMENT positionablelabel (icon)*>
     <!ATTLIST positionablelabel class	CDATA #REQUIRED>
     <!ATTLIST positionablelabel x		CDATA #REQUIRED>
     <!ATTLIST positionablelabel y		CDATA #REQUIRED>
@@ -462,7 +462,7 @@
     <!ATTLIST icon degrees		CDATA #IMPLIED>
     <!ATTLIST icon scale		CDATA #IMPLIED>
 
-  <!ELEMENT sensoricon EMPTY>
+  <!ELEMENT sensoricon (active|inactive|inconsistent|unknown|activeText|inactiveText|inconsistentText|unknownText)*>
     <!ATTLIST sensoricon class		CDATA #REQUIRED>
     <!ATTLIST sensoricon x			CDATA #REQUIRED>
     <!ATTLIST sensoricon y			CDATA #REQUIRED>
@@ -473,7 +473,11 @@
     <!ATTLIST sensoricon active		CDATA #IMPLIED>
     <!ATTLIST sensoricon inactive	CDATA #IMPLIED>
     <!ATTLIST sensoricon unknown	CDATA #IMPLIED>
-    <!ATTLIST sensoricon inconsistent		CDATA #IMPLIED>
+    <!ATTLIST sensoricon inconsistent	CDATA #IMPLIED>
+    <!ATTLIST sensoricon activeText		CDATA #IMPLIED>
+    <!ATTLIST sensoricon inactiveText	CDATA #IMPLIED>
+    <!ATTLIST sensoricon unknownText	CDATA #IMPLIED>
+    <!ATTLIST sensoricon inconsistentText		CDATA #IMPLIED>
     <!ATTLIST sensoricon sensor		CDATA #IMPLIED>
     <!ATTLIST sensoricon forcecontroloff	(true|false) "false">
     <!ATTLIST sensoricon momentary	(true|false) "false">
@@ -525,7 +529,61 @@
     <!ATTLIST sensoricon selectable	CDATA #IMPLIED>
     <!ATTLIST sensoricon defaulticon	CDATA #IMPLIED>
     <!ATTLIST sensoricon hidden	    (yes|no) "no">
-
+    
+      <!ELEMENT active EMPTY>
+        <!ATTLIST active url		    CDATA #IMPLIED>
+        <!ATTLIST active rotate		CDATA #IMPLIED>
+        <!ATTLIST active degrees		CDATA #IMPLIED>
+        <!ATTLIST active scale		CDATA #IMPLIED>
+        <!ATTLIST active sensor		    CDATA #IMPLIED>
+      <!ELEMENT inactive EMPTY>
+        <!ATTLIST inactive url		    CDATA #IMPLIED>
+        <!ATTLIST inactive rotate		CDATA #IMPLIED>
+        <!ATTLIST inactive degrees		CDATA #IMPLIED>
+        <!ATTLIST inactive scale		CDATA #IMPLIED>
+      <!ELEMENT unknown EMPTY>
+        <!ATTLIST unknown url		    CDATA #IMPLIED>
+        <!ATTLIST unknown rotate		CDATA #IMPLIED>
+        <!ATTLIST unknown degrees		CDATA #IMPLIED>
+        <!ATTLIST unknown scale		CDATA #IMPLIED>
+      <!ELEMENT inconsistent EMPTY>
+        <!ATTLIST inconsistent url		    CDATA #IMPLIED>
+        <!ATTLIST inconsistent rotate		CDATA #IMPLIED>
+        <!ATTLIST inconsistent degrees		CDATA #IMPLIED>
+        <!ATTLIST inconsistent scale		CDATA #IMPLIED>
+      <!ELEMENT activeText EMPTY>
+        <!ATTLIST activeText text	    CDATA #IMPLIED>
+        <!ATTLIST activeText redBack  	CDATA #IMPLIED>
+        <!ATTLIST activeText greenBack	CDATA #IMPLIED>
+        <!ATTLIST activeText blueBack	CDATA #IMPLIED>
+        <!ATTLIST activeText red  	CDATA #IMPLIED>
+        <!ATTLIST activeText green	CDATA #IMPLIED>
+        <!ATTLIST activeText blue	CDATA #IMPLIED>
+      <!ELEMENT inactiveText EMPTY>
+        <!ATTLIST inactiveText text	    CDATA #IMPLIED>
+        <!ATTLIST inactiveText redBack  	CDATA #IMPLIED>
+        <!ATTLIST inactiveText greenBack	CDATA #IMPLIED>
+        <!ATTLIST inactiveText blueBack	CDATA #IMPLIED>
+        <!ATTLIST inactiveText red  	CDATA #IMPLIED>
+        <!ATTLIST inactiveText green	CDATA #IMPLIED>
+        <!ATTLIST inactiveText blue	CDATA #IMPLIED>
+       <!ELEMENT unknownText EMPTY>
+        <!ATTLIST unknownText text	    CDATA #IMPLIED>
+        <!ATTLIST unknownText redBack  	CDATA #IMPLIED>
+        <!ATTLIST unknownText greenBack	CDATA #IMPLIED>
+        <!ATTLIST unknownText blueBack	CDATA #IMPLIED>
+        <!ATTLIST unknownText red  	CDATA #IMPLIED>
+        <!ATTLIST unknownText green	CDATA #IMPLIED>
+        <!ATTLIST unknownText blue	CDATA #IMPLIED>
+      <!ELEMENT inconsistentText EMPTY>
+        <!ATTLIST inconsistentText text	    CDATA #IMPLIED>
+        <!ATTLIST inconsistentText redBack  	CDATA #IMPLIED>
+        <!ATTLIST inconsistentText greenBack	CDATA #IMPLIED>
+        <!ATTLIST inconsistentText blueBack	CDATA #IMPLIED>
+        <!ATTLIST inconsistentText red  	CDATA #IMPLIED>
+        <!ATTLIST inconsistentText green	CDATA #IMPLIED>
+        <!ATTLIST inconsistentText blue	CDATA #IMPLIED>
+        
   <!ELEMENT reportericon EMPTY>
     <!ATTLIST reportericon class	CDATA #REQUIRED>
     <!ATTLIST reportericon x		CDATA #REQUIRED>
@@ -575,8 +633,9 @@
     <!ATTLIST fastclock class CDATA #REQUIRED>
     <!ATTLIST fastclock x     CDATA #REQUIRED>
     <!ATTLIST fastclock y     CDATA #REQUIRED>
+    <!ATTLIST fastclock scale CDATA #REQUIRED>
 
-  <!ELEMENT multisensoricon (multisensoriconentry)*>
+  <!ELEMENT multisensoricon (multisensoriconentry|active|inactive|unknown|inconsistent)*>
     <!ATTLIST multisensoricon class CDATA #REQUIRED>
     <!ATTLIST multisensoricon x     CDATA #REQUIRED>
     <!ATTLIST multisensoricon y     CDATA #REQUIRED>
@@ -593,7 +652,7 @@
     <!ATTLIST multisensoriconentry sensor	CDATA #REQUIRED>
     <!ATTLIST multisensoriconentry icon	CDATA #REQUIRED>
 
-  <!ELEMENT signalheadicon EMPTY>
+  <!ELEMENT signalheadicon (held|dark|red|flashred|yellow|flashyellow|green|flashgreen|lunar|flashlunar)*>
     <!ATTLIST signalheadicon class	CDATA #REQUIRED>
     <!ATTLIST signalheadicon x			CDATA #REQUIRED>
     <!ATTLIST signalheadicon y			CDATA #REQUIRED>
@@ -617,13 +676,62 @@
     <!ATTLIST signalheadicon heldicon    CDATA #IMPLIED>
     <!ATTLIST signalheadicon litmode     CDATA #IMPLIED>
     <!ATTLIST signalheadicon hidden	    (yes|no) "no">
-
+      <!ELEMENT held EMPTY>
+        <!ATTLIST held url		    CDATA #IMPLIED>
+        <!ATTLIST held rotate		CDATA #IMPLIED>
+        <!ATTLIST held degrees		CDATA #IMPLIED>
+        <!ATTLIST held scale		CDATA #IMPLIED>
+      <!ELEMENT dark EMPTY>
+        <!ATTLIST dark url		    CDATA #IMPLIED>
+        <!ATTLIST dark rotate		CDATA #IMPLIED>
+        <!ATTLIST dark degrees		CDATA #IMPLIED>
+        <!ATTLIST dark scale		CDATA #IMPLIED>
+      <!ELEMENT red EMPTY>
+        <!ATTLIST red url		    CDATA #IMPLIED>
+        <!ATTLIST red rotate		CDATA #IMPLIED>
+        <!ATTLIST red degrees		CDATA #IMPLIED>
+        <!ATTLIST red scale		CDATA #IMPLIED>
+      <!ELEMENT flashred EMPTY>
+        <!ATTLIST flashred url		    CDATA #IMPLIED>
+        <!ATTLIST flashred rotate		CDATA #IMPLIED>
+        <!ATTLIST flashred degrees		CDATA #IMPLIED>
+        <!ATTLIST flashred scale		CDATA #IMPLIED>
+      <!ELEMENT yellow EMPTY>
+        <!ATTLIST yellow url		    CDATA #IMPLIED>
+        <!ATTLIST yellow rotate		CDATA #IMPLIED>
+        <!ATTLIST yellow degrees		CDATA #IMPLIED>
+        <!ATTLIST yellow scale		CDATA #IMPLIED>
+      <!ELEMENT flashyellow EMPTY>
+        <!ATTLIST flashyellow url		    CDATA #IMPLIED>
+        <!ATTLIST flashyellow rotate		CDATA #IMPLIED>
+        <!ATTLIST flashyellow degrees		CDATA #IMPLIED>
+        <!ATTLIST flashyellow scale		CDATA #IMPLIED>
+      <!ELEMENT green EMPTY>
+        <!ATTLIST green url		    CDATA #IMPLIED>
+        <!ATTLIST green rotate		CDATA #IMPLIED>
+        <!ATTLIST green degrees		CDATA #IMPLIED>
+        <!ATTLIST green scale		CDATA #IMPLIED>
+      <!ELEMENT flashgreen EMPTY>
+        <!ATTLIST flashgreen url		    CDATA #IMPLIED>
+        <!ATTLIST flashgreen rotate		CDATA #IMPLIED>
+        <!ATTLIST flashgreen degrees		CDATA #IMPLIED>
+        <!ATTLIST flashgreen scale		CDATA #IMPLIED>
+      <!ELEMENT lunar EMPTY>
+        <!ATTLIST lunar url		    CDATA #IMPLIED>
+        <!ATTLIST lunar rotate		CDATA #IMPLIED>
+        <!ATTLIST lunar degrees		CDATA #IMPLIED>
+        <!ATTLIST lunar scale		CDATA #IMPLIED>
+      <!ELEMENT flashlunar EMPTY>
+        <!ATTLIST flashlunar url		    CDATA #IMPLIED>
+        <!ATTLIST flashlunar rotate		CDATA #IMPLIED>
+        <!ATTLIST flashlunar degrees		CDATA #IMPLIED>
+        <!ATTLIST flashlunar scale		CDATA #IMPLIED>
     <!-- the next two (aspectgenerator and head) are obsolete, and -->
     <!-- are only retained until JMRI 2 so that old files can be read -->
     <!ATTLIST signalheadicon aspectgenerator		CDATA #IMPLIED>
     <!ATTLIST signalheadicon head		CDATA #IMPLIED>
 
-  <!ELEMENT turnouticon EMPTY>
+  <!ELEMENT turnouticon (closed|thrown|unknown|inconsistent)*>
     <!ATTLIST turnouticon class		CDATA #REQUIRED>
     <!ATTLIST turnouticon x			CDATA #REQUIRED>
     <!ATTLIST turnouticon y			CDATA #REQUIRED>
@@ -638,6 +746,17 @@
     <!ATTLIST turnouticon turnout	CDATA #IMPLIED>
     <!ATTLIST turnouticon forcecontroloff	(true|false) "false">
     <!ATTLIST turnouticon tristate	(true|false) "false">
+    
+      <!ELEMENT closed EMPTY>
+        <!ATTLIST closed url		    CDATA #IMPLIED>
+        <!ATTLIST closed rotate		CDATA #IMPLIED>
+        <!ATTLIST closed degrees		CDATA #IMPLIED>
+        <!ATTLIST closed scale		CDATA #IMPLIED>
+      <!ELEMENT thrown EMPTY>
+        <!ATTLIST thrown url		    CDATA #IMPLIED>
+        <!ATTLIST thrown rotate		CDATA #IMPLIED>
+        <!ATTLIST thrown degrees		CDATA #IMPLIED>
+        <!ATTLIST thrown scale		CDATA #IMPLIED>
 
   <!ELEMENT securityelementicon EMPTY>
     <!ATTLIST securityelementicon class		CDATA #REQUIRED>
@@ -839,7 +958,7 @@
 <!ELEMENT LayoutEditor (positionablelabel|sensoricon|layoutblock|
 			positionablepoint | securityelementicon | signalheadicon |
 			levelxing | layoutturnout | reportericon | memoryicon |
-			tracksegment | fastclock | locoicon )* >
+			tracksegment | fastclock | locoicon | multisensoricon )* >
   <!ATTLIST LayoutEditor class			CDATA #REQUIRED>
   <!ATTLIST LayoutEditor name			CDATA #IMPLIED>
   <!ATTLIST LayoutEditor x			CDATA #REQUIRED>
@@ -857,6 +976,7 @@
   <!ATTLIST LayoutEditor xscale			CDATA #IMPLIED>
   <!ATTLIST LayoutEditor yscale			CDATA #IMPLIED>
   <!ATTLIST LayoutEditor defaulttrackcolor	CDATA #REQUIRED>
+  <!ATTLIST LayoutEditor defaulttextcolor	CDATA #IMPLIED>
   <!ATTLIST LayoutEditor turnoutbx		CDATA #IMPLIED>
   <!ATTLIST LayoutEditor turnoutcx		CDATA #IMPLIED>
   <!ATTLIST LayoutEditor turnoutwid		CDATA #IMPLIED>
