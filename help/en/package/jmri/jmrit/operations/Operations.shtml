@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.51 2009-12-05 15:40:44 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.52 2009-12-10 02:16:51 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -86,7 +86,7 @@ length.
 
 The Settings panel contains general parameters for the operations
 program. Select from the JMRI main window "Tools->Operations->Settings"
-to load the Settings panel. The Setting panel has fields and buttons to
+to open the Settings panel. The Setting panel has fields and buttons to
 allow you to enter your railroad name, the directions your train's
 travel, the scale that you are using, printer and icon controls, and the
 ability to create backups and restore files for operations.
@@ -152,64 +152,6 @@ You can optionally enter your name in the "Owner" field.
 When selected, add the operations menu to the main menu bar. The
 operations menu will appear the next time you restart JMRI.
 
-<H3>Manifest Printer Font</H3>
-
-The program supports two types of fonts for printing. Select the desired
-font using the radio buttons. 
-
-<A NAME="BuildReportDetails"></A>
-<H3>Build Report Details</H3>
-
-You can adjust the amount of information that the build report will
-show. Select one of the four levels using the radio buttons. The program
-when generating the build reports stores the "Very Detailed" information
-to disk. The radio buttons control how much of that data is actually
-printed. The "Minimal" radio button provides the least amount of
-information and "Very Detailed" provides the most. If you're only
-interested why a train won't build, the "Minimal" setting can provide
-you with this information. The "Normal" setting shows which engines and
-cars are being excluded from the train, and which engines and cars are
-being picked up and dropped. The "Detailed" setting will generate quite
-a few pages depending on the size of your railroad. It will show all
-available cars and engines, and a bit how the program finds destinations
-for the cars and engines. The "Very Detailed" setting produces the most
-pages, and will show why cars are not picked up or dropped. Be sure and
-press "Save" after changing the build report selection.
-
-<H3>Show Car Length</H3>
-
-Select the "Show Car Length" checkbox if you want the car's length shown
-in your manifests and switch lists.
-
-<H3>Show Car Load</H3>
-
-You can optionally show whether the car is empty or loaded. When a car
-is delivered to a siding the load state will change. You can also create
-your own loads but there are restrictions. Cars with "loads" other than
-empty or loaded can only be serviced by sidings with a 
-<A	HREF="#Schedules">Schedule</A>. It is strongly recommended that you not
-create your own loads until you become very familiar with how the
-program works. For many operators, showing whether the car is empty or
-loaded adds just enough realism to their operations.
-
-<H3>Show Car Color</H3>
-
-Select the "Show Car Color" checkbox if you want the car's color shown
-in your manifests and switch lists.
-
-<H3>Show Car Destination</H3>
-
-If you want your manifest and switch lists to show the cars destination
-when picking it up, select the "Show Car Destination" checkbox. The
-program always provides the car's destination when dropping a car from
-the train.
-
-<H3>Append Car and Engine Comments</H3>
-
-For each car in your roster, you can have an optional comment. If you
-want the car's comment added to your manifest and switch lists, select
-the checkbox.
-
 <H3>Train Icons</H3>
 
 If you want the operations program to place an icon representing the
@@ -244,6 +186,83 @@ directory in operations called "backups", and then stores the operation
 files in a directory that is based on the day you pressed the "Backup"
 button. For example, if today was November 21, 2008, the program will
 create a backup directory named "2008_11_21".</P>
+
+<A NAME="PrintOptions"></A>
+<H2>Print Options</H2>
+
+You can modify the how the program prints the train manifests and the amount of detail
+that the build report provides.  From the "Tools" menu select "Print Options" to open
+the print option window.
+<P>
+<img src="images/PrintOptions.png">
+
+<H3>Manifest Printer Font</H3>
+The program supports two types of fonts for printing. Select the desired
+font using the radio buttons. 
+
+<H3>Show Car Length</H3>
+
+Select the "Show Car Length" checkbox if you want the car's length shown
+in your manifests and switch lists.
+
+<H3>Show Car Load</H3>
+
+You can optionally show whether the car is empty or loaded. When a car
+is delivered to a siding the load state will change. You can also create
+your own loads but there are restrictions. Cars with "loads" other than
+empty or loaded can only be serviced by sidings with a 
+<A	HREF="#Schedules">Schedule</A>. It is strongly recommended that you not
+create your own loads until you become very familiar with how the
+program works. For many operators, showing whether the car is empty or
+loaded adds just enough realism to their operations.
+
+<H3>Show Car Color</H3>
+
+Select the "Show Car Color" checkbox if you want the car's color shown
+in your manifests and switch lists.
+
+<H3>Show Car Destination</H3>
+
+If you want your manifest and switch lists to show the cars destination
+when picking it up, select the "Show Car Destination" checkbox. The
+program always provides the car's destination when dropping a car from
+the train.
+
+<H3>Show Car and Engine Comments</H3>
+
+For each car in your roster, you can have an optional comment. If you
+want the car's comment added to your manifest and switch lists, select
+the checkbox.
+
+<H3>Drop Text Color</H3>
+
+You can select the text color of your manifest when the operation is to drop off a car.
+Select the desired color from the drop down box.
+
+<H3>Pickup Text Color</H3>
+
+You can select the text color of your manifest when the operation is to pick up a car.
+Select the desired color from the drop down box.
+
+<A NAME="BuildReportDetails"></A>
+<H3>Build Report Details</H3>
+
+You can adjust the amount of information that the build report will
+show. Select one of the four levels using the radio buttons. The program
+when generating the build reports stores the "Very Detailed" information
+to disk. The radio buttons control how much of that data is actually
+printed. The "Minimal" radio button provides the least amount of
+information and "Very Detailed" provides the most. If you're only
+interested why a train won't build, the "Minimal" setting can provide
+you with this information. The "Normal" setting shows which engines and
+cars are being excluded from the train, and which engines and cars are
+being picked up and dropped. The "Detailed" setting will generate quite
+a few pages depending on the size of your railroad. It will show all
+available cars and engines, and a bit how the program finds destinations
+for the cars and engines. The "Very Detailed" setting produces the most
+pages, and will show why cars are not picked up or dropped. Be sure and
+press "Save" after changing the build report selection.
+
 
 <A NAME="Locations"></A>
 <H2>Locations</H2>
