@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.20 2009-12-11 00:20:08 dan_boudreau Exp $ -->
+<!-- $Id: NCE.shtml,v 1.21 2009-12-11 02:27:02 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI Hardware Guide: NCE</TITLE>
@@ -49,7 +49,13 @@ on their front panel.
 	port using a 9-pin serial cable.  On newer computers there might not be
 	a serial port, so you will need to use one of the computers USB ports and a USB
 	to serial adaptor. See <a href="../USBtoSerial.shtml">Via a USB to Serial adapter</a> for
-	more information.</LI>
+	more information.
+	Note that this is <em>not</em> the same thing
+	as the 
+	<a href="#powercab">NCE USB adapter</a>, 
+	which is mostly for 
+	<a href="#usblimitations">use with the PowerCab</a>, 
+	not the Power Pro or Powerhouse system.</LI>
 	<LI>Then go to the preferences panel of a JMRI-based program. This
 	opens automatically the first time a program is run, or you can select
 	it from the "Edit" menu.</LI>
@@ -275,6 +281,7 @@ system from the preference menu for reliable operation.</P>
 	trouble shooting </A> section below.</LI>
 </OL>
 
+<a name="usblimitations">
 <H3>NCE USB Adapter Limitations</H3>
 
 <P>The NCE USB Adapter doesn't support all of the current JMRI
