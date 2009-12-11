@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PR3.shtml,v 1.7 2009-12-07 15:06:47 jacobsen Exp $ -->
+<!-- $Id: PR3.shtml,v 1.8 2009-12-11 14:07:30 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -131,7 +131,7 @@ station connected.
 
 <h2>Using the PR3 Programming Track</h2>
 
-<img src="images/PR3StandAlone.png" align="right" height="194" width="399">
+<img src="images/PR3standAlone.png" align="right" height="194" width="399">
 
 To use the PR3 programming track, 
 connect the PR3 to its power supply and to a 
