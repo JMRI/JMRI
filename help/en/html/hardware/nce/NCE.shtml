@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.19 2009-09-12 17:01:54 dan_boudreau Exp $ -->
+<!-- $Id: NCE.shtml,v 1.20 2009-12-11 00:20:08 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI Hardware Guide: NCE</TITLE>
@@ -46,7 +46,10 @@ on their front panel.
 <OL>
 	<LI>To connect your computer to an NCE Power Pro or PowerHouse system, you
 	can usually just connect the command station to the computer's serial
-	port using a 9-pin serial cable.</LI>
+	port using a 9-pin serial cable.  On newer computers there might not be
+	a serial port, so you will need to use one of the computers USB ports and a USB
+	to serial adaptor. See <a href="../USBtoSerial.shtml">Via a USB to Serial adapter</a> for
+	more information.</LI>
 	<LI>Then go to the preferences panel of a JMRI-based program. This
 	opens automatically the first time a program is run, or you can select
 	it from the "Edit" menu.</LI>
