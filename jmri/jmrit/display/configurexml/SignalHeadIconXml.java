@@ -7,6 +7,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.SignalHeadIcon;
+import jmri.util.NamedBeanHandle;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -14,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
@@ -34,19 +35,8 @@ public class SignalHeadIconXml extends PositionableLabelXml {
 
         Element element = new Element("signalheadicon");
         
-        element.setAttribute("signalhead", ""+p.getSignalHead().getSystemName());
+        element.setAttribute("signalhead", ""+p.getSignalHead().getName());
         storeCommonAttributes(p, element);
-        /*element.setAttribute("held", p.getHeldIcon().getURL());
-        element.setAttribute("dark", p.getDarkIcon().getURL());
-        element.setAttribute("red", p.getRedIcon().getURL());
-        element.setAttribute("yellow", p.getYellowIcon().getURL());
-        element.setAttribute("flashyellow", p.getFlashYellowIcon().getURL());
-        element.setAttribute("green", p.getGreenIcon().getURL());
-        element.setAttribute("lunar", p.getLunarIcon().getURL());
-        element.setAttribute("flashred", p.getFlashRedIcon().getURL());
-        element.setAttribute("flashgreen", p.getFlashGreenIcon().getURL());
-        element.setAttribute("flashlunar", p.getFlashLunarIcon().getURL());
-        element.setAttribute("rotate", String.valueOf(p.getGreenIcon().getRotation()));*/
         element.setAttribute("clickmode", ""+p.getClickMode());
         element.setAttribute("litmode", ""+p.getLitMode());
         element.addContent(storeIcon("held", p.getHeldIcon()));
@@ -81,6 +71,8 @@ public class SignalHeadIconXml extends PositionableLabelXml {
 		PanelEditor pe = null;
 		LayoutEditor le = null;
         SignalHeadIcon l;
+        String name;
+        
 		String shortClass = className.substring(lastDot+1,className.length());
 		if (shortClass.equals("PanelEditor")) {
 			pe = (PanelEditor) o;
@@ -101,16 +93,18 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         if (attr == null) {
             log.error("incorrect information for signal head; must use signalhead name");
             return;
+        } else {
+            name = attr.getValue();
         }
-        SignalHead sh = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(
-            attr.getValue());
+        
+        SignalHead sh = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(name);
         if (sh != null) {
-            l.setSignalHead(sh);
+            l.setSignalHead(new NamedBeanHandle<SignalHead>(name, sh));
         } else {
             log.error("SignalHead named '"+attr.getValue()+"' not found.");
             return;
         }
-    
+        
         int rotation = 0;
         try {
             attr = element.getAttribute("rotate");
@@ -119,16 +113,16 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
 
-        loadSignalIcon("red", rotation,l,element);
-        loadSignalIcon("yellow", rotation,l,element);
-        loadSignalIcon("green", rotation,l,element);
-        loadSignalIcon("lunar", rotation,l,element);
-        loadSignalIcon("held", rotation,l,element);
-        loadSignalIcon("dark", rotation,l,element);
-        loadSignalIcon("flashred", rotation,l,element);
-        loadSignalIcon("flashyellow", rotation,l,element);
-        loadSignalIcon("flashgreen", rotation,l,element);
-        loadSignalIcon("flashlunar", rotation,l,element);
+        loadSignalIcon("red", rotation,l,element, name);
+        loadSignalIcon("yellow", rotation,l,element, name);
+        loadSignalIcon("green", rotation,l,element, name);
+        loadSignalIcon("lunar", rotation,l,element, name);
+        loadSignalIcon("held", rotation,l,element, name);
+        loadSignalIcon("dark", rotation,l,element, name);
+        loadSignalIcon("flashred", rotation,l,element, name);
+        loadSignalIcon("flashyellow", rotation,l,element, name);
+        loadSignalIcon("flashgreen", rotation,l,element, name);
+        loadSignalIcon("flashlunar", rotation,l,element, name);
         
         try {
             attr = element.getAttribute("clickmode");
@@ -147,7 +141,6 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         } catch (org.jdom.DataConversionException e) {
             log.error("Failed on litmode attribute: "+e);
         }
-
         
         if (pe!=null){
             pe.putLabel(l);
@@ -158,15 +151,16 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         }
     }
     
-    private void loadSignalIcon(String aspect, int rotation, SignalHeadIcon l, Element element){
-        String name;
+    private void loadSignalIcon(String aspect, int rotation, SignalHeadIcon l, Element element, String name){
         NamedIcon icon = loadIcon( l,aspect, element);
         if (icon==null) {
             if (element.getAttribute(aspect) != null) {
-                name = element.getAttribute(aspect).getValue();
-                icon = NamedIcon.getIconByName(name);
+            String iconName;
+                iconName = element.getAttribute(aspect).getValue();
+                icon = NamedIcon.getIconByName(iconName);
                 icon.setRotation(rotation, l);
             }
+            else log.warn("did not locate " + aspect + " icon file "+name);
         }
         if (icon!=null){
             if (aspect.equals("red")) l.setRedIcon(icon);
