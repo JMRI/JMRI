@@ -1,4 +1,4 @@
-Katzer took JMRI copyrighted code, 
+In June 2006, we learned that Katzer took JMRI copyrighted code, 
 stripped out authors' names and JMRI copyright notices, 
 converted it to his own use and then distributed it as his own.
 
