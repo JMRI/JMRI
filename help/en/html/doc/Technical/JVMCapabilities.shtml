@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JVMCapabilities.shtml,v 1.5 2009-12-09 23:23:55 jacobsen Exp $ -->
+<!-- $Id: JVMCapabilities.shtml,v 1.6 2009-12-13 01:32:12 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -89,8 +89,8 @@ many will be using an older one.
 <tr><td>Linux</td><td>(1.6?)</td></tr>
 <tr><td>Windows Vista</td><td>1.6</td></tr>
 <tr><td>Windows XP</td><td>1.6</td></tr>
-<tr><td>MacOS X 10.4 and later</td><td>1.6</td></tr>
-<tr><td>MacOS X 10.3</td><td>1.5</td></tr>
+<tr><td>MacOS X 10.4 and later on Intel</td><td>1.6</td></tr>
+<tr><td>MacOS X 10.3 and later on PowerPC</td><td>1.5</td></tr>
 <tr><td>Windows 98 (2nd Ed)</td><td>1.5-11</td></tr>
 <tr><td>Windows 98</td><td>1.4.2_14</td></tr>
 <tr><td>Windows 95</td><td>1.3.1_20</td></tr>
