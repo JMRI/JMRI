@@ -31,6 +31,7 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.FileUtil;
 import jmri.util.iharder.dnd.FileDrop;
 import jmri.util.iharder.dnd.FileDrop.Listener;
 
@@ -518,17 +519,18 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         for (int i=0; i<cmps.length; i++) {
         	try {
         		if (cmps[i] instanceof JInternalFrame) {
-        			JInternalFrame intFr = (JInternalFrame) cmps[i];
-        			if (intFr.getContentPane() instanceof Jynstrument) {
-        				Jynstrument ins = (Jynstrument) intFr.getContentPane();
-        				if (ins!= null) {
-        					Element elt = new Element("Jynstrument");
-        					elt.setAttribute("JynstrumentFolder", ins.getFolder().substring( System.getProperty("user.dir").length() )  );
-        					java.util.ArrayList<Element> jychildren = new java.util.ArrayList<Element>(1);
-        					jychildren.add(WindowPreferences.getPreferences(intFr));
-        					elt.setContent(jychildren);
-        					children.add(elt);
-        				}
+        			Component[] cmps2 = ((JInternalFrame)cmps[i]).getContentPane().getComponents();
+        			int j=0;
+        			while ((j<cmps2.length) && (! (cmps2[j] instanceof Jynstrument))) {
+        				j++;
+        			}
+        			if ((j<cmps2.length) && (cmps2[j] instanceof Jynstrument)) {
+        				Element elt = new Element("Jynstrument");
+        				elt.setAttribute("JynstrumentFolder", FileUtil.getPortableFilename( ((Jynstrument) cmps2[j]).getFolder() ));       					
+        				java.util.ArrayList<Element> jychildren = new java.util.ArrayList<Element>(1);
+        				jychildren.add(WindowPreferences.getPreferences((JInternalFrame)cmps[i]));
+        				elt.setContent(jychildren);
+        				children.add(elt);
         			}
         		}
         	} catch (Exception ex) {
@@ -543,10 +545,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     	if ((getLastUsedSaveFile() == null) || (getRosterEntry()==null))
     		return null;
         Element me = new Element("ThrottleFrame");
-        if (getLastUsedSaveFile().startsWith(getDefaultThrottleFolder()))
-        	me.setAttribute("ThrottleXMLFile", getLastUsedSaveFile().substring(getDefaultThrottleFolder().length()) );
-        else
-        	me.setAttribute("ThrottleXMLFile", getLastUsedSaveFile());
+        me.setAttribute("ThrottleXMLFile", FileUtil.getPortableFilename( getLastUsedSaveFile() ));
         return me;
     }
     
@@ -569,7 +568,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 
     	String sfile = e.getAttributeValue("ThrottleXMLFile");
         if (sfile != null) {
-        	loadThrottle(getDefaultThrottleFolder()+sfile);
+        	loadThrottle(FileUtil.getExternalFilename(sfile));
         	return;
         }
         
@@ -594,7 +593,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 		List<Element> jinsts = e.getChildren("Jynstrument");
         if ((jinsts != null) && (jinsts.size()>0)) {
         	for (int i=0; i<jinsts.size(); i++) {
-        		JInternalFrame jif = ynstrument(System.getProperty("user.dir")+jinsts.get(i).getAttributeValue("JynstrumentFolder"));
+        		JInternalFrame jif = ynstrument( FileUtil.getExternalFilename( jinsts.get(i).getAttributeValue("JynstrumentFolder")) );
                 Element window = jinsts.get(i).getChild("window");
                 if ((window !=null) && (jif!=null))
                 	WindowPreferences.setPreferences(jif, window);
