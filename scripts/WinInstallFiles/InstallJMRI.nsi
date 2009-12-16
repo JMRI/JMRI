@@ -127,7 +127,7 @@
 !define AUTHOR    "Matt Harris for JMRI"        ; Author name
 !define APP       "JMRI"                        ; Application name
 !define COPYRIGHT "© 1997-2009 JMRI Community"  ; Copyright string
-!define JMRI_VER  "2.7.10"                       ; Application version
+!define JMRI_VER  "2.8"                       ; Application version
 !define JRE_VER   "1.5"                         ; Required JRE version
 !define INST_VER  "0.1.6.0"                     ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
