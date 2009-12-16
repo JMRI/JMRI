@@ -1,5 +1,5 @@
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
-<!-- $Id: Jython.shtml,v 1.5 2009-08-26 21:17:34 matthewharris Exp $ -->
+<!-- $Id: Jython.shtml,v 1.6 2009-12-16 05:28:34 jacobsen Exp $ -->
 <html>
 <head>
    <title>Jython access to JMRI tools</title>
@@ -33,7 +33,7 @@
 This page discusses access to the JMRI libraries from Jython, a Java version
 of Python.  The emphasis is on using JMRI capabilities from a 
 command-line Jython interpreter.  See the
-<A HREF="../scripts/">scripting pages</A> if you 
+<A HREF="../../tools/scripting/index.shtml">scripting pages</A> if you 
 are more interested in Jython scripting within JMRI.
 
 <h2>Introduction</h2>
