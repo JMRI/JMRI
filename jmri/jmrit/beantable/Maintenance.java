@@ -60,7 +60,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.8 $
  */
 
 public class Maintenance
@@ -1143,7 +1143,7 @@ public class Maintenance
                         referenceCount++;
                     }
                 } else if (o.getClass().getName().equals("jmri.jmrit.display.SignalHeadIcon")) {
-                    name = ((jmri.jmrit.display.SignalHeadIcon)o).getSignalHead().getBean().getSystemName();
+                    name = ((jmri.jmrit.display.SignalHeadIcon)o).getSignalHead().getSystemName();
                     if (name.equals(sysName))
                     {
                         if (text != null) {
@@ -1203,7 +1203,7 @@ public class Maintenance
                         referenceCount++;
                     }
                 } else if (o.getClass().getName().equals("jmri.jmrit.display.SignalHeadIcon")) {
-                    name = ((jmri.jmrit.display.SignalHeadIcon)o).getSignalHead().getBean().getSystemName();
+                    name = ((jmri.jmrit.display.SignalHeadIcon)o).getSignalHead().getSystemName();
                     if (name.equals(sysName))
                     {
                         if (text != null) {

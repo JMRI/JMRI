@@ -957,7 +957,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         l.setFlashGreenIcon(editor.getIcon("SignalHeadStateFlashingGreen"));
         l.setDarkIcon(editor.getIcon("SignalHeadStateDark"));
         l.setHeldIcon(editor.getIcon("SIgnalHeadStateHeld"));
-        l.setSignalHead(editor.getTableSelection().getDisplayName());
+        l.setSignalHead((SignalHead)editor.getTableSelection());
         setNextLocation(l);
         putLabel(l);
         // always allow new items to be moved

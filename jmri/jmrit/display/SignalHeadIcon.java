@@ -15,7 +15,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButtonMenuItem;
-import jmri.util.NamedBeanHandle;
 
 /**
  * An icon to display a status of a SignalHead.
@@ -26,7 +25,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.52 $
+ * @version $Revision: 1.51 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -76,22 +75,20 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     }
 
     private SignalHead mHead;
-    private NamedBeanHandle<SignalHead> namedHead;
 
     /**
      * Attached a signalhead element to this display item
      * @param sh Specific SignalHead object
      */
-    public void setSignalHead(NamedBeanHandle<SignalHead> sh) {
+    public void setSignalHead(SignalHead sh) {
         if (mHead != null) {
             mHead.removePropertyChangeListener(this);
         }
-        mHead = InstanceManager.signalHeadManagerInstance().getSignalHead(sh.getName());
+        mHead = sh;
         if (mHead != null) {
             displayState(headState());
             mHead.addPropertyChangeListener(this);
             setProperToolTip();
-            namedHead = sh;
         }
     }
     
@@ -105,15 +102,14 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         if (mHead == null) mHead = InstanceManager.signalHeadManagerInstance().getByUserName(pName);
         if (mHead == null) log.warn("did not find a SignalHead named "+pName);
         else {
-            namedHead = new NamedBeanHandle<SignalHead>(pName, mHead);
             displayState(headState());
             mHead.addPropertyChangeListener(this);
             setProperToolTip();
         }
     }
 
-    public NamedBeanHandle<SignalHead> getSignalHead() {
-        return namedHead;
+    public SignalHead getSignalHead() {
+        return mHead;
     }
 
     // display icons
@@ -557,7 +553,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         setFlashLunarIcon(_editor.getIcon("SignalHeadStateFlashingLunar"));
         setDarkIcon(_editor.getIcon("SignalHeadStateDark"));
         setHeldIcon(_editor.getIcon("SIgnalHeadStateHeld"));
-        setSignalHead(_editor.getTableSelection().getDisplayName());
+        setSignalHead((SignalHead)_editor.getTableSelection());
         _editorFrame.dispose();
         _editorFrame = null;
         _editor = null;

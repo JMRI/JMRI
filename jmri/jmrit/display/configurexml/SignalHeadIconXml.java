@@ -7,7 +7,6 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.SignalHeadIcon;
-import jmri.util.NamedBeanHandle;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -15,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.35 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
@@ -35,20 +34,33 @@ public class SignalHeadIconXml extends PositionableLabelXml {
 
         Element element = new Element("signalheadicon");
         
-        element.setAttribute("signalhead", ""+p.getSignalHead().getName());
+        element.setAttribute("signalhead", ""+p.getSignalHead().getSystemName());
         storeCommonAttributes(p, element);
+        element.setAttribute("held", p.getHeldIcon().getURL());
+        element.setAttribute("dark", p.getDarkIcon().getURL());
+        element.setAttribute("red", p.getRedIcon().getURL());
+        element.setAttribute("yellow", p.getYellowIcon().getURL());
+        element.setAttribute("flashyellow", p.getFlashYellowIcon().getURL());
+        element.setAttribute("green", p.getGreenIcon().getURL());
+        element.setAttribute("lunar", p.getLunarIcon().getURL());
+        element.setAttribute("flashred", p.getFlashRedIcon().getURL());
+        element.setAttribute("flashgreen", p.getFlashGreenIcon().getURL());
+        element.setAttribute("flashlunar", p.getFlashLunarIcon().getURL());
+        element.setAttribute("rotate", String.valueOf(p.getGreenIcon().getRotation()));
         element.setAttribute("clickmode", ""+p.getClickMode());
         element.setAttribute("litmode", ""+p.getLitMode());
-        element.addContent(storeIcon("held", p.getHeldIcon()));
-        element.addContent(storeIcon("dark", p.getDarkIcon()));
-        element.addContent(storeIcon("red", p.getRedIcon()));
-        element.addContent(storeIcon("yellow", p.getYellowIcon()));
-        element.addContent(storeIcon("flashyellow", p.getFlashYellowIcon()));
-        element.addContent(storeIcon("green", p.getGreenIcon()));
-        element.addContent(storeIcon("lunar", p.getLunarIcon()));
-        element.addContent(storeIcon("flashred", p.getFlashRedIcon()));
-        element.addContent(storeIcon("flashgreen", p.getFlashGreenIcon()));
-        element.addContent(storeIcon("flashlunar", p.getFlashLunarIcon()));
+        if (p.getLayoutPanel()==null){
+            element.addContent(storeIcon("held", p.getHeldIcon()));
+            element.addContent(storeIcon("dark", p.getDarkIcon()));
+            element.addContent(storeIcon("red", p.getRedIcon()));
+            element.addContent(storeIcon("yellow", p.getYellowIcon()));
+            element.addContent(storeIcon("flashyellow", p.getFlashYellowIcon()));
+            element.addContent(storeIcon("green", p.getGreenIcon()));
+            element.addContent(storeIcon("lunar", p.getLunarIcon()));
+            element.addContent(storeIcon("flashred", p.getFlashRedIcon()));
+            element.addContent(storeIcon("flashgreen", p.getFlashGreenIcon()));
+            element.addContent(storeIcon("flashlunar", p.getFlashLunarIcon()));
+        }
         element.setAttribute("class", "jmri.jmrit.display.configurexml.SignalHeadIconXml");
         return element;
     }
@@ -71,110 +83,164 @@ public class SignalHeadIconXml extends PositionableLabelXml {
 		PanelEditor pe = null;
 		LayoutEditor le = null;
         SignalHeadIcon l;
-        String name;
-        
 		String shortClass = className.substring(lastDot+1,className.length());
 		if (shortClass.equals("PanelEditor")) {
 			pe = (PanelEditor) o;
             l = new SignalHeadIcon();
-            loadCommonAttributes(l, PanelEditor.SIGNALS.intValue(), element);
 		}
 		else if (shortClass.equals("LayoutEditor")) {
 			le = (LayoutEditor) o;
             l = new SignalHeadIcon(le);
-            loadCommonAttributes(l, LayoutEditor.SIGNALS.intValue(), element);
 		}
 		else {
 			log.error("Unrecognizable class - "+className);
             l = new SignalHeadIcon();
 		}
+        String name;
 
+        //SignalHeadIcon l = new SignalHeadIcon();
+        // handle old format!
         Attribute attr = element.getAttribute("signalhead"); 
         if (attr == null) {
             log.error("incorrect information for signal head; must use signalhead name");
             return;
-        } else {
-            name = attr.getValue();
         }
-        
-        SignalHead sh = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+        SignalHead sh = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(
+            attr.getValue());
         if (sh != null) {
-            l.setSignalHead(new NamedBeanHandle<SignalHead>(name, sh));
+            l.setSignalHead(sh);
         } else {
             log.error("SignalHead named '"+attr.getValue()+"' not found.");
             return;
         }
-        
-        int rotation = 0;
-        try {
-            attr = element.getAttribute("rotate");
-            rotation = attr.getIntValue();
-        } catch (org.jdom.DataConversionException e){
-        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+
+
+        //NamedIcon red;
+        name = element.getAttribute("red").getValue();
+        l.setRedIcon(NamedIcon.getIconByName(name));
+
+        //NamedIcon yellow;
+        name = element.getAttribute("yellow").getValue();
+        l.setYellowIcon(NamedIcon.getIconByName(name));
+
+        //NamedIcon green;
+        name = element.getAttribute("green").getValue();
+        l.setGreenIcon(NamedIcon.getIconByName(name));
+
+        //NamedIcon lunar=null;
+        if (element.getAttribute("lunar") != null) {
+            name = element.getAttribute("lunar").getValue();
+            l.setLunarIcon(NamedIcon.getIconByName(name));
         }
 
-        loadSignalIcon("red", rotation,l,element, name);
-        loadSignalIcon("yellow", rotation,l,element, name);
-        loadSignalIcon("green", rotation,l,element, name);
-        loadSignalIcon("lunar", rotation,l,element, name);
-        loadSignalIcon("held", rotation,l,element, name);
-        loadSignalIcon("dark", rotation,l,element, name);
-        loadSignalIcon("flashred", rotation,l,element, name);
-        loadSignalIcon("flashyellow", rotation,l,element, name);
-        loadSignalIcon("flashgreen", rotation,l,element, name);
-        loadSignalIcon("flashlunar", rotation,l,element, name);
+        Attribute a; 
+
+        //NamedIcon held = null;
+        a = element.getAttribute("held");
+        if (a!=null) 
+            l.setHeldIcon(NamedIcon.getIconByName(a.getValue()));
+
+        //NamedIcon dark = null;
+        a = element.getAttribute("dark");
+        if (a!=null) 
+            l.setDarkIcon(NamedIcon.getIconByName(a.getValue()));
+
+        //NamedIcon flashred = null;
+        a = element.getAttribute("flashred");
+        if (a!=null) 
+            l.setFlashRedIcon(NamedIcon.getIconByName(a.getValue()));
+
+        //NamedIcon flashyellow = null;
+        a = element.getAttribute("flashyellow");
+        if (a!=null) 
+            l.setFlashYellowIcon(NamedIcon.getIconByName(a.getValue()));
+
+        //NamedIcon flashgreen = null;
+        a = element.getAttribute("flashgreen");
+        if (a!=null) 
+            l.setFlashGreenIcon(NamedIcon.getIconByName(a.getValue()));
+        
+        //NamedIcon flashlunar = null;
+        a = element.getAttribute("flashlunar");
+        if (a!=null) 
+            l.setFlashLunarIcon(NamedIcon.getIconByName(a.getValue()));
         
         try {
-            attr = element.getAttribute("clickmode");
-            if (attr!=null) {
-                l.setClickMode(attr.getIntValue());
+            a = element.getAttribute("rotate");
+            if (a!=null) {
+                int rotation = a.getIntValue();
+                l.setRotation(rotation);
+                /*red.setRotation(rotation, l);
+                yellow.setRotation(rotation, l);
+                green.setRotation(rotation, l);
+                if (lunar!=null) lunar.setRotation(rotation, l);
+                if (flashred!=null) flashred.setRotation(rotation, l);
+                if (flashyellow!=null) flashyellow.setRotation(rotation, l);
+                if (flashgreen!=null) flashgreen.setRotation(rotation, l);
+                if (flashlunar!=null) flashlunar.setRotation(rotation, l);
+                if (dark!=null) dark.setRotation(rotation, l);
+                if (held!=null) held.setRotation(rotation, l);*/
+                
+            }
+        } catch (org.jdom.DataConversionException e) {}
+
+        try {
+            a = element.getAttribute("clickmode");
+            if (a!=null) {
+                l.setClickMode(a.getIntValue());
             }
         } catch (org.jdom.DataConversionException e) {
             log.error("Failed on clickmode attribute: "+e);
         }
 
         try {
-            attr = element.getAttribute("litmode");
-            if (attr!=null) {
-                l.setLitMode(attr.getBooleanValue());
+            a = element.getAttribute("litmode");
+            if (a!=null) {
+                l.setLitMode(a.getBooleanValue());
             }
         } catch (org.jdom.DataConversionException e) {
             log.error("Failed on litmode attribute: "+e);
         }
+
         
         if (pe!=null){
+            loadCommonAttributes(l, PanelEditor.SIGNALS.intValue(), element);
+            NamedIcon icon = loadIcon( l,"red", element);
+            if (icon!=null) { l.setRedIcon(icon); }
+
+            icon = loadIcon( l,"yellow", element);
+            if (icon!=null) { l.setYellowIcon(icon); }
+
+            icon = loadIcon( l,"green", element);
+            if (icon!=null) { l.setGreenIcon(icon); }
+
+            icon = loadIcon( l,"lunar", element);
+            if (icon!=null) { l.setLunarIcon(icon); }
+
+            icon = loadIcon( l,"held", element);
+            if (icon!=null) { l.setHeldIcon(icon); }
+
+            icon = loadIcon( l,"dark", element);
+            if (icon!=null) { l.setDarkIcon(icon); }
+
+            icon = loadIcon( l,"flashred", element);
+            if (icon!=null) { l.setFlashRedIcon(icon); }
+
+            icon = loadIcon( l,"flashyellow", element);
+            if (icon!=null) { l.setFlashYellowIcon(icon); }
+
+            icon = loadIcon( l,"flashgreen", element);
+            if (icon!=null) { l.setFlashGreenIcon(icon); }
+
+            icon = loadIcon( l,"flashlunar", element);
+            if (icon!=null) { l.setFlashLunarIcon(icon); }
             pe.putLabel(l);
         }
         else if (le!=null){
+            loadCommonAttributes(l, LayoutEditor.SIGNALS.intValue(), element);
             l.displayState(l.headState());
             le.putSignal(l);
         }
-    }
-    
-    private void loadSignalIcon(String aspect, int rotation, SignalHeadIcon l, Element element, String name){
-        NamedIcon icon = loadIcon( l,aspect, element);
-        if (icon==null) {
-            if (element.getAttribute(aspect) != null) {
-            String iconName;
-                iconName = element.getAttribute(aspect).getValue();
-                icon = NamedIcon.getIconByName(iconName);
-                icon.setRotation(rotation, l);
-            }
-            else log.warn("did not locate " + aspect + " icon file "+name);
-        }
-        if (icon!=null){
-            if (aspect.equals("red")) l.setRedIcon(icon);
-            else if (aspect.equals("yellow")) l.setYellowIcon(icon);
-            else if (aspect.equals("green")) l.setGreenIcon(icon);
-            else if (aspect.equals("lunar")) l.setLunarIcon(icon);
-            else if (aspect.equals("held")) l.setHeldIcon(icon);
-            else if (aspect.equals("dark")) l.setDarkIcon(icon);
-            else if (aspect.equals("flashred")) l.setFlashRedIcon(icon);
-            else if (aspect.equals("flashyellow")) l.setFlashYellowIcon(icon);
-            else if (aspect.equals("flashgreen")) l.setFlashGreenIcon(icon);
-            else if (aspect.equals("flashlunar")) l.setFlashLunarIcon(icon);
-        }
-    
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadIconXml.class.getName());

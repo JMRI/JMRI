@@ -18,7 +18,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.39 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -117,6 +117,19 @@ public class PositionableLabelXml implements XmlAdapter {
         element.setAttribute("rotate", String.valueOf(icon.getRotation()));
         element.setAttribute("degrees", String.valueOf(icon.getDegrees()));
         element.setAttribute("scale", String.valueOf(icon.getScale()));
+/*
+        AffineTransform t = icon.getTransform();
+        if (t!=null) {
+            Element elem = new Element("transform");
+            elem.setAttribute("m00", ""+t.getScaleX());
+            elem.setAttribute("m01", ""+t.getShearX());
+            elem.setAttribute("m02", ""+t.getTranslateX());
+            elem.setAttribute("m10", ""+t.getShearY());
+            elem.setAttribute("m11", ""+t.getScaleY());
+            elem.setAttribute("m12", ""+t.getTranslateY());
+            element.addContent(elem);
+        }
+        */
         return element;
     }
     
@@ -154,12 +167,34 @@ public class PositionableLabelXml implements XmlAdapter {
 			log.error("Unrecognizable class - "+className);
 		}
         if (element.getAttribute("icon")!=null) {
+            /*if (le!=null) {
+                String name = element.getAttribute("icon").getValue();
+                NamedIcon icon = NamedIcon.getIconByName(name);
+                l = new PositionableLabel(icon);
+                try {
+                    Attribute a = element.getAttribute("rotate");
+                    if (a!=null) {
+                        int rotation = element.getAttribute("rotate").getIntValue();
+                        icon.setRotation(rotation, l);
+                    }
+                } catch (org.jdom.DataConversionException e) {}
+                l.setIcon(icon);
+            } else if(pe!=null) {
+                l = loadIcon("icon", element);
+                if (l==null) {
+                    return;
+                }
+                l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+            }*/
 
             String name = element.getAttribute("icon").getValue();
             NamedIcon icon = NamedIcon.getIconByName(name);
             l = new PositionableLabel(icon);
+            /*if(pe!=null)
+                pe.putLabel(l);
+            else if (le!=null)
+                le.putLabel(l);*/
             loadCommonAttributes(l, level, element);
-            
             try {
                 Attribute a = element.getAttribute("rotate");
                 if (a!=null) {
@@ -172,16 +207,31 @@ public class PositionableLabelXml implements XmlAdapter {
 
             if (nIcon!=null) {
                 l.updateIcon(nIcon);
-            }
+            } /*else {
+                l.updateIcon(Icon);
+            }*/
+            //l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         } else if (element.getAttribute("text")!=null) {
             l = new PositionableLabel(element.getAttribute("text").getValue());
+            /*if(pe!=null)
+                pe.putLabel(l);
+            else if (le!=null)
+                le.putLabel(l);*/
             loadCommonAttributes(l, level, element);
             loadTextInfo(l, element);
         
         } else {
-            log.error("PositionableLabel is null!");
-            return;
+            if(l==null)
+                log.error("PositionableLabel is null!");
+                return;
         }
+        /*if(pe!=null) {
+            loadCommonAttributes(l, PanelEditor.LABELS.intValue(), element);
+        } else if (le!=null) {
+            l.setPanel(le);
+            loadCommonAttributes(l, LayoutEditor.LABELS.intValue(), element);
+        }*/
+
         Attribute a = element.getAttribute("fixed");
         if ( (a!=null) && a.getValue().equals("true"))
             l.setFixed(true);
@@ -206,6 +256,12 @@ public class PositionableLabelXml implements XmlAdapter {
         } catch (DataConversionException ex) {
             log.warn("invalid size attribute value");
         }
+        /*a = element.getAttribute("style");
+        try {
+            if (a!=null) l.setFontStyle(a.getIntValue(), Font.BOLD);  // label is created bold, so drop bold
+        } catch (DataConversionException ex) {
+            log.warn("invalid style attribute value");
+        }*/
         a = element.getAttribute("style");
         try {
             if (a!=null){
@@ -317,6 +373,42 @@ public class PositionableLabelXml implements XmlAdapter {
             l.setVisible(false);
         }
         //l.updateSize();
+    }
+
+    @SuppressWarnings("unchecked")
+	public PositionableLabel loadIcon(String attrName, Element element) {
+        NamedIcon icon = null;
+        List<Element> iconList = element.getChildren(attrName);
+        if (log.isDebugEnabled()) log.debug("Found "+iconList.size()+" "+attrName+" objects");
+        if (iconList.size()>0) {
+            Element elem = iconList.get(0);
+            String name = elem.getAttribute("url").getValue();
+            icon = NamedIcon.getIconByName(name);
+            try {
+                PositionableLabel l = new PositionableLabel(icon);
+                l.setIcon(icon);
+                Attribute a = elem.getAttribute("rotate");
+                if (a!=null) {
+                    int rotation = a.getIntValue();
+                    icon.setRotation(rotation, l);
+                }
+                double scale = 1.0;
+                int deg = 0;
+                a = elem.getAttribute("degrees");
+                if (a!=null) {
+                    deg = a.getIntValue();
+                }
+                a =  elem.getAttribute("scale");
+                if (a!=null) {
+                    scale = elem.getAttribute("scale").getDoubleValue();
+                }
+                icon.setLoad(deg, scale, l);
+                return l;
+            } catch (org.jdom.DataConversionException dce) {}
+        } else {
+            log.debug("loadIcon \""+attrName+"\" not found.");
+        }
+        return null;
     }
     
     @SuppressWarnings("unchecked")

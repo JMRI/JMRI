@@ -14,22 +14,18 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.5 $
  */
 public class EcosTurnout extends AbstractTurnout 
                          implements EcosListener {
 
     final String prefix = "UT";
 
-    int objectNumber = 0;
-    boolean masterObjectNumber = true;
-    String slaveAddress;
-    int extended = 0;
+    int objectNumber;
     
     /**
      * Ecos turnouts use the NMRA number (0-2044) as their numerical identification
      * in the system name.
-     * @param number DCC address of the turnout
      */
     public EcosTurnout(int number) {
     	super("UT"+number);
@@ -42,40 +38,20 @@ public class EcosTurnout extends AbstractTurnout
 
     	
     }
-     /*Extended is used to indicate that this Ecos accessory has a secondary address assigned to it.
-     the value determines the symbol/icon used on the ecos.
-     2 - Three Way Point
-     4 - Double Slip*/
-    public static final int THREEWAY = 2;
-    public static final int DOUBLESLIP = 4;
-    void setExtended(int e){
-        extended = e;
-    }
-    
+
     void setObjectNumber(int o) { 
         objectNumber = o;
-        /*EcosTrafficController.instance().addEcosListener(this);
+        EcosTrafficController.instance().addEcosListener(this);
         EcosMessage m;
         m = new EcosMessage("request("+objectNumber+", view)");
-        EcosTrafficController.instance().sendEcosMessage(m, null);*/
-    }
-
-    
-    void setSlaveAddress(int o){
-        slaveAddress = prefix+o;
+        EcosTrafficController.instance().sendEcosMessage(m, null);
     }
     
-    void setMasterObjectNumber(boolean o){
-        masterObjectNumber = o;
-    }
-
     static String[] modeNames = null;
     static int[] modeValues = null;
         
     public int getNumber() { return _number; }
-    public int getObject() { return objectNumber; }
-    public int getExtended() { return extended; }
-    public String getSlaveAddress() { return slaveAddress; }
+        
       
      // Handle a request to change state by sending a turnout command
     protected void forwardCommandChangeToLayout(int s) {
@@ -150,146 +126,41 @@ public class EcosTurnout extends AbstractTurnout
     
     /**
      * Tell the layout to go to new state.
-     * @param closed State of the turnout to be sent to the command station
      */
     protected void sendMessage(boolean closed) {
-        if ((masterObjectNumber)&&(extended==0)){
-            EcosMessage m;
-            // get control
-            m = new EcosMessage("request("+objectNumber+", control)");
-            EcosTrafficController.instance().sendEcosMessage(m, null);
-            // set state
-            m = new EcosMessage("set("+objectNumber+", state["+(closed?"0":"1")+"])");
-            EcosTrafficController.instance().sendEcosMessage(m, null);
-            // release control
-            m = new EcosMessage("release("+objectNumber+", control)");
-            EcosTrafficController.instance().sendEcosMessage(m, null);
-        } else { //we have a 3 way or double slip!
-            //Working upon the basis that if the materObjectNumber is false than this is the second
-            //decoder address assigned, while if it is true then we are the first decoder address.
-            boolean firststate;
-            boolean secondstate;
-            if (!masterObjectNumber){
-                //Here we are dealing with the second address
-                int turnaddr = _number-1;
-                Turnout t = EcosTurnoutManager.instance().getTurnout("UT"+turnaddr);
-                secondstate = closed;
-                if(t.getKnownState()==CLOSED)
-                    firststate=true;
-                else
-                    firststate=false;
-                
-            } else {
-                Turnout t = EcosTurnoutManager.instance().getTurnout(slaveAddress);
-                firststate = closed;
-
-                if(t.getKnownState()==CLOSED)
-                    secondstate=true;
-                else
-                    secondstate=false;
-            }
-            int setState=0;
-            if (extended==THREEWAY){
-                if ((firststate)&&(secondstate))
-                    setState=0;
-                else if ((firststate)&&(!secondstate))
-                    setState=1;
-                else
-                    setState=2;
-            } else if (extended==DOUBLESLIP){
-                if ((firststate)&&(secondstate))
-                    setState=0;
-                else if ((!firststate)&&(!secondstate))
-                    setState=1;
-                else if ((!firststate)&&(secondstate))
-                    setState=2;
-                else
-                    setState=3;
-            }
-            
-            if (setState==99){
-                //System.out.println("Invalid selection old state " + getKnownState() + " " + getCommandedState());
-                if(closed){
-                    setCommandedState(THROWN);
-                } else {
-                    setCommandedState(CLOSED);
-                }
-                //System.out.println("After - " + getKnownState() + " " + getCommandedState() + " " + "Is consistant " + isConsistentState());
-            } else {
-            
-                EcosMessage m = new EcosMessage("request("+objectNumber+", control)");
-                EcosTrafficController.instance().sendEcosMessage(m, null);
-                // set state
-                m = new EcosMessage("set("+objectNumber+", state["+setState+"])");
-                EcosTrafficController.instance().sendEcosMessage(m, null);
-                // release control
-                m = new EcosMessage("release("+objectNumber+", control)");
-                EcosTrafficController.instance().sendEcosMessage(m, null);
-            }
-        }
-        
+        EcosMessage m;
+        // get control
+        m = new EcosMessage("request("+objectNumber+", control)");
+        EcosTrafficController.instance().sendEcosMessage(m, null);
+        // set state
+        m = new EcosMessage("set("+objectNumber+", state["+(closed?"0":"1")+"])");
+        EcosTrafficController.instance().sendEcosMessage(m, null);
+        // release control
+        m = new EcosMessage("release("+objectNumber+", control)");
+        EcosTrafficController.instance().sendEcosMessage(m, null);
     }
-        
+    
+    //Think that this might want to be changed so that is checks for <END 0 (OK)>
+    
     // to listen for status changes from Ecos system
     public void reply(EcosReply m) {
-        
+        // turnout message?
         String msg = m.toString();
         if (!msg.contains("<END 0 (OK)>")) return; //The result is not valid therefore we can not set it.
         if (msg.startsWith("<REPLY get("+objectNumber+",") || msg.startsWith("<EVENT "+objectNumber+">")) {
             int start = msg.indexOf("state[");
             int end = msg.indexOf("]");
-            int newstate = UNKNOWN;
             if (start>0 && end >0) {
+                int newstate = UNKNOWN;
                 String val = msg.substring(start+6, end);
-                //System.out.println("Extended - " + extended + " " + objectNumber);
-                if (extended==0){                
-                    if (val.equals("0")) 
-                        newstate = CLOSED;
-                    else if (val.equals("1"))
-                        newstate = THROWN;
-                    else log.warn("val |"+val+"| from "+msg);
-                    // now set state
-                    /*log.debug("see new state "+newstate+" for "+_number);*/
-                    //newCommandedState(newstate);
-                    /*Using newKnownState, as any changes made on the ecos do not show
-                    up on the panel. Therefore if an ecos route is fired the panel
-                    doesn't change to reflect it.*/
-                    newKnownState(newstate);
-                } else {
-                    int newstateext = UNKNOWN;
-                    if (extended==THREEWAY){ //Three way Point.
-                        if(val.equals("0")){
-                            newstate = CLOSED;
-                            newstateext = CLOSED;
-                        } else if(val.equals("1")){
-                            newstate = CLOSED;
-                            newstateext = THROWN;
-                        } else if(val.equals("2")){
-                            newstate = THROWN;
-                            newstateext = CLOSED;
-                        }
-                    } else if (extended==DOUBLESLIP){ //Double Slip
-                        if(val.equals("0")){
-                            newstate = CLOSED;
-                            newstateext = CLOSED;
-                        } else if(val.equals("1")){
-                            newstate = THROWN;
-                            newstateext = THROWN;
-                        } else if(val.equals("2")){
-                            newstate = THROWN;
-                            newstateext = CLOSED;
-                        } else if(val.equals("3")){
-                            newstate = CLOSED;
-                            newstateext = THROWN;
-                        }
-                    }
-                    //The masterObjectNumber is used to determine if this the master or slave decoder
-                    //address in an extended accessory object on the ecos.
-                    if (masterObjectNumber)
-                        newKnownState(newstate);
-                    else
-                        newKnownState(newstateext);
-                }
+                if (val.equals("0")) 
+                    newstate = CLOSED;
+                else if (val.equals("1"))
+                    newstate = THROWN;
+                else log.warn("val |"+val+"| from "+msg);
+                // now set state
+                log.debug("see new state "+newstate+" for "+_number);
+                newCommandedState(newstate);
             }
         }
     }
@@ -298,6 +169,8 @@ public class EcosTurnout extends AbstractTurnout
         // messages are ignored
     }
 
+    
+ 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosTurnout.class.getName());
 }
 

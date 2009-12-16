@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.62 $
+ * @version $Revision: 1.61 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -4072,11 +4072,11 @@ public class LayoutEditor extends JmriJFrame {
 		String tName = nextSignalHead.getText().trim();
         SignalHead mHead = null;
 		if ( (tName!=null) && (tName!="") ) {
-			mHead = InstanceManager.signalHeadManagerInstance().getSignalHead(tName);
-			/*if (mHead == null) 
+			mHead = InstanceManager.signalHeadManagerInstance().getBySystemName(tName.toUpperCase());
+			if (mHead == null) 
 				mHead = InstanceManager.signalHeadManagerInstance().getByUserName(tName);
-			else */
-			nextSignalHead.setText(tName);
+			else 
+				nextSignalHead.setText(mHead.getSystemName());
 		}
         if (mHead == null) {
 			// There is no signal head corresponding to this name
@@ -4098,14 +4098,14 @@ public class LayoutEditor extends JmriJFrame {
         l.setHeldIcon(signalIconEditor.getIcon(7));
         l.setLunarIcon(signalIconEditor.getIcon(8));
         l.setFlashLunarIcon(signalIconEditor.getIcon(9));
-        l.setSignalHead(tName);
-		/*SignalHead xSignal = l.getSignalHead().getBean();
+        l.setSignalHead(nextSignalHead.getText().trim());
+		SignalHead xSignal = l.getSignalHead();
 		if (xSignal != null) {
 			if ( (xSignal.getUserName()==null) || (xSignal.getUserName().equals("")) || 
 						(!(xSignal.getUserName().equals(nextSignalHead.getText().trim()))) ) {
 				nextSignalHead.setText(xSignal.getSystemName());
 			}
-		}*/
+		}
         setNextLocation(l);
 		setDirty(true);
         putSignal(l);
