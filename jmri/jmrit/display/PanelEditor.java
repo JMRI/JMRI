@@ -5,7 +5,6 @@ import jmri.InstanceManager;
 import jmri.Light;
 import jmri.Turnout;
 import jmri.Sensor;
-import jmri.SignalHead;
 import jmri.Memory;
 import jmri.Reporter;
 import jmri.jmrit.catalog.ImageIndexEditor;
