@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 
@@ -32,14 +32,16 @@ public class TurnoutIconXml extends PositionableLabelXml {
         element.setAttribute("turnout", p.getTurnout().getSystemName());
         storeCommonAttributes(p, element);
 
+        // old style 
+        //element.setAttribute("closed", p.getClosedIcon().getURL());
+        //element.setAttribute("thrown", p.getThrownIcon().getURL());
+        //element.setAttribute("unknown", p.getUnknownIcon().getURL());
+        //element.setAttribute("inconsistent", p.getInconsistentIcon().getURL());
+        // element.setAttribute("rotate", String.valueOf(p.getClosedIcon().getRotation()));
         // include contents
-        element.setAttribute("closed", p.getClosedIcon().getURL());
-        element.setAttribute("thrown", p.getThrownIcon().getURL());
-        element.setAttribute("unknown", p.getUnknownIcon().getURL());
-        element.setAttribute("inconsistent", p.getInconsistentIcon().getURL());
-        element.setAttribute("rotate", String.valueOf(p.getClosedIcon().getRotation()));
         element.setAttribute("tristate", p.getTristate()?"true":"false");
         
+        // new style
         element.addContent(storeIcon("closed", p.getClosedIcon()));
         element.addContent(storeIcon("thrown", p.getThrownIcon()));
         element.addContent(storeIcon("unknown", p.getUnknownIcon()));
@@ -65,40 +67,34 @@ public class TurnoutIconXml extends PositionableLabelXml {
 	public void load(Element element, Object o) {
         // create the objects
         PanelEditor p = (PanelEditor)o;
-        String name;
+        String name = "";
+        NamedIcon closed = null;
+        NamedIcon thrown = null;
+        NamedIcon unknown = null;
+        NamedIcon inconsistent = null;
 
         TurnoutIcon l = new TurnoutIcon();
 
-        NamedIcon closed;
-        name = element.getAttribute("closed").getValue();
-        l.setClosedIcon(closed = NamedIcon.getIconByName(name));
-        if (closed == null) log.warn("did not locate closed icon file "+name);
-
-        NamedIcon thrown;
-        name = element.getAttribute("thrown").getValue();
-        l.setThrownIcon(thrown = NamedIcon.getIconByName(name));
-        if (thrown == null) log.warn("did not locate thrown icon file "+name);
-
-        NamedIcon unknown;
-        name = element.getAttribute("unknown").getValue();
-        l.setUnknownIcon(unknown = NamedIcon.getIconByName(name));
-        if (unknown == null) log.warn("did not locate unknown icon file "+name);
-
-        NamedIcon inconsistent;
-        name = element.getAttribute("inconsistent").getValue();
-        l.setInconsistentIcon(inconsistent = NamedIcon.getIconByName(name));
-        if (inconsistent == null) log.warn("did not locate inconsistent icon file "+name);
-
-        try {
-            Attribute a = element.getAttribute("rotate");
-            if (a!=null) {
-                int rotation = element.getAttribute("rotate").getIntValue();
-                closed.setRotation(rotation, l);
-                thrown.setRotation(rotation, l);
-                inconsistent.setRotation(rotation, l);
-                unknown.setRotation(rotation, l);
-            }
-        } catch (org.jdom.DataConversionException e) {}
+        // load old style icons      
+        if (element.getAttribute("closed") != null)
+        	l.setClosedIcon(closed = NamedIcon.getIconByName(element.getAttribute("closed").getValue()));
+        if (element.getAttribute("thrown") != null)
+        	l.setThrownIcon(thrown = NamedIcon.getIconByName(element.getAttribute("thrown").getValue()));      
+        if (element.getAttribute("unknown") != null)
+        	l.setUnknownIcon(unknown = NamedIcon.getIconByName(element.getAttribute("unknown").getValue()));
+        if (element.getAttribute("inconsistent") != null){
+        	l.setInconsistentIcon(inconsistent = NamedIcon.getIconByName(element.getAttribute("inconsistent").getValue()));
+        	try {
+        		Attribute a = element.getAttribute("rotate");
+        		if (a!=null) {
+        			int rotation = element.getAttribute("rotate").getIntValue();
+        			closed.setRotation(rotation, l);
+        			thrown.setRotation(rotation, l);
+        			inconsistent.setRotation(rotation, l);
+        			unknown.setRotation(rotation, l);
+        		}
+        	} catch (org.jdom.DataConversionException e) {}
+        }
 
         loadCommonAttributes(l, PanelEditor.TURNOUTS.intValue(), element);
 
@@ -108,20 +104,35 @@ public class TurnoutIconXml extends PositionableLabelXml {
         else
             l.setTristate(false);
             
-        l.setTurnout(element.getAttribute("turnout").getValue());
+        l.setTurnout(name = element.getAttribute("turnout").getValue());
         
+        // load new style icons
         NamedIcon icon = loadIcon( l,"closed", element);
-        if (icon!=null) { l.setClosedIcon(icon); }
-
+        if (icon!=null) {
+        	closed = icon;
+        	l.setClosedIcon(icon); 
+        }
         icon = loadIcon( l,"thrown", element);
-        if (icon!=null) { l.setThrownIcon(icon); }
-
+        if (icon!=null) {
+        	thrown = icon;
+        	l.setThrownIcon(icon); 
+        }
         icon = loadIcon( l,"unknown", element);
-        if (icon!=null) { l.setUnknownIcon(icon); }
-
+        if (icon!=null) {
+        	unknown = icon;
+        	l.setUnknownIcon(icon); 
+        }
         icon = loadIcon( l,"inconsistent", element);
-        if (icon!=null) { l.setInconsistentIcon(icon); }
-
+        if (icon!=null) {
+        	inconsistent = icon;
+        	l.setInconsistentIcon(icon); 
+        }       
+        // report errors
+        if (closed == null) log.warn("did not locate closed icon turnout "+name);
+        if (thrown == null) log.warn("did not locate thrown icon turnout "+name);
+        if (unknown == null) log.warn("did not locate unknown icon turnout "+name);
+        if (inconsistent == null) log.warn("did not locate inconsistent icon turnout "+name);
+        
         p.putLabel(l);
     }
 
