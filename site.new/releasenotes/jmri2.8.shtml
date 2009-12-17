@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.8.shtml,v 1.4 2009-12-17 05:59:50 jacobsen Exp $ -->
+<!-- $Id: jmri2.8.shtml,v 1.5 2009-12-17 08:44:28 hebbos Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -464,11 +464,6 @@ There is now a IMCURRENTTIME memory variable that contains the current fast time
 Matt Harris provided a new "<a href="../help/en/html/apps/SoundPro/SoundPro.shtml">SoundPro</a>" application.
 
 <p>
-Lionel Jeanson added support for icons to the roster, so you can associate images with your
-locomotives.  He also updated the Throttle to display them, and provided a 
-<a href="../help/en/package/jmri/jmrit/throttle/ThrottleFrame.shtml#prefs">throttle preferences panel</a> for controlling that.
-
-<p>
 Peter Ulvestad updated the Comprehensive programmer format to display built-in speed table information better.
 
 <p>
@@ -524,13 +519,6 @@ Simple Signal Logic now remembers whether you entered a user name or system name
 use that same information in the future.  Previously, it converted whatever you entered into
 a system name and remembered that.
 
-<p> 
-Lionel Jeanson made some more improvements to the throttle windows:
-He added a ThrottleToolBar in order to get all throttles in one window (this involved some changes
-to the internal structure of the code that may cause problems for scripts if they were using
-the internal interfaces of the Throttles; please check your scripts).
-He also added default background image for DCC addresses 0 and 3.
-
 <p>
 Update XML parsing routines to use Xerces-J library instead of Crimson.
 This may require users who have created their own startup scripts to reference
@@ -579,9 +567,6 @@ Nigel Cliffe added a definition for the Lenz Silver 21 Pin decoder.
 Marc Fournier updated the Kato EM13 decoder definition file.
 
 <p>
-Lionel Jeanson added a window listing active throttles.
-
-<p>
 The default memory limit on Mac OS X has been increased.
 
 <p>
@@ -622,30 +607,10 @@ Kevin Dickerson added lunar signals to the Layout Editor.
 Paul Bender added ops mode programming for the Hornby command station.
 
 <p>
-Lionel Jeanson added initial support for "Jynstruments", a 
-was to extend the JMRI user interface with scripts.
-For more information, see the 
-<a href="http://jmri.org/jython/Jynstruments/README">README file</a>.
-
-<p>
-Lionel Jeanson added a button so you can remove images from a roster entry.
-
-<p>
-Lionel Jeanson did some code cleanup and minor fixes in the throttle GUI,
-and in the abstract throttle internal code.
-
-<p>
-Lionel Jeanson improved the way release/dispatch is handled for multiple LocoNet throttles.
-
-<p>
 John Plocher improved the DS54 help page.
 
 <p>
 Peter Ulvestad added the Digitrax DZ123MO decoder.
-
-<p>
-Lionel Jeanson fixed the multi-throttle release issue in LocoNet by 
-better monitoring slot status in LocoNet Throttle.
 
 <p>
 Kevin Dickerson made a number of internal changes to the layout and panel editors.
@@ -695,9 +660,6 @@ Giorgio Terdina provided screen icons for German signals.
 Tjeerd Verhage provided an icon for our SourceForge.net page
 
 <p>
-Lionel Jeanson added a first Jynstrument for throttle tool bar, allows for USB devices throttle frame browsing and throttle pilot.
-
-<p>
 Kevin Dickerson fixed a bug in sensor icons.  When the icon was using
 different size images for the four states, these used to be centered. 
 Starting in JMRI 2.7.4, this was inadvertantly changed so that they were
@@ -743,12 +705,35 @@ Andrew Crosland changed the standard/extended address boundary in the SPROG thro
 <p>
 Kevin Dickerson improved the code for saving panel files.
 
-<p>
-Lionel Jeanson improved the <a href="http://jmri.org/help/en/package/jmri/jmrit/throttle/ThrottleFrame.shtml">throttle help pages</a>
-to include much more information about advanced features.
-
 <p>Peter Ulvestad improved the decoder definition for the MRC 1663
 Atlas S2/S4 decoder. 
+
+
+<p>Lionel Jeanson improved rosters:
+<ul>
+<li>Added support for icons to rosters, so you can associate icons with your locomotives. Also updated the Roster combobox to dispay them.
+<li>Added support for images to rosters, so you can associate images with your locomotives. Also updated the Throttle to display them.
+<li>Added a button so you can remove image or icon from a roster entry.
+<li>Added a <a href="http://jmri.org/help/en/html/tools/throttle/RostersMediaPane.shtml">Roster Media pane in DecoderPro</a> to manage above improvements, available in Advanced mode.
+</ul>
+<p>Lionel Jeanson improved Throttles:
+<ul>
+<li>Added a <a href="http://jmri.org/help/en/html/tools/throttle/ThrottleToolBar.shtml">throttle window tool bar</a> in order to be able to have several throttles in one window (this involved some changes to the internal structure of the code that may cause problems for scripts if they were using
+the internal interfaces of the Throttles; please check your scripts).
+<li>Added default background image for DCC addresses 0 and 3.
+<li>Provided a <a href="http://jmri.org/help/en/html/tools/throttle/ThrottlesPreferencesPane.shtml">throttle preferences pane</a> for controlling these new features.
+<li>Improved the <a href="http://jmri.org/help/en/package/jmri/jmrit/throttle/ThrottleFrame.shtml">throttle help pages</a> to include much more information about advanced features.
+<li>Added a <a href="http://jmri.org/help/en/html/tools/throttle/ThrottlesListWindow.shtml">window listing JMRI managed throttles</a>.
+<li>Improved the way throttles and throttle windows layout are exported to xml.
+<li>Added default throttle xml files for throttles linked to a roster entry.
+<li>Reorganized <a href="http://jmri.org/help/en/html/tools/throttle/ToolsMenuThrottleEntry.shtml">the tools->throttle menu entries</a>.
+<li>Fixed the multi-throttle release issue in LocoNet by better monitoring slot status in LocoNet Throttle (also fixes function visual feedback to throttle frames)
+<li>Improved the way release/dispatch is handled for multiple LocoNet throttles.
+<li>Added initial support for <a href="http://jmri.org/help/en/html/tools/scripting/Jynstruments.shtml">"Jynstruments", a new way to extend the JMRI user interface with scripts</a>.
+<li>Added Jynstruments for the throttle frame, <a href="http://jmri.org/help/en/html/tools/throttle/HowToJMRIOrientedThrottle.shtml">allows for extended display or custom function control for throttles</a>.
+<li>Added Jynstruments for the throttle tool bar, <a href="http://jmri.org/help/en/html/tools/throttle/AdvancedThrottleControl.shtml">allows for USB devices and Nintendo Wiimote throttle frame browsing and throttle pilot</a>.
+</ul>
+
 
 <p>Dan Boudreau made several enhancements and bug fixes:
 <ul>
