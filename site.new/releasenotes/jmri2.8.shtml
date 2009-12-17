@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.8.shtml,v 1.5 2009-12-17 08:44:28 hebbos Exp $ -->
+<!-- $Id: jmri2.8.shtml,v 1.6 2009-12-17 19:27:35 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -24,7 +24,7 @@
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
+    <div id="mainContent" style=" width : 692px;">
       <h2>
       Release Notes for JMRI 2.8 release
       </h2>
@@ -116,8 +116,6 @@ as the program will update them to the new format upon storing them.
 
 Ken Cameron updated the decoder definition for the Team Digital SMC4.
 
-
-
 <p>
 Fixed a problem when using the invert option on LocoNet sensors.
 
@@ -197,10 +195,6 @@ if people are interested in this.
 Fix the script input window so that large scripts can be entered.  Once the initial text window is full, scroll-bars will appear.
 Also, fixed a bug that could cause the "Execute" button to disappear.
 
-
-<p>
-Kevin Dickerson fixed a problem what would sometimes result in improperly disabled Logix and Conditionals.
-
 <p>
 Support for "Lunar" appearance has been added to signals.
 
@@ -237,8 +231,6 @@ JMRI 2.7.3 would not locate the icon)
 <p>
 Pete Cressman fixed a problem that prevented the format of panel editor Sensor Icon text
 from being properly stored and reloaded.
-
-<p>
 
 <p>
 Pete Cressman added a "Memory Input Icon" to the panel editor.
@@ -289,13 +281,8 @@ This alignment will only occur to the unfixed and unlocked icons.
 Paul Bender fixed a problem with XPressNet throttle setup that was particularly problematic for Hornby users.
 
 <p>
-Kevin Dickerson improved the way we check for duplicate roster IDs to catch some additional
-cases.
-
-<p>
 Paul Bender corrected a bug in XPressNet LI100 programmer which made it difficult to read 
 multiple values from a decoder (single reads were ok).
-
 
 <P>
 Paul Bender added some additional error messages to the DCC programmer.
@@ -352,11 +339,6 @@ changed the Lenz tab name to Bachmann, updated
 dimensions and default values as per decoder manual and added factory reset menu items.
 
 <p>
-Kevin Dickerson added a new "failedThrottleRequest" function to the core Throttle support, 
-so that if System-specific throttles are unable to create a throttle, 
-then the address is removed from the throttleListeners Hashmap, and hence prevents the DCC address being locked out.
-
-<p>
 Paul Bender fixed an error when parsing an "unsupported command" XPressNet response message.
 
 <p>
@@ -408,21 +390,7 @@ Ilidio Serra provided a decoder definition for the Rapido TurboTrain.
 Pete Cressman fixed a problem with italic text in the panel editor.
 
 <p>
-Kevin Dickerson fixed a problem controlling Turnouts and Signals through an SPROG, 
-and greatly improved the internal structure of that code.
-
-<p>
-Kevin Dickerson added support for the <a href="http://merg.co.uk">MERG</a> Signal Driver 2 board.
-
-<p>
 Pete Cressman fixed a bug in Logix support for Memories
-
-<p>
-Kevin Dickerson reduced to one the number of times a function is sent to a decoder by an SPROG system, 
-thus for sound functions it prevents the sound being repeated three times or a turnout being set three times.  
-
-<p>
-Kevin Dickerson added support for groups in the DecoderPro roster.
 
 <p>
 Ken Cameron updated the RobotThrottle2 script to solve the 'waiting for throttle' problem,
@@ -430,32 +398,10 @@ to add a horn button,
 and to provide smoother stops.
 
 <p>
-Kevin Dickerson added formatting features into the Text and Memory 
-Label on the Layout Editor:
-<ul>
-<li>Set Fixed Size,
-<li>Set Margin Size (Not available if the size is fixed)
-<li>Text Label Background Colour
-<li>Border Size & Border Colour
-<p>
-For the Memory Label he also added:
-<li>Justification - If the Size is fixed, it deals with the justification 
-within the box, if the size is dynamic, then it is the justification 
-around the x axis.
-<li>Double Click to present an Edit Memory value.
-</ul>
-
-<p>
 Matt Harris updated the build.xml file so that JMRI can be built with Java 1.7 (1.5 is still the default)
 
 <p>
 Ken Cameron added Jython command support to Logix.
-
-<p>
-Kevin Dickerson updated the layout sensor, 
-so that it can be converted and displayed as a text label instead of an icon.  
-Formatting options are similar to that added with the positional label, 
-default text will either be from the sensor username or that it blank then it will use active, inactive.
 
 <P>
 There is now a IMCURRENTTIME memory variable that contains the current fast time.
@@ -478,10 +424,6 @@ Paul Fraker updated the MRC Athearn Genesis SD45-2 definition and updated the MR
 Elmer McKay provided a nice help file describing how to start putting signals on your layout.
 
 <p>
-Kevin Dickerson added a function to allow the system throttle manager to notify software throttles that they have
-lost control over the selected loco.
-
-<p>
 Jack Shall updated the SoundTraxx Diesel Tsunami definition to include the new ALCO 539 models.
 
 <p>
@@ -496,11 +438,6 @@ If you want those two panes, start using the new Advanced programmer format.
 
 <p>
 David Duchamp fixed a problem with processing continuing sense when editing turnouts in Layout Editor
-
-<p>
-Kevin Dickerson improved how Layout Editor windows are loaded; 
-changed the pop up to start and stop the clock so that it now works in the Layout Editor in the same way it does in the Panel Editor;
-added code to enable a circle and elipse to be drawn for a track segments.
 
 <p>
 David Duchamp extended the Maple interface so JMRI can run multiuple Maple input touchpanels.
@@ -526,9 +463,6 @@ the xercesImpl.jar file instead of crimson.jar.
 
 <p>
 David Duchamp fixed signal head placement problems in Layout Editor signal setup tool.
-
-<p>
-Kevin Dickerson added some text formatting options to the Layout Editor.
 
 <p>
 JMRI SignalHeads are supposed to start up DARK, so that whatever controls them can 
@@ -570,19 +504,12 @@ Marc Fournier updated the Kato EM13 decoder definition file.
 The default memory limit on Mac OS X has been increased.
 
 <p>
-Kevin Dickerson fixed a problem with multi-sensor icons.
-
-<p>
 Randy McKenzie contributed some additional background images for CTC panels.
 
 <p>
 XML input processing has been reworked.  This shouldn't have any impact
 on users, but might effect people who have written scripts to 
 read or write XML files. See the XmlFile JavaDoc for more information.
-
-<p>
-Kevin Dickerson fixed a problem using an SPROG command station with 
-multiple layout connections.
 
 <p>
 Nigel Cliffe contributed an update for the CT Elektronik SL version 40
@@ -601,9 +528,6 @@ the Add/Edit Section window of the Section table
 to make it easier to set entry point direction.
 
 <p>
-Kevin Dickerson added lunar signals to the Layout Editor.
-
-<p>
 Paul Bender added ops mode programming for the Hornby command station.
 
 <p>
@@ -611,9 +535,6 @@ John Plocher improved the DS54 help page.
 
 <p>
 Peter Ulvestad added the Digitrax DZ123MO decoder.
-
-<p>
-Kevin Dickerson made a number of internal changes to the layout and panel editors.
 
 <p>
 Peter Ulvestad updated the Atlas Dual Mode and four function (342 and 345)
@@ -626,10 +547,6 @@ The
 option in the main Help menu now works.
 The messages are filed in a  
 <a href="http://groups.google.com/group/jmri-problem-reports">dedicated Google group</a>.
-
-<p>
-Kevin Dickerson improved the file-load dialog so that it doesn't give 
-an error message if the user cancels the load.
 
 <p>
 Pete Cressman modified the create/edit dialogs for state variables and actions in Logix 
@@ -660,26 +577,6 @@ Giorgio Terdina provided screen icons for German signals.
 Tjeerd Verhage provided an icon for our SourceForge.net page
 
 <p>
-Kevin Dickerson fixed a bug in sensor icons.  When the icon was using
-different size images for the four states, these used to be centered. 
-Starting in JMRI 2.7.4, this was inadvertantly changed so that they were
-aligned in the upper left corner.  This bug is now fixed, and the
-images have been moved back.  This won't effect you if you're using
-the (recommended) same-size icons, but if you're using different size 
-icons and have created a panel since JMRI 2.7.4, you may have to revisit it.
-
-<p>
-Kevin Dickerson make extensive updates to the ECoS support:
-<ul>
-<li>updated the eCos support to now include S88 sensors
-<li>added support for throttles to turn locomotives through the ECoS
-<il>added features to add locos to the roster from an Ecos
-command station, and
-to add locos from the Ecos to the Roster.
-<li>updated the ECoS support for better turnout operation, including turnout monitoring.
-</ul>
-
-<p>
 SE8c Signal Heads can now work with non-Digitrax layout connections.
 There have been a number of changes to make this possible. 
 In particular, the convention for system names for SE8c signal heads has
@@ -702,12 +599,53 @@ Peter Ulvestad provided a decoder definition for the MRC Rapido Turbotrain.
 <p>
 Andrew Crosland changed the standard/extended address boundary in the SPROG throttle software to match the SPROG hardware.
 
-<p>
-Kevin Dickerson improved the code for saving panel files.
 
 <p>Peter Ulvestad improved the decoder definition for the MRC 1663
 Atlas S2/S4 decoder. 
 
+<p>Kevin Dickerson made several bug fixes and enhancements:
+<ul>
+<li>improved the file-load dialog so that it doesn't give an error message if the user cancels the load.
+<li>improved the way we check for duplicate roster IDs to catch some additional cases.
+<li>added support for the <a href="http://merg.co.uk">MERG</a> Signal Driver 2 board.
+<li>added support for groups in the DecoderPro roster.
+<li>added a new "failedThrottleRequest" function to the core Throttle support, so that if System-specific throttles are unable to create a throttle, then the address is removed from the throttleListeners Hashmap, and hence prevents the DCC address being locked out.
+<li>fixed a problem what would sometimes result in improperly disabled Logix and Conditionals.
+<li>fixed a problem controlling Turnouts and Signals through an SPROG, and greatly improved the internal structure of that code.
+<li>reduced to one the number of times a function is sent to a decoder by an SPROG system, thus for sound functions it prevents the sound being repeated three times or a turnout being set three times.
+<li>fixed a problem using an SPROG command station with multiple layout connections.
+<li>make extensive updates to the ECoS support:
+<ul>
+<li>updated the eCos support to now include S88 sensors
+<li>updated the ECoS support for better turnout operation, including turnout monitoring.
+<li>added support for throttles to turn locomotives through the ECoS 
+<li>added features to add locos to the roster from an Ecos command station, 
+</ul>
+</ul>
+<p>Kevin Dickerson made several bug fixes and enhancements to the Layout and Panel Editors:
+<ul>
+<li>made a number of internal changes to the layout and panel editors.
+<li>added formatting features into the Text and Memory Label in both Editors along with allow a sensor to be displayed as a text label in stead of an icon.
+<li>Set Fixed Size,
+<ul>
+<li>Set Margin Size (Not available if the size is fixed)
+<li>Text Label & Background Colour
+<li>Border Size & Border Colour
+</ul>
+<li>For the Memory Label he also added:
+<ul>
+<li>Justification - If the Size is fixed, it deals with the justification within the box, if the size is dynamic, then it is the justification around the x axis.
+<li>Double Click to present an Edit Memory value. 
+</ul>    
+<li>A sensor can now be displayed as a text label instead of an icon, with Formatting options similar to that above, with the default text will either be from the sensor username or if that is blank then they will use active, inactive.
+<li>improved how Layout Editor windows are loaded.
+<li>changed the pop up to start and stop the clock so that it now works in the Layout Editor in the same way it does in the Panel Editor; 
+<li>added code to enable a circle and elipse to be drawn for a track segments in the Layout Editor.
+<li>added lunar signals to the Layout Editor.
+<li>MultiSensor Icons now function correctly in the layout editor.
+<li>made a number of internal changes to the layout and panel editors.
+<li>fixed a bug in sensor icons. When the icon was using different size images for the four states, these used to be centered. Starting in JMRI 2.7.4, this was inadvertantly changed so that they were aligned in the upper left corner. This bug is now fixed, and the images have been moved back. This won't effect you if you're using the (recommended) same-size icons, but if you're using different size icons and have created a panel since JMRI 2.7.4, you may have to revisit it.
+</ul>
 
 <p>Lionel Jeanson improved rosters:
 <ul>
