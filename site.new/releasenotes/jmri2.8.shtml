@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.8.shtml,v 1.2 2009-12-11 03:39:47 jacobsen Exp $ -->
+<!-- $Id: jmri2.8.shtml,v 1.3 2009-12-17 04:44:12 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -116,8 +116,7 @@ as the program will update them to the new format upon storing them.
 
 Ken Cameron updated the decoder definition for the Team Digital SMC4.
 
-<p>
-Dan Boudreau fixed an operations bug: Cars with scheduled loads didn't always pick up the next scheduled load.
+
 
 <p>
 Fixed a problem when using the invert option on LocoNet sensors.
@@ -127,9 +126,6 @@ Pete Cressman added the capability to edit (change) the icons used by a particul
 from the popup menu.
 
 <p>
-Dan Boudreau added a curved track icon, and fixed the straight track icon.
-
-<p>
 Paul Bender added "invert" capability to XPressNet turnouts.
 
 <p>
@@ -137,9 +133,6 @@ Even more help page updates.
 
 <p>
 Panel Editor icons can be edited directly from the Panel by selecting the "edit" item from the popup menu of the icon.
-
-<p>
-Dan Boudreau made sure that changes take effect immediately when you change the level of a Panel Editor icon.
 
 <p>
 Mark Fournier updated the Comprehensive programmer to handle more consisting options.
@@ -162,12 +155,6 @@ which is unfortunately no longer being maintained online by the NMRA.
 
 <p>
 Pete Cressman fixed some problems when defining and deleting icons for a Panel Editor MultiSensor icon.
-
-<p>
-Dan Boudreau made some internal changes to the operations support
-
-<p>
-And some more help page updates...
 
 <p>
 Paul Bender added initial support for connecting to a Lenz LI-USB via the Lenz server.
@@ -195,21 +182,11 @@ Pete Cressman improved Logix Conditionals by
 </ul>
 
 <p>
-Dan Boudreau made some minor bug fixes in the operations feature: 
-Locations window didn't always show the correct number of car and engine pickups for each location.
-Small change in functionality, train reset no longer swaps car loads.
-
-<p>
 Internal Lights (IL1, etc) now support variable intensity.
 
 <p>
 The bug causing the program to hang when editing a Logix, Route or Light has been fixed.
 (This fix was in JMRI 2.6.1, but not in JMRI 2.7.1)
-
-<p>
-Dan Boudreau added a new save panel feature.  
-When saving a panel that already exists, the program now saves a backup copy of the panel in a directory called "backupPanels".  
-The backup panel's file name is modified with the current date and time.
 
 <p>
 Added a new Panel Editor icon for Memory objects that lets you set and modify numeric values.
@@ -220,8 +197,6 @@ if people are interested in this.
 Fix the script input window so that large scripts can be entered.  Once the initial text window is full, scroll-bars will appear.
 Also, fixed a bug that could cause the "Execute" button to disappear.
 
-<p>
-Dan Boudreau added initial support for RFID tags to the operations database.
 
 <p>
 Kevin Dickerson updated the ECoS support for better turnout operation, 
@@ -257,9 +232,6 @@ and added methods for better control of the icon editor.
 
 <p>
 Fixed a problem that prevented TwoOutput and ThreeOutput signal heads from being edited from the Signal Head Table.
-
-<p>
-Dan Boudreau added fields for RFID to the operations code.
 
 <p>
 Sakae Akanuma provided a Japanese translation.
@@ -328,9 +300,6 @@ Paul Bender fixed a problem with XPressNet throttle setup that was particularly 
 Ken Cameron improved his RobotThrottle script.
 
 <p>
-Dan Boureau added status information to the operations route table.
-
-<p>
 Kevin Dickerson improved the way we check for duplicate roster IDs to catch some additional
 cases.
 
@@ -351,13 +320,7 @@ Paul Bender added some additional error messages to the DCC programmer.
 Sakae Akanuma added a Japanese translation.
 
 <p>
-Dan Boudreau improved the NCE Show Cab feature.
-
-<p>
 Pete Cressman fixed a bug in the memory compare in Logix
-
-<p>
-Dan Boudreau fixed a bug with rotating square icons.
 
 <p>
 Ken Cameron updated his RobotThrottle2 and DebounceSensor scripts.
@@ -405,20 +368,12 @@ changed the Lenz tab name to Bachmann, updated
 dimensions and default values as per decoder manual and added factory reset menu items.
 
 <p>
-Dan Boudreau fixed a minor bug when building trains from staging tracks without engines.  
-Builds would sometimes fail if the staging tracks didn't have engines.  
-Fix now allows trains to be build from staging without requiring engines.
-
-<p>
 Kevin Dickerson added a new "failedThrottleRequest" function to the core Throttle support, 
 so that if System-specific throttles are unable to create a throttle, 
 then the address is removed from the throttleListeners Hashmap, and hence prevents the DCC address being locked out.
 
 <p>
 Andrew Crosland added support for CBUS CV programmers.
-
-<p>
-Dan Boudreau fixed a minor operations bug to allow terminating a train into staging without an engine.
 
 <p>
 Paul Bender fixed an error when parsing an "unsupported command" XPressNet response message.
@@ -472,13 +427,6 @@ Ilidio Serra provided a decoder definition for the Rapido TurboTrain.
 Matt Harris improved how the new audio support handles some errors.
 
 <p>
-Dan Boudreau made some improvements to the operations tools: Added some tool tips, 
-improved performance with large rolling stock collections, 
-fixed an occasional timing problem,
-created a more random set of cars and engines for building trains,
-limit the number of cars printed in the build report to 500 cars to avoid out-of-memory conditions when previewing a printout.
-
-<p>
 Pete Cressman fixed a problem with italic text in the panel editor.
 
 <p>
@@ -492,14 +440,8 @@ Kevin Dickerson added support for the <a href="http://merg.co.uk">MERG</a> Signa
 Pete Cressman fixed a bug in Logix support for Memories
 
 <p>
-Dan Boudreau fixed the panel editor to allow the user to use the + and - functions to nudge labels.  
-
-<p>
 Kevin Dickerson reduced to one the number of times a function is sent to a decoder by an SPROG system, 
 thus for sound functions it prevents the sound being repeated three times or a turnout being set three times.  
-
-<p>
-Dan Boudreau improved the operations "engine import" feature to check if the model exists.  
 
 <p>
 Kevin Dickerson added support for groups in the DecoderPro roster.
@@ -526,9 +468,6 @@ within the box, if the size is dynamic, then it is the justification
 around the x axis.
 <li>Double Click to present an Edit Memory value.
 </ul>
-
-<p>
-Dan Boudreau added options to allow operations users to control the display of error messages.
 
 <p>
 Matt Harris updated the build.xml file so that JMRI can be built with Java 1.7 (1.5 is still the default)
@@ -568,10 +507,6 @@ Paul Fraker updated the MRC Athearn Genesis SD45-2 definition and updated the MR
 Elmer McKay provided a nice help file describing how to start putting signals on your layout.
 
 <p>
-Dan Boudreau add two new operations tools for trains and locations.  
-The "Modify Trains" and "Modify Locations" tools allows the user to quickly edit which car types a train or location will service.
-
-<p>
 Kevin Dickerson added a function to allow the system throttle manager to notify software throttles that they have
 lost control over the selected loco.
 
@@ -589,14 +524,7 @@ If you want those two panes, start using the new Advanced programmer format.
 "Advanced" is be the default programmer format, if you don't pick any other one.
 
 <p>
-Dan Boudreau protected the code against certain errors when reading old operations configuration files,
-fixed a minor shutdown bug, and an issue when counting cars.
-
-<p>
 David Duchamp fixed a problem with processing continuing sense when editing turnouts in Layout Editor
-
-<p>
-Dan Boudreau added a operations tool to show cars for locations and tracks.
 
 <p>
 Kevin Dickerson improved how Layout Editor windows are loaded; 
@@ -717,11 +645,6 @@ the Add/Edit Section window of the Section table
 to make it easier to set entry point direction.
 
 <p>
-Dan Boudreau added code to detect and report 
-when any changes occur to a train.  
-He also improved save coverage when terminating the program.
-
-<p>
 Kevin Dickerson added lunar signals to the Layout Editor.
 
 <p>
@@ -773,13 +696,6 @@ Kevin Dickerson improved the file-load dialog so that it doesn't give
 an error message if the user cancels the load.
 
 <p>
-Dan Boudreau made a small change in how operations staging works.  
-Previously any car in staging could be assigned to a train.  
-Now the cars in staging must also be serviced by the train being built.
-Also, users can name tracks using -number suffix.  
-Suffix isn't printed for manifests or switch lists.
-
-<p>
 Pete Cressman modified the create/edit dialogs for state variables and actions in Logix 
 to organize them according to item type (e.g. Senors, turnouts, etc.).  
 The column expandability  has been somewhat improved.
@@ -808,16 +724,7 @@ Giorgio Terdina provided screen icons for German signals.
 Tjeerd Verhage provided an icon for our SourceForge.net page
 
 <p>
-Dan Boudreau added three additional sort options for trains in the operations code:  by route, departure, and destination.
-
-<p>
 Matt Harris updated the Audio package.
-
-<p>
-Dan Boudreau fixed a marker bug:  Opening and closing marker frames caused the number of markers created to increase by one each time the marker frame was reopened.
-
-<p>
-Dan Boudreau made an Operations enhancement.  When replacing an existing engine model with a new model, the new model will now take the old model's attributes of length, type, and horsepower. He also improved some of the build messages with regards to cabooses and cars with FRED, and made a minor improvement in build messages for engines.  Note that if the train requires 2 or more engines that they be in a consist.
 
 <p>
 Lionel Jeanson added a first Jynstrument for throttle tool bar, allows for USB devices throttle frame browsing and throttle pilot.
@@ -879,19 +786,112 @@ Brett Hoffman updated the WiFi communications code.
 Lionel Jeanson improved the <a href="http://jmri.org/help/en/package/jmri/jmrit/throttle/ThrottleFrame.shtml">throttle help pages</a>
 to include much more information about advanced features.
 
-<p>Dan Boudreau made several improvements to the operations code.
-You can now print your manifests using colors for the car drops and
-pickups. You can now reset a train if you've modified the train's route
-after you've built the train. And the car database is automatically
-saved when you change the Car Types (Descriptive or AAR codes) in setup.
+<p>Peter Ulvestad improved the decoder definition for the MRC 1663
+Atlas S2/S4 decoder. 
 
-<p>
-Peter Ulvestad improved the decoder definition for the MRC 1663 Atlas S2/S4 decoder.
+<p>Dan Boudreau made several enhancements and bug fixes:
+<ul>
+<li>Fixed the panel editor to allow the user to use the + and - functions to nudge labels.  
 
+<li>Added a curved track icon, and fixed the straight track icon.
 
+<li>Fixed a marker bug:  Opening and closing marker frames caused the number of markers created to increase by one each time the marker frame was reopened.
+
+<li>Fixed a bug when rotating square icons.
+
+<li>Added and improved the NCE Show Cab feature.
+
+<li>Added a new save panel feature.  
+When saving a panel that already exists, the program now saves a backup copy of the panel in a directory called "backupPanels".  
+The backup panel's file name is modified with the current date and time.
+
+<li>Changes now take effect immediately when you change the level of a Panel Editor icon.
+</ul>
+<p>Dan Boudreau made many improvements and bug fixes to the
+operations code.
+
+<p>New features:
+<ul>
+<li>You can now print your manifests using colors for the car drops
+and pickups.
+
+<li>The "Modify Trains" and "Modify Locations" tools allows you
+to quickly edit which car types a train or location will service.
+
+<li>The location and track tool menu now has the option to show
+cars.
+
+<li>Added fields for RFID support.
+</ul>
+<p>Operation improvements:
+<ul>
+<li>Trains departing staging now check that the engines and cars
+are serviced by that train. This allows selective builds from staging.
+
+<li>More warnings about saving the operations database when closing
+the Train panel or shutting down JMRI.
+
+<li>Several improved panels that have been reorganized and can be
+resized.
+
+<li>Many of the build messages have been improved making it easier
+to understand why builds fail.
+
+<li>The car database is now automatically saved when you change the
+Car Types (Descriptive or AAR codes) in setup.
+
+<li>The route table now has a status field for each route.
+
+<li>When replacing an existing engine model with a new model, the
+new model will now take the old model's attributes of length, type, and
+horsepower.
+
+<li>Added three additional sort options for trains in the
+operations code: by route, departure, and destination.
+
+<li>Users can name tracks using -number suffix. Suffix isn't
+printed for manifests or switch lists.
+
+<li>The "engine import" now checks to see if the model exists and
+if not will ask if it should be created.
+
+<li>The Train panel can now disable the display of error messages.
+
+<li>Tested with a 10,000 plus car database and improved build
+and table performances when dealing with very large rolling stock
+collections.
+
+<li>Created a more random set of cars and engines when building
+trains.
+</ul>
+
+<p>Operation bug fixes:
+<ul>
+<li>You can now reset a train if you've modified the train's route
+after you've built the train.
+
+<li>Cars with scheduled loads didn't always pick up the next
+scheduled load.
+
+<li>Locations window didn't always show the correct number of car
+and engine pickups for each location.
+
+<li>Train reset no longer swaps car loads.
+
+<li>Builds would fail if the staging tracks didn't have engines.
+Trains can now be built from staging without requiring engines.
+
+<li>Program now allows terminating a train into staging without an
+engine.
+
+<li>Limited the number of cars printed in the build report to 500
+cars to avoid out-of-memory conditions when previewing a printout.
+
+<li>The program can now deal with certain errors when reading old
+operations configuration files. 
+</ul>
 <!--#include virtual="/Footer" -->
-
-   </div><!-- closes #mainContent-->
+</div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
 </div> <!-- closes #container -->
 </body>
