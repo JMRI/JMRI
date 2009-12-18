@@ -1860,6 +1860,88 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     	String name = locoId.getText();
     	addLocoIcon(name);
      }
+    
+ /**
+  * Returns the panel contents sorted.  Helps organize the xml file for
+  * user edits.
+  * @return ArrayList sorted by turnout icons, sensor icons, text labels
+  * and then everything else. 
+  */
+    public ArrayList<JComponent> getSortedContents(){
+    	ArrayList<JComponent> sortIn = contents;
+    	ArrayList<JComponent> sorted = new ArrayList<JComponent>();
+    	// sort by turnout, sensors, text labels, then everything else 
+    	for (int i=0; i<sortIn.size(); i++) {
+    		Object sub = sortIn.get(i);
+    		if (sub.getClass().equals(TurnoutIcon.class)){
+    			boolean added = false;
+    			TurnoutIcon p = (TurnoutIcon)sub;
+    			for (int j=0; j<sorted.size(); j++){
+    				TurnoutIcon pT = (TurnoutIcon)sorted.get(j);
+    				if (p.getTurnout().getSystemName().compareToIgnoreCase(pT.getTurnout().getSystemName()) < 0) {
+    					sorted.add(j, (JComponent)sub);
+    					added = true;
+    					break;
+    				}
+    			}
+    			if (!added)
+    				sorted.add((JComponent)sub);
+    			sortIn.remove(sub);
+    			i--;
+    		}
+    	}
+    	// now sensors
+    	int index = sorted.size();
+    	for (int i=0; i<sortIn.size(); i++) {
+            Object sub = sortIn.get(i);
+            if (sub.getClass().equals(SensorIcon.class)){
+    			boolean added = false;
+    			SensorIcon p = (SensorIcon)sub;
+    			for (int j=index; j<sorted.size(); j++){
+    				SensorIcon pS = (SensorIcon)sorted.get(j);
+    				if (p.getSensor().getSystemName().compareToIgnoreCase(pS.getSensor().getSystemName()) < 0) {
+    					sorted.add(j, (JComponent)sub);
+    					added = true;
+    					break;
+    				}
+    			}
+    			if (!added)
+    				sorted.add((JComponent)sub);
+    			sortIn.remove(sub);
+    			i--;
+            }
+        }
+    	// now labels by text
+    	index = sorted.size();
+    	for (int i=0; i<sortIn.size(); i++) {
+    		Object sub = sortIn.get(i);
+    		if (sub.getClass().equals(PositionableLabel.class)){
+    			PositionableLabel p = (PositionableLabel)sub;
+    			if (p.isText()){
+    				boolean added = false;
+    				for (int j=index; j<sorted.size(); j++){
+    					PositionableLabel pL = (PositionableLabel)sorted.get(j);
+    					if (p.getText().compareToIgnoreCase(pL.getText()) < 0) {
+    						sorted.add(j, (JComponent)sub);
+    						added = true;
+    						break;
+    					}
+    				}
+    				if (!added)
+    					sorted.add((JComponent)sub);
+    				sortIn.remove(sub);
+    				i--;
+    			}
+    		}
+    	}
+    	// everything else
+        for (int i=0; i<sortIn.size(); i++) {
+        	Object sub = sortIn.get(i);
+        	sorted.add((JComponent)sub);
+        }
+    	return sorted;
+    }
+
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PanelEditor.class.getName());

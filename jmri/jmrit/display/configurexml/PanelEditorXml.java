@@ -7,13 +7,17 @@ import java.awt.Dimension;
 import java.awt.Point;
 
 import java.util.List;
+import java.util.ArrayList;
+
+import javax.swing.JComponent;
+
 import org.jdom.*;
 
 /**
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 public class PanelEditorXml implements XmlAdapter {
 
@@ -49,8 +53,9 @@ public class PanelEditorXml implements XmlAdapter {
         // include contents
 
         if (log.isDebugEnabled()) log.debug("N elements: "+p.contents.size());
-        for (int i=0; i<p.contents.size(); i++) {
-            Object sub = p.contents.get(i);
+        ArrayList<JComponent> contents = p.getSortedContents();
+        for (int i=0; i<contents.size(); i++) {
+            Object sub = contents.get(i);
             try {
                 Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
                 if (e!=null) panel.addContent(e);
@@ -62,7 +67,6 @@ public class PanelEditorXml implements XmlAdapter {
 
         return panel;
     }
-
 
     public void load(Element element, Object o) {
         log.error("Invalid method called");
