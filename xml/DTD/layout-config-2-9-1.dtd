@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-9-1.dtd,v 1.1 2009-12-05 07:59:17 kevin-dickerson Exp $ -->
+<!-- $Id: layout-config-2-9-1.dtd,v 1.2 2009-12-18 19:09:12 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of version 2.9.1 development.  Do not modify it       -->
 <!-- after version 2.9.1 is released.  For more information,                -->
@@ -739,10 +739,10 @@
     <!ATTLIST turnouticon height	CDATA #IMPLIED> <!-- deprecated -->
     <!ATTLIST turnouticon width		CDATA #IMPLIED> <!-- deprecated -->
     <!ATTLIST turnouticon rotate  	CDATA #IMPLIED>
-    <!ATTLIST turnouticon closed	CDATA #IMPLIED>
-    <!ATTLIST turnouticon thrown	CDATA #IMPLIED>
-    <!ATTLIST turnouticon unknown	CDATA #IMPLIED>
-    <!ATTLIST turnouticon inconsistent		CDATA #IMPLIED>
+    <!ATTLIST turnouticon closed	CDATA #IMPLIED> <!-- deprecated -->
+    <!ATTLIST turnouticon thrown	CDATA #IMPLIED> <!-- deprecated -->
+    <!ATTLIST turnouticon unknown	CDATA #IMPLIED> <!-- deprecated -->
+    <!ATTLIST turnouticon inconsistent		CDATA #IMPLIED> <!-- deprecated -->
     <!ATTLIST turnouticon turnout	CDATA #IMPLIED>
     <!ATTLIST turnouticon forcecontroloff	(true|false) "false">
     <!ATTLIST turnouticon tristate	(true|false) "false">
@@ -757,6 +757,16 @@
         <!ATTLIST thrown rotate		CDATA #IMPLIED>
         <!ATTLIST thrown degrees		CDATA #IMPLIED>
         <!ATTLIST thrown scale		CDATA #IMPLIED>
+      <!ELEMENT unknown EMPTY>
+        <!ATTLIST unknown url		    CDATA #IMPLIED>
+        <!ATTLIST unknown rotate		CDATA #IMPLIED>
+        <!ATTLIST unknown degrees		CDATA #IMPLIED>
+        <!ATTLIST unknown scale		CDATA #IMPLIED>
+      <!ELEMENT inconsistent EMPTY>
+        <!ATTLIST inconsistent url		    CDATA #IMPLIED>
+        <!ATTLIST inconsistent rotate		CDATA #IMPLIED>
+        <!ATTLIST inconsistent degrees		CDATA #IMPLIED>
+        <!ATTLIST inconsistent scale		CDATA #IMPLIED>
 
   <!ELEMENT securityelementicon EMPTY>
     <!ATTLIST securityelementicon class		CDATA #REQUIRED>
