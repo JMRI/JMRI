@@ -1,0 +1,6 @@
+This is a dummy page, which you 
+should not normally have reached.
+<p>
+From here, you can go anywhere from the side navigation bar, 
+but we suggest the 
+<a href="/k/Recent.shtml">recent events page</a>.

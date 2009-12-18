@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.8.shtml,v 1.6 2009-12-17 19:27:35 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.8.shtml,v 1.7 2009-12-18 22:17:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,7 +29,7 @@
       Release Notes for JMRI 2.8 release
       </h2>
 
-	<p>Date: MM NN, YYYY</p>
+	<p>Date: December 18, 2009</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Production release 2.8 of JMRI/DecoderPro is available for download.
 
@@ -42,8 +42,11 @@ We're therefore making that version, "Production version 2.8" available for down
 <p>
 Among the enhancements since the last production release, JMRI 2.6, are:
 <ul>
-<li>
-<li>
+<li>Greatly improved throttle support, with more flexibility for customization, locomotive images, and
+ability to use iPhones, iPods and Wii remotes as throttles
+<li>Greatly improved Logix, signaling, operations, editors, and other tools
+<li>Many new decoder definitions, several new hardware connections, and 
+    a number of new system customization tools.
 </ul>
 
 <b><p>
@@ -234,9 +237,6 @@ from being properly stored and reloaded.
 
 <p>
 Pete Cressman added a "Memory Input Icon" to the panel editor.
-
-<p>
-More fixes to the portable filename support.
 
 <p>
 Pete Cressman fixed a problem where a panel editor sensor icon would be triggered when you
