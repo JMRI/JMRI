@@ -1,8 +1,5 @@
 package jmri.jmrit.display.configurexml;
 
-//import java.awt.geom.AffineTransform;
-import java.util.List;
-
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
@@ -18,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  */
 public class PositionableLabelXml implements XmlAdapter {
 
@@ -49,10 +46,13 @@ public class PositionableLabelXml implements XmlAdapter {
         
         if (p.isIcon() && p.getIcon()!=null) {
             NamedIcon icon = (NamedIcon)p.getIcon();
-            element.setAttribute("icon", icon.getURL());
-            element.setAttribute("rotate", String.valueOf(icon.getRotation()));
-            if(p.getLayoutPanel()==null)
-                element.addContent(storeIcon("icon", icon));
+            if(p.getLayoutPanel()!=null){
+            	element.setAttribute("icon", icon.getURL());
+            	element.setAttribute("rotate", String.valueOf(icon.getRotation()));
+            }else{
+            	element.setAttribute("icon", "yes");
+            	element.addContent(storeIcon("icon", icon));
+            }
         }
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.PositionableLabelXml");
@@ -154,25 +154,26 @@ public class PositionableLabelXml implements XmlAdapter {
 			log.error("Unrecognizable class - "+className);
 		}
         if (element.getAttribute("icon")!=null) {
-
-            String name = element.getAttribute("icon").getValue();
-            NamedIcon icon = NamedIcon.getIconByName(name);
-            l = new PositionableLabel(icon);
-            loadCommonAttributes(l, level, element);
-            
-            try {
-                Attribute a = element.getAttribute("rotate");
-                if (a!=null) {
-                    int rotation = element.getAttribute("rotate").getIntValue();
-                    icon.setRotation(rotation, l);
-                }
-            } catch (org.jdom.DataConversionException e) {}
-
-            NamedIcon nIcon = loadIcon(l,"icon", element);
-
-            if (nIcon!=null) {
-                l.updateIcon(nIcon);
-            }
+        	NamedIcon icon = null;
+        	String name = element.getAttribute("icon").getValue();
+        	if (name.equals("yes")){
+        		icon = getNamedIcon("icon", element);
+        	}else{
+        		icon = NamedIcon.getIconByName(name);
+        	}
+        	l = new PositionableLabel(icon);
+    		loadCommonAttributes(l, level, element);
+        	try {
+        		Attribute a = element.getAttribute("rotate");
+        		if (a!=null) {
+        			int rotation = element.getAttribute("rotate").getIntValue();
+        			icon.setRotation(rotation, l);
+        		}
+        	} catch (org.jdom.DataConversionException e) {}
+        	NamedIcon nIcon = loadIcon(l,"icon", element);
+        	if (nIcon!=null) {
+        		l.updateIcon(nIcon);
+        	}
         } else if (element.getAttribute("text")!=null) {
             l = new PositionableLabel(element.getAttribute("text").getValue());
             loadCommonAttributes(l, level, element);
@@ -319,16 +320,11 @@ public class PositionableLabelXml implements XmlAdapter {
         //l.updateSize();
     }
     
-    @SuppressWarnings("unchecked")
 	public NamedIcon loadIcon(PositionableLabel l, String attrName, Element element) {
-        NamedIcon icon = null;
-        List<Element> iconList = element.getChildren(attrName);
-        if (log.isDebugEnabled()) log.debug("Found "+iconList.size()+" "+attrName+" objects");
-        if (iconList.size()>0) {
-            Element elem = iconList.get(0);
-            String name = elem.getAttribute("url").getValue();
-            icon = NamedIcon.getIconByName(name);
+        NamedIcon icon = getNamedIcon(attrName, element);
+        if (icon != null) {
             try {
+            	Element elem = element.getChild(attrName);
                 Attribute a = elem.getAttribute("rotate");
                 if (a!=null) {
                     int rotation = a.getIntValue();
@@ -349,6 +345,18 @@ public class PositionableLabelXml implements XmlAdapter {
             } catch (org.jdom.DataConversionException dce) {}
         } else {
             log.debug("loadIcon: \""+attrName+"\" for \""+l.getName()+"\" not found.");
+        }
+        return icon;
+    }
+    
+    private NamedIcon getNamedIcon(String attrName, Element element){
+        NamedIcon icon = null;
+        Element elem = element.getChild(attrName);
+        if (elem != null) {
+            String name = elem.getAttribute("url").getValue();
+            icon = NamedIcon.getIconByName(name);
+        } else {
+            log.debug("getNamedIcon: \""+attrName+"\" not found");
         }
         return icon;
     }
