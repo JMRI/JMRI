@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.24 2009-07-19 00:04:38 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.25 2009-12-19 18:35:02 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -48,11 +48,13 @@
 
                 <xsl:apply-templates/>
 
-	<hr/>
-	This page produced by the 
-	<A HREF="http://jmri.org">JMRI project</A>.
-	<A href="http://sourceforge.net/projects/jmri/"> 
-	<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"/> </A>
+<HR/>
+This page was produced by <a href="http://jmri.org">JMRI</a>.
+<P/>Copyright &#169; 1997 - 2009 JMRI Community. 
+<P/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
+<P/><A href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</A>
+<P/>Site hosted by: <BR/>
+<A href="http://sourceforge.net"><IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"/> </A> 
 
 	</body>
 </html>

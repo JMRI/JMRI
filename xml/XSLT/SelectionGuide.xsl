@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: SelectionGuide.xsl,v 1.4 2008-03-06 01:13:42 jacobsen Exp $ -->
+<!-- $Id: SelectionGuide.xsl,v 1.5 2009-12-19 18:35:02 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI decoder definition index and -->
 <!-- definition files into an HTML selection guide page -->
@@ -44,11 +44,13 @@
 		<xsl:call-template name="sizeTable"/>
 		<xsl:call-template name="powerTable"/>
 		
-	<hr/>
-	This page produced by the 
-	<A HREF="http://jmri.sf.net">JMRI project</A>.
-	<A href="http://sourceforge.net"> 
-	<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"/> </A>
+<HR/>
+This page was produced by <a href="http://jmri.org">JMRI</a>.
+<P/>Copyright &#169; 1997 - 2009 JMRI Community. 
+<P/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
+<P/><A href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</A>
+<P/>Site hosted by: <BR/>
+<A href="http://sourceforge.net"><IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"/> </A> 
 
 	</body>
 </html>
