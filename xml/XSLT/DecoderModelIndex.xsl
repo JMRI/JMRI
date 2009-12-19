@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: DecoderModelIndex.xsl,v 1.2 2007-09-21 05:49:30 jacobsen Exp $ -->
+<!-- $Id: DecoderModelIndex.xsl,v 1.3 2009-12-19 17:58:51 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI decoder definition index to a HTML page -->
 
@@ -51,6 +51,8 @@
 
 </xsl:template>
 
+<!-- Don't descend into functionlabels element -->
+<xsl:template match="functionlabels" />
 
 <!-- Descend into "decoderIndex" element -->
 <xsl:template match='decoderIndex'>

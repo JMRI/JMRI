@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: DecoderModelList.xsl,v 1.4 2007-09-21 05:49:30 jacobsen Exp $ -->
+<!-- $Id: DecoderModelList.xsl,v 1.5 2009-12-19 17:58:51 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI decoder definition to a HTML page -->
 
@@ -91,7 +91,8 @@
 
 </xsl:template>
 
-
+<!-- Don't descend into functionlabels element -->
+<xsl:template match="functionlabels" />
 
 <!-- Inside variables, we will find variable elements.
      For every one of these, we will output a table row.
