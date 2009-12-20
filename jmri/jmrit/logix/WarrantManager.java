@@ -25,7 +25,7 @@ import jmri.implementation.AbstractManager;
  * <P>
  *
  * @author      Pete Cressman Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class WarrantManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -77,17 +77,18 @@ public class WarrantManager extends AbstractManager
     }
 
     public Warrant getBySystemName(String name) {
-        if (name==null) { return null; }
+        if (name==null || name.trim().length()==0) { return null; }
 		String key = name.toUpperCase();
         return (Warrant)_tsys.get(key);
     }
 
     public Warrant getByUserName(String key) {
-        if (key==null) { return null; }
+        if (key==null || key.trim().length()==0) { return null; }
         return (Warrant)_tuser.get(key);
     }
 
     public Warrant provideWarrant(String name) {
+        if (name==null || name.trim().length()==0) { return null; }
         Warrant w = getByUserName(name);
         if (w==null) {
             w = getBySystemName(name);
