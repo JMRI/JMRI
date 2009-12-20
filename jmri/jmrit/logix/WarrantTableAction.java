@@ -7,13 +7,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 
 //import java.util.EventObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
-//import java.awt.FlowLayout;
+import java.io.IOException;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -23,6 +24,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JDialog;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -35,6 +37,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import javax.swing.TransferHandler;
+import java.awt.datatransfer.Transferable; 
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -64,6 +72,9 @@ public class WarrantTableAction extends AbstractAction {
     private static JTextArea _textArea;
     private static boolean _hasErrors = false;
     private static JDialog _errorDialog;
+
+    JTextField  _startWarrant = new JTextField(30);
+    JTextField  _endWarrant = new JTextField(30);
 
     public WarrantTableAction(String menuOption) {
 	    super(rb.getString(menuOption));
@@ -162,7 +173,7 @@ public class WarrantTableAction extends AbstractAction {
     public static void checkPathPortals(OBlock b) {
         // warn user of incomplete blocks and portals
         if (_textArea==null) {
-            _textArea = new javax.swing.JTextArea(25, 50);
+            _textArea = new javax.swing.JTextArea(10, 50);
             _textArea.setEditable(false);
             _textArea.setTabSize(4);
             _textArea.append("The following errors and warnings were found:");
@@ -177,9 +188,27 @@ public class WarrantTableAction extends AbstractAction {
             return;
         }
         List <Portal> pList = b.getPortals();
+        // make list of names of all portals.  Then remove those we check, leaving the orphans
         ArrayList <String> portalList =new ArrayList <String>();
         for (int i=0; i<pList.size(); i++) {
-            portalList.add(pList.get(i).getName());
+            Portal portal = pList.get(i);
+            if (portal.getFromPaths().size()==0) {
+                _textArea.append(java.text.MessageFormat.format(
+                                    rb.getString("BlockPortalNoPath"), portal.getName(),
+                                     portal.getFromBlockName()));
+                _textArea.append("\n");
+                _hasErrors = true;
+                return;
+            }
+            if (portal.getToPaths().size()==0) {
+                _textArea.append(java.text.MessageFormat.format(
+                                    rb.getString("BlockPortalNoPath"), portal.getName(),
+                                     portal.getToBlockName()));
+                _textArea.append("\n");
+                _hasErrors = true;
+                return;
+            }
+            portalList.add(portal.getName());
         }
         for (int i=0; i<pathList.size(); i++) {
             OPath path = (OPath)pathList.get(i);
@@ -280,6 +309,9 @@ public class WarrantTableAction extends AbstractAction {
         JTextField _sysNameBox;
         JTextField _userNameBox;
 
+        Warrant _startW;
+        Warrant _endW;
+
         public CreateWarrantFrame() {
             setTitle(WarrantTableAction.rb.getString("TitleCreateWarrant"));
         }
@@ -326,6 +358,11 @@ public class WarrantTableAction extends AbstractAction {
             pack();
         }
 
+        void concatenate(Warrant startW, Warrant endW) {
+            _startW = startW;
+            _endW = endW;
+        }
+
         void makeWarrant() {
             String sysName = _sysNameBox.getText().trim();
             String userName = _userNameBox.getText().trim();
@@ -346,7 +383,7 @@ public class WarrantTableAction extends AbstractAction {
                     failed = true;
                 } else {
                     // register warrant if user saves this instance
-                    w = new Warrant(sysName,userName);
+                    w = new Warrant(sysName, userName);
                 }
             }
             if (failed) {
@@ -354,7 +391,32 @@ public class WarrantTableAction extends AbstractAction {
                                 rb.getString("WarrantExists"), userName, sysName), 
                                 rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
             } else {
-                _frameMap.put(w.getDisplayName(), new WarrantFrame(w, true));
+                if (_startW!=null && _endW!=null) {
+                    List <BlockOrder> orders = _startW.getOrders();
+                    int limit = orders.size()-1;
+                    for (int i=0; i<limit; i++) {
+                        w.addBlockOrder(new BlockOrder(orders.get(i)));
+                    }
+                    BlockOrder bo = new BlockOrder(orders.get(limit)); 
+                    orders = _endW.getOrders();
+                    bo.setExitName(orders.get(0).getExitName());
+                    w.addBlockOrder(bo);
+                    for (int i=1; i<orders.size(); i++) {
+                        w.addBlockOrder(new BlockOrder(orders.get(i)));
+                    }
+
+                    List <ThrottleSetting> commands = _startW.getThrottleCommands();
+                    for (int i=0; i<commands.size(); i++) {
+                        w.addThrottleCommand(new ThrottleSetting(commands.get(i)));
+                    }
+                    commands = _startW.getThrottleCommands();
+                    for (int i=0; i<commands.size(); i++) {
+                        w.addThrottleCommand(new ThrottleSetting(commands.get(i)));
+                    }
+                    _frameMap.put(w.getDisplayName(), new WarrantFrame(w, false));
+                } else {
+                    _frameMap.put(w.getDisplayName(), new WarrantFrame(w, true));
+                }
                 dispose();
             }
         }
@@ -414,6 +476,8 @@ public class WarrantTableAction extends AbstractAction {
                 table.getColumnModel().getColumn(i).setPreferredWidth(width);
             }
             table.setRowHeight(box.getPreferredSize().height);
+            table.setDragEnabled(true);
+            table.setTransferHandler(new DnDExportHandler());
             JScrollPane tablePane = new JScrollPane(table);
             Dimension dim = table.getPreferredSize();
             dim.height = table.getRowHeight()*12;
@@ -423,7 +487,41 @@ public class WarrantTableAction extends AbstractAction {
             tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
             JLabel title = new JLabel(rb.getString("ShowWarrants"));
             tablePanel.add(title, BorderLayout.NORTH);
-            tablePanel.add(tablePane);
+            tablePanel.add(tablePane, BorderLayout.CENTER);
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+            panel.add(Box.createHorizontalStrut(2*STRUT_SIZE));
+            //JPanel p = new JPanel();
+            //p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+            JPanel pp = new JPanel();
+            pp.setLayout(new FlowLayout());
+            pp.add(new JLabel("A:"));
+            pp.add(_startWarrant);
+            _startWarrant.setDragEnabled(true);
+            _startWarrant.setTransferHandler(new DnDImportHandler());
+            panel.add(pp);
+            pp = new JPanel();
+            pp.setLayout(new FlowLayout());
+            pp.add(new JLabel("B:"));
+            pp.add(_endWarrant);
+            _endWarrant.setDragEnabled(true);
+            _endWarrant.setTransferHandler(new DnDImportHandler());
+            panel.add(pp);
+            JButton concatButton = new JButton(rb.getString("Concatenate"));
+            concatButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    concatenate();
+                }
+            });
+            //panel.add(p);
+            panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+            panel.add(concatButton);
+            panel.add(Box.createHorizontalStrut(2*STRUT_SIZE));
+            JPanel bottomPanel = new JPanel();
+            bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+            bottomPanel.add(new JLabel(rb.getString("JoinPrompt")));
+            bottomPanel.add(panel);
+            tablePanel.add(bottomPanel, BorderLayout.SOUTH);
 
             addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -442,6 +540,36 @@ public class WarrantTableAction extends AbstractAction {
             setVisible(true);
             pack();
         }
+    }
+
+    private void concatenate() {
+        WarrantManager manager = InstanceManager.warrantManagerInstance();
+        Warrant startW = manager.getWarrant(_startWarrant.getText().trim());
+        Warrant endW = manager.getWarrant(_endWarrant.getText().trim());
+        if (startW==null || endW==null) {
+            JOptionPane.showMessageDialog(null, rb.getString("BadWarrantNames"),
+                    WarrantTableAction.rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        BlockOrder last = startW.getLastOrder();
+        BlockOrder next = endW.getfirstOrder();
+        if (last==null || next==null) {
+            JOptionPane.showMessageDialog(null, rb.getString("EmptyRoutes"),
+                    WarrantTableAction.rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (!last.getPathName().equals(next.getPathName())) {
+            JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
+                    rb.getString("RoutesDontMatch"), startW.getDisplayName(), endW.getDisplayName()),
+                    WarrantTableAction.rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        CreateWarrantFrame f = new CreateWarrantFrame();
+        try {
+            f.initComponents();
+            f.concatenate(startW, endW);
+        } catch (Exception ex ) {/*bogus*/ }
+        f.setVisible(true);
     }
 
     public class ComboBoxCellEditor extends DefaultCellEditor
@@ -776,5 +904,96 @@ public class WarrantTableAction extends AbstractAction {
         }
     }
     
+    class DnDImportHandler extends TransferHandler{
+        int _type;
+
+        DnDImportHandler() {
+        }
+
+        /////////////////////import
+        public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
+            //if (log.isDebugEnabled()) log.debug("DnDImportHandler.canImport ");
+
+            for (int k=0; k<transferFlavors.length; k++){
+                if (transferFlavors[k].equals(DataFlavor.stringFlavor)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public boolean importData(JComponent comp, Transferable tr) {
+            //if (log.isDebugEnabled()) log.debug("DnDImportHandler.importData ");
+            DataFlavor[] flavors = new DataFlavor[] {DataFlavor.stringFlavor};
+
+            if (!canImport(comp, flavors)) {
+                return false;
+            }
+
+            try {
+                if (tr.isDataFlavorSupported(DataFlavor.stringFlavor) ) {
+                    String data = (String)tr.getTransferData(DataFlavor.stringFlavor);
+                    JTextField field = (JTextField)comp;
+                    field.setText(data);
+                    actionPerformed(new ActionEvent(field, 0, data));
+                    return true;
+                }
+            } catch (UnsupportedFlavorException ufe) {
+                log.warn("DnDImportHandler.importData: "+ufe.getMessage());
+            } catch (IOException ioe) {
+                log.warn("DnDImportHandler.importData: "+ioe.getMessage());
+            }
+            return false;
+        }
+        /* OB4
+        public boolean importData(TransferHandler.TransferSupport support) {
+            if (!canImport(support)) {
+                return false;
+            }
+            Transferable t = support.getTransferable();
+            String data = null;
+            try {
+                data = (String)tr.getTransferData(DataFlavor.stringFlavor);
+            } catch (UnsupportedFlavorException ufe) {
+                log.warn("DnDImportHandler.importData: "+ufe.getMessage());
+            } catch (IOException ioe) {
+                log.warn("DnDImportHandler.importData: "+ioe.getMessage());
+            }
+            JTextField field = (JTextField)support.getComponent();
+            field.setText(data);
+            actionPerformed(new ActionEvent(field, _thisActionEventId, data));
+            return true;
+        }
+        */
+    }
+
+    class DnDExportHandler extends TransferHandler{
+        int _type;
+
+        DnDExportHandler() {
+        }
+
+        public int getSourceActions(JComponent c) {
+            return COPY;
+        }
+
+        public Transferable createTransferable(JComponent c) {
+            JTable table = (JTable)c;
+            int col = table.getSelectedColumn();
+            int row = table.getSelectedRow();
+            if (col<0 || row<0) {
+                return null;
+            }
+            if (log.isDebugEnabled()) log.debug("TransferHandler.createTransferable: from ("
+                                                +row+", "+col+") for \""
+                                                +table.getModel().getValueAt(row, col)+"\"");
+            return new StringSelection((String)table.getModel().getValueAt(row, col));
+        }
+
+        public void exportDone(JComponent c, Transferable t, int action) {
+            if (log.isDebugEnabled()) log.debug("TransferHandler.exportDone ");
+        }
+    }
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WarrantTableAction.class.getName());
 }
