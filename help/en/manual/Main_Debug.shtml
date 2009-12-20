@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Main_Debug.shtml,v 1.3 2009-02-23 02:02:24 jacobsen Exp $ -->
+<!-- $Id: Main_Debug.shtml,v 1.4 2009-12-20 03:23:21 jacobsen Exp $ -->
 <html lang="en">
 <head>
 <TITLE>
@@ -92,6 +92,10 @@ DecoderPro&reg; Main Window
 <p><strong><a name="log"></a>Log Message</strong>
 <blockquote>
   <p>Opens the <a href="#logMessage">Make Log Entry </a>prompt to allow you manually enter an entry in the log file.</p>
+</blockquote>
+<p><strong><a name="displaylog"></a>Display Message Log</strong>
+<blockquote>
+  <p>Opens a window to display log messages.</p>
 </blockquote>
 <p><img src="images/separator.png" alt="sep" width="340" height="4">
 <p><strong><a name="pricom"></a>PRICOM <img src="images/arrow.gif" alt="arrow" width="20" height="9">
