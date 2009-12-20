@@ -10,7 +10,6 @@ import jmri.InstanceManager;
 //import jmri.Path;
 import jmri.Sensor;
 import jmri.SignalHead;
-import jmri.SignalMast;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -586,7 +585,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if (_runMode==MODE_RUN ) {
                 if (_idxCurrentOrder == _orders.size()) {
                     // must be destination block
-                    _engineer.setSpeedRestriction(SignalMast.NORMAL_SPEED);
+                    _engineer.setSpeedRestriction(SpeedModifier.NORMAL);
                     activeBO.setPathAndSignalProtection(0, SignalHead.RED, SignalHead.RED);
                     return;
                 }
@@ -641,7 +640,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         BlockOrder currentBO = getBlockOrderAt(_idxCurrentOrder);
         if ( (getBlockStateAt(_idxCurrentOrder+1) & OBlock.OCCUPIED) != 0 ) {
             // next block occupied. stop!
-            _engineer.setSpeedRestriction(SignalMast.STOP_SPEED);
+            _engineer.setSpeedRestriction(SpeedModifier.STOP);
             canRun = false;
             currentBO.setPathAndSignalProtection(0, SignalHead.RED, SignalHead.RED);
         } else if ((getBlockStateAt(_idxCurrentOrder+2) & OBlock.OCCUPIED) != 0) {
@@ -650,11 +649,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if (nextBO != null) {
                 OBlock nextBlock = nextBO.getBlock();
                 if ( nextBlock.allocate(this)==null) {
-                    _engineer.setSpeedRestriction(SignalMast.MEDIUM_SPEED);
+                    _engineer.setSpeedRestriction(SpeedModifier.MEDIUM);
                     currentBO.setPathAndSignalProtection(0, SignalHead.RED, SignalHead.YELLOW);
                     nextBO.setPathAndSignalProtection(0, SignalHead.YELLOW, SignalHead.RED);
                 } else {
-                    _engineer.setSpeedRestriction(SignalMast.STOP_SPEED);
+                    _engineer.setSpeedRestriction(SpeedModifier.STOP);
                     canRun = false;
                     log.warn("Next block \""+nextBlock.getDisplayName()+"\" allocated to another warrant.");
                     currentBO.setPathAndSignalProtection(0, SignalHead.RED, SignalHead.RED);
@@ -675,7 +674,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         if (beyondBlock.allocate(this)==null) {
                             // own at least 3 blocks (current, next and beyond
                             currentBO.setPathAndSignalProtection(0, SignalHead.RED, SignalHead.GREEN);
-                            _engineer.setSpeedRestriction(SignalMast.NORMAL_SPEED);
+                            _engineer.setSpeedRestriction(SpeedModifier.NORMAL);
                             if ((getBlockStateAt(_idxCurrentOrder+3) & OBlock.OCCUPIED) == 0) {
                                 nextBO.setPathAndSignalProtection(0, SignalHead.GREEN, SignalHead.YELLOW);
                                 beyondBO.setPathAndSignalProtection(0, SignalHead.GREEN, SignalHead.GREEN);
@@ -684,13 +683,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                                 beyondBO.setPathAndSignalProtection(0, SignalHead.YELLOW, SignalHead.RED);
                             }
                         } else {
-                            _engineer.setSpeedRestriction(SignalMast.MEDIUM_SPEED);
+                            _engineer.setSpeedRestriction(SpeedModifier.MEDIUM);
                             currentBO.setPathAndSignalProtection(0, SignalHead.RED, SignalHead.YELLOW);
                             nextBO.setPathAndSignalProtection(0, SignalHead.YELLOW, SignalHead.RED);
                         }
                     }
                 } else {
-                    _engineer.setSpeedRestriction(SignalMast.STOP_SPEED);
+                    _engineer.setSpeedRestriction(SpeedModifier.STOP);
                     canRun = false;
                     log.warn("Next block \""+nextBlock.getDisplayName()+"\" allocated to another warrant.");
                     currentBO.setPathAndSignalProtection(0, SignalHead.RED, SignalHead.RED);
@@ -710,12 +709,32 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         return -1;
     }
 
+
+    /** Speed aspects as defined by Doughlas A. Kerr - "Rail Signal Aspects and Indications"
+     * doug.kerr.home.att.net/pumpkin/Rail_Signal_Aspects.pdf 
+     */
+    enum SpeedModifier {
+        STOP(0.0), 
+        RESTRICTED(0.20), 
+        SLOW(0.25), 
+        MEDIUM(0.50), 
+        LIMITED(0.75), 
+        NORMAL(1.0), 
+        MAXIMUM(1.25);
+
+        private final double ratio;
+        SpeedModifier(double ratio) {
+            this.ratio = ratio;
+        }
+        double ratio() { return ratio;}
+    }
+
     /************************** Thread running the train *****************/
 
     class Engineer implements Runnable {
 
         private int     _idxCurrentCommand;     // current throttle command
-        private int     _speedModifier = SignalMast.NORMAL_SPEED;
+        private SpeedModifier _speedModifier = SpeedModifier.NORMAL;
         private float   _minSpeed = 1.0f;
         private boolean _abort = false;
         private boolean _wait = false;
@@ -805,35 +824,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
 
         private void setSpeed(float speed) {
-            float modifier = 0.0f;
-            switch (_speedModifier) {
-                case SignalMast.STOP_SPEED:
-                    modifier = 0.0f;
-                    break;
-                case SignalMast.RESTRICTED_SPEED:
-                    modifier = 0.20f;
-                    break;
-                case SignalMast.SLOW_SPEED:
-                    modifier = 0.25f;
-                    break;
-                case SignalMast.MEDIUM_SPEED:
-                    modifier = 0.50f;
-                    break;
-                case SignalMast.LIMITED_SPEED:
-                    modifier = 0.75f;
-                    break;
-                case SignalMast.NORMAL_SPEED:
-                    modifier = 1.0f;
-                    break;
-                case SignalMast.MAXIMUM_SPEED:
-                    modifier = 1.25f;
-                    break;
-            }
-            speed *= modifier;
+            speed *= _speedModifier.ratio();
             if (0.0f < speed && speed < _minSpeed) {
                 speed = _minSpeed;
             }
-            if (_speedModifier == SignalMast.STOP_SPEED) {
+            if (_speedModifier == SpeedModifier.STOP) {
                 _wait = true;
             }
             _throttle.setSpeedSetting(speed);
@@ -869,13 +864,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         /**
         * Occupancy of blocks and Portal signals my modify traim speed
         */
-        synchronized public void setSpeedRestriction(int restriction) {
+        synchronized public void setSpeedRestriction(SpeedModifier restriction) {
             if (_speedModifier==restriction && !_wait) {
                 return;
             }
             if (log.isDebugEnabled()) log.debug("setSpeedRestriction: "+_speedModifier+
                                                 " changed to "+restriction);
-            boolean wasWaiting = (_speedModifier == SignalMast.STOP_SPEED);
+            boolean wasWaiting = (_speedModifier == SpeedModifier.STOP);
             _speedModifier = restriction; 
             resetSpeed(wasWaiting);
         }
