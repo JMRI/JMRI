@@ -366,7 +366,7 @@ public class OBlockTableAction extends AbstractAction {
             JComboBox box = new JComboBox(curveOptions);
             blockTable.getColumnModel().getColumn(OBlockTableModel.CURVECOL).setCellEditor(new DefaultCellEditor(box));
             //blockTable.getColumnModel().getColumn(OBockTableModel.CURVECOL).setCellRenderer(new DefaultCellEditor(box));
-            blockTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+            //blockTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             for (int i=0; i<_oBlockModel.getColumnCount(); i++) {
                 int width = _oBlockModel.getPreferredWidth(i);
                 blockTable.getColumnModel().getColumn(i).setPreferredWidth(width);
@@ -431,7 +431,7 @@ public class OBlockTableAction extends AbstractAction {
             JTable portalTable = new DnDJTable(_portalModel);
             portalTable.getColumnModel().getColumn(_portalModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
             portalTable.getColumnModel().getColumn(_portalModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
-            portalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+            //portalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             for (int i=0; i<_portalModel.getColumnCount(); i++) {
                 int width = _portalModel.getPreferredWidth(i);
                 portalTable.getColumnModel().getColumn(i).setPreferredWidth(width);
@@ -465,7 +465,7 @@ public class OBlockTableAction extends AbstractAction {
             JTable blockPortalTable = new DnDJTable(_blockPortalXRefModel);
             blockPortalTable.setDefaultRenderer(String.class, new jmri.jmrit.symbolicprog.ValueRenderer());
             blockPortalTable.setDefaultEditor(String.class, new jmri.jmrit.symbolicprog.ValueEditor());
-            blockPortalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+            //blockPortalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             for (int i=0; i<_blockPortalXRefModel.getColumnCount(); i++) {
                 int width = _blockPortalXRefModel.getPreferredWidth(i);
                 blockPortalTable.getColumnModel().getColumn(i).setPreferredWidth(width);
@@ -523,7 +523,7 @@ public class OBlockTableAction extends AbstractAction {
             blockPathTable.getColumnModel().getColumn(blockPathModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
             blockPathTable.getColumnModel().getColumn(blockPathModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
             blockPathTable.getColumnModel().getColumn(blockPathModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
-            blockPathTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+            //blockPathTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             blockPathTable.setDragEnabled(true);
             //blockPathTable.setDropMode(DropMode.USE_SELECTION);
             blockPathTable.setTransferHandler(new DnDHandler(BLOCK_PATH_TABLE));
@@ -568,7 +568,7 @@ public class OBlockTableAction extends AbstractAction {
             PathTurnoutTable.getColumnModel().getColumn(PathTurnoutModel.SETTINGCOLUMN).setCellEditor(new DefaultCellEditor(box));
             PathTurnoutTable.getColumnModel().getColumn(PathTurnoutModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
             PathTurnoutTable.getColumnModel().getColumn(PathTurnoutModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
-            PathTurnoutTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+            //PathTurnoutTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             for (int i=0; i<PathTurnoutModel.getColumnCount(); i++) {
                 int width = PathTurnoutModel.getPreferredWidth(i);
                 PathTurnoutTable.getColumnModel().getColumn(i).setPreferredWidth(width);
