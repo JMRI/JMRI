@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a train roster -->
-<!-- $Id: operations-trains.dtd,v 1.9 2009-11-20 18:06:29 dan_boudreau Exp $ -->
+<!-- $Id: operations-trains.dtd,v 1.10 2009-12-20 15:59:10 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -27,6 +27,7 @@
 <!ATTLIST trainOptions height			CDATA #IMPLIED>
 <!ATTLIST trainOptions width			CDATA #IMPLIED>
 <!ATTLIST trainOptions sortBy			CDATA #IMPLIED>
+<!ATTLIST trainOptions columnWidths		CDATA #IMPLIED>
 
 <!ATTLIST trainEditOptions x				CDATA #IMPLIED>
 <!ATTLIST trainEditOptions y				CDATA #IMPLIED>
