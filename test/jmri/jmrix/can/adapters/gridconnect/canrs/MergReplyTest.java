@@ -13,20 +13,20 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.adapters.gridconnect.canrs.MergReply class
  *
  * @author      Bob Jacobsen  Copyright 2008, 2009
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class MergReplyTest extends TestCase {
     
-    // :S123N12345678;
+    // :S1260N12345678;
     public void testOne() {
         
-        MergReply g = new MergReply(":S123N12345678;");
+        MergReply g = new MergReply(":S1260N12345678;");
         
         CanReply r = g.createReply();
         
         Assert.assertEquals("extended", false, r.isExtended());
         Assert.assertEquals("rtr", false, r.isRtr());
-        Assert.assertEquals("header", 0x123, r.getHeader());
+        Assert.assertEquals("header", unMungeStdHeader(0x1260), r.getHeader());
         Assert.assertEquals("num elements", 4, r.getNumDataElements());
         Assert.assertEquals("el 0", 0x12, r.getElement(0));
         Assert.assertEquals("el 1", 0x34, r.getElement(1));
@@ -97,13 +97,13 @@ public class MergReplyTest extends TestCase {
 
     public void testFour() {
         
-        MergReply g = new MergReply(":X1FFFFFFFR63;");
+        MergReply g = new MergReply(":XFFE3FFFFR63;");
         
         CanReply r = g.createReply();
         
         Assert.assertEquals("extended", true, r.isExtended());
         Assert.assertEquals("rtr", true, r.isRtr());
-        Assert.assertEquals("header", 0x1FFFFFFF, r.getHeader());
+        Assert.assertEquals("header", unMungeExtHeader(0xFFE3FFFF), r.getHeader());
         Assert.assertEquals("num elements", 1, r.getNumDataElements());
         Assert.assertEquals("el 1", 0x63, r.getElement(0));
     }
@@ -126,6 +126,16 @@ public class MergReplyTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(MergReplyTest.class);
         return suite;
+    }
+
+    // Left shift a standard header from CBUS specific format
+    public int unMungeStdHeader(int h) {
+        return (h>>5);
+    }
+
+    // Un-munge extended header from CBUS specific format
+    public int unMungeExtHeader(int h) {
+        return (((h>>3) & 0x1FFC0000) | (h & 0x3FFFF));
     }
 
     // The minimal setup for log4J

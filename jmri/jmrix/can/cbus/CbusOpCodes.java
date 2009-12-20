@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractMessage;
  * Description:		methods to decode CBUS opcodes
  *
  * @author		Andrew Crosland   Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class CbusOpCodes {
     /**
@@ -92,6 +92,7 @@ public class CbusOpCodes {
         result.put(0x54,"Exit Learn Mode (NNULN) NN:,%2");
         result.put(0x55,"Clear All Events (NNCLR) NN:,%2");
         result.put(0x56,"Request Event Space (NNEVN) NN:,%2");
+        result.put(0x5C,"Enter Boot Mode (BOOT) NN:,%2");
 
         // Opcodes with 3 data
         result.put(0x60,"Set functions (DFUN) Handle:,%1, Range:,%1, Fn:,%1");
@@ -102,7 +103,8 @@ public class CbusOpCodes {
 
         // Opcodes with 4 data
         result.put(0x80,"DCC 3 byte pkt (RDCC3) Repeat:,%1, Byte 1:,%1, 2:,%1, 3:,%1");
-        result.put(0x82,"Write CV (WCVO) Handle:,%1, CV:,%2, Data:,%1");
+        result.put(0x82,"Write CV byte (WCVO) Handle:,%1, CV:,%2, Data:,%1");
+        result.put(0x83,"Write CV bit (WCVB) Handle:,%1, CV:,%2, Data:,%1");
         result.put(0x84,"Read CV (QCVS) Handle:,%1, CV:,%2, Mode:,%1");
         result.put(0x85,"Report CV (PCVS) Handle:,%1, CV:,%2, Data:,%1");
 

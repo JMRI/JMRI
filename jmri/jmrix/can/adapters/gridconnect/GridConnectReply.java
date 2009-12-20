@@ -15,21 +15,13 @@ import jmri.jmrix.can.CanReply;
  * The S indicates a standard CAN frame
  *      :XhhhhhhhhNd0d1d2d3d4d5d6d7;
  * The X indicates an extended CAN frame
- * Strict Gridconnect protocol allows a variable number of header characters,
- * e.g., a header value of 0x123 could be encoded as S123, X123, S0123 or
- * X00000123. MERG hardware uses a fixed 4 byte header when sending
- * GridConnectMessages to the computer. Additionally, the 11 byte standard
- * header is left justified in these 4 bytes.
- * This GridConnectReply code assumes the true GridConnect protocol is in use
- * but detects a standard header sent in 4 bytes and assumes it needs right
- * justifying.
  * N or R indicates a normal or remote frame, in position 6 or 10
  * d0 - d7 are the (up to) 8 data bytes
  * <P>
  * 
- * @author                      Andrew Crosland Copyright (C) 2008
+ * @author                      Andrew Crosland Copyright (C) 2008, 2009
  * @author                      Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class GridConnectReply extends AbstractMRReply {
     
@@ -114,9 +106,6 @@ public class GridConnectReply extends AbstractMRReply {
             if (_dataChars[i] == 'R') break;
             val = val*16 + getHexDigit(i);
         }
-        // Adjust standard header from MERG adapter received as 11 bits left
-        // justified in four bytes
-        if ((_dataChars[1] == 'S') && (_RTRoffset == 6)) val = (val >> 5) & 0x07FF;
         return val;
     }
         

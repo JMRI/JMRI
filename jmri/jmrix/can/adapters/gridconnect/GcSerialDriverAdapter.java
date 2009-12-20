@@ -19,7 +19,7 @@ import javax.comm.SerialPort;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002
  * @author			Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -180,6 +180,18 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
         return mOpt1;
     }
 
+    /**
+     * Option 2 
+     */
+    public String[] validOption2() { return new String[]{""}; }
+    public String option2Name() { return "Option 2"; }
+    public void configureOption2(String value) { mOpt2 = value; }
+    protected String mOpt2 = null;
+    public String getCurrentOption2Setting() {
+        if (mOpt2 == null) return validOption2()[0];
+        return mOpt2;
+    }
+   
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;

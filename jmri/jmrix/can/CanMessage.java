@@ -3,6 +3,7 @@
 package jmri.jmrix.can;
 
 import jmri.jmrix.AbstractMRMessage;
+import jmri.jmrix.can.TrafficController;
 
 /**
  * Base class for messages in a CANbus based message/reply protocol.
@@ -19,10 +20,12 @@ import jmri.jmrix.AbstractMRMessage;
  *<p>
  * CBUS uses a 2-bit "Pri" field and 7-bit "ID" ("CAN ID") field, with
  * separate accessors.
+ * CBUS ID is set as a layout connection preference and registered by the
+ * traffic controller.
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008, 2009
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class CanMessage extends AbstractMRMessage {
     
@@ -34,8 +37,7 @@ public class CanMessage extends AbstractMRMessage {
     
     // Creates a new instance of CanMessage
     public CanMessage() {
-        _header = 0;
-        setHeader(0x7a);  // default value
+        _header = TrafficController.instance().getCanid();
         _isExtended = false;
         _isRtr = false;
         _nDataChars = 8;

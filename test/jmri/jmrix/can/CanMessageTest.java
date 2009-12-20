@@ -6,11 +6,13 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import jmri.jmrix.can.TrafficControllerScaffold;
+
 /**
  * Tests for the jmri.jmrix.can.CanMessage class
  *
  * @author      Bob Jacobsen  Copyright 2008, 2009
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class CanMessageTest extends CanMRCommonTest {
 
@@ -134,6 +136,9 @@ public class CanMessageTest extends CanMRCommonTest {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void setUp() { 
+        new TrafficControllerScaffold();
+        apps.tests.Log4JFixture.setUp();
+    }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 }

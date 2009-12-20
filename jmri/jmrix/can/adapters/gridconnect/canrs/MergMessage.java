@@ -20,14 +20,15 @@ import jmri.jmrix.can.adapters.gridconnect.GridConnectMessage;
  * Strict Gridconnect protocol allows a variable number of header characters,
  * e.g., a header value of 0x123 could be encoded as S123 rather than S0123 or
  * X00000123. We choose a fixed number, either 4 or 8 bytes when sending
- * GridConnectMessages to keep MERG CAN-RS/USB adapters happy. At this time, the
- * MERG adapter ignores the header as it has a default value in EEPROM
+ * GridConnectMessages to keep MERG CAN-RS/USB adapters happy.
+ * The 11 bit standard header is left justified in these 4 bytes.
+ * The 29 bit standard header is sent as <11 bit SID><0><1><0>< 18 bit EID>
  * N or R indicates a normal or remote frame, in position 6 or 10
  * d0 - d7 are the (up to) 8 data bytes
  * <P>
  *
  * @author          Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class MergMessage extends GridConnectMessage {
     
@@ -60,28 +61,27 @@ public class MergMessage extends GridConnectMessage {
     }
         
     /**
-     * Set the header
+     * Set the header in MERG format
      *
      * @param header A valid CAN header value
      */
     public void setHeader(int header) {
+        int munged;
         if (isExtended()) {
+            munged = ((header << 3) & 0xFFE00000) | 0x80000 | (header & 0x3FFFF);
             if (log.isDebugEnabled()) log.debug("Extended header is "+header);
-            setHexDigit((header>>28)&0xF, 2);
-            setHexDigit((header>>24)&0xF, 3);
-            setHexDigit((header>>20)&0xF, 4);
-            setHexDigit((header>>16)&0xF, 5);
-            setHexDigit((header>>12)&0xF, 6);
-            setHexDigit((header>>8)&0xF, 7);
-            setHexDigit((header>>4)&0xF, 8);
-            setHexDigit( header&0xF, 9);
+            if (log.isDebugEnabled()) log.debug("Munged header is "+munged);
+            super.setHeader(munged);
         } else {
-            if (log.isDebugEnabled()) log.debug("Standard header is "+header);
             // 11 header bits are left justified
-            setHexDigit( 0, 2);
-            setHexDigit((header>>8)&0xF, 3);
-            setHexDigit((header>>4)&0xF, 4);
-            setHexDigit( header&0xF, 5);
+            munged = header << 5;
+            if (log.isDebugEnabled()) log.debug("Standard header is "+header);
+            if (log.isDebugEnabled()) log.debug("Munged header is "+munged);
+            // Can't use super() as we want to send 4 digits
+            setHexDigit((munged>>12)&0xF, 2);
+            setHexDigit((munged>>8)&0xF, 3);
+            setHexDigit((munged>>4)&0xF, 4);
+            setHexDigit( 0 , 5);
         }
     }
     

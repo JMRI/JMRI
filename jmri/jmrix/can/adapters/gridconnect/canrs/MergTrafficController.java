@@ -9,6 +9,7 @@ import jmri.jmrix.AbstractMRReply;
 
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
+import jmri.jmrix.can.cbus.CbusConstants;
 
 /**
  * Traffic controller for the MERG varient of the GridConnect protocol.
@@ -22,15 +23,13 @@ import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
  * d0 - d7 are the (up to) 8 data bytes
  *
  * @author          Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class MergTrafficController extends GcTrafficController {
     
     public MergTrafficController() {
         super();
     }
-   
-
 
     /**
      * static function returning the CanTrafficController instance to use.
@@ -41,6 +40,14 @@ public class MergTrafficController extends GcTrafficController {
         if (self == null) {
             if (log.isDebugEnabled()) log.debug("creating a new MergTrafficController object");
             self = new MergTrafficController();
+            _canid = CbusConstants.DEFAULT_STANDARD_ID;  // default value;
+            // Get CAN ID from configuration option
+            try {
+                _canid = Integer.parseInt(jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver.SerialDriverAdapter.instance().getCurrentOption2Setting());
+            } catch (Exception e) {
+                log.error("Cannot parse CAN ID - check your preference settings "+e);
+                log.error("Now using default CAN ID");
+            }
         }
         return self;
     }

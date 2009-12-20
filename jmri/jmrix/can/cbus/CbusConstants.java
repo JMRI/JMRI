@@ -8,7 +8,7 @@ package jmri.jmrix.can.cbus;
  * Description:		Constants to represent CBUS protocol
  *
  * @author		Andrew Crosland   Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public final class CbusConstants {
     /**
@@ -16,6 +16,10 @@ public final class CbusConstants {
      */
     public static final int SERVICE_HANDLE = 255;
     
+
+    public static final int DEFAULT_STANDARD_ID = 0x7a;
+    public static final int DEFAULT_EXTENDED_ID = 0x7a;
+
     /**
      * CBUS Opcodes
      */
@@ -32,11 +36,14 @@ public final class CbusConstants {
     public static final int CBUS_DSPD = 0x47;
     public static final int CBUS_SSTAT = 0x4C;
 
+    public static final int CBUS_BOOT = 0x5C;
+
     public static final int CBUS_DFUN = 0x60;
     public static final int CBUS_ERR = 0x63;
 
     public static final int CBUS_RDCC3 = 0x80;
     public static final int CBUS_WCVO = 0x82;
+    public static final int CBUS_WCVB = 0x83;
     public static final int CBUS_QCVS = 0x84;
     public static final int CBUS_PCVS = 0x85;
 
