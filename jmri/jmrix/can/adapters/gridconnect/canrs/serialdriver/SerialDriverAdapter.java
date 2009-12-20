@@ -15,7 +15,7 @@ import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
  *
  * @author			Andrew Crosland Copyright (C) 2008
  * @author			Bob Jacobsen Copyright (C) 2009
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.jmrix.SerialPortAdapter {
 
@@ -36,6 +36,17 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
         jmri.jmrix.can.ConfigurationManager.configure(mOpt1);
 
     }
+
+    /**
+     * Option 2 is CAN identifier to be used by adapter
+     */
+    public String[] validOption2() { return new String[]{"127", "126", "125", "124", "123", "122", "121", "120"}; }
+
+    /**
+     * Get a String that says what Option 2 represents
+     * May be an empty string, but will not be null
+     */
+    public String option2Name() { return "CAN ID for CAN-USB"; }
 
     static public SerialDriverAdapter instance() {
         if (mInstance == null) mInstance = new SerialDriverAdapter();
