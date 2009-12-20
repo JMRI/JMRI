@@ -43,7 +43,7 @@ import jmri.managers.DefaultRouteManager;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.51 $
+ * @version			$Revision: 1.52 $
  */
 public class InstanceManager {
 
@@ -109,6 +109,18 @@ public class InstanceManager {
         // This must be replaced when we start registering specific implementations
         instance().signalHeadManager = new AbstractSignalHeadManager();
         return instance().signalHeadManager;
+    }
+
+    static public SignalMastManager signalMastManagerInstance()  { 
+        SignalMastManager m = (SignalMastManager)getDefault(SignalMastManager.class);
+        if (m == null) {
+            m = new jmri.managers.DefaultSignalMastManager();
+            setSignalMastManager(m);
+        }
+        return m;
+    }
+    static public void setSignalMastManager(SignalMastManager p) {
+        store(p, SignalMastManager.class);
     }
 
     static public BlockManager blockManagerInstance()  {
