@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.52 2009-12-10 02:16:51 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.53 2009-12-20 15:56:26 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -824,7 +824,7 @@ engine.
 <H3>Engine Models</H3>
 
 The program allows you organize your engines by model. Each model can
-only have one engine type, length and horsepower rating associated with
+only have one engine type, length, weight and horsepower rating associated with
 it. For example, if you assign the model name "RS11" to a set of
 engines, when you change the length of one of the "RS11"s, the length
 will also change for the others.  
@@ -1145,6 +1145,10 @@ following operation panels:
 <li>Trains</li>
 <li>Edit Train</li>
 </ul>
+
+<P>The program also allows you to resize the Trains panel table
+column widths. Adjust the column widths to your liking and then press
+"Save Builds" to save your preferences.
 
 <P>The end of operations help.</P>
 
