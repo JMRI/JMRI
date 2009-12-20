@@ -182,9 +182,13 @@ public class BlockOrder  {
         if (log.isDebugEnabled()) log.debug("setPathAndSignalProtection for "+this.toString());
     }
 
+    public String hash() {
+        return _block.getDisplayName()+_pathName+_entryName+_exitName;
+    }
+
     public String toString() {
-        return ("BlockOrder: Path "+_pathName+" in Block "+_block.getDisplayName()+ 
-        " enters at "+_entryName+" and exits at "+_exitName);
+        return ("BlockOrder: Block "+_block.getDisplayName()+" has Path "+_pathName+ 
+                " with Portals "+_entryName+" and "+_exitName);
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockOrder.class.getName());
