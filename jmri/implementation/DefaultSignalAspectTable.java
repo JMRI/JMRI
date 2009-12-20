@@ -3,19 +3,19 @@
 package jmri.implementation;
 
 import java.util.ResourceBundle;
+import java.util.Hashtable;
 
 import jmri.SignalAspectTable;
-import jmri.SignalHead;
 
  /**
- * Default implementation of a basic signal head table.
+ * Default implementation of a basic signal aspect table.
  * <p>
  * The default contents are taken from the NamedBeanBundle properties file.
  * This makes creation a little more heavy-weight, but speeds operation.
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class DefaultSignalAspectTable extends AbstractNamedBean implements SignalAspectTable  {
 
@@ -27,40 +27,61 @@ public class DefaultSignalAspectTable extends AbstractNamedBean implements Signa
         super(systemName);
     }
 
-    public void loadDefaults() {
-        
-        if (rb == null) rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
-
-        log.debug("start loadDefaults");
-        
-        String ra;
-        ra = rb.getString("SignalAspectDefaultRed");
-        addAspect(ra, new int[]{SignalHead.RED});
-
-        ra = rb.getString("SignalAspectDefaultYellow");
-        addAspect(ra, new int[]{SignalHead.YELLOW});
-
-        ra = rb.getString("SignalAspectDefaultGreen");
-        addAspect(ra, new int[]{SignalHead.GREEN});
+    public void setProperty(String aspect, String key, Object value) {
+        getTable(aspect).put(key, value);
+        if (! keys.contains(key)) keys.add(key);
     }
     
-    public void setAppearances(String aspect, SignalHead[] heads) {
-        for (int i = 0; i < heads.length; i++)
-            heads[i].setAppearance(table.get(aspect)[i]);
-        if (log.isDebugEnabled()) log.debug("Set 1st head to "+table.get(aspect)[0]);
-        return;
+    public Object getProperty(String aspect, String key) {
+        return getTable(aspect).get(key);
     }
-    
-    public void addAspect(String aspect, int[] appearances) {
-        if (log.isDebugEnabled()) log.debug("add aspect \""+aspect+"\" for "+appearances.length+" heads "
-                                        +appearances[0]);
-        table.put(aspect, appearances);
+
+    protected Hashtable<String, Object> getTable(String aspect) {
+        Hashtable<String, Object> t = aspects.get(aspect);
+        if ( t == null) {
+            t = new Hashtable<String, Object>();
+            aspects.put(aspect, t);
+        }
+        return t;
     }
     
     public java.util.Enumeration<String> getAspects() {
-        return table.keys();
+        return aspects.keys();
+    }
+
+    public java.util.Enumeration<String> getKeys() {
+        return keys.elements();
+    }
+
+    public boolean checkAspect(String aspect) {
+        return aspects.get(aspect) != null;
+    }
+
+    public void loadDefaults() {
+        
+        ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
+
+        log.debug("start loadDefaults");
+        
+        String aspect;
+        String key = rb.getString("SignalAspectKey");
+        String value;
+        
+        aspect = rb.getString("SignalAspectDefaultRed");
+        value = rb.getString("SignalAspect_"+key+"_"+aspect);
+        setProperty(aspect, key, value);
+
+        aspect = rb.getString("SignalAspectDefaultYellow");
+        value = rb.getString("SignalAspect_"+key+"_"+aspect);
+        setProperty(aspect, key, value);
+
+        aspect = rb.getString("SignalAspectDefaultGreen");
+        value = rb.getString("SignalAspect_"+key+"_"+aspect);
+        setProperty(aspect, key, value);
+
     }
     
+
     public int getState() {
         throw new NoSuchMethodError();
     }
@@ -69,9 +90,11 @@ public class DefaultSignalAspectTable extends AbstractNamedBean implements Signa
         throw new NoSuchMethodError();
     }
 
-    static private ResourceBundle rb;
-    protected java.util.Hashtable<String, int[]> table = new jmri.util.OrderedHashtable<String, int[]>();
+    protected java.util.Hashtable<String, Hashtable<String, Object>> aspects
+            = new jmri.util.OrderedHashtable<String, Hashtable<String, Object>>();
 
+    protected java.util.Vector<String> keys = new java.util.Vector<String>();
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalAspectTable.class.getName());
 }
 

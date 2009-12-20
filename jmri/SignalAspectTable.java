@@ -3,15 +3,19 @@
 package jmri;
 
 /**
- * Represents a mapping between the appearances of one or 
- * more SignalHead objects on a single SignalMast, and 
- * a series of named Signal Aspects.
+ * Represents the properties of various signal aspects.
  *<p>
- * At present, the signal aspects are described by Strings,
- * not by specific objects.
+ * At present, the signal aspects are denumerated by Strings,
+ * not by specific objects; this table exists to attach properties
+ * to those Strings.
  * <p>
  * Setting or getting the "state" of one of these will throw an error.
- *
+ * <p>
+ * You'll have one of these objects for each signaling _system_ on
+ * your railroad.  In turn, these will be used by 1 to N 
+ * specific mappings to appearances, see {@link SignalAppearanceMap}.
+ * <p>
+ * Insertion order is preserved when retrieving keys.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -27,17 +31,21 @@ package jmri;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2009
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public interface SignalAspectTable extends NamedBean {
 
-    public void setAppearances(String aspect, SignalHead[] heads); 
-    
-    public void addAspect(String aspect, int[] appearances);
-    
+    public void setProperty(String aspect, String key, Object value);
+    public Object getProperty(String aspect, String key);
+  
     public java.util.Enumeration<String> getAspects();
-    
-    public void loadDefaults();
+
+    public java.util.Enumeration<String> getKeys();
+
+    /**
+     * Is this aspect known?
+     */
+    public boolean checkAspect(String aspect);
     
 }
 
