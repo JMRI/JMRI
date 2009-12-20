@@ -43,7 +43,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.88 $
+ * @version     $Revision: 1.89 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -599,6 +599,20 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     public void windowIconified(WindowEvent e) {}
     public void windowOpened(WindowEvent e) {}
  
+    static protected void setJmriSystemProperty(String key, String value) {
+        try {
+            String current = System.getProperty("org.jmri.Apps-"+key);
+            if ( current == null)
+                System.setProperty("org.jmri.apps.Apps."+key, value);
+            else if (!current.equals(value))
+                log.warn("JMRI property "+key+" already set to "+current+
+                        ", skipping reset to "+value);
+        } catch (Exception e) {
+            log.error("Unable to set JMRI property "+key+" to "+value+
+                        "due to exception: "+e);
+        }
+    }
+    
     /**
      * Provide access to a place where applications
      * can expect the configurion code to build run-time
@@ -719,6 +733,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         // save the configuration filename if present on the command line
         if (args.length>=1 && args[0]!=null) {
             configFilename = args[0];
+            setJmriSystemProperty("configFilename", configFilename);
             log.debug("Config file was specified as: "+configFilename);
         } else{
             configFilename = def;

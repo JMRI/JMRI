@@ -9,12 +9,19 @@ import apps.Apps;
 
 
 /**
- * Provide the JMRI context info 
+ * Provide the JMRI context info.
+ *<p>
+ * Currently uses direct references to the apps.Apps class. 
+ * It would be better to have Apps (or whatever) store the
+ * needed info in e.g. system parameters, so they can
+ * be retrieved without access outside the jmri.jmrit
+ * package (or move this to the apps package).  See the
+ * example for the configFilename property.
  *
  * @author	Bob Jacobsen    Copyright (C) 2007, 2009
  * @author  Matt Harris Copyright (C) 2008, 2009
  *
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class ReportContext {
 
@@ -23,8 +30,12 @@ public class ReportContext {
     public String getReport() {
         
         addString("JMRI Version: "+jmri.Version.name()+"  ");	 
+        addString("JMRI configuration file name: "
+                    +System.getProperty("org.jmri.apps.Apps.configFilename")+"  ");	 
+        if (jmri.util.JmriJFrame.getFrameList().get(0)!=null)
+            addString("JMRI main window name: "
+                    +jmri.util.JmriJFrame.getFrameList().get(0).getTitle()+"  ");	 
 
-        addProperty("java.version");
 
         addString("Connection one: "+Apps.getConnection1()+"  ");
         addString("Connection two: "+Apps.getConnection2()+"  ");
@@ -47,6 +58,7 @@ public class ReportContext {
         String audio = af!=null?af.toString():"[not initialised]";
         addString("Audio factory type: "+audio+"  ");
 
+        addProperty("java.version");
         addProperty("java.vendor");
         addProperty("java.home");
 
