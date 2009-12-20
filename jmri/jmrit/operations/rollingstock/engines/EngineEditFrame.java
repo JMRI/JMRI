@@ -30,7 +30,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -130,7 +130,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		addItem(pModel, editModelButton, 2, 0);
 		pPanel.add(pModel);
 		
-		// row4
+		// row 4
 		JPanel pType = new JPanel();
 		pType.setLayout(new GridBagLayout());
 		pType.setBorder(BorderFactory.createTitledBorder(rb.getString("Type")));
@@ -146,14 +146,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		addItem(pLength, editLengthButton, 2, 0);
 		pPanel.add(pLength);
 
-		// row 7
-		JPanel pHp = new JPanel();
-		pHp.setLayout(new GridBagLayout());
-		pHp.setBorder(BorderFactory.createTitledBorder(rb.getString("Hp")));
-		addItem(pHp, hpTextField, 0, 0);
-		pPanel.add(pHp);
-
-		// row 9
+		// row 6
 		JPanel pLocation = new JPanel();
 		pLocation.setLayout(new GridBagLayout());
 		pLocation.setBorder(BorderFactory.createTitledBorder(rb.getString("Location")));
@@ -166,6 +159,20 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		pOptional.setLayout(new BoxLayout(pOptional,BoxLayout.Y_AXIS));
 		JScrollPane optionPane = new JScrollPane(pOptional);
 		optionPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptional")));
+		
+		// row 11
+		JPanel pWeightTons = new JPanel();
+		pWeightTons.setLayout(new GridBagLayout());
+		pWeightTons.setBorder(BorderFactory.createTitledBorder(rb.getString("WeightTons")));
+		addItem(pWeightTons, weightTextField, 0, 0);
+		pOptional.add(pWeightTons);
+		
+		// row 12
+		JPanel pHp = new JPanel();
+		pHp.setLayout(new GridBagLayout());
+		pHp.setBorder(BorderFactory.createTitledBorder(rb.getString("Hp")));
+		addItem(pHp, hpTextField, 0, 0);
+		pOptional.add(pHp);
 		
 		// row 13
 		JPanel pConsist = new JPanel();
@@ -315,6 +322,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 			}
 		}
 		lengthComboBox.setSelectedItem(engine.getLength());
+		weightTextField.setText(engine.getWeightTons());
 		hpTextField.setText(engine.getHp());
 
 		locationBox.setSelectedItem(engine.getLocation());
@@ -350,6 +358,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 				String model = (String)modelComboBox.getSelectedItem();
 				// load the default hp and length for the model selected
 				hpTextField.setText(engineModels.getModelHorsepower(model));
+				weightTextField.setText(engineModels.getModelWeight(model));
 				if(engineModels.getModelLength(model)!= null && !engineModels.getModelLength(model).equals(""))
 					lengthComboBox.setSelectedItem(engineModels.getModelLength(model));
 				if(engineModels.getModelType(model)!= null && !engineModels.getModelType(model).equals(""))
@@ -484,6 +493,17 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 					_engine.setConsist(null);
 				else
 					_engine.setConsist(manager.getConsistByName((String)consistComboBox.getSelectedItem()));
+			}
+			// confirm that weight is a number
+			if (!weightTextField.getText().equals("") ){
+				try{
+					Integer.parseInt(weightTextField.getText());
+					_engine.setWeightTons(weightTextField.getText());
+				} catch (Exception e){
+					JOptionPane.showMessageDialog(this,
+							rb.getString("engineWeight"), rb.getString("engineCanNotWeight"),
+							JOptionPane.ERROR_MESSAGE);
+				}
 			}
 			// confirm that horsepower is a number
 			if (!hpTextField.getText().equals("") ){

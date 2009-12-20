@@ -28,7 +28,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.27 $
+ * @version	$Revision: 1.28 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -40,6 +40,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	protected TrainsTableFrame _trainFrame = null;
 	protected Dimension _frameDimension = new Dimension(Control.panelWidth,Control.panelHeight);
 	protected Point _framePosition = new Point();
+	// Train frame table column widths (12), starts with Time column and ends with Edit
+	protected int[] _tableColumnWidths = {40, 38, 72, 100, 120, 100, 100, 100, 100, 100, 66, 60};
 	
 	// Edit Train frame attributes
 	protected TrainEditFrame _trainEditFrame = null;
@@ -116,24 +118,36 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	firePropertyChange(PRINTPREVIEW_CHANGED_PROPERTY, old?"Preview":"Print", preview?"Preview":"Print");
     }
     
-    public void setTrainFrame(TrainsTableFrame frame){
+    public void setTrainsFrame(TrainsTableFrame frame){
     	_trainFrame = frame;
     }
     
-    public Dimension getTrainFrameSize(){
+    public Dimension getTrainsFrameSize(){
     	return _frameDimension;
     }
     
-    public Point getTrainFramePosition(){
+    public Point getTrainsFramePosition(){
     	return _framePosition;
     }
     
-    public String getTrainFrameSortBy (){
+    public String getTrainsFrameSortBy (){
     	return _sortBy;
     }
    
-    public void setTrainFrameSortBy(String sortBy){
+    public void setTrainsFrameSortBy(String sortBy){
     	_sortBy = sortBy;
+    }
+    
+    /**
+     * 
+     * @return get an array of table column widths for the trains frame
+     */
+    public int[] getTrainsFrameTableColumnWidths(){
+    	return _tableColumnWidths;
+    }
+    
+    public void setTrainsFrameTableColumnWidths(int[] tableColumnWidths){
+    	_tableColumnWidths = tableColumnWidths;
     }
     
     public void setTrainEditFrame(TrainEditFrame frame){
@@ -435,51 +449,61 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public int numEntries() { return _trainHashTable.size(); }
     
     public void options (org.jdom.Element values) {
-        if (log.isDebugEnabled()) log.debug("ctor from element "+values);
-        Element e = values.getChild("trainOptions");
-        if (e != null){
-        org.jdom.Attribute a;
-        if ((a = e.getAttribute("sortBy")) != null)
-        	_sortBy = a.getValue();
-        if ((a = e.getAttribute("buildMessages")) != null)
-        	_buildMessages = a.getValue().equals("true");
-        if ((a = e.getAttribute("buildReport")) != null)
-        	_buildReport = a.getValue().equals("true");
-        if ((a = e.getAttribute("printPreview")) != null)
-        	_printPreview = a.getValue().equals("true");
-        int x = 0;
-        int y = 0;
-        int height = Control.panelHeight;
-        int width = Control.panelWidth;
-        try {
-        	x = e.getAttribute("x").getIntValue();
-        	y = e.getAttribute("y").getIntValue();
-        	height = e.getAttribute("height").getIntValue();
-        	width = e.getAttribute("width").getIntValue();
-        	_frameDimension = new Dimension(width, height);
-        	_framePosition = new Point(x,y);
-        } catch ( org.jdom.DataConversionException ee) {
-        	log.debug("Did not find train frame attributes");
-        } catch ( NullPointerException ne) {
-        	log.debug("Did not find train frame attributes");
-        }
-        }
-        // get Train Edit attributes
-        e = values.getChild("trainEditOptions");
-        if (e != null){
-            try {
-                int x = e.getAttribute("x").getIntValue();
-                int y = e.getAttribute("y").getIntValue();
-                int height = e.getAttribute("height").getIntValue();
-                int width = e.getAttribute("width").getIntValue();
-                _editFrameDimension = new Dimension(width, height);
-                _editFramePosition = new Point(x,y);
-            } catch ( org.jdom.DataConversionException ee) {
-                log.debug("Did not find train edit frame attributes");
-            } catch ( NullPointerException ne) {
-            	log.debug("Did not find train edit frame attributes");
-            }
-        }
+    	if (log.isDebugEnabled()) log.debug("ctor from element "+values);
+    	Element e = values.getChild("trainOptions");
+    	if (e != null){
+    		org.jdom.Attribute a;
+    		if ((a = e.getAttribute("sortBy")) != null)
+    			_sortBy = a.getValue();
+    		if ((a = e.getAttribute("buildMessages")) != null)
+    			_buildMessages = a.getValue().equals("true");
+    		if ((a = e.getAttribute("buildReport")) != null)
+    			_buildReport = a.getValue().equals("true");
+    		if ((a = e.getAttribute("printPreview")) != null)
+    			_printPreview = a.getValue().equals("true");
+    		int x = 0;
+    		int y = 0;
+    		int height = Control.panelHeight;
+    		int width = Control.panelWidth;
+    		try {
+    			x = e.getAttribute("x").getIntValue();
+    			y = e.getAttribute("y").getIntValue();
+    			height = e.getAttribute("height").getIntValue();
+    			width = e.getAttribute("width").getIntValue();
+    			_frameDimension = new Dimension(width, height);
+    			_framePosition = new Point(x,y);
+    		} catch ( org.jdom.DataConversionException ee) {
+    			log.debug("Did not find train frame attributes");
+    		} catch ( NullPointerException ne) {
+    			log.debug("Did not find train frame attributes");
+    		}
+    		if ((a = e.getAttribute("columnWidths")) != null){
+             	String[] widths = a.getValue().split(" ");
+             	for (int i=0; i<widths.length; i++){
+             		try{
+             			_tableColumnWidths[i] = Integer.parseInt(widths[i]);
+             		} catch (NumberFormatException ee){
+             			log.error("Number format exception when reading trains column widths");
+             		}
+             	}
+    		}
+    	}
+    	// get Train Edit attributes
+    	e = values.getChild("trainEditOptions");
+    	if (e != null){
+    		try {
+    			int x = e.getAttribute("x").getIntValue();
+    			int y = e.getAttribute("y").getIntValue();
+    			int height = e.getAttribute("height").getIntValue();
+    			int width = e.getAttribute("width").getIntValue();
+    			_editFrameDimension = new Dimension(width, height);
+    			_editFramePosition = new Point(x,y);
+    		} catch ( org.jdom.DataConversionException ee) {
+    			log.debug("Did not find train edit frame attributes");
+    		} catch ( NullPointerException ne) {
+    			log.debug("Did not find train edit frame attributes");
+    		}
+    	}
     }
 
     
@@ -491,13 +515,13 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public org.jdom.Element store() {
     	Element values = new Element("options");
         org.jdom.Element e = new org.jdom.Element("trainOptions");
-        e.setAttribute("sortBy", getTrainFrameSortBy());
+        e.setAttribute("sortBy", getTrainsFrameSortBy());
         e.setAttribute("buildMessages", getBuildMessages()?"true":"false");
         e.setAttribute("buildReport", getBuildReport()?"true":"false");
         e.setAttribute("printPreview", getPrintPreview()?"true":"false");
         // get previous Train frame size and position
-        Dimension size = getTrainFrameSize();
-        Point posn = getTrainFramePosition();
+        Dimension size = getTrainsFrameSize();
+        Point posn = getTrainsFramePosition();
         if (_trainFrame != null){
         	size = _trainFrame.getSize();
         	posn = _trainFrame.getLocation();
@@ -507,7 +531,13 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         e.setAttribute("x", ""+posn.x);
         e.setAttribute("y", ""+posn.y);
         e.setAttribute("height", ""+size.height);
-        e.setAttribute("width", ""+size.width); 
+        e.setAttribute("width", ""+size.width);
+        // convert column widths to strings
+        String columnWidths = "";
+        for (int i=0; i<_tableColumnWidths.length; i++){
+        	columnWidths += Integer.toString(_tableColumnWidths[i])+" ";
+        }
+        e.setAttribute("columnWidths", columnWidths);
         values.addContent(e);
         // now save Train Edit frame size and position
         e = new org.jdom.Element("trainEditOptions");

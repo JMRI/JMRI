@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.table.TableColumnModel;
 
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.OperationsFrame;
@@ -30,7 +31,7 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.36 $
+ * @version             $Revision: 1.37 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -206,9 +207,9 @@ public class TrainsTableFrame extends OperationsFrame {
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
     		
     	pack();
-    	setSize(trainManager.getTrainFrameSize());
-    	setLocation(trainManager.getTrainFramePosition());
-    	setSortBy(trainManager.getTrainFrameSortBy());
+    	setSize(trainManager.getTrainsFrameSize());
+    	setLocation(trainManager.getTrainsFramePosition());
+    	setSortBy(trainManager.getTrainsFrameSortBy());
     	
     }
     
@@ -384,15 +385,24 @@ public class TrainsTableFrame extends OperationsFrame {
 	}
 	
 	protected void storeValues(){
-		trainManager.setTrainFrame(this);					//save frame size and location
-		trainManager.setTrainFrameSortBy(getSortBy());		//save how the table is sorted
+		trainManager.setTrainsFrame(this);					//save frame size and location
+		trainManager.setTrainsFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
+		trainManager.setTrainsFrameSortBy(getSortBy());		//save how the table is sorted
 		trainManager.save();
 		setModifiedFlag(false);
 	}
 	
+	protected int[] getCurrentTableColumnWidths(){
+		int[] widths = new int[12];
+		TableColumnModel tcm = trainsTable.getColumnModel();
+		for (int i=0; i<tcm.getColumnCount(); i++)
+			widths[i] = tcm.getColumn(i).getWidth();
+		return widths;
+	}
+	
     public void dispose() {
     	trainsModel.dispose();
-    	trainManager.setTrainFrame(null);
+    	trainManager.setTrainsFrame(null);
         super.dispose();
     }
       

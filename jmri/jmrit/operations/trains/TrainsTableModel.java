@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.24 $
+ * @version   $Revision: 1.25 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -113,18 +113,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 
 		// set column preferred widths
-		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
-		table.getColumnModel().getColumn(BUILDBOXCOLUMN).setPreferredWidth(38);
-		table.getColumnModel().getColumn(BUILDCOLUMN).setPreferredWidth(72);
-		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(100);
-		table.getColumnModel().getColumn(DESCRIPTIONCOLUMN).setPreferredWidth(120);
-		table.getColumnModel().getColumn(ROUTECOLUMN).setPreferredWidth(100);
-		table.getColumnModel().getColumn(DEPARTSCOLUMN).setPreferredWidth(100);
-		table.getColumnModel().getColumn(CURRENTCOLUMN).setPreferredWidth(100);
-		table.getColumnModel().getColumn(TERMINATESCOLUMN).setPreferredWidth(100);
-		table.getColumnModel().getColumn(STATUSCOLUMN).setPreferredWidth(100);
-		table.getColumnModel().getColumn(MOVECOLUMN).setPreferredWidth(66);
-		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(60);
+		int[] tableColumnWidths = manager.getTrainsFrameTableColumnWidths();
+		for (int i=0; i<tcm.getColumnCount(); i++)
+			tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}

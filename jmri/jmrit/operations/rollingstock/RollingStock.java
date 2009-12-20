@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -145,6 +145,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _color;
 	}
 
+	/**
+	 * 
+	 * @param weight rolling stock weight in ounces.
+	 */
 	public void setWeight(String weight) {
 		String old = _weight;
 		_weight = weight;
@@ -156,6 +160,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _weight;
 	}
 	
+	/**
+	 * 
+	 * @param weight full scale rolling stock weight in tons.
+	 */
 	public void setWeightTons(String weight) {
 		String old = _weightTons;
 		_weightTons = weight;

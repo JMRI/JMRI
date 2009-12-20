@@ -19,7 +19,7 @@ import java.util.List;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class OperationsTrainsGuiTest extends TestCase {
 
@@ -58,9 +58,9 @@ public class OperationsTrainsGuiTest extends TestCase {
 		Point p = f.getLocation();
 		
 		TrainManager tmanager = TrainManager.instance();
-		Assert.assertEquals("sort by 2", TrainsTableFrame.NAME, tmanager.getTrainFrameSortBy());
-		Assert.assertEquals("location 1", p, tmanager.getTrainFramePosition());
-		Assert.assertEquals("size 1", new Dimension(400,200), tmanager.getTrainFrameSize());
+		Assert.assertEquals("sort by 2", TrainsTableFrame.NAME, tmanager.getTrainsFrameSortBy());
+		Assert.assertEquals("location 1", p, tmanager.getTrainsFramePosition());
+		Assert.assertEquals("size 1", new Dimension(400,200), tmanager.getTrainsFrameSize());
 		Assert.assertFalse("Build Messages", tmanager.getBuildMessages());
 		Assert.assertFalse("Build Report", tmanager.getBuildReport());
 		Assert.assertFalse("Print Review", tmanager.getPrintPreview());
@@ -72,14 +72,14 @@ public class OperationsTrainsGuiTest extends TestCase {
 		f.setSize(610,250);
 		f.setLocation(20,10);
 		
-		Assert.assertEquals("sort by 3", TrainsTableFrame.TIME, tmanager.getTrainFrameSortBy());
+		Assert.assertEquals("sort by 3", TrainsTableFrame.TIME, tmanager.getTrainsFrameSortBy());
 		Assert.assertTrue("Build Messages 2", tmanager.getBuildMessages());
 		Assert.assertTrue("Build Report 2", tmanager.getBuildReport());
 		Assert.assertFalse("Print Review 2", tmanager.getPrintPreview());
 
 		// frame location shouldn't have moved yet
-		Assert.assertEquals("location 2", p, tmanager.getTrainFramePosition());
-		Assert.assertEquals("size 2", new Dimension(400,200), tmanager.getTrainFrameSize());
+		Assert.assertEquals("location 2", p, tmanager.getTrainsFramePosition());
+		Assert.assertEquals("size 2", new Dimension(400,200), tmanager.getTrainsFrameSize());
 		
 		f.sortById.doClick();
 		f.buildMsgBox.doClick();
@@ -87,9 +87,9 @@ public class OperationsTrainsGuiTest extends TestCase {
 		f.saveButton.doClick();
 		// frame location can move just a bit on MacOS
 		p = f.getLocation();
-		Assert.assertEquals("sort by 1", TrainsTableFrame.ID, tmanager.getTrainFrameSortBy());
-		Assert.assertEquals("location 3", p, tmanager.getTrainFramePosition());
-		Assert.assertEquals("size 3", new Dimension(610,250), tmanager.getTrainFrameSize());
+		Assert.assertEquals("sort by 1", TrainsTableFrame.ID, tmanager.getTrainsFrameSortBy());
+		Assert.assertEquals("location 3", p, tmanager.getTrainsFramePosition());
+		Assert.assertEquals("size 3", new Dimension(610,250), tmanager.getTrainsFrameSize());
 		Assert.assertFalse("Build Messages 3", tmanager.getBuildMessages());
 		Assert.assertTrue("Build Report 3", tmanager.getBuildReport());
 		Assert.assertTrue("Print Review 3", tmanager.getPrintPreview());

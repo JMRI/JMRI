@@ -44,7 +44,7 @@ import jmri.jmrit.operations.setup.Control;
  * U28B		2800	60		Diesel
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class EngineModels {
 	
@@ -55,12 +55,14 @@ public class EngineModels {
 	private static final String HORSEPOWER = rb.getString("engineModelHorsepowers");
 	private static final String ENGINELENGTHS = rb.getString("engineModelLengths");
 	private static final String ENGINETYPES = rb.getString("engineModelTypes");
+	private static final String ENGINEWEIGHTS = rb.getString("engineModelWeights");
 	
 	public static final String ENGINEMODELS_CHANGED_PROPERTY = "EngineModels";
 	
 	protected Hashtable<String, String> _engineHorsepowerHashTable = new Hashtable<String, String>();
 	protected Hashtable<String, String> _engineLengthHashTable = new Hashtable<String, String>();
 	protected Hashtable<String, String> _engineTypeHashTable = new Hashtable<String, String>();
+	protected Hashtable<String, String> _engineWeightHashTable = new Hashtable<String, String>();
     
 	public EngineModels() {
     }
@@ -165,12 +167,22 @@ public class EngineModels {
     	return _engineTypeHashTable.get(model);
     }
     
+    public void setModelWeight(String model, String type){
+    	_engineWeightHashTable.put(model, type);
+    }
+    
+    public String getModelWeight(String model){
+    	return _engineWeightHashTable.get(model);
+    }
+    
     private void loadDefaults(){
 		String[] models = MODELS.split("%%");
  		String[] hps = HORSEPOWER.split("%%");
  		String[] lengths = ENGINELENGTHS.split("%%"); 
  		String[] types = ENGINETYPES.split("%%"); 
- 		if (models.length != hps.length || models.length != lengths.length || models.length != types.length){
+ 		String[] weights = ENGINEWEIGHTS.split("%%"); 
+ 		if (models.length != hps.length || models.length != lengths.length || models.length != types.length 
+ 				|| models.length != weights.length){
  			log.error("Defaults do not have the right number of items, " +
  					"models="+models.length+" hps="+hps.length+" lengths="+lengths.length+" types="+types.length);
  			return;
@@ -180,6 +192,7 @@ public class EngineModels {
  			setModelHorsepower(models[i], hps[i]);
  			setModelLength(models[i], lengths[i]);
  			setModelType(models[i], types[i]);
+ 			setModelWeight(models[i], weights[i]);
  		}
     }
         

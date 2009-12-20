@@ -58,7 +58,7 @@ import jmri.jmrit.operations.routes.RouteManager;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -325,27 +325,27 @@ public class OperationsTrainsTest extends TestCase {
 		Consist con1 = emanager.newConsist("C16");	
 		Consist con2 = emanager.newConsist("C14");
 
-		Engine e1 = new Engine("CP", "5016");
+		Engine e1 = new Engine("PC", "5016");
 		e1.setModel("GP40");
 		e1.setConsist(con1);
 		e1.setMoves(123);
 		Assert.assertEquals("Engine 1 Length", "59", e1.getLength());
 		emanager.register(e1);
 
-		Engine e2 = new Engine("CP", "5019");
+		Engine e2 = new Engine("PC", "5019");
 		e2.setModel("GP40");
 		e2.setConsist(con1);
 		e2.setMoves(321);
 		Assert.assertEquals("Engine 2 Length", "59", e2.getLength());
 		emanager.register(e2);
 
-		Engine e3 = new Engine("CP", "5524");
+		Engine e3 = new Engine("PC", "5524");
 		e3.setModel("SD45");
 		e3.setConsist(con2);
 		Assert.assertEquals("Engine 3 Length", "66", e3.getLength());
 		emanager.register(e3);
 
-		Engine e4 = new Engine("CP", "5559");
+		Engine e4 = new Engine("PC", "5559");
 		e4.setModel("SD45");
 		e4.setConsist(con2);
 		Assert.assertEquals("Engine 4 Length", "66", e4.getLength());
@@ -664,6 +664,13 @@ public class OperationsTrainsTest extends TestCase {
 		 
 		// now allow train 2 to service Boxcars
 		train2.addTypeName("Boxcar");
+		// Try again, but exclude road name CP
+		train2.setRoadOption(Train.EXCLUDEROADS);
+		train2.addRoadName("CP");
+		train2.build();
+		Assert.assertEquals("Train 2 After Build but exclude road CP", false, train2.getBuilt());
+		train2.setRoadOption(Train.ALLROADS);
+		
 		train2.build();
 		Assert.assertEquals("Train 2 After Build include Boxcar", true, train2.getBuilt());
 		
@@ -686,7 +693,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Car c8 After without engines Build track", "South End 1", c8.getDestinationTrackName());
 
 		// Try again building without engines on staging tracks but require them
-		train1.setEngineRoad("CP");
+		train1.setEngineRoad("PC");
 		train1.setEngineModel("GP40");
 		train1.setNumberEngines("2");
 		train2.setNumberEngines("2");
@@ -834,13 +841,26 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Reset Pickup count for South End, track South End 1", 0, l3s1.getPickupRS()); 
 		Assert.assertEquals("Reset Pickup count for South End, track South End 2", 0, l3s2.getPickupRS()); 
 
+		// Try again, but exclude caboose
+		// there are cabooses waiting in staging so build should fail
+		train1.deleteTypeName("Caboose");
+		train1.build();
+		Assert.assertEquals("Train 1 After Build with engines but exclude Caboose", false, train1.getBuilt());
+		train1.addTypeName("Caboose");
+		
+		// Try again, but exclude road name CP
+		train1.setRoadOption(Train.EXCLUDEROADS);
+		train1.addRoadName("CP");
+		train1.build();
+		Assert.assertEquals("Train 1 After Build with engines but exclude road CP", false, train1.getBuilt());
+		train1.setRoadOption(Train.ALLROADS);
 		
 		// Build the train again!!
 		train1.build();
+		Assert.assertEquals("Train 1 After Build with engines include all roads", true, train1.getBuilt());
 		Assert.assertEquals("Train 1 After Build Departs Name", "North End", train1.getTrainDepartsName());
 		Assert.assertEquals("Train 1 After Build Terminates Name", "South End", train1.getTrainTerminatesName());
 		Assert.assertEquals("Train 1 After Build Next Location Name", "North Industries", train1.getNextLocationName());
-		Assert.assertEquals("Train 1 After Build Built Status", true, train1.getBuilt());
 
 		//  Move the train #1
 		train1.move();
@@ -1045,10 +1065,10 @@ public class OperationsTrainsTest extends TestCase {
 		train2.build();
 		Assert.assertEquals("Train 2 After Build require 2 engine", true, train2.getBuilt());
 		// try different road
-		train2.setEngineRoad("PC");
-		train2.build();
-		Assert.assertEquals("Train 2 After Build require road PC", false, train2.getBuilt());
 		train2.setEngineRoad("CP");
+		train2.build();
+		Assert.assertEquals("Train 2 After Build require road CP", false, train2.getBuilt());
+		train2.setEngineRoad("PC");
 		// try requiring FRED, should fail
 		train2.setRequirements(Train.FRED);
 		train2.build();

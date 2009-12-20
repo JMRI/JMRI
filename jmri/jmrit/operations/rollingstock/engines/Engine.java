@@ -8,7 +8,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents an engine on the layout
  * 
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class Engine extends RollingStock {
 	
@@ -100,6 +100,26 @@ public class Engine extends RollingStock {
 	}
 	
 	/**
+	 * Set the engine weight for this engine's model
+	 * @param weight engine weight
+	 */
+	public void setWeightTons(String weight){
+		if(getModel().equals(""))
+			return;
+		String old = getWeight();
+		engineModels.setModelWeight(getModel(), weight);
+		if (!old.equals(weight))
+			firePropertyChange(LENGTH, old, weight);
+	}
+	
+	public String getWeightTons(){
+		String weight = engineModels.getModelWeight(getModel());
+		if(weight == null)
+			weight = "";
+		return weight;
+	}
+	
+	/**
 	 * Place engine in a consist
 	 * @param consist
 	 */
@@ -167,7 +187,7 @@ public class Engine extends RollingStock {
 	 */
 	public Engine(org.jdom.Element e) {
 		org.jdom.Attribute a;
-		// must set _model first so engine hp, length and type is set properly
+		// must set _model first so engine hp, length, type and weight is set properly
 		if ((a = e.getAttribute("model")) != null)
 			_model = a.getValue();
 		if ((a = e.getAttribute("hp")) != null)
@@ -176,6 +196,8 @@ public class Engine extends RollingStock {
 			setLength(a.getValue());
 		if ((a = e.getAttribute("type")) != null)
 			setType(a.getValue());
+		if ((a = e.getAttribute("weightTons")) != null)
+			setWeightTons(a.getValue());
 		if ((a = e.getAttribute("consist")) != null){
 			Consist c = EngineManager.instance().getConsistByName(a.getValue());
 			if (c != null){

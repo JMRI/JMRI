@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009
- * @version             $Revision: 1.67 $
+ * @version             $Revision: 1.68 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -704,6 +704,7 @@ public class TrainBuilder extends TrainCommon{
 		numberEngines = 0;
 		int reqNumEngines = 0; 	
 		int engineLength = 0;
+		int engineWeight = 0;
 		
 		if (train.getNumberEngines().equals(Train.AUTO)){
 			reqNumEngines = getAutoEngines(fileOut);
@@ -880,6 +881,7 @@ public class TrainBuilder extends TrainCommon{
 							cEngine.setRouteLocation(train.getTrainDepartsRouteLocation());
 							cEngine.setRouteDestination(train.getTrainTerminatesRouteLocation());
 							cEngine.setDestination(terminateLocation, terminateTrack);
+							engineWeight = engineWeight + Integer.parseInt(cEngine.getWeightTons());
 						}
 						break;  // done with loading engines
 						// consist has the wrong number of engines, remove 	
@@ -896,6 +898,7 @@ public class TrainBuilder extends TrainCommon{
 					engine.setRouteDestination(train.getTrainTerminatesRouteLocation());
 					engine.setDestination(terminateLocation, terminateTrack);
 					engineLength = Integer.parseInt(engine.getLength());
+					engineWeight = Integer.parseInt(engine.getWeightTons());
 					break;  // done with loading engine
 				}
 			}
@@ -905,10 +908,11 @@ public class TrainBuilder extends TrainCommon{
 			return false;
 		}
 		
-		// set the engine length for locations
+		// set the engine length and weight for locations
 		for (int i=0; i<routeList.size(); i++){
 			RouteLocation rl = train.getRoute().getLocationById(routeList.get(i));
 			rl.setTrainLength(engineLength);		// load the engine(s) length
+			rl.setTrainWeight(engineWeight);		// load the engine(s) weight
 		}
 		// terminating into staging without engines?
 		if (terminateTrack == null && engineList.size() == 0){

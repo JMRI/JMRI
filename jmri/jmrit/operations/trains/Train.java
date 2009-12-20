@@ -42,7 +42,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.56 $
+ * @version $Revision: 1.57 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -88,7 +88,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	// Train status
 	public static final String TERMINATED = rb.getString("Terminated");
 	public static final String TRAINRESET = rb.getString("TrainReset");
-	public static final String TRAININROUTE = rb.getString("TrainInRoute");
+	private static final String TRAININROUTE = rb.getString("TrainInRoute");
 	
 	public static final int NONE = 0;		// train requirements
 	public static final int CABOOSE = 1;
@@ -593,6 +593,22 @@ public class Train implements java.beans.PropertyChangeListener {
     	return cars.size();
     }
     
+    /**
+     * 
+     * @return The number of cars currently in the train
+     */
+    public int getNumberCarsInTrain(RouteLocation rl){
+    	List<String> cars = CarManager.instance().getCarsByTrainList(this);
+    	// remove cars that aren't in the train
+    	for (int i=0; i<cars.size(); i++){
+    		Car c = CarManager.instance().getCarById(cars.get(i));
+    		if (c.getRouteLocation() != rl || c.getTrack() != null){
+    			cars.remove(i--);
+    		}
+    	}
+    	return cars.size();
+    }
+    
     public void setDescription(String description) {
 		String old = _description;
 		_description = description;
@@ -923,11 +939,11 @@ public class Train implements java.beans.PropertyChangeListener {
 				if (i < routeList.size()) {
 					rlNew = getRoute().getLocationById(routeList.get(i));
 				} 
-				setCurrentLocation(rlNew);
-				updateStatus(rl, rlNew);
+				setCurrentLocation(rlNew);				
 				moveTrainIcon(rlNew);
 				// cars and engines will move via property change
 				firePropertyChange(TRAIN_LOCATION_CHANGED_PROPERTY, rl, rlNew);
+				updateStatus(rl, rlNew);
 				break;
 			}
 		}
@@ -1067,7 +1083,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	private void updateStatus(RouteLocation old, RouteLocation next){
 		if (next != null){
-			setStatus(TRAININROUTE);
+			setStatus(TRAININROUTE+" "+getNumberCarsInTrain(next)+" "+rb.getString("cars"));
 		}else{
 			log.debug("Train ("+getName()+")terminated");
 			setStatus(TERMINATED);
