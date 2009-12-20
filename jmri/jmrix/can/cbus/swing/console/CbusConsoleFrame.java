@@ -44,7 +44,7 @@ import jmri.jmrix.can.cbus.CbusOpCodes;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.28 $
+ * @version			$Revision: 1.29 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -910,7 +910,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
     public synchronized void message(CanMessage m) {  // receive a message and log it
         nextLine("sent: "+m.toString()+"\n",
-                "ID:---"+" "+(m.isRtr() ? "R " : "N ")+decode(m)+" ["+CbusMessage.toAddress(m)+"]\n",
+                "ID:"+CbusMessage.getId(m)+ " "+(m.isRtr() ? "R " : "N ")+decode(m)+" ["+CbusMessage.toAddress(m)+"]\n",
                 "Dyn Pri:"+CbusMessage.getPri(m)/4+" Min Pri:"+(CbusMessage.getPri(m)&3),
                 (_filterFrame != null) ? _filterFrame.filter(m) : -1);
         sentCountField.setText(Integer.toString(++_sent));
