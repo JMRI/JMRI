@@ -6,32 +6,32 @@ import java.util.*;
  * Hashtable that preserves order for later access.
  *
  * @author Bob Jacobsen
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
-public class OrderedHashtable extends Hashtable<Object,Object> {
+public class OrderedHashtable<K, V> extends Hashtable<K, V> {
 
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         keys.add(key);
         return super.put(key, value);
     }
     
-    public Object remove(Object key) {
+    public V remove(Object key) {
         keys.remove(key);
         return super.remove(key);
     }
     
-    public Enumeration<Object> keys() {
+    public Enumeration<K> keys() {
         return new LocalEnumeration();
     }
     
-    ArrayList<Object> keys = new ArrayList<Object>();
+    ArrayList<K> keys = new ArrayList<K>();
     
-    class LocalEnumeration implements Enumeration<Object> {
+    class LocalEnumeration implements Enumeration<K> {
         public boolean hasMoreElements() {
             return (i<keys.size());
         }
-        public Object nextElement() {
+        public K nextElement() {
             return keys.get(i++);
         }
         int i = 0;
