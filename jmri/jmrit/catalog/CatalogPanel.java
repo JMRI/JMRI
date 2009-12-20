@@ -146,7 +146,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
                 updatePanel();
             }
         });
-        jmri.util.JTreeUtil.setExpandsSelectedPaths(_dTree, true);
+        _dTree.setExpandsSelectedPaths(true);
         _treePane = new JScrollPane(_dTree);
         _treePane.getViewport().setPreferredSize(new Dimension(250, 200));
         add(_treePane, 1);
