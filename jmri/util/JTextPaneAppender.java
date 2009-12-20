@@ -156,9 +156,7 @@ public class JTextPaneAppender extends AppenderSkeleton
     }
 
     /**
-     * getTextPane
-     * <p>
-     * @return
+     * Get current TextPane
      */
     public JTextPane getTextPane()
     {
@@ -166,7 +164,7 @@ public class JTextPaneAppender extends AppenderSkeleton
     }
 
     /**
-     * setTextPane
+     * Set current TextPane
      * <p>
      * @param aTextpane
      */
@@ -201,8 +199,6 @@ public class JTextPaneAppender extends AppenderSkeleton
 
     /**
      * getColorEmerg
-     * <p>
-     * @return
      */
     public Color getColorEmerg()
     {
@@ -221,8 +217,6 @@ public class JTextPaneAppender extends AppenderSkeleton
 
     /**
      * getColorError
-     * <p>
-     * @return
      */
     public Color getColorError()
     {
@@ -241,8 +235,6 @@ public class JTextPaneAppender extends AppenderSkeleton
 
     /**
      * getColorWarn
-     * <p>
-     * @return
      */
     public Color getColorWarn()
     {
@@ -261,8 +253,6 @@ public class JTextPaneAppender extends AppenderSkeleton
 
     /**
      * getColorInfo
-     * <p>
-     * @return
      */
     public Color getColorInfo()
     {
@@ -281,8 +271,6 @@ public class JTextPaneAppender extends AppenderSkeleton
 
     /**
      * getColorDebug
-     * <p>
-     * @return
      */
     public Color getColorDebug()
     {
@@ -320,10 +308,9 @@ public class JTextPaneAppender extends AppenderSkeleton
     }
 
     /**
-     * getFontSize
+     * Get the font size for a particular logging level
      * <p>
      * @param aLevel
-     * @return
      */
     public int getFontSize( Level aLevel )
     {
@@ -371,7 +358,6 @@ public class JTextPaneAppender extends AppenderSkeleton
      * Retrieves the font name of a particular Level
      * <p>
      * @param aLevel 
-     * @return
      */
     public String getFontName( Level aLevel )
     {
@@ -388,7 +374,8 @@ public class JTextPaneAppender extends AppenderSkeleton
     /**
      * @see org.apache.log4j.AppenderSkeleton#requiresLayout()
      */
-    // original code had this marked as an override, but it isn't
+    // original code had this marked as an override, but it isn't,
+    // at least for Log4J 1.2.15
     //@Override
     public boolean requiresLayout()
     {

@@ -54,8 +54,6 @@ public class JLogoutputFrame
 
     /**
      * Retrieves the singleton instance
-     * <p>
-     * @return
      */
     public static JLogoutputFrame getInstance()
     {
@@ -139,8 +137,7 @@ public class JLogoutputFrame
 
     /**
      * Outputs a message only to the appender which belongs to this frame
-     * <p>
-     * @param fqcn 
+     * 
      * @param aLevel 
      * @param aMsg
      */
@@ -160,9 +157,9 @@ public class JLogoutputFrame
     /**
      * Creates the appender and adds it to all known Loggers whose additivity 
      * flag is false, incl. root logger
-     * <p>
+     * 
      * @param aTextPane 
-     * @return
+     * @return A configured Appender
      */
     @SuppressWarnings("unchecked")
     public JTextPaneAppender createAppender( JTextPane aTextPane )
