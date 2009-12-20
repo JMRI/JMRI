@@ -15,7 +15,7 @@ import jmri.jmrix.can.*;
  * Implements the jmri.Programmer interface via commands for the CBUS programmer.
  *
  * @author      Andrew Crosland  Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class CbusDccProgrammer extends AbstractProgrammer implements CanListener {
 
@@ -33,7 +33,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     static private CbusDccProgrammer self = null;
 
     // handle mode
-    static protected int _mode = Programmer.DIRECTBYTEMODE;
+    static protected int _mode = Programmer.DIRECTBITMODE;
 
     /**
      * Switch to a new programming mode.  SPROG currently supports bit
@@ -124,7 +124,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
             controller().sendCanMessage(CbusMessage.getWriteCV(_cv, _val, getMode()), this);
         } catch (Exception e) {
             // program op failed, go straight to end
-            log.error("program operation failed, exception "+e);
+            log.error("Write operation failed, exception "+e);
             progState = RETURNSENT;
             //controller().sendCanMessage(CbusMessage.getExitProgMode(), this);
         }
@@ -147,7 +147,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
             controller().sendCanMessage(CbusMessage.getReadCV(_cv, getMode()), this);
         } catch (Exception e) {
             // program op failed, go straight to end
-            log.error("program operation failed, exception "+e);
+            log.error("Read operation failed, exception "+e);
             progState = RETURNSENT;
             //controller().sendCanMessage(CbusMessage.getExitProgMode(), this);
         }
