@@ -1876,16 +1876,16 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     		if (sub.getClass().equals(TurnoutIcon.class)){
     			boolean added = false;
     			TurnoutIcon p = (TurnoutIcon)sub;
-    			for (int j=0; j<sorted.size(); j++){
-    				TurnoutIcon pT = (TurnoutIcon)sorted.get(j);
-    				if (p.getTurnout().getSystemName().compareToIgnoreCase(pT.getTurnout().getSystemName()) < 0) {
-    					sorted.add(j, (JComponent)sub);
+    			for (int j=sorted.size(); j>0; j--){
+    				TurnoutIcon pT = (TurnoutIcon)sorted.get(j-1);
+    				if (pT.getTurnout().getSystemName().compareToIgnoreCase(p.getTurnout().getSystemName()) < 0) {
+    					sorted.add(j,(JComponent)sub);
     					added = true;
     					break;
     				}
     			}
     			if (!added)
-    				sorted.add((JComponent)sub);
+    				sorted.add(0,(JComponent)sub);
     			sortIn.remove(sub);
     			i--;
     		}
@@ -1897,16 +1897,16 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             if (sub.getClass().equals(SensorIcon.class)){
     			boolean added = false;
     			SensorIcon p = (SensorIcon)sub;
-    			for (int j=index; j<sorted.size(); j++){
-    				SensorIcon pS = (SensorIcon)sorted.get(j);
-    				if (p.getSensor().getSystemName().compareToIgnoreCase(pS.getSensor().getSystemName()) < 0) {
-    					sorted.add(j, (JComponent)sub);
+    			for (int j=sorted.size(); j>index; j--){
+    				SensorIcon pS = (SensorIcon)sorted.get(j-1);
+    				if (pS.getSensor().getSystemName().compareToIgnoreCase(p.getSensor().getSystemName()) < 0) {
+    					sorted.add(j,(JComponent)sub);
     					added = true;
     					break;
     				}
     			}
     			if (!added)
-    				sorted.add((JComponent)sub);
+    				sorted.add(index,(JComponent)sub);
     			sortIn.remove(sub);
     			i--;
             }
@@ -1919,16 +1919,16 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     			PositionableLabel p = (PositionableLabel)sub;
     			if (p.isText()){
     				boolean added = false;
-    				for (int j=index; j<sorted.size(); j++){
-    					PositionableLabel pL = (PositionableLabel)sorted.get(j);
-    					if (p.getText().compareToIgnoreCase(pL.getText()) < 0) {
-    						sorted.add(j, (JComponent)sub);
+    				for (int j=sorted.size(); j>index; j--){
+    					PositionableLabel pL = (PositionableLabel)sorted.get(j-1);
+    					if (pL.getText().compareToIgnoreCase(p.getText()) < 0) {
+    						sorted.add(j,(JComponent)sub);
     						added = true;
     						break;
     					}
     				}
     				if (!added)
-    					sorted.add((JComponent)sub);
+    					sorted.add(index,(JComponent)sub);
     				sortIn.remove(sub);
     				i--;
     			}
