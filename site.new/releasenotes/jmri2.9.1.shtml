@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.4 2009-12-17 05:51:35 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.5 2009-12-20 03:24:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -98,6 +98,8 @@ Paul Bender added a new <a href="http://jmri.org/jython/XNetListenerExample.py">
 <p>
 Dan Boudreau provided double-crossover and slip-switch track icons.
 
+<p>
+You can now display the log messages in a window by selecting "Display Message Log" in the "Debug" menu.
 
 <!--#include virtual="/Footer" -->
 
