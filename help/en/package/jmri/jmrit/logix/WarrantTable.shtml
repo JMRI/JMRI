@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: WarrantTable.shtml,v 1.2 2009-11-13 21:57:06 pete_cressman Exp $ -->
+<!-- $Id: WarrantTable.shtml,v 1.3 2009-12-20 18:57:50 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
@@ -43,7 +43,7 @@ train and record the throttle commands.
 <H3>Origin, Destination and Via Blocks</H3>
 A warrant route is created by selecting the the Block and path where
 the train will begin its trip and the portal by which it should leave.  Then
-select the Bock and path where the train should end its trip.
+select the Block and path and entry portal of the path where the train should end its trip.
 Press the <b>Calculate Route</b> button and the the computer will determine all the
 intermediate paths needed to make the trip.
 <ul>
@@ -69,9 +69,19 @@ intermediate paths needed to make the trip.
 
         <li><b>Destination Location</b>: - Consists of a text field for the
         destination <b>Block Name</b> and a drop down menu for the terminating
-        <b>Path Name</b>.
+        <b>Path Name</b> and a drop down menu to select the <b>Entry Portal
+        Name</b>.
         <br>Note that the block may have several paths and the default path
         showing may not be the one where you intend the train to finish its run.
+        <br> 
+        Also, Since paths often have two portals, the default portal
+        showing may not be the one the train should pass through. Specifying 
+        an Entry portal for the destination is needed for layouts containing 
+        reversing loops.
+        Dog-bone layouts in particular typically have additional routes through
+        their reversing loops so specifying the Entry portal helps in reducing
+        the number of unwanted routes.  
+        <p>
         </li>
         <li><b>Via Location</b>: - Consists of a text field for the
         destination <b>Via Name</b> and a drop down menu for the terminating
@@ -89,19 +99,33 @@ can be found at <a href="OBlockTable.shtml">The Occupancy Block Tables</a>.
 </p>
 <H3>Calculate and Debug</H3>
 After the origin and destination blocks and paths have been chosen, press
-the <b>Calculate Route</b> button.  If a route is found, the Route Table is
-filled out indicating each block, path and portals used to traverse the route.
+the <b>Calculate Route</b> button.  Typically, more than one route will be found.
+The "Searching for Route" text box will show some statistics on the number of routes
+and their length in blocks that have been found while searching for routes.  
+The text field "Max Number of Blocks in Route" limits how far the computer will look
+routes.  The <b>Stop</b> button will terminate
+the search for routes.  After the Stop button is pressed or the computer exhausts
+all the possible routes less than or equal the "max length", it presents a list 
+of those that it found and their lengths.
+Choose a route by pressing its radio button.  Pressing the <b>Review</b> button 
+will display the route for you to examine in the Route Table. Each block, path 
+and portals used to traverse the route is displayed. 
 </p><p>
-If the message "No Route found 
-from "Origin Block', path ..." etc. is displayed
-and you have checked the blocks, paths and exit portal, and believe them to be 
-correct, press the <b>Debug Route</b> button.</p>
-</p><p>  
-The same message will be displayed
-but after dismissing it, a window with a tree is opened.  Tracing through the
-tree by clicking on nodes will show the blocks and paths the computer has tried
-to make a route.  At the end of each branch, the leaf node will be the point 
-where it could not continue.  This is the place where you may find an error or
+You may inspect all the routes in this 
+manner.  Choosing a route and pressing the <b>Select</b> button will fill out the 
+Route Table and dismiss the dialog.
+If exactly one route is found, the list dialog is skipped and Route Table is
+filled out.  
+</p><p>
+Sometimes the dialog message "No Route found 
+from "Origin Block', path ..." etc. is displayed. Responding <b>Yes</b> to the
+question, "Show the search tree?" will open a window with a graphic description of 
+all paths begining at the Origin block, path and exit portal.  Trace what you 
+believe to be a likely route by clicking on the nodes.  Each node is a block
+path and will display its path and block name and the entry and exit portals
+it uses.  At the end of each branch, the leaf node will be the point 
+where the route could not continue.  Normally these leaves are spurs.
+However, these are also the places where you may find an error or
 omission that you made when defining the OBlocks, OPaths and Portals.
 </p>
 
@@ -143,8 +167,13 @@ The Throttle Command Table has the following columns:
         some of the elapsed time between the previous and next commands of the deleted 
         command.</li>
 </ul>
+In addition to the commands you entered from the throttle, a marker when each
+block is entered is also recorded.  A marker row in the table has the elapsed time from 
+the last throttle command, the command name "NoOp" (i.e. no command to send to the 
+train), the value "Enter Block" and the block name being entered.
+</p><p>
 All of the columns in the Throttle Command Table can be edited.  Perhaps you want to
-touch up the horn blasts or modify the speeds.
+touch up the horn blasts or modify the speeds.  Just enter the data you want.
 </p>
 
 <H3>Synchronizing Commands to Block boundaries.</H3>
@@ -154,12 +183,15 @@ the "Learn Mode" train recorded them.
 <p>
 If this is the case, Enter the word "<b>Synch</b>" in the "ET" (elapsed time) column.  
 When the train
-is run in "Run Mode", it will hold back a "Synch" command until it reaches and enters
-the block specified in the "Block" column of the command.
+is run in "Run Mode", it will hold back or advance a "Synch" command until it reaches and enters
+the block specified in the "Block" column of the command.  The marker rows can be
+edited into Synch commands or otherwise identify where synchronization can be done.
 <ul>
         <b>NOTE:</b>Be sure that the block named in the "Block" of a "Synch" command
         has not been entered by the train.  If the train has already reached that
-        block, the command will not be issued.
+        block, the command and no further commands will be issued. The computer 
+        is holding the sequence of commands waiting for the block to change state from
+        unoccupied to occupied.
         <p>
         Also, if block ahead of the train becomes occupied before the train can enter it,
         a "Synch" command may execute prematurely.  This can happen if a "rouge train"

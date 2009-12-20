@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Warrant.shtml,v 1.2 2009-11-13 21:57:06 pete_cressman Exp $ -->
+<!-- $Id: Warrant.shtml,v 1.3 2009-12-20 18:58:03 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Help</TITLE>
@@ -85,18 +85,20 @@ find portals, paths and blocks to take the train to the destination block and
 path - e.g. "Arrival Track #1" in the destination block.</p>
 <p>
 There may be more than one way to get from the origin track to the destination
-track and the one the computer presents to you may not be the one you want.  If
-this is the case, you may specify an 
-intermediate </b>via block</b> and path in that block you want to include in the route.  The
-computer will re-calculate the route with this restriction and presnt you with a route
-through the specified "Via" block and path.
+track. The computer presents you with a list of all the routes it finds - 
+some of these may be quite lengthy.  You may review and choose the route you
+want to use from the list.  If the list is too lengthy, you may restrict the number
+of routes found by specifying an 
+intermediate </b>via block</b> and path that must be included in the route.  The
+computer will re-calculate the route with this restriction and present you only with
+routes through the specified "Via" block and path.
 <A HREF="WarrantTable.shtml"> Creating and Editing Warrants</A>.</li> has more
 information about this.</p>
 <p>
 The computer may not find a route from the origin track to the destination
-track that you believe is there.  The Edit/Create Warrant frame has a <b>debug</b>
-button that displays the routes the algorithm has attempted.  Looking at these 
-attempts you
+track that you believe is there.  When this occurs, you may request the computer
+to display the routes the algorithm has attempted.  As you trace the  
+attempted routes you
 may find that you have forgotten to enter a path or miss-labeled the correct portal
 to a path.  (or, heaven forbid! found a bug.)</b>
 
