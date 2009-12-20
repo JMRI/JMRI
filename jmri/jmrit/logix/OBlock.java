@@ -172,10 +172,9 @@ public class OBlock extends jmri.Block {
     }
 
     public Portal getPortalByName(String name) {
+        if (log.isDebugEnabled()) log.debug("getPortalByName: name= \""+name+"\"." ); 
         for (int i=0; i<_portals.size(); i++)  {
             if (_portals.get(i).getName().equals(name)) {
-                if (log.isDebugEnabled()) log.debug("getPortalByName: portal= \""+
-                                                    _portals.get(i).getName()+"\"." ); 
                 return _portals.get(i);
             }
         }
