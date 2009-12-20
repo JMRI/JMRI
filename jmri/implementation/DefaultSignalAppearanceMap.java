@@ -16,7 +16,7 @@ import jmri.SignalAspectTable;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements SignalAppearanceMap  {
 
@@ -30,8 +30,10 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements Sig
 
     public void loadDefaults() {
         
-        if (rb == null) rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
-
+        if (rbr == null || rbr.get() == null) rbr = new java.lang.ref.SoftReference<ResourceBundle>(
+                                                    java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle"));
+        ResourceBundle rb = rbr.get();
+        
         log.debug("start loadDefaults");
         
         String ra;
@@ -77,7 +79,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements Sig
         throw new NoSuchMethodError();
     }
 
-    static private ResourceBundle rb;
+    static private java.lang.ref.SoftReference<ResourceBundle> rbr;
     protected java.util.Hashtable<String, int[]> table = new jmri.util.OrderedHashtable<String, int[]>();
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalAppearanceMap.class.getName());
