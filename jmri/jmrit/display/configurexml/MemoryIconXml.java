@@ -4,15 +4,18 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.MemoryIcon;
+import jmri.util.NamedBeanHandle;
+import jmri.Memory;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import java.util.List;
+
 
 /**
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -32,7 +35,7 @@ public class MemoryIconXml extends PositionableLabelXml {
         Element element = new Element("memoryicon");
 
         // include attributes
-        element.setAttribute("memory", p.getMemory().getSystemName());
+        element.setAttribute("memory", p.getMemory().getName());
         if (p.getOriginalX()!=0)
             element.setAttribute("x", ""+p.getOriginalX());
         else
@@ -113,9 +116,25 @@ public class MemoryIconXml extends PositionableLabelXml {
             l = new MemoryIcon();
 		}
         loadTextInfo(l, element);
+        String name;
+        Attribute attr = element.getAttribute("memory"); 
+        if (attr == null) {
+            log.error("incorrect information for a memory location; must use memory name");
+            return;
+        } else {
+            name = attr.getValue();
+        }
         
-        l.setMemory(jmri.InstanceManager.memoryManagerInstance().getMemory(
-            element.getAttribute("memory").getValue()));
+        Memory m = jmri.InstanceManager.memoryManagerInstance().getMemory(name);
+        
+        if (m!=null) {
+            l.setMemory(new NamedBeanHandle<Memory>(name, m));
+        } else {
+            log.error("Memory named '"+attr.getValue()+"' not found.");
+            return;
+        }
+        //l.setMemory(jmri.InstanceManager.memoryManagerInstance().getMemory(
+            //element.getAttribute("memory").getValue()));
         
          // find display level
         //int level = PanelEditor.MEMORIES.intValue();
@@ -126,7 +145,6 @@ public class MemoryIconXml extends PositionableLabelXml {
             log.warn("Could not parse level attribute!");
         } catch ( NullPointerException e) {  // considered normal if the attribute not present
         }
-        
         
         Attribute a = element.getAttribute("selectable");
         if (a!=null && a.getValue().equals("yes")) l.setSelectable(true);
