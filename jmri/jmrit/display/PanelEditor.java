@@ -1031,7 +1031,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     void addMemory() {
         MemoryIcon l = new MemoryIcon();
         IconAdder memoryIconEditor = _iconEditorFrame.get("MemoryEditor").getEditor();
-        l.setMemory((Memory)memoryIconEditor.getTableSelection());
+        l.setMemory(memoryIconEditor.getTableSelection().getDisplayName());
         setNextLocation(l);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(MEMORIES);
@@ -1057,7 +1057,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     void addMemoryInputBox() {
         MemoryInputIcon l = new MemoryInputIcon(_spinCols.getNumber().intValue());
         IconAdder memoryIconEditor = _iconEditorFrame.get("MemoryEditor").getEditor();
-        l.setMemory((Memory)memoryIconEditor.getTableSelection());
+        l.setMemory(memoryIconEditor.getTableSelection().getDisplayName());
         setNextLocation(l);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(MEMORIES);

@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import jmri.util.NamedBeanHandle;
 
 /**
  * An icon to display and input a Memory value in a TextField.
@@ -26,7 +27,7 @@ import javax.swing.SpinnerNumberModel;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  * @since 2.7.2
  */
 
@@ -38,6 +39,8 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     
     // the associated Memory object
     Memory memory = null;
+    private NamedBeanHandle<Memory> namedMemory;
+    
     
     public MemoryInputIcon(int nCols) {
         super();
@@ -67,7 +70,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
              memory = InstanceManager.memoryManagerInstance().
                  provideMemory(pName);
              if (memory != null) {
-                 setMemory(memory);
+                 setMemory(new NamedBeanHandle<Memory>(pName, memory));
              } else {
                  log.error("Memory '"+pName+"' not available, icon won't see changes");
              }
@@ -80,19 +83,20 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
      * Attached a named Memory to this display item
      * @param m The Memory object
      */
-    public void setMemory(Memory m) {
+    public void setMemory(NamedBeanHandle<Memory> m) {
         if (memory != null) {
             memory.removePropertyChangeListener(this);
         }
-        memory = m;
+        memory = InstanceManager.memoryManagerInstance().provideMemory(m.getName());
         if (memory != null) {
             displayState();
             memory.addPropertyChangeListener(this);
             setProperToolTip();
+            namedMemory = m;
         }
     }
 
-    public Memory getMemory() { return memory; }
+    public NamedBeanHandle<Memory> getMemory() { return namedMemory; }
     public int getNumColumns() { return _nCols; }
     
     // update icon as state of Memory changes
@@ -174,7 +178,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         _editor.setSelection(memory);
     }
     void editMemory() {
-        setMemory((Memory)_editor.getTableSelection());
+        setMemory(_editor.getTableSelection().getDisplayName());
         _nCols = _spinCols.getNumber().intValue();
         _textBox.setColumns(_nCols);
         setSize(getPreferredSize().width+1, getPreferredSize().height);

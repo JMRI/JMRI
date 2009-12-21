@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
+import jmri.util.NamedBeanHandle;
 
 /**
  * An icon to display a status of a Memory.<P>
@@ -27,7 +28,7 @@ import javax.swing.JLabel;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -42,7 +43,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         setDisplayLevel(PanelEditor.MEMORIES);
         // have to do following explicitly, after the ctor
         resetDefaultIcon();
-
         updateSize();
     }
 
@@ -81,6 +81,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     String defaultText = "  ";
     // the associated Memory object
     Memory memory = null;
+    private NamedBeanHandle<Memory> namedMemory;
     
     // the map of icons
     java.util.HashMap<String,NamedIcon> map = null;
@@ -94,7 +95,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
              memory = InstanceManager.memoryManagerInstance().
                  provideMemory(pName);
              if (memory != null) {
-                 setMemory(memory);
+                 setMemory(new NamedBeanHandle<Memory>(pName, memory));
              } else {
                  log.error("Memory '"+pName+"' not available, icon won't see changes");
              }
@@ -107,19 +108,20 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      * Attached a named Memory to this display item
      * @param m The Memory object
      */
-    public void setMemory(Memory m) {
+    public void setMemory(NamedBeanHandle<Memory> m) {
         if (memory != null) {
             memory.removePropertyChangeListener(this);
         }
-        memory = m;
+        memory = InstanceManager.memoryManagerInstance().provideMemory(m.getName());
         if (memory != null) {
             memory.addPropertyChangeListener(this);
             setProperToolTip();
             displayState();
+            namedMemory = m;
         }
     }
 
-    public Memory getMemory() { return memory; }
+    public NamedBeanHandle<Memory> getMemory() { return namedMemory; }
     
     public java.util.HashMap<String,NamedIcon> getMap() { return map; }
 
@@ -434,7 +436,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         _editor.setSelection(memory);
     }
     void editMemory() {
-        setMemory((Memory)_editor.getTableSelection());
+        setMemory(_editor.getTableSelection().getDisplayName());
         updateSize();
         _editorFrame.dispose();
         _editorFrame = null;
@@ -567,6 +569,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      * This may be called during the superclass ctor, so before 
      * construction of this object is complete.  Be careful about that!
      */
+      //This is now probably redundant and can use that provided in positionableLabel.
     protected int maxHeight() {
         if(isIcon() && namedIcon!=null){
             return namedIcon.getIconHeight();
@@ -584,7 +587,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     /**
      * This may be called during the superclass ctor, so before 
      * construction of this object is complete.  Be careful about that!
-     */
+     */ 
+    //This is now probably redundant and can use that provided in positionableLabel.
     protected int maxWidth() {
         if(isIcon() && namedIcon!=null){
             return namedIcon.getIconWidth();
