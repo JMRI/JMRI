@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Test schema for JMRI roster support. Not for use before JMRI 2.9.1        -->
+
+<!-- This is an experimental organization,                                  -->
+<!-- and will certainly be changed in the near future                       -->
+
+<!-- $Id: roster.xsd,v 1.1 2009-12-21 04:49:36 jacobsen Exp $ -->
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- Need annotations                                                 -->
+<!-- Attributes need to get types right esp. for enumerated           -->
+<!-- Attributes need REQUIRED/IMPLIED                                 -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="roster-config">
+    <xs:complexType>
+      <xs:sequence>
+        
+        <xs:element name="roster" minOccurs="1" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              
+              <xs:element name="locomotive" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    
+                    <xs:element name="decoder" minOccurs="1" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:attribute name="family" type="xs:string"/>
+                        <xs:attribute name="model" type="xs:string"/>
+                        <xs:attribute name="comment" type="xs:string"/>
+                      </xs:complexType>
+                    </xs:element>
+                    
+                    <xs:element name="locoaddress" minOccurs="0" maxOccurs="1">
+                      <xs:complexType><xs:sequence>
+                          <xs:element name="dcclocoaddress" minOccurs="1" maxOccurs="1">
+                            <xs:complexType>
+                              <xs:attribute name="number" type="xs:string"/>
+                              <xs:attribute name="longaddress" type="xs:string"/>
+                            </xs:complexType>
+                          </xs:element>
+                      </xs:sequence></xs:complexType>
+                    </xs:element>
+                    
+                    <xs:element name="functionlabels" minOccurs="0" maxOccurs="1">
+                      <xs:complexType><xs:sequence>
+                          <xs:element name="functionlabel" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute name="num" type="xs:string"/>
+                                  <xs:attribute name="lockable" type="xs:string"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                      </xs:sequence></xs:complexType>
+                    </xs:element>
+                    
+                    <xs:element name="attributepairs" minOccurs="0" maxOccurs="1">
+                      <xs:complexType><xs:sequence>
+                          <xs:element name="keyvaluepair" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType><xs:sequence>
+                                <xs:element name="key" minOccurs="1" maxOccurs="1"/>
+                                <xs:element name="value" minOccurs="1" maxOccurs="1"/>
+                            </xs:sequence></xs:complexType>
+                          </xs:element>
+                      </xs:sequence></xs:complexType>
+                    </xs:element>
+                    
+                  </xs:sequence>
+                  <xs:attribute name="id" type="xs:string"/>
+                  <xs:attribute name="dccAddress" type="xs:string"/> <!-- deprecated -->
+                  <xs:attribute name="fileName" type="xs:string"/>
+                  <xs:attribute name="imageFilePath" type="xs:string"/>
+                  <xs:attribute name="iconFilePath" type="xs:string"/>
+                  <xs:attribute name="URL" type="xs:string"/>
+                  <xs:attribute name="groupName" type="xs:string"/>
+                  <xs:attribute name="roadName" type="xs:string"/>
+                  <xs:attribute name="roadNumber" type="xs:string"/>
+                  <xs:attribute name="mfg" type="xs:string"/>
+                  <xs:attribute name="owner" type="xs:string"/>
+                  <xs:attribute name="model" type="xs:string"/>
+                  <xs:attribute name="comment" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        
+        <xs:element name="rosterGroup" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType><xs:sequence>
+              
+              <xs:element name="group" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              
+          </xs:sequence></xs:complexType>
+        </xs:element>
+        
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

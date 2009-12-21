@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Test schema for JMRI decoder support. Not for use before JMRI 2.9.1        -->
+
+<!-- This is an experimental organization,                                  -->
+<!-- and will certainly be changed in the near future                       -->
+
+<!-- $Id: decoder.xsd,v 1.1 2009-12-21 04:49:36 jacobsen Exp $ -->
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- Just a placeholder at this point, no content -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="decoder-config">
+    <xs:complexType>
+      <xs:sequence>
+        
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
