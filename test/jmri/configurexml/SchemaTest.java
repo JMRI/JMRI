@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SchemaTest extends LoadFileTestBase {
 
@@ -42,6 +42,10 @@ public class SchemaTest extends LoadFileTestBase {
             XmlFile.setVerify(original);
         }
     }
+    public void testValidateRoster() {
+        validate(new java.io.File("java/test/jmri/configurexml/RosterSchemaTest.xml"));
+    }
+
     // from here down is testing infrastructure
 
     public SchemaTest(String s) {

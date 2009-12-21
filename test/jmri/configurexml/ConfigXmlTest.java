@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Test the jmri.configxml package.
  * @author	Bob Jacobsen
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class ConfigXmlTest extends TestCase {
 
@@ -32,6 +32,7 @@ public class ConfigXmlTest extends TestCase {
         suite.addTest(jmri.configurexml.ConfigXmlManagerTest.suite());
         suite.addTest(jmri.configurexml.BlockManagerXmlTest.suite());
         suite.addTest(jmri.configurexml.SchemaTest.suite());
+        suite.addTest(jmri.configurexml.DefaultJavaBeanConfigXMLTest.suite());
         return suite;
     }
 
