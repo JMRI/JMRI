@@ -20,7 +20,7 @@ import org.jdom.Element;
  * @author Daniel Boudreau Copyright (c) 2007
  * @author Simon Reader Copyright (C) 2008
  *
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -363,6 +363,11 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
 						else if (rState.equals("TOGGLE")) {
 							tSetState = Route.TOGGLE;
 						}
+                        // If the Turnout has already been added to the route and is the same as that loaded, 
+                        // we will not re add the turnout.
+                        if (r.isOutputTurnoutIncluded(tSysName)){
+                            break;
+                        }
                         // Add turnout to route
                         r.addOutputTurnout(tSysName, tSetState);
                         
@@ -394,6 +399,11 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
 						else if (rState.equals("TOGGLE")) {
 							tSetState = Route.TOGGLE;
 						}
+                        // If the Turnout has already been added to the route and is the same as that loaded, 
+                        // we will not re add the turnout.                        
+                        if (r.isOutputSensorIncluded(tSysName)){
+                            break;
+                        }
                         // Add turnout to route
                         r.addOutputSensor(tSysName, tSetState);
                     }
