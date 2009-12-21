@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.19 2009-07-23 19:35:35 matthewharris Exp $ -->
+<!-- $Id: Names.shtml,v 1.20 2009-12-21 02:54:23 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -157,6 +157,9 @@ sample to be placed at a specific position in 3d space
 <li>B Block - A software object that keeps track of the contents of a specific block 
 of track
 
+<LI>F signal mast (F is not particularly mnemonic; maybe a mast with two heads
+looks like an F from the side?  All the good letters were taken)
+
 <LI>H signal Head - One part of a signal (which may have multiple heads).  
 Also interpreted to include indicators on control panels that
 are acting to display signal aspects
@@ -173,7 +176,8 @@ can. For example, the system specific part might be B for main layout power, e.g
 LPB or S42 for subdistrict channel 2 on card 4, e.g. LPS42.
 
 <LI>R Reporters - a general purpose mechanism for reporting complicated information
-from the layout, e.g. locomotive identification from some transponding hardware.
+from the layout, e.g. locomotive identification from some transponding hardware,
+RFID tag numbers, etc.
 
 <LI>S Sensors - general purpose input sensors that can generally
 be either ACTIVE or INACTIVE. This is most commonly used for block occupancy
