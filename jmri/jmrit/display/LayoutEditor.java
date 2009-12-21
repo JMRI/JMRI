@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.62 $
+ * @version $Revision: 1.63 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -629,13 +629,15 @@ public class LayoutEditor extends JmriJFrame {
 							(savedControlLayout!=controlLayout) ||					
 							(savedAnimatingLayout!=animatingLayout) ||					
 							(savedShowHelpBar!=showHelpBar) ) {
+                            
+                            targetWindowClosing(true);
 						// remind to save panel		
-						javax.swing.JOptionPane.showMessageDialog(null,
+						/*javax.swing.JOptionPane.showMessageDialog(null,
 								rb.getString("Reminder1")+" "+rb.getString("Reminder2")+
 								"\n"+rb.getString("Reminder3"),
 								rb.getString("ReminderTitle"),
-								javax.swing.JOptionPane.INFORMATION_MESSAGE);
-					}
+								javax.swing.JOptionPane.INFORMATION_MESSAGE);*/
+					} else targetWindowClosing(false);
                     setAllPositionable(false);
 					jmri.jmrit.display.PanelMenu.instance().updateLayoutEditorPanel(thisPanel);
                 }
@@ -4163,7 +4165,7 @@ public class LayoutEditor extends JmriJFrame {
 		}
         MemoryIcon l = new MemoryIcon(this);
         l.setMemory(textMemory.getText().trim());
-		Memory xMemory = l.getMemory();
+		Memory xMemory = l.getMemory().getBean();
 		if (xMemory != null) {
 			if ( (xMemory.getUserName() == null) || 
 					(!(xMemory.getUserName().equals(textMemory.getText().trim())))  ) {
@@ -5901,6 +5903,38 @@ public class LayoutEditor extends JmriJFrame {
 		}
 		return (new Point2D.Double(0.0,0.0));
 	}
+    static boolean showCloseInfoMessage = true;
+    
+    /**
+     * The target window has been requested to close, don't delete it at this
+	 *   time.  Deletion must be accomplished via the Delete this panel menu item.
+     */
+    void targetWindowClosing(boolean save) {
+        //this.setVisible(false);   // doesn't remove the editor!
+		// display info message on panel close
+		if (showCloseInfoMessage) {
+			String name = "Panel";
+            String message = rb.getString("PanelCloseQuestion") +"\n" +
+							rb.getString("PanelCloseHelp");
+            if(save){
+                message = rb.getString("Reminder1")+" "+rb.getString("Reminder2")+
+								"\n"+rb.getString("Reminder3") + "\n\n"+message;
+            }
+			if (targetPanel.getTopLevelAncestor() != null)
+				name = ((JFrame) targetPanel.getTopLevelAncestor()).getTitle();
+			int selectedValue = JOptionPane.showOptionDialog(targetPanel, 
+					java.text.MessageFormat.format(message, 
+							new Object[] { name }), null,
+							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
+							null, new Object[] { rb.getString("ButtonHide"), rb.getString("ButtonDelete"),
+				rb.getString("ButtonDontShow") }, rb.getString("ButtonHide"));
+			if (selectedValue == 1) 
+				deletePanel();
+			if (selectedValue == 2) 
+				showCloseInfoMessage = false;
+		}
+    }
+
 	
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutEditor.class.getName());
