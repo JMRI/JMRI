@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.5 2009-12-20 03:24:49 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.6 2009-12-21 18:28:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -100,6 +100,22 @@ Dan Boudreau provided double-crossover and slip-switch track icons.
 
 <p>
 You can now display the log messages in a window by selecting "Display Message Log" in the "Debug" menu.
+
+<p>
+Added more information to the context window and the emailed problem report.
+
+<p>
+Dan Boudreau added two new operations features:  
+The user can now enter engine weight.  
+The train frame table column widths can now be changed and saved.
+
+<p>
+Andrew Crosland updated the CBUS support:
+Added bootloader, including support for extended frames.
+You can now set the adapter ID when using MERG CAN adapters.
+
+<p>
+Pete Cressman improved the route-finding logic in the Warrant support.
 
 <!--#include virtual="/Footer" -->
 
