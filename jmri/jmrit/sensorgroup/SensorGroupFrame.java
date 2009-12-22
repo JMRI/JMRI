@@ -41,7 +41,7 @@ import javax.swing.table.TableColumnModel;
  *
  * @author			Bob Jacobsen   Copyright (C) 2007
  * @author			Pete Cressman   Copyright (C) 2009
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
@@ -300,6 +300,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                 }
             }
         }
+        _sensorModel.fireTableDataChanged();
         setRow -= 9;
         if (setRow < 0) {
             setRow = 0;
