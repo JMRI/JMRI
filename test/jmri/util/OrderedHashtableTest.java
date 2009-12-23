@@ -10,17 +10,18 @@ import java.util.*;
 /**
  * Tests for the jmri.util.OrderedHashtable class.
  * @author	Bob Jacobsen  Copyright 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class OrderedHashtableTest extends TestCase {
 
 
     public void testCtor() {
-        new OrderedHashtable();
+        new OrderedHashtable<Object,Object>();
+        new OrderedHashtable<String,Object>();
     }
 
     public void testPut() {
-        OrderedHashtable oht = new OrderedHashtable();
+        OrderedHashtable<String, Turnout> oht = new OrderedHashtable<String, Turnout>();
         
         Turnout t1 = new AbstractTurnout("t1"){
 	        protected void forwardCommandChangeToLayout(int s) {}
@@ -35,7 +36,7 @@ public class OrderedHashtableTest extends TestCase {
         oht.put("3", t3);
         
         // check order
-        Enumeration<Object> en = oht.keys();
+        Enumeration<String> en = oht.keys();
         String t;
         
         Assert.assertTrue(en.hasMoreElements());
@@ -58,7 +59,7 @@ public class OrderedHashtableTest extends TestCase {
     }
 
     public void testRemove() {
-        OrderedHashtable oht = new OrderedHashtable();
+        OrderedHashtable<String, Turnout> oht = new OrderedHashtable<String, Turnout>();
         
         Turnout t1 = new TestTurnout("t1");
         Turnout t2 = new TestTurnout("t2");
@@ -75,7 +76,7 @@ public class OrderedHashtableTest extends TestCase {
         oht.remove("3");
         
         // check order
-        Enumeration<Object> en = oht.keys();
+        Enumeration<String> en = oht.keys();
         String t;
         
         Assert.assertTrue(en.hasMoreElements());
