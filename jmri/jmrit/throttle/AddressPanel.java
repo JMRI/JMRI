@@ -26,7 +26,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.52 $
+ * @version $Revision: 1.53 $
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
@@ -349,20 +349,19 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	 */
 	private void changeOfAddress() {
 		currentAddress = addrSelector.getAddress();
+		if (currentAddress == null)
+			return;	// no address
 		// send notification of new address
 		for (int i = 0; i < listeners.size(); i++) {
 			AddressListener l = listeners.get(i);
 			if (log.isDebugEnabled())
 				log.debug("Notify address listener of address change " + l.getClass());			
-			if (currentAddress != null) {
-				l.notifyAddressChosen(currentAddress.getNumber(), currentAddress.isLongAddress());
-			}
+			l.notifyAddressChosen(currentAddress.getNumber(), currentAddress.isLongAddress());
 		}
-	
-    	boolean requestOK =
-    		InstanceManager.throttleManagerInstance().requestThrottle(currentAddress.getNumber(), currentAddress.isLongAddress(), this);
-    	if (!requestOK)
-    		JOptionPane.showMessageDialog(this, "Address in use by another throttle.");
+		boolean requestOK =
+			InstanceManager.throttleManagerInstance().requestThrottle(currentAddress.getNumber(), currentAddress.isLongAddress(), this);
+		if (!requestOK)
+			JOptionPane.showMessageDialog(this, "Address in use by another throttle.");
 	}
 
     /**
