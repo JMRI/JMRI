@@ -1,30 +1,21 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: Ubuntu.shtml,v 1.10 2009-07-11 19:38:44 jacobsen Exp $ -->
-<html lang="en">
-<head>
+<html lang="en"><head><!-- $Id: Ubuntu.shtml,v 1.11 2009-12-23 16:40:05 jacobsen Exp $ -->
 	<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
 	
-	<title>Installing JMRI on Ubuntu GNU/Linux</title>
-	<meta name="GENERATOR" content="OpenOffice.org 2.2  (Linux)">
+	
+	<title>Installing JMRI on Ubuntu GNU/Linux</title><meta name="GENERATOR" content="OpenOffice.org 2.2  (Linux)">
 	<meta name="CREATED" content="20070720;11550900">
 	<meta name="CHANGEDBY" content="peter">
-	<meta name="CHANGED" content="20070720;13070200"><!-- Style -->
+	<meta name="CHANGED" content="20070720;13070200"><!-- Style --><!-- Style -->
 
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
-
-</HEAD>
-
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-
-<div id="mainContent">
+  <link rel="home" title="Home" href="/"><!-- /Style --><!--#include virtual="/Header" --><!--#include virtual="Sidebar" --></head>
+<body><div id="mainContent">
 
 <h1>Installing JMRI on Ubuntu GNU/Linux</h1>
 
@@ -93,21 +84,28 @@ installs the RXTX files, alters permissions on TTY devices and adds
 the user to etc/group), installing JMRI itself and finally setting
 up the programme environment if necessary.</p>
 
-<h3>3.1 JAVA</h3>
+<h3>3.1 JAVA</h3><meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8"><title></title><meta name="GENERATOR" content="OpenOffice.org 2.4  (Linux)"><style type="text/css">
+	<!--
+		@page { margin: 2cm }
+		P { margin-bottom: 0.21cm }
+	--></style>
+
 
 One must be careful which Java is loaded. 
 'java -version' will often show Java 1.4.2 gij, this one is not wanted.
 The 'Blackwood' Java Virtual Machine does not work for JMRI, as it doesn't have all the needed libraries.
-It's best to have the Sun "SDK" software development kit
-instead of just the runtime environment (JRE).
+However some users have reported sucess with 
 
-<p>
-We recommend installing from the
+
+	
+	
+	
+	Open JDK. &nbsp;If you have any experience of this please let us know on the Yahoo Group.<p>We recommend installing from the
 repositories. 
 
-<p>System &gt; Administration &gt; Synaptic Package Manager
+</p><p>System &gt; Administration &gt; Synaptic Package Manager
 
-<p>Then search for sun-java6-jdk (or later version). 
+</p><p>Then search for sun-java6-jdk (or later version). 
 Once you've found it, mark it to be loaded, and click apply.
 You'll probably be told that a number of other packages will 
 also be loaded. That's OK.
@@ -115,36 +113,36 @@ also be loaded. That's OK.
 <a id="rxtx">
 <h3>3.2 RxTx</h3></a>
 
-<p>A problem here is that the RxTx in the Ubuntu
+</p><p>A problem here is that the RxTx in the Ubuntu
 repositories does not work with JMRI! RXTX 2.1 uses a different structure than
 RXTX 2.0; JMRI requires the RXTX 2.0 structure.
 The "2.0.7pre2" is known to work well
 and that is what is included in the automated script which can currently be downloaded</p>
 <p><a href="http://downloads.sourceforge.net/jmri/RXTX-install-5.tar.gz">Download RXTX-Install</a>
-<p>and place it
+</p><p>and place it
 in a spare directory. Unpack it by double clicking, and then
 extracting (extract) the file. 
 The script is run by opening a terminal and giving the command "./RXTXinstall"
 
-<p>The script will do the following:
+</p><p>The script will do the following:
 
-<ul>
+</p><ul>
 <li>Checks that the correct java version is installed, then copies the RXTX files to the following directories:
 
 <ul>
 <li>javax.comm.properties,&nbsp;ext/javax.comm.rxtx.properties, ext/comm.jar and ext/RXTXcomm.jar to
 /usr/lib/jvm/java-6-sun-??/jre/lib/ and lib/ext
-<li>i386/* to /usr/lib/jvm/java-6-sun-???/jre/lib/i386/
-</ul>
+</li><li>i386/* to /usr/lib/jvm/java-6-sun-???/jre/lib/i386/
+</li></ul>
 
-<li>Makes a symbolic link in /i386/ so the program finds the correct
+</li><li>Makes a symbolic link in /i386/ so the program finds the correct
 RxTx (ln -s librxtxSerial-2.0.7pre2.so librxtxSerial.so).
 
-<li>Alters the permission on dev/ttyS0 and ttyS1.
+</li><li>Alters the permission on dev/ttyS0 and ttyS1.
 
-<li>Backs up /etc/group and adds the user to it.
+</li><li>Backs up /etc/group and adds the user to it.
 
-</ul>
+</li></ul>
 The above description is brief, as the script itself can be opened in a text editor and studied at leisure.<br>
 
 <h3>3.3 JMRI</h3>
@@ -176,15 +174,12 @@ relevant Config2.xml file from this directory should fix it.</p>
 <p>java version "1.6.0"</p>
 <p>Java(TM) SE Runtime Environment (build 1.6.0-b105)</p>
 <p>Java HotSpot(TM) Client VM (build 1.6.0-b105, mixed
-mode, sharing)</p>
-<p>If it does not this should simply be a matter of
-changing the PATH variable.</p>
-<p>PATH=/usr/lib/jvm/java-6-sun/jre/bin/:$PATH</p>
-<p>A neater way is to alter the Start Up script.</p><p></p><p><big style="font-weight: bold;">USB Ports</big>&nbsp;</p>Often
-the start up script needs altering to get the computer to "see" a USB
+mode, sharing)</p>However
+upgrading Ubuntu may creat problems as the upgrade may now point at the
+"wrong" java. &nbsp;The simplest procedure is to put in a soft link<br><br>sudo ln -s /usr/lib/jvm/java-6-sun/jre/bin/java /etc/alternatives/java<br><br>This points java back to 1.6.0.<br><p></p><p><big style="font-weight: bold;">USB Ports</big>&nbsp;</p>Currently the start up scripts work "out of the box".<p>However some versions&nbsp; may need altering to get the computer to "see" a USB
 port by adding "-Djavax.comm.rxtx.SerialPorts=/dev/ttyUSB0" as shown
-below:
-<p style="margin-left: 40px;">java -noverify -Djavax.comm.rxtx.SerialPorts=/dev/ttyUSB0 -Djava.security.policy</p>
+below
+</p><p style="margin-left: 40px;">java -noverify -Djavax.comm.rxtx.SerialPorts=/dev/ttyUSB0 -Djava.security.policy</p>
 <p>Please see the&nbsp;<a href="http://jmri.sourceforge.net/install/FAQLinux.html">FAQ</a> for more details.</p>
 
 <h2>4 Starting JMRI</h2>
@@ -196,14 +191,19 @@ below:
 <dl>
 <dt>bash: ./whatever.csh: bad interpreter: No such file
 or directory
-<dd>Can not run the shell: Try installing csh.
+</dt><dd></dd><dd>Can not run the shell: Try installing csh.
 
-<dt>bash; ./cats.csh: Permission denied
-<dd>Try setting the icon to executable.
+</dd><dt></dt><dt>bash; ./cats.csh: Permission denied
+</dt><dd></dd><dd>Try setting the icon to executable.</dd></dl>Port not Found. &nbsp;<br><br><div style="margin-left: 40px;">See
+Para 3.5, but be aware that when a Java update is installed, it creates
+a new directory and alters the soft link to it. &nbsp;However all the
+RxTx &nbsp;information is left behind in the old directory. &nbsp;The
+solution is to run the install script again.</div>
 
-</dl>
-
-<p style="text-align: right;">(Rev 1.7 Mon 5 May 2008)</p>
+<h2>5 CATS</h2>If you are running CATs, currently one drops the zip
+file into the JMRI directory, and unpacks it there. &nbsp;Then copy
+cradic.gif and put the copy into resources. &nbsp; I would however keep
+TrainStat in a seperate dorectory.<p style="text-align: right;"></p><p style="text-align: right;">(Rev 1.8 Sun 13 Dec 2009)</p>
 
 <!--#include virtual="/Footer" -->
 
