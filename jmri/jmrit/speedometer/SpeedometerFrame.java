@@ -5,6 +5,7 @@ package jmri.jmrit.speedometer;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.jmrit.display.SensorIcon;
+import jmri.util.NamedBeanHandle;
 import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
@@ -26,7 +27,7 @@ import javax.swing.JTextField;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2004, 2007
  * @author      Adapted for metric system - S.K. Bosch
- * @version	$Revision: 1.25 $
+ * @version	$Revision: 1.26 $
  */
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
@@ -290,7 +291,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                     }
                 }
             });
-        startSensorIcon.setSensor(s);
+        startSensorIcon.setSensor(new NamedBeanHandle<Sensor>(startSensor.getText(),s));
 
         // set stop sensor1
         try {
@@ -335,7 +336,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                     }
                 }
             });
-        stopSensorIcon1.setSensor(s);
+        stopSensorIcon1.setSensor(new NamedBeanHandle<Sensor>(stopSensor1.getText(),s));
 
         // set stop sensor2
         try {
@@ -382,7 +383,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
                     }
                 }
             });
-        stopSensorIcon2.setSensor(s);
+        stopSensorIcon2.setSensor(new NamedBeanHandle<Sensor>(stopSensor2.getText(),s));
 
     }
 
