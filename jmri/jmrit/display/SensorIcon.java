@@ -18,12 +18,13 @@ import javax.swing.ButtonGroup;
 import javax.swing.JRadioButtonMenuItem;
 //import javax.swing.JLabel;
 import java.awt.Color;
+import jmri.util.NamedBeanHandle;
 
 /**
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.53 $
+ * @version $Revision: 1.54 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -69,7 +70,8 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     }
 
     // the associated Sensor object
-    Sensor sensor = null;
+    //Sensor sensor = null;
+    private NamedBeanHandle<Sensor> namedSensor;
 
     /**
      * Attached a named sensor to this display item
@@ -77,11 +79,13 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
      */
     public void setSensor(String pName) {
         if (InstanceManager.sensorManagerInstance()!=null) {
-            sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
             if (sensor != null) {
-                displayState(sensorState());
+                setSensor(new NamedBeanHandle<Sensor>(pName, sensor));
+                
+/*                displayState(sensorState());
                 sensor.addPropertyChangeListener(this);
-                setProperToolTip();
+                setProperToolTip();*/
             } else {
                 log.error("Sensor '"+pName+"' not available, icon won't see changes");
             }
@@ -89,7 +93,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             log.error("No SensorManager for this protocol, icon won't see changes");
         }
         //Next if statement from Layout Sensor.
-        if (text){
+        /*if (text){
             if (sensor.getUserName()!=null){
                 String userName=sensor.getUserName();
                 if (activeText==null)
@@ -113,40 +117,46 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             if (textColorActive==null)
                 textColorActive=Color.red;
             if (textColorInActive==null)
-                textColorInActive=Color.green;
+                textColorInActive=Color.yellow;
             if (textColorUnknown==null)
                 textColorUnknown=Color.black;
             if (textColorInconsistent==null)
                 textColorInconsistent=Color.blue;
             displayState(sensorState());
-        }
+        }*/
     }
     /**
      * Attached a named sensor to this display item
      * @param s the Sensor
      */
-    public void setSensor(Sensor s) {
-        if (sensor != null) {
-            sensor.removePropertyChangeListener(this);
+    public void setSensor(NamedBeanHandle<Sensor> s) {
+        if (namedSensor != null) {
+            getSensor().removePropertyChangeListener(this);
         }
-        sensor = s;
-        if (sensor != null) {
+        
+        //sensor = s.getBean();
+        namedSensor = s;
+        if (namedSensor != null) {
             displayState(sensorState());
-            sensor.addPropertyChangeListener(this);
+            getSensor().addPropertyChangeListener(this);
             setProperToolTip();
+            //namedSensor = s;
         }
         //Next if statement from Layout Sensor.
         if (text){
-            if (sensor.getUserName()!=null){
-                String userName=sensor.getUserName();
-                if (activeText==null)
-                    activeText=userName;
-                if (inactiveText==null)
-                    inactiveText = userName;
-                if (inconsistentText==null)
-                    inconsistentText=userName;
-                if (unknownText==null)
-                    unknownText=userName;
+            if (namedSensor!=null){
+                if (getSensor().getUserName()!=null)
+                {
+                    String userName=getSensor().getUserName();
+                    if (activeText==null)
+                        activeText=userName;
+                    if (inactiveText==null)
+                        inactiveText = userName;
+                    if (inconsistentText==null)
+                        inconsistentText=userName;
+                    if (unknownText==null)
+                        unknownText=userName;
+                }
             } else{
                 if (activeText==null)
                     activeText=rb.getString("SensorActive");
@@ -160,7 +170,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             if (textColorActive==null)
                 textColorActive=Color.red;
             if (textColorInActive==null)
-                textColorInActive=Color.green;
+                textColorInActive=Color.yellow;
             if (textColorUnknown==null)
                 textColorUnknown=Color.black;
             if (textColorInconsistent==null)
@@ -170,7 +180,11 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     }
 
     public Sensor getSensor() {
-        return sensor;
+        return namedSensor.getBean();
+    }
+    
+    public NamedBeanHandle <Sensor> getNamedSensor() {
+        return namedSensor;
     }
     /*public void setFixedSize(int width, int height){
         super.setFixedSize(width, height);
@@ -222,7 +236,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
      * @return A state variable from a Sensor, e.g. Sensor.ACTIVE
      */
     int sensorState() {
-        if (sensor != null) return sensor.getKnownState();
+        if (namedSensor != null) return getSensor().getKnownState();
         else return Sensor.UNKNOWN;
     }
 
@@ -246,13 +260,8 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     }
 
     public String getNameString() {
-        String name;
-        if (sensor == null) name = rb.getString("NotConnected");
-        else if (sensor.getUserName()!=null) {
-            name = sensor.getUserName();
-            if (sensor.getSystemName()!=null) name = name+" ("+sensor.getSystemName()+")";
-        } else
-            name = sensor.getSystemName();
+        String name = rb.getString("NotConnected");
+        if (namedSensor!=null) name = namedSensor.getName();
         return name;
     }
 
@@ -420,29 +429,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
      * turnout.
      */
     void displayState(int state) {
-
-        /*updateSize();
-
-        switch (state) {
-        case Sensor.UNKNOWN:
-            if (icon) super.setIcon(unknown);
-            break;
-        case Sensor.ACTIVE:
-            if (icon) super.setIcon(active);
-            break;
-        case Sensor.INACTIVE:
-            if (icon) super.setIcon(inactive);
-            break;
-        default:
-            if (icon) super.setIcon(inconsistent);
-            break;
-        }
-        setIconTextGap (-(getWidth()+getPreferredSize().width)/2);
-        setSize(getPreferredSize().width, getPreferredSize().height);
-
-        return;*/
-        //Replacement code from layout editor
-        
+    
         switch (state) {
             case Sensor.UNKNOWN:
                 //if (icon) super.setIcon(unknown);
@@ -479,11 +466,6 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                 break;
         }
         updateSize();
-        /*if (getLayoutPanel()==null){
-            setIconTextGap (-(getWidth()+getPreferredSize().width)/2);
-            setSize(getPreferredSize().width, getPreferredSize().height);
-            //setSize(maxWidth(), getPreferredSize().height);
-        }*/
         return;
     }
 
@@ -516,14 +498,14 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                 }
         };
         _editor.complete(addIconAction, changeIconAction, true, true);
-        _editor.setSelection(sensor);
+        _editor.setSelection(getSensor());
     }
     void updateSensor() {
         setActiveIcon(_editor.getIcon("SensorStateActive"));
         setInactiveIcon(_editor.getIcon("SensorStateInactive"));
         setInconsistentIcon(_editor.getIcon("BeanStateInconsistent"));
         setUnknownIcon(_editor.getIcon("BeanStateUnknown"));
-        setSensor((Sensor)_editor.getTableSelection());
+        setSensor(_editor.getTableSelection().getDisplayName());
         _editorFrame.dispose();
         _editorFrame = null;
         _editor = null;
@@ -545,24 +527,6 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         updateSize();
     }
 
-    //Replace with new code from the layout editor.
-    /*protected int maxHeight() {
-        return Math.max(
-                Math.max( (active!=null) ? active.getIconHeight() : 0,
-                        (inactive!=null) ? inactive.getIconHeight() : 0),
-                Math.max((unknown!=null) ? unknown.getIconHeight() : 0,
-                        (inconsistent!=null) ? inconsistent.getIconHeight() : 0)
-            );
-    }
-    protected int maxWidth() {
-        return Math.max(
-                Math.max((active!=null) ? active.getIconWidth() : 0,
-                        (inactive!=null) ? inactive.getIconWidth() : 0),
-                Math.max((unknown!=null) ? unknown.getIconWidth() : 0,
-                        (inconsistent!=null) ? inconsistent.getIconWidth() : 0)
-            );
-    }*/
-
     boolean momentary = false;
     public boolean getMomentary() { return momentary; }
     public void setMomentary(boolean m) { momentary = m; }
@@ -570,7 +534,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     boolean buttonLive() {
         if (!getControlling()) return false;
         if (getForceControlOff()) return false;
-        if (sensor==null) {  // no sensor connected for this protocol
+        if (namedSensor==null) {  // no sensor connected for this protocol
             log.error("No sensor connection, can't process click");
             return false;
         }
@@ -583,7 +547,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         if (getMomentary() && buttonLive()) {
             // this is a momentary button
             try {
-                sensor.setKnownState(jmri.Sensor.ACTIVE);
+                getSensor().setKnownState(jmri.Sensor.ACTIVE);
             } catch (jmri.JmriException reason) {
                 log.warn("Exception setting momentary sensor: "+reason);
             }
@@ -597,7 +561,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             if (getMomentary() && buttonLive()) {
             // this is a momentary button
                 try {
-                    sensor.setKnownState(jmri.Sensor.INACTIVE);
+                    getSensor().setKnownState(jmri.Sensor.INACTIVE);
                 } catch (jmri.JmriException reason) {
                     log.warn("Exception setting momentary sensor: "+reason);
                 }
@@ -613,16 +577,16 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             if (getMomentary()) {
                 // this is a momentary button
                 try {
-                    sensor.setKnownState(jmri.Sensor.INACTIVE);
+                    getSensor().setKnownState(jmri.Sensor.INACTIVE);
                 } catch (jmri.JmriException reason) {
                     log.warn("Exception setting momentary sensor: "+reason);
                 }
             } else {
                 try {
-                    if (sensor.getKnownState()==jmri.Sensor.INACTIVE)
-                        sensor.setKnownState(jmri.Sensor.ACTIVE);
+                    if (getSensor().getKnownState()==jmri.Sensor.INACTIVE)
+                        getSensor().setKnownState(jmri.Sensor.ACTIVE);
                     else
-                        sensor.setKnownState(jmri.Sensor.INACTIVE);
+                        getSensor().setKnownState(jmri.Sensor.INACTIVE);
                 } catch (jmri.JmriException reason) {
                     log.warn("Exception flipping sensor: "+reason);
                 }
@@ -631,8 +595,8 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     }
 
     public void dispose() {
-        sensor.removePropertyChangeListener(this);
-        sensor = null;
+        getSensor().removePropertyChangeListener(this);
+        namedSensor = null;
 
         active = null;
         inactive = null;
@@ -989,20 +953,6 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             Math.max((unknown!=null) ? unknown.getIconHeight() : 0,
                     (inconsistent!=null) ? inconsistent.getIconHeight() : 0)
         ));
-        /*if(icon) return Math.max(
-                Math.max( (active!=null) ? active.getIconHeight() : 0,
-                        (inactive!=null) ? inactive.getIconHeight() : 0),
-                Math.max((unknown!=null) ? unknown.getIconHeight() : 0,
-                        (inconsistent!=null) ? inconsistent.getIconHeight() : 0)
-            );
-        else{
-            if ((getFixedHeight()==0) && (getMargin()==0))
-                return ((javax.swing.JLabel)this).getMaximumSize().height; // defer to superclass
-            else if ((getFixedHeight()==0) && (getMargin()!=0))
-                return ((javax.swing.JLabel)this).getMaximumSize().height+(getMargin()*2);
-            return getFixedHeight();
-        //return ((javax.swing.JLabel)this).getMaximumSize().height;
-        }*/
     }
     protected int maxWidth() {
         return Math.max(super.maxWidth(), Math.max(
@@ -1011,26 +961,6 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             Math.max((unknown!=null) ? unknown.getIconWidth() : 0,
                     (inconsistent!=null) ? inconsistent.getIconWidth() : 0)
         ));
-        /*if((icon) && (text)) return Math.max(((javax.swing.JLabel)this).getMaximumSize().width,Math.max(
-                Math.max((active!=null) ? active.getIconWidth() : 0,
-                        (inactive!=null) ? inactive.getIconWidth() : 0),
-                Math.max((unknown!=null) ? unknown.getIconWidth() : 0,
-                        (inconsistent!=null) ? inconsistent.getIconWidth() : 0)
-            ));
-        if(icon) return Math.max(
-                Math.max((active!=null) ? active.getIconWidth() : 0,
-                        (inactive!=null) ? inactive.getIconWidth() : 0),
-                Math.max((unknown!=null) ? unknown.getIconWidth() : 0,
-                        (inconsistent!=null) ? inconsistent.getIconWidth() : 0)
-            );
-        else {
-            if ((getFixedWidth()==0) && (getMargin()==0))
-                return ((javax.swing.JLabel)this).getMaximumSize().width; // defer to superclass
-            else if ((getFixedWidth()==0) && (getMargin()!=0))
-                return ((javax.swing.JLabel)this).getMaximumSize().width+(getMargin()*2);
-            return getFixedWidth();
-
-        }*///return
     }
 
 
@@ -1050,20 +980,17 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             if (!buttonLive()) return;
             super.layoutPanel.setAwaitingIconChange();
             try {
-                if (sensor.getKnownState()==jmri.Sensor.INACTIVE) {
-                    sensor.setKnownState(jmri.Sensor.ACTIVE);
+                if (getSensor().getKnownState()==jmri.Sensor.INACTIVE) {
+                    getSensor().setKnownState(jmri.Sensor.ACTIVE);
                 }
                 else {
-                    sensor.setKnownState(jmri.Sensor.INACTIVE);
+                    getSensor().setKnownState(jmri.Sensor.INACTIVE);
                 }
             } catch (jmri.JmriException reason) {
                 log.warn("Exception flipping sensor: "+reason);
             }
         }
     }
-
-
-
-
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorIcon.class.getName());
 }

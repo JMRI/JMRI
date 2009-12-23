@@ -11,6 +11,8 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import jmri.util.NamedBeanHandle;
+
 import java.util.ArrayList;
 
 /**
@@ -23,7 +25,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -48,11 +50,11 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     ArrayList<Entry> entries = new ArrayList<Entry>();
     
 
-    public void addEntry(Sensor sensor, NamedIcon icon) {
+    public void addEntry(NamedBeanHandle<Sensor> sensor, NamedIcon icon) {
         if (sensor != null) {
             Entry e = new Entry();
-            sensor.addPropertyChangeListener(this);
-            e.sensor = sensor;
+            sensor.getBean().addPropertyChangeListener(this);
+            e.namedSensor = sensor;
             e.icon = icon;
             entries.add(e);
             setProperToolTip();
@@ -63,17 +65,17 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     }
 
     public void addEntry(String pName, NamedIcon icon) {
-        Sensor sensor;
+        NamedBeanHandle<Sensor> sensor;
         if (InstanceManager.sensorManagerInstance()!=null) {
-            sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-            addEntry(sensor, icon) ;
+            sensor = new NamedBeanHandle<Sensor>(pName, InstanceManager.sensorManagerInstance().provideSensor(pName));
+            addEntry(sensor, icon);
         } else {
             log.error("No SensorManager for this protocol, icon won't see changes");
         }
     }
     public int getNumEntries() { return entries.size(); }
     public String getSensorName(int i) { 
-        return entries.get(i).sensor.getSystemName();
+        return entries.get(i).namedSensor.getName();
     }
     public NamedIcon getSensorIcon(int i) { 
         return entries.get(i).icon;
@@ -139,11 +141,11 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         if ((entries == null) || (entries.size() < 1)) 
             name = rb.getString("NotConnected");
         else {
-            name = entries.get(0).sensor
-                    .getSystemName();
+            name = entries.get(0).namedSensor
+                    .getName();
             for (int i = 1; i<entries.size(); i++) {
-                name += ","+entries.get(i).sensor
-                    .getSystemName();
+                name += ","+entries.get(i).namedSensor
+                    .getName();
             }
         }
         return name;
@@ -233,7 +235,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         for (int i = 0; i<entries.size(); i++) {
             Entry e = entries.get(i);
             
-            int state = e.sensor.getKnownState();
+            int state = e.namedSensor.getBean().getKnownState();
 
             switch (state) {
             case Sensor.ACTIVE:
@@ -297,15 +299,15 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
         setUnknownIcon(editor.getIcon("BeanStateUnknown"));
         for (int i = 0; i<entries.size(); i++) {
-            entries.get(i).sensor
+            entries.get(i).namedSensor.getBean()
                 .removePropertyChangeListener(this);
         }
         int numPositions = editor.getNumIcons();
         entries = new ArrayList<Entry>(numPositions);
         for (int i=3; i<numPositions; i++) {
             NamedIcon icon = editor.getIcon(i);
-            Sensor sensor = editor.getSensor(i);
-            addEntry(sensor, icon);
+            NamedBeanHandle<Sensor> namedSensor = editor.getSensor(i);
+            addEntry(namedSensor, icon);
         }
         setUpDown(editor.getUpDown());
         _editorFrame.dispose();
@@ -388,12 +390,12 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         if (next < 0) next = 0;
         if (next >= entries.size()) next = entries.size()-1;
         int drop = displaying;
-		if (layoutPanel!=null && entries.get(next).sensor.getKnownState()!=Sensor.ACTIVE) {
+		if (layoutPanel!=null && entries.get(next).namedSensor.getBean().getKnownState()!=Sensor.ACTIVE) {
 				layoutPanel.setAwaitingIconChange();
 		}
         try {
-            entries.get(next).sensor.setKnownState(Sensor.ACTIVE);
-            if (drop >= 0 && drop != next) entries.get(drop).sensor.setKnownState(Sensor.INACTIVE);
+            entries.get(next).namedSensor.getBean().setKnownState(Sensor.ACTIVE);
+            if (drop >= 0 && drop != next) entries.get(drop).namedSensor.getBean().setKnownState(Sensor.INACTIVE);
         } catch (jmri.JmriException ex) {
             log.error("Click failed to set sensor: "+ex);
         }
@@ -423,7 +425,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     public void dispose() {
         // remove listeners
         for (int i = 0; i<entries.size(); i++) {
-            entries.get(i).sensor
+            entries.get(i).namedSensor.getBean()
                 .removePropertyChangeListener(this);
         }
 
@@ -431,7 +433,8 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     }
 
     class Entry {
-        Sensor sensor;
+        NamedBeanHandle<Sensor> namedSensor;
+        //Sensor sensor;
         NamedIcon icon; 
     }
     

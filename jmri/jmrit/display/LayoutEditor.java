@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.63 $
+ * @version $Revision: 1.64 $
  */
 
 public class LayoutEditor extends JmriJFrame {
@@ -4034,25 +4034,17 @@ public class LayoutEditor extends JmriJFrame {
         l.setInconsistentIcon(sensorIconEditor.getIcon(2));
         l.setUnknownIcon(sensorIconEditor.getIcon(3));
 		l.setSensor(nextSensor.getText().trim());
-		Sensor xSensor = l.getSensor();
-		if (xSensor != null) {
-			if ( (xSensor.getUserName()==null) || 
-					(!(xSensor.getUserName().equals(nextSensor.getText().trim()))) ) 
-				nextSensor.setText(xSensor.getSystemName());
+		//Sensor xSensor = l.getSensor();
+		if (l.getSensor() != null) {
+			if ( (l.getNamedSensor().getName()==null) || 
+					(!(l.getNamedSensor().getName().equals(nextSensor.getText().trim()))) ) 
+				nextSensor.setText(l.getNamedSensor().getName());
 		}
+        nextSensor.setText(l.getNamedSensor().getName());
         setNextLocation(l);
 		setDirty(true);
         putSensor(l);
     }
-    /*public void putSensor(LayoutSensorIcon l) {
-        l.invalidate();
-        targetPanel.add(l, SENSORS);
-		l.connect(this);
-		sensorImage.add(l);	
-        contents.add(l);
-        // reshow the panel
-        targetPanel.validate();
-    }*/
     
     public void putSensor(SensorIcon l) {
         l.invalidate();

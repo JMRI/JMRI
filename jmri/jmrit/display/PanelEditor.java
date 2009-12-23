@@ -910,7 +910,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         l.setInactiveIcon(editor.getIcon("SensorStateInactive"));
         l.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
         l.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
-        l.setSensor((Sensor)editor.getTableSelection());
+        l.setSensor(editor.getTableSelection().getDisplayName());
         setNextLocation(l);
         putLabel(l);
         // always allow new items to be moved
@@ -927,7 +927,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         int numPositions = editor.getNumIcons();
         for (int i=3; i<numPositions; i++) {
             NamedIcon icon = editor.getIcon(i);
-            Sensor sensor = editor.getSensor(i);
+            String sensor = editor.getSensor(i).getName();
             m.addEntry(sensor, icon);
         }
         m.setUpDown(editor.getUpDown());
@@ -1044,7 +1044,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     void addMemorySpinner() {
         MemorySpinnerIcon l = new MemorySpinnerIcon();
         IconAdder memoryIconEditor = _iconEditorFrame.get("MemoryEditor").getEditor();
-        l.setMemory((Memory)memoryIconEditor.getTableSelection());
+        l.setMemory(memoryIconEditor.getTableSelection().getDisplayName());
         setNextLocation(l);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(MEMORIES);
@@ -1899,7 +1899,8 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     			SensorIcon p = (SensorIcon)sub;
     			for (int j=sorted.size(); j>index; j--){
     				SensorIcon pS = (SensorIcon)sorted.get(j-1);
-    				if (pS.getSensor().getSystemName().compareToIgnoreCase(p.getSensor().getSystemName()) < 0) {
+    				//if (pS.getSensor().getSystemName().compareToIgnoreCase(p.getSensor().getSystemName()) < 0) {
+                    if (pS.getName().compareToIgnoreCase(p.getName()) < 0) {
     					sorted.add(j,(JComponent)sub);
     					added = true;
     					break;

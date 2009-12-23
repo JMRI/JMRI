@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.util.NamedBeanHandle;
 import jmri.Sensor;
 
 import java.awt.Dimension;
@@ -48,7 +49,7 @@ public class MultiSensorIconAdder extends IconAdder {
     JRadioButton _updown;
     JRadioButton _rightleft;
 
-    HashMap <String, Sensor>_sensorMap = new HashMap <String, Sensor>();
+    HashMap <String, NamedBeanHandle<Sensor>>_sensorMap = new HashMap <String, NamedBeanHandle<Sensor>>();
     int _lastIndex = 0;
     
     public static final String NamedBeanFlavorMime = DataFlavor.javaJVMLocalObjectMimeType +
@@ -63,7 +64,7 @@ public class MultiSensorIconAdder extends IconAdder {
     }
 
     void reset() {
-        _sensorMap = new HashMap <String, Sensor>();
+        _sensorMap = new HashMap <String, NamedBeanHandle<Sensor>>();
         _lastIndex = 0;
         super.reset();
     }
@@ -92,7 +93,7 @@ public class MultiSensorIconAdder extends IconAdder {
             MultiSensorIcon.Entry entry = icons.get(i);
             String label = "MultiSensorPosition " +_lastIndex++; 
             super.setIcon(i+3, label, entry.icon.getURL());
-            _sensorMap.put(label, entry.sensor);
+            _sensorMap.put(label, entry.namedSensor);
         }
         if (log.isDebugEnabled()) log.debug("Size: sensors= "+_sensorMap.size()+
                                             ", icons= "+_iconMap.size());
@@ -152,14 +153,15 @@ public class MultiSensorIconAdder extends IconAdder {
             p4.add(new JLabel(rb.getString("Sensor")));
             p3.add(p4);
             p4 = new JPanel();
-            Sensor sensor = _sensorMap.get(key);
+            NamedBeanHandle<Sensor> sensor = _sensorMap.get(key);
             String name = rb.getString("notSet");
             java.awt.Color color = java.awt.Color.RED;
             if (sensor != null) {
-                name = sensor.getUserName();
+                name = sensor.getName();
+                /*name = sensor.getUserName();
                 if (name == null)  {
                     name = sensor.getSystemName();
-                }
+                }*/
                 color = java.awt.Color.BLACK;
             }
             p4.setBorder(BorderFactory.createLineBorder(color));
@@ -356,7 +358,7 @@ public class MultiSensorIconAdder extends IconAdder {
      * @param index of key
      * @return Unique object
      */
-    public Sensor getSensor(int index) {
+    public NamedBeanHandle<Sensor> getSensor(int index) {
         return _sensorMap.get(_order.get(index));
     }
 
@@ -368,14 +370,14 @@ public class MultiSensorIconAdder extends IconAdder {
         if (name == null) {
             name = sensor.getSystemName();
         }
-        Iterator<Sensor> iter = _sensorMap.values().iterator();
+        Iterator<NamedBeanHandle<Sensor>> iter = _sensorMap.values().iterator();
         while (iter.hasNext()) {
-            Sensor s = iter.next(); 
+            /*Sensor s = iter.next().getBean; 
             String n = s.getUserName();
             if (n == null) {
                 n = s.getSystemName();
-            }
-            if (name.equals(n)) {
+            }*/
+            if (name.equals(iter.next().getName())) {
                 JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                                                rb.getString("DupSensorName"), 
                                                new Object[] {name}),
@@ -384,7 +386,7 @@ public class MultiSensorIconAdder extends IconAdder {
                 return false;
             }
         }
-        _sensorMap.put(key, sensor);
+        _sensorMap.put(key, new NamedBeanHandle<Sensor>(name, sensor));
         return true;
     }
 
