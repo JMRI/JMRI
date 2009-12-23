@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html lang="en"><head><!-- $Id: Ubuntu.shtml,v 1.11 2009-12-23 16:40:05 jacobsen Exp $ -->
+<html lang="en"><head><!-- $Id: Ubuntu.shtml,v 1.12 2009-12-23 16:46:54 jacobsen Exp $ -->
 	<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
 	
 	
@@ -14,8 +14,14 @@
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style --><!--#include virtual="/Header" --><!--#include virtual="Sidebar" --></head>
-<body><div id="mainContent">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+  </head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
 
 <h1>Installing JMRI on Ubuntu GNU/Linux</h1>
 
@@ -90,17 +96,11 @@ up the programme environment if necessary.</p>
 		P { margin-bottom: 0.21cm }
 	--></style>
 
-
 One must be careful which Java is loaded. 
 'java -version' will often show Java 1.4.2 gij, this one is not wanted.
 The 'Blackwood' Java Virtual Machine does not work for JMRI, as it doesn't have all the needed libraries.
 However some users have reported sucess with 
-
-
-	
-	
-	
-	Open JDK. &nbsp;If you have any experience of this please let us know on the Yahoo Group.<p>We recommend installing from the
+Open JDK. &nbsp;If you have any experience of this please let us know on the Yahoo Group.<p>We recommend installing from the
 repositories. 
 
 </p><p>System &gt; Administration &gt; Synaptic Package Manager
@@ -191,19 +191,25 @@ below
 <dl>
 <dt>bash: ./whatever.csh: bad interpreter: No such file
 or directory
-</dt><dd></dd><dd>Can not run the shell: Try installing csh.
+</dt><dd>Can not run the shell: Try installing csh.
 
-</dd><dt></dt><dt>bash; ./cats.csh: Permission denied
-</dt><dd></dd><dd>Try setting the icon to executable.</dd></dl>Port not Found. &nbsp;<br><br><div style="margin-left: 40px;">See
-Para 3.5, but be aware that when a Java update is installed, it creates
+<dt>bash; ./cats.csh: Permission denied
+</dt><dd>Try setting the icon to executable.</dd>
+
+<dt>Port not Found.
+</dt><dd>See Para 3.5, but be aware that when a Java update is installed, it creates
 a new directory and alters the soft link to it. &nbsp;However all the
 RxTx &nbsp;information is left behind in the old directory. &nbsp;The
-solution is to run the install script again.</div>
+solution is to run the install script again.</dd>
+
+</dl>
 
 <h2>5 CATS</h2>If you are running CATs, currently one drops the zip
 file into the JMRI directory, and unpacks it there. &nbsp;Then copy
 cradic.gif and put the copy into resources. &nbsp; I would however keep
-TrainStat in a seperate dorectory.<p style="text-align: right;"></p><p style="text-align: right;">(Rev 1.8 Sun 13 Dec 2009)</p>
+TrainStat in a seperate directory.<p style="text-align: right;"></p>
+
+<p style="text-align: right;">(Rev 1.8 Sun 13 Dec 2009)</p>
 
 <!--#include virtual="/Footer" -->
 
