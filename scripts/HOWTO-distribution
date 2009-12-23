@@ -1,22 +1,22 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.106 $)
+distribution.  ($Revision: 1.107 $)
 
-Start with a directory, typically called "Distributions", that
-contains "scripts" and "java" (from CVS) as subdirectories, and:
+Start in a directory, typically called "Distributions", that
+contains "scripts" and "java" (modules checked out from CVS) as subdirectories, then:
 
-  scripts
   ln -s java/build.xml build.xml
   ln -s scripts/dist.xml dist.xml
 
-  Linux
-  	JMRI (can be empty)
-  MacOSX
-  	JMRI (can be empty)
-  Windows
-    JMRI (can be empty)
-   
-You also need to have installed (we use version 2.44):
-    NSIS from http://nsis.sourceforge.net
+  mkdir Linux
+  mkdir Linux/JMRI
+  
+  mkdir MacOSX
+  mkdir MacOSX/JMRI
+  
+  mkdir Windows
+  mkdir Windows/JMRI
+     
+You also need to have installed NSIS from http://nsis.sourceforge.net (we use version 2.44)
     
 Make sure everything is up-to-date:
 
@@ -24,12 +24,12 @@ Make sure everything is up-to-date:
     * build.xml (2) in the javadoc instructions
     * site/Copyright.html
     * decoder index master
-    * (grep -r for the previous year in the web site, xml)
+    * (grep -r for the previous year in the web site, xml; don't change copyright notices!)
     
 ( ) Check if the decoder definitions have changed since the previous tag
     If so, remake the decoder index. 
         Delete old index from preferences
-        Run program, remake index
+        Run program in your development dir, remake index
         Make sure file is saved with Unix line ends.
         Diff w file in CVS tree as a check.
         Copy the new file from preferences into the CVS tree.
@@ -64,19 +64,15 @@ Make sure everything is up-to-date:
 
 ( ) The default.lcf file for releases is taken from Distribution/scripts/; 
     the one for normal development is from Distribution/java/.  Make sure
-    the one in scripts/ is the one you want.
+    the one in scripts/ is the one you want. (We don't generally change this)
            
 ( ) Check that the Version.java file has been updated (both version
     number in two places and copyright date) and committed
 
 ( ) Edit the "manifest" file in your development directory, and make sure that the
     version number is correct in four places (this file comes from java/, not scripts/)
-    
-    *** NOTE THAT layout-config-2-9-1.dtd has changes from the 2.7 series;
-    *** specifically a lot of attributes marked as "deprecated".
-    *** Do not lose these!
-    
-( ) Create the _next_ version-specific layout-config-2-7-*.dtd in xml/DTD
+        
+( ) Create the _next_ version-specific layout-config-2-9-*.dtd in xml/DTD
     and commit back to CVS; this needs to be a copy of the contents 
     of the file that's actually being released, so don't do it early!
     Update the comment at the top of the file (two places).
@@ -125,157 +121,88 @@ Add something about copyright notices on changed files
 To actually create the distribution:
 
 ( ) Go to your working directory and
-	cvs -Q tag -F Release-2-7-10 
+	cvs -Q tag -F Release-2-9-1
 
 ( ) Create a new working directory, if you haven't already:
     
     cd <project directory>
     mkdir X-Y-Z-cand
     cd X-Y-Z-cand
-    cvs co -r Release-2-7-10 all
+    cvs co -r Release-2-9-1 all
     
     This gives it a sticky tag.  If your working directory
     already has that name, just
     
-    cvs -q update -r Release-2-7-10
+    cvs -q update -r Release-2-9-1
     
     to make sure it's got the tag
     
 ( ) Come back to Distributions and 
     cd scripts
-	cvs -Q tag -F Release-2-7-10
+	cvs -Q tag -F Release-2-9-1
     cd ../java
-	cvs -Q tag -F Release-2-7-10
+	cvs -Q tag -F Release-2-9-1
     cd ..
     
 ( ) Announce the tag to jmri-developers list, wait for comments
 
 ( ) Start the actual build! In the Distributions directory:
 
-	ant -f dist.xml -Drelease=Release-2-7-10 -Dnumber=2.7.10 release1
+	ant -f dist.xml -Drelease=Release-2-9-1 -Dnumber=2.9.1 release1
 	
-	Ensure tests pass
+	(the -Drelease-Release-2-9-1 option specifies the CVS tag to extract
+	 and build; the -Dnumber=2.9.1 specifies the release number to append
+	 to filenames, etc.)
 	
-	Check DecoderPro for no startup errors, right version
+	This will run "alltests"; make sure they all pass
+	
+	This will run DecoderPro; check for no startup errors, right version,
+	help index present and working OK.
 
     Ant will do the various builds, construct the distribution
     directories, and finally construct the Linux, MacOS X and Windows
     distribution files.
+    
+    (If you need to, you can do the steps individually, but don't 
+     do this if you're really building a release to distribute:
+          ant x-rel-base-build
+          ant x-rel-create-windows
+          ant x-rel-installer-windows
+          ant x-rel-create-osx
+          ant x-rel-installer-osx
+          ant x-rel-create-linux
+          ant x-rel-installer-linux
+     with the options present, of course)
 	
 ( ) The next few steps can be done in parallel.
-		
-** Consider making the files available for testing
-** and getting feedback from jmri-developers
 
 ** Consider testing Windows installer on a VM
 
 ( ) Upload the Linux, Mac OS X and Windows files
 
     (The dist.xml file needs to have "test\ release" vs "production\ release"
-    edited as needed - this should be automated)
+    edited as needed in dist.xml - this should be automated)
 
-    ant -f dist.xml -Drelease=Release-2-7-10 -Dnumber=2.7.10 -Duser.name=jacobsen release2
+    ant -f dist.xml -Drelease=Release-2-9-1 -Dnumber=2.9.1 -Duser.name=jacobsen release2
 
     (The user.name only needs to be provided if your SourceForge.net ID 
      is different than your current login ID)
      
-    --------------------------------------------
-    Older methods (don't use if above succeeds):
+    Wait until the downloads have propagated to the mirrors; check 
+    by trying to download each file
     
-    Finder: Connect to Server
-    https://frs.sourceforge.net/j/ja/jacobsen/uploads
-    
-    Appears as /Volumes/uploads/
-    
-    Then do finder copies...
-    
-    Or:
-    
-    echo put JMRI.2.4.dmg | sftp jacobsen@frs.sf.net:uploads
-    echo put JMRI.2.4.tgz | sftp jacobsen@frs.sf.net:uploads
-    echo put JMRI.2.4.exe | sftp jacobsen@frs.sf.net:uploads
-
+    Ask JMRI-developers for a quick look _AND_ _WAIT_ _FOR_ _IT_!!
 
 ( ) Any time after release1 is complete, create and upload the JavaDocs
     and XSLT'd decoder pages
     
-	ant -f dist.xml -Drelease=Release-2-7-10 -Dnumber=2.7.10 release3
+	ant -f dist.xml -Drelease=Release-2-9-1 -Dnumber=2.9.1 release3
 	
-	Older manual form:
-	rsync -n -avz --delete --rsh="ssh -l jacobsen" Release-2-7-10/java/doc jacobsen,jmri@web.sourceforge.net:htdocs/JavaDoc/doc
-		
 ( ) Format the release note page, change date, etc
 
-( ) Complete all the above before continuing
-
-( ) (Sf-upload doesn't work anymore; have to go back to manual, but once the file is up
-    there really isn't much more to do with the new system. I updated sf-upload to version 11
-    for 2.7.5, but didnt' use it)
-
-    Use sf-upload to create the SF.net release structures:  http://sf-upload.sourceforge.net/
-
-    If you "ssh -t jacobsen,jmri@shell.sourceforge.net create", the files ended up in "uploads"
-    
-    Go to release manager with Safari
-    Create a "JMRI 2.7.10" directory in "test files"
-    Upload the three files via the web
-    (Only set default platform for production version, controls download)
-    (That seems to be it)
-    
-    (Following stopped working in July 2009 with new SF pages)
-    cd scripts
-    
-    For test release:
-    bbedit notesfile*.txt changefile.txt
-    sf-upload -g 26788 -packageid 49077 -r "JMRI 2.7.10 test version for Linux" -nf notesfileLin.txt  -cf changefile.txt -f JMRI.2.7.10.tgz -type ".gz" -noupload
-    sf-upload -g 26788 -packageid 49077 -r "JMRI 2.7.10 test version for Mac OS X" -nf notesfileMac.txt  -cf changefile.txt -f JMRI.2.7.10.dmg -type ".dmg" -noupload
-    sf-upload -g 26788 -packageid 49077 -r "JMRI 2.7.10 test version for Windows" -nf notesfileWin.txt  -cf changefile.txt -f JMRI.2.7.10.exe -type ".exe (32-bit Windows)" -noupload
-
-    For production release:
-    bbedit notesProdRel*.txt changefile.txt
-    sf-upload -g 26788 -packageid 33771 -r "JMRI 2.7.10 production release for Linux" -nf notesProdRelLin.txt  -cf changefile.txt -f JMRI.2.7.10.tgz -type ".gz" -noupload
-    sf-upload -g 26788 -packageid 33771 -r "JMRI 2.7.10 production release for Mac OS X" -nf notesProdRelMac.txt  -cf changefile.txt -f JMRI.2.7.10.dmg -type ".dmg" -noupload
-    sf-upload -g 26788 -packageid 33771 -r "JMRI 2.7.10 production release for Windows" -nf notesProdRelWin.txt  -cf changefile.txt -f JMRI.2.7.10.exe -type ".exe (32-bit Windows)" -noupload
-
-    (have to have a ~/.sfuploadrc file)
-    
-    --------------------------------------------
-    Older methods (don't use if above succeeds):
- 
-    Login to SourceForge web using Firefox
-
-	Go to the project home page, login, then admin page
-	
-	Click on Edit/Release Files  & release each of the three files
-	in the order:
-	
-		Linux
-		Mac OS X
-		Windows
-		
-	The name convention is "JMRI 2.7.10 test version for Linux"
-        or "JMRI 2.2 production release for Linux"
-        
-    The note says:
-
-        The JMRI 2.7.10 test version is now available for download. 
-        This is the specific version for Windows users. 
-        For more information, please see the release note at http://jmri.sf.net/releasenotes/jmri2.7.10.shtml
-
-    The change log says:
-    
-        The complete list of changes is in the release note at http://jmri.sf.net/releasenotes/jmri2.7.10.shtml
-
-	Don't select "preserve preformatted text"
-	
-    --------------------------------------------
-
 ( ) Commit release note files to the web site CVS directory
-
-( ) Wait until the downloads have propagated to the mirrors; check 
-    by trying to download each file
     
-( ) Ask JMRI-developers for a quick look _AND_ _WAIT_ _FOR_ _IT_!!
+( ) Complete all the above before continuing
 
 ( ) Update the web site front page and downloads page
     		
@@ -293,7 +220,7 @@ To actually create the distribution:
 ( ) Wait for update on JMRI web server
 
 ( ) Mail announcement to jmriusers@yahoogroups.com
-    Subject is "Test version 2.7.10 of JMRI/DecoderPro is available for download"
+    Subject is "Test version 2.9.1 of JMRI/DecoderPro is available for download"
 
 ( ) Mail announcement to jmri-announce@lists.sourceforge.net
 
@@ -301,7 +228,7 @@ To actually create the distribution:
 
 ( ) News item from JMRI sourceforge page, Summary tab
 
-	Title is of the form "JMRI 2.7.10 test version is available";
+	Title is of the form "JMRI 2.9.1 test version is available";
 	text is pretty much directly taken from the release note
 
 ( ) If a production version, update the SF automatic download icon by selecting default in FRS
@@ -335,6 +262,4 @@ To actually create the distribution:
 ( ) Commit back any changes made to this doc
 
 ( ) Take a break!
-
-===========   extra info =============
 
