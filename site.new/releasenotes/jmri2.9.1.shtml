@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.7 2009-12-22 05:50:39 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.8 2009-12-23 06:42:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -130,6 +130,9 @@ Updated so that the Memory is now referenced using the namedBeanHandle.
 <li>The memory icon load/store code was updated so that the Memory and MemoryIconInput are now referenced using the namedBeanHandle.
 Also improved some of the save code.
 </ul>
+
+<p>
+Kevin Dickerson fixed a problem with displaying exciting sensor groups.
 
 <!--#include virtual="/Footer" -->
 
