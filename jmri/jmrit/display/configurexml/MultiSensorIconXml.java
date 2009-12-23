@@ -13,7 +13,7 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class MultiSensorIconXml extends PositionableLabelXml {
 
@@ -34,19 +34,11 @@ public class MultiSensorIconXml extends PositionableLabelXml {
         Element element = new Element("multisensoricon");
         storeCommonAttributes(p, element);
 
-        /*element.setAttribute("inactive", p.getInactiveIcon().getURL());
-        element.setAttribute("unknown", p.getUnknownIcon().getURL());
-        element.setAttribute("inconsistent", p.getInconsistentIcon().getURL());
-        element.setAttribute("rotate", String.valueOf(p.getUnknownIcon().getRotation()));*/
         element.setAttribute("updown", p.getUpDown()?"true":"false");
 
         for (int i = 0; i < p.getNumEntries(); i++) {
             Element e = storeIcon("active", p.getSensorIcon(i));
             e.setAttribute("sensor", p.getSensorName(i));
-            /*Element e = new Element("multisensoriconentry");
-            e.setAttribute("sensor", p.getSensorName(i));
-            e.setAttribute("icon", p.getSensorIcon(i).getURL());
-            element.addContent(storeIcon("active", p.getSensorIcon(i)));*/
             element.addContent(e);
         }
         element.addContent(storeIcon("inactive", p.getInactiveIcon()));
@@ -90,31 +82,15 @@ public class MultiSensorIconXml extends PositionableLabelXml {
 
         MultiSensorIcon l = new MultiSensorIcon();
         int rotation = 0;
-        //This try, is to load up from previous versions of the xml file.
         try {
-            NamedIcon inactive;
-            name = element.getAttribute("inactive").getValue();
-            l.setInactiveIcon(inactive = NamedIcon.getIconByName(name));
-
-            NamedIcon unknown;
-            name = element.getAttribute("unknown").getValue();
-            l.setUnknownIcon(unknown = NamedIcon.getIconByName(name));
-
-            NamedIcon inconsistent;
-            name = element.getAttribute("inconsistent").getValue();
-            l.setInconsistentIcon(inconsistent = NamedIcon.getIconByName(name));
-            
-            Attribute a = element.getAttribute("rotate");
-            if (a!=null) {
-                rotation = element.getAttribute("rotate").getIntValue();
-                inactive.setRotation(rotation, l);
-                inconsistent.setRotation(rotation, l);
-                unknown.setRotation(rotation, l);
-            }
+            rotation = element.getAttribute("rotate").getIntValue();
         } catch (org.jdom.DataConversionException e) {
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
-
+        
+        loadSensorIcon("inactive", rotation, l, element);
+        loadSensorIcon("unknown", rotation, l,element);
+        loadSensorIcon("inconsistent", rotation, l,element);
         Attribute a = element.getAttribute("updown");
         if ( (a!=null) && a.getValue().equals("true"))
             l.setUpDown(true);
@@ -154,7 +130,6 @@ public class MultiSensorIconXml extends PositionableLabelXml {
                             {
                                 scale = item.getAttribute("scale").getDoubleValue();
                             }
-                            //l.setIcon(icon);
                             icon.setLoad(deg, scale, l);
                         }
                     } catch (org.jdom.DataConversionException dce) {}
@@ -164,30 +139,34 @@ public class MultiSensorIconXml extends PositionableLabelXml {
                     if (rotation!=0) icon.setRotation(rotation, l);
                 }
                 l.addEntry(sensor, icon);
-/*                NamedIcon aicon = loadIcon( l,"active", item);
-                if (aicon!=null) { 
-                    l.addEntry(sensor, aicon); 
-                } else {
-                    l.addEntry(sensor, nicon);
-                }*/
             }
         }
 		
-        NamedIcon icon = loadIcon( l,"inactive", element);
-        if (icon!=null) { l.setInactiveIcon(icon); }
-
-        icon = loadIcon( l,"unknown", element);
-        if (icon!=null) { l.setUnknownIcon(icon); }
-
-        icon = loadIcon( l,"inconsistent", element);
-        if (icon!=null) { l.setInconsistentIcon(icon); }
-
 		// add multi-sensor to the panel
 		if (pe!=null)
 			pe.putLabel(l);
 		else if (le!=null)
 			le.putMultiSensor(l);
     }
+    
+    private void loadSensorIcon(String state, int rotation, MultiSensorIcon l, Element element){
+        NamedIcon icon = loadIcon(l,state, element);
+        if (icon==null){
+            if (element.getAttribute(state) != null) {
+                String name;
+                name = element.getAttribute(state).getValue();
+                icon = NamedIcon.getIconByName(name);
+                icon.setRotation(rotation, l);
+            }
+            else log.warn("did not locate " + state + " for Multisensor icon file");
+        }
+        if (icon!=null) {
+            if (state.equals("inactive")) l.setInactiveIcon(icon);
+            else if (state.equals("unknown")) l.setUnknownIcon(icon);
+            else if (state.equals("inconsistent")) l.setInconsistentIcon(icon);
+        }
+    }
+    
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MultiSensorIconXml.class.getName());
 

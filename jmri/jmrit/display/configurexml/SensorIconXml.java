@@ -4,6 +4,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.SensorIcon;
+//import jmri.util.NamedBeanHandle;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
@@ -14,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -33,7 +34,7 @@ public class SensorIconXml extends PositionableLabelXml {
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
         Element element = new Element("sensoricon");
-        element.setAttribute("sensor", p.getSensor().getSystemName());
+        element.setAttribute("sensor", p.getNameString());
         storeCommonAttributes(p, element);
         element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
         element.setAttribute("momentary", p.getMomentary()?"true":"false");
@@ -166,6 +167,17 @@ public class SensorIconXml extends PositionableLabelXml {
 		}
 
         SensorIcon l;
+        
+        String name;
+        Attribute attr = element.getAttribute("sensor"); 
+        if (attr == null) {
+            log.error("incorrect information for sensor; must use sensor name");
+            return;
+        } else {
+            name = attr.getValue();
+        }
+        
+        
         boolean icon=true;
         if (element.getAttribute("icon") != null){
             String yesno = element.getAttribute("icon").getValue();
@@ -176,12 +188,22 @@ public class SensorIconXml extends PositionableLabelXml {
         }
 
         if (icon){
+            int rotation = 0;
+            try {
+                rotation = element.getAttribute("rotate").getIntValue();
+            } catch (org.jdom.DataConversionException e) {
+            } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+            }
             l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
             if(pe!=null)
                 pe.putLabel(l);
             else if (le!=null)
                 le.putSensor(l);
-            loadIconInfo(l, element);
+            loadSensorIcon("active", rotation, l, element, name);
+            loadSensorIcon("inactive", rotation, l, element, name);
+            loadSensorIcon("unknown", rotation, l,element, name);
+            loadSensorIcon("inconsistent", rotation, l,element, name);
+            //loadIconInfo(l, element);
         } else {
             l = new SensorIcon(new String("  "));
             if(pe!=null)
@@ -213,7 +235,7 @@ public class SensorIconXml extends PositionableLabelXml {
         else
             l.setMomentary(false);
         
-        l.setSensor(element.getAttribute("sensor").getValue());
+        l.setSensor(name);
 
         /*if(pe!=null)
             pe.putLabel(l);
@@ -222,7 +244,26 @@ public class SensorIconXml extends PositionableLabelXml {
 
     }
     
-    void loadIconInfo(SensorIcon l, Element element){
+    private void loadSensorIcon(String state, int rotation, SensorIcon l, Element element, String name){
+        NamedIcon icon = loadIcon(l,state, element);
+        if (icon==null){
+            if (element.getAttribute(state) != null) {
+                String iconName;
+                iconName = element.getAttribute(state).getValue();
+                icon = NamedIcon.getIconByName(iconName);
+                icon.setRotation(rotation, l);
+            }
+            else log.warn("did not locate " + state + " icon file "+name);
+        }
+        if (icon!=null) {
+            if(state.equals("active")) l.setActiveIcon(icon);
+            else if (state.equals("inactive")) l.setInactiveIcon(icon);
+            else if (state.equals("unknown")) l.setUnknownIcon(icon);
+            else if (state.equals("inconsistent")) l.setInconsistentIcon(icon);
+        }
+    }
+    
+    /*void loadIconInfo(SensorIcon l, Element element){
         String name;
         NamedIcon icon = loadIcon( l,"active", element);
         if (icon!=null) { l.setActiveIcon(icon); }
@@ -266,7 +307,7 @@ public class SensorIconXml extends PositionableLabelXml {
         }
 
     
-    }
+    }*/
     
 
     void loadTextInfo(SensorIcon l, Element element){
