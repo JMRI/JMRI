@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -622,7 +622,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		if ((a = e.getAttribute("weight")) != null)
 			_weight = a.getValue();
 		if ((a = e.getAttribute("weightTons")) != null)
-			_weightTons = a.getValue();
+			setWeightTons(a.getValue());
 		if ((a = e.getAttribute("built")) != null)
 			_built = a.getValue();
 		Location location = null;
@@ -675,7 +675,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			e.setAttribute("color", getColor());
 		if(!getWeight().equals(DEFAULT_WEIGHT))
 			e.setAttribute("weight", getWeight());
-		if (!getWeightTons().equals(DEFAULT_WEIGHT))
+		if (!getWeightTons().equals(""))
 			e.setAttribute("weightTons", getWeightTons());
 		if (!getBuilt().equals(""))
 			e.setAttribute("built", getBuilt());
