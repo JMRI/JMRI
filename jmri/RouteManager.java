@@ -25,7 +25,7 @@ import java.util.List;
  * <P>
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public interface RouteManager extends Manager {
 
@@ -38,13 +38,7 @@ public interface RouteManager extends Manager {
      *       already exists, or if there is trouble creating a new Route.
      */
     public Route provideRoute(String systemName, String userName);
-    
-    /**
-     * @deprecated Since 2.5.1
-     */
-    @Deprecated
-    public Route createNewRoute(String systemName, String userName);
-    
+        
     /**
      * Locate via user name, then system name if needed.
      * Does not create a new one if nothing found

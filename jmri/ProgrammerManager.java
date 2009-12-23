@@ -32,7 +32,7 @@ package jmri;
  * <P>
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public interface ProgrammerManager  {
 
@@ -93,39 +93,6 @@ public interface ProgrammerManager  {
      */
     public boolean isAddressedModePossible();
     
-    /** 
-     * Deprecated Since 2.5.1
-     */
-    public Programmer getServiceModeProgrammer();
-    /** 
-     * Deprecated Since 2.5.1
-     */
-    public Programmer getOpsModeProgrammer(boolean pLongAddress, int pAddress);
-    /** 
-     * Deprecated Since 2.5.1
-     */
-    public Programmer reserveServiceModeProgrammer();
-    /** 
-     * Deprecated Since 2.5.1
-     */
-    public void releaseServiceModeProgrammer(Programmer p);
-    /** 
-     * Deprecated Since 2.5.1
-     */
-    public Programmer reserveOpsModeProgrammer(boolean pLongAddress, int pAddress);
-    /** 
-     * Deprecated Since 2.5.1
-     */
-    public void releaseOpsModeProgrammer(Programmer p);
-    /** 
-     * Deprecated Since 2.5.1
-     */
-    public boolean isServiceModePossible();
-    /** 
-     * Deprecated Since 2.5.1
-     */
-    public boolean isOpsModePossible();
-
 }
 
 
