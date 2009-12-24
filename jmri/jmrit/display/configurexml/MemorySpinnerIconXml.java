@@ -8,7 +8,7 @@ import org.jdom.Element;
  * Handle configuration for display.MemorySpinnerIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class MemorySpinnerIconXml extends PositionableLabelXml {
 
@@ -28,7 +28,7 @@ public class MemorySpinnerIconXml extends PositionableLabelXml {
         Element element = new Element("memoryicon");
 
         // include attributes
-        element.setAttribute("memory", p.getMemory().getSystemName());
+        element.setAttribute("memory", p.getNamedMemory().getName());
         element.setAttribute("x", ""+p.getX());
         element.setAttribute("y", ""+p.getY());
         element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
@@ -55,8 +55,7 @@ public class MemorySpinnerIconXml extends PositionableLabelXml {
         PanelEditor p = (PanelEditor)o;
         MemorySpinnerIcon l = new MemorySpinnerIcon();
 
-        l.setMemory(jmri.InstanceManager.memoryManagerInstance().getMemory(
-            element.getAttribute("memory").getValue()));
+        l.setMemory(element.getAttribute("memory").getValue());
         
         // find coordinates
         int x = 0;

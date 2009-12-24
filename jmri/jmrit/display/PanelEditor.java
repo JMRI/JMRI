@@ -856,7 +856,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         l.setThrownIcon(editor.getIcon("TurnoutStateThrown"));
         l.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
         l.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
-        l.setTurnout((Turnout)editor.getTableSelection());
+        l.setTurnout(editor.getTableSelection().getDisplayName());
         setNextLocation(l);
         putLabel(l);
         // always allow new items to be moved

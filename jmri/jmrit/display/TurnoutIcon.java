@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import jmri.util.NamedBeanHandle;
 
 /**
  * An icon to display a status of a turnout.<P>
@@ -23,7 +24,7 @@ import javax.swing.JPopupMenu;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -39,7 +40,8 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     }
 
     // the associated Turnout object
-    Turnout turnout = null;
+    //Turnout turnout = null;
+    private NamedBeanHandle<Turnout> namedTurnout = null;
 
     /**
      * Attached a named turnout to this display item
@@ -47,10 +49,10 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
      */
      public void setTurnout(String pName) {
          if (InstanceManager.turnoutManagerInstance()!=null) {
-             turnout = InstanceManager.turnoutManagerInstance().
+            Turnout turnout = InstanceManager.turnoutManagerInstance().
                  provideTurnout(pName);
              if (turnout != null) {
-                 setTurnout(turnout);
+                 setTurnout(new NamedBeanHandle<Turnout>(pName, turnout));
              } else {
                  log.error("Turnout '"+pName+"' not available, icon won't see changes");
              }
@@ -59,19 +61,23 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
          }
      }
 
-    public void setTurnout(Turnout to) {
-        if (turnout != null) {
-            turnout.removePropertyChangeListener(this);
+    public void setTurnout(NamedBeanHandle<Turnout> to) {
+        if (namedTurnout != null) {
+            getTurnout().removePropertyChangeListener(this);
         }
-        turnout = to;
-        if (turnout != null) {
+        namedTurnout = to;
+        if (namedTurnout != null) {
             displayState(turnoutState());
-            turnout.addPropertyChangeListener(this);
+            getTurnout().addPropertyChangeListener(this);
             setProperToolTip();
         } 
     }
 
-    public Turnout getTurnout() { return turnout; }
+    public Turnout getTurnout() { return namedTurnout.getBean(); }
+    
+    public NamedBeanHandle <Turnout> getNamedTurnout() {
+        return namedTurnout;
+    }
 
     // display icons
     String closedLName = "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif";
@@ -129,7 +135,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
      * @return A state variable from a Turnout, e.g. Turnout.CLOSED
      */
     int turnoutState() {
-        if (turnout != null) return turnout.getKnownState();
+        if (namedTurnout != null) return getTurnout().getKnownState();
         else return Turnout.UNKNOWN;
     }
     
@@ -142,14 +148,14 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 		// when there's feedback, transition through inconsistent icon for better
 		// animation
 		if (super.getTristate()
-				&& (turnout.getFeedbackMode() != Turnout.DIRECT)
+				&& (getTurnout().getFeedbackMode() != Turnout.DIRECT)
 				&& (e.getPropertyName().equals("CommandedState"))) {
-			if (turnout.getCommandedState() != turnout.getKnownState()) {
+			if (getTurnout().getCommandedState() != getTurnout().getKnownState()) {
 				int now = Turnout.INCONSISTENT;
 				displayState(now);
 			}
 			// this takes care of the quick double click
-			if (turnout.getCommandedState() == turnout.getKnownState()) {
+			if (getTurnout().getCommandedState() == getTurnout().getKnownState()) {
 				int now = ((Integer) e.getNewValue()).intValue();
 				displayState(now);
 			}
@@ -167,11 +173,12 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 
     public String getNameString() {
         String name;
-        if (turnout == null) name = rb.getString("NotConnected");
-        else if (turnout.getUserName()!=null)
-            name = turnout.getUserName()+" ("+turnout.getSystemName()+")";
+        if (namedTurnout == null) name = rb.getString("NotConnected");
+        else name = namedTurnout.getName();
+        /*else if (getTurnout().getUserName()!=null)
+            name = getTurnout().getUserName()+" ("+getTurnout().getSystemName()+")";
         else
-            name = turnout.getSystemName();
+            name = getTurnout().getSystemName();*/
         return name;
     }
 
@@ -205,7 +212,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 		addDisableMenuEntry(popup);
 
 		// add tristate option if turnout has feedback
-		if (turnout != null && turnout.getFeedbackMode() != Turnout.DIRECT) {
+		if (namedTurnout != null && getTurnout().getFeedbackMode() != Turnout.DIRECT) {
 			addTristateEntry(popup);
 		}
 
@@ -297,14 +304,14 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
                 }
         };
         _editor.complete(addIconAction, changeIconAction, true, true);
-        _editor.setSelection(turnout);
+        _editor.setSelection(getTurnout());
     }
     void updateTurnout() {
         setClosedIcon(_editor.getIcon("TurnoutStateClosed"));
         setThrownIcon(_editor.getIcon("TurnoutStateThrown"));
         setInconsistentIcon(_editor.getIcon("BeanStateInconsistent"));
         setUnknownIcon(_editor.getIcon("BeanStateUnknown"));
-        setTurnout((Turnout)_editor.getTableSelection());
+        setTurnout(_editor.getTableSelection().getDisplayName());
         _editorFrame.dispose();
         _editorFrame = null;
         _editor = null;
@@ -321,21 +328,21 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         if (!getControlling()) return;
         if (getForceControlOff()) return;
         if (e.isMetaDown() || e.isAltDown() ) return;
-        if (turnout==null) {
+        if (namedTurnout==null) {
             log.error("No turnout connection, can't process click");
             return;
         }
-        if (turnout.getKnownState()==jmri.Turnout.CLOSED)
-            turnout.setCommandedState(jmri.Turnout.THROWN);
+        if (getTurnout().getKnownState()==jmri.Turnout.CLOSED)
+            getTurnout().setCommandedState(jmri.Turnout.THROWN);
         else
-            turnout.setCommandedState(jmri.Turnout.CLOSED);
+            getTurnout().setCommandedState(jmri.Turnout.CLOSED);
     }
 
     public void dispose() {
-        if (turnout != null) {
-            turnout.removePropertyChangeListener(this);
+        if (namedTurnout != null) {
+            getTurnout().removePropertyChangeListener(this);
         }
-        turnout = null;
+        namedTurnout = null;
 
         closed = null;
         thrown = null;

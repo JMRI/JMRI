@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 
@@ -29,7 +29,7 @@ public class TurnoutIconXml extends PositionableLabelXml {
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
         Element element = new Element("turnouticon");
-        element.setAttribute("turnout", p.getTurnout().getSystemName());
+        element.setAttribute("turnout", p.getNamedTurnout().getName());
         storeCommonAttributes(p, element);
 
         // old style 
@@ -67,73 +67,60 @@ public class TurnoutIconXml extends PositionableLabelXml {
 	public void load(Element element, Object o) {
         // create the objects
         PanelEditor p = (PanelEditor)o;
-        String name = "";
-        NamedIcon closed = null;
-        NamedIcon thrown = null;
-        NamedIcon unknown = null;
-        NamedIcon inconsistent = null;
-
+        
         TurnoutIcon l = new TurnoutIcon();
 
-        // load old style icons      
-        if (element.getAttribute("closed") != null)
-        	l.setClosedIcon(closed = NamedIcon.getIconByName(element.getAttribute("closed").getValue()));
-        if (element.getAttribute("thrown") != null)
-        	l.setThrownIcon(thrown = NamedIcon.getIconByName(element.getAttribute("thrown").getValue()));      
-        if (element.getAttribute("unknown") != null)
-        	l.setUnknownIcon(unknown = NamedIcon.getIconByName(element.getAttribute("unknown").getValue()));
-        if (element.getAttribute("inconsistent") != null){
-        	l.setInconsistentIcon(inconsistent = NamedIcon.getIconByName(element.getAttribute("inconsistent").getValue()));
-        	try {
-        		Attribute a = element.getAttribute("rotate");
-        		if (a!=null) {
-        			int rotation = element.getAttribute("rotate").getIntValue();
-        			closed.setRotation(rotation, l);
-        			thrown.setRotation(rotation, l);
-        			inconsistent.setRotation(rotation, l);
-        			unknown.setRotation(rotation, l);
-        		}
-        	} catch (org.jdom.DataConversionException e) {}
+        int rotation = 0;
+        try {
+            Attribute a = element.getAttribute("rotate");
+            rotation = a.getIntValue();
+        } catch (org.jdom.DataConversionException e) {
+        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+        }
+        
+        String name;
+        try {
+            name=element.getAttribute("turnout").getValue();
+        } catch ( NullPointerException e) { 
+            log.error("incorrect information for turnout; must use turnout name");
+            return;
         }
 
         loadCommonAttributes(l, PanelEditor.TURNOUTS.intValue(), element);
 
+        loadTurnoutIcon("closed", rotation, l, element, name);
+        loadTurnoutIcon("thrown", rotation, l, element, name);
+        loadTurnoutIcon("unknown", rotation, l, element, name);
+        loadTurnoutIcon("inconsistent", rotation, l, element, name);
+        
         Attribute a = element.getAttribute("tristate");
         if ( (a==null) || ((a!=null) && a.getValue().equals("true")))
             l.setTristate(true);
         else
             l.setTristate(false);
             
-        l.setTurnout(name = element.getAttribute("turnout").getValue());
-        
-        // load new style icons
-        NamedIcon icon = loadIcon( l,"closed", element);
-        if (icon!=null) {
-        	closed = icon;
-        	l.setClosedIcon(icon); 
-        }
-        icon = loadIcon( l,"thrown", element);
-        if (icon!=null) {
-        	thrown = icon;
-        	l.setThrownIcon(icon); 
-        }
-        icon = loadIcon( l,"unknown", element);
-        if (icon!=null) {
-        	unknown = icon;
-        	l.setUnknownIcon(icon); 
-        }
-        icon = loadIcon( l,"inconsistent", element);
-        if (icon!=null) {
-        	inconsistent = icon;
-        	l.setInconsistentIcon(icon); 
-        }       
-        // report errors
-        if (closed == null) log.warn("did not locate closed icon turnout "+name);
-        if (thrown == null) log.warn("did not locate thrown icon turnout "+name);
-        if (unknown == null) log.warn("did not locate unknown icon turnout "+name);
-        if (inconsistent == null) log.warn("did not locate inconsistent icon turnout "+name);
+        l.setTurnout(name);
         
         p.putLabel(l);
+    }
+    
+    private void loadTurnoutIcon(String state, int rotation, TurnoutIcon l, Element element, String name){
+        NamedIcon icon = loadIcon( l,state, element);
+        if (icon==null){
+            if (element.getAttribute(state) != null) {
+                String iconName;
+                iconName = element.getAttribute(state).getValue();
+                icon = NamedIcon.getIconByName(iconName);
+                icon.setRotation(rotation, l);
+            }
+            else log.warn("did not locate " + state + " icon file "+name);
+        }
+        if (icon!=null) {
+            if(state.equals("closed")) l.setClosedIcon(icon);
+            else if (state.equals("thrown")) l.setThrownIcon(icon);
+            else if (state.equals("unknown")) l.setUnknownIcon(icon);
+            else if (state.equals("inconsistent")) l.setInconsistentIcon(icon);
+        }
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutIconXml.class.getName());
