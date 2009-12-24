@@ -1,0 +1,1 @@
+This directory contains signaling definitions corresponding to the 1946 AAR rules as described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.

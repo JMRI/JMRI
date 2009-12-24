@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Test schema for JMRI aspect-signaling support                          -->
+
+<!-- This is an experimental organization,                                  -->
+<!-- and will certainly be changed in the near future                       -->
+
+<!-- $Id: aspecttable.xsd,v 1.1 2009-12-24 04:33:52 jacobsen Exp $ -->
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Need annotations                                                 -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="aspecttable">
+    <xs:complexType>
+      <xs:sequence>
+
+        <xs:element name="name" minOccurs="1" maxOccurs="1"></xs:element>
+
+        <xs:element name="date" minOccurs="0" maxOccurs="1"></xs:element>
+
+        <xs:element name="reference" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        
+        <xs:element name="aspects" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              
+              <xs:element name="aspect" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    
+                    <xs:element name="title" minOccurs="1" maxOccurs="1"></xs:element>
+                    <xs:element name="name" minOccurs="0" maxOccurs="1"></xs:element>
+                    <xs:element name="indication" minOccurs="0" maxOccurs="1"></xs:element>
+                    <xs:element name="description" minOccurs="0" maxOccurs="unbounded"></xs:element>
+                    <xs:element name="reference" minOccurs="0" maxOccurs="unbounded"></xs:element>
+                    <xs:element name="comment" minOccurs="0" maxOccurs="unbounded"></xs:element>
+                    
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+                
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

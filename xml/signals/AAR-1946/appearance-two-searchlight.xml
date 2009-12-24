@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+  <aspecttable>AAR-2</aspecttable>
+  <name>Two Seachlights</name>
+  <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
+  <description>Appearances for a two-searchlight signal head without other badging</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>green</show>
+      <reference>Page 42</reference>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advance approach medium</aspectname>
+      <show>green</show>
+      <show>yellow</show>
+      <reference>Page 42</reference>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach medium</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>Page 44</reference>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach approach</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <reference>Page 44</reference>
+    </appearance>
+
+    <appearance>
+      <aspectname>Medium-clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Page 45</reference>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Page 47</reference>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Page 49</reference>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <reference>Page 50</reference>
+    </appearance>
+
+  </appearances>
+</appearancetable>  
