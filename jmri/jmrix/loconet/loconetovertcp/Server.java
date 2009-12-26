@@ -8,11 +8,13 @@ import java.io.*;
 import java.util.LinkedList;
 import java.util.Properties;
 
+import jmri.util.zeroconf.ZeroConfUtil;
+
 /**
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 
 public class Server{
@@ -138,6 +140,13 @@ public class Server{
       socketListener.setName("LocoNetOverTcpServer");
       socketListener.start();
       updateServerStateListener();
+      // advertise over Zeroconf/Bonjour
+      try {
+         ZeroConfUtil.advertiseService(ZeroConfUtil.getServerName("JMRI loconetserver"), "_loconetserver._tcp.local.", portNumber, ZeroConfUtil.jmdnsInstance());
+      } catch (java.io.IOException e2) {
+         log.error("can't advertise via ZeroConf: "+e2);
+      }
+
     }
   }
 
