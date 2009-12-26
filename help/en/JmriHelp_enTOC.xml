@@ -317,14 +317,18 @@
   </tocitem>
   <tocitem text="Sensor Groups " target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
 
-  <tocitem text="Signaling " target="html.tools.signaling.index"/>
+  <tocitem text="Signaling " target="html.tools.signaling.index">
+   <tocitem text="Signal Heads " target="html.tools.signaling.index">
+    <tocitem text="Adding Signal Heads " target="package.jmri.jmrit.beantable.SignalAddEdit"/>
 
-  <tocitem text="Signal Heads " target="html.tools.signaling.index">
-   <tocitem text="Adding Signal Heads " target="package.jmri.jmrit.beantable.SignalAddEdit"/>
+    <tocitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalTable"/>
 
-   <tocitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalTable"/>
+    <tocitem text="European Examples " target="html.tools.signaling.ldt.output"/>
 
-   <tocitem text="European Examples " target="html.tools.signaling.ldt.output"/>
+   </tocitem>
+   <tocitem text="Signal Aspects " target="html.tools.signaling.AspectSignaling"/>
+
+   <tocitem text="Signal Masts " target="html.tools.signaling.SignalMasts"/>
 
   </tocitem>
   <tocitem text="Simple Signal Logic " target="package.jmri.jmrit.blockboss.BlockBossFrame"/>

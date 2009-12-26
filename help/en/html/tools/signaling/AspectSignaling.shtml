@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: AspectSignaling.shtml,v 1.1 2009-12-26 00:59:47 jacobsen Exp $ -->
+<title>JMRI: Aspect Signaling</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+
+<H1>JMRI: Aspect Signaling</H1>
+<p class=subtitle>
+    Controling signaling in a prototypical manner
+</p>
+
+Protoypical signal systems present "aspects" to the engineer
+to tell him how to run his train.  Different signals may
+show an aspect using different combinations of 
+lights, semaphore positions, and/or placards; these are called
+"appearances".  For example, the "stop" aspect with be a single red
+light on a signal mast with one lamp, red over red lamps for a signal
+mast with two lamps, etc.
+
+<h2>Available Signaling Systems</h2>
+The available signal system definitions are found in the 
+<a href="../../../../../xml/signals">xml/signals</a>
+directory.
+<dl>
+<dt>basic<dd>A non-prototypical set of aspects and appearances that most 
+        model railroaders will understand easily.
+<dt>AAR-1948<dd>American Association of Railroads 1948 rule book
+<dt>SPTCO-1960<dd>Southern Pacific Railway and Transportation Company 1960 rule book
+</dl>
+
+<h2>Creating a New Signaling System</h2>
+
+For now, you need to manually create a new directory under
+the "xml/signals" directory to hold your new signal definition.
+Then, provide these files:
+<ul>
+<li>index.shtml - Free-form decription of the signal system
+<li>aspects.xml - Define the complete set of available aspects
+<li>appearance-*.xml - One file for each type of SignalMast, defining
+        how to display each aspect.
+</ul>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

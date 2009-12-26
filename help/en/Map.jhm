@@ -86,6 +86,8 @@
 
 <mapID target="html.tools.automation.index" url="html/tools/automation/index.shtml"/>
 
+<mapID target="manual.Main_Debug_displaylog" url="manual/Main_Debug.shtml#displaylog"/>
+
 <mapID target="package.jmri.jmrix.cmri.serial.diagnostic.DiagnosticFrame" url="package/jmri/jmrix/cmri/serial/diagnostic/DiagnosticFrame.shtml"/>
 
 <mapID target="manual.Main_wangrow" url="manual/Main_wangrow.shtml"/>
@@ -600,9 +602,9 @@
 
 <mapID target="html.tools.LRoutes" url="html/tools/LRoutes.shtml"/>
 
-<mapID target="html.tools.throttle.ThrottlesListWindow" url="html/tools/throttle/ThrottlesListWindow.shtml"/>
-
 <mapID target="manual.Main_Panels" url="manual/Main_Panels.shtml"/>
+
+<mapID target="html.tools.throttle.ThrottlesListWindow" url="html/tools/throttle/ThrottlesListWindow.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_EditCarAttributes" url="package/jmri/jmrit/operations/Operations.shtml#EditCarAttributes"/>
 
@@ -807,6 +809,8 @@
 <mapID target="package.jmri.jmrit.beantable.AddEditAction" url="package/jmri/jmrit/beantable/AddEditAction.shtml"/>
 
 <mapID target="html.doc.Technical.XCode" url="html/doc/Technical/XCode.shtml"/>
+
+<mapID target="html.tools.signaling.SignalMasts" url="html/tools/signaling/SignalMasts.shtml"/>
 
 <mapID target="manual.Main_LocoNet_SoundDownloader" url="manual/Main_LocoNet.shtml#SoundDownloader"/>
 
@@ -1225,6 +1229,8 @@
 <mapID target="html.tools.Lights" url="html/tools/Lights.shtml"/>
 
 <mapID target="manual.Main_Roster_AddToGroup" url="manual/Main_Roster.shtml#AddToGroup"/>
+
+<mapID target="html.tools.signaling.AspectSignaling" url="html/tools/signaling/AspectSignaling.shtml"/>
 
 <mapID target="html.doc.Technical.XmlView" url="html/doc/Technical/XmlView.shtml"/>
 

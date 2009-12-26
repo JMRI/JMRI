@@ -6,6 +6,8 @@
 
  <indexitem text="AppleScript " target="html.tools.scripting.AppleScript"/>
 
+ <indexitem text="Aspects " target="html.tools.signaling.AspectSignaling"/>
+
  <indexitem text="Audio " target="html.tools.Audio"/>
 
  <indexitem text="Block " target="html.tools.tracker.index"/>
@@ -320,6 +322,8 @@
  </indexitem>
  <indexitem text="Sensor Groups " target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
 
+ <indexitem text="Signal Aspects " target="html.tools.signaling.AspectSignaling"/>
+
  <indexitem text="Signal Heads ">
   <indexitem text="Add Signal Head " target="package.jmri.jmrit.beantable.SignalAddEdit"/>
 
@@ -328,6 +332,8 @@
   <indexitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalTable"/>
 
  </indexitem>
+ <indexitem text="Signal Masts " target="html.tools.signaling.SignalMasts"/>
+
  <indexitem text="Signaling " target="html.tools.signaling.index"/>
 
  <indexitem text="Simple Clock " target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/>
