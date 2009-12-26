@@ -8,11 +8,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.io.*;
 
+import jmri.util.zeroconf.ZeroConfUtil;
+
 /**
  * Action to start a miniserver
  *
  * @author	    Bob Jacobsen    Copyright (C) 2004
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class MiniServerAction extends AbstractAction {
 
@@ -27,6 +29,12 @@ public class MiniServerAction extends AbstractAction {
         // start server
         startServer();
         
+        // advertise via zeroconf
+        try {
+           ZeroConfUtil.advertiseService("JMRI on "+ZeroConfUtil.getServerName("(unknown)"), "_http._tcp.local.", port, ZeroConfUtil.jmdnsInstance());
+        } catch (java.io.IOException e) {
+                org.apache.log4j.Logger.getLogger(MiniServerAction.class.getName()).error("can't advertise via ZeroConf: "+e);
+        }
     }
     
     public void ensureIndexPage() {
