@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.9 2009-12-26 01:02:12 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.10 2009-12-26 21:00:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -136,6 +136,14 @@ Kevin Dickerson fixed a problem with displaying exciting sensor groups.
 
 <p>
 A number of internal methods that were deprecated in JMRI 2.5.1 have now been removed.
+
+<p>
+The 
+<a href="http://jmri.sourceforge.net/help/en/html/web/index.shtml#Start">JMRI web server</a> 
+now advertises itself via 
+<a href="http://jmri.org/help/en/html/doc/Technical/Networking.shtml">Bonjour/Zeroconf</a>, 
+so you can easily find it in a suitable web browser
+without having to know the IP address or name.
 
 <!--#include virtual="/Footer" -->
 

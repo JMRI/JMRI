@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: index.shtml,v 1.5 2008-10-03 02:45:15 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.6 2009-12-26 21:00:59 jacobsen Exp $ -->
 <title>JMRI: Web Access</title>
 
 <!-- Style -->
@@ -63,7 +63,18 @@ it started, and to show you the URL that it's using.
 
 <p>
 Next, check the connection. 
-Enter the starting URL from the window
+
+<p>
+If you're using a Bonjour/Zeroconf-enabled web browser like
+Safari or 
+<a href="http://www.bonjourfoxy.net/">Firefox</a>, 
+you should see a "JMRI on (your computer name)"
+web site in the "Bonjour" tab.  You can just click on that
+to get to the welcome page of the JMRI web server.
+
+<p>
+Otherwise, enter the starting URL from the "Web server started ..."
+message, which will be something like "http://10.0.1.7:12080/index.html"
 (or if you're browsing on the same computer right now, 
 <a href="http://localhost:12080/index.html">click here</a>).
 You should see a welcome screen.

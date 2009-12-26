@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LbServer.shtml,v 1.1 2008-01-13 04:24:44 jacobsen Exp $ -->
+<!-- $Id: LbServer.shtml,v 1.2 2009-12-26 21:00:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -33,7 +33,7 @@
 
 This page describes how to configure multiple JMRI nodes to connect as 
 clients to a single 
-<a href="http://loconetovertcp.sourceforge.net/Interface/index.html" >LocoNetOverTCP LbServer</a>, 
+<a href="http://loconetovertcp.sourceforge.net" >LocoNetOverTCP LbServer</a>, 
 which in turn is connected to the layout.
 <P>
  

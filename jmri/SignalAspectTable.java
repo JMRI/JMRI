@@ -3,7 +3,8 @@
 package jmri;
 
 /**
- * Represents the properties of various signal aspects.
+ * A SignalAspectTable defines a signaling system by
+ * representing the properties of various signal aspects it contains.
  *<p>
  * At present, the signal aspects are denumerated by Strings,
  * not by specific objects; this table exists to attach properties
@@ -31,15 +32,27 @@ package jmri;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2009
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public interface SignalAspectTable extends NamedBean {
 
     public void setProperty(String aspect, String key, Object value);
     public Object getProperty(String aspect, String key);
   
+    /** 
+     * Get all aspects currently defined.
+     */
     public java.util.Enumeration<String> getAspects();
 
+    /**
+     * Get all keys currently defined on any aspect.
+     * <p>
+     * Each key only appears once, even if used on more than one
+     * aspect.
+     * <p>
+     * Note that a given key may or may not appear on a given
+     * aspect.
+     */
     public java.util.Enumeration<String> getKeys();
 
     /**

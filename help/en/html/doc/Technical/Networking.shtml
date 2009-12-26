@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Networking.shtml,v 1.1 2009-12-26 01:01:22 jacobsen Exp $ -->
+<!-- $Id: Networking.shtml,v 1.2 2009-12-26 21:00:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -57,7 +57,12 @@ In the rest of this page, we provide links to the various examples of those two 
 <li>LocoNet systems
     <ul>
     <li><a href="../../hardware/loconet/LocoNetServer.shtml">LocoNet RMI client server connection<a/>
+        <p>
+        This uses Java RMI to provide client-server access to the LocoNet message stream.
     <li><a href="../../hardware/loconet/LbServer.shtml">LocoNetOverTcp to LbServer<a/>
+        <p>
+        This uses Java RMI to provides access to the LocoNet message stream via the 
+        <a href="http://loconetovertcp.sourceforge.net/">LbServer protocol</a>.
     </ul>
 <li>EasyDCC
     <ul>
@@ -73,7 +78,7 @@ In the rest of this page, we provide links to the various examples of those two 
     </ul>
 <li>ECOS
     <ul>
-    <li><a href="../../hardware/ecos/index.shtml">ia network connection to ECOS command station<a/>
+    <li><a href="../../hardware/ecos/index.shtml">Via network connection to ECOS command station<a/>
     </ul>
 </ul>
 
@@ -82,13 +87,35 @@ In the rest of this page, we provide links to the various examples of those two 
 <ul>
 <li>Built-in <a href="../../web/index.shtml">mini web server</a>
     (<a href="http://jmri.org/JavaDoc/doc/jmri/web/miniserver/package-summary.html">code</a>)
+    <p>
+    This is advertised on Bonjour/Zeroconf as a "_http._tcp.local." service.
 <li>Via Python/jython scripting
 <li>For <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">remote throttles</a>
     (<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">code</a>) 
     (<a href="http://withrottle.com">WiThrottle product web site</a>)
+    <p>
+    This is advertised on Bonjour/Zeroconf as a "_withrottle._tcp.local." service.
 <li>Via running JMRI as an 
     <a href="http://www.modelrailroadmanager.com/MRRM_Advanced_Edition/Software_Architecture.html">Enterprise Java Bean</a>
+<li>Via providing a <a href="../../hardware/loconet/LocoNetServer.shtml">LocoNet RMI server<a/>.
+    <p>
+    This is advertised on Bonjour/Zeroconf as a "_jmri-locormi._tcp.local." service.
+<li>Via providing a <a href="http://loconetovertcp.sourceforge.net/">LbServer</a> implementation.
+    <p>
+    This is advertised on Bonjour/Zeroconf as a "_loconetserver._tcp.local." service. (Name
+    pending approval from the original protocol developers)
 </ul>
+
+See also the 
+<a href="http://jmri.org/JavaDoc/doc/jmri.util.zeroconf">jmri.util.zeroconf</a> package of Zeroconf/Binjour utilities for use in JMRI.
+
+<p>
+See also the 
+<a href="http://www.dns-sd.org">DNS-SD</a> page for more information on Zeroconf/Bonjour/"DNS Service Discovery" networking. 
+
+<p>
+See also "man dns-sd" for more information on the dns-sd debugging command-line tool.
+
 
 <!--#include virtual="/Footer" -->
 

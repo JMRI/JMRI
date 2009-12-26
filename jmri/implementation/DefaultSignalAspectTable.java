@@ -4,6 +4,7 @@ package jmri.implementation;
 
 import java.util.ResourceBundle;
 import java.util.Hashtable;
+import java.util.Enumeration;
 
 import jmri.SignalAspectTable;
 
@@ -15,7 +16,7 @@ import jmri.SignalAspectTable;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class DefaultSignalAspectTable extends AbstractNamedBean implements SignalAspectTable  {
 
@@ -45,11 +46,11 @@ public class DefaultSignalAspectTable extends AbstractNamedBean implements Signa
         return t;
     }
     
-    public java.util.Enumeration<String> getAspects() {
+    public Enumeration<String> getAspects() {
         return aspects.keys();
     }
 
-    public java.util.Enumeration<String> getKeys() {
+    public Enumeration<String> getKeys() {
         return keys.elements();
     }
 
@@ -95,6 +96,21 @@ public class DefaultSignalAspectTable extends AbstractNamedBean implements Signa
 
     protected java.util.Vector<String> keys = new java.util.Vector<String>();
     
+    public String toString() {
+        String retval = "SignalAspectTable "+getSystemName()+"\n";
+        Enumeration<String> e1 = getAspects();
+        while (e1.hasMoreElements()) {
+            String s1 = e1.nextElement();
+            retval += "  "+s1+"\n";
+            Enumeration<String> e2 = getKeys();
+            while (e2.hasMoreElements()) {
+                String s2 = e2.nextElement();
+                retval += "    "+s2+": "+getProperty(s1, s2)+"\n";
+            }
+        }
+        return retval;
+    }
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalAspectTable.class.getName());
 }
 

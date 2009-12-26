@@ -16,7 +16,8 @@ package jmri;
  * <p>
  * Aspects are named by a user defined String name.
  *</dl>
- * 
+ * The integer state (getState(), setState()) is the index of the
+ * current aspect in the list of all defined aspects.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -33,10 +34,12 @@ package jmri;
  *
  * @author			Bob Jacobsen Copyright (C) 2002, 2008
  * @author			Pete Cressman Copyright (C) 2009
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public interface SignalMast extends NamedBean {
 
+    public void setAspect(String aspect);
+    public String getAspect();
     
 }
 
