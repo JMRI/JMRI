@@ -10,7 +10,7 @@ package jmri.jmrit.withrottle;
  *	Create a window for WiThrottle information, advertise service, and create a thread for it to run in.
  *
  *	@author Brett Hoffman   Copyright (C) 2009
- *	@version $Revision: 1.7 $
+ *	@version $Revision: 1.8 $
  */
 
 import java.awt.event.*;
@@ -29,7 +29,7 @@ import javax.jmdns.*;
 
 import jmri.DccLocoAddress;
 import jmri.util.JmriJFrame;
-//import jmri.util.WindowMenu;
+import jmri.util.zeroconf.ZeroConfUtil;
 
 
 public class UserInterface extends JmriJFrame implements ActionListener, DeviceListener{
@@ -178,46 +178,25 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
     public void listen(){
         try{	//Create socket on available port
             socket = new ServerSocket(0);
-        } catch(IOException e){
+        } catch(IOException e1){
             log.error("New ServerSocket Failed during listen()");
             return;
         }
 
         port = socket.getLocalPort();
-        try{	//Start advertising Network Info
-            String serverName;
-            String sentName;
-            try{
-                serverName = java.net.InetAddress.getLocalHost().getHostName();
-            }catch (IOException e) {
-                serverName = "WiThrottle";
-            }
 
-//	Name string of ServiceInfo cannot have a '.' in it.
-            int dotIndex = serverName.indexOf('.');
-            if (dotIndex == -1) {	//	Has no dot
-                sentName = serverName;
-            }else if (dotIndex > 0) {	//	Has a dot, name will be up to dot
-                sentName = serverName.substring(0, dotIndex);
-            }else {	//	Give up, assign generic name
-                log.warn("Setting default name for service discovery");
-                sentName = "WiThrottle";
-            }
-
-
-            serviceInfo = ServiceInfo.create("_withrottle._tcp.local.",
-                                            sentName,
-                                            port,
-                                            "path=index.html");
-
-            jmdns.registerService(serviceInfo);
+        try {serviceInfo = ZeroConfUtil.advertiseService(
+                    ZeroConfUtil.getServerName("WiThrottle"),
+                    "_withrottle._tcp.local.",
+                    port,
+                    jmdns);
+            
             portLabel.setText(serviceInfo.getName());
-        } catch (IOException e){
+        } catch (java.io.IOException e2) {
             log.error("JmDNS Failure");
-            return;
+            portLabel.setText("failed to advertise service");
         }
-
-
+        
         while (isListen){ //Create DeviceServer threads
             DeviceServer device;
             try{
@@ -226,7 +205,7 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
                 Thread t = new Thread(device);
                 device.addDeviceListener(this);
                 t.start();
-            } catch (IOException e){
+            } catch (IOException e3){
                 if (isListen)log.error("Listen Failed on port " + port);
                 return;
             }
