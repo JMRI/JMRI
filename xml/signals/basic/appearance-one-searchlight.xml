@@ -5,29 +5,26 @@
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
-  <aspecttable>AAR-2</aspecttable>
+  <aspecttable>basic</aspecttable>
   <name>One Seachlight</name>
-  <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
-  <description>Appearances for one-searchlight signal head without other badging</description>
+  <reference></reference>
+  <description></description>
   
   <appearances>
 
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
-      <reference>Page 42</reference>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
-      <reference>Page 47</reference>
     </appearance>
 
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
-      <reference>Page 50</reference>
     </appearance>
 
   </appearances>

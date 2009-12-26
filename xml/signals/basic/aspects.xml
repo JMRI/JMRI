@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="http://jmri.org/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+  <name>basic</name>
+  <reference>Basic signals known by many modelers</reference>
+  <aspects>
+    <aspect>
+      <name>Clear</name>
+      <indication>Proceed</indication>
+    </aspect>
+
+    <aspect>
+      <name>Approach</name>
+      <indication>Proceed preparing to stop at next signal.</indication>
+    </aspect>
+
+    <aspect>
+      <name>Stop</name>
+      <indication>Stop.</indication>
+    </aspect>
+
+
+    <aspect>
+      <name>Restricting</name>
+      <indication>Proceed at restricted speed, e.g. entering a siding.</indication>
+    </aspect>
+
+
+    <aspect>
+      <name>Medium clear</name>
+      <indication>Proceed; medium speed within interlocking limits; e.g. entering a diverging route</indication>
+    </aspect>
+
+    <aspect>
+      <name>Advance Approach Medium</name>
+      <indication>Proceed approaching second signal at medium speed</indication>
+    </aspect>
+
+    <aspect>
+      <name>Approach medium</name>
+      <indication>Proceed approaching next signal at medium speed</indication>
+    </aspect>
+    <aspect>
+      <name>Advance approach</name>
+      <indication>Proceed preparing to stop at second signal</indication>
+    </aspect>
+
+
+
+  </aspects>
+</aspecttable>
+  
