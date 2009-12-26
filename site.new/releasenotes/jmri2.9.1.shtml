@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.8 2009-12-23 06:42:10 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.9 2009-12-26 01:02:12 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -133,6 +133,9 @@ Also improved some of the save code.
 
 <p>
 Kevin Dickerson fixed a problem with displaying exciting sensor groups.
+
+<p>
+A number of internal methods that were deprecated in JMRI 2.5.1 have now been removed.
 
 <!--#include virtual="/Footer" -->
 
