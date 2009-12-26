@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Start.shtml,v 1.2 2008-02-27 20:11:40 dan_boudreau Exp $ -->
+<!-- $Id: Start.shtml,v 1.3 2009-12-26 21:07:50 jacobsen Exp $ -->
 <title>JMRI: Getting Started with Scripting</title>
 
 <!-- Style -->
@@ -125,20 +125,25 @@ the CommandStation object,
 several shortcut variables are defined:
 <UL>
 <LI>sensors
-<LI>signals
 <LI>turnouts
+<LI>lights
+<LI>signals (SignalHeads)
+<li>masts (SignalMasts)
+<LI>routes
+<li>blocks
 <LI>reporters
 <LI>memories
 <LI>powermanager
 <LI>programmers
-<LI>routes
 <LI>dcc   (current command station)
+<li>shutdown (current shutdown manager)
+<li>audio
 </UL>
 These can then be referenced directly in Jython as
 <PRE>
    t2 = turnouts.provideTurnout("12");
    
-   dcc.
+   dcc.sendPacket(new byte[]{0x12, 0x32, 0x4E}, 5)
 </PRE>
 Note that the variable t2 did not need to be declared.
 <P>
