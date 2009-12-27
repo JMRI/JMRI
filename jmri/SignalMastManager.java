@@ -25,7 +25,7 @@ import java.util.List;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public interface SignalMastManager extends Manager {
 
@@ -40,6 +40,14 @@ public interface SignalMastManager extends Manager {
      * @return null if no match found
      */
     public SignalMast getSignalMast(String name);
+
+    /**
+     * Locate via user name, then system name if needed.
+     * Create new one from system name if needed
+     *
+     * @param name
+     */
+    public SignalMast provideSignalMast(String name);
 
     public SignalMast getByUserName(String s);
     public SignalMast getBySystemName(String s);

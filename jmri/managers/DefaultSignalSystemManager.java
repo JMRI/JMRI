@@ -5,7 +5,7 @@ package jmri.managers;
 import jmri.*;
 import jmri.jmrit.XmlFile;
 import jmri.implementation.AbstractManager;
-import jmri.implementation.DefaultSignalAspectTable;
+import jmri.implementation.DefaultSignalSystem;
 
 import java.io.*;
 
@@ -22,22 +22,48 @@ import org.jdom.Element;
  *
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class DefaultSignalSystemManager extends AbstractManager
     implements SignalSystemManager, java.beans.PropertyChangeListener {
 
     public DefaultSignalSystemManager() {
         super();
+        
+        // load when created, which will generally
+        // be the first time referenced
+        load();
     }
 
+    /**
+     * Don't want to store this information
+     */
+    @Override
+    protected void registerSelf() {}
+    
     public char systemLetter() { return 'I'; }
     public char typeLetter() { return 'F'; }
     
+    public SignalSystem getSystem(String name) {
+        SignalSystem t = getByUserName(name);
+        if (t!=null) return t;
+
+        return getBySystemName(name);
+    }
+
+    public SignalSystem getBySystemName(String key) {
+		String name = key.toUpperCase();
+        return (SignalSystem)_tsys.get(name);
+    }
+
+    public SignalSystem getByUserName(String key) {
+        return (SignalSystem)_tuser.get(key);
+    }
+
     void load() {
         List<String> list = getListOfNames();
         for (int i = 0; i < list.size(); i++) {
-            SignalAspectTable s = makeBean(list.get(i));
+            SignalSystem s = makeBean(list.get(i));
             register(s);
         }
     }
@@ -61,7 +87,7 @@ public class DefaultSignalSystemManager extends AbstractManager
         return retval;
     }
 
-    SignalAspectTable makeBean(String name) {
+    SignalSystem makeBean(String name) {
         String filename = "xml"+File.separator+"signals"
                             +File.separator+name
                             +File.separator+"aspects.xml";
@@ -69,7 +95,7 @@ public class DefaultSignalSystemManager extends AbstractManager
         XmlFile xf = new AspectFile();
         try {
             Element root = xf.rootFromName(filename);
-            DefaultSignalAspectTable s = new DefaultSignalAspectTable(name);
+            DefaultSignalSystem s = new DefaultSignalSystem(name);
             loadBean(s, root);
             return s;
         } catch (Exception e) {
@@ -78,7 +104,7 @@ public class DefaultSignalSystemManager extends AbstractManager
         return null;
     }
 
-    void loadBean(DefaultSignalAspectTable s, Element root) {
+    void loadBean(DefaultSignalSystem s, Element root) {
         List l = root.getChild("aspects").getChildren("aspect");
         // find all aspects, include them by name, 
         // add all other sub-elements as key/value pairs

@@ -1,9 +1,9 @@
-// SignalAspectTable.java
+// SignalSystem.java
 
 package jmri;
 
 /**
- * A SignalAspectTable defines a signaling system by
+ * A SignalSystem defines a signaling system by
  * representing the properties of various signal aspects it contains.
  *<p>
  * At present, the signal aspects are denumerated by Strings,
@@ -32,9 +32,9 @@ package jmri;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2009
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.1 $
  */
-public interface SignalAspectTable extends NamedBean {
+public interface SignalSystem extends NamedBean {
 
     public void setProperty(String aspect, String key, Object value);
     public Object getProperty(String aspect, String key);
@@ -59,8 +59,8 @@ public interface SignalAspectTable extends NamedBean {
      * Is this aspect known?
      */
     public boolean checkAspect(String aspect);
-    
+        
 }
 
 
-/* @(#)SignalAspectTable.java */
+/* @(#)SignalSystem.java */

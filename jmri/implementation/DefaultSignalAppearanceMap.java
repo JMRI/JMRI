@@ -3,10 +3,17 @@
 package jmri.implementation;
 
 import java.util.ResourceBundle;
+import java.util.List;
 
-import jmri.SignalAppearanceMap;
+import java.io.File;
+
+import org.jdom.Element;
+import org.jdom.JDOMException;
+
+import jmri.util.NamedBeanHandle;
+
 import jmri.SignalHead;
-import jmri.SignalAspectTable;
+import jmri.SignalSystem;
 
  /**
  * Default implementation of a basic signal head table.
@@ -16,9 +23,9 @@ import jmri.SignalAspectTable;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
-public class DefaultSignalAppearanceMap extends AbstractNamedBean implements SignalAppearanceMap  {
+public class DefaultSignalAppearanceMap extends AbstractNamedBean  {
 
     public DefaultSignalAppearanceMap(String systemName, String userName) {
         super(systemName, userName);
@@ -27,6 +34,65 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements Sig
     public DefaultSignalAppearanceMap(String systemName) {
         super(systemName);
     }
+
+    static public DefaultSignalAppearanceMap getMap(String signalSystemName, String aspectMapName) {
+        DefaultSignalAppearanceMap map = maps.get("map:"+signalSystemName+":"+aspectMapName);
+        if (map == null) {
+            map = loadMap(signalSystemName, aspectMapName);
+        }
+        return map;
+    }
+    
+    static DefaultSignalAppearanceMap loadMap(String signalSystemName, String aspectMapName) {
+        DefaultSignalAppearanceMap map = 
+            new DefaultSignalAppearanceMap("map:"+signalSystemName+":"+aspectMapName);
+        maps.put("map:"+signalSystemName+":"+aspectMapName, map);
+
+        File file = new File("xml"+File.separator
+                                +"signals"+File.separator
+                                +signalSystemName+File.separator
+                                +"appearance-"+aspectMapName+".xml");
+        if (!file.exists()) {
+            log.error("appearance file doesn't exist: "+file.getPath());
+            throw new IllegalArgumentException("appearance file doesn't exist: "+file.getPath());
+        }
+        jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
+        Element root;
+        try {
+            root = xf.rootFromFile(file);
+            // get appearances
+            List l = root.getChild("appearances").getChildren("appearance");
+            // find all appearances, include them by aspect name, 
+            // add 'show' sub-elements as ints
+            for (int i = 0; i < l.size(); i++) {
+                String name = ((Element)l.get(i)).getChild("aspectname").getText();
+                if (log.isDebugEnabled()) log.debug("aspect name "+name);
+                List c = ((Element)l.get(i)).getChildren("show");
+                int[] appearances = new int[c.size()];
+                for (int j = 0; j < c.size(); j++) {
+                    // note: includes setting name; redundant, but needed
+                    int ival;
+                    String sval = ((Element)c.get(j)).getText().toUpperCase();
+                    if (sval.equals("GREEN")) ival = SignalHead.GREEN;
+                    else if (sval.equals("GREEN")) ival = SignalHead.GREEN;
+                    else if (sval.equals("YELLOW")) ival = SignalHead.YELLOW;
+                    else if (sval.equals("RED")) ival = SignalHead.RED;
+                    else if (sval.equals("DARK")) ival = SignalHead.DARK;
+                    else throw new JDOMException("invalid content: "+sval);
+                    
+                    appearances[j] = ival;
+                    map.addAspect(name, appearances);
+                }
+            }
+        } catch (Exception e) {
+            log.error("error reading file: "+e);
+            return null;
+        }
+        return map;
+    }
+
+    static protected java.util.Hashtable<String, DefaultSignalAppearanceMap> maps
+            = new jmri.util.OrderedHashtable<String, DefaultSignalAppearanceMap>();
 
     public void loadDefaults() {
         
@@ -47,15 +113,20 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements Sig
         addAspect(ra, new int[]{SignalHead.GREEN});
     }
     
-    public void setAppearances(String aspect, SignalHead[] heads) {
-        if (aspectTable != null && aspectTable.checkAspect(aspect))
+    public void setAppearances(String aspect, List<NamedBeanHandle<SignalHead>> heads) {
+        if (systemDefn != null && systemDefn.checkAspect(aspect))
             log.warn("Attempt to set "+getSystemName()+" to undefined aspect: "+aspect);
-        for (int i = 0; i < heads.length; i++)
-            heads[i].setAppearance(table.get(aspect)[i]);
-        if (log.isDebugEnabled()) log.debug("Set 1st head to "+table.get(aspect)[0]);
+        for (int i = 0; i < heads.size(); i++) {
+            heads.get(i).getBean().setAppearance(table.get(aspect)[i]);
+            if (log.isDebugEnabled()) log.debug("Setting "+heads.get(i).getBean().getSystemName()+" to "+table.get(aspect)[i]);
+        }
         return;
     }
     
+    public boolean checkAspect(String aspect) {
+        return table.get(aspect) != null;
+    }
+
     public void addAspect(String aspect, int[] appearances) {
         if (log.isDebugEnabled()) log.debug("add aspect \""+aspect+"\" for "+appearances.length+" heads "
                                         +appearances[0]);
@@ -67,9 +138,9 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements Sig
     }
     
     
-    public SignalAspectTable getAspectTable() { return aspectTable; }
-    public void setAspectTable(SignalAspectTable t) { aspectTable = t; }
-    protected SignalAspectTable aspectTable;
+    public SignalSystem getSignalSystem() { return systemDefn; }
+    public void setSignalSystem(SignalSystem t) { systemDefn = t; }
+    protected SignalSystem systemDefn;
     
     public int getState() {
         throw new NoSuchMethodError();

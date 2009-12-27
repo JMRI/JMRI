@@ -34,11 +34,22 @@ package jmri;
  *
  * @author			Bob Jacobsen Copyright (C) 2002, 2008
  * @author			Pete Cressman Copyright (C) 2009
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public interface SignalMast extends NamedBean {
 
+    /**
+     * Set aspect to a valid name in the current 
+     * signal system definition.
+     * @throw IllegalArgumentException if not a valid aspect name
+     */
     public void setAspect(String aspect);
+    
+    /**
+     * Get current aspect name.
+     *
+     * @return null if not yet set
+     */
     public String getAspect();
     
 }

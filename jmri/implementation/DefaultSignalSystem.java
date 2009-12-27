@@ -1,4 +1,4 @@
-// DefaultSignalAspectTable.java
+// DefaultSignalSystem.java
 
 package jmri.implementation;
 
@@ -6,25 +6,25 @@ import java.util.ResourceBundle;
 import java.util.Hashtable;
 import java.util.Enumeration;
 
-import jmri.SignalAspectTable;
+import jmri.SignalSystem;
 
  /**
- * Default implementation of a basic signal aspect table.
+ * Default implementation of a basic signal system definition.
  * <p>
  * The default contents are taken from the NamedBeanBundle properties file.
  * This makes creation a little more heavy-weight, but speeds operation.
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.1 $
  */
-public class DefaultSignalAspectTable extends AbstractNamedBean implements SignalAspectTable  {
+public class DefaultSignalSystem extends AbstractNamedBean implements SignalSystem  {
 
-    public DefaultSignalAspectTable(String systemName, String userName) {
+    public DefaultSignalSystem(String systemName, String userName) {
         super(systemName, userName);
     }
 
-    public DefaultSignalAspectTable(String systemName) {
+    public DefaultSignalSystem(String systemName) {
         super(systemName);
     }
 
@@ -90,14 +90,14 @@ public class DefaultSignalAspectTable extends AbstractNamedBean implements Signa
     public void setState(int s) {
         throw new NoSuchMethodError();
     }
-
+    
     protected java.util.Hashtable<String, Hashtable<String, Object>> aspects
             = new jmri.util.OrderedHashtable<String, Hashtable<String, Object>>();
 
     protected java.util.Vector<String> keys = new java.util.Vector<String>();
     
     public String toString() {
-        String retval = "SignalAspectTable "+getSystemName()+"\n";
+        String retval = "SignalSystem "+getSystemName()+"\n";
         Enumeration<String> e1 = getAspects();
         while (e1.hasMoreElements()) {
             String s1 = e1.nextElement();
@@ -111,7 +111,7 @@ public class DefaultSignalAspectTable extends AbstractNamedBean implements Signa
         return retval;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalAspectTable.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalSystem.class.getName());
 }
 
-/* @(#)DefaultSignalAspectTable.java */
+/* @(#)DefaultSignalSystem.java */

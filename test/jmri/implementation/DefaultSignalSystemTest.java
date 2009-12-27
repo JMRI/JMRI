@@ -1,4 +1,4 @@
-// DefaultSignalAspectTableTest.java
+// DefaultSignalSystemTest.java
 
 package jmri.implementation;
 
@@ -10,18 +10,18 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the SignalAspectTableTest interface
+ * Tests for the DefaultSignalSystem interface implementation
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.1 $
  */
-public class DefaultSignalAspectTableTest extends TestCase {
+public class DefaultSignalSystemTest extends TestCase {
 
 	public void testCtor() {
-	    new DefaultSignalAspectTable("sys", "user");
+	    new DefaultSignalSystem("sys", "user");
 	}
 
     public void testOneAspectOneProperty() {
-	    SignalAspectTable t = new DefaultSignalAspectTable("sys", "user");
+	    SignalSystem t = new DefaultSignalSystem("sys", "user");
 	    
 	    t.setProperty("Stop", "Speed", new Integer(0));
 	    
@@ -29,7 +29,7 @@ public class DefaultSignalAspectTableTest extends TestCase {
     }
     
     public void testTwoAspectOneProperty() {
-	    SignalAspectTable t = new DefaultSignalAspectTable("sys", "user");
+	    SignalSystem t = new DefaultSignalSystem("sys", "user");
 	    
 	    t.setProperty("Stop", "Speed", new Integer(0));
 	    t.setProperty("Clear", "Speed", new Integer(10));
@@ -39,7 +39,7 @@ public class DefaultSignalAspectTableTest extends TestCase {
     }
     
     public void testTwoAspectTwoProperties() {
-	    SignalAspectTable t = new DefaultSignalAspectTable("sys", "user");
+	    SignalSystem t = new DefaultSignalSystem("sys", "user");
 	    
 	    t.setProperty("Stop", "Speed", new Integer(0));
 	    t.setProperty("Clear", "Speed", new Integer(10));
@@ -53,7 +53,7 @@ public class DefaultSignalAspectTableTest extends TestCase {
     }
     
     public void testGetAspects() {
-	    SignalAspectTable t = new DefaultSignalAspectTable("sys", "user");
+	    SignalSystem t = new DefaultSignalSystem("sys", "user");
 	    
 	    t.setProperty("Stop", "Speed", new Integer(0));
 	    t.setProperty("Approach", "Speed", new Integer(5));
@@ -70,7 +70,7 @@ public class DefaultSignalAspectTableTest extends TestCase {
     }
     
     public void testGetNullProperties() {
-	    SignalAspectTable t = new DefaultSignalAspectTable("sys", "user");
+	    SignalSystem t = new DefaultSignalSystem("sys", "user");
 	    
 	    t.setProperty("Stop", "Speed", new Integer(0));
 	    t.setProperty("Approach", "Speed", new Integer(5));
@@ -81,7 +81,7 @@ public class DefaultSignalAspectTableTest extends TestCase {
     }
     
     public void testCheckAspect() {
-	    SignalAspectTable t = new DefaultSignalAspectTable("sys", "user");
+	    SignalSystem t = new DefaultSignalSystem("sys", "user");
 	    
 	    t.setProperty("Stop", "Speed", new Integer(0));
 	    t.setProperty("Approach", "Speed", new Integer(5));
@@ -92,7 +92,7 @@ public class DefaultSignalAspectTableTest extends TestCase {
     }
     
     public void testGetKeys() {
-	    SignalAspectTable t = new DefaultSignalAspectTable("sys", "user");
+	    SignalSystem t = new DefaultSignalSystem("sys", "user");
 	    
 	    t.setProperty("Stop", "A", new Integer(0));
 	    t.setProperty("Approach", "C", new Integer(5));
@@ -109,7 +109,7 @@ public class DefaultSignalAspectTableTest extends TestCase {
     }
 
     public void testGetKeysOverlap() {
-	    SignalAspectTable t = new DefaultSignalAspectTable("sys", "user");
+	    SignalSystem t = new DefaultSignalSystem("sys", "user");
 	    
 	    t.setProperty("Stop", "A", new Integer(0));
 	    t.setProperty("Approach", "C", new Integer(5));
@@ -128,7 +128,7 @@ public class DefaultSignalAspectTableTest extends TestCase {
     }
 
     public void testDefaults() {
-        DefaultSignalAspectTable t = new DefaultSignalAspectTable("sys", "user");
+        DefaultSignalSystem t = new DefaultSignalSystem("sys", "user");
         
         t.loadDefaults();
 
@@ -154,19 +154,19 @@ public class DefaultSignalAspectTableTest extends TestCase {
     
 	// from here down is testing infrastructure
 
-	public DefaultSignalAspectTableTest(String s) {
+	public DefaultSignalSystemTest(String s) {
 		super(s);
 	}
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {DefaultSignalAspectTableTest.class.getName()};
+		String[] testCaseName = {DefaultSignalSystemTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite(DefaultSignalAspectTableTest.class);
+		TestSuite suite = new TestSuite(DefaultSignalSystemTest.class);
 		return suite;
 	}
 
@@ -175,5 +175,5 @@ public class DefaultSignalAspectTableTest extends TestCase {
         apps.tests.Log4JFixture.setUp(); 
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalAspectTableTest.class.getName());
+    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalSystemTest.class.getName());
 }
