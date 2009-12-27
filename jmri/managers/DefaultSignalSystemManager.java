@@ -22,7 +22,7 @@ import org.jdom.Element;
  *
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class DefaultSignalSystemManager extends AbstractManager
     implements SignalSystemManager, java.beans.PropertyChangeListener {
@@ -52,8 +52,7 @@ public class DefaultSignalSystemManager extends AbstractManager
     }
 
     public SignalSystem getBySystemName(String key) {
-		String name = key.toUpperCase();
-        return (SignalSystem)_tsys.get(name);
+        return (SignalSystem)_tsys.get(key);
     }
 
     public SignalSystem getByUserName(String key) {
