@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalAddEdit.shtml,v 1.17 2009-11-27 23:18:32 jacobsen Exp $ -->
+<!-- $Id: SignalAddEdit.shtml,v 1.18 2009-12-27 17:33:38 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -7,7 +7,7 @@
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Signal Add Edit">
+    <META name="keywords" content="JMRI help Signal Heads Add Edit">
 
 <!-- Style -->
   <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
