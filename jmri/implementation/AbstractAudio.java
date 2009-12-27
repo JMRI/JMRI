@@ -8,8 +8,9 @@ import jmri.Audio;
  * Base implementation of the Audio class.
  * <P>
  * Specific implementations will extend this base class.
- * <P>
  *
+ * <p>
+ * Audio bean system names are always upper case.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -25,7 +26,7 @@ import jmri.Audio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
 
@@ -39,7 +40,7 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
      * @param systemName Audio object system name (e.g. IAS1, IAB4)
      */
     public AbstractAudio(String systemName) {
-        super(systemName);
+        super(systemName.toUpperCase());
     }
 
     /**
@@ -49,7 +50,7 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
      * @param userName Audio object user name
      */
     public AbstractAudio(String systemName, String userName) {
-        super(systemName, userName);
+        super(systemName.toUpperCase(), userName);
     }
     
     public int getState() {

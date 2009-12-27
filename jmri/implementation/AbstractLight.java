@@ -38,17 +38,17 @@ import jmri.*;
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
 
     public AbstractLight(String systemName, String userName) {
-        super(systemName, userName);
+        super(systemName.toUpperCase(), userName);
     }
 
     public AbstractLight(String systemName) {
-        super(systemName);
+        super(systemName.toUpperCase());
     }
     
     /**

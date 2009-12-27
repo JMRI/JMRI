@@ -14,16 +14,16 @@ import jmri.*;
  *
  * Description:		Abstract class providing the basic logic of the Reporter interface
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public abstract class AbstractReporter extends AbstractNamedBean implements Reporter, java.io.Serializable {
 
     public AbstractReporter(String systemName) {
-        super(systemName);
+        super(systemName.toUpperCase());
     }
 
     public AbstractReporter(String systemName, String userName) {
-        super(systemName, userName);
+        super(systemName.toUpperCase(), userName);
     }
 
     public Object getCurrentReport() {return _lastReport;}

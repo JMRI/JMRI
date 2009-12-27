@@ -6,19 +6,21 @@ import java.util.ResourceBundle;
 import jmri.*;
  /**
  * Abstract class providing the basic logic of the SignalHead interface.
+ * <p>
+ * SignalHead system names are always upper case.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public abstract class AbstractSignalHead extends AbstractNamedBean
     implements SignalHead, java.io.Serializable {
 
     public AbstractSignalHead(String systemName, String userName) {
-        super(systemName, userName);
+        super(systemName.toUpperCase(), userName);
     }
 
     public AbstractSignalHead(String systemName) {
-        super(systemName);
+        super(systemName.toUpperCase());
     }
 
 	static final ResourceBundle rbx = ResourceBundle

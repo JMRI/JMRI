@@ -10,7 +10,7 @@ package jmri.implementation;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -21,11 +21,11 @@ public class DefaultRoute extends AbstractNamedBean
     implements Route, java.io.Serializable {
 
     public DefaultRoute(String systemName, String userName) {
-        super(systemName, userName);
+        super(systemName.toUpperCase(), userName);
     }
 
     public DefaultRoute(String systemName) {
-        super(systemName);
+        super(systemName.toUpperCase());
     }
 
     /**

@@ -11,18 +11,20 @@ import jmri.*;
  * <P>
  * Note that we consider it an error for there to be more than one object
  * that corresponds to a particular physical Reporter on the layout.
+ * <p>
+ * Memory system names are always upper case.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public abstract class AbstractMemory extends AbstractNamedBean implements Memory, java.io.Serializable {
 
     public AbstractMemory(String systemName) {
-        super(systemName);
+        super(systemName.toUpperCase());
     }
 
     public AbstractMemory(String systemName, String userName) {
-        super(systemName, userName);
+        super(systemName.toUpperCase(), userName);
     }
 
     public Object getValue() {return _current;}

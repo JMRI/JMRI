@@ -22,22 +22,22 @@ import jmri.*;
  * <P>
  * Note that we consider it an error for there to be more than one object that
  * corresponds to a particular physical turnout on the layout.
+ * <p>
+ * Turnout system names are always upper case.
+ * <P>
  * 
- * Description: Abstract class providing the basic logic of the Turnout
- * interface
- * 
- * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.4 $
+ * @author Bob Jacobsen Copyright (C) 2001, 2009
+ * @version $Revision: 1.5 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
 
 	protected AbstractTurnout(String systemName) {
-		super(systemName);
+		super(systemName.toUpperCase());
 	}
 
 	protected AbstractTurnout(String systemName, String userName) {
-		super(systemName, userName);
+		super(systemName.toUpperCase(), userName);
 	}
 
 	/**

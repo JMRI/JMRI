@@ -32,7 +32,8 @@ import jmri.implementation.AbstractNamedBean;
  * <P>
  * A Section may be in a Transit more than once, for example if a train is 
  *  to make two or more loops around before going elsewhere.
- *
+ * <p>
+ * Transit system names are always upper case.
  * <P>
  * This file is part of JMRI.
  * <P>
@@ -49,17 +50,17 @@ import jmri.implementation.AbstractNamedBean;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class Transit extends AbstractNamedBean
 					implements java.io.Serializable {
 
     public Transit(String systemName, String userName) {
-        super(systemName, userName);
+        super(systemName.toUpperCase(), userName);
     }
 
     public Transit(String systemName) {
-        super(systemName);
+        super(systemName.toUpperCase());
     }
 
 	/**

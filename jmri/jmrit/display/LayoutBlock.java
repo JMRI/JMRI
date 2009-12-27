@@ -57,7 +57,7 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -98,7 +98,7 @@ public class LayoutBlock extends AbstractNamedBean
 	 *		 Blocks are loaded first.
 	 */
 	public LayoutBlock(String sName, String uName) {
-		super (sName,uName);
+		super (sName.toUpperCase(),uName);
 		_instance = this;
 		blockName = uName;
 		lbSystemName = sName;

@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -42,11 +42,11 @@ public class DefaultConditional extends AbstractNamedBean
 			.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     public DefaultConditional(String systemName, String userName) {
-        super(systemName, userName);
+        super(systemName.toUpperCase(), userName);
     }
 
     public DefaultConditional(String systemName) {
-        super(systemName);
+        super(systemName.toUpperCase());
     }
 
     // boolean expression of state variables

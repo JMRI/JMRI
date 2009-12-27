@@ -6,18 +6,21 @@ import jmri.Sensor;
 
 /**
  * Abstract class providing the basic logic of the Sensor interface
- * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.2 $
+ * <p>
+ * Sensor system names are always upper case.
+ *
+ * @author			Bob Jacobsen Copyright (C) 2001, 2009
+ * @version         $Revision: 1.3 $
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
 
     // ctor takes a system-name string for initialization
     public AbstractSensor(String systemName) {
-        super(systemName);
+        super(systemName.toUpperCase());
     }
 
     public AbstractSensor(String systemName, String userName) {
-        super(systemName, userName);
+        super(systemName.toUpperCase(), userName);
     }
 
     // implementing classes will typically have a function/listener to get

@@ -63,7 +63,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * The list of BlockOrders is the route from an Origin to a Destination
      */
     public Warrant(String sName, String uName) {
-        super(sName, uName);
+        super(sName.toUpperCase(), uName);
         _idxCurrentOrder = 0;
         _idxTrailingOrder = -1;
         _orders = _savedOrders;

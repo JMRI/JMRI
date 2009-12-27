@@ -12,7 +12,7 @@ import java.util.HashMap;
  * Implements the parameter binding support.
  *
  * @author      Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public abstract class AbstractNamedBean implements NamedBean, java.io.Serializable {
 
@@ -24,11 +24,11 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     //    e.printStackTrace();
     //}
 
-    public AbstractNamedBean(String sys) {
-        mSystemName = sys.toUpperCase();
+    protected AbstractNamedBean(String sys) {
+        mSystemName = sys;
         mUserName = null;
     }
-    public AbstractNamedBean(String sys, String user) {
+    protected AbstractNamedBean(String sys, String user) {
         this(sys);
         mUserName = user;
     }
@@ -97,8 +97,8 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         firePropertyChange("UserName", old, s);
     }
 
-    private String mUserName;
-    private String mSystemName;
+    protected String mUserName;
+    protected String mSystemName;
 
     protected void firePropertyChange(String p, Object old, Object n) { 
         if (pcs!=null) pcs.firePropertyChange(p,old,n);

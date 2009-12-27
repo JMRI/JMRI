@@ -15,18 +15,18 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
     implements Logix, java.io.Serializable {
 
     public DefaultLogix(String systemName, String userName) {
-        super(systemName, userName);
+        super(systemName.toUpperCase(), userName);
     }
 
     public DefaultLogix(String systemName) {
-        super(systemName);
+        super(systemName.toUpperCase());
     }
 
     /**

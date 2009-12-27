@@ -82,18 +82,18 @@ import java.util.List;
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  * @author  Dave Duchamp Copywright (C) 2009
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
 public class Block extends jmri.implementation.AbstractNamedBean {
 
     public Block(String systemName) {
-        super(systemName);
+        super(systemName.toUpperCase());
     }
 
     public Block(String systemName, String userName) {
-        super(systemName, userName);
+        super(systemName.toUpperCase(), userName);
     }
 
     static final public int OCCUPIED = Sensor.ACTIVE;

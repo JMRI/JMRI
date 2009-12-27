@@ -82,6 +82,8 @@ import java.beans.PropertyChangeListener;
  * <P>
  * This Section implementation provides for delayed initialization of blocks and 
  *	direction sensors to be independent of order of items in panel files. 
+ * <p>
+ * Section system names are always upper case.
  * <P>
  * This file is part of JMRI.
  * <P>
@@ -98,17 +100,17 @@ import java.beans.PropertyChangeListener;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class Section extends AbstractNamedBean
     implements  java.io.Serializable {
 
     public Section(String systemName, String userName) {
-        super(systemName, userName);
+        super(systemName.toUpperCase(), userName);
     }
 
     public Section(String systemName) {
-        super(systemName);
+        super(systemName.toUpperCase());
     }
  	
 	/**
