@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.52 $
+ * @version     $Revision: 1.53 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -189,7 +189,7 @@ public class RouteTableAction extends AbstractTableAction {
             }
 
     		// want to update when enabled parameter changes
-            boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+            protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("Enabled")) return true;
                 if (e.getPropertyName().equals("Locked")) return true;
                 else return super.matchPropertyName(e);

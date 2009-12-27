@@ -41,7 +41,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.61 $
+ * @version     $Revision: 1.62 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -329,7 +329,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }
                 
                 // update table if turnout lock or feedback changes
-                boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+                protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                     if (e.getPropertyName().equals("locked")) return true;
                     if (e.getPropertyName().equals("feedbackchange")) return true;
                     else return super.matchPropertyName(e);

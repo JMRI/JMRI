@@ -4,15 +4,11 @@ package jmri.jmrit.beantable;
 
 import java.util.ResourceBundle;
 
-import javax.swing.BoxLayout;
-import javax.swing.JMenuBar;
-import javax.swing.JScrollPane;
+import javax.swing.table.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 
-import jmri.util.JTableUtil;
 import jmri.util.com.sun.TableSorter;
 
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -33,7 +29,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 
@@ -51,7 +47,9 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         super();
         dataModel 	= model;
 
-        dataTable	= JTableUtil.sortableDataModel(dataModel);
+        TableSorter sorter = new TableSorter(dataModel);
+    	dataTable = makeJTable(sorter);
+        sorter.setTableHeader(dataTable.getTableHeader());        
         dataScroll	= new JScrollPane(dataTable);
 
         // give system name column as smarter sorter and use it initially
@@ -138,6 +136,22 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
      * Hook to allow sub-types to install more items in GUI
      */
 	void extras() {}
+	    
+    /**
+     * Hook to allow sub-typing of JTable created
+     */
+	protected JTable makeJTable(TableSorter sorter) {
+	    return new JTable(sorter)  {
+            public boolean editCellAt(int row, int column, java.util.EventObject e) {
+                boolean res = super.editCellAt(row, column, e);
+                java.awt.Component c = this.getEditorComponent();
+                if (c instanceof javax.swing.JTextField) {
+                    ( (JTextField) c).selectAll();
+                }            
+                return res;
+            }
+        };
+    }
 	    
     protected Box getBottomBox() { return bottomBox; }
     /**

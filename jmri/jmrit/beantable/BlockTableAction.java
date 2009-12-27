@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -196,7 +196,7 @@ public class BlockTableAction extends AbstractTableAction {
 				super.configureTable(table);
 			}
 			
-			boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+			protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
 			    return true;
 				// return (e.getPropertyName().indexOf("alue")>=0);
 			}

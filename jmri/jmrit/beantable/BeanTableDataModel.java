@@ -7,17 +7,13 @@ import jmri.NamedBean;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JTable;
-import javax.swing.table.TableCellEditor;
-
-import javax.swing.JComboBox;
-import java.awt.Font;
+import javax.swing.table.*;
+import javax.swing.*;
+import java.awt.*;
 
 import java.util.List;
 
@@ -25,7 +21,7 @@ import java.util.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.28 $
+ * @version		$Revision: 1.29 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -61,7 +57,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             getBySystemName(sysNameList.get(i)).addPropertyChangeListener(this);
     }
 
-    List<String> sysNameList = null;
+    protected List<String> sysNameList = null;
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
@@ -85,7 +81,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 	 * <P>
 	 * Note that events will come both from the NamedBeans and also from the manager
 	 */
-	boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+	protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
 		return (e.getPropertyName().indexOf("State")>=0 || e.getPropertyName().indexOf("Appearance")>=0 
 		        || e.getPropertyName().indexOf("Comment")>=0);
 	}
@@ -175,11 +171,11 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
     abstract public String getValue(String systemName);
 
-    abstract Manager getManager();
+    abstract protected Manager getManager();
 
-    abstract NamedBean getBySystemName(String name);
-    abstract NamedBean getByUserName(String name);
-    abstract void clickOn(NamedBean t);
+    abstract protected NamedBean getBySystemName(String name);
+    abstract protected NamedBean getByUserName(String name);
+    abstract protected void clickOn(NamedBean t);
 
     public void setValueAt(Object value, int row, int col) {
         if (col==USERNAMECOL) {
@@ -287,7 +283,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         
     }
 
-    void configValueColumn(JTable table) {
+    protected void configValueColumn(JTable table) {
         // have the value column hold a button
         setColumnToHoldButton(table, VALUECOL, configureButton());
     }

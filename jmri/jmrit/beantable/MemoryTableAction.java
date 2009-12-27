@@ -24,7 +24,7 @@ import jmri.util.JmriJFrame;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -87,7 +87,7 @@ public class MemoryTableAction extends AbstractTableAction {
     		public void configValueColumn(JTable table) {
         		// value column isn't button, so config is null
 		    }
-			boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+			protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
 			    return true;
 				// return (e.getPropertyName().indexOf("alue")>=0);
 			}

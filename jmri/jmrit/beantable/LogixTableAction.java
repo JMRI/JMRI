@@ -75,7 +75,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.52 $
+ * @version $Revision: 1.53 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -211,7 +211,7 @@ public class LogixTableAction extends AbstractTableAction {
 				_logixManager.deleteLogix(l);
 			}
 
-			boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+			protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
 				if (e.getPropertyName().equals(enabledString))
 					return true;
 				else

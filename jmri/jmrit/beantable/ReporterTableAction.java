@@ -25,7 +25,7 @@ import jmri.util.JmriJFrame;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -87,7 +87,7 @@ public class ReporterTableAction extends AbstractTableAction {
     		public void configValueColumn(JTable table) {
         		// value column isn't button, so config is null
 		    }
-			boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+			protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
 			    return true;
 				// return (e.getPropertyName().indexOf("Report")>=0);
 			}

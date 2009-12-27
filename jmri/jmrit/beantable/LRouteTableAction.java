@@ -215,7 +215,7 @@ public class LRouteTableAction extends AbstractTableAction {
             }
         }
 
-        boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+        protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals(enabledString))
                 return true;
             else

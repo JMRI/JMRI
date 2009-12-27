@@ -36,7 +36,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.35 $
+ * @version     $Revision: 1.36 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -163,7 +163,7 @@ public class LightTableAction extends AbstractTableAction {
             }
 
             // all properties update for now
-            boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+            protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 return true;
             }
 

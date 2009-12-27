@@ -48,7 +48,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 
@@ -182,7 +182,7 @@ public class TransitTableAction extends AbstractTableAction {
         		// value column isn't button, so config is null
 		    }
 
-			boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
+			protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
 			    return true;
 				// return (e.getPropertyName().indexOf("alue")>=0);
 			}

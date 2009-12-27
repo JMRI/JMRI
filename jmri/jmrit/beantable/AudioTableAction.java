@@ -38,7 +38,7 @@ import jmri.NamedBean;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
  * @author      Matthew Harris  copyright (c) 2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class AudioTableAction extends AbstractTableAction {
@@ -345,16 +345,16 @@ public class AudioTableAction extends AbstractTableAction {
         }
 
         @Override
-        void clickOn(NamedBean t) {
+        protected void clickOn(NamedBean t) {
             // Do nothing
         }
 
         @Override
-        void configValueColumn(JTable table) {
+        protected void configValueColumn(JTable table) {
             // Do nothing
         }
 
-        void configEditColumn(JTable table) {
+        protected void configEditColumn(JTable table) {
             // have the edit column hold a button
             setColumnToHoldButton(table, EDITCOL,
                     new JButton(AbstractTableAction.rb.getString("ButtonEdit")));
