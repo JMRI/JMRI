@@ -423,7 +423,6 @@ public class ConditionalVariable {
             value1 = value1.trim();
             value2 = value2.trim();
         }
-        //
         try {
             int n1 = Integer.parseInt(value1);
             try {
@@ -434,22 +433,17 @@ public class ConditionalVariable {
                 }
                 if (log.isDebugEnabled()) log.debug("Compare numbers: n1= "+n1+", to n2= "+n2);
                 switch (_num1)  // both are numbers
-                {   // fall through
+                {
                     case LESS_THAN:
-                        if (n1 < n2) return true;
-                        break;
+                        return (n1 < n2);
                     case LESS_THAN_OR_EQUAL:
-                        if (n1 <= n2) return true;
-                        break;
+                        return (n1 <= n2);
                     case EQUAL:
-                        if (n1 == n2) return true;
-                        break;
+                        return (n1 == n2);
                     case GREATER_THAN_OR_EQUAL:
-                        if (n1 >= n2) return true;
-                        break;
+                        return (n1 >= n2);
                     case GREATER_THAN:
-                        if (n1 > n2) return true;
-                        break;
+                        return (n1 > n2);
                 }
             } catch (NumberFormatException nfe) {
                 return false;   // n1 is a number, n2 is not
