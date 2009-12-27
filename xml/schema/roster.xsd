@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
 <!-- Test schema for JMRI roster support. Not for use before JMRI 2.9.1        -->
 
 <!-- This is an experimental organization,                                  -->
 <!-- and will certainly be changed in the near future                       -->
 
-<!-- $Id: roster.xsd,v 1.1 2009-12-21 04:49:36 jacobsen Exp $ -->
+<!-- $Id: roster.xsd,v 1.2 2009-12-27 01:57:50 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
