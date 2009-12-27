@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalMastTable.shtml,v 1.1 2009-12-27 17:33:38 jacobsen Exp $ -->
+<!-- $Id: SignalMastTable.shtml,v 1.2 2009-12-27 18:39:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -26,7 +26,9 @@
 <H1>The Signal Mast Table
 </H1>
 
-<A href="../../../../html/tools/images/SigMastTable.gif"><IMG SRC="../../../../html/tools/images/SigMastTable.gif" ALIGN=RIGHT WIDTH="375" HEIGHT="166" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
+<A href="../../../../html/tools/images/SigMastTable.gif">
+    <IMG SRC="../../../../html/tools/images/SigMastTable.gif" ALIGN=RIGHT WIDTH="375" HEIGHT="166" HSPACE="0" VSPACE="0" ALT="Signal Mast Table figure">
+</a>
 
 
 <P>To define a new signal mast, click on the 

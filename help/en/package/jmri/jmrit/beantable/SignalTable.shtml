@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalTable.shtml,v 1.11 2009-12-27 17:33:38 jacobsen Exp $ -->
+<!-- $Id: SignalTable.shtml,v 1.12 2009-12-27 18:39:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -26,7 +26,9 @@
 <H1>The Signal Head Table
 </H1>
 
-<A href="../../../../html/tools/images/SigTable.gif"><IMG SRC="../../../../html/tools/images/SigTable.gif" ALIGN=RIGHT WIDTH="375" HEIGHT="166" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
+<A href="../../../../html/tools/images/SigTable.gif">
+ <IMG SRC="../../../../html/tools/images/SigTable.gif" ALIGN=RIGHT WIDTH="375" HEIGHT="166" HSPACE="0" VSPACE="0" ALT="Signal Table figure">
+</a>
 
 <p>All the signal heads that JMRI knows about can be referenced
 using the "Signal Head Table" tool in the Tools menu of most JMRI programs.
