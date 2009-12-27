@@ -1875,10 +1875,13 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     		Object sub = sortIn.get(i);
     		if (sub.getClass().equals(TurnoutIcon.class)){
     			boolean added = false;
-    			TurnoutIcon p = (TurnoutIcon)sub;
+    			String sName = ((TurnoutIcon)sub).getTurnout().getSystemName();
     			for (int j=sorted.size(); j>0; j--){
     				TurnoutIcon pT = (TurnoutIcon)sorted.get(j-1);
-    				if (pT.getTurnout().getSystemName().compareToIgnoreCase(p.getTurnout().getSystemName()) < 0) {
+    				if (sName.compareTo(pT.getTurnout().getSystemName()) == 0) {
+                        added = true;
+                        break;
+                    } else if (sName.compareTo(pT.getTurnout().getSystemName()) < 0) {
     					sorted.add(j,(JComponent)sub);
     					added = true;
     					break;
@@ -1886,8 +1889,8 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     			}
     			if (!added)
     				sorted.add(0,(JComponent)sub);
-    			sortIn.remove(sub);
-    			i--;
+    			//sortIn.remove(sub);
+    			//i--;
     		}
     	}
     	// now sensors
@@ -1896,11 +1899,14 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             Object sub = sortIn.get(i);
             if (sub.getClass().equals(SensorIcon.class)){
     			boolean added = false;
-    			SensorIcon p = (SensorIcon)sub;
+    			String sName = ((SensorIcon)sub).getSensor().getSystemName();
     			for (int j=sorted.size(); j>index; j--){
     				SensorIcon pS = (SensorIcon)sorted.get(j-1);
-    				//if (pS.getSensor().getSystemName().compareToIgnoreCase(p.getSensor().getSystemName()) < 0) {
-                    if (pS.getName().compareToIgnoreCase(p.getName()) < 0) {
+    				if (sName.compareTo(pS.getSensor().getSystemName()) == 0) {
+                        added = true;
+                        break;
+                    } else if (sName.compareTo(pS.getSensor().getSystemName()) < 0) {
+                    //if (pS.getName().compareToIgnoreCase(p.getName()) < 0) {
     					sorted.add(j,(JComponent)sub);
     					added = true;
     					break;
@@ -1908,8 +1914,8 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     			}
     			if (!added)
     				sorted.add(index,(JComponent)sub);
-    			sortIn.remove(sub);
-    			i--;
+    			//sortIn.remove(sub);
+    			//i--;
             }
         }
     	// now labels by text
@@ -1922,7 +1928,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     				boolean added = false;
     				for (int j=sorted.size(); j>index; j--){
     					PositionableLabel pL = (PositionableLabel)sorted.get(j-1);
-    					if (pL.getText().compareToIgnoreCase(p.getText()) < 0) {
+    					if (p.equals(pL)) {
+                            added = true;
+                            break;
+                        } else if (pL.getText().compareToIgnoreCase(p.getText()) < 0) {
     						sorted.add(j,(JComponent)sub);
     						added = true;
     						break;
@@ -1930,8 +1939,8 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     				}
     				if (!added)
     					sorted.add(index,(JComponent)sub);
-    				sortIn.remove(sub);
-    				i--;
+    				//sortIn.remove(sub);
+    				//i--;
     			}
     		}
     	}
