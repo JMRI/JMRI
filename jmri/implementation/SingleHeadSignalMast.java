@@ -2,9 +2,7 @@
 
 package jmri.implementation;
 
-import java.util.ResourceBundle;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 import jmri.*;
 import jmri.util.NamedBeanHandle;
@@ -25,7 +23,7 @@ IF:basic:one-searchlight:IH1
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SingleHeadSignalMast extends AbstractSignalMast {
 
@@ -88,6 +86,15 @@ public class SingleHeadSignalMast extends AbstractSignalMast {
         map.setAppearances(aspect, heads);
         // do standard processing
         super.setAspect(aspect);
+    }
+
+    public Vector<String> getValidAspects() {
+        java.util.Enumeration<String> e = map.getAspects();
+        Vector<String> v = new Vector<String>();
+        while (e.hasMoreElements()) {
+            v.add(e.nextElement());
+        }
+        return v;
     }
 
     List<NamedBeanHandle<SignalHead>> heads;

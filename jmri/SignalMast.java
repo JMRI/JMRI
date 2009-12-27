@@ -2,6 +2,8 @@
 
 package jmri;
 
+import java.util.Vector;
+
 /**
  * Represent a signal mast.  A signal mast is one or more signal heads
  * that are treated as a single signal.  (Imagine several heads 
@@ -34,7 +36,7 @@ package jmri;
  *
  * @author			Bob Jacobsen Copyright (C) 2002, 2008
  * @author			Pete Cressman Copyright (C) 2009
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public interface SignalMast extends NamedBean {
 
@@ -52,6 +54,7 @@ public interface SignalMast extends NamedBean {
      */
     public String getAspect();
     
+    public Vector<String> getValidAspects();
 }
 
 

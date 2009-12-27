@@ -8,7 +8,7 @@ import jmri.*;
  * Abstract class providing the basic logic of the SignalMast interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public abstract class AbstractSignalMast extends AbstractNamedBean
     implements SignalMast, java.io.Serializable {
@@ -21,7 +21,11 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         super(systemName);
     }
       
-    public void setAspect(String aspect) { this.aspect = aspect; }
+    public void setAspect(String aspect) { 
+        String oldAspect = this.aspect;
+        this.aspect = aspect; 
+        firePropertyChange("Aspect", oldAspect, aspect);
+    }
     public String getAspect() { return aspect; }
     String aspect = null;
     
