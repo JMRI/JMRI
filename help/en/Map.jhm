@@ -396,9 +396,9 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_SwitchList" url="package/jmri/jmrit/operations/Operations.shtml#SwitchList"/>
 
-<mapID target="html.tools.signaling.IntroToSignalingYourMRR" url="html/tools/signaling/IntroToSignalingYourMRR.html"/>
-
 <mapID target="html.hardware.nce.NCE" url="html/hardware/nce/NCE.shtml"/>
+
+<mapID target="html.tools.signaling.IntroToSignalingYourMRR" url="html/tools/signaling/IntroToSignalingYourMRR.html"/>
 
 <mapID target="package.jmri.jmrit.dispatcher.AllocateExtra" url="package/jmri/jmrit/dispatcher/AllocateExtra.shtml"/>
 
@@ -549,6 +549,8 @@
 <mapID target="package.jmri.jmrit.dispatcher.NewTrain" url="package/jmri/jmrit/dispatcher/NewTrain.shtml"/>
 
 <mapID target="package.jmri.jmrit.display.SetSignalsAt3WayTurnout" url="package/jmri/jmrit/display/SetSignalsAt3WayTurnout.shtml"/>
+
+<mapID target="package.jmri.jmrit.beantable.SignalMastAddEdit" url="package/jmri/jmrit/beantable/SignalMastAddEdit.shtml"/>
 
 <mapID target="manual.Basic_Programming_Roster" url="manual/Basic_Programming.shtml#Roster"/>
 
@@ -1018,6 +1020,8 @@
 
 <mapID target="html.tools.signaling.index" url="html/tools/signaling/index.shtml"/>
 
+<mapID target="html.doc.Technical.Networking" url="html/doc/Technical/Networking.shtml"/>
+
 <mapID target="manual.Main_XpressNet_LV100CM" url="manual/Main_XpressNet.shtml#LV100CM"/>
 
 <mapID target="package.jmri.jmrit.display.SetSignalsAtXoverTurnout" url="package/jmri/jmrit/display/SetSignalsAtXoverTurnout.shtml"/>
@@ -1177,6 +1181,8 @@
 <mapID target="package.jmri.jmrix.grapevine.packetgen.SerialPacketGenFrame" url="package/jmri/jmrix/grapevine/packetgen/SerialPacketGenFrame.shtml"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter2_WinConfig" url="html/tools/throttle/ThrottleChapter2.shtml#WinConfig"/>
+
+<mapID target="package.jmri.jmrit.beantable.SignalMastTable" url="package/jmri/jmrit/beantable/SignalMastTable.shtml"/>
 
 <mapID target="html.hardware.cmri.Signals" url="html/hardware/cmri/Signals.shtml"/>
 

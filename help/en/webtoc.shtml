@@ -1018,9 +1018,22 @@
    
 <li>
 <a href="html/tools/signaling/SignalMasts.shtml">Signal Masts </a>
+<ul>
+    
+<li>
+<a href="package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">Adding Signal Masts </a>
 <ul></ul>
 </li>
 
+    
+<li>
+<a href="package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table </a>
+<ul></ul>
+</li>
+
+   
+</ul>
+</li>
   
 </ul>
 </li>

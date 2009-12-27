@@ -332,8 +332,12 @@
   <indexitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalTable"/>
 
  </indexitem>
- <indexitem text="Signal Masts " target="html.tools.signaling.SignalMasts"/>
+ <indexitem text="Signal Masts " target="html.tools.signaling.SignalMasts">
+  <indexitem text="Add Signal Mast " target="package.jmri.jmrit.beantable.SignalMastAddEdit"/>
 
+  <indexitem text="Signal Mast Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
+
+ </indexitem>
  <indexitem text="Signaling " target="html.tools.signaling.index"/>
 
  <indexitem text="Simple Clock " target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/>
