@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.12 2009-12-28 04:55:36 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.13 2009-12-28 20:17:45 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -162,7 +162,14 @@ using the syntax @IMemory for the devive name
 <p>
 Pete Cressman corrected a typo in the "SignalHeadStateHeld" resource name for SignalHeadIcon and PanelEditor
 
+<p>
+JMRI now contains support for more-prototypical signaling basic on "signal masts" and "aspects".
+The basic functions are in place, along with the start of some
+<a href="http://jmri.org/help/en/html/tools/signaling/AspectSignaling.shtml">help pages</a>.
+This is still being actively developed. We intend to have it fully available by the 
+next JMRI production release in summer 2010.
 
+<p>
 <!--#include virtual="/Footer" -->
 
    </div><!-- closes #mainContent-->
