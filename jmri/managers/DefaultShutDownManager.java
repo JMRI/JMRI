@@ -1,6 +1,6 @@
 // DefaultShutDownManager.java
 
-package jmri.implementation;
+package jmri.managers;
 
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * logging.
  *
  * @author      Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.1 $
  */
 public class DefaultShutDownManager implements ShutDownManager {
 

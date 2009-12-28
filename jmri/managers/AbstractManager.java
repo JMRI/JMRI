@@ -1,6 +1,6 @@
 // AbstractManager.java
 
-package jmri.implementation;
+package jmri.managers;
 
 import java.util.Enumeration;
 
@@ -17,7 +17,7 @@ import jmri.*;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.1 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
