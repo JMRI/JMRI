@@ -2,7 +2,6 @@
 
 package jmri.jmrit.beantable.sensor;
 
-import jmri.*;
 import jmri.util.JmriJFrame;
 
 import javax.swing.*;
@@ -12,7 +11,7 @@ import java.util.ResourceBundle;
  * JFrame to create a new Sensor
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class AddSensorJFrame extends JmriJFrame {

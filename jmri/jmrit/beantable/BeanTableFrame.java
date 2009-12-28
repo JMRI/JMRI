@@ -4,7 +4,6 @@ package jmri.jmrit.beantable;
 
 import java.util.ResourceBundle;
 
-import javax.swing.table.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -29,7 +28,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 

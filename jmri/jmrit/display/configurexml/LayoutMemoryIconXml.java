@@ -11,7 +11,7 @@ import org.jdom.Element;
  *
  * @author David Duchamp Copyright: Copyright (c) 2009
  * @author Kevin Dickerson, Deprecated
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  * @deprecated 2.7.8
  */
 @Deprecated
@@ -43,7 +43,6 @@ public class LayoutMemoryIconXml implements XmlAdapter {
      * @param element Top level Element to unpack.
      * @param o  LayoutEditor as an Object
      */
-    @SuppressWarnings("unchecked")
 	public void load(Element element, Object o) {
         MemoryIconXml tmp = new MemoryIconXml();
         tmp.load(element, o);

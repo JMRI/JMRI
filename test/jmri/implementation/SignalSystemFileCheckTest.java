@@ -4,10 +4,7 @@ package jmri.implementation;
 
 import jmri.*;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import junit.framework.*;
 
 import java.io.*;
 
@@ -17,7 +14,7 @@ import java.io.*;
  * Checks all files in the distribution directory
  *
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SignalSystemFileCheckTest extends jmri.configurexml.LoadFileTestBase {
 

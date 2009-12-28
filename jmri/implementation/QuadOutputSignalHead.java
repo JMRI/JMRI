@@ -20,7 +20,7 @@ import jmri.util.NamedBeanHandle;
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
 
@@ -34,7 +34,6 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
         mLunar = lunar;
     }
 	
-	@SuppressWarnings("fallthrough")
 	protected void updateOutput() {
 	    if (mLit == false) {
 	        super.updateOutput();
