@@ -11,73 +11,73 @@
   <reference>See http://sptco.railspot.com/SP_Rules-and-Regs/Rules-and-Regs_1960.htm</reference>
   <aspects>
     <aspect>
-      <title>Rule 281</title>
       <name>Block signal green</name>
+      <title>Rule 281</title>
       <indication>Proceed</indication>
     </aspect>
     <aspect>
-      <title>Rule 282</title>
       <name>Block signal green</name>
+      <title>Rule 282</title>
       <indication>Proceed except on diverging route</indication>
     </aspect>
     <aspect>
-      <title>Rule 283</title>
       <name>Block signal green for diverging route</name>
+      <title>Rule 283</title>
       <indication>Proceed on diverging route</indication>
     </aspect>
     <aspect>
-      <title>Rule 284</title>
       <name>Block signal yellow over green</name>
+      <title>Rule 284</title>
       <indication>Reduce to medium speed and proceed. Next signal indicates "Proceed on diverging route"</indication>
     </aspect>
     <aspect>
-      <title>Rule 285</title>
       <name>Approach signal yellow</name>
+      <title>Rule 285</title>
       <indication>Proceed not exceeding medium speed, prepared to stop short of next home signal.</indication>
     </aspect>
     <aspect>
-      <title>Rule 285-A</title>
       <name>Approach medium - flashing yellow</name>
+      <title>Rule 285-A</title>
       <indication>Proceed prepared to pass next signal at not exceeding medium speed.</indication>
     </aspect>
     <aspect>
-      <title>Rule 286</title>
       <name>Distant signal yellow</name>
+      <title>Rule 286</title>
       <indication>Proceed not exceeding medium speed, prepared to stop short of next home signal.</indication>
     </aspect>
     <aspect>
-      <title>Rule 287</title>
       <name>Grade signal red</name>
+      <title>Rule 287</title>
       <indication>Reduce to restricted speed and proceed.</indication>
     </aspect>
     <aspect>
-      <title>Rule 288</title>
       <name>Home signal yellow for diverging route</name>
+      <title>Rule 288</title>
       <indication>Proceed on diverging route at restricted speed.</indication>
     </aspect>
     <aspect>
-      <title>Rule 289</title>
       <name>Home signal red over lunar</name>
+      <title>Rule 289</title>
       <indication>Proceed without stopping at restricted speed on other than main track.</indication>
     </aspect>
     <aspect>
-      <title>Rule 290</title>
       <name>Home signal red</name>
+      <title>Rule 290</title>
       <indication>Stop.</indication>
     </aspect>
     <aspect>
-      <title>Rule 291</title>
       <name>Flashing yellow</name>
+      <title>Rule 291</title>
       <indication>Stop. Then proceed at restricted speed without calling dispatcher or signal operator.</indication>
     </aspect>
     <aspect>
-      <title>Rule 292</title>
       <name>Flashing white</name>
+      <title>Rule 292</title>
       <indication>Stop. When flashing white displayed be governed by special instructions.</indication>
     </aspect>
     <aspect>
-      <title>Rule 293</title>
       <name>Home signal red, with triangular plate</name>
+      <title>Rule 293</title>
       <indication>Stop. Inspect train, track or structure as provided in special instrutions, and proceed through remainder of block in accordance with provisions of Rule 507, 509, 510, 663, 744, or 776, as the case may be.</indication>
     </aspect>
   </aspects>

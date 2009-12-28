@@ -10,129 +10,120 @@
   <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
   <aspects>
     <aspect>
-      <title>Rule 281</title>
       <name>Clear</name>
+      <title>Rule 281</title>
       <indication>Proceed</indication>
       <reference>Page 42</reference>
     </aspect>
     <aspect>
-      <title>Rule 281A</title>
       <name>Advance Approach Medium</name>
+      <title>Rule 281A</title>
       <indication>Proceed approaching second signal at medium speed</indication>
       <reference>Page 42</reference>
     </aspect>
     <aspect>
-      <title>Rule 281B</title>
       <name>Aproach limited</name>
+      <title>Rule 281B</title>
       <indication>Proceed approaching next signal at limited speed</indication>
       <reference>Page 43</reference>
     </aspect>
     <aspect>
-      <title>Rule 281C</title>
       <name>Limited - clear</name>
+      <title>Rule 281C</title>
       <indication>Proceed; limited speed within interlocking limits</indication>
       <reference>Page 43</reference>
     </aspect>
     <aspect>
-      <title>Rule 282</title>
       <name>Approach medium</name>
+      <title>Rule 282</title>
       <indication>Proceed approaching next signal at medium speed</indication>
       <reference>Page 44</reference>
     </aspect>
     <aspect>
-      <title>Rule 282A</title>
       <name>Advance approach</name>
+      <title>Rule 282A</title>
       <indication>Proceed preparing to stop at second signal</indication>
       <reference>Page 44</reference>
     </aspect>
 
     <aspect>
-      <title>Rule 283</title>
       <name>Medium clear</name>
+      <title>Rule 283</title>
       <indication>Proceed; medium speed within interlocking limits</indication>
       <reference>Page 45</reference>
     </aspect>
     <aspect>
-      <title>Rule 283A</title>
       <name>Medium - advance approach</name>
+      <title>Rule 283A</title>
       <indication>Proceed preparing to stop at second signal; medium speed within interlocking limits</indication>
       <reference>Page 45</reference>
     </aspect>
     <aspect>
-      <title>Rule 283B</title>
       <name>Medium - approach slow</name>
+      <title>Rule 283B</title>
       <indication>Proceed at medium speed approaching next signal at slow speed</indication>
       <reference>Page 46</reference>
     </aspect>
 
     <aspect>
-      <title>Rule 284</title>
       <name>Approach slow</name>
+      <title>Rule 284</title>
       <indication>Proceed approaching next signal at slow speed. Train exceeding medium speed must at once reduce to that speed.</indication>
       <reference>Page 46</reference>
     </aspect>
 
     <aspect>
-      <title>Rule 285</title>
       <name>Approach</name>
+      <title>Rule 285</title>
       <indication>Proceed preparing to stop at next signal. Train exceeding medium speed must at once reduce to that speed.</indication>
       <reference>Page 47</reference>
     </aspect>
     <aspect>
-      <title>Rule 286</title>
       <name>Medium - approach</name>
+      <title>Rule 286</title>
       <indication>Proceed at medium speed preparing to stop at next signal</indication>
       <reference>Page 47</reference>
     </aspect>
 
     <aspect>
-      <title>Rule 287</title>
       <name>Slow - clear</name>
+      <title>Rule 287</title>
       <indication>Proceed; slow speed within interlocking limits.</indication>
       <reference>Page 48</reference>
     </aspect>
     <aspect>
-      <title>Rule 288</title>
       <name>Slow - approach</name>
+      <title>Rule 288</title>
       <indication>Proceed preparing to stop at next signal; slow speed within interlocking limits.</indication>
       <reference>Page 48</reference>
     </aspect>
 
     <aspect>
-      <title>Rule 289</title>
       <name>Permissive</name>
+      <title>Rule 289</title>
       <indication>Block occupied; proceed prepared to stop short of train ahead.</indication>
       <reference>Page 49</reference>
     </aspect>
     <aspect>
-      <title>Rule 290</title>
       <name>Restricting</name>
+      <title>Rule 290</title>
       <indication>Proceed at restricted speed.</indication>
       <reference>Page 49</reference>
     </aspect>
 
     <aspect>
-      <title>Rule 291</title>
       <name>Stop and proceed</name>
+      <title>Rule 291</title>
       <indication>Stop; then proceed at restricted speed.</indication>
       <reference>Page 50</reference>
     </aspect>
     <aspect>
-      <title>Rule 292</title>
       <name>Stop</name>
+      <title>Rule 292</title>
       <indication>Stop.</indication>
       <reference>Page 50</reference>
     </aspect>
 
-
-    <aspect>
-      <title></title>
-      <name></name>
-      <indication></indication>
-      <description></description>
-      <reference></reference>
-      <comment></comment>
-    </aspect>
   </aspects>
 </aspecttable>
   
