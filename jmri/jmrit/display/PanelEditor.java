@@ -1868,7 +1868,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
   * and then everything else. 
   */
     public ArrayList<JComponent> getSortedContents(){
-    	ArrayList<JComponent> sortIn = contents;
+    	ArrayList<JComponent> sortIn = new ArrayList<JComponent>();
+        for (int i=0; i<contents.size(); i++) {
+            sortIn.add(contents.get(i));
+        }
     	ArrayList<JComponent> sorted = new ArrayList<JComponent>();
     	// sort by turnout, sensors, text labels, then everything else 
     	for (int i=0; i<sortIn.size(); i++) {
@@ -1889,8 +1892,8 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     			}
     			if (!added)
     				sorted.add(0,(JComponent)sub);
-    			//sortIn.remove(sub);
-    			//i--;
+    			sortIn.remove(sub);
+    			i--;
     		}
     	}
     	// now sensors
@@ -1914,8 +1917,8 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     			}
     			if (!added)
     				sorted.add(index,(JComponent)sub);
-    			//sortIn.remove(sub);
-    			//i--;
+    			sortIn.remove(sub);
+    			i--;
             }
         }
     	// now labels by text
@@ -1939,8 +1942,8 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     				}
     				if (!added)
     					sorted.add(index,(JComponent)sub);
-    				//sortIn.remove(sub);
-    				//i--;
+    				sortIn.remove(sub);
+    				i--;
     			}
     		}
     	}
