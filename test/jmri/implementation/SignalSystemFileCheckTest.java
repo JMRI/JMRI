@@ -14,7 +14,7 @@ import java.io.*;
  * Checks all files in the distribution directory
  *
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SignalSystemFileCheckTest extends jmri.configurexml.LoadFileTestBase {
 
@@ -36,7 +36,7 @@ public class SignalSystemFileCheckTest extends jmri.configurexml.LoadFileTestBas
                 // check that there's an aspects.xml file
                 File aspects = new File(files[i].getPath()+File.separator+"aspects.xml");
                 if (aspects.exists()) {
-                    System.out.println("found system: "+files[i].getName());
+                    log.info("found system: "+files[i].getName());
                     validate(aspects);
                 }
             }
@@ -51,13 +51,13 @@ public class SignalSystemFileCheckTest extends jmri.configurexml.LoadFileTestBas
                 // check that there's an aspects.xml file
                 File aspects = new File(files[i].getPath()+File.separator+"aspects.xml");
                 if (aspects.exists()) {
-                    System.out.println("found system: "+files[i].getName());
+                    log.info("found system: "+files[i].getName());
                     // gather all the appearance files
                     File[] apps = files[i].listFiles();
                     for (int j=0; j<apps.length; j++) {
                         if (apps[j].getName().startsWith("appearance")
                             && apps[j].getName().endsWith(".xml")) {
-                                System.out.println("   found file: "+apps[j].getName());
+                                log.info("   found file: "+apps[j].getName());
                                 validate(apps[j]);
                         }
                     }
