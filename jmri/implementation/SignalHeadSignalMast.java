@@ -1,4 +1,4 @@
-// SingleHeadSignalMast.java
+// SignalHeadSignalMast.java
 
 package jmri.implementation;
 
@@ -23,16 +23,16 @@ IF:basic:one-searchlight:IH1
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.1 $
  */
-public class SingleHeadSignalMast extends AbstractSignalMast {
+public class SignalHeadSignalMast extends AbstractSignalMast {
 
-    public SingleHeadSignalMast(String systemName, String userName) {
+    public SignalHeadSignalMast(String systemName, String userName) {
         super(systemName, userName);
         configureFromName(systemName);
     }
 
-    public SingleHeadSignalMast(String systemName) {
+    public SignalHeadSignalMast(String systemName) {
         super(systemName);
         configureFromName(systemName);
     }
@@ -105,7 +105,7 @@ public class SingleHeadSignalMast extends AbstractSignalMast {
     DefaultSignalAppearanceMap map;
     SignalSystem systemDefn;
     
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SingleHeadSignalMast.class.getName());
+    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadSignalMast.class.getName());
 }
 
-/* @(#)SingleHeadSignalMast.java */
+/* @(#)SignalHeadSignalMast.java */

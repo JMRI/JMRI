@@ -1,4 +1,4 @@
-// SingleHeadSignalMastTest.java
+// SignalHeadSignalMastTest.java
 
 package jmri.implementation;
 
@@ -10,11 +10,11 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the SingleHeadSignalMast implementation
+ * Tests for the SignalHeadSignalMast implementation
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.1 $
  */
-public class SingleHeadSignalMastTest extends TestCase {
+public class SignalHeadSignalMastTest extends TestCase {
 
     public void testSetup() {
         Assert.assertNotNull(InstanceManager.signalHeadManagerInstance());
@@ -22,16 +22,16 @@ public class SingleHeadSignalMastTest extends TestCase {
     }
     
 	public void testTwoNameCtorOK() {
-	    new SingleHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
+	    new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
 	}
 
 	public void testOneNameCtorOK() {
-	        new SingleHeadSignalMast("IF$shsm:basic:one-searchlight:IH1");
+	        new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1");
 	}
 
 	public void testOneNameCtorFailNoSystem() {
 	    try {
-	        new SingleHeadSignalMast("IF$shsm:notanaspect:one-searchlight:IH1");
+	        new SignalHeadSignalMast("IF$shsm:notanaspect:one-searchlight:IH1");
 	        Assert.fail("should have thrown exception");
         } catch (IllegalArgumentException e1) {
             jmri.util.JUnitAppender.assertErrorMessage("Did not find signal definition: notanaspect");
@@ -39,7 +39,7 @@ public class SingleHeadSignalMastTest extends TestCase {
 	}
 
 	public void testAspects() {
-	    SignalMast s = new SingleHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
+	    SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
 	    
 	    s.setAspect("Clear");
 	    Assert.assertEquals("check clear","Clear",s.getAspect());
@@ -48,13 +48,13 @@ public class SingleHeadSignalMastTest extends TestCase {
 	}
 
 	public void testAspectNotSet() {
-	    SignalMast s = new SingleHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
+	    SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
 	    
 	    Assert.assertNull("check null",s.getAspect());
 	}
 
 	public void testAspectFail() {
-	    SignalMast s = new SingleHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
+	    SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
 	    
 	    s.setAspect("Clear");
 
@@ -69,7 +69,7 @@ public class SingleHeadSignalMastTest extends TestCase {
 	}
 
 	public void testConfigureOneSearchLight() {
-	    SignalMast s = new SingleHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
+	    SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
 	    
 	    s.setAspect("Clear");
 	    Assert.assertEquals("check green",SignalHead.GREEN,
@@ -81,7 +81,7 @@ public class SingleHeadSignalMastTest extends TestCase {
 	}
 
 	public void testConfigureTwoSearchLight() {
-	    SignalMast s = new SingleHeadSignalMast("IF$shsm:basic:two-searchlight:IH1:IH2", "user");
+	    SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:two-searchlight:IH1:IH2", "user");
 	    
 	    s.setAspect("Clear");
 	    Assert.assertEquals("Clear head 1 green",SignalHead.GREEN,
@@ -119,19 +119,19 @@ public class SingleHeadSignalMastTest extends TestCase {
     
 	// from here down is testing infrastructure
 
-	public SingleHeadSignalMastTest(String s) {
+	public SignalHeadSignalMastTest(String s) {
 		super(s);
 	}
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {SingleHeadSignalMastTest.class.getName()};
+		String[] testCaseName = {SignalHeadSignalMastTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite(SingleHeadSignalMastTest.class);
+		TestSuite suite = new TestSuite(SignalHeadSignalMastTest.class);
 		return suite;
 	}
 
@@ -156,5 +156,5 @@ public class SingleHeadSignalMastTest extends TestCase {
         );
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SingleHeadSignalMastTest.class.getName());
+    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadSignalMastTest.class.getName());
 }
