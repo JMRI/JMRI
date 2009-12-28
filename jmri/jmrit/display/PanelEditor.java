@@ -3,9 +3,6 @@ package jmri.jmrit.display;
 import jmri.CatalogTree;
 import jmri.InstanceManager;
 import jmri.Light;
-import jmri.Turnout;
-import jmri.Sensor;
-import jmri.Memory;
 import jmri.Reporter;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
@@ -1868,7 +1865,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
   * and then everything else. 
   */
     public ArrayList<JComponent> getSortedContents(){
-    	ArrayList<JComponent> sortIn = new ArrayList<JComponent>();
+       	ArrayList<JComponent> sortIn = new ArrayList<JComponent>();
         for (int i=0; i<contents.size(); i++) {
             sortIn.add(contents.get(i));
         }
@@ -1878,13 +1875,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     		Object sub = sortIn.get(i);
     		if (sub.getClass().equals(TurnoutIcon.class)){
     			boolean added = false;
-    			String sName = ((TurnoutIcon)sub).getTurnout().getSystemName();
+    			TurnoutIcon p = (TurnoutIcon)sub;
     			for (int j=sorted.size(); j>0; j--){
     				TurnoutIcon pT = (TurnoutIcon)sorted.get(j-1);
-    				if (sName.compareTo(pT.getTurnout().getSystemName()) == 0) {
-                        added = true;
-                        break;
-                    } else if (sName.compareTo(pT.getTurnout().getSystemName()) < 0) {
+    				if (pT.getTurnout().getSystemName().compareToIgnoreCase(p.getTurnout().getSystemName()) < 0) {
     					sorted.add(j,(JComponent)sub);
     					added = true;
     					break;
@@ -1902,14 +1896,10 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
             Object sub = sortIn.get(i);
             if (sub.getClass().equals(SensorIcon.class)){
     			boolean added = false;
-    			String sName = ((SensorIcon)sub).getSensor().getSystemName();
+    			SensorIcon p = (SensorIcon)sub;
     			for (int j=sorted.size(); j>index; j--){
     				SensorIcon pS = (SensorIcon)sorted.get(j-1);
-    				if (sName.compareTo(pS.getSensor().getSystemName()) == 0) {
-                        added = true;
-                        break;
-                    } else if (sName.compareTo(pS.getSensor().getSystemName()) < 0) {
-                    //if (pS.getName().compareToIgnoreCase(p.getName()) < 0) {
+    				if (pS.getSensor().getSystemName().compareToIgnoreCase(p.getSensor().getSystemName()) < 0) {
     					sorted.add(j,(JComponent)sub);
     					added = true;
     					break;
@@ -1931,10 +1921,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
     				boolean added = false;
     				for (int j=sorted.size(); j>index; j--){
     					PositionableLabel pL = (PositionableLabel)sorted.get(j-1);
-    					if (p.equals(pL)) {
-                            added = true;
-                            break;
-                        } else if (pL.getText().compareToIgnoreCase(p.getText()) < 0) {
+    					if (pL.getText().compareToIgnoreCase(p.getText()) < 0) {
     						sorted.add(j,(JComponent)sub);
     						added = true;
     						break;
