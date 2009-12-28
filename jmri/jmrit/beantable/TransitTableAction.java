@@ -48,7 +48,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 
 
@@ -1124,8 +1124,6 @@ public class TransitTableAction extends AbstractTableAction {
 		if (curTSA==null) {
 			log.error("Failure when creating new TransitSectionAction");
 		}
-// djd - the warning issued for the statement below is extraneous - all works fine - don't change
-		@SuppressWarnings({"unchecked"})
 		ArrayList<TransitSectionAction> list = action[activeRow];
 		list.add(curTSA);
 		actionTableModel.fireTableDataChanged();

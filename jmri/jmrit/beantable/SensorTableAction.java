@@ -2,29 +2,20 @@
 
 package jmri.jmrit.beantable;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.Sensor;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
+import jmri.*;
 import jmri.util.JmriJFrame;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.*;
+
 
 /**
  * Swing action to create and register a
  * SensorTable GUI.
  *
- * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.23 $
+ * @author	Bob Jacobsen    Copyright (C) 2003, 2009
+ * @version     $Revision: 1.24 $
  */
 
 public class SensorTableAction extends AbstractTableAction {

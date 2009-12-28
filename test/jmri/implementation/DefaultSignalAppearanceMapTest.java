@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Tests for the SignalAppearanceMap interface
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class DefaultSignalAppearanceMapTest extends TestCase {
 
@@ -103,10 +103,10 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
     protected void setUp() { 
         apps.tests.Log4JFixture.setUp(); 
         h1 = new DefaultSignalHead("h1", "head1") {
-            protected void updateOutput() {};
+            protected void updateOutput() {}
         };
 	    h2 = new DefaultSignalHead("h2", "head2") {
-            protected void updateOutput() {};
+            protected void updateOutput() {}
         };
         l1 = new ArrayList<NamedBeanHandle<SignalHead>>();
         l1.add(new NamedBeanHandle<SignalHead>("h1", h1));

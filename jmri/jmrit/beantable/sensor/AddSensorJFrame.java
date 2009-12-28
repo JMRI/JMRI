@@ -5,10 +5,6 @@ package jmri.jmrit.beantable.sensor;
 import jmri.*;
 import jmri.util.JmriJFrame;
 
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.*;
 import java.util.ResourceBundle;
 
@@ -16,7 +12,7 @@ import java.util.ResourceBundle;
  * JFrame to create a new Sensor
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class AddSensorJFrame extends JmriJFrame {

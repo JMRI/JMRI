@@ -39,7 +39,6 @@ public class WarrantManagerXml extends XmlFile
      * @param o Object to store, of type warrantManager
      * @return Element containing the complete info
      */
-    @SuppressWarnings("unchecked")
     public Element store(Object o) {
         Element warrants = new Element("warrants");
         warrants.setAttribute("class","jmri.jmrit.logix.configurexml.WarrantManagerXml");

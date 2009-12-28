@@ -14,7 +14,7 @@ import org.jdom.Attribute;
  * using reflection.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @since 2.3.1
  */
 public class DefaultJavaBeanConfigXML implements jmri.configurexml.XmlAdapter {
@@ -31,8 +31,13 @@ public class DefaultJavaBeanConfigXML implements jmri.configurexml.XmlAdapter {
     
     Object unpack(Element e) throws Exception {
         String classname = e.getAttributeValue("beanClass");
+        
+        @SuppressWarnings("unchecked")
         Class cl = Class.forName(classname);
+        
+        @SuppressWarnings("unchecked")
         Constructor ctor = cl.getConstructor(new Class[] {});
+
         Object o = ctor.newInstance(new Object[] {});
         
         try {
@@ -41,10 +46,11 @@ public class DefaultJavaBeanConfigXML implements jmri.configurexml.XmlAdapter {
             PropertyDescriptor[] properties = b.getPropertyDescriptors();
             
             // add properties
-            List children = e.getChildren("property");
+            @SuppressWarnings("unchecked")
+            List<Element> children = e.getChildren("property");
             for (int i = 0; i<children.size(); i++) {
                 // unpack XML
-                Element property = (Element)children.get(i);
+                Element property = children.get(i);
                 Element eName = property.getChild("name");
                 Element eValue = property.getChild("value");
                 String name = eName.getText();

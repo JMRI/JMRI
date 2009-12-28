@@ -13,7 +13,7 @@ public class DefaultSignalSystemManagerTest extends TestCase {
 
     public void testGetListOfNames() {
         DefaultSignalSystemManager d = new DefaultSignalSystemManager();
-        java.util.List l = d.getListOfNames();
+        java.util.List<String> l = d.getListOfNames();
         Assert.assertTrue(l.contains("basic"));
         Assert.assertTrue(l.contains("AAR-1946"));
         Assert.assertTrue(l.contains("SPTCO-1960"));

@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle XML configuration for a DefaultSignalMastManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DefaultSignalMastManagerXml 
             extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -51,11 +51,12 @@ public class DefaultSignalMastManagerXml
      */
     public boolean load(Element element) {
         // loop over contained signalmast elements
-        List list = element.getChildren("signalmast");
+        @SuppressWarnings("unchecked")
+        List<Element> list = element.getChildren("signalmast");
 
         for (int i = 0; i < list.size(); i++) {
             SignalMast m;
-            Element e = (Element)list.get(i);
+            Element e = list.get(i);
             String sys = e.getAttribute("systemName").getValue();
             m = InstanceManager.signalMastManagerInstance()
                         .provideSignalMast(sys);

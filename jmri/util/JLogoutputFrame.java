@@ -47,7 +47,6 @@ public class JLogoutputFrame
     private static Layout myLayout = new PatternLayout( "%d{HH:mm:ss.SSS} (%6r) %-5p [%-7t] %F:%L %x - %m%n" );
     private static Vector<Filter> myFilters = new Vector<Filter>();
     
-    private Object myWaiterToSignal = null;
     private static JLogoutputFrame myInstance = null;
     private JFrame myMainFrame = null;
     private JTextPaneAppender myAppender = null;
@@ -72,21 +71,16 @@ public class JLogoutputFrame
      */
     private static void initInstance()
     {
-        Object waiter = new Object();
-        myInstance = new JLogoutputFrame( waiter );
-
-
+        myInstance = new JLogoutputFrame();
     }
     
     /**
      * Constructor
      *
      */
-    private JLogoutputFrame( Object aWaiterToSignal )
+    private JLogoutputFrame()
     {
         super();
-
-        myWaiterToSignal = aWaiterToSignal;
 
         myLog.debug( "entering init" );
 

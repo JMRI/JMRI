@@ -1,32 +1,17 @@
 package jmri.jmrit.display;
 
-import jmri.CatalogTree;
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.Reporter;
-import jmri.jmrit.catalog.ImageIndexEditor;
-import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
+import jmri.*;
+import jmri.jmrit.catalog.*;
+import jmri.jmrit.roster.*;
 import jmri.util.JmriJFrame;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.awt.event.*;
+import java.util.*;
+import java.util.List;  // disambiguate with java.awt.List
 
 import javax.swing.*;
-import javax.swing.event.MouseInputAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.event.ListSelectionEvent;
-
-import java.util.ArrayList;
-import java.util.Iterator;
+import javax.swing.event.*;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items
@@ -58,7 +43,7 @@ import java.util.Iterator;
  * The title of the target and the editor panel are kept
  * consistent via the {#setTitle} method.
  *
- * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
+ * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007, 2009
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
  * @author  Matthew Harris Copyright: Copyright (c) 2009

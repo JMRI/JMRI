@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * SignalMastTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class SignalMastTableAction extends AbstractTableAction {
@@ -151,7 +151,7 @@ public class SignalMastTableAction extends AbstractTableAction {
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalMastTableAction.class.getName());
 
     public class MyComboBoxRenderer extends JComboBox implements TableCellRenderer {
-        public MyComboBoxRenderer(Vector items) {
+        public MyComboBoxRenderer(Vector<String> items) {
             super(items);
         }
     
@@ -172,7 +172,7 @@ public class SignalMastTableAction extends AbstractTableAction {
     }
     
     public class MyComboBoxEditor extends DefaultCellEditor {
-        public MyComboBoxEditor(Vector items) {
+        public MyComboBoxEditor(Vector<String> items) {
             super(new JComboBox(items));
         }
     }

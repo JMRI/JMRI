@@ -8,14 +8,13 @@ import jmri.jmrit.beantable.BeanTableDataModel;
 
 import javax.swing.table.*;
 import javax.swing.*;
-import java.awt.*;
 import java.util.*;
 
 /**
  * Data model for a SignalMastTable
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class SignalMastTableDataModel extends BeanTableDataModel {

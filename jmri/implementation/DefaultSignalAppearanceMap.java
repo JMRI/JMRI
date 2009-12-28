@@ -23,7 +23,7 @@ import jmri.SignalSystem;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean  {
 
@@ -61,18 +61,23 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean  {
         try {
             root = xf.rootFromFile(file);
             // get appearances
-            List l = root.getChild("appearances").getChildren("appearance");
+            @SuppressWarnings("unchecked")
+            List<Element> l = root.getChild("appearances").getChildren("appearance");
+            
             // find all appearances, include them by aspect name, 
             // add 'show' sub-elements as ints
             for (int i = 0; i < l.size(); i++) {
-                String name = ((Element)l.get(i)).getChild("aspectname").getText();
+                String name = l.get(i).getChild("aspectname").getText();
                 if (log.isDebugEnabled()) log.debug("aspect name "+name);
-                List c = ((Element)l.get(i)).getChildren("show");
+                
+                @SuppressWarnings("unchecked")
+                List<Element> c = ((Element)l.get(i)).getChildren("show");
+                
                 int[] appearances = new int[c.size()];
                 for (int j = 0; j < c.size(); j++) {
                     // note: includes setting name; redundant, but needed
                     int ival;
-                    String sval = ((Element)c.get(j)).getText().toUpperCase();
+                    String sval = c.get(j).getText().toUpperCase();
                     if (sval.equals("GREEN")) ival = SignalHead.GREEN;
                     else if (sval.equals("GREEN")) ival = SignalHead.GREEN;
                     else if (sval.equals("YELLOW")) ival = SignalHead.YELLOW;

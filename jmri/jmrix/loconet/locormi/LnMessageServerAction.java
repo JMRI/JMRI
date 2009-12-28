@@ -3,7 +3,6 @@ package jmri.jmrix.loconet.locormi;
 import javax.swing.AbstractAction;
 
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
@@ -15,7 +14,7 @@ import jmri.util.zeroconf.ZeroConfUtil;
  * use the LocoNet connection on this machine.
  * Copyright:    Copyright (c) 2002
  * @author      Alex Shepherd
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class LnMessageServerAction extends AbstractAction {
 
