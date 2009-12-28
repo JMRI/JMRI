@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.6 2009-12-28 05:58:31 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.7 2009-12-28 20:16:49 jacobsen Exp $ -->
 <title>JMRI: Signaling</title>
 
 <!-- Style -->
@@ -55,12 +55,15 @@ controlling parts of the layout.
 They can be used
 to configure custom signaling logic
 by filling out forms, without writing any code.
+<LI>JMRI 
+    <a href="../scripting/index.shtml">scripting</a>
+    provides a comprehensive programming capability
+    for controlling signals exactly as you'd like.
 <LI>The JMRI 
 <A HREF="#automat">Automation classes</A>
 makes it easy to code your own signal
 logic into the program.  This is how Nick Kulp's Cornwall Railroad 
 was signalled.
-<LI>JMRI scripting provides a comprehensive programming capability.
 <LI>JMRI provides a 
 <A HREF="#widgets">complete toolkit</A>
 to make it easy to
@@ -74,10 +77,13 @@ but you have more freedom to model exactly what you want.
 
 <P>
 In addition, there are people working on more advanced signaling
-logic within the JMRI project.  Although it's too early to talk
-in detail, the idea is to provide ways of driving semi-prototypical
-signaling logic, including CTC dispatching and interlocking, 
-without requiring the user to write any Java code.  The 
+capabilities within the JMRI project.  
+Although it's too early to talk
+in detail, the idea is to provide ways of driving 
+<a href="AspectSignaling.shtml">prototypical signaling based on aspects and appearances</a>
+along with CTC dispatching and interlocking, 
+without requiring the user to write any  scripting or Java code.
+The 
 <a href="http://groups.yahoo.com/group/jmriusers/">jmriusers discussion group</A>
 will have more info on this as it becomes available.
 
