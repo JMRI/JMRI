@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: AspectSignaling.shtml,v 1.1 2009-12-26 00:59:47 jacobsen Exp $ -->
+<!-- $Id: AspectSignaling.shtml,v 1.2 2009-12-28 05:58:31 jacobsen Exp $ -->
 <title>JMRI: Aspect Signaling</title>
 
 <!-- Style -->
@@ -23,16 +23,54 @@
 
 <H1>JMRI: Aspect Signaling</H1>
 <p class=subtitle>
-    Controling signaling in a prototypical manner
+Controling signaling in a prototypical manner
 </p>
 
+<a href="images/Rule282.png">
+    <img src="images/Rule282.png" height="241" width="159" align="right">
+</a>
 Protoypical signal systems present "aspects" to the engineer
-to tell him how to run his train.  Different signals may
+to tell him how to run his train. 
+The "Stop" aspect, for example, is pretty simple: Stop the train.  
+The "Approach medium" aspect indicates something more complicated:
+"Proceed approaching next signal at medium speed".  
+Each aspect has an associated "indication", which is usually 
+codified in the railroad's rule book.
+<p>
+Different signals may
 show an aspect using different combinations of 
 lights, semaphore positions, and/or placards; these are called
-"appearances".  For example, the "stop" aspect with be a single red
+"appearances".  For example, the "stop" aspect will be a single red
 light on a signal mast with one lamp, red over red lamps for a signal
-mast with two lamps, etc.
+mast with two lamps, etc.  
+
+<h2>JMRI Support for Aspect Signaling</h2>
+
+The original JMRI support for signals was via
+"Signal Heads", which could be set to specific
+appearances (colors).
+<p>
+
+Starting with JMRI 2.9.1 (early 2010), 
+JMRI also contained "Signal Mast" objects that represent an
+entire signal, not just an individual head.  A Signal Mast
+can operate multiple heads, as required to do full prototypical
+signaling based on aspects.
+
+<p>
+<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.png">
+   <img src="../../../package/jmri/jmrit/beantable/SignalMastTable.png" 
+        height="86" width="338" align="right">
+</a>
+Signal Masts are configured through the
+<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table</a>
+You add new ones with the "Add..."  button
+on the table, which takes you to the
+<a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">"Add Signal Mast" window</a>.
+
+<p>
+From the table, you can set individual signal masts to any aspect that they're able to
+display by clicking in the "Aspect" column.
 
 <h2>Available Signaling Systems</h2>
 The available signal system definitions are found in the 
@@ -45,17 +83,9 @@ directory.
 <dt>SPTCO-1960<dd>Southern Pacific Railway and Transportation Company 1960 rule book
 </dl>
 
-<h2>Creating a New Signaling System</h2>
-
-For now, you need to manually create a new directory under
-the "xml/signals" directory to hold your new signal definition.
-Then, provide these files:
-<ul>
-<li>index.shtml - Free-form decription of the signal system
-<li>aspects.xml - Define the complete set of available aspects
-<li>appearance-*.xml - One file for each type of SignalMast, defining
-        how to display each aspect.
-</ul>
+There are instructions for creating additional signal system
+definitions on
+<a href="DefineNewAspects.shtml">a separate page</a>.
 
 <!--#include virtual="/Footer" -->
 </body>

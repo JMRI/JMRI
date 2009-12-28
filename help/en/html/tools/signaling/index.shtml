@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.5 2009-09-26 22:48:34 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.6 2009-12-28 05:58:31 jacobsen Exp $ -->
 <title>JMRI: Signaling</title>
 
 <!-- Style -->
@@ -40,9 +40,9 @@ with signals on your layout.
 JMRI provides several different things that can help with this:
 <OL>
 <LI>The JMRI 
-<A HREF="#table">"Signal Table"</A>
+<A HREF="#table">"Signal Head Table"</A>
 tool lets you control the appearance
-of individual signals on your layout.  This can be useful for
+of individual signal heads on your layout.  This can be useful for
 debugging, for example.
 <LI>The JMRI 
 <A HREF="#logic">"Simple Signal Logic"</A>
@@ -92,7 +92,7 @@ will have more info on this as it becomes available.
 	and follow those instructions. Return here to read about what you did.
 	</p><ul>
 	<li><a href="#terms">Basic Vocabulary</a></li>
-	<li><a href="#table">The Signal Table</a></li>
+	<li><a href="#table">The Signal Head Table</a></li>
 	<li><a href="#intro">Introduction to Simple Signal Logic Tools</a>
 	</li><li><a href="#start">Getting Started with Simple Signal Logic</a>
 	</li><li><a href="#logix">Introduction to Logix Use</a>
@@ -115,21 +115,22 @@ if it changes color like  in a searchlight signal, or it may take multiple light
 to indicate a single aspect, for example in position light signals.</li>
 <li>
 <b>Mast</b> The pole that mounts one or more signal arms that (usually) control each
-individual track.</li>
+individual track, also used to refer to an entire signal made up of one or more heads.</li>
 <li><b>Distant Signal</b> The signal you are controlling shows the same or 
 more restrictive aspect as the next signal in the direction and route of travel.</li></ul>
 	
 <p><b>Some JMRI specific SSL and Signal terms:</b><br>
-<ul><li><b>Signal Table</b> The list of signals in JMRI. Signals must first be added into 
-the Signal Table before they may be included in a SSL entry or Logix.</li>
+<ul><li><b>Signal Head Table</b> The list of signal heads in JMRI. 
+Signal heads must first be added into 
+the Signal Head Table before they may be included in a SSL entry or Logix.</li>
 <li>
-<b>Triple Output</b> A signal head that has each aspect of the signal directly driven 
+<b>Triple Output Head</b> A signal head that has each aspect of the signal directly driven 
 from an individual output line. 
 The individual output lines are controlled by JMRI Turnout logic, and are controlled via the
 Turnout Table.
 Each aspect change requires that three turnout commands be sent.</li>
 <li>
-<b>Double Output</b> A signal head that uses just two output lines to indicate 4 signal aspects.
+<b>Double Output Head</b> A signal head that uses just two output lines to indicate 4 signal aspects.
 Usually these aspects will be Clear, Approach, Stop, and Dark. 
 The output lines are controlled by JMRI Turnout logic, and are controlled via the
 Turnout Table.
@@ -141,10 +142,12 @@ Each aspect change requires that two turnout commands be sent.</li>
 <li>
 <b>SE8c</b> A signal head controlled by a single turnout command per aspect change. One turnout command changes between 
 stop and clear, and the second turnout command changes between approach and dark.</li>
-<li> <b>Virtual</b> Virtual signals are JMRI internal signals with no actual hardware attached. Before the advent of Logix,
+<li> <b>Virtual</b> Virtual signals are JMRI internal signals with no actual hardware attached. 
+Before the advent of Logix,
 Virtual Signals were required to solve more complex operations than can be done with with a single SSL alone.</li>
 <li><b>Protected Sensor</b> The next block sensor/s following the signal you are controlling in the 
-direction and route of travel. The "protection" is to prevent a train from entering an occupied block without warning.</li>
+direction and route of travel. The "protection" is to prevent a train from entering an 
+occupied block without warning.</li>
 <li><b>Protected Signal</b> The next signal after the one you are controlling in the 
 direction and route of travel. The "protection" is to prevent a train from approaching a stop signal without sufficient warning to allow it to be stopped short of reaching the "protected" signal.</li>
 </li>
@@ -153,45 +156,46 @@ to control the signal. This will vary depending on your hardware, and must match
 </ul>
 
 <A name="table">
-<h3>Signal Table</h3></a>
+<h3>Signal Head Table</h3></a>
 
 <A href="../../../images/SigTable.gif"><IMG SRC="../../../images/SigTable.gif" ALIGN=RIGHT WIDTH="296" HEIGHT="355" HSPACE="0" VSPACE="0"></A>
-All the signals that JMRI knows about can be referenced
-using the "Signal Table" tool in the Tools menu of most JMRI programs.
+All the signal heads that JMRI knows about can be referenced
+using the "Signal Head Table" tool in the Tools menu of most JMRI programs.
 There are five columns in the table:
 <UL>
-<LI>The <b>system name</b> is assigned to the signal when it's created, 
+<LI>The <b>system name</b> is assigned to the signal head when it's created, 
 and can't be changed.
-<LI>If you're interested in having your signals carry "human readable"
+<LI>If you're interested in having your signal heads carry "human readable"
 names, you can click in the <b>User Name</b> column and change that information
 to whatever you want.
-<LI>As the signal changes, for whatever reason, the current
+<LI>As the signal head changes, for whatever reason, the current
 appearance will show in the <b>State</b> column of the table.  You can also click on the
 appearance button to cycle through the avilable appearances:
-red, yellow, green, flashing red, flashing yellow, flashing green, and dark. The 
-system hardware will follow these changes.
+red, yellow, green, flashing red, flashing yellow, flashing green, and dark. 
+(Some signal heads can also do lunar and flashing lunar)
+The system hardware will follow these changes.
 
 <LI>The check box in the <b>Lit</b> column lets you see whether the
 signal head on the layout is lit (checked) or stays dark (unchecked). This may 
 also be controlled automatically with the SSL "approach" lighting option or 
 from Logix. <i>Note:</i> This only affects the actual layout hardware, not any 
 panel indications nor signal state logic.
- <LI>The check box in the <b>Held</b> column shows the "held" property of the
+<LI>The check box in the <b>Held</b> column shows the "held" property of the
 signal, and allows you to change it.  This property may be used by CTC
 machine logic or Logix to say "Don't change this signal head from red, even if it 
 would be safe to do so, because I want to hold a train here".
 </UL>
 <A href="../../../images/SigAdd.gif"><IMG SRC="../../../images/SigAdd.gif" ALIGN=RIGHT WIDTH="181" HEIGHT="218" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
-<P>To define a new signal, click on the 
-<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml"><b>Add New Signal</b></a>
+<P>To define a new signal head, click on the 
+<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml"><b>Add New Signal Head</b></a>
 button.  It will
-prompt you for the signal type (controlled by turnout outputs; SE8c; etc), and
+prompt you for the signal head type (controlled by turnout outputs; SE8c; etc), and
 whatever setup information is needed for your choice.
 <P> This information is saved with the configuration in an XML file, along
 with control panel setup, Logix, Routes, and similar stuff.  For more information
-on creating and displaying panels, including how to show signals
+on creating and displaying panels, including how to show signal heads
 on your panels, please see the 
-<A HREF="../../apps/PanelPro/Panels.shtml">Panels help pages</a>
+<A HREF="../../apps/PanelPro/Panels.shtml">Panels help page</a>
 and the web pages on the 
 <A HREF="http://jmri.sourceforge.net/apps/PanelPro/Panels-Cornwall/Cornwall.html">Cornwall Railroad control panel</a>.	
 <a name="logic">
@@ -201,7 +205,7 @@ Simple Signal Logic (SSL)
 is a JMRI tool to enable the rapid setup of basic ABS style signaling. 
 	The SSL user interface is designed to be user friendly to
 	all users with basic familiarity with JMRI. SSL provides a means
-	for setting up basic signals in an intuitive manner, without the 
+	for setting up basic signaling in an intuitive manner, without the 
 	user having to be familiar with all of the logic necessary to 
 	account for the different aspects.
 	For more complex operations beyond the capability of SSL refer to the section on 
@@ -210,46 +214,49 @@ is a JMRI tool to enable the rapid setup of basic ABS style signaling.
 
 <A href="../../../images/SSLLogic.gif"><IMG SRC="../../../images/SSLLogic.gif" ALIGN=RIGHT WIDTH="354" HEIGHT="364" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
 
-Much of basic ABS signaling can be boiled down to "a signal goes red when a train
+Much of basic ABS signaling can be boiled down to "a signal head goes red when a train
 can't safely enter the block it protects; it goes yellow when the block following 
 the protected block can't be entered". Although that's a simplication, it can serve
 as a powerful starting point for understanding signaling logic.
 <P>
 
 The Simple Signal Logic tool allows you to configure JMRI to 
-use this basic ABS type of logic to set the appearance of a signal. 
+use this basic ABS type of logic to set the appearance of a signal head. 
 Using the panel, you enter information on:
 <UL>
-<li><b>Signal Named</b> The signal being driven.</li><li><b>Protects Sensor/s</b> Which sensors (occupancy detectors) cover the block
+<li><b>Signal Head Named</b> The signal hread being driven.</li>
+<li><b>Protects Sensor/s</b> Which sensors (occupancy detectors) cover the block
 immediately past the signal. When any of these sensors show "active" the 
-signal will be set to red.</li>
+signal head will be set to red.</li>
 <li><b>Red When Turnout</b> If the block contains a turnout, 
 configure the turnout name and use the selection button to choose whether you're entering
-the closed or thrown leg. The signal will be set to red
+the closed or thrown leg. The signal head will be set to red
 whenever the turnout is set against this track.</li>
-<li><b>Protects Signal</b> The next signal that the train will reach;
-this signal will be set yellow if the next signal is
+<li><b>Protects Signal</b> The next signal head that the train will reach;
+this signal head will be set yellow if the next signal head is
 red.</li>  
-<li><b>With Flashing Yellow</b> If the checkbox is checked, the signal will be set
+<li><b>With Flashing Yellow</b> If the checkbox is checked, the signal head will be set
 flashing yellow (JMRI will alternate between dark and yellow) if the
-next protected signal is yellow, thereby giving four-block signaling.</li>
-<li><b>Limited Speed</b> If the checkbox is checked, this signal will be set
+next protected signal head is yellow, thereby giving four-block signaling.</li>
+<li><b>Limited Speed</b> If the checkbox is checked, this signal head will be set
 to yellow as the least restrictive aspect.</li>
 <li><b>Is Distant Signal</b> If the checkbox is checked, this signal will be set
-to the most restrictive aspect of this signal or the next protected signal.</li>
-<li><b>Approach Lighting Sensor</b> The sensor that controls the lighting of this signal. Only the
-actual hardware signal will go dark. Panel indicators will show the normal signal aspect. 
+to the most restrictive aspect of this signal head or the next protected signal head.</li>
+<li><b>Approach Lighting Sensor</b> The sensor that controls the lighting of this signal head. Only the
+actual hardware signal head will go dark. Panel indicators will show the normal signal appearance. 
 Leave this entry blank to always show lit.</li>
-<li><b>Facing Point Turnout</b> The signal located on the single track line, 
+<li><b>Facing Point Turnout</b> The signal head is located on the single track line, 
 facing a choice of two or more tracks in the direction of travel.</li>
-<li><b>Trailing Point Turnout</b> The signals located on the double track line, 
-facing a single track in the direction of travel.</li></ul><p>
+<li><b>Trailing Point Turnout</b> The signal head is located on the double track line, 
+facing a single track in the direction of travel.</li></ul>
 
-The case of a facing point turnout which leads to two different "Protected Signals" is also covered although the above figure doesn't show it.
-
+<p>
+The case of a facing point turnout which leads to two different "Protected Signal Heads" 
+is also covered although the above figure doesn't show it.
 If a single signal head is used to control both branches, then choose "On Facing-Point
 Turnout". If a different head will control each route, then simply choose "Main"
 or "Diverging" leg of turnout, as required for each one.
+
 <p>Pause your mouse over any entry or item in the SSL creation window for a brief "tooltip" help 
 reminder.</p>
 

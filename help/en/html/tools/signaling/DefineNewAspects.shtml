@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id: DefineNewAspects.shtml,v 1.1 2009-12-28 05:58:31 jacobsen Exp $ -->
+<title>JMRI: Defining Your Own Signaling System</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+
+<H1>JMRI: Defining Your Own Signaling System</H1>
+
+This page describes how to define a new signaling system
+to JMRI.  
+<p>
+We go through creating one from scratch, but 
+it's often easier to copy and modify one of the existing 
+ones in the 
+<a href="http://jmri.org/xml/signals">xml/signals<a>
+directory.
+
+<h2>Creating a New Signaling System</h2>
+
+For now, you need to manually create a new directory under
+the "xml/signals" directory to hold your new signal definition.
+Then, provide these files:
+<ul>
+<li>index.shtml - Free-form decription of the signal system
+<li>aspects.xml - Define the complete set of available aspects
+<li>appearance-*.xml - One file for each type of SignalMast, defining
+        how to display each aspect.
+</ul>
+
+<h3>Create a new index.shtml file</h3>
+
+This is only a description, but it's important to do it first
+so that you record the details of what you've done.
+<p>
+If you're capturing a prototypical system, 
+record what you know about it:  The railroad, region/district, year, 
+where you found the information, etc.
+<p>
+If you're making up your own system, describe it in some
+detail so that you can come back to it later on and 
+remember what you had in mind.  
+
+<h3>Create a new aspects.xml file</h3>
+
+This file lists <em>all</em> the aspects that can appear in
+this signaling system.  (Most model railroads only model one
+railroad, so there's only one system present, but it is possible
+to use more than one).  You can come back and add more later
+if needed, but it's better to enter them all at the beginning
+because the names will be more consistent, etc.
+
+<p>
+Most of the file is blocks that look like this:
+<code><pre>
+    &lt;aspect&gt;
+      &lt;name&gt;&lt;/name&gt;
+      &lt;title&gt;&lt;/title&gt;
+      &lt;indication&gt;&lt;/indication&gt;
+      &lt;description&gt;&lt;/description&gt;
+      &lt;reference&gt;&lt;/reference&gt;
+      &lt;comment&gt;&lt;/comment&gt;
+    &lt;/aspect&gt;
+</pre></code>
+
+You have to fill in the name element, but the others are optional.
+The title and indication elements can only be included once.
+The description, reference and comment elements can be included
+as many times as you'd like.
+
+<h3>Create appearance-*.xml files</h3>
+
+For each kind of signal on the layout (one searchlight,
+two searchlight, dwarf, semaphore, etc), you need to
+create an appearance file.
+
+<p>
+Not every aspect needs to be defined in every file, as
+not every type of signal can show every aspect.
+
+<p>
+Each aspect that the signal can show does need to be 
+described with a block like this:
+
+<code><pre>
+    &lt;appearance&gt;
+      &lt;aspectname&gt;Clear&lt;/aspectname&gt;
+      &lt;show&gt;green&lt;/show&gt;
+      &lt;show&gt;red&lt;/show&gt;
+      &lt;reference&gt;&lt;/reference&gt;
+    &lt;/appearance&gt;
+</pre></code>
+
+The "aspectname" needs to be at the start, followed by zero or more
+"show" elements. 
+The show element(s) will be used to set the signalheads that
+make up the signal properly to display this aspect.
+You can have as many "reference" elements as you'd like, they're
+for user-readable documentation.
+
+<h3>Check Your Work</h3>
+
+You can use the "Check XML File" and "Validate XML File"
+tools under the JMRI "Debug" window to check your files.
+The first checks the basic format: Are all the &lt; and &gt; 
+characters in the right place? Etc.  The second makes sure that 
+the right elements are in the right places, and is a little more
+intensive.
+
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

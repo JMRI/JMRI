@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalMastTable.shtml,v 1.2 2009-12-27 18:39:54 jacobsen Exp $ -->
+<!-- $Id: SignalMastTable.shtml,v 1.3 2009-12-28 05:58:31 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -26,10 +26,15 @@
 <H1>The Signal Mast Table
 </H1>
 
-<A href="../../../../html/tools/images/SigMastTable.gif">
-    <IMG SRC="../../../../html/tools/images/SigMastTable.gif" ALIGN=RIGHT WIDTH="375" HEIGHT="166" HSPACE="0" VSPACE="0" ALT="Signal Mast Table figure">
+<a href="SignalMastTable.png">
+   <img src="SignalMastTable.png" 
+        height="86" width="338" align="right">
 </a>
 
+<p>
+For more information on Signal Masts and aspect signaling, 
+see the 
+<a href="../../../../html/tools/signaling/AspectSignaling.shtml">introductory page</a>.
 
 <P>To define a new signal mast, click on the 
 "<A HREF="SignalMastAddEdit.shtml">Add.." button</a>.
