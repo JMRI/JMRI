@@ -23,7 +23,7 @@ IF:basic:one-searchlight:IH1
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SingleHeadSignalMast extends AbstractSignalMast {
 
@@ -95,6 +95,10 @@ public class SingleHeadSignalMast extends AbstractSignalMast {
             v.add(e.nextElement());
         }
         return v;
+    }
+
+    public SignalSystem getSignalSystem() {
+        return systemDefn;
     }
 
     List<NamedBeanHandle<SignalHead>> heads;

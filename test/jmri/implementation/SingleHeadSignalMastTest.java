@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the SingleHeadSignalMast implementation
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SingleHeadSignalMastTest extends TestCase {
 
@@ -108,6 +108,15 @@ public class SingleHeadSignalMastTest extends TestCase {
 	        InstanceManager.signalHeadManagerInstance().getSignalHead("IH2").getAppearance());
 	}
 
+	public void testSignalSystemLink() {
+	    SignalMast s = InstanceManager.signalMastManagerInstance().provideSignalMast("IF$shsm:basic:one-searchlight:IH2");
+	    
+	    SignalSystem sy = s.getSignalSystem();
+	    Assert.assertNotNull(sy);
+	    
+	    Assert.assertEquals("Proceed", s.getSignalSystem().getProperty("Clear", "indication"));
+    }
+    
 	// from here down is testing infrastructure
 
 	public SingleHeadSignalMastTest(String s) {
