@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: appearancetable.xsl,v 1.1 2009-12-24 04:33:52 jacobsen Exp $ -->
+<!-- $Id: appearancetable.xsl,v 1.2 2009-12-28 22:43:12 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI appearance table file into displayable HTML    -->
 
@@ -60,11 +60,15 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
 <!-- Overall table display -->
 <xsl:template match="appearancetable">
-    For aspect table: <xsl:value-of select="aspecttable"/>
+    For aspect table: 
+    <a href="aspects.xml">
+        <xsl:value-of select="aspecttable"/>
+    </a>
     <p/>
     Name: <xsl:value-of select="name"/><p/>
     <xsl:value-of select="reference"/><p/>
     <xsl:value-of select="description"/><p/>
+
     <!-- show the appearances -->
     <xsl:apply-templates select="appearances"/>
 </xsl:template>
@@ -72,7 +76,68 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Display each appearance -->
 <xsl:template match="appearances/appearance">
 <h3><xsl:value-of select="aspectname"/></h3>
+    
+    <!-- grab stuff from aspect.xml file -->
+    <!-- set the 'matchaspect' variable to the name of the aspect we're doing now -->
+    <xsl:variable name="matchaspect"><xsl:value-of select="aspectname" /></xsl:variable>
+
+    <!-- then compare to each aspect name in aspects.xml for match -->
+    <xsl:for-each select="document('http:aspects.xml')/aspecttable/aspects/aspect">
+        <!-- looking at all aspects to find the one matching matchaspect -->
+        <xsl:if test="name = $matchaspect">
+            <!-- now current node is match in aspects.xml -->
+
+            <!-- show title element if it exists -->
+            <xsl:for-each select="title">
+                <xsl:text>Title: </xsl:text>
+                <xsl:value-of select="." />
+                <br/>
+            </xsl:for-each>
+
+            <!-- show indication element if it exists -->
+            <xsl:for-each select="indication">
+                <xsl:text>Indication: </xsl:text>
+                <xsl:value-of select="." />
+                <br/>
+            </xsl:for-each>
+            
+            <!-- show description element(s) if any -->
+            <xsl:for-each select="description">
+                <xsl:text>Description: </xsl:text>
+                <xsl:value-of select="." />
+                <br/>
+            </xsl:for-each>
+            
+            <!-- show reference element(s) if any -->
+            <xsl:for-each select="reference">
+                <xsl:text>Aspect reference: </xsl:text>
+                <xsl:value-of select="." />
+                <br/>
+            </xsl:for-each>
+            
+            <!-- show comment element(s) if any -->
+            <xsl:for-each select="comment">
+                <xsl:text>Comment: </xsl:text>
+                <xsl:value-of select="." />
+                <br/>
+            </xsl:for-each>
+            
+            <p/>
+        </xsl:if>
+    </xsl:for-each>
+
+    <!-- show rest of element -->
     <xsl:apply-templates/>
+    
+</xsl:template>
+
+<!-- Display imagelink as image -->
+<xsl:template match="imagelink">
+    <xsl:element name="img">
+        <xsl:attribute name="src">
+            <xsl:value-of select="."/>
+        </xsl:attribute>
+    </xsl:element>
 </xsl:template>
 
 <!-- already shown -->
@@ -83,7 +148,7 @@ Show: <xsl:value-of select="."/><br/>
 </xsl:template>
 
 <xsl:template match="reference">
-<p/>Reference: <xsl:value-of select="."/>
+<p/>Appearance reference: <xsl:value-of select="."/>
 </xsl:template>
 
 </xsl:stylesheet>
