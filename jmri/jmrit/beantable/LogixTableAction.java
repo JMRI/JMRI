@@ -75,7 +75,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.53 $
+ * @version $Revision: 1.54 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -347,7 +347,7 @@ public class LogixTableAction extends AbstractTableAction {
 	LogixManager _logixManager = null; // set when LogixAction is created
 	boolean _showReminder = false;
     boolean _suppressReminder = false;
-    boolean _suppressDisable = false;
+    boolean _suppressIndirectRef = false;
 
 	// current focus variables
 	Logix _curLogix = null;
@@ -709,8 +709,8 @@ public class LogixTableAction extends AbstractTableAction {
 			Logix x = _logixManager.getByUserName(uName);
 			if (x != null) {
 				// Logix with this user name already exists
-				javax.swing.JOptionPane.showMessageDialog(addLogixFrame, rbx
-						.getString("Error3"), rbx.getString("ErrorTitle"),
+				javax.swing.JOptionPane.showMessageDialog(addLogixFrame,
+						rbx.getString("Error3"), rbx.getString("ErrorTitle"),
 						javax.swing.JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
@@ -723,8 +723,8 @@ public class LogixTableAction extends AbstractTableAction {
 		String sName = _systemName.getText().toUpperCase().trim();
 		if ( (sName.length() < 1)) {
 			// Entered system name is blank or too short
-			javax.swing.JOptionPane.showMessageDialog(addLogixFrame, rbx
-					.getString("Error8"), rbx.getString("ErrorTitle"),
+			javax.swing.JOptionPane.showMessageDialog(addLogixFrame,
+					 rbx.getString("Error8"), rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -3217,7 +3217,6 @@ public class LogixTableAction extends AbstractTableAction {
 	 * false immediately after finding an error, even if there might be more
 	 * errors.
 	 */
-	@SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
     boolean validateVariable() {
         int itemType = _variableTypeBox.getSelectedIndex();
         int testType = 0;
@@ -3348,7 +3347,6 @@ public class LogixTableAction extends AbstractTableAction {
 	 * false immediately after finding an error, even if there might be more
 	 * errors.
 	 */
-	@SuppressWarnings("fallthrough")
 	boolean validateAction() {
         int itemType = _actionItemTypeBox.getSelectedIndex();
         int actionType = Conditional.ACTION_NONE;
@@ -3363,11 +3361,34 @@ public class LogixTableAction extends AbstractTableAction {
         String actionString = _shortActionString.getText().trim();
         _curAction.setActionString("");
         _curAction.setActionData(-1);
+        boolean referenceByMemory = false;
+        if (name.charAt(0)== '@') {
+            String mName = name.substring(1);
+            if (!_suppressIndirectRef)
+            {
+                int response = JOptionPane.showConfirmDialog(_editActionFrame, java.text.MessageFormat.format(
+                                                    rbx.getString("ConfirmIndirectReference"), mName),
+                                                    rbx.getString("ConfirmTitle"), JOptionPane.YES_NO_CANCEL_OPTION,
+                                                    JOptionPane.QUESTION_MESSAGE);
+                if (response==JOptionPane.NO_OPTION) {
+                    return false;
+                } else if (response==JOptionPane.CANCEL_OPTION) {
+                    _suppressIndirectRef = true;
+                }
+            }
+            mName = validateMemoryReference(mName);
+            if (mName == null) {
+                return false;
+            }
+            referenceByMemory = true;
+        }
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
-                name = validateSensorReference(name);
-                if (name == null) {
-                    return false;
+                if (!referenceByMemory){
+                    name = validateSensorReference(name);
+                    if (name == null) {
+                        return false;
+                    }
                 }
                 actionType = Conditional.ITEM_TO_SENSOR_ACTION[selection-1];
                 if ((actionType==Conditional.ACTION_RESET_DELAYED_SENSOR) || 
@@ -3392,9 +3413,11 @@ public class LogixTableAction extends AbstractTableAction {
                 _curAction.setDeviceName(name);
                 break;
             case Conditional.ITEM_TYPE_TURNOUT:
-                name = validateTurnoutReference(name);
-                if (name == null) {
-                    return false;
+                if (!referenceByMemory){
+                    name = validateTurnoutReference(name);
+                    if (name == null) {
+                        return false;
+                    }
                 }
                 actionType = Conditional.ITEM_TO_TURNOUT_ACTION[selection-1];
                 if ((actionType==Conditional.ACTION_RESET_DELAYED_TURNOUT) || 
@@ -3427,9 +3450,11 @@ public class LogixTableAction extends AbstractTableAction {
                 _curAction.setDeviceName(name);
                 break;
             case Conditional.ITEM_TYPE_LIGHT:
-                name = validateLightReference(name);
-                if (name == null) {
-                    return false;
+                if (!referenceByMemory){
+                    name = validateLightReference(name);
+                    if (name == null) {
+                        return false;
+                    }
                 }
                 actionType = Conditional.ITEM_TO_LIGHT_ACTION[selection-1];
                 if (actionType==Conditional.ACTION_SET_LIGHT_INTENSITY) {
@@ -3480,44 +3505,55 @@ public class LogixTableAction extends AbstractTableAction {
                 _curAction.setDeviceName(name);
                 break;
             case Conditional.ITEM_TYPE_SIGNALHEAD:
-                name = validateSignalHeadReference(name);
-                if (name == null) {
-                    return false;
+                if (!referenceByMemory){
+                    name = validateSignalHeadReference(name);
+                    if (name == null) {
+                        return false;
+                    }
                 }
                 actionType = Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[selection-1];
                 if (actionType==Conditional.ACTION_SET_SIGNAL_APPEARANCE) {
                     int state = AbstractSignalHead.validStates[_actionBox.getSelectedIndex()];
-                    SignalHead h = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-                    if (DefaultConditional.getIndexInTable(h.getValidStates(), state) >= 0) {
-                        _curAction.setActionData(state);
-                    } else {
-                        messageInvalidSignalHeadAppearance(name, (String)_actionBox.getSelectedItem());
-                        return false;
+                    if (!referenceByMemory){
+                        SignalHead h = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+                        if (DefaultConditional.getIndexInTable(h.getValidStates(), state) < 0) {
+                            messageInvalidSignalHeadAppearance(name, (String)_actionBox.getSelectedItem());
+                            return false;
+                        }
                     }
+                    _curAction.setActionData(state);
                 }
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
-                name = validateSignalHeadReference(name);
-                if (name == null) {
-                    return false;
+                if (!referenceByMemory){
+                    name = validateSignalHeadReference(name);
+                    if (name == null) {
+                        return false;
+                    }
                 }
                 actionType = Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[selection-1];
                 if (actionType==Conditional.ACTION_SET_SIGNAL_APPEARANCE) {
                     int state = AbstractSignalHead.validStates[_actionBox.getSelectedIndex()];
-                    SignalHead h = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-                    if (DefaultConditional.getIndexInTable(h.getValidStates(), state) >= 0) {
-                        _curAction.setActionData(state);
-                    } else {
-                        messageInvalidSignalHeadAppearance(name, (String)_actionBox.getSelectedItem());
-                        return false;
+                    if (!referenceByMemory){
+                        SignalHead h = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+                        if (DefaultConditional.getIndexInTable(h.getValidStates(), state) < 0) {
+                            messageInvalidSignalHeadAppearance(name, (String)_actionBox.getSelectedItem());
+                            return false;
+                        }
                     }
+                    _curAction.setActionData(state);
                 }
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 break;
             case Conditional.ITEM_TYPE_MEMORY:
+                if (referenceByMemory){
+                    javax.swing.JOptionPane.showMessageDialog(_editActionFrame, rbx.getString("Warn6"), rbx.getString("WarnTitle"),
+                            javax.swing.JOptionPane.WARNING_MESSAGE);
+                    return false;
+                }
                 name = validateMemoryReference(name);
                 if (name == null) {
                     return false;
@@ -3534,18 +3570,22 @@ public class LogixTableAction extends AbstractTableAction {
                 _curAction.setActionString(actionString);
                 break;
             case Conditional.ITEM_TYPE_LOGIX:
-                name = validateLogixReference(name);
-                if (name == null) {
-                    return false;
+                if (!referenceByMemory){
+                    name = validateLogixReference(name);
+                    if (name == null) {
+                        return false;
+                    }
                 }
                 actionType = Conditional.ITEM_TO_LOGIX_ACTION[selection-1];
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 break;
             case Conditional.ITEM_TYPE_WARRANT:
-                name = validateWarrantReference(name);
-                if (name == null) {
-                    return false;
+                if (!referenceByMemory){
+                    name = validateWarrantReference(name);
+                    if (name == null) {
+                        return false;
+                    }
                 }
                 actionType = Conditional.ITEM_TO_WARRANT_ACTION[selection-1];
                 _actionNameField.setText(name);
@@ -3576,9 +3616,11 @@ public class LogixTableAction extends AbstractTableAction {
                 if (actionType==Conditional.ACTION_PLAY_SOUND) {
                     _curAction.setActionString(_longActionString.getText().trim());
                 } else if (actionType==Conditional.ACTION_CONTROL_AUDIO) {
-                    name = validateAudioReference(name);
-                    if (name == null) {
-                        return false;
+                    if (!referenceByMemory){
+                        name = validateAudioReference(name);
+                        if (name == null) {
+                            return false;
+                        }
                     }
                     _actionNameField.setText(name);
                     _curAction.setDeviceName(name);
@@ -3627,9 +3669,11 @@ public class LogixTableAction extends AbstractTableAction {
             case Conditional.ITEM_TYPE_OTHER:
                 actionType = Conditional.ITEM_TO_OTHER_ACTION[selection-1];
                 if (actionType==Conditional.ACTION_TRIGGER_ROUTE) {
-                    name = validateRouteReference(name);
-                    if (name == null) {
-                        return false;
+                    if (!referenceByMemory){
+                        name = validateRouteReference(name);
+                        if (name == null) {
+                            return false;
+                        }
                     }
                     _actionNameField.setText(name);
                     _curAction.setDeviceName(name);
