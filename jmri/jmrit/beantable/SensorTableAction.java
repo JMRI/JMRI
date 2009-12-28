@@ -2,7 +2,6 @@
 
 package jmri.jmrit.beantable;
 
-import jmri.*;
 import jmri.util.JmriJFrame;
 
 import java.awt.event.ActionEvent;
@@ -15,7 +14,7 @@ import javax.swing.*;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 
 public class SensorTableAction extends AbstractTableAction {

@@ -43,7 +43,7 @@ import jmri.managers.DefaultRouteManager;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.53 $
+ * @version			$Revision: 1.54 $
  */
 public class InstanceManager {
 
@@ -58,7 +58,6 @@ public class InstanceManager {
         l.add(val);
     }
     
-    @SuppressWarnings("unchecked")
     static public <T> List<Object> getList(Class<T> type) {
         return managerLists.get(type);
     }

@@ -2,12 +2,9 @@
 
 package jmri.jmrit.beantable.signalmast;
 
-import jmri.*;
 import jmri.util.JmriJFrame;
 
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
 
 import javax.swing.*;
 import java.util.ResourceBundle;
@@ -16,7 +13,7 @@ import java.util.ResourceBundle;
  * JFrame to create a new SignalMast
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class AddSignalMastJFrame extends JmriJFrame {

@@ -10,7 +10,6 @@ import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
-import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Layout;
 import org.apache.log4j.Level;
