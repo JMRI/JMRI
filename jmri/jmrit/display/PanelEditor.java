@@ -604,7 +604,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                         "resources/icons/smallschematics/searchlights/left-green-marker.gif");
                     editor.setIcon(3, "SignalHeadStateDark",
                         "resources/icons/smallschematics/searchlights/left-dark-marker.gif");
-                    editor.setIcon(4, "SIgnalHeadStateHeld",
+                    editor.setIcon(4, "SignalHeadStateHeld",
                         "resources/icons/smallschematics/searchlights/left-held-marker.gif");
                     editor.setIcon(5, "SignalHeadStateLunar",
                         "resources/icons/smallschematics/searchlights/left-lunar-marker.gif");
@@ -952,7 +952,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         l.setGreenIcon(editor.getIcon("SignalHeadStateGreen"));
         l.setFlashGreenIcon(editor.getIcon("SignalHeadStateFlashingGreen"));
         l.setDarkIcon(editor.getIcon("SignalHeadStateDark"));
-        l.setHeldIcon(editor.getIcon("SIgnalHeadStateHeld"));
+        l.setHeldIcon(editor.getIcon("SignalHeadStateHeld"));
         l.setSignalHead(editor.getTableSelection().getDisplayName());
         setNextLocation(l);
         putLabel(l);
