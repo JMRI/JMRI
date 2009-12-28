@@ -1,6 +1,6 @@
 // AddSignalMastJFrame.java
 
-package jmri.jmrit.beantable.sensor;
+package jmri.jmrit.beantable.signalmast;
 
 import jmri.*;
 import jmri.util.JmriJFrame;
@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
  * JFrame to create a new SignalMast
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class AddSignalMastJFrame extends JmriJFrame {

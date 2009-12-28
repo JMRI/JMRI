@@ -1,6 +1,6 @@
 // AddSignalMastPanel.java
 
-package jmri.jmrit.beantable.sensor;
+package jmri.jmrit.beantable.signalmast;
 
 import jmri.*;
 
@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
  * JPanel to create a new SignalMast
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class AddSignalMastPanel extends JPanel {

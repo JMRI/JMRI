@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * SignalMastTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class SignalMastTableAction extends AbstractTableAction {
@@ -143,7 +143,7 @@ public class SignalMastTableAction extends AbstractTableAction {
     
     void addPressed(ActionEvent e) {
         if (addFrame==null) {
-            addFrame = new jmri.jmrit.beantable.sensor.AddSignalMastJFrame();
+            addFrame = new jmri.jmrit.beantable.signalmast.AddSignalMastJFrame();
         }
         addFrame.setVisible(true);
     }
