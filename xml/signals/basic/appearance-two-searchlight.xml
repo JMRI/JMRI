@@ -16,30 +16,40 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <show>red</show>
+      <imagelink>http:/jmri.org/resources/icons/smallschematics/searchlights/left-green-high.gif</imagelink>
+      <imagelink>http:/jmri.org/resources/icons/smallschematics/searchlights/left-red-high.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <show>red</show>
+      <imagelink>http:/jmri.org/resources/icons/smallschematics/searchlights/left-yellow-high.gif</imagelink>
+      <imagelink>http:/jmri.org/resources/icons/smallschematics/searchlights/left-red-high.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
       <show>red</show>
+      <imagelink>http:/jmri.org/resources/icons/smallschematics/searchlights/left-red-high.gif</imagelink>
+      <imagelink>http:/jmri.org/resources/icons/smallschematics/searchlights/left-red-high.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>red</show>
       <show>yellow</show>
+      <imagelink>http:/jmri.org/resources/icons/smallschematics/searchlights/left-red-high.gif</imagelink>
+      <imagelink>http:/jmri.org/resources/icons/smallschematics/searchlights/left-yellow-high.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Medium clear</aspectname>
       <show>red</show>
       <show>green</show>
+      <imagelink>http:/jmri.org/resources/icons/smallschematics/searchlights/left-red-high.gif</imagelink>
+      <imagelink>http:/jmri.org/resources/icons/smallschematics/searchlights/left-green-high.gif</imagelink>
     </appearance>
 
 
