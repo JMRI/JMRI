@@ -10,7 +10,7 @@ import java.io.*;
  *
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Bob Jacobsen    Copyright (C) 2009
- *	@version $Revision: 1.1 $
+ *	@version $Revision: 1.2 $
  */
 
 public class ZeroConfUtil {
@@ -30,7 +30,7 @@ public class ZeroConfUtil {
         try {
             serverName = java.net.InetAddress.getLocalHost().getHostName();
         } catch (IOException e) {
-            serverName = "WiThrottle";
+            serverName = defaultName;
         }
 
         //	Name string of ServiceInfo cannot have a '.' in it.
@@ -40,8 +40,9 @@ public class ZeroConfUtil {
         } else if (dotIndex > 0) {	//	Has a dot, name will be up to dot
             return serverName.substring(0, dotIndex);
         } else {	//	Give up, assign generic name
-            log.warn("Setting default name \""+defaultName+"\" for service discovery");
-            return defaultName;
+            String genericName = "JMRI Server";
+            log.warn("Setting default name \""+genericName+"\" for service discovery");
+            return genericName;
         }
     }
     
