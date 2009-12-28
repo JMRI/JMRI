@@ -6,9 +6,9 @@
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
   <aspecttable>basic</aspecttable>
-  <name>One Seachlight</name>
-  <reference></reference>
-  <description></description>
+  <name>Single searchlight high signal</name>
+  <reference>(similar to basic signals described in various magazine articles)</reference>
+  <description>A simple signal for use as e.g. a block signal</description>
   
   <appearances>
 

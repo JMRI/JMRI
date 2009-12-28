@@ -6,9 +6,9 @@
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
   <aspecttable>basic</aspecttable>
-  <name>Two Seachlights</name>
-  <reference></reference>
-  <description></description>
+  <name>Double searchlight high signal</name>
+  <reference>(similar to basic signals described in various magazine articles)</reference>
+  <description>A two-headed signal for use at e.g. entrances to sidings</description>
   
   <appearances>
 
