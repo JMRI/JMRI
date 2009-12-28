@@ -14,7 +14,8 @@ package jmri;
  * <p>
  * You'll have one of these objects for each signaling _system_ on
  * your railroad.  In turn, these will be used by 1 to N 
- * specific mappings to appearances, see {@link SignalAppearanceMap}.
+ * specific mappings to appearances, see
+ * e.g. {@link jmri.implementation.DefaultSignalAppearanceMap}.
  * <p>
  * Insertion order is preserved when retrieving keys.
  * <hr>
@@ -32,7 +33,7 @@ package jmri;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2009
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public interface SignalSystem extends NamedBean {
 
