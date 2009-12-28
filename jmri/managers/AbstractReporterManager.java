@@ -3,13 +3,13 @@
 package jmri.managers;
 
 import jmri.*;
-import jmri.implementation.AbstractManager;
+import jmri.managers.AbstractManager;
 
 /**
  * Abstract partial implementation of a ReporterManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public abstract class AbstractReporterManager extends AbstractManager
     implements ReporterManager {

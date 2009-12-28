@@ -5,7 +5,7 @@ package jmri.managers;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
-import jmri.implementation.AbstractManager;
+import jmri.managers.AbstractManager;
 
 /**
  * Abstract partial implementation of an AudioManager.
@@ -25,7 +25,7 @@ import jmri.implementation.AbstractManager;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public abstract class AbstractAudioManager extends AbstractManager
     implements AudioManager {

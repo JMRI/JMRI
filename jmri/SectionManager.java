@@ -7,7 +7,7 @@ import jmri.jmrit.display.LayoutEditor;
 import java.util.List;
 import java.util.ArrayList;
 
-import jmri.implementation.AbstractManager;
+import jmri.managers.AbstractManager;
 
 /**
  * Basic Implementation of a SectionManager.
@@ -35,7 +35,7 @@ import jmri.implementation.AbstractManager;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SectionManager extends AbstractManager
     implements java.beans.PropertyChangeListener {

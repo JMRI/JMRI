@@ -43,7 +43,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.89 $
+ * @version     $Revision: 1.90 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -74,7 +74,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         
         // install shutdown manager
         InstanceManager.setShutDownManager(
-                new jmri.implementation.DefaultShutDownManager());
+                new jmri.managers.DefaultShutDownManager());
         
         // add the default shutdown task to save blocks
         // as a special case, register a ShutDownTask to write out blocks

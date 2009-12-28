@@ -2,7 +2,7 @@
 
 package jmri.jmrit.display;
 
-import jmri.implementation.AbstractManager;
+import jmri.managers.AbstractManager;
 import jmri.Sensor;
 import jmri.Block;
 import jmri.SignalHead;
@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class LayoutBlockManager extends AbstractManager {
 

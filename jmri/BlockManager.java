@@ -2,7 +2,7 @@
 
 package jmri;
 
-import jmri.implementation.AbstractManager;
+import jmri.managers.AbstractManager;
 
 /**
  * Basic Implementation of a BlockManager.
@@ -27,7 +27,7 @@ import jmri.implementation.AbstractManager;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2006
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class BlockManager extends AbstractManager
     implements java.beans.PropertyChangeListener {

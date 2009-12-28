@@ -3,7 +3,7 @@
 package jmri.managers;
 
 import jmri.*;
-import jmri.implementation.AbstractManager;
+import jmri.managers.AbstractManager;
 
 
 /**
@@ -17,7 +17,7 @@ import jmri.implementation.AbstractManager;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class AbstractSignalHeadManager extends AbstractManager
     implements SignalHeadManager, java.beans.PropertyChangeListener {

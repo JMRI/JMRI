@@ -2,7 +2,7 @@
 
 package jmri.jmrit.logix;
 
-import jmri.implementation.AbstractManager;
+import jmri.managers.AbstractManager;
 
 /**
  * Basic Implementation of a OBlockManager.
@@ -29,7 +29,7 @@ import jmri.implementation.AbstractManager;
  *
  * @author      Bob Jacobsen Copyright (C) 2006
  * @author      Pete Cressman Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class OBlockManager extends AbstractManager
     implements java.beans.PropertyChangeListener {

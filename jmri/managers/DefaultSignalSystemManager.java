@@ -4,7 +4,7 @@ package jmri.managers;
 
 import jmri.*;
 import jmri.jmrit.XmlFile;
-import jmri.implementation.AbstractManager;
+import jmri.managers.AbstractManager;
 import jmri.implementation.DefaultSignalSystem;
 
 import java.io.*;
@@ -22,7 +22,7 @@ import org.jdom.Element;
  *
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class DefaultSignalSystemManager extends AbstractManager
     implements SignalSystemManager, java.beans.PropertyChangeListener {

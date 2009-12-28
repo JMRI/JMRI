@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.implementation package
  * @author			Bob Jacobsen  2009
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 
 package jmri.implementation;
@@ -33,7 +33,7 @@ public class ImplementationTest extends TestCase {
 		suite.addTest(DefaultSignalSystemTest.suite());
 		suite.addTest(DefaultSignalAppearanceMapTest.suite());
 		suite.addTest(SE8cSignalHeadTest.suite());
-        suite.addTest(SingleHeadSignalMastTest.suite());
+        suite.addTest(SignalHeadSignalMastTest.suite());
         suite.addTest(SignalSystemFileCheckTest.suite());
 
         suite.addTest(jmri.implementation.swing.SwingShutDownTaskTest.suite());

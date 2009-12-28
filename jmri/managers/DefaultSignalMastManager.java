@@ -3,7 +3,7 @@
 package jmri.managers;
 
 import jmri.*;
-import jmri.implementation.AbstractManager;
+import jmri.managers.AbstractManager;
 
 
 /**
@@ -13,7 +13,7 @@ import jmri.implementation.AbstractManager;
  * at the present time.  They're just names...
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class DefaultSignalMastManager extends AbstractManager
     implements SignalMastManager, java.beans.PropertyChangeListener {
@@ -36,7 +36,7 @@ public class DefaultSignalMastManager extends AbstractManager
     public SignalMast provideSignalMast(String name) {
         SignalMast m = getSignalMast(name);
         if (m == null) {
-            m = new jmri.implementation.SingleHeadSignalMast(name);
+            m = new jmri.implementation.SignalHeadSignalMast(name);
             register(m);
         }
         return m;

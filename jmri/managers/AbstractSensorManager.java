@@ -3,12 +3,12 @@
 package jmri.managers;
 
 import jmri.*;
-import jmri.implementation.AbstractManager;
+import jmri.managers.AbstractManager;
 
 /**
  * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 

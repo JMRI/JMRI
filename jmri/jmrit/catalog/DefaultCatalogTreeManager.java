@@ -12,7 +12,7 @@ import jmri.CatalogTree;
  * @author			Pete Cressman Copyright (C) 2009
  *
  */
-public class DefaultCatalogTreeManager extends jmri.implementation.AbstractManager 
+public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
                     implements jmri.CatalogTreeManager {
 
     public DefaultCatalogTreeManager() {
