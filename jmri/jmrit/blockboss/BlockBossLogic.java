@@ -113,7 +113,7 @@ import java.util.Hashtable;
  * signal (along the track with the green signal).
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.32 $
+ * @version     $Revision: 1.33 $
  * 
  * Revisions to add facing point sensors, approach lighting, and check box
  * to limit speed. Dick Bronosn (RJB) 2006
@@ -634,7 +634,7 @@ public class BlockBossLogic extends Siglet {
         // check for yellow, flashing yellow overriding green
         if (protectWithFlashing && fastestColor1()==SignalHead.YELLOW)
             appearance = SignalHead.FLASHYELLOW;
-        if (fastestColor1()==SignalHead.RED)
+        if (fastestColor1()==SignalHead.RED || fastestColor1()==SignalHead.FLASHRED)
             appearance = SignalHead.YELLOW;
 
         // if distant signal, show exactly what the home signal does
@@ -675,7 +675,7 @@ public class BlockBossLogic extends Siglet {
         // check for yellow, flashing yellow overriding green
         if (protectWithFlashing && fastestColor1()==SignalHead.YELLOW)
             appearance = SignalHead.FLASHYELLOW;
-        if (fastestColor1()==SignalHead.RED)
+        if (fastestColor1()==SignalHead.RED || fastestColor1()==SignalHead.FLASHRED)
             appearance = SignalHead.YELLOW;
 
         // if distant signal, show exactly what the home signal does
@@ -721,7 +721,7 @@ public class BlockBossLogic extends Siglet {
         // check for yellow, flashing yellow overriding green
         if (protectWithFlashing && fastestColor1()==SignalHead.YELLOW)
             appearance = SignalHead.FLASHYELLOW;
-        if (fastestColor1()==SignalHead.RED)
+        if (fastestColor1()==SignalHead.RED || fastestColor1()==SignalHead.FLASHRED)
             appearance = SignalHead.YELLOW;
 
         // if distant signal, show exactly what the home signal does
@@ -775,7 +775,7 @@ public class BlockBossLogic extends Siglet {
         // check for yellow, flashing yellow overriding green
         if (protectWithFlashing && s==SignalHead.YELLOW)
             appearance = SignalHead.FLASHYELLOW;
-        if (s==SignalHead.RED)
+        if (s==SignalHead.RED  || s==SignalHead.FLASHRED)
             appearance = SignalHead.YELLOW;
         // if distant signal, show exactly what the home signal does
         if (distantSignal)
