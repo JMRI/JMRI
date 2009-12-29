@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalMastAddEdit.shtml,v 1.1 2009-12-27 17:33:38 jacobsen Exp $ -->
+<!-- $Id: SignalMastAddEdit.shtml,v 1.2 2009-12-29 05:25:24 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -26,7 +26,7 @@
 <H1>Adding Signal Masts
 </H1>
     
-<A href="../../../../images/SigMastAdd.gif"><IMG SRC="../../../../images/SigMastAdd.gif" ALIGN=RIGHT WIDTH="181" HEIGHT="218" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
+<A href="SignalMastAdd.png"><IMG SRC="SignalMastAdd.png" ALIGN=RIGHT WIDTH="208" HEIGHT="85" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
 
 <p>
 JMRI needs to know how a signal mast on the layout
