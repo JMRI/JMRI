@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: aspecttable.xsl,v 1.2 2009-12-29 05:37:46 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsl,v 1.3 2009-12-29 18:18:39 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI aspecttable file into displayable HTML    -->
 
@@ -68,14 +68,39 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 </xsl:template>
 
 <!-- Display each aspect -->
-<xsl:template match="aspects/aspect">
+<xsl:template match="aspect">
 <h3><xsl:value-of select="title"/></h3>
 Name: <xsl:value-of select="name"/><br/>
 Indication: <xsl:value-of select="indication"/><br/>
-Reference: <xsl:value-of select="reference"/><br/>
-Description: <xsl:value-of select="description"/><br/>
-Comment: <xsl:value-of select="comment"/><br/>
 
+<xsl:apply-templates/>
+
+</xsl:template>
+
+<!-- Some elements displayed specifically, don't show by default -->
+<xsl:template match="title" />
+<xsl:template match="name" />
+<xsl:template match="indication" />
+
+<xsl:template match="reference" >
+ Reference: <xsl:value-of select="reference"/><br/>
+</xsl:template>
+
+<xsl:template match="description" >
+ Description: <xsl:value-of select="description"/><br/>
+</xsl:template>
+
+<xsl:template match="comment" >
+ Comment: <xsl:value-of select="comment"/><br/>
+</xsl:template>
+
+<!-- Display imagelink as image -->
+<xsl:template match="imagelink">
+    <xsl:element name="img">
+        <xsl:attribute name="src">
+            <xsl:value-of select="."/>
+        </xsl:attribute>
+    </xsl:element>
 </xsl:template>
 
 </xsl:stylesheet>
