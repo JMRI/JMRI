@@ -310,7 +310,7 @@
  </indexitem>
  <indexitem text="Send DCC Packet " target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
 
- <indexitem text="Send Problem Report " target="package.jmri.jmrit.mailreport.Report"/>
+ <indexitem text="Upload Debugging Information " target="package.jmri.jmrit.mailreport.Report"/>
 
  <indexitem text="Sensor " target="html.tools.Sensors">
   <indexitem text="Add Sensor " target="package.jmri.jmrit.beantable.SensorAddEdit"/>

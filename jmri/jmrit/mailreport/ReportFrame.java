@@ -5,10 +5,10 @@ package jmri.jmrit.mailreport;
 import javax.swing.*;
 
 /**
- * Frame for sending a problem report
+ * Frame for uploading debugging information
  * 
  * @author			Bob Jacobsen   Copyright (C) 2009
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class ReportFrame extends jmri.util.JmriJFrame {
 
