@@ -38,7 +38,7 @@ import jmri.*;
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Ken Cameron Copyright (C) 2008,2009
  * @author	Bob Jacobsen Copyright (C) 2008,2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public abstract class AbstractVariableLight extends AbstractLight
     implements java.io.Serializable {
@@ -239,7 +239,6 @@ public abstract class AbstractVariableLight extends AbstractLight
      * Currently, this implementation assumes there's a 
      * fixed number of steps between min and max brightness.
      */
-    @SuppressWarnings("deprecation")
     protected void newInternalMinute() {
     	double origCurrent = mCurrentIntensity;
     	int origState = mState;
