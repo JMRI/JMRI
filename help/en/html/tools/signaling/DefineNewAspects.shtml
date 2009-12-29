@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: DefineNewAspects.shtml,v 1.1 2009-12-28 05:58:31 jacobsen Exp $ -->
+<!-- $Id: DefineNewAspects.shtml,v 1.2 2009-12-29 20:57:07 jacobsen Exp $ -->
 <title>JMRI: Defining Your Own Signaling System</title>
 
 <!-- Style -->
@@ -36,6 +36,14 @@ directory.
 
 For now, you need to manually create a new directory under
 the "xml/signals" directory to hold your new signal definition.
+By convention, the name of this directory (e.g. "basic" or
+"AAR-1946") provides the system name for your signal defintion.
+Think ahead a little bit:  Will there be varients of this
+definiton for different eras or different divisions?  If
+so, include a year or location in the name, to make it easy
+to create modified versions.
+
+<p>
 Then, provide these files:
 <ul>
 <li>index.shtml - Free-form decription of the signal system
@@ -59,7 +67,14 @@ remember what you had in mind.
 
 <h3>Create a new aspects.xml file</h3>
 
-This file lists <em>all</em> the aspects that can appear in
+The "name" element at the top of this file provides the user name for your
+signaling system, which features prominently in the user interface.
+It can be a little more verbose than the directory name, but should
+be similar enough that the user can associate them if needed.
+
+<p>
+This "aspects" element in this file 
+lists <em>all</em> the aspects that can appear in
 this signaling system.  (Most model railroads only model one
 railroad, so there's only one system present, but it is possible
 to use more than one).  You can come back and add more later
@@ -76,13 +91,17 @@ Most of the file is blocks that look like this:
       &lt;description&gt;&lt;/description&gt;
       &lt;reference&gt;&lt;/reference&gt;
       &lt;comment&gt;&lt;/comment&gt;
+      &lt;imagelink&gt;&lt;/imagelink&gt;
     &lt;/aspect&gt;
 </pre></code>
 
 You have to fill in the name element, but the others are optional.
 The title and indication elements can only be included once.
 The description, reference and comment elements can be included
-as many times as you'd like.
+as many times as you'd like.  
+The imagelink element, if present, should point to
+a image file (.gif, .png or .jpg) showing what the family of
+appearances looks like.
 
 <h3>Create appearance-*.xml files</h3>
 
@@ -95,7 +114,7 @@ Not every aspect needs to be defined in every file, as
 not every type of signal can show every aspect.
 
 <p>
-Each aspect that the signal can show does need to be 
+Each aspect that the signal can show needs to be 
 described with a block like this:
 
 <code><pre>
@@ -104,15 +123,25 @@ described with a block like this:
       &lt;show&gt;green&lt;/show&gt;
       &lt;show&gt;red&lt;/show&gt;
       &lt;reference&gt;&lt;/reference&gt;
+      &lt;imagelink&gt;&lt;/imagelink&gt;
     &lt;/appearance&gt;
 </pre></code>
 
 The "aspectname" needs to be at the start, followed by zero or more
 "show" elements. 
+
+<p>
 The show element(s) will be used to set the signalheads that
-make up the signal properly to display this aspect.
+make up the signal properly to display this aspect. There can be zero or more
+of these, containing "red", "flash red", "yellow", "flash yellow", "green", "flash green", "lunar", "flash lunar" or "dark".
+
+<p>
 You can have as many "reference" elements as you'd like, they're
 for user-readable documentation.
+
+<p>
+The imagelink element, if present, should point to
+a image file (.gif, .png or .jpg) showing what this appearance looks like.
 
 <h3>Check Your Work</h3>
 

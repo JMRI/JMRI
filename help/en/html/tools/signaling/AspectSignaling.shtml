@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: AspectSignaling.shtml,v 1.3 2009-12-28 20:16:49 jacobsen Exp $ -->
+<!-- $Id: AspectSignaling.shtml,v 1.4 2009-12-29 20:57:07 jacobsen Exp $ -->
 <title>JMRI: Aspect Signaling</title>
 
 <!-- Style -->
@@ -105,6 +105,39 @@ others to use.  Like decoder definitions in DecoderPro, the
 more signal system definitions we have, the more useful the program
 becomes, and the more people spend time to improve it. We all
 win that way!
+
+<h2>Program Access to Aspect Information</h2>
+
+A program (in Java or Python) can get access to 
+aspect information two ways.  If it has a reference
+to a specific SignalMast &quot;m&quot;, it can use
+<code><pre>
+   m.getValidAspects()
+</pre></code>
+to get the list of aspect names that this signal mast can display.
+The program can then access the signal system definition with
+<code><pre>
+   SignalSystem sys = m.getSignalSystem()
+</pre></code>
+and then enquire about properties of the aspect:
+<code><pre>
+   sys.getProperty("Clear","speed");
+</pre></code>
+where the first argument is the aspect name (use, for example,
+<code>m.getAspect()</code> to obtain the current one on the mast)
+and the second is a specific property.  
+Properties can be defined programatically via e.g.
+<code>m.setProperty("Clear","speed","69");</code>
+or get loaded automatically from elements in the 
+<a href="DefineNewAspects.shtml">aspect.xml</a>
+file that defines the specific signal system.
+
+<p>
+Alternately, if you know the name of the signal system in use,
+you can go directly to it via the InstanceManager:
+<code><pre>
+   SignalSystem sys = InstanceManager.signalSystemManagerInstance().getSystem("basic");
+</pre></code>
 
 <!--#include virtual="/Footer" -->
 </body>
