@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -511,7 +511,7 @@ public class DefaultConditional extends AbstractNamedBean
                 Timer timer = null;
                 int type = action.getType();
                 String devName = action.getDeviceName();
-                if (devName.charAt(0)== '@') {
+                if (devName!=null && devName.length()>0 && devName.charAt(0)== '@') {
                     String memName = devName.substring(1);
                     Memory m = InstanceManager.memoryManagerInstance().provideMemory(memName);
                     if (m == null) {

@@ -15,7 +15,7 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -232,7 +232,6 @@ public class DefaultLogix extends AbstractNamedBean
      * A Logix must be activated before it will calculate any of its
 	 *    Conditionals.
      */
-    @SuppressWarnings("deprecation")
     public void activateLogix() {
 		// if the Logix is already busy, simply return
 		if (_isActivated) return;
@@ -285,7 +284,6 @@ public class DefaultLogix extends AbstractNamedBean
                     String varName = variable.getName();
                     int varType = variable.getType();
                     int signalAspect = -1;
-                    boolean newSV = true;
                     // Get Listener type from varible type
                     switch(varType) {
                         case Conditional.TYPE_SENSOR_ACTIVE:
@@ -354,38 +352,10 @@ public class DefaultLogix extends AbstractNamedBean
                             varListenerType = LISTENER_TYPE_SIGNAL;
                             break;
                     }
-                    newSV = true;
-                        // check if already in list
-                    int positionOfListener = -1;
-                    for (int j=0; (j<_listeners.size()); j++) {
-                        if (varListenerType==_listeners.get(j).getType() ) {
-                            if (varName.equals(_listeners.get(j).getDevName())) {
-                                if (varListenerType == LISTENER_TYPE_SIGNAL) {
-                                    if (varType == Conditional.TYPE_SIGNAL_HEAD_LIT || 
-                                                varType == Conditional.TYPE_SIGNAL_HEAD_HELD ) {
-                                        if (varType == _listeners.get(j).getVarType() ) {
-                                            positionOfListener = j;
-                                            newSV = false;
-                                            break;
-                                        }
-                                    } else if ("Appearance".equals(_listeners.get(j).getPropertyName())) {
-                                            // the Appearance Listener can handle all aspects
-                                        positionOfListener = j;
-                                        newSV = false;
-                                        break;
-                                    }
-                                } else {
-                                    positionOfListener = j;
-                                    newSV = false;
-                                    break;
-                                }
-                            }
-                        }
-
-                    }
+                    int positionOfListener = getPositionOfListener(varListenerType, varType, varName);
                     // add to list if new
                     JmriSimplePropertyListener listener = null;
-                    if (newSV) {
+                    if (positionOfListener == -1) {
                         switch (varListenerType) {
                             case LISTENER_TYPE_SENSOR:
                                 listener = new JmriSimplePropertyListener("KnownState", LISTENER_TYPE_SENSOR, 
@@ -473,6 +443,21 @@ public class DefaultLogix extends AbstractNamedBean
                                           _conditionalSystemNames.get(i));
                         }
                     }
+                    // addition listeners needed for memory compare
+                    if (varType==Conditional.TYPE_MEMORY_COMPARE || 
+                        varType==Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE) {
+                        positionOfListener = getPositionOfListener(varListenerType, varType,
+                                                                       variable.getDataString());
+                        if (positionOfListener == -1) {
+                            listener = new JmriSimplePropertyListener("value", LISTENER_TYPE_MEMORY, 
+                                                                      variable.getDataString(), varType,
+                                                                      conditional);
+                            _listeners.add(listener);
+                        } else {
+                            listener = _listeners.get(positionOfListener);
+                            listener.addConditional(conditional);
+                        }
+                    }
 				}
 			}
 			else {
@@ -484,6 +469,31 @@ public class DefaultLogix extends AbstractNamedBean
 			}
 		}
 	}
+
+    private int getPositionOfListener(int varListenerType, int varType, String varName) {
+        // check if already in list
+        for (int j=0; (j<_listeners.size()); j++) {
+            if (varListenerType==_listeners.get(j).getType() ) {
+                if (varName.equals(_listeners.get(j).getDevName())) {
+                    if (varListenerType == LISTENER_TYPE_SIGNAL) {
+                        if (varType == Conditional.TYPE_SIGNAL_HEAD_LIT || 
+                                    varType == Conditional.TYPE_SIGNAL_HEAD_HELD ) {
+                            if (varType == _listeners.get(j).getVarType() ) {
+                                return j;
+                            }
+                        } else if ("Appearance".equals(_listeners.get(j).getPropertyName())) {
+                                // the Appearance Listener can handle all aspects
+                            return j;
+                        }
+                    } else {
+                        return j;
+                    }
+                }
+            }
+
+        }
+        return -1;
+    }
 	
 	/**
 	 * Assembles and returns a list of state variables that are used by conditionals 
