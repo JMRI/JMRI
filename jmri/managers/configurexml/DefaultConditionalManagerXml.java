@@ -19,7 +19,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class DefaultConditionalManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -115,7 +115,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      * @param conditionals The top-level element being created
      */
     public void setStoreElementClass(Element conditionals) {
-        conditionals.setAttribute("class","jmri.configurexml.DefaultConditionalManagerXml");
+        conditionals.setAttribute("class",this.getClass().getName());
     }
 
     public void load(Element element, Object o) {
