@@ -10,7 +10,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class InternalTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -19,7 +19,7 @@ public class InternalTurnoutManagerXml extends jmri.managers.configurexml.Abstra
     }
 
     public void setStoreElementClass(Element turnouts) {
-        turnouts.setAttribute("class","jmri.managers.configurexml.InternalTurnoutManagerXml");
+        turnouts.setAttribute("class",this.getClass().getName());
     }
 
     public void load(Element element, Object o) {

@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Based on AbstractTurnoutManagerConfigXML
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -76,7 +76,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * @param turnouts The top-level element being created
      */
     public void setStoreElementClass(Element turnouts) {
-        turnouts.setAttribute("class","jmri.configurexml.AbstractSignalHeadManagerXml");
+        turnouts.setAttribute("class",this.getClass().getName());
     }
 
     /**

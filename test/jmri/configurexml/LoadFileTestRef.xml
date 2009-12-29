@@ -46,7 +46,7 @@
     <memory systemName="IMCURRENTTIME" value="12:01 PM" />
   </memories>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jun 05 23:42:04 PDT 2009" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
-  <logixs class="jmri.configurexml.DefaultLogixManagerXml">
+  <logixs class="jmri.managers.configurexml.DefaultLogixManagerXml">
     <logix systemName="IX1" userName="Test logix" enabled="yes">
       <logixConditional systemName="IX1C1" order="0" />
     </logix>
@@ -57,7 +57,7 @@
       <comment>Length 1</comment>
     </block>
   </blocks>
-  <signalheads class="jmri.configurexml.AbstractSignalHeadManagerXml">
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH1" userName="Virtual 1">
       <comment>Virtual</comment>
     </signalhead>
@@ -68,7 +68,7 @@
       <turnoutname defines="red">For Signal IH2 R</turnoutname>
     </signalhead>
   </signalheads>
-  <routes class="jmri.configurexml.DefaultRouteManagerXml">
+  <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
     <route systemName="IR1" userName="random route 1" controlTurnout="IT101" controlTurnoutState="CLOSED">
       <routeOutputTurnout systemName="IT1" state="THROWN" />
       <routeOutputTurnout systemName="IT2" state="CLOSED" />
@@ -79,13 +79,13 @@
       <routeSensor systemName="IS101" mode="onInactive" />
     </route>
   </routes>
-  <conditionals class="jmri.configurexml.DefaultConditionalManagerXml">
+  <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
     <conditional systemName="IX1C1" userName="" antecedent="R1 and R2" logicType="1">
       <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS1" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="1" negated="no" type="1" systemName="User 1" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 2.7.8 on Tue Nov 24 23:12:54 PST 2009 $Id: LoadFileTestRef.xml,v 1.7 2009-12-15 05:44:52 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.8 on Tue Nov 24 23:12:54 PST 2009 $Id: LoadFileTestRef.xml,v 1.8 2009-12-29 04:20:10 jacobsen Exp $-->
 </layout-config>
 

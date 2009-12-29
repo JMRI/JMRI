@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -80,7 +80,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
      * @param logixs The top-level element being created
      */
     public void setStoreElementClass(Element logixs) {
-        logixs.setAttribute("class","jmri.configurexml.DefaultLogixManagerXml");
+        logixs.setAttribute("class",this.getClass().getName());
     }
 
     public void load(Element element, Object o) {

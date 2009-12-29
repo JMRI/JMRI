@@ -20,7 +20,7 @@ import org.jdom.Element;
  * @author Daniel Boudreau Copyright (c) 2007
  * @author Simon Reader Copyright (C) 2008
  *
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -198,7 +198,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
      * @param routes The top-level element being created
      */
     public void setStoreElementClass(Element routes) {
-        routes.setAttribute("class","jmri.configurexml.DefaultRouteManagerXml");
+        routes.setAttribute("class",this.getClass().getName());
     }
 
     public void load(Element element, Object o) {
