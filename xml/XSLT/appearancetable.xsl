@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: appearancetable.xsl,v 1.2 2009-12-28 22:43:12 jacobsen Exp $ -->
+<!-- $Id: appearancetable.xsl,v 1.3 2009-12-29 05:37:46 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI appearance table file into displayable HTML    -->
 
@@ -36,11 +36,11 @@
 
 <html>
 	<head>
-		<title>JMRI Appearance Table: <xsl:value-of select="aspecttable/name"/></title>
+		<title>JMRI &quot;<xsl:value-of select="appearancetable/name"/>&quot; Appearance Table</title>
 	</head>
 	
 	<body>
-		<h2>JMRI <xsl:value-of select="aspecttable/name"/> Appearance Table</h2>
+		<h2>JMRI &quot;<xsl:value-of select="appearancetable/name"/>&quot; Appearance Table</h2>
 
 
 <xsl:apply-templates/>
@@ -62,7 +62,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <xsl:template match="appearancetable">
     For aspect table: 
     <a href="aspects.xml">
-        <xsl:value-of select="aspecttable"/>
+        <xsl:value-of select="document('http:aspects.xml')/aspecttable/name"/>
     </a>
     <p/>
     Name: <xsl:value-of select="name"/><p/>

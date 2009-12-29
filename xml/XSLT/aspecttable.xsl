@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: aspecttable.xsl,v 1.1 2009-12-24 04:33:52 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsl,v 1.2 2009-12-29 05:37:46 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI aspecttable file into displayable HTML    -->
 
@@ -36,11 +36,11 @@
 
 <html>
 	<head>
-		<title>JMRI <xsl:value-of select="aspecttable/name"/> Aspect Table</title>
+		<title>JMRI &quot;<xsl:value-of select="aspecttable/name"/>&quot; Aspect Table</title>
 	</head>
 	
 	<body>
-		<h2>JMRI <xsl:value-of select="aspecttable/name"/> Aspect Table</h2>
+		<h2>JMRI &quot;<xsl:value-of select="aspecttable/name"/>&quot; Aspect Table</h2>
 
 
 <xsl:apply-templates/>
