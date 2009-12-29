@@ -141,7 +141,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (log.isDebugEnabled()) log.debug("IconAdder."+_type+", defaultIcons= "+_defaultIcons);
     }
 
-    @SuppressWarnings("unchecked")
     public CatalogTreeNode getDefaultIconNode() {
         _defaultIcons =new CatalogTreeNode(_type);
         for (int i=0; i<_order.size(); i++) {
