@@ -3,7 +3,6 @@
 package jmri.jmrit.display;
 
 import jmri.*;
-import jmri.jmrit.catalog.*;
 
 import java.awt.event.*;
 
@@ -19,7 +18,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class SignalMastIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
