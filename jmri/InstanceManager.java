@@ -43,7 +43,7 @@ import jmri.managers.DefaultRouteManager;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.54 $
+ * @version			$Revision: 1.55 $
  */
 public class InstanceManager {
 
@@ -113,6 +113,9 @@ public class InstanceManager {
     static public SignalMastManager signalMastManagerInstance()  { 
         SignalMastManager m = (SignalMastManager)getDefault(SignalMastManager.class);
         if (m == null) {
+            // ensure signal head manager exists first
+            signalHeadManagerInstance();
+            // then create a new signal mast manager and store
             m = new jmri.managers.DefaultSignalMastManager();
             setSignalMastManager(m);
         }
