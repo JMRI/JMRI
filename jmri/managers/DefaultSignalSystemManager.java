@@ -22,7 +22,7 @@ import org.jdom.Element;
  *
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class DefaultSignalSystemManager extends AbstractManager
     implements SignalSystemManager, java.beans.PropertyChangeListener {
@@ -106,6 +106,9 @@ public class DefaultSignalSystemManager extends AbstractManager
     void loadBean(DefaultSignalSystem s, Element root) {
         @SuppressWarnings("unchecked")
         List<Element> l = root.getChild("aspects").getChildren("aspect");
+        
+        // set user name from system name element
+        s.setUserName(root.getChild("name").getText());
         
         // find all aspects, include them by name, 
         // add all other sub-elements as key/value pairs
