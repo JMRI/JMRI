@@ -36,9 +36,9 @@ import javax.swing.event.ChangeListener;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.3 $
+ * @version    $Revision: 1.4 $
  */
-public class ControlPanel extends JInternalFrame
+public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
     
@@ -59,6 +59,9 @@ public class ControlPanel extends JInternalFrame
     private boolean _displaySlider = true;
     private boolean speedControllerEnable;
     
+    private DccThrottle _throttle;
+    private boolean internalAdjust = false;
+
     /* real time tracking of speed slider - on iff trackSlider==true
      * Min interval for sending commands to the actual throttle can be configured
      * as part of the throttle config but is bounded
@@ -118,11 +121,38 @@ public class ControlPanel extends JInternalFrame
     public void notifyThrottleFound(DccThrottle t)
     {
         if(log.isDebugEnabled()) log.debug("control panel received new throttle");
+        _throttle = t;
         this.setEnabled(true);
         this.setSpeedValues((int) t.getSpeedIncrement(),
                             (int) t.getSpeedSetting());
         this.setSpeedSteps(t.getSpeedStepMode());
+        _throttle.addPropertyChangeListener(this);
    }
+    
+    public void dispose() {
+        if (_throttle!=null) {
+            _throttle.removePropertyChangeListener(this);
+            _throttle = null;
+        }
+        super.dispose();
+    }
+
+    // update the state of this panel if any of the properties change
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (e.getPropertyName().equals("SpeedSetting")) {
+            internalAdjust=true;
+            float speed=((Float) e.getNewValue()).floatValue();
+            speedSetting(speed);
+            _throttleFrame.setSpeedSetting(speed);
+        } else if (e.getPropertyName().equals("SpeedSteps")) {
+            int steps=((Integer) e.getNewValue()).intValue();
+            setSpeedSteps(steps);
+            _throttleFrame.setSpeedStepMode(steps);
+        } else if (e.getPropertyName().equals("IsForward")) {
+            boolean Forward=((Boolean) e.getNewValue()).booleanValue();
+            _throttleFrame.setButtonForward(Forward);
+        }
+    }
     
     /**
      *  Enable/Disable all buttons and slider.
@@ -187,6 +217,7 @@ public class ControlPanel extends JInternalFrame
         //_speedStepMode=steps;
         
         // rescale the speed slider to match the new speed step mode
+        internalAdjust=true;
         speedSlider.setMaximum(MAX_SPEED);
         speedSlider.setValue((int)(oldSpeed * MAX_SPEED));
         speedSlider.setMajorTickSpacing(MAX_SPEED/2);
@@ -198,6 +229,7 @@ public class ControlPanel extends JInternalFrame
         speedSlider.setPaintTicks(true);
         speedSlider.setPaintLabels(true);
 
+        internalAdjust=true;
         speedSpinnerModel.setMaximum(new Integer(MAX_SPEED));
         speedSpinnerModel.setMinimum(new Integer(0));
         // rescale the speed value to match the new speed step mode
@@ -211,7 +243,6 @@ public class ControlPanel extends JInternalFrame
      *	SLIDERDISPLAY  = use speed slider display
      *      STEPDISPLAY = use speed step display
      */
-    @SuppressWarnings("fallthrough")
 	public void setSpeedController(boolean displaySlider) {
         if (displaySlider)  {
             sliderPanel.setVisible(true);
@@ -298,24 +329,28 @@ public class ControlPanel extends JInternalFrame
         speedSlider.addChangeListener( new ChangeListener()
             {
                 public void stateChanged(ChangeEvent e) {
-                    if (!_displaySlider) { return; }
-                    boolean doIt = false;
-                    if (!speedSlider.getValueIsAdjusting()) {
-                        doIt = true;
-                        lastTrackedSliderMovementTime = System.currentTimeMillis() - trackSliderMinInterval;
-                    } else if (trackSlider &&
-                               System.currentTimeMillis() - lastTrackedSliderMovementTime >= trackSliderMinInterval) {
-                        doIt = true;
-                        lastTrackedSliderMovementTime = System.currentTimeMillis();
+                    //if (!_displaySlider) { return; }
+                    if ( !internalAdjust) {
+                        boolean doIt = false;
+                        if (!speedSlider.getValueIsAdjusting()) {
+                            doIt = true;
+                            lastTrackedSliderMovementTime = System.currentTimeMillis() - trackSliderMinInterval;
+                        } else if (trackSlider &&
+                                   System.currentTimeMillis() - lastTrackedSliderMovementTime >= trackSliderMinInterval) {
+                            doIt = true;
+                            lastTrackedSliderMovementTime = System.currentTimeMillis();
+                        }
+                        if (doIt) {
+                            float newSpeed = (speedSlider.getValue() / ( MAX_SPEED * 1.0f ) ) ;
+                            if (log.isDebugEnabled()) {log.debug( "stateChanged: slider pos: " + speedSlider.getValue() + " speed: " + newSpeed );}
+                            _throttle.setSpeedSetting( newSpeed );
+                            //_throttleFrame.setSpeedSetting( newSpeed );
+                            if(speedSpinner!=null)
+                                speedSpinnerModel.setValue(new Integer(speedSlider.getValue()));
+                        }
+                    } else {
+                        internalAdjust=false;
                     }
-                    if (doIt) {
-                        float newSpeed = (speedSlider.getValue() / ( MAX_SPEED * 1.0f ) ) ;
-                        if (log.isDebugEnabled()) {log.debug( "stateChanged: slider pos: " + speedSlider.getValue() + " speed: " + newSpeed );}
-                        _throttleFrame.setSpeedSetting( newSpeed );
-                        if(speedSpinner!=null)
-                            speedSpinnerModel.setValue(new Integer(speedSlider.getValue()));
-                    }
-
                 }
             });
         
@@ -332,11 +367,16 @@ public class ControlPanel extends JInternalFrame
                 {
                     public void stateChanged(ChangeEvent e)
                     {
-                        if (_displaySlider) { return; }
-                        float newSpeed = ((Integer)speedSpinner.getValue()).floatValue() / ( MAX_SPEED * 1.0f );
-                        if (log.isDebugEnabled()) {log.debug( "stateChanged: spinner pos: " + speedSpinner.getValue() + " speed: " + newSpeed );}
-                        _throttleFrame.setSpeedSetting( newSpeed );
-                        speedSlider.setValue(((Integer)speedSpinner.getValue()).intValue());
+                        //if (_displaySlider) { return; }
+                        if ( !internalAdjust) {
+                            float newSpeed = ((Integer)speedSpinner.getValue()).floatValue() / ( MAX_SPEED * 1.0f );
+                            if (log.isDebugEnabled()) {log.debug( "stateChanged: spinner pos: " + speedSpinner.getValue() + " speed: " + newSpeed );}
+                            _throttle.setSpeedSetting( newSpeed );
+                            //_throttleFrame.setSpeedSetting( newSpeed );
+                            speedSlider.setValue(((Integer)speedSpinner.getValue()).intValue());
+                        } else {
+                            internalAdjust=false;
+                        }
                     }
                 });
         
@@ -360,7 +400,7 @@ public class ControlPanel extends JInternalFrame
                                                 public void actionPerformed(ActionEvent e)
                                                 {
                                                     setSpeedSteps(DccThrottle.SpeedStepMode14);
-                                                    _throttleFrame.setSpeedStepMode(DccThrottle.SpeedStepMode14);
+                                                    _throttle.setSpeedStepMode(DccThrottle.SpeedStepMode14);
                                                 }
                                             });
         
@@ -369,7 +409,7 @@ public class ControlPanel extends JInternalFrame
                                                 public void actionPerformed(ActionEvent e)
                                                 {
                                                     setSpeedSteps(DccThrottle.SpeedStepMode27);
-                                                    _throttleFrame.setSpeedStepMode(DccThrottle.SpeedStepMode27);
+                                                    _throttle.setSpeedStepMode(DccThrottle.SpeedStepMode27);
                                                 }
                                             });
         
@@ -378,7 +418,7 @@ public class ControlPanel extends JInternalFrame
                                                 public void actionPerformed(ActionEvent e)
                                                 {
                                                     setSpeedSteps(DccThrottle.SpeedStepMode28);
-                                                    _throttleFrame.setSpeedStepMode(DccThrottle.SpeedStepMode28);
+                                                    _throttle.setSpeedStepMode(DccThrottle.SpeedStepMode28);
                                                 }
                                             });
         
@@ -387,7 +427,7 @@ public class ControlPanel extends JInternalFrame
                                                  public void actionPerformed(ActionEvent e)
                                                  {
                                                      setSpeedSteps(DccThrottle.SpeedStepMode128);
-                                                     _throttleFrame.setSpeedStepMode(DccThrottle.SpeedStepMode128);
+                                                     _throttle.setSpeedStepMode(DccThrottle.SpeedStepMode128);
                                                  }
                                              });
         // set by default which speed selection method is on top
@@ -464,9 +504,10 @@ public class ControlPanel extends JInternalFrame
             }
     }
     
-    protected void speedSetting(float speed) {
+    private void speedSetting(float speed) {
+        // multiply by MAX_SPEED, and round to find the new slider setting.
         int newSliderSetting = java.lang.Math.round(speed * MAX_SPEED) ;
-        if (log.isDebugEnabled()) {log.debug( "propertyChange: new speed float: " + speed + " slider pos: " + newSliderSetting ) ;}
+        if (log.isDebugEnabled()) {log.debug( "speedSetting: new speed float: " + speed + " slider pos: " + newSliderSetting ) ;}
         speedSlider.setValue( newSliderSetting );
         if(speedSpinner!=null)
             speedSpinner.setValue(new Integer(newSliderSetting));

@@ -51,7 +51,7 @@ import jmri.jmrit.throttle.KeyListenerInstaller;
  * @author     Bob Jacobsen    Copyright 2008
  
  * @author     Pete Cressman   Copyright 2009
- * @version    $Revision: 1.3 $
+ * @version    $Revision: 1.4 $
  */
 
 public class LearnThrottleFrame extends JmriJFrame implements java.beans.PropertyChangeListener
@@ -125,16 +125,9 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         if (train != null) {
             name = train.getId();
         }
-        setTitle(name+" ("+_throttle.getLocoAddress().toString()+")");
+        setTitle(name+" ("+t.getLocoAddress().toString()+")");
     }
         
-    public void notifyThrottleLost(jmri.LocoAddress dccAddress) {
-        JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
-                rb.getString("ThrottleLost"), dccAddress,toString()),
-                rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-        _warrantFrame.StopRunTrain();
-    }
-
     private void initGUI()
     {
         setTitle("Throttle");
@@ -306,12 +299,10 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     */
     /* from ControlPanel */
     protected void setSpeedSetting(float speed) {
-        _throttle.setSpeedSetting(speed);
         _warrantFrame.setThrottleCommand("Speed", Float.toString(speed));
     }
     /* from ControlPanel */
     protected void setSpeedStepMode(int speedStep) {
-        _throttle.setSpeedStepMode(speedStep);
         _warrantFrame.setThrottleCommand("SpeedStep", Integer.toString(speedStep));
     }
     /* from FunctionPanel */
@@ -319,14 +310,26 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         _warrantFrame.setThrottleCommand("F"+num, Boolean.toString(isSet));
     }
     /* from FunctionPanel */
+    protected void setFunctionState(String FNum, boolean isSet) {
+        _warrantFrame.setThrottleCommand(FNum, Boolean.toString(isSet));
+    }
+    /* from FunctionPanel */
     protected void setFunctionLock(int num, boolean isLockable) {
         _warrantFrame.setThrottleCommand("LockF"+num, Boolean.toString(isLockable));
+    }
+    /* from FunctionPanel */
+    protected void setFunctionLock(String FMom, boolean isLockable) {
+        _warrantFrame.setThrottleCommand(FMom, Boolean.toString(isLockable));
+    }
+    /* from ControlPanel */
+    protected void setButtonForward(boolean isForward) {
+        _buttonPanel.setForwardDirection(isForward);
+        _warrantFrame.setThrottleCommand("Forward", Boolean.toString(isForward));
     }
     /* from ButtonPanel */
     protected void setIsForward(boolean isForward) {
         _throttle.setIsForward(isForward);
-        _buttonPanel.setForwardDirection(isForward);
-        _warrantFrame.setThrottleCommand("Forward", Boolean.toString(isForward));
+        setButtonForward(isForward);
     }
     
     /**
@@ -363,7 +366,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.3 $
+     * @version    $Revision: 1.4 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -480,9 +483,10 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
          */
         public void stop()
         {
-            _controlPanel.speedSetting(0.0F);
+            _throttle.setSpeedSetting(-0.5F);
             setSpeedSetting(-1);
             setSpeedSetting(0);
+            _throttle.setSpeedSetting(0.0F);
             stopLabel.setIcon(stopIcon);
             stopLabel.setIconTextGap(-stopLabel.getPreferredSize().width/2);
             pack();

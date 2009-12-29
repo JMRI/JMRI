@@ -441,17 +441,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
     }
 
-    public void notifyThrottleLost(jmri.LocoAddress dccAddress) {
-        if(log.isDebugEnabled()) {
-           log.debug("notifyThrottleLost address= " +dccAddress.toString()+" _runMode= "+_runMode);
-        }
-        if (_runMode == MODE_LEARN) {
-            _student.notifyThrottleLost(dccAddress);
-        } else if (_engineer !=null) {
-            controlRunTrain(ABORT);
-        }
-    }
-
     /**
     * Allocate the current saved blocks of this warrant.
     * Installs listeners for the entire route.  Sets this warrant into

@@ -37,6 +37,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+//import javax.swing.SwingConstants;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.AbstractTableModel;
@@ -520,6 +521,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                     _warrant = InstanceManager.warrantManagerInstance().createNewWarrant(sysName+n, text);
                 }
                 sysNameBox.setText(sysName+n);
+            } else {
+                _warrant.setUserName(text);
             }
         }
     }

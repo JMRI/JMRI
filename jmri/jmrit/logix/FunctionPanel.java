@@ -20,13 +20,13 @@ import jmri.jmrit.throttle.KeyListenerInstaller;
 /**
  * A JInternalFrame that contains buttons for each decoder function.
  */
-public class FunctionPanel extends JInternalFrame implements FunctionListener
+public class FunctionPanel extends JInternalFrame implements FunctionListener, java.beans.PropertyChangeListener
 {
 	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
 	
 	public static final int NUM_FUNCTION_BUTTONS = 29;
     public static final int NUM_FUNC_BUTTONS_INIT = 16;	//only show 16 function buttons at start
-    private DccThrottle throttle;
+    private DccThrottle _throttle;
     private RosterEntry _rosterEntry;
     private LearnThrottleFrame _throttleFrame;
 
@@ -53,14 +53,14 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
     public void notifyThrottleFound(DccThrottle t)
     {
         if (log.isDebugEnabled()) log.debug("Throttle found");
-        this.throttle = t;
+        _throttle = t;
         for (int i=0; i<this.NUM_FUNCTION_BUTTONS; i++)
         {
            try {
                 int functionNumber = functionButton[i].getIdentity();
                 java.lang.reflect.Method getter =
-                        throttle.getClass().getMethod("getF"+functionNumber,(Class[])null);
-                Boolean state = (Boolean)getter.invoke(throttle, (Object[])null);
+                        _throttle.getClass().getMethod("getF"+functionNumber,(Class[])null);
+                Boolean state = (Boolean)getter.invoke(_throttle, (Object[])null);
                 functionButton[i].setState(state.booleanValue());
                 if (_rosterEntry != null){
                 	String text = _rosterEntry.getFunctionLabel(functionNumber);
@@ -83,6 +83,15 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
            }
         }
         this.setEnabled(true);
+        _throttle.addPropertyChangeListener(this);
+    }
+
+    public void dispose() {
+        if (_throttle!=null) {
+            _throttle.removePropertyChangeListener(this);
+            _throttle = null;
+        }
+        super.dispose();
     }
 
 //    public FunctionButton[] getFunctionButtons() { return functionButton; }
@@ -94,39 +103,41 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
      */
     public void notifyFunctionStateChanged(int functionNumber, boolean isSet)
     {
+        if (log.isDebugEnabled()) log.debug("notifyFunctionStateChanged: functionNumber= "
+                                           +functionNumber+" isSet= "+isSet);
         switch (functionNumber)
         {
-            case 0: throttle.setF0(isSet); break;
-            case 1: throttle.setF1(isSet); break;
-            case 2: throttle.setF2(isSet); break;
-            case 3: throttle.setF3(isSet); break;
-            case 4: throttle.setF4(isSet); break;
-            case 5: throttle.setF5(isSet); break;
-            case 6: throttle.setF6(isSet); break;
-            case 7: throttle.setF7(isSet); break;
-            case 8: throttle.setF8(isSet); break;
-            case 9: throttle.setF9(isSet); break;
-            case 10: throttle.setF10(isSet); break;
-            case 11: throttle.setF11(isSet); break;
-            case 12: throttle.setF12(isSet); break;
-            case 13: throttle.setF13(isSet); break;
-            case 14: throttle.setF14(isSet); break;
-            case 15: throttle.setF15(isSet); break;
-            case 16: throttle.setF16(isSet); break;
-            case 17: throttle.setF17(isSet); break;
-            case 18: throttle.setF18(isSet); break;
-            case 19: throttle.setF19(isSet); break;
-            case 20: throttle.setF20(isSet); break;
-            case 21: throttle.setF21(isSet); break;
-            case 22: throttle.setF22(isSet); break;
-            case 23: throttle.setF23(isSet); break;
-            case 24: throttle.setF24(isSet); break;
-            case 25: throttle.setF25(isSet); break;
-            case 26: throttle.setF26(isSet); break;
-            case 27: throttle.setF27(isSet); break;
-            case 28: throttle.setF28(isSet); break;
+            case 0: _throttle.setF0(isSet); break;
+            case 1: _throttle.setF1(isSet); break;
+            case 2: _throttle.setF2(isSet); break;
+            case 3: _throttle.setF3(isSet); break;
+            case 4: _throttle.setF4(isSet); break;
+            case 5: _throttle.setF5(isSet); break;
+            case 6: _throttle.setF6(isSet); break;
+            case 7: _throttle.setF7(isSet); break;
+            case 8: _throttle.setF8(isSet); break;
+            case 9: _throttle.setF9(isSet); break;
+            case 10: _throttle.setF10(isSet); break;
+            case 11: _throttle.setF11(isSet); break;
+            case 12: _throttle.setF12(isSet); break;
+            case 13: _throttle.setF13(isSet); break;
+            case 14: _throttle.setF14(isSet); break;
+            case 15: _throttle.setF15(isSet); break;
+            case 16: _throttle.setF16(isSet); break;
+            case 17: _throttle.setF17(isSet); break;
+            case 18: _throttle.setF18(isSet); break;
+            case 19: _throttle.setF19(isSet); break;
+            case 20: _throttle.setF20(isSet); break;
+            case 21: _throttle.setF21(isSet); break;
+            case 22: _throttle.setF22(isSet); break;
+            case 23: _throttle.setF23(isSet); break;
+            case 24: _throttle.setF24(isSet); break;
+            case 25: _throttle.setF25(isSet); break;
+            case 26: _throttle.setF26(isSet); break;
+            case 27: _throttle.setF27(isSet); break;
+            case 28: _throttle.setF28(isSet); break;
         }
-        _throttleFrame.setFunctionState(functionNumber, isSet);
+        //_throttleFrame.setFunctionState(functionNumber, isSet);
     }
 
     /**
@@ -137,45 +148,46 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
      */
     public void notifyFunctionLockableChanged(int functionNumber, boolean isLockable)
     {
-        if (throttle==null) {
+        if (log.isDebugEnabled()) log.debug("notifyFunctionLockableChanged: functionNumber= "
+                                           +functionNumber+" isLockable= "+isLockable);
+        if (_throttle==null) {
         	// throttle can be null when loading throttle layout
-        	if (log.isDebugEnabled())log.warn("throttle pointer null in notifyFunctionLockableChanged");
             return;
         }
         
         switch (functionNumber)
         {
-            case 0: throttle.setF0Momentary(!isLockable); break;
-            case 1: throttle.setF1Momentary(!isLockable); break;
-            case 2: throttle.setF2Momentary(!isLockable); break;
-            case 3: throttle.setF3Momentary(!isLockable); break;
-            case 4: throttle.setF4Momentary(!isLockable); break;
-            case 5: throttle.setF5Momentary(!isLockable); break;
-            case 6: throttle.setF6Momentary(!isLockable); break;
-            case 7: throttle.setF7Momentary(!isLockable); break;
-            case 8: throttle.setF8Momentary(!isLockable); break;
-            case 9: throttle.setF9Momentary(!isLockable); break;
-            case 10: throttle.setF10Momentary(!isLockable); break;
-            case 11: throttle.setF11Momentary(!isLockable); break;
-            case 12: throttle.setF12Momentary(!isLockable); break;
-            case 13: throttle.setF13Momentary(!isLockable); break;
-            case 14: throttle.setF14Momentary(!isLockable); break;
-            case 15: throttle.setF15Momentary(!isLockable); break;
-            case 16: throttle.setF16Momentary(!isLockable); break;
-            case 17: throttle.setF17Momentary(!isLockable); break;
-            case 18: throttle.setF18Momentary(!isLockable); break;
-            case 19: throttle.setF19Momentary(!isLockable); break;
-            case 20: throttle.setF20Momentary(!isLockable); break;
-            case 21: throttle.setF21Momentary(!isLockable); break;
-            case 22: throttle.setF22Momentary(!isLockable); break;
-            case 23: throttle.setF23Momentary(!isLockable); break;
-            case 24: throttle.setF24Momentary(!isLockable); break;
-            case 25: throttle.setF25Momentary(!isLockable); break;
-            case 26: throttle.setF26Momentary(!isLockable); break;
-            case 27: throttle.setF27Momentary(!isLockable); break;
-            case 28: throttle.setF28Momentary(!isLockable); break;
+            case 0: _throttle.setF0Momentary(!isLockable); break;
+            case 1: _throttle.setF1Momentary(!isLockable); break;
+            case 2: _throttle.setF2Momentary(!isLockable); break;
+            case 3: _throttle.setF3Momentary(!isLockable); break;
+            case 4: _throttle.setF4Momentary(!isLockable); break;
+            case 5: _throttle.setF5Momentary(!isLockable); break;
+            case 6: _throttle.setF6Momentary(!isLockable); break;
+            case 7: _throttle.setF7Momentary(!isLockable); break;
+            case 8: _throttle.setF8Momentary(!isLockable); break;
+            case 9: _throttle.setF9Momentary(!isLockable); break;
+            case 10: _throttle.setF10Momentary(!isLockable); break;
+            case 11: _throttle.setF11Momentary(!isLockable); break;
+            case 12: _throttle.setF12Momentary(!isLockable); break;
+            case 13: _throttle.setF13Momentary(!isLockable); break;
+            case 14: _throttle.setF14Momentary(!isLockable); break;
+            case 15: _throttle.setF15Momentary(!isLockable); break;
+            case 16: _throttle.setF16Momentary(!isLockable); break;
+            case 17: _throttle.setF17Momentary(!isLockable); break;
+            case 18: _throttle.setF18Momentary(!isLockable); break;
+            case 19: _throttle.setF19Momentary(!isLockable); break;
+            case 20: _throttle.setF20Momentary(!isLockable); break;
+            case 21: _throttle.setF21Momentary(!isLockable); break;
+            case 22: _throttle.setF22Momentary(!isLockable); break;
+            case 23: _throttle.setF23Momentary(!isLockable); break;
+            case 24: _throttle.setF24Momentary(!isLockable); break;
+            case 25: _throttle.setF25Momentary(!isLockable); break;
+            case 26: _throttle.setF26Momentary(!isLockable); break;
+            case 27: _throttle.setF27Momentary(!isLockable); break;
+            case 28: _throttle.setF28Momentary(!isLockable); break;
         }
-        _throttleFrame.setFunctionLock(functionNumber, isLockable);
+        //_throttleFrame.setFunctionLock(functionNumber, isLockable);
     }
 
     /**
@@ -188,6 +200,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
         {
             functionButton[i].setEnabled(isEnabled);
         }
+        alt1Button.setEnabled(isEnabled);
+        alt2Button.setEnabled(isEnabled);
     }
     
     protected void resetFuncButtons(){
@@ -307,6 +321,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
     		if (i<3)
     			functionButton[i].setVisible(true);
     	}
+    	alt1Button.setVisible(true);
+    	alt2Button.setVisible(true);
     	buttonActionCmdPerformed();
     }
     
@@ -314,7 +330,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.2 $
+	 * @version $Revision: 1.3 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{
@@ -327,9 +343,10 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
 		 */
 		public void keyPressed(KeyEvent e)
 		{
+ 			if (log.isDebugEnabled()) log.debug("keyPressed: KeyCode= "+e.getKeyCode());
 			if (keyReleased)
 			{
-				log.debug("Pressed");
+				if (log.isDebugEnabled()) log.debug("Pressed");
 				for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
 				{
 					if ( functionButton[i].checkKeyCode(e.getKeyCode()) )
@@ -343,12 +360,12 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
 
 		public void keyTyped(KeyEvent e)
 		{
-			log.debug("Typed");
+			//if (log.isDebugEnabled())log.debug("Typed");
 		}
 
 		public void keyReleased(KeyEvent e)
 		{
- 			log.debug("Released");
+ 			if (log.isDebugEnabled()) log.debug("keyReleased: KeyCode= "+e.getKeyCode());
 			for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
 			{
 				if ( functionButton[i].checkKeyCode(e.getKeyCode()) )
@@ -365,86 +382,98 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener
 
  	// update the state of this panel if any of the properties change
 	// did not add f13 - f28 dboudreau, maybe I should have? 
-	public void setFunctionButton(java.beans.PropertyChangeEvent e) {
-		if (e.getPropertyName().equals("F0")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[0].setState(function);
-		} else if (e.getPropertyName().equals("F1")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[1].setState(function);
-		} else if (e.getPropertyName().equals("F2")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[2].setState(function);
-		} else if (e.getPropertyName().equals("F3")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[3].setState(function);
-		} else if (e.getPropertyName().equals("F4")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[4].setState(function);
-		} else if (e.getPropertyName().equals("F5")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[5].setState(function);
-		} else if (e.getPropertyName().equals("F6")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[6].setState(function);
-		} else if (e.getPropertyName().equals("F7")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[7].setState(function);
-		} else if (e.getPropertyName().equals("F8")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[8].setState(function);
-		} else if (e.getPropertyName().equals("F9")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[9].setState(function);
-		} else if (e.getPropertyName().equals("F10")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[10].setState(function);
-		} else if (e.getPropertyName().equals("F11")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[11].setState(function);
-		} else if (e.getPropertyName().equals("F12")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[12].setState(function);
-		} else if (e.getPropertyName().equals("F0Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[0].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F1Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[1].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F2Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[2].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F3Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[3].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F4Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[4].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F5Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[5].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F6Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[6].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F7Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[7].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F8Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[8].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F9Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[9].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F10Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[10].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F11Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[11].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F12Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[12].setIsLockable(lockable);
-		}
+	public void propertyChange(java.beans.PropertyChangeEvent e) {
+        boolean isSet = ((Boolean) e.getNewValue()).booleanValue();
+        boolean lockable = false;
+        String functionName = e.getPropertyName();
+        if (!functionName.startsWith("F")) {
+            return;
+        } else if (functionName.equals("F0")) {
+			functionButton[0].setState(isSet);
+		} else if (functionName.equals("F1")) {
+			functionButton[1].setState(isSet);
+		} else if (functionName.equals("F2")) {
+			functionButton[2].setState(isSet);
+		} else if (functionName.equals("F3")) {
+			functionButton[3].setState(isSet);
+		} else if (functionName.equals("F4")) {
+			functionButton[4].setState(isSet);
+		} else if (functionName.equals("F5")) {
+			functionButton[5].setState(isSet);
+		} else if (functionName.equals("F6")) {
+			functionButton[6].setState(isSet);
+		} else if (functionName.equals("F7")) {
+			functionButton[7].setState(isSet);
+		} else if (functionName.equals("F8")) {
+			functionButton[8].setState(isSet);
+		} else if (functionName.equals("F9")) {
+			functionButton[9].setState(isSet);
+		} else if (functionName.equals("F10")) {
+			functionButton[10].setState(isSet);
+		} else if (functionName.equals("F11")) {
+			functionButton[11].setState(isSet);
+		} else if (functionName.equals("F12")) {
+			functionButton[12].setState(isSet);
+		} else if (functionName.equals("F0Momentary")) {
+			lockable = true;
+            functionName = "LockF0";
+			functionButton[0].setIsLockable(isSet);
+		} else if (functionName.equals("F1Momentary")) {
+            functionName = "LockF1";
+			lockable = true;
+			functionButton[1].setIsLockable(isSet);
+		} else if (functionName.equals("F2Momentary")) {
+            functionName = "LockF2";
+			lockable = true;
+			functionButton[2].setIsLockable(isSet);
+		} else if (functionName.equals("F3Momentary")) {
+            functionName = "LockF3";
+			lockable = true;
+			functionButton[3].setIsLockable(isSet);
+		} else if (functionName.equals("F4Momentary")) {
+            functionName = "LockF4";
+			lockable = true;
+			functionButton[4].setIsLockable(isSet);
+		} else if (functionName.equals("F5Momentary")) {
+            functionName = "LockF5";
+			lockable = true;
+			functionButton[5].setIsLockable(isSet);
+		} else if (functionName.equals("F6Momentary")) {
+            functionName = "LockF6";
+			lockable = true;
+			functionButton[6].setIsLockable(isSet);
+		} else if (functionName.equals("F7Momentary")) {
+            functionName = "LockF7";
+			lockable = true;
+			functionButton[7].setIsLockable(isSet);
+		} else if (functionName.equals("F8Momentary")) {
+            functionName = "LockF8";
+			lockable = true;
+			functionButton[8].setIsLockable(isSet);
+		} else if (functionName.equals("F9Momentary")) {
+            functionName = "LockF9";
+			lockable = true;
+			functionButton[9].setIsLockable(isSet);
+		} else if (functionName.equals("F10Momentary")) {
+            functionName = "LockF10";
+			lockable = true;
+			functionButton[10].setIsLockable(isSet);
+		} else if (functionName.equals("F11Momentary")) {
+            functionName = "LockF11";
+			lockable = true;
+			functionButton[11].setIsLockable(isSet);
+		} else if (functionName.equals("F12Momentary")) {
+            functionName = "LockF12";
+			lockable = true;
+			functionButton[12].setIsLockable(isSet);
+		} else {
+            return;
+        }
+        if (lockable) {
+            _throttleFrame.setFunctionLock(functionName, isSet);
+        } else {
+            _throttleFrame.setFunctionState(functionName, isSet);
+        }
 	}
 
 
