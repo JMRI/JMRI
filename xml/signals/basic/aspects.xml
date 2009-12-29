@@ -5,7 +5,7 @@
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
 >
-  <name>basic</name>
+  <name>Basic Model Signals</name>
   <reference>Basic signals known by many modelers</reference>
   <aspects>
     <aspect>
