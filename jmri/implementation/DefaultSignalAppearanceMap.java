@@ -23,7 +23,7 @@ import jmri.SignalSystem;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean  {
 
@@ -71,7 +71,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean  {
                 if (log.isDebugEnabled()) log.debug("aspect name "+name);
                 
                 @SuppressWarnings("unchecked")
-                List<Element> c = ((Element)l.get(i)).getChildren("show");
+                List<Element> c = l.get(i).getChildren("show");
                 
                 int[] appearances = new int[c.size()];
                 for (int j = 0; j < c.size(); j++) {

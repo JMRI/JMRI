@@ -2,7 +2,6 @@
 
 package jmri;
 
-import java.util.List;
 
 /**
  * Interface for obtaining information about signal systems.
@@ -28,7 +27,7 @@ import java.util.List;
  * <P>
  *
  * @author   Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public interface SignalSystemManager extends Manager {
 

@@ -28,7 +28,6 @@ import javax.swing.event.*;
  * <LI>TURNOUTS turnouts and other variable track items
  * <LI>SENSORS sensors and other independently modified objects
  * </UL>
- * Note that higher numbers appear behind lower numbers.
  * <P>
  * The "contents" List keeps track of all the objects added to the target
  * frame for later manipulation.

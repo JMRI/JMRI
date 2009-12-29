@@ -6,15 +6,13 @@ import jmri.util.JmriJFrame;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.*;
-
 
 /**
  * Swing action to create and register a
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 
 public class SensorTableAction extends AbstractTableAction {

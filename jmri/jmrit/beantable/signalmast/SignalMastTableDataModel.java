@@ -6,7 +6,6 @@ import jmri.*;
 
 import jmri.jmrit.beantable.BeanTableDataModel;
 
-import javax.swing.table.*;
 import javax.swing.*;
 import java.util.*;
 
@@ -14,7 +13,7 @@ import java.util.*;
  * Data model for a SignalMastTable
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class SignalMastTableDataModel extends BeanTableDataModel {

@@ -22,7 +22,7 @@ import org.jdom.Element;
  *
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class DefaultSignalSystemManager extends AbstractManager
     implements SignalSystemManager, java.beans.PropertyChangeListener {
@@ -112,9 +112,9 @@ public class DefaultSignalSystemManager extends AbstractManager
         for (int i = 0; i < l.size(); i++) {
             String name = l.get(i).getChild("name").getText();
             if (log.isDebugEnabled()) log.debug("aspect name "+name);
-  
+ 
             @SuppressWarnings("unchecked")
-            List<Element> c = (List<Element>)l.get(i).getChildren();            
+            List<Element> c = l.get(i).getChildren();            
 
             for (int j = 0; j < c.size(); j++) {
                 // note: includes setting name; redundant, but needed
