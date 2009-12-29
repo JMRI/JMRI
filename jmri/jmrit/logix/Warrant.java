@@ -463,7 +463,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                                 name, getBlockOrderAt(i).getBlock().getDisplayName());
             }
         }
+        boolean old = _allocated; 
         _allocated = true;
+        firePropertyChange("allocate", new Boolean(old), new Boolean(true));
         return null;
     }
 
@@ -475,8 +477,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             OBlock block = _orders.get(i).getBlock();
             block.deAllocate(this);
         }
+        boolean old = _allocated;
         _allocated = false;
         _routeSet = false;
+        firePropertyChange("allocate", new Boolean(old), new Boolean(false));
     }
 
     /**
@@ -490,7 +494,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     */
     public String setRoute(int delay, List <BlockOrder> orders) {
         // we assume our train is occupying the first block
-        _routeSet = false;
+        boolean routeSet = true;
+        String msg = null;
         if (orders==null) {
             _orders = _savedOrders;
         } else {
@@ -512,14 +517,18 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     bo.setPathAndSignalProtection(delay, SignalHead.RED, SignalHead.YELLOW);
                 }
             } else {
-                return java.text.MessageFormat.format(rb.getString("BlockNotAllocated"), 
+                routeSet = false;
+                msg = java.text.MessageFormat.format(rb.getString("BlockNotAllocated"), 
                                 name, getBlockOrderAt(i).getBlock().getDisplayName());
             }
         }
         _orders.get(0).setPathAndSignalProtection(delay, SignalHead.RED, SignalHead.GREEN);
+
         _allocated = true;
-        _routeSet = true;
-        return null;
+        boolean old = _routeSet;
+        _routeSet = routeSet;
+        firePropertyChange("setRoute", new Boolean(old), new Boolean(_routeSet));
+        return msg;
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
