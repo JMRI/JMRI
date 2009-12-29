@@ -11,6 +11,8 @@
     <aspect>
       <name>Clear</name>
       <indication>Proceed</indication>
+      <comment>This next image link is just a test</comment>
+      <imagelink>http:/jmri.org/resources/icons/smallschematics/searchlights/left-green-high.gif</imagelink>
     </aspect>
 
     <aspect>

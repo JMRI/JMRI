@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: aspecttable.xsl,v 1.3 2009-12-29 18:18:39 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsl,v 1.4 2009-12-29 18:35:43 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI aspecttable file into displayable HTML    -->
 
@@ -83,15 +83,15 @@ Indication: <xsl:value-of select="indication"/><br/>
 <xsl:template match="indication" />
 
 <xsl:template match="reference" >
- Reference: <xsl:value-of select="reference"/><br/>
+ Reference: <xsl:value-of select="."/><br/>
 </xsl:template>
 
 <xsl:template match="description" >
- Description: <xsl:value-of select="description"/><br/>
+ Description: <xsl:value-of select="."/><br/>
 </xsl:template>
 
 <xsl:template match="comment" >
- Comment: <xsl:value-of select="comment"/><br/>
+ Comment: <xsl:value-of select="."/><br/>
 </xsl:template>
 
 <!-- Display imagelink as image -->
