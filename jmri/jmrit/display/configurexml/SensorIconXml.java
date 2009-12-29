@@ -15,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.40 $
+ * @version $Revision: 1.41 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -51,9 +51,12 @@ public class SensorIconXml extends PositionableLabelXml {
     }
     
     protected void storeTextInfo(SensorIcon p, Element element) {
+        if (p.getText()==null) {
+            return;
+        }
+        element.setAttribute("text", p.getText());
         element.setAttribute("size", ""+p.getFont().getSize());
         element.setAttribute("style", ""+p.getFont().getStyle());
-        element.setAttribute("text", p.getText());
         if (p.getMargin()!=0)
             element.setAttribute("margin", ""+p.getMargin());
         if (p.getBorderSize()!=0){
