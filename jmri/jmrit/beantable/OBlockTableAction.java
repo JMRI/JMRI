@@ -1729,7 +1729,6 @@ public class OBlockTableAction extends AbstractAction {
             return String.class;
         }
 
-        @SuppressWarnings("fallthrough")
         public int getPreferredWidth(int col) {
             switch (col) {
                 case FROM_PORTAL_COLUMN:
@@ -1889,36 +1888,28 @@ public class OBlockTableAction extends AbstractAction {
                 case TURNOUT_NAME_COL:
                     Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout((String)value);
                     if (t!=null) {
-                        _path.removeSetting(bs);
-                        _path.addSetting(new BeanSetting(t, bs.getSetting()));
+                         if (!t.equals(bs.getBean())) {
+                             _path.removeSetting(bs);
+                             _path.addSetting(new BeanSetting(t, bs.getSetting()));
+                         }
                     } else {
                         JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
                                 rbx.getString("NoSuchTurnout"), (String)value),
                                 AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                         return;
                     }
-                    fireTableRowsUpdated(row,row);
+                    fireTableDataChanged();
                     break;
                 case SETTINGCOLUMN:
                     String setting = (String)value;
-                    int s = Turnout.UNKNOWN;
                     if (setting.equals(closed)) {
-                        s = Turnout.CLOSED; 
+                        bs.setSetting(Turnout.CLOSED); 
                     } else if (setting.equals(thrown)) {
-                        s = Turnout.THROWN; 
+                        bs.setSetting(Turnout.THROWN); 
                     } else if (setting.equals(unknown)) {
-                        s = Turnout.UNKNOWN;
+                        bs.setSetting(Turnout.UNKNOWN);
                     } else if (setting.equals(inconsistent)) {
-                        s = Turnout.INCONSISTENT;
-                    }
-                    if (s==bs.getSetting()) {
-                        break;
-                    }
-                    _path.removeSetting(bs);
-                    t = InstanceManager.turnoutManagerInstance().
-                                    provideTurnout(bs.getBean().getSystemName());
-                    if (t!=null) {
-                        _path.addSetting(new BeanSetting(t, s));
+                        bs.setSetting(Turnout.INCONSISTENT);
                     }
                     fireTableRowsUpdated(row,row);
                     break;
