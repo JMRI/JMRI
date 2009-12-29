@@ -261,6 +261,14 @@ public class ConditionalVariable {
                 }
 				break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
+				SignalMast f = InstanceManager.signalMastManagerInstance().provideSignalMast(_name);
+				if (f == null) {
+					log.error("invalid signal mast name= \""+_name+"\" in state variable");
+					return (false);
+				}
+                if (f.getAspect() == null) result = false;
+                else if (f.getAspect().equals(_dataString)) result = true;
+                else result = false; 
                 break;
             case Conditional.ITEM_TYPE_SIGNALHEAD:
 				SignalHead h = InstanceManager.signalHeadManagerInstance().getSignalHead(_name);
@@ -586,6 +594,8 @@ public class ConditionalVariable {
                 return (rbx.getString("StateRouteIsSet"));
             case Conditional.TYPE_TRAIN_RUNNING:
                 return (rbx.getString("StateTrainRunning"));
+            case Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS:
+                return (rbx.getString("TypeSignalMastAspectEquals"));
         }
         return "";
     }
@@ -655,6 +665,8 @@ public class ConditionalVariable {
                 return (rbx.getString("TypeRouteIsSet"));
             case Conditional.TYPE_TRAIN_RUNNING:
                 return (rbx.getString("TypeTrainRunning"));
+            case Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS:
+                return (rbx.getString("TypeSignalMastAspectEquals"));
         }
         return ("");
     }
@@ -710,20 +722,16 @@ public class ConditionalVariable {
                 if ((_type==Conditional.TYPE_SIGNAL_HEAD_LIT) ||
                         (_type==Conditional.TYPE_SIGNAL_HEAD_HELD)) {
                     return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                                 new Object[] {rbx.getString("Signal"), _name, type} );
+                                 new Object[] {rbx.getString("SignalHead"), _name, type} );
                 } else {
-                    return java.text.MessageFormat.format(rbx.getString("SignalStateDescrpt"),
-                                 new Object[] {rbx.getString("Signal"), _name, type} );
+                    return java.text.MessageFormat.format(rbx.getString("SignalHeadStateDescrpt"),
+                                 new Object[] {rbx.getString("SignalHead"), _name, type} );
                 }
+
             case Conditional.ITEM_TYPE_SIGNALMAST:
-                if ((_type==Conditional.TYPE_SIGNAL_HEAD_LIT) ||
-                        (_type==Conditional.TYPE_SIGNAL_HEAD_HELD)) {
-                    return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                                 new Object[] {rbx.getString("Signal"), _name, type} );
-                } else {
-                    return java.text.MessageFormat.format(rbx.getString("SignalStateDescrpt"),
-                                 new Object[] {rbx.getString("Signal"), _name, type} );
-                }
+                return java.text.MessageFormat.format(rbx.getString("SignalMastStateDescrpt"),
+                                 new Object[] {rbx.getString("SignalMast"), _name, _dataString} );
+                                 
             case Conditional.ITEM_TYPE_MEMORY:
                 if ((_type==Conditional.TYPE_MEMORY_EQUALS) ||
                         (_type==Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE)) {

@@ -95,6 +95,7 @@ public interface Conditional extends NamedBean {
     public static final int TYPE_ROUTE_ALLOCATED = 27;
     public static final int TYPE_ROUTE_SET = 28;
     public static final int TYPE_TRAIN_RUNNING = 29;
+    public static final int TYPE_SIGNAL_MAST_ASPECT_EQUALS = 30;
 	
 	// action definitions
 	public static final int ACTION_OPTION_ON_CHANGE_TO_TRUE = 1;
@@ -164,6 +165,7 @@ public interface Conditional extends NamedBean {
     public static final int ACTION_RUN_WARRANT = 34;
     public static final int ACTION_CONTROL_TRAIN = 35;
     public static final int ACTION_SET_TRAIN_ID = 36;
+	public static final int ACTION_SET_SIGNALMAST_ASPECT = 37;
 
 /**************************************************************************************/
 /* New Variable and Action type scheme for Logix UI
@@ -220,10 +222,11 @@ public interface Conditional extends NamedBean {
                                     ITEM_TYPE_WARRANT,      // TYPE_ROUTE_OCCUPIED      26
                                     ITEM_TYPE_WARRANT,      // TYPE_ROUTE_ALLOCATED     27
                                     ITEM_TYPE_WARRANT,      // TYPE_ROUTE_SET           28
-                                    ITEM_TYPE_WARRANT       // TYPE_TRAIN_RUNNING       29
+                                    ITEM_TYPE_WARRANT,      // TYPE_TRAIN_RUNNING       29
+                                    ITEM_TYPE_SIGNALMAST    // TYPE_SIGNAL_MAST_ASPECT_EQUALS 30
                                     };
 
-    // Map Signal comboBox items to Signal Head Conditional variable types
+    // Map SignalHead comboBox items to SignalHead Conditional variable types
     public static int[] ITEM_TO_SIGNAL_HEAD_TEST = {TYPE_SIGNAL_HEAD_RED, 
                                     TYPE_SIGNAL_HEAD_YELLOW,
                                     TYPE_SIGNAL_HEAD_GREEN, 
@@ -235,6 +238,9 @@ public interface Conditional extends NamedBean {
                                     TYPE_SIGNAL_HEAD_DARK,
                                     TYPE_SIGNAL_HEAD_LIT, 
                                     TYPE_SIGNAL_HEAD_HELD  };
+
+    // Map SignalMAst comboBox items to SignalMast Conditional variable types
+    public static int[] ITEM_TO_SIGNAL_MAST_TEST = {TYPE_SIGNAL_MAST_ASPECT_EQUALS };
 
     // Map Sensor state comboBox items to Sensor Conditional variable types
     public static int[] ITEM_TO_SENSOR_TEST = {TYPE_SENSOR_ACTIVE, TYPE_SENSOR_INACTIVE};
@@ -294,8 +300,9 @@ public interface Conditional extends NamedBean {
                                         ITEM_TYPE_WARRANT,      // ACTION_SET_ROUTE_TURNOUTS 33
                                         ITEM_TYPE_WARRANT,      // ACTION_RUN_WARRANT       34
                                         ITEM_TYPE_WARRANT,      // ACTION_CONTROL_TRAIN     35
-                                        ITEM_TYPE_WARRANT       // ACTION_SET_TRAIN_ID      36
-                                  };
+                                        ITEM_TYPE_WARRANT,      // ACTION_SET_TRAIN_ID      36
+                                        ITEM_TYPE_SIGNALMAST    // ACTION_SET_SIGNALMAST_ASPECT 37                                        ITEM_TYPE_SIGNALHEAD,
+                                 };
 
     // Map Sensor Type comboBox items to Sensor action types
     public static int[] ITEM_TO_SENSOR_ACTION = {ACTION_SET_SENSOR, ACTION_DELAYED_SENSOR,
@@ -323,9 +330,12 @@ public interface Conditional extends NamedBean {
     public static int[] ITEM_TO_WARRANT_ACTION = {ACTION_ALLOCATE_WARRANT_ROUTE, ACTION_DEALLOCATE_WARRANT_ROUTE,
                 ACTION_SET_ROUTE_TURNOUTS, ACTION_RUN_WARRANT, ACTION_CONTROL_TRAIN, ACTION_SET_TRAIN_ID};
 
-    // Map Signal Type comboBox items to Signal action types
+    // Map Signal Head Type comboBox items to Signal Head action types
     public static int[] ITEM_TO_SIGNAL_HEAD_ACTION = {ACTION_SET_SIGNAL_APPEARANCE, ACTION_SET_SIGNAL_HELD, 
                 ACTION_CLEAR_SIGNAL_HELD, ACTION_SET_SIGNAL_DARK , ACTION_SET_SIGNAL_LIT};
+
+    // Map Signal Mast Type comboBox items to Signal Mast action types
+    public static int[] ITEM_TO_SIGNAL_MAST_ACTION = {ACTION_SET_SIGNALMAST_ASPECT};
 
     // Map Audio Type comboBox items to Audio action types
     public static int[] ITEM_TO_AUDIO_ACTION = {ACTION_PLAY_SOUND, ACTION_CONTROL_AUDIO};

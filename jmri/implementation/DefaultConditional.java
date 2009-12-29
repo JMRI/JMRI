@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -504,6 +504,7 @@ public class DefaultConditional extends AbstractNamedBean
 				// need to take this action
                 actionNeeded++;
 				SignalHead h = null;
+				SignalMast f = null;
 				Logix x = null;	
 				Light lgt = null;
                 Warrant w = null;
@@ -1019,6 +1020,17 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
 						}
                         break;
+					case Conditional.ACTION_SET_SIGNALMAST_ASPECT:
+						f = InstanceManager.signalMastManagerInstance().
+									provideSignalMast(devName);
+						if (f == null) {
+							log.error("invalid signal mast name in action - "+action.getDeviceName());
+						}
+						else {
+							f.setAspect(action.getActionString());
+                            actionCount++;
+						}
+						break;
 				}
 			}
             if (PARKS_DEBUG) { System.out.println("Global state= "+_currentState+" Local state= "+currentState+

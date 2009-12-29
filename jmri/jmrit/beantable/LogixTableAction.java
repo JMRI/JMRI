@@ -2,24 +2,8 @@
 
 package jmri.jmrit.beantable;
 
-import jmri.InstanceManager;
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.Light;
-import jmri.Logix;
-import jmri.LogixManager;
-import jmri.Conditional;
-import jmri.ConditionalAction;
-import jmri.implementation.DefaultConditionalAction;
-import jmri.ConditionalVariable;
-import jmri.ConditionalManager;
-import jmri.Sensor;
-import jmri.Turnout;
-import jmri.SignalHead;
-import jmri.Route;
-import jmri.Memory;
-import jmri.implementation.AbstractSignalHead;
-import jmri.implementation.DefaultConditional;
+import jmri.*;
+import jmri.implementation.*;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 
@@ -41,14 +25,7 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.JOptionPane;
-import javax.swing.JComboBox;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JScrollPane;
 import javax.swing.table.*;
-
-//import java.util.List;
 
 import jmri.Audio;
 import jmri.util.JmriJFrame;
@@ -75,7 +52,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.54 $
+ * @version $Revision: 1.55 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -2505,6 +2482,7 @@ public class LogixTableAction extends AbstractTableAction {
                                 Conditional.ITEM_TO_LIGHT_TEST, testType));
                 _variableNameField.setText(_curVariable.getName());
                 break;
+
             case Conditional.ITEM_TYPE_SIGNALHEAD:
                 _variableStateBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                                 Conditional.ITEM_TO_SIGNAL_HEAD_TEST, testType));
@@ -2513,11 +2491,14 @@ public class LogixTableAction extends AbstractTableAction {
                                                     ", index= "+DefaultConditional.getIndexInTable(
                                 Conditional.ITEM_TO_SIGNAL_HEAD_TEST, testType)); 
                 break;
+
             case Conditional.ITEM_TYPE_SIGNALMAST:
-                _variableStateBox.setSelectedIndex(DefaultConditional.getIndexInTable(
-                                Conditional.ITEM_TO_SIGNAL_HEAD_TEST, testType));
+                // set display to show current state variable (curVariable) parameters
+                //_variableStateBox.setSelectedIndex(DefaultConditional.getIndexInTable(
+                //                Conditional.ITEM_TO_SIGNAL_MAST_TEST, testType));
                 _variableNameField.setText(_curVariable.getName());
                 break;
+
             case Conditional.ITEM_TYPE_MEMORY:
                 _variableCompareTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                                 Conditional.ITEM_TO_MEMORY_TEST, testType));
@@ -2643,11 +2624,8 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
-               /*SignalHead sm = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-               if (actionType==Conditional.ACTION_SET_SIGNAL_APPEARANCE) {
-                   _actionBox.setSelectedIndex(DefaultConditional.getIndexInTable(
-                                AbstractSignalHead.validStates, _curAction.getActionData()));
-               }*/
+                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
+                                Conditional.ITEM_TO_SIGNAL_MAST_ACTION, actionType)+1);
                break;
             case Conditional.ITEM_TYPE_CLOCK:
                 _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
@@ -2912,21 +2890,24 @@ public class LogixTableAction extends AbstractTableAction {
                 _namePanel.setVisible(true);
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
-                for(int i=0; i<Conditional.ITEM_TO_SIGNAL_HEAD_ACTION.length; i++) {
+                for(int i=0; i<Conditional.ITEM_TO_SIGNAL_MAST_ACTION.length; i++) {
                     _actionTypeBox.addItem(
-                        DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[i]));
+                        DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_SIGNAL_MAST_ACTION[i]));
                 }
-                if (actionType==Conditional.ACTION_SET_SIGNAL_APPEARANCE) {
+                if (actionType==Conditional.ACTION_SET_SIGNALMAST_ASPECT) {
                     JPanel p = (JPanel)_actionPanel.getComponent(0);
                     JLabel l = (JLabel)p.getComponent(0);
                     l.setText(rbx.getString("LabelSignalAspect"));
-                    for (int i = 0; i < AbstractSignalHead.validStateNames.length; i++) {
-                        _actionBox.addItem(AbstractSignalHead.validStateNames[i]);
+
+                    java.util.Enumeration<String> en1 = InstanceManager.signalSystemManagerInstance().getSystem("basic").getAspects();
+                    while (en1.hasMoreElements()) {
+                        _actionBox.addItem(en1.nextElement());
                     }
-                    _actionPanel.setToolTipText(rbx.getString("SignalSetHint"));
+
+                    _actionPanel.setToolTipText(rbx.getString("SignalMastSetHint"));
                     _actionPanel.setVisible(true);
                 }
-                _namePanel.setToolTipText(rbx.getString("NameHintSignal"));
+                _namePanel.setToolTipText(rbx.getString("NameHintSignalMast"));
                 _namePanel.setVisible(true);
                 break;
             case Conditional.ITEM_TYPE_LIGHT:
@@ -3152,10 +3133,12 @@ public class LogixTableAction extends AbstractTableAction {
                 _variableStatePanel.setVisible(true);
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
-                _variableNamePanel.setToolTipText(rbx.getString("NameHintSignal"));
-                for (int i=0; i<Conditional.ITEM_TO_SIGNAL_HEAD_TEST.length; i++) {
-                    _variableStateBox.addItem(
-                        ConditionalVariable.getStateString(Conditional.ITEM_TO_SIGNAL_HEAD_TEST[i]));
+                _variableNamePanel.setToolTipText(rbx.getString("NameHintSignalMast"));
+                
+                // ?? get default aspects from 'basic' definiton
+                java.util.Enumeration<String> en1 = InstanceManager.signalSystemManagerInstance().getSystem("basic").getAspects();
+                while (en1.hasMoreElements()) {
+                    _variableStateBox.addItem(en1.nextElement());
                 }
                 _variableNamePanel.setVisible(true);
                 _variableStatePanel.setVisible(true);
@@ -3234,7 +3217,8 @@ public class LogixTableAction extends AbstractTableAction {
                 testType = Conditional.ITEM_TO_SIGNAL_HEAD_TEST[_variableStateBox.getSelectedIndex()];
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
-                testType = Conditional.ITEM_TO_SIGNAL_HEAD_TEST[_variableStateBox.getSelectedIndex()];
+                // only one kind of test defined now:
+                testType = Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS;
                 break;
             case Conditional.ITEM_TYPE_MEMORY:
                 testType = Conditional.ITEM_TO_MEMORY_TEST[_variableCompareTypeBox.getSelectedIndex()];
@@ -3316,11 +3300,18 @@ public class LogixTableAction extends AbstractTableAction {
                 name = "Clock";
                 break;
             case Conditional.ITEM_TYPE_SIGNALHEAD:
-            case Conditional.ITEM_TYPE_SIGNALMAST:
                 name = validateSignalHeadReference(name);
                 if (name == null) {
                     return false;
                 }
+                break;
+            case Conditional.ITEM_TYPE_SIGNALMAST:
+                name = validateSignalMastReference(name);
+                if (name == null) {
+                    return false;
+                }
+                // save the selected aspect for comparison
+                _curVariable.setDataString((String)_variableStateBox.getSelectedItem());
                 break;
             case Conditional.ITEM_TYPE_WARRANT:
                 name = validateWarrantReference(name);
@@ -3528,22 +3519,14 @@ public class LogixTableAction extends AbstractTableAction {
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
                 if (!referenceByMemory){
-                    name = validateSignalHeadReference(name);
+                    name = validateSignalMastReference(name);
                     if (name == null) {
                         return false;
                     }
                 }
-                actionType = Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[selection-1];
-                if (actionType==Conditional.ACTION_SET_SIGNAL_APPEARANCE) {
-                    int state = AbstractSignalHead.validStates[_actionBox.getSelectedIndex()];
-                    if (!referenceByMemory){
-                        SignalHead h = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
-                        if (DefaultConditional.getIndexInTable(h.getValidStates(), state) < 0) {
-                            messageInvalidSignalHeadAppearance(name, (String)_actionBox.getSelectedItem());
-                            return false;
-                        }
-                    }
-                    _curAction.setActionData(state);
+                actionType = Conditional.ITEM_TO_SIGNAL_MAST_ACTION[selection-1];
+                if (actionType==Conditional.ACTION_SET_SIGNALMAST_ASPECT) {
+                    _curAction.setActionString((String)_actionBox.getSelectedItem());
                 }
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
@@ -3704,7 +3687,7 @@ public class LogixTableAction extends AbstractTableAction {
             case Conditional.ITEM_TYPE_SIGNALHEAD:
                 return Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[actionTypeSelection];
             case Conditional.ITEM_TYPE_SIGNALMAST:
-                return Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[actionTypeSelection];
+                return Conditional.ITEM_TO_SIGNAL_MAST_ACTION[actionTypeSelection];
             case Conditional.ITEM_TYPE_MEMORY:
                 return Conditional.ITEM_TO_MEMORY_ACTION[actionTypeSelection];
             case Conditional.ITEM_TYPE_LOGIX:
@@ -3887,6 +3870,26 @@ public class LogixTableAction extends AbstractTableAction {
             }
             name = name.toUpperCase().trim();
             h = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+        }
+        if (h == null) {
+            messageInvalidActionItemName(name, "SignalHead");
+            return null;
+        }
+        return name;
+    }
+    /**
+    * Checks SignalMast reference of text.
+    */
+    String validateSignalMastReference(String name) {
+        SignalMast h = null;
+        name = name.trim();
+        if ((name != null) && (name != "")) {
+            h = InstanceManager.signalMastManagerInstance().getByUserName(name);
+            if (h != null) {
+                //return h.getSystemName();
+                return name;
+            }
+            h = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
         }
         if (h == null) {
             messageInvalidActionItemName(name, "SignalHead");
@@ -4167,6 +4170,25 @@ public class LogixTableAction extends AbstractTableAction {
         }
         if (h == null) {
             messageInvalidActionItemName(name, "SignalHead");
+        }
+        return h;
+    }
+
+    /**
+    * get SignalMast instance.
+    */
+    SignalMast getSignalMast(String name) {
+        SignalMast h = null;
+        name = name.trim();
+        if ((name != null) && (name != "")) {
+            h = InstanceManager.signalMastManagerInstance().getByUserName(name);
+            if (h != null) {
+                return h;
+            }
+            h = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
+        }
+        if (h == null) {
+            messageInvalidActionItemName(name, "SignalMast");
         }
         return h;
     }

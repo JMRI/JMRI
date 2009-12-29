@@ -1,12 +1,6 @@
 package jmri.implementation;
 
 import jmri.*;
-import jmri.Light;
-import jmri.Conditional;
-import jmri.Sensor;
-import jmri.Turnout;
-import jmri.SignalHead;
-import jmri.Memory;
 import jmri.jmrit.logix.Warrant;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,7 +9,7 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -320,36 +314,39 @@ public class DefaultLogix extends AbstractNamedBean
                             varName = "clock";
                             break;
                         case Conditional.TYPE_SIGNAL_HEAD_RED:
-                            varListenerType = LISTENER_TYPE_SIGNAL;
+                            varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.RED;
                             break;
                         case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-                            varListenerType = LISTENER_TYPE_SIGNAL;
+                            varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.YELLOW;
                             break;
                         case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-                            varListenerType = LISTENER_TYPE_SIGNAL;
+                            varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.GREEN;
                             break;
                         case Conditional.TYPE_SIGNAL_HEAD_DARK:
-                            varListenerType = LISTENER_TYPE_SIGNAL;
+                            varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.DARK;
                             break;
                         case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-                            varListenerType = LISTENER_TYPE_SIGNAL;
+                            varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.FLASHRED;
                             break;
                         case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-                            varListenerType = LISTENER_TYPE_SIGNAL;
+                            varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.FLASHYELLOW;
                             break;
                         case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-                            varListenerType = LISTENER_TYPE_SIGNAL;
+                            varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.FLASHGREEN;
                             break;
                         case Conditional.TYPE_SIGNAL_HEAD_LIT:
                         case Conditional.TYPE_SIGNAL_HEAD_HELD:
-                            varListenerType = LISTENER_TYPE_SIGNAL;
+                            varListenerType = LISTENER_TYPE_SIGNALHEAD;
+                            break;
+                        case Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS:
+                            varListenerType = LISTENER_TYPE_SIGNALMAST;
                             break;
                     }
                     int positionOfListener = getPositionOfListener(varListenerType, varType, varName);
@@ -386,19 +383,23 @@ public class DefaultLogix extends AbstractNamedBean
                                                                          varName, varType, conditional,
                                                                     variable.getNum1(), variable.getNum2());
                                 break;
-                            case LISTENER_TYPE_SIGNAL:
+                            case LISTENER_TYPE_SIGNALHEAD:
                                 if (signalAspect <0) {
                                     if (varType == Conditional.TYPE_SIGNAL_HEAD_LIT) {
-                                        listener = new JmriSimplePropertyListener("Lit", LISTENER_TYPE_SIGNAL,
+                                        listener = new JmriSimplePropertyListener("Lit", LISTENER_TYPE_SIGNALHEAD,
                                                                             varName, varType, conditional);
                                     } else { // varType == Conditional.TYPE_SIGNAL_HEAD_HELD
-                                        listener = new JmriSimplePropertyListener("Held", LISTENER_TYPE_SIGNAL,
+                                        listener = new JmriSimplePropertyListener("Held", LISTENER_TYPE_SIGNALHEAD,
                                                                             varName, varType, conditional);
                                     }
                                 } else {
-                                    listener = new JmriMultiStatePropertyListener("Appearance", LISTENER_TYPE_SIGNAL,
+                                    listener = new JmriMultiStatePropertyListener("Appearance", LISTENER_TYPE_SIGNALHEAD,
                                                                         varName, varType, conditional, signalAspect);
                                 }
+                                break;
+                            case LISTENER_TYPE_SIGNALMAST:
+                                listener = new JmriSimplePropertyListener("Aspect", LISTENER_TYPE_SIGNALMAST,
+                                                                    varName, varType, conditional);
                                 break;
                             default:
                                 log.error("Unknown (new) Variable Listener type= "+varListenerType+", for varName= "
@@ -426,7 +427,7 @@ public class DefaultLogix extends AbstractNamedBean
                                 cpl.setRange(variable.getNum1(), variable.getNum2());
                                 cpl.addConditional(conditional);
                                 break;
-                            case LISTENER_TYPE_SIGNAL:
+                            case LISTENER_TYPE_SIGNALHEAD:
                                 if (signalAspect < 0) {
                                     listener = _listeners.get(positionOfListener);
                                     listener.addConditional(conditional);
@@ -436,6 +437,10 @@ public class DefaultLogix extends AbstractNamedBean
                                     mpl.addConditional(conditional);
                                     mpl.setState(signalAspect);
                                 }
+                                break;
+                            case LISTENER_TYPE_SIGNALMAST:
+                                listener = _listeners.get(positionOfListener);
+                                listener.addConditional(conditional);
                                 break;
                             default:
                                 log.error("Unknown (old) Variable Listener type= "+varListenerType+", for varName= "
@@ -475,7 +480,7 @@ public class DefaultLogix extends AbstractNamedBean
         for (int j=0; (j<_listeners.size()); j++) {
             if (varListenerType==_listeners.get(j).getType() ) {
                 if (varName.equals(_listeners.get(j).getDevName())) {
-                    if (varListenerType == LISTENER_TYPE_SIGNAL) {
+                    if (varListenerType == LISTENER_TYPE_SIGNALHEAD) {
                         if (varType == Conditional.TYPE_SIGNAL_HEAD_LIT || 
                                     varType == Conditional.TYPE_SIGNAL_HEAD_HELD ) {
                             if (varType == _listeners.get(j).getVarType() ) {
@@ -704,7 +709,7 @@ public class DefaultLogix extends AbstractNamedBean
 				}
 				c.addPropertyChangeListener (listener);
 				return;
-			case LISTENER_TYPE_SIGNAL:
+			case LISTENER_TYPE_SIGNALHEAD:
 				SignalHead h = InstanceManager.signalHeadManagerInstance().
 										getSignalHead(listener.getDevName());
 				if (h==null) {
@@ -712,6 +717,15 @@ public class DefaultLogix extends AbstractNamedBean
 					break;
 				}
 				h.addPropertyChangeListener (listener);
+				return;
+			case LISTENER_TYPE_SIGNALMAST:
+				SignalMast f = InstanceManager.signalMastManagerInstance().
+										provideSignalMast(listener.getDevName());
+				if (f==null) {
+					msg = "signal mast";
+					break;
+				}
+				f.addPropertyChangeListener (listener);
 				return;
 			case LISTENER_TYPE_MEMORY:
 				Memory m = InstanceManager.memoryManagerInstance().
@@ -787,7 +801,7 @@ public class DefaultLogix extends AbstractNamedBean
                     // remove listener for this Conditional
                     c.removePropertyChangeListener(listener);
                     return;
-                case LISTENER_TYPE_SIGNAL:
+                case LISTENER_TYPE_SIGNALHEAD:
                     SignalHead h = InstanceManager.signalHeadManagerInstance().
                                             getSignalHead(listener.getDevName());
                     if (h==null) {
@@ -796,6 +810,16 @@ public class DefaultLogix extends AbstractNamedBean
                     }
                     // remove listener for this Signal Head
                     h.removePropertyChangeListener(listener);
+                    return;
+                case LISTENER_TYPE_SIGNALMAST:
+                    SignalMast f = InstanceManager.signalMastManagerInstance().
+                                            provideSignalMast(listener.getDevName());
+                    if (f==null) {
+                        msg = "signal mast";
+                        break;
+                    }
+                    // remove listener for this Signal Head
+                    f.removePropertyChangeListener(listener);
                     return;
                 case LISTENER_TYPE_MEMORY:
                     Memory m = InstanceManager.memoryManagerInstance().
