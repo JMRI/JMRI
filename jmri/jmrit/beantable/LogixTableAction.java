@@ -52,7 +52,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -2807,6 +2807,7 @@ public class LogixTableAction extends AbstractTableAction {
             _optionPanel.setVisible(true);    // item type compatible with action type
         }
         _actionTypeBox.addItem("");
+        _actionNameField.removeActionListener(actionSignalMastNameListener);
         switch (itemType)  {
             case Conditional.ITEM_TYPE_TURNOUT:
                 for(int i=0; i<Conditional.ITEM_TO_TURNOUT_ACTION.length; i++) {
@@ -2890,6 +2891,8 @@ public class LogixTableAction extends AbstractTableAction {
                 _namePanel.setVisible(true);
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
+                _actionNameField.addActionListener(actionSignalMastNameListener);
+
                 for(int i=0; i<Conditional.ITEM_TO_SIGNAL_MAST_ACTION.length; i++) {
                     _actionTypeBox.addItem(
                         DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_SIGNAL_MAST_ACTION[i]));
@@ -2899,10 +2902,7 @@ public class LogixTableAction extends AbstractTableAction {
                     JLabel l = (JLabel)p.getComponent(0);
                     l.setText(rbx.getString("LabelSignalAspect"));
 
-                    java.util.Enumeration<String> en1 = InstanceManager.signalSystemManagerInstance().getSystem("basic").getAspects();
-                    while (en1.hasMoreElements()) {
-                        _actionBox.addItem(en1.nextElement());
-                    }
+                    loadJComboBoxWithMastAspects(_actionBox,_actionNameField.getText().trim());
 
                     _actionPanel.setToolTipText(rbx.getString("SignalMastSetHint"));
                     _actionPanel.setVisible(true);
@@ -3079,6 +3079,39 @@ public class LogixTableAction extends AbstractTableAction {
             _variableData1Panel.setToolTipText(rbx.getString("DataHintValue"));
         }
     }
+    
+    ActionListener variableSignalMastNameListener = new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            // fired when signal mast name changes, but only
+            // while in signal mast mode
+            log.debug("variableSignalMastNameListener fires; _variableNameField : "+_variableNameField.getText().trim());
+            loadJComboBoxWithMastAspects(_variableStateBox,_variableNameField.getText().trim());
+        }
+    };
+    
+    ActionListener actionSignalMastNameListener = new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            // fired when signal mast name changes, but only
+            // while in signal mast mode
+            log.debug("actionSignalMastNameListener fires; _actionNameField : "+_actionNameField.getText().trim());
+            loadJComboBoxWithMastAspects(_actionBox,_actionNameField.getText().trim());
+        }
+    };
+    
+    void loadJComboBoxWithMastAspects(JComboBox box, String mastName) {
+        box.removeAllItems();
+        log.debug("loadJComboBoxWithMastAspects called with name: "+mastName);
+        SignalMast m = InstanceManager.signalMastManagerInstance().getSignalMast(mastName);
+        if (m == null) {
+            box.addItem(rbx.getString("PromptLoadMastName"));
+        } else {
+            java.util.Vector<String> v = m.getValidAspects();
+            for (int i = 0; i<v.size(); i++) {
+                box.addItem(v.get(i));
+            }
+        }
+    }
+
 	/**
 	 * Responds to change in variable type in State Variable Table in the Edit
 	 * Conditional window Also used to set up for Edit of a Conditional with
@@ -3093,6 +3126,7 @@ public class LogixTableAction extends AbstractTableAction {
         _variableData1Panel.setVisible(false);
         _variableData2Panel.setVisible(false);
         _variableStateBox.removeAllItems();
+        _variableNameField.removeActionListener(variableSignalMastNameListener);
         switch (itemType) {
             case Conditional.TYPE_NONE:
                 return;
@@ -3133,13 +3167,11 @@ public class LogixTableAction extends AbstractTableAction {
                 _variableStatePanel.setVisible(true);
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
+                _variableNameField.addActionListener(variableSignalMastNameListener);
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintSignalMast"));
                 
-                // ?? get default aspects from 'basic' definiton
-                java.util.Enumeration<String> en1 = InstanceManager.signalSystemManagerInstance().getSystem("basic").getAspects();
-                while (en1.hasMoreElements()) {
-                    _variableStateBox.addItem(en1.nextElement());
-                }
+                loadJComboBoxWithMastAspects(_variableStateBox,_variableNameField.getText().trim());
+
                 _variableNamePanel.setVisible(true);
                 _variableStatePanel.setVisible(true);
                 break;
@@ -3190,6 +3222,7 @@ public class LogixTableAction extends AbstractTableAction {
         _variableStateBox.setMaximumSize(_variableStateBox.getPreferredSize());
     } /* variableTypeChanged */
 
+    
 	/**
 	 * Validates Variable data from Edit Variable Window, and transfers it to
 	 * current action object as appropriate
