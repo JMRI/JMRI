@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.14 2009-12-29 00:49:41 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.15 2009-12-29 01:36:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -160,7 +160,13 @@ Pete Cressman made it so Conditonal action items can be specified from a memory 
 using the syntax @IMemory for the devive name
 
 <p>
-Pete Cressman corrected a typo in the "SignalHeadStateHeld" resource name for SignalHeadIcon and PanelEditor
+Pete Cressman made it so Conditonal action items can be specified from a memory value 
+using the syntax "@IMemory" for the device name - i.e. the name of the internal memory 
+variable preceded by the "@" character.
+Note the particular value being referenced is not verified by Logix.  
+It is the user's responsibility to have the correct value in the memory location
+when the Conditional's actions are executed.  
+Errors encountered at Conditional execution time are reported on the console screen. 
 
 <p>
 JMRI now contains support for more-prototypical signaling basic on "signal masts" and "aspects".
