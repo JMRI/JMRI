@@ -35,7 +35,7 @@ import jmri.util.StringUtil;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.44 $
+ * @version			$Revision: 1.45 $
  */
 public class Llnmon {
 
@@ -1525,8 +1525,8 @@ public class Llnmon {
     }
 
     String idString(int id1, int id2) {
-        return "0x"+Integer.toHexString( (id2&0x7F)*128+(id1&0x7F))
-            +" ("+((id2/4&0)&0x3f)+")";
+        return "0x"+Integer.toHexString(id2&0x7F)+" 0x"+Integer.toHexString(id1&0x7F)
+            +" ("+((id2&0x7F)*128+(id1&0x7F))+")";
     }
     /*
      * Take an int and convert it to a dotted version number
