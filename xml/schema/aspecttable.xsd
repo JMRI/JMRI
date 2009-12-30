@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI aspect-signaling support                           -->
 
-<!-- $Id: aspecttable.xsd,v 1.12 2009-12-30 20:36:44 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsd,v 1.13 2009-12-30 20:50:18 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -25,11 +25,9 @@
   <xs:element name="aspecttable">
     <xs:annotation>
         <xs:documentation>
-        Top level elements without child elements become properties
-        of the Signal System named bean.  We therefore 
-        allow unlimited extension of those at the end of the element.
-        Only the first of multiple occurrances is kept as a 
-        property.
+          Top level elements without child elements become properties of the Signal System name bean.  
+          We therefore allow unlimited extension of those at the end of the aspecttable element.
+          Only the first of multiple occurrances is kept as a property.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="false">jmri.managers.DefaultSignalSystemManager</jmri:usingclass>
@@ -54,11 +52,9 @@
               <xs:element name="aspect" minOccurs="1" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:annotation><xs:documentation>
-                  Top level elements without child elements become attributes
-                  of the aspect within the Signal System.  We therefore 
-                  allow unlimited extension of those at the end of the element.
-                  Only the first of multiple occurrances is kept as a 
-                  property.
+                  Top level elements without child elements become properties of the aspect.  
+                  We therefore allow unlimited extension of those at the end of the aspect element.
+                  Only the first of multiple occurrances is kept as a property.
                   </xs:documentation></xs:annotation>
                   
                   <xs:sequence>
@@ -72,7 +68,7 @@
                     <xs:element name="comment" minOccurs="0" maxOccurs="unbounded"></xs:element>
                     <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded"></xs:element>
                     
-                    <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
 
                   </xs:sequence>
                 </xs:complexType>
@@ -81,7 +77,7 @@
           </xs:complexType>
         </xs:element>
                 
-      <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
       
       </xs:sequence>
     </xs:complexType>

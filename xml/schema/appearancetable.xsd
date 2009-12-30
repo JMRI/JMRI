@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI aspect-signaling support.                          -->
 
-<!-- $Id: appearancetable.xsd,v 1.5 2009-12-30 20:13:26 jacobsen Exp $ -->
+<!-- $Id: appearancetable.xsd,v 1.6 2009-12-30 20:50:18 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -19,27 +19,38 @@
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema.xsd"
-           <!-- xsi:schemaLocation="http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd" -->
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd"
            >
   <xs:element name="appearancetable">
     <xs:annotation>
-        <xs:documentation>
-        ******** Optional items  **********
-        The first instance of each of these
-        becomes a property of the signal
-        system named bean.
-        </xs:documentation>
         <xs:appinfo>
             <jmri:class>jmri.implementation.DefaultSignalAppearanceMap</jmri:class>
             <jmri:class>jmri.jmrit.beantable.signalmast.AddSignalMastPanel</jmri:class>
         </xs:appinfo>
+        <xs:documentation>
+        We allow unlimited extension at the end of the appearancetable element
+        for the purposes of automatically-created documentation, 
+        but only the aspecttable, name and appearances elements are used by the
+        program.
+        </xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
         
-        <xs:element name="aspecttable" minOccurs="1" maxOccurs="1" />
-        <xs:element name="name" minOccurs="1" maxOccurs="1" />
+        <xs:element name="aspecttable" minOccurs="1" maxOccurs="1">
+          <xs:annotation><xs:documentation>
+          Content of this element must match the name of an
+          aspect table, as it's used to retrieve a 
+          SignalSystem at run time.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element name="name" minOccurs="1" maxOccurs="1" >
+          <xs:annotation><xs:documentation>
+          Content of this element defines the name that's present to the
+          user when selecting an appearance table to use.
+          </xs:documentation></xs:annotation>
+        </xs:element>
 
         <xs:element name="reference" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="description" minOccurs="0" maxOccurs="unbounded" />
@@ -50,6 +61,12 @@
               
               <xs:element name="appearance" minOccurs="1" maxOccurs="unbounded">
                 <xs:complexType>
+                  <xs:annotation><xs:documentation>
+                  We allow unlimited extension at the end of the aspect element
+                  for the purposes of automatically-created documentation, 
+                  but only the aspectname and show element(s) are used by the
+                  program.
+                  </xs:documentation></xs:annotation>
                   <xs:sequence>
                     
                     <xs:element name="aspectname" minOccurs="1" maxOccurs="1" />
@@ -57,12 +74,17 @@
                     <xs:element name="reference" minOccurs="0" maxOccurs="unbounded" />
                     <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" />
                     
+                    <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+
+        <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+
       </xs:sequence>
     </xs:complexType>
   </xs:element>
