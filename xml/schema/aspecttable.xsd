@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI aspect-signaling support                           -->
 
-<!-- $Id: aspecttable.xsd,v 1.9 2009-12-30 20:21:47 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsd,v 1.10 2009-12-30 20:25:36 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -19,9 +19,8 @@
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema.xsdl"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema.xsd"
            >
-           <!-- xsi:schemaLocation="http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd" -->
   <xs:element name="aspecttable">
     <xs:annotation>
         <xs:documentation>
