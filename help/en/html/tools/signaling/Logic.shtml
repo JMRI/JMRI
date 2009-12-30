@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Logic.shtml,v 1.2 2008-03-09 20:27:29 jacobsen Exp $ -->
+<!-- $Id: Logic.shtml,v 1.3 2009-12-30 18:17:17 jacobsen Exp $ -->
 <title>JMRI: Simple Signal Logic</title>
 
 <!-- Style -->
@@ -29,6 +29,8 @@
 <div class=para>
 <p>This page describes the logic used by the JMRI Simple
 Signal panel to control signals.</p>
+<p>We display the actual code, so there's no ambiguity about
+what it's doing.  This is from JMRI test release 2.9.1.</p>
 </div>
 
     <div class=section><a name="single">
@@ -45,20 +47,41 @@ Signal panel to control signals.</p>
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
         // check for yellow, flashing yellow overriding green
-        if (watchedSignal1!=null && protectWithFlashing && watchedSignal1.getAppearance()==SignalHead.YELLOW)
+        if (protectWithFlashing && fastestColor1()==SignalHead.YELLOW)
             appearance = SignalHead.FLASHYELLOW;
-        if (watchedSignal1!=null && watchedSignal1.getAppearance()==SignalHead.RED)
+        if (fastestColor1()==SignalHead.RED || fastestColor1()==SignalHead.FLASHRED)
             appearance = SignalHead.YELLOW;
 
+        // if distant signal, show exactly what the home signal does
+        if (distantSignal)
+            appearance = fastestColor1();
+            
+        // if limited speed and green, reduce to yellow
+        if (limitSpeed1)
+            appearance = slowerOf(appearance, SignalHead.YELLOW);
+      
         // check for red overriding yellow or green
-        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor1!=null && watchSensor1.getBean().getKnownState() != Sensor.INACTIVE)
+            appearance = SignalHead.RED;
+        if (watchSensor2!=null && watchSensor2.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor3!=null && watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor4!=null && watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
 
+        // check if signal if held, forcing a red aspect by this calculation
+        if (((SignalHead)outputs[0]).getHeld())
+            appearance = SignalHead.RED;
+
+        // handle approach lighting
+        doApproach();
+        
         // show result if changed
-        if (appearance != oldAppearance)
+        if (appearance != oldAppearance) {
             ((SignalHead)outputs[0]).setAppearance(appearance);
+            if (log.isDebugEnabled()) log.debug("Change appearance of "+name+" to "+appearance);
+        }
     }
 </pre></div>
 
@@ -80,22 +103,46 @@ Signal panel to control signals.</p>
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
         // check for yellow, flashing yellow overriding green
-        if (watchedSignal1!=null && protectWithFlashing && watchedSignal1.getAppearance()==SignalHead.YELLOW)
+        if (protectWithFlashing && fastestColor1()==SignalHead.YELLOW)
             appearance = SignalHead.FLASHYELLOW;
-        if (watchedSignal1!=null && watchedSignal1.getAppearance()==SignalHead.RED)
+        if (fastestColor1()==SignalHead.RED || fastestColor1()==SignalHead.FLASHRED)
             appearance = SignalHead.YELLOW;
 
+        // if distant signal, show exactly what the home signal does
+        if (distantSignal)
+            appearance = fastestColor1();
+
+        // if limited speed and green, reduce to yellow
+        if (limitSpeed1)
+            appearance = slowerOf(appearance, SignalHead.YELLOW);
+      
         // check for red overriding yellow or green
-        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.CLOSED)
+        if (watchSensor1!=null && watchSensor1.getBean().getKnownState() != Sensor.INACTIVE)
+            appearance = SignalHead.RED;
+        if (watchSensor2!=null && watchSensor2.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor3!=null && watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor4!=null && watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+            
+        if (watchTurnout!=null && watchTurnout.getBean().getKnownState() != Turnout.CLOSED)
+            appearance = SignalHead.RED;
+        if (watchTurnout!=null && watchTurnout.getBean().getCommandedState() != Turnout.CLOSED)
             appearance = SignalHead.RED;
 
+        // check if signal if held, forcing a red aspect by this calculation
+        if (((SignalHead)outputs[0]).getHeld())
+            appearance = SignalHead.RED;
+            
+        // handle approach lighting
+        doApproach();
+        
         // show result if changed
-        if (appearance != oldAppearance)
+        if (appearance != oldAppearance) {
             ((SignalHead)outputs[0]).setAppearance(appearance);
+            if (log.isDebugEnabled()) log.debug("Change appearance of "+name+" to "+appearance);
+        }
     }
 </pre></div>
 
@@ -120,22 +167,46 @@ Signal panel to control signals.</p>
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
         // check for yellow, flashing yellow overriding green
-        if (watchedSignal1!=null && protectWithFlashing && watchedSignal1.getAppearance()==SignalHead.YELLOW)
+        if (protectWithFlashing && fastestColor1()==SignalHead.YELLOW)
             appearance = SignalHead.FLASHYELLOW;
-        if (watchedSignal1!=null && watchedSignal1.getAppearance()==SignalHead.RED)
+        if (fastestColor1()==SignalHead.RED || fastestColor1()==SignalHead.FLASHRED)
             appearance = SignalHead.YELLOW;
 
+        // if distant signal, show exactly what the home signal does
+        if (distantSignal)
+            appearance = fastestColor1();
+
+        // if limited speed and green, reduce to yellow
+        if (limitSpeed2)
+            appearance = slowerOf(appearance, SignalHead.YELLOW);
+      
         // check for red overriding yellow or green
-        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchTurnout!=null && watchTurnout.getKnownState() != Turnout.THROWN)
+        if (watchSensor1!=null && watchSensor1.getBean().getKnownState() != Sensor.INACTIVE)
+            appearance = SignalHead.RED;
+        if (watchSensor2!=null && watchSensor2.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor3!=null && watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor4!=null && watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
 
+        if (watchTurnout!=null && watchTurnout.getBean().getKnownState() != Turnout.THROWN)
+            appearance = SignalHead.RED;
+        if (watchTurnout!=null && watchTurnout.getBean().getCommandedState() != Turnout.THROWN)
+            appearance = SignalHead.RED;
+
+        // check if signal if held, forcing a red aspect by this calculation
+        if (((SignalHead)outputs[0]).getHeld())
+            appearance = SignalHead.RED;
+            
+        // handle approach lighting
+        doApproach();
+        
         // show result if changed
-        if (appearance != oldAppearance)
+        if (appearance != oldAppearance) {
             ((SignalHead)outputs[0]).setAppearance(appearance);
+            if (log.isDebugEnabled()) log.debug("Change appearance of "+name+" to "+appearance);
+        }
     }
 </pre></div>
 
@@ -157,24 +228,64 @@ Signal panel to control signals.</p>
     void doFacing() {
         int appearance = SignalHead.GREEN;
         int oldAppearance = ((SignalHead)outputs[0]).getAppearance();
-
-        // find signal to watch
-        SignalHead s = watchedSignal1;
-        if (watchTurnout!=null && watchTurnout.getKnownState() == Turnout.THROWN )
-            s = watchedSignal2;
+        
+        // find downstream appearance, being pessimistic if we're not sure of the state
+        int s = SignalHead.GREEN;
+        if (watchTurnout!=null && watchTurnout.getBean().getKnownState() != Turnout.THROWN)
+            s = slowerOf(s, fastestColor1());
+        if (watchTurnout!=null && watchTurnout.getBean().getKnownState() != Turnout.CLOSED)
+            s = slowerOf(s, fastestColor2());
 
         // check for yellow, flashing yellow overriding green
-        if (s!=null && protectWithFlashing && s.getAppearance()==SignalHead.YELLOW)
+        if (protectWithFlashing && s==SignalHead.YELLOW)
             appearance = SignalHead.FLASHYELLOW;
-        if (s!=null && s.getAppearance()==SignalHead.RED)
+        if (s==SignalHead.RED  || s==SignalHead.FLASHRED)
             appearance = SignalHead.YELLOW;
+        // if distant signal, show exactly what the home signal does
+        if (distantSignal)
+            appearance = s;
+
+        // if limited speed and green or flashing yellow, reduce to yellow
+        if (watchTurnout!=null && limitSpeed1 && watchTurnout.getBean().getKnownState()!=Turnout.THROWN)
+            appearance = slowerOf(appearance, SignalHead.YELLOW);
+
+        if (watchTurnout!=null && limitSpeed2 && watchTurnout.getBean().getKnownState()!=Turnout.CLOSED)
+            appearance = slowerOf(appearance, SignalHead.YELLOW);
+           
 
         // check for red overriding yellow or green
-        if (watchSensor1!=null && watchSensor1.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor2!=null && watchSensor2.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor3!=null && watchSensor3.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
-        if (watchSensor4!=null && watchSensor4.getKnownState() != Sensor.INACTIVE) appearance = SignalHead.RED;
+        if (watchSensor1!=null && watchSensor1.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor2!=null && watchSensor2.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor3!=null && watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor4!=null && watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
 
+        if ((watchTurnout!=null && watchTurnout.getBean().getKnownState() == Turnout.CLOSED) 
+                && ((watchedSensor1!=null && watchedSensor1.getBean().getKnownState() != Sensor.INACTIVE)))
+            appearance = SignalHead.RED;
+        if ((watchTurnout!=null && watchTurnout.getBean().getKnownState() == Turnout.CLOSED) && ((watchedSensor1Alt!=null && watchedSensor1Alt.getBean().getKnownState() != Sensor.INACTIVE)))
+            appearance = SignalHead.RED;
+        if ((watchTurnout!=null && watchTurnout.getBean().getKnownState() == Turnout.THROWN) && ((watchedSensor2!=null && watchedSensor2.getBean().getKnownState() != Sensor.INACTIVE)))
+            appearance = SignalHead.RED;
+        if ((watchTurnout!=null && watchTurnout.getBean().getKnownState() == Turnout.THROWN) && ((watchedSensor2Alt!=null && watchedSensor2Alt.getBean().getKnownState() != Sensor.INACTIVE)))
+            appearance = SignalHead.RED;
+        
+        // check if turnout in motion, if so force red
+        if (watchTurnout!=null && (watchTurnout.getBean().getKnownState() != watchTurnout.getBean().getCommandedState()) )
+            appearance = SignalHead.RED;
+        if (watchTurnout!=null && (watchTurnout.getBean().getKnownState() != Turnout.THROWN) && (watchTurnout.getBean().getKnownState() != Turnout.CLOSED) )  // checking for other states
+            appearance = SignalHead.RED;
+
+        // check if signal if held, forcing a red aspect by this calculation
+        if (((SignalHead)outputs[0]).getHeld())
+            appearance = SignalHead.RED;
+            
+        // handle approach lighting
+        doApproach();
+        
         // show result if changed
         if (appearance != oldAppearance)
             ((SignalHead)outputs[0]).setAppearance(appearance);
