@@ -3,7 +3,7 @@
 
 <!-- Schema for elements include in JMRI XML schema.                        -->
 
-<!-- $Id: JMRIschema.xsd,v 1.1 2009-12-30 19:24:34 jacobsen Exp $ -->
+<!-- $Id: JMRIschema.xsd,v 1.2 2009-12-30 19:53:01 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -19,11 +19,17 @@
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-
-  <xs:element name="class">
-    <xs:annotation><xs:documentation>
-    Indicate a JMRI class that reads and writes this element.
-    </xs:documentation></xs:annotation>
-  </xs:element>
+    <xs:element name="usingclass">
+        <xs:annotation><xs:documentation>
+        Indicate a JMRI class that reads and/or writes this element.
+        </xs:documentation></xs:annotation>
+        <xs:complexType>
+            <xs:attribute name="configurexml" type="xs:boolean">
+                <xs:annotation><xs:documentation>
+                Is this element used as part of the ConfigureXML system?
+                </xs:documentation></xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
 
 </xs:schema>
