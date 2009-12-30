@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI aspect-signaling support                           -->
 
-<!-- $Id: aspecttable.xsd,v 1.10 2009-12-30 20:25:36 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsd,v 1.11 2009-12-30 20:35:05 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -19,7 +19,8 @@
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema.xsd"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd"
            >
   <xs:element name="aspecttable">
     <xs:annotation>
@@ -31,7 +32,7 @@
         property.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:classT configurTexml="biff">jmri.managers.DefaultSignalSystemManager</jmri:classT>
+            <jmri:usingclass configurexml="false">jmri.managers.DefaultSignalSystemManager</jmri:usingclass>
         </xs:appinfo>
     </xs:annotation>
     <xs:complexType>
@@ -71,6 +72,8 @@
                     <xs:element name="comment" minOccurs="0" maxOccurs="unbounded"></xs:element>
                     <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded"></xs:element>
                     
+                    <xsd:any minOccurs=0" maxOccurs="unbounded" processContents="lax"/>
+
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
@@ -78,6 +81,8 @@
           </xs:complexType>
         </xs:element>
                 
+      <xsd:any minOccurs=0" maxOccurs="unbounded" processContents="lax"/>
+      
       </xs:sequence>
     </xs:complexType>
   </xs:element>
