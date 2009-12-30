@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- Test schema for JMRI aspect-signaling support.                         -->
+<!-- XML Schema for JMRI aspect-signaling support.                          -->
 
-<!-- This is an experimental organization,                                  -->
-<!-- and will certainly be changed in the near future                       -->
-
-<!-- $Id: appearancetable.xsd,v 1.3 2009-12-28 22:41:31 jacobsen Exp $ -->
+<!-- $Id: appearancetable.xsd,v 1.4 2009-12-30 20:10:06 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -20,8 +17,24 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd"
+           >
   <xs:element name="appearancetable">
+    <xs:annotation>
+        <xs:documentation>
+        ******** Optional items  **********
+        The first instance of each of these
+        becomes a property of the signal
+        system named bean.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:class>jmri.implementation.DefaultSignalAppearanceMap</jmri:class>
+            <jmri:class>jmri.jmrit.beantable.signalmast.AddSignalMastPanel</jmri:class>
+        </xs:appinfo>
+    </xs:annotation>
     <xs:complexType>
       <xs:sequence>
         
