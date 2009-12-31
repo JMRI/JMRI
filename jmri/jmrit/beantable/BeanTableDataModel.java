@@ -21,7 +21,7 @@ import java.util.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.29 $
+ * @version		$Revision: 1.30 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -83,7 +83,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 	 */
 	protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
 		return (e.getPropertyName().indexOf("State")>=0 || e.getPropertyName().indexOf("Appearance")>=0 
-		        || e.getPropertyName().indexOf("Comment")>=0);
+		        || e.getPropertyName().indexOf("Comment")>=0) || e.getPropertyName().indexOf("UserName")>=0;
 	}
 
     public int getRowCount() {

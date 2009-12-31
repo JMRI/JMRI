@@ -41,7 +41,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.62 $
+ * @version     $Revision: 1.63 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -668,7 +668,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         if (user.equals("")) user=null;
         // Test if bit already in use as a light
         String sName = sysName.getText().toUpperCase();
-        if (sName.charAt(1)=='T') {
+        if (sName.length()>2 && sName.charAt(1)=='T') {
             // probably standard format turnout system name
             String testSN = sName.substring(0,1)+"L"+sName.substring(2,sName.length());
             jmri.Light testLight = InstanceManager.lightManagerInstance().

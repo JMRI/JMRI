@@ -17,7 +17,7 @@ import jmri.TurnoutOperationManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -143,7 +143,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     public Turnout newTurnout(String sysName, String userName) {
         // if the systemName is specified, find that system
 		String systemName = sysName.toUpperCase();
-        if (systemName != null) {
+        if (systemName != null && systemName.length()>0) {
             for (int i=0; i<mgrs.size(); i++) {
                 if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
                     return ( (TurnoutManager)mgrs.get(i)).newTurnout(systemName, userName);
@@ -210,7 +210,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 	 public int askNumControlBits(String sysName) {
         // if the systemName is specified, find that system
 		String systemName = sysName.toUpperCase();
-        if (systemName != null) {
+        if (systemName != null && systemName.length()>0) {
             for (int i=0; i<mgrs.size(); i++) {
                 if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
                     return ((TurnoutManager)mgrs.get(i)).askNumControlBits(systemName);
