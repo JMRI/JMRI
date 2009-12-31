@@ -6,7 +6,7 @@
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
   <aspecttable>AAR-2</aspecttable>
-  <name>Double searchlight high signal</name>
+  <name>Double searchlight high absolute signal</name>
   <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
   <description>Appearances for a two-searchlight signal head without other badging</description>
   
@@ -16,56 +16,56 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <show>green</show>
-      <reference>Page 42</reference>
+      <reference>Page 42 B</reference>
     </appearance>
 
     <appearance>
       <aspectname>Advance approach medium</aspectname>
       <show>green</show>
       <show>yellow</show>
-      <reference>Page 42</reference>
+      <reference>Page 42 B</reference>
     </appearance>
 
     <appearance>
       <aspectname>Approach medium</aspectname>
       <show>yellow</show>
       <show>green</show>
-      <reference>Page 44</reference>
+      <reference>Page 44 B</reference>
     </appearance>
 
     <appearance>
-      <aspectname>Approach approach</aspectname>
+      <aspectname>Advance approach</aspectname>
       <show>yellow</show>
       <show>yellow</show>
-      <reference>Page 44</reference>
+      <reference>Page 44 B</reference>
     </appearance>
 
     <appearance>
       <aspectname>Medium-clear</aspectname>
       <show>red</show>
       <show>green</show>
-      <reference>Page 45</reference>
+      <reference>Page 45 B</reference>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <show>red</show>
-      <reference>Page 47</reference>
+      <reference>Page 47 B</reference>
     </appearance>
 
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>red</show>
       <show>yellow</show>
-      <reference>Page 49</reference>
+      <reference>Page 49 B</reference>
     </appearance>
 
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
       <show>red</show>
-      <reference>Page 50</reference>
+      <reference>Page 50 B</reference>
     </appearance>
 
   </appearances>

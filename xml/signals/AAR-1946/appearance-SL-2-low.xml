@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="http:../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+  <aspecttable>AAR-2</aspecttable>
+  <name>Double head dwarf signal</name>
+  <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
+  <description>Appearances for a two-searchlight dwarf signal head without other badging</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>green</show>
+      <reference>Page 42 F</reference>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach medium</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>Page 44 C</reference>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advance approach</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <reference>Page 44 C</reference>
+    </appearance>
+
+    <appearance>
+      <aspectname>Slow-Clear</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <reference>Page 48 B</reference>
+    </appearance>
+
+    <appearance>
+      <aspectname>Slow-approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Page 48</reference>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Page 49 C</reference>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <reference>Page 50 D</reference>
+    </appearance>
+
+  </appearances>
+</appearancetable>  

@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="http:../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<?xml-stylesheet href="http://jmri.org/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
 
 <appearancetable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
   <aspecttable>AAR-2</aspecttable>
-  <name>Single head dwarf signal</name>
+  <name>Single searchlight high permissive signal</name>
   <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
-  <description>Appearances for a one-searchlight dwarf signal head without other badging</description>
+  <description>Appearances for one-searchlight signal head with number plate</description>
   
   <appearances>
 
     <appearance>
-      <aspectname>Slow - Clear</aspectname>
+      <aspectname>Clear</aspectname>
       <show>green</show>
-      <reference>Page 48</reference>
+      <reference>Page 42 C</reference>
     </appearance>
 
     <appearance>
-      <aspectname>Restricting</aspectname>
+      <aspectname>Approach</aspectname>
       <show>yellow</show>
-      <reference>Page 49</reference>
+      <reference>Page 47 C</reference>
     </appearance>
 
     <appearance>
-      <aspectname>Stop</aspectname>
+      <aspectname>Stop and proceed</aspectname>
       <show>red</show>
-      <reference>Page 50</reference>
+      <reference>Page 50 B</reference>
     </appearance>
 
   </appearances>
