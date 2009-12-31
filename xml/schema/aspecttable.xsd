@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI aspect-signaling support                           -->
 
-<!-- $Id: aspecttable.xsd,v 1.15 2009-12-31 09:55:05 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsd,v 1.16 2009-12-31 22:49:20 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -59,9 +59,15 @@
                   
                   <xs:sequence>
                     
-                    <xs:element name="name" minOccurs="1" maxOccurs="1"></xs:element>
+                    <xs:element name="name" minOccurs="1" maxOccurs="1">
+                      <xs:annotation><xs:documentation>
+                      This must match zero or one "aspectname" element 
+                      in each appearance definition file.
+                      </xs:documentation></xs:annotation>
+                    </xs:element>
                     
                     <xs:element name="title" minOccurs="0" maxOccurs="1"></xs:element>
+                    <xs:element name="rule" minOccurs="0" maxOccurs="1"></xs:element>
                     <xs:element name="indication" minOccurs="0" maxOccurs="1"></xs:element>
                     <xs:element name="description" minOccurs="0" maxOccurs="unbounded"></xs:element>
                     <xs:element name="reference" minOccurs="0" maxOccurs="unbounded"></xs:element>
