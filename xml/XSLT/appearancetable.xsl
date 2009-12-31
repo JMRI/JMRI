@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: appearancetable.xsl,v 1.4 2009-12-31 09:09:22 jacobsen Exp $ -->
+<!-- $Id: appearancetable.xsl,v 1.5 2009-12-31 18:26:59 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI appearance table file into displayable HTML    -->
 
@@ -62,7 +62,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <xsl:template match="appearancetable">
     For aspect table: 
     <a href="aspects.xml">
-        <xsl:value-of select="document('http:aspects.xml')/aspecttable/name"/>
+        <xsl:value-of select="document('aspects.xml')/aspecttable/name"/>
     </a>
     <p/>
     Name: <xsl:value-of select="name"/><p/>
@@ -84,7 +84,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <!-- then compare to each aspect name in aspects.xml for match -->
     <!-- the http: access method means this doesn't work (no matches) for file: access -->
     <!-- to display the .xml files, but nothing else seems to work for that either -->
-    <xsl:for-each select="document('http:aspects.xml')/aspecttable/aspects/aspect">
+    <xsl:for-each select="document('aspects.xml')/aspecttable/aspects/aspect">
         <!-- looking at all aspects to find the one matching matchaspect -->
         <xsl:if test="name = $matchaspect">
             <!-- now current node is match in aspects.xml -->
