@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI aspect-signaling support                           -->
 
-<!-- $Id: aspecttable.xsd,v 1.13 2009-12-30 20:50:18 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsd,v 1.14 2009-12-31 02:58:35 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -68,7 +68,8 @@
                     <xs:element name="comment" minOccurs="0" maxOccurs="unbounded"></xs:element>
                     <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded"></xs:element>
                     
-                    <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
+                    <!-- next line causes a "Unique Particle Attribution" error -->
+                    <!-- <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/> -->
 
                   </xs:sequence>
                 </xs:complexType>
