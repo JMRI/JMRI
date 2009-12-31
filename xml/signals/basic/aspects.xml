@@ -11,43 +11,28 @@
     <aspect>
       <name>Clear</name>
       <indication>Proceed</indication>
-      <comment>This next image link is just a test</comment>
-      <imagelink>http:/jmri.org/resources/icons/smallschematics/searchlights/left-green-high.gif</imagelink>
     </aspect>
 
     <aspect>
       <name>Approach</name>
-      <indication>Proceed preparing to stop at next signal.</indication>
+      <indication>Proceed preparing to stop at next signal</indication>
     </aspect>
 
     <aspect>
       <name>Stop</name>
-      <indication>Stop.</indication>
+      <indication>Stop</indication>
     </aspect>
 
     <aspect>
-      <name>Restricting</name>
-      <indication>Proceed at restricted speed, e.g. entering a siding.</indication>
+      <name>Diverging Clear</name>
+      <indication>Proceed through diverging route</indication>
     </aspect>
 
     <aspect>
-      <name>Medium clear</name>
-      <indication>Proceed; medium speed within interlocking limits; e.g. entering a diverging route</indication>
+      <name>Diverging Approach</name>
+      <indication>Proceed through diverging route preparing to stop at next signal</indication>
     </aspect>
 
-    <aspect>
-      <name>Advance Approach Medium</name>
-      <indication>Proceed approaching second signal at medium speed</indication>
-    </aspect>
-
-    <aspect>
-      <name>Approach medium</name>
-      <indication>Proceed approaching next signal at medium speed</indication>
-    </aspect>
-    <aspect>
-      <name>Advance approach</name>
-      <indication>Proceed preparing to stop at second signal</indication>
-    </aspect>
   </aspects>
   <appearancefiles>
     <appearancefile href="appearance-one-searchlight.xml"/>

@@ -15,19 +15,19 @@
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
-      <imagelink>http:/jmri.org/resources/icons/smallschematics/searchlights/left-green-high.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-abs/rule-281.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
-      <imagelink>http:/jmri.org/resources/icons/smallschematics/searchlights/left-yellow-high.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-abs/rule-285.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
-      <imagelink>http:/jmri.org/resources/icons/smallschematics/searchlights/left-red-high.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-abs/rule-292.gif</imagelink>
     </appearance>
 
   </appearances>
