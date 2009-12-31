@@ -1,31 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en"><head>
 
-
-  <meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
+  <meta name="keywords" content="JMRI throttle">
   <meta name="Description" content="Throttle documentation for JMRI project">
   <meta name="Keywords" content="JMRI">
   <meta name="Author" content="Lionel Jeanson">
   <meta name="Language" content="EN">
-  <meta name="Robots" content="Index, Follow">
-  <meta name="Revisit-After" content="7 Days"><!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
-  
-  
-  
-  
   
   
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style --><title>Advanced throttle control</title></head><body>
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+  
+  <title>Advanced throttle control</title></head><body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 <div id="mainContent">
 <h1>Advanced control of a throttle</h1>
-
 
 <h2>Keyboard Control of the Standard Throttle Window</h2>
 
@@ -100,7 +94,7 @@ the <a href="ThrottleToolBar.shtml">Throttle Window <span style="font-weight: bo
 Jynstrumentable too, so here we drop the Jynstruments on the toolbar itself,
 not on the window content.</span><br>
 
-<a name="joypad">
+<a name="joypad" />
 <h3>USB Joypad (USBControl.jyn)</h3>
 There is a Jynstrument named USBControl.jyn to be dropped on a Throttle Window
 toolbar to get control of that Window with a joypad. See the .py files for
@@ -148,7 +142,7 @@ should customize a driver.py for your own harware.</span><br>
 <br>
 
 
-<a name="wii">
+<a name="wii" />
 <h3>Nintendo Wiimote (WiimoteThrottle.jyn)</h3>
 There is a Jynstrument named WiimoteThrottle.jyn to be dropped on a Throttle
 Window toolbar to get control of that Window with a Nintendo Wiimote device.
@@ -198,7 +192,7 @@ accelerometers, you're very welcome!<br>
 Please, <a href="../../hardware/raildriver/index.shtml">see there.</a><br>
 <br>
 
-<a name="iphone">
+<a name="iphone" />
 <h2>iPhone and iPod Touch</h2>
 
 There's a third-party application called
