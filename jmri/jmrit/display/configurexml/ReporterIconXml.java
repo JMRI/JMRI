@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for display.ReporterIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class ReporterIconXml extends PositionableLabelXml {
 
@@ -67,7 +67,7 @@ public class ReporterIconXml extends PositionableLabelXml {
 		}
 		else if (shortClass.equals("LayoutEditor")) {
 			le = (LayoutEditor) o;
-            l.setPanel(le);
+            //l.setPanel(le);
 		}
 		else {
 			log.error("Unrecognizable class - "+className);
