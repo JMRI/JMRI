@@ -12,7 +12,7 @@ import jmri.Manager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class ProxySensorManager extends AbstractProxyManager
                             implements SensorManager {
@@ -133,7 +133,7 @@ public class ProxySensorManager extends AbstractProxyManager
     public Sensor newSensor(String sysName, String userName) {
 		String systemName = sysName.toUpperCase();
         // if the systemName is specified, find that system
-        if (systemName != null) {
+        if (systemName != null && systemName.length()>0) {
             for (int i=0; i<mgrs.size(); i++) {
                 if ( ( (SensorManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
                     return ( (SensorManager)mgrs.get(i)).newSensor(systemName, userName);

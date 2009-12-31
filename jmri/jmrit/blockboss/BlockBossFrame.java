@@ -30,7 +30,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  *              
  *              Revisions to add facing point sensors, approach lighting,
  *              limited speed, changed layout, and tool tips.  
@@ -655,7 +655,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         // check signal head exists
         if (InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText())==null) {
             setTitle(rbt.getString("Simple_Signal_Logic"));
-            JOptionPane.showMessageDialog(this,rbt.getString("Signal_head_\"")+outSignalField.getText()+rbt.getString("\"_is_not_defined_yet"));
+            JOptionPane.showMessageDialog(this,rbt.getString("Signal_head_")+outSignalField.getText()+rbt.getString("_is_not_defined_yet"));
             return;
         }
 
