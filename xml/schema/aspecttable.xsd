@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI aspect-signaling support                           -->
 
-<!-- $Id: aspecttable.xsd,v 1.14 2009-12-31 02:58:35 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsd,v 1.15 2009-12-31 09:55:05 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -78,6 +78,21 @@
           </xs:complexType>
         </xs:element>
                 
+        <xs:element name="appearancefiles" minOccurs="1" maxOccurs="1">
+        <xs:annotation><xs:documentation>
+        ******** Table of appearance XML filename **********
+        </xs:documentation></xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="appearancefile" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="href" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
       <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
       
       </xs:sequence>
