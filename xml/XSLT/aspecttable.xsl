@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: aspecttable.xsl,v 1.6 2009-12-31 19:40:12 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsl,v 1.7 2009-12-31 22:49:39 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI aspecttable file into displayable HTML    -->
 
@@ -69,11 +69,19 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
 <!-- Display each aspect -->
 <xsl:template match="aspect">
-<h3><xsl:value-of select="title"/></h3>
-Name: <xsl:value-of select="name"/><br/>
-Indication: <xsl:value-of select="indication"/><br/>
-
-<!-- try to locate all images and show -->
+    <!-- create section title -->
+    <h3>
+    <xsl:for-each select="rule">
+        <xsl:value-of select="." />
+        <xsl:text>: </xsl:text>
+    </xsl:for-each>
+    <xsl:value-of select="name"/>
+    </h3>
+    <!-- end create section title -->
+    
+    Indication: <xsl:value-of select="indication"/><br/>
+    
+    <!-- try to locate all images and show -->
     <table><tr>
     <!-- set the 'matchaspect' variable to the name of the aspect we're doing now -->
     <xsl:variable name="matchaspect"><xsl:value-of select="name" /></xsl:variable>
@@ -98,8 +106,9 @@ Indication: <xsl:value-of select="indication"/><br/>
 </xsl:template>
 
 <!-- Some elements displayed specifically, don't show by default -->
-<xsl:template match="title" />
 <xsl:template match="name" />
+<xsl:template match="title" />
+<xsl:template match="rule" />
 <xsl:template match="indication" />
 
 <xsl:template match="reference" >
