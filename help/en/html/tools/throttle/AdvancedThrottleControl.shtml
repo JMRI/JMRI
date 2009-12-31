@@ -26,17 +26,10 @@
 <div id="mainContent">
 <h1>Advanced control of a throttle</h1>
 
-<p></p>
 
-<h2>Mouse control</h2>
+<h2>Keyboard Control of the Standard Throttle Window</h2>
 
-<p>Click on the buttons, move the slider... </p>
-
-<p></p>
-
-<h2>Keyboard control</h2>
-You can browse through:<br>
-
+You can operate your JMRI throttle from the keyboard in addition to using a mouse.
 
 <div style="margin-left: 40px;">
 Throttles in curent Window : Alt + left/right<br>
@@ -46,7 +39,7 @@ Throttle Windows : Shift + left/right<br>
 You can operate the Throttle using your keyboard (the Control Panel in the Throttle Window has to be selected):<br>
 
 
-<h3>Speed</h3>
+<h4>Speed</h4>
 <dl style="margin-left: 40px;">
   <dt>Numeric Keypad +</dt>
     <dd>Increase Speed </dd>
@@ -66,7 +59,7 @@ You can operate the Throttle using your keyboard (the Control Panel in the Throt
     <dd>Emergency Stop! (instantly halts the locomotive)</dd>
 </dl>
 
-<h3>Direction</h3>
+<h4>Direction</h4>
 <dl style="margin-left: 40px;">
   <dt>Up Arrow</dt>
     <dd>Reverse </dd>
@@ -74,7 +67,7 @@ You can operate the Throttle using your keyboard (the Control Panel in the Throt
     <dd>Forward </dd>
 </dl>
 
-<h3>Functions</h3>
+<h4>Functions</h4>
 <dl style="margin-left: 40px;">
   <dt>Numeric Keypad 0 - 9</dt>
     <dd>Functions 0 to 9 </dd>
@@ -86,15 +79,23 @@ You can operate the Throttle using your keyboard (the Control Panel in the Throt
 
 
 
-<h2>Jynstruments</h2>
-See <a href="../scripting/Jynstruments.shtml">there for more informations about
-Jynstruments</a>.<br>
-<br>
+<h2>Custom Throttle with Jynstruments</h2>
+
+<a href="../scripting/Jynstruments.shtml">Jynstruments</a>
+are powerful tools for creating custom JMRI throttles.
+There's
+<a href="../scripting/Jynstruments.shtml">much more information</a>
+on creating and customizing them on a 
+<a href="../scripting/Jynstruments.shtml">separate page</a>.
+Here, we focus on using the customized throttles.
+
+<p>
 <a href="http://jmri.org/jython/Jynstruments/ThrottleWindowToolBar/">Both
-Jynstruments</a> provided bellow allows for controlling already assigned
-throttles, the Throttle Window you will control has to be set up before. Then
-it's only a matter of drag'n dropping a folder on the <a href="ThrottleToolBar.shtml">Throttle Window <span style="font-weight: bold;">toolbar</span></a>.<br>
-<br>
+Jynstruments</a> provided below are for controlling already assigned
+throttles, the Throttle Window you will control has to be set up before. 
+Then it's only a matter of drag'n dropping a folder on 
+the <a href="ThrottleToolBar.shtml">Throttle Window <span style="font-weight: bold;">toolbar</span></a>.
+<p>
 <span style="font-style: italic;">Note that Throttle Window content is
 Jynstrumentable too, so here we drop the Jynstruments on the toolbar itself,
 not on the window content.</span><br>
