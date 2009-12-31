@@ -22,6 +22,8 @@
 
 <mapID target="package.jmri.jmrix.loconet.ds64.DS64Frame" url="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml"/>
 
+<mapID target="html.tools.throttle.AdvancedThrottleControl_joypad" url="html/tools/throttle/AdvancedThrottleControl.shtml#joypad"/>
+
 <mapID target="html.hardware.powerline.Compatibility" url="html/hardware/powerline/Compatibility.shtml"/>
 
 <mapID target="package.jmri.jmrit.display.PanelTarget" url="package/jmri/jmrit/display/PanelTarget.shtml"/>
@@ -61,6 +63,10 @@
 <mapID target="manual.Basic_Programming_Read Data" url="manual/Basic_Programming.shtml#Read Data"/>
 
 <mapID target="manual.Main_LocoNet_LocoIOProgrammer" url="manual/Main_LocoNet.shtml#LocoIOProgrammer"/>
+
+<mapID target="html.tools.signaling.DefineNewAspects" url="html/tools/signaling/DefineNewAspects.shtml"/>
+
+<mapID target="html.doc.Technical.XmlSchema" url="html/doc/Technical/XmlSchema.shtml"/>
 
 <mapID target="manual.Comp_FunctionLabel_Top" url="manual/Comp_FunctionLabel.shtml#Top"/>
 
@@ -642,6 +648,8 @@
 
 <mapID target="package.jmri.jmrix.cmri.serial.serialmon.SerialMonFrame" url="package/jmri/jmrix/cmri/serial/serialmon/SerialMonFrame.shtml"/>
 
+<mapID target="html.tools.throttle.AdvancedThrottleControl_wii" url="html/tools/throttle/AdvancedThrottleControl.shtml#wii"/>
+
 <mapID target="html.hardware.loconet.LbServer" url="html/hardware/loconet/LbServer.shtml"/>
 
 <mapID target="manual.Main_TurnoutControl" url="manual/Main_TurnoutControl.shtml"/>
@@ -767,6 +775,8 @@
 <mapID target="manual.Main_PRICOM" url="manual/Main_PRICOM.shtml"/>
 
 <mapID target="manual.Basic_Programming_Save Data" url="manual/Basic_Programming.shtml#Save Data"/>
+
+<mapID target="html.tools.throttle.AdvancedThrottleControl_iphone" url="html/tools/throttle/AdvancedThrottleControl.shtml#iphone"/>
 
 <mapID target="manual.Main_Debug_pricom" url="manual/Main_Debug.shtml#pricom"/>
 
@@ -1018,9 +1028,9 @@
 
 <mapID target="html.tools.scripting.Start" url="html/tools/scripting/Start.shtml"/>
 
-<mapID target="html.tools.signaling.index" url="html/tools/signaling/index.shtml"/>
-
 <mapID target="html.doc.Technical.Networking" url="html/doc/Technical/Networking.shtml"/>
+
+<mapID target="html.tools.signaling.index" url="html/tools/signaling/index.shtml"/>
 
 <mapID target="manual.Main_XpressNet_LV100CM" url="manual/Main_XpressNet.shtml#LV100CM"/>
 
@@ -1318,9 +1328,9 @@
 
 <mapID target="manual.Main_Debug_logMessage" url="manual/Main_Debug.shtml#logMessage"/>
 
-<mapID target="html.tools.programmer.messages" url="html/tools/programmer/messages.shtml"/>
-
 <mapID target="manual.Main_NCE_Clock" url="manual/Main_NCE.shtml#Clock"/>
+
+<mapID target="html.tools.programmer.messages" url="html/tools/programmer/messages.shtml"/>
 
 <mapID target="manual.Main_RPS_Align" url="manual/Main_RPS.shtml#Align"/>
 

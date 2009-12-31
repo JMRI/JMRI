@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.16 2009-12-31 07:59:00 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.17 2009-12-31 21:26:11 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -172,7 +172,10 @@ Errors encountered at Conditional execution time are reported on the console scr
 JMRI now contains support for more-prototypical signaling basic on "signal masts" and "aspects".
 The basic functions are in place, along with the start of some
 <a href="http://jmri.org/help/en/html/tools/signaling/AspectSignaling.shtml">help pages</a>.
-This is still being actively developed. We intend to have it fully available by the 
+This is still being actively developed. There's a first set of 
+signal definitions available for the
+<a href="http://jmri.org/xml/signals/AAR-1946/aspects.xml">AAR 1946</a> signaling system.
+We intend to have this fully available by the 
 next JMRI production release in summer 2010.
 
 <p>
@@ -181,6 +184,17 @@ when computing the proper color for a protecting signal.
 
 <p>
 Nelson Allison improved the scripts for running the Roco  46800 and 46902 cranes.
+
+<p>
+Pete Cressman fixed a problem that was preventing Reporter icons from loading in Layout Editor windows.
+
+<p>
+Dick Bronson provided a great set of
+<a href="http://jmri.org/resources/icons/smallschematics/aspects/AAR-1946/">icons for ARR signal masts</a>
+as part of the 
+<a href="http://jmri.org/help/en/html/tools/signaling/AspectSignaling.shtml">aspect-based signaling</a>.
+The best way to see the icons is the
+<a href="http://jmri.org/xml/signals/AAR-1946/aspects.xml">aspect page</a>.
 
 <!--#include virtual="/Footer" -->
 

@@ -451,6 +451,12 @@
 
  
 <li>
+<a href="html/tools/throttle/AdvancedThrottleControl.shtml#iphone">iPhone/iPod </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="html/doc/Technical/JUnit.shtml">JUnit </a>
 <ul></ul>
 </li>
@@ -946,12 +952,6 @@
 
  
 <li>
-<a href="package/jmri/jmrit/mailreport/Report.shtml">Send Problem Report </a>
-<ul></ul>
-</li>
-
- 
-<li>
 <a href="html/tools/Sensors.shtml">Sensor </a>
 <ul>
   
@@ -1182,9 +1182,28 @@
  
 <li>
 <a href="html/tools/throttle/ThrottleMain.shtml">Throttles </a>
+<ul>
+  
+<li>
+<a href="html/tools/throttle/AdvancedThrottleControl.shtml#iphone">iPhone/iPod as Throttle </a>
 <ul></ul>
 </li>
 
+  
+<li>
+<a href="html/tools/throttle/AdvancedThrottleControl.shtml#joypad">USB Joypad as Throttle </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/tools/throttle/AdvancedThrottleControl.shtml#wii">Wii Remote as Throttle </a>
+<ul></ul>
+</li>
+
+ 
+</ul>
+</li>
  
 <li>
 <a href="html/tools/tracker/index.shtml">Tracker </a>
@@ -1237,6 +1256,12 @@
 </li>
  
 <li>
+<a href="package/jmri/jmrit/mailreport/Report.shtml">Upload Debugging Information </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml">USB </a>
 <ul></ul>
 </li>
@@ -1287,6 +1312,18 @@
  
 <li>
 <a href="html/web/index.shtml">Web </a>
+<ul></ul>
+</li>
+
+ 
+<li>
+<a href="html/tools/throttle/AdvancedThrottleControl.shtml#wii">Wii Remote </a>
+<ul></ul>
+</li>
+
+ 
+<li>
+<a href="package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle for iPhone/iPod Touch </a>
 <ul></ul>
 </li>
 

@@ -146,6 +146,8 @@
 
  <indexitem text="Internationalization " target="html.doc.Technical.I8N"/>
 
+ <indexitem text="iPhone/iPod " target="html.tools.throttle.AdvancedThrottleControl_iphone"/>
+
  <indexitem text="JUnit " target="html.doc.Technical.JUnit"/>
 
  <indexitem text="Jynstruments " target="html.tools.scripting.Jynstruments"/>
@@ -310,8 +312,6 @@
  </indexitem>
  <indexitem text="Send DCC Packet " target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
 
- <indexitem text="Upload Debugging Information " target="package.jmri.jmrit.mailreport.Report"/>
-
  <indexitem text="Sensor " target="html.tools.Sensors">
   <indexitem text="Add Sensor " target="package.jmri.jmrit.beantable.SensorAddEdit"/>
 
@@ -388,8 +388,14 @@
   <indexitem text="Turnout Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
 
  </indexitem>
- <indexitem text="Throttles " target="html.tools.throttle.ThrottleMain"/>
+ <indexitem text="Throttles " target="html.tools.throttle.ThrottleMain">
+  <indexitem text="iPhone/iPod as Throttle " target="html.tools.throttle.AdvancedThrottleControl_iphone"/>
 
+  <indexitem text="USB Joypad as Throttle " target="html.tools.throttle.AdvancedThrottleControl_joypad"/>
+
+  <indexitem text="Wii Remote as Throttle " target="html.tools.throttle.AdvancedThrottleControl_wii"/>
+
+ </indexitem>
  <indexitem text="Tracker " target="html.tools.tracker.index"/>
 
  <indexitem text="Transits " target="package.jmri.jmrit.beantable.TransitTable">
@@ -406,6 +412,8 @@
   <indexitem text="Turnout Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
 
  </indexitem>
+ <indexitem text="Upload Debugging Information " target="package.jmri.jmrit.mailreport.Report"/>
+
  <indexitem text="USB " target="package.jmri.jmrix.jinput.treemodel.TreeFrame"/>
 
  <indexitem text="USS CTC Tools " target="html.tools.uss.index">
@@ -423,6 +431,10 @@
  <indexitem text="Warrants " target="package.jmri.jmrit.logix.Warrant"/>
 
  <indexitem text="Web " target="html.web.index"/>
+
+ <indexitem text="Wii Remote " target="html.tools.throttle.AdvancedThrottleControl_wii"/>
+
+ <indexitem text="WiThrottle for iPhone/iPod Touch " target="package.jmri.jmrit.withrottle.UserInterface"/>
 
  <indexitem text="XML " target="html.apps.DecoderPro.IntroXML">
   <indexitem text="Editors " target="html.doc.Technical.XmlEditors"/>
