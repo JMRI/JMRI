@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.15 2009-12-29 01:36:39 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.16 2009-12-31 07:59:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -180,6 +180,7 @@ Simple Signal Logic treats a flashing-red signal head (e.g. if set that way by a
 when computing the proper color for a protecting signal.
 
 <p>
+Nelson Allison improved the scripts for running the Roco  46800 and 46902 cranes.
 
 <!--#include virtual="/Footer" -->
 
