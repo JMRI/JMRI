@@ -49,6 +49,10 @@
       <indication>Proceed preparing to stop at second signal</indication>
     </aspect>
 
+  <appearancefiles>
+    <appearancefile href="appearance-one-searchlight.xml"/>
+    <appearancefile href="appearance-two-searchlight.xml"/>
+  </appearancefiles>
 
 
   </aspects>
