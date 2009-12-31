@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: aspecttable.xsl,v 1.5 2009-12-31 09:32:29 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsl,v 1.6 2009-12-31 19:40:12 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI aspecttable file into displayable HTML    -->
 
@@ -74,20 +74,23 @@ Name: <xsl:value-of select="name"/><br/>
 Indication: <xsl:value-of select="indication"/><br/>
 
 <!-- try to locate all images and show -->
+    <table><tr>
     <!-- set the 'matchaspect' variable to the name of the aspect we're doing now -->
     <xsl:variable name="matchaspect"><xsl:value-of select="name" /></xsl:variable>
     <!-- index through all the files -->
+    <!-- Bug: Firefox doesn't properly preserve document order here... -->
     <xsl:for-each select="document(/aspecttable/appearancefiles/appearancefile/@href)/appearancetable/appearances/appearance">
         <!-- looking at all aspects to find the one matching matchaspect -->
         <xsl:if test="aspectname = $matchaspect">
             <!-- found, make an image tag -->
-            <xsl:element name="img">
+            <td valign="bottom"><xsl:element name="img">
                 <xsl:attribute name="src">
                     <xsl:value-of select="imagelink"/>
                 </xsl:attribute>
-            </xsl:element>     
+            </xsl:element></td> 
         </xsl:if>
     </xsl:for-each>
+    </tr></table>
 <!-- end of valiant attempt -->
 
 <xsl:apply-templates/>
