@@ -20,5 +20,8 @@
     </aspect>
 
   </aspects>
+  <appearancefiles>
+    <appearancefile href="sample-appearance-file.xml"/>
+  </appearancefiles>
 </aspecttable>
   
