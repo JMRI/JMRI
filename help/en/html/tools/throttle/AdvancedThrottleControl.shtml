@@ -100,7 +100,7 @@ the <a href="ThrottleToolBar.shtml">Throttle Window <span style="font-weight: bo
 Jynstrumentable too, so here we drop the Jynstruments on the toolbar itself,
 not on the window content.</span><br>
 
-
+<a name="joypad">
 <h3>USB Joypad (USBControl.jyn)</h3>
 There is a Jynstrument named USBControl.jyn to be dropped on a Throttle Window
 toolbar to get control of that Window with a joypad. See the .py files for
@@ -148,6 +148,7 @@ should customize a driver.py for your own harware.</span><br>
 <br>
 
 
+<a name="wii">
 <h3>Nintendo Wiimote (WiimoteThrottle.jyn)</h3>
 There is a Jynstrument named WiimoteThrottle.jyn to be dropped on a Throttle
 Window toolbar to get control of that Window with a Nintendo Wiimote device.
@@ -197,7 +198,7 @@ accelerometers, you're very welcome!<br>
 Please, <a href="../../hardware/raildriver/index.shtml">see there.</a><br>
 <br>
 
-
+<a name="iphone">
 <h2>iPhone and iPod Touch</h2>
 
 There's a third-party application called
