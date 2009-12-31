@@ -197,14 +197,17 @@ Please, <a href="../../hardware/raildriver/index.shtml">see there.</a><br>
 <br>
 
 
-<h2>iPhone</h2>
+<h2>iPhone and iPod Touch</h2>
 
-<p>Soon, <a href="http://withrottle.com/">see there.</a></p>
+There's a third-party application called
+<a href="http://withrottle.com/">WiThrottle</a>
+that works with JMRI let you control trains with your 
+iPhone or iPod Touch.
 
-<p></p>
-
-<p><br>
-<br>
+<p>
+You can also browse the
+<a href="../../web/index.shtml">JMRI webserver</a>
+from Safari on your iPhone or iPod Touch.
 </p>
 </div>
 <!--#include virtual="/Footer" -->
