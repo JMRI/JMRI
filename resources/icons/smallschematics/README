@@ -8,4 +8,5 @@ Directories are:
                    
   searchlights:    Seachlight signals for a track diagram.
   
-  
+  aspects:  displays of various signal aspects, organized by analogy
+            to the aspect signaling definition directories
