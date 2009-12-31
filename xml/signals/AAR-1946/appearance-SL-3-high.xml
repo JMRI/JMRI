@@ -22,7 +22,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Advance approach medium</aspectname>
+      <aspectname>Advance Approach Medium</aspectname>
       <show>green</show>
       <show>yellow</show>
       <show>red</show>
@@ -31,7 +31,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Approach limited</aspectname>
+      <aspectname>Approach Limited</aspectname>
       <show>yellow</show>
       <show>green</show>
       <show>green</show>
@@ -40,7 +40,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Limited-clear</aspectname>
+      <aspectname>Limited-Clear</aspectname>
       <show>red</show>
       <show>green</show>
       <show>green</show>
@@ -49,7 +49,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Approach medium</aspectname>
+      <aspectname>Approach Medium</aspectname>
       <show>yellow</show>
       <show>green</show>
       <show>red</show>
@@ -58,7 +58,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Advanced approach</aspectname>
+      <aspectname>Advance Approach</aspectname>
       <show>yellow</show>
       <show>yellow</show>
       <show>red</show>
@@ -67,7 +67,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Medium-clear</aspectname>
+      <aspectname>Medium-Clear</aspectname>
       <show>red</show>
       <show>green</show>
       <show>red</show>
@@ -76,7 +76,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Medium-advanced approach</aspectname>
+      <aspectname>Medium-Advance Approach</aspectname>
       <show>red</show>
       <show>yellow</show>
       <show>yellow</show>
@@ -85,7 +85,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Medium-approach slow</aspectname>
+      <aspectname>Medium-Approach Slow</aspectname>
       <show>red</show>
       <show>yellow</show>
       <show>green</show>
@@ -94,7 +94,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Approach slow</aspectname>
+      <aspectname>Approach Slow</aspectname>
       <show>yellow</show>
       <show>red</show>
       <show>green</show>
@@ -112,7 +112,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Medium-approach</aspectname>
+      <aspectname>Medium-Approach</aspectname>
       <show>red</show>
       <show>yellow</show>
       <show>red</show>
@@ -121,7 +121,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Slow-clear</aspectname>
+      <aspectname>Slow-Clear</aspectname>
       <show>red</show>
       <show>red</show>
       <show>green</show>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: appearancetable.xsl,v 1.3 2009-12-29 05:37:46 jacobsen Exp $ -->
+<!-- $Id: appearancetable.xsl,v 1.4 2009-12-31 09:09:22 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI appearance table file into displayable HTML    -->
 
@@ -82,6 +82,8 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <xsl:variable name="matchaspect"><xsl:value-of select="aspectname" /></xsl:variable>
 
     <!-- then compare to each aspect name in aspects.xml for match -->
+    <!-- the http: access method means this doesn't work (no matches) for file: access -->
+    <!-- to display the .xml files, but nothing else seems to work for that either -->
     <xsl:for-each select="document('http:aspects.xml')/aspecttable/aspects/aspect">
         <!-- looking at all aspects to find the one matching matchaspect -->
         <xsl:if test="name = $matchaspect">
@@ -126,26 +128,37 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
         </xsl:if>
     </xsl:for-each>
 
+    <!-- display the aspect in a little table -->
+    <table><tr><td>
+    <!-- Put image to left if it exists -->
+    <xsl:for-each select="imagelink">
+        <xsl:element name="img">
+            <xsl:attribute name="src">
+                <xsl:value-of select="."/>
+            </xsl:attribute>
+        </xsl:element>
+    </xsl:for-each>
+    </td>
+    <!-- show elements to right if they exist-->
+    <td>
+    <xsl:for-each select="show">
+        Show: <xsl:value-of select="."/><br/>
+    </xsl:for-each>
+    
+    </td></tr></table>
     <!-- show rest of element -->
     <xsl:apply-templates/>
     
 </xsl:template>
 
-<!-- Display imagelink as image -->
-<xsl:template match="imagelink">
-    <xsl:element name="img">
-        <xsl:attribute name="src">
-            <xsl:value-of select="."/>
-        </xsl:attribute>
-    </xsl:element>
-</xsl:template>
+<!-- Ignore imagelink, already done -->
+<xsl:template match="imagelink" />
 
 <!-- already shown -->
 <xsl:template match="aspectname"/>
 
-<xsl:template match="show">
-Show: <xsl:value-of select="."/><br/>
-</xsl:template>
+<!-- Ignore show, already done -->
+<xsl:template match="show" />
 
 <xsl:template match="reference">
 <p/>Appearance reference: <xsl:value-of select="."/>

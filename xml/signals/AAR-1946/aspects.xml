@@ -25,56 +25,56 @@
     </aspect>
 
     <aspect>
-      <name>Aproach limited</name>
+      <name>Approach Limited</name>
       <title>Rule 281B</title>
       <indication>Proceed approaching next signal at limited speed</indication>
       <reference>Page 43</reference>
     </aspect>
 
     <aspect>
-      <name>Limited-clear</name>
+      <name>Limited-Clear</name>
       <title>Rule 281C</title>
       <indication>Proceed; limited speed within interlocking limits</indication>
       <reference>Page 43</reference>
     </aspect>
 
     <aspect>
-      <name>Approach medium</name>
+      <name>Approach Medium</name>
       <title>Rule 282</title>
       <indication>Proceed approaching next signal at medium speed</indication>
       <reference>Page 44</reference>
     </aspect>
 
     <aspect>
-      <name>Advance approach</name>
+      <name>Advance Approach</name>
       <title>Rule 282A</title>
       <indication>Proceed preparing to stop at second signal</indication>
       <reference>Page 44</reference>
     </aspect>
 
     <aspect>
-      <name>Medium-clear</name>
+      <name>Medium-Clear</name>
       <title>Rule 283</title>
       <indication>Proceed; medium speed within interlocking limits</indication>
       <reference>Page 45</reference>
     </aspect>
 
     <aspect>
-      <name>Medium-advance approach</name>
+      <name>Medium-Advance Approach</name>
       <title>Rule 283A</title>
       <indication>Proceed preparing to stop at second signal; medium speed within interlocking limits</indication>
       <reference>Page 45</reference>
     </aspect>
 
     <aspect>
-      <name>Medium-approach slow</name>
+      <name>Medium-Approach Slow</name>
       <title>Rule 283B</title>
       <indication>Proceed at medium speed approaching next signal at slow speed</indication>
       <reference>Page 46</reference>
     </aspect>
 
     <aspect>
-      <name>Approach slow</name>
+      <name>Approach Slow</name>
       <title>Rule 284</title>
       <indication>Proceed approaching next signal at slow speed. Train exceeding medium speed must at once reduce to that speed.</indication>
       <reference>Page 46</reference>
@@ -88,21 +88,21 @@
     </aspect>
 
     <aspect>
-      <name>Medium-approach</name>
+      <name>Medium-Approach</name>
       <title>Rule 286</title>
       <indication>Proceed at medium speed preparing to stop at next signal</indication>
       <reference>Page 47</reference>
     </aspect>
 
     <aspect>
-      <name>Slow-clear</name>
+      <name>Slow-Clear</name>
       <title>Rule 287</title>
       <indication>Proceed; slow speed within interlocking limits.</indication>
       <reference>Page 48</reference>
     </aspect>
 
     <aspect>
-      <name>Slow-approach</name>
+      <name>Slow-Approach</name>
       <title>Rule 288</title>
       <indication>Proceed preparing to stop at next signal; slow speed within interlocking limits.</indication>
       <reference>Page 48</reference>
@@ -123,7 +123,7 @@
     </aspect>
 
     <aspect>
-      <name>Stop and proceed</name>
+      <name>Stop And Proceed</name>
       <title>Rule 291</title>
       <indication>Stop; then proceed at restricted speed.</indication>
       <reference>Page 50</reference>

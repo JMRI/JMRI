@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="http:../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
 
 <appearancetable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
@@ -17,34 +17,39 @@
       <show>green</show>
       <show>green</show>
       <reference>Page 42 B</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-high-abs/rule-281.gif</imagelink>
     </appearance>
 
     <appearance>
-      <aspectname>Advance approach medium</aspectname>
+      <aspectname>Advance Approach Medium</aspectname>
       <show>green</show>
       <show>yellow</show>
       <reference>Page 42 B</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-high-abs/rule-281a.gif</imagelink>
     </appearance>
 
     <appearance>
-      <aspectname>Approach medium</aspectname>
+      <aspectname>Approach Medium</aspectname>
       <show>yellow</show>
       <show>green</show>
       <reference>Page 44 B</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-high-abs/rule-282.gif</imagelink>
     </appearance>
 
     <appearance>
-      <aspectname>Advance approach</aspectname>
+      <aspectname>Advance Approach</aspectname>
       <show>yellow</show>
       <show>yellow</show>
       <reference>Page 44 B</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-high-abs/rule-282a.gif</imagelink>
     </appearance>
 
     <appearance>
-      <aspectname>Medium-clear</aspectname>
+      <aspectname>Medium-Clear</aspectname>
       <show>red</show>
       <show>green</show>
       <reference>Page 45 B</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-high-abs/rule-283.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -52,6 +57,7 @@
       <show>yellow</show>
       <show>red</show>
       <reference>Page 47 B</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-high-abs/rule-285.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -59,6 +65,7 @@
       <show>red</show>
       <show>yellow</show>
       <reference>Page 49 B</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-high-abs/rule-290.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -66,6 +73,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Page 50 B</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-2-high-abs/rule-292.gif</imagelink>
     </appearance>
 
   </appearances>
