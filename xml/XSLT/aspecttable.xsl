@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: aspecttable.xsl,v 1.7 2009-12-31 22:49:39 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsl,v 1.8 2010-01-01 00:51:33 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI aspecttable file into displayable HTML    -->
 
@@ -63,8 +63,14 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     Date: <xsl:value-of select="date"/>
     <p/>
     <xsl:value-of select="reference"/>
+
     <!-- show the aspects -->
+    <h2>Aspect Definitions</h2>
     <xsl:apply-templates select="aspects"/>
+
+    <!-- link to appearances -->
+    <xsl:apply-templates select="appearancefiles"/>
+
 </xsl:template>
 
 <!-- Display each aspect -->
@@ -99,7 +105,6 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
         </xsl:if>
     </xsl:for-each>
     </tr></table>
-<!-- end of valiant attempt -->
 
 <xsl:apply-templates/>
 
@@ -130,6 +135,37 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
             <xsl:value-of select="."/>
         </xsl:attribute>
     </xsl:element>
+</xsl:template>
+
+<xsl:template match="appearancefiles">
+<!-- Display appearancefile section -->
+<h2>Signal Mast Definition Files</h2>
+<xsl:apply-templates select="appearancefile"/>
+</xsl:template>
+
+<!-- Display appearancefile elements as links to separate files -->
+<xsl:template match="appearancefile">
+    <xsl:element name="a">
+        <xsl:attribute name="href">
+            <xsl:value-of select="@href"/>
+        </xsl:attribute>
+        <xsl:value-of select="document(@href)/appearancetable/name" />
+    </xsl:element>
+    <br/>
+    <!-- try to locate all images and show -->
+    <table><tr>
+    <!-- index through all the files -->
+    <!-- Bug: Firefox doesn't properly preserve document order here... -->
+    <xsl:for-each select="document(@href)/appearancetable/appearances/appearance/imagelink">
+            <!-- found, make an image tag -->
+            <td valign="bottom"><xsl:element name="img">
+                <xsl:attribute name="src">
+                    <xsl:value-of select="."/>
+                </xsl:attribute>
+            </xsl:element></td> 
+    </xsl:for-each>
+    </tr></table>
+    <p/>
 </xsl:template>
 
 </xsl:stylesheet>
