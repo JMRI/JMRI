@@ -14,7 +14,7 @@ import jmri.util.zeroconf.ZeroConfUtil;
  * Action to start a miniserver
  *
  * @author	    Bob Jacobsen    Copyright (C) 2004
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class MiniServerAction extends AbstractAction {
 
@@ -58,9 +58,14 @@ public class MiniServerAction extends AbstractAction {
         }
     }
     
+    ServerThread s;
     public void startServer() {
-        ServerThread s = new ServerThread();
-        s.start();
+    	if (s == null){
+    		s = new ServerThread();
+    		s.start();
+    	}else{
+    		log.info("Mini Server already running");
+    	}
     }
     
     
@@ -92,6 +97,9 @@ public class MiniServerAction extends AbstractAction {
             // as the MiniServer ctor is the service loop
         }
     }
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(MiniServerAction.class.getName());
 }
 
 /* @(#)MiniServerAction.java */
