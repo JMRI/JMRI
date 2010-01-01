@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the SignalHeadSignalMast implementation
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SignalHeadSignalMastTest extends TestCase {
 
@@ -89,10 +89,10 @@ public class SignalHeadSignalMastTest extends TestCase {
 	    Assert.assertEquals("Clear head 2 red",SignalHead.RED,
 	        InstanceManager.signalHeadManagerInstance().getSignalHead("IH2").getAppearance());
 
-	    s.setAspect("Restricting");
-	    Assert.assertEquals("Restricting head 1 red",SignalHead.RED,
+	    s.setAspect("Diverging Approach");
+	    Assert.assertEquals("Diverging Approach head 1 red",SignalHead.RED,
 	        InstanceManager.signalHeadManagerInstance().getSignalHead("IH1").getAppearance());
-	    Assert.assertEquals("Restricting head 2 yellow",SignalHead.YELLOW,
+	    Assert.assertEquals("Diverging Approach head 2 yellow",SignalHead.YELLOW,
 	        InstanceManager.signalHeadManagerInstance().getSignalHead("IH2").getAppearance());
 	}
 
