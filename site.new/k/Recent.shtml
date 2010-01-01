@@ -7,8 +7,9 @@
 <!--#include virtual="/k/c/header2"-->
 <!--#include virtual="/k/c/recent_topmatter.txt"-->
 <a id="ComingEvents">
-<H3><!--#include virtual="/k/i/ComingEvents_d.txt"-->: <!--#include virtual="/k/i/ComingEvents_h.txt"--></H3>
-<!--#include virtual="/k/i/ComingEvents_b.txt"-->
+<a id="2009-12-21">
+<H3><!--#include virtual="/k/i/2009-12-21_d.txt"-->: <!--#include virtual="/k/i/2009-12-21_h.txt"--></H3>
+<!--#include virtual="/k/i/2009-12-21_b.txt"-->
 <a id="2009-12-10">
 <H3><!--#include virtual="/k/i/2009-12-10_d.txt"-->: <!--#include virtual="/k/i/2009-12-10_h.txt"--></H3>
 <!--#include virtual="/k/i/2009-12-10_b.txt"-->

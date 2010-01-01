@@ -1,10 +1,23 @@
 <a id="nexthearing">
-<!-- We currently have no hearings scheduled. -->
 
+
+The next event in the case is a 
+<a href="/k/docket/396.pd">settlement conference</a>
+on January 28, 2010 in San Francisco. The outcome of that
+will determine whether we go to trial on our appeal to the
+Federal Circuit, and whether we have a trial in the main case.
+We'll post more information as soon as we can.
+
+<!-- 
+We currently have no hearings scheduled.
+ -->
+
+<!-- 
 We're waiting 
 for decisions from the District Court on the motions discussed at the
 <a href="/k/Recent.shtml#2009-12-04">December 4, 2009 hearing</a>. We'll post those 
 when they become available.
+ -->
 
 <!-- 
 Our next district court hearing is scheduled 
@@ -16,15 +29,6 @@ if you could come out and attend the hearing to <u>respectfully</u>
 support open-source software.
  -->
 
-
-<!-- On the morning of April 11th, 2008, the District Court in San Francisco will hold a  -->
-<!-- hearing on Katzer's motion to dismiss and strike parts of our action related to DMCA and contract,  -->
-<!-- and on Katzer's motion to declare the patent parts of the lawsuit moot.  -->
-<!-- There will also be another Case Management Conference that day.  -->
-<!-- There are some filings due April 4, 2008 relating to the case management conference,  -->
-<!-- and those will be made available on the  -->
-<!-- <a href="docket/index.shtml">docket page</a> -->
-<!-- after they are filed. -->
 
 <!-- -->
 <!-- For those of you in the San Francisco area, it would be great  -->
