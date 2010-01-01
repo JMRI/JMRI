@@ -41,7 +41,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.63 $
+ * @version     $Revision: 1.64 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -151,6 +151,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     else if (col==SENSOR1COL) return new JTextField(5).getPreferredSize().width;
                     else if (col==SENSOR2COL) return new JTextField(5).getPreferredSize().width;
                     else if (col==OPSONOFFCOL) return new JTextField(14).getPreferredSize().width;
+                    else if (col==OPSEDITCOL) return new JTextField(7).getPreferredSize().width;
                     else if (col==LOCKOPRCOL || col==xLOCKOPRCOL) return new JTextField(10).getPreferredSize().width;
                     else if (col==LOCKDECCOL || col==xLOCKDECCOL) return new JTextField(10).getPreferredSize().width;
                     else return super.getPreferredWidth(col);
