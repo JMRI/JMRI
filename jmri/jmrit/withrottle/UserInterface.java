@@ -10,7 +10,7 @@ package jmri.jmrit.withrottle;
  *	Create a window for WiThrottle information, advertise service, and create a thread for it to run in.
  *
  *	@author Brett Hoffman   Copyright (C) 2009
- *	@version $Revision: 1.8 $
+ *	@version $Revision: 1.9 $
  */
 
 import java.awt.event.*;
@@ -184,6 +184,7 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
         }
 
         port = socket.getLocalPort();
+        if(log.isDebugEnabled()) log.debug("WiThrottle listening on TCP port: " + port);
 
         try {serviceInfo = ZeroConfUtil.advertiseService(
                     ZeroConfUtil.getServerName("WiThrottle"),
