@@ -28,7 +28,7 @@ import jmri.jmrix.powerline.SerialAddress;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
  * @author      Ken Cameron Copyright (C) 2009
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 abstract public class SerialLight extends AbstractVariableLight {
 
@@ -61,7 +61,11 @@ abstract public class SerialLight extends AbstractVariableLight {
         // Convert to the two-part X10 address
         housecode = SerialAddress.houseCodeAsValueFromSystemName(getSystemName());
         devicecode = SerialAddress.deviceCodeAsValueFromSystemName(getSystemName());
-        
+        if (housecode == -1) {
+            insteonaddress = SerialAddress.deviceCodeFromSystemName(getSystemName());
+            isInsteon = true;
+        }
+
         // Set defaults for all other instance variables
         setControlType( NO_CONTROL );
         setControlSensor( null );
@@ -83,6 +87,8 @@ abstract public class SerialLight extends AbstractVariableLight {
     // data members holding the X10 address
     protected int housecode = -1;
     protected int devicecode = -1;
+    protected String insteonaddress = "";
+    protected boolean isInsteon = false;
             
     /**
      *  Send a On/Off Command to the hardware
@@ -118,9 +124,9 @@ abstract public class SerialLight extends AbstractVariableLight {
         out.addFunction(housecode, function, 0);
         // send
         SerialTrafficController.instance().sendX10Sequence(out, null);
-        
-    	if (log.isDebugEnabled()) {
-    		log.debug("sendOnOff(" + newDim + ")  house " + X10Sequence.houseCodeToText(housecode) + " device " + devicecode + " funct: " + function);
+
+ 	    if (log.isDebugEnabled()) {
+ 		    log.debug("sendOnOff(" + newDim + ")  house " + X10Sequence.houseCodeToText(housecode) + " device " + devicecode + " funct: " + function);
         }
     }
 

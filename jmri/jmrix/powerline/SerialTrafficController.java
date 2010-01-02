@@ -26,7 +26,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * communicate with an adapter.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -60,6 +60,16 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      */
     public void sendX10Sequence(X10Sequence s, SerialListener l) {}
     
+    /**
+     * Send a sequence of Insteon messages to an adapter.
+     * <p>
+     * Makes them into the local messages and then queues in order.
+     * <p>
+     * This is a default, null implementation, which must be overridden
+     * in an adapter-specific subclass.
+     */
+    public void sendInsteonSequence(InsteonSequence s, SerialListener l) {}
+
     /**
      * Provide the maximum number of dimming steps available.
      * @return By default, dimming not available.

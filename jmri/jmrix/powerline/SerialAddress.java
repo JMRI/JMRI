@@ -23,12 +23,13 @@ import java.util.regex.*;
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008, 2009
  * @author Ken Cameron, Copyright (C) 2008, 2009
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class SerialAddress {
 
 	private static  Matcher hCodes = Pattern.compile("^P[LTS]([A-P])(\\d++)$").matcher("");
 	private static	Matcher aCodes = Pattern.compile("^P[LTS].*$").matcher("");
+	private static	Matcher iCodes = Pattern.compile("^P[LTS](\\p{XDigit}\\p{XDigit}).(\\p{XDigit}\\p{XDigit}).(\\p{XDigit}\\p{XDigit})$").matcher("");
 	private static	char minHouseCode = 'A';
 	private static	char maxHouseCode = 'P';
 
@@ -69,6 +70,21 @@ public class SerialAddress {
                 return (false);
             }
             return (true);
+        }
+        if (aCodes.reset(systemName).matches()) {
+            if (!iCodes.reset(systemName).matches()) {
+                // here if an illegal format
+                log.error("illegal character in header field system name: " + systemName);
+                return (false);
+            } else {
+                if (iCodes.groupCount() != 3) {
+                    // here if an illegal format
+                    log.error("legal character in header field system name: " + systemName);
+                    return (false);
+                } else {
+                    return (true);
+                }
+            }
         }
         log.error("address did not match any valid forms: " + systemName);
         return false;
@@ -114,9 +130,14 @@ public class SerialAddress {
             nName = systemName.substring(0,3) + Integer.toString(Integer.parseInt(hCodes.group(2)));
         }
         if (nName == "") {
-        	if (log.isDebugEnabled()) {
-        		log.debug("valid name doesn't normalize: " + systemName + " hMatch: " + hMatch + " hCount: " + hCount);
-        	}
+            boolean iMatch = iCodes.reset(systemName).matches();
+            if (iMatch) {
+                nName = systemName.toString();
+            } else {
+        	    if (log.isDebugEnabled()) {
+        		    log.debug("valid name doesn't normalize: " + systemName + " hMatch: " + hMatch + " hCount: " + hCount);
+        	    }
+            }
         }
         return nName;
     }
@@ -159,16 +180,25 @@ public class SerialAddress {
         if ( !validSystemNameFormat(systemName, systemName.charAt(1)) ) {
             // No point in normalizing if a valid system name format is not present
         } else {
-			if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 2) {
-				// This is a PLaxx address
-				try {
-					dCode = hCodes.group(2);
-				}
-				catch (Exception e) {
-					log.error("illegal character in number field system name: " + systemName);
+			if (hCodes.reset(systemName).matches()) {
+    			if (hCodes.groupCount() == 2) {
+				    // This is a PLaxx address
+				    try {
+					    dCode = hCodes.group(2);
+				    }
+				    catch (Exception e) {
+					    log.error("illegal character in number field system name: " + systemName);
+					    return "";
+				    }
+                }
+			} else {
+    			if (iCodes.reset(systemName).matches()) {
+                    dCode = iCodes.group(1)+iCodes.group(2)+iCodes.group(3);
+                } else {
+					log.error("illegal insteon address: " + systemName);
 					return "";
-				}
-			}
+                }
+            }
         }
         return dCode;
     }

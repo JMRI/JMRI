@@ -25,7 +25,7 @@ import jmri.jmrix.powerline.*;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009
  * @author      Ken Cameron Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -81,16 +81,27 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
             
         // see if going to stabilize at on or off
         if (intensity <= 0.5) {
-            // going to low, send a real off
-            X10Sequence out3 = new X10Sequence();
-            out3.addAddress(housecode, devicecode);
-            out3.addFunction(housecode, X10Sequence.FUNCTION_OFF, 0);
-            SerialTrafficController.instance().sendX10Sequence(out3, null);
-            // going to low, send max dim count low
-            X10Sequence out2 = new X10Sequence();
-            out2.addAddress(housecode, devicecode);
-            out2.addFunction(housecode, X10Sequence.FUNCTION_DIM, maxDimStep);
-            SerialTrafficController.instance().sendX10Sequence(out2, null);
+            if (!isInsteon) {
+                // going to low, send a real off
+                X10Sequence out3 = new X10Sequence();
+                out3.addAddress(housecode, devicecode);
+                out3.addFunction(housecode, X10Sequence.FUNCTION_OFF, 0);
+                SerialTrafficController.instance().sendX10Sequence(out3, null);
+                // going to low, send max dim count low
+                X10Sequence out2 = new X10Sequence();
+                out2.addAddress(housecode, devicecode);
+                out2.addFunction(housecode, X10Sequence.FUNCTION_DIM, maxDimStep);
+                SerialTrafficController.instance().sendX10Sequence(out2, null);
+            } else {
+                // going to low, send a real off
+                InsteonSequence out3 = new InsteonSequence();
+                out3.addFunction(insteonaddress, InsteonSequence.FUNCTION_OFF, 0);
+                SerialTrafficController.instance().sendInsteonSequence(out3, null);
+                // going to low, send max dim count low
+                InsteonSequence out2 = new InsteonSequence();
+                out2.addFunction(insteonaddress, InsteonSequence.FUNCTION_DIM, maxDimStep);
+                SerialTrafficController.instance().sendInsteonSequence(out2, null);
+            }
 
             lastOutputStep = 0;
             
@@ -169,12 +180,20 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 
         lastOutputStep = newStep;
         
-        // create output sequence of address, then function
-        X10Sequence out = new X10Sequence();
-        out.addAddress(housecode, devicecode);
-        out.addFunction(housecode, function, deltaDim);
-        // send
-        SerialTrafficController.instance().sendX10Sequence(out, null);
+        if (!isInsteon) {
+            // create output sequence of address, then function
+            X10Sequence out = new X10Sequence();
+            out.addAddress(housecode, devicecode);
+            out.addFunction(housecode, function, deltaDim);
+            // send
+            SerialTrafficController.instance().sendX10Sequence(out, null);
+        } else {
+            // create output sequence of address, then function
+            InsteonSequence out = new InsteonSequence();
+            out.addFunction(insteonaddress, function, deltaDim);
+            // send
+            SerialTrafficController.instance().sendInsteonSequence(out, null);
+        }
 
     	if (log.isDebugEnabled()) {
     		log.debug("sendIntensity(" + intensity + ") house " + X10Sequence.houseCodeToText(housecode) + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
@@ -214,15 +233,27 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
         	log.debug("set state "+newState+" house "+housecode+" device "+devicecode);
         }
 
-        // create output sequence of address, then function
-        X10Sequence out = new X10Sequence();
-        out.addAddress(housecode, devicecode);
-        out.addFunction(housecode, function, 0);
-        // send
-        SerialTrafficController.instance().sendX10Sequence(out, null);
+        if (!isInsteon) {
+            // create output sequence of address, then function
+            X10Sequence out = new X10Sequence();
+            out.addAddress(housecode, devicecode);
+            out.addFunction(housecode, function, 0);
+            // send
+            SerialTrafficController.instance().sendX10Sequence(out, null);
         
-    	if (log.isDebugEnabled()) {
-    		log.debug("end sendOnOff(" + newState + ")  house " + housecode + " device " + devicecode + " funct: " + function);
+    	    if (log.isDebugEnabled()) {
+    		    log.debug("end sendOnOff(" + newState + ")  house " + housecode + " device " + devicecode + " funct: " + function);
+            }
+        } else {
+            // create output sequence of just address and function together
+            InsteonSequence out = new InsteonSequence();
+            out.addFunction(insteonaddress, function, 0);
+            // send
+            SerialTrafficController.instance().sendInsteonSequence(out, null);
+
+            if (log.isDebugEnabled()) {
+    		    log.debug("end sendOnOff(" + newState + ")  insteon " + insteonaddress  + " funct: " + function);
+            }
         }
     }
 

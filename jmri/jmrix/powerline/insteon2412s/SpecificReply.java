@@ -10,7 +10,7 @@ import jmri.jmrix.powerline.SerialReply;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008, 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
@@ -30,6 +30,30 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
     public String toMonitorString() {
         // check for valid length
+        if (getNumDataElements() > 0) {
+            String val;
+            int msg = getElement(0);
+            if ((getElement(0)&0xFF) == 0x02) {
+                val = "Insteon 0x02: ";
+                for (int i = 0; i < getNumDataElements(); i++) {
+                    val = val + "0x" + jmri.util.StringUtil.twoHexFromInt(getElement(i)) + " ";
+                }
+                val = val + "\n";
+            } else {
+                if (((getElement(0)&0xFF) == 0x62)){
+                    val = "Insteon 0x62: ";
+                    for (int i = 0; i < getNumDataElements(); i++) {
+                        val = val + "0x" + jmri.util.StringUtil.twoHexFromInt(getElement(i)) + " ";
+                    }
+                    val = val + "\n";
+                } else {
+                    val = "Insteon confused: 0x"+jmri.util.StringUtil.twoHexFromInt(getElement(0))+"\n";
+                }
+            }
+            return val;
+        }
+        return "Really bad: 0x??\n";
+/*
         if (getNumDataElements() == 1) {
             String val;
             int msg = getElement(0);
@@ -39,7 +63,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
                 case 0xA6: val = "CP10 time request\n";break;
                 case 0xF3: val = "Input Filter Failed\n";break;
                 case Constants.READY_REQ: val = "Interface Ready\n";break;
-                default: val = "One byte, probably CRC\n";break;
+                default: val = "One byte, probably not the CRC\n";break;
             }
             return val;
         } else if ((getNumDataElements() == 2) && ((getElement(1)&0xFF) == Constants.READY_REQ)) {
@@ -64,6 +88,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
             String s = "Unknown reply of length " + getNumDataElements() + " " + toString();
             return s + "\n";
         }
+ */
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificReply.class.getName());
