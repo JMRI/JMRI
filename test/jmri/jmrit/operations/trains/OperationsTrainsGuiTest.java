@@ -19,7 +19,7 @@ import java.util.List;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class OperationsTrainsGuiTest extends TestCase {
 
@@ -113,7 +113,7 @@ public class OperationsTrainsGuiTest extends TestCase {
 		// fill in name and description fields
 		trainEditFrame.trainNameTextField.setText("Test Train Name");
 		trainEditFrame.trainDescriptionTextField.setText("Test Train Description");
-		trainEditFrame.commentTextField.setText("Test Train Comment");
+		trainEditFrame.commentTextArea.setText("Test Train Comment");
 		trainEditFrame.addTrainButton.doClick();
 		
 		TrainManager tmanager = TrainManager.instance();
@@ -245,7 +245,7 @@ public class OperationsTrainsGuiTest extends TestCase {
 		
 		Assert.assertEquals("train name", "Test Train Name", f.trainNameTextField.getText());
 		Assert.assertEquals("train description", "Test Train Description", f.trainDescriptionTextField.getText());
-		Assert.assertEquals("train comment", "Test Train Comment", f.commentTextField.getText());
+		Assert.assertEquals("train comment", "Test Train Comment", f.commentTextArea.getText());
 		Assert.assertEquals("train depart hour", "15", f.hourBox.getSelectedItem());
 		Assert.assertEquals("train depart minute", "45", f.minuteBox.getSelectedItem());
 		Assert.assertEquals("train route", t.getRoute(), f.routeBox.getSelectedItem());

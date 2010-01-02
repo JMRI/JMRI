@@ -25,6 +25,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
@@ -49,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.54 $
+ * @version $Revision: 1.55 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -112,8 +113,13 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	// text field
 	JTextField trainNameTextField = new JTextField(18);
 	JTextField trainDescriptionTextField = new JTextField(30);
-	JTextField commentTextField = new JTextField(35);
-
+	//JTextField commentTextField = new JTextField(35);
+	
+	// text area
+	JTextArea commentTextArea	= new JTextArea(2,50);
+	JScrollPane commentScroller = new JScrollPane(commentTextArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	Dimension minScrollerDim = new Dimension(500,42);
+	
 	// for padding out panel
 	JLabel space1 = new JLabel("       ");
 	JLabel space2 = new JLabel("       ");
@@ -280,7 +286,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
      	JPanel pC = new JPanel();
     	pC.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
     	pC.setLayout(new GridBagLayout());
-		addItem(pC, commentTextField, 1, 0);
+    	commentScroller.setMinimumSize(minScrollerDim);
+		addItem(pC, commentScroller, 1, 0);
 				
 		// row 15 buttons
 	   	JPanel pB = new JPanel();
@@ -326,7 +333,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			routeBox.setSelectedItem(_train.getRoute());
 			numEnginesBox.setSelectedItem(_train.getNumberEngines());
 			modelEngineBox.setSelectedItem(_train.getEngineModel());
-			commentTextField.setText(_train.getComment());
+			commentTextArea.setText(_train.getComment());
 			cabooseRadioButton.setSelected((_train.getRequirements()& Train.CABOOSE)>0);
 			fredRadioButton.setSelected((_train.getRequirements()& Train.FRED)>0);
 			enableButtons(true);
@@ -576,7 +583,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		_train.setCabooseRoad((String)roadCabooseBox.getSelectedItem());
 		_train.setName(trainNameTextField.getText());
 		_train.setDescription(trainDescriptionTextField.getText());
-		_train.setComment(commentTextField.getText());
+		_train.setComment(commentTextArea.getText());
 		// save frame size and location
 		manager.setTrainEditFrame(this);
 
