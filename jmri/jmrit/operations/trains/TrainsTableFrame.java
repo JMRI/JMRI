@@ -31,7 +31,7 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.37 $
+ * @version             $Revision: 1.38 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -256,7 +256,7 @@ public class TrainsTableFrame extends OperationsFrame {
 			build.start();		
 		}
 		if (ae.getSource() == printButton){
-			List<String> trains = getTrainList();
+			List<String> trains = trainsModel.getSelectedTrainList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById(trains.get(i));
 				if(train.getBuild()){
@@ -276,7 +276,7 @@ public class TrainsTableFrame extends OperationsFrame {
 			tslef.initComponents();
 		}
 		if (ae.getSource() == terminateButton){
-			List<String> trains = getTrainList();
+			List<String> trains = trainsModel.getSelectedTrainList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById(trains.get(i));
 				if (train.getBuild() && train.getBuilt() && !train.getPrinted())
@@ -297,22 +297,11 @@ public class TrainsTableFrame extends OperationsFrame {
 	 * A thread is used to allow train table updates during builds.
 	 */
 	private void buildTrains(){
-		List<String> trains = getTrainList();
+		List<String> trains = trainsModel.getSelectedTrainList();
 		for (int i=0; i<trains.size(); i++){
 			Train train = trainManager.getTrainById(trains.get(i));
 			train.buildIfSelected();
 		}
-	}
-	
-	private List<String> getTrainList(){
-		List<String> trains;
-		if (sortById.isSelected())
-			trains = trainManager.getTrainsByIdList();
-		else if (sortByTime.isSelected())
-			trains = trainManager.getTrainsByTimeList();
-		else
-			trains = trainManager.getTrainsByNameList();
-		return trains;
 	}
 	
 	private void setSortBy(String sortBy){
