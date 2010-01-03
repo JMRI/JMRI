@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI aspect-signaling support.                          -->
 
-<!-- $Id: appearancetable.xsd,v 1.9 2010-01-03 20:27:58 jacobsen Exp $ -->
+<!-- $Id: appearancetable.xsd,v 1.10 2010-01-03 22:05:54 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -23,7 +23,7 @@
            xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
            xsi:schemaLocation="
                 http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
-                http://docbook.org/ns/docbook DocBook.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/DocBook.xsd
             "
            >
 
