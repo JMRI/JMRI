@@ -3,6 +3,7 @@
 
 <aspecttable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:db = "http://docbook.org/ns/docbook"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
 >
   <name>SPTCO-1960</name>
@@ -10,6 +11,23 @@
   <reference>Signaling definitions corresponding to the 1960 Southern Pacific Transportation Company rules 
         as described in the "Rules and Regulations of the Transportation Department" booklet.</reference>
   <reference>See http://sptco.railspot.com/SP_Rules-and-Regs/Rules-and-Regs_1960.htm</reference>
+
+  <db:authorgroup>
+    <db:author>
+        <db:personname><db:firstname>Bob</db:firstname><db:surname>Jacobsen</db:surname></db:personname>
+        <db:email>jake@physics.berkeley.edu</db:email>
+    </db:author>    
+  </db:authorgroup>
+
+  <db:revhistory>
+    <db:revision>
+        <db:revnumber>1</db:revnumber>
+        <db:date>2009-12-29</db:date>
+        <db:authorinitials>RGJ</db:authorinitials>
+        <db:revremark>Initial version</db:revremark>
+    </db:revision>    
+  </db:revhistory>
+
   <aspects>
     <aspect>
       <name>Block signal green</name>
@@ -82,7 +100,10 @@
       <indication>Stop. Inspect train, track or structure as provided in special instrutions, and proceed through remainder of block in accordance with provisions of Rule 507, 509, 510, 663, 744, or 776, as the case may be.</indication>
     </aspect>
   </aspects>
+  
   <appearancefiles>
+    <!-- None yet -->
   </appearancefiles>
+
 </aspecttable>
   

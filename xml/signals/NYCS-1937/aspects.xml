@@ -3,11 +3,28 @@
 
 <aspecttable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:db = "http://docbook.org/ns/docbook"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
 >
   <name>NYCS</name>
   <date>1937</date>
   <reference>As described in the New York Central System publication "Rules for the Governmant of the Operating Department."</reference>
+
+  <db:authorgroup>
+    <db:author>
+        <db:personname><db:firstname>Dick</db:firstname><db:surname>Bronson</db:surname></db:personname>
+    </db:author>    
+  </db:authorgroup>
+
+  <db:revhistory>
+    <db:revision>
+        <db:revnumber>1</db:revnumber>
+        <db:date>2010-01-01</db:date>
+        <db:authorinitials>DB</db:authorinitials>
+        <db:revremark>Initial version</db:revremark>
+    </db:revision>    
+  </db:revhistory>
+
   <aspects>
 
     <aspect>
