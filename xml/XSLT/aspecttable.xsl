@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: aspecttable.xsl,v 1.8 2010-01-01 00:51:33 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsl,v 1.9 2010-01-03 20:24:34 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI aspecttable file into displayable HTML    -->
 
@@ -17,7 +17,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
  
-<xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet	version="1.0" 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:db="http://docbook.org/ns/docbook"
+    >
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
@@ -43,7 +46,7 @@
 		<h2>JMRI &quot;<xsl:value-of select="aspecttable/name"/>&quot; Aspect Table</h2>
 
 
-<xsl:apply-templates/>
+<xsl:apply-templates match="/aspecttable"/>
 
 <HR/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.
@@ -69,7 +72,12 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <xsl:apply-templates select="aspects"/>
 
     <!-- link to appearances -->
+    <hr/>
     <xsl:apply-templates select="appearancefiles"/>
+
+    <!-- revision history -->
+    <hr/>
+    <xsl:apply-templates select="db:revhistory"/>
 
 </xsl:template>
 
@@ -167,5 +175,8 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     </tr></table>
     <p/>
 </xsl:template>
+
+<!-- Display revision history -->
+<xsl:include href="show-revhistory.xsl" />
 
 </xsl:stylesheet>

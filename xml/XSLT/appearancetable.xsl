@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: appearancetable.xsl,v 1.8 2009-12-31 22:49:39 jacobsen Exp $ -->
+<!-- $Id: appearancetable.xsl,v 1.9 2010-01-03 20:24:53 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI appearance table file into displayable HTML    -->
 
@@ -17,7 +17,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
  
-<xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet	version="1.0" 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:db="http://docbook.org/ns/docbook"
+    >
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
@@ -73,6 +76,10 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
     <!-- show the appearances -->
     <xsl:apply-templates select="appearances"/>
+
+    <!-- revision history -->
+    <hr/>
+    <xsl:apply-templates select="db:revhistory"/>
 </xsl:template>
 
 <!-- Display each appearance -->
@@ -184,5 +191,8 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <xsl:template match="reference">
 <p/>Appearance reference: <xsl:value-of select="."/>
 </xsl:template>
+
+<!-- Display revision history -->
+<xsl:include href="show-revhistory.xsl" />
 
 </xsl:stylesheet>
