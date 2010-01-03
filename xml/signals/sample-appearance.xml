@@ -6,23 +6,25 @@
     xmlns:db = "http://docbook.org/ns/docbook"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
+
   <db:authorgroup>
     <db:author>
-        <db:personname><db:firstname>Bob</db:firstname><db:surname>Jacobsen</db:surname></db:personname>
-        <db:email>jake@physics.berkeley.edu</db:email>
+        <db:personname><db:firstname>Sample</db:firstname><db:surname>Name</db:surname></db:personname>
+        <db:email>name@com.domain</db:email>
     </db:author>    
   </db:authorgroup>
-    
+
   <db:revhistory>
     <db:revision>
         <db:revnumber>1</db:revnumber>
-        <db:date>2010-01-02</db:date>
-        <db:authorinitials>RGJ</db:authorinitials>
-        <db:revremark>Initial version</db:revremark>
+        <db:date>2009-12-28</db:date>
+        <db:authorinitials>initials</db:authorinitials>
     </db:revision>    
   </db:revhistory>
 
+ 
   <aspecttable>Sample</aspecttable>
+
   <name>Sample of full file format</name>
   <reference></reference>
   <description></description>
