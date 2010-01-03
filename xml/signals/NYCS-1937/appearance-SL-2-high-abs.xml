@@ -5,7 +5,7 @@
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
-  <aspecttable>NYCS-1937</aspecttable>
+  <aspecttable>NYCS</aspecttable>
   <name>Double searchlight high absolute signal</name>
   <reference>As described in the New York Central System publication "Rules for the Governmant of the Operating Department."</reference>
   <description>Appearances for a two-searchlight signal head without other badging</description>
@@ -18,7 +18,7 @@
       <show>green</show>
       <reference>Page 92</reference>
       <comment>Unofficial Rule and Aspect Name to allow for optional appearance</comment>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NYCS-1937/SL-2-high-abs/rule-281alt.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYCS-1937/SL-2-high-abs/rule-281-alt.gif</imagelink>
     </appearance>
 
     <appearance>
