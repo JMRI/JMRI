@@ -3,11 +3,31 @@
 
 <aspecttable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+    xmlns:db = "http://docbook.org/ns/docbook"
+    xsi:noNamespaceSchemaLocation = "http://localhost/xml/schema/aspecttable.xsd"
 >
   <name>AAR-2</name>
   <date>1946</date>
   <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
+
+  <db:authorgroup>
+    <db:author>
+        <db:personname><db:firstname>Dick</db:firstname><db:surname>Bronson</db:surname></db:personname>
+    </db:author>    
+    <db:author>
+        <db:personname><db:firstname>Bob</db:firstname><db:surname>Jacobsen</db:surname></db:personname>
+        <db:email>jake@physics.berkeley.edu</db:email>
+    </db:author>    
+  </db:authorgroup>
+
+  <db:revhistory>
+    <db:revision>
+        <db:revnumber>1</db:revnumber>
+        <db:date>2009-12-28</db:date>
+        <db:authorinitials>RGJ</db:authorinitials>
+    </db:revision>    
+  </db:revhistory>
+
   <aspects>
 
     <aspect>

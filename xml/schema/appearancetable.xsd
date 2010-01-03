@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI aspect-signaling support.                          -->
 
-<!-- $Id: appearancetable.xsd,v 1.8 2009-12-31 22:49:20 jacobsen Exp $ -->
+<!-- $Id: appearancetable.xsd,v 1.9 2010-01-03 20:27:58 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -17,11 +17,18 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<xs:schema xmlns:xs  ="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
            xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
-           xsi:schemaLocation="http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook DocBook.xsd
+            "
            >
+
+<xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='DocBook.xsd'/>
+
   <xs:element name="appearancetable">
     <xs:annotation>
         <xs:appinfo>
@@ -38,6 +45,18 @@
     <xs:complexType>
       <xs:sequence>
         
+        <xs:element ref="docbook:authorgroup" minOccurs="1" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the authors in standard form
+          </xs:documentation></xs:annotation>
+        </xs:element>
+        
+        <xs:element ref="docbook:revhistory" minOccurs="1" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the revision history in standard form
+          </xs:documentation></xs:annotation>
+        </xs:element>
+
         <xs:element name="aspecttable" minOccurs="1" maxOccurs="1">
           <xs:annotation><xs:documentation>
           Content of this element must match the name of an
