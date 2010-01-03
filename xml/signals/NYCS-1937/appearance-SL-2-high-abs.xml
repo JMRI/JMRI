@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+  <aspecttable>NYCS-1937</aspecttable>
+  <name>Double searchlight high absolute signal</name>
+  <reference>As described in the New York Central System publication "Rules for the Governmant of the Operating Department."</reference>
+  <description>Appearances for a two-searchlight signal head without other badging</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Clear-alt</aspectname>
+      <show>green</show>
+      <show>green</show>
+      <reference>Page 92</reference>
+      <comment>Unofficial Rule and Aspect Name to allow for optional appearance</comment>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYCS-1937/SL-2-high-abs/rule-281alt.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <reference>Page 92</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYCS-1937/SL-2-high-abs/rule-281.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>Page 94</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYCS-1937/SL-2-high-abs/rule-282.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advance Approach</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <reference>Page 95</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYCS-1937/SL-2-high-abs/rule-282A.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Page 98</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYCS-1937/SL-2-high-abs/rule-285.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Slow-Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Page 100</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYCS-1937/SL-2-high-abs/rule-287.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Page 103</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYCS-1937/SL-2-high-abs/rule-290.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <reference>Page 105</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYCS-1937/SL-2-high-abs/rule-292.gif</imagelink>
+    </appearance>
+
+  </appearances>
+</appearancetable>  

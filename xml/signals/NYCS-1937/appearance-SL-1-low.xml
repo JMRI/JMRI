@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+  <aspecttable>NYCS-1937</aspecttable>
+  <name>Single head dwarf signal</name>
+  <reference>As described in the New York Central System publication "Rules for the Governmant of the Operating Department."</reference>
+  <description>Appearances for a one-searchlight dwarf signal head</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Slow-Clear</aspectname>
+      <show>green</show>
+      <reference>Page 100</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYCS-1937/SL-1-low/rule-287.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>yellow</show>
+      <reference>Page 103</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYCS-1937/SL-1-low/rule-290.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <reference>Page 105</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYCS-1937/SL-1-low/rule-292.gif</imagelink>
+    </appearance>
+
+  </appearances>
+</appearancetable>  
