@@ -6,38 +6,38 @@
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
   <aspecttable>AAR-2</aspecttable>
-  <name>Single searchlight high permissive signal</name>
+  <name>Single position light high absolute signal</name>
   <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
-  <description>Appearances for one-searchlight signal head with number or letter plate</description>
+  <description>Appearances for single position light signal head without other badging.</description>
   
   <appearances>
 
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
-      <reference>Page 42 C</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-pbs/rule-281.gif</imagelink>
+      <reference>Page 55</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/PL-1-high-abs/rule-281.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
-      <reference>Page 47 C</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-pbs/rule-285.gif</imagelink>
+      <reference>Page 55</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/PL-1-high-abs/rule-285.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Permissive</aspectname>
-      <show>yellow</show>
-      <reference>Page 49</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-pbs/rule-289.gif</imagelink>
+      <show>lunar</show>
+      <reference>Page 55</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/PL-1-high-abs/rule-289.gif</imagelink>
     </appearance>
 
     <appearance>
-      <aspectname>Stop And Proceed</aspectname>
+      <aspectname>Stop</aspectname>
       <show>red</show>
-      <reference>Page 50 B</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-pbs/rule-291.gif</imagelink>
+      <reference>Page 55</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/PL-1-high-abs/rule-292.gif</imagelink>
     </appearance>
 
   </appearances>

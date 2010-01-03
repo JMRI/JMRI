@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+  <aspecttable>AAR-2</aspecttable>
+  <name>Double position light high signal</name>
+  <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
+  <description>Appearances for a two high position light signal</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>Page 55</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/PL-2-high/rule-282.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advance Approach</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <reference>Page 55</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/PL-2-high/rule-282A.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Medium-Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Page 55</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/PL-2-high/rule-283.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Slow-Approach</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Page 55</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/PL-2-high/rule-288.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>red</show>
+      <show>lunar</show>
+      <reference>Page 55</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/PL-2-high/rule-290.gif</imagelink>
+    </appearance>
+
+  </appearances>
+</appearancetable>  

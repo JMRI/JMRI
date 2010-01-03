@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+  <aspecttable>AAR-2</aspecttable>
+  <name>Color Position Light signal</name>
+  <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
+  <description>Appearances for a Color Position Light signal</description>
+  
+  <appearances>
+
+   <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>green</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-281.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-282.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Medium-Clear</aspectname>
+      <show>dark</show>
+      <show>green</show>
+      <show>green</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-283.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Medium-Approach Slow</aspectname>
+      <show>dark</show>
+      <show>green</show>
+      <show>red</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-283B.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Slow</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-284.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>green</show>
+      <show>yellow</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-285.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Medium-Approach</aspectname>
+      <show>dark</show>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-286.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Slow-Clear</aspectname>
+      <show>dark</show>
+      <show>green</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-287.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Slow-Approach</aspectname>
+      <show>dark</show>
+      <show>yellow</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-288.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Permissive</aspectname>
+      <show>green</show>
+      <show>lunar</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <comment>Normal speed route appearance</comment>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-289.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Permissive-medium</aspectname>
+      <show>dark</show>
+      <show>lunar</show>
+      <show>green</show>
+      <reference>Page 57</reference>
+      <comment>Unofficial Rule and Aspect Name to allow for medium speed route appearance</comment>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-289-medium.gif</imagelink>
+    </appearance>
+
+     <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>dark</show>
+      <show>lunar</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-290.gif</imagelink>
+    </appearance>
+
+     <appearance>
+      <aspectname>Stop and Proceed</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <comment>Normal speed route appearance</comment>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-291.gif</imagelink>
+    </appearance>
+
+     <appearance>
+      <aspectname>Stop and Proceed-medium</aspectname>
+      <show>dark</show>
+      <show>red</show>
+      <show>green</show>
+      <reference>Page 57</reference>
+      <comment>Unofficial Rule and Aspect Name to allow for medium speed route appearance</comment>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-291-medium.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>dark</show>
+      <show>red</show>
+      <show>dark</show>
+      <reference>Page 57</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/CPL/rule-292.gif</imagelink>
+    </appearance>
+
+  </appearances>
+</appearancetable>  

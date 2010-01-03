@@ -11,6 +11,14 @@
   <aspects>
 
     <aspect>
+      <name>Clear-alt</name>
+      <rule>Rule 281-alt</rule>
+      <indication>Proceed</indication>
+      <reference>Page 42</reference>
+      <comment>Unofficial Rule and Aspect Name to allow for optional appearance</comment>
+    </aspect>
+
+    <aspect>
       <name>Clear</name>
       <rule>Rule 281</rule>
       <indication>Proceed</indication>
@@ -116,6 +124,14 @@
     </aspect>
 
     <aspect>
+      <name>Permissive-medium</name>
+      <rule>Rule 289-medium</rule>
+      <indication>Block occupied; proceed prepared to stop short of train ahead on medium speed route.</indication>
+      <reference>Page 49</reference>
+      <comment>Unofficial Rule and Aspect Name to allow for optional appearance</comment>
+    </aspect>
+
+    <aspect>
       <name>Restricting</name>
       <rule>Rule 290</rule>
       <indication>Proceed at restricted speed.</indication>
@@ -130,6 +146,14 @@
     </aspect>
 
     <aspect>
+      <name>Stop And Proceed-medium</name>
+      <rule>Rule 291-medium</rule>
+      <indication>Stop; then proceed at restricted speed on medium speed route.</indication>
+      <reference>Page 50</reference>
+      <comment>Unofficial Rule and Aspect Name to allow for optional appearance</comment>
+    </aspect>
+
+    <aspect>
       <name>Stop</name>
       <rule>Rule 292</rule>
       <indication>Stop.</indication>
@@ -137,6 +161,7 @@
     </aspect>
 
   </aspects>
+
   <appearancefiles>
     <appearancefile href="appearance-SL-1-high-abs.xml"/>
     <appearancefile href="appearance-SL-1-high-pbs.xml"/>
@@ -145,6 +170,11 @@
     <appearancefile href="appearance-SL-2-high-pbs.xml"/>
     <appearancefile href="appearance-SL-2-low.xml"/>
     <appearancefile href="appearance-SL-3-high.xml"/>
+    <appearancefile href="appearance-PL-1-high-abs.xml"/>
+    <appearancefile href="appearance-PL-1-high-pbs.xml"/>
+    <appearancefile href="appearance-PL-2-high.xml"/>
+    <appearancefile href="appearance-PL-1-low.xml"/>
+    <appearancefile href="appearance-CPL.xml"/>
   </appearancefiles>
   
 </aspecttable>

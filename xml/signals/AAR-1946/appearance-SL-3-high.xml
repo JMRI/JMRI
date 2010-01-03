@@ -13,6 +13,16 @@
   <appearances>
 
     <appearance>
+      <aspectname>Clear-alt</aspectname>
+      <show>green</show>
+      <show>green</show>
+      <show>red</show>
+      <reference>Page 42 D</reference>
+      <comment>Unofficial Rule and Aspect Name to allow for optional appearance</comment>
+      <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-3-high/rule-281alt.gif</imagelink>
+    </appearance>
+
+    <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
       <show>red</show>
