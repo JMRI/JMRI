@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
@@ -35,7 +35,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
 
         Element element = new Element("signalheadicon");
         
-        element.setAttribute("signalhead", ""+p.getSignalHead().getName());
+        element.setAttribute("signalhead", ""+p.getNameString());
         storeCommonAttributes(p, element);
         element.setAttribute("clickmode", ""+p.getClickMode());
         element.setAttribute("litmode", ""+p.getLitMode());
@@ -98,6 +98,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         }
         
         SignalHead sh = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+
         if (sh != null) {
             l.setSignalHead(new NamedBeanHandle<SignalHead>(name, sh));
         } else {

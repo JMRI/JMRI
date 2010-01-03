@@ -26,7 +26,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.53 $
+ * @version $Revision: 1.54 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -75,7 +75,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         displayState(SignalHead.RED);
     }
 
-    private SignalHead mHead;
+//    private SignalHead mHead;
     private NamedBeanHandle<SignalHead> namedHead;
 
     /**
@@ -83,15 +83,15 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      * @param sh Specific SignalHead object
      */
     public void setSignalHead(NamedBeanHandle<SignalHead> sh) {
-        if (mHead != null) {
-            mHead.removePropertyChangeListener(this);
+        if (namedHead != null) {
+            getSignalHead().removePropertyChangeListener(this);
         }
-        mHead = InstanceManager.signalHeadManagerInstance().getSignalHead(sh.getName());
-        if (mHead != null) {
+        namedHead = sh;
+        if (namedHead != null) {
             displayState(headState());
-            mHead.addPropertyChangeListener(this);
+            getSignalHead().addPropertyChangeListener(this);
             setProperToolTip();
-            namedHead = sh;
+            //namedHead = sh;
         }
     }
     
@@ -101,19 +101,22 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      * @param pName Used as a system/user name to lookup the SignalHead object
      */
     public void setSignalHead(String pName) {
-        mHead = InstanceManager.signalHeadManagerInstance().getBySystemName(pName);
+        SignalHead mHead = InstanceManager.signalHeadManagerInstance().getBySystemName(pName);
         if (mHead == null) mHead = InstanceManager.signalHeadManagerInstance().getByUserName(pName);
         if (mHead == null) log.warn("did not find a SignalHead named "+pName);
         else {
-            namedHead = new NamedBeanHandle<SignalHead>(pName, mHead);
-            displayState(headState());
-            mHead.addPropertyChangeListener(this);
-            setProperToolTip();
+            setSignalHead(new NamedBeanHandle<SignalHead>(pName, mHead));
         }
     }
 
-    public NamedBeanHandle<SignalHead> getSignalHead() {
+    public NamedBeanHandle<SignalHead> getNamedSignalHead() {
         return namedHead;
+    }
+
+    public SignalHead getSignalHead(){
+        if (namedHead==null)
+            return null;
+        return namedHead.getBean();
     }
 
     // display icons
@@ -241,8 +244,8 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      * @return An appearance variable from a SignalHead, e.g. SignalHead.RED
      */
     public int headState() {
-        if (mHead==null) return 0;
-        else return mHead.getAppearance();
+        if (getSignalHead()==null) return 0;
+        else return getSignalHead().getAppearance();
     }
 
     // update icon as state of turnout changes
@@ -263,11 +266,9 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
 
     public String getNameString() {
         String name;
-        if (mHead == null) name = rb.getString("NotConnected");
-        else if (mHead.getUserName() == null)
-            name = mHead.getSystemName();
+        if (namedHead == null) name = rb.getString("NotConnected");
         else
-            name = mHead.getUserName()+" ("+mHead.getSystemName()+")";
+            name = namedHead.getName();
         return name;
     }
 
@@ -377,10 +378,10 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             public void actionPerformed(ActionEvent e) {
                 jmri.jmrit.blockboss.BlockBossFrame f = new jmri.jmrit.blockboss.BlockBossFrame();
                 String name;
-                if (mHead.getUserName()==null || mHead.getUserName().equals(""))
+                /*if (mHead.getUserName()==null || mHead.getUserName().equals(""))
                     name = mHead.getSystemName();
-                else
-                    name = mHead.getUserName();
+                else*/
+                    name = getNameString();
                 f.setTitle(java.text.MessageFormat.format(rb.getString("SignalLogic"), name));
                 f.setSignal(name);
                 f.setVisible(true);
@@ -451,16 +452,16 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      */
     public void displayState(int state) {
         updateSize();
-        if (mHead == null) {
+        if (getSignalHead() == null) {
             log.debug("Display state "+state+", disconnected");
         } else {
-            log.debug("Display state "+state+" for "+mHead.getSystemName());
-            if (mHead.getHeld()) {
+            log.debug("Display state "+state+" for "+getNameString());
+            if (getSignalHead().getHeld()) {
                 if (text) super.setText(rb.getString("Held"));
                 if (icon) super.setIcon(held);
                 return;
             }
-            else if (getLitMode() && !mHead.getLit()) {
+            else if (getLitMode() && !getSignalHead().getLit()) {
                 if (text) super.setText(rb.getString("Dark"));
                 if (icon) super.setIcon(dark);
                 return;
@@ -544,7 +545,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                 }
         };
         _editor.complete(addIconAction, changeIconAction, false, true);
-        _editor.setSelection(mHead);
+        _editor.setSelection(getSignalHead());
     }
     void updateSignal() {
         setRedIcon(_editor.getIcon("SignalHeadStateRed"));
@@ -618,7 +619,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         if (!getControlling()) return;
         if (getForceControlOff()) return;
         if (e.isMetaDown() || e.isAltDown() ) return;
-        if (mHead==null) {
+        if (getSignalHead()==null) {
             log.error("No turnout connection, can't process click");
             return;
         }
@@ -626,29 +627,29 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             layoutPanel.setAwaitingIconChange();
         switch (clickMode) {
         case 0 :
-            switch (mHead.getAppearance()) {
+            switch (getSignalHead().getAppearance()) {
             case jmri.SignalHead.RED:
             case jmri.SignalHead.FLASHRED:
-                mHead.setAppearance(jmri.SignalHead.YELLOW);
+                getSignalHead().setAppearance(jmri.SignalHead.YELLOW);
                 break;
             case jmri.SignalHead.YELLOW:
             case jmri.SignalHead.FLASHYELLOW:
-                mHead.setAppearance(jmri.SignalHead.GREEN);
+                getSignalHead().setAppearance(jmri.SignalHead.GREEN);
                 break;
             case jmri.SignalHead.GREEN:
             case jmri.SignalHead.FLASHGREEN:
-                mHead.setAppearance(jmri.SignalHead.RED);
+                getSignalHead().setAppearance(jmri.SignalHead.RED);
                 break;
             default:
-                mHead.setAppearance(jmri.SignalHead.RED);
+                getSignalHead().setAppearance(jmri.SignalHead.RED);
                 break;
             }
             return;
         case 1 :
-            mHead.setLit(!mHead.getLit());
+            getSignalHead().setLit(!getSignalHead().getLit());
             return;
         case 2 : 
-            mHead.setHeld(!mHead.getHeld());
+            getSignalHead().setHeld(!getSignalHead().getHeld());
             return;
         default:
             log.error("Click in mode "+clickMode);
@@ -711,8 +712,8 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     //private static boolean warned = false;
 
     public void dispose() {
-        mHead.removePropertyChangeListener(this);
-        mHead = null;
+        getSignalHead().removePropertyChangeListener(this);
+        namedHead = null;
 
         red = null;
         flashRed = null;
