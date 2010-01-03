@@ -16,7 +16,7 @@ import jmri.jmrix.can.CanListener;
  * <P>
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author				Andrew Crosland  Copyright (C) 2009
- * @version 		$Revision: 1.3 $
+ * @version 		$Revision: 1.4 $
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener{
     private boolean _handleExpected = false;
@@ -56,6 +56,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         msg.setElement(2, _intAddr & 0xff);
         TrafficController.instance().sendCanMessage(msg, this);
         _handleExpected = true;
+        startThrottleRequestTimer();
 	}
 
     public void message(CanMessage m) {
@@ -97,6 +98,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                     handle = 0 - m.getElement(3);
                     _handleExpected = false;
                     log.debug("PLOC expected but received ERR");
+                    failedThrottleRequest(_dccAddr);
                 }
                 break;
 
@@ -135,6 +137,32 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     static boolean isLongAddress(int num) {
         return (num>=128);
     }
+
+    javax.swing.Timer throttleRequestTimer = null;
+
+	/**
+     * Start timer to wait for command station to respond to PLOC
+     */
+    protected void startThrottleRequestTimer() {
+        throttleRequestTimer = new javax.swing.Timer(5000, new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                timeout();
+            }
+        });
+        throttleRequestTimer.setRepeats(false);
+        throttleRequestTimer.start();
+    }
+
+    /**
+     * Internal routine to notify failed throttle request a timeout
+     */
+    synchronized protected void timeout() {
+        log.debug("Throttle request (PLOC) timed out");
+        failedThrottleRequest(_dccAddr);
+        throttleRequestTimer.stop();
+    }
+
+
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusThrottleManager.class.getName());
 }
