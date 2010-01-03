@@ -14,12 +14,12 @@ import java.lang.reflect.Constructor;
  * Must be overridden to define specific panel details for class
  * Must have exactly one constructor like the one shown below
  * @author John Harper	Copyright 2005
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class TurnoutOperationConfig extends JPanel {
 
 	TurnoutOperation myOperation;
-	boolean valid = true;
+	//boolean valid = true;
 	
 	TurnoutOperationConfig(TurnoutOperation op) {
 		myOperation = op;
@@ -27,7 +27,8 @@ public class TurnoutOperationConfig extends JPanel {
 	
 	TurnoutOperation getOperation() { return myOperation; }
 	
-	public boolean isValid() { return valid; }
+	//Boudreau 2009: Should not override isValid() causes contents to not be be displayed with Java 1.6
+	//public boolean isValid() { return valid; }
 	
 	public void endConfigure() {log.error("Should have been overridden!");}
 	
@@ -52,8 +53,8 @@ public class TurnoutOperationConfig extends JPanel {
 				} catch (Throwable e) { }		// too many to list!
 			}
 		} catch (ClassNotFoundException e) { }
-		if (config==null || !config.isValid()) {
-			config = null;
+		if (config==null) {
+			//config = null;
 			log.debug("could not create configurator for "+op.getClass().getName()+" \""+op.getName()+"\"");
 		}
 		return config;
