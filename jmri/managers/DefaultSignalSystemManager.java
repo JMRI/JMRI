@@ -22,7 +22,7 @@ import org.jdom.Element;
  *
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class DefaultSignalSystemManager extends AbstractManager
     implements SignalSystemManager, java.beans.PropertyChangeListener {
@@ -98,7 +98,7 @@ public class DefaultSignalSystemManager extends AbstractManager
             loadBean(s, root);
             return s;
         } catch (Exception e) {
-            log.error("Could not parse aspect file: "+e);
+            log.error("Could not parse aspect file \""+filename+"\" due to: "+e);
         }
         return null;
     }
