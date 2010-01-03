@@ -4,7 +4,7 @@
 <appearancetable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xmlns:db = "http://docbook.org/ns/docbook"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
 
   <db:authorgroup>
