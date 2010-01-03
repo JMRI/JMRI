@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.18 2010-01-03 20:22:54 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.19 2010-01-03 20:55:01 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -211,6 +211,12 @@ already in use.
 <p>
 Matt Harris updated the Windows installer to NSIS 2.46 to ensure complete compatibility 
 with Windows 7 (addition of compatibility manifest entries)
+
+<p>
+Bob Bucklew provided an icon for the knock-out that fills unused positions in a 
+USS CTC panel, now at 
+<a href="http://jmri.org/resources/icons/USSpanels/Panels/knockout.gif">resources/icons/USSpanels/Panels/knockout.gif</a>.
+
 
 <!--#include virtual="/Footer" -->
 

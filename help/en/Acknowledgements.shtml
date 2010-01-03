@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.91 2010-01-01 19:28:42 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.92 2010-01-03 20:55:01 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -37,7 +37,7 @@
 <a name="A"></A>
     <LI>Sakae Akanuma provided a Japanese translation.
     <LI>Kerry Albrecht, who helped debug a problem loading panel files
-    <LI>Nelson Allison, who provided scripts for Roco and Heljan cranes
+    <LI>Nelson Allison, who provided scripts for Roco cranes
 	<LI>Debbie Ames of Lenz USA, who has provided valuable information on
 	the Lenz decoders and loaned equipment for testing
 	<LI>Ronald Angel, who figured out how to run the demo on GNU/Linux

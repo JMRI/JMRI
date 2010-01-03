@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlSchema.shtml,v 1.1 2009-12-31 19:56:27 jacobsen Exp $ -->
+<!-- $Id: XmlSchema.shtml,v 1.2 2010-01-03 20:55:01 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -58,16 +58,26 @@ support for locating those files when the XML parser
 needs them.  
 <p/>
 
-(Stuff about the DOCTYPE lines and the DTDs they reference)
+<h2>Developing JMRI Schema</h2>
 
+XML Schema are more verbose than the DTDs we're used to.
+With that complexity, we get more expressing power, but
+at the same time more ways to mess up.
 <p>
+It's important that the JMRI schema definitions be kept semantically
+correct.  There are some subtle aspects to XML schema that it will take
+us some time to get comfortable with, and if we let too many problems
+build up in the meantime, we'll eventually have a lot of back-fitting to do.
 The W3C online 
 <a href="http://www.w3.org/2001/03/webdata/xsv">schema validation tool</a>.
-Works, but doesn't seem to to check compliance with nested 
-JMRIschema elements.
+is a very good tool for checking that JMRI schema changes are still technically 
+correct.  You should check your changes with it before commiting them to CVS.
+Unfortunately, it doesn't seem to to check compliance with nested schema elements,
+e.g. from DocBook (see below) or JMRIschema,
+but it's still a very useful check.
 
-<p>
-The venetian blind pattern
+
+<h3>The Venetian Blind Pattern</h3>
 
 http://www.ibm.com/developerworks/xml/library/ws-soa-xmlwsdl.html#N1012B
 
@@ -78,23 +88,25 @@ http://www.javapassion.com/webservices/XMLSchemaDesignPatterns.pdf
 <p>
 Our approach is based on the structure of the underlying code:
 A particular *Xml class is the unit of reuse.
-s
+
 <p>
 Overall structure of the schema; planning for inclusion, merging and reuse; 
 planning for extension.
 
+Lots of classes descend from jmri.configurexml.XmAdapter:
+<a href="http://jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">see JavaDoc</a>
 
 By convention, provide &lt;xsd:annotation&gt;&lt;xsd:appinfo&gt; element containing
 the class name that reads/writes and element:
 <pre><code>
-    <xs:annotation>
-        <xs:documentation>
+    &lt;xs:annotation&gt;
+        &lt;xs:documentation&gt;
         Some human readable docs go here
-        </xs:documentation>
-        <xs:appinfo>
-            <jmri:usingclass configurexml="false">jmri.managers.DefaultSignalSystemManager</jmri:usingclass>
-        </xs:appinfo>
-    </xs:annotation>
+        &lt;/xs:documentation&gt;
+        &lt;xs:appinfo&gt;
+            &lt;jmri:usingclass configurexml="false"&gt;jmri.managers.DefaultSignalSystemManager&lt;/jmri:usingclass&gt;
+        &lt;/xs:appinfo&gt;
+    &lt;/xs:annotation&gt;
 </code></pre>
 
 Validation locally:
@@ -106,11 +118,6 @@ We really need a better one, but what can you do?
 
 <h2>External Standards and Future Work</h2>
 
-Once JMRI has moved forward to Java 1.4, we will 
-consider moving from DTDs (which have issues of name reuse, localization, etc)
-to schema for defining our formats.
-
-<p>
 The 
 <a href="http://www.oasis-open.org/">OASIS collaboration</a>
 defines a number of schema and schema elements that have become 
@@ -125,9 +132,18 @@ to improve inter-operability. Perhaps the first ones of interest are:
     <li>revision history (http://www.docbook.org/tdg/en/html/revhistory.html)
     </ul>
 
-http://www.docbook.org/tdg/en/html/docbook.html
+http://www.docbook.org/specs/docbook-5.0-spec-cs-01.html
+http://www.docbook.org/xml/5.0/xsd/
+http://www.docbook.org/xml/5.0/xsd/docbook.xsd
 
-http://www.docbook.org/specs/wd-docbook-docbook-5.0a1.html
+We have our own subset that we use, because 
+the full DocBook 5.0 schema takes a very long time to parse, 
+and isn't fully consistent with versions of other software that we use.
+We use the normal DocBook 5.0 namespace, so we can later easily convert to 
+a more complete schema transparently.
+Our smaller schema is located at
+<a href="http://jmri.org/xml/schema/DocBook.xsd">http://jmri.org/xml/schema/DocBook.xsd</a>
+(our usual schema location).
 
 <li><a href="http://www.oasis-open.org/committees/ubl/faq.php">UBL</a>, 
 though aimed at business 
