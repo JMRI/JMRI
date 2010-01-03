@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * <P>
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author				Andrew Crosland  Copyright (C) 2009
- * @version 		$Revision: 1.5 $
+ * @version 		$Revision: 1.6 $
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener{
     private boolean _handleExpected = false;
@@ -102,7 +102,15 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                     _handleExpected = false;
                     log.debug("PLOC expected but received ERR");
                     throttleRequestTimer.stop();
-                    JOptionPane.showMessageDialog(null, "Address in use by another throttle.");
+                    switch (m.getElement(3)) {
+                        case CbusConstants.ERR_ADDR_FULL:
+                            JOptionPane.showMessageDialog(null, "Loco stack is full.");
+                            break;
+
+                        case CbusConstants.ERR_ADDR_TAKEN:
+                            JOptionPane.showMessageDialog(null, "Address in use by another throttle.");
+                            break;
+                    }
                     failedThrottleRequest(_dccAddr);
                 }
                 break;

@@ -8,7 +8,7 @@ package jmri.jmrix.can.cbus;
  * Description:		Constants to represent CBUS protocol
  *
  * @author		Andrew Crosland   Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public final class CbusConstants {
     /**
@@ -77,8 +77,8 @@ public final class CbusConstants {
     /**
      * Error codes returned by CBUS_ERR
      */
-    public static final int ERR_ADDR_TAKEN = 1;
-    public static final int ERR_ADDR_FULL = 2;
+    public static final int ERR_ADDR_FULL = 1;
+    public static final int ERR_ADDR_TAKEN = 2;
     public static final int ERR_SESS_LOCO_NOT_FOUND = 3;
     public static final int ERR_NO_MORE_ENGINES = 4;
     public static final int ERR_ENGINE_NOT_FOUND = 5;
