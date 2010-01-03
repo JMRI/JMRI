@@ -16,7 +16,7 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LoadFileTestBase extends TestCase {
 
@@ -33,7 +33,7 @@ public class LoadFileTestBase extends TestCase {
             xf.rootFromFile(file);
         } catch (Exception ex) {
             XmlFile.setVerify(original);
-            Assert.fail(ex.toString());
+            Assert.fail("failed to validate \""+file.getPath()+"\" due to: "+ex);
             return;
         } finally {
             XmlFile.setVerify(original);
