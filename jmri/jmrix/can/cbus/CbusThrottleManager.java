@@ -11,12 +11,14 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanListener;
 
+import javax.swing.JOptionPane;
+
 /**
  * CBUS implementation of a ThrottleManager.
  * <P>
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author				Andrew Crosland  Copyright (C) 2009
- * @version 		$Revision: 1.4 $
+ * @version 		$Revision: 1.5 $
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener{
     private boolean _handleExpected = false;
@@ -82,6 +84,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                     // We're expecting an engine report and it matches our address
                     handle = m.getElement(1);
                     CbusThrottle throttle;
+                    throttleRequestTimer.stop();
                     throttle = new CbusThrottle(rcvdDccAddr, handle);
                     notifyThrottleKnown(throttle, rcvdDccAddr);
                     _handleExpected = false;
@@ -98,6 +101,8 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                     handle = 0 - m.getElement(3);
                     _handleExpected = false;
                     log.debug("PLOC expected but received ERR");
+                    throttleRequestTimer.stop();
+                    JOptionPane.showMessageDialog(null, "Address in use by another throttle.");
                     failedThrottleRequest(_dccAddr);
                 }
                 break;
@@ -141,7 +146,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     javax.swing.Timer throttleRequestTimer = null;
 
 	/**
-     * Start timer to wait for command station to respond to PLOC
+     * Start timer to wait for command station to respond to RLOC
      */
     protected void startThrottleRequestTimer() {
         throttleRequestTimer = new javax.swing.Timer(5000, new java.awt.event.ActionListener() {
@@ -157,7 +162,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
      * Internal routine to notify failed throttle request a timeout
      */
     synchronized protected void timeout() {
-        log.debug("Throttle request (PLOC) timed out");
+        log.debug("Throttle request (RLOC) timed out");
         failedThrottleRequest(_dccAddr);
         throttleRequestTimer.stop();
     }
