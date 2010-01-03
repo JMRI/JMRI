@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractMessage;
  * Description:		methods to decode CBUS opcodes
  *
  * @author		Andrew Crosland   Copyright (C) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class CbusOpCodes {
     /**
@@ -82,6 +82,7 @@ public class CbusOpCodes {
         // Opcodes with 2 data
         result.put(0x40,"Request Session (RLOC) Addr:,%2");
         result.put(0x42,"Set Node Number (SNN) NN:,%2");
+        result.put(0x45,"Consist (PCON) Handle:,%1, Consist addr:,%1");
         result.put(0x47,"Speed/Dir (DSPD) Handle:,%1, Speed/dir:,%1");
         result.put(0x4C,"Service mode status (SSTAT) Handle:,%1, Status:,%1");
         
