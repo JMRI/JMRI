@@ -50,6 +50,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.7.0
+; - Update to ensure removal of crimson.jar library file in both old and
+; - new file layouts
+; -------------------------------------------------------------------------
 ; - Version 0.1.6.0
 ; - Corrected an error where old install location was not being read back
 ; - if previously installed.
@@ -129,7 +133,7 @@
 !define COPYRIGHT "© 1997-2009 JMRI Community"  ; Copyright string
 !define JMRI_VER  "2.8"                       ; Application version
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.6.0"                     ; Installer version
+!define INST_VER  "0.1.7.0"                     ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -300,7 +304,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$INSTDIR\jdom-jdk11.jar"
     
     ; -- Delete old .jar & support files in lib/ directory
-    ; [Placeholder for now]
+    Delete "$INSTDIR\lib\crimson.jar"
 
     ; -- Delete .jar & support files installed using previous layout
     Delete "$INSTDIR\activation.jar"
