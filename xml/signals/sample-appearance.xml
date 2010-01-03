@@ -3,9 +3,26 @@
 
 <appearancetable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:db = "http://docbook.org/ns/docbook"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
-  <aspecttable>basic</aspecttable>
+  <db:authorgroup>
+    <db:author>
+        <db:personname><db:firstname>Bob</db:firstname><db:surname>Jacobsen</db:surname></db:personname>
+        <db:email>jake@physics.berkeley.edu</db:email>
+    </db:author>    
+  </db:authorgroup>
+    
+  <db:revhistory>
+    <db:revision>
+        <db:revnumber>1</db:revnumber>
+        <db:date>2010-01-02</db:date>
+        <db:authorinitials>RGJ</db:authorinitials>
+        <db:revremark>Initial version</db:revremark>
+    </db:revision>    
+  </db:revhistory>
+
+  <aspecttable>Sample</aspecttable>
   <name>Sample of full file format</name>
   <reference></reference>
   <description></description>
@@ -22,9 +39,9 @@
 
 
     <appearance>
-      <aspectname>Medium clear</aspectname>
+      <aspectname>Not clear</aspectname>
       <show>red</show>
-      <show>green</show>
+      <show>red</show>
       <reference></reference>
       <reference></reference>
     </appearance>
