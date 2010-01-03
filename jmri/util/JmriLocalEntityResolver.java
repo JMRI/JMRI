@@ -19,7 +19,7 @@ import java.net.URI;
  * local files within the JMRI distributions in the xml/DTD directory.
  *
  * @author Bob Jacobsen  Copyright 2007, 2009
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 import org.xml.sax.EntityResolver;
@@ -27,7 +27,7 @@ import org.xml.sax.InputSource;
 
 public class JmriLocalEntityResolver implements EntityResolver {
     public InputSource resolveEntity (String publicId, String systemId) {
-        if (log.isDebugEnabled()) log.debug(" got entity request "+systemId);
+        if (log.isDebugEnabled()) log.debug("-- got entity request "+systemId);
         
         // find local file first
         try {
