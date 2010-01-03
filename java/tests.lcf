@@ -55,7 +55,7 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 # Justification, padding and truncation can be controlled e.g. %-5.10p 
 # is left justified, at least 5 and no more than 10 characters wide
 
-log4j.appender.A1.layout.ConversionPattern=%n%-5p - %m [%t] %c{4}.%M()%n
+log4j.appender.A1.layout.ConversionPattern=%-5p - %m [%t] %c{4}.%M()%n
 
 # R is set to output to a log file
 log4j.appender.R=org.apache.log4j.FileAppender
