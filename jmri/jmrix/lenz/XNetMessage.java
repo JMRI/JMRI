@@ -13,17 +13,17 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003-2009
- * @version			$Revision: 2.14 $
+ * @version			$Revision: 2.15 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
 
-	static private final int _nRetries = 5;
+	static protected int _nRetries = 5;
 	
 	/* According to the specification, XPressNet has a maximum timing 
 	   interval of 500 milliseconds durring normal communications */
 	static private final int XNetProgrammingTimeout = 10000;
-	static private final int XNetMessageTimeout = 5000;
+	static private int XNetMessageTimeout = 5000;
 
 
 	/** Create a new object, representing a specific-length message.
@@ -110,6 +110,22 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
       * return the message length 
       */
       public int length() { return _nDataChars; }
+
+
+     /** changing the default number of retries for an XPressNet 
+      * message 
+      * @param r number of retries to attempt.
+      */
+     public void setXNetMessageRetries(int t){
+        _nRetries = t;
+     }
+
+     /** changing the default timeout for an XPressNet message 
+      * @param t Timeout in milliseconds
+      */
+     public void setXNetMessageTimeout(int t){
+        XNetMessageTimeout = t;
+     }
 
     // decode messages of a particular form
 
