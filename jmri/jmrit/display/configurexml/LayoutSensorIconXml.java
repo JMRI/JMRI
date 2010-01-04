@@ -1,6 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.configurexml.XmlAdapter;
+import jmri.configurexml.*;
 
 import org.jdom.Element;
 
@@ -11,12 +11,12 @@ import org.jdom.Element;
  *
  * @author David Duchamp Copyright (c) 2007
  * @author Kevin Dickerson, Deprecated
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  * @deprecated 2.7.8
  */
  
  @Deprecated
-public class LayoutSensorIconXml implements XmlAdapter {
+public class LayoutSensorIconXml extends AbstractXmlAdapter {
 
     public LayoutSensorIconXml() {
     }

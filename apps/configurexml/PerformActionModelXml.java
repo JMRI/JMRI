@@ -13,10 +13,10 @@ import org.jdom.Element;
  * Handle XML persistance of PerformActionModel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  * @see apps.PerformActionPanel
  */
-public class PerformActionModelXml implements XmlAdapter {
+public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public PerformActionModelXml() {
     }

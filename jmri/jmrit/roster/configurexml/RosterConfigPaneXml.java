@@ -15,9 +15,9 @@ import org.jdom.Element;
  * roster.Roster class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
-public class RosterConfigPaneXml implements XmlAdapter {
+public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public RosterConfigPaneXml() {
     }

@@ -15,9 +15,9 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  */
-abstract public class AbstractConnectionConfig  implements jmri.jmrix.ConnectionConfig {
+abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
     /**
      * Ctor for an object being created during load process

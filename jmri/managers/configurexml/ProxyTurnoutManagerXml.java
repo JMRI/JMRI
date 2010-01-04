@@ -1,6 +1,6 @@
 package jmri.managers.configurexml;
 
-import jmri.configurexml.XmlAdapter;
+import jmri.configurexml.*;
 import org.jdom.Element;
 
 /**
@@ -11,9 +11,9 @@ import org.jdom.Element;
  * form created or used.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class ProxyTurnoutManagerXml implements XmlAdapter {
+public class ProxyTurnoutManagerXml extends AbstractXmlAdapter {
 
     public ProxyTurnoutManagerXml() {
     }

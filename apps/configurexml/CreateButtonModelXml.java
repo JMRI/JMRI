@@ -13,10 +13,10 @@ import org.jdom.Element;
  * Handle XML persistance of CreateButtonModel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  * @see apps.CreateButtonPanel
  */
-public class CreateButtonModelXml implements XmlAdapter {
+public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public CreateButtonModelXml() {
     }

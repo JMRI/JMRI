@@ -2,7 +2,7 @@
 
 package jmri.jmrit.display.configurexml;
 
-import jmri.configurexml.XmlAdapter;
+import jmri.configurexml.*;
 import jmri.jmrit.display.LayoutEditor;
 // import jmri.jmrit.display.PositionablePoint;
 import jmri.jmrit.display.LayoutTurnout;
@@ -17,9 +17,9 @@ import java.awt.geom.*;
  * This module handles configuration for display.LayoutTurnout objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
-public class LayoutTurnoutXml implements XmlAdapter {
+public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
     public LayoutTurnoutXml() {
     }

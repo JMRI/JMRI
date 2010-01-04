@@ -9,9 +9,9 @@ import org.jdom.Element;
  * Handle XML configuration for DccLocoAddress objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2005
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
-public class DccLocoAddressXml implements XmlAdapter {
+public class DccLocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public DccLocoAddressXml() {}
 

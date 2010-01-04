@@ -14,10 +14,10 @@ import org.jdom.Attribute;
  * using reflection.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @since 2.3.1
  */
-public class DefaultJavaBeanConfigXML implements jmri.configurexml.XmlAdapter {
+public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapter {
 
     public DefaultJavaBeanConfigXML() {
     }

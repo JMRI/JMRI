@@ -10,10 +10,10 @@ import jmri.jmrit.display.*;
  * Handle configuration for display.AnalogClock2Display objects.
  *
  * @author  Howard G. Penny  Copyright (c) 2005
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class AnalogClock2DisplayXml
-    implements XmlAdapter {
+    extends AbstractXmlAdapter {
 
     public AnalogClock2DisplayXml() {
     }

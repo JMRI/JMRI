@@ -1,7 +1,7 @@
 package jmri.jmrix.configurexml;
 
 import jmri.configurexml.ConfigXmlManager;
-import jmri.configurexml.XmlAdapter;
+import jmri.configurexml.*;
 import jmri.jmrix.JmrixConfigPane;
 
 import org.jdom.Element;
@@ -20,9 +20,9 @@ import javax.swing.UnsupportedLookAndFeelException;
  * e.g. jmrix.easydcc.serialdriver.configurexml
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
-public class JmrixConfigPaneXml implements XmlAdapter {
+public class JmrixConfigPaneXml extends AbstractXmlAdapter {
 
     public JmrixConfigPaneXml() {
     }

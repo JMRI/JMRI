@@ -1,7 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
 import org.jdom.Element;
-import jmri.configurexml.XmlAdapter;
+import jmri.configurexml.*;
 //import java.awt.Color;
 //import org.jdom.DataConversionException;
 //import jmri.jmrit.display.PositionableLabel;
@@ -14,12 +14,12 @@ import jmri.configurexml.XmlAdapter;
  *
  * @author David Duchamp Copyright: Copyright (c) 2009
  * @author Kevin Dickerson, Deprecated
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  * @deprecated 2.7.8
  */
 @Deprecated
 
-public class LayoutPositionableLabelXml implements XmlAdapter {
+public class LayoutPositionableLabelXml extends AbstractXmlAdapter {
 
     public LayoutPositionableLabelXml() {
     }

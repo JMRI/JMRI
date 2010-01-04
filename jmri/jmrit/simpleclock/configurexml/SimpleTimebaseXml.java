@@ -14,9 +14,9 @@ import org.jdom.Element;
  * Handle XML persistance of SimpleTimebase objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
-public class SimpleTimebaseXml implements XmlAdapter {
+public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public SimpleTimebaseXml() {
     }

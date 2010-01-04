@@ -3,7 +3,7 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.InstanceManager;
-import jmri.configurexml.XmlAdapter;
+import jmri.configurexml.*;
 import jmri.jmrit.display.LayoutBlock;
 import jmri.jmrit.display.LayoutBlockManager;
 import jmri.Sensor;
@@ -18,9 +18,9 @@ import java.awt.Color;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
-public class LayoutBlockManagerXml implements XmlAdapter {
+public class LayoutBlockManagerXml extends AbstractXmlAdapter {
 
     public LayoutBlockManagerXml() {
     }

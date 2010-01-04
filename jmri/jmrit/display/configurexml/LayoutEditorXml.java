@@ -1,7 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.InstanceManager;
-import jmri.configurexml.XmlAdapter;
+import jmri.configurexml.*;
 import jmri.jmrit.display.LayoutEditor;
 
 import java.util.List;
@@ -13,9 +13,9 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
-public class LayoutEditorXml implements XmlAdapter {
+public class LayoutEditorXml extends AbstractXmlAdapter {
 
     public LayoutEditorXml() {}
 

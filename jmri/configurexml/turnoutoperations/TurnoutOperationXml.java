@@ -16,7 +16,7 @@ import jmri.util.StringUtil;
  * @author John Harper	Copyright 2005
  *
  */
-public abstract class TurnoutOperationXml implements XmlAdapter {
+public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlAdapter {
 
 	/**
 	 * inherited methods

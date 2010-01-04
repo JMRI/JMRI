@@ -1,6 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.configurexml.XmlAdapter;
+import jmri.configurexml.*;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.SecurityElementIcon;
 import jmri.jmrix.loconet.SecurityElement;
@@ -11,9 +11,9 @@ import org.jdom.Element;
  * Handle configuration for display.SecurityElementIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
-public class SecurityElementIconXml implements XmlAdapter {
+public class SecurityElementIconXml extends AbstractXmlAdapter {
 
     public SecurityElementIconXml() {
     }

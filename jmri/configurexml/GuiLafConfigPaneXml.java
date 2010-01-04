@@ -18,10 +18,10 @@ import org.jdom.Element;
  * and the default Locale.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  * @see jmri.GuiLafConfigPane
  */
-public class GuiLafConfigPaneXml implements XmlAdapter {
+public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public GuiLafConfigPaneXml() {
     }

@@ -15,9 +15,9 @@ import org.jdom.Element;
  * configuring LnSecurityElementManager.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
-public class LnSecurityElementManagerXml implements XmlAdapter {
+public class LnSecurityElementManagerXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public LnSecurityElementManagerXml() {
         super();

@@ -14,9 +14,9 @@ import jmri.configurexml.XmlAdapter;
  * <P>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
-public class EcosPreferencesXml implements XmlAdapter /*extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML*/ {
+public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML*/ {
 
     public EcosPreferencesXml() {
         super();

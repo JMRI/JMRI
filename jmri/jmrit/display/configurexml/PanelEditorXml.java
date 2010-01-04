@@ -1,7 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.InstanceManager;
-import jmri.configurexml.XmlAdapter;
+import jmri.configurexml.*;
 import jmri.jmrit.display.PanelEditor;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -17,9 +17,9 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
-public class PanelEditorXml implements XmlAdapter {
+public class PanelEditorXml extends AbstractXmlAdapter {
 
     public PanelEditorXml() {}
 

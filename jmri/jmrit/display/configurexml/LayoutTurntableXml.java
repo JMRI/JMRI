@@ -2,7 +2,7 @@
 
 package jmri.jmrit.display.configurexml;
 
-import jmri.configurexml.XmlAdapter;
+import jmri.configurexml.*;
 import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.LayoutTurntable;
 import jmri.jmrit.display.TrackSegment;
@@ -15,9 +15,9 @@ import java.awt.geom.*;
  * This module handles configuration for display.LayoutTurntable objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
-public class LayoutTurntableXml implements XmlAdapter {
+public class LayoutTurntableXml extends AbstractXmlAdapter {
 
     public LayoutTurntableXml() {
     }

@@ -1,6 +1,6 @@
 package jmri.jmrix.configurexml;
 
-import jmri.configurexml.XmlAdapter;
+import jmri.configurexml.*;
 import jmri.jmrix.SerialPortAdapter;
 
 import org.jdom.Element;
@@ -10,9 +10,9 @@ import org.jdom.Element;
  * classes persisting the status of serial port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
-abstract public class AbstractConnectionConfigXml implements XmlAdapter {
+abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
 
     public AbstractConnectionConfigXml() {
     }

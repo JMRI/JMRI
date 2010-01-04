@@ -2,7 +2,7 @@
 
 package jmri.jmrit.display.configurexml;
 
-import jmri.configurexml.XmlAdapter;
+import jmri.configurexml.*;
 import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.LevelXing;
 import jmri.jmrit.display.TrackSegment;
@@ -14,9 +14,9 @@ import java.awt.geom.*;
  * This module handles configuration for display.LevelXing objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
-public class LevelXingXml implements XmlAdapter {
+public class LevelXingXml extends AbstractXmlAdapter {
 
     public LevelXingXml() {
     }

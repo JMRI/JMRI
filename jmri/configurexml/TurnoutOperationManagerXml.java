@@ -16,7 +16,7 @@ import jmri.configurexml.turnoutoperations.TurnoutOperationXml;
  * @author John Harper
  *
  */
-public class TurnoutOperationManagerXml implements XmlAdapter {
+public class TurnoutOperationManagerXml extends jmri.configurexml.AbstractXmlAdapter {
 
     public TurnoutOperationManagerXml() {
     }
