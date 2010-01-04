@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: appearancetable.xsl,v 1.10 2010-01-04 00:26:58 jacobsen Exp $ -->
+<!-- $Id: appearancetable.xsl,v 1.11 2010-01-04 00:35:39 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI appearance table file into displayable HTML    -->
 
@@ -106,7 +106,12 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
         </xsl:if>
     </xsl:for-each>
 
-    <xsl:value-of select="aspectname"/></h3>
+    <!-- name is also a link -->
+        <!-- create target for linking -->
+    <xsl:element name="a"><xsl:attribute name="href">aspects.xml#<xsl:value-of select="aspectname"/></xsl:attribute>
+    <xsl:value-of select="aspectname"/>
+    </xsl:element>
+    </h3>
     <!-- end heading -->
     
     <!-- then compare to each aspect name in aspects.xml for match -->
