@@ -3,7 +3,7 @@
 
 <layout-config
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/panel.xsd"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/panelfile.xsd"
         >
   <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
@@ -88,6 +88,6 @@
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 2.5.5 on Sat Jun 06 12:27:55 PDT 2009 $Id: PanelFileSchemaTest.xml,v 1.1 2010-01-04 18:06:58 jacobsen Exp $-->
+  <!--Written by JMRI version 2.5.5 on Sat Jun 06 12:27:55 PDT 2009 $Id: PanelFileSchemaTest.xml,v 1.2 2010-01-04 23:08:33 jacobsen Exp $-->
 </layout-config>
 

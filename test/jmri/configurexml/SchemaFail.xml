@@ -4,7 +4,7 @@
 <!-- This XML file is supposed to fail to validate -->
 <layout-config
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/JMRItypes.xsd"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/types/general.xsd"
 >
   <unknownElement/>
 </layout-config>

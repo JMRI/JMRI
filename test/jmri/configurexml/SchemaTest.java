@@ -16,12 +16,12 @@ import junit.framework.TestSuite;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SchemaTest extends LoadFileTestBase {
 
     public void testValidateRef() {
-        validate(new java.io.File("java/test/jmri/configurexml/JMRItypesTest.xml"));
+        validate(new java.io.File("java/test/jmri/configurexml/ConfigFileSchemaTest.xml"));
     }
 
     public void testValidateFail() {
@@ -49,6 +49,10 @@ public class SchemaTest extends LoadFileTestBase {
 
     public void testValidatePanelFile() {
         validate(new java.io.File("java/test/jmri/configurexml/PanelFileSchemaTest.xml"));
+    }
+
+    public void testValidateLargePanelFile() {
+        validate(new java.io.File("java/test/jmri/configurexml/LargePanelFileSchemaTest.xml"));
     }
 
     // from here down is testing infrastructure
