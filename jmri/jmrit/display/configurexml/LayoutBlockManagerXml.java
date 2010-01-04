@@ -18,7 +18,7 @@ import java.awt.Color;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class LayoutBlockManagerXml implements XmlAdapter {
 
@@ -58,6 +58,7 @@ public class LayoutBlockManagerXml implements XmlAdapter {
 					elem.setAttribute("occupiedsense", ""+b.getOccupiedSense());
 					elem.setAttribute("trackcolor", b.colorToString(b.getBlockTrackColor()));
 					elem.setAttribute("occupiedcolor", b.colorToString(b.getBlockOccupiedColor()));
+					elem.setAttribute("extracolor", b.colorToString(b.getBlockExtraColor()));
 					layoutblocks.addContent(elem);
 					if (b.getMemoryName() != "") {
 						elem.setAttribute("memory", b.getMemoryName());
@@ -133,6 +134,11 @@ public class LayoutBlockManagerXml implements XmlAdapter {
 											.getAttribute("occupiedcolor").getValue());
 				b.setBlockOccupiedColor(color);
 				Attribute a = ((layoutblockList.get(i)))
+											.getAttribute("extracolor");
+				if (a!=null) {
+					b.setBlockExtraColor(b.stringToColor(a.getValue()));
+				}				
+				a = ((layoutblockList.get(i)))
 											.getAttribute("occupancysensor");
 				if (a!=null) {
 					b.setOccupancySensorName(a.getValue());

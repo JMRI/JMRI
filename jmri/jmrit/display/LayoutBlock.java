@@ -57,7 +57,7 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -80,6 +80,7 @@ public class LayoutBlock extends AbstractNamedBean
     private ArrayList<LayoutEditor> panels = new ArrayList<LayoutEditor>();  // panels using this block
 	private java.beans.PropertyChangeListener mBlockListener = null;
 	private	int jmriblknum = 1;
+	private boolean useExtraColor = false;
 
 	// persistent instances variables (saved between sessions)
 	public String blockName = "";
@@ -89,6 +90,7 @@ public class LayoutBlock extends AbstractNamedBean
 	public int occupiedSense = Sensor.ACTIVE;
 	public Color blockTrackColor = Color.black;
 	public Color blockOccupiedColor = Color.black;
+	public Color blockExtraColor = Color.black;
 	
 	/* 
 	 * Creates a LayoutBlock object.
@@ -145,6 +147,10 @@ public class LayoutBlock extends AbstractNamedBean
 	public void setBlockTrackColor(Color color) {blockTrackColor = color;}	
 	public Color getBlockOccupiedColor() {return blockOccupiedColor;}
 	public void setBlockOccupiedColor(Color color) {blockOccupiedColor = color;}	
+	public Color getBlockExtraColor() {return blockExtraColor;}
+	public void setBlockExtraColor(Color color) {blockExtraColor = color;}
+	public boolean getUseExtraColor() {return useExtraColor;}
+	public void setUseExtraColor(boolean b) {useExtraColor = b;}
 	public void incrementUse() {useCount ++;}
 	public void decrementUse() {
 		useCount --;
@@ -285,6 +291,9 @@ public class LayoutBlock extends AbstractNamedBean
 	public Color getBlockColor() {
 		if (getOccupancy() == OCCUPIED) {
 			return blockOccupiedColor;
+		}
+		else if (useExtraColor) {
+			return blockExtraColor;
 		}
 		else {
 			return blockTrackColor;
@@ -594,6 +603,7 @@ public class LayoutBlock extends AbstractNamedBean
     int senseInactiveIndex;
     JComboBox trackColorBox = new JComboBox();
 	JComboBox occupiedColorBox = new JComboBox();
+	JComboBox extraColorBox = new JComboBox();
 	JLabel blockUseLabel= new JLabel( rb.getString("UseCount"));
 	JButton blockEditDone;
 	JButton blockEditCancel;
@@ -666,6 +676,15 @@ public class LayoutBlock extends AbstractNamedBean
 			panel7.add(occupiedColorBox);
             occupiedColorBox.setToolTipText( rb.getString("OccupiedColorHint") );
             contentPane.add(panel7);
+			// set up extra color (changeable)
+			JPanel panel7a = new JPanel(); 
+            panel7a.setLayout(new FlowLayout());
+			JLabel extraColorLabel = new JLabel( rb.getString("ExtraColor") );
+			panel7a.add(extraColorLabel);
+			initializeColorCombo(extraColorBox);
+			panel7a.add(extraColorBox);
+            extraColorBox.setToolTipText( rb.getString("ExtraColorHint") );
+            contentPane.add(panel7a);
 			// set up Memory entry (changeable)
 			contentPane.add(new JSeparator(JSeparator.HORIZONTAL));
 			JPanel panel8 = new JPanel(); 
@@ -708,6 +727,7 @@ public class LayoutBlock extends AbstractNamedBean
 		}
 		setColorCombo(trackColorBox,blockTrackColor);
 		setColorCombo(occupiedColorBox,blockOccupiedColor);
+		setColorCombo(extraColorBox,blockExtraColor);
 		memoryNameField.setText(memoryName);
 		editLayoutBlockFrame.addWindowListener(new java.awt.event.WindowAdapter() {
 				public void windowClosing(java.awt.event.WindowEvent e) {
@@ -750,6 +770,10 @@ public class LayoutBlock extends AbstractNamedBean
 		oldColor = blockOccupiedColor;
 		blockOccupiedColor = getSelectedColor(occupiedColorBox);
 		if (oldColor!=blockOccupiedColor) needsRedraw = true;
+		// check if extra color changed
+		oldColor = blockExtraColor;
+		blockExtraColor = getSelectedColor(extraColorBox);
+		if (oldColor!=blockExtraColor) needsRedraw = true;
 		// check if Memory changed
 		if ( !memoryName.equals(memoryNameField.getText().trim()) ) {
 			// memory has changed
