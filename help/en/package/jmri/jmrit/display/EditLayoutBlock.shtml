@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: EditLayoutBlock.shtml,v 1.4 2008-11-01 17:33:00 jacobsen Exp $ -->
+<!-- $Id: EditLayoutBlock.shtml,v 1.5 2010-01-04 20:58:57 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -31,7 +31,7 @@ normally correspond to physical blocks on a layout. Block occupancy is indicated
 by the state of an <i>occupancy sensor</i>. When a layout's track is divided 
 into blocks, all of the track need not belong to a block. For example, yard track
 is normally not in a block, whereas mainline track almost always would be divided 
-into blocks. The main use of blocks is to facilitate signalling, but blocks may 
+into blocks. The main use of blocks is to facilitate signaling, but blocks may 
 be used for other layout control and animation functions.</p>
 <p>
 If a block name is entered in the <b>Block: Name</b> field of the tool bar prior 
@@ -65,7 +65,7 @@ will break the link between the two parts of the block information.</p>
 Of interest in the Block Table is the "Value" column. The "Value" can be used to 
 identify trains as they move around the layout. If a train is parked in 
 a Block, and train identifying text is manually entered into the "Value" entry 
-for that Block, the text will be propogated from Block to Block as the train is 
+for that Block, the text will be propagated from Block to Block as the train is 
 run around the layout. When the train enters a Block, the text "Value" of the 
 block the train entered from will be
 copied into the "Value" of the entered Block; when the train exits a Block, the 
@@ -74,7 +74,7 @@ to the block (see below), the "Value" of the Memory Variable will be set to the
 "Value" of the block. So by placing a Memory Icon near the block, the identity 
 of the train in the block can be displayed in the Layout Editor panel. <b>Caution: 
 Tracking trains using this method requires smoothly running block detection 
-circuitry.</b> False or flikering block detection can easily confuse things.</p>
+circuitry.</b> False or flickering block detection can easily confuse things.</p>
 <p>
 Turnout, level crossing, and track segment edit dialogs provide access to the 
 Create/Edit Block dialog where information specific to a block may be entered
@@ -94,7 +94,13 @@ colors for occupied and unoccupied states, allowing the track in a block to
 change color as a train enters and leaves that block. To set track colors, 
 select the unoccupied track color in the <b>Track Color:</b> selection box, 
 and select the occupied track color in the <b>Occupied Track Color:</b> 
-selection box.</p>
+selection box. An alternate unoccupied track color is provided for special uses. 
+For example, Dispatcher has an option to use the alternate unoccupied track color 
+for blocks that are allocated but unoccupied. Set the alternate unoccupied track 
+color using the <b>Alternate Track Color:</b> selection box. When track color is 
+set, Layout Editor will use the occupied track color if a block is occupied, then 
+if not occupied, will use the alternate unoccupied track color if it has been 
+requested, otherwise it uses the unoccupied track color.</p>
 <p>
 The <b>Memory Variable Name:</b> field in the Create/Edit Block dialog 
 shows the name of the memory variable currently assigned to the block, if there

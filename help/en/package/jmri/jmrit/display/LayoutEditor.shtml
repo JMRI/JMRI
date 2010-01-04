@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.17 2009-03-12 18:15:47 matthewharris Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.18 2010-01-04 20:58:57 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -1030,7 +1030,13 @@ colors for occupied and unoccupied states, allowing the track in a block to
 change color as a train enters and leaves that block. To set track colors, 
 select the unoccupied track color in the <b>Track Color:</b> selection box, 
 and select the occupied track color in the <b>Occupied Track Color:</b> 
-selection box.</p>
+selection box. An alternate unoccupied track color is provided for special uses. 
+For example, Dispatcher has an option to use the alternate unoccupied track color 
+for blocks that are allocated but unoccupied. Set the alternate unoccupied track 
+color using the <b>Alternate Track Color:</b> selection box. When track color is 
+set, Layout Editor will use the occupied track color if a block is occupied, then 
+if not occupied, will use the alternate unoccupied track color if it has been 
+requested, otherwise it uses the unoccupied track color.</p>
 <p>
 Optionally a Memory Variable may be assigned to a block by entering its name 
 (system name or user name) in the <b>Memory Variable Name:</b> 
