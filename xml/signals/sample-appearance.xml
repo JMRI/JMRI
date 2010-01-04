@@ -7,6 +7,8 @@
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
 
+  <db:copyright><db:year>2009</db:year><db:year>2010</db:year><db:holder>JMRI</db:holder></db:copyright>
+  
   <db:authorgroup>
     <db:author>
         <db:personname><db:firstname>Sample</db:firstname><db:surname>Name</db:surname></db:personname>

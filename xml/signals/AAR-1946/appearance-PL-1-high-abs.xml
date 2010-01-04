@@ -3,8 +3,31 @@
 
 <appearancetable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:db = "http://docbook.org/ns/docbook"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
+
+  <db:copyright><db:year>2009</db:year><db:year>2010</db:year><db:holder>JMRI</db:holder></db:copyright>
+
+  <db:authorgroup>
+    <db:author>
+        <db:personname><db:firstname>Dick</db:firstname><db:surname>Bronson</db:surname></db:personname>
+    </db:author>    
+    <db:author>
+        <db:personname><db:firstname>Bob</db:firstname><db:surname>Jacobsen</db:surname></db:personname>
+        <db:email>jake@physics.berkeley.edu</db:email>
+    </db:author>    
+  </db:authorgroup>
+
+  <db:revhistory>
+    <db:revision>
+        <db:revnumber>1</db:revnumber>
+        <db:date>2010-01-01</db:date>
+        <db:authorinitials>DB</db:authorinitials>
+        <db:revremark>Initial version</db:revremark>
+    </db:revision>    
+  </db:revhistory>
+
   <aspecttable>AAR-2</aspecttable>
   <name>Single position light high absolute signal</name>
   <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
