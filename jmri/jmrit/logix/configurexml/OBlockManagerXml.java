@@ -32,8 +32,8 @@ import jmri.jmrit.logix.Portal;
  * @author Pete Cressman Copyright: Copyright (c) 2009
  * 
  */
-public class OBlockManagerXml extends XmlFile
-                    implements jmri.configurexml.XmlAdapter {
+public class OBlockManagerXml // extends XmlFile
+                    extends jmri.configurexml.AbstractXmlAdapter {
 
     public OBlockManagerXml() {
     }

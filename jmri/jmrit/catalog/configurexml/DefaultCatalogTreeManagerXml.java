@@ -30,7 +30,7 @@ import org.jdom.Attribute;
  * 
  */
 public class DefaultCatalogTreeManagerXml extends XmlFile
-                    implements jmri.configurexml.XmlAdapter {
+                    /* extends jmri.configurexml.AbstractXmlAdapter */ {
 
 	private static String defaultFileName = XmlFile.prefsDir()+"catalogTrees.xml";
 

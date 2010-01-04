@@ -27,8 +27,8 @@ import jmri.jmrit.logix.ThrottleSetting;
  * @author Pete Cressman Copyright: Copyright (c) 2009
  * 
  */
-public class WarrantManagerXml extends XmlFile
-                    implements jmri.configurexml.XmlAdapter {
+public class WarrantManagerXml //extends XmlFile
+                    extends jmri.configurexml.AbstractXmlAdapter {
 
     public WarrantManagerXml() {
     }
