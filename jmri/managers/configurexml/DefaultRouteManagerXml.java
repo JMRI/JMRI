@@ -20,7 +20,7 @@ import org.jdom.Element;
  * @author Daniel Boudreau Copyright (c) 2007
  * @author Simon Reader Copyright (C) 2008
  *
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -365,17 +365,17 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
 						}
                         // If the Turnout has already been added to the route and is the same as that loaded, 
                         // we will not re add the turnout.
-                        if (r.isOutputTurnoutIncluded(tSysName)){
-                            break;
+                        if (!r.isOutputTurnoutIncluded(tSysName)){
+
+                            // Add turnout to route
+                            r.addOutputTurnout(tSysName, tSetState);
+                            
+                            // determine if turnout should be locked
+                            Turnout t = r.getOutputTurnout(k);
+                            if (r.getLocked()) {
+                                t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
+                            }
                         }
-                        // Add turnout to route
-                        r.addOutputTurnout(tSysName, tSetState);
-                        
-                        // determine if turnout should be locked
-                        Turnout t = r.getOutputTurnout(k);
-						if (r.getLocked()) {
-							t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
-						}
                 	}
                 }
                 // load output sensors if there are any - new format
