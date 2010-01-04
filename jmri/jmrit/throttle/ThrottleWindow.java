@@ -93,9 +93,11 @@ public class ThrottleWindow extends JmriJFrame {
         throttlesPanel = new JPanel(throttlesLayout);
         throttlesPanel.setDoubleBuffered(true);
         if ( (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) 
-        	&& ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isOneWindowForAll()) )
+        	&& ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isOneWindowForAll()))
         	initializeToolbar();
-
+/*        if ( (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) 
+        		&& ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isResizingWindow()))
+        	setResizable(false);*/
         initializeMenu();
         
         setCurentThrottleFrame ( new ThrottleFrame(this) );
@@ -304,6 +306,7 @@ public class ThrottleWindow extends JmriJFrame {
 		viewAllButtons.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent ev) {
 				getCurentThrottleFrame().getFunctionPanel().showAllFnButtons();
+				getCurentThrottleFrame().getFunctionPanel().setEnabled();
 			}
 		});
 		
@@ -327,14 +330,6 @@ public class ThrottleWindow extends JmriJFrame {
 		preferencesItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				editPreferences();
-			}
-		});
-		JMenuItem resetFuncButtonsItem = new JMenuItem(throttleBundle.getString("ThrottleMenuEditResetFunctionButtons"));
-		editMenu.add(resetFuncButtonsItem);
-		resetFuncButtonsItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				getCurentThrottleFrame().getFunctionPanel().initGUI();
-				getCurentThrottleFrame().getFunctionPanel().setEnabled(false);
 			}
 		});
 		editMenuExportRoster = new JMenuItem(throttleBundle.getString("ThrottleMenuEditSaveCustoms"));

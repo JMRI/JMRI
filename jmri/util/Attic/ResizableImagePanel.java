@@ -135,21 +135,44 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
         loadImage();
     }
 
+    boolean toResize = false;
     public void componentResized(ComponentEvent e) {
-        setSize(e.getComponent().getSize());
-        setPreferredSize(e.getComponent().getSize());
-        setScaledImage();
+    	if ( ! (isResizingContainer()))
+    		if ( e.getComponent().isVisible() ) {
+    			setSize(e.getComponent().getSize());
+    			setPreferredSize(e.getComponent().getSize());
+    			setScaledImage();
+    			toResize = false;
+    		}
+    		else
+    			toResize = true;
     }
 
     public void componentMoved(ComponentEvent e) {
     }
 
     public void componentShown(ComponentEvent e) {
+    	log.debug("Component shown");
+    	if (isResizingContainer())
+    		resizeContainer();
+    	else {
+    		if ((toResize) || (scaledImage==null)) {
+    			setSize(e.getComponent().getSize());
+    			setPreferredSize(e.getComponent().getSize());
+    			setScaledImage();
+    			toResize = false;
+    		}
+        }
     }
 
+    final static Dimension smallDim = new Dimension(10,10);
+    
     public void componentHidden(ComponentEvent e) {
+    	log.debug("Component hidden");
+    	if (isResizingContainer()) {
+    		resizeContainer(smallDim);
+    	}
     }
-
 
 	private boolean loadImage() {
         try {
@@ -160,29 +183,35 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
             unsetImage();
             return false;
         }
-        if (isResizingContainer()) {
-        	Container p1 = getParent();
-        	if (p1 != null)
-        	{
-        		Dimension d = new Dimension(image.getWidth(null), image.getHeight(null)) ;
-        		p1.setPreferredSize(d);
-        		setPreferredSize(d);
-        		setSize(d);
-        		while (p1.getParent() != null) 	p1=p1.getParent();
-        		try {
-        			((Window)p1).pack(); // yes, lucky hack, possibly dirty
-        		}
-        		catch(Exception e)
-        		{
-        			log.error("loadImage() no top parent pack to force resize");
-        		}
-        	}
-        }
+        if (isResizingContainer())
+        	resizeContainer();       
         setScaledImage();
         setVisible(true);
         return true;
     }
+	
+	private void resizeContainer(Dimension d) {
+		log.debug("Resizing container");
+    	Container p1 = getParent();
+    	if ((p1 != null) && (image!=null))
+    	{
+    		setPreferredSize(d);
+    		setSize(d);
+    		p1.setPreferredSize(d);
+    		p1.setSize(d);
+    		if ((getTopLevelAncestor() != null) && (getTopLevelAncestor() instanceof Window))
+    			((Window) getTopLevelAncestor()).pack(); // yes, lucky hack, possibly dirty
+    	}
+	}
     
+	private void resizeContainer() {
+		if (scaledImage != null)
+			resizeContainer( new Dimension(scaledImage.getWidth(null), scaledImage.getHeight(null)) );
+		else
+			if (image != null)
+				resizeContainer( new Dimension(image.getWidth(null), image.getHeight(null)) );
+	}
+	
     public void unsetImage()
     {
     	image = null;
@@ -207,6 +236,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     private void setScaledImage() {
         if (image != null) {
             if ((getSize().getWidth() != image.getWidth(null)) || (getSize().getHeight() != image.getHeight(null))) {
+            	log.debug("Actually resizing image "+this.getImagePath());
             	if ( _respectAspectRatio )
             		if (  (getSize().getWidth() / getSize().getHeight()) > ((double)image.getWidth(null) / (double)image.getHeight(null)) )
             			scaledImage = image.getScaledInstance( -1, (int)getSize().getHeight(), java.awt.Image.SCALE_SMOOTH);

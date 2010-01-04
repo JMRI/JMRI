@@ -141,6 +141,7 @@ public class FunctionButtonPropertyEditor extends JDialog
         idField.setText(String.valueOf(button.getIdentity()));
         fontField.setText(String.valueOf(button.getFont().getSize()));
         visibleCheckBox.setSelected(button.getDisplay());
+        textField.requestFocus();
     }
 
     /**

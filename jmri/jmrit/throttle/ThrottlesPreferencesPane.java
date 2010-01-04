@@ -228,13 +228,11 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
         cbEnableAutoLoad.setEnabled( cbUseExThrottle.isSelected() );
         cbUseAdvTransition.setEnabled( cbUseExThrottle.isSelected() && cb1Win4all.isSelected() );
         cbUseRosterImage.setEnabled( cbUseExThrottle.isSelected() );
-        cbResizeWinImg.setEnabled( cbUseExThrottle.isSelected() &&  cbUseRosterImage.isSelected() );
+        cbResizeWinImg.setEnabled( cbUseExThrottle.isSelected()  &&  cbUseRosterImage.isSelected() );
         cbHideUndefinedButtons.setEnabled( cbUseExThrottle.isSelected() );
         cbIgnoreThrottlePosition.setEnabled( cbUseExThrottle.isSelected() && cbEnableAutoLoad.isSelected() );
         if ( cbUseExThrottle.isSelected() ) {
         	if ( cb1Win4all.isSelected() ) {
-        		cbResizeWinImg.setSelected( false );
-        		cbResizeWinImg.setEnabled( false );
         		cbIgnoreThrottlePosition.setSelected( true );
         		cbIgnoreThrottlePosition.setEnabled( false );
         	}

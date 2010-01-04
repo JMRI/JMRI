@@ -185,6 +185,11 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         alt2Button.setEnabled(isEnabled);
     }
     
+    public void setEnabled()
+    {
+    	setEnabled(throttle!=null);
+    }
+    
     public void setAddressPanel(AddressPanel addressPanel){
     	this.addressPanel = addressPanel; 
     }
@@ -330,7 +335,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.52 $
+	 * @version $Revision: 1.53 $
 	 */
     class FunctionButtonKeyListener extends KeyAdapter {
     	private boolean keyReleased = true;
