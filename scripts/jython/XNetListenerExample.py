@@ -4,7 +4,7 @@
 # Author: Paul Bender, Copyright 2009
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 import jmri
 
@@ -28,7 +28,11 @@ class xnetListener(jmri.jmrix.lenz.XNetListener):
 			# reply is the message 0x01 0x04 0x05
 			if m.isOkMessage():
 				print "message is OK Message"
-
+	
+	# an XNetListener must define the notifyTimeout
+	# function, which takes a  message as a parameter
+	def notifyTimeout(self,m):
+		print "Timeout on Message ",m.toString()
 	
 #end of class definition
 
