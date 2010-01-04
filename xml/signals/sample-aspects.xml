@@ -6,17 +6,16 @@
     xmlns:db = "http://docbook.org/ns/docbook"
     xsi:noNamespaceSchemaLocation = "http://localhost/xml/schema/aspecttable.xsd"
 >
-  <name>AAR-2</name>
-  <date>1946</date>
-  <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
+  <name>Sample</name>
+  <date>1804</date>
+  <reference>As described in the January 1804 version of "Iron Horse Quarterly", chapter II.</reference>
 
+  <db:copyright><db:year>2009</db:year><db:year>2010</db:year><db:holder>JMRI</db:holder></db:copyright>
+  
   <db:authorgroup>
     <db:author>
-        <db:personname><db:firstname>Dick</db:firstname><db:surname>Bronson</db:surname></db:personname>
-    </db:author>    
-    <db:author>
-        <db:personname><db:firstname>Bob</db:firstname><db:surname>Jacobsen</db:surname></db:personname>
-        <db:email>jake@physics.berkeley.edu</db:email>
+        <db:personname><db:firstname>Sample</db:firstname><db:surname>Name</db:surname></db:personname>
+        <db:email>name@com.domain</db:email>
     </db:author>    
   </db:authorgroup>
 
@@ -24,7 +23,7 @@
     <db:revision>
         <db:revnumber>1</db:revnumber>
         <db:date>2009-12-28</db:date>
-        <db:authorinitials>RGJ</db:authorinitials>
+        <db:authorinitials>initials</db:authorinitials>
     </db:revision>    
   </db:revhistory>
 

@@ -10,6 +10,8 @@
   <name>Basic Model Signals</name>
   <reference>Basic signals known by many modelers</reference>
 
+  <db:copyright><db:year>2009</db:year><db:year>2010</db:year><db:holder>JMRI</db:holder></db:copyright>
+
   <db:authorgroup>
     <db:author>
         <db:personname><db:firstname>Dick</db:firstname><db:surname>Bronson</db:surname></db:personname>
