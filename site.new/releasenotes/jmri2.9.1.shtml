@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.21 2010-01-04 01:45:30 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.22 2010-01-04 21:51:11 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -214,6 +214,10 @@ of throttle errors, and added a warning dialog if a throttle user tries to selec
 already in use.
 
 <p>
+Robert Coleman got initial support working for the Smart Home 2412s Insteon interface. It 
+can be used to turn both Insteon and X10 adapters on and off.
+
+<p>
 Matt Harris updated the Windows installer to NSIS 2.46 to ensure complete compatibility 
 with Windows 7 (addition of compatibility manifest entries)
 
@@ -225,6 +229,38 @@ USS CTC panel, now at
 <p>
 Dan Boudreau fixed a subtle and nasty bug that was preventing the Turnout Operations configuration
 window from displaying properly under certain circumstances.
+
+<p>
+Paul Bender made a technical change to the XPressnet code
+to pass the message listener for the sending thread to the handleTimeout method in AbstractMRTrafficController.
+This allows subclasses to notify listeners if a message that they sent received a timeout message.  
+The XPressNetTrafficController passes this information on to an XPressNetListener.   
+This is currently used to fix a minor bug which caused the throttle to lock up 
+if a message it sent did not receive a reply message (this happens occasionally with the Hornby Elite).
+Updated XNetMessage to allow setting the default values for the number of retries and the length of time before a timeout.
+Updated the XNetListenerExample.py sample script to include the notifyTimeout message routine.
+
+<p>
+Brett Hoffman updated the 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle help</a>.
+
+<p>
+Lionel Jeanson made some throttle updates:
+<ul>
+<li>reviewed conditions to enable Program button in AddressPanel
+<li>now using default programmer (from JMRI preferences) when that button is clicked
+<li>removed the "Reset function button" from edit menu, merged functionality to the one in View menu
+<li>in function button properties, changed default selected entry to the one of button text
+<li>reviewed the way image are resized for better performances
+<li>now allow to enable "resize window to image size" in all case (disabled by default)
+</ul>
+
+<p>
+David Duchamp added colors to the Layout Editor track.
+
+<p>
+David Duchamp added <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher<a> options.
+
 
 <!--#include virtual="/Footer" -->
 
