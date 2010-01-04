@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: aspecttable.xsl,v 1.9 2010-01-03 20:24:34 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsl,v 1.10 2010-01-04 00:35:10 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI aspecttable file into displayable HTML    -->
 
@@ -83,6 +83,9 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
 <!-- Display each aspect -->
 <xsl:template match="aspect">
+    <!-- create target for linking -->
+    <xsl:element name="a"><xsl:attribute name="name"><xsl:value-of select="name"/></xsl:attribute></xsl:element>
+
     <!-- create section title -->
     <h3>
     <xsl:for-each select="rule">
