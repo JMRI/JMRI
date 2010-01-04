@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.20 2010-01-04 01:14:52 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.21 2010-01-04 01:45:30 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,7 +29,7 @@
       Release Notes for JMRI 2.9.1 release
       </h2>
 
-	<p>Date: MMM NN, YYYY</p>
+	<p>Date: MMM NN, 2010</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.9.1 of JMRI/DecoderPro is available for download.
 
@@ -222,6 +222,9 @@ Bob Bucklew provided an icon for the knock-out that fills unused positions in a
 USS CTC panel, now at 
 <a href="http://jmri.org/resources/icons/USSpanels/Panels/knockout.gif">resources/icons/USSpanels/Panels/knockout.gif</a>.
 
+<p>
+Dan Boudreau fixed a subtle and nasty bug that was preventing the Turnout Operations configuration
+window from displaying properly under certain circumstances.
 
 <!--#include virtual="/Footer" -->
 
