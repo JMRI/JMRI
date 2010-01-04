@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: aspecttable.xsl,v 1.10 2010-01-04 00:35:10 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsl,v 1.11 2010-01-04 02:42:10 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI aspecttable file into displayable HTML    -->
 
@@ -46,9 +46,9 @@
 		<h2>JMRI &quot;<xsl:value-of select="aspecttable/name"/>&quot; Aspect Table</h2>
 
 
-<xsl:apply-templates match="/aspecttable"/>
+<xsl:apply-templates select='aspecttable' />
 
-<HR/>
+<hr/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.
 <P/>Copyright &#169; 1997 - 2009 JMRI Community. 
 <P/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
