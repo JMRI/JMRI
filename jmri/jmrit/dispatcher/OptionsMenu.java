@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 
 public class OptionsMenu extends JMenu {
@@ -109,6 +109,8 @@ public class OptionsMenu extends JMenu {
 	JCheckBox detectionCheckBox = new JCheckBox(rb.getString("DetectionBox"));
 	JCheckBox shortNameCheckBox = new JCheckBox(rb.getString("ShortNameBox"));
 	JCheckBox nameInBlockCheckBox = new JCheckBox(rb.getString("NameInBlockBox"));
+	JCheckBox extraColorForAllocatedCheckBox = new JCheckBox(rb.getString("ExtraColorForAllocatedBox"));
+	JCheckBox nameInAllocatedBlockCheckBox = new JCheckBox(rb.getString("NameInAllocatedBlockBox"));
 	JComboBox layoutScaleBox = new JComboBox();
 	
 	private void optionWindowRequested(ActionEvent e) {
@@ -164,6 +166,16 @@ public class OptionsMenu extends JMenu {
 			p7.add(nameInBlockCheckBox);
 			nameInBlockCheckBox.setToolTipText(rb.getString("NameInBlockBoxHint"));
 			optionsPane.add(p7);
+			JPanel p10 = new JPanel();
+			p10.setLayout(new FlowLayout());
+			p10.add(extraColorForAllocatedCheckBox);
+			extraColorForAllocatedCheckBox.setToolTipText(rb.getString("ExtraColorForAllocatedBoxHint"));
+			optionsPane.add(p10);
+			JPanel p11 = new JPanel();
+			p11.setLayout(new FlowLayout());
+			p11.add(nameInAllocatedBlockCheckBox);
+			nameInAllocatedBlockCheckBox.setToolTipText(rb.getString("NameInAllocatedBlockBoxHint"));
+			optionsPane.add(p11);
 			JPanel p8 = new JPanel();
 			initializeScaleCombo();
 			p8.add(new JLabel(rb.getString("LayoutScale")+":"));
@@ -209,6 +221,8 @@ public class OptionsMenu extends JMenu {
 		autoTurnoutsCheckBox.setSelected(dispatcher.getAutoTurnouts());
 		shortNameCheckBox.setSelected(dispatcher.getShortActiveTrainNames());
 		nameInBlockCheckBox.setSelected(dispatcher.getShortNameInBlock());
+		extraColorForAllocatedCheckBox.setSelected(dispatcher.getExtraColorForAllocated());
+		nameInAllocatedBlockCheckBox.setSelected(dispatcher.getNameInAllocatedBlock());
 		optionsFrame.pack();
 		optionsFrame.setVisible(true);
 	}
@@ -233,6 +247,8 @@ public class OptionsMenu extends JMenu {
 		}
 		dispatcher.setShortActiveTrainNames(shortNameCheckBox.isSelected());
 		dispatcher.setShortNameInBlock(nameInBlockCheckBox.isSelected());
+		dispatcher.setExtraColorForAllocated(extraColorForAllocatedCheckBox.isSelected());
+		dispatcher.setNameInAllocatedBlock(nameInAllocatedBlockCheckBox.isSelected());
 		dispatcher.setScale(layoutScaleBox.getSelectedIndex()+1);
 		optionsFrame.setVisible(false);	
 		optionsFrame.dispose();  // prevent this window from being listed in the Window menu.

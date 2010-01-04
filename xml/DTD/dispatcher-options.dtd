@@ -1,7 +1,7 @@
 <!-- Defines XML for Dispatcher options information -->
-<!-- $Id: dispatcher-options.dtd,v 1.3 2009-02-26 20:32:55 djduchamp Exp $ -->
+<!-- $Id: dispatcher-options.dtd,v 1.4 2010-01-04 19:11:44 djduchamp Exp $ -->
 
-<!-- This DTD is part of JMRI. Copyright 2001-2008.                         -->
+<!-- This DTD is part of JMRI. Copyright 2001-2010.                         -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -26,5 +26,7 @@
     <!ATTLIST options hasoccupancydetection   CDATA #REQUIRED>
     <!ATTLIST options shortactivetrainnames   CDATA #REQUIRED>
     <!ATTLIST options shortnameinblock        CDATA #REQUIRED>
+    <!ATTLIST options extracolorforallocated  CDATA #REQUIRED>
+    <!ATTLIST options nameinallocatedblock    CDATA #REQUIRED>
     <!ATTLIST options layoutscale             CDATA #REQUIRED>
 

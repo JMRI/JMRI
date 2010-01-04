@@ -37,7 +37,7 @@ import org.jdom.Element;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 
 public class OptionsFile extends jmri.jmrit.XmlFile {
@@ -138,6 +138,16 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 						if (options.getAttribute("shortnameinblock").getValue().equals("no"))
 							dispatcher.setShortNameInBlock(false);
 					}
+					if (options.getAttribute("extracolorforallocated")!=null) {
+						dispatcher.setExtraColorForAllocated(true);
+						if (options.getAttribute("extracolorforallocated").getValue().equals("no"))
+							dispatcher.setExtraColorForAllocated(false);
+					}
+					if (options.getAttribute("nameinallocatedblock")!=null) {
+						dispatcher.setNameInAllocatedBlock(true);
+						if (options.getAttribute("nameinallocatedblock").getValue().equals("no"))
+							dispatcher.setNameInAllocatedBlock(false);
+					}
 					if (options.getAttribute("layoutscale")!=null) {
 						String s = (options.getAttribute("layoutscale")).getValue();
 						for (int i = 1; i<=Scale.NUM_SCALES; i++) {
@@ -182,6 +192,8 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 		options.setAttribute("hasoccupancydetection", ""+(dispatcher.getHasOccupancyDetection()?"yes":"no"));
 		options.setAttribute("shortactivetrainnames", ""+(dispatcher.getShortActiveTrainNames()?"yes":"no"));
 		options.setAttribute("shortnameinblock", ""+(dispatcher.getShortNameInBlock()?"yes":"no"));
+		options.setAttribute("extracolorforallocated", ""+(dispatcher.getExtraColorForAllocated()?"yes":"no"));
+		options.setAttribute("nameinallocatedblock", ""+(dispatcher.getNameInAllocatedBlock()?"yes":"no"));
 		options.setAttribute("layoutscale", Scale.getShortScaleID(dispatcher.getScale()));
 		root.addContent(options);
 			

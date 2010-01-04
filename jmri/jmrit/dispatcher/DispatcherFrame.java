@@ -42,7 +42,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 
@@ -72,6 +72,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	private boolean _AutoTurnouts = false;
 	private boolean _ShortActiveTrainNames = false;
 	private boolean _ShortNameInBlock = true;
+	private boolean _ExtraColorForAllocated = false;
+	private boolean _NameInAllocatedBlock = false;	
 	private int _LayoutScale = Scale.HO;
 			
 	// operational instance variables
@@ -1078,6 +1080,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	}
 	protected boolean getShortNameInBlock() {return _ShortNameInBlock;}
 	protected void setShortNameInBlock(boolean set) {_ShortNameInBlock = set;}
+	protected boolean getExtraColorForAllocated() {return _ExtraColorForAllocated;}
+	protected void setExtraColorForAllocated(boolean set) {_ExtraColorForAllocated = set;}
+	protected boolean getNameInAllocatedBlock() {return _NameInAllocatedBlock;}
+	protected void setNameInAllocatedBlock(boolean set) {_NameInAllocatedBlock = set;}
 	protected int getScale() {return _LayoutScale;}
 	protected void setScale(int sc) {_LayoutScale = sc;}
 	protected ArrayList<ActiveTrain> getActiveTrainsList() {return activeTrainsList;}
