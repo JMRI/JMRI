@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: UserInterface.shtml,v 1.4 2009-12-31 20:25:58 jacobsen Exp $ -->
+<!-- Copyright ($Author: bhoffman351 $) 2009 -->
+<!-- $Id: UserInterface.shtml,v 1.5 2010-01-04 03:10:46 bhoffman351 Exp $ -->
 <title>JMRI: WiFi Throttle</title>
 
 <!-- Style -->
@@ -29,9 +29,25 @@ JMRI: WiFi Throttle
   <img src="http://withrottle.com/WiThrottle/Home_files/TVC%20in%20iPhone.png" height="250" width="150" align="right">
 </a>
 This window controls the connection between WiFi throttles, 
-e.g. an iPhone or iPod Touch, and JMRI.
+e.g. an iPhone or iPod Touch, and JMRI.  It can be set as an
+"Action at Startup" in the "Show Advanced Preferences" section
+of JMRI Preferences.
 
 <p>
+This utility broadcasts its connection information across the local 
+network, so it can be picked up by any device looking for 
+the service.  This eliminates having to enter connection information 
+into the device.  If the computer running JMRI is protected by a
+software firewall, you may need to disable the firewall to allow
+the WiFi throttle to connect.
+<p>
+
+When using a WiFi throttle, if the computer enters sleep mode,
+control will be lost. System preferences may need to be adjusted
+to prevent the computer from putting itself to sleep when it is inactive.
+
+<P>
+
 The first use of this is the
 <a href="http://withrottle.com">WiThrottle</a>
 for iPhone and iPod Touch.
