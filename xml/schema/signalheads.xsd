@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: sensors.xsd,v 1.2 2010-01-04 17:42:06 jacobsen Exp $ -->
+<!-- $Id: signalheads.xsd,v 1.1 2010-01-04 17:42:06 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -29,25 +29,31 @@
                 http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/DocBook.xsd
             "
         >
-    <xs:complexType name="SensorManagerType">
+    <xs:complexType name="SignalHeadManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a SensorManager implementation.
+          Define the XML stucture for storing the contents of a SignalHeadManager implementation.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.managers.DefaultSensorManager</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.managers.AbstractSignalHeadManagerXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
         
-        <xs:element name="sensor" minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="signalhead" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="comment" minOccurs="0" maxOccurs="1" />
+              <xs:element name="turnout" minOccurs="0" maxOccurs="unbounded" >
+                <xs:complexType>
+                  <xs:attribute name="systemName" type="xs:string" />
+                  <xs:attribute name="userName" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
             </xs:sequence>
+            <xs:attribute name="class" type="xs:string"/>
             <xs:attribute name="systemName" type="xs:string" />
             <xs:attribute name="userName" type="xs:string" />
-            <xs:attribute name="inverted" type="xs:boolean" default="false" />
           </xs:complexType>
         </xs:element>
             

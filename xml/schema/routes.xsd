@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: sensors.xsd,v 1.2 2010-01-04 17:42:06 jacobsen Exp $ -->
+<!-- $Id: routes.xsd,v 1.1 2010-01-04 17:42:06 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -29,25 +29,43 @@
                 http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/DocBook.xsd
             "
         >
-    <xs:complexType name="SensorManagerType">
+    <xs:complexType name="RouteManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a SensorManager implementation.
+          Define the XML stucture for storing the contents of a RouteManager implementation.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.managers.DefaultSensorManager</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.managers.DefaultRouteManager</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
         
-        <xs:element name="sensor" minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="route" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="comment" minOccurs="0" maxOccurs="1" />
+              <xs:element name="routeOutputTurnout" minOccurs="0" maxOccurs="unbounded" >
+                <xs:complexType>
+                  <xs:attribute name="systemName" type="xs:string" />
+                  <xs:attribute name="state" type="xs:string" /> <!-- THROWN/CLOSE/TOGGLE -->
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="routeOutputSensor" minOccurs="0" maxOccurs="unbounded" >
+                <xs:complexType>
+                  <xs:attribute name="systemName" type="xs:string" />
+                  <xs:attribute name="state" type="xs:string" /> <!-- ACTIVE/INACTIVE/? -->
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="routeSensor" minOccurs="0" maxOccurs="unbounded" >
+                <xs:complexType>
+                  <xs:attribute name="systemName" type="xs:string" />
+                  <xs:attribute name="mode" type="xs:string" /> <!-- onActive/onInactive/? -->
+                </xs:complexType>
+              </xs:element>
             </xs:sequence>
             <xs:attribute name="systemName" type="xs:string" />
             <xs:attribute name="userName" type="xs:string" />
-            <xs:attribute name="inverted" type="xs:boolean" default="false" />
+            <xs:attribute name="controlTurnout" type="xs:string" />
+            <xs:attribute name="controlTurnoutState" type="xs:string" /> <!-- CLOSED/THROWN/? -->
           </xs:complexType>
         </xs:element>
             

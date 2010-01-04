@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- Test schema for JMRI roster support. Not for use before JMRI 2.9.1        -->
+<!-- Schema for JMRI roster support.          -->
 
-<!-- This is an experimental organization,                                  -->
-<!-- and will certainly be changed in the near future                       -->
+<!-- $Id: roster.xsd,v 1.3 2010-01-04 17:42:06 jacobsen Exp $ -->
 
-<!-- $Id: roster.xsd,v 1.2 2009-12-27 01:57:50 jacobsen Exp $ -->
-
-<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -21,12 +18,29 @@
 <!-- for more details.                                                      -->
 
 
+<!-- Not in Venetian blind form                                       -->
 <!-- Need annotations                                                 -->
 <!-- Attributes need to get types right esp. for enumerated           -->
 <!-- Attributes need REQUIRED/IMPLIED                                 -->
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/DocBook.xsd
+            "
+        >
   <xs:element name="roster-config">
+    <xs:annotation>
+        <xs:documentation>
+          This is the schema representing the over-all roster element
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="false">jmri.jmrit.roster.Roster</jmri:usingclass>
+        </xs:appinfo>
+    </xs:annotation>
     <xs:complexType>
       <xs:sequence>
         

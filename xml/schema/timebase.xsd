@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: sensors.xsd,v 1.2 2010-01-04 17:42:06 jacobsen Exp $ -->
+<!-- $Id: timebase.xsd,v 1.1 2010-01-04 17:42:06 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -29,30 +29,26 @@
                 http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/DocBook.xsd
             "
         >
-    <xs:complexType name="SensorManagerType">
+    <xs:complexType name="TimebaseType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a SensorManager implementation.
+          Define the XML stucture for storing the contents of a Timebase implementation.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.managers.DefaultSensorManager</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.managers.SimpleTimebaseXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
-      <xs:sequence>
-        
-        <xs:element name="sensor" minOccurs="0" maxOccurs="unbounded">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="comment" minOccurs="0" maxOccurs="1" />
-            </xs:sequence>
-            <xs:attribute name="systemName" type="xs:string" />
-            <xs:attribute name="userName" type="xs:string" />
-            <xs:attribute name="inverted" type="xs:boolean" default="false" />
-          </xs:complexType>
-        </xs:element>
-            
-      </xs:sequence>
       <xs:attribute name="class" type="xs:string"/>
+      <xs:attribute name="time" type="xs:string"/> <!-- float -->
+      <xs:attribute name="rate" type="xs:string"/> <!-- yes/no -->
+      <xs:attribute name="run" type="xs:string"/> <!-- yes/no -->
+      <xs:attribute name="master" type="xs:string"/> <!-- yes/no -->
+      <xs:attribute name="sync" type="xs:string"/> <!-- yes/no -->
+      <xs:attribute name="correct" type="xs:string"/> <!-- yes/no -->
+      <xs:attribute name="display" type="xs:string"/> <!-- yes/no -->
+      <xs:attribute name="startstopped" type="xs:string"/> <!-- yes/no -->
+      <xs:attribute name="startsettime" type="xs:string"/> <!-- yes/no -->
+      <xs:attribute name="startclockoption" type="xs:string"/> <!-- yes/no -->
     </xs:complexType>
 
 </xs:schema>
