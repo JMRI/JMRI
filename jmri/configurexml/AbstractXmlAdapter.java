@@ -6,17 +6,19 @@ import org.jdom.Element;
  * Abstract class to provide basic error handling for XmlAdapter
  *
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @see XmlAdapter
  */
 
 public abstract class AbstractXmlAdapter implements XmlAdapter {
     
     /**
-     * Provide common error handling.
+     * Provide common handling of errors that
+     * happen during the "load" process.
      * 
      * Simple implementation just sends message to 
-     * standard logging
+     * standard logging; needs to be given a plug-in
+     * structure for e.g. posting a Swing dialog, etc.
      *
      * @param text description of error encountered
      * @param systemName System name of bean being handled, may be null

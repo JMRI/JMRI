@@ -6,7 +6,7 @@ import org.jdom.Element;
  * Interface assumed during configuration operations.
  *
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * @see ConfigXmlManager
  */
 
@@ -43,4 +43,27 @@ public interface XmlAdapter {
      * @return The XML representation Element
      */
     public Element store(Object o);
+    
+    /**
+     * Invoke common handling of errors that
+     * happen during the "load" process.
+     * 
+     * This is part of the interface to ensure that 
+     * all the necessary classes provide it; eventually
+     * it will be coupled to a reporting mechanism of some
+     * sort.
+     *
+     * @param text description of error encountered
+     * @param systemName System name of bean being handled, may be null
+     * @param userName used name of the bean being handled, may be null
+     * @param Exception Any exception being handled in the processing, may be null
+     * @throws JmriConfigureXmlException in place for later expansion;
+     *         should be propagated upward to higher-level error handling
+     */
+    public void creationErrorEncountered (
+                String description, 
+                String systemName, 
+                String userName, 
+                Exception exception) throws JmriConfigureXmlException;
+                
 }
