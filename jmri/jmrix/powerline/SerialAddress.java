@@ -23,7 +23,7 @@ import java.util.regex.*;
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008, 2009
  * @author Ken Cameron, Copyright (C) 2008, 2009
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class SerialAddress {
 
@@ -74,12 +74,12 @@ public class SerialAddress {
         if (aCodes.reset(systemName).matches()) {
             if (!iCodes.reset(systemName).matches()) {
                 // here if an illegal format
-                log.error("illegal character in header field system name: " + systemName);
+                log.error("address did not match any valid forms: " + systemName);
                 return (false);
             } else {
                 if (iCodes.groupCount() != 3) {
                     // here if an illegal format
-                    log.error("legal character in header field system name: " + systemName);
+                    log.error("invalid format - " + systemName);
                     return (false);
                 } else {
                     return (true);
