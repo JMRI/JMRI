@@ -14,8 +14,8 @@ import jmri.jmrix.lenz.*;
  * It allows the user to set the XPressNet Address and the
  * port speed used to communicate with the LI101.
  *
- * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.5 $
+ * @author			Paul Bender  Copyright (C) 2003-2010
+ * @version			$Revision: 2.6 $
  */
 public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -209,6 +209,11 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
     public void message(XNetMessage l) {
     }
 
+    // Handle a timeout notification
+    public void notifyTimeout(XNetMessage msg)
+    {
+       if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
+    }
 
     // For now, reset just resets the screen to factory defaults, and does
     // not send any information to the LI101F.  To do a reset, we need to

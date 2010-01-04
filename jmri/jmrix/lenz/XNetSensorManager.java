@@ -9,8 +9,8 @@ import jmri.Sensor;
  *
  * System names are "XSnnn", where nnn is the sensor number without padding.
  *
- * @author			Paul Bender Copyright (C) 2003
- * @version			$Revision: 2.8 $
+ * @author			Paul Bender Copyright (C) 2003-2010
+ * @version			$Revision: 2.9 $
  */
 public class XNetSensorManager extends jmri.managers.AbstractSensorManager implements XNetListener {
 
@@ -77,6 +77,11 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     public void message(XNetMessage l) {
     }
 
+    // Handle a timeout notification
+    public void notifyTimeout(XNetMessage msg)
+    {
+       if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
+    } 
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetSensorManager.class.getName());
 

@@ -8,8 +8,8 @@ package jmri.jmrix.lenz;
  * It adds the appropriate Managers via the Initilization Manager
  * based on the Command Station Type.
  *
- * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.4 $
+ * @author			Paul Bender  Copyright (C) 2003-2010
+ * @version			$Revision: 2.5 $
  */
 abstract public class AbstractXNetInitilizationManager {
 
@@ -138,7 +138,13 @@ abstract public class AbstractXNetInitilizationManager {
        // listen for the messages to the LI100/LI101
        public void message(XNetMessage l) {
        }
-   
+
+       // Handle a timeout notification
+       public void notifyTimeout(XNetMessage msg)
+       {
+          if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
+       }
+ 
        public void dispose() {
           XNetTrafficController.instance().removeXNetListener(XNetInterface.CS_INFO,this);
        }

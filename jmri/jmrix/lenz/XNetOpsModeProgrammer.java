@@ -12,9 +12,9 @@ import jmri.ProgrammerException;
  * bit mode writes for POM
  *
  * @see            jmri.Programmer
- * @author         Paul Bender Copyright (C) 2003
+ * @author         Paul Bender Copyright (C) 2003-2010
  * @author         Girgio Terdina Copyright (C) 2007
- * @version        $Revision: 2.14 $
+ * @version        $Revision: 2.15 $
 */
 
 public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements XNetListener 
@@ -149,6 +149,11 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     public synchronized void message(XNetMessage l) {
     }
 
+    // Handle a timeout notification
+    public void notifyTimeout(XNetMessage msg)
+    {
+       if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
+    }
 
     protected void timeout(){
 	progState=XNetProgrammer.NOTPROGRAMMING;

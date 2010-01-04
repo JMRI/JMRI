@@ -4,8 +4,8 @@
  * This is the Consist definition for a consist on an XPresNet system.
  * it uses the XPressNet specific commands to build a consist.
  *
- * @author                      Paul Bender Copyright (C) 2004
- * @version                     $Revision: 2.16 $
+ * @author                      Paul Bender Copyright (C) 2004-2010
+ * @version                     $Revision: 2.17 $
  */
 
 package jmri.jmrix.lenz;
@@ -431,6 +431,12 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 
 	public void message(XNetMessage l){
 	}
+
+        // Handle a timeout notification
+        public void notifyTimeout(XNetMessage msg)
+        {
+          if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
+        }
 
 	/* 
 	 * <P>

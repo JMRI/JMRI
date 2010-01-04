@@ -98,8 +98,9 @@
  * NOTE: For LZ100 and LZV100 command stations prior to version 3.2, it 
  * may be necessary to poll for the feedback response data.
  * </P>
- * @author			Bob Jacobsen Copyright (C) 2001, Portions by Paul Bender Copyright (C) 2003 
- * @version			$Revision: 2.21 $
+ * @author			Bob Jacobsen Copyright (C) 2001
+ * @author                      Paul Bender Copyright (C) 2003-2010 
+ * @version			$Revision: 2.22 $
  */
 
 package jmri.jmrix.lenz;
@@ -294,6 +295,11 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     public void message(XNetMessage l) {
     }
 
+    // Handle a timeout notification
+    public void notifyTimeout(XNetMessage msg)
+    {
+       if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
+    }
 
     /*
      *  With Direct Mode feedback, if we see ANY valid response to our

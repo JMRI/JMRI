@@ -26,8 +26,8 @@ import javax.swing.JScrollPane;
  * function buttons
  * <P>
  *
- * @author	Paul Bender   Copyright (C) 2005
- * @version	$Revision: 1.10 $
+ * @author	Paul Bender   Copyright (C) 2005-2010
+ * @version	$Revision: 1.11 $
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -313,6 +313,12 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     // We need to be able to receive information sent by the computer to 
     // the command station
     public void message(XNetMessage m) {
+    }
+
+    // Handle a timeout notification
+    public void notifyTimeout(XNetMessage msg)
+    {
+       if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
     }
 
     // Register for logging

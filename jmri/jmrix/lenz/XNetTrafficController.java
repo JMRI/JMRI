@@ -16,8 +16,8 @@ import java.util.Hashtable;
  * method for locating the local implementation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @author			Paul Bender  Copyright (C) 2004,2005
- * @version 		$Revision: 2.14 $
+ * @author			Paul Bender  Copyright (C) 2004-2010
+ * @version 		$Revision: 2.15 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -204,6 +204,13 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
             }
         }
     }
+
+    protected void handleTimeout(AbstractMRMessage msg,AbstractMRListener l) {
+        super.handleTimeout(msg,l);
+        if(l != null) ((XNetListener)l).notifyTimeout((XNetMessage)msg);
+    }
+
+
 
     /** Reference to the command station in communication here */
     LenzCommandStation mCommandStation;

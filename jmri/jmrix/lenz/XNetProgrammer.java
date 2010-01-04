@@ -25,9 +25,9 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen     Copyright (c) 2002, 2007
- * @author Paul Bender      Copyright (c) 2003, 2004, 2005
+ * @author Paul Bender      Copyright (c) 2003-2010
  * @author Giorgio Terdina  Copyright (c) 2007
- * @version $Revision: 2.24 $
+ * @version $Revision: 2.25 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -406,6 +406,11 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     	synchronized public void message(XNetMessage l) {
     	}
 
+        // Handle a timeout notification
+        public void notifyTimeout(XNetMessage msg)
+        {
+           if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
+        }
 
 
 	/*

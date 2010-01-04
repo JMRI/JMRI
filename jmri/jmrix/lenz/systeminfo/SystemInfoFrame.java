@@ -19,9 +19,9 @@ import jmri.jmrix.lenz.*;
  * (as an example, the fact that you can't program using the computer on a
  * Commander or Compact)
  *
- * @author			Paul Bender  Copyright (C) 2003
+ * @author			Paul Bender  Copyright (C) 2003-2010
  * @author			Giorgio Terdina  Copyright (C) 2007
- * @version			$Revision: 2.8 $
+ * @version			$Revision: 2.9 $
  */
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -169,6 +169,12 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
     
     // listen for the messages to the LI100/LI101
     public void message(XNetMessage l) {
+    }
+
+    // Handle a timeout notification
+    public void notifyTimeout(XNetMessage msg)
+    {
+       if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
     }
 
 

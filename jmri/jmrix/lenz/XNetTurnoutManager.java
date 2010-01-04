@@ -10,7 +10,8 @@ import jmri.Turnout;
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 2.10 $
+ * @author			Paul Bender Copyright (C) 2003-2010
+ * @version			$Revision: 2.11 $
  */
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 
@@ -100,6 +101,11 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     public void message(XNetMessage l) {
     }
 
+    // Handle a timeout notification
+    public void notifyTimeout(XNetMessage msg)
+    {
+       if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
+    }
 
     static public XNetTurnoutManager instance() {
         if (_instance == null) _instance = new XNetTurnoutManager();

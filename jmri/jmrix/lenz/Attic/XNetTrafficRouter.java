@@ -13,7 +13,8 @@ package jmri.jmrix.lenz;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 2.7 $
+ * @author			Paul Bender Copyright (C) 2004-2010
+ * @version 		$Revision: 2.8 $
  *
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {
@@ -56,6 +57,13 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
      // listen for the messages to the LI100/LI101
      public void message(XNetMessage l) {
      }
+
+     // Handle a timeout notification
+     public void notifyTimeout(XNetMessage msg)
+     {
+        if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
+     }
+
  
     // methods to connect/disconnect to a source of data in another
     // XNetInterface

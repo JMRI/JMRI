@@ -9,13 +9,13 @@ import jmri.DccLocoAddress;
  * Consist Manager for use with the
  * XNetConsist class for the consists it builds
  *
- * @author                Paul Bender Copyright (C) 2004
- * @version               $Revision: 2.11 $
+ * @author                Paul Bender Copyright (C) 2004-2010
+ * @version               $Revision: 2.12 $
  */
 
 public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implements jmri.ConsistManager {
 
-        //private Thread initThread = null;
+        private Thread initThread = null;
 
         /**
          *  Constructor - call the constructor for the superclass, and 
@@ -25,7 +25,10 @@ public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implem
         public XNetConsistManager(){
               super();
               // Initilize the consist reader thread.
-	      new Thread(new XNetConsistReader());
+	      initThread = new Thread(new XNetConsistReader());
+              int it=initThread.getPriority();
+              it--;
+              initThread.start();
         }
 
 	/**
@@ -246,6 +249,13 @@ public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implem
            // Listener for messages to the command station
            public void message(XNetMessage l){
            }
+
+           // Handle a timeout notification
+           public void notifyTimeout(XNetMessage msg)
+           {
+              if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
+           }
+
      }
 
         static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetConsistManager.class.getName());

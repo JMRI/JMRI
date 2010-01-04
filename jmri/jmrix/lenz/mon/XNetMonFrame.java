@@ -11,9 +11,9 @@ import jmri.jmrix.lenz.XNetConstants;
 /**
  * Frame displaying (and logging) XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2002
- # @author          Paul Bender Copyright (C) 2004-2009
+ * @author          Paul Bender Copyright (C) 2004-2010
  * @author          Giorgio Terdina Copyright (C) 2007
- * @version         $Revision: 2.28 $
+ * @version         $Revision: 2.29 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -967,6 +967,11 @@ import jmri.jmrix.lenz.XNetConstants;
 
     	}
 
+        // Handle a timeout notification
+        public void notifyTimeout(XNetMessage msg)
+        {
+           if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
+        }
 
 	/**
   	 *  We need to calculate the locomotive address when doing the

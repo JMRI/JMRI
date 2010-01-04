@@ -14,8 +14,8 @@ import jmri.jmrix.lenz.*;
  * It allows the user to set the statup mode (automatic or manual) and to 
  * reset the command station.
  *
- * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.4 $
+ * @author			Paul Bender  Copyright (C) 2005-2010
+ * @version			$Revision: 1.5 $
  */
 public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XNetListener {
 
@@ -215,6 +215,11 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
     synchronized public void message(XNetMessage l) {
     }
 
+    // Handle a timeout notification
+    public void notifyTimeout(XNetMessage msg)
+    {
+       if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
+    }
 
     // Set to default values.  Voltage is 16, E Line is Active. 
     synchronized void resetLZ100Settings() {

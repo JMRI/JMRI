@@ -14,8 +14,8 @@ import jmri.jmrix.lenz.*;
  * It allows the user to set the XPressNet Address and the
  * port speed used to communicate with the LIUSB.
  *
- * @author			Paul Bender  Copyright (C) 2009
- * @version			$Revision: 1.2 $
+ * @author			Paul Bender  Copyright (C) 2009-2010
+ * @version			$Revision: 1.3 $
  */
 public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -158,6 +158,12 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
 
     // listen for the messages to the LIUSB
     public void message(XNetMessage l) {
+    }
+
+    // Handle a timeout notification
+    public void notifyTimeout(XNetMessage msg)
+    {
+       if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
     }
 
 

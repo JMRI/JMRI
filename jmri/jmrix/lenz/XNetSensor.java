@@ -8,8 +8,8 @@ import jmri.Sensor;
 /**
  * Extend jmri.AbstractSensor for XPressNet layouts.
  * <P>
- * @author			Paul Bender Copyright (C) 2003
- * @version         $Revision: 2.11 $
+ * @author			Paul Bender Copyright (C) 2003-2010
+ * @version         $Revision: 2.12 $
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
 
@@ -123,6 +123,11 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     public void message(XNetMessage l) {
     }
 
+    // Handle a timeout notification
+    public void notifyTimeout(XNetMessage msg)
+    {
+       if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
+    }
 
     public void dispose() {
         //XNetTrafficController.instance().removeXNetListener(XNetInterface.FEEDBACK, this);

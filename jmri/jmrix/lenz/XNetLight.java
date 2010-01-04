@@ -15,8 +15,8 @@ import jmri.Turnout;
  * <P>
  *  Based in part on SerialLight.java
  *
- * @author      Paul Bender Copyright (C) 2008
- * @version     $Revision: 1.5 $
+ * @author      Paul Bender Copyright (C) 2008-2010
+ * @version     $Revision: 1.6 $
  */
 public class XNetLight extends AbstractLight implements XNetListener {
 
@@ -172,6 +172,12 @@ l);
 
     // listen for the messages to the LI100/LI101
     public void message(XNetMessage l) {
+    }
+
+    // Handle a timeout notification
+    public void notifyTimeout(XNetMessage msg)
+    {
+       if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
     }
 
     /* Send an "Off" message to the decoder for this output  */

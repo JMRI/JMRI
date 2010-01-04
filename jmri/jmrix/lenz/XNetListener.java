@@ -13,7 +13,8 @@ package jmri.jmrix.lenz;
  * case.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version			$Revision: 2.1 $		
+ * @author			Bob Jacobsen  Copyright (C) 2010
+ * @version			$Revision: 2.2 $		
  */
 public interface XNetListener extends jmri.jmrix.AbstractMRListener {
 
@@ -37,7 +38,12 @@ public interface XNetListener extends jmri.jmrix.AbstractMRListener {
 	 *             modified here.
 	 */
 	public void message(XNetMessage msg);
+
+
+        /**
+         * Member function invoked by an XNetInterface implementation to notify          * a sender that an outgoing message timed out and was dropped from the          * queue.
+         */
+        public void notifyTimeout(XNetMessage msg);
+
 }
-
-
 /* @(#)XNetListener.java */

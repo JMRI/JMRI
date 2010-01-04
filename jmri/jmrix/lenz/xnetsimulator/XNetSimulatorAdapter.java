@@ -11,6 +11,8 @@ import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.AbstractMRTrafficController;
 
+import jmri.jmrix.ConnectionStatus;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
@@ -30,14 +32,14 @@ import java.io.PipedOutputStream;
  *      support infrastructure.
  * 
  * @author			Paul Bender, Copyright (C) 2009
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 public class XNetSimulatorAdapter extends XNetPortController implements Runnable{
     
     private boolean OutputBufferEmpty = true;
     private boolean CheckBuffer = true;
-   
+ 
     public XNetSimulatorAdapter() {
         try {
             PipedOutputStream tempPipeI=new PipedOutputStream();
@@ -49,6 +51,7 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
         }
         catch (java.io.IOException e) {
             log.error("init (pipe): Exception: "+e.toString());
+            return;
         }
     }
 
@@ -105,13 +108,19 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
     
     // base class methods for the XNetPortController interface
     public DataInputStream getInputStream() {
-        if (pin == null ) 
+        if (pin == null ){ 
             log.error("getInputStream called before load(), stream not available");
+            ConnectionStatus.instance().setConnectionState(XNetSimulatorAdapter.instance().getCurrentPortName(),ConnectionStatus.CONNECTION_DOWN);
+        }
         return pin;
     }
     
     public DataOutputStream getOutputStream() {
-        if (pout==null) log.error("getOutputStream called before load(), stream not available");
+        if (pout==null) 
+        { 
+           log.error("getOutputStream called before load(), stream not available");
+            ConnectionStatus.instance().setConnectionState(XNetSimulatorAdapter.instance().getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+        }
      	return pout;
     }
     
@@ -135,6 +144,7 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
        // and writes modified data to the output pipe.  This is the heart
        // of the command station simulation.
        if(log.isDebugEnabled()) log.debug("Simulator Thread Started");
+       ConnectionStatus.instance().setConnectionState(XNetSimulatorAdapter.instance().getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
        for(;;){
          XNetMessage m=readMessage();
          if(log.isDebugEnabled()) log.debug("Simulator Thread received message " + m.toString() );
@@ -152,6 +162,8 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
          msg= loadChars();
       } catch( java.io.IOException e){
         // should do something meaningful here.
+        ConnectionStatus.instance().setConnectionState(XNetSimulatorAdapter.instance().getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+
       } 
       setOutputBufferEmpty(true);
       return(msg);
@@ -265,6 +277,7 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
         try {
 	   outpipe.writeByte((byte)r.getElement(i));
         } catch  ( java.io.IOException ex){
+        ConnectionStatus.instance().setConnectionState(XNetSimulatorAdapter.instance().getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
         }
     }
 

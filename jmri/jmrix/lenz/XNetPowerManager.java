@@ -3,7 +3,8 @@
  *
  * Description:		PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 2.5 $
+ * @author			Paul Bender Copyright (C) 2003-2010
+ * @version			$Revision: 2.6 $
  */
 
 package jmri.jmrix.lenz;
@@ -134,6 +135,11 @@ public class XNetPowerManager implements PowerManager, XNetListener {
         public void message(XNetMessage l) {
         }
 
+        // Handle a timeout notification
+        public void notifyTimeout(XNetMessage msg)
+        {
+          if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
+        }
 
 	// Initialize logging information
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetPowerManager.class.getName());

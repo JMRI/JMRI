@@ -10,9 +10,9 @@ import java.util.LinkedList;
 /**
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
- * @author  Paul Bender (C) 2002-2009
+ * @author  Paul Bender (C) 2002-2010
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.28 $
+ * @version    $Revision: 2.29 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -1109,7 +1109,16 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     // listen for the messages to the LI100/LI101
     public void message(XNetMessage l) {
     }
-    
+
+    // Handle a timeout notification
+    public void notifyTimeout(XNetMessage msg)
+    {
+       if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
+       // For now, the throttle is just going to try to send a queued message, 
+       // if one is available.
+       sendQueuedMessage();
+   }
+ 
     
     // Status Information processing routines
     // Used for return values from Status requests.

@@ -26,7 +26,8 @@ import java.util.LinkedList;
  * and the port is waiting to do something.
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
- * @version         $Revision: 1.68 $
+ * @author          Paul Bender Copyright (C) 2004-2010
+ * @version         $Revision: 1.69 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -274,7 +275,7 @@ abstract public class AbstractMRTrafficController {
                             log.error("transmitLoop interrupted"); 
                         }
                         if (mCurrentState != OKSENDMSGSTATE)
-                            handleTimeout(modeMsg);
+                            handleTimeout(modeMsg,l);
                         mCurrentState = WAITMSGREPLYSTATE;
                     }
                 }
@@ -293,7 +294,7 @@ abstract public class AbstractMRTrafficController {
                     }
                     checkReplyInDispatch();
                     if (mCurrentState == WAITMSGREPLYSTATE) {
-                        handleTimeout(m);
+                        handleTimeout(m,l);
                     } else if(mCurrentState == AUTORETRYSTATE) {
                          log.error("Message added back to queue: " + m.toString());
                          msgQueue.addFirst(m);
@@ -342,7 +343,7 @@ abstract public class AbstractMRTrafficController {
                             // exit program mode timeout?
                             if (mCurrentState == WAITREPLYINNORMMODESTATE){
                                 // entering normal mode via timeout
-                                handleTimeout (msg);
+                                handleTimeout (msg,l);
                                 mCurrentMode = NORMALMODE;
                             }
                             // and go around again
@@ -367,7 +368,7 @@ abstract public class AbstractMRTrafficController {
                             checkReplyInDispatch();
                             // and go around again
                             if (mCurrentState == WAITMSGREPLYSTATE) {
-                                handleTimeout(msg);
+                                handleTimeout(msg,l);
                             } else {
                                 resetTimeout(msg);
                             }
@@ -419,7 +420,7 @@ abstract public class AbstractMRTrafficController {
     private static boolean timeoutFlag = false;
     private int timeouts = 0;
     protected boolean flushReceiveChars = false;
-    protected void handleTimeout(AbstractMRMessage msg) {
+    protected void handleTimeout(AbstractMRMessage msg,AbstractMRListener l) {
         log.warn("Timeout on reply to message: "+msg.toString()+
                  " consecutive timeouts = "+timeouts);
         timeouts++;
@@ -758,7 +759,9 @@ abstract public class AbstractMRTrafficController {
             log.error("Unexpected exception in invokeAndWait:" +e);
             e.printStackTrace();
         }
+        if (log.isDebugEnabled()) log.debug("dispatch thread invoked"); 
        
+
  
         if (!msg.isUnsolicited()) {
             // effect on transmit:
