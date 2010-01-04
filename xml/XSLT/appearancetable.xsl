@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: appearancetable.xsl,v 1.9 2010-01-03 20:24:53 jacobsen Exp $ -->
+<!-- $Id: appearancetable.xsl,v 1.10 2010-01-04 00:26:58 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI appearance table file into displayable HTML    -->
 
@@ -187,6 +187,10 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
 <!-- Ignore show, already done -->
 <xsl:template match="show" />
+
+<xsl:template match="comment">
+<p/><xsl:value-of select="."/>
+</xsl:template>
 
 <xsl:template match="reference">
 <p/>Appearance reference: <xsl:value-of select="."/>
