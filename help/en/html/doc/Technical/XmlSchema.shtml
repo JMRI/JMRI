@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlSchema.shtml,v 1.2 2010-01-03 20:55:01 jacobsen Exp $ -->
+<!-- $Id: XmlSchema.shtml,v 1.3 2010-01-04 00:36:46 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -58,7 +58,8 @@ support for locating those files when the XML parser
 needs them.  
 <p/>
 
-<h2>Developing JMRI Schema</h2>
+<h2>Checking JMRI Schema</h2>
+
 
 XML Schema are more verbose than the DTDs we're used to.
 With that complexity, we get more expressing power, but
@@ -69,12 +70,59 @@ correct.  There are some subtle aspects to XML schema that it will take
 us some time to get comfortable with, and if we let too many problems
 build up in the meantime, we'll eventually have a lot of back-fitting to do.
 The W3C online 
-<a href="http://www.w3.org/2001/03/webdata/xsv">schema validation tool</a>.
+<a href="http://www.w3.org/2001/03/webdata/xsv">schema validation tool</a>
 is a very good tool for checking that JMRI schema changes are still technically 
 correct.  You should check your changes with it before commiting them to CVS.
 Unfortunately, it doesn't seem to to check compliance with nested schema elements,
 e.g. from DocBook (see below) or JMRIschema,
 but it's still a very useful check.
+
+<p>
+Using the JMRI "Validate XML File" tool in the "Debug" menu to
+validate a .xml file ("instance file") that uses your new or 
+updated schema is an important check of both.
+
+<p>
+You should also add a 
+<a href="JUnit.shtml">JUnit test</a>
+that checks the schema and a typical file.
+The easiest way to do that (see e.g.
+test/jmri/configurexml/SchemaTest.java
+for an example) is to inherit your test class
+from jmri.configurexml.LoadFileTestBase, and 
+then call <code>validate(File f)</code>
+on a test file.  The test XML file can put put with
+the test Java file in the "test/" file tree.
+<code><pre>
+    public void testValidateRoster() {
+        validate(new java.io.File("java/test/jmri/configurexml/RosterSchemaTest.xml"));
+    }
+</pre></code>
+
+<p>
+For a quick file check, Linux and MacOS X users can validate from the
+command line with e.g. 
+<code><pre>
+ cd xml
+ xmllint -schema schema/aspecttable.xsd -noout signals/sample-aspects.xml
+</pre></code>
+<code>xmllint</code> can't check schema files themselves, unfortunately, because
+their schema isn't something it can handle.
+
+<p>
+Your schema docs should point to our standard stylesheet in 
+their head matter:
+<code><pre>
+&lt;?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?&gt;
+</pre></code>
+This is a pretty basic stylesheet, only really sufficient to
+show basic structure.  For an example of the output it
+produces, click on this link to the 
+<a href="http://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a> schema file.
+If anybody knows of a better stylesheet, we
+can certainly switch to it.
+
+<h2>Developing JMRI Schema</h2>
 
 
 <h3>The Venetian Blind Pattern</h3>
@@ -109,13 +157,6 @@ the class name that reads/writes and element:
     &lt;/xs:annotation&gt;
 </code></pre>
 
-Validation locally:
-xmllint -schema schema/aspecttable.xsd -noout signals/AAR-1946/aspects.xml
-
-Standard stylesheet:
-<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
-We really need a better one, but what can you do?
-
 <h2>External Standards and Future Work</h2>
 
 The 
@@ -142,8 +183,10 @@ and isn't fully consistent with versions of other software that we use.
 We use the normal DocBook 5.0 namespace, so we can later easily convert to 
 a more complete schema transparently.
 Our smaller schema is located at
-<a href="http://jmri.org/xml/schema/DocBook.xsd">http://jmri.org/xml/schema/DocBook.xsd</a>
-(our usual schema location).
+<a href="http://jmri.org/xml/schema/docbook/DocBook.xsd">http://jmri.org/xml/schema/docbook/DocBook.xsd</a>
+(our usual schema location). It is <em>only</em>
+referenced from JMRI schema files, not instance files,
+so that we can later convert with finite work.
 
 <li><a href="http://www.oasis-open.org/committees/ubl/faq.php">UBL</a>, 
 though aimed at business 
@@ -158,10 +201,6 @@ so that doesn't help so much)
 Learning to use these will require some work, as 
 we can't assume that computers using JMRI have internet access,
 so can't just reference the entire schema as remote entities.
-
-<p>
-(Can we say you can't validate without an Internet connection?
-Can we use weak validation to complete anyway?)
 
 <!--#include virtual="/Footer" -->
 
