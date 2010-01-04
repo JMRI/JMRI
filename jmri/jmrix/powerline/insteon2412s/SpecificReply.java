@@ -2,7 +2,6 @@
 
 package jmri.jmrix.powerline.insteon2412s;
 
-import jmri.jmrix.powerline.X10Sequence;
 import jmri.jmrix.powerline.SerialReply;
 
 /**
@@ -10,7 +9,7 @@ import jmri.jmrix.powerline.SerialReply;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008, 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
@@ -32,7 +31,6 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
         // check for valid length
         if (getNumDataElements() > 0) {
             String val;
-            int msg = getElement(0);
             if ((getElement(0)&0xFF) == 0x02) {
                 val = "Insteon 0x02: ";
                 for (int i = 0; i < getNumDataElements(); i++) {
