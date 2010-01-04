@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.19 2010-01-03 20:55:01 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.20 2010-01-04 01:14:52 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -190,11 +190,16 @@ Pete Cressman fixed a problem that was preventing Reporter icons from loading in
 
 <p>
 Dick Bronson provided a great set of
-<a href="http://jmri.org/resources/icons/smallschematics/aspects/AAR-1946/">icons for ARR signal masts</a>
-as part of the 
+icons for 
+<a href="http://jmri.org/resources/icons/smallschematics/aspects/AAR-1946/">AAR</a>
+and
+<a href="http://jmri.org/resources/icons/smallschematics/aspects/NYCS-1937/">NYCS</a>
+signal masts as part of the 
 <a href="http://jmri.org/help/en/html/tools/signaling/AspectSignaling.shtml">aspect-based signaling</a>.
 The best way to see the icons is the
-<a href="http://jmri.org/xml/signals/AAR-1946/aspects.xml">aspect page</a>.
+<a href="http://jmri.org/xml/signals/AAR-1946/aspects.xml">AAR</a> and
+<a href="http://jmri.org/xml/signals/NYCS-1937/aspects.xml">NYCS</a>
+aspect pages.
 
 <p>
 Brett Hoffman added support for sending roster information to the withrottle protocol.
