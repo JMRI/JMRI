@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI aspect-signaling support                           -->
 
-<!-- $Id: aspecttable.xsd,v 1.19 2010-01-03 23:34:05 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsd,v 1.20 2010-01-04 00:11:36 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -49,6 +49,13 @@
         <xs:element name="date" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="reference" minOccurs="0" maxOccurs="unbounded"></xs:element>
      
+        <xs:element ref="docbook:copyright" minOccurs="1" maxOccurs="1" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) providing copyright information in standard form.
+          Must be present.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+        
         <xs:element ref="docbook:authorgroup" minOccurs="1" maxOccurs="unbounded" >
           <xs:annotation><xs:documentation>
           DocBook element(s) describing the authors in standard form

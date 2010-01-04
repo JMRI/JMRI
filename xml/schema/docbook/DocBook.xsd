@@ -7,7 +7,7 @@
 <!-- http://www.docbook.org/xml/5.0/xsd/docbook.xsd -->
 <!-- XML schema file for DocBook 5.0                -->
 
-<!-- $Id: DocBook.xsd,v 1.1 2010-01-03 23:33:11 jacobsen Exp $ -->
+<!-- $Id: DocBook.xsd,v 1.2 2010-01-04 00:11:36 jacobsen Exp $ -->
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
     elementFormDefault="qualified" 
@@ -71,6 +71,68 @@
 
   <xs:element name="date">
     <xs:complexType mixed="true">
+      <xs:attribute name="role"/>
+      <xs:attributeGroup ref="docbook:db.common.attributes"/>
+      <xs:attributeGroup ref="docbook:db.common.linking.attributes"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="copyright">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="docbook:year"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="docbook:holder"/>
+      </xs:sequence>
+      <xs:attribute name="role"/>
+      <xs:attributeGroup ref="docbook:db.common.attributes"/>
+      <xs:attributeGroup ref="docbook:db.common.linking.attributes"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="year">
+    <xs:complexType mixed="true">
+<!-- 
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="docbook:inlinemediaobject"/>
+        <xs:element ref="docbook:remark"/>
+        <xs:element ref="docbook:superscript"/>
+        <xs:element ref="docbook:subscript"/>
+        <xs:element ref="docbook:xref"/>
+        <xs:element ref="docbook:link"/>
+        <xs:element ref="docbook:olink"/>
+        <xs:element ref="docbook:anchor"/>
+        <xs:element ref="docbook:biblioref"/>
+        <xs:element ref="docbook:alt"/>
+        <xs:element ref="docbook:annotation"/>
+        <xs:element ref="docbook:indexterm"/>
+        <xs:element ref="docbook:phrase"/>
+        <xs:element ref="docbook:replaceable"/>
+      </xs:choice>
+ -->
+      <xs:attribute name="role"/>
+      <xs:attributeGroup ref="docbook:db.common.attributes"/>
+      <xs:attributeGroup ref="docbook:db.common.linking.attributes"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="holder">
+    <xs:complexType mixed="true">
+<!-- 
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="docbook:inlinemediaobject"/>
+        <xs:element ref="docbook:remark"/>
+        <xs:element ref="docbook:superscript"/>
+        <xs:element ref="docbook:subscript"/>
+        <xs:element ref="docbook:xref"/>
+        <xs:element ref="docbook:link"/>
+        <xs:element ref="docbook:olink"/>
+        <xs:element ref="docbook:anchor"/>
+        <xs:element ref="docbook:biblioref"/>
+        <xs:element ref="docbook:alt"/>
+        <xs:element ref="docbook:annotation"/>
+        <xs:element ref="docbook:indexterm"/>
+        <xs:element ref="docbook:phrase"/>
+        <xs:element ref="docbook:replaceable"/>
+      </xs:choice>
+ -->
       <xs:attribute name="role"/>
       <xs:attributeGroup ref="docbook:db.common.attributes"/>
       <xs:attributeGroup ref="docbook:db.common.linking.attributes"/>
