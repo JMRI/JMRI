@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003-2009
- * @version			$Revision: 2.15 $
+ * @version			$Revision: 2.16 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -116,14 +116,14 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
       * message 
       * @param r number of retries to attempt.
       */
-     public void setXNetMessageRetries(int t){
+     static public void setXNetMessageRetries(int t){
         _nRetries = t;
      }
 
      /** changing the default timeout for an XPressNet message 
       * @param t Timeout in milliseconds
       */
-     public void setXNetMessageTimeout(int t){
+     static public void setXNetMessageTimeout(int t){
         XNetMessageTimeout = t;
      }
 
