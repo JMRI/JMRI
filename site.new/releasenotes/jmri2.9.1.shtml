@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.22 2010-01-04 21:51:11 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.23 2010-01-05 06:09:31 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -260,6 +260,10 @@ David Duchamp added colors to the Layout Editor track.
 
 <p>
 David Duchamp added <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher<a> options.
+
+<p>
+Pete Cressman added Learn-Mode recording from read throttles to the Warrant auto-run system.
+
 
 
 <!--#include virtual="/Footer" -->
