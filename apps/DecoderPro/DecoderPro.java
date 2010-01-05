@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004, 2007
- * @version     $Revision: 1.58 $
+ * @version     $Revision: 1.59 $
  */
 public class DecoderPro extends Apps {
 
@@ -49,7 +49,7 @@ public class DecoderPro extends Apps {
     }
 
     protected AppConfigPanel newPrefs() {
-        return new AppConfigPanel(configFilename, 1);
+        return new AppConfigPanel(1);
     }
 
     protected String logo() {
@@ -129,7 +129,8 @@ public class DecoderPro extends Apps {
 
         setConfigFilename("DecoderProConfig2.xml", args);
         JmriJFrame f = new JmriJFrame("DecoderPro");
-        createFrame(new DecoderPro(f), f);
+        DecoderPro dp = new DecoderPro(f);
+        createFrame(dp, f);
 
         log.debug("main initialization done");
         splash(false);

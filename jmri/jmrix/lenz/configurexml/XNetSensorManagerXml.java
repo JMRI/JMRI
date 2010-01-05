@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XNetSensorManager;
  * provides a load method here.
  *
  * @author  Paul Bender Copyright (c) 2003
- * @version $Revision: 2.6 $
+ * @version $Revision: 2.7 $
  */
 public class XNetSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -28,7 +28,7 @@ public class XNetSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) {
+    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
         // create the master object
         XNetSensorManager.instance();
         // load individual sensors

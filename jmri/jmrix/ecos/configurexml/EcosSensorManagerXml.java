@@ -11,7 +11,7 @@ import jmri.jmrix.ecos.EcosSensorManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class EcosSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -27,7 +27,7 @@ public class EcosSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) {
+    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
         // create the master object
         EcosSensorManager.instance();
         // load individual turnouts

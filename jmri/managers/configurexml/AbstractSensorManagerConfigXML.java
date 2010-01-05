@@ -19,7 +19,7 @@ import org.jdom.Element;
  * specific Sensor or AbstractSensor subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -80,7 +80,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
      * register and fill it.
      * @param sensors Top level Element to unpack.
      */
-    abstract public boolean load(Element sensors);
+    abstract public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException;
 
     /**
      * Utility method to load the individual Sensor objects.
@@ -90,7 +90,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
      * @return true if succeeded
      */
     @SuppressWarnings("unchecked")
-	public boolean loadSensors(Element sensors) {
+	public boolean loadSensors(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
     	boolean result = true;
         List<Element> sensorList = sensors.getChildren("sensor");
         if (log.isDebugEnabled()) log.debug("Found "+sensorList.size()+" sensors");
@@ -98,7 +98,9 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
 
         for (int i=0; i<sensorList.size(); i++) {
             if (sensorList.get(i).getAttribute("systemName") == null) {
-                log.error("unexpected null in systemName "+sensorList.get(i)+" "+sensorList.get(i).getAttributes());
+                creationErrorEncountered (org.apache.log4j.Level.ERROR,
+                                      "Unexpected missing system name while loading sensors",
+                                      null,null,null);
                 result = false;
                 break;
             }
@@ -117,7 +119,9 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             Sensor s = tm.newSensor(sysName, userName);
             
             if (s==null){
-            	log.error("Could not create sensor: '"+sysName+"' user name: '"+(userName==null?"":userName)+"'");
+                creationErrorEncountered (org.apache.log4j.Level.WARN,
+                                      "Could not create sensor",
+                                      sysName,userName,null);
             	result = false;
             	continue;
             }

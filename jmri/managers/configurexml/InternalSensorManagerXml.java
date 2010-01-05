@@ -10,7 +10,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class InternalSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -26,7 +26,7 @@ public class InternalSensorManagerXml extends jmri.managers.configurexml.Abstrac
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) {
+    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
         // load individual sensors
         return loadSensors(sensors);
     }

@@ -16,11 +16,11 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class LoadFileTest extends LoadFileTestBase {
 
-    public void testLoadOne() {
+    public void testLoadOne() throws Exception {
         // load file
         InstanceManager.configureManagerInstance()
             .load(new java.io.File("java/test/jmri/configurexml/LoadFileTest.xml"));
@@ -37,7 +37,7 @@ public class LoadFileTest extends LoadFileTestBase {
         
     }
     
-    public void testLoad277() {
+    public void testLoad277() throws Exception {
         // load file
         InstanceManager.configureManagerInstance()
             .load(new java.io.File("java/test/jmri/configurexml/LoadFileTest277.xml"));

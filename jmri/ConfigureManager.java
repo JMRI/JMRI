@@ -44,7 +44,7 @@ import java.io.File;
  * for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  * @see jmri.InstanceManager
  * @see jmri.configurexml.ConfigXmlManager
  */
@@ -84,9 +84,10 @@ public interface ConfigureManager {
 
     /**
      * Stores just preferences information.
-     * @param file Output file
+     * <p>
+     * Where that information is stored is implementation-specific.
      */
-    public void storePrefs(File file);
+    public void storePrefs();
 
     /**
      * Stores just configuration information.
@@ -106,7 +107,7 @@ public interface ConfigureManager {
      * @param file Input file
      * @return true if succeeded
      */
-    public boolean load(File file);
+    public boolean load(File file) throws JmriException;
 
     /**
      * Provide a method-specific way of locating a file to be

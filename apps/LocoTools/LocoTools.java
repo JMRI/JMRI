@@ -32,7 +32,7 @@ import javax.swing.JMenuBar;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.32 $
+ * @version     $Revision: 1.33 $
  */
 public class LocoTools extends Apps {
 
@@ -41,7 +41,7 @@ public class LocoTools extends Apps {
     }
 
     protected AppConfigPanel newPrefs() {
-        return new AppConfigPanel(configFilename, 1);
+        return new AppConfigPanel(1);
     }
 
     protected void systemsMenu(JMenuBar menuBar, JFrame frame) {

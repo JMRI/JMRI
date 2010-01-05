@@ -25,7 +25,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  * @since 2.1.2
  *
  */
@@ -150,7 +150,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * @return true if successful
      */
     @SuppressWarnings("unchecked")
-	public boolean load(Element blocks) {
+	public boolean load(Element blocks) throws jmri.configurexml.JmriConfigureXmlException {
     	boolean result = true;
         List<Element> list = blocks.getChildren("block");
         if (log.isDebugEnabled()) log.debug("Found "+list.size()+" objects");
@@ -169,7 +169,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * @param element Element holding one block
      */
     @SuppressWarnings("unchecked")
-	public void loadBlock(Element element) {
+	public void loadBlock(Element element) throws jmri.configurexml.JmriConfigureXmlException {
             if (element.getAttribute("systemName") == null) {
                 log.warn("unexpected null in systemName "+element+" "+element.getAttributes());
                 return;
@@ -225,7 +225,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * @param element Element containing path information
      */
     @SuppressWarnings("unchecked")
-	public void loadPath(Block block, Element element) {
+	public void loadPath(Block block, Element element) throws jmri.configurexml.JmriConfigureXmlException {
         // load individual path
         int toDir = 0;
         int fromDir = 0;
@@ -234,6 +234,10 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             fromDir = element.getAttribute("fromdir").getIntValue();
         } catch (org.jdom.DataConversionException e) {
             log.error("Could not parse path attribute");
+        } catch (NullPointerException e) {
+            creationErrorEncountered (org.apache.log4j.Level.ERROR,
+                                        "Block Path entry in file missing required attribute",
+                                        block.getSystemName(),block.getUserName(),null);
         }
         
         Block toBlock = null;

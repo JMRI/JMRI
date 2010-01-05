@@ -3,6 +3,7 @@
 package apps;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.util.JmriJFrame;
 import jmri.util.FileUtil;
 import jmri.jmrit.XmlFile;
@@ -11,7 +12,7 @@ import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrix.ConnectionStatus;
 
-import jmri.util.WindowMenu; // * GT 28-AUG-2008 Added window menu
+import jmri.util.WindowMenu;
 import jmri.util.iharder.dnd.FileDrop;
 import jmri.util.iharder.dnd.FileDrop.Listener;
 
@@ -40,10 +41,10 @@ import net.roydesign.mac.MRJAdapter;
 /**
  * Base class for Jmri applications.
  * <P>
- * @author	Bob Jacobsen   Copyright 2003, 2007, 2008
+ * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.90 $
+ * @version     $Revision: 1.91 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -55,22 +56,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
         setButtonSpace();
         setJynstrumentSpace();
-
-        // load preference file
-        if (configFilename != null) {
-            log.debug("configure from specified file "+configFilename);
-        } else {
-            configFilename = "jmriprefs.xml";
-            log.debug("configure from default file "+configFilename);
-        }
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        File file = new File(configFilename);
-        // decide whether name is absolute or relative
-        if (!file.isAbsolute()) {
-            // must be relative, but we want it to 
-            // be relative to the preferences directory
-            file = new File(XmlFile.prefsDir()+configFilename);
-        }
         
         // install shutdown manager
         InstanceManager.setShutDownManager(
@@ -94,12 +79,43 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
                 }
             });
         
-        // install configuration manager
-        InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
-        log.debug("start load config file");
-        configOK = InstanceManager.configureManagerInstance().load(file);
-        log.debug("end load config file, OK="+configOK);
+        // install configuration manager & Swing error handler
+        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
+        InstanceManager.setConfigureManager(cm);
+        cm.setErrorHandler(new jmri.configurexml.swing.DialogErrorHandler());
 
+        // find preference file and set location in configuration manager
+        if (configFilename != null) {
+            log.debug("configure from specified file "+configFilename);
+        } else {
+            configFilename = "jmriprefs.xml";
+            log.debug("configure from default file "+configFilename);
+        }
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        File file = new File(configFilename);
+        // decide whether name is absolute or relative
+        if (!file.isAbsolute()) {
+            // must be relative, but we want it to 
+            // be relative to the preferences directory
+            file = new File(XmlFile.prefsDir()+configFilename);
+        }
+        cm.setPrefsLocation(file);
+        
+        // load config file if it exists
+        if (file.exists()) {
+            log.debug("start load config file");
+            try {
+                configOK = InstanceManager.configureManagerInstance().load(file);
+            } catch (JmriException e) {
+                log.error("Unhandled problem loading configuration: "+e);
+                configOK = false;
+            }
+            log.debug("end load config file, OK="+configOK);
+        } else {  
+            log.info("No saved preferences, will open preferences window");
+            configOK = false;
+        }
+        
 	// populate GUI
 	    log.debug("Start UI");
         setResourceBundle();
@@ -227,7 +243,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         if (prefsFrame == null) {
             prefsFrame = new JmriJFrame(rb.getString("MenuItemPreferences"));
             prefsFrame.getContentPane().setLayout(new BoxLayout(prefsFrame.getContentPane(), BoxLayout.X_AXIS));
-            prefs = new AppConfigPanel(configFilename, 2);
+            prefs = new AppConfigPanel(2);
             prefsFrame.getContentPane().add(prefs);
             setPrefsFrameHelp(prefsFrame, "package.apps.AppConfigPanel");
             prefsFrame.pack();
@@ -764,7 +780,11 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     static protected void loadFile(String name){
         File pFile = InstanceManager.configureManagerInstance().find(name);
         if (pFile!=null)
-            InstanceManager.configureManagerInstance().load(pFile);
+            try {
+                InstanceManager.configureManagerInstance().load(pFile);
+            } catch (JmriException e) {
+                log.error("Unhandled problem in loadFile: "+e);
+            }
         else
             log.warn("Could not find "+name+" config file");
 

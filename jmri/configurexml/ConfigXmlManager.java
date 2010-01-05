@@ -13,13 +13,15 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
 
+import org.apache.log4j.Level;
+
 /**
  * Provides the mechanisms for storing an entire layout configuration
  * to XML.  "Layout" refers to the hardware:  Specific communcation
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.67 $
+ * @version $Revision: 1.68 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -36,7 +38,19 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     public void registerPref(Object o) {
         // skip if already present, leaving in original order
         if (plist.contains(o)) return;
-        // find the class name of the adapter
+
+        confirmAdapterAvailable(o);
+        
+        // and add to list
+        plist.add(o);
+    }
+
+    /**
+     * Common check routine to confirm 
+     * an adapter is available as part of
+     * registration process.
+     */
+    void confirmAdapterAvailable(Object o) {
         String adapter = adapterName(o);
         if (log.isDebugEnabled()) log.debug("register "+o+" adapter "+adapter);
         if (adapter!=null)
@@ -44,11 +58,11 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 Class.forName(adapter);
             } catch (java.lang.ClassNotFoundException ex) {
                 locateClassFailed(ex, adapter, o);
+            } catch (java.lang.NoClassDefFoundError ex) {
+                locateClassFailed(ex, adapter, o);
             }
-        // and add to list
-        plist.add(o);
     }
-
+    
     /**
      * Remove the registered preference items.  This is used
      * e.g. when a GUI wants to replace the preferences with new
@@ -76,30 +90,18 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     public void registerConfig(Object o) {
         // skip if already present, leaving in original order
         if (clist.contains(o)) return;
-        // find the class name of the adapter
-        String adapter = adapterName(o);
-        if (adapter!=null)
-            try {
-                Class.forName(adapter);
-            } catch (java.lang.ClassNotFoundException ex) {
-                locateClassFailed(ex, adapter, o);
-            } catch (java.lang.NoClassDefFoundError ex) {
-                locateClassFailed(ex, adapter, o);
-            }
+
+        confirmAdapterAvailable(o);
+        
         // and add to list
         clist.add(o);
     }
     public void registerTool(Object o) {
         // skip if already present, leaving in original order
         if (tlist.contains(o)) return;
-        // find the class name of the adapter
-        String adapter = adapterName(o);
-        if (adapter!=null)
-            try {
-                Class.forName(adapter);
-            } catch (java.lang.ClassNotFoundException ex) {
-                locateClassFailed(ex, adapter, o);
-            }
+
+        confirmAdapterAvailable(o);
+        
         // and add to list
         tlist.add(o);
     }
@@ -112,14 +114,9 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     public void registerUser(Object o) {
         // skip if already present, leaving in original order
         if (ulist.contains(o)) return;
-        // find the class name of the adapter
-        String adapter = adapterName(o);
-        if (adapter!=null)
-            try {
-                Class.forName(adapter);
-            } catch (java.lang.ClassNotFoundException ex) {
-                locateClassFailed(ex, adapter, o);
-            }
+
+        confirmAdapterAvailable(o);
+        
         // and add to list
         ulist.add(o);
     }
@@ -235,15 +232,23 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         finalStore(root, file);
     }
     /**
-     * Writes prefs to a file.
-     * @param file
+     * Writes prefs to a predefined File location.
      */
-    public void storePrefs(File file) {
+    public void storePrefs() {
         Element root = initStore();
         addPrefsStore(root);
-        finalStore(root, file);
+        finalStore(root, prefsFile);
     }
-
+    
+    /**
+     * Set location for preferences file. 
+     * <p>
+     * File need not exist,
+     * but location must be writable when storePrefs() called.
+     */
+    public void setPrefsLocation(File prefsFile) { this.prefsFile = prefsFile; }
+    File prefsFile;
+    
     /**
      * Writes prefs to a file.
      * @param file
@@ -296,8 +301,16 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
     }
 
+    /** 
+     * Load a file.
+     * <p>
+     * Handles problems locally to the extent that it can,
+     * by routing them to the creationErrorEncountered
+     * method. 
+     * @return true if no problems during the load
+     */
     @SuppressWarnings("unchecked")
-	public boolean load(File fi) {
+	public boolean load(File fi) throws JmriConfigureXmlException {
         boolean result = true;
         try {
             Element root = super.rootFromFile(fi);
@@ -308,8 +321,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 Element item = items.get(i);
                 String adapterName = item.getAttribute("class").getValue();
                 log.debug("load via "+adapterName);
+                XmlAdapter adapter = null;
                 try {
-                    XmlAdapter adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
+                    adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
+                    adapter.setConfigXmlManager(this);
                     // and do it
                     boolean loadStatus = adapter.load(item);
                     log.debug("load status for "+adapterName+" is "+loadStatus);
@@ -317,12 +332,14 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     if (!loadStatus)
                     	result = false;
                 } catch (Exception e) {
-                    log.error("Exception while loading "+item.getName()+":"+e);
-                    e.printStackTrace();
+                    creationErrorEncountered (adapter, "load("+fi.getName()+")",Level.ERROR,
+                                              "Unexpected error (Exception)",null,null,e);
+                   
                     result = false;  // keep going, but return false to signal problem
                 } catch (Throwable et) {
-                    log.error("Thrown while loading "+item.getName()+":"+et);
-                    et.printStackTrace();
+                    creationErrorEncountered (adapter, "in load("+fi.getName()+")", Level.ERROR,
+                                              "Unexpected error (Throwable)",null,null,et);
+
                     result = false;  // keep going, but return false to signal problem
                 }
             }
@@ -330,16 +347,20 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         } catch (java.io.FileNotFoundException e1) {
             // this returns false to indicate un-success, but not enough
             // of an error to require a message
-            log.warn("File not found: "+fi.getAbsolutePath());
+            creationErrorEncountered (null, "opening file "+fi.getName(), Level.ERROR,
+                                      "File not found", null,null,e1);
             return false;
         } catch (org.jdom.JDOMException e) {
-            log.error("Exception reading: "+e);
-            e.printStackTrace();
+            creationErrorEncountered (null, "parsing file "+fi.getName(), Level.ERROR,
+                                      "Parse error", null,null,e);
             return false;
         } catch (java.lang.Exception e) {
-            log.error("Exception reading: "+e);
-            e.printStackTrace();
+            creationErrorEncountered (null, "loading from file "+fi.getName(), Level.ERROR,
+                                      "Unknown error (Exception)", null,null,e);
             return false;
+        } finally {
+            // no matter what, close error reporting
+            handler.done();
         }
 		// all loaded, initialize objects as necessary
 		InstanceManager.logixManagerInstance().activateAllLogixs();
@@ -390,6 +411,46 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         log.warn("Could not locate file "+f);
     }
 
+    /**
+     * Invoke common handling of errors that
+     * happen during the "load" process.
+     * <p>
+     * Generally, this is invoked by {@link XmlAdapter}
+     * implementations of their creationErrorEncountered()
+     * method (note different arguemments, though). The
+     * standard implemenation of that is in {@link AbstractXmlAdapter}.
+     * <p>
+     * Exceptions passed into this are absorbed.
+     *
+     * @param adapter Object that encountered the error (for reporting),
+     *                  may be null
+     * @param operation description of the operation being attempted,
+     *                  may be null
+     * @param description description of error encountered
+     * @param systemName System name of bean being handled, may be null
+     * @param userName used name of the bean being handled, may be null
+     * @param exception Any exception being handled in the processing, may be null
+     */
+    static public void creationErrorEncountered (
+                XmlAdapter adapter,
+                String operation,
+                org.apache.log4j.Level level,
+                String description, 
+                String systemName, 
+                String userName, 
+                Throwable exception)
+    {
+        // format and log a message (note reordered from arguments)
+        ErrorMemo e = new ErrorMemo(level,
+                            adapter, operation, description, 
+                            systemName, userName, exception);
+
+        handler.handle(e);
+    }
+    
+    static ErrorHandler handler = new ErrorHandler();
+    public void setErrorHandler(ErrorHandler handler) { this.handler = handler; }
+    
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConfigXmlManager.class.getName());
 }

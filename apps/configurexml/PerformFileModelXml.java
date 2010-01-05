@@ -3,6 +3,7 @@ package apps.configurexml;
 import apps.PerformFileModel;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.configurexml.XmlAdapter;
 import java.io.File;
 
@@ -12,7 +13,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformFileModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  * @see apps.PerformFilePanel
  */
 public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -40,7 +41,7 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
      * @param e Top level Element to unpack.
      * @return true if successful
       */
-    public boolean load(Element e) {
+    public boolean load(Element e) throws JmriException {
     	boolean result = true;
         String fileName = e.getAttribute("name").getValue();
         log.debug("Load file "+fileName);

@@ -12,13 +12,13 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class PanelEditorTest extends TestCase {
 
     TurnoutIcon to = null;
 
-	public void testShow() {
+	public void testShow() throws Exception {
 	    // reset instance manager, configuration manager
         jmri.InstanceManager i = new jmri.InstanceManager(){
             protected void init() {

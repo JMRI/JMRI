@@ -10,7 +10,7 @@ import org.jdom.Element;
  * classes persisting the status of serial port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
 
@@ -96,7 +96,14 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
         String status = adapter.openPort(portName, "JMRI app");
         if (status != null ) {
             // indicates an error, return it
-            throw new Exception(status);
+            getConfigXmlManager().creationErrorEncountered(
+                                        null, "opening connection",
+                                        org.apache.log4j.Level.ERROR,
+                                        status,
+                                        null,null,null
+                                    );
+            // now force end to operation
+            return false;
         }
         
         // if successful so far, go ahead and configure

@@ -12,7 +12,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @since 2.3.1
  */
 public class CbusSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
@@ -29,7 +29,7 @@ public class CbusSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) {
+    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
     	boolean result = true;
         // create the master object
         CbusSensorManager mgr = CbusSensorManager.instance();

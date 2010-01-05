@@ -11,7 +11,7 @@ import jmri.jmrix.powerline.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007, 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -27,7 +27,7 @@ public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractS
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) {
+    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
         // create the master object
         SerialSensorManager.instance();
         // load individual sensors

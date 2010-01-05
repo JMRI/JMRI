@@ -20,8 +20,8 @@ import jmri.InstanceManager;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  * <P>
- * @author	Bob Jacobsen   Copyright 2003, 2005, 2007
- * @version     $Revision: 1.7 $
+ * @author	Bob Jacobsen   Copyright 2003, 2005, 2007, 2010
+ * @version     $Revision: 1.8 $
  */
 public class FacelessApp {
 	static String name = "Faceless App";
@@ -104,7 +104,9 @@ public class FacelessApp {
 		adapter.openPort(portName, "JMRI app");
         adapter.configure();
 
-        InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
+        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
+        // not setting preference file location!
+        InstanceManager.setConfigureManager(cm);
 
 
 	}

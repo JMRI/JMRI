@@ -9,11 +9,11 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the rps.Reading class.
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class RpsPositionIconTest extends TestCase {
 
-	public void testCtorAndID() {
+	public void testCtorAndID() throws Exception {
         // init test system
         new Engine(){ void reset() { _instance = null; }}.reset();
 

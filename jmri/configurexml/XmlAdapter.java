@@ -6,7 +6,7 @@ import org.jdom.Element;
  * Interface assumed during configuration operations.
  *
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  * @see ConfigXmlManager
  */
 
@@ -53,17 +53,20 @@ public interface XmlAdapter {
      * it will be coupled to a reporting mechanism of some
      * sort.
      *
-     * @param text description of error encountered
+     * @param description description of error encountered
      * @param systemName System name of bean being handled, may be null
      * @param userName used name of the bean being handled, may be null
-     * @param Exception Any exception being handled in the processing, may be null
+     * @param exception Any exception being handled in the processing, may be null
      * @throws JmriConfigureXmlException in place for later expansion;
      *         should be propagated upward to higher-level error handling
      */
     public void creationErrorEncountered (
+                org.apache.log4j.Level level,
                 String description, 
                 String systemName, 
                 String userName, 
-                Exception exception) throws JmriConfigureXmlException;
+                Throwable exception) throws JmriConfigureXmlException;
                 
+    public void setConfigXmlManager(ConfigXmlManager c);
+    
 }

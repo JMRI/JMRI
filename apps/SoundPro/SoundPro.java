@@ -41,7 +41,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004, 2007
  * @author      Matthew Harris  copyright (c) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SoundPro extends Apps {
 
@@ -50,7 +50,7 @@ public class SoundPro extends Apps {
     }
 
     protected AppConfigPanel newPrefs() {
-        return new AppConfigPanel(configFilename, 1);
+        return new AppConfigPanel(1);
     }
 
     @Override

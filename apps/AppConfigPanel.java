@@ -24,7 +24,7 @@ import java.util.ArrayList;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.27 $
+ * @version	$Revision: 1.28 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -33,15 +33,12 @@ public class AppConfigPanel extends JPanel {
     /**
      * Construct a configuration panel for inclusion in a preferences
      * or configuration dialog.
-     * @param filename Configuration file name; may be either an absolute
-     *      pathname or relative to the existing preferences directory. Need not exist yet.
      * @param nConnections number of connections configured, e.g. the number of connection
      *      sub-panels included
      */
-    public AppConfigPanel(String filename, int nConnections) {
+    public AppConfigPanel(int nConnections) {
         super();
         log.debug("start app");
-        mConfigFilename = filename;
 
         rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
@@ -250,8 +247,6 @@ public class AppConfigPanel extends JPanel {
         clist.clear();
     }
 
-    protected String mConfigFilename;
-
     protected void saveContents() {
         // remove old prefs that are registered in ConfigManager
         InstanceManager.configureManagerInstance().removePrefItems();
@@ -259,17 +254,8 @@ public class AppConfigPanel extends JPanel {
         for (int i = 0; i<clist.size(); i++) {
             InstanceManager.configureManagerInstance().registerPref(clist.get(i));
         }
-        // write file
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        // decide whether name is absolute or relative
-        File file = new File(mConfigFilename);
-        if (!file.isAbsolute()) {
-            // must be relative, but we want it to 
-            // be relative to the preferences directory
-            file = new File(XmlFile.prefsDir()+mConfigFilename);
-        }
 
-        InstanceManager.configureManagerInstance().storePrefs(file);
+        InstanceManager.configureManagerInstance().storePrefs();
     }
     
     /**

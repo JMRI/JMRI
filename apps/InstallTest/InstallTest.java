@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  *
  * @author	Ken Cameron   Copyright 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class InstallTest extends Apps {
 
@@ -49,7 +49,7 @@ public class InstallTest extends Apps {
     }
 
     protected AppConfigPanel newPrefs() {
-        return new AppConfigPanel(configFilename, 1);
+        return new AppConfigPanel(1);
     }
 
     protected String logo() {

@@ -2,7 +2,7 @@
 
 package jmri.configurexml;
 
-import jmri.InstanceManager;
+import jmri.*;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFileChooser;
@@ -17,7 +17,7 @@ import javax.swing.JFileChooser;
  * types of information stored in configuration files.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2002
- * @version	    $Revision: 1.14 $
+ * @version	    $Revision: 1.15 $
  * @see             jmri.jmrit.XmlFile
  */
 public class LoadXmlConfigAction extends LoadStoreBaseAction {
@@ -43,7 +43,11 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
     	boolean results = false;
         java.io.File file = getFile(fileChooser);
         if (file!=null)
-        	results = InstanceManager.configureManagerInstance().load(file);
+            try {
+                InstanceManager.configureManagerInstance().load(file);
+            } catch (JmriException e) {
+                log.error("Unhandled problem in loadFile: "+e);
+            }
         else
             results = true;   //We assume that as the file is null then the user has clicked cancel.
         return results;

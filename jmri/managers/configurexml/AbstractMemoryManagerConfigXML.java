@@ -18,7 +18,7 @@ import org.jdom.Element;
  * specific Memory or AbstractMemory subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -87,7 +87,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
      * @param memories Top level Element to unpack.
      * @return true if successful
      */
-    abstract public boolean load(Element memories);
+    abstract public boolean load(Element memories) throws jmri.configurexml.JmriConfigureXmlException;
 
     /**
      * Utility method to load the individual Memory objects.
