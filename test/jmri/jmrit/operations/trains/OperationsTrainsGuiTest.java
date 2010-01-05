@@ -19,7 +19,7 @@ import java.util.List;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class OperationsTrainsGuiTest extends TestCase {
 
@@ -69,6 +69,10 @@ public class OperationsTrainsGuiTest extends TestCase {
 		f.buildMsgBox.doClick();
 		f.buildReportBox.doClick();
 		f.saveButton.doClick();
+		
+		// frame location can move just a bit on MacOS
+		p = f.getLocation();		
+		
 		f.setSize(610,250);
 		f.setLocation(20,10);
 		
@@ -85,8 +89,10 @@ public class OperationsTrainsGuiTest extends TestCase {
 		f.buildMsgBox.doClick();
 		f.printPreviewBox.doClick();
 		f.saveButton.doClick();
+		
 		// frame location can move just a bit on MacOS
 		p = f.getLocation();
+		
 		Assert.assertEquals("sort by 1", TrainsTableFrame.ID, tmanager.getTrainsFrameSortBy());
 		Assert.assertEquals("location 3", p, tmanager.getTrainsFramePosition());
 		Assert.assertEquals("size 3", new Dimension(610,250), tmanager.getTrainsFrameSize());
