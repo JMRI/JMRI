@@ -3,7 +3,6 @@
 package jmri.jmrix.ecos.configurexml;
 
 import org.jdom.Element;
-//import jmri.configurexml.XmlAdapter;
 
 /**
  * This class is here to prevent error messages
@@ -13,7 +12,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class EcosLocoAddressManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML{

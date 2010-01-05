@@ -2,15 +2,13 @@ package apps.configurexml;
 
 import apps.PerformScriptModel;
 
-import jmri.configurexml.XmlAdapter;
-
 import org.jdom.Element;
 
 /**
  * Handle XML persistance of PerformScriptModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  * @see apps.PerformScriptPanel
  */
 public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter {

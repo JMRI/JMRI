@@ -4,7 +4,6 @@ import apps.PerformFileModel;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.configurexml.XmlAdapter;
 import java.io.File;
 
 import org.jdom.Element;
@@ -13,7 +12,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformFileModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  * @see apps.PerformFilePanel
  */
 public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {

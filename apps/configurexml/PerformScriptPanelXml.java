@@ -3,7 +3,6 @@ package apps.configurexml;
 import apps.PerformScriptPanel;
 
 import jmri.InstanceManager;
-import jmri.configurexml.XmlAdapter;
 import java.awt.Component;
 
 import org.jdom.Element;
@@ -12,7 +11,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformScriptModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * @see apps.PerformScriptPanel
  */
 public class PerformScriptPanelXml extends jmri.configurexml.AbstractXmlAdapter {

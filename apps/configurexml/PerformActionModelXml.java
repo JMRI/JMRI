@@ -2,7 +2,6 @@ package apps.configurexml;
 
 import apps.PerformActionModel;
 
-import jmri.configurexml.XmlAdapter;
 import java.awt.event.ActionEvent;
 
 import javax.swing.Action;
@@ -13,7 +12,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformActionModel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  * @see apps.PerformActionPanel
  */
 public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter {

@@ -1,6 +1,5 @@
 package jmri.jmrit.simpleclock.configurexml;
 
-import jmri.configurexml.XmlAdapter;
 import jmri.Timebase;
 import jmri.InstanceManager;
 
@@ -14,7 +13,7 @@ import org.jdom.Element;
  * Handle XML persistance of SimpleTimebase objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
 

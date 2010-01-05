@@ -3,12 +3,9 @@
  */
 package jmri.configurexml.turnoutoperations;
 
-//import java.lang.reflect.Constructor;
-
 import org.jdom.Element;
 
 import jmri.TurnoutOperation;
-import jmri.configurexml.XmlAdapter;
 import jmri.util.StringUtil;
 
 /**

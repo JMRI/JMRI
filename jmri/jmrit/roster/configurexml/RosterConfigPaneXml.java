@@ -1,6 +1,5 @@
 package jmri.jmrit.roster.configurexml;
 
-import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterConfigPane;
 import jmri.jmrit.roster.RosterEntry;
@@ -15,7 +14,7 @@ import org.jdom.Element;
  * roster.Roster class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 

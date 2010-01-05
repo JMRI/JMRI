@@ -9,7 +9,6 @@ import java.util.List;
 
 import jmri.TurnoutOperation;
 import jmri.TurnoutOperationManager;
-import jmri.configurexml.XmlAdapter;
 import jmri.configurexml.turnoutoperations.TurnoutOperationXml;
 
 /**

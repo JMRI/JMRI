@@ -1,6 +1,5 @@
 package jmri.jmrit.symbolicprog.configurexml;
 
-import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.symbolicprog.ProgrammerConfigPane;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import org.jdom.Attribute;
@@ -22,7 +21,7 @@ import org.jdom.Element;
  * CombinedLocoSelPane object.  It is <b>not</b> known why this works!
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 

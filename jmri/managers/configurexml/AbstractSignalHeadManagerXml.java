@@ -5,6 +5,7 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.configurexml.XmlAdapter;
+
 import java.util.List;
 import org.jdom.Element;
 
@@ -22,7 +23,7 @@ import org.jdom.Element;
  * Based on AbstractTurnoutManagerConfigXML
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfigXML {
 

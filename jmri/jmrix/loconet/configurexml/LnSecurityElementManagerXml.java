@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet.configurexml;
 
 import jmri.InstanceManager;
-import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.loconet.AspectGenerator;
 import jmri.jmrix.loconet.LnSecurityElementManager;
 import jmri.jmrix.loconet.SecurityElement;
@@ -15,7 +14,7 @@ import org.jdom.Element;
  * configuring LnSecurityElementManager.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class LnSecurityElementManagerXml extends jmri.configurexml.AbstractXmlAdapter {
 

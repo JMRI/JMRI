@@ -1,8 +1,6 @@
 package jmri.jmrix.ecos.configurexml;
 
 import org.jdom.Element;
-//import jmri.jmrix.ecos.EcosPreferences;
-import jmri.configurexml.XmlAdapter;
 
 /**
  * This class is here to prevent error messages
@@ -14,7 +12,7 @@ import jmri.configurexml.XmlAdapter;
  * <P>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML*/ {
 

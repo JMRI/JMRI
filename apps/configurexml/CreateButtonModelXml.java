@@ -3,7 +3,6 @@ package apps.configurexml;
 import apps.Apps;
 import apps.CreateButtonModel;
 
-import jmri.configurexml.XmlAdapter;
 import javax.swing.Action;
 import javax.swing.JButton;
 
@@ -13,7 +12,7 @@ import org.jdom.Element;
  * Handle XML persistance of CreateButtonModel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  * @see apps.CreateButtonPanel
  */
 public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
