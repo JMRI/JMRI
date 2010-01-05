@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -1004,7 +1004,21 @@ public class DefaultConditional extends AbstractNamedBean
 							log.error("invalid Warrant name in action - "+action.getDeviceName());
 						}
 						else {
-                            w.runAutoTrain(true);   // error message, if any, logged by warrant
+                            String msg = w.setRoute(0, null);
+                            if (msg!=null) {
+                                jmri.jmrit.logix.BlockOrder bo = w.getfirstOrder();
+                                jmri.jmrit.logix.OBlock block = bo.getBlock();
+                                if (block.allocate(w) == null) {
+                                    log.warn(msg+" - "+action.getDeviceName());
+                                    block.setPath(bo.getPathName(), 0);
+                                    msg = w.runAutoTrain(true);
+                                } else {
+                                    msg = "Unable to allocate origin block "+block.getDisplayName();
+                                } 
+                            }
+                            if (msg != null){
+                                log.error(msg+" - "+action.getDeviceName());
+                            }
                             actionCount++;
 						}
                         break;
