@@ -4,6 +4,33 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
+
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ResourceBundle;
+
+import javax.swing.ButtonGroup;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JDesktopPane;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+//import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
+
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.powerpanel.PowerPane;
 import jmri.jmrit.roster.RosterEntry;
@@ -27,7 +54,7 @@ import javax.swing.*;
  * @author     Bob Jacobsen    Copyright 2008
  
  * @author     Pete Cressman   Copyright 2009
- * @version    $Revision: 1.5 $
+ * @version    $Revision: 1.6 $
  */
 
 public class LearnThrottleFrame extends JmriJFrame implements java.beans.PropertyChangeListener
@@ -109,7 +136,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         setTitle("Throttle");
         this.addWindowListener (new WindowAdapter() {
                                    public void windowClosing(WindowEvent e) {
-                                       _warrantFrame.StopRunTrain();
+                                       _warrantFrame.stopRunTrain();
                                        dispose();
                                    }
                                });     
@@ -180,11 +207,11 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         buttonGroup.add(displaySteps);
         editControl.add(displaySteps);
 
-        JCheckBoxMenuItem trackBox = new JCheckBoxMenuItem(rb.getString("CheckBoxTrackSliderInRealTime"));
+        JCheckBoxMenuItem trackBox = new JCheckBoxMenuItem(rb.getString("CheckBoxTrackSliderInRealTime"), true);
         trackBox.addActionListener(new ActionListener() {
                 JCheckBoxMenuItem trackBox;
                 public void actionPerformed(ActionEvent e) {
-                    _controlPanel.setTrackSlider(trackBox.isSelected());
+                    _controlPanel.setSpeedController(trackBox.isSelected());
                 }
                 ActionListener init(JCheckBoxMenuItem tb) {
                     trackBox = tb;
@@ -307,6 +334,9 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         _throttle.setIsForward(isForward);
         setButtonForward(isForward);
     }
+    protected void stopRunTrain() {
+        _warrantFrame.stopRunTrain();
+    }
     
     /**
      *  change the power LED displayed as appropriate and set corresponding tooltip
@@ -342,7 +372,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.5 $
+     * @version    $Revision: 1.6 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -376,6 +406,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         private JButton forwardButton, reverseButton;
         private JLabel forwardLight, reverseLight, stopLabel;
         private JButton stopButton;
+        private int _gap;
         
         ButtonFrame() {
             super();
@@ -431,6 +462,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
             reversePanel.add(reverseButton, constraints);
 
             stopLabel = new JLabel("Emergency");
+            _gap = -(stopIcon.getIconWidth()+stopLabel.getPreferredSize().width)/2;
             stopButton = new JButton("Stop");
             stopButton.addActionListener(new ActionListener() {
                                              public void actionPerformed(ActionEvent e)  {
@@ -460,11 +492,11 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         public void stop()
         {
             _throttle.setSpeedSetting(-0.5F);
-            setSpeedSetting(-1);
-            setSpeedSetting(0);
+            //setSpeedSetting(-1);
+            //setSpeedSetting(0);
             _throttle.setSpeedSetting(0.0F);
             stopLabel.setIcon(stopIcon);
-            stopLabel.setIconTextGap(-stopLabel.getPreferredSize().width/2);
+            stopLabel.setIconTextGap(_gap);
             pack();
         }
 

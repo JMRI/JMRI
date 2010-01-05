@@ -36,7 +36,7 @@ import javax.swing.event.ChangeListener;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.4 $
+ * @version    $Revision: 1.5 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {
@@ -58,17 +58,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     
     private boolean _displaySlider = true;
     private boolean speedControllerEnable;
+    private boolean _emergencyStop = false;
     
     private DccThrottle _throttle;
     private boolean internalAdjust = false;
 
-    /* real time tracking of speed slider - on iff trackSlider==true
-     * Min interval for sending commands to the actual throttle can be configured
-     * as part of the throttle config but is bounded
-     */
-    
-    private boolean trackSlider = false;
-    //private boolean trackSliderDefault = false;
     private long trackSliderMinInterval = 200;          // milliseconds
     private long lastTrackedSliderMovementTime = 0;
     
@@ -144,6 +138,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             float speed=((Float) e.getNewValue()).floatValue();
             speedSetting(speed);
             _throttleFrame.setSpeedSetting(speed);
+            if (_emergencyStop && speed < 0.0F) {
+                _throttleFrame.stopRunTrain();
+            }
+            if (speed != 0.0F) {
+                _emergencyStop = (speed < 0.0F);
+            }
         } else if (e.getPropertyName().equals("SpeedSteps")) {
             int steps=((Integer) e.getNewValue()).intValue();
             setSpeedSteps(steps);
@@ -259,16 +259,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
     
     /**
-     * Set real-time tracking of speed slider, or not
-     * 
-     * @param track  boolean value, true to track, false to set speed on unclick
-     */
-    
-    public void setTrackSlider(boolean track) {
-        trackSlider = track;
-    }
-    
-    /**
      *  Set the GUI to match that the loco speed.
      *
      * @param  speedIncrement  : TODO
@@ -329,14 +319,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSlider.addChangeListener( new ChangeListener()
             {
                 public void stateChanged(ChangeEvent e) {
-                    //if (!_displaySlider) { return; }
                     if ( !internalAdjust) {
                         boolean doIt = false;
                         if (!speedSlider.getValueIsAdjusting()) {
                             doIt = true;
                             lastTrackedSliderMovementTime = System.currentTimeMillis() - trackSliderMinInterval;
-                        } else if (trackSlider &&
-                                   System.currentTimeMillis() - lastTrackedSliderMovementTime >= trackSliderMinInterval) {
+                        } else if (System.currentTimeMillis() - lastTrackedSliderMovementTime >= trackSliderMinInterval) {
                             doIt = true;
                             lastTrackedSliderMovementTime = System.currentTimeMillis();
                         }
@@ -344,7 +332,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                             float newSpeed = (speedSlider.getValue() / ( MAX_SPEED * 1.0f ) ) ;
                             if (log.isDebugEnabled()) {log.debug( "stateChanged: slider pos: " + speedSlider.getValue() + " speed: " + newSpeed );}
                             _throttle.setSpeedSetting( newSpeed );
-                            //_throttleFrame.setSpeedSetting( newSpeed );
                             if(speedSpinner!=null)
                                 speedSpinnerModel.setValue(new Integer(speedSlider.getValue()));
                         }
@@ -367,7 +354,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 {
                     public void stateChanged(ChangeEvent e)
                     {
-                        //if (_displaySlider) { return; }
                         if ( !internalAdjust) {
                             float newSpeed = ((Integer)speedSpinner.getValue()).floatValue() / ( MAX_SPEED * 1.0f );
                             if (log.isDebugEnabled()) {log.debug( "stateChanged: spinner pos: " + speedSpinner.getValue() + " speed: " + newSpeed );}
@@ -509,6 +495,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         int newSliderSetting = java.lang.Math.round(speed * MAX_SPEED) ;
         if (log.isDebugEnabled()) {log.debug( "speedSetting: new speed float: " + speed + " slider pos: " + newSliderSetting ) ;}
         speedSlider.setValue( newSliderSetting );
+        speedSlider.repaint();
         if(speedSpinner!=null)
             speedSpinner.setValue(new Integer(newSliderSetting));
     }

@@ -137,7 +137,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             case 27: _throttle.setF27(isSet); break;
             case 28: _throttle.setF28(isSet); break;
         }
-        //_throttleFrame.setFunctionState(functionNumber, isSet);
     }
 
     /**
@@ -187,7 +186,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             case 27: _throttle.setF27Momentary(!isLockable); break;
             case 28: _throttle.setF28Momentary(!isLockable); break;
         }
-        //_throttleFrame.setFunctionLock(functionNumber, isLockable);
     }
 
     /**
@@ -330,7 +328,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.3 $
+	 * @version $Revision: 1.4 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{
@@ -383,12 +381,13 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
  	// update the state of this panel if any of the properties change
 	// did not add f13 - f28 dboudreau, maybe I should have? 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-        boolean isSet = ((Boolean) e.getNewValue()).booleanValue();
-        boolean lockable = false;
         String functionName = e.getPropertyName();
         if (!functionName.startsWith("F")) {
             return;
-        } else if (functionName.equals("F0")) {
+        }
+        boolean isSet = ((Boolean) e.getNewValue()).booleanValue();
+        boolean lockable = false;
+        if (functionName.equals("F0")) {
 			functionButton[0].setState(isSet);
 		} else if (functionName.equals("F1")) {
 			functionButton[1].setState(isSet);
