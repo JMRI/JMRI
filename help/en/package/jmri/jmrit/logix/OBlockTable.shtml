@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: OBlockTable.shtml,v 1.1 2009-11-12 00:04:54 pete_cressman Exp $ -->
+<!-- $Id: OBlockTable.shtml,v 1.2 2010-01-05 05:56:08 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -134,18 +134,20 @@ side'.  (Yes, it's magic.  Try it and you'll see that it works.)</p>
 <ul>
         <li><b>From Signal Name</b>: (Optional) Enter the name, either system name or user name,
         of the signal that faces the 'from' block.  That is, the signal that controls the movement
-        of a train exiting the 'from' block and entering the 'to' block</li> 
+        of a train exiting the 'from' block and entering the 'to' block.  Thus the 'from signal'
+        protects the 'to block' from entry from the 'from block'. </li> 
         <li><b>From Block Name</b>: The user or system name of the OBlock on one side of the Portal.</li>
         <li><b>Portal Name</b>: The portal name.  The names of portals must be unique.</li>
         <li><b>To Block Name</b>: The user or system name of the OBlock on the other side of the Portal.</li>
         <li><b>To Signal Name</b>: (Optional) Enter the name, either system name or user name,
         of the signal that faces the 'to' block.  That is, the signal that controls the movement
-        of a train exiting the 'to' block and entering the 'from' block</li>
+        of a train exiting the 'to' block and entering the 'from' block.  Likewise, the 'to signal'
+        protects the 'from block'.</li>
         <li><<b>Delete</b>: A button to delete the Portal.  To make the deletion permanent, 
         save your configuration file to disk</li> 
 </ul>
 This table is sorted by the name of the Portal.  This means that when a new row is added
-the entry will jump to its postion in the sort.  After entering a new Portal you will find it at 
+the entry will jump to its postion in the sort.  After entering a new Portal you may find it at 
 the top of the window for further editing.
 
 <H3>Columns in Block-Path Tables:</H3>

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: WarrantTable.shtml,v 1.3 2009-12-20 18:57:50 pete_cressman Exp $ -->
+<!-- $Id: WarrantTable.shtml,v 1.4 2010-01-05 05:56:08 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
@@ -152,7 +152,23 @@ changes and button presses on the throttle are recorded in the Throttle
 Command Table.
 <p>
 Pressing the <b>Stop</b> button will end the recording.
-</p> 
+</p><p>
+Te learn script should be done with a completely clear route - All turnouts 
+set, all blocks unoccupied (except origin), all signals set for
+clear runing and no changes made during recording
+period.  When the train is run executing the script, any changes in these
+completely conditions will be taken into account.
+</p<p>
+As a safety feature, whenever a warranted train has permission to enter the 
+next block, the turnouts are (re)set.   Having permission from signals means 
+that resetting the turnouts should not interfere with any interlocking logic.  
+In the absence of signals, occupancy or allocation to another warrant also 
+may deny permission.  It is the most restrictive of these three conditions 
+that gives the auto-run train permission to proceed.  When such a denial is 
+cleared, the train will proceed automatically.  The only thing that overrides 
+having permission to proceed is if the user has set "Halt".  The train will 
+not move until the user sets "Resume". (see below how to set these user commands.
+</p>   
 <H3>Throttle Command Table</H3>
 The Throttle Command Table has the following columns:
 <ul>
