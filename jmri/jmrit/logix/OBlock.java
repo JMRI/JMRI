@@ -33,7 +33,7 @@ import jmri.SignalHead;
  * for more details.
  * <P>
  *
- * @version
+ * @version $Revision: 1.7 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {

@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003-2009
- * @version			$Revision: 2.16 $
+ * @version			$Revision: 2.17 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -114,7 +114,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 
      /** changing the default number of retries for an XPressNet 
       * message 
-      * @param r number of retries to attempt.
+      * @param t number of retries to attempt.
       */
      static public void setXNetMessageRetries(int t){
         _nRetries = t;

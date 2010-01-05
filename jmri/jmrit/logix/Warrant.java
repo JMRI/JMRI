@@ -20,7 +20,7 @@ import jmri.jmrit.roster.RosterEntry;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version
+ * @version $Revision: 1.12 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
