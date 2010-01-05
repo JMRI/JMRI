@@ -10,7 +10,7 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.9 $
+ * @version $Revision: 2.10 $
  */
 public class XNetPacketizerTest extends TestCase {
 
@@ -21,7 +21,7 @@ public class XNetPacketizerTest extends TestCase {
     public void testOutbound() throws Exception {
         LenzCommandStation lcs = new LenzCommandStation();
         XNetPacketizer c = new XNetPacketizer(lcs){
-            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {} // don't care about timeout
+            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg,jmri.jmrix.AbstractMRListener l) {} // don't care about timeout
             public void receiveLoop() {}
             protected void portWarn(Exception e) {}
         };
@@ -44,7 +44,7 @@ public class XNetPacketizerTest extends TestCase {
     public void testInbound() throws Exception {
         LenzCommandStation lcs = new LenzCommandStation();
         XNetPacketizer c = new XNetPacketizer(lcs){
-            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {} // don't care about timeout
+            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg,jmri.jmrix.AbstractMRListener l) {} // don't care about timeout
             protected void reportReceiveLoopException(Exception e) {}           
             protected void portWarn(Exception e) {}
         };

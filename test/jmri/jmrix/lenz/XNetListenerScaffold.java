@@ -3,7 +3,7 @@
  *
  * Description:	    test implementation of XNetListener
  * @author			Bob Jacobsen
- * @version         $Revision: 2.5 $
+ * @version         $Revision: 2.6 $
  */
 
 package jmri.jmrix.lenz;
@@ -20,6 +20,5 @@ public class XNetListenerScaffold implements jmri.jmrix.lenz.XNetListener {
 	    static XNetReply rcvdRply;
 	    @SuppressWarnings("unused")
 		private static XNetMessage rcvdMsg;
-	    @SuppressWarnings("unused")
-	        static XNetMessage timeOutMsg;
+	        private static XNetMessage timeOutMsg;
 }

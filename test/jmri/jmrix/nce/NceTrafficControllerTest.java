@@ -21,7 +21,7 @@ import jmri.jmrix.nce.NcePortController;
 /**
  * JUnit tests for the NceTrafficController class
  * @author			Bob Jacobsen Copyright 2003, 2007
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class NceTrafficControllerTest extends TestCase {
 
@@ -36,7 +36,7 @@ public class NceTrafficControllerTest extends TestCase {
 	public void xtestSendAscii() throws Exception {
 		NceTrafficController c = new NceTrafficController(){
 		    // skip timeout message
-		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {}
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg,jmri.jmrix.AbstractMRListener l) {}
             public void receiveLoop() {}
             protected void portWarn(Exception e) {}
         };
@@ -66,7 +66,7 @@ public class NceTrafficControllerTest extends TestCase {
 	public void xtestSendBinary() throws Exception {
 		NceTrafficController c = new NceTrafficController(){
 		    // skip timeout message
-		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {}
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg,jmri.jmrix.AbstractMRListener l) {}
             public void receiveLoop() {}
             protected void portWarn(Exception e) {}
         };
@@ -95,7 +95,7 @@ public class NceTrafficControllerTest extends TestCase {
 	public void xtestMonitor() throws Exception {
 		NceTrafficController c = new NceTrafficController(){
 		    // skip timeout message
-		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {}
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg,jmri.jmrix.AbstractMRListener l) {}
             public void receiveLoop() {}
             protected void portWarn(Exception e) {}
         };
@@ -131,7 +131,7 @@ public class NceTrafficControllerTest extends TestCase {
 	public void xtestRcvReply() throws Exception {
 		NceTrafficController c = new NceTrafficController(){
 		    // skip timeout message
-		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {}
+		    protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg,jmri.jmrix.AbstractMRListener l) {}
             public void receiveLoop() {}
             protected void portWarn(Exception e) {}
         };
