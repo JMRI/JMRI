@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: DecoderPro.shtml,v 1.5 2008-11-01 17:32:59 jacobsen Exp $ -->
+<!-- $Id: DecoderPro.shtml,v 1.6 2010-01-05 16:29:04 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -34,7 +34,18 @@ Help on specific menus:
 <li>Edit - (<a href="../AppConfigPanel.shtml">Preferences</a>)
 <li><a href="../../jmri/jmrit/ToolsMenu.shtml">Tools</a>
 <li><a href="../../../html/apps/DecoderPro/Roster.shtml#menu">Roster</a>
+<li>Panels
+<li>Hardware selected options
+<li>Other Hardware selected options
+<li>Debug
+<li>Window
+<li>Help
 </ul>
+
+<p>
+The buttons on this window are short cuts to the decoder programers. 
+Plus a help link to a write up about DecoderPro Symbolic Programmer 
+and a Quit button that ends the JMRI program.
 
 <p>
 This is the apps.DecoderPro.DecoderPro.shtml help page
