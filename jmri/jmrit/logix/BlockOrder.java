@@ -102,84 +102,24 @@ public class BlockOrder  {
     }
 
     /**
-    * Set the signal our train sees entering block
-    */
-    public void setEntrySignal(int appearance) {
-        Portal portal = getEntryPortal();
-        if (portal!=null) {
-            portal.setSignal(_block, appearance); 
-        }
-    }
-
-    public int getEntrySignalAppearance() {
-        Portal portal = getEntryPortal();
-        if (portal!=null) {
-            return portal.getSignalAppearance(_block); 
-        }
-        return SignalHead.DARK;
-    }
-
-    /**
-    * Set signal an opposing train sees at our train's block entry portal
-    * i.e. what another train traveling in the opposite direction would see. 
-    */
-    public void setOpposingEntrySignal(int appearance) {
-        Portal portal = getEntryPortal();
-        if (portal!=null) {
-            portal.setOpposingSignal(_block, appearance); 
-        }
-    }
-
-    /**
-    * Signal appearance our train sees at exit of block
-    */
-    public int getExitSignalAppearance() {
-        Portal portal = getExitPortal();
-        if (portal!=null) {
-            return portal.getSignalAppearance(_block); 
-        }
-        return SignalHead.DARK;
-    }
-
-    /**
-    * Set signal our train sees exiting block
-    */
-    public void setExitSignal(int appearance) {
-        Portal portal = getExitPortal();
-        if (portal!=null) {
-            portal.setSignal(_block, appearance); 
-        }
-    }
-
-    /**
-    * Set signal opposing train sees at our train's block exit portal
-    */
-    public void setOpposingExitSignal(int appearance) {
-        Portal portal = getExitPortal();
-        if (portal!=null) {
-            portal.setOpposingSignal(_block, appearance); 
-        }
-    }
-
-    /**
     * Set all entry portal signals 'Stop' and exit portals 'approach'
     * set path portal signals 'clear' and opposing path portal signals 'stop'
     */
-    public void setPathAndSignalProtection(int delay, int enterAppearance, int exitAppearance) {
+    public int setPathAndGetPermissibleSpeed() {
         OBlock block = getBlock();
-        block.setPath(getPathName(), delay);
-        block.setSignalProtection();
+        if ((block.getState() & OBlock.OCCUPIED) != 0) {
+            return Warrant.STOP_SPEED;
+        }
         Portal portal = block.getPortalByName(getEntryName());
         if (portal!=null) {
-            portal.setOpposingSignal(block, enterAppearance);
-            portal.setSignal(block, SignalHead.RED);
+            int speed = portal.getPermissibleSpeedFromOpposingSignal(block);
+            if (speed != Warrant.STOP_SPEED) {
+                block.setPath(getPathName(), 0);
+            }
+            return speed;
         }
-        portal = block.getPortalByName(getExitName());
-        if (portal!=null) {
-            portal.setOpposingSignal(block, SignalHead.RED);
-            portal.setSignal(block, exitAppearance);
-        }
-        if (log.isDebugEnabled()) log.debug("setPathAndSignalProtection for "+this.toString());
+        if (log.isDebugEnabled()) log.debug("setPathAndGetPermissibleSpeed for "+this.toString());
+        return Warrant.STOP_SPEED;
     }
 
     public String hash() {
@@ -187,8 +127,8 @@ public class BlockOrder  {
     }
 
     public String toString() {
-        return ("BlockOrder: Block "+_block.getDisplayName()+" has Path "+_pathName+ 
-                " with Portals "+_entryName+" and "+_exitName);
+        return ("BlockOrder: Block \""+_block.getDisplayName()+"\" has Path \""+_pathName+ 
+                "\" with Portals \""+_entryName+"\" and \""+_exitName+"\"");
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockOrder.class.getName());

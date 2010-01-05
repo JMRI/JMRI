@@ -33,6 +33,7 @@ import jmri.SignalHead;
  * for more details.
  * <P>
  *
+ * @version
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
@@ -99,6 +100,7 @@ public class OBlock extends jmri.Block {
             }
             if (value.equals(getValue())) {  // allocated to caller, so deallocate
                 setValue(null);
+                // firePropertyChange signaled in super.setValue()
                 if (sensor != null)  {
                     setState(sensor.getState());  // unset allocated bit
                 }
@@ -241,27 +243,6 @@ public class OBlock extends jmri.Block {
             log.error("Path \""+pathName+"\" not found in Block \""+getDisplayName()+"\".");
         } else {
             path.setTurnouts(delay);
-        }
-    }
-
-    /**
-    * set (incoming) outward facing signals RED, (outgoing) inward facing signals YELLOW
-    * Blocks all incoming paths prior to setting a specific clear or approch for a given
-    * path.
-    */
-    public void setSignalProtection() {
-        for (int i=0; i<_portals.size(); i++)  {
-            Portal portal = _portals.get(i);
-            portal.setOpposingSignal(this, SignalHead.RED);
-            portal.setSignal(this, SignalHead.YELLOW);
-        }
-    }
-
-    public void releaseSignalProtection() {
-        for (int i=0; i<_portals.size(); i++)  {
-            Portal portal = _portals.get(i);
-            portal.setOpposingSignal(this, SignalHead.YELLOW);
-            portal.setSignal(this, SignalHead.YELLOW);
         }
     }
 
