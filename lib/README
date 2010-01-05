@@ -61,8 +61,8 @@ jakarta-regexp-1.5.jar
   Used for testing only, not at runtime
   
 jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
-  from <https://jinput.dev.java.net/>
-  2008-01-09 combined binaries (most recent as of 3/20/2008)
+  from <https://jinput.dev.java.net/> jinput_dist_20090401
+  (most recent as of 2010-Jan-02)
 
 servlet.jar:
   jakarta-servletapi-3.2.3-src/lib/servlet.jar
