@@ -763,6 +763,8 @@ public class WarrantTableAction extends AbstractAction {
                         return new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "off");
                     }
                 case CONTROL_COLUMN:
+                    String msg = "Error";
+                    WarrantFrame frame = getOpenWarrantFrame(w.getDisplayName());
                     switch (w.getRunMode()) {
                         case Warrant.MODE_NONE:
                             if (w.getOrders().size()==0) {
@@ -775,10 +777,12 @@ public class WarrantTableAction extends AbstractAction {
                                 return java.text.MessageFormat.format(
                                     WarrantTableAction.rb.getString("NoCommands"), w.getDisplayName());
                             }
-                            return WarrantTableAction.rb.getString("Idle");
+                            msg = WarrantTableAction.rb.getString("Idle");
+                            break;
                         case Warrant.MODE_LEARN:
-                            return java.text.MessageFormat.format(WarrantTableAction.rb.getString("Learning"),
+                            msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString("Learning"),
                                                        w.getCurrentBlockOrder().getBlock().getDisplayName());
+                            break;
                         case Warrant.MODE_RUN:
                             String key;
                             if (w.isWaiting()) {
@@ -789,11 +793,18 @@ public class WarrantTableAction extends AbstractAction {
                             bo = w.getCurrentBlockOrder();
                             int idx = w.getCurrentCommandIndex();
                             if (bo!=null) {
-                                return java.text.MessageFormat.format(WarrantTableAction.rb.getString(key),
-                                            bo.getBlock().getDisplayName(), idx);
+                                msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString(key),
+                                            bo.getBlock().getDisplayName(), idx+1);
+                                if (frame !=null) {
+                                    frame.scrollCommandTable(idx);
+                                }
                             }
+                            break;
                     }
-                    break;
+                    if (frame !=null) {
+                        frame._statusBox.setText(msg);
+                    }
+                    return msg;
                 case EDIT_COLUMN:
                     return WarrantTableAction.rb.getString("ButtonEdit");
                 case DELETE_COLUMN:
@@ -845,22 +856,25 @@ public class WarrantTableAction extends AbstractAction {
                         }
                         msg = w.setRoute(0, null);
                         if (msg!=null) {
-                            if (w.getBlockAt(0).allocate(w)!=null) {
+                            BlockOrder bo = w.getfirstOrder();
+                            OBlock block = bo.getBlock();
+                            if (block.allocate(w) == null) {
+                                if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(null,
+                                            java.text.MessageFormat.format(WarrantTableAction.rb.getString("OkToRun"),
+                                            msg), WarrantTableAction.rb.getString("WarningTitle"), 
+                                            JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+                                    return;
+                                }
+                                block.setPath(bo.getPathName(), 0);
+                                msg = null;
+                            } else {
                                 msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString("OriginBlockNotSet"), 
-                                        w.getBlockAt(0).getDisplayName());
+                                        block.getDisplayName());
                                 break;
-                            }
-                            if (JOptionPane.YES_OPTION != JOptionPane.showConfirmDialog(null,
-                                        java.text.MessageFormat.format(WarrantTableAction.rb.getString("OkToRun"),
-                                        msg), WarrantTableAction.rb.getString("WarningTitle"), 
-                                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
-                                break;
-                            }
+                            } 
                         }
-                        msg = w.runAutoTrain(true);
-                        WarrantFrame frame = getOpenWarrantFrame(w.getDisplayName());
-                        if (frame !=null) {
-                            w.addPropertyChangeListener(frame);
+                        if (msg == null) {
+                            msg = w.runAutoTrain(true);
                         }
                     } else {
                         msg = java.text.MessageFormat.format(
@@ -987,7 +1001,12 @@ public class WarrantTableAction extends AbstractAction {
             if (log.isDebugEnabled()) log.debug("TransferHandler.createTransferable: from ("
                                                 +row+", "+col+") for \""
                                                 +table.getModel().getValueAt(row, col)+"\"");
-            return new StringSelection((String)table.getModel().getValueAt(row, col));
+            Object obj = table.getModel().getValueAt(row, col);
+            if (obj instanceof String) {
+                return new StringSelection((String)obj);
+            } else {
+                return new StringSelection(obj.getClass().getName());
+            }
         }
 
         public void exportDone(JComponent c, Transferable t, int action) {

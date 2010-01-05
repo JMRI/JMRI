@@ -367,7 +367,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         JButton stopButton = new JButton(rb.getString("Stop"));
         stopButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                StopRunTrain();
+                stopRunTrain();
+                // at end of Learn session, check if route was detected
                 if (!runProtectedOK()) {
                     _runBlind.setSelected(true);
                 }
@@ -400,12 +401,24 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         _runProtect.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (log.isDebugEnabled()) log.debug("_runProtect.isSelected()="+_runProtect.isSelected()+
-                                                    " runProtectedOK()= "+runProtectedOK());
+                                                    " runProtectedOK= "+runProtectedOK()+" runBlindOK= "+runBlindOK());
 
                 if (_runProtect.isSelected() && !runProtectedOK()) {
-                    JOptionPane.showMessageDialog(null, rb.getString("MustRunBlind"),
-                            rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-                    _runBlind.setSelected(true);
+                        JOptionPane.showMessageDialog(null, rb.getString("MustRunBlind"),
+                                rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                        _runBlind.setSelected(true);
+                }
+            }
+        });
+        _runBlind.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (log.isDebugEnabled()) log.debug("_runProtect.isSelected()="+_runProtect.isSelected()+
+                                                    " runProtectedOK= "+runProtectedOK()+" runBlindOK= "+runBlindOK());
+
+                if (_runBlind.isSelected() && !runBlindOK()) {
+                        JOptionPane.showMessageDialog(null, rb.getString("CannotRunBlind"),
+                                rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                        _runBlind.setSelected(false);
                 }
             }
         });
@@ -733,6 +746,17 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         if (_throttleCommands.size() > 0) {
             return !_throttleCommands.get(0).getBlockName().equals(
                 _throttleCommands.get(_throttleCommands.size()-1).getBlockName());
+        }
+        return true;
+    }
+
+    private boolean runBlindOK() {
+        if (_throttleCommands.size() > 0) {
+            for (int i=0; i<_throttleCommands.size(); i++) {
+                if (_throttleCommands.get(i).getTime().toString().equals ("Synch")) {
+                    return false;
+                }
+            }
         }
         return true;
     }
@@ -1383,6 +1407,11 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
 
     private void runTrain(int mode) {
         String msg = null;
+        if (_warrant.getRunMode()!=Warrant.MODE_NONE) {
+            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(rb.getString("TrainRunning"), _trainIdBox.getText()),
+                                           rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         DccLocoAddress locoAddress = null;
 
         if (_orders.size()==0) {
@@ -1412,15 +1441,21 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         if (msg==null) {
             msg = _warrant.setRoute(0, _orders);
             if (msg!=null) {
-                if (_warrant.getBlockAt(0).allocate(_warrant)!=null) {
-                    msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString("OriginBlockNotSet"), 
-                            _warrant.getBlockAt(0).getDisplayName());
-                } else if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this,
+                BlockOrder bo = _warrant.getfirstOrder();
+                OBlock block = bo.getBlock();
+                if (block.allocate(_warrant) == null) {
+                    if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(this,
                             java.text.MessageFormat.format(WarrantTableAction.rb.getString("OkToRun"),
                             msg), WarrantTableAction.rb.getString("WarningTitle"), 
                             JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+                        return;
+                    }
+                    block.setPath(bo.getPathName(), 0);
                     msg = null;
-                }
+                } else {
+                    msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString("OriginBlockNotSet"), 
+                            block.getDisplayName());
+                } 
             }
         }
         if (msg!=null) {
@@ -1462,12 +1497,12 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             JOptionPane.showMessageDialog(this, msg,
                                 rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             // learnThrottle will be disposed by _warrant.setRunMode(Warrant.MODE_NONE, null, null, null);
-            StopRunTrain();
+            stopRunTrain();
             return;
         }
     }
 
-    protected void StopRunTrain() {
+    protected void stopRunTrain() {
         _warrant.setRunMode(Warrant.MODE_NONE, null, null, null, false);
         _warrant.removePropertyChangeListener(this);
         if (_learnThrottle!=null) {
@@ -1492,7 +1527,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             _searchStatus.setText(java.text.MessageFormat.format(rb.getString("FinderStatus"),
                            new Object[] {e.getOldValue(), e.getNewValue()}));
         } else {
-            String item = "";
+            String item = "Error";
             switch (_warrant.getRunMode()) {
                 case Warrant.MODE_NONE:
                     _warrant.removePropertyChangeListener(this);
@@ -1514,7 +1549,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                     int idx = _warrant.getCurrentCommandIndex();
                     if (bo!=null) {
                         item = java.text.MessageFormat.format(rb.getString(key),
-                                    bo.getBlock().getDisplayName(), idx);
+                                    bo.getBlock().getDisplayName(), idx+1);
                         scrollCommandTable(idx);
                     } else {
                         log.error("Current BlockOrder is null!");
@@ -1540,14 +1575,14 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             bName = _warrant.getCurrentBlockOrder().getBlock().getDisplayName();
         }
         _throttleCommands.add(new ThrottleSetting(time, cmd, value, bName));
-        _commandModel.fireTableDataChanged();
 
         scrollCommandTable(_commandModel.getRowCount());
+        _commandModel.fireTableDataChanged();
     }
 
-    private void scrollCommandTable(int row) {
+    protected void scrollCommandTable(int row) {
 
-        int setRow = row - 4;
+        int setRow = row-3;
         if (setRow < 0) {
             setRow = 0;
         }
@@ -1827,7 +1862,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             }
             switch (col) {
                 case ROW_NUM:
-                    return row+1;
+                    return new Integer(row+1);
                 case TIME_COLUMN:
                     return ts.getTime().toString();
                 case COMMAND_COLUMN: 

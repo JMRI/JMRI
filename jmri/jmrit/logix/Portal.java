@@ -240,6 +240,32 @@ public class Portal  {
         return null; 
     }
 
+    public int getPermissibleSpeedFromSignal(OBlock block) {
+        int appearance = Warrant.NORMAL_SPEED;
+        if (block.equals(_fromBlock)) {
+            if (_fromSignal!=null) {
+                appearance = _fromSignal.getAppearance();
+            }
+        } else if (block.equals(_toBlock)) {
+            if (_toSignal!=null) {
+                appearance = _toSignal.getAppearance();
+            }
+        }
+        if (log.isDebugEnabled()) log.debug(block.getDisplayName()+" has appearance= "+appearance);
+        switch (appearance) {
+            case SignalHead.RED:
+                return Warrant.STOP_SPEED;
+            case SignalHead.FLASHRED:
+                return Warrant.SLOW_SPEED;
+            case SignalHead.YELLOW:
+                return Warrant.MEDIUM_SPEED;
+            case SignalHead.FLASHYELLOW:
+                return Warrant.LIMITED_SPEED;
+            default:
+                return Warrant.NORMAL_SPEED;
+        }
+    }
+/*
     public void setSignal(OBlock block, int appearance) {
         if (block.equals(_fromBlock)) {
             if (_fromSignal!=null) {
@@ -269,7 +295,33 @@ public class Portal  {
         }
         return appearance;
     }
-    
+*/    
+    public int getPermissibleSpeedFromOpposingSignal(OBlock block) {
+        int appearance = Warrant.NORMAL_SPEED;
+        if (block.equals(_fromBlock)) {
+            if (_toSignal!=null) {
+                appearance = _toSignal.getAppearance();
+            }
+        } else if (block.equals(_toBlock)) {
+            if (_fromSignal!=null) {
+                appearance = _fromSignal.getAppearance();
+            }
+        }
+        if (log.isDebugEnabled()) log.debug(block.getDisplayName()+" has appearance= "+appearance);
+        switch (appearance) {
+            case SignalHead.RED:
+                return Warrant.STOP_SPEED;
+            case SignalHead.FLASHRED:
+                return Warrant.SLOW_SPEED;
+            case SignalHead.YELLOW:
+                return Warrant.MEDIUM_SPEED;
+            case SignalHead.FLASHYELLOW:
+                return Warrant.LIMITED_SPEED;
+            default:
+                return Warrant.NORMAL_SPEED;
+        }
+    }
+/*    
     public void setOpposingSignal(OBlock block, int appearance) {
         if (block.equals(_fromBlock)) {
             if (_toSignal!=null) {
@@ -299,7 +351,7 @@ public class Portal  {
         }
         return appearance;
     }
-    
+*/    
     private boolean verify(List <OPath> paths, OBlock block) {
         String name = block.getSystemName();
         for (int i=0; i<paths.size(); i++) {
