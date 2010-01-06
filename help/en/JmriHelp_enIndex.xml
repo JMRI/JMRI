@@ -444,4 +444,6 @@
   <indexitem text="Viewing Panel Files " target="html.apps.PanelPro.ShowPanel"/>
 
  </indexitem>
+ <indexitem text="Panels Menu " target="package.jmri.jmrit.display.PanelMenuHelp"/>
+
 </index>

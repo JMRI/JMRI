@@ -630,6 +630,8 @@
 
 <mapID target="manual.Main_XpressNet_LI101" url="manual/Main_XpressNet.shtml#LI101"/>
 
+<mapID target="package.jmri.jmrit.display.PanelMenuHelp" url="package/jmri/jmrit/display/PanelMenuHelp.shtml"/>
+
 <mapID target="manual.Main_RPS_Debugger" url="manual/Main_RPS.shtml#Debugger"/>
 
 <mapID target="manual.Main_acela" url="manual/Main_acela.shtml"/>
