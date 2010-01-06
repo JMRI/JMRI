@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2006, 2007,2008 All rights reserved                  -->
-<!-- $Id: MRC_soundbrilliance1806.xml,v 1.5 2010-01-06 22:51:54 jacobsen Exp $ -->
+<!-- $Id: MRC_soundbrilliance1806.xml,v 1.6 2010-01-06 23:01:58 jacobsen Exp $ -->
 <!--                                                                         -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under   -->
 <!-- the terms of version 2 of the GNU General Public License as published   -->
@@ -342,6 +342,16 @@
 			<decVal max="3"/>
 		</variable>
 
+		<variable label="Auto Ditchlight flash with horn (for MRC 1802)"  
+						CV="63" 
+						item="Global lighting option 1"
+						tooltip="" 
+						default="1">
+			<enumVal>
+				<enumChoice choice="Disable" value="0"/>
+				<enumChoice choice="Enable" value="1"/>
+			</enumVal>
+		</variable>
 		<variable label="Rail clack volume" 
 						CV="64" 
 						item="Sound Setting 15" 
@@ -407,7 +417,7 @@
 
 		<variable label="Light Mode"  
 						CV="117" 
-						item="Global lighting option 1"
+						item="Global lighting option 2"
 						tooltip="CV117 selects the Light Mode" 
 						default="0">
 			<enumVal>
