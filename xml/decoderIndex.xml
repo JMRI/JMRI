@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.7.10 on Wed Dec 09 18:48:58 PST 2009 $Id: decoderIndex.xml,v 1.155 2009-12-10 02:51:40 jacobsen Exp $-->
+  <!--Written by JMRI version 2.9.1 on Wed Jan 06 15:29:10 PST 2010 $Id: decoderIndex.xml,v 1.156 2010-01-06 23:30:16 jacobsen Exp $-->
   <decoderIndex version="184">
     <mfgList nmraListDate="2009-07-30" updated="2009-10-20" lastadd="54">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -1637,9 +1637,28 @@
           <size length="95" width="14" height="9" units="mm" />
         </model>
       </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45" type="locomotive" file="MRC_soundbrilliance1800.xml">
+        <model model="Synch Diesel Sound 1800 - HO UNIVERSAL ALCO/ SD60/SD70/F" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no">
+          <size length="" width="" height="" units="mm" />
+        </model>
+        <model model="Synch Diesel Sound 1801 - HO DROP-IN ALCO/SD60/SD70/F" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no">
+          <size length="" width="" height="" units="mm" />
+        </model>
+      </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45" type="locomotive" file="MRC_soundbrilliance1806.xml">
+        <model model="Synch Diesel Sound 1802 - HO Scale KATO SD40-2" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no">
+          <size length="83" width="16" height="7.5" units="mm" />
+        </model>
         <model model="Synch Diesel Sound 1806 - N Scale KATO SD40-2" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no">
           <size length="72" width="9.7" height="3.0" units="mm" />
+        </model>
+        <model model="Synch Diesel Sound 1811 - G.E. U23B Prime Mover" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no">
+          <size length="" width="" height="" units="mm" />
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45" type="locomotive" file="MRC_soundbrilliance1810.xml">
+        <model model="Synch Diesel Sound 1810 - N Scale KATO F40PH" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no">
+          <size length="66" width="14" height="3.5" units="mm" />
         </model>
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1819.xml">
@@ -5282,6 +5301,30 @@
           <output name="6" label="(all orange)" connection="unspecified" />
           <output name="7" label="not present" connection="unspecified" />
           <output name="8" label="on L version" connection="unspecified" />
+        </model>
+      </family>
+      <family name="Zimo Function Decoders" mfg="Zimo" type="locomotive" file="Zimo_MX680_v1-2.xml">
+        <model model="MX680 version 1-2" lowVersionID="1" highVersionID="2" maxInputVolts="12-22V" maxTotalCurrent="0.5A" formFactor="N" numOuts="8" numFns="14" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Front Light" connection="unspecified" />
+          <output name="2" label="Rear Light" connection="unspecified" />
+          <output name="3" label="FO 1" connection="unspecified" />
+          <output name="4" label="FO 2" connection="unspecified" />
+          <output name="5" label="FO 3" connection="unspecified" />
+          <output name="6" label="FO 4" connection="unspecified" />
+          <output name="7" label="FO 5 Pad (+5v)" connection="unspecified" />
+          <output name="8" label="FO 6 Pad (+5v)" connection="unspecified" />
+          <size length="14" width="9" height="2.5" units="mm" />
+        </model>
+        <model model="MX680N version 1-2" lowVersionID="1" highVersionID="2" connector="NMRAsmall" maxInputVolts="12-22V" maxTotalCurrent="0.5A" formFactor="N" numOuts="8" numFns="14" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Front Light" connection="unspecified" />
+          <output name="2" label="Rear Light" connection="unspecified" />
+          <output name="3" label="FO 1 Pad" connection="unspecified" />
+          <output name="4" label="FO 2 Pad" connection="unspecified" />
+          <output name="5" label="FO 3 Pad" connection="unspecified" />
+          <output name="6" label="FO 4 Pad" connection="unspecified" />
+          <output name="7" label="FO 5 Pad (+5v)" connection="unspecified" />
+          <output name="8" label="FO 6 Pad (+5v)" connection="unspecified" />
+          <size length="14" width="9" height="2.5" units="mm" />
         </model>
       </family>
       <family name="Zimo MX69 MX690" mfg="Zimo" lowVersionID="1" highVersionID="30" type="locomotive" file="Zimo_MX69MX690.xml">
