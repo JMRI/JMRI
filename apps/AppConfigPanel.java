@@ -4,14 +4,12 @@ package apps;
 
 import jmri.GuiLafConfigPane;
 import jmri.InstanceManager;
-import jmri.jmrit.XmlFile;
 import jmri.jmrix.JmrixConfigPane;
 
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
@@ -24,7 +22,7 @@ import java.util.ArrayList;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.28 $
+ * @version	$Revision: 1.29 $
  */
 public class AppConfigPanel extends JPanel {
 
