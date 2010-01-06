@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.21 2009-12-11 02:27:02 jacobsen Exp $ -->
+<!-- $Id: NCE.shtml,v 1.22 2010-01-06 16:55:07 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI Hardware Guide: NCE</TITLE>
@@ -148,7 +148,8 @@ can access turnout 21 from your throttle, JMRI would address it as
 
 <H3>Limitations</H3>
 
-<P>A very small number of early NCE Power Pro (PowerHouse) command stations
+<P>A very small number of early (pre-2002) 
+NCE Power Pro (PowerHouse) command stations
 have an "optional analog control circuit". (If you don't recall special
 ordering this, you probably don't need to read the rest of this
 paragraph!) In these, pins 5, 6, and 9 are used with an analog voltage
@@ -236,8 +237,13 @@ system from the preference menu for reliable operation.</P>
 
 <OL>
 	<LI>To connect your computer using a NCE USB adaptor, you will
-	need in addition to the USB adaptor, a USB cable and a RJ12 to RJ12
-	cable.</LI>
+	need in addition to the USB adaptor, a USB cable to connect
+	the adapter to your computer and a RJ12 to RJ12
+	cable to connect the adapter to your NCE system.
+	It's important that you use a RJ12 cable with six conductors
+	in it, not just four like some phone cables. 
+	Look at the end connectors to make sure.
+	</LI>
 	<LI>On some computers, you'll need to install a driver for the
     <a href="https://www.silabs.com/products/interface/usbtouart/Pages/default.aspx">USB interface chip</a>
 	in the NCE USB adapter.
@@ -253,6 +259,9 @@ system from the preference menu for reliable operation.</P>
         <a href="http://www.silabs.com">SiLabs</a> chips.
 	    </UL>
 	Download the proper file, unpack it, and execute the installer.
+	Be sure to follow the directions:  On some computers,
+	it matters whether or not the NCE-USB adapter is connected
+	and powered on when you do the install.
 	<LI>Now go to the preferences panel of a JMRI-based program. This
 	opens automatically the first time a program is run, or you can select
 	it from the "Edit" menu.</LI>
