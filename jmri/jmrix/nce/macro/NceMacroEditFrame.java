@@ -66,7 +66,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * FF10 = link macro 16 
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -519,14 +519,14 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 			if (deleteButton10.getText() == LINK){
 				if (macroValid == false) { // Error user input incorrect
 					JOptionPane.showMessageDialog(NceMacroEditFrame.this,
-							"Get macro number 1 to 255", "NCE Macro",
+							"Get macro number 0 to 255", "NCE Macro",
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				int linkMacro = validMacro (accyTextField10.getText());
 				if (linkMacro == -1) {
 					JOptionPane.showMessageDialog(NceMacroEditFrame.this,
-							"Enter macro number 1 to 255 in line 10", "NCE Macro",
+							"Enter macro number 0 to 255 in line 10", "NCE Macro",
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -684,7 +684,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
         accyNum = getAccyRow (macroAccy, index, textAccy10, accyTextField10, cmdButton10);
         if (accyNum < 0){
 			JOptionPane.showMessageDialog(NceMacroEditFrame.this,
-					"Enter macro number 1 to 255 in line 10", "NCE Macro",
+					"Enter macro number 0 to 255 in line 10", "NCE Macro",
 					JOptionPane.ERROR_MESSAGE);
 			return false;
         }
@@ -1161,7 +1161,7 @@ public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmri
 		deleteButton10.setText(LINK);
 		deleteButton10.setEnabled(true);
 		deleteButton10.setToolTipText("Link another macro to this one");
-		accyTextField10.setToolTipText("Enter accessory address 1 to 2044 or link macro address 1 to 255");
+		accyTextField10.setToolTipText("Enter accessory address 1 to 2044 or link macro address 0 to 255");
     }
     
    
