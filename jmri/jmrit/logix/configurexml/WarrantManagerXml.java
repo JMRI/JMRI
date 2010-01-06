@@ -1,8 +1,5 @@
 package jmri.jmrit.logix.configurexml;
 
-import jmri.jmrit.XmlFile;
-
-//import java.util.Enumeration;
 import java.util.List;
 import java.util.Iterator;
 
