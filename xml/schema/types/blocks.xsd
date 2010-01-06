@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
+<?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: blocks.xsd,v 1.1 2010-01-04 22:49:04 jacobsen Exp $ -->
+<!-- $Id: blocks.xsd,v 1.2 2010-01-06 20:54:41 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
