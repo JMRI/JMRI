@@ -873,9 +873,7 @@ public class WarrantTableAction extends AbstractAction {
                                 break;
                             } 
                         }
-                        if (msg == null) {
-                            msg = w.runAutoTrain(true);
-                        }
+                        msg = w.runAutoTrain(true);
                     } else {
                         msg = java.text.MessageFormat.format(
                                 WarrantTableAction.rb.getString("TrainRunning"), w.getDisplayName());

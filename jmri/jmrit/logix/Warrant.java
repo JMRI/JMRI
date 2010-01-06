@@ -9,7 +9,7 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 //import jmri.Path;
 import jmri.Sensor;
-import jmri.SignalHead;
+//import jmri.SignalHead;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -20,7 +20,7 @@ import jmri.jmrit.roster.RosterEntry;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 

@@ -2,7 +2,7 @@
 package jmri.jmrit.logix;
 
 //import jmri.Path;
-import jmri.SignalHead;
+//import jmri.SignalHead;
 
 /**
  * An BlockOrder is a row in the warrant.  It contains the directives the Engineer
