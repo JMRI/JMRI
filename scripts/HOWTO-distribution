@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.107 $)
+distribution.  ($Revision: 1.108 $)
 
 Start in a directory, typically called "Distributions", that
 contains "scripts" and "java" (modules checked out from CVS) as subdirectories, then:
@@ -20,10 +20,10 @@ You also need to have installed NSIS from http://nsis.sourceforge.net (we use ve
     
 Make sure everything is up-to-date:
 
-( ) If it's a new year, update copyright dates (done for 2009):
+( ) If it's a new year, update copyright dates (done for 2010):
     * build.xml (2) in the javadoc instructions
     * site/Copyright.html
-    * decoder index master
+    * xml/XSLT master
     * (grep -r for the previous year in the web site, xml; don't change copyright notices!)
     
 ( ) Check if the decoder definitions have changed since the previous tag
