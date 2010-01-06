@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.24 2010-01-06 00:11:11 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.25 2010-01-06 23:06:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -65,6 +65,10 @@ see our
 <a href="/Copyright.html">copyright and licensing page</a>.</p></b>
 
 <h3>New warnings for this version:</h3>
+
+The JInput USB library was updated to the current version, which (should) fix problems on
+Intel Macs and some Linux machines.  We don't have a way to check this with all possible
+input devices, so please cehck to make sure that your USB-attached devices still work.
 
 
 <h3>Download links:</h3>
@@ -262,6 +266,9 @@ David Duchamp added colors to the Layout Editor track.
 David Duchamp added <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher<a> options.
 
 <p>
+Mark Waters added a new "Zimo MX680 v1-2" decoder type.
+
+<p>
 Pete Cressman added Learn-Mode recording from read throttles to the Warrant auto-run system.
 
 <p>
@@ -273,6 +280,10 @@ The error handling when reading files has been improved.  Now, you'll get notifi
 by a dialog box popping up with some details 
 if e.g. something can't be created due to an error.
 Much more work is needed on explanations, etc, to make this complete.
+
+<p>
+Peter Ulvestad added a decoder definition for the MRC Sound Brilliance 1800, 1802, 1810 and 1811 decoders.
+
 
 <!--#include virtual="/Footer" -->
 
