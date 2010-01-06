@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.23 2010-01-05 06:09:31 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.24 2010-01-06 00:11:11 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -264,7 +264,15 @@ David Duchamp added <a href="http://jmri.sourceforge.net/help/en/package/jmri/jm
 <p>
 Pete Cressman added Learn-Mode recording from read throttles to the Warrant auto-run system.
 
+<p>
+The JInput USB library was updated to the current version, which (should) fix problems on
+Intel Macs and some Linux machines.
 
+<p>
+The error handling when reading files has been improved.  Now, you'll get notified
+by a dialog box popping up with some details 
+if e.g. something can't be created due to an error.
+Much more work is needed on explanations, etc, to make this complete.
 
 <!--#include virtual="/Footer" -->
 
