@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: DecoderMfgIndex.xsl,v 1.4 2009-12-19 18:35:02 jacobsen Exp $ -->
+<!-- $Id: DecoderMfgIndex.xsl,v 1.5 2010-01-06 22:03:35 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI decoder definition index to a HTML page -->
 
-<!-- This file is part of JMRI.  Copyright 2007.                            -->
+<!-- This file is part of JMRI.  Copyright 2007-2010.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -43,7 +43,7 @@
 
 <HR/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.
-<P/>Copyright &#169; 1997 - 2009 JMRI Community. 
+<P/>Copyright &#169; 1997 - 2010 JMRI Community. 
 <P/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 <P/><A href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</A>
 <P/>Site hosted by: <BR/>

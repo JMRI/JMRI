@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.25 2009-12-19 18:35:02 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.26 2010-01-06 22:03:35 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
 <!-- Used by default when the panel file is displayed in a web browser-->
 
-<!-- This file is part of JMRI.  Copyright 2007.                            -->
+<!-- This file is part of JMRI.  Copyright 2007-2010.                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -50,7 +50,7 @@
 
 <HR/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.
-<P/>Copyright &#169; 1997 - 2009 JMRI Community. 
+<P/>Copyright &#169; 1997 - 2010 JMRI Community. 
 <P/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 <P/><A href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</A>
 <P/>Site hosted by: <BR/>

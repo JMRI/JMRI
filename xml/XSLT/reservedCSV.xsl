@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: reservedCSV.xsl,v 1.3 2008-12-11 01:41:03 jacobsen Exp $ -->
+<!-- $Id: reservedCSV.xsl,v 1.4 2010-01-06 22:03:35 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI decoder definition to -->
 <!-- one line of a CSV file  per decoder -->
@@ -7,7 +7,7 @@
 <!-- This made from the readme2html.xsl file of TestXSLT 2.7 -->
 
 
-<!-- This file is part of JMRI.  Copyright 2007.                            -->
+<!-- This file is part of JMRI.  Copyright 2007-2010.                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->

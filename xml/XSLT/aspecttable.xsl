@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: aspecttable.xsl,v 1.11 2010-01-04 02:42:10 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsl,v 1.12 2010-01-06 22:03:35 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI aspecttable file into displayable HTML    -->
 
 <!-- Used by default when the file is displayed in a web browser            -->
 
-<!-- This file is part of JMRI.  Copyright 2009.                            -->
+<!-- This file is part of JMRI.  Copyright 2009-2010.                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -50,7 +50,7 @@
 
 <hr/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.
-<P/>Copyright &#169; 1997 - 2009 JMRI Community. 
+<P/>Copyright &#169; 1997 - 2010 JMRI Community. 
 <P/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 <P/><A href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</A>
 <P/>Site hosted by: <BR/>
