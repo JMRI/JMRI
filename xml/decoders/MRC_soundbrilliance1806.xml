@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2006, 2007,2008 All rights reserved                  -->
-<!-- $Id: MRC_soundbrilliance1806.xml,v 1.4 2009-10-19 04:49:41 jacobsen Exp $ -->
+<!-- $Id: MRC_soundbrilliance1806.xml,v 1.5 2010-01-06 22:51:54 jacobsen Exp $ -->
 <!--                                                                         -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under   -->
 <!-- the terms of version 2 of the GNU General Public License as published   -->
@@ -20,6 +20,8 @@
 <!--                                                                                                                                           -->
 <decoder-config>
 		<version author="Peter Ulvestad"
+			version="1.7" lastUpdated="20091228" />  
+		<version author="Peter Ulvestad"
 			version="1.6" lastUpdated="20091011" />  
 		<version author="Peter Ulvestad"
 			version="1.5" lastUpdated="20090826" />  
@@ -27,6 +29,7 @@
 			version="1.4" lastUpdated="20090624" />  
 		<version author="Lou DeHayes"
 			version="1.3" lastUpdated="20090308" />  
+<!--   version 1.7 Included MRC 1802 and 1811 in difinition-->
 <!--   version 1.6 Corrected Reset, modified CV 6 and MRC pane-->
 <!--   version 1.5 Corrected CV 67-94 (Speed Table)  -->
 <!--   version 1.4 Modified model name to match others in series and make easier to locate  -->
@@ -36,9 +39,17 @@
 
 <decoder>
 	<family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45">
+		<model model="Synch Diesel Sound 1802 - HO Scale KATO SD40-2" 
+			numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
+			<size length="83" width="16" height="7.5" units="mm" />
+		</model>
 		<model model="Synch Diesel Sound 1806 - N Scale KATO SD40-2" 
 			numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
 			<size length="72" width="9.7" height="3.0" units="mm" />
+		</model>
+		<model model="Synch Diesel Sound 1811 - G.E. U23B Prime Mover" 
+			numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
+			<size length="" width="" height="" units="mm" />
 		</model>
 	</family>
 
@@ -230,9 +241,9 @@
 		<variable label="Horn Type" 
 						CV="50" 
 						item="Sound Option 2" 
-						tooltip="CV50 selects the Horn Type [range 0-15] or turns off the Horn [16]"
+						tooltip="CV50 selects the Horn Type [range 0-15]"
 						default="4">
-			<decVal max="16"/>
+			<decVal max="15"/>
 		</variable>
 
 		<variable label="Horn Volume" 
@@ -420,11 +431,11 @@
 		<variable label="Prime Mover"  
 						CV="123" 
 						item="Sound Option 8"
-						tooltip="CV123 selects the Prime Mover Type [EMD Large Diesel or EMD Switcher]" 
+						tooltip="CV123 selects the Prime Mover Type" 
 						default="1">
 			<enumVal>
-				<enumChoice choice="SD45-2" value="0"/>
-				<enumChoice choice="MP-15 AC" value="1"/>
+				<enumChoice choice="" value="0"/>
+				<enumChoice choice="" value="1"/>
 				<enumChoice choice="Off" value="2"/>
 			</enumVal>
 		</variable>
@@ -450,5 +461,7 @@
 	</pane>
 
 </decoder-config>
+
+ 	  	 
 
  	  	 
