@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: turnouts.xsd,v 1.2 2010-01-04 23:31:37 jacobsen Exp $ -->
+<!-- $Id: turnouts.xsd,v 1.3 2010-01-06 07:41:40 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
 <!--                                                                        -->
@@ -43,25 +43,23 @@
       </xs:annotation>
 
       <xs:sequence>
-        
 
         <xs:element name="operations" minOccurs="0" maxOccurs="1">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="operation" minOccurs="0" maxOccurs="unbounded">
-              </xs:element>
+              <xs:element name="operation" type="OperationType" minOccurs="0" maxOccurs="unbounded" />
             </xs:sequence>
-            <xs:attribute name="automate" type="xs:string" />
+            <xs:attribute name="automate" type="xs:string" use="required" />
           </xs:complexType>
         </xs:element>
     
         <xs:element name="turnout" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="operation" minOccurs="0" maxOccurs="1" />
-              <xs:element name="comment" minOccurs="0" maxOccurs="1" />
+              <xs:element name="operation" type="OperationType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="comment" type="CommentType" minOccurs="0" maxOccurs="1" />
             </xs:sequence>
-            <xs:attribute name="systemName" type="systemNameType" />
+            <xs:attribute name="systemName" type="systemNameType" use="required" />
             <xs:attribute name="userName" type="userNameType" />
             <xs:attribute name="feedback" type="xs:string" />
             <xs:attribute name="sensor1" type="xs:string" />
@@ -80,7 +78,24 @@
         </xs:element>
             
       </xs:sequence>
-      <xs:attribute name="class" type="xs:string"/>
+      <xs:attribute name="class" type="xs:string" use="required" />
+  </xs:complexType>
+
+  <xs:complexType name="OperationType">
+      <xs:attribute name="name" type="xs:string" use="required" />
+      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="interval" type="xs:string" />
+      <xs:attribute name="maxtries" type="xs:string" />
+      <xs:attribute name="parameter1" type="xs:string" />
+      <xs:attribute name="parameter2" type="xs:string" />
+      <xs:attribute name="parameter3" type="xs:string" />
+      <xs:attribute name="parameter4" type="xs:string" />
+      <xs:attribute name="parameter5" type="xs:string" />
+      <xs:attribute name="parameter6" type="xs:string" />
+      <xs:attribute name="parameter7" type="xs:string" />
+      <xs:attribute name="parameter8" type="xs:string" />
+      <xs:attribute name="parameter9" type="xs:string" />
+      <xs:attribute name="parameter10" type="xs:string" />
   </xs:complexType>
 
 </xs:schema>
