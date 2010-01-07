@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.22 2010-01-06 16:55:07 jacobsen Exp $ -->
+<!-- $Id: NCE.shtml,v 1.23 2010-01-07 04:17:10 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI Hardware Guide: NCE</TITLE>
@@ -240,9 +240,18 @@ system from the preference menu for reliable operation.</P>
 	need in addition to the USB adaptor, a USB cable to connect
 	the adapter to your computer and a RJ12 to RJ12
 	cable to connect the adapter to your NCE system.
+	<p>
 	It's important that you use a RJ12 cable with six conductors
 	in it, not just four like some phone cables. 
 	Look at the end connectors to make sure.
+	<p>
+	The connection order is also thought to be important:
+	<ul>
+	    <li>Plug in the cab-bus side and power up the
+	        attached PowerCab
+	    <li>Once the PowerCab is up and working, then
+	        plug the USB cable into the computer.
+	</ul>
 	</LI>
 	<LI>On some computers, you'll need to install a driver for the
     <a href="https://www.silabs.com/products/interface/usbtouart/Pages/default.aspx">USB interface chip</a>
