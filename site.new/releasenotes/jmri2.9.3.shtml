@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.2.shtml,v 1.2 2010-01-07 19:23:04 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.3.shtml,v 1.1 2010-01-07 19:23:04 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
- JMRI: Release Notes for 2.9.2
+ JMRI: Release Notes for 2.9.3
  
  </title>
     <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -26,12 +26,12 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h2>
-      Release Notes for JMRI 2.9.2 release
+      Release Notes for JMRI 2.9.3 release
       </h2>
 
 	<p>Date: MMM NN, 2010</p>
 	<p>From: Bob Jacobsen</p>
-	<p>Subject: Test version 2.9.2 of JMRI/DecoderPro is available for download.
+	<p>Subject: Test version 2.9.3 of JMRI/DecoderPro is available for download.
 
 <br><b>This is a draft release note only; the download links do not yet work</b>
 
@@ -41,18 +41,22 @@
 And please back up your JMRI files before installing this, in case you want to go 
 back to an earlier version.
 
-<p>This is the second in a series of test versions. We expect this series
+<p>This is the third in a series of test versions. We expect this series
 to end in a JMRI 2.10 (or perhaps JMRI 3.0) production release in Summer 2010. 
 
 <p>
-The only change in this test release is a new communications library, called "RXTX 2.2".
-This new library is incompatible with the previous one, and required numerous code
-changes in JMRI.  
+It contains 
+many new features, including:
 
-<p>
-Everything else in this test rlease is the same as the
-<a href="jmri2.9.1.shtml">JMRI 2.9.1</a>
-test release.
+<ul>
+<li>
+<li>
+</ul>
+along with lots of other changes.  See the complete list below.
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.
 
 <b><p>
 JMRI is now only available under the 
@@ -62,15 +66,17 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-This version of JMRI uses different communications libraries.
+<h3>Older warnings</h3>
+
+This version of JMRI uses the new communications libraries introduced in 
+<a href="jmri2.9.2.shtml">JMRI 2.9.2</a>.
 On Windows, the installer should take care of all installation and deinstallation 
 required.  On Mac, no actions are necessary, the new distribution directory
 should just work.  On Linux, you may have to install and/or uninstall 
 various communications library parts, see the
 <a href="../install/Linux.html">JMRI Linux pages</a> for more info.
 
-<h3>Older warnings</h3>
-
+<p>
 The JInput USB library was updated to the current version in 
 <a href="jmri2.9.1.shtml">JMRI 2.9.1</a>, which (should) 
 have fixed problems on
@@ -87,14 +93,17 @@ To make these stop, just store the file again so that it's rewritten in the most
 <p>Please use these links for downloading:
 
 <p>MacOS X:
-     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.2.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.2.dmg/download</a>
+     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.3.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.3.dmg/download</a>
 
 <p>Windows:
-     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.2.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.2.exe/download</a>
+     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.3.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.3.exe/download</a>
 
 <p>Linux:
-     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.2.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.2.tgz/download</a>
+     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.3.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.3.tgz/download</a>
 
+<h3>Changes since test version 2.9.2</h3>
+
+Dan Boudreau made some improvements to programmer error messages, and to operations build messages.
 
 <!--#include virtual="/Footer" -->
 
