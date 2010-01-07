@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2010
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.29 $
+ * @version    $Revision: 2.30 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -1113,10 +1113,15 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     // Handle a timeout notification
     public void notifyTimeout(XNetMessage msg)
     {
-       if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
-       // For now, the throttle is just going to try to send a queued message, 
-       // if one is available.
-       sendQueuedMessage();
+       if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString() + " , " +msg.getRetries() +" retries available.");
+       if(msg.getRetries()>0){
+	  // If the message still has retries available, send it back to 
+	  // the traffic controller.
+          XNetTrafficController.instance().sendXNetMessage(msg,this);
+       } else {
+         // Try to send the next queued message,  if one is available.
+         sendQueuedMessage();
+       }
    }
  
     

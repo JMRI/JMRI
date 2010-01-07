@@ -12,8 +12,8 @@ import java.io.Serializable;
  * actually a variable number of bytes in Unicode.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @author			Paul Bender  Copyright (C) 2003-2009
- * @version			$Revision: 2.17 $
+ * @author			Paul Bender  Copyright (C) 2003-2010
+ * @version			$Revision: 2.18 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
