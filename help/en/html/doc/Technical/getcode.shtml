@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: getcode.shtml,v 1.5 2009-10-22 05:51:59 jacobsen Exp $ -->
+<!-- $Id: getcode.shtml,v 1.6 2010-01-07 22:38:16 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -38,10 +38,10 @@
 <h2>Quickstart</h2>
 
 You can download the most recent source code via CVS using:
-<PRE>
+<code><PRE>
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all 
-</PRE>
+</PRE></code>
 (If asked for a password, just hit return)
 
 
