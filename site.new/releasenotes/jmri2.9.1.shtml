@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.26 2010-01-07 07:31:39 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.27 2010-01-07 18:57:22 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,11 +29,11 @@
       Release Notes for JMRI 2.9.1 release
       </h2>
 
-	<p>Date: MMM NN, 2010</p>
+	<p>Date: January 7, 2010</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.9.1 of JMRI/DecoderPro is available for download.
 
-<br><b>This is a draft release note only; the download links do not yet work</b>
+<!-- <br><b>This is a draft release note only; the download links do not yet work</b> -->
 
 <h3>Notes:</h3>
 
@@ -53,7 +53,7 @@ many new features, including:
 <li>New 
     <a href="http://jmri.org/help/en/html/tools/signaling/AspectSignaling.shtml">aspect-based signaling</a>
     support
-<li>Initial support for the Insteon 2412S
+<li>Initial support for the Insteon 2412S adapter
 <li>Multiple throttle improvements
 </ul>
 along with lots of other changes and bug fixes.  
@@ -72,8 +72,8 @@ see our
 <h3>New warnings for this version:</h3>
 
 The JInput USB library was updated to the current version, which (should) fix problems on
-Intel Macs and some Linux machines.  We don't have a way to check this with all possible
-input devices, so please cehck to make sure that your USB-attached devices still work.
+Windows Visata, Intel Macs and some Linux machines.  We don't have a way to check this with all possible
+input devices, so please check to make sure that your USB-attached devices still work.
 
 <p>
 When loading an older panel file containing signal head icons, you may
@@ -146,7 +146,7 @@ Also improved some of the save code.
 </ul>
 
 <p>
-Kevin Dickerson fixed a problem with displaying exciting sensor groups.
+Kevin Dickerson fixed a problem with displaying existing sensor groups.
 
 <p>
 A number of internal methods that were deprecated in JMRI 2.5.1 have now been removed.
