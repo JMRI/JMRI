@@ -50,6 +50,12 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.8.0
+; - Update installer for migration to new version of RXTX ensuring that
+; - correct version of the .dll is installed for 32-bit or 64-bit
+; - Also, changed the SerialIO installation to be localised to the JMRI
+; - program directory, rather than in the system-wide JRE
+; -------------------------------------------------------------------------
 ; - Version 0.1.7.0
 ; - Update to ensure removal of crimson.jar library file in both old and
 ; - new file layouts
@@ -133,7 +139,7 @@
 !define COPYRIGHT "© 1997-2010 JMRI Community"  ; Copyright string
 !define JMRI_VER  "2.9.1"                       ; Application version
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.7.0"                     ; Installer version
+!define INST_VER  "0.1.8.0"                     ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -153,6 +159,7 @@ Var OFFLINEINSTALL ; a flag determining if this is an offline install
 Var JREINSTALLCOUNT ; a counter holding times around the JRE install loop
 Var REMOVEOLDINSTALL ; a flag to determine if old installer to be removed
 Var REMOVEOLDJMRI.BACKUPONLY ; a flag to determine if we should back-up
+Var UPGRADING ; a flag to determine if we are upgrading
 
 ; -------------------------------------------------------------------------
 ; - Compiler Flags (to reduce executable size, saves some bytes)
@@ -355,14 +362,35 @@ SectionGroup "JMRI Core Files" SEC_CORE
   
   Section "COM Library" SEC_COMLIB
     SectionIn RO  ; This section always selected
-    ; -- win32com library files installed here
-    SetOutPath "$JAVADIR\lib"
-    File /a "${SRCDIR}\javax.comm.properties"
-    SetOutPath "$JAVADIR\lib\ext"
-    File /a "${SRCDIR}\Serialio.jar"
-    SetOutPath "$JAVADIR\bin"
+    
+    ; -- If we're upgrading, we need to make sure that
+    ; -- any previously loaded library files in the JRE
+    ; -- are removed
+    
+    StrCmp $UPGRADING "1" 0 InstallComLib
+    Delete "$JAVADIR\lib\javax.comm.properties"
+    Delete "$JAVADIR\lib\ext\Serialio.jar"
+    Delete "$JAVADIR\bin\jspWin.dll"
+    Delete "$JAVADIR\bin\win32com.dll"
+    
+    InstallComLib:
+    SetOutPath "$INSTDIR\lib"
+    
+    ; -- SerialIO native library
     File /a "${SRCDIR}\jspWin.dll"
-    File /a "${SRCDIR}\win32com.dll"
+    
+    ; -- Check if we're running on x64
+    Call CheckIf64bit
+    Pop $0
+    
+    StrCmp $0 "0" Notx64 Isx64
+    Isx64:
+      File /a "${SRCDIR}\lib\win64\rxtxSerial.dll"
+      Goto DoneComLib
+    Notx64:
+      File /a "${SRCDIR}\lib\win32\rxtxSerial.dll"
+    DoneComLib:
+
   SectionEnd ; SEC_COMLIB
 
   Section "Help" SEC_HELP
@@ -376,7 +404,8 @@ SectionGroup "JMRI Core Files" SEC_CORE
     SectionIn RO  ; This section always selected
     ; -- Library files installed here
     SetOutPath "$INSTDIR\lib"
-    File /a /r "${SRCDIR}\lib\*.*"
+    ; -- Match all files in 'lib' but do not recurse into sub-directories
+    File /a "${SRCDIR}\lib\*.*"
     
     ; -- Extract and run OpenAL library installer in silent mode
     ; [Ignored for now]
@@ -899,6 +928,9 @@ Function nsDialogRemoveOldJMRI
   Push $2
   Push $3
   
+  ; -- Default to not upgrading
+  StrCpy $UPGRADING 0
+  
   ; -- First check if JMRI has been installed (Current User first, then All Users)
   ReadRegStr $0 HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "DisplayName"
   StrCmp $0 "" 0 CheckOld
@@ -907,7 +939,9 @@ Function nsDialogRemoveOldJMRI
   
   CheckOld:
     ; -- If we get to here, then an old JMRI installation exists
-    ; -- default to uninstall and backup
+    StrCpy $UPGRADING 1
+    
+    ; -- Default to uninstall and backup
     StrCpy $REMOVEOLDJMRI.BACKUPONLY 0
     StrCpy $2 "This previous installation should be removed.$\r$\nThis wizard will backup any existing roster files and settings."
     StrCpy $3 "Remove old ${APP} installation and backup existing files"
@@ -1275,6 +1309,26 @@ Function un.GetParent
     Pop $1
     Exch $0
 
+FunctionEnd
+
+Function CheckIf64bit
+; -------------------------------------------------------------------------
+; - Check if this installer is running on a 64-bit system
+; - input:  none
+; - output: result on top of stack (0 if 32-bit; 1 if 64-bit)
+; -------------------------------------------------------------------------
+
+  ; -- Save variables to the stack
+  Push $0
+  
+  ; -- Determine if we're running on x64
+  System::Call kernel32::GetCurrentProcess()i.s
+  System::Call kernel32::IsWow64Process(is,*i.s)
+  Pop $0
+
+  ; -- Restore variables from the stack
+  Exch $0
+  
 FunctionEnd
 
 Function RemoveObsoleteDecoderDefinitions

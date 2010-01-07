@@ -3,6 +3,19 @@ These are the binary files, typically .jars, needed at build and run time.
 
 Contents:
 
+Generally, we are moving toward using subdirectories to hold the
+CVS-resident versions of OS-specific code for Windows (.dll files)
+and Linux (.so files) so that we can separate various builds.
+
+For example, the RXTX rxtxSerial.dll comes in separate versions for 32-bit
+and 64-bit Windows, but the files have the same name.  We store them
+in separate win32/ and win64/ subdirectories, and let the installer sort them out.
+
+A similar mechanism will eventually be needed for Linux, but for now
+we keep the 32-bit files in the main lib/ directory.
+
+Specific components:
+
 vecmath.jar
  from Java3D 1.3.2
  from <https://java3d.dev.java.net/binary-builds-old.html>
@@ -23,17 +36,16 @@ log4j.jar
 
 MRJAdapter.jar
 
-comm.jar
 javax.comm.properties
-  version 2.0 (minor version unknown)
-  from Sun
+  left over from javax.comm version 2.0 (minor version unknown) from Sun
+  
+RXTXcomm.jar, librxtxSerial.jnilib
+  From Rxtx-2.2pre2  http://rxtx.qbang.org (http://rxtx.qbang.org/pub/rxtx/rxtx-2.2pre2-bins.zip)
+  The win32 and win64 directories contain the necessary rxtxSerial.dll for the two windows varients
+  The i686-pc-linux-gnu directory contains two .so libraries for 32-bit Linux
   
 security.policy
  (JMRI file)
-
-#crimson.jar             
-# version 1.1.3
-# from <http://xml.apache.org/crimson/>
 
 xercesImpl.jar
   version Xerces-J 2.9.1
@@ -116,8 +128,15 @@ jmdns.jar
     Version 3.0, 84670 bytes, December 7, 2009
     from http://sourceforge.net/projects/jmdns
 
-Older:
+jakarta-regexp-1.5.jar
 
-JMRI 1.9/2.0 had the jakarta-regexp-1.5.jar present in this directory
 
+
+Older, no longer present:
+
+
+#crimson.jar             
+# version 1.1.3
+# from <http://xml.apache.org/crimson/>
+# No longer used as of JMRI 2.7.6
 

@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.44 $ -->
+<!-- Revision $Revision: 1.45 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -79,14 +79,12 @@
     <delete file="Windows/JMRI/lib/UmlGraph-5.2.jar" />
     <delete file="Windows/JMRI/lib/junit.jar" />
     <delete file="Windows/JMRI/lib/jfcunit.jar" />
-    <delete file="Windows/JMRI/lib/jakarta-regexp-1.5.jar" />
     <delete file="Windows/JMRI/lib/libjinput-linux.so" />
     <delete file="Windows/JMRI/lib/libjinput-osx.jnilib" />
     <delete file="Windows/JMRI/lib/libusbJava.jnilib" />
     <delete file="Windows/JMRI/lib/libusbJava.so" />
     <delete file="Windows/JMRI/lib/comm-rxtx.jar" />
     <delete file="Windows/JMRI/lib/librxtxSerial.jnilib" />
-    <delete file="Windows/JMRI/lib/RXTXcomm.jar" />
     <delete file="Windows/JMRI/lib/libgluegen-rt.jnilib" />
     <delete file="Windows/JMRI/lib/libgluegen-rt.so" />
     <delete file="Windows/JMRI/lib/libjoal_native.jnilib" />
@@ -109,36 +107,7 @@
       		<include name="*"/>
       	</fileset>
    	</copy>
-    <copy todir="Windows/JMRI/lib">
-		<fileset dir="Windows/JMRI/scripts/WinInstallFiles" >
-      		<include name="javax.comm.properties"/>
-      	</fileset>
-   	</copy>
     <delete dir="Windows/JMRI/scripts" />
-    <!-- move windows .jar files to top directory -->
-<!-- 
-    <move todir="Windows/JMRI">
-		<fileset dir="Windows/JMRI/lib" >
-      		<include name="comm.jar"/>
-      		<include name="crimson.jar"/>
-      		<include name="jdom.jar"/>
-      		<include name="javacsv.jar"/>
-      		<include name="jhall.jar"/>
-      		<include name="jython.jar"/>
-      		<include name="log4j.jar"/>
-      		<include name="jinput.jar"/>
-      		<include name="jinput-wintab.dll"/>
-      		<include name="jinput-raw.dll"/>
-      		<include name="jinput-dx8.dll"/>
-      		<include name="ch.ntb.usb.jar"/>
-      		<include name="LibusbJava.dll"/>
-      		<include name="MRJAdapter.jar"/>
-      		<include name="Serialio.jar"/>
-      		<include name="servlet.jar"/>
-      		<include name="vecmath.jar"/>
-      	</fileset>
-	</move>
- -->
     
 </target>
 
@@ -153,7 +122,6 @@
     <delete file="MacOSX/JMRI/lib/UmlGraph-5.2.jar" />
     <delete file="MacOSX/JMRI/lib/junit.jar" />
     <delete file="MacOSX/JMRI/lib/jfcunit.jar" />
-    <delete file="MacOSX/JMRI/lib/jakarta-regexp-1.5.jar" />
     <delete file="MacOSX/JMRI/lib/Serialio.jar" />
     <delete file="MacOSX/JMRI/lib/jinput-wintab.dll" />
     <delete file="MacOSX/JMRI/lib/jinput-raw.dll" />
@@ -165,6 +133,9 @@
     <delete file="MacOSX/JMRI/lib/libgluegen-rt.so" />
     <delete file="MacOSX/JMRI/lib/joal_native.dll" />
     <delete file="MacOSX/JMRI/lib/libjoal_native.so" />
+    <delete dir="MacOSX/JMRI/lib/win32" />
+    <delete dir="MacOSX/JMRI/lib/win64" />
+    <delete dir="MacOSX/JMRI/lib/i686-pc-linux-gnu" />
     <delete dir="MacOSX/JMRI/xml" />
     <cvs command="export" reallyquiet="true" package="xml" dest="MacOSX/JMRI" tag="${release}"/>
     <delete dir="MacOSX/JMRI/resources" />
@@ -216,7 +187,6 @@
     <delete file="Linux/JMRI/lib/UmlGraph-5.2.jar" />
     <delete file="Linux/JMRI/lib/junit.jar" />
     <delete file="Linux/JMRI/lib/jfcunit.jar" />
-    <delete file="Linux/JMRI/lib/jakarta-regexp-1.5.jar" />
     <delete file="Linux/JMRI/lib/Serialio.jar" />
     <delete file="Linux/JMRI/lib/libjinput-osx.jnilib" />
     <delete file="Linux/JMRI/lib/jinput-wintab.dll" />
@@ -228,6 +198,8 @@
     <delete file="Linux/JMRI/lib/libgluegen-rt.jnilib" />
     <delete file="Linux/JMRI/lib/joal_native.dll" />
     <delete file="Linux/JMRI/lib/libjoal_native.jnilib" />
+    <delete dir="Linux/JMRI/lib/win32" />
+    <delete dir="Linux/JMRI/lib/win64" />
     <delete dir="Linux/JMRI/xml" />
     <cvs command="export" reallyquiet="true" package="xml" dest="Linux/JMRI" tag="${release}"/>
     <delete dir="Linux/JMRI/resources" />
