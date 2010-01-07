@@ -1304,6 +1304,8 @@
 
 <mapID target="html.hardware.PDA" url="html/hardware/PDA.shtml"/>
 
+<mapID target="package.jmri.jmrit.DebugMenu" url="package/jmri/jmrit/DebugMenu.shtml"/>
+
 <mapID target="manual.Comp_FMap" url="manual/Comp_FMap.shtml"/>
 
 <mapID target="package.jmri.jmrit.catalog.ImageIndex" url="package/jmri/jmrit/catalog/ImageIndex.shtml"/>
