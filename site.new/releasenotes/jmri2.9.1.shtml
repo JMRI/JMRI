@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.25 2010-01-06 23:06:56 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.26 2010-01-07 07:31:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -49,10 +49,15 @@ It contains
 many new features, including:
 
 <ul>
-<li>
-<li>
+<li>Improved CBUS support
+<li>New 
+    <a href="http://jmri.org/help/en/html/tools/signaling/AspectSignaling.shtml">aspect-based signaling</a>
+    support
+<li>Initial support for the Insteon 2412S
+<li>Multiple throttle improvements
 </ul>
-along with lots of other changes.  See the complete list below.
+along with lots of other changes and bug fixes.  
+See the complete list below.
 
 <p>Some of the changes involved are quite extensive.
 They may require a certain amount of experience before they are working well.  
@@ -70,6 +75,10 @@ The JInput USB library was updated to the current version, which (should) fix pr
 Intel Macs and some Linux machines.  We don't have a way to check this with all possible
 input devices, so please cehck to make sure that your USB-attached devices still work.
 
+<p>
+When loading an older panel file containing signal head icons, you may
+get WARN messages about "did not locate lunar icon file" and "did not locate flashlunar icon file".
+To make these stop, just store the file again so that it's rewritten in the most recent format.
 
 <h3>Download links:</h3>
 
@@ -95,6 +104,7 @@ Also handles double slip and three way points better.
 
 <p>
 Kevin Dickerson updated the storage code so that Signalheads in panel files are saved using the new namedBeanHandle.
+This means that they will be remembered by their system name or user name, whichever you specified.
 
 <p>
 Paul Bender added a new <a href="http://jmri.org/jython/XNetListenerExample.py">XNetListenerExample.py</a> sample script.
@@ -158,10 +168,6 @@ Pete Cressman fixed a problem with integer comparisons in Conditionals.
 
 <p>
 Dan Boudreau and Pete Cressman fixed a problem with the order of saved PanelEditor items.
-
-<p>
-Pete Cressman made it so Conditonal action items can be specified from a memory value 
-using the syntax @IMemory for the devive name
 
 <p>
 Pete Cressman made it so Conditonal action items can be specified from a memory value 
@@ -284,6 +290,11 @@ Much more work is needed on explanations, etc, to make this complete.
 <p>
 Peter Ulvestad added a decoder definition for the MRC Sound Brilliance 1800, 1802, 1810 and 1811 decoders.
 
+<p>
+Dan Boudreau made some improvements to the tooltips in the NCE Macro editor.
+
+<p>
+Paul Bender fixed a timeout issue in the XPressNet support that mostly effected the Elite.
 
 <!--#include virtual="/Footer" -->
 
