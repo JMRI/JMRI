@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Compatibility.shtml,v 1.6 2008-03-11 01:40:56 jacobsen Exp $ -->
+<!-- $Id: Compatibility.shtml,v 1.7 2010-01-07 07:28:44 jacobsen Exp $ -->
 <title>JMRI: Powerline Controllers</title>
 
 <!-- Style -->
@@ -47,7 +47,7 @@ See also the main page on
   <th>Model</th>
   <th>Image</th>
   <th>Identification Help</th>  <!-- Comment -->
-  <th>JMRI Type</th>
+  <th>JMRI Status</th>
 </tr>
 
 <tr>
@@ -95,7 +95,7 @@ See also the main page on
     This is the adapter that comes with the ActiveHome Professional.
     Best identified by the USB connection on the bottom and an attenna on the side.
   </td>  <!-- Comment -->
-  <td>Not Supported (<i>yet</i>)
+  <td>Not Supported (<i>yet</i>).
   We hope to support it next, pending USB support and somebody willing to test.
     <br />
     Last Edited: 17 Jan 2008
@@ -114,7 +114,7 @@ See also the main page on
     While it is a serial device, it uses the RTS/DTS lines instead of the data lines.
     That lets the device work while having most other serial devices work through it.
   </td>  <!-- Comment -->
-  <td>Not Supported (<i>yet</i>)
+  <td>Not Supported.
   We may be able to support it eventually, 
   but are working on the simpler, character-based versions first.
     <br />
@@ -135,11 +135,22 @@ See also the main page on
   <th>Model</th>
   <th>Image</th>
   <th>Identification Help</th>  <!-- Comment -->
-  <th>JMRI Type</th>
+  <th>JMRI Status</th>
 </tr>
 
-<!-- row containing one mode -->
-<!-- sample! -->
+<tr>
+  <td><a href="http://www.smarthome.com/2412S/PowerLinc-INSTEON-Modem-Serial/p.aspx">Smart Home</td> <!-- Manufacturer -->
+  <td>PowerLinc Modem 2412S</td> <!-- Model -->
+  <td><img src="http://cache1.smarthome.com/images/2414s.jpg" width="138" height="138"/></td> <!-- Image -->
+  <td>
+    This is the serial (not USB) Insteon adapter. 
+    It can control both Insteon and X10 devices.
+  </td>
+  <td>Support is available starting in JMRI 2.9.1</td> <!-- Type -->
+    <br />
+    Last Edited: 3 Jan 2010
+</tr>
+
 <tr>
   <td><a href="http://www.smarthome.com">Smarthome.com</td> <!-- Manufacturer -->
   <td nowrap>
@@ -150,8 +161,8 @@ See also the main page on
     This version can be identified by the USB connection on the bottom.
     <br />
   </td>  <!-- Comment -->
-  <td>This is likely to be the first Insteon adapter we support, 
-     because one of the developers has one.
+  <td>Not Supported (<i>yet</i>)
+      We hope to support it next, pending USB support and somebody willing to test.
     <br />
     Last Edited: 4 Feb 2008
     </td> <!-- Type -->

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Names.shtml,v 1.9 2009-11-29 19:28:53 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.10 2010-01-07 07:28:44 jacobsen Exp $ -->
 <title>JMRI: Power Line System Names</title>
 
 <!-- Style -->
@@ -74,7 +74,7 @@ will work.
 like PT12, with no housecode letters; this is no longer available,
 because it caused way too much confusion)
 
-<h2>Insteon (currently planned, not implemented)</h2>
+<h2>Insteon</h2>
 
 Insteon adapters are labelled with a four-part number that looks
 like "01.2A.B4.CD".  These are just random

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: index.shtml,v 1.5 2008-02-05 15:28:30 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.6 2010-01-07 07:28:44 jacobsen Exp $ -->
 <title>JMRI: Powerline Controllers</title>
 
 <!-- Style -->
@@ -30,19 +30,9 @@ This page talks about how to configure JMRI to talk
 to powerline controllers, e.g. X10. 
 
 <p>
-JMRI support for the X10 CM11 adapter
-became available in JMRI 2.1.2.
-
-<p>
 See also the associated
 <a href="Compatibility.shtml">compatibility page</a> to see what interfaces
 have been supported.
-
-<p>
-Currently we are using the X10 CM11A serial device as our test implementation.
-Once that is working, we expect to add other X10 interfaces.
-Eventually the Insteon device family will be supported once we have a developer
-who buys one of those interfaces.
 
 <p>
 For information on how to address your equipment via JMRI, please
@@ -52,8 +42,13 @@ see the
 <p>
 JMRI Lights work intuitively with powerline devices.  When the JMRI
 Light is set "ON", a command is send to the remote device to set it "ON".
-Ditto for "OFF".  Note that X10 controls the rate at which the brightness
-is changed, and what happens at the remote end.
+Ditto for "OFF". 
+
+<p>
+There's also limited support for dimming (variable brightness) Lights.
+See the 
+<a href="../../../package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml">"Light Control" page</a> 
+for more information on this.
 
 <p>
 JMRI Turnouts are available for X10.  When the JMRI Turnout
