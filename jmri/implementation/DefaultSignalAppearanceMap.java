@@ -23,7 +23,7 @@ import jmri.SignalSystem;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean  {
 
@@ -78,10 +78,14 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean  {
                     // note: includes setting name; redundant, but needed
                     int ival;
                     String sval = c.get(j).getText().toUpperCase();
-                    if (sval.equals("GREEN")) ival = SignalHead.GREEN;
+                    if (sval.equals("LUNAR")) ival = SignalHead.LUNAR;
                     else if (sval.equals("GREEN")) ival = SignalHead.GREEN;
                     else if (sval.equals("YELLOW")) ival = SignalHead.YELLOW;
                     else if (sval.equals("RED")) ival = SignalHead.RED;
+                    else if (sval.equals("FLASHLUNAR")) ival = SignalHead.FLASHLUNAR;
+                    else if (sval.equals("FLASHGREEN")) ival = SignalHead.FLASHGREEN;
+                    else if (sval.equals("FLASHYELLOW")) ival = SignalHead.FLASHYELLOW;
+                    else if (sval.equals("FLASHRED")) ival = SignalHead.FLASHRED;
                     else if (sval.equals("DARK")) ival = SignalHead.DARK;
                     else throw new JDOMException("invalid content: "+sval);
                     
