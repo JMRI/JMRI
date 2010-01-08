@@ -13,12 +13,14 @@ import jmri.ConditionalAction;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.Logix;
+import jmri.managers.DefaultUserMessagePreferences;
 
 import java.awt.Container;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Component;
 
 import java.beans.PropertyChangeListener;
 
@@ -43,7 +45,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.53 $
+ * @version     $Revision: 1.54 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -694,9 +696,47 @@ public class RouteTableAction extends AbstractTableAction {
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     // remind to save, if Route was created or edited
                     if (routeDirty) {
-                        javax.swing.JOptionPane.showMessageDialog(addFrame,
-                            "Remember to save your Route information.","Reminder",
-                                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                        final DefaultUserMessagePreferences p;
+                        p = jmri.managers.DefaultUserMessagePreferences.instance();
+                        if (p.getRouteSaveMsg()){
+                            final JDialog dialog = new JDialog();
+                            dialog.setTitle("Reminder");
+                            dialog.setLocationRelativeTo(null);
+                            dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                            JPanel container = new JPanel();
+                            container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+                            container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+                            
+                            JLabel question = new JLabel("Remember to save your Route information.", JLabel.CENTER);
+                            question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                            container.add(question);
+                            
+                            JButton okButton = new JButton("Okay");
+                            JPanel button = new JPanel();
+                            button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                            button.add(okButton);
+                            container.add(button);
+                            
+                            final JCheckBox remember = new JCheckBox("Do not remind me again?");
+                            remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+                            remember.setFont(remember.getFont().deriveFont(10f));
+                            container.add(remember);
+                            
+                            okButton.addActionListener(new ActionListener(){
+                                public void actionPerformed(ActionEvent e) {
+                                    if(remember.isSelected()){
+                                        p.setRouteSaveMsg(false);
+                                    }
+                                    dialog.dispose();
+                                }
+                            });
+                            
+                            
+                            dialog.getContentPane().add(container);
+                            dialog.pack();
+                            dialog.setModal(true);
+                            dialog.setVisible(true);
+                        }
                         routeDirty = false;
                     }
                     // hide addFrame
