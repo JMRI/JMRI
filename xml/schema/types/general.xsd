@@ -3,7 +3,7 @@
 
 <!-- Test schema for JMRI I/O support. Not for use before JMRI 2.9.1        -->
 
-<!-- $Id: general.xsd,v 1.3 2010-01-06 20:54:41 jacobsen Exp $ -->
+<!-- $Id: general.xsd,v 1.4 2010-01-08 21:06:17 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -60,7 +60,7 @@
   <xs:simpleType name="yesNoType">
     <xs:annotation>
         <xs:documentation>
-          General definition of attribute that's either "yes" or "no".
+          General definition of string that's either "yes" or "no".
         </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:token">
@@ -68,6 +68,26 @@
       <xs:enumeration value="no"/>
     </xs:restriction>
   </xs:simpleType>
+
+  <xs:simpleType name="SignalColorType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of string that's a valid signal color
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="green"/>
+      <xs:enumeration value="yellow"/>
+      <xs:enumeration value="red"/>
+      <xs:enumeration value="lunar"/>
+      <xs:enumeration value="flashgreen"/>
+      <xs:enumeration value="flashyellow"/>
+      <xs:enumeration value="flashred"/>
+      <xs:enumeration value="flashlunar"/>
+      <xs:enumeration value="dark"/>
+    </xs:restriction>
+  </xs:simpleType>
+
 
   <xs:simpleType name="CommentType">
     <xs:annotation>
