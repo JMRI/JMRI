@@ -3,7 +3,7 @@ package jmri;
 /**
  * Defines a simple place to get the JMRI version string.
  *<P>
- * These JavaDocs are for Version 2.9.1 of JMRI.
+ * These JavaDocs are for Version 2.9.2 of JMRI.
  *
  * <hr>
  * This file is part of JMRI.
@@ -19,7 +19,7 @@ package jmri;
  * for more details.
  * <P>
  * @author  Bob Jacobsen   Copyright 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010
- * @version $Revision: 1.119 $
+ * @version $Revision: 1.120 $
  */
 
 public class Version {
