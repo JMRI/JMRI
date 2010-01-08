@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: index.shtml,v 1.1 2010-01-08 02:03:51 jacobsen Exp $ -->
+<html lang="en">
+<head>
+ <TITLE>JMRI: NMRA 2010 Clinics</TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="clinics java model railroad JMRI CMRI decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+
+<hr class="hide">
+
+<div class="nomenu" id="mBody">
+  <div id="mainContent">
+    <H2>JMRI: NMRA 2010 Clinics</H2>
+
+<a href="http://www.nmra75.org/">
+<img src="http://www.nmra75.org/Images/75%20Logo.png" alt="NMRA convention logo" align="right"></a>
+
+The clinic schedule for the NMRA 2010 Milwaukee convention hasn't been announced yet,
+but we've applied to present several clinics, including both old favorites and several new
+ones.
+
+<p>
+We'll post a complete schedule here when it's available.
+
+<p>
+More information on the NMRA Wilwaukee convention can be found on the  
+<a href="http://www.nmra75.org/">convention website</a>
+(click on the
+<a href="http://www.nmra75.org/Clinics.htm">Clinics</a> 
+link to see 
+all clinics). 
+Many interesting clinics are listed in addition to ours.
+
+<p>
+There are also some presentations posted on our
+<a href="../NMRA2009/index.html">2009 clinics page</a>.
+
+<!--#include virtual="/Footer" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+</div> <!-- closes #container -->
+</body>
+</html>
+
