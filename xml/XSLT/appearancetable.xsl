@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: appearancetable.xsl,v 1.13 2010-01-06 22:03:35 jacobsen Exp $ -->
+<!-- $Id: appearancetable.xsl,v 1.14 2010-01-08 15:33:31 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI appearance table file into displayable HTML    -->
 
@@ -97,17 +97,15 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <!-- Compare to each aspect name in aspects.xml for matching rule -->
     <!-- The second argument provides the context (parent file) for the document() path; -->
     <!-- without it, the reference is relative to the stylesheet location -->
-    <xsl:for-each select="document('http:aspects.xml', .)/aspecttable/aspects/aspect">
+    <xsl:for-each select="document('http:aspects.xml', .)/aspecttable/aspects/aspect[name=$matchaspect]">
         <!-- looking at all aspects to find the one matching matchaspect -->
-        <xsl:if test="name = $matchaspect">
             <!-- now current node is match in aspects.xml -->
-
+                        
             <!-- show title element if it exists -->
             <xsl:for-each select="rule">
                 <xsl:value-of select="." />
                 <xsl:text>: </xsl:text>
             </xsl:for-each>
-        </xsl:if>
     </xsl:for-each>
 
     <!-- name is also a link -->
@@ -115,15 +113,21 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <xsl:element name="a"><xsl:attribute name="href">aspects.xml#<xsl:value-of select="aspectname"/></xsl:attribute>
     <xsl:value-of select="aspectname"/>
     </xsl:element>
+
+    <!-- end heading -->
     </h3>
     <!-- end heading -->
+    
+    <!-- error if no match -->
+    <xsl:if test="not(document('http:aspects.xml', .)/aspecttable/aspects/aspect[name=$matchaspect])">
+        <em>Error: This appearance does not appear in the <a href="aspects.xml">aspect table</a>.
+        Check spelling and upper/lower case.</em>
+    </xsl:if>
     
     <!-- then compare to each aspect name in aspects.xml for match -->
     <!-- The second argument provides the context (parent file) for the document() path; -->
     <!-- without it, the reference is relative to the stylesheet location -->
-    <xsl:for-each select="document('http:aspects.xml', .)/aspecttable/aspects/aspect">
-        <!-- looking at all aspects to find the one matching matchaspect -->
-        <xsl:if test="name = $matchaspect">
+    <xsl:for-each select="document('http:aspects.xml', .)/aspecttable/aspects/aspect[name=$matchaspect]">
             <!-- now current node is match in aspects.xml -->
 
             <!-- show title element if it exists -->
@@ -162,7 +166,6 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
             </xsl:for-each>
             
             <p/>
-        </xsl:if>
     </xsl:for-each>
 
     <!-- display the aspect in a little table -->
