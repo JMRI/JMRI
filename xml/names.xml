@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.19 2009-07-03 07:43:44 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.20 2010-01-08 17:03:08 jacobsen Exp $ -->
 <names-config>
 		<version author="Jack Shall jack745@bellsouth.net" 
 			version="10" lastUpdated="20090115"/>
@@ -624,7 +624,7 @@
 
 	<!-- Advanced section -->
 	
-	<definitiongroup name="Sound">
+	<definitiongroup name="Advanced">
 
 		<!-- Advanced group 1 -->
 		<!-- <definition item="Advanced Group 1 Control" /> -->
