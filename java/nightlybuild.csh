@@ -17,9 +17,6 @@
 #
 #
 
-# give system time to stabilize after wakeup
-sleep 30
-
 # Make sure env variables are defined
 setenv normal_destination
 setenv error_destination
@@ -48,7 +45,6 @@ else
   # CVS did not terminate OK
   if ( { (test "$error_destination") } ) then
     cat nightlybuildlog.txt | mail -s "Error in CVS checkout" ${error_destination}
-    sleep 240
   else
     echo Error in CVS checkout, see log in nightlybuildlog.txt
   endif
@@ -62,7 +58,6 @@ else
   # Ant did not terminate OK
   if ( { (test "$error_destination") } ) then
     cat nightlybuildlog.txt | mail -s "Did not build successfully" ${error_destination}
-    sleep 240
   else
     echo Did not build successfully, see log in nightlybuildlog.txt
   endif
@@ -76,7 +71,6 @@ else
   # Tests did not run and terminate OK
   if ( { (test "$error_destination") } ) then
     cat nightlybuildlog.txt | mail -s "Tests did not run successfully" ${error_destination}
-    sleep 240
   else
     echo Did not run successfully, see log in nightlybuildlog.txt
   endif
@@ -84,11 +78,10 @@ else
 endif
 
 # Check the log for error messages (searches cvs, build log too, but those shouldn't trip the comparison
-if ( { grep ERROR nightlybuildlog.txt >/dev/null || grep WARN nightlybuildlog.txt >/dev/null } ) then
+if ( { grep ERROR nightlybuildlog.txt >/dev/null || grep "WARN " nightlybuildlog.txt >/dev/null } ) then
   # Errors found, mail the log
   if ( { (test "$error_destination") } ) then
     cat nightlybuildlog.txt | mail -s "Errors found in test log" ${error_destination}
-    sleep 240
   else
     echo Errors found in test log, see nightlybuildlog.txt
   endif
@@ -102,7 +95,6 @@ else
   # Ant did not terminate OK
   if ( { (test "$error_destination") } ) then
     cat nightlybuildlog.txt | mail -s "Javadoc did not build successfully" ${error_destination}
-    sleep 240
   else
     echo Javadoc did not build successfully, see log in nightlyjavadoclog.txt
   endif
@@ -113,7 +105,6 @@ if ( { grep '\[javadoc\].*: warning -' nightlybuildlog.txt >/dev/null } ) then
   # Errors found, mail the log
   if ( { (test "$error_destination") } ) then
     cat nightlybuildlog.txt | mail -s "Javadoc errors found" ${error_destination}
-    sleep 240
   else
     echo Javadoc errors found, see nightlybuildlog.txt
   endif
@@ -134,7 +125,6 @@ echo "ls -l htdocs/decoders.zip" | sftp jacobsen,jmri@web.sourceforge.net >>& ni
 # and notify of success
 if ( { (test "$normal_destination") } ) then
   cat nightlybuildlog.txt | mail -s "Build completed OK" ${normal_destination}
-  sleep 240
 else
   echo Build completed OK
 endif
