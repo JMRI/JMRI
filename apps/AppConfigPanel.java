@@ -22,7 +22,7 @@ import java.util.ArrayList;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.29 $
+ * @version	$Revision: 1.30 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -364,8 +364,80 @@ public class AppConfigPanel extends JPanel {
     	}
     	if (dups) {
 	        saveContents();
-	
-	        if (JOptionPane.showConfirmDialog(null,
+            
+            final jmri.managers.DefaultUserMessagePreferences p;
+            p = jmri.managers.DefaultUserMessagePreferences.instance();
+            p.resetChangeMade();
+            if(p.getQuitAfterSave()==0x00){
+                final JDialog dialog = new JDialog();
+                dialog.setTitle(rb.getString("MessageShortQuitWarning"));
+                dialog.setLocationRelativeTo(null);
+                dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                JPanel container = new JPanel();
+                container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+                container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+
+                JLabel question = new JLabel(rb.getString("MessageLongQuitWarning"));
+                question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                container.add(question);
+                final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                remember.setFont(remember.getFont().deriveFont(10f));
+                remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+                //user preferences do not have the save option, but once complete the following line can be removed
+                //Need to get the method to save connection configuration.
+                JButton yesButton = new JButton("Yes");
+                JButton noButton = new JButton("No");
+                JPanel button = new JPanel();
+                button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                button.add(yesButton);
+                button.add(noButton);
+                container.add(button);
+                
+                noButton.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                        if(remember.isSelected()){
+                            p.setQuitAfterSave(0x01);
+                        }
+                        dialog.dispose();
+                    }
+                });
+                
+                yesButton.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                        if(remember.isSelected()) {
+                            p.setQuitAfterSave(0x02);
+                            saveContents();
+                        }
+                        dialog.dispose();
+                        // end the program
+                        dispose();
+                        
+                        
+                        // do orderly shutdown.  Note this
+                        // invokes Apps.handleQuit, even if this 
+                        // panel hasn't been created by an Apps subclass.
+                        Apps.handleQuit();
+                    }
+                });
+                container.add(remember);
+                container.setAlignmentX(Component.CENTER_ALIGNMENT);
+                container.setAlignmentY(Component.CENTER_ALIGNMENT);
+                dialog.getContentPane().add(container);
+                dialog.pack();
+                dialog.setModal(true);
+                dialog.setVisible(true);
+            } else if (p.getQuitAfterSave()==0x02) {
+	            // end the program
+	            dispose();
+	            
+	            // do orderly shutdown.  Note this
+	            // invokes Apps.handleQuit, even if this 
+	            // panel hasn't been created by an Apps subclass.
+	            Apps.handleQuit();
+            
+            }
+
+	        /*if (JOptionPane.showConfirmDialog(null,
 	                                          rb.getString("MessageLongQuitWarning"),
 	                                          rb.getString("MessageShortQuitWarning"),
 	                                          JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -379,7 +451,7 @@ public class AppConfigPanel extends JPanel {
 	            // panel hasn't been created by an Apps subclass.
 	            Apps.handleQuit();
 
-	        }
+	        }*/
     	}
         // don't end the program, just close the window
         if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).setVisible(false);
