@@ -27,7 +27,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.69 $
+ * @version         $Revision: 1.70 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -661,7 +661,7 @@ abstract public class AbstractMRTrafficController {
     /**
      * Read a single byte, protecting against various timeouts, etc.
      * <P>
-     * When a javax.comm port is set to have a 
+     * When a gnu.io port is set to have a 
      * receive timeout (via the enableReceiveTimeout() method),
      * some will return zero bytes or an EOFException at the end of the timeout.
      * In that case, the read should be repeated to get the next real character.

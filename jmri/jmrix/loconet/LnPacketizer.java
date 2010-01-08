@@ -29,7 +29,7 @@ import java.util.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.23 $
+ * @version 		$Revision: 1.24 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -152,7 +152,7 @@ public class LnPacketizer extends LnTrafficController {
     /**
      * Read a single byte, protecting against various timeouts, etc.
      * <P>
-     * When a javax.comm port is set to have a 
+     * When a gnu.io port is set to have a 
      * receive timeout (via the enableReceiveTimeout() method),
      * some will return zero bytes or an EOFException at the end of the timeout.
      * In that case, the read should be repeated to get the next real character.

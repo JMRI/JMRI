@@ -8,7 +8,7 @@ package jmri.jmrix;
  *
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  * @see         jmri.jmrix.SerialConfigException
  */
 public interface SerialPortAdapter extends PortAdapter {
@@ -96,7 +96,7 @@ public interface SerialPortAdapter extends PortAdapter {
      * Error handling for busy port at open.
      * @see jmri.jmrix.AbstractPortController
      */
-    public String handlePortBusy(javax.comm.PortInUseException p,
+    public String handlePortBusy(gnu.io.PortInUseException p,
                             String portName,
                             org.apache.log4j.Logger log);
 }

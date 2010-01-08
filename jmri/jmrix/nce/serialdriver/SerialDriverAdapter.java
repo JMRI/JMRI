@@ -13,9 +13,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 
-import javax.comm.CommPortIdentifier;
-import javax.comm.PortInUseException;
-import javax.comm.SerialPort;
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
 
 /**
  * Implements SerialPortAdapter for the NCE system.
@@ -27,7 +27,7 @@ import javax.comm.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.39 $
+ * @version			$Revision: 1.40 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -53,7 +53,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
                     if (validSpeeds[i].equals(mBaudRate))
                         baud = validSpeedValues[i];
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (javax.comm.UnsupportedCommOperationException e) {
+            } catch (gnu.io.UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
                 return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
             }
@@ -96,7 +96,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 
             opened = true;
 
-        } catch (javax.comm.NoSuchPortException p) {
+        } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (Exception ex) {
             log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);

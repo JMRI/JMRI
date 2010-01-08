@@ -2,7 +2,7 @@
 
 package jmri.util;
 
-import javax.comm.SerialPort;
+import gnu.io.SerialPort;
 
 
 /**
@@ -15,13 +15,13 @@ import javax.comm.SerialPort;
  * method, falling back to  JavaComm 2 if necessary.
  *
  * @author Paul Bender Copyright 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class SerialUtil {
 
     static public void setSerialPortParams(SerialPort activeSerialPort,int baud, int databits, int stopbits,int parity) 
-	throws javax.comm.UnsupportedCommOperationException
+	throws gnu.io.UnsupportedCommOperationException
 	{
         /* 
          * First try once to work around bug, then do again for real

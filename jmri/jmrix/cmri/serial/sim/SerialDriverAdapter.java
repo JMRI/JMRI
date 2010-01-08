@@ -9,18 +9,18 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 
-import javax.comm.CommPortIdentifier;
-import javax.comm.PortInUseException;
-import javax.comm.SerialPort;
-import javax.comm.SerialPortEvent;
-import javax.comm.SerialPortEventListener;
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
+import gnu.io.SerialPortEventListener;
 
 /**
  * Extends the serialdriver.SerialDriverAdapter class to 
  * act as simulated connection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SerialDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
@@ -39,7 +39,7 @@ public class SerialDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Ser
             // try to set it for CMRI serial
             try {
                 setSerialPort();
-            } catch (javax.comm.UnsupportedCommOperationException e) {
+            } catch (gnu.io.UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
                 return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
             }
@@ -150,7 +150,7 @@ public class SerialDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Ser
 
             opened = true;
 
-        } catch (javax.comm.NoSuchPortException p) {
+        } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (Exception ex) {
             log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
@@ -218,7 +218,7 @@ public class SerialDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Ser
     /**
      * Local method to do specific port configuration
      */
-    protected void setSerialPort() throws javax.comm.UnsupportedCommOperationException {
+    protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = 19200;  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i<validSpeeds.length; i++ )

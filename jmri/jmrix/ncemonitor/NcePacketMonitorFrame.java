@@ -2,9 +2,9 @@
 
 package jmri.jmrix.ncemonitor;
 
-import javax.comm.CommPortIdentifier;
-import javax.comm.PortInUseException;
-import javax.comm.SerialPort;
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Enumeration;
@@ -20,7 +20,7 @@ import java.io.DataInputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -398,7 +398,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             try {
                 // Doc says 7 bits, but 8 seems needed
                 activeSerialPort.setSerialPortParams(38400, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (javax.comm.UnsupportedCommOperationException e) {
+            } catch (gnu.io.UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
                 return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
             }
@@ -450,7 +450,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
         return null; // indicates OK return
     }
 
-    void handlePortBusy(javax.comm.PortInUseException p, String port ) {
+    void handlePortBusy(gnu.io.PortInUseException p, String port ) {
         log.error("Port "+p+" in use, cannot open");
     }
 

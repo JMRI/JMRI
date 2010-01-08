@@ -5,7 +5,7 @@
  * Description:		Provide access to Zimo's MX-1 on an attached serial comm port.
  *			Normally controlled by the zimo.mx1.Mx1Frame class.
  * @author		Bob Jacobsen   Copyright (C) 2002
- * @version		$Revision: 1.10 $
+ * @version		$Revision: 1.11 $
  *
  * Adapted for use with Zimo MX-1 by Sip Bosch
  *
@@ -17,11 +17,11 @@ import jmri.jmrix.zimo.Mx1CommandStation;
 import jmri.jmrix.zimo.Mx1Packetizer;
 import jmri.jmrix.zimo.Mx1PortController;
 
-import javax.comm.CommPortIdentifier;
-import javax.comm.PortInUseException;
-import javax.comm.SerialPortEventListener;
-import javax.comm.SerialPortEvent;
-import javax.comm.SerialPort;
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPortEventListener;
+import gnu.io.SerialPortEvent;
+import gnu.io.SerialPort;
 
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
@@ -45,7 +45,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 			// try to set it for Can Net
 			try {
 				setSerialPort();
-			} catch (javax.comm.UnsupportedCommOperationException e) {
+			} catch (gnu.io.UnsupportedCommOperationException e) {
 				log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
 				return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
 			}
@@ -142,7 +142,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 
 			opened = true;
 
-                }  catch (javax.comm.NoSuchPortException p) {
+                }  catch (gnu.io.NoSuchPortException p) {
                      return handlePortNotFound(p, portName, log);
                 }  catch (Exception ex) {
 			log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
@@ -211,7 +211,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 	/**
 	 * Local method to do specific configuration
 	 */
-	protected void setSerialPort() throws javax.comm.UnsupportedCommOperationException {
+	protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
 		// find the baud rate value, configure comm options
 		int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
 		for (int i = 0; i<validSpeeds.length; i++ )

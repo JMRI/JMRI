@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.util.Vector;
 import jmri.jmrix.sprog.sprog.SerialDriverAdapter;
 
-import javax.comm.SerialPort;
+import gnu.io.SerialPort;
 
 /**
  * Converts Stream-based I/O to/from Sprog messages.  The "SprogInterface"
@@ -17,7 +17,7 @@ import javax.comm.SerialPort;
  * handled in an independent thread.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class SprogTrafficController implements SprogInterface, Runnable {
 

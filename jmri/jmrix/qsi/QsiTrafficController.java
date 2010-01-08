@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.util.Vector;
 import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
 
-import javax.comm.SerialPort;
+import gnu.io.SerialPort;
 
 /**
  * Converts Stream-based I/O to/from QSI messages.  The "QsiInterface"
@@ -23,7 +23,7 @@ import javax.comm.SerialPort;
  * included in the QsiMessage and QsiReply content.
  * 
  * @author			Bob Jacobsen  Copyright (C) 2007, 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 

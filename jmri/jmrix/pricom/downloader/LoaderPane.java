@@ -4,9 +4,9 @@ package jmri.jmrix.pricom.downloader;
 
 import java.awt.FlowLayout;
 
-import javax.comm.CommPortIdentifier;
-import javax.comm.PortInUseException;
-import javax.comm.SerialPort;
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
 
 import javax.swing.*;
 import java.util.ResourceBundle;
@@ -21,7 +21,7 @@ import java.io.DataInputStream;
 /**
  * Pane for downloading software updates to PRICOM products
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.16 $
+ * @version	    $Revision: 1.17 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -403,7 +403,7 @@ public class LoaderPane extends javax.swing.JPanel {
                 int speed = 9600;
                 // Doc says 7 bits, but 8 seems needed
                 activeSerialPort.setSerialPortParams(speed, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (javax.comm.UnsupportedCommOperationException e) {
+            } catch (gnu.io.UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
                 return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
             }
@@ -454,7 +454,7 @@ public class LoaderPane extends javax.swing.JPanel {
         return null; // indicates OK return
     }
 
-    void handlePortBusy(javax.comm.PortInUseException p, String port ) {
+    void handlePortBusy(gnu.io.PortInUseException p, String port ) {
         log.error("Port "+p+" in use, cannot open");
     }
 

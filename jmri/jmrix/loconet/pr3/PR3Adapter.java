@@ -8,14 +8,14 @@ import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetThrottledTransmitter;
 
-import javax.comm.SerialPort;
+import gnu.io.SerialPort;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it 
  * refers to the switch settings on the new Digitrax PR3
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006, 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class PR3Adapter extends LocoBufferAdapter {
 
@@ -28,7 +28,7 @@ public class PR3Adapter extends LocoBufferAdapter {
     /**
      * Always use flow control, not considered a user-settable option
      */
-    protected void setSerialPort(SerialPort activeSerialPort) throws javax.comm.UnsupportedCommOperationException {
+    protected void setSerialPort(SerialPort activeSerialPort) throws gnu.io.UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = 57600;  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i<validBaudNumber().length; i++ )

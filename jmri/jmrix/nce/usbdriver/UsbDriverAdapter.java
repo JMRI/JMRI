@@ -15,9 +15,9 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.util.Vector;
 
-import javax.comm.CommPortIdentifier;
-import javax.comm.PortInUseException;
-import javax.comm.SerialPort;
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
 
 /**
  * Implements UsbPortAdapter for the NCE system.
@@ -29,7 +29,7 @@ import javax.comm.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class UsbDriverAdapter extends NcePortController {
 
@@ -55,7 +55,7 @@ public class UsbDriverAdapter extends NcePortController {
                     if (validSpeeds[i].equals(mBaudRate))
                         baud = validSpeedValues[i];
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (javax.comm.UnsupportedCommOperationException e) {
+            } catch (gnu.io.UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
                 return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
             }
@@ -98,7 +98,7 @@ public class UsbDriverAdapter extends NcePortController {
 
             opened = true;
 
-        } catch (javax.comm.NoSuchPortException p) {
+        } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (Exception ex) {
             log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);

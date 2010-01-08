@@ -21,7 +21,7 @@ import javax.swing.JTextField;
  * connection.
  *
  * @author	Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  *
  * @see XnTcpAdapter
@@ -122,7 +122,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
         	    log.debug("Found "+v.size()+" ports");
             }
         } catch (java.lang.UnsatisfiedLinkError e1) {
-            log.error("UnsatisfiedLinkError - the javax.comm library has not been installed properly");
+            log.error("UnsatisfiedLinkError - the gnu.io library has not been installed properly");
             log.error("java.library.path="+System.getProperty("java.library.path","<unknown>"));
             javax.swing.JOptionPane.showMessageDialog(null, "Failed to load comm library.\nYou have to fix that before setting preferences.");
             return;

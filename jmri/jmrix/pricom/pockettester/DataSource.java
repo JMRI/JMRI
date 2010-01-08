@@ -2,9 +2,9 @@
 
 package jmri.jmrix.pricom.pockettester;
 
-import javax.comm.CommPortIdentifier;
-import javax.comm.PortInUseException;
-import javax.comm.SerialPort;
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Enumeration;
@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
@@ -311,7 +311,7 @@ public class DataSource extends jmri.util.JmriJFrame {
                 speed = Integer.parseInt((String)speedBox.getSelectedItem());
                 // 8-bits, 1-stop, no parity
                 activeSerialPort.setSerialPortParams(speed, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (javax.comm.UnsupportedCommOperationException e) {
+            } catch (gnu.io.UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
                 return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
             }
@@ -363,7 +363,7 @@ public class DataSource extends jmri.util.JmriJFrame {
         return null; // indicates OK return
     }
 
-    void handlePortBusy(javax.comm.PortInUseException p, String port ) {
+    void handlePortBusy(gnu.io.PortInUseException p, String port ) {
         log.error("Port "+p+" in use, cannot open");
     }
 

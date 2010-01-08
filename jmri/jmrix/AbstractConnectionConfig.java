@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.24 $
+ * @version	$Revision: 1.25 $
  */
 abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
@@ -98,7 +98,7 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
         	    else log.debug("Zero-length port vector");
             }
         } catch (java.lang.UnsatisfiedLinkError e1) {
-            log.error("UnsatisfiedLinkError - the javax.comm library has not been installed properly");
+            log.error("UnsatisfiedLinkError - the gnu.io library has not been installed properly");
             log.error("java.library.path="+System.getProperty("java.library.path","<unknown>"));
             javax.swing.JOptionPane.showMessageDialog(null, "Failed to load comm library.\nYou have to fix that before setting preferences.");
             return;

@@ -9,7 +9,7 @@ import java.util.Vector;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import javax.comm.CommPortIdentifier;
+import gnu.io.CommPortIdentifier;
 import javax.swing.JOptionPane;
 import jmri.util.SystemType;
 
@@ -24,7 +24,7 @@ import jmri.util.SystemType;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 abstract public class AbstractPortController implements SerialPortAdapter {
 
@@ -40,7 +40,7 @@ abstract public class AbstractPortController implements SerialPortAdapter {
     /**
      * Standard error handling for port-busy case
      */
-    public String handlePortBusy(javax.comm.PortInUseException p,
+    public String handlePortBusy(gnu.io.PortInUseException p,
                             String portName,
                             org.apache.log4j.Logger log) {
 				log.error(portName+" port is in use: "+p.getMessage());
@@ -53,7 +53,7 @@ abstract public class AbstractPortController implements SerialPortAdapter {
     /**
      * Standard error handling for port-not-found case
      */
-    public String handlePortNotFound(javax.comm.NoSuchPortException p,
+    public String handlePortNotFound(gnu.io.NoSuchPortException p,
                             String portName,
                             org.apache.log4j.Logger log) {
 				log.error("Serial port "+portName+" not found");

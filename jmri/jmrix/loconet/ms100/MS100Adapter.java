@@ -12,9 +12,9 @@ import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import javax.comm.CommPortIdentifier;
-import javax.comm.PortInUseException;
-import javax.comm.SerialPort;
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
 
 import Serialio.SerInputStream;
 import Serialio.SerOutputStream;
@@ -29,7 +29,7 @@ import Serialio.SerialPortLocal;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.31 $
+ * @version			$Revision: 1.32 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -40,14 +40,14 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         try {
             // this has to work through one of two sets of class. If
             // Serialio.SerialConfig exists on this machine, we use that
-            // else we revert to javax.comm
+            // else we revert to gnu.io
             try {
                 Class.forName("Serialio.SerialConfig");
                 log.debug("openPort using SerialIO");
                 InnerSerial inner = new InnerSerial();
                 inner.getPortNames();
             } catch (ClassNotFoundException e) {
-                log.debug("openPort using javax.comm");
+                log.debug("openPort using gnu.io");
                 InnerJavaComm inner = new InnerJavaComm();
                 inner.getPortNames();
             }
@@ -125,11 +125,11 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             return portNameVector;
         }
 
-        public String openPort(String portName, String appName) throws javax.comm.NoSuchPortException, javax.comm.UnsupportedCommOperationException,
+        public String openPort(String portName, String appName) throws gnu.io.NoSuchPortException, gnu.io.UnsupportedCommOperationException,
                                                                        java.io.IOException {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-            javax.comm.SerialPort activeSerialPort = null;
+            gnu.io.SerialPort activeSerialPort = null;
             try {
                 activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
             }
@@ -141,12 +141,12 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             // spec is 16600, says 16457 is OK also. Try that as a second choice
             try {
                 activeSerialPort.setSerialPortParams(16600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (javax.comm.UnsupportedCommOperationException e) {
+            } catch (gnu.io.UnsupportedCommOperationException e) {
                 // assume that's a baudrate problem, fall back.
                 log.warn("attempting to fall back to 16457 baud after 16600 failed");
                 try {
                     activeSerialPort.setSerialPortParams(16457, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-                } catch (javax.comm.UnsupportedCommOperationException e2) {
+                } catch (gnu.io.UnsupportedCommOperationException e2) {
                     log.warn("trouble setting 16600 baud");
                     javax.swing.JOptionPane.showMessageDialog(null,
                                                               "Failed to set the correct baud rate for the MS100. Port is set to "
@@ -195,7 +195,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         try {
             // this has to work through one of two sets of class. If
             // Serialio.SerialConfig exists on this machine, we use that
-            // else we revert to javax.comm
+            // else we revert to gnu.io
             try {
                 Class.forName("Serialio.SerialConfig");
                 log.debug("openPort using SerialIO");
@@ -203,7 +203,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
                 String result = inner.openPort(portName, appName);
                 if (result!=null) return result;
             } catch (ClassNotFoundException e) {
-                log.debug("openPort using javax.comm");
+                log.debug("openPort using gnu.io");
                 InnerJavaComm inner = new InnerJavaComm();
                 String result = inner.openPort(portName, appName);
                 if (result!=null) return result;
