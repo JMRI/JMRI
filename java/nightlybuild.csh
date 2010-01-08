@@ -78,7 +78,7 @@ else
 endif
 
 # Check the log for error messages (searches cvs, build log too, but those shouldn't trip the comparison
-if ( { grep ERROR nightlybuildlog.txt >/dev/null || grep "WARN " nightlybuildlog.txt >/dev/null } ) then
+if ( { grep ERROR nightlybuildlog.txt >/dev/null || grep 'WARN ' nightlybuildlog.txt >/dev/null } ) then
   # Errors found, mail the log
   if ( { (test "$error_destination") } ) then
     cat nightlybuildlog.txt | mail -s "Errors found in test log" ${error_destination}
