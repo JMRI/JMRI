@@ -1,7 +1,7 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
 <head>
-<!-- $Id: XNetAddressing.shtml,v 1.1 2008-01-13 06:47:33 jacobsen Exp $ -->
+<!-- $Id: XNetAddressing.shtml,v 1.2 2010-01-08 19:37:00 pbender Exp $ -->
    <title>Lenz Feedback Bus Addressing</title>
 
 <!-- Style -->
@@ -44,7 +44,7 @@ programs will automatically assign an XT prefix for you.
 <p>
 On the Feedback bus, accessory decoders are allowed to occupy addresses 
 from 1 to 64.  Since the feedback equiped decoders Lenz provides actually 
-include 4 accessory decoders, this limtied address space actually 
+include 4 accessory decoders, this limited address space actually 
 corresponds to accessory decoder address 1 to 256.
 </p>
 <p>
