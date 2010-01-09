@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * SignalMastTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class SignalMastTableAction extends AbstractTableAction {
@@ -64,6 +64,8 @@ public class SignalMastTableAction extends AbstractTableAction {
 
         // create the frame
         f = new BeanTableFrame(m, helpTarget()){
+            TableSorter sorter;
+    
             /**
              * Include an "add" button
              */
@@ -76,7 +78,8 @@ public class SignalMastTableAction extends AbstractTableAction {
                     }
                 });
             }
-            protected JTable makeJTable(TableSorter sorter) {
+            protected JTable makeJTable(TableSorter srtr) {
+                this.sorter = srtr;
                 return new JTable(sorter)  {
                     public boolean editCellAt(int row, int column, java.util.EventObject e) {
                         boolean res = super.editCellAt(row, column, e);
@@ -99,35 +102,35 @@ public class SignalMastTableAction extends AbstractTableAction {
                             return super.getCellEditor(row, column);
                     }
                     TableCellRenderer getRenderer(int row) {
-                        TableCellRenderer retval = rendererMap.get(m.getValueAt(row,SYSNAMECOL));
+                        TableCellRenderer retval = rendererMap.get(sorter.getValueAt(row,SYSNAMECOL));
                         if (retval == null) {
                             // create a new one with right aspects
                             retval = new MyComboBoxRenderer(getAspectVector(row));
-                            rendererMap.put(m.getValueAt(row,SYSNAMECOL), retval);
+                            rendererMap.put(sorter.getValueAt(row,SYSNAMECOL), retval);
                         }
                         return retval;
                     }
                     Hashtable<Object, TableCellRenderer> rendererMap = new Hashtable<Object, TableCellRenderer>();
                 
                     TableCellEditor getEditor(int row) {
-                        TableCellEditor retval = editorMap.get(m.getValueAt(row,SYSNAMECOL));
+                        TableCellEditor retval = editorMap.get(sorter.getValueAt(row,SYSNAMECOL));
                         if (retval == null) {
                             // create a new one with right aspects
                             retval = new MyComboBoxEditor(getAspectVector(row));
-                            editorMap.put(m.getValueAt(row,SYSNAMECOL), retval);
+                            editorMap.put(sorter.getValueAt(row,SYSNAMECOL), retval);
                         }
                         return retval;
                     }
                     Hashtable<Object, TableCellEditor> editorMap = new Hashtable<Object, TableCellEditor>();
                 
                     Vector<String> getAspectVector(int row) {
-                        Vector<String> retval = boxMap.get(m.getValueAt(row,SYSNAMECOL));
+                        Vector<String> retval = boxMap.get(sorter.getValueAt(row,SYSNAMECOL));
                         if (retval == null) {
                             // create a new one with right aspects
                             Vector<String> v = InstanceManager.signalMastManagerInstance()
-                                                .getSignalMast((String)m.getValueAt(row,SYSNAMECOL)).getValidAspects();
+                                                .getSignalMast((String)sorter.getValueAt(row,SYSNAMECOL)).getValidAspects();
                             retval = v;
-                            boxMap.put(m.getValueAt(row,SYSNAMECOL), retval);
+                            boxMap.put(sorter.getValueAt(row,SYSNAMECOL), retval);
                         }
                         return retval;
                     }
