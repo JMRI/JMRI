@@ -2,7 +2,6 @@
 
 package jmri.jmrit.beantable.usermessagepreferences;
 
-//import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +17,7 @@ import javax.swing.*;
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class UserMessagePreferencesPane extends javax.swing.JPanel {
 
@@ -34,7 +33,7 @@ public class UserMessagePreferencesPane extends javax.swing.JPanel {
     
     public UserMessagePreferencesPane() {
         super();
-        p = jmri.managers.DefaultUserMessagePreferences.instance();
+        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel buttonPanel = new JPanel();
         JButton updateButton = new JButton("Update");

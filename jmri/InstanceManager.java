@@ -43,7 +43,7 @@ import jmri.managers.DefaultRouteManager;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.55 $
+ * @version			$Revision: 1.56 $
  */
 public class InstanceManager {
 
@@ -62,11 +62,19 @@ public class InstanceManager {
         return managerLists.get(type);
     }
     
-    static public <T> Object getDefault(Class<T> type) {
+    /**
+     * Get the first object of type T that was
+     * store(d). 
+     *
+     * Someday, we may provide another way to set the default
+     * but for now it's the first one stored
+     */
+    @SuppressWarnings("unchecked")   // checked by construction
+    static public <T> T getDefault(Class<T> type) {
         List<Object> l = getList(type);
         if (l == null) return null;
         if (l.size()<1) return null;
-        return l.get(l.size()-1);
+        return (T)l.get(l.size()-1);
     }
     
     static public PowerManager powerManagerInstance()  { 

@@ -22,7 +22,7 @@ import java.util.ArrayList;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.31 $
+ * @version	$Revision: 1.32 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -366,7 +366,7 @@ public class AppConfigPanel extends JPanel {
 	        saveContents();
             
             final jmri.UserPreferencesManager p;
-            p = jmri.managers.DefaultUserMessagePreferences.instance();
+            p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
             p.resetChangeMade();
             if(p.getQuitAfterSave()==0x00){
                 final JDialog dialog = new JDialog();

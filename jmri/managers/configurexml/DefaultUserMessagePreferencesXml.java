@@ -72,7 +72,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
      @SuppressWarnings("unchecked")
     public boolean load(Element messages) {
         // ensure the master object exists
-        jmri.UserPreferencesManager p = jmri.managers.DefaultUserMessagePreferences.instance();
+        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         p.setLoading();
         List<Element> messageList = messages.getChildren("displayRememberMsg");
         for (int i=0; i<messageList.size();i++){

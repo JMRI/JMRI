@@ -45,7 +45,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.55 $
+ * @version     $Revision: 1.56 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -697,7 +697,7 @@ public class RouteTableAction extends AbstractTableAction {
                     // remind to save, if Route was created or edited
                     if (routeDirty) {
                         final jmri.UserPreferencesManager p;
-                        p = jmri.managers.DefaultUserMessagePreferences.instance();
+                        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
                         if (p.getRouteSaveMsg()){
                             final JDialog dialog = new JDialog();
                             dialog.setTitle("Reminder");

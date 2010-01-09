@@ -11,7 +11,7 @@ package jmri;
  * @see jmri.managers.DefaultUserMessagePreferences
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
  
 public interface UserPreferencesManager {
@@ -27,7 +27,7 @@ public interface UserPreferencesManager {
     public boolean getRouteSaveMsg();
     public void setRouteSaveMsg(boolean boo);
     
-    //The reset is used after the preferences have been loaded for the first time
+    // The reset is used after the preferences have been loaded for the first time
     public void resetChangeMade();
 
      /**
@@ -50,8 +50,8 @@ public interface UserPreferencesManager {
     /*
         Example informational message dialog box.
         
-        final DefaultUserMessagePreferences p;
-        p = jmri.managers.DefaultUserMessagePreferences.instance();
+        final UserPreferencesManager p;
+        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (p.getRouteSaveMsg()){
             final JDialog dialog = new JDialog();
             dialog.setTitle("Reminder");
@@ -98,7 +98,7 @@ public interface UserPreferencesManager {
         Example question message dialog box.
         
         final DefaultUserMessagePreferences p;
-        p = jmri.managers.DefaultUserMessagePreferences.instance();
+        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (p.getQuitAfterSave()==0x00){
             final JDialog dialog = new JDialog();
             dialog.setTitle(rb.getString("MessageShortQuitWarning"));
