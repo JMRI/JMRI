@@ -13,7 +13,8 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
      /**
      * Default implementation for storing the contents of a
      * User Messages Preferences
-     * @param o Object to store, of type MemoryManager
+     * @param o Object to store, but not really used, because 
+     *              info to be stored comes from the DefaultUserMessagePreferences
      * @return Element containing the complete info
      */
     public Element store(Object o) {
@@ -63,7 +64,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
     /**
      * Create a MemoryManager object of the correct class, then
      * register and fill it.
-     * @param memories Top level Element to unpack.
+     * @param messages Top level Element to unpack.
      * @return true if successful
      */
      @SuppressWarnings("unchecked")
