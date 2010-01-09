@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.18 2010-01-04 20:58:57 djduchamp Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.19 2010-01-09 22:25:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -312,7 +312,7 @@ are optional or required.
 	If a sensor with the entered name does not exist, it will be created using the 
 	entered name as the JMRI system name (with a suitable prefix if needed).</li>
 	<li><b>Signal Icon</b> (field) - applies to Signal Icon - Entry is required.
-	If a signal head with the entered name is not in the Signal Table, an error 
+	If a signal head with the entered name is not in the Signal Head Table, an error 
 	message results, and the Signal Icon is not created. <b>Note: To automatically 
 	associate signal heads with turnouts and block boundaries, you should use the 
 	automated tools in the Tools menu to place signal icons.</b> This item
@@ -484,7 +484,7 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	procedure for assigning signals to a turnout. Right-handed turnouts, 
 	left-handed turnouts, and wye turnouts are supported. Prior to accessing this 
 	item, the turnout must be on the panel, and the required signal heads 
-	must be in the Signal Table. When this item is selected, a dialog is 
+	must be in the Signal Head Table. When this item is selected, a dialog is 
 	shown for entry of the turnout name (system or user), and the names of the 
 	three or four signal heads to be placed around the turnout. For each signal
 	head, check boxes are available for selecting whether an icon is to be placed 
@@ -503,7 +503,7 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	turnout or a level crossing. Prior to accessing this item, blocks must 
 	be defined for signaled
 	regions of track on the panel, and the required signal heads must be in the
-	Signal Table. When this item is selected, a dialog is shown for entry of  
+	Signal Head Table. When this item is selected, a dialog is shown for entry of  
 	names of the two blocks whose boundary is to be signaled, and for entry of
 	names (system or user) of one or two signal heads to be assigned to the 
 	block boundary. For each signal head, check boxes are available for 
@@ -522,7 +522,7 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	for placing signal heads around the crossover and for setting up logic
 	for those signals. Prior to accessing this item, blocks must be defined for 
 	signaled regions of track on the panel, and the required signal heads must be 
-	in the Signal Table. When this item is selected, a small dialog is shown for 
+	in the Signal Head Table. When this item is selected, a small dialog is shown for 
 	entry of the name (system or user) of the crossover turnout to be signaled. 
 	The entered name must correspond to a double crossover, a right-handed crossover,
 	or a left-handed crossover. (If this tool is accessed by selecting 
@@ -545,7 +545,7 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	for placing signal heads around the level crossing and for setting up logic
 	for those signals. Prior to accessing this tool, blocks must be defined for 
 	signaled regions of track on the panel, and the required signal heads must be 
-	in the Signal Table. This tool works best if the level crossing also serves as 
+	in the Signal Head Table. This tool works best if the level crossing also serves as 
 	the boundary between two blocks in each signaled direction. When this item is 
 	selected, a dialog is shown for entry of one or two block names that uniquely 
 	identify the level crossing to be signaled, and for entry of
@@ -572,7 +572,7 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	and diverging tracks of the two turnouts.  It also provides for setting up logic
 	for those signals. Prior to accessing this item, blocks must be defined for 
 	signaled regions of track on the panel, and the required signal heads must be 
-	in the Signal Table. When this item is selected, a dialog is shown for entry of  
+	in the Signal Head Table. When this item is selected, a dialog is shown for entry of  
 	the names (system or user) of the two turnouts to be signaled, and for entry of
 	names (system or user) of four to eight signal heads to be assigned. For 
 	each signal head, check boxes are available for selecting whether a signal  
@@ -603,7 +603,7 @@ turnouts and block boundaries are oriented mostly vertically or mostly horizonta
 	turnouts that simulate a 3-way turnout. Each of the two turnouts may be 
 	either right-hand (RH) or left-hand (LH). Prior to accessing this item, blocks 
 	must be defined for signaled regions of track on the panel, and the required 
-	signal heads must be in the Signal Table. When this item is selected, a dialog 
+	signal heads must be in the Signal Head Table. When this item is selected, a dialog 
 	is shown for entry of the names (system or user) of the two turnouts comprising 
 	the 3-way turnout to be signaled, and for entry of names (system or user) of 
 	six (or four) signal heads to be assigned. For each signal head, check boxes 

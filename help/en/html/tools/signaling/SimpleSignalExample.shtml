@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: SimpleSignalExample.shtml,v 1.6 2008-11-17 15:18:08 jacobsen Exp $ -->
+<!-- $Id: SimpleSignalExample.shtml,v 1.7 2010-01-09 22:25:56 jacobsen Exp $ -->
 <title>JMRI: Simple Signal Logic Example</title>
 
 <!-- Style -->
@@ -189,10 +189,10 @@ tell the program about those turnouts also.  (SE8c users skip this step)
 
 <a name="definesignals"/>
 <LI>Tell it how your signals are addressed.
-<A href="../../../images/SigTable.gif"><IMG SRC="../../../images/SigTable.gif" ALIGN=RIGHT WIDTH="170" HEIGHT="314" HSPACE="0" VSPACE="0" ALT="Signal Table Figure"></A>
+<A href="../../../images/SigTable.gif"><IMG SRC="../../../images/SigTable.gif" ALIGN=RIGHT WIDTH="170" HEIGHT="314" HSPACE="0" VSPACE="0" ALT="Signal Head Table Figure"></A>
 
   <UL>
-  <LI>From the Tools menu, open the "Signal Table"
+  <LI>From the Tools menu, open the "Signal Head Table"
   	  tool.
   <LI>Click the 
       "<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">Add...</a>"

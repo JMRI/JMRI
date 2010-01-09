@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: BlockBossFrame.shtml,v 1.10 2009-11-28 17:19:13 jacobsen Exp $ -->
+<!-- $Id: BlockBossFrame.shtml,v 1.11 2010-01-09 22:25:56 jacobsen Exp $ -->
 <title>JMRI: SSL Documentation</title>
 
 <!-- Style -->
@@ -63,8 +63,8 @@ more restrictive aspect as the next signal in the direction and route of travel.
 <p>Some JMRI specific SSL and Signal terms:
 
 <dl>
-<dt><b>Signal Table</b> <dd>The list of signals in JMRI. Signals must first be added into 
-the Signal Table before they may be included in a SSL entry or Logix.
+<dt><b>Signal Head Table</b> <dd>The list of signals in JMRI. Signals must first be added into 
+the Signal Head Table before they may be included in a SSL entry or Logix.
 
 <dt><b>Triple Output</b> 
 <dd>A signal head that has each aspect of the signal directly driven 
@@ -102,11 +102,11 @@ to control the signal. This will vary depending on your hardware, and must match
 
 </dl>
 
-<a name="table"><h2>Signal Table</h2></a>
+<a name="table"><h2>Signal Head Table</h2></a>
 
 <A href="./images/SigTable.gif"><IMG SRC="./images/SigTable.gif" ALIGN=RIGHT WIDTH="750" HEIGHT="332" HSPACE="0" VSPACE="0"></A>
 <p>All the signals that JMRI knows about can be referenced
-using the "Signal Table" tool in the Tools menu of most JMRI programs.
+using the "Signal Head Table" tool in the Tools menu of most JMRI programs.
 There are eight columns in the table:
 <UL>
 <LI>The system name is assigned to the signal when it's created, 
@@ -221,11 +221,11 @@ See the page on
 <a href="../../../../html/tools/signaling/index.shtml#table">signals</a>
 for information on how to set up your real signals.
 </p><ol>
-</li><li> Select <b>Signal Table</b> in the <b>Tools</b> menu.
-</li><li> In the Signal Table window that appears, click <b>Add</b> to begin defining a new signal head.
+</li><li> Select <b>Signal Head Table</b> in the <b>Tools</b> menu.
+</li><li> In the Signal Head Table window that appears, click <b>Add</b> to begin defining a new signal head.
 </li><li> In the Add New Signal window that appears choose the "Virtual Signal" type.
 </li><li> Enter a system name such as IH1000.
-</li><li> Click <b>OK</b> to enter this head into the Signal Table.  
+</li><li> Click <b>OK</b> to enter this head into the Signal Head Table.  
 </li><li> Enter all the signal heads that you will be using for this test, using different names.
 The actual name doesn't matter, they just have to be different.
 <li> Now select <b>Simple Signal Logic</b> in the <b>Tools</b> menu.

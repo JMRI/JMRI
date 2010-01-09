@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SetSignalsAtTToTTurnout.shtml,v 1.3 2009-03-07 20:09:27 djduchamp Exp $ -->
+<!-- $Id: SetSignalsAtTToTTurnout.shtml,v 1.4 2010-01-09 22:25:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -46,7 +46,7 @@ the turnout is "THROWN".</p>
 <p>
 Prior to selecting this tool, both 
 turnouts must be on the panel connected throat-to-throat by a single track 
-segment, and required signal heads must be in the Signal Table. This tool places 
+segment, and required signal heads must be in the Signal Head Table. This tool places 
 signal heads only when the main track of the turnouts is vertical or horizontal 
 (or mostly vertical or horizontal) on the panel, so design your panel 
 accordingly. The control logic created by this tool only works correctly 
@@ -149,7 +149,7 @@ correctly, you may have to create and assign a virtual signal (a signal that
 does not correspond to an actual signal on the layout) at the unsignaled end of 
 the block that connects track that is signaled with track that is not signaled. 
 (You do not need to add an icon for the virtual signal to your panel, but it 
-must exist in your signal table, and must be assigned to a turnout or block 
+must exist in your signal head table, and must be assigned to a turnout or block 
 boundary using a Set Signals ... tool.) If a block ends with an 
 end bumper, no virtual signal is required at the end bumper end.</p>
 <p>

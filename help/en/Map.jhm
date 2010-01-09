@@ -176,8 +176,6 @@
 
 <mapID target="html.doc.Technical.StartUpScripts" url="html/doc/Technical/StartUpScripts.shtml"/>
 
-<mapID target="package.jmri.jmrit.beantable.SignalTable" url="package/jmri/jmrit/beantable/SignalTable.shtml"/>
-
 <mapID target="package.jmri.jmrix.loconet.locostats.LocoStatsFrame" url="package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml"/>
 
 <mapID target="manual.index_Error" url="manual/index.shtml#Error"/>
@@ -1321,6 +1319,8 @@
 <mapID target="html.tools.automation.viaJava" url="html/tools/automation/viaJava.shtml"/>
 
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_window" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#window"/>
+
+<mapID target="package.jmri.jmrit.beantable.SignalHeadTable" url="package/jmri/jmrit/beantable/SignalHeadTable.shtml"/>
 
 <mapID target="html.tools.throttle.ThrottleWindowMenus" url="html/tools/throttle/ThrottleWindowMenus.shtml"/>
 

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SetSignalsAtBoundary.shtml,v 1.4 2009-03-07 20:09:27 djduchamp Exp $ -->
+<!-- $Id: SetSignalsAtBoundary.shtml,v 1.5 2010-01-09 22:25:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -34,7 +34,7 @@ this tool will place signal
 icons on the panel at the specified block boundary, and will set up Simple 
 Signal Logic for the specified signal heads. Prior to accessing this tool, 
 blocks must be defined for signaled regions of track on the panel, and 
-the required signal heads must be in the Signal Table. This tool only works
+the required signal heads must be in the Signal Head Table. This tool only works
 correctly when track through the anchor point is vertical or horizontal (or
 mostly vertical or horizontal), so design your panel accordingly.</p>
 <p>

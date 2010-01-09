@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.7 2009-12-28 20:16:49 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.8 2010-01-09 22:25:56 jacobsen Exp $ -->
 <title>JMRI: Signaling</title>
 
 <!-- Style -->
@@ -291,15 +291,15 @@ to create a CTC panel, as Bob Bucklew shows on
 		and "test" for user name, then click <b>OK</b>. <i>Note:</i> System names must start 
 		with CT, IT, LT, NT, XT, etc. and be followed by the actual hardware number of the turnout.
 		</li> <li> Clicking on the correct <b>Closed/Thrown</b> entries in the Turnout Table should now cause your signal to change.
-		</li><li> Next select <b>Signal Table</b> in the <b>Tools</b> menu.
-		</li><li> In the Signal Table window that appears, click <b>Add</b> to begin defining a new signal head.
+		</li><li> Next select <b>Signal Head Table</b> in the <b>Tools</b> menu.
+		</li><li> In the Signal Head Table window that appears, click <b>Add</b> to begin defining a new signal head.
 		</li><li> In the Add New Signal window that appears choose the correct signal type to 
 		match your hardware. The required item boxes will appear.
 		</li><li> Enter a system name. For example LH152. <i>Note:</i> System names must start 
 		with CH, IH, LH, NH, XH, etc. and be followed by the number of this head.
 		</li><li> Next enter one or more turnout numbers that will control this signal. <i>Note:</i> In the case of
 		SE8c style signals just enter the first turnout number of each pair. The second is automatically known. 
-		</li><li> Click <b>OK</b> to enter this head into the Signal Table.  
+		</li><li> Click <b>OK</b> to enter this head into the Signal Head Table.  
 		</li><li> Enter all the signal heads that you will be using for this test.
 		<li> Now select <b>Simple Signal Logic</b> in the <b>Tools</b> menu.
 		</li>

@@ -1015,7 +1015,7 @@
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/SignalTable.shtml">Signal Head Table </a>
+<a href="package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head Table </a>
 <ul></ul>
 </li>
 
@@ -1172,7 +1172,13 @@
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/SignalTable.shtml">Signal Table </a>
+<a href="package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table </a>
 <ul></ul>
 </li>
 

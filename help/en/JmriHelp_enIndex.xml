@@ -333,7 +333,7 @@
 
   <indexitem text="European Examples " target="html.tools.signaling.ldt.output"/>
 
-  <indexitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalTable"/>
+  <indexitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
 
  </indexitem>
  <indexitem text="Signal Masts " target="html.tools.signaling.SignalMasts">
@@ -385,7 +385,9 @@
 
   <indexitem text="Sensor Table " target="package.jmri.jmrit.beantable.SensorTable"/>
 
-  <indexitem text="Signal Table " target="package.jmri.jmrit.beantable.SignalTable"/>
+  <indexitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
+
+  <indexitem text="Signal Mast Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
 
   <indexitem text="Thread Table " target="package.jmri.jmrit.automat.monitor.AutomatTableFrame"/>
 

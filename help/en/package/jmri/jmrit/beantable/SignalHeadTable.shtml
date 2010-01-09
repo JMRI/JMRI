@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalTable.shtml,v 1.12 2009-12-27 18:39:54 jacobsen Exp $ -->
+<!-- $Id: SignalHeadTable.shtml,v 1.1 2010-01-09 22:25:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -7,7 +7,7 @@
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Signal Table">
+    <META name="keywords" content="JMRI help Signal Head Table">
 
 <!-- Style -->
   <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -27,7 +27,7 @@
 </H1>
 
 <A href="../../../../html/tools/images/SigTable.gif">
- <IMG SRC="../../../../html/tools/images/SigTable.gif" ALIGN=RIGHT WIDTH="375" HEIGHT="166" HSPACE="0" VSPACE="0" ALT="Signal Table figure">
+ <IMG SRC="../../../../html/tools/images/SigTable.gif" ALIGN=RIGHT WIDTH="375" HEIGHT="166" HSPACE="0" VSPACE="0" ALT="Signal Head Table figure">
 </a>
 
 <p>All the signal heads that JMRI knows about can be referenced

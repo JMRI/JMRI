@@ -321,7 +321,7 @@
    <tocitem text="Signal Heads " target="html.tools.signaling.index">
     <tocitem text="Adding Signal Heads " target="package.jmri.jmrit.beantable.SignalAddEdit"/>
 
-    <tocitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalTable"/>
+    <tocitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
 
     <tocitem text="European Examples " target="html.tools.signaling.ldt.output"/>
 
@@ -346,7 +346,7 @@
 
    <tocitem text="Sensor Table " target="package.jmri.jmrit.beantable.SensorTable"/>
 
-   <tocitem text="Signal Table " target="package.jmri.jmrit.beantable.SignalTable"/>
+   <tocitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
 
    <tocitem text="Route Table " target="package.jmri.jmrit.beantable.RouteTable"/>
 
