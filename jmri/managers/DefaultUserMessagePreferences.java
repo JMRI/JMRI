@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import jmri.UserPreferencesManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
 import java.awt.event.ActionEvent;
@@ -16,10 +17,10 @@ import java.awt.Component;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
  
-public class DefaultUserMessagePreferences{
+public class DefaultUserMessagePreferences implements UserPreferencesManager {
 
     protected static DefaultUserMessagePreferences _instance = null;
 
@@ -41,7 +42,7 @@ public class DefaultUserMessagePreferences{
         }
     }
     
-    public static synchronized DefaultUserMessagePreferences instance() {
+    public static synchronized UserPreferencesManager instance() {
         if (_instance == null) {
             if (log.isDebugEnabled()) log.debug("creating a new Default UserMessagePreferences object");
             _instance = new DefaultUserMessagePreferences();

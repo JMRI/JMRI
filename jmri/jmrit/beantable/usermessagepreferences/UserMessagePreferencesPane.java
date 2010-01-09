@@ -18,7 +18,7 @@ import javax.swing.*;
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class UserMessagePreferencesPane extends javax.swing.JPanel {
 
@@ -30,7 +30,7 @@ public class UserMessagePreferencesPane extends javax.swing.JPanel {
 
     JCheckBox _rememberAdhocLocosEcos;
     JComboBox _defaultProtocol;
-    jmri.managers.DefaultUserMessagePreferences p;
+    jmri.UserPreferencesManager p;
     
     public UserMessagePreferencesPane() {
         super();

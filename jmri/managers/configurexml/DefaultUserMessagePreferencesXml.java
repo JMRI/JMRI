@@ -18,9 +18,11 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
      * @return Element containing the complete info
      */
     public Element store(Object o) {
+        jmri.UserPreferencesManager p = (jmri.UserPreferencesManager) o;
+
         Element messages = new Element("UserMessagePreferences");
-        DefaultUserMessagePreferences p = jmri.managers.DefaultUserMessagePreferences.instance();
         setStoreElementClass(messages);
+
         Element userPref;
         
         if (!p.getDisplayRememberMsg()){
@@ -70,7 +72,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
      @SuppressWarnings("unchecked")
     public boolean load(Element messages) {
         // ensure the master object exists
-        DefaultUserMessagePreferences p = jmri.managers.DefaultUserMessagePreferences.instance();
+        jmri.UserPreferencesManager p = jmri.managers.DefaultUserMessagePreferences.instance();
         p.setLoading();
         List<Element> messageList = messages.getChildren("displayRememberMsg");
         for (int i=0; i<messageList.size();i++){
