@@ -16,7 +16,7 @@ import java.awt.Component;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
  
 public class DefaultUserMessagePreferences{
@@ -24,10 +24,7 @@ public class DefaultUserMessagePreferences{
     protected static DefaultUserMessagePreferences _instance = null;
 
     public DefaultUserMessagePreferences(){
-        if (jmri.InstanceManager.configureManagerInstance()!=null) {
-            jmri.InstanceManager.store(this, DefaultUserMessagePreferences.class);
-            jmri.InstanceManager.configureManagerInstance().registerConfig(this);
-        }
+
         if (userPreferencesShutDownTask==null) {
             userPreferencesShutDownTask = new QuietShutDownTask("User Preferences Shutdown") {
                 @Override
@@ -49,7 +46,7 @@ public class DefaultUserMessagePreferences{
             if (log.isDebugEnabled()) log.debug("creating a new Default UserMessagePreferences object");
             _instance = new DefaultUserMessagePreferences();
 
-            //jmri.InstanceManager.store(_instance, DefaultUserMessagePreferences.class);
+            jmri.InstanceManager.store(_instance, DefaultUserMessagePreferences.class);
             jmri.InstanceManager.configureManagerInstance().registerPref(_instance);
         }
         return (_instance);
