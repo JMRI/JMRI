@@ -24,7 +24,7 @@ import jmri.util.SystemType;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 abstract public class AbstractPortController implements SerialPortAdapter {
 
@@ -156,6 +156,11 @@ abstract public class AbstractPortController implements SerialPortAdapter {
         // For now, just run this under Windows
         // until such time as differences between
         // RXTX and Sun can be fully reconciled.
+    	// Boudreau: 1/8/2010 Now using RXTX with Windows, eliminate the reload since
+    	// it doesn't work anymore.
+    	return;
+    }
+    	/*
         if (SystemType.getType() == SystemType.WINDOWS) {
             try // try reloading the driver
             {
@@ -181,6 +186,7 @@ abstract public class AbstractPortController implements SerialPortAdapter {
             }
         }
 	}
+	*/
     
     /**
      * Get an array of valid values for "option 1"; used to display valid options.
