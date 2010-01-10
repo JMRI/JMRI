@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: AspectSignaling.shtml,v 1.5 2009-12-31 21:23:33 jacobsen Exp $ -->
+<!-- $Id: AspectSignaling.shtml,v 1.6 2010-01-10 06:56:08 jacobsen Exp $ -->
 <title>JMRI: Aspect Signaling</title>
 
 <!-- Style -->
@@ -131,6 +131,20 @@ Properties can be defined programatically via e.g.
 or get loaded automatically from elements in the 
 <a href="DefineNewAspects.shtml">aspect.xml</a>
 file that defines the specific signal system.
+
+<p>
+In addition to the global properties for an aspect, there
+can also be properties local to a specific Signal Mast type.
+An example of this is the default icon image:  The image for a 
+two-head signal mast is different from that for a one-head signal mast,
+even if they both represent "Clear".
+<p>
+To get those:
+<code><pre>
+   m.getAppearanceMap().getProperty("Clear","imagelink");
+</pre></code>
+In words, this is saying "Get the appeance info for this mast,
+and then check the imagelink property of the Clear aspect".
 
 <p>
 Alternately, if you know the name of the signal system in use,
