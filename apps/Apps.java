@@ -44,7 +44,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.93 $
+ * @version     $Revision: 1.94 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -380,7 +380,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
                 // hsURL = HelpSet.findHelpSet(ClassLoader.getSystemClassLoader(), helpsetName);
                 // following line doesn't work on Mac Classic
                 // hsURL = new URL("file:"+helpsetName);
-                hsURL = new URL(FileUtil.getUrl(new File(helpsetName)));
+                hsURL = (new File(helpsetName)).toURL();
                 globalHelpSet = new HelpSet(null, hsURL);
             } catch (java.lang.NoClassDefFoundError ee) {
                 log.debug("classpath="+System.getProperty("java.class.path","<unknown>"));

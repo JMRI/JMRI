@@ -19,7 +19,7 @@ import javax.sound.sampled.*;
  * S@see jmri.jmrit.sound
  *
  * @author	Bob Jacobsen  Copyright (C) 2004, 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class Sound  {
 
@@ -59,7 +59,7 @@ public class Sound  {
     void loadingSound(String filename) {
         try {
             // create a base URL for the sound file location
-            URL url = new URL(jmri.util.FileUtil.getUrl(new java.io.File(filename)));
+            URL url = (new java.io.File(filename)).toURL();
 
             // create a loader and start asynchronous sound loading
             audioClip = new sun.applet.AppletAudioClip(url);

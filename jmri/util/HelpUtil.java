@@ -21,7 +21,7 @@ import java.io.File;
  * It assumes that Java Help 1.1.8 is in use
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class HelpUtil {
@@ -99,7 +99,7 @@ public class HelpUtil {
                     // hsURL = HelpSet.findHelpSet(ClassLoader.getSystemClassLoader(), helpsetName);
                     // following line doesn't work on Mac Classic
                     // hsURL = new URL("file:"+helpsetName);
-                    hsURL = new URL(FileUtil.getUrl(new File(helpsetName)));
+                    hsURL = (new File(helpsetName)).toURL();
                     globalHelpSet = new HelpSet(null, hsURL);
                 } catch (java.lang.NoClassDefFoundError ee) {
                     log.debug("classpath="+System.getProperty("java.class.path","<unknown>"));
