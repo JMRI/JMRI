@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: WindowsNew.shtml,v 1.3 2009-03-11 18:11:17 matthewharris Exp $ -->
+<!-- $Id: WindowsNew.shtml,v 1.4 2010-01-10 07:23:47 jacobsen Exp $ -->
 <html lang="en">
 <HEAD>
         <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
-        <TITLE>JMRI 2.5.2 and later Install Guide: Windows</TITLE>
+        <TITLE>JMRI Install Guide: Windows</TITLE>
 
 <!-- Style -->
   <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -20,15 +20,20 @@
 <div class="nomenu" id="mBody">
 <div id="mainContent">
 <h2>Note:</h2>
-<p>This Install Guide is suitable for JMRI versions 2.5.2 and later - for versions 2.5.1 and earlier, <a href="Windows.html">refer to the old Install Guide</a>.</p>
+<p>This Install Guide is suitable for JMRI versions 2.5.2 and later - for versions 2.5.1 and earlier (2008 and before), <a href="Windows.html">refer to the old Install Guide</a>.</p>
 
 <H1> 
-JMRI 2.5.2 and later Install Guide: Windows
+JMRI Install Guide: Windows
 </H1>
 
 <OL>
   <LI>Determine if your hardware supports Java and JMRI</LI>
-    <P>We have had a report that a 100MHz Pentium is too slow to use, and another that a 120MHz Pentium II is fine, so somewhere around there is the minimum machine configuration, but it's important to have enough memory.  We recommend you have at least 96MB of memory for Windows 98, and 128MB of memory for Windows 2000 or later.  Having 128MB or 256MB respectively would give better performance.  For the more complicated programmer screens, a display with a resolution of 800x600 or larger is strongly recommended. Note that used PC hardware is available for very little money; it might be cheaper to buy a used computer than to update your existing one.</P>
+    <P>We have had a report that a 180MHz Pentium II is too slow to use, and another that a 330MHz Pentium II is fine, 
+    so somewhere around there is the minimum machine configuration, but it's important to have enough memory.  
+    We recommend you have at least 128MB of memory for Windows 98, and 256MB of memory for Windows 2000 or later.  
+    Having 256MB or 512MB respectively would give better performance.  
+    For the more complicated programmer screens, a display with a resolution of 800x600 or larger is strongly recommended. 
+    Note that used PC hardware is available for very little money; it might be cheaper to buy a used computer than to update your existing one.</P>
 
   <LI>Get JMRI</LI>
 

@@ -88,7 +88,7 @@
 		<dt><h3>Supported Computers</h3></dt>
 		<dd> 
 		<ul>
-            <LI><A href="./install/WindowsNew.html">Windows</a>
+            <LI><A href="./install/WindowsNew.shtml">Windows</a>
             <LI><A href="./install/MacOSX.html">MacOS X</a>
             <LI><A href="./install/Linux.html">Linux</a>
             <LI><A href="./install/Debug.shtml">Debugging an installation</a>
