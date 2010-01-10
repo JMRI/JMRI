@@ -37,14 +37,13 @@ import jmri.Turnout;
  * <P>
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version         $Revision: 1.24 $
+ * @version         $Revision: 1.25 $
  */
 
 public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager implements LocoNetListener {
 
     // ctor has to register for LocoNet events
     public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller) {
-        //_instance = this;
         this.fastcontroller = fastcontroller;
         this.throttledcontroller = throttledcontroller;
         
@@ -141,16 +140,6 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         // the "+ 1" in the following converts to throttle-visible numbering
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1);
     }
-
-    //static public LnTurnoutManager instance() {
-    //    if (_instance == null) {
-    //        log.error("forcing default instance");
-    //        _instance = new LnTurnoutManager(null);
-    //    }
-    //    return _instance;
-    //}
-    
-    //static LnTurnoutManager _instance = null;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnTurnoutManager.class.getName());
 }
