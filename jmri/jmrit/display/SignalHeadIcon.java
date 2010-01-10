@@ -26,7 +26,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.54 $
+ * @version $Revision: 1.55 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -531,7 +531,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         makeAddIconFrame("EditSignal", "addIconsToPanel", 
                                            "SelectSignal", _editor);
         _editor.makeIconPanel();
-        _editor.setPickList(PickListModel.signalPickModelInstance());
+        _editor.setPickList(PickListModel.signalHeadPickModelInstance());
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
