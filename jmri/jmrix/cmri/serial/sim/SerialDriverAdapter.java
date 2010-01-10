@@ -9,28 +9,20 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
-
 /**
  * Extends the serialdriver.SerialDriverAdapter class to 
  * act as simulated connection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SerialDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
-
-    SerialPort activeSerialPort = null;
 
     public String openPort(String portName, String appName)  {
             // don't even try to get port
 
             // get and save stream
-            serialStream = null; //activeSerialPort.getInputStream();
+            serialStream = null;
 
             opened = true;
 

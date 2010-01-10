@@ -5,7 +5,6 @@ package apps;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.util.JmriJFrame;
-import jmri.util.FileUtil;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
@@ -28,9 +27,6 @@ import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.help.CSH;
-import javax.help.HelpBroker;
-import javax.help.HelpSet;
 import javax.swing.*;
 
 import java.awt.event.WindowEvent;
@@ -44,7 +40,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.95 $
+ * @version     $Revision: 1.96 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
