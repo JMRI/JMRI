@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a engine roster -->
-<!-- $Id: operations-engines.dtd,v 1.8 2009-09-02 03:31:32 dan_boudreau Exp $ -->
+<!-- $Id: operations-engines.dtd,v 1.9 2010-01-10 04:06:43 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -34,6 +34,7 @@
 <!ATTLIST engine color					CDATA #IMPLIED> 
 <!ATTLIST engine length					CDATA #IMPLIED>
 <!ATTLIST engine weight					CDATA #IMPLIED>
+<!ATTLIST engine weightTons				CDATA #IMPLIED>
 <!ATTLIST engine built					CDATA #IMPLIED>  
 <!ATTLIST engine hp						CDATA #IMPLIED>  
 <!ATTLIST engine consist				CDATA #IMPLIED> 
