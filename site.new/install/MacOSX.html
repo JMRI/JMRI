@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MacOSX.html,v 1.34 2009-11-28 19:12:36 jacobsen Exp $ -->
+<!-- $Id: MacOSX.html,v 1.35 2010-01-10 07:24:34 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -70,7 +70,7 @@
 	    <p>
 	    You should have enough memory for your computer to run well, but you don't need
 	    any more than that.
-        Having 50MB of free disk space is sufficient.
+        The install will take up about 100MB of disk space, mostly for the help pages.
         
 		<LI>Determine if you have the needed hardware.
 		
@@ -91,6 +91,7 @@
 	      "/dev/cu", for example "/dev/tty.KeyUSA19181.1". In that case, you
 	      must select the one that starts with "cu", e.g.
 	      "/dev/cu.KeyUSA19181.1".</p>
+	      
 	    <p>There's a Mac OS X driver for USB-serial adapters
 	    based on the Prolific PL2303 chipset 
 	    <a href="http://osx-pl2303.sourceforge.net/">available here</a>.
@@ -107,6 +108,10 @@
       
 	<LI>Install the serial communications libraries</LI>
 
+     <em>This step is no longer needed if you are installing
+     JMRI 2.9.2 or later.  If you are installing JMRI 2.9.2 or later,
+     skip to the next step. </em>
+     
 	 <p>Although Mac OS X comes with an up-to-date Java, it doesn't
 	 include the Java communications libraries.  These are needed to
 	 talk to a command station, so we provide an installer.
@@ -160,12 +165,14 @@
 
 	<p><a href="../download/index.html#prod-rel">Download</a> a version of JMRI, either the
 	latest production version, or a "test version".  Since the version
-	numbers change with every release, this link takes you to the general
+	numbers change with every release, 
+	<a href="../download/index.html">this link</a> 
+	takes you to the general
 	JMRI download page, where you can select whichever version you like.</p>
 
 	<p>The JMRI project is continuously adding features, bug fixes,
-	examples and tutorials to the release, and so a new "test" versions
-	appear every couple of weeks.  You may find one of these has features
+	examples and tutorials to the release, and so a new "test" version
+	appears every month or so.  You may find one of these has features
 	that you really want.  These are announced in the "jmriusers" Yahoo
 	discussion group at
 	<a href="http://groups.yahoo.com/group/jmriusers/">http://groups.yahoo.com/group/jmriusers/</a>.
