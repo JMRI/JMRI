@@ -44,7 +44,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.94 $
+ * @version     $Revision: 1.95 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -366,64 +366,23 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         devMenu.add(new jmri.jmrix.serialsensor.SerialSensorAction("Serial port sensors"));
     }
 
-    static HelpSet globalHelpSet;
-    static HelpBroker globalHelpBroker;
 
     protected void helpMenu(JMenuBar menuBar, final JFrame frame) {
-        JMenu helpMenu = new JMenu(rb.getString("MenuHelp"));
-        menuBar.add(helpMenu);
         try {
-            String helpsetName = "help/en/JmriHelp_en.hs";
-            URL hsURL;
-            try {
-                // HelpSet.findHelpSet doesn't seem to be working, so is temporarily bypassed
-                // hsURL = HelpSet.findHelpSet(ClassLoader.getSystemClassLoader(), helpsetName);
-                // following line doesn't work on Mac Classic
-                // hsURL = new URL("file:"+helpsetName);
-                hsURL = (new File(helpsetName)).toURL();
-                globalHelpSet = new HelpSet(null, hsURL);
-            } catch (java.lang.NoClassDefFoundError ee) {
-                log.debug("classpath="+System.getProperty("java.class.path","<unknown>"));
-                log.debug("classversion="+System.getProperty("java.class.version","<unknown>"));
-                log.error("Help classes not found, help system omitted", ee);
-                return;
-            } catch (java.lang.Exception e2) {
-                log.error("HelpSet "+helpsetName+" not found, help system omitted", e2);
-                return;
-            }
-            globalHelpBroker = globalHelpSet.createHelpBroker();
+
+            // create menu and standard items
+            JMenu helpMenu = jmri.util.HelpUtil.makeHelpMenu(frame, mainWindowHelpID(), true);
+            
+            // tell help to use default browser for external types
             javax.help.SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
+                
+            // use as main help menu 
+            menuBar.add(helpMenu);
             
-            JMenuItem menuWindowItem = jmri.util.HelpUtil.makeHelpMenuItem(mainWindowHelpID());
-            helpMenu.add(menuWindowItem);
-            
-            JMenuItem menuItem = new JMenuItem(rb.getString("MenuItemHelp"));
-            helpMenu.add(menuItem);
-            menuItem.addActionListener(new CSH.DisplayHelpFromSource(globalHelpBroker));
-
-            // start help to see what happend
-            log.debug("help: "+globalHelpSet.getHomeID()+":"+globalHelpSet.getTitle()
-                               +":"+globalHelpSet.getHelpSetURL());
-
-        } catch (java.lang.NoSuchMethodError e2) {
-            log.error("Is jh.jar available? Error starting help system: "+e2);
         } catch (java.lang.Throwable e3) {
-            log.error("Unexpected error starting help system: "+e3);
+            log.error("Unexpected error creating help: "+e3);
         }
 
-        JMenuItem license = new JMenuItem(rb.getString("MenuItemLicense"));
-        helpMenu.add(license);
-        license.addActionListener(new LicenseAction());
-
-        helpMenu.add(new jmri.jmrit.mailreport.ReportAction());
-
-        JMenuItem directories = new JMenuItem(rb.getString("MenuItemLocations"));
-        helpMenu.add(directories);
-        directories.addActionListener(new jmri.jmrit.XmlFileLocationAction());
-
-        JMenuItem context = new JMenuItem(rb.getString("MenuItemContext"));
-        helpMenu.add(context);
-        context.addActionListener(new apps.ReportContextAction());
     }
 
     /**

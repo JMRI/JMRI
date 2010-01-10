@@ -21,7 +21,7 @@ import java.io.File;
  * It assumes that Java Help 1.1.8 is in use
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class HelpUtil {
@@ -53,6 +53,20 @@ public class HelpUtil {
             item = new JMenuItem(rb.getString("MenuItemHelp"));
             globalHelpBroker.enableHelpOnButton(item, "index", null);
             helpMenu.add(item);
+            
+            // add standard items
+            JMenuItem license = new JMenuItem(rb.getString("MenuItemLicense"));
+            helpMenu.add(license);
+            license.addActionListener(new apps.LicenseAction());
+
+            JMenuItem directories = new JMenuItem(rb.getString("MenuItemLocations"));
+            helpMenu.add(directories);
+            directories.addActionListener(new jmri.jmrit.XmlFileLocationAction());
+    
+            JMenuItem context = new JMenuItem(rb.getString("MenuItemContext"));
+            helpMenu.add(context);
+            context.addActionListener(new apps.ReportContextAction());
+
             helpMenu.add(new jmri.jmrit.mailreport.ReportAction());
         }
         return helpMenu;
@@ -95,11 +109,7 @@ public class HelpUtil {
                 String helpsetName = "help/en/JmriHelp_en.hs";
                 URL hsURL;
                 try {
-                    // HelpSet.findHelpSet doesn't seem to be working, so is temporarily bypassed
-                    // hsURL = HelpSet.findHelpSet(ClassLoader.getSystemClassLoader(), helpsetName);
-                    // following line doesn't work on Mac Classic
-                    // hsURL = new URL("file:"+helpsetName);
-                    hsURL = (new File(helpsetName)).toURL();
+                    hsURL = new URL("file:"+helpsetName);
                     globalHelpSet = new HelpSet(null, hsURL);
                 } catch (java.lang.NoClassDefFoundError ee) {
                     log.debug("classpath="+System.getProperty("java.class.path","<unknown>"));
@@ -117,8 +127,7 @@ public class HelpUtil {
             }
             failed = false;
         }
-        if (failed) return false;  // initialization failed
-        return true;
+        return !failed;
     }
     
     static HelpSet globalHelpSet;
