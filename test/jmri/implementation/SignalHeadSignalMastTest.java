@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the SignalHeadSignalMast implementation
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SignalHeadSignalMastTest extends TestCase {
 
@@ -46,6 +46,15 @@ public class SignalHeadSignalMastTest extends TestCase {
 	    s.setAspect("Stop");
 	    Assert.assertEquals("check stop","Stop",s.getAspect());
 	}
+
+	public void testAspectAttributes() {
+	    SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
+	    
+	    s.setAspect("Clear");
+        Assert.assertEquals("../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-abs/rule-281.gif",
+                s.getAppearanceMap().getProperty("Clear","imagelink"));
+	}
+
 
 	public void testAspectNotSet() {
 	    SignalMast s = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");

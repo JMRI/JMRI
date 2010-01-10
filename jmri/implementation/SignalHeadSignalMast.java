@@ -23,7 +23,7 @@ IF:basic:one-searchlight:IH1
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SignalHeadSignalMast extends AbstractSignalMast {
 
@@ -87,7 +87,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         // do standard processing
         super.setAspect(aspect);
     }
-
+    
     public Vector<String> getValidAspects() {
         java.util.Enumeration<String> e = map.getAspects();
         Vector<String> v = new Vector<String>();
@@ -100,7 +100,11 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
     public SignalSystem getSignalSystem() {
         return systemDefn;
     }
-
+    
+    public SignalAppearanceMap getAppearanceMap() {
+        return map;
+    }
+    
     List<NamedBeanHandle<SignalHead>> heads;
     DefaultSignalAppearanceMap map;
     SignalSystem systemDefn;

@@ -36,7 +36,7 @@ import java.util.Vector;
  *
  * @author			Bob Jacobsen Copyright (C) 2002, 2008
  * @author			Pete Cressman Copyright (C) 2009
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public interface SignalMast extends NamedBean {
 
@@ -57,6 +57,8 @@ public interface SignalMast extends NamedBean {
     public Vector<String> getValidAspects();
     
     public SignalSystem getSignalSystem();
+    
+    public SignalAppearanceMap getAppearanceMap();
 }
 
 

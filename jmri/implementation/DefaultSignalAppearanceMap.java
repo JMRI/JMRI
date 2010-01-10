@@ -23,9 +23,9 @@ import jmri.SignalSystem;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
-public class DefaultSignalAppearanceMap extends AbstractNamedBean  {
+public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 
     public DefaultSignalAppearanceMap(String systemName, String userName) {
         super(systemName, userName);
@@ -65,11 +65,11 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean  {
             List<Element> l = root.getChild("appearances").getChildren("appearance");
             
             // find all appearances, include them by aspect name, 
-            // add 'show' sub-elements as ints
             for (int i = 0; i < l.size(); i++) {
                 String name = l.get(i).getChild("aspectname").getText();
                 if (log.isDebugEnabled()) log.debug("aspect name "+name);
                 
+                // add 'show' sub-elements as ints
                 @SuppressWarnings("unchecked")
                 List<Element> c = l.get(i).getChildren("show");
                 
@@ -92,6 +92,19 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean  {
                     appearances[j] = ival;
                 }
                 map.addAspect(name, appearances);
+
+                // now add the rest of the attributes
+                java.util.Hashtable<String, String> hm = new java.util.Hashtable<String, String>();
+
+                @SuppressWarnings("unchecked")
+                List<Element> a = l.get(i).getChildren();
+
+                for (int j = 0; j < a.size(); j++) {
+                    String key = a.get(j).getName();
+                    String value = a.get(j).getText();
+                    hm.put(key, value);
+                }                
+                map.aspectAttributeMap.put(name, hm);
             }
         } catch (Exception e) {
             log.error("error reading file \""+file.getName()+"\" due to: "+e);
@@ -99,6 +112,16 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean  {
         }
         return map;
     }
+
+    /**
+     * Get a property associated with a specific aspect
+     */
+    public String getProperty(String aspect, String key) {
+        return aspectAttributeMap.get(aspect).get(key);
+    }
+
+    protected java.util.Hashtable<String, java.util.Hashtable<String, String>> aspectAttributeMap 
+            = new java.util.Hashtable<String, java.util.Hashtable<String, String>>();
 
     static protected java.util.Hashtable<String, DefaultSignalAppearanceMap> maps
             = new jmri.util.OrderedHashtable<String, DefaultSignalAppearanceMap>();
