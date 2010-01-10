@@ -42,7 +42,7 @@ import javax.swing.event.*;
  * The title of the target and the editor panel are kept
  * consistent via the {#setTitle} method.
  *
- * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007, 2009
+ * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007, 2009, 2010
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
  * @author  Matthew Harris Copyright: Copyright (c) 2009
@@ -217,7 +217,8 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         _addIconBox.addItem(new ComboBoxItem("RightTOEditor"));
         _addIconBox.addItem(new ComboBoxItem("LeftTOEditor"));
         _addIconBox.addItem(new ComboBoxItem("SensorEditor"));
-        _addIconBox.addItem(new ComboBoxItem("SignalEditor"));
+        _addIconBox.addItem(new ComboBoxItem("SignalHeadEditor"));
+        _addIconBox.addItem(new ComboBoxItem("SignalMastEditor"));
         _addIconBox.addItem(new ComboBoxItem("MemoryEditor"));
         _addIconBox.addItem(new ComboBoxItem("ReporterEditor"));
         _addIconBox.addItem(new ComboBoxItem("LightEditor"));
@@ -579,7 +580,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                     };
                     break;
                 case 3:
-                    editor = new IconAdder("SignalEditor");
+                    editor = new IconAdder("SignalHeadEditor");
                     editor.setIcon(0, "SignalHeadStateRed",
                         "resources/icons/smallschematics/searchlights/left-red-marker.gif");
                     editor.setIcon(1, "SignalHeadStateYellow", 
@@ -601,9 +602,9 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                     editor.setIcon(9, "SignalHeadStateFlashingLunar",
                         "resources/icons/smallschematics/searchlights/left-flashlunar-marker.gif");
 
-                    frame = makeAddIconFrame("SignalEditor", "addIconsToPanel", 
-                                                       "SelectSignal", editor);
-                    pickList = PickListModel.signalPickModelInstance();
+                    frame = makeAddIconFrame("SignalHeadEditor", "addIconsToPanel", 
+                                                       "SelectSignalHead", editor);
+                    pickList = PickListModel.signalHeadPickModelInstance();
 
                     addIconAction = new ActionListener() {
                         public void actionPerformed(ActionEvent a) {
@@ -612,7 +613,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                     };
                     changeIconAction = new ActionListener() {
                             public void actionPerformed(ActionEvent a) {
-                                JFrameItem frame = _iconEditorFrame.get("SignalEditor");
+                                JFrameItem frame = _iconEditorFrame.get("SignalHeadEditor");
                                 frame.getEditor().addCatalog();
                                 frame.pack();
                             }
@@ -620,6 +621,21 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                     addToTable = false;
                     break;
                 case 4:
+                    // signal mast
+                    editor = new IconAdder("SignalMastEditor");
+
+                    frame = makeAddIconFrame("SignalMastEditor", "addIconsToPanel", 
+                                                       "SelectSignalMast", editor);
+                    pickList = PickListModel.signalMastPickModelInstance();
+
+                    addIconAction = new ActionListener() {
+                        public void actionPerformed(ActionEvent a) {
+                            addSignalMast();
+                        }
+                    };
+                    addToTable = false;
+                    break;
+                case 5:
                     editor = new IconAdder("MemoryEditor") {
                             JButton b = new JButton(rb.getString("AddSpinner"));
                             JButton bBox = new JButton(rb.getString("AddInputBox"));
@@ -665,7 +681,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                     frame = makeAddIconFrame("MemoryEditor", "addMemValueToPanel", "SelectMemory", editor);
                     pickList = PickListModel.memoryPickModelInstance();
                     break;
-                case 5:
+                case 6:
                     editor = new IconAdder("ReporterEditor");
                     addIconAction = new ActionListener() {
                         public void actionPerformed(ActionEvent a) {
@@ -675,7 +691,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                     frame = makeAddIconFrame("ReporterEditor", "addReportValueToPanel","SelectReporter", editor);
                     pickList = PickListModel.reporterPickModelInstance();
                     break;
-                case 6:
+                case 7:
                     editor = new IconAdder("LightEditor");
                     editor.setIcon(3, "LightStateOff",
                         "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif");
@@ -703,7 +719,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                             }
                     };
                     break;
-                case 7:
+                case 8:
                     editor = new IconAdder("BackgroundEditor");
                     editor.setIcon(0, "background","resources/PanelPro.gif");
 
@@ -723,7 +739,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                     };
                     addToTable = false;
                     break;
-                case 8:
+                case 9:
                     editor = new MultiSensorIconAdder("MultiSensorEditor");
                     editor.setIcon(0, "BeanStateInconsistent",
                                               "resources/icons/USS/plate/levers/l-inconsistent.gif");
@@ -754,13 +770,13 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                             }
                     };
                     break;
-                case 9:
+                case 10:
                     addRpsReporter();
                     return;
-                case 10:
+                case 11:
                     addClock();
                     return;
-                case 11:
+                case 12:
                     editor = new IconAdder("IconEditor");
                     editor.setIcon(0, "plainIcon","resources/jmri48x48.gif");
                     frame = makeAddIconFrame("IconEditor", "addIconToPanel", "pressAdd", editor);
@@ -785,7 +801,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
                 editor.setPickList(pickList);
             }
             editor.complete(addIconAction, changeIconAction, addToTable, false);
-            if (which == 7) {
+            if (which == 9) {
                 frame.addHelpMenu("package.jmri.jmrit.display.MultiSensorIconAdder", true);
             } else {
                 frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
@@ -928,7 +944,7 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
      */
     void addSignalHead() {
         SignalHeadIcon l = new SignalHeadIcon();
-        IconAdder editor = _iconEditorFrame.get("SignalEditor").getEditor();
+        IconAdder editor = _iconEditorFrame.get("SignalHeadEditor").getEditor();
         l.setRedIcon(editor.getIcon("SignalHeadStateRed"));
         l.setFlashRedIcon(editor.getIcon("SignalHeadStateFlashingRed"));
         l.setYellowIcon(editor.getIcon("SignalHeadStateYellow"));
@@ -938,6 +954,20 @@ public class PanelEditor extends JmriJFrame implements ItemListener {
         l.setDarkIcon(editor.getIcon("SignalHeadStateDark"));
         l.setHeldIcon(editor.getIcon("SignalHeadStateHeld"));
         l.setSignalHead(editor.getTableSelection().getDisplayName());
+        setNextLocation(l);
+        putLabel(l);
+        // always allow new items to be moved
+        l.setPositionable(true);
+        moveToFront(l);
+    }
+
+    /**
+     * Add a signal mast to the target
+     */
+    void addSignalMast() {
+        SignalMastIcon l = new SignalMastIcon();
+        IconAdder editor = _iconEditorFrame.get("SignalMastEditor").getEditor();
+        l.setSignalMast(editor.getTableSelection().getDisplayName());
         setNextLocation(l);
         putLabel(l);
         // always allow new items to be moved

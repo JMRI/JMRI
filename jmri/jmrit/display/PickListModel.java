@@ -1,15 +1,7 @@
 package jmri.jmrit.display;
 
 
-import jmri.InstanceManager;
-import jmri.LightManager;
-import jmri.MemoryManager;
-import jmri.ReporterManager;
-import jmri.SensorManager;
-import jmri.SignalHeadManager;
-import jmri.TurnoutManager;
-import jmri.NamedBean;
-import jmri.Manager;
+import jmri.*;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.NamedBeanComparator;
 
@@ -192,8 +184,11 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     public static PickListModel sensorPickModelInstance() {
         return new SensorPickModel();
     }
-    public static PickListModel signalPickModelInstance() {
-        return new SignalPickModel();
+    public static PickListModel signalHeadPickModelInstance() {
+        return new SignalHeadPickModel();
+    }
+    public static PickListModel signalMastPickModelInstance() {
+        return new SignalMastPickModel();
     }
     public static PickListModel memoryPickModelInstance() {
         return new MemoryPickModel();
@@ -243,9 +238,9 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         }
     }
 
-    class SignalPickModel extends PickListModel {
+    class SignalHeadPickModel extends PickListModel {
         SignalHeadManager manager;
-        SignalPickModel () {
+        SignalHeadPickModel () {
             manager = InstanceManager.signalHeadManagerInstance();
         }
         public Manager getManager() {
@@ -256,6 +251,22 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         }
         public NamedBean addBean(String name) {
             return manager.getSignalHead(name);
+        }
+    }
+
+    class SignalMastPickModel extends PickListModel {
+        SignalMastManager manager;
+        SignalMastPickModel () {
+            manager = InstanceManager.signalMastManagerInstance();
+        }
+        public Manager getManager() {
+            return manager;
+        }
+        public NamedBean getBySystemName(String name) {
+            return manager.getBySystemName(name);
+        }
+        public NamedBean addBean(String name) {
+            return manager.getSignalMast(name);
         }
     }
 

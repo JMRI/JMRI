@@ -12,17 +12,19 @@ import junit.framework.*;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2009
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SignalMastIconTest extends TestCase {
 
     SignalMastIcon to = null;
 
-	public void testShow() {
-        JFrame jf = new JFrame("SignalMast Icon Test");
+	public void testShowText() {
+	    // this one is for Layout editor, which for now
+	    // is still in text form.
+        JFrame jf = new JFrame("SignalMast Icon Text Test");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        to = new SignalMastIcon();
+        to = new SignalMastIcon(null);
 
         jf.getContentPane().add(new JLabel("Should say Approach: "));
         jf.getContentPane().add(to);
@@ -48,6 +50,49 @@ public class SignalMastIconTest extends TestCase {
 	    SignalMast s = InstanceManager.signalMastManagerInstance()
 	                        .provideSignalMast("IF$shsm:basic:one-searchlight:IH1");
 	    
+	    to.setSignalMast(s.getSystemName());
+	    
+	    s.setAspect("Clear");
+	    s.setAspect("Approach");
+
+
+        jf.pack();
+        jf.setVisible(true);
+
+	}
+
+	public void testShowIcon() {
+        JFrame jf = new JFrame("SignalMastIcon Icon Test");
+        jf.getContentPane().setLayout(new java.awt.FlowLayout());
+
+        to = new SignalMastIcon();
+
+        jf.getContentPane().add(new JLabel("Should be yellow/yellow: "));
+        jf.getContentPane().add(to);
+        
+        // reset instance manager & create test heads
+        jmri.util.JUnitUtil.resetInstanceManager();
+        InstanceManager.signalHeadManagerInstance().register(
+            new DefaultSignalHead("IH1"){
+                protected void updateOutput(){}
+            }
+        );
+        InstanceManager.signalHeadManagerInstance().register(
+            new DefaultSignalHead("IH2"){
+                protected void updateOutput(){}
+            }
+        );
+        InstanceManager.signalHeadManagerInstance().register(
+            new DefaultSignalHead("IH3"){
+                protected void updateOutput(){}
+            }
+        );
+
+	    SignalMast s = InstanceManager.signalMastManagerInstance()
+	                        .provideSignalMast("IF$shsm:basic:one-searchlight:IH1");
+	    
+	    s.setAspect("Clear");
+
 	    to.setSignalMast(s.getSystemName());
 	    
 	    s.setAspect("Clear");

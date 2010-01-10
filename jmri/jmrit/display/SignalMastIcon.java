@@ -3,12 +3,12 @@
 package jmri.jmrit.display;
 
 import jmri.*;
+import jmri.jmrit.catalog.NamedIcon;
+import jmri.util.NamedBeanHandle;
 
 import java.awt.event.*;
 
 import javax.swing.*;
-
-import jmri.util.NamedBeanHandle;
 
 /**
  * An icon to display a status of a SignalMast.
@@ -18,16 +18,16 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class SignalMastIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
     public SignalMastIcon() {
         // super ctor call to make sure this is an icon label
-        super("<empty>");
-        icon = false;
-        text = true;
+        super(new NamedIcon("resources/icons/misc/X-red.gif","resources/icons/misc/X-red.gif"));
+        icon = true;
+        text = false;
         
         setDisplayLevel(PanelEditor.SIGNALS);
     }
@@ -67,6 +67,7 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
      * @param pName Used as a system/user name to lookup the SignalMast object
      */
     public void setSignalMast(String pName) {
+        this.pName = pName;
         mMast = InstanceManager.signalMastManagerInstance().provideSignalMast(pName);
         if (mMast == null) log.warn("did not find a SignalMast named "+pName);
         else {
@@ -77,6 +78,8 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
         }
     }
 
+    String pName;
+    
     public NamedBeanHandle<SignalMast> getSignalMast() {
         return namedMast;
     }
@@ -106,7 +109,9 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
     public void setProperToolTip() {
         setToolTipText(getNameString());
     }
-
+   
+    public String getPName() { return pName; }
+    
     public String getNameString() {
         String name;
         if (mMast == null) name = rb.getString("NotConnected");
@@ -180,11 +185,29 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
             log.debug("Display state "+state+" for "+mMast.getSystemName());
         }
         
-        super.setText(state);
-        
+        if (text)
+            super.setText(state);
+        else {
+            if (state !=null ) {
+                String s = mMast.getAppearanceMap().getProperty(state, "imagelink");
+                s = s.substring(s.indexOf("resources"));
+                
+                // tiny global cache, due to number of icons
+                NamedIcon n = iconCache.get(s);
+                if (n == null) {
+                    n = new NamedIcon(s,s);
+                    iconCache.put(s, n);
+                }
+                
+                super.setIcon(n);
+                setSize(n.getIconWidth(), n.getIconHeight());
+            }
+        }
         return;
     }
 
+    static java.util.Hashtable<String, NamedIcon> iconCache =
+        new java.util.Hashtable<String, NamedIcon>();
 
     //private static boolean warned = false;
 
