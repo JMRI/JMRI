@@ -63,7 +63,7 @@ public class EcosLocoToRoster implements EcosListener {
         frame = new JFrame();
         _ecosObject = ecosObject;
         _ecosObjectInt = Integer.parseInt(_ecosObject);
-        ecosManager = (EcosLocoAddressManager)jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+        ecosManager = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
         ecosLoco = ecosManager.getByEcosObject(ecosObject);
         String rosterId=ecosLoco.getEcosDescription();
         if(checkDuplicate(rosterId)){

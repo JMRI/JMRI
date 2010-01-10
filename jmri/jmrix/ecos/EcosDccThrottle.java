@@ -14,7 +14,7 @@ import javax.swing.*;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2009 by Kevin Dickerson
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 {
@@ -76,7 +76,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         
         this.address      = address;
         this.isForward    = true;
-        objEcosLocoManager = (EcosLocoAddressManager)jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+        objEcosLocoManager = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
         //We go on a hunt to find an object with the dccaddress sent by our controller.
         objEcosLoco = objEcosLocoManager.provideByDccAddress(address.getNumber());
 

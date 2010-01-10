@@ -43,7 +43,7 @@ import jmri.managers.DefaultRouteManager;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.56 $
+ * @version			$Revision: 1.57 $
  */
 public class InstanceManager {
 
@@ -78,14 +78,14 @@ public class InstanceManager {
     }
     
     static public PowerManager powerManagerInstance()  { 
-        return (PowerManager)getDefault(PowerManager.class);
+        return getDefault(PowerManager.class);
     }
     static public void setPowerManager(PowerManager p) {
         store(p, PowerManager.class);
     }
 
     static public ProgrammerManager programmerManagerInstance()  { 
-        return (ProgrammerManager)getDefault(ProgrammerManager.class);
+        return getDefault(ProgrammerManager.class);
     }
 
     static public void setProgrammerManager(ProgrammerManager p) {
@@ -119,7 +119,7 @@ public class InstanceManager {
     }
 
     static public SignalMastManager signalMastManagerInstance()  { 
-        SignalMastManager m = (SignalMastManager)getDefault(SignalMastManager.class);
+        SignalMastManager m = getDefault(SignalMastManager.class);
         if (m == null) {
             // ensure signal head manager exists first
             signalHeadManagerInstance();
@@ -134,7 +134,7 @@ public class InstanceManager {
     }
 
     static public SignalSystemManager signalSystemManagerInstance()  { 
-        SignalSystemManager m = (SignalSystemManager)getDefault(SignalSystemManager.class);
+        SignalSystemManager m = getDefault(SignalSystemManager.class);
         if (m == null) {
             m = new jmri.managers.DefaultSignalSystemManager();
             setSignalSystemManager(m);

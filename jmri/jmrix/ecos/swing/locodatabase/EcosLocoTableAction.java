@@ -31,10 +31,10 @@ public class EcosLocoTableAction extends AbstractTableAction {
 
             public void clickOn(jmri.jmrix.ecos.EcosLocoAddressManager m) {}
             
-            public EcosLocoAddressManager getManager() {return (EcosLocoAddressManager)jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);}
+            public EcosLocoAddressManager getManager() {return jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);}
 
-            public EcosLocoAddress getByEcosObject(String object) {return ((EcosLocoAddressManager)jmri.InstanceManager.getDefault(EcosLocoAddressManager.class)).getByEcosObject(object);}
-            public EcosLocoAddress getByDccAddress(int address) {return ((EcosLocoAddressManager)jmri.InstanceManager.getDefault(EcosLocoAddressManager.class)).getByDccAddress(address);}
+            public EcosLocoAddress getByEcosObject(String object) {return (jmri.InstanceManager.getDefault(EcosLocoAddressManager.class)).getByEcosObject(object);}
+            public EcosLocoAddress getByDccAddress(int address) {return (jmri.InstanceManager.getDefault(EcosLocoAddressManager.class)).getByDccAddress(address);}
             
             public String getValue(String s) {
                 return "Set";
