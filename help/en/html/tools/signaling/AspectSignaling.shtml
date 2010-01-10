@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: AspectSignaling.shtml,v 1.6 2010-01-10 06:56:08 jacobsen Exp $ -->
+<!-- $Id: AspectSignaling.shtml,v 1.7 2010-01-10 07:04:49 jacobsen Exp $ -->
 <title>JMRI: Aspect Signaling</title>
 
 <!-- Style -->
@@ -82,6 +82,18 @@ From the table, you can set individual signal masts to
 any aspect that they're able to
 display by clicking in the "Aspect" column.
 
+<p>
+Signal Masts can be both tested (in Conditionals) and 
+set (in Actions) via Logix.  When you're editing a Logix Conditional
+or Action, you have to type the Signal Mast name and hit enter/return
+so that the program can look up the possible aspects for that particular
+signal mast.
+
+<p>
+You can also add a Signal Mast icon in the Panel Editor in the usual 
+way.  The icon will display the images from the appearance definition 
+for that particular signal mast. 
+
 <h2>Available Signaling Systems</h2>
 
 JMRI users have provided a number of pre-defined signal systems:
@@ -106,7 +118,7 @@ more signal system definitions we have, the more useful the program
 becomes, and the more people spend time to improve it. We all
 win that way!
 
-<h2>Program Access to Aspect Information</h2>
+<h2>Access to Aspect Information from Code</h2>
 
 A program (in Java or Python) can get access to 
 aspect information two ways.  If it has a reference

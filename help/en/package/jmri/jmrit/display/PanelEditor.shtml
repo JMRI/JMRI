@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PanelEditor.shtml,v 1.15 2009-09-06 16:42:20 pete_cressman Exp $ -->
+<!-- $Id: PanelEditor.shtml,v 1.16 2010-01-10 07:04:49 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
@@ -39,7 +39,7 @@ described on a
 
 <p>
 Panels are created with the Panel Editor, which allows you to place images
-to represent turnouts, signals, sensors, trackwork, etc.
+to represent turnouts, signal heads, sensors, signal masts, trackwork, etc.
 
 <P>If you'd like to see animated clinics that show how each of these
 things are actually done on the computer screen, please see <A
@@ -68,7 +68,8 @@ The Panel Editor consists of the following items:</P>
         <LI>Add Right Hand Turnout Icon</LI>
         <LI>Add Left Hand Turnout Icon</LI>
         <LI>Add Sensor Icon</LI>
-        <LI>Add Signal Icon</LI>
+        <LI>Add Signal Head Icon</LI>
+        <LI>Add Signal Mast Icon</LI>
         <LI>Add Memory Value</LI>
         <LI>Add Reporter Value</LI>
         <LI>Add Background Image</LI>
