@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: sections.xsd,v 1.2 2010-01-06 20:54:41 jacobsen Exp $ -->
+<!-- $Id: sections.xsd,v 1.3 2010-01-11 10:28:12 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -44,7 +44,7 @@
         <xs:element name="section" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="blockentry" minOccurs="0" maxOccurs="1" >
+              <xs:element name="blockentry" minOccurs="0" maxOccurs="unbounded" >
                 <xs:complexType>
                   <xs:attribute name="sName" type="xs:string" />
                   <xs:attribute name="order" type="xs:integer" />
