@@ -17,7 +17,7 @@ import java.awt.Component;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
  
 public class DefaultUserMessagePreferences implements UserPreferencesManager {
@@ -66,10 +66,14 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     }
     
     private static final int ASK = 0x00; // ie always ask the question
+    @SuppressWarnings("unused")
     private static final int NO = 0x01; //ie never do the operation if informational
+    @SuppressWarnings("unused")
     private static final int YES = 0x02; //ie always perform the operation
     
+    @SuppressWarnings("unused")
     private static final boolean DISPLAY = true;
+    @SuppressWarnings("unused")
     private static final boolean NODISPLAY = false;
     
     /**
@@ -81,6 +85,14 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     public boolean getRouteSaveMsg() { return routeSaveMsg; }
     public void setRouteSaveMsg(boolean boo) { 
         routeSaveMsg = boo;
+        _changeMade = true;
+        displayRememberMsg();
+    }
+    
+    protected static int warnDeleteRoute = ASK;
+    public int getWarnDeleteRoute() { return warnDeleteRoute; }
+    public void setWarnDeleteRoute(int boo) { 
+        warnDeleteRoute = boo;
         _changeMade = true;
         displayRememberMsg();
     }
@@ -104,6 +116,102 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         _changeMade = true;
         displayRememberMsg();
     }
+    
+    protected static int warnSensorInUse = ASK;
+    public int getWarnSensorInUse() { return warnSensorInUse; }
+    public void setWarnSensorInUse(int boo) { 
+        warnSensorInUse = boo;
+        _changeMade = true;
+        displayRememberMsg();
+    }
+    
+    protected static int warnSignalHeadInUse = ASK;
+    public int getWarnSignalHeadInUse() { return warnSignalHeadInUse; }
+    public void setWarnSignalHeadInUse(int boo) { 
+        warnSignalHeadInUse = boo;
+        _changeMade = true;
+        displayRememberMsg();
+    }
+    
+    protected static int warnTransitInUse = ASK;
+    public int getWarnTransitInUse() { return warnTransitInUse; }
+    public void setWarnTransitInUse(int boo) { 
+        warnTransitInUse = boo;
+        _changeMade = true;
+        displayRememberMsg();
+    }
+    
+    protected static int warnSignalMastInUse = ASK;
+    public int getWarnSignalMastInUse() { return warnSignalMastInUse; }
+    public void setWarnSignalMastInUse(int boo) { 
+        warnSignalMastInUse = boo;
+        _changeMade = true;
+        displayRememberMsg();
+    }
+    protected static int warnSectionInUse = ASK;
+    public int getWarnSectionInUse() { return warnSectionInUse; }
+    public void setWarnSectionInUse(int boo) { 
+        warnSectionInUse = boo;
+        _changeMade = true;
+        displayRememberMsg();
+    }
+    
+    protected static int warnReporterInUse = ASK;
+    public int getWarnReporterInUse() { return warnReporterInUse; }
+    public void setWarnReporterInUse(int boo) { 
+        warnReporterInUse = boo;
+        _changeMade = true;
+        displayRememberMsg();
+    }
+    
+    protected static int warnMemoryInUse = ASK;
+    public int getWarnMemoryInUse() { return warnMemoryInUse; }
+    public void setWarnMemoryInUse(int boo) { 
+        warnMemoryInUse = boo;
+        _changeMade = true;
+        displayRememberMsg();
+    }
+    
+    protected static int warnLogixInUse = ASK;
+    public int getWarnLogixInUse() { return warnLogixInUse; }
+    public void setWarnLogixInUse(int boo) { 
+        warnLogixInUse = boo;
+        _changeMade = true;
+        displayRememberMsg();
+    }
+    
+    protected static int warnLightInUse = ASK;
+    public int getWarnLightInUse() { return warnLightInUse; }
+    public void setWarnLightInUse(int boo) { 
+        warnLightInUse = boo;
+        _changeMade = true;
+        displayRememberMsg();
+    }
+    
+    protected static int warnLRouteInUse = ASK;
+    public int getWarnLRouteInUse() { return warnLRouteInUse; }
+    public void setWarnLRouteInUse(int boo) { 
+        warnLRouteInUse = boo;
+        _changeMade = true;
+        displayRememberMsg();
+    }
+    
+    protected static int warnBlockInUse = ASK;
+    public int getWarnBlockInUse() { return warnBlockInUse; }
+    public void setWarnBlockInUse(int boo) { 
+        warnBlockInUse = boo;
+        _changeMade = true;
+        displayRememberMsg();
+    }
+    
+    protected static int warnAudioInUse = ASK;
+    public int getWarnAudioInUse() { return warnAudioInUse; }
+    public void setWarnAudioInUse(int boo) { 
+        warnAudioInUse = boo;
+        _changeMade = true;
+        displayRememberMsg();
+    }
+    
     
     protected static boolean displayRememberMsg = DISPLAY;
     public boolean getDisplayRememberMsg() { return displayRememberMsg; }

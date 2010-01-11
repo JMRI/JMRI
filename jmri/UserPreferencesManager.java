@@ -11,7 +11,7 @@ package jmri;
  * @see jmri.managers.DefaultUserMessagePreferences
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
  
 public interface UserPreferencesManager {
@@ -27,6 +27,9 @@ public interface UserPreferencesManager {
     public boolean getRouteSaveMsg();
     public void setRouteSaveMsg(boolean boo);
     
+    public int getWarnDeleteRoute();
+    public void setWarnDeleteRoute(int boo);
+    
     // The reset is used after the preferences have been loaded for the first time
     public void resetChangeMade();
 
@@ -40,9 +43,45 @@ public interface UserPreferencesManager {
     public int getWarnTurnoutInUse();
     public void setWarnTurnoutInUse(int boo);
     
+    public int getWarnSensorInUse();
+    public void setWarnSensorInUse(int boo);
+    
     public boolean getDisplayRememberMsg();
     public void setDisplayRememberMsg(boolean boo);
 
+    public int getWarnSignalHeadInUse();
+    public void setWarnSignalHeadInUse(int boo);
+
+    public int getWarnTransitInUse();
+    public void setWarnTransitInUse(int boo);
+
+    public int getWarnSignalMastInUse();
+    public void setWarnSignalMastInUse(int boo);
+
+    public int getWarnSectionInUse();
+    public void setWarnSectionInUse(int boo);
+
+    public int getWarnReporterInUse();
+    public void setWarnReporterInUse(int boo);
+
+    public int getWarnMemoryInUse();
+    public void setWarnMemoryInUse(int boo);
+
+    public int getWarnLogixInUse();
+    public void setWarnLogixInUse(int boo);
+
+    public int getWarnLightInUse();
+    public void setWarnLightInUse(int boo);
+
+    public int getWarnLRouteInUse();
+    public void setWarnLRouteInUse(int boo);
+
+    
+    public int getWarnBlockInUse();
+    public void setWarnBlockInUse(int boo);
+
+    public int getWarnAudioInUse();
+    public void setWarnAudioInUse(int boo);
 
     public void displayRememberMsg();
     
