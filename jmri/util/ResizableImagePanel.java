@@ -178,8 +178,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
         try {
             image = ImageIO.read(new File(_imagePath));
         } catch (Exception ex) {
-        	if (log.isDebugEnabled())
-        		log.debug(_imagePath + " is not a valid image file, exception: " + ex);
+        	if (log.isDebugEnabled()) log.debug(_imagePath + " is not a valid image file, exception: " + ex);
             unsetImage();
             return false;
         }
@@ -237,7 +236,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
         if (image != null) {
             if ((getSize().getWidth() != 0) && (getSize().getHeight() != 0) && 
             		((getSize().getWidth() != image.getWidth(null)) || (getSize().getHeight() != image.getHeight(null)))) {
-            	log.debug("Actually resizing image "+this.getImagePath());
+            	if (log.isDebugEnabled()) log.debug("Actually resizing image "+this.getImagePath());
             	if ( _respectAspectRatio )
             		if (  (getSize().getWidth() / getSize().getHeight()) > ((double)image.getWidth(null) / (double)image.getHeight(null)) )
             			scaledImage = image.getScaledInstance( -1, (int)getSize().getHeight(), java.awt.Image.SCALE_SMOOTH);
