@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: Protocol.shtml,v 1.1 2010-01-11 17:41:00 jacobsen Exp $ -->
+<title>JMRI: WiFi Throttle Communications Protocol</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: WiFi Throttle Communications Protocol
+</h1>
+
+This page describes the protocol provided by the
+<a href="">jmri.jmrit.withrottle</a>
+package for controlling trains through JMRI via 
+a TCP/IP link.
+
+<p>
+Additions and corrections are welcomed.  This information is 
+very preliminary.
+
+<p>
+Open a TCP/IP link to the port advertised via ZeroConf/Bonjour
+as the servicve "_withrottle._tcp.local.".
+
+<p>
+Send TLaddr, CTLaddr, TSaddr, or CTSaddr to allocate 
+a throttle.  "L" means Long DCC address, "S" means Short DCC
+address.
+
+<p>
+TR0 is reverse, TR1 is forward.
+
+<p>
+TViiii sets speed, where iiii is an integer value. 
+(Need to figure out range for this)
+
+<p>
+Tr and Td "release" and "dispatch" the throttle.  For most
+DCC systems, these are the same thing; if in doubt, use release.
+
+<p>
+This is the package/jmri/jmrit/withrottle/Protocol help page
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

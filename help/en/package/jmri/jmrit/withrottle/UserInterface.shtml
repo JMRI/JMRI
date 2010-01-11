@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author: bhoffman351 $) 2009 -->
-<!-- $Id: UserInterface.shtml,v 1.5 2010-01-04 03:10:46 bhoffman351 Exp $ -->
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: UserInterface.shtml,v 1.6 2010-01-11 17:41:00 jacobsen Exp $ -->
 <title>JMRI: WiFi Throttle</title>
 
 <!-- Style -->
@@ -51,6 +51,10 @@ to prevent the computer from putting itself to sleep when it is inactive.
 The first use of this is the
 <a href="http://withrottle.com">WiThrottle</a>
 for iPhone and iPod Touch.
+
+<p>
+The protocol is described on a 
+<a href="Protocol.shtml">separate page</a>.
 
 <p>
 This is the package/jmri/jmrit/withrottle/UserInterface help page
