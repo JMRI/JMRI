@@ -3,7 +3,7 @@
 
 <!-- Test schema for JMRI I/O support. Not for use before JMRI 2.9.1        -->
 
-<!-- $Id: general.xsd,v 1.4 2010-01-08 21:06:17 jacobsen Exp $ -->
+<!-- $Id: general.xsd,v 1.5 2010-01-11 03:51:42 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -54,6 +54,19 @@
     </xs:annotation>
     <xs:restriction base="xs:normalizedString">
       <xs:minLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="nullUserNameType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of "userName" attribute type
+          that can contain zero-length content.
+          Centralized so we can later enforce naming, linking, etc.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:minLength value="0"/>
     </xs:restriction>
   </xs:simpleType>
 

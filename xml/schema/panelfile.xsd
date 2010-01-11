@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: panelfile.xsd,v 1.1 2010-01-04 22:50:39 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsd,v 1.2 2010-01-11 03:51:42 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
 <!--                                                                        -->
@@ -33,6 +33,7 @@
         >
 
     <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
+    <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/DocBook.xsd'/>
 
     <xs:annotation>
         <xs:documentation>
@@ -54,6 +55,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/transits.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/timebase.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalheads.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalmasts.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/layoutblocks.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalelements.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/audio.xsd"/>
@@ -111,6 +113,7 @@ application
         <xs:element name="timebase"     type="TimebaseType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="signalheads"  type="SignalHeadManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="signalmasts"  type="SignalMastManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="layoutblocks" type="LayoutBlockManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="signalelements" type="SignalElementManagerType" minOccurs="0" maxOccurs="unbounded" />
 
@@ -120,6 +123,8 @@ application
         <xs:element name="conditionals" type="ConditionalManagerType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="LayoutEditor" type="LayoutEditorType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" />
         
       </xs:sequence>
     </xs:complexType>
