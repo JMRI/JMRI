@@ -22,7 +22,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.70 $
+ * @version $Revision: 1.71 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -330,6 +330,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             for (int i = 0; i<items.size(); i++) {
                 // get the class, hence the adapter object to do loading
                 Element item = items.get(i);
+                if (item.getAttribute("class") == null) {
+                    // this is an element that we're not meant to read
+                    continue;
+                }
                 String adapterName = item.getAttribute("class").getValue();
                 log.debug("load via "+adapterName);
                 XmlAdapter adapter = null;
@@ -388,7 +392,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             }
             r.addRevision("File "+fi.getName()+" loaded "+(result ? "OK":"with errors"), included);
         } else {
-            log.warn("could not record history");
+            log.info("Not recording file history");
         }
 
         if (!result) return false;
