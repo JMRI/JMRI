@@ -15,7 +15,7 @@ import jmri.jmrit.revhistory.RevHistory;
  * here.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -131,7 +131,6 @@ public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
         if (r == null) return null;
         
         Element e = historyElement(r);
-        e.setAttribute("class", RevHistoryXml.class.getName());
         
         // add one more element for this store
         RevHistory.Revision rev = 
