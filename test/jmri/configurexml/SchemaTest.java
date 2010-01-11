@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SchemaTest extends LoadFileTestBase {
 
@@ -53,6 +53,10 @@ public class SchemaTest extends LoadFileTestBase {
 
     public void testValidateLargePanelFile() {
         validate(new java.io.File("java/test/jmri/configurexml/LargePanelFileSchemaTest.xml"));
+    }
+
+    public void testValidateRevHistFile() {
+        validate(new java.io.File("java/test/jmri/configurexml/RevHistTest.xml"));
     }
 
     // from here down is testing infrastructure
