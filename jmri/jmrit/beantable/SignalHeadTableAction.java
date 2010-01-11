@@ -49,7 +49,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.49 $
+ * @version     $Revision: 1.50 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -153,6 +153,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
             public Manager getManager() { return InstanceManager.signalHeadManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.signalHeadManagerInstance().getBySystemName(name);}
             public NamedBean getByUserName(String name) { return InstanceManager.signalHeadManagerInstance().getByUserName(name);}
+            public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnSignalHeadInUse(); }
+            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnSignalHeadInUse(boo); }
+            
             public void clickOn(NamedBean t) {
                 int oldState = ((SignalHead)t).getAppearance();
                 int newState = SignalHead.DARK;

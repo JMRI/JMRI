@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -89,7 +89,8 @@ public class BlockTableAction extends AbstractTableAction {
             public Manager getManager() { return InstanceManager.blockManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.blockManagerInstance().getBySystemName(name);}
             public NamedBean getByUserName(String name) { return InstanceManager.blockManagerInstance().getByUserName(name);}
-
+            public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnBlockInUse(); }
+            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnBlockInUse(boo); }
             public void clickOn(NamedBean t) {
             	// don't do anything on click; not used in this class, because 
             	// we override setValueAt

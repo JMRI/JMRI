@@ -13,7 +13,6 @@ import jmri.ConditionalAction;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.Logix;
-import jmri.managers.DefaultUserMessagePreferences;
 
 import java.awt.Container;
 import java.awt.BorderLayout;
@@ -45,7 +44,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.56 $
+ * @version     $Revision: 1.57 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -204,6 +203,10 @@ public class RouteTableAction extends AbstractTableAction {
             public NamedBean getByUserName(String name) { 
                 return jmri.InstanceManager.routeManagerInstance().getByUserName(name);
             }    
+            
+            public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnDeleteRoute(); }
+            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnDeleteRoute(boo); }
+            
             public void clickOn(NamedBean t) {
                ((Route)t).setRoute();
             }

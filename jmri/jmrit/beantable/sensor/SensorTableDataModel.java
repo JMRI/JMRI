@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * Data model for a SensorTable
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class SensorTableDataModel extends BeanTableDataModel {
@@ -33,6 +33,8 @@ public class SensorTableDataModel extends BeanTableDataModel {
     protected Manager getManager() { return InstanceManager.sensorManagerInstance(); }
     protected NamedBean getBySystemName(String name) { return InstanceManager.sensorManagerInstance().getBySystemName(name);}
     protected NamedBean getByUserName(String name) { return InstanceManager.sensorManagerInstance().getByUserName(name);}
+    protected int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnSensorInUse(); }
+    protected void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnSensorInUse(boo); }
     protected void clickOn(NamedBean t) {
         try {
             int state = ((Sensor)t).getKnownState();

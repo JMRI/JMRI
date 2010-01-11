@@ -14,6 +14,8 @@ import java.io.IOException;
 import javax.swing.table.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import java.util.List;
 
@@ -21,7 +23,7 @@ import java.util.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.30 $
+ * @version		$Revision: 1.31 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -176,6 +178,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     abstract protected NamedBean getBySystemName(String name);
     abstract protected NamedBean getByUserName(String name);
     abstract protected void clickOn(NamedBean t);
+    
+    abstract protected int getDisplayDeleteMsg();
+    abstract protected void setDisplayDeleteMsg(int boo);
 
     public void setValueAt(Object value, int row, int col) {
         if (col==USERNAMECOL) {
@@ -213,10 +218,90 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     }
 
     void deleteBean(int row, int col) {
-        NamedBean t = getBySystemName(sysNameList.get(row));
+        final NamedBean t = getBySystemName(sysNameList.get(row));
         int count = t.getNumPropertyChangeListeners()-1; // one is this table
         if (log.isDebugEnabled()) log.debug("Delete with "+count);
-        if (!noWarnDelete) {
+        if (getDisplayDeleteMsg()==0x02) {
+            doDelete(t);
+        } else {
+            final JDialog dialog = new JDialog();
+            String msg;
+            String msg1;
+            final jmri.UserPreferencesManager p;
+            p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+            dialog.setTitle(AbstractTableAction.rb.getString("WarningTitle"));
+            dialog.setLocationRelativeTo(null);
+            dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            JPanel container = new JPanel();
+            container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+            container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+            if (count>0) { // warn of listeners attached before delete
+                msg = java.text.MessageFormat.format(AbstractTableAction.rb.getString("DeletePrompt"), new Object[]{t.getSystemName()});
+                        
+                msg1 = java.text.MessageFormat.format(AbstractTableAction.rb.getString("ReminderInUse"),
+                        new Object[]{""+count});
+                JLabel question = new JLabel(msg);
+                question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                container.add(question);
+                question = new JLabel(msg1);
+                question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                container.add(question);
+
+            } else {
+                msg = java.text.MessageFormat.format(
+                        AbstractTableAction.rb.getString("DeletePrompt"),
+                        new Object[]{t.getSystemName()});
+                JLabel question = new JLabel(msg);
+                question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                container.add(question);
+            }
+
+            final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+            remember.setFont(remember.getFont().deriveFont(10f));
+            remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            JButton yesButton = new JButton("Yes");
+            JButton noButton = new JButton("No");
+            JPanel button = new JPanel();
+            button.setAlignmentX(Component.CENTER_ALIGNMENT);
+            button.add(yesButton);
+            button.add(noButton);
+            container.add(button);
+            
+            noButton.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e) {
+                    //there is no point in remebering this the user will never be
+                    //able to delete a bean!
+                    /*if(remember.isSelected()){
+                        setDisplayDeleteMsg(0x01);
+                    }*/
+                    dialog.dispose();
+                }
+            });
+            
+            yesButton.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e) {
+                    if(remember.isSelected()) {
+                       setDisplayDeleteMsg(0x02);
+                    }
+                    doDelete(t);
+                    dialog.dispose();
+                }
+            });
+            container.add(remember);
+            container.setAlignmentX(Component.CENTER_ALIGNMENT);
+            container.setAlignmentY(Component.CENTER_ALIGNMENT);
+            dialog.getContentPane().add(container);
+            dialog.pack();
+            dialog.setModal(true);
+            dialog.setVisible(true);
+        }
+
+
+        //}
+        
+        /*if (!noWarnDelete) {
+        
             String msg;
             if (count>0) { // warn of listeners attached before delete
                 msg = java.text.MessageFormat.format(
@@ -243,7 +328,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             }
         }
         // finally OK, do the actual delete
-        doDelete(t);
+        doDelete(t);*/
     }
     	
 	boolean noWarnDelete = false;

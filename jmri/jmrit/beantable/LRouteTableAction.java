@@ -233,6 +233,9 @@ public class LRouteTableAction extends AbstractTableAction {
         public NamedBean getByUserName(String name) {
             return _logixManager.getByUserName(name);
         }
+        
+        public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnLRouteInUse(); }
+        public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnLRouteInUse(boo); }
 
         public void configureTable(JTable table) {
             table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());

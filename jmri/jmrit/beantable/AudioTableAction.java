@@ -38,7 +38,7 @@ import jmri.NamedBean;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
  * @author      Matthew Harris  copyright (c) 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class AudioTableAction extends AbstractTableAction {
@@ -222,7 +222,8 @@ public class AudioTableAction extends AbstractTableAction {
         }
 
         public AudioManager getManager() { return InstanceManager.audioManagerInstance(); }
-
+        public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnSensorInUse(); }
+        public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnSensorInUse(boo); }
         public Audio getBySystemName(String name) { return InstanceManager.audioManagerInstance().getBySystemName(name); }
 
         public Audio getByUserName(String name) { return InstanceManager.audioManagerInstance().getByUserName(name); }

@@ -44,7 +44,7 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 // GT - 12-Oct-2009 - Added "Entry Block" column in entryPointTable
 
@@ -94,6 +94,9 @@ public class SectionTableAction extends AbstractTableAction {
             public NamedBean getByUserName(String name) { 
 				return jmri.InstanceManager.sectionManagerInstance().getByUserName(name);
 			}
+            
+            public int getDisplayDeleteMsg() { return jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnSectionInUse(); }
+            public void setDisplayDeleteMsg(int boo) { jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnSectionInUse(boo); }
 
             public void clickOn(NamedBean t) {
             }

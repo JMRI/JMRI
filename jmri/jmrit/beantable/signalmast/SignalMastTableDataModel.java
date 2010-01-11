@@ -13,7 +13,7 @@ import java.util.*;
  * Data model for a SignalMastTable
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class SignalMastTableDataModel extends BeanTableDataModel {
@@ -24,6 +24,9 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     protected Manager getManager() { return InstanceManager.signalMastManagerInstance(); }
     protected NamedBean getBySystemName(String name) { return InstanceManager.signalMastManagerInstance().getBySystemName(name);}
     protected NamedBean getByUserName(String name) { return InstanceManager.signalMastManagerInstance().getByUserName(name);}
+    public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnSignalMastInUse(); }
+    public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnSignalMastInUse(boo); }
+    
     protected void clickOn(NamedBean t) {
 //         try {
 //             int state = ((Sensor)t).getKnownState();

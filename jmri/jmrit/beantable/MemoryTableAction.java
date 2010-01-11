@@ -24,7 +24,7 @@ import jmri.util.JmriJFrame;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -64,6 +64,8 @@ public class MemoryTableAction extends AbstractTableAction {
             public Manager getManager() { return InstanceManager.memoryManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.memoryManagerInstance().getBySystemName(name);}
             public NamedBean getByUserName(String name) { return InstanceManager.memoryManagerInstance().getByUserName(name);}
+            public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnMemoryInUse(); }
+            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnMemoryInUse(boo); }
 
             public void clickOn(NamedBean t) {
             	// don't do anything on click; not used in this class, because 

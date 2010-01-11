@@ -52,7 +52,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.56 $
+ * @version $Revision: 1.57 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -208,7 +208,10 @@ public class LogixTableAction extends AbstractTableAction {
 				return InstanceManager.logixManagerInstance().getByUserName(
 						name);
 			}
-
+    
+            public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnLogixInUse(); }
+            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnLogixInUse(boo); }
+    
             public void configureTable(JTable table) {
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
                 table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());

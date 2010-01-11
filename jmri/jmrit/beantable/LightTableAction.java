@@ -36,7 +36,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.36 $
+ * @version     $Revision: 1.37 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -176,6 +176,9 @@ public class LightTableAction extends AbstractTableAction {
             public NamedBean getByUserName(String name) { 
                 return InstanceManager.lightManagerInstance().getByUserName(name);
             }
+            public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnLightInUse(); }
+            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnLightInUse(boo); }
+            
             public void clickOn(NamedBean t) {
                 int oldState = ((Light)t).getState();
                 int newState;

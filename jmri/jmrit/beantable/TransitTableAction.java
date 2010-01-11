@@ -48,7 +48,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 
 
@@ -102,7 +102,9 @@ public class TransitTableAction extends AbstractTableAction {
             public Manager getManager() { return InstanceManager.transitManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.transitManagerInstance().getBySystemName(name);}
             public NamedBean getByUserName(String name) { return InstanceManager.transitManagerInstance().getByUserName(name);}
-
+            public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnTransitInUse(); }
+            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnTransitInUse(boo); }
+    
             public void clickOn(NamedBean t) {
             }
 

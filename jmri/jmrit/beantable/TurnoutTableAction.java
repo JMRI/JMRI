@@ -41,7 +41,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.64 $
+ * @version     $Revision: 1.65 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -312,6 +312,9 @@ public class TurnoutTableAction extends AbstractTableAction {
                 public Manager getManager() { return InstanceManager.turnoutManagerInstance(); }
                 public NamedBean getBySystemName(String name) { return InstanceManager.turnoutManagerInstance().getBySystemName(name);}
                 public NamedBean getByUserName(String name) { return InstanceManager.turnoutManagerInstance().getByUserName(name);}
+                public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnTurnoutInUse(); }
+                public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnTurnoutInUse(boo); }
+                
                 public void clickOn(NamedBean t) {
                     int state = ((Turnout)t).getCommandedState();
                     if (state==Turnout.CLOSED) ((Turnout)t).setCommandedState(Turnout.THROWN);
