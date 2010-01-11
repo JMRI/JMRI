@@ -2,6 +2,7 @@ package jmri.configurexml;
 
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.revhistory.RevHistory;
 
 import java.io.File;
 
@@ -21,7 +22,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.69 $
+ * @version $Revision: 1.70 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -200,6 +201,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             if (e!=null) root.addContent(e);
         }
     }
+    protected void includeHistory(Element root) {
+        // add history to end of document
+        if (InstanceManager.getDefault(RevHistory.class) != null)
+        root.addContent(jmri.jmrit.revhistory.configurexml.RevHistoryXml.storeDirectly(InstanceManager.getDefault(RevHistory.class)));
+    }
+
     protected void finalStore(Element root, File file) {
         try {
             Document doc = newDocument(root, dtdLocation+"layout-config-"+dtdVersion+".dtd");
@@ -211,7 +218,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             m.put("href", xsltLocation+"panelfile.xsl");
             ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
             doc.addContent(0,p);
-
+            
             writeXML(file, doc);
         } catch (java.io.FileNotFoundException ex3) {
             log.error("FileNotFound error writing file: "+ex3.getLocalizedMessage());
@@ -229,6 +236,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         addConfigStore(root);
         addToolsStore(root);
         addUserStore(root);
+        includeHistory(root);
         finalStore(root, file);
     }
     /**
@@ -256,6 +264,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     public void storeConfig(File file) {
         Element root = initStore();
         addConfigStore(root);
+        includeHistory(root);
         finalStore(root, file);
     }
 
@@ -271,6 +280,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         Element root = initStore();
         addConfigStore(root);
         addUserStore(root);
+        includeHistory(root);
         finalStore(root, file);
     }
     
@@ -312,8 +322,9 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     @SuppressWarnings("unchecked")
 	public boolean load(File fi) throws JmriConfigureXmlException {
         boolean result = true;
+        Element root = null;
         try {
-            Element root = super.rootFromFile(fi);
+            root = super.rootFromFile(fi);
             // get the objects to load
             List<Element> items = root.getChildren();
             for (int i = 0; i<items.size(); i++) {
@@ -328,6 +339,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     // and do it
                     boolean loadStatus = adapter.load(item);
                     log.debug("load status for "+adapterName+" is "+loadStatus);
+                    
                     // if any adaptor load fails, then the entire load has failed
                     if (!loadStatus)
                     	result = false;
@@ -344,24 +356,43 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 }
             }
 
+
         } catch (java.io.FileNotFoundException e1) {
             // this returns false to indicate un-success, but not enough
             // of an error to require a message
             creationErrorEncountered (null, "opening file "+fi.getName(), Level.ERROR,
                                       "File not found", null,null,e1);
-            return false;
+            result = false;
         } catch (org.jdom.JDOMException e) {
             creationErrorEncountered (null, "parsing file "+fi.getName(), Level.ERROR,
                                       "Parse error", null,null,e);
-            return false;
+            result = false;
         } catch (java.lang.Exception e) {
             creationErrorEncountered (null, "loading from file "+fi.getName(), Level.ERROR,
                                       "Unknown error (Exception)", null,null,e);
-            return false;
+            result = false;
         } finally {
             // no matter what, close error reporting
             handler.done();
         }
+
+        // loading complete, as far as it got, make history entry
+        RevHistory r = InstanceManager.getDefault(RevHistory.class);
+        if (r!=null) {
+            RevHistory included = null;
+            if (root != null) {
+                Element revhistory = root.getChild("revhistory", org.jdom.Namespace.getNamespace("http://docbook.org/ns/docbook"));
+                if (revhistory != null) {
+                    included = jmri.jmrit.revhistory.configurexml.RevHistoryXml.loadRevHistory(revhistory);
+                }
+            }
+            r.addRevision("File "+fi.getName()+" loaded "+(result ? "OK":"with errors"), included);
+        } else {
+            log.warn("could not record history");
+        }
+
+        if (!result) return false;
+        
 		// all loaded, initialize objects as necessary
 		InstanceManager.logixManagerInstance().activateAllLogixs();
 		InstanceManager.layoutBlockManagerInstance().initializeLayoutBlockPaths();

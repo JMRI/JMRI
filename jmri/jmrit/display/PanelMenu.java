@@ -22,7 +22,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004
  * @author  Dave Duchamp   Copyright 2007
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class PanelMenu extends JMenu {
     public PanelMenu() {
@@ -40,6 +40,7 @@ public class PanelMenu extends JMenu {
         
         add(new jmri.configurexml.LoadXmlUserAction(rb.getString("MenuItemLoad")));
         add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStore")));
+        add(new jmri.jmrit.revhistory.swing.RevHistoryAction(rb.getString("MenuItemShowHistory")));
         add(new JSeparator());
 		panelsSubMenu = new JMenu(rb.getString("MenuShowPanel"));
 		add(panelsSubMenu);

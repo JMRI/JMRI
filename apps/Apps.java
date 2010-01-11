@@ -40,7 +40,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.96 $
+ * @version     $Revision: 1.97 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -81,6 +81,11 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         cm.setErrorHandler(new jmri.configurexml.swing.DialogErrorHandler());
         InstanceManager.setConfigureManager(cm);
 
+        // Install a history manager
+        jmri.InstanceManager.store(new jmri.jmrit.revhistory.RevHistory(), jmri.jmrit.revhistory.RevHistory.class);
+        // record startup
+        jmri.InstanceManager.getDefault(jmri.jmrit.revhistory.RevHistory.class).addRevision(nameString);
+        
         // Install a user preferences manager
         jmri.InstanceManager.store(new jmri.managers.DefaultUserMessagePreferences(), jmri.UserPreferencesManager.class);
         
@@ -683,6 +688,21 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             }
         }
         catch (java.lang.NoSuchMethodError e) { log.error("Exception starting logging: "+e); }
+    
+        // first log entry
+    	log.info(jmriLog);
+
+        // now indicate logging locations
+        Enumeration<org.apache.log4j.Logger> e = org.apache.log4j.Logger.getRootLogger().getAllAppenders();
+        while ( e.hasMoreElements() ) {
+            org.apache.log4j.Appender a = (org.apache.log4j.Appender)e.nextElement();
+            if ( a instanceof org.apache.log4j.RollingFileAppender ) {
+                log.info("This log is stored in file: "+((org.apache.log4j.RollingFileAppender)a).getFile());
+            }
+            else if ( a instanceof org.apache.log4j.FileAppender ) {
+                log.info("This log is stored in file: "+((org.apache.log4j.FileAppender)a).getFile());
+            }
+        }
     }
 
     /**
@@ -758,21 +778,13 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
     @SuppressWarnings("unchecked")
 	static public String startupInfo(String program) {
-    	log.info(jmriLog);
-        Enumeration<org.apache.log4j.Logger> e = org.apache.log4j.Logger.getRootLogger().getAllAppenders();
-        while ( e.hasMoreElements() ) {
-            org.apache.log4j.Appender a = (org.apache.log4j.Appender)e.nextElement();
-            if ( a instanceof org.apache.log4j.RollingFileAppender ) {
-                log.info("This log is stored in file: "+((org.apache.log4j.RollingFileAppender)a).getFile());
-            }
-            else if ( a instanceof org.apache.log4j.FileAppender ) {
-                log.info("This log is stored in file: "+((org.apache.log4j.FileAppender)a).getFile());
-            }
-        }
-        return (program+" version "+jmri.Version.name()
+        nameString = (program+" version "+jmri.Version.name()
                 +" starts under Java "+System.getProperty("java.version","<unknown>")
                 +" at "+(new java.util.Date()));
+        return nameString;
     }
+    
+    static String nameString = "JMRI program";
     
     public void propertyChange(PropertyChangeEvent ev){
 //   	log.info("property change: comm port status update");
