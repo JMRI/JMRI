@@ -235,7 +235,8 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
 
     private void setScaledImage() {
         if (image != null) {
-            if ((getSize().getWidth() != image.getWidth(null)) || (getSize().getHeight() != image.getHeight(null))) {
+            if ((getSize().getWidth() != 0) && (getSize().getHeight() != 0) && 
+            		((getSize().getWidth() != image.getWidth(null)) || (getSize().getHeight() != image.getHeight(null)))) {
             	log.debug("Actually resizing image "+this.getImagePath());
             	if ( _respectAspectRatio )
             		if (  (getSize().getWidth() / getSize().getHeight()) > ((double)image.getWidth(null) / (double)image.getHeight(null)) )
