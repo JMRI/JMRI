@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.3.shtml,v 1.1 2010-01-07 19:23:04 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.3.shtml,v 1.2 2010-01-11 20:10:05 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -104,6 +104,25 @@ To make these stop, just store the file again so that it's rewritten in the most
 <h3>Changes since test version 2.9.2</h3>
 
 Dan Boudreau made some improvements to programmer error messages, and to operations build messages.
+
+<p>
+Alfredo Sola updated the Spanish translation.
+
+<p>
+Removed the warning message when the program starts up if no roster entries have been stored yet.
+
+<p>
+Fixed a problem with lunar lamps in aspect signaling.
+
+<p>
+You can now add Signal Mast icons in the panel editor.
+The images used are taken from the definition of the signal system in use.
+
+<p>
+A history of the panel files loaded and stored by JMRI is now kept.
+You can look at the current history from the Panel menu.  The display
+is still in a very preliminary stage, we'll improve that later, but 
+we put the feature in now to start accumulating the history in the file.
 
 <!--#include virtual="/Footer" -->
 
