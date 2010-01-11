@@ -40,7 +40,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.97 $
+ * @version     $Revision: 1.98 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -693,7 +693,9 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     	log.info(jmriLog);
 
         // now indicate logging locations
+        @SuppressWarnings("unchecked")
         Enumeration<org.apache.log4j.Logger> e = org.apache.log4j.Logger.getRootLogger().getAllAppenders();
+       
         while ( e.hasMoreElements() ) {
             org.apache.log4j.Appender a = (org.apache.log4j.Appender)e.nextElement();
             if ( a instanceof org.apache.log4j.RollingFileAppender ) {
@@ -776,7 +778,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     // GUI members
     private JMenuBar menuBar;
 
-    @SuppressWarnings("unchecked")
 	static public String startupInfo(String program) {
         nameString = (program+" version "+jmri.Version.name()
                 +" starts under Java "+System.getProperty("java.version","<unknown>")
