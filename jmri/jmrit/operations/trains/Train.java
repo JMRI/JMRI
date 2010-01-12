@@ -42,7 +42,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.57 $
+ * @version $Revision: 1.58 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -71,6 +71,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _cabooseRoad = "";		// required road name for cabooses assigned to this train
 	protected Calendar _departureTime = Calendar.getInstance();	// departure time for this train
 	protected String _leadEngineId ="";		// lead engine for train icon info
+	protected String _builtStartYear = "";	// built start year 
+	protected String _builtEndYear = "";	// built end year
+	protected String _ownerOption = ALLOWNERS;// train road name restrictions
+	
 	
 	protected String _comment = "";
 	
@@ -78,7 +82,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String DISPOSE_CHANGED_PROPERTY = "TrainDispose";
 	public static final String STOPS_CHANGED_PROPERTY = "TrainStops";
 	public static final String TYPES_CHANGED_PROPERTY = "TrainTypes";
-	public static final String ROADS_CHANGED_PROPERTY = "TrainRoad";
+	public static final String ROADS_CHANGED_PROPERTY = "TrainRoads";
+	public static final String OWNERS_CHANGED_PROPERTY = "TrainOwners";
 	public static final String NAME_CHANGED_PROPERTY = "TrainName";
 	public static final String DESCRIPTION_CHANGED_PROPERTY = "TrainDescription";
 	public static final String STATUS_CHANGED_PROPERTY = "TrainStatus";
@@ -94,9 +99,16 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final int CABOOSE = 1;
 	public static final int FRED = 2;
 	
+	// road options
 	public static final String ALLROADS = rb.getString("All");			// train services all road names 
 	public static final String INCLUDEROADS = rb.getString("Include");
 	public static final String EXCLUDEROADS = rb.getString("Exclude");
+	
+	// owner options
+	public static final String ALLOWNERS = rb.getString("All");			// train services all road names 
+	public static final String INCLUDEOWNERS = rb.getString("Include");
+	public static final String EXCLUDEOWNERS = rb.getString("Exclude");
+
 	
 	public static final String AUTO = rb.getString("Auto");				// how engines are assigned to this train
 	
@@ -577,6 +589,144 @@ public class Train implements java.beans.PropertyChangeListener {
        	// exclude!
        	return !_roadList.contains(road);
     }
+    
+	public String getOwnerOption (){
+    	return _ownerOption;
+    }
+    
+ 	/**
+ 	 * Set how this train deals with car owner names
+ 	 * @param option ALLOWNERS INCLUDEOWNERS EXCLUDEOWNERS
+ 	 */
+    public void setOwnerOption (String option){
+    	_ownerOption = option;
+    }
+
+    List<String> _ownerList = new ArrayList<String>();
+    private void setOwnerNames(String[] owners){
+    	if (owners.length == 0) return;
+    	jmri.util.StringUtil.sort(owners);
+ 		for (int i=0; i<owners.length; i++)
+ 			_ownerList.add(owners[i]);
+    }
+    
+    /**
+     * Provides a list of owner names that the train will
+     * either service or exclude.  See setOwnerOption
+     * @return Array of owner names as Strings
+     */
+    public String[] getOwnerNames(){
+      	String[] owners = new String[_ownerList.size()];
+     	for (int i=0; i<_ownerList.size(); i++)
+     		owners[i] = _ownerList.get(i);
+     	if (_ownerList.size() == 0)
+     		return owners;
+     	jmri.util.StringUtil.sort(owners);
+   		return owners;
+    }
+    
+    /**
+     * Add a owner name that the train will
+     * either service or exclude.  See setOwnerOption
+     * @return true if owner name was added, false if owner name
+     * wasn't in the list.
+     */
+    public boolean addOwnerName(String owner){
+     	if (_ownerList.contains(owner))
+    		return false;
+    	_ownerList.add(owner);
+    	log.debug("train (" +getName()+ ") add car owner "+owner);
+    	firePropertyChange (OWNERS_CHANGED_PROPERTY, _ownerList.size()-1, _ownerList.size());
+    	return true;
+    }
+    
+    /**
+     * Delete a owner name that the train will
+     * either service or exclude.  See setOwnerOption
+     * @return true if owner name was removed, false if owner name
+     * wasn't in the list.
+     */
+    public boolean deleteOwnerName(String owner){
+     	if (!_ownerList.contains(owner))
+    		return false;
+    	_ownerList.remove(owner);
+    	log.debug("train (" +getName()+ ") delete car owner "+owner);
+    	firePropertyChange (OWNERS_CHANGED_PROPERTY, _ownerList.size()+1, _ownerList.size());
+       	return true;
+    }
+    
+    /**
+     * Determine if train will service a specific owner name.
+     * @param owner the owner name to check.
+     * @return true if train will service this owner name.
+     */
+    public boolean acceptsOwnerName(String owner){
+    	if (_ownerOption.equals(ALLOWNERS)){
+    		return true;
+    	}
+       	if (_ownerOption.equals(INCLUDEOWNERS)){
+       		return _ownerList.contains(owner);
+       	}
+       	// exclude!
+       	return !_ownerList.contains(owner);
+    }
+    
+    /**
+     * Only rolling stock built in or after this year will be used.
+     * @param year
+     */
+    public void setBuiltStartYear(String year){
+    	_builtStartYear = year;
+    }
+    
+    public String getBuiltStartYear(){
+    	return _builtStartYear;
+    }
+    
+    /**
+     * Only rolling stock built in or before this year will be used.
+     * @param year
+     */
+    public void setBuiltEndYear(String year){
+    	_builtEndYear = year;
+    }
+    
+    public String getBuiltEndYear(){
+    	return _builtEndYear;
+    }
+    
+    /**
+     * Determine if train will service rolling stock by built date. 
+     * @param date
+     * @return true is built date is in the acceptable range.
+     */
+    public boolean acceptsBuiltDate(String date){
+    	if(getBuiltStartYear().equals("") && getBuiltEndYear().equals(""))
+    		return true;	// range dates not defined
+    	int s = 0;		// default start year;
+    	int e = 99999;	// default end year;
+    	try{
+       		s = Integer.parseInt(getBuiltStartYear());
+    	} catch (NumberFormatException e1){
+    		log.debug("Built start date not initialized, start: "+getBuiltStartYear());
+    	}
+    	try{
+    		e = Integer.parseInt(getBuiltEndYear());
+    	} catch (NumberFormatException e1){
+    		log.debug("Built end date not initialized, end: "+getBuiltEndYear());
+    	}  	
+    	try{
+    		int d = Integer.parseInt(date);
+    		if (s<d && d<e)
+    			return true;
+    		else
+    			return false;
+    	} catch (NumberFormatException e1){
+    		log.debug("date: "+date+" isn't an integer");
+    		return false;
+    	}  	
+    }
+    
     /**
      * 
      * @return The number of cars worked by this train
@@ -1169,6 +1319,15 @@ public class Train implements java.beans.PropertyChangeListener {
         	if (log.isDebugEnabled()) log.debug("Train (" +getName()+ ") " +getRoadOption()+  " car roads: "+ names);
         	setRoadNames(roads);
         }
+        if ((a = e.getAttribute("carOwnerOption")) != null )  _ownerOption = a.getValue();
+        if ((a = e.getAttribute("builtStartYear")) != null )  _builtStartYear = a.getValue();
+        if ((a = e.getAttribute("builtEndYear")) != null )  _builtEndYear = a.getValue();
+        if ((a = e.getAttribute("carOwners")) != null ) {
+        	String names = a.getValue();
+           	String[] owners = names.split("%%");
+        	if (log.isDebugEnabled()) log.debug("Train (" +getName()+ ") " +getOwnerOption()+  " car owners: "+ names);
+        	setOwnerNames(owners);
+        }
         if ((a = e.getAttribute("numberEngines")) != null)
         	_numberEngines = a.getValue();
         if ((a = e.getAttribute("engineRoad")) != null)
@@ -1224,7 +1383,10 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("skip", names);        
         if (getCurrentLocation() != null)
         	e.setAttribute("current", getCurrentLocation().getId());
-    	e.setAttribute("carRoadOperation", getRoadOption());	
+    	e.setAttribute("carRoadOperation", getRoadOption());
+    	e.setAttribute("carOwnerOption", getOwnerOption());	
+    	e.setAttribute("builtStartYear", getBuiltStartYear());
+    	e.setAttribute("builtEndYear", getBuiltEndYear());	
         e.setAttribute("numberEngines", getNumberEngines());
         e.setAttribute("engineRoad", getEngineRoad());
         e.setAttribute("engineModel", getEngineModel());
@@ -1247,13 +1409,24 @@ public class Train implements java.beans.PropertyChangeListener {
     			typeNames = typeNames + types[i]+"%%";
         }
         e.setAttribute("carTypes", typeNames);
-      	// build list of car roads for this train
-    	String[] roads = getRoadNames();
-    	String roadNames ="";
-    	for (int i=0; i<roads.length; i++){
-    		roadNames = roadNames + roads[i]+"%%";
-    	}
-        e.setAttribute("carRoads", roadNames);
+      	// save list of car roads for this train
+        if (!getRoadOption().equals(ALLROADS)){
+        	String[] roads = getRoadNames();
+        	String roadNames ="";
+        	for (int i=0; i<roads.length; i++){
+        		roadNames = roadNames + roads[i]+"%%";
+        	}
+        	e.setAttribute("carRoads", roadNames);
+        }
+        // save list of car owners for this train
+        if (!getOwnerOption().equals(ALLOWNERS)){
+        	String[] owners = getOwnerNames();
+        	String ownerNames ="";
+        	for (int i=0; i<owners.length; i++){
+        		ownerNames = ownerNames + owners[i]+"%%";
+        	}
+        	e.setAttribute("carOwners", ownerNames);
+        }
         return e;
     }
 

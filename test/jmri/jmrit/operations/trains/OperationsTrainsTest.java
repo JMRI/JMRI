@@ -58,7 +58,7 @@ import jmri.jmrit.operations.routes.RouteManager;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.45 $
+ * @version $Revision: 1.46 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -121,7 +121,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Train Constant DISPOSE_CHANGED_PROPERTY", "TrainDispose", Train.DISPOSE_CHANGED_PROPERTY);
 		Assert.assertEquals("Train Constant STOPS_CHANGED_PROPERTY", "TrainStops", Train.STOPS_CHANGED_PROPERTY);
 		Assert.assertEquals("Train Constant TYPES_CHANGED_PROPERTY", "TrainTypes", Train.TYPES_CHANGED_PROPERTY);
-		Assert.assertEquals("Train Constant ROADS_CHANGED_PROPERTY", "TrainRoad", Train.ROADS_CHANGED_PROPERTY);
+		Assert.assertEquals("Train Constant ROADS_CHANGED_PROPERTY", "TrainRoads", Train.ROADS_CHANGED_PROPERTY);
 		Assert.assertEquals("Train Constant STATUS_CHANGED_PROPERTY", "TrainStatus", Train.STATUS_CHANGED_PROPERTY);
 		Assert.assertEquals("Train Constant DEPARTURETIME_CHANGED_PROPERTY", "TrainDepartureTime", Train.DEPARTURETIME_CHANGED_PROPERTY);
 		

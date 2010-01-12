@@ -50,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -63,6 +63,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	RouteManager routeManager;
 
 	Train _train = null;
+	Frame _trainEditBuildOptionsFrame = null;
 	List<JCheckBox> typeCarCheckBoxes = new ArrayList<JCheckBox>();
 	List<JCheckBox> typeEngineCheckBoxes = new ArrayList<JCheckBox>();
 	List<JCheckBox> locationCheckBoxes = new ArrayList<JCheckBox>();
@@ -113,7 +114,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	// text field
 	JTextField trainNameTextField = new JTextField(18);
 	JTextField trainDescriptionTextField = new JTextField(30);
-	//JTextField commentTextField = new JTextField(35);
 	
 	// text area
 	JTextArea commentTextArea	= new JTextArea(2,50);
@@ -301,7 +301,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		getContentPane().add(p2);
 		getContentPane().add(locationsPane);
 		getContentPane().add(typeCarPane);
-		getContentPane().add(roadPane);
+		// road panel has been moved to build options, see tools menu
+		//getContentPane().add(roadPane);		
 		getContentPane().add(typeEnginePane);
 		getContentPane().add(trainReq);
 		getContentPane().add(pC);
@@ -354,6 +355,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
+		toolMenu.add(new TrainEditBuildOptionsAction(rb.getString("MenuItemBuildOptions"), this));
 		toolMenu.add(new PrintTrainAction(rb.getString("MenuItemPrint"), new Frame(), false, _train));
 		toolMenu.add(new PrintTrainAction(rb.getString("MenuItemPreview"), new Frame(), true, _train));
 		menuBar.add(toolMenu);
@@ -424,6 +426,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			}	
 			routeBox.setSelectedItem("");
 			manager.deregister(train);
+			if (_trainEditBuildOptionsFrame != null)
+				_trainEditBuildOptionsFrame.dispose();
 			_train = null;
 
 			enableButtons(false);
@@ -933,6 +937,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		setVisible(true);
     }
+    
+    public void setChildFrame(Frame frame){
+    	_trainEditBuildOptionsFrame = frame;
+    }
 	
 	public void dispose() {
 		LocationManager.instance().removePropertyChangeListener(this);
@@ -941,6 +949,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		CarTypes.instance().removePropertyChangeListener(this);
 		CarRoads.instance().removePropertyChangeListener(this);	
 		routeManager.removePropertyChangeListener(this);
+		if (_trainEditBuildOptionsFrame != null)
+			_trainEditBuildOptionsFrame.dispose();
 		if (_train != null){
 			_train.removePropertyChangeListener(this);
 			Route route = _train.getRoute();

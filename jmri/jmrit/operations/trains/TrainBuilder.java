@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009
- * @version             $Revision: 1.70 $
+ * @version             $Revision: 1.71 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -49,7 +49,8 @@ public class TrainBuilder extends TrainCommon{
 	// build variables shared between local routines
 	Train train;			// the train being built
 	int numberCars;			// how many cars are moved by this train
-	int numberEngines;		// the number of engines assigned to this train
+	int reqNumEngines = 0; 	// the number of engines required for this train
+	int numberEngines = 0;	// the number of engines assigned to this train
 	int carIndex;			// index for carList
 	List<String> carList;	// list of cars available for this train
 	List<String> routeList;	// list of locations from departure to termination served by this train
@@ -175,29 +176,66 @@ public class TrainBuilder extends TrainCommon{
 			requested = requested/2;  // only need half as many cars to meet requests
 		addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildRouteRequest"),new Object[]{train.getRoute().getName(), Integer.toString(requested), Integer.toString(numMoves)}));
 		
-		// show road names that this train will service
-		if (!train.getRoadOption().equals(Train.ALLROADS)){
-			String[] roads = train.getRoadNames();
-			StringBuffer sbuf = new StringBuffer("");    	
-	    	for (int i=0; i<roads.length; i++){
-	    		sbuf = sbuf.append(roads[i]+", ");
-	    	}
-	       	// remove trailing separators
-	        if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2);
-	    	String roadNames = sbuf.toString();
-	    	addLine(fileOut, FIVE, "Train ("+train.getName()+") "+train.getRoadOption()+" roads: "+roadNames);
-		}
 		// show car types that this train will service
 		String[] types =train.getTypeNames();
 		StringBuffer sbuf = new StringBuffer("");
     	for (int i=0; i<types.length; i++){
     		sbuf = sbuf.append(types[i]+", ");
-    	}
-    	// remove trailing separators
-        if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2);
-    	String typeNames = sbuf.toString();
-    	addLine(fileOut, FIVE, "Train ("+train.getName()+") services rolling stock types: "+typeNames);
+    	}  	
+        if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2);	// remove trailing separators
+    	addLine(fileOut, FIVE, "Train ("+train.getName()+") services rolling stock types: "+sbuf.toString());
+		// show road names that this train will service
+		if (!train.getRoadOption().equals(Train.ALLROADS)){
+			String[] roads = train.getRoadNames();
+			sbuf = new StringBuffer("");    	
+	    	for (int i=0; i<roads.length; i++){
+	    		sbuf = sbuf.append(roads[i]+", ");
+	    	}	       	
+	        if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2);	// remove trailing separators
+	    	addLine(fileOut, FIVE, "Train ("+train.getName()+") "+train.getRoadOption()+" roads: "+sbuf.toString());
+		}
+		// show owner names that this train will service
+		if (!train.getOwnerOption().equals(Train.ALLOWNERS)){
+			String[] owners = train.getOwnerNames();
+			sbuf = new StringBuffer("");    	
+	    	for (int i=0; i<owners.length; i++){
+	    		sbuf = sbuf.append(owners[i]+", ");
+	    	}
+	        if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2); // remove trailing separators
+	    	addLine(fileOut, FIVE, "Train ("+train.getName()+") "+train.getOwnerOption()+" owners: "+sbuf.toString());
+		}
+		// show built date serviced
+		if (!train.getBuiltStartYear().equals(""))
+			addLine(fileOut, FIVE, "Train ("+train.getName()+") will service rolling stock built after "+train.getBuiltStartYear());
+		if (!train.getBuiltEndYear().equals(""))
+			addLine(fileOut, FIVE, "Train ("+train.getName()+") will service rolling stock built before "+train.getBuiltEndYear());
 		
+		// show engine info
+		if (train.getNumberEngines().equals(Train.AUTO)){
+			reqNumEngines = getAutoEngines(fileOut);
+		} else {
+			reqNumEngines = Integer.parseInt(train.getNumberEngines());
+		}	
+		// show engine types that this train will service
+		if (reqNumEngines >0){
+			String[] engineTypes = EngineTypes.instance().getNames();
+			sbuf = new StringBuffer("");
+			for (int i=0; i<engineTypes.length; i++){
+				if (train.acceptsTypeName(engineTypes[i]))
+					sbuf = sbuf.append(engineTypes[i]+", ");
+			}   		
+			
+			if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2);	// remove trailing separators
+			addLine(fileOut, FIVE, "Train ("+train.getName()+") services engine types: "+sbuf.toString());
+		}		
+		// show engine requirements for this train
+		if (reqNumEngines == 0)
+			addLine(fileOut, ONE, rb.getString("buildTrainReq0Engine"));
+		else if (reqNumEngines == 1)
+			addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildTrainReq1Engine"),new Object[]{train.getEngineModel(), train.getEngineRoad()}));
+		else
+			addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildTrainReqEngine"),new Object[]{train.getNumberEngines(), train.getEngineModel(), train.getEngineRoad()}));
+	
 		// does train terminate into staging?
 		terminateStageTrack = null;
 		List<String> stagingTracksTerminate = terminateLocation.getTracksByMovesList(Track.STAGING);
@@ -265,7 +303,8 @@ public class TrainBuilder extends TrainCommon{
 		}
 
     	// remove cars that don't have a valid track, interchange, road, or type for this train
-    	for (carIndex=0; carIndex<carList.size(); carIndex++){
+		addLine(fileOut, SEVEN, "Remove cars not serviced by this train");
+		for (carIndex=0; carIndex<carList.size(); carIndex++){
     		Car c = carManager.getCarById(carList.get(carIndex));
     		// remove cars that don't have a valid track
     		if (c.getTrack() == null){
@@ -286,6 +325,18 @@ public class TrainBuilder extends TrainCommon{
     			}
     			if (!train.acceptsTypeName(c.getType())){
     				addLine(fileOut, FIVE, "Exclude car ("+c.getRoad()+" "+c.getNumber()+") type ("+c.getType()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
+    				carList.remove(carList.get(carIndex));
+    				carIndex--;
+    				continue;
+    			}
+    			if (!train.acceptsOwnerName(c.getOwner())){
+    				addLine(fileOut, FIVE, "Exclude car ("+c.getRoad()+" "+c.getNumber()+") owner ("+c.getOwner()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
+    				carList.remove(carList.get(carIndex));
+    				carIndex--;
+    				continue;
+    			}
+       			if (!train.acceptsBuiltDate(c.getBuilt())){
+    				addLine(fileOut, FIVE, "Exclude car ("+c.getRoad()+" "+c.getNumber()+") built ("+c.getBuilt()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
     				carList.remove(carList.get(carIndex));
     				carIndex--;
     				continue;
@@ -706,40 +757,14 @@ public class TrainBuilder extends TrainCommon{
 	 * @param fileOut
 	 * @return true if engines found.
 	 */
-	private boolean getEngines(PrintWriter fileOut){				
-		numberEngines = 0;
-		int reqNumEngines = 0; 	
+	private boolean getEngines(PrintWriter fileOut){
+		// if not departing staging track and engines aren't required done!
+		if (departStageTrack == null && reqNumEngines == 0)
+			return true;
+		
+		numberEngines = 0;	
 		int engineLength = 0;
-		int engineWeight = 0;
-		
-		if (train.getNumberEngines().equals(Train.AUTO)){
-			reqNumEngines = getAutoEngines(fileOut);
-		} else {
-			reqNumEngines = Integer.parseInt(train.getNumberEngines());
-		}
-		
-		// show engine types that this train will service
-		if (reqNumEngines >0){
-			String[] engineTypes = EngineTypes.instance().getNames();
-			StringBuffer sbuf = new StringBuffer("");
-			for (int i=0; i<engineTypes.length; i++){
-				if (train.acceptsTypeName(engineTypes[i]))
-					sbuf = sbuf.append(engineTypes[i]+", ");
-			}   		
-			// remove trailing separators
-			if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2);
-			String typeNames = sbuf.toString();
-			addLine(fileOut, FIVE, "Train ("+train.getName()+") services engine types: "+typeNames);
-		}
-		
-		// show engine requirements for this train
-		if (reqNumEngines == 0)
-			addLine(fileOut, ONE, rb.getString("buildTrainReq0Engine"));
-		else if (reqNumEngines == 1)
-			addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildTrainReq1Engine"),new Object[]{train.getEngineModel(), train.getEngineRoad()}));
-		else
-			addLine(fileOut, ONE, MessageFormat.format(rb.getString("buildTrainReqEngine"),new Object[]{train.getNumberEngines(), train.getEngineModel(), train.getEngineRoad()}));
-		
+		int engineWeight = 0;				
 		// if leaving staging, use any number of engines if required number is 0
 		boolean leavingStaging = false;
 		if (departStageTrack != null)
@@ -749,16 +774,13 @@ public class TrainBuilder extends TrainCommon{
 				addLine(fileOut, THREE, "Staging track ("+departStageTrack.getName()+") doesn't have the required number of engines");
 				return false;
 			}
-		if (!leavingStaging && reqNumEngines == 0)
-			return true;
 
 		// get list of engines for this route		
 		List<String> engineList = engineManager.getEnginesAvailableTrainList(train);
 		// remove engines that are the wrong type, wrong track, wrong road name, or part of consist (not lead)
+		addLine(fileOut, SEVEN, "Remove engines not serviced by this train");
 		for (int indexEng=0; indexEng<engineList.size(); indexEng++){
 			Engine engine = engineManager.getEngineById(engineList.get(indexEng));
-			addLine(fileOut, FIVE, "Engine ("+engine.getRoad()+" "+engine.getNumber()+") road ("+engine.getRoad()+") model ("+engine.getModel()+") type ("+engine.getType()+")");
-			addLine(fileOut, SEVEN, " at location ("+engine.getLocationName()+", "+engine.getTrackName()+")");
 			// remove engines types that train does not service
 			if (!train.acceptsTypeName(engine.getType())){
 				addLine(fileOut, THREE, "Exclude engine ("+engine.getRoad()+" "+engine.getNumber()+"), type ("+engine.getType()+") is not serviced by this train");
@@ -776,6 +798,20 @@ public class TrainBuilder extends TrainCommon{
 			// remove engines with roads that train does not service
 			if (!train.getEngineRoad().equals("") && !engine.getRoad().equals(train.getEngineRoad())){
 				addLine(fileOut, THREE, "Exclude engine ("+engine.getRoad()+" "+engine.getNumber()+"), road ("+engine.getRoad()+") is not serviced by this train");
+				engineList.remove(indexEng);
+				indexEng--;
+				continue;
+			}
+			// remove engines with owners that train does not service
+			if (!train.acceptsOwnerName(engine.getOwner())){
+				addLine(fileOut, THREE, "Exclude engine ("+engine.getRoad()+" "+engine.getNumber()+"), owner ("+engine.getOwner()+") is not serviced by this train");
+				engineList.remove(indexEng);
+				indexEng--;
+				continue;
+			}
+			// remove engines with built dates that train does not service
+			if (!train.acceptsBuiltDate(engine.getBuilt())){
+				addLine(fileOut, THREE, "Exclude engine ("+engine.getRoad()+" "+engine.getNumber()+"), built ("+engine.getBuilt()+") is not serviced by this train");
 				engineList.remove(indexEng);
 				indexEng--;
 				continue;
@@ -851,10 +887,14 @@ public class TrainBuilder extends TrainCommon{
 				}
 			}
 		}
-		// now load the number of engines into the train
+		// show how many engines were found
+		addLine(fileOut, SEVEN, "Found "+engineList.size()+" engine(s) for this train, now search for termination track");
+		// now find terminal track for engine(s)
 		Track terminateTrack = terminateStageTrack;
 		for (int indexEng=0; indexEng<engineList.size(); indexEng++){
 			Engine engine = engineManager.getEngineById(engineList.get(indexEng));
+			addLine(fileOut, FIVE, "Engine ("+engine.getRoad()+" "+engine.getNumber()+") road ("+engine.getRoad()+") model ("+engine.getModel()+") type ("+engine.getType()+")");
+			addLine(fileOut, SEVEN, " at location ("+engine.getLocationName()+", "+engine.getTrackName()+")");
 			train.setLeadEngine(engine);	//load lead engine
 			// find a track for engine(s) at destination
 			if (terminateTrack == null){
@@ -1328,7 +1368,20 @@ public class TrainBuilder extends TrainCommon{
 					if (!train.acceptsRoadName(eng.getRoad())){
 						addLine(file, THREE, MessageFormat.format(rb.getString("buildStagingDepartEngineRoad"),
 								new Object[]{departStageTrack.getName(), eng.getRoad()+" "+eng.getNumber(), eng.getRoad(), train.getName()}));
-						return false;				}
+						return false;				
+					}
+					// does the train accept the engine owner from the staging track?
+					if (!train.acceptsOwnerName(eng.getOwner())){
+						addLine(file, THREE, MessageFormat.format(rb.getString("buildStagingDepartEngineOwner"),
+								new Object[]{departStageTrack.getName(), eng.getRoad()+" "+eng.getNumber(), eng.getOwner(), train.getName()}));
+						return false;				
+					}
+					// does the train accept the engine built date from the staging track?
+					if (!train.acceptsBuiltDate(eng.getBuilt())){
+						addLine(file, THREE, MessageFormat.format(rb.getString("buildStagingDepartEngineBuilt"),
+								new Object[]{departStageTrack.getName(), eng.getRoad()+" "+eng.getNumber(), eng.getBuilt(), train.getName()}));
+						return false;				
+					}
 				}
 			}
 		}
@@ -1353,6 +1406,18 @@ public class TrainBuilder extends TrainCommon{
 					if (!train.acceptsRoadName(car.getRoad())){
 						addLine(file, THREE, MessageFormat.format(rb.getString("buildStagingDepartCarRoad"),
 								new Object[]{departStageTrack.getName(), car.getRoad()+" "+car.getNumber(), car.getRoad(), train.getName()}));
+						return false;
+					}
+					// does the train accept the car owner from the staging track?
+					if (!train.acceptsOwnerName(car.getOwner())){
+						addLine(file, THREE, MessageFormat.format(rb.getString("buildStagingDepartCarOwner"),
+								new Object[]{departStageTrack.getName(), car.getRoad()+" "+car.getNumber(), car.getOwner(), train.getName()}));
+						return false;
+					}
+					// does the train accept the car built date from the staging track?
+					if (!train.acceptsBuiltDate(car.getBuilt())){
+						addLine(file, THREE, MessageFormat.format(rb.getString("buildStagingDepartCarBuilt"),
+								new Object[]{departStageTrack.getName(), car.getRoad()+" "+car.getNumber(), car.getBuilt(), train.getName()}));
 						return false;
 					}
 				}
