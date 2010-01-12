@@ -29,7 +29,7 @@ public class QsiTrafficControllerTest extends TestCase {
 	public void testSendAscii() throws Exception {
 		QsiTrafficController c = new QsiTrafficController(){
 		    // skip timeout message
-		    //protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+		    //protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg,jmri.jmrix.AbstractMRListener l) {};
             //public void receiveLoop() {}
             //protected void portWarn(Exception e) {}
         };
@@ -59,7 +59,7 @@ public class QsiTrafficControllerTest extends TestCase {
 	public void testMonitor() throws Exception {
 		QsiTrafficController c = new QsiTrafficController(){
 		    // skip timeout message
-		    //protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+		    //protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg,jmri.jmrix.AbstractMRListener l) {};
             //public void receiveLoop() {}
             //protected void portWarn(Exception e) {}
         };
@@ -96,7 +96,7 @@ public class QsiTrafficControllerTest extends TestCase {
 	public void testRcvReply() throws Exception {
 		QsiTrafficController c = new QsiTrafficController(){
 		    // skip timeout message
-		    //protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg) {};
+		    //protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg,jmri.jmrix.AbstractMRListener l) {};
             //public void receiveLoop() {}
             //protected void portWarn(Exception e) {}
         };
