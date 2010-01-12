@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
@@ -167,10 +167,10 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         }
     }
 
-    protected void handleTimeout(AbstractMRMessage m) {
+    protected void handleTimeout(AbstractMRMessage m,AbstractMRListener l) {
         // inform node, and if it resets then reinitialize 
         if (getNode(curSerialNodeIndex) != null)      
-            if (getNode(curSerialNodeIndex).handleTimeout(m)) 
+            if (getNode(curSerialNodeIndex).handleTimeout(m,l)) 
                 setMustInit(curSerialNodeIndex, true);
         else
             log.warn("Timeout can't be handled due to missing node index="+curSerialNodeIndex);

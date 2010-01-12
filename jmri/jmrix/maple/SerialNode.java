@@ -3,6 +3,7 @@
 package jmri.jmrix.maple;
 
 import jmri.jmrix.AbstractMRMessage;
+import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractNode;
 
 /**
@@ -21,7 +22,7 @@ import jmri.jmrix.AbstractNode;
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author      Bob Jacobsen, Dave Duchamp, revised for Maple, 2009
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SerialNode extends AbstractNode {
 
@@ -124,7 +125,7 @@ public class SerialNode extends AbstractNode {
      *
      * @return true if initialization required
      */
-    public boolean handleTimeout(AbstractMRMessage m) {
+    public boolean handleTimeout(AbstractMRMessage m,AbstractMRListener l) {
 		// increment timeout count
         timeout++;
 		

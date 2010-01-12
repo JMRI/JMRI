@@ -9,7 +9,7 @@ package jmri.jmrix;
  * Integrated with {@link AbstractMRNodeTrafficController}.
  *
  * @author Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public abstract class AbstractNode {
     
@@ -70,9 +70,10 @@ public abstract class AbstractNode {
     /**
      * Deal with a timeout in the transmission controller.
      * @param m message that didn't receive a reply
+     * @param l listener that sent the message 
      * @return true if initialization required
      */
-    abstract public boolean handleTimeout(AbstractMRMessage m);
+    abstract public boolean handleTimeout(AbstractMRMessage m,AbstractMRListener l);
 
     /**
      * A reply was received, so there was not timeout, do any

@@ -29,7 +29,7 @@ import java.io.DataInputStream;
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Bob Jacobsen, Dave Duchamp, adapt to use for Maple 2008, 2009
  *
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  * @since 2.3.7
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
@@ -172,18 +172,18 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 	public int getWrTimeoutCount() {return wrTimeoutCount;}
 	public void resetWrTimeoutCount() {wrTimeoutCount = 0;}
 
-    protected void handleTimeout(AbstractMRMessage m) {
+    protected void handleTimeout(AbstractMRMessage m,AbstractMRListener l) {
 		if (m.getElement(3)=='W' && m.getElement(4)=='C') {
 			wrTimeoutCount ++;
 		}
 		else if (m.getElement(3)=='R' && m.getElement(4)=='C') {
 			if (mNeedAdditionalPollPacket) {
 //				log.warn("Timeout of poll message, node = "+curSerialNodeIndex+" beg addr = "+mSavedPollAddress);
-				getNode(curSerialNodeIndex).handleTimeout(m);
+				getNode(curSerialNodeIndex).handleTimeout(m,l);
 			}
 			else {
 //				log.warn("Timeout of poll message, node = "+(curSerialNodeIndex-1)+" beg addr = "+mSavedPollAddress);
-				getNode(curSerialNodeIndex-1).handleTimeout(m);
+				getNode(curSerialNodeIndex-1).handleTimeout(m,l);
 			}
 		}
 		else {

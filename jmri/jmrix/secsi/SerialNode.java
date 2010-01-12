@@ -5,6 +5,7 @@ package jmri.jmrix.secsi;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
+import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractNode;
 
 /**
@@ -22,7 +23,7 @@ import jmri.jmrix.AbstractNode;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SerialNode extends AbstractNode {
 
@@ -280,7 +281,7 @@ public class SerialNode extends AbstractNode {
      *
      * @return true if initialization required
      */
-    public boolean handleTimeout(AbstractMRMessage m) {
+    public boolean handleTimeout(AbstractMRMessage m,AbstractMRListener l) {
         timeout++;
         // normal to timeout in response to init, output
         if (m.getElement(1)!=0x50) return false;

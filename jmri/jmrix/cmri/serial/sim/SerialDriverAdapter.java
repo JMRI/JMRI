@@ -14,7 +14,7 @@ import java.io.InputStream;
  * act as simulated connection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SerialDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
@@ -44,7 +44,7 @@ public class SerialDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Ser
         // install a traffic controller that doesn't time out
         new SerialTrafficController(){
             // timeout doesn't do anything
-            protected void handleTimeout(jmri.jmrix.AbstractMRMessage m) {}
+            protected void handleTimeout(jmri.jmrix.AbstractMRMessage m,jmri.jmrix.AbstractMRListener l) {}
             // and make this the instance
             { self = this;}
         };

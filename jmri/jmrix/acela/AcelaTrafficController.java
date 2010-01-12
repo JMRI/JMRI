@@ -26,7 +26,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  *
  * @author	Bob Coleman Copyright (C) 2007. 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -353,10 +353,10 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         }
     }
 
-    protected void handleTimeout(AbstractMRMessage m) {
+    protected void handleTimeout(AbstractMRMessage m,AbstractMRListener l) {
         // don't use super behavior, as timeout to init, transmit message is normal
         // inform node, and if it resets then reinitialize        
-        if (getNode(curAcelaNodeIndex).handleTimeout(m)) 
+        if (getNode(curAcelaNodeIndex).handleTimeout(m,l)) 
             setMustInit(curAcelaNodeIndex, true);
     }
     

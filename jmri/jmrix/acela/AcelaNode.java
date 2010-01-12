@@ -4,6 +4,7 @@ package jmri.jmrix.acela;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
+import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractNode;
 
 /**
@@ -23,7 +24,7 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008, 2009
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -1101,7 +1102,7 @@ public class AcelaNode extends AbstractNode {
      *
      * @return true if initialization required
      */
-    public boolean handleTimeout(AbstractMRMessage m) {
+    public boolean handleTimeout(AbstractMRMessage m,AbstractMRListener l) {
         timeout++;
         if (log.isDebugEnabled()) {
             log.warn("Timeout to poll for UA=" + nodeAddress + ": consecutive timeouts: " + timeout);
