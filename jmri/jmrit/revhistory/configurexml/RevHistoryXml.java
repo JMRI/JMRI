@@ -15,7 +15,7 @@ import jmri.jmrit.revhistory.RevHistory;
  * here.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -54,7 +54,7 @@ public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
         RevHistory r = new RevHistory();
         
         @SuppressWarnings("unchecked")
-        java.util.List<Element> list = (java.util.List<Element>)(e.getChildren("revision", Namespace.getNamespace("http://docbook.org/ns/docbook")));
+        java.util.List<Element> list = e.getChildren("revision", Namespace.getNamespace("http://docbook.org/ns/docbook"));
         for (int i = 0; i<list.size(); i++) {
             loadRevision(r, list.get(i));
         }
