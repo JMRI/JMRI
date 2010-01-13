@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Invoke complete set of tests for the jmri.managers
  * @author	Bob Jacobsen, Copyright (C) 2009
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class ManagersTest extends TestCase {
 
@@ -30,6 +30,7 @@ public class ManagersTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.managers.ManagersTest");  // no tests in this class itself
 		suite.addTest(InternalLightManagerTest.suite());
 		suite.addTest(DefaultSignalSystemManagerTest.suite());
+		suite.addTest(DefaultUserMessagePreferencesTest.suite());
         return suite;
     }
 
