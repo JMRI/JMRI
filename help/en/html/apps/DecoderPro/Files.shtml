@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Files.shtml,v 1.4 2010-01-10 19:15:51 jacobsen Exp $ -->
+<!-- $Id: Files.shtml,v 1.5 2010-01-13 20:21:34 jacobsen Exp $ -->
 <title>JMRI: DecoderPro User Guide - Configuration Files</title>
 
 <!-- Style -->
@@ -43,6 +43,12 @@ The location of this varies by computer type.
 The easiest way 
 to find it is to start a JMRI program, e.g. DecoderPro or PanelPro, 
 and select "Locations ..." from the "Help" menu.
+
+<p>
+As a special treat for Windows users, 
+if you go to the Windows Start Menu, in the JMRI section, 
+you can select "Preferences" to have it open that directory for you.
+
 <p>
 Normally, it's located
 <ul>
@@ -60,7 +66,9 @@ or "User Documents" or "Users and Documents".  You're looking
 for a folder called "JMRI".
 
 </ul>
-Make sure you find the preferences directory, <em>and not</em> the original
+If you have to search for it, as opposed to having the program
+tell you where it is,
+make sure you find the preferences directory, <em>and not</em> the original
 application package. They are kept separate to simplify updating the
 program version.
 
