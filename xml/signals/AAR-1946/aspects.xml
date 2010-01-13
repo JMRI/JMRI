@@ -10,17 +10,17 @@
   <date>1946</date>
   <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
 
-  <db:copyright><db:year>2009</db:year><db:year>2010</db:year><db:holder>JMRI</db:holder></db:copyright>
+  <copyright xmlns="http://docbook.org/ns/docbook" ><year>2009</year><year>2010</year><holder>JMRI</holder></copyright>
 
-  <db:authorgroup>
-    <db:author>
-        <db:personname><db:firstname>Dick</db:firstname><db:surname>Bronson</db:surname></db:personname>
-    </db:author>    
-    <db:author>
-        <db:personname><db:firstname>Bob</db:firstname><db:surname>Jacobsen</db:surname></db:personname>
-        <db:email>jake@physics.berkeley.edu</db:email>
-    </db:author>    
-  </db:authorgroup>
+  <authorgroup xmlns="http://docbook.org/ns/docbook" >
+    <author>
+        <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
+    </author>    
+    <author>
+        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+        <email>jake@physics.berkeley.edu</email>
+    </author>    
+  </authorgroup>
 
   <db:revhistory>
     <db:revision>
