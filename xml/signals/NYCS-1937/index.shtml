@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: index.shtml,v 1.1 2010-01-03 20:16:59 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2010-01-13 06:18:09 jacobsen Exp $ -->
 <title>JMRI: NYCS-1937 Signaling Definition</title>
 
 <!-- Style -->
@@ -84,7 +84,6 @@ Signal Mast definitions:
     <hr class="hide">
     <div id="footer">
 	<ul id="bn">
-	<li><a href="/sitemap/">Site Map</a></li>
 	<li>Contact us via the <a href="http://groups.yahoo.com/group/jmriusers">JMRI users</a> mailing list</li>
 	</ul>
 
