@@ -17,7 +17,7 @@ import java.awt.Component;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
  
 public class DefaultUserMessagePreferences implements UserPreferencesManager {
@@ -27,7 +27,8 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     public DefaultUserMessagePreferences(){
 
         // register this object to be stored as part of preferences
-        jmri.InstanceManager.configureManagerInstance().registerPref(this);
+        if (jmri.InstanceManager.configureManagerInstance() != null)
+            jmri.InstanceManager.configureManagerInstance().registerPref(this);
         
         // register a shutdown task to fore storing of preferences at shutdown
         if (userPreferencesShutDownTask==null) {
