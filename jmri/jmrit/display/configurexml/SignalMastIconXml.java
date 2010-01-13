@@ -3,7 +3,6 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.SignalMast;
-import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.PanelEditor;
 import jmri.jmrit.display.LayoutEditor;
 import jmri.jmrit.display.SignalMastIcon;
@@ -15,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalMastIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SignalMastIconXml extends PositionableLabelXml {
 
@@ -93,15 +92,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
             log.error("SignalMast named '"+attr.getValue()+"' not found.");
             return;
         }
-        
-        int rotation = 0;
-        try {
-            attr = element.getAttribute("rotate");
-            rotation = attr.getIntValue();
-        } catch (org.jdom.DataConversionException e){
-        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-        }
-                
+                        
         if (pe!=null){
             pe.putLabel(l);
         }
