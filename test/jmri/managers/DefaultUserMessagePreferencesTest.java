@@ -13,6 +13,7 @@ public class DefaultUserMessagePreferencesTest extends TestCase {
     
     public void testSetGet() {
         DefaultUserMessagePreferences d = new DefaultUserMessagePreferences();
+        jmri.util.JUnitAppender.assertWarnMessage("Won't protect preferences at shutdown without registered ShutDownManager");
         
         Assert.assertTrue(!d.getPreferenceState("one"));
         
