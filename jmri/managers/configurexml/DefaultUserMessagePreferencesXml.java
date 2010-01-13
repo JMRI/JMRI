@@ -24,13 +24,13 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
 
         //Element userPref;
         
-        storeDisplayMsg(messages, "displayRememberMsg", p.getDisplayRememberMsg());
+        //storeDisplayMsg(messages, "displayRememberMsg", p.getDisplayRememberMsg());
         /*if (!p.getDisplayRememberMsg()){
             userPref = new Element("displayRememberMsg").setAttribute("display", "no");
             messages.addContent(userPref);
         }*/
         
-        storeDisplayMsg(messages, "routeSaveMsg", p.getRouteSaveMsg());
+        //storeDisplayMsg(messages, "routeSaveMsg", p.getRouteSaveMsg());
         /*if (!p.getRouteSaveMsg()){
             userPref = new Element("routeSaveMsg").setAttribute("display", "no");
             messages.addContent(userPref);
@@ -78,6 +78,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         storeQuestion(messages, "warnReporterInUse", p.getWarnReporterInUse());
         storeQuestion(messages, "warnMemoryInUse", p.getWarnMemoryInUse());
         storeQuestion(messages, "warnLogixInUse", p.getWarnLogixInUse());
+        storeQuestion(messages, "warnDeleteLogix", p.getWarnDeleteLogix());
         storeQuestion(messages, "warnLightInUse", p.getWarnLightInUse());
         storeQuestion(messages, "warnLRouteInUse", p.getWarnLRouteInUse());
         storeQuestion(messages, "warnBlockInUse", p.getWarnBlockInUse());
@@ -124,7 +125,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         p.setLoading();
         
-        p.setDisplayRememberMsg(loadDisplayMsg(messages, "displayRememberMsg"));
+        //p.setDisplayRememberMsg(loadDisplayMsg(messages, "displayRememberMsg"));
         /*List<Element> messageList = messages.getChildren("displayRememberMsg");
         for (int i=0; i<messageList.size();i++){
             if (messageList.get(i).getAttribute("display")!=null) {
@@ -136,7 +137,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
             }
         }*/
         
-        p.setRouteSaveMsg(loadDisplayMsg(messages, "routeSaveMsg"));
+        //p.setRouteSaveMsg(loadDisplayMsg(messages, "routeSaveMsg"));
         /*messageList = messages.getChildren("routeSaveMsg");
         for (int i=0; i<messageList.size();i++){
             if (messageList.get(i).getAttribute("display")!=null) {
@@ -188,6 +189,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         p.setWarnReporterInUse(loadQuestion(messages, "warnReporterInUse"));
         p.setWarnMemoryInUse(loadQuestion(messages, "warnMemoryInUse"));
         p.setWarnLogixInUse(loadQuestion(messages, "warnLogixInUse"));
+        p.setWarnDeleteLogix(loadQuestion(messages, "warnDeleteLogix"));
         p.setWarnLightInUse(loadQuestion(messages, "warnLightInUse"));
         p.setWarnLRouteInUse(loadQuestion(messages, "warnLRouteInUse"));
         p.setWarnBlockInUse(loadQuestion(messages, "warnBlockInUse"));

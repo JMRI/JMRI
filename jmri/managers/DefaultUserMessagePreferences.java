@@ -17,7 +17,7 @@ import java.awt.Component;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
  
 public class DefaultUserMessagePreferences implements UserPreferencesManager {
@@ -59,11 +59,14 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
 
     public void setPreferenceState(String name, boolean state) {
         if (state) {
-            if (!preferenceList.contains(name))
+            if (!preferenceList.contains(name)){
                 preferenceList.add(name);
+                displayRememberMsg();
+            }
         } else {
             preferenceList.remove(name);
         }
+        _changeMade = true;
     }
 
     // local to this class, not parent, for configure xml
@@ -105,7 +108,6 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
                 }
             });
             
-            
             dialog.getContentPane().add(container);
             dialog.pack();
             dialog.setModal(true);
@@ -139,19 +141,6 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     private static final boolean DISPLAY = true;
     @SuppressWarnings("unused")
     private static final boolean NODISPLAY = false;
-    
-    /**
-     * Method to determine if the informational save 
-     * message should be displayed or not when exiting from
-     * a route.
-     */
-    protected static boolean routeSaveMsg = DISPLAY;
-    public boolean getRouteSaveMsg() { return routeSaveMsg; }
-    public void setRouteSaveMsg(boolean boo) { 
-        routeSaveMsg = boo;
-        _changeMade = true;
-        displayRememberMsg();
-    }
     
     protected static int warnDeleteRoute = ASK;
     public int getWarnDeleteRoute() { return warnDeleteRoute; }
@@ -244,6 +233,14 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         displayRememberMsg();
     }
     
+    protected static int warnDeleteLogix = ASK;
+    public int getWarnDeleteLogix() { return warnDeleteLogix; }
+    public void setWarnDeleteLogix(int boo) { 
+        warnDeleteLogix = boo;
+        _changeMade = true;
+        displayRememberMsg();
+    }
+    
     protected static int warnLightInUse = ASK;
     public int getWarnLightInUse() { return warnLightInUse; }
     public void setWarnLightInUse(int boo) { 
@@ -277,17 +274,18 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     }
     
     
-    protected static boolean displayRememberMsg = DISPLAY;
+    /*protected static boolean displayRememberMsg = DISPLAY;
     public boolean getDisplayRememberMsg() { return displayRememberMsg; }
     public void setDisplayRememberMsg(boolean boo) { 
         displayRememberMsg = boo; 
         _changeMade = true;
-    }
+    }*/
 
 
     public void displayRememberMsg(){
         if (_loading) return;
-        if (displayRememberMsg){
+        showInfoMessage("Reminder", "You can re-display this message from 'Edit|Message Options' Menu.", "DefaultUserMessagePreferences.reminder");
+        /*if (displayRememberMsg){
             final JDialog dialog = new JDialog();
             dialog.setTitle("Reminder");
             dialog.setLocationRelativeTo(null);
@@ -325,7 +323,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
             dialog.pack();
             dialog.setModal(true);
             dialog.setVisible(true);
-        }
+        }*/
     
     }
     

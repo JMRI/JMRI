@@ -11,30 +11,10 @@ import javax.swing.*;
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class UserMessagePreferencesPane extends javax.swing.JPanel {
 
-    JPanel applicationTabPanel = new JPanel();
-    JCheckBox _routeSaveMsg;
-    JComboBox _quitAfterSave;
-    JComboBox _warnTurnoutInUse;
-    JComboBox _warnAudioInUse;
-    JComboBox _warnBlockInUse;
-    JComboBox _warnLRouteInUse;
-    JComboBox _warnLightInUse;
-    JComboBox _warnLogixInUse;
-    JComboBox _warnSectionInUse;
-    JComboBox _warnMemoryInUse;
-    JComboBox _warnReporterInUse;
-    JComboBox _warnRouteInUse;
-    JComboBox _warnSensorInUse;
-    JComboBox _warnSignalMastInUse;
-    JComboBox _warnSignalHeadInUse;
-    JComboBox _warnTransitInUse;
-
-    JCheckBox _rememberAdhocLocosEcos;
-    JComboBox _defaultProtocol;
     jmri.UserPreferencesManager p;
     
     public UserMessagePreferencesPane() {
@@ -54,24 +34,62 @@ public class UserMessagePreferencesPane extends javax.swing.JPanel {
         //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JTabbedPane tab = new JTabbedPane();
         tab.add(routeTab(), "Routes");
+        tab.add(logixTab(), "Logixs");
+        tab.add(lRouteTab(), "LRoutes");
         tab.add(applicationTab(), "Application");
         tab.add(tableDeleteTab(), "Deleting Table Entries");
         add(tab);
         add(buttonPanel);
     }
 
+    JCheckBox _routeSaveMsg;
+    JComboBox _warnRouteInUse;
     private JPanel routeTab(){
         JPanel routeTabPanel = new JPanel();
         routeTabPanel.setLayout(new BoxLayout(routeTabPanel, BoxLayout.Y_AXIS));
         
         _routeSaveMsg  = new JCheckBox("Always Display Save Message Reminder");
-        _routeSaveMsg.setSelected(p.getRouteSaveMsg());
+        _routeSaveMsg.setSelected(!p.getPreferenceState("beantable.RouteTableAction.remindRoute"));
         routeTabPanel.add(_routeSaveMsg);
         
         routeTabPanel.add(addQuestionButton(_warnRouteInUse = new JComboBox(), "When Deleting a Route", p.getWarnDeleteRoute()));
         
         return routeTabPanel;
     }
+    
+    JComboBox _warnLRouteInUse;
+    JCheckBox _lRouteSaveMsg;
+    private JPanel lRouteTab(){
+        JPanel lRouteTabPanel = new JPanel();
+        lRouteTabPanel.setLayout(new BoxLayout(lRouteTabPanel, BoxLayout.Y_AXIS));
+        
+        _lRouteSaveMsg  = new JCheckBox("Always Display Save Message Reminder");
+        _lRouteSaveMsg.setSelected(!p.getPreferenceState("beantable.LRouteTableAction.remindRoute"));
+        lRouteTabPanel.add(_lRouteSaveMsg);
+        
+        lRouteTabPanel.add(addQuestionButton(_warnLRouteInUse = new JComboBox(), "When Deleting a LRoute", p.getWarnLRouteInUse()));
+        
+        return lRouteTabPanel;
+    }
+    
+    JCheckBox _logixSaveMsg;
+    JComboBox _warnLogixInUse;
+    JComboBox _warnDeleteLogix;
+    private JPanel logixTab(){
+        JPanel logixTabPanel = new JPanel();
+        logixTabPanel.setLayout(new BoxLayout(logixTabPanel, BoxLayout.Y_AXIS));
+        
+        _logixSaveMsg  = new JCheckBox("Always Display Save Message Reminder");
+        _logixSaveMsg.setSelected(!p.getPreferenceState("beantable.LogixTableAction.remindRoute"));
+        logixTabPanel.add(_logixSaveMsg);
+        
+        logixTabPanel.add(addQuestionButton(_warnDeleteLogix = new JComboBox(), "When Deleting a Logix", p.getWarnDeleteLogix()));
+        logixTabPanel.add(addQuestionButton(_warnLogixInUse = new JComboBox(), "When Deleting a Logix that is in use", p.getWarnLogixInUse()));
+        
+        return logixTabPanel;
+    }
+    
+    JComboBox _quitAfterSave;
     
     private JPanel applicationTab(){
         //applicationtabpanel = new JPanel(new BoxLayout());
@@ -82,6 +100,18 @@ public class UserMessagePreferencesPane extends javax.swing.JPanel {
         
         return applicationTabPanel;
     }
+    
+    JComboBox _warnTurnoutInUse;
+    JComboBox _warnAudioInUse;
+    JComboBox _warnBlockInUse;
+    JComboBox _warnLightInUse;
+    JComboBox _warnSectionInUse;
+    JComboBox _warnMemoryInUse;
+    JComboBox _warnReporterInUse;
+    JComboBox _warnSensorInUse;
+    JComboBox _warnSignalMastInUse;
+    JComboBox _warnSignalHeadInUse;
+    JComboBox _warnTransitInUse;
     
     private JPanel tableDeleteTab(){
         //applicationtabpanel = new JPanel(new BoxLayout());
@@ -99,9 +129,8 @@ public class UserMessagePreferencesPane extends javax.swing.JPanel {
 
         tableDeleteTabPanel.add(addQuestionButton(_warnAudioInUse = new JComboBox(), "Audio", p.getWarnAudioInUse()));
         tableDeleteTabPanel.add(addQuestionButton(_warnBlockInUse = new JComboBox(), "Block", p.getWarnBlockInUse()));
-        tableDeleteTabPanel.add(addQuestionButton(_warnLRouteInUse = new JComboBox(), "LRoute", p.getWarnLRouteInUse()));
+        //tableDeleteTabPanel.add(addQuestionButton(_warnLRouteInUse = new JComboBox(), "LRoute", p.getWarnLRouteInUse()));
         tableDeleteTabPanel.add(addQuestionButton(_warnLightInUse = new JComboBox(), "Light", p.getWarnLightInUse()));    
-        tableDeleteTabPanel.add(addQuestionButton(_warnLogixInUse = new JComboBox(), "Logix", p.getWarnLogixInUse()));
         tableDeleteTabPanel.add(addQuestionButton(_warnSectionInUse = new JComboBox(), "Section", p.getWarnSectionInUse()));
         tableDeleteTabPanel.add(addQuestionButton(_warnMemoryInUse = new JComboBox(), "Memory", p.getWarnMemoryInUse()));
         tableDeleteTabPanel.add(addQuestionButton(_warnReporterInUse = new JComboBox(), "Reporter", p.getWarnReporterInUse()));
@@ -117,14 +146,28 @@ public class UserMessagePreferencesPane extends javax.swing.JPanel {
     
     private void updateButtonPressed(){
         p.setLoading();
-        p.setRouteSaveMsg(_routeSaveMsg.isSelected());
+        
+        //From Route Tab
+        p.setPreferenceState("beantable.RouteTableAction.remindRoute", !_routeSaveMsg.isSelected());
+        p.setWarnDeleteRoute(getChoiceType(_warnRouteInUse));
+        
+        //From logix Tab
+        p.setPreferenceState("beantable.LogixTableAction.remindLogix", !_logixSaveMsg.isSelected());
+        p.setWarnDeleteLogix(getChoiceType(_warnDeleteLogix));
+        p.setWarnLogixInUse(getChoiceType(_warnLogixInUse));
+        
+        //From Application Tab
         p.setQuitAfterSave(getChoiceType(_quitAfterSave));
+        
+        //From LRoute Tab
+        p.setWarnLRouteInUse(getChoiceType(_warnLRouteInUse));
+        p.setPreferenceState("beantable.LogixTableAction.remindLogix", !_lRouteSaveMsg.isSelected());
+        
+        //From table DeleteTab
         p.setWarnTurnoutInUse(getChoiceType(_warnTurnoutInUse));
         p.setWarnAudioInUse(getChoiceType(_warnAudioInUse));
         p.setWarnBlockInUse(getChoiceType(_warnBlockInUse));
-        p.setWarnLRouteInUse(getChoiceType(_warnLRouteInUse));
         p.setWarnLightInUse(getChoiceType(_warnLightInUse));
-        p.setWarnLogixInUse(getChoiceType(_warnLogixInUse));
         p.setWarnSectionInUse(getChoiceType(_warnSectionInUse));
         p.setWarnMemoryInUse(getChoiceType(_warnMemoryInUse));
         p.setWarnReporterInUse(getChoiceType(_warnReporterInUse));
