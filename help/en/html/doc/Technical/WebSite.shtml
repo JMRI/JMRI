@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: WebSite.shtml,v 1.6 2009-02-10 01:52:45 jacobsen Exp $ -->
+<!-- $Id: WebSite.shtml,v 1.7 2010-01-13 06:06:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -107,7 +107,6 @@ the root of the web server.
 <LI>community - Clinics, web pages, and other community-contributed information
 <li>images - (Images used by web pages)
 <li>contact - 
-<li>sitemap - 
 </ul>
 The following directories still contain content in site.new, but are
 in the process of being moved into the JavaHelp pages for use
