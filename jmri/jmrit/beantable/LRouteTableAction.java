@@ -1136,19 +1136,17 @@ public class LRouteTableAction extends AbstractTableAction {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         // remind to save, if Route was created or edited
                         if (routeDirty) {
-                            javax.swing.JOptionPane.showMessageDialog(_addFrame,
-                                rbx.getString("ReminderMsg"),rbx.getString("Reminder"),
-                                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                            InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Reminder","Remember to save your Route information.","beantable.LRouteTableAction.remindRoute");
                             routeDirty = false;
-                        }
-                        // hide _addFrame.
-                        _addFrame.setVisible(false);
+                        }                        _addFrame.setVisible(false);
                         // if in Edit, cancel edit mode
                         if (_editMode) {
                             cancelEdit();
                         }
                         _inputModel.dispose();
                         _outputModel.dispose();
+                        routeDirty = false;
                     }
                 });
 

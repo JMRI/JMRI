@@ -26,6 +26,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.*;
+import java.awt.Component;
 
 import jmri.Audio;
 import jmri.util.JmriJFrame;
@@ -52,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.57 $
+ * @version $Revision: 1.58 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -278,7 +279,7 @@ public class LogixTableAction extends AbstractTableAction {
         JMenu menu = new JMenu(rbx.getString("OptionsMenu"));
         menu.setMnemonic(KeyEvent.VK_O);
 
-        menu.addSeparator();
+        /*menu.addSeparator();
         JCheckBoxMenuItem cbMenuItem = new JCheckBoxMenuItem(rbx.getString("SuppressWithDisable"));
         cbMenuItem.setSelected(_suppressReminder);
         cbMenuItem.addActionListener(new ActionListener() {
@@ -286,7 +287,9 @@ public class LogixTableAction extends AbstractTableAction {
                 _suppressReminder = !_suppressReminder;
             }
         });
-        menu.add(cbMenuItem);
+        menu.add(cbMenuItem);*/
+        _suppressReminder = InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                               getPreferenceState("beantable.LRouteTableAction.remindRoute");
 
         ButtonGroup enableButtonGroup = new ButtonGroup();
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(rbx.getString("EnableAll"));
@@ -977,12 +980,16 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Display reminder to save
 	 */
 	void showSaveReminder() {
-		if (_showReminder && !_suppressReminder) {
+		/*if (_showReminder && !_suppressReminder) {
             javax.swing.JOptionPane.showMessageDialog(editLogixFrame, rbx
                     .getString("Reminder1"),
                     rbx.getString("ReminderTitle"),
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
-		}
+		}*/
+        if (_showReminder){
+            InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                showInfoMessage(rbx.getString("ReminderTitle"),rbx.getString("Reminder1"),"beantable.LogixTableAction.remindLogix");
+        }
 	}
 
 	/**
@@ -1144,7 +1151,72 @@ public class LogixTableAction extends AbstractTableAction {
         if (!checkFlags(sName)) {
             return;
         }
-        if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(f, java.text.MessageFormat.format(
+        final Logix x = _logixManager.getBySystemName(sName);
+        final jmri.UserPreferencesManager p;
+        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        if (p.getWarnDeleteLogix()==0x02) {
+            if (x != null) {
+                _logixManager.deleteLogix(x);
+            }
+        } else {
+            final JDialog dialog = new JDialog();
+            String msg;
+            dialog.setTitle(rbx.getString("ConfirmTitle"));
+            dialog.setLocationRelativeTo(null);
+            dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            JPanel container = new JPanel();
+            container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+            container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+            msg = java.text.MessageFormat.format(
+                    rbx.getString("ConfirmLogixDelete"), sName);
+            JLabel question = new JLabel(msg);
+            question.setAlignmentX(Component.CENTER_ALIGNMENT);
+            container.add(question);
+
+            final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+            remember.setFont(remember.getFont().deriveFont(10f));
+            remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            JButton yesButton = new JButton("Yes");
+            JButton noButton = new JButton("No");
+            JPanel button = new JPanel();
+            button.setAlignmentX(Component.CENTER_ALIGNMENT);
+            button.add(yesButton);
+            button.add(noButton);
+            container.add(button);
+            
+            noButton.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e) {
+                    //there is no point in remebering this the user will never be
+                    //able to delete a bean!
+                    /*if(remember.isSelected()){
+                        setDisplayDeleteMsg(0x01);
+                    }*/
+                    dialog.dispose();
+                }
+            });
+            
+            yesButton.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e) {
+                    if(remember.isSelected()) {
+                       p.setWarnDeleteLogix(0x02);
+                    }
+                    if (x != null) {
+                        _logixManager.deleteLogix(x);
+                    }
+                    dialog.dispose();
+                }
+            });
+            container.add(remember);
+            container.setAlignmentX(Component.CENTER_ALIGNMENT);
+            container.setAlignmentY(Component.CENTER_ALIGNMENT);
+            dialog.getContentPane().add(container);
+            dialog.pack();
+            dialog.setModal(true);
+            dialog.setVisible(true);
+        }
+
+        /*if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(f, java.text.MessageFormat.format(
                                                 rbx.getString("ConfirmLogixDelete"), sName),
                                                 rbx.getString("ConfirmTitle"), JOptionPane.YES_NO_OPTION,
                                                 JOptionPane.QUESTION_MESSAGE) )
@@ -1153,7 +1225,7 @@ public class LogixTableAction extends AbstractTableAction {
             if (x != null) {
                 _logixManager.deleteLogix(x);
             }
-        }
+        }*/
 		f.setVisible(true);
 	}
 
@@ -1716,6 +1788,7 @@ public class LogixTableAction extends AbstractTableAction {
 		if (alreadyEditingActionOrVariable()) {
             return;
 		}
+
         Conditional c = _curConditional;
         if (_curLogix.getSystemName().equals(SensorGroupFrame.logixSysName)) {
             javax.swing.JOptionPane.showMessageDialog(
