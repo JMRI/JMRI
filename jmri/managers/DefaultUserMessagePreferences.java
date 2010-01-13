@@ -17,7 +17,7 @@ import java.awt.Component;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
  
 public class DefaultUserMessagePreferences implements UserPreferencesManager {
@@ -49,7 +49,70 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
             }
         }
     }
-        
+    
+    java.util.ArrayList<String> preferenceList = new java.util.ArrayList<String>();
+    
+    public boolean getPreferenceState(String name) {
+        return preferenceList.contains(name);
+    }
+
+    public void setPreferenceState(String name, boolean state) {
+        if (state) {
+            if (!preferenceList.contains(name))
+                preferenceList.add(name);
+        } else {
+            preferenceList.remove(name);
+        }
+    }
+
+    // local to this class, not parent, for configure xml
+    public java.util.ArrayList<String> getPreferenceStateList() { return preferenceList; }
+    
+    public void showInfoMessage(String title, String message, final String preference) {
+        final UserPreferencesManager p;
+        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        if (!p.getPreferenceState(preference)){
+            final JDialog dialog = new JDialog();
+            dialog.setTitle(title);
+            dialog.setLocationRelativeTo(null);
+            dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            JPanel container = new JPanel();
+            container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+            container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+            
+            JLabel question = new JLabel(message, JLabel.CENTER);
+            question.setAlignmentX(Component.CENTER_ALIGNMENT);
+            container.add(question);
+            
+            JButton okButton = new JButton("Okay");
+            JPanel button = new JPanel();
+            button.setAlignmentX(Component.CENTER_ALIGNMENT);
+            button.add(okButton);
+            container.add(button);
+            
+            final JCheckBox remember = new JCheckBox("Skip message in future?");
+            remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+            remember.setFont(remember.getFont().deriveFont(10f));
+            container.add(remember);
+            
+            okButton.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e) {
+                    if(remember.isSelected()){
+                        p.setPreferenceState(preference, true);
+                    }
+                    dialog.dispose();
+                }
+            });
+            
+            
+            dialog.getContentPane().add(container);
+            dialog.pack();
+            dialog.setModal(true);
+            dialog.setVisible(true);
+        }
+    }
+
+
     ShutDownTask userPreferencesShutDownTask = null;
     
     private static boolean _changeMade = false;

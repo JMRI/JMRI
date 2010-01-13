@@ -63,6 +63,13 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
             messages.addContent(userPref);
         }*/
         
+        java.util.ArrayList<String> preferenceList = ((jmri.managers.DefaultUserMessagePreferences)p).getPreferenceStateList();
+        for (int i = 0; i < preferenceList.size(); i++) {
+            Element pref = new Element("setting");
+            pref.addContent(preferenceList.get(i));
+            messages.addContent(pref);
+        }
+        
         storeQuestion(messages, "warnSensorInUse", p.getWarnSensorInUse());
         storeQuestion(messages, "warnSignalHeadInUse", p.getWarnSignalHeadInUse());
         storeQuestion(messages, "warnTransitInUse", p.getWarnTransitInUse());
@@ -163,7 +170,16 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                     else if (yesno.equals("no")) p.setWarnTurnoutInUse(0x01);
                 }
             }
-        }*/
+         }*/
+       
+        @SuppressWarnings("unchecked")
+        List<Element> settingList = messages.getChildren("setting");
+        
+        for (int i = 0; i < settingList.size(); i++) {
+            String name = settingList.get(i).getText();
+            p.setPreferenceState(name, true);
+        }
+        
         p.setWarnSensorInUse(loadQuestion(messages, "warnSensorInUse"));
         p.setWarnSignalHeadInUse(loadQuestion(messages, "warnSignalHeadInUse"));
         p.setWarnTransitInUse(loadQuestion(messages, "warnTransitInUse"));

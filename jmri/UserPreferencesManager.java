@@ -11,7 +11,7 @@ package jmri;
  * @see jmri.managers.DefaultUserMessagePreferences
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
  
 public interface UserPreferencesManager {
@@ -19,6 +19,27 @@ public interface UserPreferencesManager {
     public void setLoading();
     public void finishLoading();
     
+    /**
+     * Enquire as to the state of a user preference.
+     * <p>
+     * Preferences that have not been set will be 
+     * considered to be false.
+     *<p>
+     * The name is free-form, but to avoid ambiguity it should
+     * start with the package name (package.Class) for the
+     * primary using class.
+     */
+    boolean getPreferenceState(String name);
+
+    /**
+     * Set the state of a user preference.
+     * <p>
+     * The name is free-form, but to avoid ambiguity it should
+     * start with the package name (package.Class) for the
+     * primary using class.
+     */
+    void setPreferenceState(String name, boolean state);
+ 
     /**
      * Method to determine if the informational save 
      * message should be displayed or not when exiting from
@@ -33,6 +54,15 @@ public interface UserPreferencesManager {
     // The reset is used after the preferences have been loaded for the first time
     public void resetChangeMade();
 
+    /**
+     * Show an info message ("don't forget ...")
+     * with a given dialog title and
+     * user message.
+     * Use a given preference name to determine whether
+     * to show it in the future.
+     */
+    public void showInfoMessage(String title, String message, String preference);
+    
      /**
      * Method to determine if the question of reloading JMRI should 
      * should be presented, and if not the default setting.
