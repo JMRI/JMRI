@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 /**
  * Basic Implementation of the User Preferences Manager.
@@ -17,7 +19,7 @@ import java.awt.Component;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
  
 public class DefaultUserMessagePreferences implements UserPreferencesManager {
@@ -50,7 +52,9 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
             }
         }
     }
-    
+
+    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+
     java.util.ArrayList<String> preferenceList = new java.util.ArrayList<String>();
     
     public boolean getPreferenceState(String name) {
@@ -78,7 +82,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         if (!p.getPreferenceState(preference)){
             final JDialog dialog = new JDialog();
             dialog.setTitle(title);
-            dialog.setLocationRelativeTo(null);
+            //dialog.setLocationRelativeTo(null);
             dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
             JPanel container = new JPanel();
             container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -110,7 +114,16 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
             
             dialog.getContentPane().add(container);
             dialog.pack();
+            int w = dialog.getSize().width;
+            int h = dialog.getSize().height;
+            int x = (dim.width-w)/2;
+            int y = (dim.height-h)/2;
+
+// Move the window
+            dialog.setLocation(x, y);
+
             dialog.setModal(true);
+
             dialog.setVisible(true);
         }
     }
