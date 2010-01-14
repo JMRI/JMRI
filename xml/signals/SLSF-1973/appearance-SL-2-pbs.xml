@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:db = "http://docbook.org/ns/docbook"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <db:copyright><db:year>2009</db:year><db:year>2010</db:year><db:holder>JMRI</db:holder></db:copyright>
+
+  <db:authorgroup>
+    <db:author>
+        <db:personname><db:firstname>Dick</db:firstname><db:surname>Bronson</db:surname></db:personname>
+    </db:author>
+    <db:author>
+        <db:personname><db:firstname>Paul</db:firstname><db:surname>Bender</db:surname></db:personname>
+    </db:author>   
+  </db:authorgroup>
+
+  <db:revhistory>
+    <db:revision>
+        <db:revnumber>1</db:revnumber>
+        <db:date>2010-01-01</db:date>
+        <db:authorinitials>DB</db:authorinitials>
+        <db:revremark>Initial version</db:revremark>
+    </db:revision>    
+    <db:revision>
+        <db:revnumber>2</db:revnumber>
+        <db:date>2010-01-12</db:date>
+        <db:authorinitials>PAB</db:authorinitials>
+        <db:revremark>Adapted from NYCS-1937</db:revremark>
+    </db:revision>    
+  </db:revhistory>
+
+  <aspecttable>SLSF</aspecttable>
+  <name>Double searchlight permissive signal</name>
+  <reference> As described in the
+July 1978 Revision of the St. Louis San Francisco Railway Company publication "RULES for the Maintenance of way and Structures" effective July 1,1973, chapter titled Description of Signals.  As noted in the source material, these rules are rules of the Frisco Transportation department.
+  </reference>
+  <description>Appearances for a two-searchlight signal head with number plate</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <reference>Page 16</reference>
+      <imagelink>
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Advance Approach</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <reference>Page 16</reference>
+      <imagelink>
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <reference>Page 16</reference>
+      <imagelink>
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Page 16</reference>
+      <imagelink>
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Diverging Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Page 18</reference>
+      <imagelink>
+      </imagelink>
+    </appearance>
+
+
+    <appearance>
+      <aspectname>Diverging Approach</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Page 18</reference>
+      <imagelink>
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>lunar</show>
+      <show>red</show>
+      <reference>Page 18</reference>
+      <imagelink>
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>red</show>
+      <show>lunar</show>
+      <reference>Page 18</reference>
+      <imagelink>
+      </imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop and Proceed</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <reference>Page 18</reference>
+      <imagelink>
+      </imagelink>
+    </appearance>
+
+  </appearances>
+</appearancetable>  
