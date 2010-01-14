@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: aspecttable.xsl,v 1.14 2010-01-14 05:37:29 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsl,v 1.15 2010-01-14 05:51:20 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI aspecttable file into displayable HTML    -->
 
@@ -115,12 +115,14 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     <xsl:for-each select="document(/aspecttable/appearancefiles/appearancefile/@href)/appearancetable/appearances/appearance">
         <!-- looking at all aspects to find the one matching matchaspect -->
         <xsl:if test="aspectname = $matchaspect">
-            <!-- found, make an image tag -->
-            <td valign="bottom"><xsl:element name="img">
+            <!-- found, make image tag(s) -->
+            <xsl:for-each select="imagelink">
+              <td valign="bottom"><xsl:element name="img">
                 <xsl:attribute name="src">
-                    <xsl:value-of select="imagelink"/>
+                    <xsl:value-of select="."/>
                 </xsl:attribute>
-            </xsl:element></td> 
+              </xsl:element></td> 
+            </xsl:for-each>
         </xsl:if>
     </xsl:for-each>
     </tr></table>
