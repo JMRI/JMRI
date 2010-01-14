@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: aspecttable.xsl,v 1.13 2010-01-13 06:25:52 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsl,v 1.14 2010-01-14 05:37:29 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI aspecttable file into displayable HTML    -->
 
@@ -28,7 +28,15 @@
 <xsl:output method="html" encoding="ISO-8859-1"/>
 
 
-<!-- This first template matches our root element in the input file.
+<!-- Overide basic default template rule to 
+     copy nodes to the output.  This lets e.g.
+     XHTML be embedded in comments, etc, and
+     be properly carried through. -->
+<xsl:template match="*|/">
+  <xsl:copy/><xsl:apply-templates/>
+</xsl:template>
+
+<!-- This primary template matches our root element in the input file.
      This will trigger the generation of the HTML skeleton document.
      In between we let the processor recursively process any contained
      elements, which is what the apply-templates instruction does.
@@ -65,7 +73,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <xsl:template match="aspecttable">
     Date: <xsl:value-of select="date"/>
     <p/>
-    <xsl:value-of select="reference"/>
+    <xsl:apply-templates select="reference"/>
 
     <!-- show the aspects -->
     <h2>Aspect Definitions</h2>
@@ -128,15 +136,15 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <xsl:template match="indication" />
 
 <xsl:template match="reference" >
- Reference: <xsl:value-of select="."/><br/>
+ Reference: <xsl:apply-templates/><br/>
 </xsl:template>
 
 <xsl:template match="description" >
- Description: <xsl:value-of select="."/><br/>
+ Description: <xsl:apply-templates/><br/>
 </xsl:template>
 
 <xsl:template match="comment" >
- Comment: <xsl:value-of select="."/><br/>
+ Comment: <xsl:apply-templates/><br/>
 </xsl:template>
 
 <!-- Display imagelink as image -->
@@ -182,4 +190,5 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Display revision history -->
 <xsl:include href="show-revhistory.xsl" />
 
+  
 </xsl:stylesheet>

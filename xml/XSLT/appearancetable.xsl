@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: appearancetable.xsl,v 1.15 2010-01-13 06:25:52 jacobsen Exp $ -->
+<!-- $Id: appearancetable.xsl,v 1.16 2010-01-14 05:37:29 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI appearance table file into displayable HTML    -->
 
@@ -27,8 +27,15 @@
 -->
 <xsl:output method="html" encoding="ISO-8859-1"/>
 
+<!-- Overide basic default template rule to 
+     copy nodes to the output.  This lets e.g.
+     XHTML be embedded in comments, etc, and
+     be properly carried through. -->
+<xsl:template match="*|/">
+  <xsl:copy-of select="."/>
+</xsl:template>
 
-<!-- This first template matches our root element in the input file.
+<!-- This primary template matches our root element in the input file.
      This will trigger the generation of the HTML skeleton document.
      In between we let the processor recursively process any contained
      elements, which is what the apply-templates instruction does.
@@ -75,8 +82,10 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     </a>
     <p/>
     Name: <xsl:value-of select="name"/><p/>
-    <xsl:value-of select="reference"/><p/>
-    <xsl:value-of select="description"/><p/>
+
+    <xsl:apply-templates select="reference"/><p/>
+
+    <xsl:apply-templates select="description"/><p/>
 
     <!-- show the appearances -->
     <xsl:apply-templates select="appearances"/>
@@ -87,7 +96,8 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 </xsl:template>
 
 <!-- Display each appearance -->
-<xsl:template match="appearances/appearance">
+<xsl:template match="appearances"><xsl:apply-templates select="appearance"/></xsl:template>
+<xsl:template match="appearance">
     <!-- set up to grab stuff from aspect.xml file -->
     <!-- set the 'matchaspect' variable to the name of the aspect we're doing now -->
     <xsl:variable name="matchaspect"><xsl:value-of select="aspectname" /></xsl:variable>
@@ -147,21 +157,21 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
             <!-- show description element(s) if any -->
             <xsl:for-each select="description">
                 <xsl:text>Description: </xsl:text>
-                <xsl:value-of select="." />
+                <xsl:apply-templates select="." />
                 <br/>
             </xsl:for-each>
             
             <!-- show reference element(s) if any -->
             <xsl:for-each select="reference">
                 <xsl:text>Aspect reference: </xsl:text>
-                <xsl:value-of select="." />
+                <xsl:apply-templates select="." />
                 <br/>
             </xsl:for-each>
             
             <!-- show comment element(s) if any -->
             <xsl:for-each select="comment">
                 <xsl:text>Comment: </xsl:text>
-                <xsl:value-of select="." />
+                <xsl:apply-templates select="." />
                 <br/>
             </xsl:for-each>
             
@@ -200,12 +210,8 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Ignore show, already done -->
 <xsl:template match="show" />
 
-<xsl:template match="comment">
-<p/><xsl:value-of select="."/>
-</xsl:template>
-
 <xsl:template match="reference">
-<p/>Appearance reference: <xsl:value-of select="."/>
+<p/>Appearance reference: <xsl:apply-templates/>
 </xsl:template>
 
 <!-- Display revision history -->
