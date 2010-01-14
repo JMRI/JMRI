@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.3.shtml,v 1.3 2010-01-13 06:07:49 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.3.shtml,v 1.4 2010-01-14 06:14:57 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -126,6 +126,18 @@ we put the feature in now to start accumulating the history in the file.
 
 <p>
 Dan Boudreau added two new build options for trains: by owner, and by built date.
+
+<p>
+Joan Carrancà added a set of 
+<a href="http://jmri.org/xml/signals/DB-HV-1969/index.shtml">signal definitions for the DB 1969 system </a>.
+
+<p>
+Dan Boudreau added two new build options for trains: by owner, and by built date.
+
+<p>
+Paul Bender added a set of 
+<a href="http://jmri.org/xml/signals/SLSF-1973/index.shtml">signal definitions for the SLSF (Frisco) system </a>.
+
 
 
 <!--#include virtual="/Footer" -->

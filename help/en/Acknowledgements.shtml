@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.92 2010-01-03 20:55:01 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.93 2010-01-14 06:14:57 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -58,6 +58,7 @@
 	XpressNet implementation, created the LI101 configuration tool, has
 	made important contributions to the base code, added Lenz XPA support,
 	wrote the Lenz feedback code, wrote the Lenz consisting support,
+	provided the SLSF (Frisco) signals,
 	and in general has made more contributions than can be counted.
 	<li>Jim Betz provided a version number for TCS decoders and
 	a model definition for the Z2 decoder.
@@ -112,6 +113,7 @@
     <LI>Bob Byck, who did extensive testing of test release 1.7.3
 	<LI>Allen Byrne, who has systematically made improvements in the syntax and structure of the JMRI code
 <a name="C"></A>
+    <LI>Joan Carrancà, who provided the German DB signal set.
     <LI>Bill Carman, who located information on the MRC/Athearn F Unit and Challenger decoders
     <LI>Ken Cameron, who wrote the NCE fast clock support, added 
         support for more than two systems to the preferences,
