@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: index.shtml,v 1.5 2010-01-13 06:25:52 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.6 2010-01-14 06:15:14 jacobsen Exp $ -->
 <title>JMRI: Signal System Definitions</title>
 
 <!-- Style -->
@@ -53,6 +53,9 @@ The available definitions include:
 
 <dt><a href="DB-HV-1969/index.shtml">DB HV 1969</a>
     <dd>1969 Deutsche Bundesbahn "Einheitsbauform" Home Signal/Distant signal (Hauptsignal/Vorsignal) system revision
+
+<dt><a href="SLSF-1973/index.shtml">SLSF-1973</a>
+    <dd>1973 SLSF (Frisco) rules 
 
 </dl>
 
