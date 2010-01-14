@@ -27,9 +27,9 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @author Bob Jacobsen, Dave Duchamp, adapt to use for Maple 2008, 2009
+ * @author Bob Jacobsen, Dave Duchamp, adapt to use for Maple 2008, 2009, 2010
  *
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  * @since 2.3.7
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
@@ -192,13 +192,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
     
     protected void resetTimeout(AbstractMRMessage m) {
-		if (getNode(curSerialNodeIndex)==null) {
+		if (getNode(curSerialNodeIndex-1)==null) {
 			log.error("Timeout of non-configured device - "+curSerialNodeIndex);
 		}
 		else {
 			// don't use super behavior, as timeout to init, transmit message is normal
 			// and inform node
-			getNode(curSerialNodeIndex).resetTimeout(m);
+			getNode(curSerialNodeIndex-1).resetTimeout(m);
 		}        
     }
     

@@ -10,7 +10,6 @@ import jmri.jmrix.AbstractNode;
  * Models a serial node, consisting of one Maple Systems HMI touch screen panel.
  * <P>
  * Nodes are numbered ala the Station number, from 1 to 99.  
- * Node number 1 carries sensors 1 to 999, node 2 1001 to 1999 etc.
  * <P>
  * The array of sensor states is used to update sensor known state
  * only when there's a change on the serial bus.  This allows for the
@@ -22,7 +21,7 @@ import jmri.jmrix.AbstractNode;
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author      Bob Jacobsen, Dave Duchamp, revised for Maple, 2009
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SerialNode extends AbstractNode {
 
@@ -34,6 +33,7 @@ public class SerialNode extends AbstractNode {
     // class constants
     // node definition instance variables (must persist between runs)
 //	protected int pulseWidth = 500;				// Pulse width for pulsed turnout control (milliseconds)
+	private int _address = 0;
 
     // operational instance variables  (should not be preserved between runs)
 
@@ -54,6 +54,7 @@ public class SerialNode extends AbstractNode {
     public SerialNode(int address, int type) {
         // set address 
         setNodeAddress (address);
+		_address = address;
         // register this node
         SerialTrafficController.instance().registerNode(this);
     }
@@ -71,30 +72,6 @@ public class SerialNode extends AbstractNode {
     protected boolean checkNodeAddress(int address) {
         return (address > 0) && (address <= 99);
     }
-
-//    /**
-//     * Public method to return pulse width.
-//	 *    Used with pulsed turnout control.
-//     */
-//    public int getPulseWidth() {
-//        return (OutputBits.instance().getPulseWidth());
-//    }
-
-//    /**
-//     * Public method to set pulse width.
-//     *   width - width of pulse used for pulse controlled turnout control (millisec.)
-//     *   Note: Pulse width must be between 100 and 10000 milliseconds.  If width
-//     *          is out of range, it is restricted to the allowable range
-//     */
-//    public void setPulseWidth(int width) {
-//        if ( (width < 100) || (width > 10000) ) {
-//            log.warn("pulse width out of 100 - 10000 range: "+
-//                                            Integer.toString(width));
-//            if (width < 100) width = 100;
-//            if (width > 10000) width = 10000;
-//      }
-//		OutputBits.instance().setPulseWidth(width);
-//    }
 
     /**
      * Public Method to create an Initialization packet (SerialMessage) for this node
