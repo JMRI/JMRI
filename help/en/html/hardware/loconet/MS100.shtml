@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MS100.shtml,v 1.2 2008-04-02 16:16:43 jacobsen Exp $ -->
+<!-- $Id: MS100.shtml,v 1.3 2010-01-14 23:02:22 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -38,7 +38,7 @@ to a LocoNet.
 Unfortunately, the MS100 is a somewhat old design, and doesn't
 provide a completely reliable connection to the LocoNet.
 The 
-<A HREF="LocoBufferII.shtml">LocoBuffer II</a>
+<A HREF="LocoBufferUSB.shtml">LocoBuffer USB</a>
 is currently the most reliable way to 
 connect a computer to a LocoNet.  It produced by Dick Bronson's
 <A HREF="http://www.rr-cirkits.com">RR-CirKits</a> 
@@ -46,29 +46,31 @@ company, based in part on the original LocoBuffer design.
 </p>
 
 
-	  <p>In MS100 mode, the program attempts to open the port at 16600
-	  baud, the LocoNet rate.  If this fails, it attempts to open the
-	  port at 16457 baud, which is a standard rate that's close enough
-	  to work.  If this also fails, the won't be able to talk to the 
-	  LocoNet through the MS100.
-	  Because neither of these rates are available, <b>the MS100 can't be
-	  used with MacOS X or most Windows Vista machines</b>.  
-	  Because we can't be sure your computer
-	  will be able to talk to a MS100 without trying it, you should
-	  test this before spending money on the MS100. To do that:</p>
-	  <UL>
-	    <LI>Start the program.</li>
-	    <LI>Set the preferences for MS100 and your serial port. You
-	    don't need to have anything connected, but do select the port
-	    you will eventually be using. </li>
-	    <LI>Save the preferences.</li>
-	    <LI>Quit the program and restart it so that the preferences
-	    take effect.</li>
-	  </UL>
-	  
-	  <p>If you get a dialog box saying "Could not set baud rate...",
-	  then you won't be able to use your computer with a MS100.  You
-	  should use a LocoBuffer.</p>
+<p>In MS100 mode, the program attempts to open the port at 16600
+baud, the LocoNet rate.  If this fails, it attempts to open the
+port at 16457 baud, which is a standard rate that's close enough
+to work.  If this also fails, the won't be able to talk to the 
+LocoNet through the MS100.
+<p>
+Because neither of these rates are available, <b>the MS100 can't be
+used with MacOS X, Windows 7 or most Windows Vista machines</b>.  
+<p>
+Because we can't be sure your computer
+will be able to talk to a MS100 without trying it, you should
+test this before spending money on the MS100. To do that:</p>
+<UL>
+    <LI>Start the program.</li>
+    <LI>Set the preferences for MS100 and your serial port. You
+    don't need to have anything connected, but do select the port
+    you will eventually be using. </li>
+    <LI>Save the preferences.</li>
+    <LI>Quit the program and restart it so that the preferences
+    take effect.</li>
+</UL>
+
+<p>If you get a dialog box saying "Could not set baud rate...",
+then you won't be able to use your computer with a MS100.  You
+should use a LocoBuffer.</p>
 
 <h3>Linux hack to set the baud rate</h3>
 
