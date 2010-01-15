@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id: Names.shtml,v 1.4 2008-11-01 17:32:59 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.5 2010-01-15 02:27:23 jacobsen Exp $ -->
 <title>JMRI: CTI Acela System Names</title>
 
 <!-- Style -->
@@ -81,7 +81,7 @@ Each CTI module can contain zero (Dash-8, SignalMan, SwitchMan, YardMaster), fou
 <p>
 Addresses are assigned, starting at zero, from the first module on the RED side of the CTI Acela module.
 <p>
-As an example, let us assume we have a CTI Acela network consisting of: an Acela module, a Train-Brain module, a WatchMan module, and a YardMaster moldule.
+As an example, let us assume we have a CTI Acela network consisting of: an Acela module, a Train-Brain module, a WatchMan module, and a YardMaster module.
 <p>
 The Train-Brain module supports four sensors so its sensors are at absolute input addresses 0 through 3 inclusive.  The Watchman module supports eight sensors so its sensors are at absolute input addresses 4 through 11 inclusive.  The YardMaster module supports zero sensors so it uses none of the absolute input addresses. 
 <p>
@@ -108,11 +108,11 @@ As described in the Acela documentation on the
 <a href="http://www.cti-electronics.com/app_sw.htm">CTI web site</a>, 
 turnouts or lights are addressed starting from 0.
 <p>
-Each CTI module can contain zero, four, eight, or sixteen outputs depending upomn the type of the module.
+Each CTI module can contain zero, four, eight, or sixteen outputs depending upon the type of the module.
 <p>
 Addresses are assigned, starting at zero, from the first module on the RED side of the CTI Acela module.
 <p>
-As an example, let us assume we have a CTI Acela network consisting of: an Acela module, a Train-Brain module, a WatchMan module, and a YardMaster moldule.
+As an example, let us assume we have a CTI Acela network consisting of: an Acela module, a Train-Brain module, a WatchMan module, and a YardMaster module.
 <p>
 The Train-Brain module supports four outputs so its outputs are at absolute output addresses 0 through 3 inclusive.  The Watchman module supports zero outputs so it uses none of the absolute output addresses.  The YardMaster supports sixteen outputs so its outputs are at absolute output addresses 4 through 19 inclusive.
 <p>
