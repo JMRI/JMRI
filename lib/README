@@ -3,16 +3,17 @@ These are the binary files, typically .jars, needed at build and run time.
 
 Contents:
 
-Generally, we are moving toward using subdirectories to hold the
+Generally, we use subdirectories to hold the
 CVS-resident versions of OS-specific code for Windows (.dll files)
 and Linux (.so files) so that we can separate various builds.
 
 For example, the RXTX rxtxSerial.dll comes in separate versions for 32-bit
 and 64-bit Windows, but the files have the same name.  We store them
-in separate win32/ and win64/ subdirectories, and let the installer sort them out.
+in separate subdirectories under windows/, and let the installer sort them out.
 
-A similar mechanism will eventually be needed for Linux, but for now
-we keep the 32-bit files in the main lib/ directory.
+A similar mechanism is used for Linux under the linux/ directory.
+
+MacOS X fat binaries are treated slightly differently, see the README file there.
 
 Specific components:
 

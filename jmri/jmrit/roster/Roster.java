@@ -46,7 +46,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.50 $
+ * @version	$Revision: 1.49 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -490,20 +490,13 @@ public class Roster extends XmlFile {
      * <P>
      * Note that this does not
      * clear any existing entries.
-     * @name filename of roster file
      */
     @SuppressWarnings("unchecked")
 	void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
-        // roster exists?  
-        if (!(new File(name)).exists()) {
-            log.debug("no roster file found; this is normal if you haven't put decoders in your roster yet");
-            return;
-        }
-
         // find root
         Element root = rootFromName(name);
         if (root==null) {
-            log.error("Roster file exists, but could not be read; roster not available");
+            log.warn("roster file could not be read; this is normal if you haven't put decoders in your roster yet");
             return;
         }
         if (log.isDebugEnabled()) XmlFile.dumpElement(root);

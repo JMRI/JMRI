@@ -6,12 +6,12 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+//import java.lang.reflect.Field;
+//import java.lang.reflect.Method;
 
 import gnu.io.CommPortIdentifier;
 import javax.swing.JOptionPane;
-import jmri.util.SystemType;
+//import jmri.util.SystemType;
 
 /**
  * Provide an abstract base for *PortController classes.
@@ -24,7 +24,7 @@ import jmri.util.SystemType;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.22 $
  */
 abstract public class AbstractPortController implements SerialPortAdapter {
 
@@ -137,7 +137,7 @@ abstract public class AbstractPortController implements SerialPortAdapter {
     Vector<String> portNameVector = null;
     @SuppressWarnings("unchecked")
 	public Vector<String> getPortNames() {
-    	reloadDriver(); // Refresh the list of communication ports
+    	//reloadDriver(); // Refresh the list of communication ports
         // first, check that the comm package can be opened and ports seen
         portNameVector = new Vector<String>();
         Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
@@ -152,6 +152,10 @@ abstract public class AbstractPortController implements SerialPortAdapter {
          return portNameVector;
     }
     
+    
+  	/*
+  	 *  // Boudreau: 1/8/2010 Now using RXTX with Windows, eliminate the reload since
+    	// it isn't needed.
     public void reloadDriver() {
         // For now, just run this under Windows
         // until such time as differences between
@@ -181,6 +185,7 @@ abstract public class AbstractPortController implements SerialPortAdapter {
             }
         }
 	}
+	*/
     
     /**
      * Get an array of valid values for "option 1"; used to display valid options.
