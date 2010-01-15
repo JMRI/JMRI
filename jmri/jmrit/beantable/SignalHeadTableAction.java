@@ -19,6 +19,7 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.SignalHead;
+import jmri.implementation.SingleTurnoutSignalHead;
 import jmri.implementation.DoubleTurnoutSignalHead;
 import jmri.implementation.TripleTurnoutSignalHead;
 import jmri.implementation.QuadOutputSignalHead;
@@ -49,7 +50,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.50 $
+ * @version     $Revision: 1.51 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -192,11 +193,38 @@ public class SignalHeadTableAction extends AbstractTableAction {
         return "package.jmri.jmrit.beantable.SignalTable";
     }
 
+    
+    final int[] signalStatesValues = new int[]{
+        SignalHead.DARK, 
+        SignalHead.RED, 
+        SignalHead.LUNAR,
+        SignalHead.YELLOW,
+        SignalHead.GREEN,
+        SignalHead.FLASHRED, 
+        SignalHead.FLASHLUNAR,
+        SignalHead.FLASHYELLOW,
+        SignalHead.FLASHGREEN
+    };
+    
+    String[] signalStates = new String[]{
+        rbean.getString("SignalHeadStateDark"),
+        rbean.getString("SignalHeadStateRed"),
+        rbean.getString("SignalHeadStateLunar"),
+        rbean.getString("SignalHeadStateYellow"),
+        rbean.getString("SignalHeadStateGreen"),
+        rbean.getString("SignalHeadStateFlashingRed"),
+        rbean.getString("SignalHeadStateFlashingLunar"),
+        rbean.getString("SignalHeadStateFlashingYellow"),
+        rbean.getString("SignalHeadStateFlashingGreen")
+        
+    };
+    
     String stateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
     String stateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
     String[] turnoutStates = new String[]{stateClosed, stateThrown};
     int[] turnoutStateValues = new int[]{Turnout.CLOSED, Turnout.THROWN};
 
+    String signalheadSingle = rb.getString("StringSignalheadSingle");
     String signalheadDouble = rb.getString("StringSignalheadDouble");
     String signalheadTriple = rb.getString("StringSignalheadTriple");
     String signalheadBiPolar = rb.getString("StringSignalheadBiPolar");
@@ -237,7 +265,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
     JLabel vtLabel = new JLabel("");
     JComboBox s1Box = new JComboBox(turnoutStates);
     JComboBox s2Box = new JComboBox(turnoutStates);
+    JComboBox s2aBox = new JComboBox(signalStates);
     JComboBox s3Box = new JComboBox(turnoutStates);
+    JComboBox s3aBox = new JComboBox(signalStates);
     JComboBox s4Box = new JComboBox(turnoutStates);
     JComboBox s5Box = new JComboBox(turnoutStates);
     JComboBox s6Box = new JComboBox(turnoutStates);
@@ -257,6 +287,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     String lsDec = rb.getString("StringLsDec");
     String dccSignalDecoder = rb.getString("StringDccSigDec");
     String mergSignalDriver = rb.getString("StringMerg");
+    String singleTurnout = rb.getString("StringSingle");
 
     int turnoutStateFromBox(JComboBox box) {
         String mode = (String)box.getSelectedItem();
@@ -272,7 +303,47 @@ public class SignalHeadTableAction extends AbstractTableAction {
 		if (state==iTurnoutStates[0]) box.setSelectedIndex(0);
 		else if (state==iTurnoutStates[1]) box.setSelectedIndex(1);
 		else log.error("unexpected  turnout state value: "+state);
-	}		
+	}
+    
+    int signalStateFromBox(JComboBox box) {
+        String mode = (String)box.getSelectedItem();
+        int result = jmri.util.StringUtil.getStateFromName(mode, signalStatesValues, signalStates);
+
+        if (result<0) {
+            log.warn("unexpected mode string in signalMode: "+mode);
+            throw new IllegalArgumentException();
+        }
+        return result;
+    }
+    
+    void setSignalStateInBox (JComboBox box, int state) {
+		
+        switch(state){
+            case SignalHead.DARK : box.setSelectedIndex(0);
+                                    break;
+            case SignalHead.RED : box.setSelectedIndex(1);
+                                    break;
+            case SignalHead.LUNAR : box.setSelectedIndex(2);
+                                    break;
+            case SignalHead.YELLOW : box.setSelectedIndex(3);
+                                    break;
+            case SignalHead.GREEN : box.setSelectedIndex(4);
+                                    break;
+            case SignalHead.FLASHRED : box.setSelectedIndex(5);
+                                    break;
+            case SignalHead.FLASHLUNAR : box.setSelectedIndex(6);
+                                    break;
+            case SignalHead.FLASHYELLOW : box.setSelectedIndex(7);
+                                    break;
+            case SignalHead.FLASHGREEN : box.setSelectedIndex(8);
+                                    break;
+            default : log.error("unexpected Signal state value: "+state);
+        }
+        
+        /*if (state==iSignalStates[0]) box.setSelectedIndex(0);
+		else if (state==iSignalStates[1]) box.setSelectedIndex(1);
+		else log.error("unexpected  Signal state value: "+state);*/
+	}
     
     int signalheadTypeFromBox(JComboBox box) {
         String mode = (String)box.getSelectedItem();
@@ -342,7 +413,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             addFrame.getContentPane().add(typeBox = new JComboBox(new String[]{
                 acelaAspect, dccSignalDecoder, doubleTurnout, lsDec, mergSignalDriver, quadOutput, 
-                se8c4Aspect, tripleTurnout, virtualHead
+                singleTurnout, se8c4Aspect, tripleTurnout, virtualHead
             }));
             if (jmri.jmrix.grapevine.ActiveFlag.isActive()) typeBox.addItem(grapevine);
             typeBox.addActionListener(new ActionListener(){
@@ -376,6 +447,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             p.add(v2Label);
             p.add(to2);
             p.add(s2Box);
+            p.add(s2aBox);
             p.add(mstBox);
             addFrame.getContentPane().add(p);
 
@@ -383,6 +455,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             p.add(v3Label);
             p.add(to3);
             p.add(s3Box);
+            p.add(s3aBox);
             addFrame.getContentPane().add(p);
 
             p = new JPanel(); p.setLayout(new FlowLayout());
@@ -443,9 +516,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v2Label.setVisible(false);
             to2.setVisible(false);
             s2Box.setVisible(false);
+            s2aBox.setVisible(false);
             v3Label.setVisible(false);
             to3.setVisible(false);
             s3Box.setVisible(false);
+            s3aBox.setVisible(false);
             v4Label.setVisible(false);
             to4.setVisible(false);
             s4Box.setVisible(false);
@@ -476,9 +551,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v2Label.setVisible(false);
             to2.setVisible(false);
             s2Box.setVisible(false);
+            s2aBox.setVisible(false);
             v3Label.setVisible(false);
             to3.setVisible(false);
             s3Box.setVisible(false);
+            s3aBox.setVisible(false);
             v4Label.setVisible(false);
             to4.setVisible(false);
             s4Box.setVisible(false);
@@ -509,11 +586,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v2Label.setText(rb.getString("LabelYellowTurnoutNumber"));
             v2Label.setVisible(true);
             s2Box.setVisible(false);
+            s2aBox.setVisible(false);
             to2.setVisible(true);
             v3Label.setText(rb.getString("LabelRedTurnoutNumber"));
             v3Label.setVisible(true);
             to3.setVisible(true);
             s3Box.setVisible(false);
+            s3aBox.setVisible(false);
             v4Label.setText(rb.getString("LabelLunarTurnoutNumber"));
             v4Label.setVisible(true);
             to4.setVisible(true);
@@ -544,11 +623,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v2Label.setText(rb.getString("LabelYellowTurnoutNumber"));
             v2Label.setVisible(true);
             s2Box.setVisible(false);
+            s2aBox.setVisible(false);
             to2.setVisible(true);
             v3Label.setText(rb.getString("LabelRedTurnoutNumber"));
             v3Label.setVisible(true);
             to3.setVisible(true);
             s3Box.setVisible(false);
+            s3aBox.setVisible(false);
             v4Label.setVisible(false);
             to4.setVisible(false);
             s4Box.setVisible(false);
@@ -579,9 +660,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v2Label.setVisible(true);
             to2.setVisible(true);
             s2Box.setVisible(false);
+            s2aBox.setVisible(false);
             v3Label.setVisible(false);
             to3.setVisible(false);
             s3Box.setVisible(false);
+            s3aBox.setVisible(false);
             v4Label.setVisible(false);
             to4.setVisible(false);
             s4Box.setVisible(false);
@@ -599,6 +682,41 @@ public class SignalHeadTableAction extends AbstractTableAction {
             mstBox.setVisible(false);
             msaBox.setVisible(false);
             
+        } else if (singleTurnout.equals(typeBox.getSelectedItem())) {
+            systemNameLabel.setText(rb.getString("LabelSystemName"));
+            systemNameLabel.setVisible(true);
+            systemName.setVisible(true);
+            userNameLabel.setText(rb.getString("LabelUserName"));
+            v1Label.setText(rb.getString("LabelTurnoutNumber"));
+            v1Label.setVisible(true);
+            to1.setVisible(true);
+            s1Box.setVisible(false);
+            v2Label.setText("On Appearance");
+            v2Label.setVisible(true);
+            to2.setVisible(false);
+            s2Box.setVisible(false);
+            s2aBox.setVisible(true);
+            v3Label.setText("Off Appearance");
+            v3Label.setVisible(true);
+            to3.setVisible(false);
+            s3aBox.setVisible(true);
+            s3Box.setVisible(false);
+            v4Label.setVisible(false);
+            to4.setVisible(false);
+            s4Box.setVisible(false);
+            v5Label.setVisible(false);
+            to5.setVisible(false);
+            s5Box.setVisible(false);
+            v6Label.setVisible(false);
+            to6.setVisible(false);
+            s6Box.setVisible(false);
+            v7Label.setVisible(false);
+            to7.setVisible(false);
+            s7Box.setVisible(false);
+            vtLabel.setVisible(false);
+            stBox.setVisible(false);
+            mstBox.setVisible(false);
+            msaBox.setVisible(false);
         } else if (virtualHead.equals(typeBox.getSelectedItem())) {
             systemNameLabel.setText(rb.getString("LabelSystemName"));
             systemNameLabel.setVisible(true);
@@ -610,9 +728,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v2Label.setVisible(false);
             to2.setVisible(false);
             s2Box.setVisible(false);
+            s2aBox.setVisible(false);
             v3Label.setVisible(false);
             to3.setVisible(false);
             s3Box.setVisible(false);
+            s3aBox.setVisible(false);
             v4Label.setVisible(false);
             to4.setVisible(false);
             s4Box.setVisible(false);
@@ -643,10 +763,12 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v2Label.setVisible(true);
             to2.setVisible(true);
             s2Box.setVisible(true);
+            s2aBox.setVisible(false);
             v3Label.setText(rb.getString("LabelRedTurnoutNumber"));
             v3Label.setVisible(true);
             to3.setVisible(true);
             s3Box.setVisible(true);
+            s3aBox.setVisible(false);
             v4Label.setText(rb.getString("LabelFlashGreenTurnoutNumber"));
             v4Label.setVisible(true);
             to4.setVisible(true);
@@ -679,9 +801,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
               v2Label.setVisible(false);
               to2.setVisible(false);
               s2Box.setVisible(false);
+              s2aBox.setVisible(false);
               v3Label.setVisible(false);
               to3.setVisible(false);
               s3Box.setVisible(false);
+              s3aBox.setVisible(false);
               v4Label.setVisible(false);
               to4.setVisible(false);
               s4Box.setVisible(false);
@@ -712,6 +836,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v2Label.setVisible(true);
             to2.setVisible(false);
             s2Box.setVisible(false);
+            s2aBox.setVisible(false);
             mstBox.setVisible(true);
             msaBox.setVisible(true);
             setUkSignalAspectsFromBox(msaBox, 2);
@@ -719,6 +844,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v3Label.setVisible(true);
             to3.setVisible(true);
             s3Box.setVisible(false);
+            s3aBox.setVisible(false);
             v4Label.setText("Input2");
             v4Label.setVisible(false);
             to4.setVisible(false);
@@ -931,6 +1057,20 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 s.setUserName(userName.getText());
                 InstanceManager.signalHeadManagerInstance().register(s);
             }
+        } else if (singleTurnout.equals(typeBox.getSelectedItem())) {
+            Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(to1.getText());
+            int on = signalStateFromBox(s2aBox);
+            int off = signalStateFromBox(s3aBox);
+            if (t1==null) addTurnoutMessage(v1Label.getText(), to1.getText());
+            if (t1==null) {
+                log.warn("skipping creation of signal "+systemName.getText()+" due to error");
+                return;
+            }
+            if (checkBeforeCreating(systemName.getText())) {			
+            	s = new jmri.implementation.SingleTurnoutSignalHead(systemName.getText(),userName.getText(),
+            	    new NamedBeanHandle<Turnout>(to1.getText(),t1), on, off);
+                InstanceManager.signalHeadManagerInstance().register(s);
+            }
         } else if (virtualHead.equals(typeBox.getSelectedItem())) {
             if (checkBeforeCreating(systemName.getText())) {
 				s = new jmri.implementation.VirtualSignalHead(systemName.getText(),userName.getText());
@@ -1074,6 +1214,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
         Turnout t3 = null;
         Turnout t2 = null;
         Turnout t1 = null;
+        NamedBeanHandle <Turnout> nbt1 = null;
+        NamedBeanHandle <Turnout> nbt2 = null;
+        NamedBeanHandle <Turnout> nbt3 = null;
 
         switch(ukSignalAspectsFromBox(msaBox)){
             case 4: t3 = InstanceManager.turnoutManagerInstance().provideTurnout(to5.getText());
@@ -1081,21 +1224,25 @@ public class SignalHeadTableAction extends AbstractTableAction {
                         addTurnoutMessage(v5Label.getText(), to5.getText());
                         log.warn("skipping creation of signal "+systemName.getText()+" due to error");
                         return;
-                    }
+                    } else
+                        nbt3 = new NamedBeanHandle<Turnout>(to5.getText(),t3);
+
                     // fall through
             case 3: t2 = InstanceManager.turnoutManagerInstance().provideTurnout(to4.getText());
                     if (t2==null) {
                         addTurnoutMessage(v4Label.getText(), eto4.getText());
                         log.warn("skipping creation of signal "+systemName.getText()+" due to error");
                         return;
-                    }
+                    } else
+                        nbt2 = new NamedBeanHandle<Turnout>(to4.getText(),t2);
                     // fall through
             case 2: t1 = InstanceManager.turnoutManagerInstance().provideTurnout(to3.getText());
                     if (t1==null) {
                         addTurnoutMessage(v3Label.getText(), eto3.getText());
                         log.warn("skipping creation of signal "+systemName.getText()+" due to error");
                         return;
-                    }
+                    } else
+                        nbt1 = new NamedBeanHandle<Turnout>(to3.getText(),t1);
         }
                     if (checkBeforeCreating(systemName.getText())) {
         }
@@ -1104,7 +1251,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
             if(ukSignalTypeFromBox(mstBox).equals("Distant")) home=false;
             else home=true;
 
-            s = new jmri.implementation.MergSD2SignalHead(systemName.getText(), ukSignalAspectsFromBox(msaBox), new NamedBeanHandle<Turnout>(to3.getText(),t1), new NamedBeanHandle<Turnout>(to4.getText(),t2), new NamedBeanHandle<Turnout>(to5.getText(),t3), false, home);
+            s = new jmri.implementation.MergSD2SignalHead(systemName.getText(), ukSignalAspectsFromBox(msaBox), nbt1, nbt2, nbt3, false, home);
             s.setUserName(userName.getText());
             InstanceManager.signalHeadManagerInstance().register(s);
 
@@ -1142,7 +1289,9 @@ public class SignalHeadTableAction extends AbstractTableAction {
     JLabel evtLabel = new JLabel("");
     JComboBox es1Box = new JComboBox(turnoutStates);
     JComboBox es2Box = new JComboBox(turnoutStates);
+    JComboBox es2aBox = new JComboBox(signalStates);
     JComboBox es3Box = new JComboBox(turnoutStates);
+    JComboBox es3aBox = new JComboBox(signalStates);
     JComboBox es4Box = new JComboBox(turnoutStates);
     JComboBox es5Box = new JComboBox(turnoutStates);
     JComboBox es6Box = new JComboBox(turnoutStates);
@@ -1203,12 +1352,14 @@ public class SignalHeadTableAction extends AbstractTableAction {
             p.add(ev2Label);
             p.add(eto2);
             p.add(es2Box);
+            p.add(es2aBox);
             p.add(emstBox);
             editFrame.getContentPane().add(p);
             p = new JPanel(); p.setLayout(new FlowLayout());
             p.add(ev3Label);
             p.add(eto3);
             p.add(es3Box);
+            p.add(es3aBox);
             editFrame.getContentPane().add(p);
             p = new JPanel(); p.setLayout(new FlowLayout());
             p.add(ev4Label);
@@ -1271,9 +1422,11 @@ public class SignalHeadTableAction extends AbstractTableAction {
 		ev2Label.setVisible(false);
 		eto2.setVisible(false);
 		es2Box.setVisible(false);
+        es2Box.setVisible(false);
 		ev3Label.setVisible(false);
 		eto3.setVisible(false);
 		es3Box.setVisible(false);
+        es3aBox.setVisible(false);
 		ev4Label.setVisible(false);
 		eto4.setVisible(false);
 		es4Box.setVisible(false);
@@ -1349,6 +1502,25 @@ public class SignalHeadTableAction extends AbstractTableAction {
             ev2Label.setVisible(true);
             eto2.setVisible(true);
 			eto2.setText(((DoubleTurnoutSignalHead)curS).getRed().getName());
+ 		}
+		else if (className.equals("jmri.implementation.SingleTurnoutSignalHead")) {
+			signalType.setText(singleTurnout);
+            eSystemNameLabel.setText(rb.getString("LabelSystemName"));
+			eSysNameLabel.setText(curS.getSystemName());
+            eUserNameLabel.setText(rb.getString("LabelUserName"));
+            eUserName.setText(curS.getUserName());
+            ev1Label.setText(rb.getString("LabelTurnoutNumber"));
+            ev1Label.setVisible(true);
+            eto1.setVisible(true);
+			eto1.setText(((SingleTurnoutSignalHead)curS).getOutput().getName());
+            ev2Label.setText("On Appearance");
+            ev2Label.setVisible(true);
+            es2aBox.setVisible(true);
+            setSignalStateInBox(es2aBox, ((SingleTurnoutSignalHead)curS).getOnAppearance());
+            ev3Label.setText("Off Appearance");
+            ev3Label.setVisible(true);
+            es3aBox.setVisible(true);
+            setSignalStateInBox(es3aBox, ((SingleTurnoutSignalHead)curS).getOffAppearance());
  		}
 		else if (className.equals("jmri.implementation.VirtualSignalHead")) {
 			signalType.setText(virtualHead);
@@ -1574,6 +1746,16 @@ public class SignalHeadTableAction extends AbstractTableAction {
 				return;
 			}
 			else ((DoubleTurnoutSignalHead)curS).setRed(new NamedBeanHandle<Turnout>(eto2.getText(),t2));
+		}
+		else if (className.equals("jmri.implementation.SingleTurnoutSignalHead")) {
+            Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(eto1.getText());
+            if (t1==null) {
+				noTurnoutMessage(ev1Label.getText(), eto1.getText());
+				return;
+			}
+			((SingleTurnoutSignalHead)curS).setOutput(new NamedBeanHandle<Turnout>(eto1.getText(),t1));
+            ((SingleTurnoutSignalHead)curS).setOnAppearance(signalStateFromBox(es2aBox));
+            ((SingleTurnoutSignalHead)curS).setOffAppearance(signalStateFromBox(es3aBox));
 		}
 		else if (className.equals("jmri.implementation.LsDecSignalHead")) {
 			Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(eto1.getText());
