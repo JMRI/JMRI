@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Main_Roster.shtml,v 1.3 2009-10-09 16:10:29 kevin-dickerson Exp $ -->
+<!-- $Id: Main_Roster.shtml,v 1.4 2010-01-15 16:09:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
 <TITLE>
@@ -77,34 +77,35 @@ DecoderPro&reg; Main Window
 <blockquote>
   <p>Open your operating systems printer and when the print is initiated the preview window is shown.</p>
 </blockquote>
-<p><strong>Roster Grouping...</strong></p>
+<p>
+<a name="RosterGrouping"><strong>Roster Grouping...</strong></p>
 <blockquote>
   <p>Roster Grouping allows you to allocate Roster Entries into different groups.  If for example you run multiple layouts with different locomotives, you can allocate those locomotives to the relative group, thus when you select a roster group to work with, the drop down lists in the throttle or edit roster entries will only contain locomotives that are in that specific list.</p>
   <p>When working with a Roster Group, some of the functions above change slightly.<br>
   <blockquote>Create Entry - The new entry will automatically be placed into the current group.<br>Delete Entry - this will now only remove the roster entry from the roster group.  Entries can only be deleted, when working in "Global" mode<br> Print Summary and Print Preview Summary - will only list locomotives that are allocated in the specific roster group</p></blockquote>
 
-<p><a href="#CreateGroup"><b>Create Roster Group</b></a>
+<p><a name="CreateGroup"><b>Create Roster Group</b></a>
 <blockquote>
   <p>Allows you to create a new Roster Group</p>
 </blockquote>
-<p><a href="#ActiveGroup"><b>Set Active Roster Group</b></a>
+<p><a name="ActiveGroup"><b>Set Active Roster Group</b></a>
 <blockquote>
   <p>Select the roster group to work with, this will restrict the roster entries displayed in the throttle address panel, edit roster entry, print preview etc.<br>
   to work with all roster entries select the group "Global".
 </blockquote>
-<p><a href="#DeleteGroup"><b>Delete Roster Group</b></a>
+<p><a name="DeleteGroup"><b>Delete Roster Group</b></a>
 <blockquote>
   <p>Allows you to remove a Roster Group.  This will not delete the roster entries that have been allocated to the group.
 </blockquote>
-<p><a href="#AddToGroup"><b>Roster Table Association</b></a>
+<p><a name="AssociateGroup"><b>Roster Table Association</b></a>
 <blockquote>
   <p>This table lists all the Roster entries, from the drop down box at the top select the group that you wish to view/add/remove entries to.  By default all entries belong to the "Global" group and can not be removed or added.</P.
 </blockquote>
-<p><a href="#AddToGroup"><b>Associate Roster Entry to Group</b></a>
+<p><a name="AddToGroup"><b>Associate Roster Entry to Group</b></a>
 <blockquote>
   <p>This allows you to associate roster entries to roster groups.  The drop down list of Roster Entries will only display entries that have not been allocated to that group.</P.
 </blockquote>
-<p><a href="#AddToGroup"><b>Disassociation of Roster Entry to Group</b></a>
+<p><a name="RmFromGroup"><b>Disassociation of Roster Entry to Group</b></a>
 <blockquote>
   <p>This allows you to remove an association of a roster entry to a roster group.  The drop down list of Roster Entries, will only display entries that have been allocated to the select group.</p>
 </blockquote>
