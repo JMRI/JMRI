@@ -139,7 +139,7 @@
 !define COPYRIGHT "© 1997-2010 JMRI Community"  ; Copyright string
 !define JMRI_VER  "2.9.2"                       ; Application version
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.8.0"                     ; Installer version
+!define INST_VER  "0.1.9.0"                     ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -385,10 +385,18 @@ SectionGroup "JMRI Core Files" SEC_CORE
     
     StrCmp $0 "0" Notx64 Isx64
     Isx64:
-      File /a "${SRCDIR}\lib\win64\rxtxSerial.dll"
+      File /a "${SRCDIR}\lib\windows\x64\jinput-raw_64.dll"
+      File /a "${SRCDIR}\lib\windows\x64\jinput-dx8_64.dll"
+      File /a "${SRCDIR}\lib\windows\x64\rxtxSerial.dll"
       Goto DoneComLib
     Notx64:
-      File /a "${SRCDIR}\lib\win32\rxtxSerial.dll"
+      File /a "${SRCDIR}\lib\windows\x86\LibusbJava.dll"
+      File /a "${SRCDIR}\lib\windows\x86\gluegen-rt.dll"
+      File /a "${SRCDIR}\lib\windows\x86\jinput-dx8.dll"
+      File /a "${SRCDIR}\lib\windows\x86\jinput-raw.dll"
+      File /a "${SRCDIR}\lib\windows\x86\jinput-wintab.dll"
+      File /a "${SRCDIR}\lib\windows\x86\joal_native.dll"
+      File /a "${SRCDIR}\lib\windows\x86\rxtxSerial.dll"
     DoneComLib:
 
   SectionEnd ; SEC_COMLIB

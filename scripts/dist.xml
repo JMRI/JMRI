@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.45 $ -->
+<!-- Revision $Revision: 1.46 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -79,16 +79,11 @@
     <delete file="Windows/JMRI/lib/UmlGraph-5.2.jar" />
     <delete file="Windows/JMRI/lib/junit.jar" />
     <delete file="Windows/JMRI/lib/jfcunit.jar" />
-    <delete file="Windows/JMRI/lib/libjinput-linux.so" />
-    <delete file="Windows/JMRI/lib/libjinput-osx.jnilib" />
-    <delete file="Windows/JMRI/lib/libusbJava.jnilib" />
-    <delete file="Windows/JMRI/lib/libusbJava.so" />
-    <delete file="Windows/JMRI/lib/comm-rxtx.jar" />
-    <delete file="Windows/JMRI/lib/librxtxSerial.jnilib" />
-    <delete file="Windows/JMRI/lib/libgluegen-rt.jnilib" />
-    <delete file="Windows/JMRI/lib/libgluegen-rt.so" />
-    <delete file="Windows/JMRI/lib/libjoal_native.jnilib" />
-    <delete file="Windows/JMRI/lib/libjoal_native.so" />
+    <delete dir="Windows/lib/linux"/>
+    <delete dir="Windows/lib/macosx"/>
+    <delete dir="Windows/JMRI/lib/win32" />
+    <delete dir="Windows/JMRI/lib/win64" />
+    <delete dir="Windows/JMRI/lib/i686-pc-linux-gnu" />
     <cvs command="export" reallyquiet="true" package="xml" dest="Windows/JMRI" tag="${release}"/>
     <cvs command="export" reallyquiet="true" package="resources" dest="Windows/JMRI" tag="${release}"/>
     <cvs command="export" reallyquiet="true" package="help" dest="Windows/JMRI" tag="${release}"/>
@@ -123,16 +118,8 @@
     <delete file="MacOSX/JMRI/lib/junit.jar" />
     <delete file="MacOSX/JMRI/lib/jfcunit.jar" />
     <delete file="MacOSX/JMRI/lib/Serialio.jar" />
-    <delete file="MacOSX/JMRI/lib/jinput-wintab.dll" />
-    <delete file="MacOSX/JMRI/lib/jinput-raw.dll" />
-    <delete file="MacOSX/JMRI/lib/jinput-dx8.dll" />
-    <delete file="MacOSX/JMRI/lib/libjinput-linux.so" />
-    <delete file="MacOSX/JMRI/lib/LibusbJava.dll" />
-    <delete file="MacOSX/JMRI/lib/libusbJava.so" />
-    <delete file="MacOSX/JMRI/lib/gluegen-rt.dll" />
-    <delete file="MacOSX/JMRI/lib/libgluegen-rt.so" />
-    <delete file="MacOSX/JMRI/lib/joal_native.dll" />
-    <delete file="MacOSX/JMRI/lib/libjoal_native.so" />
+    <delete dir="MacOSX/lib/linux"/>
+    <delete dir="MacOSX/lib/windows"/>
     <delete dir="MacOSX/JMRI/lib/win32" />
     <delete dir="MacOSX/JMRI/lib/win64" />
     <delete dir="MacOSX/JMRI/lib/i686-pc-linux-gnu" />
@@ -188,18 +175,11 @@
     <delete file="Linux/JMRI/lib/junit.jar" />
     <delete file="Linux/JMRI/lib/jfcunit.jar" />
     <delete file="Linux/JMRI/lib/Serialio.jar" />
-    <delete file="Linux/JMRI/lib/libjinput-osx.jnilib" />
-    <delete file="Linux/JMRI/lib/jinput-wintab.dll" />
-    <delete file="Linux/JMRI/lib/jinput-raw.dll" />
-    <delete file="Linux/JMRI/lib/jinput-dx8.dll" />
-    <delete file="Linux/JMRI/lib/LibusbJava.dll" />
-    <delete file="Linux/JMRI/lib/libusbJava.jnilib" />
-    <delete file="Linux/JMRI/lib/gluegen-rt.dll" />
-    <delete file="Linux/JMRI/lib/libgluegen-rt.jnilib" />
-    <delete file="Linux/JMRI/lib/joal_native.dll" />
-    <delete file="Linux/JMRI/lib/libjoal_native.jnilib" />
+    <delete dir="Linux/lib/linux"/>
+    <delete dir="Linux/lib/windows"/>
     <delete dir="Linux/JMRI/lib/win32" />
     <delete dir="Linux/JMRI/lib/win64" />
+    <delete dir="Linux/JMRI/lib/i686-pc-linux-gnu" />
     <delete dir="Linux/JMRI/xml" />
     <cvs command="export" reallyquiet="true" package="xml" dest="Linux/JMRI" tag="${release}"/>
     <delete dir="Linux/JMRI/resources" />
