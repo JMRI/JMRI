@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009, 2010 -->
-<!-- Revision $Revision: 1.58 $ -->
+<!-- Revision $Revision: 1.59 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -369,7 +369,7 @@
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:lib/"/>
+       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>
        <sysproperty key="user.language" value="tlh"/>  <!-- klingon -->
        <sysproperty key="user.country" value="001"/> 
        <arg line="LocaleTestConfig2.xml"/>
@@ -387,7 +387,7 @@
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:lib/"/>       
+       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>
     </java>
   </target>
 
@@ -399,7 +399,7 @@
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:lib/"/>
+       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>
        <jvmarg value="-Xrunhprof:cpu=samples,heap=sites,file=log.txt,depth=10" />
     </java>
   </target>
@@ -412,7 +412,7 @@
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:lib/"/>       
+       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>       
     </java>
   </target>
 
@@ -428,7 +428,7 @@
             <sysproperty key="java.security.policy" value="lib/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
             <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-            <sysproperty key="java.library.path" path=".:lib/"/>       
+            <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>       
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
             <!-- <jvmarg value="-Xloggc:memory.vgc"/> -->
@@ -455,7 +455,7 @@
        <sysproperty key="java.security.policy" value="lib/security.policy"/> 
        <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
        <sysproperty key="log4j.ignoreTCL" path="true/"/>       
-       <sysproperty key="java.library.path" path=".:lib/"/>       
+       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>       
        <jvmarg value="${profiler.info.jvmargs.agent}"/>
        <!-- <jvmarg value="-verbose"/> -->
        <!-- <jvmarg value="-verbosegc"/> -->
