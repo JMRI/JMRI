@@ -29,7 +29,7 @@ import Serialio.SerialPortLocal;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.32 $
+ * @version			$Revision: 1.33 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -39,9 +39,12 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         portNameVector = null;
         try {
             // this has to work through one of two sets of class. If
-            // Serialio.SerialConfig exists on this machine, we use that
+            // Serialio.SerialConfig exists on this machine and we're
+            // running on Windows XP or earlier, we use that
             // else we revert to gnu.io
             try {
+                if (System.getProperty("os.name","<unknown>").toLowerCase().contains("windows") && Double.valueOf(System.getProperty("os.version")) >= 6 )
+                    throw new Exception("MS100 interface not compatible.");
                 Class.forName("Serialio.SerialConfig");
                 log.debug("openPort using SerialIO");
                 InnerSerial inner = new InnerSerial();
