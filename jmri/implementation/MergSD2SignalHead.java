@@ -14,6 +14,7 @@
 
 package jmri.implementation;
 
+import jmri.*;
 import jmri.Turnout;
 import jmri.util.NamedBeanHandle;
 
@@ -43,6 +44,10 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         if (t3!=null) mInput3=t3;
         mFeather = feather;
         mHome = home;
+        if (mHome)
+            setAppearance(RED);
+        else
+            setAppearance(YELLOW);
     }
     
     public MergSD2SignalHead(String sys, int aspect, NamedBeanHandle<Turnout> t1, NamedBeanHandle<Turnout> t2, NamedBeanHandle<Turnout> t3, boolean feather, boolean home){
@@ -53,6 +58,10 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         if (t3!=null) mInput3=t3;
         mFeather = feather;
         mHome = home;
+        if (mHome)
+            setAppearance(RED);
+        else
+            setAppearance(YELLOW);
     
     }
     
@@ -76,7 +85,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
             case 3: if ((newAppearance == RED) || (newAppearance == YELLOW) || (newAppearance == GREEN))
                         valid=true;
                     break;
-            case 4: if ((newAppearance == RED) || (newAppearance == YELLOW) || (newAppearance == GREEN) || (newAppearance == FLASHYELLOW))
+            case 4: if ((newAppearance == RED) || (newAppearance == YELLOW) || (newAppearance == GREEN) || (newAppearance == LUNAR))
                         valid=true;
                     break;
         }
@@ -99,12 +108,9 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         }    
     }
         
+    @SuppressWarnings("fallthrough")
 	protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
-	/*if (mLit == false) {
-            //mDark.setCommandedState(mDarkState);
-            return;
-        } else {*/
             switch (mAppearance) {
             case RED:
                     mInput1.getBean().setCommandedState(Turnout.CLOSED);
@@ -119,7 +125,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
                         mInput1.getBean().setCommandedState(Turnout.CLOSED);
                     }
                     break;
-        	case FLASHYELLOW:
+        	case LUNAR:
                     mInput1.getBean().setCommandedState(Turnout.THROWN);
                     mInput2.getBean().setCommandedState(Turnout.THROWN);
                     mInput3.getBean().setCommandedState(Turnout.CLOSED);
@@ -151,11 +157,11 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         super.dispose();
     }
 
-    NamedBeanHandle<Turnout> mInput1; //Section directly infront of the Signal
-    NamedBeanHandle<Turnout> mInput2; //Section infront of the next Signal
-    NamedBeanHandle<Turnout> mInput3; //Section infront of the second Signal
+    NamedBeanHandle<Turnout> mInput1 = null; //Section directly infront of the Signal
+    NamedBeanHandle<Turnout> mInput2 = null; //Section infront of the next Signal
+    NamedBeanHandle<Turnout> mInput3 = null; //Section infront of the second Signal
 
-    int mAspects;
+    int mAspects = 2;
     boolean mFeather = false;
     boolean mHome = true; //Home Signal = true, Distance Signal = false
 
@@ -174,6 +180,80 @@ public class MergSD2SignalHead extends DefaultSignalHead {
     public void setAspects(int i) {mAspects = i;}
     public void setFeather(boolean boo) {mFeather = boo;}
     public void setHome(boolean boo) {mHome = boo;}
+    
+    final static private java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
+    
+    final static private int[] validStates2AspectHome = new int[]{
+        RED, 
+        GREEN
+    };
+    final static private String[] validStateNames2AspectHome = new String[]{
+        rb.getString("SignalHeadStateRed"),
+        rb.getString("SignalHeadStateGreen")
+    };
+    
+    final static private int[] validStates2AspectDistant = new int[]{
+        YELLOW, 
+        GREEN
+    };
+    final static private String[] validStateNames2AspectDistant = new String[]{
+        rb.getString("SignalHeadStateYellow"),
+        rb.getString("SignalHeadStateGreen")
+    };
+    
+    final static private int[] validStates3Aspect = new int[]{
+        RED, 
+        YELLOW,
+        GREEN
+    };
+    
+    final static private String[] validStateNames3Aspect = new String[]{
+        rb.getString("SignalHeadStateRed"),
+        rb.getString("SignalHeadStateYellow"),
+        rb.getString("SignalHeadStateGreen")
+    };
+    
+    final static private int[] validStates4Aspect = new int[]{
+        RED, 
+        YELLOW,
+        LUNAR,
+        GREEN
+    };
+    
+    final static private String[] validStateNames4Aspect = new String[]{
+        rb.getString("SignalHeadStateRed"),
+        rb.getString("SignalHeadStateYellow"),
+        rb.getString("SignalHeadStateLunar"),
+        rb.getString("SignalHeadStateGreen")
+    };
+    
+    public int[] getValidStates() {
+        if (!mHome)
+            return validStates2AspectDistant;
+        else {
+            switch(mAspects){
+                case 2 :    return validStates2AspectHome;
+                case 3 :    return validStates3Aspect;
+                case 4 :    return validStates4Aspect;
+                default :   log.warn("Unexpected number of apsects: "+mAspects);
+                            return validStates3Aspect;
+            }
+        }
+
+    }
+    public String[] getValidStateNames() {
+        if (!mHome)
+            return validStateNames2AspectDistant;
+        else {
+            switch(mAspects){
+                case 2 :    return validStateNames2AspectHome;
+                case 3 :    return validStateNames3Aspect;
+                case 4 :    return validStateNames4Aspect;
+                default :   log.warn("Unexpected number of apsects: "+mAspects);
+                            return validStateNames3Aspect;
+            }
+        }
+    }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MergSD2SignalHead.class.getName());
     
