@@ -29,7 +29,7 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision: 1.14 $ (CVS maintains this line, do not edit please)
+# $Revision: 1.15 $ (CVS maintains this line, do not edit please)
 #
 
 # define the class to be invoked
@@ -42,6 +42,9 @@ DEBUG=yes
 # label what is to follow
 if test ${DEBUG}; then echo "JMRI: Starting ${CLASSNAME} from $0"; fi
 
+# locate bundle
+SCRIPTDIR=`dirname "$0"`            # punctuation is for directories with spaces
+BUNDLEDIR="${SCRIPTDIR}/../../.."   # script is in *.app/Contents/MacOS/
 
 # build library path
 SYSLIBPATH=
@@ -63,7 +66,7 @@ then
     fi
 fi
 
-if [ -d "lib/$OS" ]
+if [ -d "${BUNDLEDIR}/lib/$OS" ]
 then
   SYSLIBPATH="lib/$OS"
 fi
@@ -88,9 +91,9 @@ then
 	      ARCH="i386"
 	    fi
 
-	    if [ -d "lib/$OS/$ARCH" ]
+	    if [ -d "${BUNDLEDIR}/lib/$OS/$ARCH" ]
 	    then
-	       SYSLIBPATH="lib/$OS/$ARCH:$LIBPATH"
+	       SYSLIBPATH="lib/$OS/$ARCH:$SYSLIBPATH"
 
 	       # we're only interested in ONE of these values, so as soon as we find a supported
 	       # architecture directory, continue processing and start up the program
@@ -106,7 +109,6 @@ if [ "${JMRI_HOME}" ]
 then
     cd "${JMRI_HOME}"
 else 
-    SCRIPTDIR=`dirname "$0"`;  # punctuation is for directories with spaces
     cd "${SCRIPTDIR}/../../.."; # script is in *.app/Contents/MacOS/
 fi
 [ "${DEBUG}" ] && echo "PWD: '${PWD}'"
