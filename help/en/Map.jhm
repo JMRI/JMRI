@@ -628,6 +628,8 @@
 
 <mapID target="manual.Main_XpressNet_LI101" url="manual/Main_XpressNet.shtml#LI101"/>
 
+<mapID target="package.jmri.jmrit.withrottle.Protocol" url="package/jmri/jmrit/withrottle/Protocol.shtml"/>
+
 <mapID target="package.jmri.jmrit.display.PanelMenuHelp" url="package/jmri/jmrit/display/PanelMenuHelp.shtml"/>
 
 <mapID target="manual.Main_RPS_Debugger" url="manual/Main_RPS.shtml#Debugger"/>
@@ -796,6 +798,8 @@
 
 <mapID target="package.apps.Apps" url="package/apps/Apps.shtml"/>
 
+<mapID target="manual.Main_Roster_Group" url="manual/Main_Roster.shtml#Group"/>
+
 <mapID target="manual.Main_ConsistControl" url="manual/Main_ConsistControl.shtml"/>
 
 <mapID target="manual.Main_Roster_Edit" url="manual/Main_Roster.shtml#Edit"/>
@@ -830,6 +834,8 @@
 
 <mapID target="manual.Main_NCE_Editconsist" url="manual/Main_NCE.shtml#Editconsist"/>
 
+<mapID target="manual.Main_Roster_RmFromGroup" url="manual/Main_Roster.shtml#RmFromGroup"/>
+
 <mapID target="html.apps.DecoderPro.Programmer" url="html/apps/DecoderPro/Programmer.shtml"/>
 
 <mapID target="html.doc.Technical.JVMCapabilities" url="html/doc/Technical/JVMCapabilities.shtml"/>
@@ -843,6 +849,8 @@
 <mapID target="html.hardware.zimo.Zimo" url="html/hardware/zimo/Zimo.shtml"/>
 
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml"/>
+
+<mapID target="manual.Main_Roster_AssociateGroup" url="manual/Main_Roster.shtml#AssociateGroup"/>
 
 <mapID target="manual.Main_Speedometer" url="manual/Main_Speedometer.shtml"/>
 

@@ -282,6 +282,10 @@
   <indexitem text="Reporter Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
 
  </indexitem>
+ <indexitem text="Roster " target="manual.Main_Roster">
+  <indexitem text="Groups " target="manual.Main_Roster_Group"/>
+
+ </indexitem>
  <indexitem text="Route ">
   <indexitem text="Add Route " target="package.jmri.jmrit.beantable.RouteAddEdit"/>
 
