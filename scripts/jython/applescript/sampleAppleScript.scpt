@@ -1,1 +1,0 @@
-# List all the UI elements of a windowtell application "System Events"  tell application process "DecoderPro"    tell window "DecoderPro"      get UI elements    end tell  end tellend tell# (To open the pane needed to authorize this)#  tell app "System Preferences"#    set current pane to pane id "com.apple.preference.universalaccess"#  end tell

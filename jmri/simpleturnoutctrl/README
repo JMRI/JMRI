@@ -1,8 +1,0 @@
-DO NOT ADD ANY NEW FILES TO THIS DIRECTORY.
-
-The jmri.simpleturnoutctrl package been moved
-to the jmri.jmrit.simpleturnoutctrl package.
-
-Due to CVS limitations, jmri/simpleturnoutctrl directory 
-cannot be removed. We have therefore left it here, empty
-except for this file.
