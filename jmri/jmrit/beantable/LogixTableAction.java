@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.58 $
+ * @version $Revision: 1.59 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -288,7 +288,8 @@ public class LogixTableAction extends AbstractTableAction {
             }
         });
         menu.add(cbMenuItem);*/
-        _suppressReminder = InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+        if (InstanceManager.getDefault(jmri.UserPreferencesManager.class) != null)
+            _suppressReminder = InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                                getPreferenceState("beantable.LRouteTableAction.remindRoute");
 
         ButtonGroup enableButtonGroup = new ButtonGroup();
@@ -987,8 +988,9 @@ public class LogixTableAction extends AbstractTableAction {
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
 		}*/
         if (_showReminder){
-            InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                showInfoMessage(rbx.getString("ReminderTitle"),rbx.getString("Reminder1"),"beantable.LogixTableAction.remindLogix");
+            if (InstanceManager.getDefault(jmri.UserPreferencesManager.class) != null)
+                InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                    showInfoMessage(rbx.getString("ReminderTitle"),rbx.getString("Reminder1"),"beantable.LogixTableAction.remindLogix");
         }
 	}
 
@@ -1154,7 +1156,7 @@ public class LogixTableAction extends AbstractTableAction {
         final Logix x = _logixManager.getBySystemName(sName);
         final jmri.UserPreferencesManager p;
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        if (p.getWarnDeleteLogix()==0x02) {
+        if (p != null && p.getWarnDeleteLogix()==0x02) {
             if (x != null) {
                 _logixManager.deleteLogix(x);
             }
