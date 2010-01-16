@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle XML configuration for SingleTurnoutSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -37,8 +37,8 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         element.setAttribute("systemName", p.getSystemName());
 
         storeCommon(p, element);
-        element.setAttribute("onAppearance", getSignalColour(p.getOnAppearance()));
-        element.setAttribute("offAppearance", getSignalColour(p.getOffAppearance()));
+        element.setAttribute("thrownAppearance", getSignalColour(p.getOnAppearance()));
+        element.setAttribute("closedAppearance", getSignalColour(p.getOffAppearance()));
         
         Element el = new Element("turnoutname");
         el.setAttribute("defines", "aspect");
@@ -91,9 +91,9 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         Attribute a = element.getAttribute("userName");
         int on = 0x00;
         int off = 0x00;
-        on = getIntFromColour(element.getAttribute("onAppearance").getValue());
+        on = getIntFromColour(element.getAttribute("closedAppearance").getValue());
         
-        off = getIntFromColour(element.getAttribute("offAppearance").getValue());
+        off = getIntFromColour(element.getAttribute("thrownAppearance").getValue());
         SignalHead h;
         if (a == null)
             h = new SingleTurnoutSignalHead(sys, lit, on, off);
