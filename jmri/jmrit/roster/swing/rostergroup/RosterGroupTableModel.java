@@ -18,7 +18,7 @@ import javax.swing.JTextField;
  *
  * @author              Bob Jacobsen   Copyright (C) 2009
  * @author              Kevin Dickerson   Copyright (C) 2009
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  * @since 2.7.5
  */
 public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel {
@@ -48,7 +48,7 @@ public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel 
         case ROADNUMBERCOL: return "Road Number";
         case ROADNAMECOL:   return "Road Name";
         case MFGCOL:        return "Manufacturer";
-        case ADDTOGROUPCOL: return "Add to Group";
+        case ADDTOGROUPCOL: return "Include";
         case OWNERCOL: return "Owner";
         default:            return "<UNKNOWN>";
         }
