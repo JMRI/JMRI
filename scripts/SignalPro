@@ -26,11 +26,11 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision: 1.44 $ (CVS maintains this line, do not edit please)
+# $Revision: 1.1 $ (CVS maintains this line, do not edit please)
 #
 
 # define the class to be invoked
-CLASSNAME=apps.InstallTest.InstallTest
+CLASSNAME=apps.SignalPro.SignalPro
 
 # set DEBUG to anything to see debugging output
 # DEBUG=yes
