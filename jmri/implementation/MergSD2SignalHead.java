@@ -14,20 +14,22 @@
 
 package jmri.implementation;
 
-import jmri.*;
 import jmri.Turnout;
 import jmri.util.NamedBeanHandle;
 
 /**
  * Implement SignalHead for the MERG Signal Driver 2.
  *<p>
- * The Signal Driver, runs off of the output of a steady State Accessory decoder.
+ * The Signal Driver , runs off of the output of a steady State Accessory decoder.
  * and can be configured to run 2, 3 or 4 Aspect signals. With 2 or 3 aspect signals
  * being able to have a feather included.
+ * 
+ * The driver is designed to be used with UK based signals
+ *
  * The class assigns turnout positions for RED, YELLOW, GREEN and Double Yellow aspects.
  * THE SD2 does not support flashing double yellow aspects on turnouts, an alternative method
  * is required to do this, as per the MERG SD2 documentation.
- * nb As there is no Double Yellow asigned within JMRI, we use the Flash Yellow instead.
+ * nb As there is no Double Yellow asigned within JMRI, we use the Lunar instead.
  * <P>
  * For more info on the signals, see 
  * <A HREF="http://www.merg.info">http://www.merg.info</a>.
@@ -169,16 +171,46 @@ public class MergSD2SignalHead extends DefaultSignalHead {
     public NamedBeanHandle<Turnout> getInput2() {return mInput2;}
     public NamedBeanHandle<Turnout> getInput3() {return mInput3;}
 
+	/**
+	 * Return the number of aspects for a given signal.
+	 */
     public int getAspects() {return mAspects;}
     public boolean getFeather() {return mFeather;}
+	
+    /**
+	 * Returns whether the signal is a home or a distant/Repeater signal
+     * default is true.
+	 */
     public boolean getHome() {return mHome;}
-    
+
+    /**
+	 * Sets the first turnout used on the driver
+     * Relates to the section directly infront of the Signal (2, 3 & 4 aspect Signals)
+	 */
     public void setInput1(NamedBeanHandle<Turnout> t) {mInput1 = t;}
+
+    /**
+	 * Sets the second turnout used on the driver
+     * Relates to the section in front of the next Signal (3 and 4 aspect Signal)
+	 */
     public void setInput2(NamedBeanHandle<Turnout> t) {mInput2 = t;}
+     
+    /**
+	 * Sets the third turnout used on the driver
+     * Relates to the section directly in front the third Signal (4 aspect Signal)
+	 */
     public void setInput3(NamedBeanHandle<Turnout> t) {mInput3 = t;}
     
+
+    /**
+	 * Sets the number of aspects on the signal, valid aspects 2,3,4
+	 */
     public void setAspects(int i) {mAspects = i;}
     public void setFeather(boolean boo) {mFeather = boo;}
+
+    /**
+	 * Set wheather the signal is a home or distance/repeater signal
+	 */
     public void setHome(boolean boo) {mHome = boo;}
     
     final static private java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
@@ -187,6 +219,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         RED, 
         GREEN
     };
+
     final static private String[] validStateNames2AspectHome = new String[]{
         rb.getString("SignalHeadStateRed"),
         rb.getString("SignalHeadStateGreen")
