@@ -50,7 +50,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.51 $
+ * @version     $Revision: 1.52 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -198,12 +198,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         SignalHead.DARK, 
         SignalHead.RED, 
         SignalHead.LUNAR,
-        SignalHead.YELLOW,
-        SignalHead.GREEN,
-        SignalHead.FLASHRED, 
-        SignalHead.FLASHLUNAR,
-        SignalHead.FLASHYELLOW,
-        SignalHead.FLASHGREEN
+        SignalHead.YELLOW
     };
     
     String[] signalStates = new String[]{
@@ -211,12 +206,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         rbean.getString("SignalHeadStateRed"),
         rbean.getString("SignalHeadStateLunar"),
         rbean.getString("SignalHeadStateYellow"),
-        rbean.getString("SignalHeadStateGreen"),
-        rbean.getString("SignalHeadStateFlashingRed"),
-        rbean.getString("SignalHeadStateFlashingLunar"),
-        rbean.getString("SignalHeadStateFlashingYellow"),
-        rbean.getString("SignalHeadStateFlashingGreen")
-        
+        rbean.getString("SignalHeadStateGreen")
     };
     
     String stateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
@@ -691,12 +681,12 @@ public class SignalHeadTableAction extends AbstractTableAction {
             v1Label.setVisible(true);
             to1.setVisible(true);
             s1Box.setVisible(false);
-            v2Label.setText("On Appearance");
+            v2Label.setText(rb.getString("LabelTurnoutThrownAppearance"));
             v2Label.setVisible(true);
             to2.setVisible(false);
             s2Box.setVisible(false);
             s2aBox.setVisible(true);
-            v3Label.setText("Off Appearance");
+            v3Label.setText(rb.getString("LabelTurnoutClosedAppearance"));
             v3Label.setVisible(true);
             to3.setVisible(false);
             s3aBox.setVisible(true);
