@@ -1,7 +1,6 @@
 // SingleTurnoutSignalHead.java
 
 package jmri.implementation;
-import jmri.InstanceManager;
 import jmri.*;
 import jmri.util.NamedBeanHandle;
 
@@ -23,7 +22,7 @@ import jmri.util.NamedBeanHandle;
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SingleTurnoutSignalHead extends DefaultSignalHead {
 
