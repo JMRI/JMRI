@@ -129,6 +129,8 @@
    <tocitem text="Getting Started " target="html.apps.DecoderPro.index"/>
 
   </tocitem>
+  <tocitem text="Roster Groups " target="manual.Main_Roster_Group"/>
+
   <tocitem text="Installing New Decoder Definitions " target="html.apps.DecoderPro.FileUpdate"/>
 
   <tocitem text="Multi-Decoder Control " target="package.jmri.jmrit.dualdecoder.DualDecoderSelectFrame"/>
