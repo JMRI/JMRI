@@ -1,6 +1,6 @@
-// PanelPro.java
+// SignalPro.java
 
-package apps.PanelPro;
+package apps.SignalPro;
 
 import apps.Apps;
 import jmri.util.JmriJFrame;
@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * The JMRI program for creating control panels.
+ * The JMRI program for direct control of signals.
  * <P>
  * If an argument is provided at startup, it will be used as the name of
  * the configuration file.  Note that this is just the name, not the path;
@@ -38,30 +38,30 @@ import javax.swing.JPanel;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  * <P>
- * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.24 $
+ * @author	Bob Jacobsen   Copyright 2003-2010
+ * @version     $Revision: 1.1 $
  */
-public class PanelPro extends Apps {
+public class SignalPro extends Apps {
 
-    PanelPro(JFrame p) {
+    SignalPro(JFrame p) {
         super(p);
     }
 
     protected String logo() {
-        return "resources/PanelPro.gif";
+        return "resources/logo.gif";
     }
 
     protected String mainWindowHelpID() {
-            return "package.apps.PanelPro.PanelPro";
+            return "package.apps.SignalPro.SignalPro";
     }
 
     protected String line1() {
-        return MessageFormat.format(rb.getString("PanelProVersionCredit"),
+        return MessageFormat.format(rb.getString("SignalProVersionCredit"),
                                 new Object[]{jmri.Version.name()});
     }
 
     protected String line2() {
-        return "http://jmri.org/PanelPro ";
+        return "http://jmri.org/SignalPro ";
     }
 
     protected JPanel statusPanel() {
@@ -81,7 +81,7 @@ public class PanelPro extends Apps {
         JPanel p3 = new JPanel();
         p3.setLayout(new java.awt.FlowLayout());
         JButton h1 = new JButton(rb.getString("ButtonHelp"));
-        jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.PanelPro.PanelPro");
+        jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.SignalPro.SignalPro");
         h1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         p3.add(h1);
         JButton q1 = new JButton(rb.getString("ButtonQuit"));
@@ -99,17 +99,17 @@ public class PanelPro extends Apps {
         splash(true);
 
         initLog4J();
-        log.info(apps.Apps.startupInfo("PanelPro"));
+        log.info(apps.Apps.startupInfo("SignalPro"));
 
-        setConfigFilename("PanelProConfig2.xml", args);
-        JmriJFrame f = new JmriJFrame("PanelPro");
-        createFrame(new PanelPro(f), f);
+        setConfigFilename("SignalProConfig2.xml", args);
+        JmriJFrame f = new JmriJFrame("SignalPro");
+        createFrame(new SignalPro(f), f);
 
         log.debug("main initialization done");
         splash(false);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PanelPro.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalPro.class.getName());
 }
 
 

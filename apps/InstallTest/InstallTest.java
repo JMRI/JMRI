@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  *
  * @author	Ken Cameron   Copyright 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class InstallTest extends Apps {
 
@@ -66,7 +66,7 @@ public class InstallTest extends Apps {
     }
 
     protected String line2() {
-        return "http://jmri.sf.net/InstallTest";
+        return "http://jmri.org/InstallTest";
     }
 
     protected JPanel statusPanel() {

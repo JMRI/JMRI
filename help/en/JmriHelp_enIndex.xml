@@ -86,6 +86,8 @@
   <indexitem text="Options " target="package.jmri.jmrit.dispatcher.Options"/>
 
  </indexitem>
+ <indexitem text="DispatcherPro " target="html.apps.DispatcherPro.index"/>
+
  <indexitem text="DS64 " target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
 
  <indexitem text="Error Codes " target="html.Errors"/>
@@ -347,6 +349,8 @@
 
  </indexitem>
  <indexitem text="Signaling " target="html.tools.signaling.index"/>
+
+ <indexitem text="SignalPro " target="html.apps.SignalPro.index"/>
 
  <indexitem text="Simple Clock " target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/>
 

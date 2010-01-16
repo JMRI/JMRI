@@ -40,7 +40,7 @@ import jmri.Turnout;
  *  interval, then set back to 1.
  * <p>
  *  For more discussion of this, please see the 
- *  <a href="http://jmri.sf.net/help/en/html/hardware/cmri/CMRI.shtml#options">documentation page</a>
+ *  <a href="http://jmri.org/help/en/html/hardware/cmri/CMRI.shtml#options">documentation page</a>
  * (for C/MRI, but this is similar).
  *
  *  NOTE: In the current version Maple support, code for implementing pulsed turnouts has been commented out.
@@ -48,7 +48,7 @@ import jmri.Turnout;
  * @author			Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author			David Duchamp Copyright (C) 2004, 2007
  * @author			Dan Boudreau Copyright (C) 2007
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SerialTurnout extends AbstractTurnout {
 

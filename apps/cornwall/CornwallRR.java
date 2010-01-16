@@ -31,7 +31,7 @@ import javax.swing.JMenuBar;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 public class CornwallRR extends Apps {
 
@@ -56,7 +56,7 @@ public class CornwallRR extends Apps {
                                 new Object[]{jmri.Version.name()});
     }
     protected String line2() {
-        return "http://jmri.sf.net/Panels/Cornwall.html";
+        return "http://jmri.org/Panels/Cornwall.html";
     }
     protected String logo() {
         return "resources/icons/cornwall/cornwall_logo.gif";

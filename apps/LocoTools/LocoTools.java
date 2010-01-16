@@ -32,7 +32,7 @@ import javax.swing.JMenuBar;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.33 $
+ * @version     $Revision: 1.34 $
  */
 public class LocoTools extends Apps {
 
@@ -55,7 +55,7 @@ public class LocoTools extends Apps {
     }
 
     protected String line2() {
-        return "http://jmri.sf.net/LocoTools ";
+        return "http://jmri.org/LocoTools ";
     }
 
     // Main entry point

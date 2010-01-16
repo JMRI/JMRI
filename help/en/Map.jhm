@@ -40,9 +40,9 @@
 
 <mapID target="manual.Main_Roster_DeleteGroup" url="manual/Main_Roster.shtml#DeleteGroup"/>
 
-<mapID target="manual.Main_LocoNet_Sounds" url="manual/Main_LocoNet.shtml#Sounds"/>
-
 <mapID target="manual.Main_NCE" url="manual/Main_NCE.shtml"/>
+
+<mapID target="manual.Main_LocoNet_Sounds" url="manual/Main_LocoNet.shtml#Sounds"/>
 
 <mapID target="html.hardware.can.scripting" url="html/hardware/can/scripting.shtml"/>
 
@@ -101,6 +101,8 @@
 <mapID target="manual.Main_RPS" url="manual/Main_RPS.shtml"/>
 
 <mapID target="manual.Main_Roster_RemoveFromGroup" url="manual/Main_Roster.shtml#RemoveFromGroup"/>
+
+<mapID target="html.apps.DispatcherPro.index" url="html/apps/DispatcherPro/index.shtml"/>
 
 <mapID target="html.hardware.misc.DccSpecialties" url="html/hardware/misc/DccSpecialties.shtml"/>
 
@@ -597,6 +599,8 @@
 <mapID target="package.jmri.jmrix.loconet.se8.SE8Frame" url="package/jmri/jmrix/loconet/se8/SE8Frame.shtml"/>
 
 <mapID target="package.jmri.jmrit.display.EditLayoutTurnout" url="package/jmri/jmrit/display/EditLayoutTurnout.shtml"/>
+
+<mapID target="html.apps.SignalPro.index" url="html/apps/SignalPro/index.shtml"/>
 
 <mapID target="html.hardware.easydcc.EasyDCC" url="html/hardware/easydcc/EasyDCC.shtml"/>
 

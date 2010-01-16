@@ -269,6 +269,12 @@
 </li>
  
 <li>
+<a href="html/apps/DispatcherPro/index.shtml">DispatcherPro </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64 </a>
 <ul></ul>
 </li>
@@ -1057,6 +1063,12 @@
  
 <li>
 <a href="html/tools/signaling/index.shtml">Signaling </a>
+<ul></ul>
+</li>
+
+ 
+<li>
+<a href="html/apps/SignalPro/index.shtml">SignalPro </a>
 <ul></ul>
 </li>
 
