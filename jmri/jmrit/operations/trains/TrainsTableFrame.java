@@ -31,7 +31,7 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.38 $
+ * @version             $Revision: 1.39 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -45,6 +45,9 @@ public class TrainsTableFrame extends OperationsFrame {
 	public static final String TERMINATES = rb.getString("Terminates");
 	public static final String ROUTE = rb.getString("Route");
 	public static final String ID = rb.getString("Id");
+	
+	public static final String MOVE = rb.getString("Move");
+	public static final String TERMINATE =rb.getString("Terminate");
 
 	CarManagerXml carManagerXml = CarManagerXml.instance();	// load cars		
 	TrainManager trainManager = TrainManager.instance();
@@ -57,7 +60,7 @@ public class TrainsTableFrame extends OperationsFrame {
 	// labels
 	JLabel textSort = new JLabel(rb.getString("SortBy"));
 	JLabel textSep1 = new JLabel("          ");
-	JLabel textSep2 = new JLabel();
+	JLabel textSep2 = new JLabel("          ");
 	
 	// radio buttons
     JRadioButton sortByName = new JRadioButton(NAME);
@@ -66,7 +69,10 @@ public class TrainsTableFrame extends OperationsFrame {
     JRadioButton sortByTerminates = new JRadioButton(TERMINATES);
     JRadioButton sortByRoute = new JRadioButton(ROUTE);
     JRadioButton sortById = new JRadioButton(ID);
-     
+    
+    JRadioButton moveRB = new JRadioButton(MOVE);
+    JRadioButton terminateRB = new JRadioButton(TERMINATE);
+        
 	// major buttons
 	JButton addButton = new JButton(rb.getString("Add"));
 	JButton buildButton = new JButton(rb.getString("Build"));
@@ -123,9 +129,14 @@ public class TrainsTableFrame extends OperationsFrame {
     	cp1.add(sortByTerminates);
     	cp1.add(sortById);
     	cp1.add(textSep1);
+    	
     	cp1.add(buildMsgBox);
     	cp1.add(buildReportBox);
     	cp1.add(printPreviewBox);
+    	cp1.add(textSep2);
+    	
+    	cp1.add(moveRB);
+    	cp1.add(terminateRB);
     	
     	//row 2
     	//tool tips, see setPrintButtonText() for more tool tips
@@ -137,6 +148,9 @@ public class TrainsTableFrame extends OperationsFrame {
 		
 		buildMsgBox.setToolTipText(rb.getString("BuildMessagesTip"));
 		printPreviewBox.setToolTipText(rb.getString("PreviewTip"));
+		
+		moveRB.setToolTipText(rb.getString("MoveTip"));
+		terminateRB.setToolTipText(rb.getString("TerminateTip"));
 		
     	JPanel cp2 = new JPanel();
 		cp2.add (addButton);
@@ -176,12 +190,20 @@ public class TrainsTableFrame extends OperationsFrame {
     	sortGroup.add(sortByRoute);
     	sortGroup.add(sortById);
     	sortByName.setSelected(true);
+    	
+    	ButtonGroup actionGroup = new ButtonGroup();
+    	actionGroup.add(moveRB);
+    	actionGroup.add(terminateRB);
+    	
     	addRadioButtonAction(sortByTime);
 		addRadioButtonAction(sortByName);
 		addRadioButtonAction(sortByDeparts);
 		addRadioButtonAction(sortByTerminates);
 		addRadioButtonAction(sortByRoute);
 		addRadioButtonAction(sortById);
+		
+		addRadioButtonAction(moveRB);
+		addRadioButtonAction(terminateRB);	
 		
 		buildMsgBox.setSelected(trainManager.getBuildMessages());
     	buildReportBox.setSelected(trainManager.getBuildReport());
@@ -192,6 +214,8 @@ public class TrainsTableFrame extends OperationsFrame {
 		
 		// Set the button text to Print or Preview
 		setPrintButtonText();
+		// Set the train action button text to Move or Terminate
+		setTrainActionButton();
     	
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
@@ -233,6 +257,12 @@ public class TrainsTableFrame extends OperationsFrame {
 		if (ae.getSource() == sortByRoute){
 			trainsModel.setSort(trainsModel.SORTBYROUTE);
 		}
+		if (ae.getSource() == moveRB){
+			trainManager.setTrainsFrameTrainAction(MOVE);
+		}
+		if (ae.getSource() == terminateRB){
+			trainManager.setTrainsFrameTrainAction(TERMINATE);
+		}
 	}
 	
 	TrainSwitchListEditFrame tslef;
@@ -259,13 +289,12 @@ public class TrainsTableFrame extends OperationsFrame {
 			List<String> trains = trainsModel.getSelectedTrainList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById(trains.get(i));
-				if(train.getBuild()){
-					if(!train.printManifest()){
-						String string = "Need to build train (" +train.getName()+ ") before printing manifest";
-						JOptionPane.showMessageDialog(null, string,
-								"Can not print manifest",
-								JOptionPane.ERROR_MESSAGE);
-					}
+				if(train.getBuild() && !train.printManifest() && trainManager.getBuildMessages()){
+					String string = "Need to build train (" +train.getName()+ ") before printing manifest";
+					JOptionPane.showMessageDialog(null, string,
+							"Can not print manifest",
+							JOptionPane.ERROR_MESSAGE);
+
 				}
 			}
 		}
@@ -279,15 +308,18 @@ public class TrainsTableFrame extends OperationsFrame {
 			List<String> trains = trainsModel.getSelectedTrainList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById(trains.get(i));
-				if (train.getBuild() && train.getBuilt() && !train.getPrinted())
-					if (JOptionPane.showConfirmDialog(null,
+				if (train.getBuild() && train.getBuilt() && !train.getPrinted()){
+					int status = JOptionPane.showConfirmDialog(null,
 							"Warning, train manifest hasn't been printed!",
-							"Terminate Train ("+train.getName()+")?", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+							"Terminate Train ("+train.getName()+")?", JOptionPane.YES_NO_OPTION);
+					if (status == JOptionPane.YES_OPTION) 
+						train.terminate();
+					// Quit?
+					if (status == JOptionPane.CLOSED_OPTION) 
 						return;
-					}
-				train.terminateIfSelected();
+				}
 			}
-		}		
+		}
 		if (ae.getSource() == saveButton){
 			storeValues();
 		}
@@ -357,6 +389,11 @@ public class TrainsTableFrame extends OperationsFrame {
 			printButton.setToolTipText(rb.getString("PrintSelectedTip"));
 			buildReportBox.setToolTipText(rb.getString("BuildReportPrintTip"));
 		}
+	}
+	
+	private void setTrainActionButton(){
+			moveRB.setSelected(trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE));
+			terminateRB.setSelected(trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.TERMINATE));
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {

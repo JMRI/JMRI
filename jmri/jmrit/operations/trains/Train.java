@@ -42,7 +42,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.58 $
+ * @version $Revision: 1.59 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -885,6 +885,12 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 	}
 	
+	/**
+	 * Returns true if the train build failed. Note that returning false doesn't
+	 * mean the build was successful.
+	 * 
+	 * @return true if train build failed.
+	 */
 	public boolean getBuildFailed() {
 		return _buildFailed;
 	}
@@ -1060,16 +1066,11 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * Terminate train if build checkbox is selected by user.
-	 * Warns user if the train manifest hasn't been printed.
+	 * Terminate train.
 	 */
-	public void terminateIfSelected(){
-		if(_build && _built){
-			while(_built)
-				move();
-		} else {
-			log.debug("Train ("+getName()+") not selected or built, skipping terminate train");
-		}
+	public void terminate(){
+		while(_built)
+			move();
 	}
 
 	/**

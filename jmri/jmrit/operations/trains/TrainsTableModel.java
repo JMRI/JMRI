@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.25 $
+ * @version   $Revision: 1.26 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -217,9 +217,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         	return rb.getString("Build");
         }
         case MOVECOLUMN: {
-        	if (!train.getBuildFailed())
-        		return rb.getString("Move");
-        	return rb.getString("Report");
+        	if (train.getBuildFailed())
+        		return rb.getString("Report");
+        	return manager.getTrainsFrameTrainAction();
         }
         case EDITCOLUMN: return rb.getString("Edit");
         default: return "unknown "+col;
@@ -262,7 +262,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
      	if (!train.getBuilt()){
      		train.build();
      	} else {
-     		if (TrainManager.instance().getBuildReport())
+     		if (manager.getBuildReport())
      			train.printBuildReport();
      		train.printManifest();
      	}
@@ -270,11 +270,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     
     private void moveTrain (int row){
     	Train train = manager.getTrainById(sysList.get(row));
-    	if (!train.getBuildFailed()){
-    		if (log.isDebugEnabled()) log.debug("Move train ("+train.getName()+")");
+    	if (train.getBuildFailed()){
+    		train.printBuildReport();
+    	} else if (manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
+       		if (log.isDebugEnabled()) log.debug("Move train ("+train.getName()+")");
      		train.move();
     	} else {
-    		train.printBuildReport();
+       		if (log.isDebugEnabled()) log.debug("Terminate train ("+train.getName()+")");
+       		train.terminate();
     	}
     }
 
@@ -287,6 +290,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
        	}
     	if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||
     			e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY) ||
+    			e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY) ||
     			e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY)) {
     		updateList();
     		fireTableDataChanged();

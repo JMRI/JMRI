@@ -28,12 +28,13 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.28 $
+ * @version	$Revision: 1.29 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
 	// Train frame attributes
-	protected String _sortBy = "";
+	protected String _sortBy = "";				// Trains frame sort radio button
+	protected String _trainAction = TrainsTableFrame.MOVE;	// Trains frame table button action
 	protected boolean _buildMessages = true;	// when true, show build messages
 	protected boolean _buildReport = false;		// when true, print/preview build reports
 	protected boolean _printPreview = false;	// when true, preview train manifest
@@ -51,6 +52,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	// property changes
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "TrainsListLength";
 	public static final String PRINTPREVIEW_CHANGED_PROPERTY = "TrainsPrintPreview";
+	public static final String TRAIN_ACTION_CHANGED_PROPERTY = "TrainsAction";
 	
 	public TrainManager() {
 		CarTypes.instance().addPropertyChangeListener(this);
@@ -136,6 +138,16 @@ public class TrainManager implements java.beans.PropertyChangeListener {
    
     public void setTrainsFrameSortBy(String sortBy){
     	_sortBy = sortBy;
+    }
+    
+    public String getTrainsFrameTrainAction (){
+    	return _trainAction;
+    }
+   
+    public void setTrainsFrameTrainAction(String action){
+    	String old = _trainAction;
+    	_trainAction = action;
+    	firePropertyChange(TRAIN_ACTION_CHANGED_PROPERTY, old, action);
     }
     
     /**
@@ -461,6 +473,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     			_buildReport = a.getValue().equals("true");
     		if ((a = e.getAttribute("printPreview")) != null)
     			_printPreview = a.getValue().equals("true");
+       		if ((a = e.getAttribute("trainAction")) != null)
+    			_trainAction = a.getValue();
+       		// determine panel position
     		int x = 0;
     		int y = 0;
     		int height = Control.panelHeight;
@@ -519,6 +534,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         e.setAttribute("buildMessages", getBuildMessages()?"true":"false");
         e.setAttribute("buildReport", getBuildReport()?"true":"false");
         e.setAttribute("printPreview", getPrintPreview()?"true":"false");
+        e.setAttribute("trainAction", getTrainsFrameTrainAction());
         // get previous Train frame size and position
         Dimension size = getTrainsFrameSize();
         Point posn = getTrainsFramePosition();
