@@ -21,6 +21,8 @@
         <db:date>2010-01-01</db:date>
         <db:authorinitials>DB</db:authorinitials>
         <db:revremark>Initial version</db:revremark>
+    </db:revision>
+    <db:revision>
         <db:revnumber>2</db:revnumber>
         <db:date>2010-01-11</db:date>
         <db:authorinitials>DB</db:authorinitials>
