@@ -82,7 +82,7 @@ then
 
 	    if [ -d "lib/$OS/$ARCH" ]
 	    then
-	       SYSLIBPATH="lib/$OS/$ARCH:$SYSLIBPATH"
+	       SYSLIBPATH="lib/$OS/$ARCH:$LIBPATH"
 
 	       # we're only interested in ONE of these values, so as soon as we find a supported
 	       # architecture directory, continue processing and start up the program

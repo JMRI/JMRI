@@ -26,7 +26,7 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision: 1.11 $ (CVS maintains this line, do not edit please)
+# $Revision: 1.10 $ (CVS maintains this line, do not edit please)
 #
 
 # define the class to be invoked
@@ -82,7 +82,7 @@ then
 
 	    if [ -d "lib/$OS/$ARCH" ]
 	    then
-	       SYSLIBPATH="lib/$OS/$ARCH:$SYSLIBPATH"
+	       SYSLIBPATH="lib/$OS/$ARCH:$LIBPATH"
 
 	       # we're only interested in ONE of these values, so as soon as we find a supported
 	       # architecture directory, continue processing and start up the program
