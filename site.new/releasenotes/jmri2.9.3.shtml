@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.3.shtml,v 1.4 2010-01-14 06:14:57 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.3.shtml,v 1.5 2010-01-17 22:13:11 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -49,7 +49,8 @@ It contains
 many new features, including:
 
 <ul>
-<li>
+<li>(two more signal systems)
+<li>settable preferences
 <li>
 </ul>
 along with lots of other changes.  See the complete list below.
@@ -138,7 +139,38 @@ Dan Boudreau added two new build options for trains: by owner, and by built date
 Paul Bender added a set of 
 <a href="http://jmri.org/xml/signals/SLSF-1973/index.shtml">signal definitions for the SLSF (Frisco) system </a>.
 
+<p>
+David Duchamp fixed a minor bug in the Maple interface
 
+<p>
+Kevin Dickerson added the ability to set various warnings to not appear in the future, and
+save that setting from one run of the program to the next.
+
+<p>
+Kevin Dickerson added a page title to the roster print out that will either be
+"DecoderPro Roster All Entries" or "DecoderPro Roster Group 'GroupName' Entries",
+so you can see if you're printing the entire roster or just one of the 
+<a href="http://jmri.org/help/en/manual/Main_Roster.shtml#RosterGrouping">roster groups</a>.
+
+<p>
+Kevin Dickerson fixes the order in which the MERG SD2 signal head sequences.
+
+<p>
+Matt Harris added protection against trying to use a Digitrax MS100
+on Windows Vista and Windows 7.
+
+<p>
+Kevin Dickerson added a new "single output" signal type.  
+This allows you to have a signal that only has two states controlled by one turnout,
+e.g. one that only shows a single color and dark, or
+two specific colors.
+
+<p>
+Dan Boudreau made a minor operations improvement with regards to engine roads:  
+The user can exclude a road for cars, but still allow an engine to be assigned to the train with the excluded car road.
+
+<p>
+Dan Boudreau added a new operations feature.  Allow users to move or terminate a train from the Trains window.
 
 <!--#include virtual="/Footer" -->
 
