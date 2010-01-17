@@ -3,14 +3,15 @@
 
 <aspecttable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:db = "http://docbook.org/ns/docbook"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
 >
   <name>AAR-2</name>
   <date>1946</date>
   <reference>As described in the August 1946 version of the AAR publication "American Railway Signaling Principles and Practices", chapter II.</reference>
 
-  <copyright xmlns="http://docbook.org/ns/docbook" ><year>2009</year><year>2010</year><holder>JMRI</holder></copyright>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
 
   <authorgroup xmlns="http://docbook.org/ns/docbook" >
     <author>
@@ -23,38 +24,38 @@
     </author>    
   </authorgroup>
 
-  <db:revhistory>
-    <db:revision>
-        <db:revnumber>1</db:revnumber>
-        <db:date>2009-12-21</db:date>
-        <db:authorinitials>RGJ</db:authorinitials>
-        <db:revremark>Initial version</db:revremark>
-    </db:revision>    
-    <db:revision>
-        <db:revnumber>1.1</db:revnumber>
-        <db:date>2009-12-27</db:date>
-        <db:authorinitials>DB, RGJ</db:authorinitials>
-        <db:revremark>Fix consistency, more aspects</db:revremark>
-    </db:revision>    
-    <db:revision>
-        <db:revnumber>2</db:revnumber>
-        <db:date>2010-01-01</db:date>
-        <db:authorinitials>DB</db:authorinitials>
-        <db:revremark>More appearances</db:revremark>
-    </db:revision>    
-    <db:revision>
-        <db:revnumber>2.1</db:revnumber>
-        <db:date>2010-01-01</db:date>
-        <db:authorinitials>RGJ</db:authorinitials>
-        <db:revremark>Add author and revision info</db:revremark>
-    </db:revision>    
-    <db:revision>
-         <db:revnumber>2.2</db:revnumber>
-        <db:date>2010-01-11</db:date>
-        <db:authorinitials>DB</db:authorinitials>
-        <db:revremark>Typo Correction</db:revremark>
-    </db:revision>
-  </db:revhistory>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2009-12-21</date>
+        <authorinitials>RGJ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2009-12-27</date>
+        <authorinitials>DB, RGJ</authorinitials>
+        <revremark>Fix consistency, more aspects</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2010-01-01</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>More appearances</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2.1</revnumber>
+        <date>2010-01-01</date>
+        <authorinitials>RGJ</authorinitials>
+        <revremark>Add author and revision info</revremark>
+    </revision>    
+    <revision>
+         <revnumber>2.2</revnumber>
+        <date>2010-01-11</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Typo Correction</revremark>
+    </revision>
+  </revhistory>
 
   <aspects>
 

@@ -3,31 +3,32 @@
 
 <appearancetable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:db = "http://docbook.org/ns/docbook"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
 
-  <db:copyright><db:year>2010</db:year><db:holder>JMRI</db:holder></db:copyright>
-
-  <db:authorgroup>
-    <db:author>
-        <db:personname><db:firstname>Joan</db:firstname><db:surname>Carrancà</db:surname></db:personname>
-        <db:email>jcarranca@gmail.com</db:email>
-    </db:author>
-    <db:author>
-        <db:personname><db:firstname>Bob</db:firstname><db:surname>Jacobsen</db:surname></db:personname>
-        <db:email>jake@physics.berkeley.edu</db:email>
-    </db:author>    
-  </db:authorgroup>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Joan</firstname><surname>Carrancà</surname></personname>
+        <email>jcarranca@gmail.com</email>
+    </author>
+    <author>
+        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+        <email>jake@physics.berkeley.edu</email>
+    </author>    
+  </authorgroup>
     
-  <db:revhistory>
-    <db:revision>
-        <db:revnumber>1</db:revnumber>
-        <db:date>2010-01-09</db:date>
-        <db:authorinitials>JCV</db:authorinitials>
-        <db:revremark>Initial version</db:revremark>
-    </db:revision>    
-  </db:revhistory>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-01-09</date>
+        <authorinitials>JCV</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+  </revhistory>
 
   <aspecttable>DB-HV-1969</aspecttable>
   <name>Shunting signal, dwarf-type</name>

@@ -3,30 +3,31 @@
 
 <appearancetable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:db = "http://docbook.org/ns/docbook"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
 
-  <db:copyright><db:year>2009</db:year><db:year>2010</db:year><db:holder>JMRI</db:holder></db:copyright>
-
-  <db:authorgroup>
-    <db:author>
-        <db:personname><db:firstname>Dick</db:firstname><db:surname>Bronson</db:surname></db:personname>
-    </db:author>    
-    <db:author>
-        <db:personname><db:firstname>Bob</db:firstname><db:surname>Jacobsen</db:surname></db:personname>
-        <db:email>jake@physics.berkeley.edu</db:email>
-    </db:author>    
-  </db:authorgroup>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
+    </author>    
+    <author>
+        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+        <email>jake@physics.berkeley.edu</email>
+    </author>    
+  </authorgroup>
     
-  <db:revhistory>
-    <db:revision>
-        <db:revnumber>1</db:revnumber>
-        <db:date>2009-12-28</db:date>
-        <db:authorinitials>RGJ</db:authorinitials>
-        <db:revremark>Initial version</db:revremark>
-    </db:revision>    
-  </db:revhistory>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2009-12-28</date>
+        <authorinitials>RGJ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+  </revhistory>
 
   <aspecttable>basic</aspecttable>
   <name>Single searchlight high signal</name>
