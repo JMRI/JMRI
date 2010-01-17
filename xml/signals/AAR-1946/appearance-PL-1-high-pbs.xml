@@ -57,7 +57,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Stop and Proceed</aspectname>
+      <aspectname>Stop And Proceed</aspectname>
       <show>red</show>
       <reference>Page 55</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/PL-1-high-pbs/rule-291.gif</imagelink>

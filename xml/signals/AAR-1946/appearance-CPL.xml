@@ -146,7 +146,7 @@
     </appearance>
 
      <appearance>
-      <aspectname>Stop and Proceed</aspectname>
+      <aspectname>Stop And Proceed</aspectname>
       <show>green</show>
       <show>red</show>
       <show>dark</show>
@@ -156,7 +156,7 @@
     </appearance>
 
      <appearance>
-      <aspectname>Stop and Proceed-medium</aspectname>
+      <aspectname>Stop And Proceed-medium</aspectname>
       <show>dark</show>
       <show>red</show>
       <show>green</show>
