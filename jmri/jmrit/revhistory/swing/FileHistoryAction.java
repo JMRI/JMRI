@@ -1,8 +1,8 @@
-// RevHistoryAction.java
+// FileHistoryAction.java
 
 package jmri.jmrit.revhistory.swing;
 
-import jmri.jmrit.revhistory.RevHistory;
+import jmri.jmrit.revhistory.FileHistory;
 import jmri.util.JmriJFrame;
 import jmri.*;
 
@@ -10,19 +10,19 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * Swing action to display the revision history
+ * Swing action to display the file revision history
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
  * @version     $Revision: 1.1 $
  */
-public class RevHistoryAction extends AbstractAction {
+public class FileHistoryAction extends AbstractAction {
 
-    public RevHistoryAction(String s) { 
+    public FileHistoryAction(String s) { 
 	    super(s);
     }
 
-    public RevHistoryAction() { 
-        this("History");
+    public FileHistoryAction() { 
+        this("File History");
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -35,7 +35,7 @@ public class RevHistoryAction extends AbstractAction {
         JScrollPane  scroll = new JScrollPane(pane);
         frame.getContentPane().add(scroll);
         
-        RevHistory r = InstanceManager.getDefault(RevHistory.class);
+        FileHistory r = InstanceManager.getDefault(FileHistory.class);
         if (r == null) {
             pane.append("<No History Found>\n");
         } else {
@@ -55,4 +55,4 @@ public class RevHistoryAction extends AbstractAction {
     }
 }
 
-/* @(#)RevHistoryAction.java */
+/* @(#)FileHistoryAction.java */

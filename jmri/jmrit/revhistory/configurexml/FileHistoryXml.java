@@ -4,21 +4,21 @@ import org.jdom.Element;
 import org.jdom.Namespace;
 import java.util.ArrayList;
 
-import jmri.jmrit.revhistory.RevHistory;
+import jmri.jmrit.revhistory.FileHistory;
 
 /**
- * Load/Store RevHistory objects.
+ * Load/Store FileHistory objects.
  * <p>
  * This interacts somewhat differently with the ConfigureXML system.
- * RevHistory objects are _not_ registed with the manager, but rather 
+ * FileHistory objects are _not_ registed with the manager, but rather 
  * handled explicitly by them.  The "load()" method is therefore a null-op
  * here.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.1 $
  */
 
-public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
+public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
     
     /**
      * Usual configurexml method, this one doesn't
@@ -38,64 +38,57 @@ public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
      * Then adds, instead of replacing, the history information
      */
     public boolean loadDirectly(Element e) throws Exception {
-        if (!e.getName().equals("revhistory"))
+        if (!e.getName().equals("filehistory"))
             throw new Exception("Unexpected element name: "+e.getName());
         
-        RevHistory rmain = jmri.InstanceManager.getDefault(RevHistory.class);
+        FileHistory rmain = jmri.InstanceManager.getDefault(FileHistory.class);
         
-        RevHistory r = loadRevHistory(e);
+        FileHistory r = loadFileHistory(e);
         System.out.println(r);
-        rmain.addRevision("loaded by JMRI "+jmri.Version.name(), r);
+        rmain.addOperation("Load","", r);
         
         return true;
     }
     
-    static public RevHistory loadRevHistory(Element e) {
-        RevHistory r = new RevHistory();
+    static public FileHistory loadFileHistory(Element e) {
+        FileHistory r = new FileHistory();
         
         @SuppressWarnings("unchecked")
-        java.util.List<Element> list = e.getChildren("revision", Namespace.getNamespace("http://docbook.org/ns/docbook"));
+        java.util.List<Element> list = e.getChildren("operation");
         for (int i = 0; i<list.size(); i++) {
-            loadRevision(r, list.get(i));
+            loadOperation(r, list.get(i));
         }
         return r;
     }
 
-    static void loadRevision(RevHistory r, Element e) {
+    static public void loadOperation(FileHistory r, Element e) {
         Element s;
-        Namespace n = Namespace.getNamespace("http://docbook.org/ns/docbook");
-        int revnumber = 0;
-        s = e.getChild("revnumber",n);
+
+        String type = null;
+        s = e.getChild("type");
         if (s!=null) {
-            String c = s.getText();
-            revnumber = Integer.parseInt(c);
+            type = s.getText();
         }
         
         String date = null;
-        s = e.getChild("date",n);
+        s = e.getChild("date");
         if (s!=null) {
             date = s.getText();
         }
         
-        String authorinitials = null;
-        s = e.getChild("authorinitials",n);
+        String filename = null;
+        s = e.getChild("filename");
         if (s!=null) {
-            authorinitials = s.getText();
+            filename = s.getText();
+        }
+                
+        FileHistory filehistory = null;
+        s = e.getChild("filehistory");
+        if (s!=null) {
+            filehistory = loadFileHistory(s);
         }
         
-        String revremark = null;
-        s = e.getChild("revremark",n);
-        if (s!=null) {
-            revremark = s.getText();
-        }
-        
-        RevHistory revhistory = null;
-        s = e.getChild("revhistory",n);
-        if (s!=null) {
-            revhistory = loadRevHistory(s);
-        }
-        
-        r.addRevision(revnumber, date, authorinitials, revremark, revhistory);
+        r.addOperation(type, date, filename, filehistory);
     }
 
 
@@ -127,60 +120,54 @@ public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
     }
     
     static public Element storeDirectly(Object o) {
-        final RevHistory r = (RevHistory)o;
-        if (r == null) return null;
+        final FileHistory r = (FileHistory)o;
+        if (r == null) return null;  // no file history object, not recording
         
         Element e = historyElement(r);
         
         // add one more element for this store
-        RevHistory.Revision rev = 
-                r.new Revision() {{
-                    revnumber = r.maxNumber()+1;
+        FileHistory.OperationMemo rev = 
+                r.new OperationMemo() {{
+                    type = "Store";
                     date = (new java.util.Date()).toString();
-                    authorinitials = System.getProperty("user.name");
-                    revremark = "Store from JMRI "+jmri.Version.name();
+                    filename = "";
                     history = null;
                 }};
 
         e.addContent(
-            revisionElement(rev)
+            operationElement(rev)
         );
         // and return
         return e;
     }
-    static Element historyElement(RevHistory r) {
-        ArrayList<RevHistory.Revision> list = r.getList();
+    static Element historyElement(FileHistory r) {
+        ArrayList<FileHistory.OperationMemo> list = r.getList();
         
-        Element e = new Element("revhistory","http://docbook.org/ns/docbook");
+        Element e = new Element("filehistory");
 
         for (int i = 0; i<list.size(); i++) {
-            Element revision = revisionElement(list.get(i));
-            e.addContent(revision);            
+            Element operation = operationElement(list.get(i));
+            e.addContent(operation);            
         }
         
         return e;
     }
     
-    static Element revisionElement(RevHistory.Revision r) {
-        Element rev = new Element("revision","http://docbook.org/ns/docbook");
+    static Element operationElement(FileHistory.OperationMemo r) {
+        Element rev = new Element("operation");
 
-        Element revnumber = new Element("revnumber","http://docbook.org/ns/docbook");
-        revnumber.addContent(""+r.revnumber);
+        Element revnumber = new Element("type");
+        revnumber.addContent(""+r.type);
         rev.addContent(revnumber);
         
-        Element date = new Element("date","http://docbook.org/ns/docbook");
+        Element date = new Element("date");
         date.addContent(r.date);
         rev.addContent(date);
 
-        Element authorinitials = new Element("authorinitials","http://docbook.org/ns/docbook");
-        authorinitials.addContent(r.authorinitials);
+        Element authorinitials = new Element("filename");
+        authorinitials.addContent(r.filename);
         rev.addContent(authorinitials);
-
-        Element revremark = new Element("revremark","http://docbook.org/ns/docbook");
-        revremark.addContent(r.revremark);
-        rev.addContent(revremark);
         
-        // not strictly docbook, this nesting is an extension
         if (r.history != null) 
             rev.addContent(historyElement(r.history));
             

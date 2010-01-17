@@ -39,7 +39,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.99 $
+ * @version     $Revision: 1.100 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -81,9 +81,9 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         InstanceManager.setConfigureManager(cm);
 
         // Install a history manager
-        jmri.InstanceManager.store(new jmri.jmrit.revhistory.RevHistory(), jmri.jmrit.revhistory.RevHistory.class);
+        jmri.InstanceManager.store(new jmri.jmrit.revhistory.FileHistory(), jmri.jmrit.revhistory.FileHistory.class);
         // record startup
-        jmri.InstanceManager.getDefault(jmri.jmrit.revhistory.RevHistory.class).addRevision(nameString);
+        jmri.InstanceManager.getDefault(jmri.jmrit.revhistory.FileHistory.class).addOperation("app", nameString, null);
         
         // Install a user preferences manager
         jmri.InstanceManager.store(new jmri.managers.DefaultUserMessagePreferences(), jmri.UserPreferencesManager.class);

@@ -2,7 +2,7 @@ package jmri.configurexml;
 
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.revhistory.RevHistory;
+import jmri.jmrit.revhistory.FileHistory;
 
 import java.io.File;
 
@@ -22,7 +22,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.71 $
+ * @version $Revision: 1.72 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -203,8 +203,8 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
     protected void includeHistory(Element root) {
         // add history to end of document
-        if (InstanceManager.getDefault(RevHistory.class) != null)
-        root.addContent(jmri.jmrit.revhistory.configurexml.RevHistoryXml.storeDirectly(InstanceManager.getDefault(RevHistory.class)));
+        if (InstanceManager.getDefault(FileHistory.class) != null)
+        root.addContent(jmri.jmrit.revhistory.configurexml.FileHistoryXml.storeDirectly(InstanceManager.getDefault(FileHistory.class)));
     }
 
     protected void finalStore(Element root, File file) {
@@ -381,16 +381,16 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
 
         // loading complete, as far as it got, make history entry
-        RevHistory r = InstanceManager.getDefault(RevHistory.class);
+        FileHistory r = InstanceManager.getDefault(FileHistory.class);
         if (r!=null) {
-            RevHistory included = null;
+            FileHistory included = null;
             if (root != null) {
-                Element revhistory = root.getChild("revhistory", org.jdom.Namespace.getNamespace("http://docbook.org/ns/docbook"));
-                if (revhistory != null) {
-                    included = jmri.jmrit.revhistory.configurexml.RevHistoryXml.loadRevHistory(revhistory);
+                Element filehistory = root.getChild("filehistory");
+                if (filehistory != null) {
+                    included = jmri.jmrit.revhistory.configurexml.FileHistoryXml.loadFileHistory(filehistory);
                 }
             }
-            r.addRevision("File "+fi.getName()+" loaded "+(result ? "OK":"with errors"), included);
+            r.addOperation((result ? "Load OK":"Load with errors"), fi.getName(), included);
         } else {
             log.info("Not recording file history");
         }
