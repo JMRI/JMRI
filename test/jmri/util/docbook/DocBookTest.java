@@ -10,10 +10,13 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.util.docbook package
  * @author	Bob Jacobsen     Copyright (C) 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class DocBookTest extends TestCase {
 
+    public void testExtra() {
+    }
+    
     // from here down is testing infrastructure
 
     public DocBookTest(String s) {
