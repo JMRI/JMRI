@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: aspecttable.xsl,v 1.15 2010-01-14 05:51:20 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsl,v 1.16 2010-01-17 00:11:21 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI aspecttable file into displayable HTML    -->
 
@@ -107,25 +107,61 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     Indication: <xsl:value-of select="indication"/><br/>
     
     <!-- try to locate all images and show -->
-    <table><tr>
+    
     <!-- set the 'matchaspect' variable to the name of the aspect we're doing now -->
     <xsl:variable name="matchaspect"><xsl:value-of select="name" /></xsl:variable>
-    <!-- index through all the files -->
-    <!-- Bug: Firefox doesn't properly preserve document order here... -->
-    <xsl:for-each select="document(/aspecttable/appearancefiles/appearancefile/@href)/appearancetable/appearances/appearance">
-        <!-- looking at all aspects to find the one matching matchaspect -->
-        <xsl:if test="aspectname = $matchaspect">
-            <!-- found, make image tag(s) -->
-            <xsl:for-each select="imagelink">
-              <td valign="bottom"><xsl:element name="img">
-                <xsl:attribute name="src">
-                    <xsl:value-of select="."/>
-                </xsl:attribute>
-              </xsl:element></td> 
+
+        <xsl:for-each select="/aspecttable/imagetypes/imagetype">
+            <xsl:variable name="matchtype"><xsl:value-of select="@type" /></xsl:variable>
+        
+            <table><tr>
+            <!-- index through all the files -->
+            <!-- Bug: Firefox doesn't properly preserve document order here... -->
+            <xsl:for-each select="document(/aspecttable/appearancefiles/appearancefile/@href)/appearancetable/appearances/appearance">
+                <!-- looking at all aspects to find the one matching matchaspect -->
+                <xsl:if test="aspectname = $matchaspect">
+                    <!-- found, make image tag(s) -->
+                    <xsl:for-each select="imagelink">
+
+                        <xsl:if test="@type = $matchtype">
+
+                              <td valign="bottom"><xsl:element name="img">
+                                <xsl:attribute name="src">
+                                    <xsl:value-of select="."/>
+                                </xsl:attribute>
+                              </xsl:element></td> 
+
+                        </xsl:if>
+
+                    </xsl:for-each>
+                </xsl:if>
             </xsl:for-each>
-        </xsl:if>
-    </xsl:for-each>
-    </tr></table>
+            </tr></table>
+
+        </xsl:for-each>
+
+        <table><tr>
+        <!-- Now repeat all that, except take unlabeled images -->
+        <xsl:for-each select="document(/aspecttable/appearancefiles/appearancefile/@href)/appearancetable/appearances/appearance">
+            <!-- looking at all aspects to find the one matching matchaspect -->
+            <xsl:if test="aspectname = $matchaspect">
+                <!-- found, make image tag(s) -->
+                <xsl:for-each select="imagelink">
+
+                    <xsl:if test='string-length(@type)=0'>
+
+                          <td valign="bottom"><xsl:element name="img">
+                            <xsl:attribute name="src">
+                                <xsl:value-of select="."/>
+                            </xsl:attribute>
+                          </xsl:element></td> 
+
+                    </xsl:if>
+
+                </xsl:for-each>
+            </xsl:if>
+        </xsl:for-each>
+        </tr></table>
 
 <xsl:apply-templates/>
 

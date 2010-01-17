@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI aspect-signaling support.                          -->
 
-<!-- $Id: appearancetable.xsd,v 1.14 2010-01-08 21:06:47 jacobsen Exp $ -->
+<!-- $Id: appearancetable.xsd,v 1.15 2010-01-17 00:11:21 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -107,6 +107,21 @@
                     <xs:element name="reference" minOccurs="0" maxOccurs="unbounded" />
                     <xs:element name="comment" minOccurs="0" maxOccurs="unbounded" />
                     <xs:element name="imagelink" minOccurs="0" maxOccurs="unbounded" />
+                      <xs:annotation><xs:documentation>
+                      *** Indicates a image location and type ***
+                      *** Type should be a member of the list in **
+                      *** the imagetype elements in the aspects.xml file **
+                      </xs:documentation></xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="imagetype" minOccurs="0" maxOccurs="unbounded" >
+                            <xs:complexType>
+                              <xs:attribute name="type" type="xs:string"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
                     
                     <!-- next line causes a "Unique Particle Attribution" error -->
                     <!-- <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/> -->

@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI aspect-signaling support                           -->
 
-<!-- $Id: aspecttable.xsd,v 1.20 2010-01-04 00:11:36 jacobsen Exp $ -->
+<!-- $Id: aspecttable.xsd,v 1.21 2010-01-17 00:11:21 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -104,6 +104,21 @@
                     <!-- <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/> -->
 
                   </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="imagetypes" minOccurs="0" maxOccurs="1">
+        <xs:annotation><xs:documentation>
+        ******** Table of imagelink types **********
+        </xs:documentation></xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="imagetype" minOccurs="0" maxOccurs="unbounded" >
+                <xs:complexType>
+                  <xs:attribute name="type" type="xs:string"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
