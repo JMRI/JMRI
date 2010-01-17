@@ -32,7 +32,13 @@
         <db:authorinitials>RGJ</db:authorinitials>
         <db:revremark>Add author and revision info</db:revremark>
     </db:revision>    
-  </db:revhistory>
+    <db:revision>
+         <db:revnumber>1.2</db:revnumber>
+        <db:date>2010-01-11</db:date>
+        <db:authorinitials>DB</db:authorinitials>
+        <db:revremark>Typo Correction</db:revremark>
+    </db:revision>
+ </db:revhistory>
 
   <aspecttable>AAR-2</aspecttable>
   <name>Single searchlight high permissive signal</name>
@@ -63,7 +69,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Stop And Proceed</aspectname>
+      <aspectname>Stop and Proceed</aspectname>
       <show>red</show>
       <reference>Page 50 B</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/SL-1-high-pbs/rule-291.gif</imagelink>

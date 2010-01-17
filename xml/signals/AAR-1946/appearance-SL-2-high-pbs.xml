@@ -32,6 +32,12 @@
         <db:authorinitials>RGJ</db:authorinitials>
         <db:revremark>Add author and revision info</db:revremark>
     </db:revision>    
+    <db:revision>
+         <db:revnumber>1.2</db:revnumber>
+        <db:date>2010-01-11</db:date>
+        <db:authorinitials>DB</db:authorinitials>
+        <db:revremark>Typo Correction</db:revremark>
+    </db:revision>
   </db:revhistory>
 
   <aspecttable>AAR-2</aspecttable>
@@ -98,7 +104,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Stop And Proceed</aspectname>
+      <aspectname>Stop and Proceed</aspectname>
       <show>red</show>
       <show>red</show>
       <reference>Page 50 A</reference>

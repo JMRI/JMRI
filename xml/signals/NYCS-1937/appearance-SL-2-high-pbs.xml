@@ -21,6 +21,10 @@
         <db:date>2010-01-01</db:date>
         <db:authorinitials>DB</db:authorinitials>
         <db:revremark>Initial version</db:revremark>
+        <db:revnumber>2</db:revnumber>
+        <db:date>2010-01-11</db:date>
+        <db:authorinitials>DB</db:authorinitials>
+        <db:revremark>Typo Corrections</db:revremark>
     </db:revision>    
   </db:revhistory>
 
@@ -37,7 +41,7 @@
       <show>green</show>
       <reference>Page 92</reference>
       <comment>Unofficial Rule and Aspect Name to allow for optional appearance</comment>
-      <imagelink>../../../resources/icons/smallschematics/aspects/NYCS-1937/SL-2-high-abs/rule-281-alt.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NYCS-1937/SL-2-high-pbs/rule-281-alt.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -97,7 +101,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Stop And Proceed</aspectname>
+      <aspectname>Stop and Proceed</aspectname>
       <show>red</show>
       <show>red</show>
       <reference>Page 104</reference>

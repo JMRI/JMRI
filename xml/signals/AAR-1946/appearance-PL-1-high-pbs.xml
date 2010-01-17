@@ -12,6 +12,7 @@
   <db:authorgroup>
     <db:author>
         <db:personname><db:firstname>Dick</db:firstname><db:surname>Bronson</db:surname></db:personname>
+        <db:email>dick@rr-cirkits.com</db:email>
     </db:author>    
     <db:author>
         <db:personname><db:firstname>Bob</db:firstname><db:surname>Jacobsen</db:surname></db:personname>
@@ -25,6 +26,12 @@
         <db:date>2010-01-01</db:date>
         <db:authorinitials>DB</db:authorinitials>
         <db:revremark>Initial version</db:revremark>
+    </db:revision>    
+    <db:revision>
+        <db:revnumber>1.01</db:revnumber>
+        <db:date>2010-01-17</db:date>
+        <db:authorinitials>DB</db:authorinitials>
+        <db:revremark>Typo correction</db:revremark>
     </db:revision>    
   </db:revhistory>
 
@@ -57,7 +64,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Stop And Proceed</aspectname>
+      <aspectname>Stop and Proceed</aspectname>
       <show>red</show>
       <reference>Page 55</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/AAR-1946/PL-1-high-pbs/rule-291.gif</imagelink>

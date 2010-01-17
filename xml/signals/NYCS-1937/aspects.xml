@@ -24,6 +24,10 @@
         <db:date>2010-01-01</db:date>
         <db:authorinitials>DB</db:authorinitials>
         <db:revremark>Initial version</db:revremark>
+        <db:revnumber>2</db:revnumber>
+        <db:date>2010-01-11</db:date>
+        <db:authorinitials>DB</db:authorinitials>
+        <db:revremark>Typo Correction</db:revremark>
     </db:revision>    
   </db:revhistory>
 
@@ -178,7 +182,7 @@
     </aspect>
 
     <aspect>
-      <name>Stop And Proceed</name>
+      <name>Stop and Proceed</name>
       <rule>Rule 291</rule>
       <indication>Stop; then proceed at restricted speed.</indication>
       <reference>Page 104</reference>

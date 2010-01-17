@@ -15,6 +15,7 @@
   <authorgroup xmlns="http://docbook.org/ns/docbook" >
     <author>
         <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
+        <email>dick@rr-cirkits.com</email>
     </author>    
     <author>
         <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
@@ -47,6 +48,12 @@
         <db:authorinitials>RGJ</db:authorinitials>
         <db:revremark>Add author and revision info</db:revremark>
     </db:revision>    
+    <db:revision>
+         <db:revnumber>2.2</db:revnumber>
+        <db:date>2010-01-11</db:date>
+        <db:authorinitials>DB</db:authorinitials>
+        <db:revremark>Typo Correction</db:revremark>
+    </db:revision>
   </db:revhistory>
 
   <aspects>
@@ -180,14 +187,14 @@
     </aspect>
 
     <aspect>
-      <name>Stop And Proceed</name>
+      <name>Stop and Proceed</name>
       <rule>Rule 291</rule>
       <indication>Stop; then proceed at restricted speed.</indication>
       <reference>Page 50</reference>
     </aspect>
 
     <aspect>
-      <name>Stop And Proceed-medium</name>
+      <name>Stop and Proceed-medium</name>
       <rule>Rule 291-medium</rule>
       <indication>Stop; then proceed at restricted speed on medium speed route.</indication>
       <reference>Page 50</reference>
