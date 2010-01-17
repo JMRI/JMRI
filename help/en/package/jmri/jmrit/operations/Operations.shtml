@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.53 2009-12-20 15:56:26 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.54 2010-01-17 01:35:49 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -946,24 +946,10 @@ Selected Trains</A> button.
 
 <H3>Train Rolling Stock</H3>
 
-You can determine what type of rolling stock the train will service.
-Select the Rolling stock the train will carry by clicking on the
+You can determine what type of cars and engines the train will service.
+Select the rolling stock the train will carry by clicking on the
 appropriate check boxes. A checked box means the train will service this
 type of rolling stock.
-
-<H3>Train Road Names</H3>
-
-You can control the car road names that the train will service. If the
-train will service any road name, select the "Accept All" radio button.
-If you want to accept only some road names, select "Accept only" radio
-button. Then use the menu of road names and "Add Road" button to make a
-list of road names that the train will service. To remove a road name
-from your list, select the road name from the menu and use the "Delete
-Road" button. 
-<P>
-To build a list of road names that the train will not service, select
-the "Exclude" radio button. Use the menu of road names and the "Add
-Road" button to build a list of roads that this train will not service.
 
 <A NAME="TrainRequires"></A>
 <H3>Train Requires</H3>
@@ -994,6 +980,46 @@ Press "Save Train" to save your train. The program will create a file
 (OperationsTrainRoster.xml) in your JMRI directory in a folder called
 "operations". A backup file with the last settings for all of your
 trains is also created each time the "Save Train" button is pressed. 
+
+<A NAME="TrainRoadNames"></A>
+<H3>Train Road Names</H3>
+
+You can control the road names that the train will service. Select
+under the "Edit Train->Tools" menu the "Train Build Options". This will
+bring up a new window with several options.
+
+<P><img src="images/TrainBuildOptions.png"> 
+
+<P>If the train will
+service any road name, select the "Accept All" radio button. If you want
+to accept only some road names, select "Accept only" radio button. Then
+use the menu of road names and "Add Road" button to make a list of road
+names that the train will service. To remove a road name from your list,
+select the road name from the menu and use the "Delete Road" button.
+
+<P>To build a list of road names that the train will not service,
+select the "Exclude" radio button. Use the menu of road names and the
+"Add Road" button to build a list of roads that this train will not
+service.
+
+<P>Press the "Save Train" button to update the train build options
+and close the window when your done.
+
+<H3>Train Owners</H3>
+
+You can decide which rolling stock the train will service by owner name.
+The control is similar to <A HREF="#TrainRoadNames">Train Road Names</A>,
+see above.
+
+<H3>Train Built Dates</H3>
+
+You can control which rolling stock the train will service by their built
+date. If you want only engines and cars built after a certain year,
+select the "After" radio button and enter a four digit year in the text
+box. If you only want engines and cars built before a certain year,
+select the "Before" radio button and enter a four digit year in the text
+box. And if you want to specify a period, select the "Range" radio
+button and enter the after and before years you want the train to service.
 
 <A NAME="BuildingTrains"></A>
 <H2>Building Trains</H2>
