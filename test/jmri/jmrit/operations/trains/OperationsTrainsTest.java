@@ -58,7 +58,7 @@ import jmri.jmrit.operations.routes.RouteManager;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -3700,9 +3700,13 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("e1 destination 7", "Boston Engine Yard", e1.getDestinationTrackName());
 		Assert.assertEquals("e2 destination 7", "Boston Engine Yard", e2.getDestinationTrackName());
 
-		// now exclude road NH, engine road is NH and should be taken
+		// now exclude road NH, engine road is NH and should be rejected
 		train1.addRoadName("NH");
 		train1.setRoadOption(Train.EXCLUDEROADS);
+		train1.build();
+		Assert.assertEquals("Train 1 After Build 7a", false, train1.getBuilt());
+		// now override by setting a road for the engine
+		train1.setEngineRoad("NH");
 		train1.build();
 		Assert.assertEquals("Train 1 After Build 8", true, train1.getBuilt());
 		// check destinations
@@ -3910,7 +3914,8 @@ public class OperationsTrainsTest extends TestCase {
 
 		// change lead engine road name, should cause build failure since Boston only 
 		// accepts NH, SP, and UP.
-		e1.setRoad("X");
+		train1.setEngineRoad("");	// reset engine road requirements, was "NH"
+		e1.setRoad("X");	// was "NH"
 		train1.build();
 		Assert.assertEquals("Train 1 After Build 21", false, train1.getBuilt());
 		

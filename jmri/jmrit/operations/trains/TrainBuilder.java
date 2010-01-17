@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009
- * @version             $Revision: 1.71 $
+ * @version             $Revision: 1.72 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -802,6 +802,13 @@ public class TrainBuilder extends TrainCommon{
 				indexEng--;
 				continue;
 			}
+			// remove engines with roads that train does not service
+			if (train.getEngineRoad().equals("") && !train.acceptsRoadName(engine.getRoad())){
+				addLine(fileOut, THREE, "Exclude engine ("+engine.getRoad()+" "+engine.getNumber()+"), road ("+engine.getRoad()+") is not serviced by this train");
+				engineList.remove(indexEng);
+				indexEng--;
+				continue;
+			}
 			// remove engines with owners that train does not service
 			if (!train.acceptsOwnerName(engine.getOwner())){
 				addLine(fileOut, THREE, "Exclude engine ("+engine.getRoad()+" "+engine.getNumber()+"), owner ("+engine.getOwner()+") is not serviced by this train");
@@ -888,7 +895,12 @@ public class TrainBuilder extends TrainCommon{
 			}
 		}
 		// show how many engines were found
-		addLine(fileOut, SEVEN, "Found "+engineList.size()+" engine(s) for this train, now search for termination track");
+		if (engineList.size()>0){
+			if (reqNumEngines > 1)
+				addLine(fileOut, SEVEN, "Found "+engineList.size()+" consist(s) for this train, now search for termination track");
+			else
+				addLine(fileOut, SEVEN, "Found "+engineList.size()+" engine(s) for this train, now search for termination track");
+		}
 		// now find terminal track for engine(s)
 		Track terminateTrack = terminateStageTrack;
 		for (int indexEng=0; indexEng<engineList.size(); indexEng++){
