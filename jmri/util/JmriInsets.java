@@ -19,7 +19,7 @@ import java.util.*;
  *
  * 
  * @author      Matt Harris
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class JmriInsets {
 
@@ -225,7 +225,7 @@ public class JmriInsets {
             }
         }
         catch (Exception e) {
-            log.error("Error: " + e.getMessage());
+            log.error("Error parsing Gnome XML: " + e.getMessage());
         }
         return -1;
     }
@@ -265,7 +265,7 @@ public class JmriInsets {
                 return Integer.parseInt(value);
         }
         catch (Exception e) {
-            log.error("Error: " + e.getMessage());
+            log.error("Error parsing KDI_CONFIG: " + e.getMessage());
         }
         return -1;
     }
