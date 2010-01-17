@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FAQLinux.html,v 1.19 2010-01-13 06:06:14 jacobsen Exp $ -->
+<!-- $Id: FAQLinux.html,v 1.20 2010-01-17 22:51:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -97,6 +97,19 @@ Java programs like JMRI.
 Java programs, not develop them, so it's smaller.
 </dd>
 
+<dt class=left><a id="commlibs"/>Do I need to install the Java comm libraries?</dt>
+<dd class=first>
+If you want to use JMRI 2.9.2 or later, you don't need to 
+install the Java comm libraries.  With that version, JMRI 
+changed to use the RXTX library instead, and JMRI carries
+the needed files with it. 
+
+<p>
+If you want to use JMRI 2.9.1 or earlier, including JMRI 2.8,
+you do need to install the Java comm libraries.
+
+</dd>
+
 <dt class=left><a id="comm"/>Where do I install the Java comm libraries?</dt>
 <dd class=first>
 Those libraries need to be installed where they will be found at the java startup.
@@ -167,7 +180,7 @@ included in the INSTALLATION file contained within the RxTx package.</p>
 	   <A href="/community/" title="Who is JMRI">
 	   	all who contributed</A>! </p>
 
-	<p>Copyright &copy; 1997 - 2004 JMRI Community. 
+	<p>Copyright &copy; 1997 - 2010 JMRI Community. 
 	<P>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 	<P><A href="/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a></p>
     

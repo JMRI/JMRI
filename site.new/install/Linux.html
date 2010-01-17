@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Linux.html,v 1.28 2010-01-13 06:06:14 jacobsen Exp $ -->
+<!-- $Id: Linux.html,v 1.29 2010-01-17 22:51:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -56,6 +56,8 @@
       </H2>
 
       This page describes general aspects of installing JMRI on Linux.
+      
+      <p>
       There are multiple versions of Linux, all slightly different and
       requiring installation instructions that differ in detail.
       There are specific pages describing details of
@@ -82,7 +84,7 @@
       <li><a href="EeePC.shtml">EeePC</a>, and
       <li><a href="OLPC_XO.shtml">OLPC (One Laptop Per Child) XO</a>.
       </ul>
-
+      
       <p>
       You can also find some more specific information
       on the "<A HREF="FAQLinux.html">JMRI Linux FAQ page</a>".
@@ -139,8 +141,16 @@
 		This should give you a file named "j2re-1_4_0-fcs-linux-i386.rpm".
 		Install that with:<BR>
 		<TT>rpm -i j2re-1_4_0-fcs-linux-i386.rpm</TT></li>
+        </ol>
 
-	    <li>Download and Install the Java Communications API (javacomm20-x86) from
+	<li>Download and Install the Java Communications API
+	    <p>
+	    If you are installing JMRI 2.9.1 or earlier, you need to
+	    install a Java Communications API (Java comm) library.
+	    If you are installing JMRI 2.9.2 or later, skip this step.
+        
+        <ol>
+	    <li>Download and install javacomm20-x86 from
 		<A
 		HREF="http://java.sun.com/products/javacomm/">http://java.sun.com/products/javacomm/</A>
 		and install it with<br>
@@ -219,7 +229,7 @@
 	   <A href="/community/" title="Who is JMRI">
 	   	all who contributed</A>! </p>
 
-	<p>Copyright &copy; 1997 - 2004 JMRI Community. 
+	<p>Copyright &copy; 1997 - 2010 JMRI Community. 
 	<P>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 	<P><A href="/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a></p>
     
