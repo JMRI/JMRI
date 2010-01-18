@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalAddEdit.shtml,v 1.18 2009-12-27 17:33:38 jacobsen Exp $ -->
+<!-- $Id: SignalAddEdit.shtml,v 1.19 2010-01-18 16:58:16 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -90,7 +90,68 @@ choices for how the signal head is connected:
   the turnout on the "green" connection Thrown should light the
   green lamp.
   </dd>
-
+<dt>Quadruple Output</dt>
+  <dd>
+  This type controls a signal head via four electrical connections.
+  One goes to a green lamp/LED, one to a yellow one, 
+  one to a red one, and the fourth to a "lunar" (white) one.
+  <p>
+  These connections are controlled via the JMRI Turnout
+  logic, and therefore appear in the Turnout Table.
+  They're not really connected to switch motors, though,
+  they're just electrical outputs.
+  <p>
+  For each connection, enter the appropriate JMRI
+  turnout for the electrical connection on the layout,
+  either as a number (1,2,3) or as a JMRI
+  name (system name like LT1, CT2 or an already-defined user name). 
+  They need not be consecutive or in any particular order.
+  <p>
+  If you need to debug one of these signal heads, start by
+  checking whether the Turnout connections work. You can
+  do this by going to the 
+  <a href="TurnoutTable.shtml">Turnout Table</a> and changing the output setting
+  there.
+  Setting e.g.
+  the turnout on the "green" connection Thrown should light the
+  green lamp.
+  </dd>
+  
+ <dt>Single Output</dt>
+  <dd>
+  This type controls a signal head with a single electrical connections.
+  The connection can be to a single lamp/LED to display a single apperance.
+  An alternative method is to connect a pair of LEDs to the single output
+  wired up suitable so that when the output of the decoder is on you get one
+  color and while the output is off you get the other.
+  
+  This type could also be used to control mechanically operated signals that only
+  have two appearances and therefore always have an appearance.
+  It is possible to gain a third "flashing" appearance.  
+  If you have Dark and a colour selected, then the end result is an additional flash color option
+  If there are two colours selected, then you are given flash for both colours, however this will 
+  either flash option will result in the colours flashing alternatively.
+  <p>
+  These connections are controlled via the JMRI Turnout
+  logic, and therefore appear in the Turnout Table.
+  They're not really connected to switch motors, though,
+  they're just electrical outputs.
+  <p>
+  For each connection, enter the appropriate JMRI
+  turnout for the electrical connection on the layout,
+  either as a number (1,2,3) or as a JMRI
+  name (system name like LT1, CT2 or an already-defined user name). 
+  They need not be consecutive or in any particular order.
+  <p>
+  If you need to debug one of these signal heads, start by
+  checking whether the Turnout connections work. You can
+  do this by going to the 
+  <a href="TurnoutTable.shtml">Turnout Table</a> and changing the output setting
+  there.
+ 
+  Appearance Closed - The appearance given when the connection is in the Closed State.
+  Appearance Thrown - The appearance given when the connection is in the Thrown State.
+  </dd>
 <dt>Virtual</dt>
   <dd>
   This type doesn't connect to the layout at all.
@@ -170,32 +231,28 @@ choices for how the signal head is connected:
   For more information on how those names are generated, see the 
   <a href="../../../../html/hardware/grapevine/Names.shtml">page on Grapevine names</a>.
   </dd>
-
-<dt>Quadruple Output</dt>
+ <dt>MERG Signal Driver 2</dt>
   <dd>
-  This type controls a signal head via four electrical connections.
-  One goes to a green lamp/LED, one to a yellow one, 
-  one to a red one, and the fourth to a "lunar" (white) one.
+  This type controls a signal that uses a MERG Signal Driver 2 to control its displayed aspects.
+  The SD2 is driven using a steady State accessory decoder. Depending upon the number of aspects
+  that are displayed on the signal, will determine the number of turnout outputs are required.
+  ie.<br>
+  2 Aspect requires 1 turnout<br>
+  3 Aspect requires 2 turnouts<br>
+  4 Aspect requires 3 turnouts
   <p>
-  These connections are controlled via the JMRI Turnout
-  logic, and therefore appear in the Turnout Table.
-  They're not really connected to switch motors, though,
-  they're just electrical outputs.
+  The Signal driver on JMRI has been setup to control the aspect output only for the SD2, 
+  it does not control the other features of the SD2 such as "Steam Rules" or "Feather".
+  However these can easily be configured using normal Logixs or routes.
   <p>
-  For each connection, enter the appropriate JMRI
-  turnout for the electrical connection on the layout,
-  either as a number (1,2,3) or as a JMRI
-  name (system name like LT1, CT2 or an already-defined user name). 
-  They need not be consecutive or in any particular order.
+  <b>Notes</b> - The MERG SD2 driver does not support flashing yellow aspect, 
+  for flashing yellow aspects an additional circuit is required as documented 
+  in the MERG Technical Bulletins.<br>
+  As the MERG SD2 driver goes beyond the Green/Yellow/Red Aspects supported in 
+  JMRI with a double yellow aspect, the double yellow state is represented in the
+  status as a "Lunar".
   <p>
-  If you need to debug one of these signal heads, start by
-  checking whether the Turnout connections work. You can
-  do this by going to the 
-  <a href="TurnoutTable.shtml">Turnout Table</a> and changing the output setting
-  there.
-  Setting e.g.
-  the turnout on the "green" connection Thrown should light the
-  green lamp.
+  Further information on the Signal Driver can be found at <a href="www.merg.info">MERG</a>
   </dd>
 
 </dl>

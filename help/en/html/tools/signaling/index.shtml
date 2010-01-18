@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.8 2010-01-09 22:25:56 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.9 2010-01-18 16:57:49 kevin-dickerson Exp $ -->
 <title>JMRI: Signaling</title>
 
 <!-- Style -->
@@ -145,6 +145,16 @@ one turnout thrown (on) controls the stop and the other thrown (on) controls the
 Both outputs thrown (on) controls the
 approach, and both closed (off) are dark. 
 Each aspect change requires that two turnout commands be sent.</li>
+<li>
+<b>Single Output Head</b> A signal head that uses just one output line to indicate upto 3 appearances (including flashing).
+The appearances available to configure are Dark, Red, Yellow, Green and Lunar.
+
+The output lines are controlled by JMRI Turnout logic, and are controlled via the
+Turnout Table.
+The output coding is such that 
+With the turnout thrown (on) controls one appearance and turnout closed (off) controls the other. 
+Flashing allows for a third appearance, which will flash between the two appearances configured.
+</li>
 <li>
 <b>SE8c</b> A signal head controlled by a single turnout command per aspect change. One turnout command changes between 
 stop and clear, and the second turnout command changes between approach and dark.</li>
