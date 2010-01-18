@@ -19,7 +19,7 @@ import java.util.*;
  *
  * 
  * @author      Matt Harris
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class JmriInsets {
 
@@ -221,7 +221,7 @@ public class JmriInsets {
             	return -1;
             if(found) {
                 temp = temp.substring(temp.indexOf("value=\"") + 7);
-                return Integer.parseInt(temp.substring(0, temp.indexOf("\">")));
+                return Integer.parseInt(temp.substring(0, temp.indexOf('"')));
             }
         }
         catch (Exception e) {
