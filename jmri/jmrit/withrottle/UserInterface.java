@@ -10,7 +10,7 @@ package jmri.jmrit.withrottle;
  *	Create a window for WiThrottle information, advertise service, and create a thread for it to run in.
  *
  *	@author Brett Hoffman   Copyright (C) 2009
- *	@version $Revision: 1.9 $
+ *	@version $Revision: 1.10 $
  */
 
 import java.awt.event.*;
@@ -192,7 +192,7 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
                     port,
                     jmdns);
             
-            portLabel.setText(serviceInfo.getName());
+            portLabel.setText(serviceInfo.getName()+" "+port);
         } catch (java.io.IOException e2) {
             log.error("JmDNS Failure");
             portLabel.setText("failed to advertise service");
@@ -311,3 +311,5 @@ class ServerThread extends Thread {
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ServerThread.class.getName());
 }
+
+ 	  	 
