@@ -36,7 +36,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.37 $
+ * @version     $Revision: 1.38 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -141,8 +141,19 @@ public class LightTableAction extends AbstractTableAction {
                     javax.swing.SwingUtilities.invokeLater(t);
     			} else if (col==INTENSITYCOL) {
                     // alternate
-                    Light l = (Light)getBySystemName((String)getValueAt(row, SYSNAMECOL));
-                    l.setTargetIntensity(((Double)value).doubleValue());
+    				try {
+                        Light l = (Light)getBySystemName((String)getValueAt(row, SYSNAMECOL));
+                        double intensity = ((Double)value).doubleValue();
+                        if (intensity < 0) {
+                        	intensity = 0;
+                        }
+                        if (intensity > 1.0) {
+                        	intensity = 1.0;
+                        }
+                        l.setTargetIntensity(intensity);
+    				} catch (IllegalArgumentException e1) {
+                        status1.setText( rb.getString("LightError16") );
+    				}
     			} else if (col==ENABLECOL) {
                     // alternate
                     Light l = (Light)getBySystemName((String)getValueAt(row, SYSNAMECOL));
