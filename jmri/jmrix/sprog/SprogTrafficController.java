@@ -8,6 +8,8 @@ import java.util.Vector;
 import jmri.jmrix.sprog.sprog.SerialDriverAdapter;
 
 import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
+import gnu.io.SerialPortEventListener;
 
 /**
  * Converts Stream-based I/O to/from Sprog messages.  The "SprogInterface"
@@ -15,12 +17,19 @@ import gnu.io.SerialPort;
  * a SprogPortController is via a pair of *Streams, which then carry sequences
  * of characters for transmission.     Note that this processing is
  * handled in an independent thread.
+ * 
+ * Updated January 2010 for gnu io (RXTX) - Andrew Berridge. Comments tagged with
+ * "AJB" indicate changes or observations by me
+ * 
+ * Removed Runnable implementation and methods for it
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
-public class SprogTrafficController implements SprogInterface, Runnable {
+public class SprogTrafficController implements SprogInterface, SerialPortEventListener  {
 
+	private SprogReply reply = new SprogReply();
+	
 	public SprogTrafficController() {
 		if (log.isDebugEnabled()) log.debug("setting instance: "+this);
 		self=this;
@@ -96,7 +105,9 @@ public class SprogTrafficController implements SprogInterface, Runnable {
 
           } else {
             // disable flow control
-            SerialDriverAdapter.instance().setHandshake(0);
+            //AJB - removed Jan 2010 - this stops SPROG from sending. Could cause problems with
+        	//serial Sprogs, but I have no way of testing: 
+        	//SerialDriverAdapter.instance().setHandshake(0);
           }
           if (log.isDebugEnabled()) log.debug("Setting sprogState " + s);
         }
@@ -227,9 +238,13 @@ public class SprogTrafficController implements SprogInterface, Runnable {
 	 * looking for input messages in character form on the
 	 * stream connected to the PortController via <code>connectPort</code>.
 	 * Terminates with the input stream breaking out of the try block.
+	 * 
+	 * AJB Jan 2010 - neither method below is required any more - 
+	 * incoming data handled by event-driven method - serialEvent
+	 * 
 	 */
-	public void run() {
-          while (true) {   // loop permanently, stream close will exit via exception
+	/*public void run() {
+        while (true) {   // loop permanently, stream close will exit via exception
             try {
               handleOneIncomingReply();
             }
@@ -238,7 +253,7 @@ public class SprogTrafficController implements SprogInterface, Runnable {
             }
           }
         }
-
+        
         void handleOneIncomingReply() throws java.io.IOException {
           // we sit in this until the message is complete, relying on
           // threading to let other stuff happen
@@ -246,10 +261,11 @@ public class SprogTrafficController implements SprogInterface, Runnable {
           // Create output message
           SprogReply msg = new SprogReply();
           // message exists, now fill it
+         
           int i;
           for (i = 0; i < SprogReply.maxSize; i++) {
-            byte char1 = istream.readByte();
-            msg.setElement(i, char1);
+        		byte char1 = istream.readByte();
+        		msg.setElement(i, char1);
             if (endReply(msg)) break;
           }
 
@@ -274,7 +290,7 @@ public class SprogTrafficController implements SprogInterface, Runnable {
             javax.swing.SwingUtilities.invokeLater(r);
           }
         }
-
+*/
         /*
          * Normal SPROG replies will end with the prompt for the next command
          * Bootloader will end with ETX with no preceding DLE
@@ -343,6 +359,73 @@ public class SprogTrafficController implements SprogInterface, Runnable {
        private boolean unsolicited;
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogTrafficController.class.getName());
+
+	/**
+	 * serialEvent - respond to an event triggered by RXTX. In this case
+	 * we are only dealing with DATA_AVAILABLE but the other events
+	 * are left here for reference. AJB Jan 2010
+	 */
+	public void serialEvent(SerialPortEvent event) {
+	     switch (event.getEventType()) {
+	      case SerialPortEvent.BI:
+	      case SerialPortEvent.OE:
+	      case SerialPortEvent.FE:
+	      case SerialPortEvent.PE:
+	      case SerialPortEvent.CD:
+	      case SerialPortEvent.CTS:
+	      case SerialPortEvent.DSR:
+	      case SerialPortEvent.RI:
+	      case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
+	         break;
+	      case SerialPortEvent.DATA_AVAILABLE:
+	          // we get here if data has been received
+	    	  //fill the current reply with any data received
+	    	  int replyCurrentSize = this.reply.getNumDataElements();
+	          int i;
+	          for (i = replyCurrentSize; i < SprogReply.maxSize - replyCurrentSize; i++) {
+	        	try{
+	        		if (istream.available()==0) break; //nothing waiting to be read
+	        		byte char1 = istream.readByte();
+	        		this.reply.setElement(i, char1);
+        		
+	        	} catch (Exception e) {}
+	            if (endReply(this.reply)) {
+	            	sendreply();
+	            	break;
+	            }
+	          }
+	 
+
+	         break;
+	      }
+	}
+	/**
+	 * Send the current reply - built using data from seriaEvent
+	 */
+	private void sendreply() {
+        //send the reply
+        if (log.isDebugEnabled()) log.debug("dispatch reply of length "+this.reply.getNumDataElements());
+        {
+          final SprogReply thisReply = this.reply;
+          if (unsolicited) {
+            log.debug("Unsolicited Reply");
+            thisReply.setUnsolicited();
+          }
+          final SprogTrafficController thisTC = this;
+          // return a notification via the queue to ensure end
+          Runnable r = new Runnable() {
+            SprogReply msgForLater = thisReply;
+            SprogTrafficController myTC = thisTC;
+            public void run() {
+              log.debug("Delayed notify starts");
+              myTC.notifyReply(msgForLater);
+            }
+          };
+          javax.swing.SwingUtilities.invokeLater(r);
+        }
+        //Create a new reply, ready to be filled
+        this.reply = new SprogReply();
+	}
 }
 
 

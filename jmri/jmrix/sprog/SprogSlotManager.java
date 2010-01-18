@@ -21,12 +21,16 @@ import jmri.jmrix.sprog.sprogslotmon.*;
  * (e.g. service mode and ops mode, or two ops mode) at the same time, but this
  * code definitely can't.
  * <P>
+ * <P> Updated by Andrew Berridge, January 2010 - state management code now safer,
+ * uses enum, etc.</P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
  *              Andrew Crosland         (C) 2006 ported to SPROG
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class SprogSlotManager extends SprogCommandStation implements SprogListener, CommandStation, Runnable {
 
+	private enum SlotThreadState {IDLE, WAITING_FOR_REPLY, SEND_STATUS_REQUEST, WAITING_FOR_STATUS_REPLY}
+	
     public SprogSlotManager() {
         // error if more than one constructed?
         if (self != null) log.debug("Creating too many SlotManager objects");
@@ -227,76 +231,122 @@ public class SprogSlotManager extends SprogCommandStation implements SprogListen
       byte [] p;
       int [] statusA = new int [4];
       //int statusIdx = 0;
-      int state = 0;
-      SprogMessage m = SprogMessage.getStatus();
-      while (true) {
-        // loop permanently but sleep
+      //AJB slot state now uses enums
+      SlotThreadState state =  SlotThreadState.IDLE;
+      SlotThreadState prevState = state;
+      //Keep track of how many times we've been doing the same thing
+      //in case we need to give up (to avoid being stuck in a state with 
+      //no escape!
+      int numLoopsSameState = 0;
+      //count of no. of times idle
+      int idleCount = 0;
+      while (true) { // loop permanently but sleep
+         if (log.isDebugEnabled()) {
+        	 log.debug("SPROG SlotManager in state: " + state.toString());
+         }
+    	/*
+    	 * Check:
+    	 * Are we stuck in certain (non idle) state?
+    	 */
+    	if (state != SlotThreadState.IDLE) { 
+			idleCount = 0;
+			if (state == prevState) {
+				if(++ numLoopsSameState > 100) {
+					//We're probably stuck in a state... Just go back to idle and
+				//carry on!
+					log.error("Stuck in state: " + state.toString());
+					numLoopsSameState = 0;
+					state = SlotThreadState.IDLE;
+				}
+			} else {
+				numLoopsSameState = 0;
+			}
+		}
+    	prevState = state;
         try {
-          Thread.sleep(3);
+        	//Slow down loop repeat rate if we've been idle for a while,
+        	//otherwise repeat frequently for responsiveness
+        	if (idleCount > 10) {
+        		log.debug("sleeping 800ms");
+        		Thread.sleep(800);
+        	} else {
+        		Thread.sleep(10);
+        	}
         } catch (InterruptedException i) {
             Thread.currentThread().interrupt(); // retain if needed later
           log.error("Sprog slot thread interrupted\n"+i);
         }
         switch(state) {
-          case 0: {
-            log.debug("Slot thread state 0");
+          case IDLE: {
+            idleCount ++;
             // Get next packet to send
             p = getNextPacket();
             if (p != null) {
+            	/* AJB: Moved flags to before sending packet - with improved
+            	 * performance, we were sometimes setting the flags AFTER
+            	 * a reply was received elsewhere!
+            	 */
+	            synchronized(this) {
+	                replyReceived = false; //should be false!
+	                awaitingReply = true;  //should be true!
+	            }
               sendPacket(p);
-              synchronized(this) {
-                  replyReceived = false; //should be false!
-                  awaitingReply = true;  //should be true!
-              }
-              state = 1; //Should be 1
+
+              state = SlotThreadState.WAITING_FOR_REPLY; 
             }
             break;
           }
-          case 1: {
-            log.debug("Slot thread state 1");
+          case WAITING_FOR_REPLY: {
             // Wait for reply
             if (replyReceived) {
               if (++statusDue > 20) {
-                state = 2;
+                state = SlotThreadState.SEND_STATUS_REQUEST;
               } else {
-                state = 0;
+                state = SlotThreadState.IDLE;
               }
-            }
+            } 
             break;
           }
-          case 2: {
-            log.debug("Slot thread state 2");
+          case SEND_STATUS_REQUEST: {
             // Send status request
-            SprogTrafficController.instance().sendSprogMessage(m, this);
-            log.debug("Send status request");
+        	/* AJB: Moved flags to before sending packet - with improved
+        	 * performance, we were sometimes setting the flags AFTER
+        	 * a reply was received elsewhere!
+        	 */
             synchronized(this) {
-              replyReceived = false;
-              awaitingReply = true;
+                replyReceived = false;
+                awaitingReply = true;
             }
+            SprogTrafficController.instance().
+            	sendSprogMessage(SprogMessage.getStatus(), this);
+            
             statusDue = 0;
-            state = 3;
+            state = SlotThreadState.WAITING_FOR_STATUS_REPLY;
             break;
           }
-          case 3: {
-            log.debug("Slot thread state 3");
+          case WAITING_FOR_STATUS_REPLY: {
             // Waiting for status reply
             if (replyReceived) {
               if (SprogSlotMonFrame.instance() != null) {
                 String s = replyForMe.toString();
                 log.debug("Reply received whilst waiting for status");
                 int i = s.indexOf('h');
-//                float volts = Integer.decode("0x"+s.substring(i+1, i+5)).intValue();
-                int milliAmps = ((Integer.decode("0x"+s.substring(i+7, i+11)).intValue())*488)/47;
-//                statusA[statusIdx] = milliAmps;
-//                statusIdx = (statusIdx+1)%4;
-//                String voltString, ampString;
-//                ampString = Float.toString((float)((statusA[0] + statusA[1] + statusA[2] + statusA[3])/4)/1000);
-                statusA[0] = milliAmps;
-                String ampString;
-                ampString = Float.toString((float)statusA[0]/1000);
-                SprogSlotMonFrame.instance().updateStatus(ampString);
+                //Check that we got a status message before acting on it
+                //by checking that "h" was found in the reply
+                if (i > -1) { 
+	//                float volts = Integer.decode("0x"+s.substring(i+1, i+5)).intValue();
+	                int milliAmps = ((Integer.decode("0x"+s.substring(i+7, i+11)).intValue())*488)/47;
+	//                statusA[statusIdx] = milliAmps;
+	//                statusIdx = (statusIdx+1)%4;
+	//                String voltString, ampString;
+	//                ampString = Float.toString((float)((statusA[0] + statusA[1] + statusA[2] + statusA[3])/4)/1000);
+	                statusA[0] = milliAmps;
+	                String ampString;
+	                ampString = Float.toString((float)statusA[0]/1000);
+	                SprogSlotMonFrame.instance().updateStatus(ampString);
+	              }
               }
-              state = 0;
+              state = SlotThreadState.IDLE;
               break;
             }
           }
@@ -386,8 +436,8 @@ public class SprogSlotManager extends SprogCommandStation implements SprogListen
      */
     public int getInUseCount() {
         int result = 0;
-        for (int i = 0; i<=SprogConstants.MAX_SLOTS; i++) {
-// ???            if (slotQ(i).slotStatus() == SprogConstants.LOCO_IN_USE ) result++;
+        for (int i = 0; i< _Queue.getLength(); i++) {
+            if (!_Queue.slot(i).isFree() ) result++;
         }
         return result;
     }

@@ -11,6 +11,7 @@ import jmri.jmrix.sprog.SprogSlotManager;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.util.TooManyListenersException;
 
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
@@ -29,7 +30,7 @@ import gnu.io.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Andrew Crosland   Copyright (C) 2006
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -60,7 +61,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
             activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
 
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            activeSerialPort.setFlowControlMode(0);
+            //AJB removed Jan 2010: activeSerialPort.setFlowControlMode(0);
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
@@ -89,7 +90,15 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
                          +"  CD: "+activeSerialPort.isCD()
                          );
             }
-
+            
+            //AJB - add Sprog Traffic Controller as event listener
+            try {
+                activeSerialPort.addEventListener(SprogTrafficController.instance());
+             } catch (TooManyListenersException e) {}
+             
+             // AJB - activate the DATA_AVAILABLE notifier
+             activeSerialPort.notifyOnDataAvailable(true);
+             
             opened = true;
 
         } catch (gnu.io.NoSuchPortException p) {
@@ -141,8 +150,9 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         // start operation
         // sourceThread = new Thread(p);
         // sourceThread.start();
-        sinkThread = new Thread(SprogTrafficController.instance());
-        sinkThread.start();
+        //Removed by AJB Jan 2010
+        //sinkThread = new Thread(SprogTrafficController.instance());
+        //sinkThread.start();
 
         jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogCSThrottleManager());
 

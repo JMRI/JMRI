@@ -10,6 +10,9 @@ import jmri.jmrix.sprog.SprogProgrammerManager;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.util.TooManyListenersException;
+
+import javax.swing.UIDefaults.ActiveValue;
 
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
@@ -26,9 +29,12 @@ import gnu.io.SerialPort;
  * <P>
  * The current implementation only handles the 9,600 baud rate, and does
  * not use any other options at configuration time.
+ * 
+ * Updated January 2010 for gnu io (RXTX) - Andrew Berridge. Comments tagged with
+ * "AJB" indicate changes or observations by me
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -57,9 +63,11 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
             // set RTS high, DTR high
             activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
             activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
-
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            activeSerialPort.setFlowControlMode(0);
+            //AJB: Removed Jan 2010 - 
+            //Setting flow control mode to zero kills comms - SPROG doesn't send data
+            //Concern is that will disabling this affect other SPROGs? Serial ones? 
+            //activeSerialPort.setFlowControlMode(0);
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
@@ -88,7 +96,15 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
                          +"  CD: "+activeSerialPort.isCD()
                          );
             }
-
+            
+            //AJB - add Sprog Traffic Controller as event listener
+            try {
+                activeSerialPort.addEventListener(SprogTrafficController.instance());
+             } catch (TooManyListenersException e) {}
+             
+             // AJB - activate the DATA_AVAILABLE notifier
+             activeSerialPort.notifyOnDataAvailable(true);
+             
             opened = true;
 
         } catch (gnu.io.NoSuchPortException p) {
@@ -135,8 +151,8 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         // start operation
         // sourceThread = new Thread(p);
         // sourceThread.start();
-        sinkThread = new Thread(SprogTrafficController.instance());
-        sinkThread.start();
+        //sinkThread = new Thread(SprogTrafficController.instance());
+        //sinkThread.start();
 
         jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogThrottleManager());
 

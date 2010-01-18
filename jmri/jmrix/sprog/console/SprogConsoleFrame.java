@@ -5,6 +5,7 @@ package jmri.jmrix.sprog.console;
 import java.awt.*;
 import javax.swing.*;
 
+import jmri.jmrix.sprog.SprogSlotManager;
 import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
@@ -14,8 +15,11 @@ import jmri.jmrix.sprog.SprogConstants;
 /**
  * Frame for Sprog Console
  * 
+ * Updated Jan 2010 by Andrew Berridge - fixed errors caused by trying
+ * to send some commands while slot manager is active
+ * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
     
@@ -42,6 +46,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     // members for handling the SPROG interface
     SprogMessage msg;
     SprogTrafficController tc = null;
+    SprogSlotManager sm = null;
     String replyString;
     int sprogMajorVersion;
     int sprogMinorVersion;
@@ -68,6 +73,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     protected void init() {
         // connect to TrafficController
         tc = SprogTrafficController.instance();
+        // connect to SlotManager (it is only used in Command Station mode)
+        sm = SprogSlotManager.instance();
         tc.addSprogListener(this);
     }
     
@@ -80,13 +87,18 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         super.initComponents();
 
         // Send a blank message to kick off the state machine to get the
-        // currrent configuration of the attached SPROG
-        msg = new SprogMessage(1);
-        msg.setOpCode(' ');
-        nextLine("cmd: \""+msg+"\"\n", "");
-        tc.sendSprogMessage(msg, this);
-        state = CRSENT;
-        startShortTimer();
+        // current configuration of the attached SPROG
+        //Only send this if we have zero active slots in slot manager
+        //in command mode
+
+        if (sm.getInUseCount() == 0) {
+	        msg = new SprogMessage(1);
+	        msg.setOpCode(' ');
+	        nextLine("cmd: \""+msg+"\"\n", "");
+	        tc.sendSprogMessage(msg, this);
+	        state = CRSENT;  
+	        startShortTimer();
+        }
         
         // Add a nice border to super class
         super.jScrollPane1.setBorder(BorderFactory.createTitledBorder(
@@ -394,7 +406,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 }
                 
                 // Get Current Limit if available
-                if (isCurrentLimitPossible()) {
+                if (isCurrentLimitPossible() && sm.getInUseCount() == 0) {
                     state = CURRENTQUERYSENT;
                     msg = new SprogMessage(1);
                     msg.setOpCode('I');
@@ -404,11 +416,18 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                     // Set default and get the mode word
                     currentLimit = (SprogConstants.DEFAULT_I*4880)/470;
                     currentTextField.setText(String.valueOf(currentLimit));
-                    state = MODEQUERYSENT;
-                    msg = new SprogMessage(1);
-                    msg.setOpCode('M');
-                    nextLine("cmd: \""+msg+"\"\n", "");
-                    tc.sendSprogMessage(msg, this);
+                   
+                    //Only send this if we have zero active slots in slot manager
+                    //in command mode           
+                    if (sm.getInUseCount() == 0) {
+                    	state = MODEQUERYSENT;
+	                    msg = new SprogMessage(1);
+	                    msg.setOpCode('M');
+	                    nextLine("cmd: \""+msg+"\"\n", "");
+	                    tc.sendSprogMessage(msg, this);
+                    } else {
+                    	state = IDLE;
+                    }
                 }
             }
         } else if (state == CURRENTQUERYSENT) {
@@ -427,11 +446,17 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             currentTextField.setText(String.valueOf(currentLimit));
             currentTextField.setEnabled(true);
             // Next get the mode word
-            state = MODEQUERYSENT;
-            msg = new SprogMessage(1);
-            msg.setOpCode('M');
-            nextLine("cmd: \""+msg+"\"\n", "");
-            tc.sendSprogMessage(msg, this);
+            //Only get this if we have zero active slots in slot manager
+            //in command mode
+            if (sm.getInUseCount() == 0) {
+	            state = MODEQUERYSENT;
+	            msg = new SprogMessage(1);
+	            msg.setOpCode('M');
+	            nextLine("cmd: \""+msg+"\"\n", "");
+	            tc.sendSprogMessage(msg, this);
+            } else {
+            	state = IDLE;
+            }
         } else if (state == MODEQUERYSENT) {
             tmpString = new String(replyString.substring(replyString.indexOf("=") + 
                         2, replyString.indexOf("=") + 6));
