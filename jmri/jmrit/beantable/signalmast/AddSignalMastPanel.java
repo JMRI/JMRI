@@ -16,7 +16,7 @@ import org.jdom.*;
  * JPanel to create a new SignalMast
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class AddSignalMastPanel extends JPanel {
@@ -43,6 +43,7 @@ public class AddSignalMastPanel extends JPanel {
         h.add(head2);
         h.add(head3);
         h.add(head4);
+        h.add(head5);
         p.add(h);
         
         add(p);
@@ -77,6 +78,7 @@ public class AddSignalMastPanel extends JPanel {
     JTextField head2 = new JTextField(5);
     JTextField head3 = new JTextField(5);
     JTextField head4 = new JTextField(5);
+    JTextField head5 = new JTextField(5);
     
     String sigsysname;
     ArrayList<File> mastNames = new ArrayList<File>();
@@ -125,6 +127,8 @@ public class AddSignalMastPanel extends JPanel {
             name += ":"+head3.getText();
         if (!head4.getText().equals(""))
             name += ":"+head4.getText();
+        if (!head5.getText().equals(""))
+            name += ":"+head5.getText();
             
         log.debug("add signal: "+name);
         SignalMast m = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
