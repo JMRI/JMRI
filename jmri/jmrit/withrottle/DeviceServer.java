@@ -9,10 +9,17 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Created by Brett Hoffman on:
  *	@author 7/20/09.
- *	@version $Revision: 1.6 $
+ *	@version $Revision: 1.7 $
  *
  *	Thread with input and output streams for each connected device.
  *	Creates an invisible throttle window for each.
+ *
+ *      Sorting codes:
+ *      'T'hrottle - sends to throttleController
+ *      'S'econdThrottle - sends to secondThrottleController
+ *      'C' - Not used anymore except to provide backward compliance, same as 'T'
+ *      'N'ame of device
+ *      'Q'uit - device has quit, close its throttleWindow
  *
  */
 
@@ -22,15 +29,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import jmri.DccThrottle;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleWindow;
 import jmri.jmrit.throttle.AddressPanel;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.throttle.AddressListener;
 
-public class DeviceServer implements Runnable, AddressListener {
+public class DeviceServer implements Runnable, ThrottleControllerListener {
     private Socket device;
     String newLine = System.getProperty("line.separator");
     BufferedReader in = null;
@@ -38,16 +43,20 @@ public class DeviceServer implements Runnable, AddressListener {
     ArrayList<DeviceListener> listeners;
     String deviceName = "Unknown";
     String deviceAddress = "Not Set";
+    String secondDeviceAddress = "Not Set";
 
     ThrottleFrame throttleFrame;
+    ThrottleFrame secondThrottleFrame;
     ThrottleWindow throttleWindow;
     AddressPanel addressPanel;
+    AddressPanel secondAddressPanel;
     ThrottleController throttleController;
+    ThrottleController secondThrottleController;
     private boolean keepReading;
 
     List <RosterEntry> rosterList;
 
-
+    
     DeviceServer(Socket socket){
         this.device = socket;
         if (listeners == null){
@@ -60,7 +69,7 @@ public class DeviceServer implements Runnable, AddressListener {
             throttleFrame = throttleWindow.getCurentThrottleFrame();
             throttleController = new ThrottleController(throttleFrame);
             addressPanel = throttleFrame.getAddressPanel();
-            addressPanel.addAddressListener(this);
+            throttleController.addThrottleControllerListener(this);
 
         }
         try{
@@ -97,6 +106,18 @@ public class DeviceServer implements Runnable, AddressListener {
                             break;
                         }
 
+                        case 'S':{
+                            if (secondThrottleController == null){
+                                secondThrottleFrame = throttleWindow.addThrottleFrame();
+                                throttleWindow.nextThrottleFrame();
+                                secondThrottleController = new ThrottleController(secondThrottleFrame);
+                                secondAddressPanel = secondThrottleFrame.getAddressPanel();
+                                secondThrottleController.addThrottleControllerListener(this);
+                            }
+                            keepReading = secondThrottleController.sort(inPackage.substring(1));
+                            break;
+                        }
+
                         case 'C':{  //  Prefix for confirmed package
                             switch (inPackage.charAt(1)){
                                 case 'T':{
@@ -122,6 +143,9 @@ public class DeviceServer implements Runnable, AddressListener {
                         }
 
                         case 'Q':{
+                            if (secondThrottleController != null){
+                                secondThrottleController.sort(inPackage);
+                            }
                             keepReading = throttleController.sort(inPackage);
                             break;
                         }
@@ -141,16 +165,25 @@ public class DeviceServer implements Runnable, AddressListener {
             }
         }while (keepReading);	//	'til we tell it to stop
         log.debug("Ending thread run loop for device");
-        if (throttleController != null) throttleController.shutdownThrottle();
+        if (throttleController != null) {
+            throttleController.shutdownThrottle();
+            throttleController.removeThrottleControllerListener(this);
+        }
+        if (secondThrottleController != null) {
+            secondThrottleController.shutdownThrottle();
+            secondThrottleController.removeThrottleControllerListener(this);
+        }
         throttleWindow.dispose();
         throttleController = null;
+        secondThrottleController = null;
+        closeSocket();
         for (int i = 0; i < listeners.size(); i++) {
             DeviceListener l = listeners.get(i);
             l.notifyDeviceDisconnected(this);
 
         }
 
-        addressPanel.removeAddressListener(this);
+        //addressPanel.removeAddressListener(this);
     }
 
     
@@ -170,7 +203,7 @@ public class DeviceServer implements Runnable, AddressListener {
     }
 
     public String getCurrentAddress(){
-        
+        if (secondThrottleFrame != null) return (deviceAddress +", "+secondDeviceAddress);
         return deviceAddress;
     }
 
@@ -196,39 +229,58 @@ public class DeviceServer implements Runnable, AddressListener {
                 listeners.remove(l);
     }
 
+    
+    public void notifyControllerAddressFound(ThrottleController TC){
+        //deviceAddress = throttle.getLocoAddress().toString();
+        if (TC == secondThrottleController){    //  prefix with S to indicate second address
+            secondDeviceAddress = secondAddressPanel.getCurrentAddress().toString();
+            out.println("S" + secondDeviceAddress+newLine); //  response
 
-    public void notifyAddressChosen(int newAddress, boolean isLong){
-
-    }
-
-
-    public void notifyAddressReleased(int address, boolean isLong){
-        deviceAddress = "Not Set";
+            //  Send function labels for this roster entry
+            if (secondAddressPanel.getRosterEntry() != null){
+                out.println(sendFunctionLabels(secondAddressPanel.getRosterEntry()));
+            }
+            for (int i = 0; i < listeners.size(); i++) {
+                DeviceListener l = listeners.get(i);
+                l.notifyDeviceAddressChanged(secondAddressPanel.getCurrentAddress());
+                if (log.isDebugEnabled()) log.debug("Notify DeviceListener: " + l.getClass() + " secondAddress: "+secondDeviceAddress);
+            }
+        }else{
+            deviceAddress = addressPanel.getCurrentAddress().toString();
+            out.println("T" + deviceAddress+newLine); //  response
         
-        out.println("T" + deviceAddress+newLine);
-        for (int i = 0; i < listeners.size(); i++) {
-            DeviceListener l = listeners.get(i);
-            log.debug("Notify Address released");
-            l.notifyDeviceAddressChanged(addressPanel.getCurrentAddress());
-
+            //  Send function labels for this roster entry
+            if (addressPanel.getRosterEntry() != null){
+                out.println(sendFunctionLabels(addressPanel.getRosterEntry()));
+            }
+            for (int i = 0; i < listeners.size(); i++) {
+                DeviceListener l = listeners.get(i);
+                l.notifyDeviceAddressChanged(addressPanel.getCurrentAddress());
+                if (log.isDebugEnabled()) log.debug("Notify DeviceListener: " + l.getClass() + " address: "+deviceAddress);
+            }
         }
+        
     }
-
-
-    public void notifyAddressThrottleFound(DccThrottle throttle){
-        deviceAddress = throttle.getLocoAddress().toString();
+    
+    public void notifyControllerAddressReleased(ThrottleController TC){
         
-        out.println("T" + deviceAddress+newLine); //  response
-        
-        //  Send function labels for this roster entry
-        if (addressPanel.getRosterEntry() != null){
-            out.println(sendFunctionLabels(addressPanel.getRosterEntry()));
-        }
-        for (int i = 0; i < listeners.size(); i++) {
-            DeviceListener l = listeners.get(i);
-            log.debug("Notify Address Throttle Found");
-            l.notifyDeviceAddressChanged(addressPanel.getCurrentAddress());
-
+        if (TC == secondThrottleController){
+            secondDeviceAddress = "Not Set";
+            if (log.isDebugEnabled()) log.debug("Second address: " + secondDeviceAddress);
+            out.println("S" + secondDeviceAddress+newLine);
+            for (int i = 0; i < listeners.size(); i++) {
+                DeviceListener l = listeners.get(i);
+                l.notifyDeviceAddressChanged(secondAddressPanel.getCurrentAddress());
+                if (log.isDebugEnabled()) log.debug("Notify DeviceListener: " + l.getClass() + " secondAddress: "+secondDeviceAddress);
+            }
+        }else{
+            deviceAddress = "Not Set";
+            out.println("T" + deviceAddress+newLine);
+            for (int i = 0; i < listeners.size(); i++) {
+                DeviceListener l = listeners.get(i);
+                l.notifyDeviceAddressChanged(addressPanel.getCurrentAddress());
+                if (log.isDebugEnabled()) log.debug("Notify DeviceListener: " + l.getClass() + " address: "+deviceAddress);
+            }
         }
         
     }
@@ -243,7 +295,6 @@ public class DeviceServer implements Runnable, AddressListener {
         List <RosterEntry> list = Roster.instance().matchingList(null, null, null, null, null, null, null);
         for (int i = 0; i < list.size(); i++) {
             RosterEntry roster = list.get(i);
-            //System.out.println(list.size());
             if(Roster.getRosterGroup()!=null){
                 if(roster.getAttribute(Roster.getRosterGroupWP())!=null){
                     if(roster.getAttribute(Roster.getRosterGroupWP()).equals("yes"))
@@ -275,7 +326,9 @@ public class DeviceServer implements Runnable, AddressListener {
             functionString.append("]\\[");
             if (rosterEntry.getFunctionLabel(i) != null) functionString.append(rosterEntry.getFunctionLabel(i));
         }
-
+        if ((secondAddressPanel != null) && (rosterEntry == secondAddressPanel.getRosterEntry())) {
+            return ("RS" + i + functionString + newLine);
+        }
         return ("RF" + i + functionString + newLine);
     }
 
