@@ -13,9 +13,9 @@ import org.jdom.Element;
 
 /**
  * Handle XML configuration for SingleTurnoutSignalHead objects.
- *
- * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008
- * @version $Revision: 1.2 $
+ * Based Upon DoubleTurnoutSignalHeadXML by Bob Jacobsen
+ * @author Kevin Dickerson: Copyright (c) 2010
+ * @version $Revision: 1.3 $
  */
 public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -37,10 +37,18 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         element.setAttribute("systemName", p.getSystemName());
 
         storeCommon(p, element);
-        element.setAttribute("thrownAppearance", getSignalColour(p.getOnAppearance()));
-        element.setAttribute("closedAppearance", getSignalColour(p.getOffAppearance()));
         
-        Element el = new Element("turnoutname");
+        Element el = new Element("appearance");
+        el.setAttribute("defines", "thrown");
+        el.addContent(getSignalColour(p.getOnAppearance()));
+        element.addContent(el);
+        
+        el = new Element("appearance");
+        el.setAttribute("defines", "closed");
+        el.addContent(getSignalColour(p.getOffAppearance()));
+        element.addContent(el);
+        
+        el = new Element("turnoutname");
         el.setAttribute("defines", "aspect");
         el.addContent(p.getOutput().getName());
         element.addContent(el);
@@ -86,14 +94,14 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         List<Element> l = element.getChildren("turnoutname");
         if (l.size() == 0) l = element.getChildren("turnout");
         NamedBeanHandle<Turnout> lit = loadTurnout(l.get(0));
+        
+        l = element.getChildren("appearance");
+        int off = loadAppearance(element.getChildren("appearance"), "closed");
+        int on = loadAppearance(element.getChildren("appearance"), "thrown");
         // put it together
         String sys = element.getAttribute("systemName").getValue();
         Attribute a = element.getAttribute("userName");
-        int on = 0x00;
-        int off = 0x00;
-        on = getIntFromColour(element.getAttribute("closedAppearance").getValue());
-        
-        off = getIntFromColour(element.getAttribute("thrownAppearance").getValue());
+
         SignalHead h;
         if (a == null)
             h = new SingleTurnoutSignalHead(sys, lit, on, off);
@@ -104,6 +112,14 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         
         InstanceManager.signalHeadManagerInstance().register(h);
         return true;
+    }
+    
+    private int loadAppearance(List<Element> l, String state){
+        for (int i = 0; i <l.size(); i++){
+            if(l.get(i).getAttribute("defines").getValue().equals(state))
+                return getIntFromColour(l.get(i).getText());
+        }
+        return 0x00;
     }
 
     /**
