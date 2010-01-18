@@ -21,8 +21,10 @@ import jmri.util.NamedBeanHandle;
  * This class doesn't currently listen to the Turnout's to see if they've
  * been changed via some other mechanism.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version	$Revision: 1.2 $
+ * Based Upon DoubleTurnoutSignalHead by Bob Jacobsen
+ *
+ * @author	Kevin Dickerson Copyright (C) 2010
+ * @version	$Revision: 1.3 $
  */
 public class SingleTurnoutSignalHead extends DefaultSignalHead {
 
@@ -51,17 +53,17 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
             mOutput.getBean().setCommandedState(Turnout.CLOSED);
 			return;
         } else if ( !mFlashOn &&
-            ( (mAppearance == FLASHGREEN) ||
-            (mAppearance == FLASHYELLOW) ||
-            (mAppearance == FLASHRED) ) ) {
-                // flash says to make output dark
+            (mAppearance == mOnAppearance*2) ) {
                 mOutput.getBean().setCommandedState(Turnout.CLOSED);
 			    return;
-
-		} else {
-            if (mAppearance==mOffAppearance) {
+		} else if ( !mFlashOn && 
+            (mAppearance == mOffAppearance*2)  ) {
+                mOutput.getBean().setCommandedState(Turnout.THROWN);
+			    return;
+		}else {
+            if ((mAppearance==mOffAppearance) || (mAppearance==(mOffAppearance*2))) {
                 mOutput.getBean().setCommandedState(Turnout.CLOSED);
-            } else if (mAppearance==mOnAppearance){
+            } else if ((mAppearance==mOnAppearance) || (mAppearance==(mOnAppearance*2))){
                 mOutput.getBean().setCommandedState(Turnout.THROWN);
             } else {
                 log.warn("Unexpected new appearance: "+mAppearance);
@@ -91,13 +93,54 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
     public void setOutput(NamedBeanHandle<Turnout> t) {mOutput=t;}
     
     public int[] getValidStates() {
-        int [] validStates = new int[] { mOnAppearance, mOffAppearance};
+        int [] validStates;
+        if (mOnAppearance == DARK || mOffAppearance == DARK){
+            validStates = new int[3];
+        }
+        else {
+            validStates = new int [4];
+        }
+        int x = 0;
+        validStates[x] = mOnAppearance;
+        x++;
+        if (mOnAppearance != DARK){
+            validStates[x] = (mOnAppearance * 2);
+            x++;
+        }
+        validStates[x] = mOffAppearance;
+        x++;
+        if (mOffAppearance != DARK){
+            validStates[x] = (mOffAppearance * 2);
+        }
+//        int [] validStates = new int[] { mOnAppearance, mOffAppearance};
         return validStates;
     }
     
     public String[] getValidStateNames() {
-        String[] validStateNames = new String[] { getSignalColour(mOnAppearance), getSignalColour(mOffAppearance)};
-        return validStateNames;
+        String [] validStateName;
+        if (mOnAppearance == DARK || mOffAppearance == DARK){
+            validStateName = new String[3];
+        }
+        else {
+            validStateName = new String[4];
+        }
+        int x = 0;
+        validStateName[x] = getSignalColour(mOnAppearance);
+        x++;
+        if (mOnAppearance != DARK){
+            validStateName[x] = getSignalColour((mOnAppearance * 2));
+            x++;
+        }
+        validStateName[x] = getSignalColour(mOffAppearance);
+        x++;
+        if (mOffAppearance != DARK){
+            validStateName[x] = getSignalColour((mOffAppearance * 2));
+        }
+//        int [] validStates = new int[] { mOnAppearance, mOffAppearance};
+        return validStateName;
+        
+        //String[] validStateNames = new String[] { getSignalColour(mOnAppearance), getSignalColour(mOffAppearance)};
+        //return validStateNames;
     }
     final static private java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
     @SuppressWarnings("fallthrough")
