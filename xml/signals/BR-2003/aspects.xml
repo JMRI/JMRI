@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="http://jmri.org/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<aspecttable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://localhost/xml/schema/aspecttable.xsd"
+>
+  <name>BR-2003</name>
+  <date>2003</date>
+  <reference>As described in the June 2003 edition of Signals and indicators controlling train movements, GE/RT8000 - S1 Rule Book</reference>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Kevin</firstname><surname>Dickerson</surname></personname>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-01-15</date>
+        <authorinitials>KD</authorinitials>
+        <revremark>Initial Release</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspects>
+
+    <aspect>
+      <name>Proceed</name>
+      <title></title>
+      <indication>Green Aspect Showing</indication>
+      <description>Next signal displaying proceed aspect</description>
+      <reference>Section 2.1, 2.2</reference>
+      <comment></comment>
+    </aspect>
+    
+    <aspect>
+      <name>Preliminary Caution</name>
+      <title></title>
+      <indication>Double Yellow Aspects Showing</indication>
+      <description>Proceed: be prepared to find the next signal displaying one yellow aspect</description>
+      <reference></reference>
+      <comment>4 Aspect Signals Only</comment>
+    </aspect>
+    
+     <aspect>
+      <name>Flashing Preliminary Caution</name>
+      <title></title>
+      <indication>Double Yellow Aspects Showing</indication>
+      <description>Proceed: be prepared to find the next signal displaying one flashing yellow aspect</description>
+      <reference>Section 2.5</reference>
+      <comment>4 Aspect Signals Only with a diverging route.</comment>
+    </aspect>
+    
+    <aspect>
+      <name>Caution</name>
+      <title></title>
+      <indication>Yellow Aspect Showing</indication>
+      <description>Proceed: be prepared to stop at the next signal</description>
+      <reference>Section 2.1, 2.2</reference>
+      <comment></comment>
+    </aspect>
+    
+    <aspect>
+      <name>Flash Caution</name>
+      <title></title>
+      <indication>Flashing Yellow Aspect Showing</indication>
+      <description>Proceed: the next signal will be at caution with a junction indicator showing</description>
+      <reference>Section 2.5, 2.6</reference>
+      <comment>3+4 Aspect Signals Only with a diverging route.</comment>
+    </aspect>
+    
+    
+    <aspect>
+      <name>Danger</name>
+      <title></title>
+      <indication>Red Aspect Showing</indication>
+      <description>Stop</description>
+      <reference>Section 2.1, 2.2</reference>
+      <comment></comment>
+    </aspect>
+    
+    <aspect>
+      <name>Junction Indicator</name>
+      <title></title>
+      <indication>Taking a diverging route</indication>
+      <description>To show that a train is being signalled to a route to the left or right of the straight route</description>
+      <reference></reference>
+      <comment></comment>
+    </aspect>
+    
+    <aspect>
+      <name>Position Light Stop (Red/White)</name>
+      <title></title>
+      <indication>Red and White Aspect Showing</indication>
+      <description>This indicates stop.</description>
+      <reference></reference>
+      <comment></comment>
+    </aspect>
+    
+    <aspect>
+      <name>Position Light Stop (Yellow/White)</name>
+      <title></title>
+      <indication>Yellow and White Aspect Showing</indication>
+      <description>This indicates stop, if the points are set for a route that would take the movement onto a running line. Movements are allowed to pass the signal if it is being made towards a shunt neck or siding.</description>
+      <reference></reference>
+      <comment></comment>
+    </aspect>
+    
+    <aspect>
+      <name>Position Light Proceed at Caution (White/White)</name>
+      <title></title>
+      <indication>Two White Aspect Showing</indication>
+      <description>If the position-light signal displays two white lights at 45degrees, this authorises the driver to proceed at caution towards the next stop signal, Buffer stop and be prepared to stop short of any obstruction.</description>
+      <reference></reference>
+      <comment></comment>
+    </aspect>
+
+  </aspects>
+  <appearancefiles>
+  
+    <appearancefile href="appearance-ply.xml"/>
+    <appearancefile href="appearance-plr.xml"/>
+    <appearancefile href="appearance-2-d.xml"/>
+    <appearancefile href="appearance-2-h.xml"/>
+    <appearancefile href="appearance-2-h-c.xml"/>
+    <appearancefile href="appearance-2-h-d.xml"/>
+    <appearancefile href="appearance-3.xml"/>
+    <appearancefile href="appearance-3-c.xml"/>
+    <appearancefile href="appearance-3-i.xml"/>
+    <appearancefile href="appearance-3-i-c.xml"/>
+    <appearancefile href="appearance-4c.xml"/>
+    <appearancefile href="appearance-4-c.xml"/>
+    <appearancefile href="appearance-4-i.xml"/>
+    <appearancefile href="appearance-4-i-c.xml"/>
+    
+    
+  </appearancefiles>
+</aspecttable>
+  

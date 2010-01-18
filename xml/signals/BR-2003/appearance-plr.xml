@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="http://jmri.org/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Kevin</firstname><surname>Dickerson</surname></personname>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-01-18</date>
+        <authorinitials>KD</authorinitials>
+        <revremark>Initial Version</revremark>
+    </revision>    
+  </revhistory>
+  
+  <aspecttable>BR</aspecttable>
+
+  <name>Position Light Signal Red/White</name>
+  <reference></reference>
+  <description>This uses a single head to control the appearance</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Position Light Proceed at Caution (White/White)</aspectname>
+      <show>lunar</show>
+      <reference></reference>
+      <imagelink>../../../resources/icons/BritishRailSignals/clsPLCaution.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Position Light Stop (Red/White)</aspectname>
+      <show>red</show>
+      <reference></reference>
+      <imagelink>../../../resources/icons/BritishRailSignals/clsPLDanger.gif</imagelink>
+    </appearance>
+
+  </appearances>
+</appearancetable>  
