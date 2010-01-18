@@ -50,7 +50,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.52 $
+ * @version     $Revision: 1.53 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -193,12 +193,12 @@ public class SignalHeadTableAction extends AbstractTableAction {
         return "package.jmri.jmrit.beantable.SignalTable";
     }
 
-    
     final int[] signalStatesValues = new int[]{
         SignalHead.DARK, 
         SignalHead.RED, 
         SignalHead.LUNAR,
-        SignalHead.YELLOW
+        SignalHead.YELLOW,
+        SignalHead.GREEN
     };
     
     String[] signalStates = new String[]{
