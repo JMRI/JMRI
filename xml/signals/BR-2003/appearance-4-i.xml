@@ -32,10 +32,6 @@
   <reference></reference>
   <description>This uses 4 single state signal heads to represent the main signal</description>
 
-  <name>Sample of full file format</name>
-  <reference></reference>
-  <description></description>
-  
   <appearances>
 
     <appearance>
@@ -45,7 +41,6 @@
       <show>dark</show>
       <show>dark</show>
       <imagelink>../../../resources/icons/BritishRailSignals/cls4Proceed.gif</imagelink>
-      <reference></reference>
     </appearance>
 
     <appearance>
@@ -54,7 +49,6 @@
       <show>dark</show>
       <show>yellow</show>
       <show>dark</show>
-      <reference></reference>
       <imagelink>../../../resources/icons/BritishRailSignals/cls4Caution.gif</imagelink>
     </appearance>
     
@@ -64,7 +58,6 @@
       <show>dark</show>
       <show>flashyellow</show>
       <show>dark</show>
-      <reference></reference>
       <imagelink>../../../resources/icons/BritishRailSignals/cls4FlashCaution.gif</imagelink>
     </appearance>
     
@@ -74,7 +67,6 @@
       <show>dark</show>
       <show>yellow</show>
       <show>dark</show>
-      <reference></reference>
       <imagelink>../../../resources/icons/BritishRailSignals/cls4PriCaution.gif</imagelink>
     </appearance>
     
@@ -84,7 +76,6 @@
       <show>dark</show>
       <show>flashyellow</show>
       <show>dark</show>
-      <reference></reference>
       <imagelink>../../../resources/icons/BritishRailSignals/cls4FlashPriCaution.gif</imagelink>
     </appearance>
     
@@ -94,7 +85,6 @@
       <show>dark</show>
       <show>dark</show>
       <show>red</show>
-      <reference></reference>
       <imagelink>../../../resources/icons/BritishRailSignals/cls4Danger.gif</imagelink>
     </appearance>
     

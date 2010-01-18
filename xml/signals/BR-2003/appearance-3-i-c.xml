@@ -31,10 +31,6 @@
   <name>3 Aspect Signal Head + Call On(individual aspects)</name>
   <reference></reference>
   <description>This uses 3 single state signal heads to represent the main signal and a further signal head to represent the Call-on</description>
-
-  <name>Sample of full file format</name>
-  <reference></reference>
-  <description></description>
   
   <appearances>
 
@@ -44,8 +40,8 @@
       <show>dark</show>
       <show>dark</show>
       <show>dark</show>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls3Proceed(wc).gif</imagelink>
       <reference></reference>
+      <imagelink>../../../resources/icons/BritishRailSignals/cls3Proceed(wc).gif</imagelink>
     </appearance>
 
     <appearance>

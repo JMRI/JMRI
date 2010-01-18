@@ -46,8 +46,8 @@
       <aspectname>Danger</aspectname>
       <show>red</show>
       <show>dark</show>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls2Danger(wc).gif</imagelink>
       <reference></reference>
+      <imagelink>../../../resources/icons/BritishRailSignals/cls2Danger(wc).gif</imagelink>
       
     </appearance>
     
