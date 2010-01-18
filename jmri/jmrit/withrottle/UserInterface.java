@@ -10,7 +10,7 @@ package jmri.jmrit.withrottle;
  *	Create a window for WiThrottle information, advertise service, and create a thread for it to run in.
  *
  *	@author Brett Hoffman   Copyright (C) 2009
- *	@version $Revision: 1.10 $
+ *	@version $Revision: 1.11 $
  */
 
 import java.awt.event.*;
@@ -41,6 +41,7 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
     JPanel panel;
     JButton button;
     JLabel portLabel = new JLabel(rb.getString("LabelPending"));
+    JLabel manualPortLabel = new JLabel();
     JLabel numConnected;
     JScrollPane scrollTable;
     JTable withrottlesList;
@@ -97,6 +98,9 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
         con.gridwidth = 2;
         panel.add(portLabel, con);
 
+        con.gridy = 2;
+        panel.add(manualPortLabel, con);
+
         numConnected = new JLabel(rb.getString("LabelClients") + " " + deviceList.size());
         con.weightx = 0;
         con.gridx = 2;
@@ -109,7 +113,7 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
         con.weightx = 0.5;
         con.ipadx = 0;
         con.gridx = 1;
-        con.gridy = 2;
+        con.gridy = 3;
         con.gridwidth = 1;
         panel.add(button, con);
 
@@ -143,7 +147,7 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
 
 
         con.gridx = 0;
-        con.gridy = 3;
+        con.gridy = 4;
         con.weighty = 1.0;
         con.ipadx = 10;
         con.ipady = 10;
@@ -192,7 +196,8 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
                     port,
                     jmdns);
             
-            portLabel.setText(serviceInfo.getName()+" "+port);
+            portLabel.setText(serviceInfo.getName());
+            manualPortLabel.setText(socket.getInetAddress().getLocalHost().getHostAddress().toString()+":"+port);
         } catch (java.io.IOException e2) {
             log.error("JmDNS Failure");
             portLabel.setText("failed to advertise service");
@@ -260,6 +265,7 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
                 button.setText(rb.getString("ButtonStartServer"));
 
                 portLabel.setText(rb.getString("LabelNone"));
+                manualPortLabel.setText(null);
             }else{	//	Restart server
                 button.setText(rb.getString("ButtonStopServer"));
                 isListen = true;
