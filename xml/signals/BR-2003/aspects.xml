@@ -49,7 +49,7 @@
     </aspect>
     
      <aspect>
-      <name>Flashing Preliminary Caution</name>
+      <name>Flash Preliminary Caution</name>
       <title></title>
       <indication>Double Yellow Aspects Showing</indication>
       <description>Proceed: be prepared to find the next signal displaying one flashing yellow aspect</description>
