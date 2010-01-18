@@ -11,14 +11,18 @@ package jmri.jmrit.withrottle;
  *	Sends commands to appropriate throttle component.
  *
  *	Sorting codes for received string from client:
- *	'V'elocity, 'X'stop, 'F'unction (1-button down, 0-button up) (0-28)
- *	di'R'ection (0=reverse, 1=forward), 'I'dle,
- *	'L'ong address (#), 'S'hort address, 'r'elease, 'd'ispatch
- *	'I'dle (defaults to this if it falls through the tree), 'Q'uit
+ *	'V'elocity followed by 0 - 126
+ *      'X'stop
+ *      'F'unction (1-button down, 0-button up) (0-28) e.g. F14 indicates function 4 button is pressed
+ *                                              `       F04 indicates function 4 button is released
+ *	di'R'ection (0=reverse, 1=forward)
+ *	'L'ong address #, 'S'hort address #     e.g. L1234
+ *      'r'elease, 'd'ispatch
+ *	'I'dle (defaults to this if it falls through the tree)
  *
  *	@author Brett Hoffman   Copyright (C) 2009
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.1 $
+ *	@version $Revision: 1.2 $
  */
 
 import jmri.DccThrottle;
@@ -30,6 +34,7 @@ import jmri.jmrit.throttle.FunctionPanel;
 import jmri.jmrit.throttle.FunctionButton;
 
 import javax.swing.JSlider;
+import java.util.ArrayList;
 
 
 public class ThrottleController implements AddressListener{
@@ -43,6 +48,7 @@ public class ThrottleController implements AddressListener{
         float speedMultiplier;
 	private boolean isAddressSet;
 	public boolean confirm = false;
+        private ArrayList<ThrottleControllerListener> listeners;
 
 /**
  *  Constructor.
@@ -67,6 +73,20 @@ public class ThrottleController implements AddressListener{
         addressPanel.addAddressListener(this);
     }
 
+    public void addThrottleControllerListener(ThrottleControllerListener l) {
+        if (listeners == null)
+                listeners = new ArrayList<ThrottleControllerListener>(1);
+        if (!listeners.contains(l))
+                listeners.add(l);
+    }
+
+    public void removeThrottleControllerListener(ThrottleControllerListener l) {
+        if (listeners == null)
+                return;
+        if (listeners.contains(l))
+                listeners.remove(l);
+    }
+
     /**
      * Receive notification that a new address has been selected.
      * @param newAddress The address that is now selected.
@@ -80,6 +100,11 @@ public class ThrottleController implements AddressListener{
      */
     public void notifyAddressReleased(int address, boolean isLong){
         isAddressSet = false;
+        for (int i = 0; i < listeners.size(); i++) {
+            ThrottleControllerListener l = listeners.get(i);
+            l.notifyControllerAddressReleased(this);
+            if (log.isDebugEnabled()) log.debug("Notify TCListener address released: " + l.getClass());
+        }
     }
     
     /**
@@ -94,7 +119,11 @@ public class ThrottleController implements AddressListener{
         }else {
             log.error("*throttle is null!*");
         }
-
+        for (int i = 0; i < listeners.size(); i++) {
+            ThrottleControllerListener l = listeners.get(i);
+            l.notifyControllerAddressFound(this);
+            if (log.isDebugEnabled()) log.debug("Notify TCListener address found: " + l.getClass());
+        }
         if (speedIncrement == 0) {	//	handles LN Simulator
             speedIncrement = 1;
         }
@@ -109,6 +138,7 @@ public class ThrottleController implements AddressListener{
     public boolean sort(String inPackage){
         if (isAddressSet){
 
+            try{
             switch (inPackage.charAt(0)) {
                 case 'V':	//	Velocity
                         setSpeed(Integer.parseInt(inPackage.substring(1)));
@@ -154,6 +184,10 @@ public class ThrottleController implements AddressListener{
                         
                         break;
             }
+            }catch (NullPointerException e){
+                log.warn("No throttle frame to receive: " + inPackage);
+                return false;
+            }
         }else{
             switch (inPackage.charAt(0)) {
                 case 'L':	//	Set a Long address.
@@ -184,10 +218,14 @@ public class ThrottleController implements AddressListener{
 //  Device is quitting or has lost connection
     public void shutdownThrottle(){
 
+        try{
         if (isAddressSet){
             controlPanel.setSpeedValues(speedIncrement, 0);
             addressPanel.dispatchAddress();
             addressPanel.removeAddressListener(this);
+        }
+        }catch (NullPointerException e){
+            log.warn("No throttle frame to shutdown");
         }
     }
 
