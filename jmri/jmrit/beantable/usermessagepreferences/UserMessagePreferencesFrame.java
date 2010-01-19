@@ -9,7 +9,7 @@ import javax.swing.JButton;
 /**
  * Frame for ECoS preferences
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class UserMessagePreferencesFrame extends jmri.util.JmriJFrame {
 
@@ -31,7 +31,7 @@ public class UserMessagePreferencesFrame extends jmri.util.JmriJFrame {
 
         getContentPane().add(userMessagePreferencesPane);
 
-		addHelpMenu("package.jmri.jmrit.beantable.userMessagePreferences.UserMessagePreferencesFrame", true);
+		addHelpMenu("package.jmri.jmrit.beantable.UserMessagePreferences", true);
 
         pack();
     }
