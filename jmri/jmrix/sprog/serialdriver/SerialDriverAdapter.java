@@ -24,9 +24,12 @@ import gnu.io.SerialPort;
  * <P>
  * The current implementation only handles the 9,600 baud rate, and does
  * not use any other options at configuration time.
+ * 
+ * Updated January 2010 for gnu io (RXTX) - Andrew Berridge. Comments tagged with
+ * "AJB" indicate changes or observations by me
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  */
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -132,6 +135,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         // start operation
         // sourceThread = new Thread(p);
         // sourceThread.start();
+        //Andrew Berridge - removed Jan 2010
         //sinkThread = new Thread(SprogTrafficController.instance());
         //sinkThread.start();
 
