@@ -946,6 +946,8 @@
 
 <mapID target="html.tools.tracker.index" url="html/tools/tracker/index.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_TrainRoadNames" url="package/jmri/jmrit/operations/Operations.shtml#TrainRoadNames"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_Routes" url="package/jmri/jmrit/operations/Operations.shtml#Routes"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_Engines" url="package/jmri/jmrit/operations/Operations.shtml#Engines"/>
@@ -1379,6 +1381,8 @@
 <mapID target="package.jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame" url="package/jmri/jmrit/symbolicprog/tabbedframe/PaneProgFrame.shtml"/>
 
 <mapID target="html.apps.PanelPro.PanelPro" url="html/apps/PanelPro/PanelPro.shtml"/>
+
+<mapID target="package.jmri.jmrit.beantable.UserMessagePreferences" url="package/jmri/jmrit/beantable/UserMessagePreferences.shtml"/>
 
 <mapID target="html.tools.speedometer.NCE-Speedometer" url="html/tools/speedometer/NCE-Speedometer.shtml"/>
 
