@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.3.shtml,v 1.5 2010-01-17 22:13:11 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.3.shtml,v 1.6 2010-01-19 19:25:53 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -171,6 +171,15 @@ The user can exclude a road for cars, but still allow an engine to be assigned t
 
 <p>
 Dan Boudreau added a new operations feature.  Allow users to move or terminate a train from the Trains window.
+
+<p>
+Matt Harris fixed a spurious warning about "Insets" when running under Gnome-based Linux.
+
+<p>
+Kevin Dickerson added a set of 
+<a href="http://jmri.org/xml/signals/BR-2003/aspects.xml">British Rail signal definitions</a>
+and 
+<a href="http://jmri.org/resources/icons/BritishRailSignals">associated images</a>.
 
 <!--#include virtual="/Footer" -->
 
