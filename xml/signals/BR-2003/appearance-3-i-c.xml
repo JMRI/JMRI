@@ -29,9 +29,9 @@
   <aspecttable>BR</aspecttable>
 
   <name>3 Aspect Signal Head + Call On(individual aspects)</name>
-  <reference></reference>
-  <description>This uses 3 single state signal heads to represent the main signal and a further signal head to represent the Call-on</description>
   
+  <description>This uses 3 single state signal heads to represent the main signal and a further signal head to represent the Call-on</description>
+ 
   <appearances>
 
     <appearance>
@@ -40,8 +40,8 @@
       <show>dark</show>
       <show>dark</show>
       <show>dark</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls3Proceed(wc).gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3Proceed(wc).gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed.gif</imagelink>     
     </appearance>
 
     <appearance>
@@ -50,8 +50,8 @@
       <show>yellow</show>
       <show>dark</show>
       <show>dark</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls3Caution(wc).gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3Caution(wc).gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Caution.gif</imagelink>
     </appearance>
     
     <appearance>
@@ -60,8 +60,8 @@
       <show>flashyellow</show>
       <show>dark</show>
       <show>dark</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls3FlashCaution(wc).gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3FlashCaution(wc).gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/FlashCaution.gif</imagelink>
     </appearance>
     
     <appearance>
@@ -70,18 +70,18 @@
       <show>dark</show>
       <show>red</show>
       <show>dark</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls3Danger.gif(wc)</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3Danger.gif(wc)</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Danger.gif</imagelink>
     </appearance>
     
     <appearance>
-      <aspectname>Position Light Proceed at Caution (White/White)</aspectname>
+      <aspectname>Call On</aspectname>
       <show>dark</show>
       <show>dark</show>
       <show>red</show>
-      <show>lunar</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls3DangerCallOn.gif</imagelink>
+      <show>lunar</show>   
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3DangerCallOn.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/DangerCallOn.gif</imagelink>
     </appearance>
 
   </appearances>

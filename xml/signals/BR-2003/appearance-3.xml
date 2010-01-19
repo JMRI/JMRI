@@ -29,7 +29,7 @@
   <aspecttable>BR</aspecttable>
 
   <name>3 Aspect Signal</name>
-  <reference></reference>
+  
   <description>This uses a single head to control the aspects</description>
   
   <appearances>
@@ -37,25 +37,29 @@
     <appearance>
       <aspectname>Proceed</aspectname>
       <show>green</show>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls3Proceed.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3Proceed.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Caution</aspectname>
       <show>yellow</show>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls3Caution.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3Caution.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Caution.gif</imagelink>
     </appearance>
     
     <appearance>
       <aspectname>Flash Caution</aspectname>
       <show>flashyellow</show>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls3FlashCaution.gif</imagelink>      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3FlashCaution.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/FlashCaution.gif</imagelink>
     </appearance>
     
     <appearance>
       <aspectname>Danger</aspectname>
       <show>red</show>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls3Danger.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3Danger.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Danger.gif</imagelink>
     </appearance>
 
   </appearances>

@@ -29,7 +29,7 @@
   <aspecttable>BR</aspecttable>
 
   <name>2 Aspect Signal Home + Call On</name>
-  <reference></reference>
+  
   <description>This uses a single head to control the main aspect, with a second Call On signal</description>
   
   <appearances>
@@ -38,25 +38,26 @@
       <aspectname>Proceed</aspectname>
       <show>green</show>
       <show>dark</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls2Proceed(wc).gif</imagelink>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls2Proceed(wc).gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Danger</aspectname>
       <show>red</show>
       <show>dark</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls2Danger(wc).gif</imagelink>
-      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls2Danger(wc).gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Danger.gif</imagelink>   
     </appearance>
     
     <appearance>
-      <aspectname>Position Light Proceed at Caution (White/White)</aspectname>
+      <aspectname>Call On</aspectname>
       <show>red</show>
-      <show>green</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls2DangerCallOn.gif</imagelink>
+      <show>lunar</show>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls2DangerCallOn.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/DangerCallOn.gif</imagelink>
     </appearance>
 
   </appearances>

@@ -29,7 +29,7 @@
   <aspecttable>BR</aspecttable>
 
   <name>3 Aspect Signal Head(individual aspects)</name>
-  <reference></reference>
+  
   <description>This uses 3 single state signal heads</description>
   
   <appearances>
@@ -39,7 +39,8 @@
       <show>green</show>
       <show>dark</show>
       <show>dark</show>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls3Proceed.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3Proceed.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -47,8 +48,9 @@
       <show>dark</show>
       <show>yellow</show>
       <show>dark</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls3Caution.gif</imagelink>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3Caution.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Caution.gif</imagelink>
     </appearance>
     
     <appearance>
@@ -56,8 +58,9 @@
       <show>dark</show>
       <show>flashyellow</show>
       <show>dark</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls3FlashCaution.gif</imagelink>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3FlashCaution.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/FlashCaution.gif</imagelink>
     </appearance>
     
     <appearance>
@@ -65,8 +68,9 @@
       <show>dark</show>
       <show>dark</show>
       <show>red</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls3Danger.gif</imagelink>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3Danger.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Danger.gif</imagelink>
     </appearance>
 
   </appearances>
