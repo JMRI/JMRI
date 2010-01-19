@@ -28,23 +28,30 @@
   <aspecttable>BR</aspecttable>
 
   <name>Position Light Signal Yellow/White</name>
-  <reference></reference>
-  <description>This uses a single head to control the appearance</description>
+  
+  <description>This uses a single head to control the appearance
+  The signal is used where a set of points can be set to either go up to a shunt neck or siding, or out onto the main running line.  
+  If the signal is displaying Yellow/White or two Yellows then this means STOP if the points are set out onto the main line. If the points
+  are set to the shunt neck or siding then movements are allowed to pass.
+  When two white lights at 45degrees are showing, this authorises the driver to proceed at caution towards the next stop signal.
+  </description>
   
   <appearances>
 
     <appearance>
-      <aspectname>Position Light Proceed at Caution (White/White)</aspectname>
+      <aspectname>Proceed at Caution</aspectname>
       <show>lunar</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/clsPLCaution.gif</imagelink>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/clsPLCaution.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspect/PLCaution.gif</imagelink>
     </appearance>
 
     <appearance>
-      <aspectname>Position Light Stop (Yellow/White)</aspectname>
+      <aspectname>Stop (Yellow/White)</aspectname>
       <show>yellow</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/clsPLYDanger.gif</imagelink>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/clsPLYDanger.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspect/PLYDanger.gif</imagelink>
     </appearance>
 
   </appearances>

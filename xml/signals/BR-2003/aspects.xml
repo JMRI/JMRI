@@ -32,7 +32,6 @@
 
     <aspect>
       <name>Proceed</name>
-      <title></title>
       <indication>Green Aspect Showing</indication>
       <description>Next signal displaying proceed aspect</description>
       <reference>Section 2.1, 2.2</reference>
@@ -41,17 +40,14 @@
     
     <aspect>
       <name>Preliminary Caution</name>
-      <title></title>
       <indication>Double Yellow Aspects Showing</indication>
       <description>Proceed: be prepared to find the next signal displaying one yellow aspect</description>
-      <reference></reference>
       <comment>4 Aspect Signals Only</comment>
     </aspect>
     
      <aspect>
       <name>Flash Preliminary Caution</name>
-      <title></title>
-      <indication>Double Yellow Aspects Showing</indication>
+      <indication>Flashing Double Yellow Aspects Showing</indication>
       <description>Proceed: be prepared to find the next signal displaying one flashing yellow aspect</description>
       <reference>Section 2.5</reference>
       <comment>4 Aspect Signals Only with a diverging route.</comment>
@@ -59,7 +55,6 @@
     
     <aspect>
       <name>Caution</name>
-      <title></title>
       <indication>Yellow Aspect Showing</indication>
       <description>Proceed: be prepared to stop at the next signal</description>
       <reference>Section 2.1, 2.2</reference>
@@ -68,7 +63,6 @@
     
     <aspect>
       <name>Flash Caution</name>
-      <title></title>
       <indication>Flashing Yellow Aspect Showing</indication>
       <description>Proceed: the next signal will be at caution with a junction indicator showing</description>
       <reference>Section 2.5, 2.6</reference>
@@ -78,7 +72,6 @@
     
     <aspect>
       <name>Danger</name>
-      <title></title>
       <indication>Red Aspect Showing</indication>
       <description>Stop</description>
       <reference>Section 2.1, 2.2</reference>
@@ -86,44 +79,55 @@
     </aspect>
     
     <aspect>
+      <name>Call On</name>
+      <indication>Red Aspect and Two White Aspect Showing</indication>
+      <description>If the main Signal is showing Danger and the position-light signal displays two white lights at 45degrees, this authorises the driver to proceed at caution towards the next stop signal, Buffer stop and be prepared to stop short of any obstruction.</description>
+      <reference>Section 2.7</reference>
+      <comment></comment>
+    </aspect>
+    
+    <aspect>
       <name>Junction Indicator</name>
-      <title></title>
       <indication>Taking a diverging route</indication>
       <description>To show that a train is being signalled to a route to the left or right of the straight route</description>
-      <reference></reference>
+      <reference>Section 2.3</reference>
       <comment></comment>
     </aspect>
     
     <aspect>
-      <name>Position Light Stop (Red/White)</name>
-      <title></title>
+      <name>Stop</name>
       <indication>Red and White Aspect Showing</indication>
       <description>This indicates stop.</description>
-      <reference></reference>
+      <reference>Section 2.7</reference>
       <comment></comment>
     </aspect>
     
     <aspect>
-      <name>Position Light Stop (Yellow/White)</name>
-      <title></title>
+      <name>Stop (Yellow/White)</name>
       <indication>Yellow and White Aspect Showing</indication>
       <description>This indicates stop, if the points are set for a route that would take the movement onto a running line. Movements are allowed to pass the signal if it is being made towards a shunt neck or siding.</description>
-      <reference></reference>
+      <reference>Section 2.7</reference>
       <comment></comment>
     </aspect>
     
     <aspect>
-      <name>Position Light Proceed at Caution (White/White)</name>
-      <title></title>
+      <name>Proceed at Caution</name>
       <indication>Two White Aspect Showing</indication>
       <description>If the position-light signal displays two white lights at 45degrees, this authorises the driver to proceed at caution towards the next stop signal, Buffer stop and be prepared to stop short of any obstruction.</description>
-      <reference></reference>
+      <reference>Section 2.7</reference>
       <comment></comment>
     </aspect>
 
   </aspects>
+  <imagetypes>
+    <imagetype type="large"/>
+    <imagetype type="aspects"/>
+  </imagetypes>
   <appearancefiles>
-  
+    <appearancefile href="appearance-2-h-sema-sub.xml"/>
+    <appearancefile href="appearance-2-d-sema.xml"/>
+    <appearancefile href="appearance-2-h-d-sema.xml"/>
+    <appearancefile href="appearance-2-h-sema.xml"/>
     <appearancefile href="appearance-ply.xml"/>
     <appearancefile href="appearance-plr.xml"/>
     <appearancefile href="appearance-2-d.xml"/>
@@ -134,6 +138,7 @@
     <appearancefile href="appearance-3-c.xml"/>
     <appearancefile href="appearance-3-i.xml"/>
     <appearancefile href="appearance-3-i-c.xml"/>
+    <appearancefile href="appearance-4c.xml"/>
     <appearancefile href="appearance-4-c.xml"/>
     <appearancefile href="appearance-4-i.xml"/>
     <appearancefile href="appearance-4-i-c.xml"/>

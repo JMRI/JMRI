@@ -28,35 +28,34 @@
   
   <aspecttable>BR</aspecttable>
 
-  <name>Semephore Home Signal + subsidiary</name>
+  <name>2 Aspect Signal Home + Distant</name>
   
-  <description>This uses a single head to control the main aspect, with a second subsidiary signal</description>
+  <description>This uses two single heads to control the aspects, this would be used on a semaphore signal with both the home and distance signals located on the same mast</description>
   
   <appearances>
 
     <appearance>
       <aspectname>Proceed</aspectname>
       <show>green</show>
-      <show>dark</show>
+      <show>green</show>
       
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargesemaHomeProceed(ws).gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargesemaHomeDistantProceed.gif</imagelink>
     </appearance>
 
     <appearance>
-      <aspectname>Danger</aspectname>
-      <show>red</show>
-      <show>dark</show>
+      <aspectname>Caution</aspectname>
+      <show>green</show>
+      <show>yellow</show>
       
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargesemaHomeDanger(ws).gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargesemaHomeDistantCaution.gif</imagelink>
     </appearance>
     
     <appearance>
-      <aspectname>Call On</aspectname>
+      <aspectname>Danger</aspectname>
       <show>red</show>
-      <show>green</show>
       
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargesemaHomeDangerCallOn(ws).gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargesemaHomeDistantDanger.gif</imagelink>
     </appearance>
-
+    
   </appearances>
 </appearancetable>  

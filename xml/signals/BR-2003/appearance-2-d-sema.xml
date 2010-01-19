@@ -28,7 +28,7 @@
   <aspecttable>BR</aspecttable>
 
   <name>Semephore Distance Signal</name>
-  <reference></reference>
+  
   <description>This uses a single head to control the appearance</description>
   
   <appearances>
@@ -36,13 +36,15 @@
     <appearance>
       <aspectname>Proceed</aspectname>
       <show>green</show>
-      <reference></reference>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargesemaDistantProceed.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Caution</aspectname>
       <show>yellow</show>
-      <reference></reference>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargesemaDistantCaution.gif</imagelink>
     </appearance>
 
   </appearances>

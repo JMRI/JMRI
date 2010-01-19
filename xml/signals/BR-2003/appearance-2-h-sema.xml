@@ -29,7 +29,7 @@
   <aspecttable>BR</aspecttable>
 
   <name>Semephore Home Signal</name>
-  <reference></reference>
+  
   <description>This uses a single head to control the appearance</description>
   
   <appearances>
@@ -37,13 +37,15 @@
     <appearance>
       <aspectname>Proceed</aspectname>
       <show>green</show>
-      <reference></reference>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargesemaHomeProceed.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Danger</aspectname>
       <show>red</show>
-      <reference></reference>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargesemaHomeDanger.gif</imagelink>
     </appearance>
 
   </appearances>

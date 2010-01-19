@@ -29,7 +29,7 @@
   <aspecttable>BR</aspecttable>
 
   <name>4 Aspect Signal with Call On</name>
-  <reference></reference>
+  
   <description>This uses a single head to control the aspects with Lunar acting as the second yellow. It also uses a second head to control the Call-On Aspect</description>
   
   <appearances>
@@ -38,56 +38,63 @@
       <aspectname>Proceed</aspectname>
       <show>green</show>
       <show>dark</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls4Proceed(wc).gif</imagelink>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls4Proceed(wc).gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed-4.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Caution</aspectname>
       <show>yellow</show>
       <show>dark</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls4Caution(wc).gif</imagelink>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls4Caution(wc).gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Caution-4.gif</imagelink>
     </appearance>
     
     <appearance>
       <aspectname>Flash Caution</aspectname>
       <show>flashyellow</show>
       <show>dark</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls4FlashCaution(wc).gif</imagelink>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls4FlashCaution(wc).gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/FlashCaution-4.gif</imagelink>
     </appearance>
     
     <appearance>
       <aspectname>Preliminary Caution</aspectname>
       <show>lunar</show>
       <show>dark</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls4PriCaution(wc).gif</imagelink>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls4PriCaution(wc).gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/PriCaution-4.gif</imagelink>
     </appearance>
     
     <appearance>
       <aspectname>Flash Preliminary Caution</aspectname>
       <show>flashlunar</show>
       <show>dark</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls4FlashPriCaution(wc).gif</imagelink>      
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls4FlashPriCaution(wc).gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/FlashPriCaution-4.gif</imagelink>
     </appearance>
     
     <appearance>
       <aspectname>Danger</aspectname>
       <show>red</show>
       <show>dark</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls4Danger(wc).gif</imagelink>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls4Danger(wc).gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Danger-4.gif</imagelink>
     </appearance>
     
     <appearance>
-      <aspectname>Position Light Proceed at Caution (White/White)</aspectname>
+      <aspectname>Call On</aspectname>
       <show>red</show>
       <show>lunar</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls4DangerCallOn.gif</imagelink>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls4DangerCallOn.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/DangerCallOn-4.gif</imagelink>
     </appearance>
 
   </appearances>

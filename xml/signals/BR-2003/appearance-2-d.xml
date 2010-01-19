@@ -28,23 +28,25 @@
   <aspecttable>BR</aspecttable>
 
   <name>2 Aspect Signal Distant</name>
-  <reference></reference>
-  <description>This uses a single head to control the aspects</description>
+  
+  <description>This uses a single head to control the aspects.</description>
   
   <appearances>
 
     <appearance>
       <aspectname>Proceed</aspectname>
       <show>green</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls2Proceed.gif</imagelink>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls2Proceed.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Caution</aspectname>
       <show>yellow</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/cls2Caution.gif</imagelink>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls2Caution.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Caution.gif</imagelink>
     </appearance>
 
   </appearances>

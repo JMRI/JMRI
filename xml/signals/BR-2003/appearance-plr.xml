@@ -28,23 +28,25 @@
   <aspecttable>BR</aspecttable>
 
   <name>Position Light Signal Red/White</name>
-  <reference></reference>
+  
   <description>This uses a single head to control the appearance</description>
   
   <appearances>
 
     <appearance>
-      <aspectname>Position Light Proceed at Caution (White/White)</aspectname>
+      <aspectname>Proceed at Caution</aspectname>
       <show>lunar</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/clsPLCaution.gif</imagelink>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargecolourlightPLCaution.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspect/PLCaution.gif</imagelink>
     </appearance>
 
     <appearance>
-      <aspectname>Position Light Stop (Red/White)</aspectname>
+      <aspectname>Stop</aspectname>
       <show>red</show>
-      <reference></reference>
-      <imagelink>../../../resources/icons/BritishRailSignals/clsPLDanger.gif</imagelink>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargecolourlightPLDanger.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspect/PLRDanger.gif</imagelink>
     </appearance>
 
   </appearances>
