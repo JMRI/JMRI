@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.3.shtml,v 1.7 2010-01-20 03:30:07 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.3.shtml,v 1.8 2010-01-20 15:55:12 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -185,6 +185,10 @@ and
 Update to make it easier to
 <a href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">use an Android phone as a throttle</a>.
 
+<p>
+Dan Boudreau added a new build option for operations: aggressive.  
+Setting aggressive true will cause the build process to immediately make available tracks that are vacated by cars being picked up.
+He also added a new feature, under tools in the train edit window, so users can print the train's manifest, even after terminating the train.
 
 <!--#include virtual="/Footer" -->
 
