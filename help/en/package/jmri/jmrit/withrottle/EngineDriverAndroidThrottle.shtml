@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: EngineDriverAndroidThrottle.shtml,v 1.1 2010-01-20 03:03:17 jacobsen Exp $ -->
+<title>JMRI: Engine Driver Throttle for Android</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Engine Driver Throttle for Android
+</h1>
+
+
+<img src="images/EngineDriverIcon.png" height="72" width="72" align="right">
+
+Available for download is an early beta version of Engine Driver (V0.1), 
+a JMRI throttle for the Android platform. 
+This application can connect to a JMRI WiThrottle server running on a PC, 
+and in turn control your locomotives. Speed, direction, and 15 functions are supported. 
+Due to it's early release, it is rough around the edges, has a number of caveat, 
+and requires some development procedures to get running. 
+If you feel brave enough, here is what you need to do: (This will be simpler with
+<a href="http://jmri.org/releasenotes/jmri2.9.2.shtml">JMRI 2.9.2</a>,
+due out at the end of January)
+
+<p>
+Before your Android device will allow you to install this program, 
+you will need to permit the installation of non-Market applications. 
+This is under Settings->Applications->Unknown sources (at least on Android 2.0). 
+Then you can use your phone to 
+<a href="http://sourceforge.net/projects/jmri/files/test%20files/Engine_Driver-debug_v0.1.apk/download">download this file</a>, 
+and select it for installation.
+
+<p>
+You will need to know your computer's IP address. 
+You will also need to know the TCP port that the JMRI WiThrottle is listening on. 
+In order to do this, first download the latest version of JMRI (2.9.1 at the time of writing). 
+Then modify the default.lcf file that comes with JMRI in a text editor. 
+Where it says log4j.rootCategory= INFO, change INFO to DEBUG. 
+Otherwise install JMRI as normal. Start JMRI (LocoTools is fine), 
+and then start the WiThrottle server in Debug->Start WiThrottle Server (last menu entry). 
+Log output will include the TCP port that this server is listening on.
+
+<p>
+With the IP address and the TCP port, you have everything you need to connect Engine Driver up to JMRI. 
+I have my Android device configured to obtain an IP address from my Wi-Fi router,
+and it is through that connection to my "layout" PC that the two can communicate.
+After you have connected, enter your locomotive address and select the correct address length. 
+Finally you should be able to can run the engine. 
+Be sure that you have turned on track power, the throttle can not yet do that for you.
+
+<p>
+Current version is 0.1, available for download at:<br/>
+<a href="http://sourceforge.net/projects/jmri/files/test%20files/Engine_Driver-debug_v0.1.apk/download">http://sourceforge.net/projects/jmri/files/test%20files/Engine_Driver-debug_v0.1.apk/download</a>
+<p>
+This is the package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle help page
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Networking.shtml,v 1.3 2010-01-08 05:39:24 jacobsen Exp $ -->
+<!-- $Id: Networking.shtml,v 1.4 2010-01-20 03:03:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -91,8 +91,10 @@ In the rest of this page, we provide links to the various examples of those two 
     This is advertised on Bonjour/Zeroconf as a "_http._tcp.local." service.
 <li>Via Python/jython scripting
 <li>For <a href="../../../package/jmri/jmrit/withrottle/UserInterface.shtml">remote throttles</a>
+    such as the iPhone or Android.
     (<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">code</a>) 
     (<a href="http://withrottle.com">WiThrottle product web site</a>)
+    (<a href="../../../package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">Android Engine Driver page</a>)
     <p>
     This is advertised on Bonjour/Zeroconf as a "_withrottle._tcp.local." service.
 <li>Via running JMRI as an 
