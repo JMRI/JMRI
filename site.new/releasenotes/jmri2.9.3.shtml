@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.3.shtml,v 1.6 2010-01-19 19:25:53 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.3.shtml,v 1.7 2010-01-20 03:30:07 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -180,6 +180,11 @@ Kevin Dickerson added a set of
 <a href="http://jmri.org/xml/signals/BR-2003/aspects.xml">British Rail signal definitions</a>
 and 
 <a href="http://jmri.org/resources/icons/BritishRailSignals">associated images</a>.
+
+<p>
+Update to make it easier to
+<a href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">use an Android phone as a throttle</a>.
+
 
 <!--#include virtual="/Footer" -->
 
