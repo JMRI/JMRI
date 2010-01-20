@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.93 2010-01-14 06:14:57 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.94 2010-01-20 03:02:16 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -288,6 +288,7 @@
 	<LI>Bill Nanney, who tenaciously worked to help find a bug where certain
 	decoders wouldn't read and write all sheets
 	<LI>Seth Neumann, who provided information on Wangrow decoders
+	<LI>Mark Noble, who found some broken links
 <a name="O"></A>
 	<LI>Glen Oberhauser, who added LocoNet throttles
 	<li>David Phillip Oster provided key information and a useful tool
