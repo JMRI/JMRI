@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.10 2009-10-07 22:04:56 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.11 2010-01-20 02:12:51 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -60,7 +60,7 @@ interface in-between:
      computers, with lots of types of layouts.
 <li>"Below" the interface lies code that connects to specific
      layout hardware.  We connected to a
-     <a href="hardware">full range of systems</a>:
+     <a href="../../hardware">full range of systems</a>:
      C/MRI, Digitrax, EasyDCC, Lenz, NCE, etc.
      We are certainly
      interested in connecting to other systems.
