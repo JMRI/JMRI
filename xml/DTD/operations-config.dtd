@@ -1,5 +1,5 @@
 <!-- Defines XML documenting operations configuration -->
-<!-- $Id: operations-config.dtd,v 1.14 2009-12-10 02:38:52 dan_boudreau Exp $ -->
+<!-- $Id: operations-config.dtd,v 1.15 2010-01-20 02:29:53 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -14,13 +14,14 @@
 <!-- for more details.                                                      -->
 
 <!ELEMENT operations-config (operations)*>
-<!ELEMENT operations (railRoad | settings | panel | fontName | manifestColors |buildReport | owner | iconColor | options)*>
+<!ELEMENT operations (railRoad | settings | panel | fontName | manifestColors |buildOptions | buildReport | owner | iconColor | options)*>
 
 <!ELEMENT railRoad EMPTY>
 <!ELEMENT settings EMPTY>
 <!ELEMENT panel EMPTY>
 <!ELEMENT fontName EMPTY>
 <!ELEMENT manifestColors EMPTY>
+<!ELEMENT buildOptions EMPTY>
 <!ELEMENT buildReport EMPTY>
 <!ELEMENT owner EMPTY>
 <!ELEMENT iconColor EMPTY>
@@ -48,6 +49,7 @@
 <!ATTLIST fontName name				CDATA #IMPLIED>   
 <!ATTLIST manifestColors dropColor	CDATA #IMPLIED> 
 <!ATTLIST manifestColors pickupColor	CDATA #IMPLIED>  
+<!ATTLIST buildOptions aggressive	(true | false ) "false">              
 <!ATTLIST buildReport level			CDATA #IMPLIED>                                   
 <!ATTLIST owner name				CDATA #IMPLIED>
 <!ATTLIST iconColor north			CDATA #IMPLIED>    
