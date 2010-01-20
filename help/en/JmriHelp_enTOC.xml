@@ -138,6 +138,12 @@
   <tocitem text="Error Messages " target="html.tools.programmer.messages"/>
 
  </tocitem>
+ <tocitem text="Throttles " target="html.tools.throttle.ThrottleMain">
+  <tocitem text="Android Phone as Throttle " target="package.jmri.jmrit.withrottle.EngineDriverAndroidThrottle"/>
+
+  <tocitem text="iPhone/iPod Touch as Throttle " target="package.jmri.jmrit.withrottle.UserInterface"/>
+
+ </tocitem>
  <tocitem text="PanelPro " target="html.apps.PanelPro.PanelPro">
   <tocitem text="Intro " target="html.apps.PanelPro.PanelPro"/>
 
@@ -148,60 +154,6 @@
   <tocitem text="Panel Editor " target="package.jmri.jmrit.display.PanelEditor"/>
 
   <tocitem text="Viewing Files " target="html.apps.PanelPro.ShowPanel"/>
-
- </tocitem>
- <tocitem text="Dispatcher " target="package.jmri.jmrit.dispatcher.Dispatcher">
-  <tocitem text="Introduction " target="package.jmri.jmrit.dispatcher.Dispatcher">
-   <tocitem text="Glossary " target="package.jmri.jmrit.dispatcher.Dispatcher_glossary"/>
-
-   <tocitem text="Using Transits and Sections " target="package.jmri.jmrit.dispatcher.Dispatcher_transits"/>
-
-   <tocitem text="Dispatcher Window " target="package.jmri.jmrit.dispatcher.Dispatcher_window"/>
-
-   <tocitem text="Active Trains Table " target="package.jmri.jmrit.dispatcher.Dispatcher_atrains"/>
-
-   <tocitem text="Allocation Requests Table " target="package.jmri.jmrit.dispatcher.Dispatcher_arequests"/>
-
-  </tocitem>
-  <tocitem text="Options Menu " target="package.jmri.jmrit.dispatcher.Options"/>
-
-  <tocitem text="Allocated Section Window " target="package.jmri.jmrit.dispatcher.AllocatedSections"/>
-
-  <tocitem text="Allocate Extra " target="package.jmri.jmrit.dispatcher.AllocateExtra"/>
-
-  <tocitem text="New Train " target="package.jmri.jmrit.dispatcher.NewTrain"/>
-
- </tocitem>
- <tocitem text="Operations " target="package.jmri.jmrit.operations.Operations">
-  <tocitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
-
-  <tocitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations">
-   <tocitem text="Yards " target="package.jmri.jmrit.operations.Operations_Yards"/>
-
-   <tocitem text="Sidings " target="package.jmri.jmrit.operations.Operations_Sidings"/>
-
-   <tocitem text="Interchange " target="package.jmri.jmrit.operations.Operations_Interchange"/>
-
-   <tocitem text="Staging " target="package.jmri.jmrit.operations.Operations_Staging"/>
-
-  </tocitem>
-  <tocitem text="Cars " target="package.jmri.jmrit.operations.Operations_Cars"/>
-
-  <tocitem text="Engines " target="package.jmri.jmrit.operations.Operations_Engines"/>
-
-  <tocitem text="Routes " target="package.jmri.jmrit.operations.Operations_Routes"/>
-
-  <tocitem text="Trains " target="package.jmri.jmrit.operations.Operations_Trains"/>
-
-  <tocitem text="Switch List " target="package.jmri.jmrit.operations.Operations_SwitchList"/>
-
- </tocitem>
- <tocitem text="Warrants " target="package.jmri.jmrit.logix.Warrant"/>
-
- <tocitem text="Error Codes " target="html.Errors"/>
-
- <tocitem text="SoundPro " target="html.apps.SoundPro.SoundPro">
-  <tocitem text="Intro " target="html.apps.SoundPro.SoundPro"/>
 
  </tocitem>
  <tocitem text="Tools " target="html.tools.index">
@@ -363,8 +315,6 @@
    <tocitem text="Block Table " target="package.jmri.jmrit.beantable.BlockTable"/>
 
   </tocitem>
-  <tocitem text="Throttles " target="html.tools.throttle.ThrottleMain"/>
-
   <tocitem text="Tracker (Blocks) " target="html.tools.tracker.index"/>
 
   <tocitem text="Transits ">
@@ -373,13 +323,15 @@
    <tocitem text="Transit Table " target="package.jmri.jmrit.beantable.TransitTable"/>
 
   </tocitem>
+  <tocitem text="Turnout Control " target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
+
   <tocitem text="Turnouts " target="html.tools.Turnouts">
    <tocitem text="Turnout Add/Edit " target="package.jmri.jmrit.beantable.TurnoutAddEdit"/>
 
    <tocitem text="Turnout Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
 
   </tocitem>
-  <tocitem text="Turnout Control " target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
+  <tocitem text="Warrants " target="package.jmri.jmrit.logix.Warrant"/>
 
   <tocitem text="USS CTC Tools " target="html.tools.uss.index">
    <tocitem text="Turnout Lever " target="package.jmri.jmrit.ussctc.TurnoutLeverFrame"/>
@@ -393,6 +345,58 @@
    <tocitem text="Follower " target="package.jmri.jmrit.ussctc.FollowerFrame"/>
 
   </tocitem>
+ </tocitem>
+ <tocitem text="Operations " target="package.jmri.jmrit.operations.Operations">
+  <tocitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
+
+  <tocitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations">
+   <tocitem text="Yards " target="package.jmri.jmrit.operations.Operations_Yards"/>
+
+   <tocitem text="Sidings " target="package.jmri.jmrit.operations.Operations_Sidings"/>
+
+   <tocitem text="Interchange " target="package.jmri.jmrit.operations.Operations_Interchange"/>
+
+   <tocitem text="Staging " target="package.jmri.jmrit.operations.Operations_Staging"/>
+
+  </tocitem>
+  <tocitem text="Cars " target="package.jmri.jmrit.operations.Operations_Cars"/>
+
+  <tocitem text="Engines " target="package.jmri.jmrit.operations.Operations_Engines"/>
+
+  <tocitem text="Routes " target="package.jmri.jmrit.operations.Operations_Routes"/>
+
+  <tocitem text="Trains " target="package.jmri.jmrit.operations.Operations_Trains"/>
+
+  <tocitem text="Switch List " target="package.jmri.jmrit.operations.Operations_SwitchList"/>
+
+ </tocitem>
+ <tocitem text="Dispatcher " target="package.jmri.jmrit.dispatcher.Dispatcher">
+  <tocitem text="Introduction " target="package.jmri.jmrit.dispatcher.Dispatcher">
+   <tocitem text="Glossary " target="package.jmri.jmrit.dispatcher.Dispatcher_glossary"/>
+
+   <tocitem text="Using Transits and Sections " target="package.jmri.jmrit.dispatcher.Dispatcher_transits"/>
+
+   <tocitem text="Dispatcher Window " target="package.jmri.jmrit.dispatcher.Dispatcher_window"/>
+
+   <tocitem text="Active Trains Table " target="package.jmri.jmrit.dispatcher.Dispatcher_atrains"/>
+
+   <tocitem text="Allocation Requests Table " target="package.jmri.jmrit.dispatcher.Dispatcher_arequests"/>
+
+  </tocitem>
+  <tocitem text="Options Menu " target="package.jmri.jmrit.dispatcher.Options"/>
+
+  <tocitem text="Allocated Section Window " target="package.jmri.jmrit.dispatcher.AllocatedSections"/>
+
+  <tocitem text="Allocate Extra " target="package.jmri.jmrit.dispatcher.AllocateExtra"/>
+
+  <tocitem text="New Train " target="package.jmri.jmrit.dispatcher.NewTrain"/>
+
+ </tocitem>
+ <tocitem text="Error Codes " target="html.Errors"/>
+
+ <tocitem text="SoundPro " target="html.apps.SoundPro.SoundPro">
+  <tocitem text="Intro " target="html.apps.SoundPro.SoundPro"/>
+
  </tocitem>
  <tocitem text="Panels " target="html.apps.PanelPro.Panels">
   <tocitem text="Panel Editor " target="package.jmri.jmrit.display.PanelEditor"/>
