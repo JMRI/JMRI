@@ -36,7 +36,7 @@
     <appearance>
       <aspectname>Proceed</aspectname>
       <show>green</show>
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaDistantProceed.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaDistantClear.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed.gif</imagelink>
     </appearance>
 
