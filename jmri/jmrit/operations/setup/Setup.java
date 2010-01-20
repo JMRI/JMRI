@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -149,6 +149,8 @@ public class Setup {
 	private static boolean mainMenuEnabled = false;		//when true add operations menu to main menu bar
 	private static boolean enableRfid = false;			//when true show RFID fields for rolling stock
 	
+	private static boolean aggressiveBuild = false;		//when true subtract car length from track reserve length 
+	
 	// Setup frame attributes
 	protected static OperationsSetupFrame _operationsSetupFrame = null;
 	protected static Dimension _operationsSetupFrameDimension = null;
@@ -181,6 +183,14 @@ public class Setup {
 	
 	public static void setRfidEnabled(boolean enabled){
 		enableRfid = enabled;
+	}
+	
+	public static boolean isBuildAggressive(){
+		return aggressiveBuild;
+	}
+	
+	public static void setBuildAggressive(boolean enabled){
+		aggressiveBuild = enabled;
 	}
 	
 	public static String getRailroadName(){
@@ -639,6 +649,9 @@ public class Setup {
     	values.setAttribute("dropColor", getDropTextColor());
     	values.setAttribute("pickupColor", getPickupTextColor());
     	
+    	e.addContent(values = new Element("buildOptions"));
+    	values.setAttribute("aggressive", isBuildAggressive()?"true":"false");
+    	
     	e.addContent(values = new Element("buildReport"));
     	values.setAttribute("level", getBuildReportLevel());
     	
@@ -797,6 +810,12 @@ public class Setup {
         		if (log.isDebugEnabled()) log.debug("pickupColor: "+pickupColor);
         		Setup.setPickupTextColor(pickupColor);
         	}
+        }
+        if ((operations.getChild("buildOptions") != null)
+				&& (a = operations.getChild("buildOptions").getAttribute("aggressive")) != null) {
+      		String enable = a.getValue();
+    		if (log.isDebugEnabled()) log.debug("aggressive: "+enable);
+    		Setup.setBuildAggressive(enable.equals("true"));
         }
         if ((operations.getChild("buildReport") != null)
 				&& (a = operations.getChild("buildReport").getAttribute("level")) != null) {

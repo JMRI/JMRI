@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -295,7 +295,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 					//	if there's a destination then pickup complete
 					if (_destination != null){
 						oldLocation.deletePickupRS();
-						oldTrack.deletePickupRS();
+						oldTrack.deletePickupRS(this);
 					}
 				}
 			}
@@ -311,7 +311,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 				// if there's a destination then there's a pickup
 				if (_destination != null){
 					_location.addPickupRS();
-					_trackLocation.addPickupRS();
+					_trackLocation.addPickupRS(this);
 				}
 			} 
 			firePropertyChange(LOCATION_CHANGED_PROPERTY, oldLocation, location);
@@ -346,7 +346,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 				// delete pickup in case destination is null
 				if(_location != null && _trackLocation != null){
 					_location.deletePickupRS();
-					_trackLocation.deletePickupRS();
+					_trackLocation.deletePickupRS(this);
 				}
 			}
 			if (oldTrack != null){
@@ -357,7 +357,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 				_destination.addDropRS();
 				if(_location != null && _trackLocation != null){
 					_location.addPickupRS();
-					_trackLocation.addPickupRS();
+					_trackLocation.addPickupRS(this);
 				}
 			
 				// Need to know if destination name changes so we can forward to listerners 

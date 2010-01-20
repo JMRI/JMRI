@@ -31,7 +31,7 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.39 $
+ * @version             $Revision: 1.40 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -289,7 +289,7 @@ public class TrainsTableFrame extends OperationsFrame {
 			List<String> trains = trainsModel.getSelectedTrainList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById(trains.get(i));
-				if(train.getBuild() && !train.printManifest() && trainManager.getBuildMessages()){
+				if(train.getBuild() && !train.printManifestIfBuilt() && trainManager.getBuildMessages()){
 					String string = "Need to build train (" +train.getName()+ ") before printing manifest";
 					JOptionPane.showMessageDialog(null, string,
 							"Can not print manifest",

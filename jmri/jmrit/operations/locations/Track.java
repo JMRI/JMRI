@@ -13,13 +13,14 @@ import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Represents a location (track) on the layout
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.31 $
+ * @version             $Revision: 1.32 $
  */
 public class Track {
 	
@@ -213,7 +214,7 @@ public class Track {
 	 * Adds rolling stock to a specific track.  
 	 * @param rs
 	 */	
-	public void addRS (RollingStock rs){
+	public void addRS(RollingStock rs){
  		setNumberRS(getNumberRS()+1);
  		if (rs.getClass() == Car.class)
  			setNumberCars(getNumberCars()+1);
@@ -222,7 +223,7 @@ public class Track {
 		setUsedLength(getUsedLength() + Integer.parseInt(rs.getLength())+ RollingStock.COUPLER);
 	}
 	
-	public void deleteRS (RollingStock rs){
+	public void deleteRS(RollingStock rs){
 		setNumberRS(getNumberRS()-1);
  		if (rs.getClass() == Car.class)
  			setNumberCars(getNumberCars()-1);
@@ -235,14 +236,18 @@ public class Track {
 	 * Increments the number of cars and or engines that will be picked up by a train
 	 * at this location.
 	 */
-	public void addPickupRS() {
+	public void addPickupRS(RollingStock rs) {
 		int old = _pickupRS;
 		_pickupRS++;
+		if (Setup.isBuildAggressive())
+			setReserved(getReserved() - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER));
 		firePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
 	}
 	
-	public void deletePickupRS() {
+	public void deletePickupRS(RollingStock rs) {
 		int old = _pickupRS;
+		if (Setup.isBuildAggressive())
+			setReserved(getReserved() + (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER));
 		_pickupRS--;
 		firePropertyChange("pickupRS", Integer.toString(old), Integer.toString(_pickupRS));
 	}
@@ -264,16 +269,14 @@ public class Track {
 		int old = _dropRS;
 		_dropRS++;
 		setMoves(getMoves()+1);
-		int reserved = getReserved() + Integer.parseInt(rs.getLength()) + RollingStock.COUPLER;
-		setReserved(reserved);
+		setReserved(getReserved() + Integer.parseInt(rs.getLength()) + RollingStock.COUPLER);
 		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
 	}
 	
 	public void deleteDropRS(RollingStock rs) {
 		int old = _dropRS;
 		_dropRS--;
-		int reserved = getReserved() - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER);
-		setReserved(reserved);
+		setReserved(getReserved() - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER));
 		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
 	}
 
@@ -328,6 +331,10 @@ public class Track {
     	return _roadOption;
     }
     
+    /**
+     * Set the road option for this track.
+     * @param option ALLROADS, INCLUDEROADS, or EXCLUDEROADS
+     */
     public void setRoadOption (String option){
     	String old = _roadOption;
     	_roadOption = option;
@@ -401,6 +408,10 @@ public class Track {
     	return _dropOption;
     }
     
+    /**
+     * Set the car drop option for this track.
+     * @param option ANY, TRAINS, or ROUTES
+     */
     public void setDropOption (String option){
     	String old = _dropOption;
     	_dropOption = option;
@@ -412,6 +423,10 @@ public class Track {
     	return _pickupOption;
     }
     
+    /**
+     * Set the car pickup option for this track.
+     * @param option ANY, TRAINS, or ROUTES
+     */
     public void setPickupOption (String option){
        	String old = _pickupOption;
        	_pickupOption = option;
@@ -446,6 +461,12 @@ public class Track {
     	log.debug("track " +getName()+ " delete drop "+id);
      }
     
+    /**
+     * Determine if train can drop cars to this track.  Based on the train's
+     * id or train's route id.  See setDropOption(option).
+     * @param train
+     * @return true if the train can drop cars to this track.
+     */
     public boolean acceptsDropTrain(Train train){
     	if (_dropOption.equals(ANY))
     		return true;
@@ -483,6 +504,10 @@ public class Track {
  			_pickupList.add(ids[i]);
     }
     
+    /**
+     * Add train or route id to this track.
+     * @param id
+     */
     public void addPickupId(String id){
      	if (_pickupList.contains(id))
     		return;
@@ -495,6 +520,12 @@ public class Track {
     	log.debug("track " +getName()+ " delete pickup "+id);
      }
     
+    /**
+     * Determine if train can pickup cars from this track.  Based on the train's
+     * id or train's route id.  See setPickupOption(option).
+     * @param train
+     * @return true if the train can pickup cars from this track.
+     */
     public boolean acceptsPickupTrain(Train train){
     	if (_pickupOption.equals(ANY))
     		return true;

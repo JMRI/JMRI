@@ -25,7 +25,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class PrintTrainAction  extends AbstractAction {
 	
@@ -33,25 +33,27 @@ public class PrintTrainAction  extends AbstractAction {
 	String newLine = "\n";
 	public static final int MAX_NAME_LENGTH = 15;
 
-    public PrintTrainAction(String actionName, Frame frame, boolean preview, Train train) {
+    public PrintTrainAction(String actionName, Frame mFrame, boolean isPreview, Frame frame) {
         super(actionName);
-        mFrame = frame;
-        isPreview = preview;
-        this.train = train;
+        this.mFrame = mFrame;
+        this.isPreview = isPreview;
+        this.frame = frame;
     }
 
     /**
      * Frame hosting the printing
      */
     Frame mFrame;
+    Frame frame;	// TrainEditFrame
     /**
      * Variable to set whether this is to be printed or previewed
      */
     boolean isPreview;
-    Train train;
     
 
     public void actionPerformed(ActionEvent e) {
+    	TrainEditFrame f = (TrainEditFrame)frame;
+    	Train train = f._train;
     	if (train == null)
     		return;
 

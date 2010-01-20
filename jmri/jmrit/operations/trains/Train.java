@@ -42,7 +42,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.59 $
+ * @version $Revision: 1.60 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -899,18 +899,28 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * Print manifest for train if already built.
 	 * @return true if print successful.
 	 */
-	public boolean printManifest(){
+	public boolean printManifestIfBuilt(){
 		if(_built){
-			File file = TrainManagerXml.instance().getTrainManifestFile(getName());
 			boolean isPreview = TrainManager.instance().getPrintPreview();
-			printReport(file, "Train Manifest "+getDescription(), isPreview, Setup.getFontName(), false);
-			if (!isPreview)
-				setPrinted(true);
+			printManifest(isPreview);
 		} else {
-			String string = "Need to build train (" +getName()+ ") before printing manifest";
-			log.debug(string);
+			log.debug("Need to build train (" +getName()+ ") before printing manifest");
 			return false;
 		}
+		return true;
+	}
+	
+	/**
+	 * Print manifest for train.
+	 * @return true if print successful.
+	 */
+	public boolean printManifest(boolean isPreview){
+		File file = TrainManagerXml.instance().getTrainManifestFile(getName());
+		if (!file.exists())
+			return false;
+		printReport(file, "Train Manifest "+getDescription(), isPreview, Setup.getFontName(), false);
+		if (!isPreview)
+			setPrinted(true);
 		return true;
 	}
 	

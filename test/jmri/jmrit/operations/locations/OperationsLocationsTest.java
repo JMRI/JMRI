@@ -38,7 +38,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -492,17 +492,19 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
 
 		Assert.assertEquals("Location Track Pick Ups Start", 0, t.getPickupRS());
-
-		t.addPickupRS();
+		jmri.jmrit.operations.rollingstock.cars.Car c1 = new jmri.jmrit.operations.rollingstock.cars.Car("TESTROAD", "TESTNUMBER1");
+		c1.setLength("40");
+		
+		t.addPickupRS(c1);
 		Assert.assertEquals("Location Track Pick Ups 1st", 1, t.getPickupRS());
 
-		t.addPickupRS();
+		t.addPickupRS(c1);
 		Assert.assertEquals("Location Track Pick Ups 2nd", 2, t.getPickupRS());
 
-		t.deletePickupRS();
+		t.deletePickupRS(c1);
 		Assert.assertEquals("Location Track Pick Ups 3rd", 1, t.getPickupRS());
 
-		t.deletePickupRS();
+		t.deletePickupRS(c1);
 		Assert.assertEquals("Location Track Pick Ups 4th", 0, t.getPickupRS());
 	}
 
