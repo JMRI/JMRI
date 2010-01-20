@@ -38,24 +38,24 @@
       <aspectname>Proceed</aspectname>
       <show>green</show>
       <show>dark</show>
-      
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargesemaHomeProceed(ws).gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeProceed(ws).gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Danger</aspectname>
       <show>red</show>
       <show>dark</show>
-      
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargesemaHomeDanger(ws).gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeDanger(ws).gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Danger.gif</imagelink>
     </appearance>
     
     <appearance>
       <aspectname>Call On</aspectname>
       <show>red</show>
-      <show>green</show>
-      
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargesemaHomeDangerCallOn(ws).gif</imagelink>
+      <show>green</show>      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeDangerCallOn(ws).gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/DanagerCallOn.gif</imagelink>
     </appearance>
 
   </appearances>

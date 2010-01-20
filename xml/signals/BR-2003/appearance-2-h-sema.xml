@@ -37,15 +37,16 @@
     <appearance>
       <aspectname>Proceed</aspectname>
       <show>green</show>
-      
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargesemaHomeProceed.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeProceed.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Danger</aspectname>
       <show>red</show>
       
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargesemaHomeDanger.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeDanger.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Danger.gif</imagelink>
     </appearance>
 
   </appearances>

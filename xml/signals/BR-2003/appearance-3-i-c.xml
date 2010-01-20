@@ -31,7 +31,11 @@
   <name>3 Aspect Signal Head + Call On(individual aspects)</name>
   
   <description>This uses 3 single state signal heads to represent the main signal and a further signal head to represent the Call-on</description>
- 
+
+  <name>Sample of full file format</name>
+  
+  <description></description>
+  
   <appearances>
 
     <appearance>
@@ -41,7 +45,8 @@
       <show>dark</show>
       <show>dark</show>
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3Proceed(wc).gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed.gif</imagelink>     
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed.gif</imagelink>
+      
     </appearance>
 
     <appearance>
@@ -50,6 +55,7 @@
       <show>yellow</show>
       <show>dark</show>
       <show>dark</show>
+      
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3Caution(wc).gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Caution.gif</imagelink>
     </appearance>
@@ -60,6 +66,7 @@
       <show>flashyellow</show>
       <show>dark</show>
       <show>dark</show>
+      
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3FlashCaution(wc).gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/FlashCaution.gif</imagelink>
     </appearance>
@@ -70,7 +77,8 @@
       <show>dark</show>
       <show>red</show>
       <show>dark</show>
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3Danger.gif(wc)</imagelink>
+      
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3Danger(wc).gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Danger.gif</imagelink>
     </appearance>
     
@@ -79,7 +87,8 @@
       <show>dark</show>
       <show>dark</show>
       <show>red</show>
-      <show>lunar</show>   
+      <show>lunar</show>
+      
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3DangerCallOn.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/DangerCallOn.gif</imagelink>
     </appearance>

@@ -37,16 +37,16 @@
       <aspectname>Proceed at Caution</aspectname>
       <show>lunar</show>
       
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargecolourlightPLCaution.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspect/PLCaution.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/clsPLCaution.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/PLCaution.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
       
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/LargecolourlightPLDanger.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspect/PLRDanger.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/clsPLDanger.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/PLRDanger.gif</imagelink>
     </appearance>
 
   </appearances>

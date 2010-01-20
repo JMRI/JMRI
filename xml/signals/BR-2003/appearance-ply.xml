@@ -43,7 +43,7 @@
       <show>lunar</show>
       
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/clsPLCaution.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspect/PLCaution.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/PLCaution.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -51,7 +51,7 @@
       <show>yellow</show>
       
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/clsPLYDanger.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspect/PLYDanger.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/PLYDanger.gif</imagelink>
     </appearance>
 
   </appearances>
