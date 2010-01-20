@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: AspectSignaling.shtml,v 1.7 2010-01-10 07:04:49 jacobsen Exp $ -->
+<!-- $Id: AspectSignaling.shtml,v 1.8 2010-01-20 15:09:52 jacobsen Exp $ -->
 <title>JMRI: Aspect Signaling</title>
 
 <!-- Style -->
@@ -103,14 +103,27 @@ JMRI users have provided a number of pre-defined signal systems:
         model railroaders will understand easily.
 <dt><a href="../../../../../xml/signals/AAR-1946/index.shtml">AAR-1946</a>
     <dd>American Association of Railroads 1946 rule book
+
+<dt><a href="../../../../../xml/signals/BR-2003/index.shtml">BR-2003</a>
+    <dd>British Rail 2003 rule book
+
+<dt><a href="../../../../../xml/signals/DB-HV-1969/index.shtml">DB HV 1969</a>
+    <dd>1969 Deutsche Bundesbahn "Einheitsbauform" Home Signal/Distant signal (Hauptsignal/Vorsignal) system revision
+
+<dt><a href="../../../../../xml/signals/NYCS-1937/index.shtml">NYCS-1937</a>
+    <dd>New York Central System 1937 rule book
+
+<dt><a href="../../../../../xml/signals/SLSF-1973/index.shtml">SLSF-1973</a>
+    <dd>SLSF (Frisco) 1973 rule book
+
 <dt><a href="../../../../../xml/signals/SPTCO-1960/index.shtml">SPTCO-1960</a>
     <dd>Southern Pacific Railway and Transportation Company 1960 rule book
 </dl>
 
-There are instructions for creating additional signal system
+There are instructions for creating your own signal system
 definitions on
 <a href="DefineNewAspects.shtml">a separate page</a>.
-If you do create a new definition for a new prototype, 
+If you do create a new definition for another prototype railroad or era, 
 please contribute it back to the JMRI project so we 
 can distribute it with future releases of the project for
 others to use.  Like decoder definitions in DecoderPro, the
