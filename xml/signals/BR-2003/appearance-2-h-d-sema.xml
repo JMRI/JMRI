@@ -38,7 +38,7 @@
       <aspectname>Proceed</aspectname>
       <show>green</show>
       <show>green</show>
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeDistantClear.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeDistantProceed.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed-sema-h-d.gif</imagelink>
     </appearance>
 
@@ -54,7 +54,7 @@
       <aspectname>Danger</aspectname>
       <show>red</show>
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeDistantDanger.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Danager-sema-h-d.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Danger-sema-h-d.gif</imagelink>
     </appearance>
     
   </appearances>
