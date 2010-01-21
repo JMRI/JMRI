@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.94 2010-01-20 03:02:16 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.95 2010-01-21 07:08:56 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -258,6 +258,8 @@
 	<LI>Carsten S. Lundsten, who let us make icons from the artwork on his great signaling
 	website <A HREF="http://www.lundsten.dk/us_signaling">http://www.lundsten.dk/us_signaling</a>.
 <a name="M"></A>
+    <LI>Jason M'Sadoques, who created the 
+        <a href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">Android phone throttle application</a>.
 	<LI>Jim Malone, who created a decoder file definition the Digitrax DN163K1a
 	<LI>Mark Marowicz, who provided the CT Electronik SL 51 decoder definition
     <li>David McDowell of the North Raleigh Model Railroad Club created
