@@ -1,5 +1,5 @@
 <!DOCTYPE html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: UpdatingDocs.shtml,v 1.5 2010-01-21 14:52:49 jacobsen Exp $ -->
+<!-- $Id: UpdatingDocs.shtml,v 1.6 2010-01-21 15:05:42 jacobsen Exp $ -->
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -25,7 +25,7 @@
 <head>
 <!-- Copyright Joseph A. Ellis - TesserAct Studios -->
 <!-- Copyright Bob Blakcwell - afticarr@sympatico.ca 2007 -->
-<!-- $Id: UpdatingDocs.shtml,v 1.5 2010-01-21 14:52:49 jacobsen Exp $ -->
+<!-- $Id: UpdatingDocs.shtml,v 1.6 2010-01-21 15:05:42 jacobsen Exp $ -->
 <title>Updating JMRI Manuals/Documents</title>
 
 <!-- Style -->
@@ -57,13 +57,12 @@
 </ul>
 </div>
 
-<p>JMRI's web pages and help screens are written in a simple subset
+JMRI's web pages and help screens are written in a simple subset
 of HTML, the language that powers the web.  
 The most important part of the content is the plain text 
 that people will read, and the additional formatting information
 is kept very minimal.  To update a JMRI web page, you edit
 these directly with a simple text editor.
-</p>
 
 <p>Using MSWord or Front Page to edit these .shtml documents is not a good idea
 because they will probably add in their own proprietary formatting codes that
@@ -71,22 +70,20 @@ will mess things up, possibly even to the point of being unusable by JMRI. Also,
 don't rename files, or make changes to the formatting information at the
 top or bottom.  Still with making editorial changes to the text in the 
 main body of file, which is really what the readers are paying attention
-to anyway.</p>
+to anyway.
 
 <p>To get started, you can drill down inside your computer's 
 JMRI program files to
 the folder for the DecoderPro manual.
 On a Windows system, the location for this folder
-looks something like this -- <span
-style="font-family: monospace">C:\ProgramFiles\JMRI\help\en\manual</span>.
-In this folder is a file called <span
-style="font-family: monospace">index.shtml</span>. Open that file with 
+looks something like this -- <code>C:\ProgramFiles\JMRI\help\en\manual</code>.
+In this folder is a file called <code>index.shtml</code>. Open that file with 
 a text editor
 and look around.  If you change something, you can then 
 open the page in the JMRI help system and see how it looks 
 (either keep a backup in case you
 want the original page back,
-or you can reinstall JMRI to restore it)</p>
+or you can reinstall JMRI to restore it)
 
 <p>The most simple changes are just ones to the text itself: 
 To add a sentence or fix a wording, you just do that with the editor.
@@ -94,62 +91,61 @@ To add a break between paragraphs, e.g. to add
 a new paragraph, you insert a "tag" 
 that tells JMRI or a browser to insert a paragraph break:  &lt;p&gt;.
 
-<h2 id="screenshots">Creating Images from Screen Shots</h2>
-<strong>For Windows</strong> 
+<h2> <a name="screenshots">Creating Images from Screen Shots</h2>
+<h3>For Windows</h3> 
 
-<p>To snag a screen shot in Windows, start by setting up the window that holds
+To snag a screen shot in Windows, start by setting up the window that holds
 what you want to capture. Make it take up as little space on your screen as you
 can while it still shows what you want. You can take a shot of the active
-window (instead of your whole desktop), by pressing the <span
-style="font-family: monospace">&lt;Alt&gt;</span> key and the <span
-style="font-family: monospace">&lt;Print Screen&gt;</span> key at the same
-time. (Note: Depending on your keyboard, you might need to press the <span
-style="font-family: monospace">&lt;Fn&gt;</span> or <span
-style="font-family: monospace">&lt;Function-Lock&gt;</span> key as well.) This
-puts the image on your &ldquo;clipboard&rdquo; and you can paste it into an
-image-editing program such as Window's Paint or Photoshop. </p>
+window (instead of your whole desktop), by pressing the 
+<code>&lt;Alt&gt;</code> key and the 
+<code>&lt;Print Screen&gt;</code> key at the same
+time. (Note: Depending on your keyboard, you might need to press the 
+<code>&lt;Fn&gt;</code> or 
+<code>&lt;Function-Lock&gt;</code> key as well.) This
+puts the image on your &quot;clipboard&quot; and you can paste it into an
+image-editing program such as Window's Paint or Photoshop. 
 
-<p><strong>For Linux</strong></p>
+<h3>For Linux</h3>
 
-<p>If your distro doesn't already have a default application that supports the
+If your distro doesn't already have a default application that supports the
 use of the &lt;<span style="font-family: monospace">Print Screen</span>&gt; and
 &lt;<span style="font-family: monospace">Alt + Print Screen</span>&gt; keys you
 can install <a href="http://www.kde.org/">KSnapshot</a> or your favorite
-application to do your screen grabbing.</p>
+application to do your screen grabbing.
 
-<p><strong>For Mac OS X</strong></p>
+<h3>For Mac OS X</h3>
 
-<p>After setting up your shot, hold down <span
+After setting up your shot, hold down <span
 style="font-family: monospace">&lt;Apple + Shift + 4&gt;</span> key. When you
 release them at the same time, the cursor becomes a plus sign, and you can drag
 it around the area you want. When you let go, you will have an image file on
-your desktop.</p>
+your desktop.
 
-<p><strong>Using a Third-Party Application</strong></p>
-
-<p>I love <a
-href="http://www.irfanview.com/main_download_engl.htm">IrFanView</a> for
+<h3>Using a Third-Party Application</h3>
+I love 
+<a href="http://www.irfanview.com/main_download_engl.htm">IrFanView</a> for
 screenshots, and it is free. With it, you can also include your mouse cursor in
 your snapshot. You can also take a series of shots easily, and even make a
 slideshow of them. You can tell it what file format you want the image files to
 be AND where you want them to be saved before you take the shot, and that makes
-it easier to work with them in a program like Paint or Photoshop.</p>
+it easier to work with them in a program like Paint or Photoshop.
 
-<h2 id="sizing">Sizing and Saving the Images</h2>
+<h2 name="sizing">Sizing and Saving the Images</h2>
 
-<p>Any changes you make to your image should be done before you use Amaya to
+Any changes you make to your image should be done before you use Amaya to
 insert it into your document. Remember that if you change it, it needs to be
 re-inserted. Make sure you save the image as one of the following filetypes:
 PNG, GIF, JPG, or JPEG (not BMP or TIF), and do not use any spaces or capital
 letters in the name. Generally, a good size for the width of an image is 500
 pixels or less, at a web resolution of 72 pixels per inch. If you know how to
-resize your images, it would be very helpful. </p>
+resize your images, it would be very helpful. 
 
-<h2 id="submit">Submitting to Sourceforge</h2>
+<h2 name="submit">Submitting to Sourceforge</h2>
 
 <p>If you understand this, you are ready to help us update the many JMRI
 documents that we use for both the JMRI website and for the Help files in the
-next software build. </p>
+next software build. 
 
 <p>
 When you submit your changes to be included in future JMRI releases, they
@@ -159,44 +155,44 @@ file that have been changed.
 To make that easier, please don't reformat pages or use an 
 editor that moves lines around on its own.
 
-<p><strong>Prepare the Files</strong></p>
+<h3>Prepare the Files</h3>
 
-<p>The proper filetype to use for JMRI has the .shtml extension. If you have
+The proper filetype to use for JMRI has the .shtml extension. If you have
 made an .html or .htm file, you can change the extension yourself to .shtml
 (just ignore the warning). Don't use spaces or capital letters in your
 filenames. If you are not changing or adding images, just save the file with
 its original name, i.e. &ldquo;index.shtml&rdquo;, 
 save it where you can find it easily, and click the <a
-href="#submit">Submit to Sourceforge</a> link below.</p>
+href="#submit">Submit to Sourceforge</a> link below.
 
 <p>If you are submitting more than one file at a time (i.e. the .shtml and some
 new or edited image files), then you should first copy these files into a new
 folder somewhere on your hard drive, and then compress (or Zip) the folder. For
-Windows XP, right click the folder, then Send To -- Compressed.</p>
+Windows XP, right click the folder, then Send To -- Compressed.
 
-<p><strong>Send to Sourceforge</strong></p>
+<h3>Send to Sourceforge</h3>
 
-<p>Sourceforge is a community of open-source developers and the hard-working
+Sourceforge is a community of open-source developers and the hard-working
 volunteers for the JMRI software project would welcome your help whether you
 want to register with SourceForge or not. 
-When you click the &ldquo;Submit to Sourceforge&rdquo;
-link below, you will be taken to a page that has a link called &ldquo;Add new
-Artifact.&rdquo; If you do this without being a logged-in user, you can submit
+When you click the &quot;Submit to Sourceforge&quot;
+link below, you will be taken to a page that has a link called &quot;Add new
+Artifact.&quot; If you do this without being a logged-in user, you can submit
 your file(s) anonymously. If you plan to do a lot of submissions, we suggest
-you first use the &ldquo;Log In&rdquo; link on the top-right side, and then
-&ldquo;Create an Account.&rdquo; This will allow you to keep track of what you
+you first use the &quo;Log In&quot; link on the top-right side, and then
+&quot;Create an Account.&quot; This will allow you to keep track of what you
 have submitted, and allow others to see who is contributing their time. Once
 you have logged in with your new username, you can return to the proper page by
-going back two times in your browser. Either way, when you click the &ldquo;Add
-New Artifact&rdquo; link, you only need to provide a brief description of what
-you are sending, and then upload your file or compressed folder. </p>
+going back two times in your browser. Either way, when you click the &quot;Add
+New Artifact&quot; link, you only need to provide a brief description of what
+you are sending, and then upload your file or compressed folder. 
 
 <p>Link to <a
 href="http://sourceforge.net/tracker/?group_id=26788&amp;atid=388315">Submit to
-SourceForge</a>. </p>
+SourceForge</a>. 
 
 
-<p>This document is located in help/en/html/doc/Technical/webupdate/UpdatingDocs.shtml</p>
+<p>This document is located in help/en/html/doc/Technical/webupdate/UpdatingDocs.shtml
 
     
 <!--#include virtual="/Footer" -->
