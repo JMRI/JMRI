@@ -1,5 +1,5 @@
 <!DOCTYPE html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: UpdatingDocs.shtml,v 1.3 2009-02-23 02:02:24 jacobsen Exp $ -->
+<!-- $Id: UpdatingDocs.shtml,v 1.4 2010-01-21 07:08:17 jacobsen Exp $ -->
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -25,7 +25,7 @@
 <head>
 <!-- Copyright Joseph A. Ellis - TesserAct Studios -->
 <!-- Copyright Bob Blakcwell - afticarr@sympatico.ca 2007 -->
-<!-- $Id: UpdatingDocs.shtml,v 1.3 2009-02-23 02:02:24 jacobsen Exp $ -->
+<!-- $Id: UpdatingDocs.shtml,v 1.4 2010-01-21 07:08:17 jacobsen Exp $ -->
 <title>Updating JMRI Manuals/Documents</title>
 
 <!-- Style -->
@@ -65,106 +65,16 @@ enough knowledge to help update JMRI documents.</p>
 because they will probably add in their own proprietary formatting codes that
 will mess things up, possibly even to the point of being unusable by JMRI.</p>
 
-<p>If you are familiar with writing HTML, you can use whatever editing
-application works for you, but if you're new to it, I suggest <a
-href="http://www.w3.org/Amaya/">Amaya</a> because it allows you to view the
-document in two ways-- the way it will display in one pane, and the source code
-behind it in another. The nice thing is you can make your edits in the
-&ldquo;display&ldquo; view, and never even look at the code!</p>
-<p>
-If you do use an editor like Amaya, it is very important that you
-set it to make minimal changes to the files you're editing.
-If you use an editor that (automatically) reformats the original text,
-it may not be possible to merge your changes into the common version.</p>
-
 <p>To get started, you can drill down inside your CPU's JMRI program files to
 the folder for the DecoderPro manual.
 On a WinXP system, the location for this folder
 looks something like this -- <span
 style="font-family: monospace">C:\ProgramFiles\JMRI\help\en\manual</span>.
 In this folder is a file called <span
-style="font-family: monospace">index.shtml</span>. Open that file with Amaya
+style="font-family: monospace">index.shtml</span>. Open that file with 
+a text editor
 and look around, being careful not to change it unless you have saved a
 re-named version.</p>
-
-<h2 id="update">Updating or Creating a New Document with Amaya</h2>
-
-<p>To UPDATE an existing document, open it in Amaya. First, save a newly-named
-version of it in the same directory. For instance, if it is called <span
-style="font-family: monospace">index.shtml</span>, re-name it to <span
-style="font-family: monospace">index_edit.shtml</span> (that's an underscore
-line using the Shift-Hyphen key). Open that file with Amaya and edit it in the
-document view (not the code view). </p>
-
-<p>You can delete, add, or change the text there. (To make it easier for the
-developers to see what you have done, read about inserting and/or deleting text
-below.) If you want to change the formatting of a word or phrase (for instance,
-make a phrase into a Heading), select it first and then use the tools under
-<span style="font-family: monospace">Elements</span> located by default on the
-right side of the screen. <span
-style="font-family: monospace">T<sub>1</sub></span> will make it the
-largest-sized heading, <span
-style="font-family: monospace">T<sub>2</sub></span> the second largest, etc. If
-you are making any changes or additions to the images being used in the page,
-see <a href="#linking">Linking to Images</a> below. When finished, follow the
-<a href="#submit">How To Submit</a> instructions.</p>
-
-<p>To create a NEW document, open an existing document inside the folder where
-you will want your new document to be placed. Save a COPY of it in the same
-directory, but add <span style="font-family: monospace">_new</span> to the end
-of the name (i.e. <span style="font-family: monospace">index_new.shtml</span>).
-Open that document, and delete any undesired text and/or images and type in
-what you want. If there are no images to be used, proceed to <a
-href="#submit">How To Submit</a>, below.</p>
-
-<h2 id="linking">Linking to Images</h2>
-
-<p>Images seen on your page are not inside your .shtml document, they are
-actually only linked to. In the HTML code, they will look something like <span
-style="font-family: monospace">&lt;img alt=&ldquo;description&rdquo;
-src=&ldquo;images/imagename.gif&rdquo; width=&ldquo;400&rdquo;
-height=&ldquo;300&rdquo;&gt;</span>). What matters here is that, before you use
-Amaya to insert your image, you must first place the image file inside a folder
-holding all the other images related to the document. In the example above,
-this folder is named <span style="font-family: monospace">images</span> and
-there is a GIF image file inside of it named <span
-style="font-family: monospace">imagename.gif</span>. For more about making your
-own images, see <a href="#screenshots">Creating Images from Screenshots</a>
-below.</p>
-
-<p>To insert the link for your image into your .shtml document, use Amaya's
-display view, and place your cursor where you want the image to appear. From
-the top menu, use <span style="font-family: monospace">Insert-Image</span>.</p>
-
-<p><img alt="insert image" src="images/insert_pic.gif" width="468"
-height="275"></p>
-
-<p>Or you can use the <span style="font-family: monospace">Insert/Replace
-Image</span> tool under <span
-style="font-family: monospace">Elements</span>.</p>
-
-<p><img alt="elements tools" src="images/elements.gif" width="500" height="171"
-border="1"></p>
-
-<p>Either way, a dialog box opens. Browse to your image file, provide a
-description under Alternate Text, and press Confirm. Amaya will insert the code
-needed, including the path to where the file is <strong>in relation to your
-document</strong>, and the width and height of the image.</p>
-
-<p><img alt="confirm insertion" src="images/confirm_insert.gif" width="500"
-height="311"> </p>
-
-<p>Your image will appear. Make sure that the image is in its own paragraph, or
-the text around it will be beside it instead of under it. Also, because it is a
-paragraph, you can format it to align left, right, or center.</p>
-
-<p><img alt="inserted" src="images/inserted_pic.gif" width="500"
-height="412"></p>
-
-<p>IMPORTANT NOTE: If your image is the wrong size for the page (for instance,
-too small to be readable or much larger than needed), you will need to adjust
-your image file and then re-insert it into the .shtml page. See <a
-href="#sizing">Sizing and Saving Images</a> below.</p>
 
 <h2 id="screenshots">Creating Images from Screen Shots</h2>
 <strong>For Windows</strong> 
@@ -226,7 +136,7 @@ next software build. </p>
 <p>
 When you submit your changes to be included in future JMRI releases, they
 are given a quick check and then merged into the previous content.
-The check is done by using a "diff" tool to find the parts of the
+The check is done by using CVS tools to find the parts of the
 file that have been changed.
 To make that easier, please don't reformat pages or use an 
 editor that moves lines around on its own.
@@ -236,11 +146,9 @@ editor that moves lines around on its own.
 <p>The proper filetype to use for JMRI has the .shtml extension. If you have
 made an .html or .htm file, you can change the extension yourself to .shtml
 (just ignore the warning). Don't use spaces or capital letters in your
-filenames. If you are not changing or adding images, just save the file with a
-variation of its original name, i.e. &ldquo;index_edit.shtml&rdquo; (that's an
-underscore line using the &lt;<span
-style="font-family: monospace">Shift-Hyphen</span>&gt;
-key), save it where you can find it easily, and click the <a
+filenames. If you are not changing or adding images, just save the file with
+its original name, i.e. &ldquo;index.shtml&rdquo;, 
+save it where you can find it easily, and click the <a
 href="#submit">Submit to Sourceforge</a> link below.</p>
 
 <p>If you are submitting more than one file at a time (i.e. the .shtml and some
@@ -252,7 +160,8 @@ Windows XP, right click the folder, then Send To -- Compressed.</p>
 
 <p>Sourceforge is a community of open-source developers and the hard-working
 volunteers for the JMRI software project would welcome your help whether you
-want to register or not. When you click the &ldquo;Submit to Sourceforge&rdquo;
+want to register with SourceForge or not. 
+When you click the &ldquo;Submit to Sourceforge&rdquo;
 link below, you will be taken to a page that has a link called &ldquo;Add new
 Artifact.&rdquo; If you do this without being a logged-in user, you can submit
 your file(s) anonymously. If you plan to do a lot of submissions, we suggest
@@ -268,21 +177,6 @@ you are sending, and then upload your file or compressed folder. </p>
 href="http://sourceforge.net/tracker/?group_id=26788&amp;atid=388315">Submit to
 SourceForge</a>. </p>
 
-<h2 id="summary">Summary</h2>
-
-<p>Using a WYSIWYG (What You See Is What You Get) editor like Amaya will allow
-even a novice to assist the JMRI developers correct and maintain the many pages
-used for both the Website and the Help Pages in the JMRI program releases.
-Keeping it simple is key! You needn't be concerned with how it looks while you
-are working on it, as there is a separate Cascading Style Sheet (a CSS
-document) that will control the layout and formatting of everything. It is
-helpful enough to assist in the re-writing and spell-checking and clarification
-of the existing text, and even more helpful to add pages (and images) you feel
-are needed.</p>
-
-<p></p>
-
-<p></p>
 
 <p><em>This document is located in help/en/html/doc/Technical/webupdate/UpdatingDocs.shtml</em></p>
 
