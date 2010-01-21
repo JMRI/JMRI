@@ -1,5 +1,5 @@
 <!DOCTYPE html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id: UpdatingDocs.shtml,v 1.4 2010-01-21 07:08:17 jacobsen Exp $ -->
+<!-- $Id: UpdatingDocs.shtml,v 1.5 2010-01-21 14:52:49 jacobsen Exp $ -->
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -25,7 +25,7 @@
 <head>
 <!-- Copyright Joseph A. Ellis - TesserAct Studios -->
 <!-- Copyright Bob Blakcwell - afticarr@sympatico.ca 2007 -->
-<!-- $Id: UpdatingDocs.shtml,v 1.4 2010-01-21 07:08:17 jacobsen Exp $ -->
+<!-- $Id: UpdatingDocs.shtml,v 1.5 2010-01-21 14:52:49 jacobsen Exp $ -->
 <title>Updating JMRI Manuals/Documents</title>
 
 <!-- Style -->
@@ -48,7 +48,7 @@
 
 <div class="toc">
 <ul>
-  <li><a href="#update">Updating or Creating a New Document with Amaya</a></li>
+  <li><a href="#update">Updating a Document</a></li>
   <li><a href="#linking">Linking to Images</a></li>
   <li><a href="#screenshots">Creating Images from Screen Shots</a></li>
   <li><a href="#sizing">Sizing and Saving the Images</a></li>
@@ -57,24 +57,42 @@
 </ul>
 </div>
 
-<p>If you don't understand HTML here is a chance to learn a little about it.
-This will not make you a high paid Web Page designer, but should give you
-enough knowledge to help update JMRI documents.</p>
+<p>JMRI's web pages and help screens are written in a simple subset
+of HTML, the language that powers the web.  
+The most important part of the content is the plain text 
+that people will read, and the additional formatting information
+is kept very minimal.  To update a JMRI web page, you edit
+these directly with a simple text editor.
+</p>
 
 <p>Using MSWord or Front Page to edit these .shtml documents is not a good idea
 because they will probably add in their own proprietary formatting codes that
-will mess things up, possibly even to the point of being unusable by JMRI.</p>
+will mess things up, possibly even to the point of being unusable by JMRI. Also,
+don't rename files, or make changes to the formatting information at the
+top or bottom.  Still with making editorial changes to the text in the 
+main body of file, which is really what the readers are paying attention
+to anyway.</p>
 
-<p>To get started, you can drill down inside your CPU's JMRI program files to
+<p>To get started, you can drill down inside your computer's 
+JMRI program files to
 the folder for the DecoderPro manual.
-On a WinXP system, the location for this folder
+On a Windows system, the location for this folder
 looks something like this -- <span
 style="font-family: monospace">C:\ProgramFiles\JMRI\help\en\manual</span>.
 In this folder is a file called <span
 style="font-family: monospace">index.shtml</span>. Open that file with 
 a text editor
-and look around, being careful not to change it unless you have saved a
-re-named version.</p>
+and look around.  If you change something, you can then 
+open the page in the JMRI help system and see how it looks 
+(either keep a backup in case you
+want the original page back,
+or you can reinstall JMRI to restore it)</p>
+
+<p>The most simple changes are just ones to the text itself: 
+To add a sentence or fix a wording, you just do that with the editor.
+To add a break between paragraphs, e.g. to add
+a new paragraph, you insert a "tag" 
+that tells JMRI or a browser to insert a paragraph break:  &lt;p&gt;.
 
 <h2 id="screenshots">Creating Images from Screen Shots</h2>
 <strong>For Windows</strong> 
@@ -178,7 +196,7 @@ href="http://sourceforge.net/tracker/?group_id=26788&amp;atid=388315">Submit to
 SourceForge</a>. </p>
 
 
-<p><em>This document is located in help/en/html/doc/Technical/webupdate/UpdatingDocs.shtml</em></p>
+<p>This document is located in help/en/html/doc/Technical/webupdate/UpdatingDocs.shtml</p>
 
     
 <!--#include virtual="/Footer" -->
