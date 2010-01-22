@@ -12,7 +12,7 @@ package jmri.jmrix.tmcc;
  * are included. These are added during transmission.
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -21,11 +21,13 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     public SerialMessage() {
         super(3);
         setOpCode(0xFE);
+        setTimeout(100);
     }
 
     // copy one
     public  SerialMessage(SerialMessage m) {
         super(m);
+        setTimeout(100);
     }
 
     /**
@@ -35,6 +37,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      */
     public  SerialMessage(String m) {
         super(m);
+        setTimeout(100);
     }
 
     /**
@@ -44,6 +47,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      */
     public  SerialMessage(byte[] a) {
         super(String.valueOf(a));
+        setTimeout(100);
     }
 
     /**
@@ -54,6 +58,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         super(3);
         setOpCode(0xFE);
         putAsWord(value);
+        setTimeout(100);
     }
 
 

@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -134,20 +134,13 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     protected void waitForStartOfReply(DataInputStream istream) throws java.io.IOException {
     }
 
-    /**
-     * Add header to the outgoing byte stream.
-     *
-     * The TMCC implementation adds a TMCC NOP (0xFE, 0xFF, 0x9F)
-     * to the front of every message.  This is empirically
-     * needed to ensure that various functions work reliably.
+    /** 
+     * No header needed
      * @param msg  The output byte stream
      * @return next location in the stream to fill
      */
     protected int addHeaderToOutput(byte[] msg, AbstractMRMessage m) {
-        msg[0] = (byte)0xFE;
-        msg[1] = (byte)0xFF;
-        msg[2] = (byte)0x9F;
-        return 3;
+        return 0;
     }
 
     /**

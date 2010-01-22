@@ -11,7 +11,7 @@ import jmri.jmrix.AbstractThrottle;
  * over 100 are considered long addresses. 
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, 2006
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SerialThrottle extends AbstractThrottle
 {
@@ -131,6 +131,9 @@ public class SerialThrottle extends AbstractThrottle
         }
         
         SerialTrafficController.instance().sendSerialMessage(m, null);
+        SerialTrafficController.instance().sendSerialMessage(m, null);
+        SerialTrafficController.instance().sendSerialMessage(m, null);
+        SerialTrafficController.instance().sendSerialMessage(m, null);
     }
 
     public void setIsForward(boolean forward) {
@@ -144,10 +147,16 @@ public class SerialThrottle extends AbstractThrottle
             m.putAsWord(0x0003+address.getNumber()*128);
         }
         SerialTrafficController.instance().sendSerialMessage(m, null);
+        SerialTrafficController.instance().sendSerialMessage(m, null);
+        SerialTrafficController.instance().sendSerialMessage(m, null);
+        SerialTrafficController.instance().sendSerialMessage(m, null);
         
     }
 
     protected void sendToLayout(int value) {
+        SerialTrafficController.instance().sendSerialMessage(new SerialMessage(value), null);
+        SerialTrafficController.instance().sendSerialMessage(new SerialMessage(value), null);
+        SerialTrafficController.instance().sendSerialMessage(new SerialMessage(value), null);
         SerialTrafficController.instance().sendSerialMessage(new SerialMessage(value), null);
     }
     
