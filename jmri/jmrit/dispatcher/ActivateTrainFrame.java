@@ -38,7 +38,7 @@ import java.util.List;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2009
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 
@@ -88,6 +88,13 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 	private JCheckBox autoRunBox = new JCheckBox(rb.getString("AutoRun"));
 	private JTextField priorityField = new JTextField(6);
 	private JCheckBox resetWhenDoneBox = new JCheckBox(rb.getString("ResetWhenDone"));
+	private JCheckBox delayedStartBox = new JCheckBox(rb.getString("DelayedStart"));
+	private JTextField departureHrField = new JTextField(2);
+	private JTextField departureMinField = new JTextField(2);
+	private JComboBox trainTypeBox = new JComboBox();
+	
+	// Note: See also items related to automatically running trains near the end of this module
+	
 	
 	/**
 	 * Displays a window that allows a new ActiveTrain to be activated
@@ -178,11 +185,6 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 			initiatePane.add(p4);
             JPanel p6 = new JPanel(); 
 			p6.setLayout(new FlowLayout());
-			p6.add(new JLabel(rb.getString("PriorityLabel")+" :"));
-			p6.add(priorityField);
-			priorityField.setToolTipText(rb.getString("PriorityHint"));
-			priorityField.setText("5");    
-			p6.add(new JLabel("     "));
 			p6.add(resetWhenDoneBox);
             resetWhenDoneBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -191,6 +193,32 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
             });
 			resetWhenDoneBox.setToolTipText(rb.getString("ResetWhenDoneBoxHint"));
 			initiatePane.add(p6);
+            JPanel p8 = new JPanel(); 
+			p8.setLayout(new FlowLayout());
+			p8.add(new JLabel(rb.getString("PriorityLabel")+" :"));
+			p8.add(priorityField);
+			priorityField.setToolTipText(rb.getString("PriorityHint"));
+			priorityField.setText("5");    
+			p8.add(new JLabel("     "));
+			p8.add(new JLabel(rb.getString("TrainTypeBoxLabel")));
+			initializeTrainTypeBox();
+			p8.add(trainTypeBox);
+			trainTypeBox.setSelectedIndex(1);
+			trainTypeBox.setToolTipText(rb.getString("TrainTypeBoxHint"));
+			initiatePane.add(p8);
+            JPanel p9 = new JPanel(); 
+			p9.setLayout(new FlowLayout());
+			p9.add(delayedStartBox);
+			delayedStartBox.setToolTipText(rb.getString("DelayedStartHint"));
+			p9.add(new JLabel("   "+rb.getString("DepartureTime")));
+			p9.add(departureHrField);
+			departureHrField.setText("08");
+			departureHrField.setToolTipText(rb.getString("DepartureTimeHrHint"));
+			p9.add(new JLabel(":"));
+			p9.add(departureMinField);
+			departureMinField.setText("00");
+			departureMinField.setToolTipText(rb.getString("DepartureTimeMinHint"));
+			initiatePane.add(p9);			
 			initiatePane.add(new JSeparator());
             JPanel p5 = new JPanel(); 
 			p5.setLayout(new FlowLayout());
@@ -203,11 +231,7 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 			autoRunBox.setToolTipText(rb.getString("AutoRunBoxHint"));
 			initiatePane.add(p5);
 			initiatePane.add(new JSeparator());
-			// items related to auto run of trains  
-			
-			
-			
-			// end of items related to auto run of trains
+			initializeAutoRunItems();
 			initiatePane.add(new JSeparator());
 			JPanel p7 = new JPanel();
 			p7.setLayout(new FlowLayout());
@@ -252,6 +276,18 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		initiateFrame.pack();
 		initiateFrame.setVisible(true);	
 	}
+	private void initializeTrainTypeBox() {
+		trainTypeBox.removeAllItems();
+		trainTypeBox.addItem(rb.getString("None"));
+		trainTypeBox.addItem(rb.getString("LOCAL_PASSENGER"));
+		trainTypeBox.addItem(rb.getString("LOCAL_FREIGHT"));
+		trainTypeBox.addItem(rb.getString("THROUGH_PASSENGER"));
+		trainTypeBox.addItem(rb.getString("THROUGH_FREIGHT"));
+		trainTypeBox.addItem(rb.getString("EXPRESS_PASSENGER"));
+		trainTypeBox.addItem(rb.getString("EXPRESS_FREIGHT"));
+		trainTypeBox.addItem(rb.getString("MOW"));
+		// NOTE: The above must correspond in order and name to definitions in ActiveTrain.java.
+	}	
 	private void handleTransitSelectionChanged(ActionEvent e) {
 		int index = transitSelectBox.getSelectedIndex();
 		if (index<0) return;
@@ -277,11 +313,22 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		}			
 	}
 	private void handleAutoRunClick(ActionEvent e) {
-// here add code for requesting automatic running and remove the message below.
-		javax.swing.JOptionPane.showMessageDialog(initiateFrame, rb
+		if (autoRunBox.isSelected()) {
+			showAutoRunItems();
+		}
+		else {
+			hideAutoRunItems();
+		}
+		initiateFrame.pack();
+// when auto running is ready remove the message below.
+		if (autoRunBox.isSelected()) {
+// djd debugging
+			javax.swing.JOptionPane.showMessageDialog(initiateFrame, rb
 				.getString("NoAutoRunMessage"), rb.getString("InformationTitle"),
 						javax.swing.JOptionPane.INFORMATION_MESSAGE);
-		autoRunBox.setSelected(false);
+			autoRunBox.setSelected(false);
+// end djd debugging
+		}
 	}
 	private void handleStartingBlockSelectionChanged(ActionEvent e) {
 		initializeDestinationBlockCombo();
@@ -314,6 +361,43 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		int endBlockSeq = destinationBlockSeqList.get(index).intValue();
 		boolean autoRun = autoRunBox.isSelected();
 		boolean resetWhenDone = resetWhenDoneBox.isSelected();
+		boolean delayedStart = delayedStartBox.isSelected();
+		int departureTimeHours = 8;
+		try {
+			departureTimeHours = Integer.parseInt(departureHrField.getText());
+			if ( (departureTimeHours<0) || (departureTimeHours>23) ) {
+				JOptionPane.showMessageDialog(initiateFrame,java.text.MessageFormat.format(rb.getString(
+					"BadEntry3"),new Object[] { departureHrField.getText() }), 
+							rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);		
+				log.warn ("Range error in Departure Time Hours field");
+				return;
+			}
+		}
+		catch (Exception ehr) {
+			JOptionPane.showMessageDialog(initiateFrame,java.text.MessageFormat.format(rb.getString(
+					"BadEntry2"),new Object[] { departureHrField.getText() }), 
+							rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);		
+			log.warn ("Conversion exception in departure time hours field");
+			return;
+		}
+		int departureTimeMinutes = 8;
+		try {
+			departureTimeMinutes = Integer.parseInt(departureMinField.getText());
+			if ( (departureTimeMinutes<0) || (departureTimeMinutes>59) ) {
+				JOptionPane.showMessageDialog(initiateFrame,java.text.MessageFormat.format(rb.getString(
+					"BadEntry3"),new Object[] { departureMinField.getText() }), 
+							rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+				log.warn ("Range error in Departure Time Minutes field");
+				return;
+			}
+		}
+		catch (Exception emn) {
+			JOptionPane.showMessageDialog(initiateFrame,java.text.MessageFormat.format(rb.getString(
+					"BadEntry2"),new Object[] { departureMinField.getText() }), 
+							rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);		
+			log.warn ("Conversion exception in departure time minutes field");
+			return;
+		}
 		int tSource = 0;
 		String dccAddress = "unknown";
 		if (_TrainsFromRoster) {
@@ -386,15 +470,30 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 			log.error ("Conversion exception in priority field");
 			return;
 		}
+		int trainType = trainTypeBox.getSelectedIndex();
+		if (autoRunBox.isSelected()) {
+			if (!readAutoRunItems()) {
+				return;
+			}
+		}
 		// create a new Active Train
 		ActiveTrain at = _dispatcher.createActiveTrain ( transitName, trainName, tSource, startBlockName, 
 					startBlockSeq, endBlockName, endBlockSeq, autoRun, dccAddress, priority, 
 						resetWhenDone, true, initiateFrame);
 		if (at==null) return;  // error message sent by createActiveTrain
-		else if (autoRunBox.isSelected()) {
-		
-// here add code to complete creation of an automatically running train
-		
+		at.setDelayedStart(delayedStart);
+		at.setDepartureTimeHr(departureTimeHours);
+		at.setDepartureTimeMin(departureTimeMinutes);
+		at.setTrainType(trainType);
+		if (autoRunBox.isSelected()) {
+			AutoActiveTrain aat = new AutoActiveTrain(at);
+			setAutoRunItems(aat);
+			if (!aat.initialize()) {
+				JOptionPane.showMessageDialog(initiateFrame,java.text.MessageFormat.format(rb.getString(
+						"Error27"),new Object[] { at.getTrainName() }), rb.getString("InformationTitle"),
+							JOptionPane.INFORMATION_MESSAGE);		
+			}
+			_dispatcher.getAutoTrainsFrame().addAutoActiveTrain(aat);
 		}
 		initiateFrame.setVisible(false);
 		initiateFrame.dispose();  // prevent this window from being listed in the Window menu.
@@ -624,9 +723,12 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		setComboBox(destinationBlockBox, info.getDestinationBlockName());
 		priorityField.setText(info.getPriority());
 		resetWhenDoneBox.setSelected(info.getResetWhenDone());
+		delayedStartBox.setSelected(info.getDelayedStart());
+		departureHrField.setText(info.getDepartureTimeHr());
+		departureMinField.setText(info.getDepartureTimeMin());
+		setComboBox(trainTypeBox,info.getTrainType());
 		autoRunBox.setSelected(info.getRunAuto());
-// here add items for auto running		
-		
+		autoTrainInfoToDialog(info);
 	}
 	private TrainInfo dialogToTrainInfo() {
 		TrainInfo info = new TrainInfo();
@@ -647,9 +749,12 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		info.setTrainFromUser(_TrainsFromUser);
 		info.setPriority(priorityField.getText());
 		info.setResetWhenDone(resetWhenDoneBox.isSelected());
+		info.setDelayedStart(delayedStartBox.isSelected());
+		info.setDepartureTimeHr(departureHrField.getText());
+		info.setDepartureTimeMin(departureMinField.getText());
+		info.setTrainType((String)trainTypeBox.getSelectedItem());
 		info.setRunAuto(autoRunBox.isSelected());
-// here add auto run items to Train Info object
-		
+		autoRunItemsToTrainInfo(info);
 		return info;
 	}
 	// Normalizes a suggested xml file name.  Returns null string if a valid name cannot be assembled 
@@ -677,6 +782,156 @@ public class ActivateTrainFrame extends jmri.util.JmriJFrame {
 		}
 		if (!found) box.setSelectedIndex(0);				
 		return found;
+	}
+	
+	/**
+	 * The following are for items that are only for automatic running of ActiveTrains
+	 * They are isolated here to simplify changing them in the future
+	 *		initializeAutoRunItems - initializes the display of auto run items in this window
+	 *		initializeAutoRunValues - initializes the values of auto run items from values in a 
+	 *				saved train info file
+	 *		hideAutoRunItems - hides all auto run items in this window
+	 *		showAutoRunItems - shows all auto run items in this window
+	 *		autoTrainInfoToDialog - gets auto run items from a train info, puts values in items, 
+	 *				and initializes auto run dialog items
+	 *		autoTrainItemsToTrainInfo - copies values of auto run items to train info for saving
+	 *				to a file
+	 *		readAutoRunItems - reads and checks values of all auto run items.
+	 *				returns true if OK, sends appropriate messages and returns false if not OK
+	 *		setAutoRunItems - sets the user entered auto run items in the new AutoActiveTrain
+	 */
+	// auto run items in ActivateTrainFrame
+	private	JPanel pa1 = new JPanel();
+	private JLabel speedFactorLabel = new JLabel(rb.getString("SpeedFactorLabel"));
+	private JTextField speedFactorField = new JTextField(5);
+	private JLabel rampRateLabel = new JLabel(rb.getString("RampRateBoxLabel"));
+	private JComboBox rampRateBox = new JComboBox();
+	private	JPanel pa2 = new JPanel();
+	private JCheckBox resistanceWheelsBox = new JCheckBox(rb.getString("ResistanceWheels"));
+	private	JPanel pa3 = new JPanel();
+	private JLabel trainLengthLabel = new JLabel(rb.getString("MaxTrainLengthLabel"));
+	private JLabel trainLengthOptionalLabel = new JLabel(rb.getString("MaxTrainOptionalLabel"));
+	private JTextField maxTrainLengthField = new JTextField(5);
+	// auto run variables
+	float _speedFactor = 1.0f;
+	int _rampRate = AutoActiveTrain.RAMP_NONE;
+	boolean _resistanceWheels = true;
+	float _maxTrainLength = 18.0f;
+	
+	private void initializeAutoRunItems() {
+		initializeRampCombo();
+		pa1.setLayout(new FlowLayout());
+		pa1.add(speedFactorLabel);
+		pa1.add(speedFactorField);
+		speedFactorField.setToolTipText(rb.getString("SpeedFactorHint"));
+		pa1.add(new JLabel("   "));
+		pa1.add(rampRateLabel);
+		pa1.add(rampRateBox);
+		rampRateBox.setToolTipText(rb.getString("RampRateBoxHint"));
+		initiatePane.add(pa1);
+		pa2.setLayout(new FlowLayout());
+		pa2.add(resistanceWheelsBox);
+		resistanceWheelsBox.setToolTipText(rb.getString("ResistanceWheelsBoxHint"));
+		initiatePane.add(pa2);
+		pa3.setLayout(new FlowLayout());
+		pa3.add(trainLengthLabel);
+		pa3.add(maxTrainLengthField);
+		pa3.add(trainLengthOptionalLabel);
+		maxTrainLengthField.setToolTipText(rb.getString("MaxTrainLengthHint"));
+		initiatePane.add(pa3);
+		hideAutoRunItems();   // initialize with auto run items hidden
+		initializeAutoRunValues();
+	}
+	private void initializeAutoRunValues() {
+		speedFactorField.setText(""+_speedFactor);
+		rampRateBox.setSelectedIndex(_rampRate);
+		resistanceWheelsBox.setSelected(_resistanceWheels);
+		maxTrainLengthField.setText(""+_maxTrainLength);
+	}
+	private void hideAutoRunItems() {
+		pa1.setVisible(false);
+		pa2.setVisible(false);
+		pa3.setVisible(false);
+	}
+	private void showAutoRunItems() {
+		pa1.setVisible(true);
+		pa2.setVisible(true);
+		pa3.setVisible(true);
+	}
+	private void autoTrainInfoToDialog(TrainInfo info) {
+		speedFactorField.setText(info.getSpeedFactor());
+		setComboBox(rampRateBox, info.getRampRate());
+		resistanceWheelsBox.setSelected(info.getResistanceWheels());
+		maxTrainLengthField.setText(info.getMaxTrainLength());
+		if (autoRunBox.isSelected()) {
+			showAutoRunItems();
+		}
+		else {
+			hideAutoRunItems();
+		}
+		initiateFrame.pack();
+	}
+	private void autoRunItemsToTrainInfo(TrainInfo info) {
+		info.setSpeedFactor(speedFactorField.getText());
+		info.setRampRate((String)rampRateBox.getSelectedItem());
+		info.setResistanceWheels(resistanceWheelsBox.isSelected());
+		info.setMaxTrainLength(maxTrainLengthField.getText());
+	}
+	private boolean readAutoRunItems() {
+		boolean success = true;
+		float factor = 1.0f;
+		try {
+			factor = Float.parseFloat(speedFactorField.getText());
+			if ((factor<0.1f) || (factor>1.0f)) {
+				JOptionPane.showMessageDialog(initiateFrame,java.text.MessageFormat.format(rb.getString(
+						"Error29"),new Object[] { speedFactorField.getText() }), rb.getString("ErrorTitle"),
+							JOptionPane.ERROR_MESSAGE);	
+				speedFactorField.setText("1.0");
+				return false;
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(initiateFrame,java.text.MessageFormat.format(rb.getString(
+				"Error30"),new Object[] { speedFactorField.getText() }), rb.getString("ErrorTitle"),
+							JOptionPane.ERROR_MESSAGE);	
+				speedFactorField.setText("1.0");
+				return false;
+		}
+		_speedFactor = factor;
+		_rampRate = rampRateBox.getSelectedIndex();
+		_resistanceWheels = resistanceWheelsBox.isSelected();
+		try {
+			factor = Float.parseFloat(maxTrainLengthField.getText());
+			if ((factor<0.0f) || (factor>10000.0f)) {
+				JOptionPane.showMessageDialog(initiateFrame,java.text.MessageFormat.format(rb.getString(
+						"Error31"),new Object[] { maxTrainLengthField.getText() }), rb.getString("ErrorTitle"),
+							JOptionPane.ERROR_MESSAGE);	
+				maxTrainLengthField.setText("18.0");
+				return false;
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(initiateFrame,java.text.MessageFormat.format(rb.getString(
+				"Error32"),new Object[] { maxTrainLengthField.getText() }), rb.getString("ErrorTitle"),
+							JOptionPane.ERROR_MESSAGE);	
+				maxTrainLengthField.setText("18.0");
+				return false;
+		}
+		_maxTrainLength = factor;
+		return success;
+	}
+	private void setAutoRunItems(AutoActiveTrain aaf) {
+		aaf.setSpeedFactor(_speedFactor);
+		aaf.setRampRate(_rampRate);
+		aaf.setResistanceWheels(_resistanceWheels);
+		aaf.setMaxTrainLength(_maxTrainLength);
+	}
+	private void initializeRampCombo() {
+		rampRateBox.removeAllItems();
+		rampRateBox.addItem(rb.getString("RAMP_NONE")); 
+		rampRateBox.addItem(rb.getString("RAMP_FAST")); 
+		rampRateBox.addItem(rb.getString("RAMP_MEDIUM")); 
+		rampRateBox.addItem(rb.getString("RAMP_MED_SLOW")); 
+		rampRateBox.addItem(rb.getString("RAMP_SLOW"));
+		// Note: the order above must correspond to the numbers in AutoActiveTrain.java
 	}
    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ActivateTrainFrame.class.getName());

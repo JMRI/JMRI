@@ -17,8 +17,8 @@ import java.util.ResourceBundle;
  * AllocatedSections are transient, and are not saved to disk.
  * <P>
  *
- * @author	Dave Duchamp  Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @author	Dave Duchamp  Copyright (C) 2008-2010
+ * @version	$Revision: 1.4 $
  */
 public class AllocatedSection {
 

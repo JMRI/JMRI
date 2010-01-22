@@ -27,7 +27,9 @@ import java.util.ResourceBundle;
  * <P> 
  * Programming Note: public methods may be addressed externally via 
  *			jmri.jmrit.dispatcher.DispatcherFrame.instance().  ...
- *
+ * <P>
+ * Delayed start of manual and automatic trains is enforced by not allocating sections for trains until
+ *			the fast clock reaches the departure time.
  * <P>
  * This file is part of JMRI.
  * <P>
@@ -41,8 +43,8 @@ import java.util.ResourceBundle;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  *
- * @author			Dave Duchamp   Copyright (C) 2008
- * @version			$Revision: 1.11 $
+ * @author			Dave Duchamp   Copyright (C) 2008-2010
+ * @version			$Revision: 1.12 $
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 
@@ -53,6 +55,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		autoTurnouts = new AutoTurnouts(this);
 		if (autoTurnouts==null)
 			log.error("Failed to create AutoTurnouts object when constructing Dispatcher");
+		InstanceManager.sectionManagerInstance().initializeBlockingSensors();
 		atFrame = new ActivateTrainFrame(this);
 		if (atFrame==null)
 			log.error("Failed to create ActivateTrainFrame object when constructing Dispatcher");
@@ -73,11 +76,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	private boolean _ShortActiveTrainNames = false;
 	private boolean _ShortNameInBlock = true;
 	private boolean _ExtraColorForAllocated = false;
-	private boolean _NameInAllocatedBlock = false;	
+	private boolean _NameInAllocatedBlock = false;
+	private boolean _AlwaysSet = true;
 	private int _LayoutScale = Scale.HO;
 			
 	// operational instance variables
 	private ArrayList<ActiveTrain> activeTrainsList = new ArrayList<ActiveTrain>();  // list of ActiveTrain objects
+	private ArrayList<java.beans.PropertyChangeListener> _atListeners = 
+							new ArrayList<java.beans.PropertyChangeListener>();
 	//private ArrayList allTransits = new ArrayList();  // list of Transit objects
 	private TransitManager transitManager = InstanceManager.transitManagerInstance();
 	private ArrayList<AllocationRequest> allocationRequests = new ArrayList<AllocationRequest>();  // List of AllocatedRequest objects
@@ -86,16 +92,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	private AutoTurnouts autoTurnouts = null;
 	private ActivateTrainFrame atFrame = null;
 	private boolean newTrainActive = false;
+	private AutoTrainsFrame _autoTrainsFrame = null;
 			
 	// dispatcher window variables
 	protected JmriJFrame dispatcherFrame=null;
 	private Container contentPane = null;
 	private ActiveTrainsTableModel activeTrainsTableModel = null;
 	private JButton addTrainButton = null;
-	private JButton showAllocatedButton = null;
 	private JButton terminateTrainButton = null;
 	private JButton allocateExtraButton = null;
 	private AllocationRequestTableModel allocationRequestTableModel = null;
+	private AllocatedSectionTableModel allocatedSectionTableModel = null;
 	
 	void initializeOptions() {
 		if (optionsRead) return;
@@ -130,7 +137,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			activeTrainsTableModel = new ActiveTrainsTableModel();
 			JTable activeTrainsTable = new JTable(activeTrainsTableModel);
 			activeTrainsTable.setRowSelectionAllowed(false);
-			activeTrainsTable.setPreferredScrollableViewportSize(new java.awt.Dimension(830,100));
+			activeTrainsTable.setPreferredScrollableViewportSize(new java.awt.Dimension(830,160));
 			TableColumnModel activeTrainsColumnModel = activeTrainsTable.getColumnModel();
 			TableColumn transitColumn = activeTrainsColumnModel.getColumn(ActiveTrainsTableModel.TRANSIT_COLUMN);
 			transitColumn.setResizable(true);
@@ -185,13 +192,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             });
 			addTrainButton.setToolTipText(rb.getString("InitiateTrainButtonHint"));
 			p13.add(new JLabel("   "));
-			p13.add (showAllocatedButton = new JButton(rb.getString("ShowAllocated")+"..."));
-            showAllocatedButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    showAllocatedSections(e);
-                }
-            });
-			showAllocatedButton.setToolTipText(rb.getString("ShowAllocatedButtonHint"));
+// djd debugging
+// add new button here
 			p13.add(new JLabel("   "));
 			p13.add (allocateExtraButton = new JButton(rb.getString("AllocateExtra")+"..."));
             allocateExtraButton.addActionListener(new ActionListener() {
@@ -232,16 +234,16 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			TableColumnModel allocationRequestColumnModel = allocationRequestTable.getColumnModel();
 			TableColumn activeColumn = allocationRequestColumnModel.getColumn(AllocationRequestTableModel.ACTIVE_COLUMN);
 			activeColumn.setResizable(true);
-			activeColumn.setMinWidth(200);
-			activeColumn.setMaxWidth(250);
+			activeColumn.setMinWidth(210);
+			activeColumn.setMaxWidth(260);
 			TableColumn priorityColumn = allocationRequestColumnModel.getColumn(AllocationRequestTableModel.PRIORITY_COLUMN);
 			priorityColumn.setResizable(true);
-			priorityColumn.setMinWidth(70);
-			priorityColumn.setMaxWidth(120);
+			priorityColumn.setMinWidth(60);
+			priorityColumn.setMaxWidth(100);
 			TableColumn sectionColumn = allocationRequestColumnModel.getColumn(AllocationRequestTableModel.SECTION_COLUMN);
 			sectionColumn.setResizable(true);
-			sectionColumn.setMinWidth(130);
-			sectionColumn.setMaxWidth(200);
+			sectionColumn.setMinWidth(140);
+			sectionColumn.setMaxWidth(210);
 			TableColumn secStatusColumn = allocationRequestColumnModel.getColumn(AllocationRequestTableModel.STATUS_COLUMN);
 			secStatusColumn.setResizable(true);
 			secStatusColumn.setMinWidth(100);
@@ -268,59 +270,50 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			JScrollPane allocationRequestTableScrollPane = new JScrollPane(allocationRequestTable);
 			p22.add(allocationRequestTableScrollPane, BorderLayout.CENTER);
 			contentPane.add(p22);
-		}
-        dispatcherFrame.pack();
-        dispatcherFrame.setVisible(true);
-    }
-	
-	// show all allocated Sections
-	JmriJFrame allocatedSectionsFrame = null;
-	AllocatedSectionTableModel allocatedSectionTableModel = null;
-	void showAllocatedSections(ActionEvent e) {
-        if (allocatedSectionsFrame==null) {
-            allocatedSectionsFrame = new JmriJFrame(rb.getString("AllocatedSectionsTitle"));
-            allocatedSectionsFrame.addHelpMenu("package.jmri.jmrit.dispatcher.AllocatedSections", true);
-			Container allocatedSectionsPane = allocatedSectionsFrame.getContentPane();
-            allocatedSectionsPane.setLayout(new BoxLayout(allocatedSectionsFrame.getContentPane(), BoxLayout.Y_AXIS));
-            JPanel p1 = new JPanel(); 
-			p1.setLayout(new FlowLayout());
+			// set up allocated sections table
+			contentPane.add(new JSeparator());
+			JPanel p30 = new JPanel();
+			p30.setLayout(new FlowLayout());
+			p30.add(new JLabel(rb.getString("AllocatedSectionsTitle")));
+			contentPane.add(p30);			
+            JPanel p31 = new JPanel(); 
+			p31.setLayout(new FlowLayout());
 			allocatedSectionTableModel = new AllocatedSectionTableModel();
 			JTable allocatedSectionTable = new JTable(allocatedSectionTableModel);
 			allocatedSectionTable.setRowSelectionAllowed(false);
-			allocatedSectionTable.setPreferredScrollableViewportSize(new java.awt.Dimension(530,100));
+			allocatedSectionTable.setPreferredScrollableViewportSize(new java.awt.Dimension(630,200));
 			TableColumnModel allocatedSectionColumnModel = allocatedSectionTable.getColumnModel();
-			TableColumn activeColumn = allocatedSectionColumnModel.getColumn(AllocatedSectionTableModel.ACTIVE_COLUMN);
-			activeColumn.setResizable(true);
-			activeColumn.setMinWidth(200);
-			activeColumn.setMaxWidth(250);
-			TableColumn sectionColumn = allocatedSectionColumnModel.getColumn(AllocatedSectionTableModel.SECTION_COLUMN);
-			sectionColumn.setResizable(true);
-			sectionColumn.setMinWidth(130);
-			sectionColumn.setMaxWidth(200);
-			TableColumn occupancyColumn = allocatedSectionColumnModel.getColumn(AllocatedSectionTableModel.OCCUPANCY_COLUMN);
-			occupancyColumn.setResizable(true);
-			occupancyColumn.setMinWidth(80);
-			occupancyColumn.setMaxWidth(140);
+			TableColumn activeAColumn = allocatedSectionColumnModel.getColumn(AllocatedSectionTableModel.ACTIVE_COLUMN);
+			activeAColumn.setResizable(true);
+			activeAColumn.setMinWidth(250);
+			activeAColumn.setMaxWidth(350);
+			TableColumn sectionAColumn = allocatedSectionColumnModel.getColumn(AllocatedSectionTableModel.SECTION_COLUMN);
+			sectionAColumn.setResizable(true);
+			sectionAColumn.setMinWidth(200);
+			sectionAColumn.setMaxWidth(350);
+			TableColumn occupancyAColumn = allocatedSectionColumnModel.getColumn(AllocatedSectionTableModel.OCCUPANCY_COLUMN);
+			occupancyAColumn.setResizable(true);
+			occupancyAColumn.setMinWidth(80);
+			occupancyAColumn.setMaxWidth(140);
 			TableColumn releaseColumn = allocatedSectionColumnModel.getColumn(AllocatedSectionTableModel.RELEASEBUTTON_COLUMN);
 			releaseColumn.setCellEditor(new ButtonEditor(new JButton()));
 			releaseColumn.setMinWidth(90);
 			releaseColumn.setMaxWidth(170);
 			releaseColumn.setResizable(false);
-			ButtonRenderer buttonRenderer = new ButtonRenderer();
 			allocatedSectionTable.setDefaultRenderer(JButton.class,buttonRenderer);
-			JButton sampleButton = new JButton(rb.getString("ReleaseButton"));
-			allocatedSectionTable.setRowHeight(sampleButton.getPreferredSize().height);
-			releaseColumn.setPreferredWidth((sampleButton.getPreferredSize().width)+2);
+			JButton sampleAButton = new JButton(rb.getString("ReleaseButton"));
+			allocatedSectionTable.setRowHeight(sampleAButton.getPreferredSize().height);
+			releaseColumn.setPreferredWidth((sampleAButton.getPreferredSize().width)+2);
 			JScrollPane allocatedSectionTableScrollPane = new JScrollPane(allocatedSectionTable);
-			p1.add(allocatedSectionTableScrollPane, BorderLayout.CENTER);
-			allocatedSectionsPane.add(p1);
+			p31.add(allocatedSectionTableScrollPane, BorderLayout.CENTER);
+			contentPane.add(p31);
 		}
-        allocatedSectionsFrame.pack();
-        allocatedSectionsFrame.setVisible(true);
-	}	
+        dispatcherFrame.pack();
+        dispatcherFrame.setVisible(true);
+    }
 	void releaseAllocatedSectionFromTable(int index) {
 		AllocatedSection as = allocatedSections.get(index);
-		releaseAllocatedSection(as);
+		releaseAllocatedSection(as,false);
 	}		
 
 	// allocate extra window variables
@@ -654,8 +647,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			return null;
 		}
 		if (startBlockSectionSequenceNumber<=0) {
-			JOptionPane.showMessageDialog(frame, rb.getString("Error12"), 
-						rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);			
+			if (showErrorMessages) {
+				JOptionPane.showMessageDialog(frame, rb.getString("Error12"), 
+						rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+			}
 		}	
 		else if (startBlockSectionSequenceNumber>t.getMaxSequence()) {
 			if (showErrorMessages) {
@@ -706,6 +701,63 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			log.error("AutoRun requested without a dccAddress when attempting to create an Active Train");
 			return null;
 		}
+		if (autoRun) {
+			if (_autoTrainsFrame==null) {
+				// This is the first automatic active train--check if all required options are present
+				//   for automatic running.  First check for layout editor panel
+				if ( !_UseConnectivity || (_LE == null) ) {
+					if (showErrorMessages) {
+						JOptionPane.showMessageDialog(frame, rb.getString("Error33"), 
+								rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+						log.error("AutoRun requested without a LayoutEditor panel for connectivity.");
+						return null;
+					}
+				}
+				if (!_HasOccupancyDetection) {
+					if (showErrorMessages) {
+						JOptionPane.showMessageDialog(frame, rb.getString("Error35"), 
+								rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+						log.error("AutoRun requested without a LayoutEditor panel for connectivity.");
+						return null;
+					}
+				}
+					
+				// check for auto turnouts when allocating
+// djd debugging
+// add code here
+			}
+			// check/set Transit specific items for automatic running				
+			// validate connectivity for all Sections in this transit
+			int numErrors = t.validateConnectivity(_LE);
+			if (numErrors != 0) {
+				if (showErrorMessages) {
+					JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
+						"Error34"),new Object[] {(""+numErrors) }), 
+								rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+				}
+				return null;
+			}
+			// check/set direction sensors in signal logic for all Sections in this Transit.
+			numErrors = t.checkSignals(_LE);
+			if (numErrors == 0) {
+				t.initializeBlockingSensors();
+			}
+			if (numErrors != 0) {
+				if (showErrorMessages) {
+					JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
+						"Error36"),new Object[] {(""+numErrors) }), 
+								rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+				}
+				return null;
+			}
+			// this train is OK, activate the AutoTrains window, if needed
+			if (_autoTrainsFrame==null) {
+				_autoTrainsFrame = new AutoTrainsFrame(_instance);
+			}
+			else {
+				_autoTrainsFrame.setVisible(true);
+			}
+		}
 		// all information checks out - create	
 		ActiveTrain at = new ActiveTrain(t,trainID,tSource);
 		//if (at==null) {
@@ -718,6 +770,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		//	return null;
 		//}
 		activeTrainsList.add(at);
+		java.beans.PropertyChangeListener listener = null;
+		at.addPropertyChangeListener(listener = new java.beans.PropertyChangeListener() {
+				public void propertyChange(java.beans.PropertyChangeEvent e) {
+					handleActiveTrainChange(e);
+				}
+			});
+		_atListeners.add(listener);
 		t.setState(Transit.ASSIGNED);
 		at.setStartBlock(startBlock);
 		at.setStartBlockSectionSequenceNumber(startBlockSectionSequenceNumber);
@@ -743,6 +802,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			allocatedSectionTableModel.fireTableDataChanged();
 		}
 		return at;
+	}
+	private void handleActiveTrainChange(java.beans.PropertyChangeEvent e) {
+		activeTrainsTableModel.fireTableDataChanged();
 	}
 	private boolean isInAllocatedSection(jmri.Block b) {
 		for (int i = 0; i<allocatedSections.size(); i++) {
@@ -772,14 +834,22 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		// remove any allocated sections
 		for (int k = allocatedSections.size(); k>0;  k--) {
 			if (at == allocatedSections.get(k-1).getActiveTrain()) {
-				releaseAllocatedSection (allocatedSections.get(k-1));
+				releaseAllocatedSection (allocatedSections.get(k-1), true);
 			}
 		}
 		// terminate the train
 		for (int m = activeTrainsList.size(); m>0; m--) {
 			if (at == activeTrainsList.get(m-1)) {
 				activeTrainsList.remove(m-1);
+				at.removePropertyChangeListener(_atListeners.get(m-1));
+				_atListeners.remove(m-1);
 			}
+		}
+		if (at.getAutoRun()) {		
+			AutoActiveTrain aat = at.getAutoActiveTrain();
+			_autoTrainsFrame.removeAutoActiveTrain(aat);
+			aat.terminate();
+			aat.dispose();
 		}
 		at.terminate();
 		at.dispose();
@@ -944,7 +1014,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 				if (_AutoTurnouts) {
 					// automatically set the turnouts for this section before allocation
 					turnoutsOK = autoTurnouts.setTurnoutsInSection(s,ar.getSectionSeqNumber(),nextSection,
-												at,_LE);
+												at,_LE,_AlwaysSet);
 				}
 				else {
 					// check that turnouts are correctly set before allowing allocation to proceed
@@ -1027,9 +1097,21 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	
 	/**
 	 * Releases an allocated Section, and removes it from the Dispatcher 
-	 *   Input consists of the AllocatedSection object returned by "allocateSection"
+	 *   Input consists of the AllocatedSection object (returned by "allocateSection") and
+	 *		whether this release is from a Terminate Train.
 	 */	
-	public void releaseAllocatedSection(AllocatedSection as) {
+	public void releaseAllocatedSection(AllocatedSection as, boolean terminatingTrain) {
+		// check that section is not occupied if not terminating train
+		if ( !terminatingTrain && (as.getSection().getOccupancy() == Section.OCCUPIED) ) {
+			// warn the manual dispatcher that Allocated Section is occupied
+			int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,java.text.MessageFormat.format(
+				rb.getString("Question4"),new Object[] { as.getSectionName() }),rb.getString("WarningTitle"),
+					JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,
+						new Object[]{rb.getString("ButtonYesX"),rb.getString("ButtonNoX")},
+							rb.getString("ButtonNoX"));
+			if (selectedValue == 1) return;   // return without releasing if "No" response
+		}
+		// release the Allocated Section
 		for (int i = allocatedSections.size(); i>0; i--) {
 			if (as == allocatedSections.get(i-1))
 				allocatedSections.remove(i-1);
@@ -1088,6 +1170,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	protected void setScale(int sc) {_LayoutScale = sc;}
 	protected ArrayList<ActiveTrain> getActiveTrainsList() {return activeTrainsList;}
 	protected void newTrainDone() {newTrainActive = false;}
+	protected AutoTrainsFrame getAutoTrainsFrame() {return _autoTrainsFrame;}
 	
 	static DispatcherFrame _instance = null;
     static public DispatcherFrame instance() {

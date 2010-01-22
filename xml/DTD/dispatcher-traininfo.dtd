@@ -1,5 +1,5 @@
 <!-- Defines XML for Dispatcher train info file information -->
-<!-- $Id: dispatcher-traininfo.dtd,v 1.2 2009-03-01 18:58:41 djduchamp Exp $ -->
+<!-- $Id: dispatcher-traininfo.dtd,v 1.3 2010-01-22 13:38:06 djduchamp Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2009.                         -->
 <!--                                                                        -->
@@ -27,6 +27,14 @@
     <!ATTLIST traininfo trainfromuser	   	CDATA #REQUIRED>
     <!ATTLIST traininfo priority        	CDATA #REQUIRED>
     <!ATTLIST traininfo resetwhendone        	CDATA #REQUIRED>
+    <!ATTLIST traininfo delayedstart        	CDATA #REQUIRED>
+    <!ATTLIST traininfo departuretimehr        	CDATA #REQUIRED>
+    <!ATTLIST traininfo departuretimemin        CDATA #REQUIRED>
+    <!ATTLIST traininfo traintype        	CDATA #REQUIRED>
     <!ATTLIST traininfo autorun        		CDATA #REQUIRED>
+    <!ATTLIST traininfo speedfactor        	CDATA #REQUIRED>
+    <!ATTLIST traininfo ramprate        	CDATA #REQUIRED>
+    <!ATTLIST traininfo resistancewheels        CDATA #REQUIRED>
+    <!ATTLIST traininfo maxtrainlength        	CDATA #REQUIRED>
 
 

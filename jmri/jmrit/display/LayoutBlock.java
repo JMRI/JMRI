@@ -57,7 +57,7 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -81,6 +81,7 @@ public class LayoutBlock extends AbstractNamedBean
 	private java.beans.PropertyChangeListener mBlockListener = null;
 	private	int jmriblknum = 1;
 	private boolean useExtraColor = false;
+	private boolean suppressNameUpdate = false;
 
 	// persistent instances variables (saved between sessions)
 	public String blockName = "";
@@ -572,7 +573,7 @@ public class LayoutBlock extends AbstractNamedBean
 			memory = jmri.InstanceManager.memoryManagerInstance().
                             getMemory(memoryName);
 		}
-		if ( (memory!=null) && (block!=null) ) {
+		if ( (memory!=null) && (block!=null) && !suppressNameUpdate ) {
 			// copy block value to memory if there is a value
 			Object val = block.getValue();
 			if (val!=null) val = val.toString();
@@ -592,6 +593,13 @@ public class LayoutBlock extends AbstractNamedBean
 		}
 		mBlockListener = null;
 	}
+	
+	/**
+	 * Sets/resets update of memory name when block goes from occupied to unoccupied or vice versa.
+	 * If set is true, name update is suppressed.
+	 * If set is false, name update works normally.
+	 */
+	public void setSuppressNameUpdate(boolean set) {suppressNameUpdate = set;}
 			
 	// variables for Edit Layout Block pane
 	JmriJFrame editLayoutBlockFrame = null;

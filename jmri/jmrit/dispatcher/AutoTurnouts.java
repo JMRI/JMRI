@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008-2009
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 
 public class AutoTurnouts {
@@ -58,7 +58,7 @@ public class AutoTurnouts {
 	 */
 	protected boolean checkTurnoutsInSection(Section s, int seqNum, Section nextSection,
 				ActiveTrain at, LayoutEditor le) {
-		return turnoutUtil(s, seqNum, nextSection, at, le, false);
+		return turnoutUtil(s, seqNum, nextSection, at, le, false, false);
 	}
 	/** 
 	 * Set all turnouts for travel in the designated Section to the next Section.
@@ -79,8 +79,8 @@ public class AutoTurnouts {
 	 * NOTE: This method requires use of the connectivity stored in a Layout Editor panel.
 	 */
 	protected boolean setTurnoutsInSection(Section s, int seqNum, Section nextSection,
-				ActiveTrain at, LayoutEditor le) {
-		return turnoutUtil(s, seqNum, nextSection, at, le, true);
+				ActiveTrain at, LayoutEditor le, boolean alwaysSet) {
+		return turnoutUtil(s, seqNum, nextSection, at, le, alwaysSet, true);
 	}
 	/**
 	 * Internal method implementing the above two methods
@@ -89,7 +89,7 @@ public class AutoTurnouts {
 	 *	 what it finds. 
 	 */
 	private boolean turnoutUtil(Section s, int seqNum, Section nextSection,
-				ActiveTrain at, LayoutEditor le, boolean set) {
+				ActiveTrain at, LayoutEditor le, boolean alwaysSet, boolean set) {
 		// validate input and initialize
 		Transit tran = at.getTransit();
 		if ( (s==null) || (seqNum>tran.getMaxSequence()) || (!tran.containsSection(s)) || (le==null) ) {
@@ -169,7 +169,10 @@ public class AutoTurnouts {
 				Turnout to = turnoutList.get(i).getTurnout();
 				int setting = settingsList.get(i).intValue();
 				// test current setting
-				if (to.getKnownState()!=setting) {
+				if (alwaysSet) {
+					to.setCommandedState(setting);
+				}
+				else if (to.getKnownState()!=setting) {
 					// turnout is not set correctly
 					if (set) {
 						// setting has been requested, is Section free and Block unoccupied

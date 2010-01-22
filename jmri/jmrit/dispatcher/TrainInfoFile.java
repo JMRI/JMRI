@@ -33,7 +33,7 @@ import org.jdom.Element;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2009
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 
 public class TrainInfoFile extends jmri.jmrit.XmlFile {
@@ -137,14 +137,39 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
 						if (traininfo.getAttribute("resetwhendone").getValue().equals("no"))
 							tInfo.setResetWhenDone(false);
 					}
+					if (traininfo.getAttribute("delayedstart")!=null) {
+						tInfo.setDelayedStart(true);
+						if (traininfo.getAttribute("delayedstart").getValue().equals("no"))
+							tInfo.setDelayedStart(false);
+					}
+					if (traininfo.getAttribute("departuretimehr")!=null) {
+						tInfo.setDepartureTimeHr(traininfo.getAttribute("departuretimehr").getValue());
+					}
+					if (traininfo.getAttribute("departuretimemin")!=null) {
+						tInfo.setDepartureTimeMin(traininfo.getAttribute("departuretimemin").getValue());
+					}
+					if (traininfo.getAttribute("traintype")!=null) {
+						tInfo.setTrainType(traininfo.getAttribute("traintype").getValue());
+					}
 					if (traininfo.getAttribute("autorun")!=null) {
 						tInfo.setRunAuto(true);
 						if (traininfo.getAttribute("autorun").getValue().equals("no"))
 							tInfo.setRunAuto(false);
 					}
-					if (tInfo.getRunAuto()) {
-						// here retrieve items related only to automatically run trains
-						
+					// here retrieve items related only to automatically run trains if present
+					if (traininfo.getAttribute("speedfactor")!=null) {
+						tInfo.setSpeedFactor(traininfo.getAttribute("speedfactor").getValue());
+					}
+					if (traininfo.getAttribute("ramprate")!=null) {
+						tInfo.setRampRate(traininfo.getAttribute("ramprate").getValue());
+					}
+					if (traininfo.getAttribute("resistancewheels")!=null) {
+						tInfo.setResistanceWheels(true);
+						if (traininfo.getAttribute("resistancewheels").getValue().equals("no"))
+							tInfo.setResistanceWheels(false);
+					}
+					if (traininfo.getAttribute("maxtrainlength")!=null) {
+						tInfo.setMaxTrainLength(traininfo.getAttribute("maxtrainlength").getValue());
 					}
 				}
 			}
@@ -180,7 +205,16 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
 		traininfo.setAttribute("trainfromuser", ""+(tf.getTrainFromUser()?"yes":"no"));
 		traininfo.setAttribute("priority", tf.getPriority());
 		traininfo.setAttribute("resetwhendone", ""+(tf.getResetWhenDone()?"yes":"no"));
+		traininfo.setAttribute("delayedstart", ""+(tf.getDelayedStart()?"yes":"no"));
+		traininfo.setAttribute("departuretimehr", tf.getDepartureTimeHr());
+		traininfo.setAttribute("departuretimemin", tf.getDepartureTimeMin());
+		traininfo.setAttribute("traintype", tf.getTrainType());
 		traininfo.setAttribute("autorun", ""+(tf.getRunAuto()?"yes":"no"));
+		// here save items related to automatically running active trains
+		traininfo.setAttribute("speedfactor", tf.getSpeedFactor());
+		traininfo.setAttribute("ramprate", tf.getRampRate());
+		traininfo.setAttribute("resistancewheels", ""+(tf.getResistanceWheels()?"yes":"no"));
+		traininfo.setAttribute("maxtrainlength", tf.getMaxTrainLength());		
 
 		root.addContent(traininfo);
 			

@@ -39,6 +39,7 @@ import java.util.ResourceBundle;
  *                  at industries.
  *       READY - Train has completed WORKING, and is awaiting a restart - dispatcher clearance
  *                  to resume running.
+ *       STOPPED - Train was stopped by the dispatcher. Dispatcher must resume. (automatic trains only)
  *       DONE -  Train has completed its transit of the layout and is ready to be terminated 
  *                  by the dispatcher.
  * The ActiveTrain status should maintained (setStatus) by the running class, or if running 
@@ -78,7 +79,7 @@ import java.util.ResourceBundle;
  * <P>
  *
  * @author	Dave Duchamp  Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class ActiveTrain {
 
@@ -103,15 +104,28 @@ public class ActiveTrain {
 	public static final int WAITING = 0x04;   // waiting for a section allocation
 	public static final int WORKING = 0x08;   // actively working
 	public static final int READY = 0x10;	  // completed work, waiting for restart
+	public static final int STOPPED = 0x20;   // stopped by the dispatcher (auto trains only)
 	public static final int DONE = 0x40;	  // completed its transit
-    
+	
+	/**
+	 * Constants representing Type of ActiveTrains. 
+	 */
+	public static final int NONE = 0x00;               // no train type defined
+	public static final int LOCAL_PASSENGER = 0x01;    // low priority local passenger train 
+	public static final int LOCAL_FREIGHT =	0x02;      // low priority freight train performing local tasks 
+	public static final int THROUGH_PASSENGER = 0x03;  // normal priority through passenger train
+	public static final int THROUGH_FREIGHT = 0x04;    // normal priority through freight train 
+	public static final int EXPRESS_PASSENGER = 0x05;  // high priority passenger train    
+	public static final int EXPRESS_FREIGHT = 0x06;    // high priority freight train 
+	public static final int MOW = 0x07;			       // low priority maintenance of way train  
+
 	/** 
 	 * Constants representing the mode of running of the Active Train
 	 * The mode is set when the Active Train is created. The mode may be switched during a 
 	 *    run.
 	 */
-	public static final int AUTOMATIC = 0x02;   // requires mAutoRun to be "true"
-	public static final int MANUAL = 0x04;    // requires mAutoRun to be "true"
+	public static final int AUTOMATIC = 0x02;   // requires mAutoRun to be "true" (auto trains only)
+	public static final int MANUAL = 0x04;    // requires mAutoRun to be "true" (auto trains only)
 	public static final int DISPATCHED = 0x08;
 	
 	/**
@@ -127,6 +141,7 @@ public class ActiveTrain {
 	private int mTrainSource = ROSTER;
 	private int mStatus = WAITING;
 	private int mMode = DISPATCHED;
+	private AutoActiveTrain mAutoActiveTrain = null;
 	private ArrayList<AllocatedSection> mAllocatedSections = new ArrayList<AllocatedSection>();
 	private jmri.Section mLastAllocatedSection = null;
 	private jmri.Section mSecondAllocatedSection = null;
@@ -142,7 +157,11 @@ public class ActiveTrain {
 	private boolean mAutoRun = false;
 	private String mDccAddress = "";
 // djd debugging
-	private boolean mResetWhenDone = true;   
+	private boolean mResetWhenDone = true;
+	boolean mDelayedStart = false;
+	int mDepartureTimeHr = 8;
+	int mDepartureTimeMin = 0;
+	int mTrainType = LOCAL_FREIGHT;
 	
 	/**
      * Access methods 
@@ -164,7 +183,8 @@ public class ActiveTrain {
 	public int getTrainSource() { return mTrainSource; }
 	public int getStatus() { return mStatus; }
 	public void setStatus(int status) {  
-		if ( (status==RUNNING) || (status==PAUSED) || (status==WAITING) || (status==WORKING) ) {
+		if ( (status==RUNNING) || (status==PAUSED) || (status==WAITING) || (status==WORKING) ||
+					(status==READY) || (status==STOPPED) || (status==DONE)) {
 			int old = mStatus;
 			mStatus = status;
 			firePropertyChange("status", new Integer(old), new Integer(mStatus));
@@ -183,8 +203,35 @@ public class ActiveTrain {
 			return rb.getString("WORKING");
 		else if (mStatus==READY) 
 			return rb.getString("READY");
+		else if (mStatus==STOPPED) 
+			return rb.getString("STOPPED");
 		else if (mStatus==DONE) 
 			return rb.getString("DONE");
+		return ("");
+	}
+	public boolean getDelayedStart() {return mDelayedStart;}
+	public void setDelayedStart(boolean set) {mDelayedStart = set;}
+	public int getDepartureTimeHr() {return mDepartureTimeHr;}
+	public void setDepartureTimeHr(int hr) {mDepartureTimeHr = hr;}
+	public int getDepartureTimeMin() {return mDepartureTimeMin;}
+	public void setDepartureTimeMin(int min) {mDepartureTimeMin = min;}
+	public void setTrainType(int type) {mTrainType = type;}
+	public int getTrainType() {return mTrainType;}	
+	public String getTrainTypeText() {
+		if (mTrainType==LOCAL_FREIGHT) 
+			return rb.getString("LOCAL_FREIGHT");
+		else if (mTrainType==LOCAL_PASSENGER) 
+			return rb.getString("LOCAL_PASSENGER");
+		else if (mTrainType==THROUGH_FREIGHT) 
+			return rb.getString("THROUGH_FREIGHT");
+		else if (mTrainType==THROUGH_PASSENGER) 
+			return rb.getString("THROUGH_PASSENGER");
+		else if (mTrainType==EXPRESS_FREIGHT) 
+			return rb.getString("EXPRESS_FREIGHT");
+		else if (mTrainType==EXPRESS_PASSENGER) 
+			return rb.getString("EXPRESS_PASSENGER");
+		else if (mTrainType==MOW) 
+			return rb.getString("MOW");
 		return ("");
 	}
 	public  int getMode() { return mMode; }
@@ -206,7 +253,9 @@ public class ActiveTrain {
 		else if (mMode==DISPATCHED) 
 			return rb.getString("DISPATCHED");
 			return ("");
-	}	
+	}
+	public void setAutoActiveTrain(AutoActiveTrain aat) {mAutoActiveTrain=aat;}
+	public AutoActiveTrain getAutoActiveTrain() {return mAutoActiveTrain;}
 	public void addAllocatedSection (AllocatedSection as) {
 		if (as!=null) {
 			mAllocatedSections.add(as);
@@ -225,9 +274,22 @@ public class ActiveTrain {
 			if (as.getSequence()==2) {
 				mSecondAllocatedSection = as.getSection();
 			}
+			if (DispatcherFrame.instance().getNameInAllocatedBlock()) {
+				as.getSection().setNameInBlocks(mTrainName);
+				as.getSection().suppressNameUpdate(true);
+			}
+			if (DispatcherFrame.instance().getExtraColorForAllocated()) {
+				as.getSection().setAlternateColor(true);
+			}
+			refreshPanel();
 		}
 		else {
 			log.error("Null Allocated Section reference in addAllocatedSection of ActiveTrain");
+		}
+	}
+	private void refreshPanel() {
+		if (DispatcherFrame.instance().getLayoutEditor()!=null) {
+			DispatcherFrame.instance().getLayoutEditor().redrawPanel();
 		}
 	}
 	public void removeAllocatedSection (AllocatedSection as) {
@@ -244,6 +306,12 @@ public class ActiveTrain {
 			return;
 		}
 		mAllocatedSections.remove(index);
+		if (DispatcherFrame.instance().getNameInAllocatedBlock()) {
+			as.getSection().clearNameInUnoccupiedBlocks();
+			as.getSection().suppressNameUpdate(false);
+		}
+		as.getSection().setAlternateColor(false);
+		refreshPanel();
 		if (as.getSection() == mLastAllocatedSection) {
 			mLastAllocatedSection = null;
 			if (mAllocatedSections.size()>0) {
