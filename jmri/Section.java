@@ -100,7 +100,7 @@ import java.beans.PropertyChangeListener;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class Section extends AbstractNamedBean
     implements  java.io.Serializable {
@@ -147,6 +147,7 @@ public class Section extends AbstractNamedBean
      */
 	private int mState = FREE;
 	private int mOccupancy = UNOCCUPIED;
+	private boolean mOccupancyInitialized = false;
 	private Block mFirstBlock = null;
 	private Block mLastBlock = null;
 	private Sensor mForwardBlockingSensor = null;
@@ -207,7 +208,23 @@ public class Section extends AbstractNamedBean
 	/**
 	 * Query the occupancy of a section
 	 */
-	public int getOccupancy() { return mOccupancy; }
+	public int getOccupancy() { 
+		if (mOccupancyInitialized) return mOccupancy;
+		// initialize occupancy
+		mOccupancy = UNOCCUPIED;
+		for (int i=0;i<mBlockEntries.size();i++) {
+			if (mBlockEntries.get(i).getState() == OCCUPIED) {
+				mOccupancy = OCCUPIED;
+			}
+			else if (mBlockEntries.get(i).getState() != UNOCCUPIED) {
+				log.warn("Occupancy of block "+mBlockEntries.get(i).getSystemName()+
+							" is not OCCUPIED or UNOCCUPIED in Section - "+getSystemName());
+				return (mBlockEntries.get(i).getState());
+			}
+		}
+		mOccupancyInitialized = true;
+		return mOccupancy;
+	}
 	private void setOccupancy(int occupancy) {
         int old = mOccupancy;
         mOccupancy = occupancy;
@@ -226,7 +243,7 @@ public class Section extends AbstractNamedBean
 			mForwardBlockingSensor = InstanceManager.sensorManagerInstance().
 												getSensor(mForwardBlockingSensorName);
 			if (mForwardBlockingSensor==null) {
-				log.error("Missing Sensor - "+mForwardBlockingSensorName+" - when initializing Section - "+
+				log.warn("Missing Sensor - "+mForwardBlockingSensorName+" - when initializing Section - "+
 									getSystemName());
 			}
 		}
@@ -1164,7 +1181,7 @@ public class Section extends AbstractNamedBean
 							sh = cUtil.getSignalHeadAtAnchor(p, cBlock, true);
 							Block otherBlock = ((p.getConnect1()).getLayoutBlock()).getBlock();
 							if (otherBlock==cBlock) otherBlock = ((p.getConnect2()).getLayoutBlock()).getBlock();
-							if (getBlockSequenceNumber(cBlock) > getBlockSequenceNumber(otherBlock)) { 
+							if (getBlockSequenceNumber(cBlock) < getBlockSequenceNumber(otherBlock)) { 
 								direction = EntryPoint.REVERSE;
 							}
 							else {
@@ -1411,23 +1428,22 @@ public class Section extends AbstractNamedBean
 								c2Head = InstanceManager.signalHeadManagerInstance().getSignalHead(hName);
 							}
 							int direction = getDirectionStandardTurnout(t,cUtil);
-							//int altDirection = EntryPoint.FORWARD;
-							//if (direction==EntryPoint.FORWARD) altDirection = EntryPoint.REVERSE;
+							int altDirection = EntryPoint.FORWARD;
+							if (direction==EntryPoint.FORWARD) altDirection = EntryPoint.REVERSE;
 							if (direction!=EntryPoint.UNKNOWN)  {
 								if (t.getLayoutBlock().getBlock()==cBlock) {
-// the following are commented out because not doing so will overflow the number of sensors allowed by SSL's																
-//									// turnout is in this block, set direction sensors on all signal heads
-//									// Note: need allocation to traverse this turnout
-//									if (!checkDirectionSensor(b1Head, altDirection, 
-//													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
-//									if (b2Head!=null) 
-//										if (!checkDirectionSensor(b2Head, altDirection, 
-//													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
-//									if (!checkDirectionSensor(c1Head, altDirection, 
-//													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
-//									if (c2Head!=null) 
-//										if (!checkDirectionSensor(c2Head, altDirection, 
-//													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+									// turnout is in this block, set direction sensors on all signal heads
+									// Note: need allocation to traverse this turnout
+									if (!checkDirectionSensor(b1Head, altDirection, 
+													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+									if (b2Head!=null) 
+										if (!checkDirectionSensor(b2Head, altDirection, 
+													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+									if (!checkDirectionSensor(c1Head, altDirection, 
+													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
+									if (c2Head!=null) 
+										if (!checkDirectionSensor(c2Head, altDirection, 
+													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
 								}
 								else {
 									// turnout is not in this block, switch to heads of linked turnout
@@ -1854,9 +1870,67 @@ public class Section extends AbstractNamedBean
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * This function sets/resets the display to use alternate color for unoccupied blocks in this section.
+	 *    If 'set' is true, the alternate unoccupied color will be used.
+	 *    If 'set' is false, the unoccupied color will be used.
+	 *    If Layout Editor panel is not present, Layout Blocks will not be present, and nothing will be set.
+	 */
+	public void setAlternateColor(boolean set) {
+		for (int i=0; i<mBlockEntries.size(); i++) {
+			Block b = mBlockEntries.get(i);
+			LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(b.getUserName());
+			if (lb!=null) lb.setUseExtraColor(set);
+		}
 	}		
 	
-						
+	/**
+	 * This function sets a string in the memories associated with blocks in this section.
+	 *    If Layout Editor panel is not present, Layout Blocks will not be present, and nothing will be set.
+	 */
+	public void setNameInBlocks(String name) {
+		for (int i=0; i<mBlockEntries.size(); i++) {
+			Block b = mBlockEntries.get(i);
+			LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(b.getUserName());
+			if (lb!=null) {
+				Memory m = lb.getMemory();
+				if (m!=null) m.setValue(name);
+			}			
+		}
+	}
+		
+	/**
+	 * This function clears the string in the memories associated with unoccupied blocks in this section.
+	 *    If Layout Editor panel is not present, Layout Blocks will not be present, and nothing will be set.
+	 */
+	public void clearNameInUnoccupiedBlocks() {
+		for (int i=0; i<mBlockEntries.size(); i++) {
+			Block b = mBlockEntries.get(i);
+			if (b.getState()==Block.UNOCCUPIED) {
+				LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(b.getUserName());
+				if (lb!=null) {
+					Memory m = lb.getMemory();
+					if (m!=null) m.setValue("  ");
+				}			
+			}
+		}
+	}
+		
+	/**
+	 * This function suppresses the update of a memory variable when a block goes to unoccupied, so the 
+	 *	text set above doesn't get wiped out.
+	 */
+	public void suppressNameUpdate(boolean set) {
+		for (int i=0; i<mBlockEntries.size(); i++) {
+			Block b = mBlockEntries.get(i);
+			LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(b.getUserName());
+			if (lb!=null) lb.setSuppressNameUpdate(set);
+		}
+	}
+		
+		
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Section.class.getName());
 	
 }

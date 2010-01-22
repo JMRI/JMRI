@@ -35,7 +35,7 @@ import jmri.managers.AbstractManager;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SectionManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -183,6 +183,26 @@ public class SectionManager extends AbstractManager
 		}
 		return numErrors;
 	}
+	
+	/**
+	 * Initialize all blocking sensors that exist - sets them to 'ACTIVE'
+	 */
+	public void initializeBlockingSensors () {
+		List<String> list = getSystemNameList();
+		for (int i = 0; i<list.size(); i++) {
+			Section s = getBySystemName(list.get(i));
+			try {
+				if (s.getForwardBlockingSensor()!=null) {
+					s.getForwardBlockingSensor().setState(Sensor.ACTIVE);
+				}
+				if (s.getReverseBlockingSensor()!=null) {
+					s.getReverseBlockingSensor().setState(Sensor.ACTIVE);
+				}
+			} catch (jmri.JmriException reason) {
+				log.error ("Exception when initializing blocking Sensors for Section "+s.getSystemName());
+			}
+		}
+	}		
 		 	
     static SectionManager _instance = null;
     static public SectionManager instance() {

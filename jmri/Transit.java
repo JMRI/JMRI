@@ -50,7 +50,7 @@ import jmri.implementation.AbstractNamedBean;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class Transit extends AbstractNamedBean
 					implements java.io.Serializable {
@@ -347,16 +347,36 @@ public class Transit extends AbstractNamedBean
 	 *	   Active Train completes the Transit, can it automatically be set up to start again?
 	 *  To be resetable, the first Section and the last Section must be the same Section, and
 	 *	   the first and last Sections must be defined to run in the same direction.
+	 *  If the last Section is an alternate Section, the previous Section is tested. However,
+	 *	   if the Active Train does not complete it's Transit in the same Section it started
+	 *     in, the restart will not take place.
 	 * Returns 'true' if continuous running is possible, returns 'false' otherwise.
 	 */
 	public boolean canBeResetWhenDone() {
 		TransitSection firstTS = mTransitSectionList.get(0);
-		TransitSection lastTS = mTransitSectionList.get(mTransitSectionList.size()-1);
-		if (firstTS.getSection() != lastTS.getSection())
-			return false;
+		int lastIndex = mTransitSectionList.size()-1;
+		TransitSection lastTS = mTransitSectionList.get(lastIndex);
+		boolean OK = false;
+		while (!OK) {
+			if (firstTS.getSection() != lastTS.getSection()) {
+				if ( lastTS.isAlternate() && (lastIndex>1) ) {
+					lastIndex --;
+					lastTS = mTransitSectionList.get(lastIndex);
+				}
+				else {
+					log.warn("Section mismatch "+(firstTS.getSection()).getSystemName()+" "+
+						(lastTS.getSection()).getSystemName());
+					return false;
+				}
+			}
+			OK = true;
+		}
 		// same Section, check direction
-		if (firstTS.getDirection() != lastTS.getDirection())
-			return false;		
+		if (firstTS.getDirection() != lastTS.getDirection()) {
+			log.warn("Direction mismatch "+(firstTS.getSection()).getSystemName()+" "+
+						(lastTS.getSection()).getSystemName());
+			return false;
+		}
 		return true;
 	}
 	
@@ -369,22 +389,84 @@ public class Transit extends AbstractNamedBean
 	 * Returns "true" if everything is OK. Sends message to the user if a signal head is missing,
 	 *		and returns 'false'. Quits looking after finding the first missing signal head.
 	 */
-	public boolean checkSignals(JmriJFrame frame, LayoutEditor panel) {
-// djd debugging
-// add code here	
-		return true;
+	public int checkSignals(LayoutEditor panel) {
+		if (panel==null) {
+			log.error("checkSignals called with a null LayoutEditor panel");
+			return -1;
+		}
+		int numErrors = 0;
+		for (int i = 0; i<mTransitSectionList.size(); i++) {
+			int n = mTransitSectionList.get(i).getSection().placeDirectionSensors(panel);
+			numErrors = numErrors + n;
+		}
+		return numErrors;
 	}
 	
 	/**
 	 * Validates connectivity through the Transit.
-	 * Returns "true" if everything is OK. Sends message to the user if break in connectivity 
-	 *		is detected, ,and returns 'false'. Quits looking after finding the first problem.
+	 * Returns the number of errors found. Sends log messages detailing the errors if break 
+	 *      in connectivity is detected. Checks all Sections before quitting.
 	 */
-	public boolean validateConnectivity(JmriJFrame frame, LayoutEditor panel) {
-// djd debugging
-// add code here	
-		return true;
+	public int validateConnectivity(LayoutEditor panel) {
+		if (panel==null) {
+			log.error("validateConnectivity called with a null LayoutEditor panel");
+			return -1;
+		}
+		int numErrors = 0;
+		for (int i = 0; i<mTransitSectionList.size(); i++) {
+			String s = mTransitSectionList.get(i).getSection().validate(panel);
+			if (!s.equals("")) {
+				log.error(s);
+				numErrors ++;
+			}
+		}
+		return numErrors;
 	}
+	
+	/**
+	 * Initializes blocking sensors for Sections in this Transit
+	 *    This should be done before any Sections are allocated for this Transit.
+	 *    Only Sections that are FREE are initialized, so as not to interfere with running
+	 *			active trains.
+	 *    If any Section does not have blocking sensors, warning messages are logged.
+	 *	  Returns 0 if no errors, number of errors otherwise.
+	 */
+	public int initializeBlockingSensors() {
+		int numErrors = 0;
+		for (int i = 0; i<mTransitSectionList.size(); i++) {
+			Section s = mTransitSectionList.get(i).getSection();
+			try {
+				if (s.getForwardBlockingSensor()!=null) {
+					if (s.getState() == Section.FREE) {
+						s.getForwardBlockingSensor().setState(Sensor.ACTIVE);
+					}
+				}
+				else {
+					log.warn("Missing forward blocking sensor for section "+s.getSystemName());
+					numErrors ++;
+				}
+			} catch (jmri.JmriException reason) {
+				log.error ("Exception when initializing forward blocking Sensor for Section "+s.getSystemName());
+				numErrors ++;
+			}
+			try {
+				if (s.getReverseBlockingSensor()!=null) {
+					if (s.getState() == Section.FREE) {
+						s.getReverseBlockingSensor().setState(Sensor.ACTIVE);
+					}
+				}
+				else {
+					log.warn("Missing reverse blocking sensor for section "+s.getSystemName());
+					numErrors ++;
+				}
+			} catch (jmri.JmriException reason) {
+				log.error ("Exception when initializing reverse blocking Sensor for Section "+s.getSystemName());
+				numErrors ++;
+			}
+		}
+		return numErrors;
+	}
+		
 	    
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Transit.class.getName());
 	
