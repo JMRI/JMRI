@@ -33,7 +33,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *   method. 
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class ConnectivityUtil 
@@ -667,16 +667,17 @@ public class ConnectivityUtil
 			else if ( (t.getConnectD()!=null) && (((TrackSegment)t.getConnectD()).getLayoutBlock()==lBlock) ) 
 				list.add(t);
 		}
+// djd debugging
 // debugging code - comment out when not debugging something involving this method
 //		String txt = "Turnouts for Block "+block.getUserName()+" - ";
 //		for (int k = 0; k<list.size(); k++) {
 //			if (k>0) txt = txt+", ";
-//			if ( ((LayoutTurnout)list.get(k)).getTurnout()!=null)
-//				txt = txt+((LayoutTurnout)list.get(k)).getTurnout().getSystemName();
+//			if ( (list.get(k)).getTurnout()!=null)
+//				txt = txt+(list.get(k)).getTurnout().getSystemName();
 //			else txt = txt+"???";
 //		}
 //		log.error(txt);
-// end debugging
+// end debugging code
 		return list;
 	}
 	
@@ -932,7 +933,8 @@ public class ConnectivityUtil
 			if ( ( (bbLogic.getSensor1()!=null) && (bbLogic.getSensor1()).equals(name) ) ||
 					( (bbLogic.getSensor2()!=null) && (bbLogic.getSensor2()).equals(name) ) ||
 					( (bbLogic.getSensor3()!=null) && (bbLogic.getSensor3()).equals(name) ) ||
-					( (bbLogic.getSensor4()!=null) && (bbLogic.getSensor4()).equals(name) ) ) {
+					( (bbLogic.getSensor4()!=null) && (bbLogic.getSensor4()).equals(name) ) ||
+					( (bbLogic.getSensor5()!=null) && (bbLogic.getSensor5()).equals(name) ) ) {
 				bbLogic.retain();
 				bbLogic.start();
 				return true;
@@ -941,6 +943,7 @@ public class ConnectivityUtil
 			else if (bbLogic.getSensor2()==null) bbLogic.setSensor2(name);
 			else if (bbLogic.getSensor3()==null) bbLogic.setSensor3(name);
 			else if (bbLogic.getSensor4()==null) bbLogic.setSensor4(name);
+			else if (bbLogic.getSensor5()==null) bbLogic.setSensor5(name);
 			else {
 				log.error("Error - could not add sensor to SSL for signal head "+sh.getSystemName()+
 										" because there is no room in the SSL.");								
@@ -1032,6 +1035,8 @@ public class ConnectivityUtil
 				bbLogic.setSensor3(null);
 			if ( (bbLogic.getSensor4()!=null) && (bbLogic.getSensor4()).equals(name) ) 
 				bbLogic.setSensor4(null);
+			if ( (bbLogic.getSensor5()!=null) && (bbLogic.getSensor5()).equals(name) ) 
+				bbLogic.setSensor5(null);
 			if (bbLogic.getMode()==BlockBossLogic.FACING) {
 				if ( (bbLogic.getWatchedSensor1()!=null) && (bbLogic.getWatchedSensor1()).equals(name) )
 					bbLogic.setWatchedSensor1(null);

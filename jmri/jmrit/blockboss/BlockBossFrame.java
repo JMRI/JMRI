@@ -30,7 +30,7 @@ import javax.swing.*;
  * The individual items all share data models to simplify the logic.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  *              
  *              Revisions to add facing point sensors, approach lighting,
  *              limited speed, changed layout, and tool tips.  
@@ -46,6 +46,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     JTextField sSensorField2        = new JTextField(6);
     JTextField sSensorField3        = new JTextField(6);
     JTextField sSensorField4        = new JTextField(6);
+    JTextField sSensorField5        = new JTextField(6);
     JTextField sNextSignalField1    = new JTextField(6);
     JTextField sNextSignalField1Alt = new JTextField(6);
     JCheckBox sLimitBox;
@@ -58,6 +59,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     JTextField tmSensorField2           = new JTextField(6);
     JTextField tmSensorField3           = new JTextField(6);
     JTextField tmSensorField4           = new JTextField(6);
+    JTextField tmSensorField5           = new JTextField(6);
     JTextField tmProtectTurnoutField    = new JTextField(6);
     JTextField tmNextSignalField1       = new JTextField(6);
     JTextField tmNextSignalField1Alt    = new JTextField(6);
@@ -71,6 +73,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     JTextField tdSensorField2           = new JTextField(6);
     JTextField tdSensorField3           = new JTextField(6);
     JTextField tdSensorField4           = new JTextField(6);
+    JTextField tdSensorField5           = new JTextField(6);
     JTextField tdProtectTurnoutField    = new JTextField(6);
     JTextField tdNextSignalField1       = new JTextField(6);
     JTextField tdNextSignalField1Alt    = new JTextField(6);
@@ -84,6 +87,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     JTextField fSensorField2        = new JTextField(6);
     JTextField fSensorField3        = new JTextField(6);
     JTextField fSensorField4        = new JTextField(6);
+    JTextField fSensorField5        = new JTextField(6);
     JTextField fProtectTurnoutField = new JTextField(6);
     JTextField fNextSignalField1    = new JTextField(6);
     JTextField fNextSignalField1Alt = new JTextField(6);
@@ -213,6 +217,10 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         tdSensorField4.setDocument(sSensorField4.getDocument());
         fSensorField4.setDocument(sSensorField4.getDocument());
 
+        tmSensorField5.setDocument(sSensorField5.getDocument());
+        tdSensorField5.setDocument(sSensorField5.getDocument());
+        fSensorField5.setDocument(sSensorField5.getDocument());
+
         tdProtectTurnoutField.setDocument(tmProtectTurnoutField.getDocument());
         fProtectTurnoutField.setDocument(tmProtectTurnoutField.getDocument());
 
@@ -327,6 +335,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         constraints.gridx = 4;
         sSensorField4.setToolTipText(sensorFieldTooltip);
         modeSingle.add(sSensorField4, constraints);
+        constraints.gridx = 5;
+        sSensorField5.setToolTipText(sensorFieldTooltip);
+        modeSingle.add(sSensorField5, constraints);
 
         insets.top = 2;
         constraints.gridx = 0;
@@ -393,6 +404,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         constraints.gridx = 4;
         tmSensorField4.setToolTipText(sensorFieldTooltip);
         modeTrailMain.add(tmSensorField4, constraints);
+        constraints.gridx = 5;
+        tmSensorField5.setToolTipText(sensorFieldTooltip);
+        modeTrailMain.add(tmSensorField5, constraints);
 
         insets.top = 2;
         constraints.fill = GridBagConstraints.NONE;
@@ -473,6 +487,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         constraints.gridx = 4;
         tdSensorField4.setToolTipText(sensorFieldTooltip);
         modeTrailDiv.add(tdSensorField4, constraints);
+        constraints.gridx = 5;
+        tdSensorField5.setToolTipText(sensorFieldTooltip);
+        modeTrailDiv.add(tdSensorField5, constraints);
 
         insets.top = 2;
         constraints.fill = GridBagConstraints.NONE;
@@ -554,6 +571,9 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         constraints.gridx = 4;
         fSensorField4.setToolTipText(sensorFieldTooltip);
         modeFacing.add(fSensorField4, constraints);
+        constraints.gridx = 5;
+        fSensorField5.setToolTipText(sensorFieldTooltip);
+        modeFacing.add(fSensorField5, constraints);
 
         insets.top = 2;
         constraints.fill = GridBagConstraints.NONE;
@@ -681,6 +701,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         b.setSensor2(sSensorField2.getText());
         b.setSensor3(sSensorField3.getText());
         b.setSensor4(sSensorField4.getText());
+        b.setSensor5(sSensorField5.getText());
         b.setMode(BlockBossLogic.SINGLEBLOCK);
 
         b.setWatchedSignal1(sNextSignalField1.getText(), sFlashBox.isSelected());
@@ -699,6 +720,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         b.setSensor2(tmSensorField2.getText());
         b.setSensor3(tmSensorField3.getText());
         b.setSensor4(tmSensorField4.getText());
+        b.setSensor5(tmSensorField5.getText());
         b.setMode(BlockBossLogic.TRAILINGMAIN);
 
         b.setTurnout(tmProtectTurnoutField.getText());
@@ -718,6 +740,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         b.setSensor2(tdSensorField2.getText());
         b.setSensor3(tdSensorField3.getText());
         b.setSensor4(tdSensorField4.getText());
+        b.setSensor5(tdSensorField5.getText());
         b.setMode(BlockBossLogic.TRAILINGDIVERGING);
 
         b.setTurnout(tdProtectTurnoutField.getText());
@@ -738,6 +761,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         b.setSensor2(fSensorField2.getText());
         b.setSensor3(fSensorField3.getText());
         b.setSensor4(fSensorField4.getText());
+        b.setSensor5(fSensorField5.getText());
         b.setMode(BlockBossLogic.FACING);
 
         b.setTurnout(fProtectTurnoutField.getText());
@@ -784,6 +808,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         sSensorField2.setText(b.getSensor2());
         sSensorField3.setText(b.getSensor3());
         sSensorField4.setText(b.getSensor4());
+        sSensorField5.setText(b.getSensor5());
 
         tmProtectTurnoutField.setText(b.getTurnout());
 

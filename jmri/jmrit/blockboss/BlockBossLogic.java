@@ -113,7 +113,7 @@ import java.util.Hashtable;
  * signal (along the track with the green signal).
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.33 $
+ * @version     $Revision: 1.34 $
  * 
  * Revisions to add facing point sensors, approach lighting, and check box
  * to limit speed. Dick Bronosn (RJB) 2006
@@ -191,6 +191,15 @@ public class BlockBossLogic extends Siglet {
         if (watchSensor4.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor4_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
     }
 
+    public void setSensor5(String name) {
+        if (name == null || name.equals("")) {
+            watchSensor5 = null;
+            return;
+        }
+        watchSensor5 = new NamedBeanHandle<Sensor> (name, InstanceManager.sensorManagerInstance().provideSensor(name));
+        if (watchSensor5.getBean() == null) log.warn(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Sensor5_")+name+java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("_was_not_found!"));
+    }
+
     /**
      * Return the system name of the sensor being monitored
      * @return system name; null if no sensor configured
@@ -210,6 +219,10 @@ public class BlockBossLogic extends Siglet {
     public String getSensor4() {
         if (watchSensor4 == null) return null;
         return watchSensor4.getName();
+    }
+    public String getSensor5() {
+        if (watchSensor5 == null) return null;
+        return watchSensor5.getName();
     }
 
     public void setTurnout(String name) {
@@ -421,6 +434,7 @@ public class BlockBossLogic extends Siglet {
     NamedBeanHandle<Sensor> watchSensor2 = null;
     NamedBeanHandle<Sensor> watchSensor3 = null;
     NamedBeanHandle<Sensor> watchSensor4 = null;
+    NamedBeanHandle<Sensor> watchSensor5 = null;
     NamedBeanHandle<Turnout> watchTurnout = null;
     NamedBeanHandle<SignalHead> watchedSignal1 = null;
     NamedBeanHandle<SignalHead> watchedSignal1Alt = null;
@@ -480,6 +494,10 @@ public class BlockBossLogic extends Siglet {
         }
         if (watchSensor4 != null) {
             tempArray[n]= watchSensor4.getBean();
+            n++;
+        }
+        if (watchSensor5 != null) {
+            tempArray[n]= watchSensor5.getBean();
             n++;
         }
         if (watchedSignal1 != null) {
@@ -570,7 +588,7 @@ public class BlockBossLogic extends Siglet {
             doFacing();
             break;
         default:
-            log.error(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Unexpected_mode:_")+mode);
+            log.error(java.util.ResourceBundle.getBundle("jmri.jmrit.blockboss.BlockBossBundle").getString("Unexpected_mode:_")+mode+"_Signal_"+getDrivenSignal());
         }
     }
 
@@ -654,6 +672,8 @@ public class BlockBossLogic extends Siglet {
             appearance = SignalHead.RED;
         if (watchSensor4!=null && watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
+        if (watchSensor5!=null && watchSensor5.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
 
         // check if signal if held, forcing a red aspect by this calculation
         if (((SignalHead)outputs[0]).getHeld())
@@ -694,6 +714,8 @@ public class BlockBossLogic extends Siglet {
         if (watchSensor3!=null && watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
         if (watchSensor4!=null && watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor5!=null && watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
             
         if (watchTurnout!=null && watchTurnout.getBean().getKnownState() != Turnout.CLOSED)
@@ -740,6 +762,8 @@ public class BlockBossLogic extends Siglet {
         if (watchSensor3!=null && watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
         if (watchSensor4!=null && watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor5!=null && watchSensor5.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
 
         if (watchTurnout!=null && watchTurnout.getBean().getKnownState() != Turnout.THROWN)
@@ -797,6 +821,8 @@ public class BlockBossLogic extends Siglet {
         if (watchSensor3!=null && watchSensor3.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
         if (watchSensor4!=null && watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
+            appearance = SignalHead.RED;
+        if (watchSensor5!=null && watchSensor5.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
 
         if ((watchTurnout!=null && watchTurnout.getBean().getKnownState() == Turnout.CLOSED) 

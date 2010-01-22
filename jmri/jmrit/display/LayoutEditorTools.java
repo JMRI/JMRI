@@ -33,7 +33,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class LayoutEditorTools 
@@ -5623,11 +5623,13 @@ public class LayoutEditorTools
 		if ( (logic.getSensor2()!=null) && (logic.getSensor2()).equals(name) ) return;
 		if ( (logic.getSensor3()!=null) && (logic.getSensor3()).equals(name) ) return;
 		if ( (logic.getSensor4()!=null) && (logic.getSensor4()).equals(name) ) return;
+		if ( (logic.getSensor5()!=null) && (logic.getSensor5()).equals(name) ) return;
 		// add in the first available slot
 		if (logic.getSensor1()==null) logic.setSensor1(name);
 		else if (logic.getSensor2()==null) logic.setSensor2(name);
 		else if (logic.getSensor3()==null) logic.setSensor3(name);
 		else if (logic.getSensor4()==null) logic.setSensor4(name);
+		else if (logic.getSensor5()==null) logic.setSensor5(name);
 		else log.error("Error - could not add sensor to SSL for signal head "+logic.getDrivenSignal());
 	}
 	

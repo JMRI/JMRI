@@ -24,7 +24,7 @@ import org.jdom.Element;
  * "signalelements" and "signalelement" respectively.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  * 
  * Revisions to add facing point sensors, approach lighting, 
  * and limited speed.                 Dick Bronson (RJB) 2006
@@ -67,6 +67,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
             if (p.getSensor2()!=null) block.addContent(storeSensor(p.getSensor2()));
             if (p.getSensor3()!=null) block.addContent(storeSensor(p.getSensor3()));
             if (p.getSensor4()!=null) block.addContent(storeSensor(p.getSensor4()));
+            if (p.getSensor5()!=null) block.addContent(storeSensor(p.getSensor5()));
 
             if (p.getTurnout()!=null) {
                 block.setAttribute("watchedturnout", p.getTurnout());
@@ -151,6 +152,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
             if (sl.size()>=2 && sl.get(1)!= null) bb.setSensor2(sl.get(1).getAttributeValue("systemName"));
             if (sl.size()>=3 && sl.get(2)!= null) bb.setSensor3(sl.get(2).getAttributeValue("systemName"));
             if (sl.size()>=4 && sl.get(3)!= null) bb.setSensor4(sl.get(3).getAttributeValue("systemName"));
+            if (sl.size()>=5 && sl.get(4)!= null) bb.setSensor5(sl.get(4).getAttributeValue("systemName"));
 
             // new form of sensors with system names
             sl = block.getChildren("sensorname");
@@ -158,6 +160,7 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
             if (sl.size()>=2 && sl.get(1)!= null) bb.setSensor2(sl.get(1).getText());
             if (sl.size()>=3 && sl.get(2)!= null) bb.setSensor3(sl.get(2).getText());
             if (sl.size()>=4 && sl.get(3)!= null) bb.setSensor4(sl.get(3).getText());
+            if (sl.size()>=5 && sl.get(4)!= null) bb.setSensor5(sl.get(4).getText());
 
             try {
                 bb.setMode(block.getAttribute("mode").getIntValue());

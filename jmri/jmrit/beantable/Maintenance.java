@@ -60,7 +60,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class Maintenance
@@ -951,6 +951,14 @@ public class Maintenance
                 }
             }
             sName = bbl.getSensor4();
+            if (sName != null) {
+                if (sName.equals(sysName) || sName.equals(userName)) {
+                    tempText = tempText + MessageFormat.format(rbm.getString("WatchSensorReference"),"\t");
+                    found = true;
+                    referenceCount++;
+                }
+            }
+            sName = bbl.getSensor5();
             if (sName != null) {
                 if (sName.equals(sysName) || sName.equals(userName)) {
                     tempText = tempText + MessageFormat.format(rbm.getString("WatchSensorReference"),"\t");
