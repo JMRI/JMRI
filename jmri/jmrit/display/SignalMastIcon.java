@@ -5,7 +5,8 @@ package jmri.jmrit.display;
 import jmri.*;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.NamedBeanHandle;
-
+import java.util.Iterator;
+import java.util.Set;
 import java.awt.event.*;
 
 import javax.swing.*;
@@ -18,7 +19,7 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class SignalMastIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -58,6 +59,7 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
             mMast.addPropertyChangeListener(this);
             setProperToolTip();
             namedMast = sh;
+            pName=sh.getName();
         }
     }
     
@@ -197,15 +199,33 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
                 if (n == null) {
                     n = new NamedIcon(s,s);
                     iconCache.put(s, n);
+                    if(_rotate!=0){
+                        n.rotate(_rotate, this);
+                    }
                 }
-                
                 super.setIcon(n);
                 setSize(n.getIconWidth(), n.getIconHeight());
             }
         }
         return;
     }
-
+    
+    int _rotate=0;
+    public void rotate(int deg){
+        Set<String> set = iconCache.keySet();
+        Iterator<String> itr = set.iterator();
+        while (itr.hasNext()) {
+          String state = itr.next();
+          NamedIcon n = iconCache.get(state);
+          n.rotate(deg, this);
+        }
+        _rotate = _rotate+deg;
+    }
+    
+    public int getRotation(){
+        return _rotate;
+    }
+    
     static java.util.Hashtable<String, NamedIcon> iconCache =
         new java.util.Hashtable<String, NamedIcon>();
 
