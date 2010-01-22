@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.3.shtml,v 1.9 2010-01-21 07:08:31 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.3.shtml,v 1.10 2010-01-22 17:13:04 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -191,9 +191,18 @@ Setting aggressive true will cause the build process to immediately make availab
 He also added a new feature, under tools in the train edit window, so users can print the train's manifest, even after terminating the train.
 
 <p>
-Several updates to the Lionel TMCC support to fix multiple bugs. The TMCC support was badly broken in JMRI 2.4, and 
-is only now being repaired.
+Several updates to the Lionel TMCC support to fix multiple bugs. 
+The TMCC support was badly broken in JMRI 2.4, and only with this version should be considered working.
 
+<p>
+David Duchamp updated Simple Signal Logic to use up to five sensors, which allows more complicated trackwork
+to be handled by Layout Editor.
+
+<p>
+David Duchamp made Dispatcher enhancements for both manual running and future automatic running of trains.
+
+<p>
+Kevin Dickerson fixed how Signal Mast icons rotate in the Panel and Layout Editors.
 
 <!--#include virtual="/Footer" -->
 
