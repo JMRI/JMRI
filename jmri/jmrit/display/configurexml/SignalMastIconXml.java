@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalMastIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SignalMastIconXml extends PositionableLabelXml {
 
@@ -36,6 +36,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
         
         element.setAttribute("signalmast", ""+p.getPName());
         storeCommonAttributes(p, element);
+        element.setAttribute("rotation", ""+p.getRotation());
         element.setAttribute("class", "jmri.jmrit.display.configurexml.SignalMastIconXml");
         return element;
     }
@@ -82,6 +83,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
             return;
         } else {
             name = attr.getValue();
+            System.out.println(name);
         }
         
         SignalMast sh = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(name);
@@ -92,6 +94,17 @@ public class SignalMastIconXml extends PositionableLabelXml {
             log.error("SignalMast named '"+attr.getValue()+"' not found.");
             return;
         }
+        
+        
+        try {
+            attr = element.getAttribute("rotation");
+            int rotation = attr.getIntValue();
+            l.rotate(rotation);
+        } catch ( org.jdom.DataConversionException e) {
+            log.error("failed to convert rotation attribute");
+        } catch ( NullPointerException e) {  // considered normal if the attribute not present
+        }
+            
                         
         if (pe!=null){
             pe.putLabel(l);
