@@ -32,7 +32,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -57,6 +57,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	JLabel textIconLocal = new JLabel(rb.getString("IconLocal"));
 	JLabel textIconTerminate = new JLabel(rb.getString("IconTerminate"));
 	JLabel textComment = new JLabel(rb.getString("Comment"));
+	JLabel textBuild = new JLabel(rb.getString("BuildOption"));
 
 	// major buttons	
 	JButton backupButton = new JButton(rb.getString("Backup"));
@@ -78,6 +79,9 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
     
     JRadioButton typeDesc = new JRadioButton(rb.getString("Descriptive"));
     JRadioButton typeAAR = new JRadioButton(rb.getString("AAR"));
+    
+    JRadioButton buildNormal = new JRadioButton(rb.getString("Normal"));
+    JRadioButton buildAggressive = new JRadioButton(rb.getString("Aggressive"));
 		    
     // check boxes
     JCheckBox eastCheckBox = new JCheckBox(rb.getString("eastwest"));
@@ -214,6 +218,17 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addItem (panel, textOwner, 0, 10);
 		addItemLeft (panel, ownerTextField, 1, 10);
 		
+		// row 12 
+		JPanel buildButtons = new JPanel();
+		ButtonGroup buildGroup = new ButtonGroup();
+		buildGroup.add(buildNormal);
+		buildGroup.add(buildAggressive);
+		buildButtons.add(buildNormal);
+		buildButtons.add(buildAggressive);
+		addItem (panel, textBuild, 0, 12);
+		addItemWidth(panel, buildButtons, 3, 1, 12);
+		setBuildOption();
+		
 		// Option panel
 		JPanel options = new JPanel();
 		options.setLayout(new GridBagLayout());
@@ -257,7 +272,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		localComboBox.setSelectedItem(Setup.getTrainIconColorLocal());
 		terminateComboBox.setSelectedItem(Setup.getTrainIconColorTerminate());
 				
-		// row 11
+		// row 15
 		JPanel pControl = new JPanel();
 		pControl.setLayout(new GridBagLayout());
 		addItem(pControl, restoreButton, 0, 9);
@@ -348,6 +363,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 					CarManagerXml.instance().writeOperationsCarFile();
 				}
 			}
+			// build option
+			Setup.setBuildAggressive(buildAggressive.isSelected());
 			// main menu enabled?
 			Setup.setMainMenuEnabled(mainMenuCheckBox.isSelected());
 			// RFID enabled?
@@ -475,6 +492,11 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	private void setCarTypes(){
 		typeDesc.setSelected(Setup.getCarTypes().equals(Setup.DESCRIPTIVE));
 		typeAAR.setSelected(Setup.getCarTypes().equals(Setup.AAR));
+	}
+	
+	private void setBuildOption(){
+		buildNormal.setSelected(!Setup.isBuildAggressive());
+		buildAggressive.setSelected(Setup.isBuildAggressive());
 	}
 	
 	private void setDirectionCheckBox(int direction){
