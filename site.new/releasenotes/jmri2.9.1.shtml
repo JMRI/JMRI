@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.1.shtml,v 1.27 2010-01-07 18:57:22 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.1.shtml,v 1.28 2010-01-23 06:30:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -71,6 +71,10 @@ see our
 
 <h3>New warnings for this version:</h3>
 
+Due to a problem with the release build for this version, you may have to select
+"Rebuild Decoder Index" from the "Debug" menu to make all the new decoder types visible.
+
+<p>
 The JInput USB library was updated to the current version, which (should) fix problems on
 Windows Visata, Intel Macs and some Linux machines.  We don't have a way to check this with all possible
 input devices, so please check to make sure that your USB-attached devices still work.
