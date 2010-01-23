@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.1 2010-01-08 02:03:51 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2010-01-23 18:00:29 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>JMRI: NMRA 2010 Clinics</TITLE>
@@ -19,22 +19,27 @@
 <body>
 <!--#include virtual="/Header" -->
 
-
-<hr class="hide">
-
-<div class="nomenu" id="mBody">
-  <div id="mainContent">
-    <H2>JMRI: NMRA 2010 Clinics</H2>
+<H2>JMRI: NMRA 2010 Clinics</H2>
 
 <a href="http://www.nmra75.org/">
 <img src="http://www.nmra75.org/Images/75%20Logo.png" alt="NMRA convention logo" align="right"></a>
 
-The clinic schedule for the NMRA 2010 Milwaukee convention hasn't been announced yet,
-but we've applied to present several clinics, including both old favorites and several new
-ones.
-
 <p>
-We'll post a complete schedule here when it's available.
+We will be presenting several clinics at the NMRA 2010 Milwaukee convention, including 
+both old favorites and several new ones.  The final 
+clinic schedule hasn't been issued yet, but we have received tentative times for 
+our clinics.
+
+<h3>Tuesday, July 13, 2010</h3>
+<p>1:00 PM - <b>Intro to JMRI and PanelPro's Layout Editor</b>, Dave Duchamp, Dick Bronson, and Bob Jacobsen
+<p>2:30 PM - <b>Introduction To Layout Control With JMRI PanelPro</b>, Dick Bronson, Dave Duchamp, and Bob Jacobsen
+<h3>Wednesday, July 14, 2010</h3>
+<p>1:00 PM - <b>Running Trains with JMRI's Dispatcher</b>, Dave Duchamp, Dick Bronson, and Bob Jacobsen
+<p>2:30 PM - <b>Aspect Based Signaling With JMRI PanelPro</b>, Dick Bronson, Bob Jacobsen, and Dave Duchamp
+<p>4:00 PM - <b>Create a Detailed CTC Machine Model With JMRI PanelPro</b>, Dick Bronson, Dave Duchamp, and Bob Jacobsen
+<p>7:00 PM - <b>JMRI - New and Advanced Features</b>, Bob Jacobsen, Dave Duchamp, and Dick Bronson
+<p>8:30 PM - <b>JMRI User Group Meeting: What's New and Coming?</b>, Bob Jacobsen, Dick Bronson, and Dave Duchamp
+<p> If there are any changes to this tentative schedule, we'll post them promptly.
 
 <p>
 More information on the NMRA Wilwaukee convention can be found on the  
@@ -56,4 +61,3 @@ There are also some presentations posted on our
 </div> <!-- closes #container -->
 </body>
 </html>
-
