@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: DecoderPro.shtml,v 1.4 2010-01-23 06:55:57 jacobsen Exp $ -->
+<!-- $Id: DecoderPro.shtml,v 1.5 2010-01-23 12:39:58 jacobsen Exp $ -->
 <TITLE>
 DecoderPro Manual
 </TITLE>
@@ -35,8 +35,8 @@ Command Control (DCC) decoders for model railroad use.</h3>
 
 <p>
 A 
-<a href="DecoderProManual_2_4.pdf">printable PDF version</a> of this manual is available for
-<a href="DecoderProManual_2_4.pdf">download</a>. Note that this is a 5MB file.
+<a href="DecoderProManual_2_8.pdf">printable PDF version</a> of this manual is available for
+<a href="DecoderProManual_2_8.pdf">download</a>. Note that this is a 7MB file.
 
 <hr>
 <p>
@@ -67,7 +67,7 @@ DecoderPro 2.4, and the HTML verified using HTML4 and Cascading Style Sheets. </
 
 <div align="right">
 <p>
-<a href="DecoderProManual_2_4.pdf">Download a .PDF file<br>
+<a href="DecoderProManual_2_8.pdf">Download a .PDF file<br>
 of this entire manual.</a></div>
 
 <h4>
