@@ -39,7 +39,13 @@ import jmri.util.iharder.dnd.FileDrop.Listener;
 import org.jdom.Document;
 import org.jdom.Element;
 
-// Should be named ThrottlePanel but was already existing with that name and don't want to break dependencies (particularly in Jython code)
+/**
+ * Should be named ThrottlePanel but was already existing with that name 
+ * and don't want to break dependencies (particularly in Jython code)
+ * @author Glen Oberhauser
+ * @author Andrew Berridge  Copyright 2010
+ * @version $Revision: 1.66 $
+ */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
 	private static final ResourceBundle throttleBundle = ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle");
@@ -115,7 +121,6 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     /**
      * Sets the location of a throttle frame on the screen
      * according to x and y coordinates
-     * @author Andrew Berridge
      * @see java.awt.Component#setLocation(int, int)
      */
     public void setLocation(int x, int y) {
