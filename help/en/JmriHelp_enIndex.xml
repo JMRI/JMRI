@@ -285,7 +285,7 @@
 
  </indexitem>
  <indexitem text="Roster " target="manual.Main_Roster">
-  <indexitem text="Groups " target="manual.Main_Roster_Group"/>
+  <indexitem text="Groups " target="manual.Main_RosterGroup"/>
 
  </indexitem>
  <indexitem text="Route ">
