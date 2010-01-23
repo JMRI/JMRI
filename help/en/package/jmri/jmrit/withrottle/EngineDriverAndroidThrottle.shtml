@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: EngineDriverAndroidThrottle.shtml,v 1.1 2010-01-20 03:03:17 jacobsen Exp $ -->
+<!-- $Id: EngineDriverAndroidThrottle.shtml,v 1.2 2010-01-23 21:10:56 jacobsen Exp $ -->
 <title>JMRI: Engine Driver Throttle for Android</title>
 
 <!-- Style -->
@@ -39,6 +39,7 @@ If you feel brave enough, here is what you need to do: (This will be simpler wit
 due out at the end of January)
 
 <p>
+<img src="images/EngineDriverScreen.png" height="250" width="150" align="right">
 Before your Android device will allow you to install this program, 
 you will need to permit the installation of non-Market applications. 
 This is under Settings->Applications->Unknown sources (at least on Android 2.0). 

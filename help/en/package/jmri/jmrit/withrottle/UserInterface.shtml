@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: UserInterface.shtml,v 1.7 2010-01-20 03:03:17 jacobsen Exp $ -->
+<!-- $Id: UserInterface.shtml,v 1.8 2010-01-23 21:10:56 jacobsen Exp $ -->
 <title>JMRI: WiFi Throttle</title>
 
 <!-- Style -->
@@ -27,9 +27,6 @@ JMRI: WiFi Throttle
 
 <a href="http://withrottle.com">
   <img src="http://withrottle.com/WiThrottle/Home_files/TVC%20in%20iPhone.png" height="250" width="150" align="right">
-</a>
-<a href="EngineDriverAndroidThrottle.shtml">
-  <img src="images/EngineDriverIcon.png" height="72" width="72" align="right">
 </a>
 This window controls the connection between WiFi throttles, 
 e.g. an iPhone, iPod Touch, or Android Phone, and JMRI.  
@@ -62,6 +59,9 @@ app on the iPhone or iPod Touch. The basic application is
 available for free download from the iTunes store.  
 
 <P>
+<a href="EngineDriverAndroidThrottle.shtml">
+  <img src="images/EngineDriverScreen.png" height="200" width="120" align="right">
+</a>
 To use your Android phone with JMRI as a throttle, you
 run the 
 <a href="EngineDriverAndroidThrottle.shtml">Engine Driver</a>
