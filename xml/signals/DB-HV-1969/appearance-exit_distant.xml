@@ -27,12 +27,25 @@
         <date>2010-01-09</date>
         <authorinitials>JCV</authorinitials>
         <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2010-01-17</date>
+        <authorinitials>RGJ</authorinitials>
+        <revremark>Simpler namespace indicators </revremark>
+        <revremark>New imagetype tag</revremark>
+    </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2010-01-19</date>
+        <authorinitials>JCV</authorinitials>
+        <revremark>Added small and medium size icons more suitable for panels</revremark>
     </revision>    
   </revhistory>
 
   <aspecttable>DB-HV-1969</aspecttable>
   <name>Combined exit + distant signal</name>
-  <reference>See <a href="http://www.sh1.org/eisenbahn/shhp.htm">sh1's page</a> or the <a href="http://en.wikipedia.org/wiki/German_railway_signalling#Home_signal.2Fdistant_signal_.28H.2FV.29">Wiki</a></reference>
+  <reference>See <a href="http://www.sh1.org/eisenbahn/shhp.htm">sh1's page</a> or the <a href="http://en.wikipedia.org/wiki/German_railway_signalling#Home_signal.2Fdistant_signal_.28H.2FV.29">Wikipedia</a></reference>
   <description>Signal to use at the station exit (placed before the switch zone), with distant signal head.
   Compared to an entry signal it can also show "shunting allowed Sh1" because shunting movements take place between this signal and "end of shunting" signal Ra11.
   Exits that lead to the track without switches can also be equipped with entry signals (no need for Sh1 aspect).
@@ -44,56 +57,72 @@
       <aspectname>Hp00</aspectname>
       <show>red</show>
       <show>dark</show>
-      <imagelink>../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit_distant/hp00+dark.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit_distant/hp00+dark.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/exit_distant/hp00+dark.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/exit_distant/hp00+dark.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp0/Sh1</aspectname>
       <show>flashgreen</show>
       <show>dark</show>
-      <imagelink>../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit_distant/hp0+sh1+dark.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit_distant/hp0+sh1+dark.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/exit_distant/hp0+sh1+dark.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/exit_distant/hp0+sh1+dark.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp1+Vr0</aspectname>
       <show>green</show>
       <show>red</show>
-      <imagelink>../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit_distant/hp1+vr0.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit_distant/hp1+vr0.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/exit_distant/hp1+vr0.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/exit_distant/hp1+vr0.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp1+Vr1</aspectname>
       <show>green</show>
       <show>green</show>
-      <imagelink>../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit_distant/hp1+vr1.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit_distant/hp1+vr1.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/exit_distant/hp1+vr1.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/exit_distant/hp1+vr1.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp1+Vr2</aspectname>
       <show>green</show>
       <show>yellow</show>
-      <imagelink>../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit_distant/hp1+vr2.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit_distant/hp1+vr2.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/exit_distant/hp1+vr2.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/exit_distant/hp1+vr2.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp2+Vr0</aspectname>
       <show>yellow</show>
       <show>red</show>
-      <imagelink>../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit_distant/hp2+vr0.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit_distant/hp2+vr0.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/exit_distant/hp2+vr0.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/exit_distant/hp2+vr0.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp2+Vr1</aspectname>
       <show>yellow</show>
       <show>green</show>
-      <imagelink>../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit_distant/hp2+vr1.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit_distant/hp2+vr1.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/exit_distant/hp2+vr1.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/exit_distant/hp2+vr1.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp2+Vr2</aspectname>
       <show>yellow</show>
       <show>yellow</show>
-      <imagelink>../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit_distant/hp2+vr2.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/exit_distant/hp2+vr2.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/exit_distant/hp2+vr2.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/exit_distant/hp2+vr2.gif</imagelink>
     </appearance>
 
   </appearances>

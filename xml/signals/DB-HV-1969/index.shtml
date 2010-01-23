@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: index.shtml,v 1.1 2010-01-13 06:03:35 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2010-01-23 20:42:03 jacobsen Exp $ -->
 <title>JMRI: DB HV System 1969</title>
 
 <!-- Style -->
@@ -35,8 +35,9 @@ English information available in <a href="http://www.sh1.org/eisenbahn/s.htm">Wo
 <br>
 The wikipedia has also some english information in its <a href="http://en.wikipedia.org/wiki/German_railway_signalling">German railway signalling page</a>.
 <br>
-For a visual description od aspects via java applets see the excellent <a href="http://www-users.rwth-aachen.de/christoph.schmitz2/hpsignal_e.html">Christoph Schmitz Signalling page</a>.
-
+For a visual description of aspects via java applets see the excellent <a href="http://www-users.rwth-aachen.de/christoph.schmitz2/hpsignal_e.html">Christoph Schmitz Signalling page</a>.
+<br>
+For a historical view of signals evolution please see J. B. Calvert introduction to <a href="http://mysite.du.edu/~jcalvert/railway/germaust.htm#Sigs">German and Austrian Signalling</a>.
 <p>
 See the 
 <a href="aspects.xml">aspect page</a>.

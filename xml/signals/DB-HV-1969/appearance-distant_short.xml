@@ -27,12 +27,25 @@
         <date>2010-01-09</date>
         <authorinitials>JCV</authorinitials>
         <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2010-01-17</date>
+        <authorinitials>RGJ</authorinitials>
+        <revremark>Simpler namespace indicators </revremark>
+        <revremark>New imagetype tag</revremark>
+    </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2010-01-19</date>
+        <authorinitials>JCV</authorinitials>
+        <revremark>Added small and medium size icons more suitable for panels</revremark>
     </revision>    
   </revhistory>
 
   <aspecttable>DB-HV-1969</aspecttable>
   <name>Single distant signal at short breaking distance</name>
-  <reference>See <a href="http://www.sh1.org/eisenbahn/shhp.htm">sh1's page</a> or the <a href="http://en.wikipedia.org/wiki/German_railway_signalling#Example_3">Wiki</a></reference>
+  <reference>See <a href="http://www.sh1.org/eisenbahn/shhp.htm">sh1's page</a> or the <a href="http://en.wikipedia.org/wiki/German_railway_signalling#Example_3">Wikipedia</a></reference>
   <description>Single distant signal ahead of block signals at short breaking distance.
   Placed instead of the "normal" single distant signal when the distance to the block signal is less than 1km.
   It has a white light (kennlicht) on the left side of the "usual" distant signal head.
@@ -43,19 +56,25 @@
     <appearance>
       <aspectname>Vr0</aspectname>
       <show>red</show>
-      <imagelink>../../../resources/icons/largeschematics/aspects/DB-HV-1969/distant_short/vr0_short.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/distant_short/vr0_short.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/distant_short/vr0_short.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/distant_short/vr0_short.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Vr1</aspectname>
       <show>green</show>
-      <imagelink>../../../resources/icons/largeschematics/aspects/DB-HV-1969/distant_short/vr1_short.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/distant_short/vr1_short.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/distant_short/vr1_short.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/distant_short/vr1_short.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Vr2</aspectname>
       <show>yellow</show>
-      <imagelink>../../../resources/icons/largeschematics/aspects/DB-HV-1969/distant_short/vr2_short.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/distant_short/vr2_short.gif</imagelink>
+      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/distant_short/vr2_short.gif</imagelink>
+      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/distant_short/vr2_short.gif</imagelink>
     </appearance>
 
   </appearances>
