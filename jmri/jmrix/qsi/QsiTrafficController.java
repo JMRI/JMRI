@@ -5,7 +5,7 @@ package jmri.jmrix.qsi;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
-import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
+import jmri.jmrix.qsi.serialdriver.SerialDriverAdapter;
 
 import gnu.io.SerialPort;
 
@@ -23,7 +23,7 @@ import gnu.io.SerialPort;
  * included in the QsiMessage and QsiReply content.
  * 
  * @author			Bob Jacobsen  Copyright (C) 2007, 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 
