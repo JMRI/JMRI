@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -109,6 +110,17 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     public void toFront() {
     	if (throttleWindow == null) return;
     	throttleWindow.toFront(title);
+    }
+    
+    /**
+     * Sets the location of a throttle frame on the screen
+     * according to x and y coordinates
+     * @author Andrew Berridge
+     * @see java.awt.Component#setLocation(int, int)
+     */
+    public void setLocation(int x, int y) {
+    	if (throttleWindow == null) return;
+    	throttleWindow.setLocation(new Point(x, y));
     }
     
 	public void setTitle(String txt) {
