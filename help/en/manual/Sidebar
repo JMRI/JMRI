@@ -1,15 +1,17 @@
 <!-- Sidebar -->
-<!-- This is the common sidebar definition for Technical (developer) pages -->
-    <hr class="hide">
+<!-- This is the common sidebar definition for Manual pages -->
+<hr class="hide">
 
-    <div id="mBody">
+<div id="mBody">
 
-	<div id="side"> <!-- Block of text on left side of page -->
-	    <div style="text-align: center">The JMRI Manual:</div>
-	    <dl>
+<div id="side"> <!-- Block of text at top -->
+    <div style="text-align: center"><strong>The JMRI Manual</strong></div>
 
+    <div style="text-align: right">
+        <a href="DecoderProManual_2_8.pdf">Download</a>
+    </div>
 
-
+<dl><!-- main table of contents -->
 
 <dt><a href="Getting_Started.shtml">Getting Started</a></dt>
     <dd>
