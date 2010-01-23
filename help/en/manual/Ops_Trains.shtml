@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: Ops_Trains.shtml,v 1.1 2010-01-23 06:55:58 jacobsen Exp $ -->
+<title>Operations-Trains window</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>Using DecoderPro&reg; to Operate Trains</h1>
+<h1>Operations Trains Window</h1>
+
+<div align=right>
+<p><a href="Ops_Routes.shtml">Previous | </a><a href="Ops_TripThruOperations.shtml">Next</a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<hr>
+<p>The <strong>Trains</strong> window opens which allows you to build trains to run on your layout.</p>
+<p><img src="images/Ops_Trains.png" width="922" height="207" alt="Trains"></p>
+<h4>Menu Bar</h4>
+<p>&nbsp;</p>
+<table width="90%" border="0" cellspacing="1" cellpadding="2">
+  <tr>
+    <td width="15%"><img src="images/Ops_TrainsMenu.png" width="142" height="172" alt="Trains menu"></td>
+    <td width="85%" align="left" valign="top"><ul>
+      <li>Tools
+        <ul>
+          <li>Print -- opens printer dialog for your default printer.</li>
+          <li>Preview -- opens printer dialog for your default printer. OK then preview is displayed.</li>
+          <li>Print Options -- opens <a href="Ops_TrainsPrintOpt.shtml">Print Options </a>dialog that lets you set up your manifest printing.</li>
+          <li>Modify Trains -- opens <a href="Ops_TrainsModify.shtml">Modify Trains</a> dialog to allow you to modify a train.</li>
+          </ul>
+      </li>
+      <li>Windows -- standard DecoderPro&reg; format.</li>
+      <li>Help -- standard DecoderPro&reg; format.</li>
+    </ul></td>
+  </tr>
+</table>
+<p>Select a <strong>Sort by</strong>
+  <input name="radio" type="radio" id="radio" value="radio" checked> 
+<strong>Name</strong> (default) </p>
+<p>At the bottom of the window is a series of buttons, at this time press 
+  <input type="submit" name="button" id="button" value="Add"> 
+to open the <a href="Ops_AddTrain.shtml">Add Train </a>window. </p>
+<hr>
+
+<div align=right>
+<p><a href="Ops_Routes.shtml">Previous | </a><a href="Ops_TripThruOperations.shtml">Next</a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

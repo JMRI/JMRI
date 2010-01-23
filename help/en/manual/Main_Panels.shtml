@@ -1,52 +1,40 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Main_Panels.shtml,v 1.2 2009-02-23 00:43:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
-<TITLE>
-DecoderPro&reg; Main Window
-</TITLE>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
-<meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
-<meta name="Revised_By" content="Bob Blackwell - afticarr@sympatico.ca">
-<meta name="Revised_By" content="Dale Tripp">
-<meta name="Revised_By" content="Bruce Shanks">
-<meta name="keywords" content="JMRI manual">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: Main_Panels.shtml,v 1.3 2010-01-23 06:55:57 jacobsen Exp $ -->
+<title>Panels Menu</title>
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
+<!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
+<a NAME="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
 <h1>Panels Menu </h1>
 
 <div align=right>
-<p><a href="Main_Roster.shtml">Previous | </a><a href="Main_Debug.shtml">Next</a></p>
+<p><a href="Main_Roster.shtml">Previous | </a><a href="Main_Operations.shtml">Next</a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <hr>
 <p><strong>DecoderPro </strong>is only one facet of the JMRI suite of programs.  Another facet
   is <strong>PanelPro</strong>, which is software that allows you draw a track diagram and then interface the items in that diagram to the electronic hardware on the real layout so
-  that the hardware can be operated via the JMRI Interface.  For a tutorial on how to work with PanelPro go to <a href="http://jmri.sourceforge.net/community/clinics/NMRA2008/LayoutEditorClinic2008/LayoutEditorClinic.pdf" target="_blank">PanelPro Layout Editor Tutorial</a> and <a href="http://www.rr-cirkits.com/Clinics/Clinics.shtml" target="_blank">PanelPro Clinic (</a>pdf and flash video files). The subject of 
+  that the hardware can be operated via the JMRI Interface.  
+  For a tutorial on how to work with PanelPro go to 
+  <a href="http://jmri.org/community/clinics/NMRA2008/LayoutEditorClinic2008/LayoutEditorClinic.pdf" target="_blank">PanelPro Layout Editor Tutorial</a> and <a href="http://www.rr-cirkits.com/Clinics/Clinics.shtml" target="_blank">PanelPro Clinic (</a>pdf and flash video files). The subject of 
   panels is included here only show what is available in the DecoderPro menus with a brief illustration/description of what these menu 
   selections access.  They are covered here because the there is a Panels menu on the 
 DecoderPro main window that allows access to some of the PanelPro functions.</p>
@@ -92,8 +80,8 @@ DecoderPro main window that allows access to some of the PanelPro functions.</p>
 <h4><a name="PanelEditor"></a> Panel and Panel Editor</h4>
 <table width="90%" border="0" align="center" cellpadding="1" cellspacing="1">
   <tr>
-    <td align="left" valign="top"><img src="images/Main_PanelMenu_01.png" alt="Panel" width="212" height="259" border="4"></td>
-    <td align="left" valign="top"><img src="images/Main_PanelMenu_02.png" alt="Panel Editor" width="362" height="725" border="4"></td>
+    <td align="left" valign="top"><input type="image" name="panel" id="panel" src="images/Main_PanelMenu_01.png"></td>
+    <td align="left" valign="top"><input type="image" name="Panel Editor" id="Panel Editor" src="images/Main_PanelMenu_02.png"></td>
   </tr>
 </table>
 <div>
@@ -101,7 +89,9 @@ DecoderPro main window that allows access to some of the PanelPro functions.</p>
 </div>
 <h4><a name="LayoutEditor"></a> Layout Editor</h4>
 <p>For more information on how to use the <a href="http://www.jmri.org/help/en/package/jmri/jmrit/display/LayoutEditor.shtml">Layout  Editor.</a></p>
-<p align="center"><img src="images/Main_PanelMenu_03.png" alt="Layout Editro" width="987" height="706"></p>
+<p align="center">
+  <input type="image" name="Layout Editor" id="Layout Editor" src="images/Main_PanelMenu_03.png">
+</p>
 <div><a href="#NewPanel">Back</a></div>
 <h4 align="left"><a name="ThreadMonitor"></a>Thread Monitor</h4>
 <p align="center"><img src="images/Main_PanelMenu_04.png" alt="Thread Monitor" width="461" height="477" border="4"></p>
@@ -112,7 +102,7 @@ DecoderPro main window that allows access to some of the PanelPro functions.</p>
 <hr>
 
 <div align=right>
-<p><a href="Main_Debug.shtml"></a><a href="Main_Roster.shtml">Previous | </a><a href="Main_Debug.shtml">Next</a></p>
+<p><a href="Main_Debug.shtml"></a><a href="Main_Roster.shtml">Previous | </a><a href="Main_Operations.shtml">Next</a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 

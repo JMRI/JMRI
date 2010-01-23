@@ -1,40 +1,26 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Main_LocoNet.shtml,v 1.3 2009-02-23 02:02:24 jacobsen Exp $ -->
 <html lang="en">
 <head>
-<TITLE>
-DecoderPro&reg; Main Window
-</TITLE>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
-<meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
-<meta name="Revised_By" content="Bob Blackwell - afticarr@sympatico.ca">
-<meta name="Revised_By" content="Dale Tripp">
-<meta name="Revised_By" content="Bruce Shanks">
-<meta name="keywords" content="JMRI manual">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: Main_LocoNet.shtml,v 1.4 2010-01-23 06:55:57 jacobsen Exp $ -->
+<title>LocoNet Menu</title>
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
+<!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
+<a NAME="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
 <h1>LocoNet Menu </h1>
 
@@ -56,7 +42,7 @@ DecoderPro&reg; Main Window
 <p>Opens <a href="#BDL16Programmer">BDL 16 Programmer </a>.</p>
 <p><strong><a name="LocoIO"></a>Configure LocoIO</strong></p>
 <p>Opens the <a href="#LocoIOProgrammer">LocoIO programmer </a>window.</p>
-<p><strong><a name="PM4"></a>Configure PM4</strong></p>
+<p><strong><a name="PM4"></a>Configure PM4</strong> (also newer PM42)</p>
 <p>Opens the <a href="#PM4">PM4 programmer</a> window.</p>
 <p><strong><a name="SE8C"></a>Configure SE8C</strong></p>
 <p>Opens the <a href="#SE8CProgrammer">SE3C programmer</a> window.</p>
@@ -194,7 +180,7 @@ DecoderPro&reg; Main Window
   <div align="right"><a href="#BDL16">Back</a></div>
 </div>
 
-<h4><a name="PM4Programmer"></a>PM4 Programmer Window</h4>
+<h4><a name="PM4Programmer"></a>PM4 Programmer Window (also newer PM42)</h4>
 <p><img src="images/Main_Loconet05.png" alt="PM4 programmer" width="416" height="289" border="4"></p>
 <div>
   <div align="right"><a href="#PM4">Back</a></div>
@@ -254,7 +240,8 @@ Because of the way the DS64 board works, this tool can't change  the basic addre
 <h4><a name="SoundDownloader"></a>Decoder Sound Downloader</h4>
 <p><img src="images/Main_Loconet13.png" alt="Sound Download" width="436" height="232"></p>
 <p>Digitrax sound decoders are loaded with "sound projects", stored in  "Sound Project" (.spj) files.  Those contain a number of "sound fragments"  in .wav format, plus some additional control information. </p>
-<p> The Decoder Sound Downloader tool lets you load a new .spj file into   a Digitrax sound decoder via a Digitrax PR2 or PR3 interface. If you're   using a PR3, it needs to be put into "Programmer mode" before   trying to download, see the main <a href="../html/hardware/loconet/PR3.shtml">PR3 page</a>. </p>
+<p> The Decoder Sound Downloader tool lets you load a new .spj file into   a Digitrax sound decoder via a Digitrax PR2 or PR3 interface. If you're   using a PR3, it needs to be put into "Programmer mode" before   trying to download, see the main 
+<a href="../help/en/html/hardware/loconet/PR3.shtml">PR3 page</a>. </p>
 <p> Digitrax provides sample sound project files at their Sound Depot <a href="http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a> web site. You can also find links to documentation and additional tools there. </p>
 <p> JMRI also provides tools for <a href="../package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml">editing sound project files</a> to include new sounds and even to <a href="../package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml">change the sound logic</a>. When you first select the Download Sounds tool, it opens a dialog  with most of the controls disabled:<br>
   <br>

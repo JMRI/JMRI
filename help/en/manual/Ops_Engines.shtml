@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: Ops_Engines.shtml,v 1.1 2010-01-23 06:55:58 jacobsen Exp $ -->
+<title>Operations-Engines</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+
+<h1>Using DecoderPro&reg; to Operate Trains</h1>
+<h1>Operations Engines Window</h1>
+
+<div align=right>
+<p><a href="Ops_Cars.shtml">Previous </a> | <a href="Ops_Routes.shtml">Next</a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<hr>
+<p>The engines panel allows you to edit your engine roster. You can enter  an engine's number, road, model, type, and length. You can optionally  add the engine's build date and owner. If you want a group of engines to  be assigned as a unit, you can create a "consist". The engine type is  used by the program to determine where engines are picked up and or  stored at the various locations on your layout. Some of default engine  types are electric, diesel, gas turbine, and steam.</p>
+<p><img src="images/Ops_Engine.png" width="922" height="238" alt="Engine"></p>
+<p><strong>Menu Bar</strong></p>
+<p><img src="images/Ops_EngineMenu.png" width="400" height="198" alt="Engines Menu"></p>
+<p><strong>Tools </strong></p>
+<ul>
+  <li><strong>Roster <img src="images/arrow.gif" width="20" height="9" alt="arrow"></strong>
+    <ul>
+      <li><a href="Ops_ImportEngines.shtml">Import from JMRI roster</a></li>
+      <li><a href="Ops_ImportEngines.shtml">Import from file</a></li>
+      <li><strong>Delete all engines</strong> -- Opens the <strong>Delete all engines?</strong> confirmation dialog box.</li>
+      <li><strong>Print</strong> -- Opens your computers <strong>Print</strong> window and will print your engine roster.</li>
+      <li><strong>Preview</strong> -- Opens your computers <strong>Print</strong> window and when you click <strong>OK</strong> will show the preview of your engine roster.</li>
+    </ul>
+</ul>
+<p><strong>Window</strong> -- same as other DecoderPro&reg; menus.</p>
+<p><strong>Help</strong> -- same as other DecoderPro&reg; menus.</p>
+<p><strong><em>Body of window</em></strong></p>
+<p><strong>Sort by</strong> -- select the element in the roster by which you would like to sort your engine roster, we will use engine
+  <input name="radio" type="radio" id="radio" value="radio" checked>
+  <strong>Number </strong>selection.</p>
+<p>(number) <strong>engines</strong> --shows number of engines in your roster.</p>
+<p>
+  <input type="submit" name="button" id="button" value="Add">
+  when selected opens the <a href="Ops_AddEngine.shtml">Add Engine</a> window.</p>
+<p>
+  <input type="submit" name="button2" id="button2" value="Find">
+  <input type="text" name="textfield" id="textfield">
+  Locate an engine in your roster, when you type the road number into the text box. </p>
+<hr>
+
+<div align=right>
+<p><a href="Ops_Cars.shtml">Previous </a> | <a href="Ops_Routes.shtml">Next</a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: Ops_Cars.shtml,v 1.1 2010-01-23 06:55:58 jacobsen Exp $ -->
+<title>Operations-Cars</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+<h1>Using DecoderPro&reg; to Operate Trains</h1>
+<h1>Operations Cars Window</h1>
+
+<div align=right>
+<p><a href="Ops_Locations.shtml">Previous </a> | <a href="Ops_Engines.shtml">Next</a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<hr>
+<p>The cars window allows you to edit your car roster. You can enter a car's  number, road, type, and length. The program will automatically calculate the  car's weight based on length and the scale you are modeling. You can  optionally add the car's color, build date, load and owner. If you want  a group of cars to be switched as a unit, you can create a "kernel". You  can assign any number of cars to a kernel but the type of the first car  assigned will be used by the program to determine if the kernel is  allowed at a location. The entire length of the kernel is used to  determine if the cars in the kernel will fit. Note that the program also  includes space for the car's couplers when calculating the length of a  kernel. </p>
+<p><img src="images/Ops_Cars01.png" width="922" height="222" alt="Cars window"></p>
+<p><strong><em>Menu Bar</em></strong></p>
+<p><img src="images/Ops_Cars02.png" width="242" height="219" alt="Operations Cars"></p>
+<p><strong>Tools
+</strong></p>
+<ul>
+  <li><strong>Roster &raquo;  </strong>
+<ul>
+      <li><a href="Ops_ImportCarsFile.shtml">Import from file</a> -- opens windows <strong>Open</strong> dialog box.</li>
+      <li>Delete all cars -- Opens the <strong>Delete all cars?</strong> confirmation dialog box.</li>
+      <li>Print -- Opens your computers <strong>Print</strong> window and will print your car roster.</li>
+      <li>Preview -- Opens your computers <strong>Print</strong> window and when you click <strong>OK</strong> will show the preview of your car roster.</li>
+  </ul>
+  </ul>
+<p><strong>Window</strong> --same as other DecoderPro menus.</p>
+<p><strong>Help</strong> -- same as other DecoderPro menus.</p>
+<p><strong><em>Body of window</em></strong></p>
+<p><strong>Sort by</strong> -- select the element in the roster by which you would like to sort your car roster, we will use car 
+  <input name="radio" type="radio" id="radio" value="radio" checked> 
+<strong>Number </strong></p>
+<p>(number) <strong>cars</strong> -- only shows number of cars in your roster.</p>
+<p>
+  <input type="submit" name="button" id="button" value="Add"> 
+when selected opens the <a href="Ops_AddCars.shtml">Add Car</a> window.</p>
+<p>
+  <input type="submit" name="button2" id="button2" value="Find"> 
+  <input type="text" name="textfield" id="textfield">
+Locate a car in your roster, when you type the road number into the text box. </p>
+<hr>
+
+<div align=right>
+<p><a href="Ops_Locations.shtml">Previous </a> | <a href="Ops_Engines.shtml">Next</a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

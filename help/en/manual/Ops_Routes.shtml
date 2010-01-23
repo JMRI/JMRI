@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: Ops_Routes.shtml,v 1.1 2010-01-23 06:55:58 jacobsen Exp $ -->
+<title>Operations-Routes</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+<h1>Using DecoderPro&reg; to Operate Trains</h1>
+<h1>Operations Routes Window</h1>
+
+<div align=right>
+<p><a href="Ops_Engines.shtml">Previous </a> | <a href="Ops_Trains.shtml">Next</a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<hr>
+<p>A route is a list of locations that a train will visit. Later you can  decide if the train stops at a location for work. Routes can be point to  point or out and back. The current Routes are shown in the <strong>Routes</strong> window.</p>
+<p><img src="images/Ops_Routes.png" width="462" height="200" alt="Routes window"></p>
+<h4>Menu Bar</h4>
+<p><img src="images/Ops_RoutesMenu.png" width="195" height="146" alt="Routes menu"></p>
+<p><strong>Tools</strong></p>
+<blockquote>
+  <p><strong>Copy Route</strong> opens the <strong>Route Copy</strong> dialog. This allows you to copy an existing route.</p>
+  <p>&nbsp;</p>
+  <table width="90%" border="0" cellspacing="1" cellpadding="2">
+    <tr>
+      <td width="42%"><img src="images/Ops_RoutesCopy.png" width="370" height="149" alt="Route Copy"></td>
+      <td width="58%" align="left" valign="top"><p>Type the <strong>New Route Name</strong>        
+        <input type="text" name="textfield" id="textfield">
+      </p>
+      <p><strong>Select Route to Copy</strong>
+<select name="select" id="select">
+</select>
+      this route will be copied and saved with the new name.</p>
+      <p>
+        <input type="checkbox" name="checkbox" id="checkbox">
+        <strong>      Invert </strong>will reverse the sequence of the route when copied.</p>
+      <p>
+        <input type="submit" name="button" id="button" value="Copy">
+      press to copy the route into your Route file.</p></td>
+    </tr>
+  </table>
+</blockquote>
+<p><strong>Window </strong>-- Standard DecoderPro&reg; window menu.</p>
+<p><strong>Help</strong> -- Standard DecoderPro&reg; Help menu.</p>
+<h4>Body</h4>
+<p>shows existing routes id, name and status.</p>
+<h4>Bottom of window</h4>
+<p><strong>Sort by 
+  <input name="radio" type="radio" id="radio" value="radio" checked>
+  Name
+  <input type="radio" name="radio2" id="radio2" value="radio2"> 
+  Id
+</strong>establishes the sort order of the routes.</p>
+<p>
+  <input type="submit" name="button2" id="button2" value="Add"> 
+opens the <a href="Ops_AddRoutes.shtml">Add Routes</a> window to allow you to add routes to your Operations data base. </p>
+<hr>
+
+<div align=right>
+<p><a href="Ops_Engines.shtml">Previous </a> | <a href="Ops_Trains.shtml">Next</a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

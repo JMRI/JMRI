@@ -1,40 +1,26 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Dcode_Submit.shtml,v 1.2 2009-02-23 00:43:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
-<TITLE>
-Decoder Definition
-</TITLE>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
-<meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
-<meta name="Revised_By" content="Bob Blackwell - afticarr@sympatico.ca">
-<meta name="Revised_By" content="Dale Tripp">
-<meta name="Revised_By" content="Bruce Shanks">
-<meta name="keywords" content="JMRI manual">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
+<!-- Copyright ($Author: jacobsen $) 2009, 2010 -->
+<!-- $Id: Dcode_Submit.shtml,v 1.3 2010-01-23 06:55:57 jacobsen Exp $ -->
+<title>Comprehensive Programmer - Advanced Features Pane</title>
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
+<!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
+<a NAME="Top"></a>
 <h1>Decoder Definition</h1>
 <h1>Submitting to JMRI</h1>
 
@@ -54,26 +40,39 @@ Decoder Definition
   If &nbsp;not, don't worry about it. Go to the <a href="http://sourceforge.net/tracker/?group_id=26788&atid=388315">patch web site</a> on SourceForge:<br>
   <br>
   </li>
-  <li>Click on &quot;Add new artifact&quot; near the center-left of the screen.<br>
+  <li>Click on <strong>Add new  </strong>on left side of the screen as shown<br>
+    .<img src="images/Dcode07.png" width="747" height="407" alt="Submit"><br>
     <br>
   </li>
-  <li>On the new page that comes up, enter something in the following fields:
-    <ol type="a">
-      <li>Summary (This is really the title) </li>
-      <li>Detailed Description (Just a little more info)</li>
-      <li>If you don't have a SourceForge account, make sure to put your name and email address in the Detailed Description field so we know who to thank!<br>
+  <li>On the new page that comes up, enter something in the following fields:<br>
+    <img src="images/Dcode08.png" width="922" height="546" alt="submit form">
+<ol type="a">
+      <li>Select the <strong>Category: </strong>XML files from 
+        <select name="select" size="1" id="select">
+          <option>XML file</option>
+        </select>
+      </li>
+      <li><strong>Summary:</strong> type in a short summary of file</li>
+      <li><strong>Description:</strong> (Just a little more info) If you don't have a SourceForge account, make sure to put your name and email address in the Detailed Description field so we know who to thank!</li>
+      <li>Upload a file attachment <strong>File:</strong>
+        <input type="text" name="textfield" id="textfield">
+        <input type="submit" name="button" id="button" value="Browse">
+      locate the file on your computer and select it.</li>
+      <li>Now form is completed, click on 
+        <input type="submit" name="button2" id="button2" value="Add Artifact">
+         Your file is submitted for inclusion in a release.<br>
         <br>
       </li>
     </ol>
   </li>
-  <li>Check the box labelled <strong>Check to Upload and Attach a File</strong>&nbsp;underneath the description text box.<br>
-    <br>
-  </li>
-  <li>Click choose file, and navigate to a copy of the file on your computer.&nbsp; (You can do this more than once if you've got multiple files)<br>
-    <br>
-  </li>
-  <li>Click submit. This way, nothing gets lost, and we've got a trail of what was contributed when.</li>
 </ol>
+
+
+
+
+
+
+
 
 
 <hr>

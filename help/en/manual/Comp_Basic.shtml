@@ -1,39 +1,24 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Comp_Basic.shtml,v 1.2 2009-02-23 00:43:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
-<TITLE>
-DecoderPro&reg; Comprehensive Programmer
-</TITLE>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
-<meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
-<meta name="Revised_By" content="Bob Blackwell - afticarr@sympatico.ca">
-<meta name="Revised_By" content="Dale Tripp">
-<meta name="Revised_By" content="Bruce Shanks">
-<meta name="keywords" content="JMRI manual">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
+<!-- Copyright ($Author: jacobsen $) 2009, 2010 -->
+<!-- $Id: Comp_Basic.shtml,v 1.3 2010-01-23 06:55:57 jacobsen Exp $ -->
+<title>Comprehensive Programmer - Basic Pane</title>
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
+
 <!--#include virtual="Sidebar" -->
-
 <div id="mainContent">
-
 
 <a NAME="Top"></a>
 
@@ -41,8 +26,11 @@ DecoderPro&reg; Comprehensive Programmer
 <h1>Expanded Basic Pane</h1>
 
 <div align=right>
-  <p><a href="Comp_Setup_Roster.shtml"> Previous | </a><a href="Comp_Motor.shtml">Next </a></p>
-  <p>      <a href="index.shtml#Advanced Programmer">Back to Index</a>
+  <p align="right">Comprehensive Programmer  
+    <a href="Comp_Setup_Roster.shtml">Previous</a> | <a href="Comp_Motor.shtml">Next <br>
+  </a>Advanced Programmer 
+  <a href="Adv_RosterMedia.shtml">Previous | </a><a href="Comp_Motor.shtml">Next </a></p>
+<p>      <a href="index.shtml#Advanced Programmer">Back to Index</a>
     </p>
 </div>
 
@@ -51,9 +39,7 @@ DecoderPro&reg; Comprehensive Programmer
 One of the first things you will notice about the expanded Basic Pane
 in the Comprehensive Programmer is that there are a lot more options than
 you found in the Basic Programmer.</p>
-<img src="images/Extended_Basic_Program_Roster.png" alt="Extended Basic Roster" width="1276" height="629" border="4">
-  
-
+<p align="center"><img src="images/Extended_Basic_Program_Roster.png" width="917" height="794" alt="Extended basic pane"></p>
 <p>
 Select 2 or 4 digit <b>addressing</b> radio button to select which mode of addressing you wish to be active</p>
 <p>You can enter locomotive addresses in both the <strong>Primary address</strong> and/or the <strong>Extended address</strong>. The address of a decoder is the prefix for the code it responds to.
@@ -80,9 +66,8 @@ is "breaking away" and running out of control at high speed on a DCC layout, you
 
 <h2>The Read and Write Buttons</h2>
 <p>
-At the bottom of all the programmer panes you will find three rows of buttons, as shown :<img src="images/Comp_03_Basic.png" alt="Comprehensive Programmer - Action Buttons" border=5 height=114 width=705>
-
-
+At the bottom of all the programmer panes you will find three rows of buttons, as shown :
+<p align="center"><img src="images/Comp_03_Basic.png" width="929" height="168" alt="comp basic buttons">
 <p>
 The top row operates <span class="ACCENT">only</span> on the currently visible pane. These buttons are:</p>
 
@@ -100,10 +85,9 @@ Below the two rows of buttons is a text line that shows what the current <b>prog
 Finally, the bottom line of the pane is a status bar that tells you exactly what the system is doing. It shows <strong>idle</strong> in these screen shots  because the system was  not actively programming decoders when they were made. </p>
 <hr>
 <div align=right>
-  <p><a href="Comp_Motor.shtml"></a><a href="Comp_Setup_Roster.shtml">Previous | </a><a href="Comp_Motor.shtml">Next </a></p>
-  <p>
-    <a href="index.shtml#Advanced Programmer">Back to Index</a>
-    </p>
+  <p><a href="Comp_Motor.shtml"></a><a href="Comp_Setup_Roster.shtml">Previous | </a><a href="Comp_Motor.shtml">Next <br>
+  </a>Advanced Programmer <a href="Adv_RosterMedia.shtml">Previous | </a><a href="Comp_Motor.shtml">Next </a></p>
+<p> <a href="index.shtml#Advanced Programmer">Back to Index</a> </p>
 </div>
 
 <!--#include virtual="/Footer" -->

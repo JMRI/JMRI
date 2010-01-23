@@ -1,42 +1,26 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Comp_GlobalCVs.shtml,v 1.3 2009-02-23 12:48:02 jacobsen Exp $ -->
 <html lang="en">
 <head>
-<TITLE>
-DecoderPro&reg; Comprehensive Programmer
-</TITLE>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
-<meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
-<meta name="Revised_By" content="Bob Blackwell - afticarr@sympatico.ca">
-<meta name="Revised_By" content="Dale Tripp">
-<meta name="Revised_By" content="Bruce Shanks">
-<meta name="keywords" content="JMRI manual">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
+<!-- Copyright ($Author: jacobsen $) 2009, 2010 -->
+<!-- $Id: Comp_GlobalCVs.shtml,v 1.4 2010-01-23 06:55:57 jacobsen Exp $ -->
+<title>Comprehensive Programmer - Global CV Listing Pane</title>
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
+<!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
 <a NAME="Top"></a>
-
 <h1>DecoderPro&reg; Comprehensive Programmer</h1>
 <h1>Global CV Listing Pane</h1>
 
@@ -63,10 +47,9 @@ of the CV listings.</p>
 You may <b>Read</b> or <b>Write</b> individual CVs using the buttons
 in their row. On this page, a <b>Read sheet</b> or <b>Write sheet</b> operation
 is the same as a <b>Read all</b> or <b>Write all</b>. <span class="ACCENT">Again, a reminder: you can only read CVs if your command station has that capability.</span>
-<p><img src="images/Comp_11_CV.jpg" alt="CV programming" width="1280" height="800" border="4">
-<h1 align="center">&nbsp;</h1>
+<p align="center"><img src="images/Comp_11_CV.png" width="923" height="799" alt="CV pane">
 <p>
-One thing to keep in mind about the <b>CV</b> listing on this pane - anything you can do here you can do from one of the other panes in Decoder Pro, without having to know the <b>CV</b> number or how to compile the values to get the desired effect. This pane is meant for advanced users of DCC used to crunching the numbers themselves. Those new to DCC can safely ignore this panel without losing any capability at all.
+  One thing to keep in mind about the <b>CV</b> listing on this pane - anything you can do here you can do from one of the other panes in Decoder Pro, without having to know the <b>CV</b> number or how to compile the values to get the desired effect. This pane is meant for advanced users of DCC used to crunching the numbers themselves. Those new to DCC can safely ignore this panel without losing any capability at all.
 <p>
 <hr>
 <div align=right>

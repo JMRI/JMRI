@@ -1,41 +1,26 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Main_Menu.shtml,v 1.2 2009-02-23 00:43:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
-<TITLE>
-DecoderPro&reg; Main Window
-</TITLE>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
-<meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
-<meta name="Revised_By" content="Bob Blackwell - afticarr@sympatico.ca">
-<meta name="Revised_By" content="Dale Tripp">
-<meta name="Revised_By" content="Bruce Shanks">
-<meta name="keywords" content="JMRI manual">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: Main_Menu.shtml,v 1.3 2010-01-23 06:55:57 jacobsen Exp $ -->
+<title>DecoderPro Menus</title>
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
+<!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
-
+<a NAME="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
 <h1>Menu Overview</h1>
 
@@ -44,8 +29,8 @@ DecoderPro&reg; Main Window
 </div>
 
 <hr>
-<p>Most of the DecoderPro functions can be accessed via the menu bar on the DecoderPro window</p>
-<p align="center"><img src="images/Main_05_MenuBar.png" alt="menu bar" width="423" height="146" border="4"></p>
+<p wrap="">All of the JMRI functions can be accessed via the menu bar on the DecoderPro&reg; window.</p>
+<p><img src="images/Main_05_MenuBar.png" width="430" height="119" alt="menu bar"><img src="images/Main_05_MenuBar_A.png" width="502" height="126" alt="main menu bar alt"></p>
 <h4><a href="Main_File.shtml">File</a></h4>
 <ul>
   <li>Print Decoder Definitions...</li>
@@ -61,8 +46,7 @@ DecoderPro&reg; Main Window
 </ul>
 <h4><a href="Main_Tool.shtml">Tools</a></h4>
 <ul>
-  <li>Programmers
-    
+  <li><strong>Programmers <img src="images/arrow.gif" width="20" height="9" alt="arrow"></strong>
     <ul>
       <li>Single CV Programmer</li>
       <li>Service Mode Programmer</li>
@@ -70,12 +54,23 @@ DecoderPro&reg; Main Window
       <li>Multi-Decoder Control</li>
     </ul>
   </li>
-  <li>Tables
-    <ul>
+  <li><strong>Tables&raquo;</strong>
+<ul>
       <li>Various Tables used with Panel Pro and not covered in this manual</li>
     </ul>
   </li>
-  <li>Clocks
+  <li><strong>Throttles <img src="images/arrow.gif" width="20" height="9" alt="arrow"></strong>
+    <ul>
+      <li>New Throttle...</li>
+      <li>Save Throttle Layout...</li>
+      <li>Load Throttle Layout...</li>
+      <li>Save as Default Throttle Layout</li>
+      <li>Load Default Throttle Layout</li>
+      <li>Throttle Preferences...</li>
+    </ul>
+  </li>
+  <li><strong>Consisting Tool...</strong></li>
+  <li><strong>Clocks <img src="images/arrow.gif" width="20" height="9" alt="arrow"></strong>
     <ul>
       <li>Setup Fast Clock...</li>
       <li>Nixie Clock</li>
@@ -83,27 +78,47 @@ DecoderPro&reg; Main Window
       <li>Analog Clock</li>    
     </ul>
   </li>
-  <li>Power Control</li>
-  <li>Turnout Control...</li>
-  <li>Simple Signal Logic</li>
-  <li>Sensor Groups...</li>
-  <li>Speedometer...</li>
-  <li>Light Control...</li>
-  <li>Dispatcher...</li>
-  <li>Send DCC Packet...</li>
-  <li>USS CTC Controls...(not covered in this manual)</li>
-  <li>Operations (covered in another section)</li>
+  <li><strong>Power Control</strong></li>
+  <li><strong>Turnout Control...</strong></li>
+  <li><strong>Simple Signal Logic</strong></li>
+  <li><strong>Sensor Groups...</strong></li>
+  <li><strong>Speedometer...</strong></li>
+  <li><strong>Light Control...</strong></li>
+  <li><strong>Dispatcher...</strong></li>
+  <li><strong>Send DCC Packet...</strong></li>
+  <li><strong>USS CTC Tools&raquo;</strong>(not covered in this manual)</li>
+  <li><strong><a href="Ops_Start.shtml">Operations</a> <img src="images/arrow.gif" width="20" height="9" alt="aroww"></strong>(on menu bar only if checked in the Operations Settings)
+    <ul>
+      <li><a href="Ops_Settings.shtml">Settings</a></li>
+      <li><a href="Ops_Locations.shtml">Location</a></li>
+      <li><a href="Ops_Cars.shtml">Cars</a></li>
+      <li><a href="Ops_Engines.shtml">Engines</a></li>
+      <li><a href="Ops_Routes.shtml">Routes</a></li>
+      <li><a href="Ops_Trains.shtml">Trains</a></li>
+    </ul>
+  </li>
 </ul>
 <h4><a href="Main_Roster.shtml">Roster</a></h4>
 <ul>
-  <li>Create Entry...</li>
-  <li>Edit Entry...</li>
-  <li>Copy Entry...</li>
-  <li>Import Entry...</li>
-  <li>Export Entry...</li>
-  <li>Delete Entry...</li>
-  <li>Print Summary...</li>
-  <li>Print Preview Summary...</li>
+  <li><strong>Create Entry...</strong></li>
+  <li><strong>Edit Entry...</strong></li>
+  <li><strong>Copy Entry...</strong></li>
+  <li><strong>Import Entry...</strong></li>
+  <li><strong>Export Entry...</strong></li>
+  <li><strong>Delete Entry...</strong></li>
+  <li><strong>Print Summary...</strong></li>
+  <li><strong>Print Preview Summary...</strong></li>
+  <li><strong>Roster Groups</strong>
+    <img src="images/arrow.gif" width="20" height="9" alt="arrow">
+<ul>
+      <li>Create Roster Group      </li>
+      <li>Set Active Roster Group</li>
+      <li>Delete Roster Group</li>
+      <li>Table Association</li>
+      <li>Associate Roster Entry to Group</li>
+      <li>Disassociation of Roster Entry to Group</li>
+    </ul>
+  </li>
 </ul>
 <h4><a href="Main_Panels.shtml">Panels</a></h4>
 <p>Beyond the scope of this manual, primarily for use in connection with PanelPro</p>
@@ -129,32 +144,59 @@ DecoderPro&reg; Main Window
 </ul>
 <h4><a href="Main_Debug.shtml">Debug</a></h4>
 <ul>
-  <li>Memory Usage Monitor</li>
-  <li>Import Decoder File</li>
-  <li>Import Decoder URL</li>
-  <li>Recreate Decoder Index</li>
-  <li>Recreate Roster Index</li>
-  <li>Other options are beyond the scope of this manual</li>
+  <li><strong>Memory Usage Monitor</strong></li>
+  <li><strong>Import Decoder File</strong></li>
+  <li><strong>Import Decoder URL</strong></li>
+  <li><strong>Recreate Decoder Index</strong></li>
+  <li><strong>Recreate Roster Index</strong></li>
+  <li><strong>Check XML File</strong></li>
+  <li><strong>Validate XML File</strong></li>
+  <li><strong>Check Decoder Names</strong></li>
+  <li><strong>Check Programmer Names</strong></li>
+  <li><strong>Load Logix Disabled</strong></li>
+  <li><strong>Log Message</strong></li>
+  <li><strong>PRICOM <img src="images/arrow.gif" width="20" height="9" alt="arrow"></strong>
+    <ul>
+      <li>PRICOM Pocket Tester&raquo;
+        <ul>
+          <li>Connect</li>
+        </ul>
+      </li>
+      <li>PRICOM Flash Updater</li>
+    </ul>
+  </li>
+  <li><strong>USB Input Control</strong></li>
+  <li><strong>USB Device Viewer</strong></li>
+  <li><strong>RailDriver Throttle</strong></li>
+  <li><strong>Start Mini Web Server</strong></li>
+  <li><strong>Start Wi Throttle</strong></li>
 </ul>
 <h4><a href="Main_Window.shtml">Window</a></h4>
 <ul>
+  <li><strong>Minimize</strong></li>
+</ul>
+<p>(lists all DecoderPro windows that are open)</p>
+<ul>
   <li>
     <input name="checkbox" type="checkbox" id="checkbox" checked>
-  DecoderPro</li>
+  <strong>DecoderPro</strong></li>
   <li>
-    <input type="checkbox" name="checkbox2" id="checkbox2">
-  LocoNet Traffic</li>
+    <strong>
+  <input type="checkbox" name="checkbox2" id="checkbox2">
+  LocoNet Traffic</strong></li>
   <li>
-    <input type="checkbox" name="checkbox3" id="checkbox3">
-  Power Control</li>
+    <strong>
+  <input type="checkbox" name="checkbox3" id="checkbox3">
+  Power Control</strong></li>
 </ul>
 <h4><a href="Main_Help.shtml">Help</a></h4>
 <ul>
-  <li>Window Help...</li>
-  <li>General Help...</li>
-  <li>License...</li>
-  <li>Locations...</li>
-  <li>Context....</li>
+  <li><strong>Window Help...</strong></li>
+  <li><strong>General Help...</strong></li>
+  <li><strong>License...</strong></li>
+  <li><strong>Send Problem Report...</strong></li>
+  <li><strong>Locations...</strong></li>
+  <li><strong>Context....</strong></li>
 </ul>
 <hr>
 

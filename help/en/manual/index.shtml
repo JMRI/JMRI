@@ -1,55 +1,34 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.3 2009-02-28 15:48:53 jacobsen Exp $ -->
 <html lang="en">
 <head>
-<TITLE>
-DecoderPro Manual
-</TITLE>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
-<meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
-<meta name="Revised_By" content="Bob Blackwell - afticarr@sympatico.ca">
-<meta name="Revised_By" content="Dale Tripp">
-<meta name="Revised_By" content="Bruce Shanks">
-<meta name="keywords" content="JMRI manual">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: index.shtml,v 1.4 2010-01-23 06:55:58 jacobsen Exp $ -->
+<title>Decoder Pro Manual: Index</title>
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
+<!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
 <a NAME="Top"></a>
+<h1>DecoderPro&reg; v2.8</h1>
 
-<h1>DecoderPro&reg; v2.4</h1>
-
-<h3>Updated 2/15/2009</h3>
+<h3>Updated 1/15/2010</h3>
 
 <p>
 <h3>
 A Java-based cross-platform application for the programming of Digital
 Command Control (DCC) decoders for model railroad use.</h3>
-
-<p>
-A 
-<a href="DecoderProManual_2_4.pdf">printable PDF version</a> of this manual is available for
-<a href="DecoderProManual_2_4.pdf">download</a>. Note that this is a 5MB file.
 
 <hr>
 <p>
@@ -60,172 +39,358 @@ on the computer. You can get Java as a free (but very large...) download
 at:
 <p><a href="http://java.sun.com/getjava/" target="_blank">
 http://java.sun.com/getjava/</a>
-
-<p>If  this is your first visit to our manual we suggest that you take
-<a href="../html/apps/DecoderPro/Tour.shtml">the DecoderPro&reg; tour</a>
-to  get an overview of what we&rsquo;re about to cover.
+<p>If  this is your first visit to our manual we suggest that you take the
+<a href="../html/apps/DecoderPro/Tour.shtml">DecoderPro&reg;  tour</a><br>
+to get an overview of what we&rsquo;re about to cover..
 
 <p>
 <span class="ACCENT">
 Note that all screen shots in this manual are from a Windows machine using the
- "Metal" User Interface option<!--off of a Macintosh, using the
-Mac Graphic User Interface option-->. While your screens will probably differ
+ "Metal" User Interface option. While your screens will probably differ
 in some layout details, they will be essentially the same.</span>
 
-<p><span class="UPDATE">Note: This entire manual has been updated to correspond to 
-DecoderPro 2.4, and the HTML verified using HTML4 and Cascading Style Sheets. </span>
-
+<hr>
+<p><span class="UPDATE">Note: This entire manual has been updated to correspond to DecoderPro 2.8, and the HTML verified using HTML4 and Cascading Style Sheets. If the formatting looks odd, you probably need to update your browser. </span>
 <h1>
 <a NAME="index"></a>Index</h1>
 
 <div align="right">
+<p><a href="DecoderProManual2-4.zip" target="_blank">
+Download a .ZIP archive<br>
+of this entire manual.</a>
+</div>
+
+<div align="right">
 <p>
-<a href="DecoderProManual_2_4.pdf">Download a .PDF file<br>
-of this entire manual.</a></div>
+Download a .PDF file<br>
+of this entire manual.</div>
+<h1>Table of Contents</h1>
+<h4>
+  <a NAME="GettingStarted" id="GettingStarted"></a>Getting
+    started</h4>
+<ol>
+<li>
+<a href="Start_DCC.shtml">What is DCC?</a></li>
+
+<li>
+<a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro&reg;  work with?</a></li>
+
+<li>
+<a href="Start_DCC_Hardware.shtml">What hardware do I need?</a></li>
+
+<li>
+<a href="Start_DecoderPro.shtml">How do I start the program?</a></li>
+
+<li>
+<a href="Start_Preferences.shtml">How do I set up my preferences?</a></li>
+</ol>
 
 <h4>
-  <a NAME="Getting Started"></a><a href="Getting_Started.shtml#Top">Getting
-    started</a></h4>
-<ol>
-<li>
-<a href="Getting_Started.shtml#What is DCC">What is DCC?</a></li>
-
-<li>
-<a href="Getting_Started.shtml#DCC systems">What DCC systems will DecoderPro&reg;  work with?</a></li>
-
-<li>
-<a href="Getting_Started.shtml#DCC Hardware">What hardware do I need?</a></li>
-
-<li>
-<a href="Getting_Started.shtml#Start">How do I start the program?</a></li>
-
-<li>
-<a href="Getting_Started.shtml#Preferences">How do I set up my preferences?</a></li>
-</ol>
-
+<a NAME="Setting up"></a>Using DecoderPro&reg;</h4>
+<ul>
+  <li><a href="Programmer_Setup.shtml">How do I set up to program
+    a decoder?</a></li>
+  <li><a href="Programmer_Start.shtml">What are the Programming
+    Modes?</a></li>
+</ul>
+<h4>DecoderPro&reg; Programming Modes</h4>
+<ul>
+  <li><a href="Programmer_SingleCV.shtml">Single CV Programmer</a></li>
+  <li><a href="Programmer_ServiceMode.shtml">Service Mode Programmer</a></li>
+  <li><a href="Programmer_OpsMode.shtml">Ops Mode Programming</a></li>
+  <li><a href="Programmer_Multi_Decoder.shtml">Multi Decoder Control (Programming)</a></li>
+</ul>
 <h4>
-<a NAME="Setting up"></a><a href="Basic_Programming.shtml#Top">Using DecoderPro</a>&reg;</h4>
-
-<ol>
-<li>
-<a href="Basic_Programming.shtml#Setting Up">How do I set up to program
-a decoder?</a></li>
-
-<li>
-<a href="Basic_Programming.shtml#Programming Modes">What are the Programming
-Modes?</a></li>
-</ol>
-
-<h4><a href="Basic_Programming.shtml#Top">DecoderPro&reg; Programming Modes</a></h4>
-<ol>
-  <li><a href="Simple_Programmer.shtml">Single CV Programmer</a></li>
-  <li><a href="Basic_Programming.shtml#ServiceMode">Service Mode Programmer</a></li>
-  <li><a href="Basic_Programming.shtml#OpsMode">Ops Mode Programming</a></li>
-  <li><a href="Multi_Decoder_Control.shtml">Multi Decoder Control (Programming)</a></li>
-</ol>
-<h4>
-<a NAME="Basic Programmer"></a>
-<a href="Basic_Programming.shtml#Basic Programmer">The Basic Programmer</a></h4>
-
-<ol>
-<li>
-<a href="Basic_Programming.shtml#Roster">Entering locomotives in
-the "Roster"</a></li>
-
-<li>
-<a href="Basic_Programming.shtml#Basic 2">The basic programmer</a></li>
-
-<li>
-<a href="Basic_Programming.shtml#Read Data">Reading the data from the decoder</a></li>
-
-<li>
-<a href="Basic_Programming.shtml#Enter/Edit data">Entering and editing new
-data</a></li>
-
-<li>
-<a href="Basic_Programming.shtml#Write Data">Writing the new data to the
-decoder</a></li>
-
-<li>
-<a href="Basic_Programming.shtml#Save Data">Saving the new data to a file</a></li>
-
-<li>
-<a href="Basic_Programming.shtml#Do More">What if I need to do more?</a></li>
-</ol>
-
+  <a NAME="Basic Programmer"></a>
+The Basic Programmer</h4>
+<ul>
+  <li><a href="Basic_Start.shtml">Entering locomotives in
+    the "Roster"</a></li>
+  <li><a href="Basic_BasicPane.shtml">The basic programmer</a></li>
+  <li><a href="Basic_BasicPane.shtml">Reading the data from the decoder</a></li>
+  <li><a href="Basic_BasicPane.shtml">Entering and editing new
+    data</a></li>
+  <li><a href="Basic_BasicPane.shtml">Writing the new data to the
+    decoder</a></li>
+  <li><a href="Basic_BasicPane.shtml">Saving the new data to a file</a></li>
+  <li><a href="Basic_BasicPane.shtml#Do More">What if I need to do more?</a></li>
+</ul>
 <h4>
 <a NAME="Advanced Programmer"></a>The Comprehensive Programmer</h4>
-
-<ol>
-<li>
-<a href="Comp_Setup_Roster.shtml">Set-up and Roster Panes</a></li>
-
-<li>
-<a href="Comp_Basic.shtml">Expanded Basic Pane</a></li>
-
-<li>
-<a href="Comp_Motor.shtml">Motor Control Pane</a></li>
-
-<li>
-<a href="Comp_Speed.shtml">Speed Control Pane</a></li>
-
-<li><a href="Comp_Speed_Talble.shtml" target="_parent">Speed Table Pane</a></li>
-<li>
-<a href="Comp_FMap.shtml">Function Mapping Pane</a></li>
-
-<li><a href="Comp_FunctionLabel.shtml">Function Labels Pane</a></li>
-<li>
-<a href="Comp_LightFX.shtml">Lights Pane</a></li>
-
-<li>
-<a href="Comp_Consist.shtml">Consisting Pane</a></li>
-
-<li>
-<a href="Comp_Advanced.shtml">Advanced Features Pane</a></li>
-
-<li><a href="Comp_Analog.shtml">Analog Controls Pane</a></li>
-<li>
-<a href="Comp_SoundFX.shtml">Sound Pane</a></li>
-
-<li>
-<a href="Comp_SoundLevels.shtml"> Sound Levels Pane</a></li>
-
-<li>
-<a href="Comp_GlobalCVs.shtml">Global CV Pane</a></li>
-
-<li>
-<a href="Comp_ManfSpecific.shtml">Manufacturer-Specific Pane</a></li>
-
-<li>
-<a href="Comp_PrintData.shtml">Printing the Decoder Data</a></li>
-</ol>
+<ul>
+  <li><a href="Comp_Setup_Roster.shtml">Set-up and Roster Panes</a></li>
+  <li><a href="Comp_Basic.shtml">Expanded Basic Pane</a></li>
+  <li><a href="Comp_Motor.shtml">Motor Control Pane</a></li>
+  <li><a href="Comp_Speed.shtml">Speed Control Pane</a></li>
+  <li><a href="Comp_Speed_Talble.shtml" target="_parent">Speed Table Pane</a></li>
+  <li><a href="Comp_FMap.shtml">Function Mapping Pane</a></li>
+  <li><a href="Comp_LightFX.shtml">Lights Pane</a></li>
+  <li><a href="Comp_Consist.shtml">Consisting Pane</a></li>
+  <li><a href="Comp_Advanced.shtml">Advanced Features Pane</a></li>
+  <li><a href="Comp_Analog.shtml">Analog Controls Pane</a></li>
+  <li><a href="Comp_SoundFX.shtml">Sound Pane</a></li>
+  <li><a href="Comp_SoundLevels.shtml"> Sound Levels Pane</a></li>
+  <li><a href="Comp_GlobalCVs.shtml">Global CV Pane</a></li>
+  <li><a href="Comp_ManfSpecific.shtml">Manufacturer-Specific Pane</a></li>
+  <li><a href="Comp_PrintData.shtml">Printing the Decoder Data</a></li>
+</ul>
+<h4><a name="AdvanceProgram"></a>The Advanced Programmer</h4>
+<ul>
+  <li><a href="Adv_start.shtml">Starting Advanced programmer</a></li>
+  <li><a href="Adv_FunctionLabel.shtml">Function Labels Pane</a></li>
+  <li><a href="Adv_RosterMedia.shtml">Roster Media</a></li>
+  <li><a href="Comp_Basic.shtml">Expanded Basic Pane</a></li>
+  <li><a href="Comp_Motor.shtml">Motor Control Pane</a></li>
+  <li><a href="Comp_Speed.shtml">Speed Control Pane</a></li>
+  <li><a href="Comp_Speed_Talble.shtml" target="_parent">Speed Table Pane</a></li>
+  <li><a href="Comp_FMap.shtml">Function Mapping Pane</a></li>
+  <li><a href="Comp_LightFX.shtml">Lights Pane</a></li>
+  <li><a href="Comp_Consist.shtml">Consisting Pane</a></li>
+  <li><a href="Comp_Advanced.shtml">Advanced Features Pane</a></li>
+  <li><a href="Comp_Analog.shtml">Analog Controls Pane</a></li>
+  <li><a href="Comp_SoundFX.shtml">Sound Pane</a></li>
+  <li><a href="Comp_SoundLevels.shtml"> Sound Levels Pane</a></li>
+  <li><a href="Comp_GlobalCVs.shtml">Global CV Pane</a></li>
+  <li><a href="Comp_ManfSpecific.shtml">Manufacturer-Specific Pane</a></li>
+  <li><a href="Comp_PrintData.shtml">Printing the Decoder Data</a></li>
+</ul>
 <h4><a name="Main"></a>DecoderPro&reg; Main Window</h4>
-
-<ol>
+<ul>
   <li><a href="Main_Main.shtml">Main Window</a></li>
   <li><a href="Main_Menu.shtml">Menu Overview</a></li>
-  <li><a href="Main_File.shtml">File Menu</a></li>
-  <li><a href="Main_Edit.shtml">Edit Menu</a></li>
-  <li><a href="Main_Tool.shtml">Tools Menu</a></li>
-  <li><a href="Main_Roster.shtml">Roster Menu</a></li>
-  <li><a href="Main_Panels.shtml">Panels Menu</a></li>
-  <li><a href="Main_Menu.shtml#System">System dependent menu </a></li>
-  <li><a href="Main_Debug.shtml">Debug Menu</a></li>
-  <li><a href="Main_Window.shtml">Window Menu</a></li>
-  <li><a href="Main_Help.shtml">Help Menu</a></li>
-</ol>
+  <li><a href="Main_File.shtml">File Menu</a>
+    <ul>
+      <li>Print Decoder Definitions...</li>
+      <li>Print Preview Decoder Definitions...</li>
+      <li>Quit</li>
+    </ul>
+  </li>
+  <li><a href="Main_Edit.shtml">Edit Menu</a>
+    <ul>
+      <li>Cut</li>
+      <li>Copy</li>
+      <li>Paste</li>
+      <li>Preferences...</li>
+    </ul>
+  </li>
+  <li><a href="Main_Tool.shtml">Tools Menu</a>
+    <ul>
+      <li>Programmers <img src="images/arrow.gif" width="20" height="9" alt="arrow">
+        <ul>
+          <li><a href="Programmer_SingleCV.shtml">Single CV Programmer</a></li>
+          <li><a href="Programmer_ServiceMode.shtml">Service Mode Programmer</a></li>
+          <li><a href="Programmer_OpsMode.shtml">Ops Mode Programmer</a></li>
+          <li><a href="Programmer_Multi_Decoder.shtml">Multi-Decoder Control</a></li>
+        </ul>
+      </li>
+      <li>Tables <img src="images/arrow.gif" width="20" height="9" alt="arrow"> (not yet covered in this manual)</li>
+      <li><a href="Main_Throttle.shtml">Throttles</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
+        <ul>
+          <li>New Throttle...</li>
+          <li>Save Throttle Layout...</li>
+          <li>Load Throttle Layout...</li>
+          <li>Save as Default Throttle Layout</li>
+          <li>Load Default Throttle Layout</li>
+          <li><a href="Main_Tool.shtml#Preferences">Throttle Preferences...</a></li>
+        </ul>
+      </li>
+      <li><a href="Main_ConsistControl.shtml">Consisting Tool...</a></li>
+      <li>Clocks <img src="images/arrow.gif" width="20" height="9" alt="arrow">
+        <ul>
+          <li><a href="Main_FastClockSetup.shtml">Set up Fast Clock...</a></li>
+          <li>Nixie Clock</li>
+          <li>LCD Clock</li>
+          <li>Analog Clock</li>
+        </ul>
+      </li>
+      <li>Power Control...</li>
+      <li><a href="Main_TurnoutControl.shtml">Turnout Control...</a></li>
+      <li>Simple Signal Logic (not covered in this manual)</li>
+      <li>Sensor Groups... (not covered in this manual)</li>
+      <li><a href="Main_Speeometer.shtml">Speedometer...</a></li>
+      <li><a href="Main_lightControl.shtml">Light Control...</a></li>
+      <li>Dispatcher... (not covered in this manual)</li>
+      <li>Send DCC Packet...(not covered in this manual)</li>
+      <li>USS CTC Tools <img src="images/arrow.gif" width="20" height="9" alt="arrow">(not covered in this manual)</li>
+      <li><a href="Ops_Start.shtml">Operations</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
+        <ul>
+          <li><a href="Ops_Settings.shtml">Setup</a></li>
+          <li><a href="Ops_Locations.shtml">Locations</a></li>
+          <li><a href="Ops_Cars.shtml">Cars</a></li>
+          <li><a href="Ops_Engines.shtml">Engines</a></li>
+          <li><a href="Ops_Routes.shtml">Routes</a></li>
+          <li><a href="Ops_Trains.shtml">Trains</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="Main_Roster.shtml">Roster Menu</a>
+    <ul>
+      <li><a href="Main_Roster.shtml#CreateRoster">Create Entry...</a></li>
+      <li><a href="Main_Roster.shtml#EditRoster">Edit Entry...</a></li>
+      <li>Copy Entry...</li>
+      <li>Import Entry...</li>
+      <li>Export Entry...</li>
+      <li>Delete Entry...</li>
+      <li><a href="Main_Roster.shtml#PrintOutput">Print Summary</a></li>
+      <li><a href="Main_Roster.shtml#PrintOutput">Print Preview Summary...</a></li>
+      <li><a href="Main_RosterGroup.shtml">Roster Groups</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
+        <ul>
+          <li>Create Roster Group</li>
+          <li>Set Active Roster Group</li>
+          <li>Delete Roster Group</li>
+          <li>Table Association</li>
+          <li>Associate Roster Entry to Group</li>
+          <li>Disassociation of Roster Entry to Group</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="Main_Panels.shtml">Panels Menu</a>
+    <ul>
+      <li>New Panel <img src="images/arrow.gif" width="20" height="9" alt="arrow">
+        <ul>
+          <li><a href="Main_Panels.shtml#PanelEditor">Panel Editor</a></li>
+          <li><a href="Main_Panels.shtml#LayoutEditor">Layout Editor</a></li>
+        </ul>
+      </li>
+      <li>Load Panels...</li>
+      <li>Store Panels...</li>
+      <li>Show Panel <img src="images/arrow.gif" width="20" height="9" alt="arrow"> </li>
+      <li>Run Script...</li>
+      <li><a href="/Main_Panels.shtml#ThreadMonitor">Thread Monitor</a></li>
+      <li>Script Output</li>
+      <li>Script Entry</li>
+    </ul>
+  </li>
+  <li><a href="Ops_Start.shtml">Operations</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
+    <ul>
+      <li><a href="Ops_Settings.shtml">Setup</a></li>
+      <li><a href="Ops_Locations.shtml">Locations</a></li>
+      <li><a href="Ops_Cars.shtml">Cars</a></li>
+      <li><a href="Ops_Engines.shtml">Engines</a></li>
+      <li><a href="Ops_Routes.shtml">Routes</a></li>
+      <li><a href="Ops_Trains.shtml">Trains</a></li>
+    </ul>
+  </li>
+  <li><a href="Main_Menu.shtml#System">System dependent menu </a>
+    <ul>
+      <li><a href="Main_acela.shtml">Acela</a></li>
+          <li><a href="Main_CMRI.shtml">CMRI</a></li>
+          <li><a href="Main_EasyDCC.shtml">EasyDCC</a></li>
+          <li><a href="Main_GrapeVine.shtml">Grapevine</a></li>
+          <li><a href="Main_LocoNet.shtml">LocoNet </a>&nbsp;&nbsp;&nbsp;</li>
+          <li><a href="Main_NCE.shtml">NCE</a></li>
+          <li><a href="Main_OakTreeSystems.shtml">OakTreeSystems</a></li>
+          <li><a href="Main_Powerline.shtml">Powerline</a></li>
+          <li><a href="Main_QSI.shtml">QSI</a></li>
+          <li><a href="Main_RPS.shtml">RPS</a></li>
+          <li><a href="Main_SECSI.shtml">SECSI</a></li>
+          <li><a href="Main_SPROG.shtml">SPROG</a></li>
+          <li><a href="Main_TMCC.shtml">TMCC</a></li>
+          <li><a href="Main_wangrow.shtml">wangrow</a></li>
+          <li><a href="Main_XpressNet.shtml">XpressNet</a></li>
+          <li><a href="Main_Zimo.shtml">Zimo</a></li>
+    </ul>
+  </li>
+  <li><a href="Main_Debug.shtml">Debug Menu</a>
+    <ul>
+      <li><a href="Main_Debug.shtml#memoryMonitor">Memory Usage Monitor</a></li>
+      <li>Import Decoder File</li>
+      <li>Import Decoder URL</li>
+      <li>Recreate Decoder Index</li>
+      <li>Recreate Roster Index</li>
+      <li>Check XML File</li>
+      <li>Validate XML File</li>
+      <li>Check Decoder Names</li>
+      <li>Check Programmer Names</li>
+          <li>Load Logixs Disabled</li>
+          <li><a href="Main_Debug.shtml#logMessage">Log Message</a></li>
+          <li>PRICOM <img src="images/arrow.gif" width="20" height="9" alt="arrow">
+            <ul>
+              <li><a href="Main_PRICOM.shtml">PRICOM Pocket Tester</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
+                <ul>
+                  <li>Connect</li>
+                </ul>
+              </li>
+              <li>PRICOM Flash Updater</li>
+            </ul>
+          </li>
+          <li>USB Input Control</li>
+          <li>USB Device Viewer</li>
+          <li>RailDriver Throttle</li>
+          <li>Start Mini Web Server</li>
+          <li>Start Wi Throttle</li>
+    </ul>
+  </li>
+  <li><a href="Main_Window.shtml">Window Menu</a>
+    <ul>
+      <li>Minimize</li>
+    </ul>
+    <p>(lists all DecoderPro windows that are open)</p>
+    <ul>
+      <li>
+        <input name="checkbox" id="checkbox" checked="checked" type="checkbox">
+        DecoderPro</li>
+      <li> <strong>
+        <input name="checkbox2" id="checkbox2" type="checkbox">
+        </strong>LocoNet Traffic</li>
+      <li> <strong>
+        <input name="checkbox3" id="checkbox3" type="checkbox">
+      </strong>        Power Control</li>
+    </ul>
+    <ul>
+      <li></li>
+    </ul>
+  </li>
+  <li><a href="Main_Help.shtml">Help Menu</a>
+    <ul>
+      <li>Window Help...</li>
+          <li>General Help...</li>
+          <li>License...</li>
+          <li>Send Problem Report...</li>
+          <li>Locations...</li>
+          <li>Context....</li>
+    </ul>
+</li>
+</ul>
+<h4><a name="Operations"></a>DecoderPro&reg; Operations Program</h4>
+<ul>
+  <li><a href="Ops_Start.shtml">What does Operations do?</a></li>
+  <li><a href="Ops_Settings.shtml">Settings</a>
+    <ul>
+      <li><a href="Ops_PrintOptions.shtml">Manifest Print Options</a></li>
+    </ul>
+  </li>
+  <li><a href="Ops_Locations.shtml">Locations</a>
+    <ul>
+      <li><a href="Ops_AddSiding.shtml">Add Siding Track</a></li>
+      <li><a href="Ops_AddYard.shtml">Add Yard Track</a></li>
+      <li><a href="Ops_AddInterchange.shtml">Add Interchange Track</a></li>
+      <li><a href="Ops_AddStaging.shtml">Add Staging Track</a></li>
+    </ul>
+  </li>
+  <li><a href="Ops_Cars.shtml">Cars</a></li>
+  <li><a href="Ops_Engines.shtml">Engines</a></li>
+  <li><a href="Ops_Routes.shtml">Routes</a></li>
+  <li><a href="Ops_Trains.shtml">Trains</a></li>
+  <li><a href="Ops_TripThruOperations.shtml">A Trip Through Operations</a></li>
+</ul>
 <h4><a NAME="DecoderDefinition"></a>Creating a Decoder Definition </h4>
-<ol>
-<li><a href="Dcode_Start.shtml">Getting Started</a></li>
-<li><a href="Dcode_Format.shtml">Format</a></li>
-<li><a href="Dcode_Testing.shtml">Testing</a></li>
-<li><a href="Dcode_Submit.shtml">Submitting to JMRI</a></li>
-</ol>
+<ul>
+  <li><a href="Dcode_Start.shtml">Getting Started</a></li>
+  <li><a href="Dcode_Format.shtml">Format</a></li>
+  <li><a href="Dcode_Testing.shtml">Testing</a></li>
+  <li><a href="Dcode_Submit.shtml">Submitting to JMRI</a></li>
+</ul>
 <h4><a name="Error"></a>Error Messages</h4>
-<ol>
+<ul>
   <li><a href="Error.shtml">Decoder Programmer Error Messages</a></li>
-</ol>
+</ul>
 <hr>
+<p>The <a href="http://jmri.org/Download/index.html">JMRI download page</a>
+is hosted by <A href="http://sourceforge.net">
+<img src="images/sflogo.png" width="88" height="31" border="0" alt="SourceForge Logo" align="middle" hspace="10">sourceforge.net</A>.</p>
 <p>
 To give feedback on this HTML manual, ask questions about things not
 covered, or make suggestions for improvements to the manual or the software,
@@ -238,15 +403,55 @@ are best submitted to the
   <a href="http://groups.yahoo.com/group/jmriusers/">JMRI E-mail list</a> in plain text format. This will make it easier to copy into the files, and help prevent "Microsoft Bloat" in the HTML.
 <p>Thanks for reading, and Let's Run Trains!
 
-<p>
-<br>Joe Ellis
-<br>CEO, Bethlehem-Ares Railroad, a 1:160 Corporation
-<br>09/04/2002</p>
-<p>Updated to JMRI version 1.3 by Bob Blackwell.</p>
-<p>no date</p>
-<p>Updated  to JMRI version 2.4, new sections added<br>
-Dale A. Tripp and Bruce Shanks<br>
-2/15/2009</p>
+<table width="90%" border="1" align="center" cellpadding="2" cellspacing="1">
+  <caption>
+    Revisions
+  </caption>
+  <tr>
+    <th width="8%" scope="col">Version</th>
+    <th width="8%" scope="col">Revision Date</th>
+    <th width="13%" scope="col">Editors</th>
+    <th width="71%" scope="col">Major Revisions</th>
+  </tr>
+  <tr>
+    <td align="left" valign="top">original</td>
+    <td align="left" valign="top">9/4/2002</td>
+    <td align="left" valign="top">Joe Ellis</td>
+    <td>Bethlehem-Ares Railroad, a 1:160 Corporation</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">1.3</td>
+    <td align="left" valign="top">no date</td>
+    <td align="left" valign="top">Bob Blackwell</td>
+    <td>Updated to JMRI version 1.3</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">2.4</td>
+    <td align="left" valign="top">2/15/2009</td>
+    <td align="left" valign="top">Dale A. Tripp Bruce Shanks</td>
+    <td>Updated to JMRI 2.4, new sections added<br>
+      added Main Menu information<br>
+      added Decoder Definition How to<br>
+      added Error code page</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">2.8</td>
+    <td align="left" valign="top">1/15/2010</td>
+    <td align="left" valign="top">Dale A. Tripp Bruce Shanks</td>
+    <td>Updated to JMRI 2.8<br>
+      Expanded Table of Contents with additiona direct links
+      <br>
+      Updated Comprehensive Programmer, moved Function Label pane to Advanced Programmer<br>
+      added Advanced Programmer features, including Roster Media pane<br>
+      Added Roster Group feature<br>
+      Updated decoder definition submission process<br>
+    Added Operations section</td>
+  </tr>
+</table>
+<hr>
+<div align=right>Go to the
+<a href="http://groups.yahoo.com/group/jmriusers/">
+JMRI Users home page on Yahoo Groups</a></div>
 
 <!--#include virtual="/Footer" -->
 </body>

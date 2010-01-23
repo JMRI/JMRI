@@ -1,40 +1,26 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Main_Debug.shtml,v 1.4 2009-12-20 03:23:21 jacobsen Exp $ -->
 <html lang="en">
 <head>
-<TITLE>
-DecoderPro&reg; Main Window
-</TITLE>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
-<meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
-<meta name="Revised_By" content="Bob Blackwell - afticarr@sympatico.ca">
-<meta name="Revised_By" content="Dale Tripp">
-<meta name="Revised_By" content="Bruce Shanks">
-<meta name="keywords" content="JMRI manual">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: Main_Debug.shtml,v 1.5 2010-01-23 06:55:57 jacobsen Exp $ -->
+<title>Debug Menu</title>
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
+<!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
+<a NAME="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
 <h1>Debug Menu </h1>
 
@@ -51,11 +37,11 @@ DecoderPro&reg; Main Window
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
 <p><strong>Import Decoder File</strong>
 <blockquote>
-  <p>Opens your operating systems <strong>Open</strong> dialog to open to locate a decoder definition file to install in DecoderPro.</p>
+  <p>Opens your operating systems <strong>Open</strong> dialog  to locate a decoder definition file to install in DecoderPro.</p>
 </blockquote>
 <p><strong>Import Decoder URL</strong>
 <blockquote>
-  <p>Opens an <strong>Input</strong> prompt in which you type an URL of a file to download and install a decoder definition file in DecoderPro..</p>
+  <p>Opens an <strong>Input</strong> prompt in which you type a URL of a file to download and install a decoder definition file in DecoderPro.</p>
 </blockquote>
 <p><strong>Recreate Decoder Index</strong>
 <blockquote>
@@ -93,15 +79,9 @@ DecoderPro&reg; Main Window
 <blockquote>
   <p>Opens the <a href="#logMessage">Make Log Entry </a>prompt to allow you manually enter an entry in the log file.</p>
 </blockquote>
-<p><strong><a name="displaylog"></a>Display Message Log</strong>
-<blockquote>
-  <p>Opens a window to display log messages.</p>
-</blockquote>
 <p><img src="images/separator.png" alt="sep" width="340" height="4">
-<p><strong><a name="pricom"></a>PRICOM <img src="images/arrow.gif" alt="arrow" width="20" height="9">
-</strong>
+<p><strong><a name="pricom"></a>PRICOM <img src="images/arrow.gif" alt="arrow" width="20" height="9"></strong>
 <ul>
-<li>
   <ul>
     <li><strong>PRICOM Packet Tester <img src="images/arrow.gif" alt="arrow" width="20" height="9">    </strong>    
       <ul>
@@ -110,7 +90,6 @@ DecoderPro&reg; Main Window
     </li>
     <li><strong>PRICOM Flash Update</strong></li>
   </ul>
-  </li>
 </ul>
 <blockquote>
   <p>Opens the P<strong>RICOM Flash Updater</strong> window to facilitate updating the firmware.</p>
@@ -136,7 +115,15 @@ DecoderPro&reg; Main Window
   <p>The <a href="../html/web/index.shtml">JMRI mini web server </a>is meant to be a quick and easy  way for model railroaders, not Masters of the Web,   to get a web connection to JMRI up and running.</p>
 </blockquote>
 <p align="center"><img src="images/Main_Debug03.png" alt="mini server" width="407" height="121" border="4"></p>
-<p>&nbsp;</p>
+<p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
+<p><strong>Start Wi Throttle</strong></p>
+<blockquote>
+  <p>Opens the WiThrottle window which controls the connection between Wi Throttle and iphone, or ipad touch and JMRI</p>
+  <p>Additional information on <strong><a href="http://www.withrottle.com/WiThrottle/Home.shtml" target="_blank">creating a Wi Throttle.</a></strong></p>
+  <p align="center">
+    <input type="image" name="Start Wi Throttle" id="Start Wi Throttle" src="images/Main_Debug04.png">
+  </p>
+</blockquote>
 <hr>
 <h4><a name="memoryMonitor"></a> Memory Monitor Tool</h4>
 <p align="center"><img src="images/Main_Debug01.png" alt="Memory Monitro" width="513" height="188" border="4"> </p>

@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: Ops_schedule.shtml,v 1.1 2010-01-23 06:55:58 jacobsen Exp $ -->
+<title>Operations-Schedules</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>Using DecoderPro&reg; to Operate Trains</h1>
+<h1>Operations Manifest Schedule</h1>
+
+<div align=right>
+<p><a href="Ops_Locations.shtml">back</a><a href="#"></a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<hr>
+<p>If you would like to see cars delivered in a particular sequence, or  with a specific load for delivery or shipping, the program allows you to  apply a schedule to a siding. This is an optional feature and shouldn't  be used until you become very familiar with how the program generates  manifests and switch lists. A schedule provides very fine control on the  order types of cars will be delivered to a siding. You can also specify  the road name for the type of car delivered. For example, if you wanted  two SP boxcars to be delivered followed by a tank car loaded with "Oil",  you can create a schedule that will do exactly that. </p>
+<h4>Creating a Schedule</h4>
+<p>First open the<a href="Ops_Locations.shtml"> Locations </a>panel.</p>
+<p><img src="images/Ops_Schedule01.png" width="661" height="212" alt="schedule start"></p>
+<p>Then press 
+  <input type="submit" name="button" id="button" value="Edit"> 
+to the right of the location to open the <strong>Edit Locations </strong>panel. </p>
+<p><img src="images/Ops_Schedule02.png" width="705" height="144" alt="Schedule select"></p>
+<p>Then press
+  <input type="submit" name="button2" id="button2" value="Edit">
+to the right of the location to open the <strong>Edit Siding Track </strong>panel. </p>
+<p>&nbsp;</p>
+<table width="90%" border="0" cellspacing="1" cellpadding="2">
+  <tr>
+    <td width="44%"><img src="images/Ops_Schedule03.png" width="419" height="460" alt="schedule"></td>
+    <td width="56%" align="left" valign="top"><p>Next to <strong>Optional Schedule</strong>
+        <select name="select" id="select">
+</select>
+on the <strong>Edit Siding Track</strong> panel. Press
+<input type="submit" name="button3" id="button3" value="Edit">
+should open the <strong>Add Schedule</strong> panel. </p>
+    <p>&nbsp;</p></td>
+  </tr>
+</table>
+<p><img src="images/Ops_Schedule04.png" width="897" height="259" alt="schedule"></p>
+<p>Type  a <strong>Name </strong>for your schedule and then press
+  <input type="submit" name="button4" id="button4" value="Add Schedule">
+on the bottom of the panel. Multiple sidings can use the same  schedule as long as the sidings use the same car types and roads.</p>
+<p><img src="images/Ops_Schedule05.png" width="898" height="257" alt="schedule"></p>
+<p> Now  add your first delivery for this siding by selecting a car type 
+  <select name="select2" id="select2">
+    <option>Boxcar</option>
+  </select>
+then pressing 
+<input type="submit" name="button5" id="button5" value="Add car type">
+. A new item should appear in your schedule  containing the type of car,</p>
+<p><img src="images/Ops_Schedule06.png" width="901" height="257" alt="schedule"></p>
+<p>  You can if you wish specify a particular road for the type of car  you entered, or leave it blank if you don't care about the road name.  You  can also specify the car load received and shipped. </p>
+<p> If  you wanted more than one car type to be delivered consecutively,  increase the count to the number that you wish. The maximum count is 10  and the minimum is 1. Repeat selecting the car types and pressing 
+  <input type="submit" name="button6" id="button6" value="Add car type">
+until your have a delivery schedule you like. Press
+<input type="submit" name="button7" id="button7" value="Save Schedule">
+and close the schedule panel when you are done. </p>
+<p>Note only car types and roads that are accepted by this siding  are available. If a car type or road isn't available, check the car  types and roads for this siding and location. </p>
+<p>If you want a specific load for your cars,  you can create them using the <a href="Ops_CarAttributes.shtml">Edit Car  Attributes</a> for car <strong>Load</strong>. Each new load is associated with the car  type. For example you can have "Screws" for a boxcar, and "Oil" for a  tank car. The program will only deliver cars with a "Schedule" load to a  siding that has a Schedule that also requests that particular load.  However, cars with a Schedule load can still be placed at yards,  staging, and interchanges. </p>
+<p>You can optionally use your staging tracks to empty cars with a  "Schedule" load, and you can also optionally create "Schedule" loads  using staging tracks. </p>
+<p>You can also access your Schedules from the <a href="Ops_Locations.shtml">Locations Tools menu</a>.  The  Schedules table provides status for each schedule.  Since you can assign  a schedule to multiple sidings, the table also provides additional status for each  of the sidings that use that particular schedule.  The table also allows you  the edit a schedule once its been assigned to a siding. </p>
+<p><img src="images/Ops_Schedule07.png" width="787" height="191" alt="schedule"></p>
+
+<hr>
+
+<div align=right>
+<p><a href="Ops_Locations.shtml">back</a><a href="#"></a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -1,40 +1,26 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Main_NCE.shtml,v 1.2 2009-02-23 00:43:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
-<TITLE>
-DecoderPro&reg; Main Window
-</TITLE>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
-<meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
-<meta name="Revised_By" content="Bob Blackwell - afticarr@sympatico.ca">
-<meta name="Revised_By" content="Dale Tripp">
-<meta name="Revised_By" content="Bruce Shanks">
-<meta name="keywords" content="JMRI manual">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: Main_NCE.shtml,v 1.3 2010-01-23 06:55:57 jacobsen Exp $ -->
+<title>Comprehensive Programmer - Advanced Features Pane</title>
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
+<!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
+<a NAME="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
 <h1>NCE Menu</h1>
 
@@ -69,6 +55,9 @@ DecoderPro&reg; Main Window
 
 <p><strong><a name="Clock"></a>Monitor Clock</strong></p>
 <p>Opens the <a href="#ClockMon">NCE Clock Monitor</a> window. When the clock is running as clock master mode, the internal clock rate is adjusted to match time with the NCE command station clock. The goal is the minute should roll over at the same time for the internal clock and ProCab displays.</p>
+<p><strong>Show Cabs</strong></p>
+<p><br>
+  Opens a window that  displays the cabs currently on the system.&nbsp;  This is handy for determining the cab number assigned to a throttle that  doesn&rsquo;t have a display.&nbsp; Just use &ldquo;Show  Cabs&rdquo; to display the cabs currently on the system.&nbsp; Then plug in the cab in question and use it  again to see which one is added.&nbsp; If you  have a standalone set-up bench it&rsquo;s even easier.&nbsp; Cycle the power to clear the command station  memory. Then plug in the new cab and Show Cabs will display its number</p>
 <p><strong>Booster Programming</strong></p>
 
   <p>Booster  Programming is stated to be only for NCE booster testing, and warns that the  booster must be disconnected from the track before using.</p>
@@ -80,12 +69,12 @@ DecoderPro&reg; Main Window
 <p align="left"><strong>Backup button</strong></p>
 <p align="left">Click on the <strong>Backup</strong> button located on the bottom row. This will open the <strong>Save</strong> dialog. This will read the NCE command station memory and store the contents into the file you selected.</p>
 <p align="left"><strong>Restore button</strong></p>
-<p align="left">Click the <strong>Restore</strong> button located on the bottom row. This will display the <strong>Open</strong> dialog, select the file you want to restore to the NCE comand stations memory and click on <strong>Open</strong> button.</p>
+<p align="left">Click the <strong>Restore</strong> button located on the bottom row. This will display the <strong>Open</strong> dialog, select the file you want to restore to the NCE command stations memory and click on <strong>Open</strong> button.</p>
 <p align="left"><strong>Get button</strong></p>
 <p align="left">To review a macro, enter the number of the macro in the text box under the heading <strong>Macro</strong> and click the <strong>Get</strong> button. This will retrieve the macro from the command station's memory. If the the macro currently exists,<strong> Reply:</strong> will be macro found. If the macro does not exist, the <strong>Reply:</strong> will be macro empty. If there is a macro, the editor will show a list of accessories that the macro is programmed to activate.</p>
-<p align="left"><strong>Add butotn</strong></p>
+<p align="left"><strong>Add button</strong></p>
 <p align="left">The <strong>Add </strong>button will add an accessory's address </p>
-<p align="left"><strong>Delete butotn</strong></p>
+<p align="left"><strong>Delete button</strong></p>
 <p align="left">The <strong>Delete</strong> button will remove an accessory's address </p>
 <p align="left"><strong>Link Macro button</strong></p>
 <p align="left">Links this macro to another one.</p>
@@ -102,12 +91,12 @@ DecoderPro&reg; Main Window
 <p align="left"><strong>Backup</strong> button allows you to backup all of your consists to a file from the NCE command Station.</p>
 <p align="left"><strong>Restore</strong> button allows you restore consists from a file to the NCE command Station.</p>
 <p align="left"><strong>Get</strong> button is used to retrieve the consist from the command station's memory.</p>
-<p align="left">You may add a locomotive by entering the address and clicking the <strong>?? </strong>button. The <strong>Type</strong> button toggles between <strong>Long</strong> and <strong>Short </strong>address. Click the <strong>Add</strong> button and that locomotive will be added to the consist.</p>
+<p>You may add a locomotive by entering  the address and clicking the <strong>?? </strong>button to set forward or reverse running.  The <strong>Type</strong> button toggles between <strong>Long</strong> and <strong>Short </strong>address (remember that NCE allows both long and short  addresses in the range below 128).  Click the <strong>Add</strong> button and that locomotive will be added to the consist.</p>
 <p align="left">Alternately, you may add a locomotive from your roster with the drop-down list, then click the <strong>Add </strong>button.</p>
 <p align="left">
   <input name="checkbox" type="checkbox" id="checkbox" checked> 
   <strong>Consist roster </strong>enables saving and maintaining consist roster when checked.</p>
-<p align="left"><strong>Save</strong> and <strong>Load</strong> Button is dispalyed as a <strong>Save</strong> button when program has detected that a change has been made to a consist. When you select a consist to load from the consist menu, it becomes the <strong>Load </strong>button.</p>
+<p align="left"><strong>Save</strong> and <strong>Load</strong> Button is displayed as a <strong>Save</strong> button when program has detected that a change has been made to a consist. When you select a consist to load from the consist menu, it becomes the <strong>Load </strong>button.</p>
 <p align="left"><strong>Clear </strong>button removes all the locomotives from a consist.</p>
 <div>
   <div align="right"><a href="#Editconsist">Back</a></div>

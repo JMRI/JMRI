@@ -1,39 +1,26 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Basic_Programming.shtml,v 1.3 2009-02-23 02:02:24 jacobsen Exp $ -->
 <html lang="en">
 <head>
+<!-- Copyright ($Author: jacobsen $) 2009, 2010 -->
+<!-- $Id: Basic_Programming.shtml,v 1.4 2010-01-23 06:55:57 jacobsen Exp $ -->
 <TITLE>
 Using DecoderPro&reg;
 </TITLE>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
-<meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
-<meta name="Revised_By" content="Bob Blackwell - afticarr@sympatico.ca">
-<meta name="Revised_By" content="Dale Tripp">
-<meta name="Revised_By" content="Bruce Shanks">
-<meta name="keywords" content="JMRI manual">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
+
 <!--#include virtual="Sidebar" -->
-
 <div id="mainContent">
-
 
 <h1>Using DecoderPro&reg;</h1>
 
@@ -156,7 +143,7 @@ feel is important to record. </p>
   Most decoders will activate the <strong>Reset Menu</strong> (next to the File menu at  the top of the page).&nbsp; This will reset  the decoder to the manufacturers default settings for all the CVs, or just some  of them if the manufacturer has several reset routines.&nbsp; It does this by writing directly to a CV in  the decoder, if the decoder has that feature, CV8 in the case of Digitrax. All  decoders may not support reset and how they work is manufacturer and decoder  dependent.</p>
 <p><br>
   One decoder with a lengthy list  of reset routines is the QSI Revolution decoder, which enables a drop-down list  of options for resetting the decoder as shown below:</p>
-<p><img src="images/Factory Reset.jpg" alt="Factory Reset" width="1010" height="765" border="4"></p>
+<p><img src="images/FactoryReset.jpg" alt="Factory Reset" width="1010" height="765" border="4"></p>
 <p>You  will note that the decoder address is shown but grayed out (or blank if this is  a new locomotive in the roster).&nbsp; This  field is automatically filled in by the program and is determined from the  address entered using the <strong>Basic</strong> tab which we will get to shortly.&nbsp; This address is used with the <strong>Ident </strong>function  on the start page if you wish to recall a locomotive that is already in your  roster. </p>
 
 <p><a name="ProgramModes"></a>The Programming mode can be changed by clicking on the <strong>Set.</strong>.. button at the bottom of the window. To the left of the <strong>Set</strong>... button is the current programming mode that is selected. When you click on the <strong>Set.</strong>. button, the <strong>Set programming mode</strong> dialog box displays.</p>
@@ -176,7 +163,7 @@ necessary... but if you are having problems, experiment.  If a mode is not suppo
 
 <p>But, first a let&rsquo;s talk a  bit about Roster management.&nbsp; The Set-up  screen (the one where we selected the decoder) and the initial DecoderPro  &ldquo;Splash&rdquo; screen have a top tab called Roster.&nbsp;  When you click on it you get opportunities to modify, print and move  your roster files.&nbsp; Particularly  interesting are<strong> Export/Import </strong>and <strong>Copy</strong>.&nbsp;  Let&rsquo;s say you and a friend have two identical Berkshires, and you desire  to have yours to be set up just like your friends.&nbsp; Now, you could put his loco on your track and  read all the CVs out and then put them in yours, but if he lives on the other  coast that&rsquo;s not practical.&nbsp; So, have him  use DecoderPro to export his loco file and e-mail it to you.&nbsp; You import it into DecoderPro, change the  address if you wish and then use that roster entry to program your loco.&nbsp;Similarly you can Copy a roster entry to duplicate one  of your own locomotives into a second roster entry with it&rsquo;s own address.</p>
 
-<p align="center"><img src="images/Roster Edit.png" alt="Roster Edit" width="412" height="265" border="4"></p>
+<p align="center"><img src="images/RosterEdit.png" alt="Roster Edit" width="412" height="265" border="4"></p>
 
 <p>Let&rsquo;s  move on to the Basic Programmer.</p>
 <div align=right>

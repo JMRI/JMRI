@@ -1,42 +1,28 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Main_Tool.shtml,v 1.2 2009-02-23 00:43:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
-<TITLE>
-DecoderPro&reg; Main Window
-</TITLE>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="Author" content="Joseph A. Ellis - TesserAct Studios">
-<meta name="GENERATOR" content="Mozilla/4.5 (Macintosh; U; PPC) [Netscape]">
-<meta name="Revised_By" content="Bob Blackwell - afticarr@sympatico.ca">
-<meta name="Revised_By" content="Dale Tripp">
-<meta name="Revised_By" content="Bruce Shanks">
-<meta name="keywords" content="JMRI manual">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: Main_Tool.shtml,v 1.3 2010-01-23 06:55:58 jacobsen Exp $ -->
+<title>DecoderPro Tool Menu</title>
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
+<!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
+<a name="Top"></a>
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Tool Menu </h1>
+<h1>Tools Menu </h1>
 
 <div align=right>
 <p><a href="Main_Edit.shtml">Previous | </a><a href="Main_Roster.shtml">Next</a></p>
@@ -49,25 +35,25 @@ DecoderPro&reg; Main Window
   <li>Single CV Programmer</li>
 </ul>
 <blockquote>
-  <p>Opens the <a href="Simple_Programmer.shtml">Simple Programmer </a></p>
+  <p>Opens the <a href="Programmer_SingleCV.shtml">Simple Programmer </a></p>
 </blockquote>
 <ul>
   <li>Service Mode Programmer </li>
 </ul>
 <blockquote>
-  <p>	Opens the <a href="Basic_Programming.shtml#ServiceMode">Service Mode Programmer</a>.</p>
+  <p>	Opens the <a href="Programmer_ServiceMode.shtml">Service Mode Programmer</a>.</p>
 </blockquote>
 <ul>
   <li>Ops-Mode Programmer</li>
 </ul>
 <blockquote>
-  <p>Opens the <a href="Basic_Programming.shtml#OpsMode">Ops-Mode Programmer. </a></p>
+  <p>Opens the <a href="Programmer_OpsMode.shtml">Ops-Mode Programmer. </a></p>
 </blockquote>
 <ul>
   <li>Multi-Decoder Control</li>
 </ul>
 <blockquote>
-  <p>Opens the <a href="Multi_Decoder_Control.shtml">Multi-Decoder Control</a> window.</p>
+  <p>Opens the <a href="Programmer_Multi_Decoder.shtml">Multi-Decoder Control</a> window.</p>
 </blockquote>
 <p><strong>Tables </strong><img src="images/arrow.gif" alt="arrow" width="20" height="9"> (advanced users, beyond the scope of this manual)</p>
 <blockquote>
@@ -93,9 +79,71 @@ DecoderPro&reg; Main Window
   <p>Displays  the <strong>Open</strong> dialog box allowing you to select a throttle file that has been saved in the default folder above, or the location of your choice.</p>
 </blockquote>
 <ul>
-  <li>Save Throttle Preferences...</li>
+  <li>Save as Default Throttle Layout</li>
 </ul>
 <blockquote>
+  <p>Saves your current Thottle as the default layout	</p>
+</blockquote>
+<ul>
+  <li>Load Default Throttle Layout</li>
+</ul>
+<blockquote>
+  <p>Loads the Throttle that you saved as the default</p>
+</blockquote>
+<ul>
+  <li><a name="Preferences"></a>Throttle Preferences...</li>
+</ul>
+<blockquote>
+  <p>Opens the Throttles preferences dialog</p>
+  <p align="center"><img src="images/Main_Tool01.png" width="584" height="327" alt="Throttle Prefereences"></p>
+  <blockquote>
+    <p align="left">Select the options that you require</p>
+    <p align="left">
+      <input name="checkbox" type="checkbox" id="checkbox" checked>
+    <strong>Use extended throttle</strong></p>
+    <blockquote>
+      <p align="left">
+        <input type="checkbox" name="checkbox2" id="checkbox2">
+      Set controls transparent</p>
+      <p align="left">
+        <input name="checkbox3" type="checkbox" id="checkbox3" checked>
+      Use roster image as background</p>
+      <blockquote>
+        <p align="left">
+          <input name="checkbox4" type="checkbox" id="checkbox4" checked>
+        Resize window to image size</p>
+      </blockquote>
+      <p align="left">
+        <input name="checkbox5" type="checkbox" id="checkbox5" checked>
+      Search roster info when address entered</p>
+      <p align="left">
+        <input name="checkbox6" type="checkbox" id="checkbox6" checked>
+      Automatic load of throttle window preferences when linked to roster</p>
+      <blockquote>
+        <p align="left">
+          <input name="checkbox7" type="checkbox" id="checkbox7" checked>
+        Ignore throttle frame position</p>
+      </blockquote>
+      <p align="left">
+        <input type="checkbox" name="checkbox8" id="checkbox8">
+      Hide undefined roster function buttons</p>
+      <p align="left">
+        <input name="checkbox9" type="checkbox" id="checkbox9" checked>
+      Enable throttle toolbar</p>
+    </blockquote>
+    <p align="left">At the bottom of the dialog are three buttons</p>
+    <blockquote>
+      <p align="left">
+        <input type="submit" name="button" id="button" value="Cancel">
+      cancels the dialog with no prefernces saved</p>
+      <p align="left">
+        <input type="submit" name="button2" id="button2" value="Apply">
+      Applies the preferences without saving to let you preview them</p>
+      <p align="left">
+        <input type="submit" name="button3" id="button3" value="Save">
+      Saves the preferences as selected and closes the dialog</p>
+    </blockquote>
+  </blockquote>
   <p>Saves your throttle preferences, you must have a throttle open, in the throttle folder above.</p>
 </blockquote>
 <p><a name="Consist"></a><span class="style1"><a href="Main_ConsistControl.shtml">Consisting Tool..</a>.</span></p>
@@ -135,8 +183,8 @@ DecoderPro&reg; Main Window
 <p><strong><a name="Turnout"></a><a href="Main_TurnoutControl.shtml">Turnout Control...</a></strong></p>
 <p><strong>Simple Signal Logic </strong>(advanced users, beyond the scope of this manual)</p>
 <p><strong>Sensor Groups.</strong>... (advanced users, beyond the scope of this manual)</p>
-<p><strong><a name="Speedometer"></a><a href="Main_Speedometer.shtml">Speedometer...</a></strong></p>
-<p><strong><a name="Light"></a>Light Control...</strong></p>
+<p><strong><a name="Speedometer"></a><a href="Main_Speeometer.shtml">Speedometer...</a></strong></p>
+<p><strong><a name="Light"></a><a href="Main_lightControl.shtml">Light Control...</a></strong></p>
 <p><strong>Dispatcher</strong>... (advanced users, beyond the scope of this manual)</p>
 <p><img src="images/separator.png" alt="sep" width="340" height="4"><br>
 </p>
@@ -144,7 +192,15 @@ DecoderPro&reg; Main Window
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
 <p><strong>USS CTC Tool</strong> <img src="images/arrow.gif" alt="arrow" width="20" height="9">(advanced users, beyond the scope of this manual)</p>
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
-<p><strong>Operations</strong> <img src="images/arrow.gif" alt="arrow" width="20" height="9"> (not covered in this manual)</p>
+<p><a name="Ops"></a><a href="Ops_Start.shtml"><strong>Operations</strong></a><strong><img src="images/arrow.gif" alt="arrow" width="20" height="9"></strong></p>
+<ul>
+  <li>Settings</li>
+  <li>Locations</li>
+  <li>Cars</li>
+  <li>Engines</li>
+  <li>Routes</li>
+  <li>Trains</li>
+</ul>
 <hr>
 
 <div align=right>
