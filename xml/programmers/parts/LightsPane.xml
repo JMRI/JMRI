@@ -21,6 +21,11 @@
         <display item="Function F0F option 2"/>
         <display item="Function F0F option 3"/>
         <display item="Function F0F option 4"/>
+        <display item="Function F0F check 1" format="checkbox"/>
+        <display item="Function F0F check 2" format="checkbox"/>
+        <display item="Function F0F check 3" format="checkbox"/>
+        <display item="Function F0F check 4" format="checkbox"/>
+        <display item="Function F0F check 5" format="checkbox"/>
         <label label=" "/>
         <display item="Function F0R effect generated"/>
         <display item="Function F0R behavior"/>
@@ -29,6 +34,11 @@
         <display item="Function F0R option 2"/>
         <display item="Function F0R option 3"/>
         <display item="Function F0R option 4"/>
+        <display item="Function F0R check 1" format="checkbox"/>
+        <display item="Function F0R check 2" format="checkbox"/>
+        <display item="Function F0R check 3" format="checkbox"/>
+        <display item="Function F0R check 4" format="checkbox"/>
+        <display item="Function F0R check 5" format="checkbox"/>
         <label label=" "/>
         <display item="Function 1 effect generated"/>
         <display item="Function 1 behavior"/>
@@ -37,7 +47,12 @@
         <display item="Function 1 option 2"/>
         <display item="Function 1 option 3"/>
         <display item="Function 1 option 4"/>
-        <label label=" "/>
+        <display item="Function 1 check 1" format="checkbox"/>
+        <display item="Function 1 check 2" format="checkbox"/>
+        <display item="Function 1 check 3" format="checkbox"/>
+        <display item="Function 1 check 4" format="checkbox"/>
+        <display item="Function 1 check 5" format="checkbox"/>
+       	<label label=" "/>
         <display item="Function 2 effect generated"/>
         <display item="Function 2 behavior"/>
         <display item="Function 2 options"/>
@@ -45,14 +60,29 @@
         <display item="Function 2 option 2"/>
         <display item="Function 2 option 3"/>
         <display item="Function 2 option 4"/>
-        <label label=" "/>
+        <display item="Function 2 check 1" format="checkbox"/>
+        <display item="Function 2 check 2" format="checkbox"/>
+        <display item="Function 2 check 3" format="checkbox"/>
+        <display item="Function 2 check 4" format="checkbox"/>
+        <display item="Function 2 check 5" format="checkbox"/>
+       	<label label=" "/>
         <display item="Function 3 effect generated"/>
         <display item="Function 3 behavior"/>
         <display item="Function 3 options"/>
+        <display item="Function 3 check 1" format="checkbox"/>
+        <display item="Function 3 check 2" format="checkbox"/>
+        <display item="Function 3 check 3" format="checkbox"/>
+        <display item="Function 3 check 4" format="checkbox"/>
+        <display item="Function 3 check 5" format="checkbox"/>
         <label label=" "/>
         <display item="Function 4 effect generated"/>
         <display item="Function 4 behavior"/>
         <display item="Function 4 options"/>
+        <display item="Function 4 check 1" format="checkbox"/>
+        <display item="Function 4 check 2" format="checkbox"/>
+        <display item="Function 4 check 3" format="checkbox"/>
+        <display item="Function 4 check 4" format="checkbox"/>
+        <display item="Function 4 check 5" format="checkbox"/>
         <label label=" "/>
         <display item="Function 5 effect generated"/>
         <display item="Function 5 behavior"/>

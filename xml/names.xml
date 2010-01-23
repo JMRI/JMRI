@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.21 2010-01-08 17:09:07 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.22 2010-01-23 23:55:20 jacobsen Exp $ -->
 <names-config>
 		<version author="Jack Shall jack745@bellsouth.net" 
 			version="10" lastUpdated="20090115"/>
@@ -298,6 +298,10 @@
 		<definition item="Function F0F option 2"/>
 		<definition item="Function F0F option 3"/>
 		<definition item="Function F0F option 4"/>
+		<definition item="Function F0F check 1"/>
+		<definition item="Function F0F check 2"/>
+		<definition item="Function F0F check 3"/>
+		<definition item="Function F0F check 4"/>
 
 		<definition item="Function F0R effect generated"/>
 		<definition item="Function F0R behavior"/>
@@ -306,6 +310,10 @@
 		<definition item="Function F0R option 2"/>
 		<definition item="Function F0R option 3"/>
 		<definition item="Function F0R option 4"/>
+		<definition item="Function F0R check 1"/>
+		<definition item="Function F0R check 2"/>
+		<definition item="Function F0R check 3"/>
+		<definition item="Function F0R check 4"/>
 
 		<definition item="Function 1 effect generated"/>
 		<definition item="Function 1 behavior"/>
@@ -314,6 +322,10 @@
 		<definition item="Function 1 option 2"/>
 		<definition item="Function 1 option 3"/>
 		<definition item="Function 1 option 4"/>
+		<definition item="Function 1 check 1"/>
+		<definition item="Function 1 check 2"/>
+		<definition item="Function 1 check 3"/>
+		<definition item="Function 1 check 4"/>
 
 		<definition item="Function 2 effect generated"/>
 		<definition item="Function 2 behavior"/>
@@ -322,14 +334,26 @@
 		<definition item="Function 2 option 2"/>
 		<definition item="Function 2 option 3"/>
 		<definition item="Function 2 option 4"/>
+		<definition item="Function 2 check 1"/>
+		<definition item="Function 2 check 2"/>
+		<definition item="Function 2 check 3"/>
+		<definition item="Function 2 check 4"/>
 
 		<definition item="Function 3 effect generated"/>
 		<definition item="Function 3 behavior"/>
 		<definition item="Function 3 options"/>
+		<definition item="Function 3 check 1"/>
+		<definition item="Function 3 check 2"/>
+		<definition item="Function 3 check 3"/>
+		<definition item="Function 3 check 4"/>
 
 		<definition item="Function 4 effect generated"/>
 		<definition item="Function 4 behavior"/>
 		<definition item="Function 4 options"/>
+		<definition item="Function 4 check 1"/>
+		<definition item="Function 4 check 2"/>
+		<definition item="Function 4 check 3"/>
+		<definition item="Function 4 check 4"/>
 
 		<definition item="Function 5 effect generated"/>
 		<definition item="Function 5 behavior"/>
