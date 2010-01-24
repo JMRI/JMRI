@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.96 2010-01-22 04:23:37 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.97 2010-01-24 21:20:49 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -47,6 +47,7 @@
 	<LI>Ron W. Auld, who's llnmon program formed the basis for the LocoNet
 	monitoring
 <a name="B"></A>
+    <LI>Harald Barth, who improved the SRCP implementation
 	<LI>Michal Basta, who contributed the Czech internationalization
 	<LI>Patrick Beard, who allows us to distribute his javax.comm.MRJ
 	package for the Macintosh
