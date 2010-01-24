@@ -10,7 +10,7 @@ package jmri.jmrix.srcp;
  * class handles the response from the command station.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2004, 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -43,7 +43,6 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         String s = toString();
         return s.contains("POWER ON") && s.contains("SET");
     }
-
 
     // static methods to return a formatted message
     static public SRCPMessage getEnableMain() {
@@ -148,60 +147,44 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     static public SRCPMessage getProgMode() {
-        return null;
-    }
-
-    static public SRCPMessage getExitProgMode() {
-        return null;
-    }
-
-    static public SRCPMessage getReadPagedCV(int cv) { //R xxx
-        SRCPMessage m = new SRCPMessage(5);
-        m.setBinary(false);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
-        m.setTimeout(LONG_TIMEOUT);
-        m.setOpCode('R');
-        m.setElement(1,' ');
-        m.addIntAsThreeHex(cv, 2);
+	String msg = "INIT 1 SM NMRA\n";
+	SRCPMessage m = new SRCPMessage(msg);
         return m;
     }
 
-    static public SRCPMessage getWritePagedCV(int cv, int val) { //P xxx xx
-        SRCPMessage m = new SRCPMessage(8);
-        m.setBinary(false);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+    static public SRCPMessage getExitProgMode() {
+	String msg = "TERM 1 SM\n";
+	SRCPMessage m = new SRCPMessage(msg);
+        return m;
+    }
+
+    static public SRCPMessage getReadPagedCV(int cv) {
+	String msg = "GET 1 SM -1 CV " + cv + "\n";
+	SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
-        m.setOpCode('P');
-        m.setElement(1,' ');
-        m.addIntAsThreeHex(cv, 2);
-        m.setElement(5,' ');
-        m.addIntAsTwoHex(val, 6);
+        return m;
+    }
+
+    static public SRCPMessage getWritePagedCV(int cv, int val) {
+	String msg = "SET 1 SM -1 CV " + cv + " " + val + "\n";
+	SRCPMessage m = new SRCPMessage(msg);
+        m.setTimeout(LONG_TIMEOUT);
         return m;
     }
 
     static public SRCPMessage getReadRegister(int reg) { //Vx
         if (reg>8) log.error("register number too large: "+reg);
-        SRCPMessage m = new SRCPMessage(2);
-        m.setBinary(false);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+	String msg = "GET 1 SM -1 REG " + reg + "\n";
+	SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
-        m.setOpCode('V');
-        String s = ""+reg;
-        m.setElement(1, s.charAt(s.length()-1));
         return m;
     }
 
     static public SRCPMessage getWriteRegister(int reg, int val) { //Sx xx
         if (reg>8) log.error("register number too large: "+reg);
-        SRCPMessage m = new SRCPMessage(5);
-        m.setBinary(false);
-        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+	String msg = "SET 1 SM -1 REG " + reg + " " + val + "\n";
+	SRCPMessage m = new SRCPMessage(msg);
         m.setTimeout(LONG_TIMEOUT);
-        m.setOpCode('S');
-        String s = ""+reg;
-        m.setElement(1, s.charAt(s.length()-1));
-        m.setElement(2,' ');
-        m.addIntAsTwoHex(val, 3);
         return m;
     }
 

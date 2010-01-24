@@ -19,7 +19,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class NetworkDriverAdapter extends SRCPPortController {
 
@@ -50,6 +50,8 @@ public class NetworkDriverAdapter extends SRCPPortController {
 
         // start the connection
         SRCPTrafficController.instance().sendSRCPMessage(new SRCPMessage("GO\n"), null);
+        SRCPTrafficController.instance().sendSRCPMessage(new SRCPMessage("SET PROTOCOL SRCP 0.8.3\n"), null);
+        SRCPTrafficController.instance().sendSRCPMessage(new SRCPMessage("SET CONNECTIONMODE SRCP COMMAND\n"), null);
         // mark OK for menus
         jmri.jmrix.srcp.ActiveFlag.setActive();
     }

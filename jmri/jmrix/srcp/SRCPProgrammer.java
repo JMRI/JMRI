@@ -12,7 +12,7 @@ import java.beans.PropertyChangeEvent;
  * Implements the jmri.Programmer interface via commands for the SRCP powerstation
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
 
@@ -176,14 +176,16 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
             if (log.isDebugEnabled()) log.debug("reply in NOTPROGRAMMING state");
+	    if (!m.isResponseOK()) log.warn("Reply \""+m.toString()+"\"");
             return;
         } else if (progState == COMMANDSENT) {
             if (log.isDebugEnabled()) log.debug("reply in COMMANDSENT state");
             // operation done, capture result, then have to leave programming mode
             progState = NOTPROGRAMMING;
             // check for errors
-            if (m.match("--") >= 0) {
+            if (!m.isResponseOK()) {
                 if (log.isDebugEnabled()) log.debug("handle error reply "+m);
+		log.warn("Reply \""+m.toString()+"\"");
                 // perhaps no loco present? Fail back to end of programming
                 notifyProgListenerEnd(-1, jmri.ProgListener.NoLocoDetected);
             } else {
