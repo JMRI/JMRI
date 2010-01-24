@@ -12,7 +12,7 @@ package jmri.jmrix.maple;
  * are included. These are added during transmission.
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -59,6 +59,11 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         }
         return s;
     }
+	
+	// control when reply is expected
+	private boolean _replyExpected = true;
+	protected void setNoReply() {_replyExpected = false;}
+	public boolean replyExpected() {return _replyExpected;}
 
     // static methods to recognize a message
     public boolean isPoll() { 

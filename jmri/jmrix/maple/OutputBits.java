@@ -17,7 +17,7 @@ package jmri.jmrix.maple;
  *		address 1001.
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class OutputBits {
 
@@ -122,6 +122,7 @@ public class OutputBits {
         m.setElement(11+nBits, 03);        
         m.setChecksum(12+nBits);
         m.setTimeout(mSendDelay);
+		m.setNoReply();
         return m;
     }
 

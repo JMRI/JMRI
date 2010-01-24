@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractNode;
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author      Bob Jacobsen, Dave Duchamp, revised for Maple, 2009
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class SerialNode extends AbstractNode {
 
@@ -72,6 +72,11 @@ public class SerialNode extends AbstractNode {
     protected boolean checkNodeAddress(int address) {
         return (address > 0) && (address <= 99);
     }
+	
+	/**
+	 * Public access to this node's address
+	 */
+	public int getAddress() {return _address;}
 
     /**
      * Public Method to create an Initialization packet (SerialMessage) for this node
@@ -105,8 +110,7 @@ public class SerialNode extends AbstractNode {
     public boolean handleTimeout(AbstractMRMessage m,AbstractMRListener l) {
 		// increment timeout count
         timeout++;
-		
-// djd debugging - needs attention here
+		log.warn("Poll of node "+_address+" timed out. Timeout count = "+timeout);		
         return false;
     }
     
