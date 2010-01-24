@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LightTable.shtml,v 1.5 2008-11-01 16:40:03 jacobsen Exp $ -->
+<!-- $Id: LightTable.shtml,v 1.6 2010-01-24 02:04:03 ken_c Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -60,6 +60,11 @@ must be checked.  You can uncheck this box to temporarily disable a
 Light from being triggered, i.e. prevent it switching when its control
 mechanism fires.</p>
 
+<p>
+	A light may also be a variable light.
+    This will depend on the interface and the hardware driving the light.
+</p>
+
 <h2>Switching a Light On or Off</h2>
 
 <p>Lights may be turned on or off by clicking the button in the State
@@ -78,6 +83,21 @@ using a <a href="Logix.shtml">logix</a>.</p>
 control mechanism.  A 'disabled' state will not prevent a Light
 from being turned on or off using the button in the Light Table or from 
 being controlled by a logix.</p>
+
+<p>
+	A variable light may also be adjusted by entering a value of 0.00 to 1.00
+	in the <b>intensity column</b> for the light.
+	A light that does not support variable intensities will consider any non
+	zero value as meaning on.
+	If a light has transition effects enabled and configured the light will respond
+	according to those options.
+</p>
+<p>
+	The status button for a variable light will also be an  status indication of the variable light.
+	When it is not on or off it will show if the last change was moving higher or lower.
+	The intensity displayed will be the current intesity and not the target intensity when
+	transition effects are enabled.
+</p>
    
 <h2>Creating New Lights</h2>
 
