@@ -30,7 +30,7 @@ import gnu.io.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Andrew Crosland   Copyright (C) 2006
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -160,7 +160,6 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
 
     }
 
-    private Thread sinkThread;
     private Thread slotThread;
 
     // base class methods for the SprogPortController interface

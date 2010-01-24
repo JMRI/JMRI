@@ -12,8 +12,6 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.util.TooManyListenersException;
 
-import javax.swing.UIDefaults.ActiveValue;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -34,7 +32,7 @@ import gnu.io.SerialPort;
  * "AJB" indicate changes or observations by me
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -159,8 +157,6 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         jmri.jmrix.sprog.ActiveFlag.setActive();
 
     }
-
-    private Thread sinkThread;
 
     // base class methods for the SprogPortController interface
     public DataInputStream getInputStream() {

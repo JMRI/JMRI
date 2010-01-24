@@ -29,7 +29,7 @@ import gnu.io.SerialPort;
  * "AJB" indicate changes or observations by me
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -144,8 +144,6 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         jmri.jmrix.sprog.ActiveFlag.setActive();
 
     }
-
-    private Thread sinkThread;
 
     // base class methods for the SprogPortController interface
     public DataInputStream getInputStream() {
