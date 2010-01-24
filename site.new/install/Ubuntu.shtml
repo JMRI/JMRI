@@ -1,34 +1,29 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html lang="en"><head><!-- $Id: Ubuntu.shtml,v 1.12 2009-12-23 16:46:54 jacobsen Exp $ -->
-	<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
-	
-	
-	<title>Installing JMRI on Ubuntu GNU/Linux</title><meta name="GENERATOR" content="OpenOffice.org 2.2  (Linux)">
-	<meta name="CREATED" content="20070720;11550900">
-	<meta name="CHANGEDBY" content="peter">
-	<meta name="CHANGED" content="20070720;13070200"><!-- Style --><!-- Style -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: Ubuntu.shtml,v 1.13 2010-01-24 20:31:48 jacobsen Exp $ -->
+<title>Installing JMRI on Ubuntu GNU/Linux</title><meta name="GENERATOR" content="OpenOffice.org 2.2  (Linux)">
 
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
-
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
-  </head>
-
+<body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
+<!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
 <h1>Installing JMRI on Ubuntu GNU/Linux</h1>
 
 <p>These are instructions for the installation of JMRI
-on a Ubuntu Linux/GNU system. &nbsp;Though the procedure is not
-complicated a script has been written to automate some of the
-procedures. &nbsp; These have been used by a number of users
+on a Ubuntu Linux/GNU system. &nbsp; &nbsp; These have been used by a number of users
 successfully and should work on Ubuntu, Kubuntu, XUbuntu and Debian
 (The USB
 port has not been tested under Debian).</p>
@@ -40,10 +35,14 @@ port has not been tested under Debian).</p>
 top operating system. This short instruction deals with installing
 JMRI on the Ubuntu (or similar Debian based) desktop.</p>
 <h3>1.1 The Problem</h3>
-<p>JMRI is quite easy to install on Windows. It consists
+<p>JMRI is quite easy to install on Windows, and since 2.9.3 on Ubuntu.
+It consists
 of two stages, install Java and install JMRI. Unfortunatly GNU Linux
-used to involve five stages and some command line work. &nbsp;The use
-of a script to automate most of this makes the task much easier.&nbsp; </p>
+used to involve five stages and some command line work. &nbsp;A script
+was written to make the task easier and modify Java so that JMRI would
+run. &nbsp;If you are updating from a JMRI version prior to 2.9.2 then
+Java needs to me unmodified. &nbsp;A script is provided on the users
+group to do this. </p>
 <h3>1.2 Linux/GNU</h3>
 <p>GNU/Linux provides a viable alternative to Windows. Is it&nbsp;free and it is also suitable for loading onto older machines
 which may no longer have a viable legal OS.  It is also far less
@@ -84,28 +83,19 @@ A better option is to upgrade your system to the
 Ubuntu 8.04 release which includes a fix for this driver problem.
 
 <h2>3 Installation Steps</h2>
-<p>There are three steps in Installing JMRI in Linux/GNU,
-The are installation of Java, running the Install-RXTX script (which
-installs the RXTX files, alters permissions on TTY devices and adds
-the user to etc/group), installing JMRI itself and finally setting
-up the programme environment if necessary.</p>
+<p>There are two steps in Installing JMRI in Linux/GNU,
+The are installation of Java, or the modification of an previously modified copy and installing JMRI itself.</p>
 
-<h3>3.1 JAVA</h3><meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8"><title></title><meta name="GENERATOR" content="OpenOffice.org 2.4  (Linux)"><style type="text/css">
-	<!--
-		@page { margin: 2cm }
-		P { margin-bottom: 0.21cm }
-	--></style>
+<h3>3.1 JAVA</h3>
 
 One must be careful which Java is loaded. 
 'java -version' will often show Java 1.4.2 gij, this one is not wanted.
-The 'Blackwood' Java Virtual Machine does not work for JMRI, as it doesn't have all the needed libraries.
-However some users have reported sucess with 
-Open JDK. &nbsp;If you have any experience of this please let us know on the Yahoo Group.<p>We recommend installing from the
+The 'Blackwood' Java Virtual Machine does not work for JMRI, as it doesn't have all the needed libraries.<p>We recommend installing from the
 repositories. 
 
 </p><p>System &gt; Administration &gt; Synaptic Package Manager
 
-</p><p>Then search for sun-java6-jdk (or later version). 
+</p><p>Then search for sun-java6-jre or OpenJDK-6-jre. 
 Once you've found it, mark it to be loaded, and click apply.
 You'll probably be told that a number of other packages will 
 also be loaded. That's OK.
@@ -113,8 +103,15 @@ also be loaded. That's OK.
 <a id="rxtx">
 <h3>3.2 RxTx</h3></a>
 
-</p><p>A problem here is that the RxTx in the Ubuntu
-repositories does not work with JMRI! RXTX 2.1 uses a different structure than
+</p><p>RxTx used to be a problem requiring modifications to Java to
+enable JMRI to run. &nbsp;This is no longer required. &nbsp;However if
+you are using a version of JMRI prior to 2.9.2 then Java must be
+"unmodified". &nbsp;There is a script to do this in the Users Group
+Files area, or one can work back from the following.</p>For those who
+do not wish to use the new version the instructions for modifying Java
+are given below. &nbsp;If one wishes to run both then this is simply a
+matter of unmodifying or modyfying Java using the scripts.<p>The problem was that the RxTx in the Ubuntu
+repositories would not work with JMRI! RXTX 2.1 uses a different structure than
 RXTX 2.0; JMRI requires the RXTX 2.0 structure.
 The "2.0.7pre2" is known to work well
 and that is what is included in the automated script which can currently be downloaded</p>
@@ -169,21 +166,17 @@ relevant Config2.xml file from this directory should fix it.</p>
 
 <h3>3.5 The Environment</h3>
 <p>On a fresh install the environment is OK, java
--version will give 
-</p>
-<p>java version "1.6.0"</p>
-<p>Java(TM) SE Runtime Environment (build 1.6.0-b105)</p>
-<p>Java HotSpot(TM) Client VM (build 1.6.0-b105, mixed
-mode, sharing)</p>However
-upgrading Ubuntu may creat problems as the upgrade may now point at the
-"wrong" java. &nbsp;The simplest procedure is to put in a soft link<br><br>sudo ln -s /usr/lib/jvm/java-6-sun/jre/bin/java /etc/alternatives/java<br><br>This points java back to 1.6.0.<br><p></p><p><big style="font-weight: bold;">USB Ports</big>&nbsp;</p>Currently the start up scripts work "out of the box".<p>However some versions&nbsp; may need altering to get the computer to "see" a USB
+-version will give something like: 
+</p>java version "1.6.0_15"<br>Java(TM) SE Runtime Environment (build 1.6.0_15-b03)<br>Java HotSpot(TM) Client VM (build 14.1-b02, mixed mode, sharing)<br><br>or<br><br>java version "1.6.0_0"<br>OpenJDK Runtime Environment (IcedTea6 1.6.1) (6b16-1.6.1-3ubuntu1)<br>OpenJDK Client VM (build 14.0-b16, mixed mode, sharing)<br><br>However
+upgrading Ubuntu may creat problems for JMRI releases prior to 2.9.2 as the upgrade may now point at the
+"wrong" java. In this case simply run the reinstall script.<br><p></p><p><big style="font-weight: bold;">USB Ports</big>&nbsp;</p>Currently the start up scripts work "out of the box".<p>However some versions&nbsp; may need altering to get the computer to "see" a USB
 port by adding "-Djavax.comm.rxtx.SerialPorts=/dev/ttyUSB0" as shown
 below
 </p><p style="margin-left: 40px;">java -noverify -Djavax.comm.rxtx.SerialPorts=/dev/ttyUSB0 -Djava.security.policy</p>
 <p>Please see the&nbsp;<a href="http://jmri.sourceforge.net/install/FAQLinux.html">FAQ</a> for more details.</p>
 
 <h2>4 Starting JMRI</h2>
-<p>To start open a terminal and enter ./DecoderPro</p>
+<p>To start open a terminal and enter ./DecoderPro or double click on the icon. &nbsp;Remember&nbsp;</p>
 
 <h3>4.1 Errors</h3>
 <p>If you have any problems get back to the group.</p>
@@ -193,7 +186,7 @@ below
 or directory
 </dt><dd>Can not run the shell: Try installing csh.
 
-<dt>bash; ./cats.csh: Permission denied
+</dd><dt>bash; ./cats.csh: Permission denied
 </dt><dd>Try setting the icon to executable.</dd>
 
 <dt>Port not Found.
@@ -204,13 +197,15 @@ solution is to run the install script again.</dd>
 
 </dl>
 
-<h2>5 CATS</h2>If you are running CATs, currently one drops the zip
+<h2>5 CATS</h2>I have&nbsp;carried out limited testing on&nbsp; CATs
+with 2.9.2 and with a modified install script it runs. &nbsp;If you are
+running CATs, currently one drops the zip
 file into the JMRI directory, and unpacks it there. &nbsp;Then copy
 cradic.gif and put the copy into resources. &nbsp; I would however keep
 TrainStat in a seperate directory.<p style="text-align: right;"></p>
 
-<p style="text-align: right;">(Rev 1.8 Sun 13 Dec 2009)</p>
+<p style="text-align: right;">(Rev 1.9 Sun 24 Jan 2010)</p>
 
 <!--#include virtual="/Footer" -->
-
-</div></body></html>
+</body>
+</html>
