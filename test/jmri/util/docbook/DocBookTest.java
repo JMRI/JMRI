@@ -2,15 +2,12 @@
 
 package jmri.util.docbook;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import junit.framework.*;
 
 /**
  * Tests for the jmri.util.docbook package
  * @author	Bob Jacobsen     Copyright (C) 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class DocBookTest extends TestCase {
 

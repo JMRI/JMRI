@@ -1,7 +1,6 @@
 package jmri.util.docbook.configurexml;
 
 import org.jdom.Element;
-import org.jdom.Namespace;
 import java.util.ArrayList;
 
 import jmri.util.docbook.*;
@@ -15,7 +14,7 @@ import jmri.util.docbook.*;
  * here.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
