@@ -23,4 +23,27 @@
             <jvmarg value="-Xrunjdwp:transport=dt_socket,address=${jpda.address}"/>
         </java>
     </target>
+
+    <target description="run test suite w debug under NetBeans"
+            name="alltest-nb" depends="tests, runtime-library-selection">
+        <nbjpdastart addressproperty="jpda.address" name="JMRI" transport="dt_socket">
+            <classpath refid="project.class.path"    />
+        </nbjpdastart>
+        <java classname="apps.tests.AllTest" dir=".." fork="yes">
+            <classpath refid="project.class.path"    />
+            <sysproperty key="java.security.policy" value="lib/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>
+            <!-- <jvmarg value="-verbose"/> -->
+            <!-- <jvmarg value="-verbosegc"/> -->
+            <!-- <jvmarg value="-Xloggc:memory.vgc"/> -->
+            <!-- for JTune -->
+            <jvmarg value="-Xdebug"/>
+            <jvmarg value="-Xnoagent"/>
+            <jvmarg value="-Djava.compiler=none"/>
+            <jvmarg value="-Xrunjdwp:transport=dt_socket,address=${jpda.address}"/>
+        </java>
+    </target>
+
 </project>

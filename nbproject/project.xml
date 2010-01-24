@@ -32,9 +32,10 @@
                     <target>decoderpro</target>
                 </action>
                 <action name="profile">
-                    <target>netbeans-profile</target>
+                    <target>profile-nb</target>
                 </action>
                 <action name="test">
+                    <script>nbproject/ide-targets.xml</script>
                     <target>alltest-nb</target>
                 </action>
                 <action name="rebuild">
