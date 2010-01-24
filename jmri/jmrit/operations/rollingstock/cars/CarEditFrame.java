@@ -21,16 +21,18 @@ import javax.swing.JTextField;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainManagerXml;
 
 
 /**
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -452,7 +454,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 						newCar.setTrain(oldCar.getTrain());
 						oldCar.removePropertyChangeListener(this);
 						manager.deregister(oldCar);
-						managerXml.writeOperationsCarFile();
+						writeFiles();
 						return;
 					}
 				}
@@ -461,7 +463,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			// save frame size and position
 			manager.setCarEditFrame(this);
 			// save car file
-			managerXml.writeOperationsCarFile();
+			writeFiles();
 		}
 		if (ae.getSource() == deleteButton){
 			log.debug("car delete button actived");
@@ -471,14 +473,14 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 				manager.deregister(_car);
 				_car = null;
 				// save car file
-				managerXml.writeOperationsCarFile();
+				writeFiles();
 			} else {
 				Car car = manager.getCarByRoadAndNumber(roadComboBox.getSelectedItem().toString(),
 						roadNumberTextField.getText());
 				if (car != null){
 					manager.deregister(car);
 					// save car file
-					managerXml.writeOperationsCarFile();
+					writeFiles();
 				}
 			}
 		}
@@ -487,7 +489,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 				return;
 			addCar();
 			// save car file
-			managerXml.writeOperationsCarFile();
+			writeFiles();
 		}
 		if (ae.getSource() == clearRoadNumberButton){
 			roadNumberTextField.setText("");
@@ -504,6 +506,21 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			lef.setLocationRelativeTo(this);
 			lef.initComponents((String)typeComboBox.getSelectedItem());
 		}
+	}
+	
+	static boolean roadsModified = false;
+	/**
+	 * Need to also write the location and train files if a road name
+	 * was deleted. 
+	 */
+	private void writeFiles(){
+		managerXml.writeOperationsCarFile();
+		if (roadsModified){
+			roadsModified = false;
+			LocationManagerXml.instance().writeOperationsLocationFile();
+			TrainManagerXml.instance().writeOperationsTrainFile();
+		}
+		
 	}
 	
 	CarLoadEditFrame lef = null;
@@ -686,6 +703,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		if(Control.showProperty && log.isDebugEnabled()) 
 			log.debug ("CarEditFrame sees propertyChange "+e.getPropertyName()+" old: "+e.getOldValue()+" new: "+e.getNewValue());
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)){
+			if ((Integer)e.getOldValue() > (Integer)e.getNewValue())
+				roadsModified = true;
 			CarRoads.instance().updateComboBox(roadComboBox);
 			if (_car != null)
 				roadComboBox.setSelectedItem(_car.getRoad());
