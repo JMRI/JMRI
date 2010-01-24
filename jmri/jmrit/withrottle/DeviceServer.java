@@ -9,7 +9,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Created by Brett Hoffman on:
  *	@author 7/20/09.
- *	@version $Revision: 1.7 $
+ *	@version $Revision: 1.8 $
  *
  *	Thread with input and output streams for each connected device.
  *	Creates an invisible throttle window for each.
@@ -36,6 +36,10 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
 public class DeviceServer implements Runnable, ThrottleControllerListener {
+
+    //  Manually increment as features are added
+    private static final String versionNumber = "1.1";
+
     private Socket device;
     String newLine = System.getProperty("line.separator");
     BufferedReader in = null;
@@ -80,6 +84,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener {
             log.error("Stream creation failed (DeviceServer)");
             return;
         }
+        out.println("VN"+getWiTVersion()+newLine);
         out.println(sendRoster());
     }
 
@@ -205,6 +210,10 @@ public class DeviceServer implements Runnable, ThrottleControllerListener {
     public String getCurrentAddress(){
         if (secondThrottleFrame != null) return (deviceAddress +", "+secondDeviceAddress);
         return deviceAddress;
+    }
+
+    public static String getWiTVersion(){
+        return versionNumber;
     }
 
     /**
