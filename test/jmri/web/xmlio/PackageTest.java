@@ -3,12 +3,17 @@
 package jmri.web.xmlio;
 
 import junit.framework.*;
+import java.io.*;
+
+import org.jdom.*;
+import org.jdom.input.*;
+import org.jdom.output.*;
 
 /**
  * Invokes complete set of tests in the jmri.web.xmlio tree
  *
  * @author	    Bob Jacobsen  Copyright 2008, 2009, 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class PackageTest extends TestCase {
 
@@ -16,7 +21,32 @@ public class PackageTest extends TestCase {
     public void testCtor() {
         new XmlIOFactory();
     }
+    
+    // check that JDOM serialization works as expected
+    // by sending an element through a stream.
+    // 
+    // Note that you can't do this twice; SAX input
+    // expects end-of-stream after the end of the element.
+    //
+    public void testJdomSerialization() throws Exception {
+        Element send = new Element("foo");
+        send.addContent(new Element("bar").addContent("biff"));
+        ByteArrayOutputStream os = new ByteArrayOutputStream(1000);
         
+        XMLOutputter outputter = new XMLOutputter();
+
+        outputter.output(send, os); 
+        
+        ByteArrayInputStream is = new ByteArrayInputStream(os.toByteArray());
+
+        SAXBuilder builder = new SAXBuilder();
+
+        Element received = builder.build(is).getRootElement();
+        
+        Assert.assertEquals("biff", received.getChild("bar").getText());
+    }
+    
+    
     // from here down is testing infrastructure
     public PackageTest(String s) {
         super(s);
