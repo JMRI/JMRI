@@ -16,7 +16,11 @@
   </copyright>
 
   <authorgroup xmlns="http://docbook.org/ns/docbook">
-    <author>
+     <author>
+        <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
+        <email>dick@rr-cirkits.com</email>
+     </author>    
+     <author>
         <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
         <email>jake@physics.berkeley.edu</email>
     </author>    
@@ -35,17 +39,29 @@
         <authorinitials>DB</authorinitials>
         <revremark>Added References</revremark>
     </revision>
+    <revision>
+         <revnumber>1.2</revnumber>
+        <date>2010-01-23</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Consistancy</revremark>
+    </revision>
   </revhistory>
 
   <aspects>
     <aspect>
-      <name>Block signal green</name>
+      <name>Block Signal Green</name>
       <rule>Rule 281</rule>
       <indication>Proceed</indication>
       <reference>Page 90</reference>
     </aspect>
     <aspect>
-      <name>Block signal green</name>
+      <name>Block Signal Green</name>
+      <rule>Rule 282</rule>
+      <indication>Proceed except on diverging route</indication>
+      <reference>Page 91</reference>
+    </aspect>
+    <aspect>
+      <name>Block Signal Green-alt</name>
       <rule>Rule 282</rule>
       <indication>Proceed except on diverging route</indication>
       <reference>Page 91</reference>
@@ -57,19 +73,19 @@
       <reference>Page 92</reference>
     </aspect>
     <aspect>
-      <name>Block signal yellow over green</name>
+      <name>Block Signal Yellow over Green</name>
       <rule>Rule 284</rule>
       <indication>Reduce to medium speed and proceed. Next signal indicates "Proceed on diverging route"</indication>
       <reference>Page 93</reference>
     </aspect>
     <aspect>
-      <name>Approach signal yellow</name>
+      <name>Approach Signal Yellow</name>
       <rule>Rule 285</rule>
       <indication>Proceed not exceeding medium speed, prepared to stop short of next home signal.</indication>
       <reference>Page 94</reference>
     </aspect>
     <aspect>
-      <name>Approach medium - flashing yellow</name>
+      <name>Approach Medium - Flashing Yellow</name>
       <rule>Rule 285-A</rule>
       <indication>Proceed prepared to pass next signal at not exceeding medium speed.</indication>
       <reference>Page 95</reference>
@@ -81,25 +97,25 @@
       <reference>Page 96</reference>
     </aspect>
     <aspect>
-      <name>Grade signal red</name>
+      <name>Grade Signal Red</name>
       <rule>Rule 287</rule>
       <indication>Reduce to restricted speed and proceed.</indication>
       <reference>Page 97</reference>
     </aspect>
     <aspect>
-      <name>Home signal yellow for diverging route</name>
+      <name>Home Signal Yellow for diverging route</name>
       <rule>Rule 288</rule>
       <indication>Proceed on diverging route at restricted speed.</indication>
       <reference>Page 98</reference>
     </aspect>
     <aspect>
-      <name>Home signal red over lunar</name>
+      <name>Home Signal Red over Lunar</name>
       <rule>Rule 289</rule>
       <indication>Proceed without stopping at restricted speed on other than main track.</indication>
       <reference>Page 99</reference>
     </aspect>
     <aspect>
-      <name>Home signal red</name>
+      <name>Home Signal Red</name>
       <rule>Rule 290</rule>
       <indication>Stop.</indication>
       <reference>Page 100</reference>
@@ -117,7 +133,7 @@
       <reference>Page 102</reference>
     </aspect>
     <aspect>
-      <name>Home signal red, with triangular plate</name>
+      <name>Home Signal Red, with triangular plate</name>
       <rule>Rule 293</rule>
       <indication>Stop. Inspect train, track or structure as provided in special instrutions, and proceed through remainder of block in accordance with provisions of Rule 507, 509, 510, 663, 744, or 776, as the case may be.</indication>
       <reference>Page 103</reference>
