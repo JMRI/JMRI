@@ -13,7 +13,7 @@ import org.jdom.*;
  * Invokes complete set of tests of the jmri.web.xmlio.DefaultXmlIOServerTest class
  *
  * @author	    Bob Jacobsen  Copyright 2008, 2009, 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class DefaultXmlIOServerTest extends TestCase {
 
@@ -46,7 +46,7 @@ public class DefaultXmlIOServerTest extends TestCase {
         return e1;
     }
     
-    public void testSynchReadComplete() {
+    public void testSynchReadComplete() throws JmriException {
         Element e = server.immediateRequest(getReadOneCommand());
         
         Assert.assertNotNull(e.getChildren("item"));
@@ -62,7 +62,7 @@ public class DefaultXmlIOServerTest extends TestCase {
         Assert.assertEquals("turnout", item.getChild("type").getText());
     }
     
-    public void testSynchReadOneClosed() {
+    public void testSynchReadOneClosed() throws JmriException {
         t2.setCommandedState(Turnout.CLOSED);
 
         Element e = server.immediateRequest(getReadOneCommand());
@@ -71,7 +71,7 @@ public class DefaultXmlIOServerTest extends TestCase {
         Assert.assertEquals(""+Turnout.CLOSED, item.getChild("value").getText());
     }
 
-    public void testSynchReadOneThrown() {
+    public void testSynchReadOneThrown() throws JmriException {
         t2.setCommandedState(Turnout.THROWN);
 
         Element e = server.immediateRequest(getReadOneCommand());
@@ -80,7 +80,7 @@ public class DefaultXmlIOServerTest extends TestCase {
         Assert.assertEquals(""+Turnout.THROWN, item.getChild("value").getText());
     }
     
-    public void testSynchReadOneClosedWValueElement() {
+    public void testSynchReadOneClosedWValueElement() throws JmriException {
         t2.setCommandedState(Turnout.CLOSED);
 
         Element e = server.immediateRequest(getWriteOneCommand());

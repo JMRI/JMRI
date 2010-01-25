@@ -24,15 +24,14 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
 
     public Element immediateRequest(Element e) throws JmriException {
         @SuppressWarnings("unchecked")
-        List<Element> items = (List<Element>)e.getChildren("item");
-        
+        List<Element> items = e.getChildren("item");
         for (Element item : items) {
             String type = item.getChild("type").getText();
             String name = item.getChild("name").getText();
@@ -68,7 +67,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
         dr.requestor = r;
         
         @SuppressWarnings("unchecked")
-        List<Element> items = (List<Element>)e.getChildren("item");
+        List<Element> items = e.getChildren("item");
 
         for (Element item : items) {
             String type = item.getChild("type").getText();
@@ -86,7 +85,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
 
     void sendMonitorReply(Element e, XmlIORequestor r) {
         @SuppressWarnings("unchecked")
-        List<Element> items = (List<Element>)e.getChildren("item");
+        List<Element> items = e.getChildren("item");
         
         for (Element item : items) {
             String type = item.getChild("type").getText();
@@ -102,7 +101,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
     
     boolean checkValues(Element e) {
         @SuppressWarnings("unchecked")
-        List<Element> items = (List<Element>)e.getChildren("item");
+        List<Element> items = e.getChildren("item");
         
         boolean changed = false;
         for (Element item : items) {
@@ -227,7 +226,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             
             // found change, pull listeners and return
             @SuppressWarnings("unchecked")
-            List<Element> items = (List<Element>)request.getChildren("item");
+            List<Element> items = request.getChildren("item");
     
             for (Element item : items) {
                 String type = item.getChild("type").getText();

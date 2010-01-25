@@ -23,7 +23,7 @@ import java.util.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.31 $
+ * @version		$Revision: 1.32 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -227,8 +227,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             final JDialog dialog = new JDialog();
             String msg;
             String msg1;
-            final jmri.UserPreferencesManager p;
-            p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
             dialog.setTitle(AbstractTableAction.rb.getString("WarningTitle"));
             dialog.setLocationRelativeTo(null);
             dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);

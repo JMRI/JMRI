@@ -1,7 +1,6 @@
 package jmri.jmrit.revhistory.configurexml;
 
 import org.jdom.Element;
-import org.jdom.Namespace;
 import java.util.ArrayList;
 
 import jmri.jmrit.revhistory.FileHistory;
@@ -15,7 +14,7 @@ import jmri.jmrit.revhistory.FileHistory;
  * here.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {

@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.59 $
+ * @version $Revision: 1.60 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -1200,7 +1200,7 @@ public class LogixTableAction extends AbstractTableAction {
             
             yesButton.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
-                    if(remember.isSelected()) {
+                    if(p != null && remember.isSelected()) {
                        p.setWarnDeleteLogix(0x02);
                     }
                     if (x != null) {
