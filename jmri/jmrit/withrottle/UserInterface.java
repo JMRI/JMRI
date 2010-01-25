@@ -10,7 +10,7 @@ package jmri.jmrit.withrottle;
  *	Create a window for WiThrottle information, advertise service, and create a thread for it to run in.
  *
  *	@author Brett Hoffman   Copyright (C) 2009
- *	@version $Revision: 1.11 $
+ *	@version $Revision: 1.12 $
  */
 
 import java.awt.event.*;
@@ -117,6 +117,11 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
         con.gridwidth = 1;
         panel.add(button, con);
 
+        JLabel vLabel = new JLabel("v"+DeviceServer.getWiTVersion());
+        con.weightx = 0;
+        con.gridx = 2;
+        con.gridy = 3;
+        panel.add(vLabel, con);
 
         JLabel icon;
         java.net.URL imageURL = ClassLoader.getSystemResource("resources/IconForWiThrottle.gif");
@@ -124,6 +129,7 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
         if (imageURL != null) {
             ImageIcon image = new ImageIcon(imageURL);
             icon = new JLabel(image);
+            con.weightx = 0.5;
             con.gridx = 2;
             con.gridy = 0;
             con.ipady = 5;
