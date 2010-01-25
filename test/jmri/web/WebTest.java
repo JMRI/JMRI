@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.web tree
  *
  * @author	    Bob Jacobsen  Copyright 2008
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class WebTest extends TestCase {
 
@@ -27,6 +27,7 @@ public class WebTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.web.WebTest");   // no tests in this class itself
         suite.addTest(jmri.web.miniserver.MiniServerTest.suite());
+        suite.addTest(jmri.web.xmlio.PackageTest.suite());
         return suite;
     }
 
