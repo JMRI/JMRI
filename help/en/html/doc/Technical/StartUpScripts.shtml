@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: StartUpScripts.shtml,v 1.7 2009-05-19 16:26:39 jacobsen Exp $ -->
+<!-- $Id: StartUpScripts.shtml,v 1.8 2010-01-25 14:25:15 jacobsen Exp $ -->
 <title>JMRI: Startup Scripts</title>
 
 <!-- Style -->
@@ -91,7 +91,7 @@ in order:
 <p>
 This allows you to drop jar files into the 
 JMRI install directory for the 
-<a href="../Technical/plugins.shtml">JMRI plug-in mechanism</a>.
+<a href="plugins.shtml">JMRI plug-in mechanism</a>.
 
 <dt>Configuration File
 <dd>
@@ -194,7 +194,7 @@ in order:
 <p>
 This allows you to drop jar files into the 
 JMRI install directory for the 
-<a href="../help/en/html/doc/Technical/plugins.shtml">JMRI plug-in mechanism</a>.
+<a href="plugins.shtml">JMRI plug-in mechanism</a>.
 
 <dt>Configuration File
 <dd>
@@ -267,7 +267,7 @@ The script builds the Java classpath automatically to contain, in order:
 <li>jmri.jar in the current directory
 <li>all jar files in the lib subdirectory of the current directory
 </ul>
-This allows you to drop jar files into the JMRI install directory for the <a href="../help/en/html/doc/Technical/plugins.shtml">JMRI plug-in mechanism</a>.
+This allows you to drop jar files into the JMRI install directory for the <a href="plugins.shtml">JMRI plug-in mechanism</a>.
 
 
 <dt>Java command
