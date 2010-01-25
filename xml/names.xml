@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.22 2010-01-23 23:55:20 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.23 2010-01-25 17:34:00 jacobsen Exp $ -->
 <names-config>
 		<version author="Jack Shall jack745@bellsouth.net" 
 			version="10" lastUpdated="20090115"/>
@@ -302,6 +302,7 @@
 		<definition item="Function F0F check 2"/>
 		<definition item="Function F0F check 3"/>
 		<definition item="Function F0F check 4"/>
+		<definition item="Function F0F check 5"/>
 
 		<definition item="Function F0R effect generated"/>
 		<definition item="Function F0R behavior"/>
@@ -314,6 +315,7 @@
 		<definition item="Function F0R check 2"/>
 		<definition item="Function F0R check 3"/>
 		<definition item="Function F0R check 4"/>
+		<definition item="Function F0R check 5"/>
 
 		<definition item="Function 1 effect generated"/>
 		<definition item="Function 1 behavior"/>
@@ -326,6 +328,7 @@
 		<definition item="Function 1 check 2"/>
 		<definition item="Function 1 check 3"/>
 		<definition item="Function 1 check 4"/>
+		<definition item="Function 1 check 5"/>
 
 		<definition item="Function 2 effect generated"/>
 		<definition item="Function 2 behavior"/>
@@ -338,6 +341,7 @@
 		<definition item="Function 2 check 2"/>
 		<definition item="Function 2 check 3"/>
 		<definition item="Function 2 check 4"/>
+		<definition item="Function 2 check 5"/>
 
 		<definition item="Function 3 effect generated"/>
 		<definition item="Function 3 behavior"/>
@@ -346,6 +350,7 @@
 		<definition item="Function 3 check 2"/>
 		<definition item="Function 3 check 3"/>
 		<definition item="Function 3 check 4"/>
+		<definition item="Function 3 check 5"/>
 
 		<definition item="Function 4 effect generated"/>
 		<definition item="Function 4 behavior"/>
@@ -354,6 +359,7 @@
 		<definition item="Function 4 check 2"/>
 		<definition item="Function 4 check 3"/>
 		<definition item="Function 4 check 4"/>
+		<definition item="Function 4 check 5"/>
 
 		<definition item="Function 5 effect generated"/>
 		<definition item="Function 5 behavior"/>
