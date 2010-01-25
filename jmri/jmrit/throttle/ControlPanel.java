@@ -50,7 +50,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.72 $
+ * @version    $Revision: 1.73 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
@@ -113,6 +113,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     
     // Save the speed step mode to aid in storage of the throttle.
     private int _speedStepMode = DccThrottle.SpeedStepMode128;
+    
+    // Save the speed step mode from the xml until the throttle is actually available
+    private int _speedStepModeForLater = 0;
+    
     /**
      *  Constructor.
      */
@@ -727,7 +731,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.72 $
+     * @version    $Revision: 1.73 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -945,10 +949,16 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 // in this case, recover by displaying the speed slider.
                 this.setSpeedController(SLIDERDISPLAY);
             }
-        try {			
+        try {
+            // Set the speed steps in the GUI from the xml
             setSpeedSteps(e.getAttribute("speedMode").getIntValue());
-            if(throttle!=null)
+            // Try to set the throttle speed steps
+            if(throttle!=null) {
                 throttle.setSpeedStepMode(e.getAttribute("speedMode").getIntValue());
+            } else {
+                // save value to do it later
+                _speedStepModeForLater = e.getAttribute("speedMode").getIntValue();
+            }
         } catch (org.jdom.DataConversionException ex)
             {
                 log.error("DataConverstionException in setXml: "+ex);
@@ -1005,6 +1015,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         this.setIsForward(throttle.getIsForward());
         this.setSpeedValues((int) throttle.getSpeedIncrement(),
                             (int) throttle.getSpeedSetting());
+        // Throttle now available so set speed steps from saved xml value
+        if (_speedStepModeForLater != 0) {
+            this.throttle.setSpeedStepMode(_speedStepModeForLater);
+            _speedStepModeForLater = 0;
+        }
+        // Set speed steps in the GUI from the throttle
         this.setSpeedSteps(throttle.getSpeedStepMode());
         this.throttle.addPropertyChangeListener(this);
         if(log.isDebugEnabled()) {
