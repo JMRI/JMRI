@@ -33,6 +33,8 @@
 # 
 # Currently tested on Windows only
 
+# The next line is maintained by CVS, please don't change it
+# $Revision: 1.2 $
 
 #
 # Set the name of the controller you're using
