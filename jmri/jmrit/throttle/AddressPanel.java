@@ -27,7 +27,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.54 $
+ * @version $Revision: 1.55 $
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
@@ -46,6 +46,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	private JButton setButton;
 	private JComboBox rosterBox;
 	private JComboBox conRosterBox;
+	
+	private boolean disableRosterBoxActions = false;
 	
 	private RosterEntry rosterEntry;
 
@@ -96,6 +98,40 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 			listeners.remove(l);		
 	}
 
+	
+	/**
+	 * Gets the selected index of the roster combo box. Implemented to support
+	 * xboxThrottle.py
+	 * @return the selected index of the roster combo box
+	 */
+	public int getRosterSelectedIndex() {
+		return rosterBox.getSelectedIndex();
+	}
+	
+	/**
+	 * Sets the selected index of the roster combo box. Implemented to support
+	 * xboxThrottle.py
+	 * This method temporarily disables roster box actions so it can change the 
+	 * selected index without triggering a cascade of events.
+	 * @param index the index to select in the combo box
+	 */
+	public void setRosterSelectedIndex(int index) {
+		if (rosterBox.isEnabled() && index >= 0 && index < rosterBox.getItemCount()) {
+			this.disableRosterBoxActions = true; //Temporarily disable roster box actions
+			rosterBox.setSelectedIndex(index);
+			this.disableRosterBoxActions = false;
+		}
+	}
+	
+	/**
+	 * "Sets" the current roster entry. Equivalent to the user pressing the "Set"
+	 * button.
+	 * Implemented to support xboxThrottle.py
+	 */
+	public void selectRosterEntry() {
+		rosterItemSelected();
+	}
+	
 	/**
 	 * Get notification that a throttle has been found as we requested.
 	 * 
@@ -235,7 +271,9 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 		rosterBox.setToolTipText(rb.getString("SelectLocoFromRosterTT"));
 		rosterBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				rosterItemSelected();
+				if (!disableRosterBoxActions) { //Have roster box actions been disabled?
+					rosterItemSelected();
+				}
 			}
 		});
 		constraints.gridx = 0;
@@ -393,12 +431,14 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	 * Dispatch the current address for use by other throttles
 	 */
 	public void dispatchAddress() {
-		throttle.dispatch();
-		if (consistThrottle != null) {
-			consistThrottle.dispatch();
-			consistThrottle = null;
+		if (throttle != null) {
+			throttle.dispatch();
+			if (consistThrottle != null) {
+				consistThrottle.dispatch();
+				consistThrottle = null;
+			}
+			notifyThrottleDisposed();
 		}
-		notifyThrottleDisposed();
 	}
 
 	/**
