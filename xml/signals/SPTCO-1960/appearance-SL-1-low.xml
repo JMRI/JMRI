@@ -52,7 +52,7 @@
 
     <appearance>
       <aspectname>Approach Medium - Flashing Yellow</aspectname>
-      <show>flashing yellow</show>
+      <show>flashyellow</show>
       <reference>Page 95 D</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-1-low/rule-285A.gif</imagelink>
     </appearance>
