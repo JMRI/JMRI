@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004, 2007 All rights reserved -->
-<!-- $Id: Bachmann_EZDCC.xml,v 1.8 2009-09-03 22:27:02 jacobsen Exp $ -->
+<!-- $Id: Bachmann_EZDCC.xml,v 1.9 2010-01-25 17:50:08 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -24,9 +24,9 @@
 		<!-- Version 4 - Changed model name, added decoder dimensions, updated defaults and cleaned up xml formatting (Peter Ulvestad) -->
 <decoder>
 	<family name="E-Z Command decoders" mfg="Bachmann Trains">
-		<model model="2 function decoder (36-552)" numOuts="2" numFns="0" maxMotorCurrent="1A" formFactor="HO" connector="NEM652/NMRA medium plug"
+		<model model="2 function decoder (36-552)" numOuts="2" numFns="0" maxMotorCurrent="1A" formFactor="HO" connector="NMRAmedium"
 			lowVersionID="46" nmraWarrant="yes" nmraWarrantStart="2006-04">
-			<size length="25" width="16" height="5" units="millimeters"/>
+			<size length="25" width="16" height="5" units="mm"/>
 		</model>
 	</family>
 
