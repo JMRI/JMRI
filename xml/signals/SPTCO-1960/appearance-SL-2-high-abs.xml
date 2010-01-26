@@ -28,6 +28,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Initial version</revremark>
     </revision>
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-01-26</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Error corrections</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>SPTCO-1960</aspecttable>
@@ -38,19 +44,11 @@
   <appearances>
 
     <appearance>
-      <aspectname>Block Signal Green</aspectname>
+      <aspectname>Block Signal Green for Main Route</aspectname>
       <show>green</show>
       <show>dark</show>
       <reference>Page 91 D</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-2-high-abs/rule-282.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Block Signal Green-alt</aspectname>
-      <show>green</show>
-      <show>red</show>
-      <reference>Page 91 A</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-2-high-abs/rule-282-alt.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -70,7 +68,7 @@
     </appearance>
 
     <appearance>
-      <aspectname>Home Signal Yellow for diverging route</aspectname>
+      <aspectname>Home Signal Yellow for Diverging Route</aspectname>
       <show>red</show>
       <show>yellow</show>
       <reference>Page 95 C</reference>

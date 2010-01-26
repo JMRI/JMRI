@@ -9,7 +9,7 @@
   <date>1960</date>
   <reference>Signaling definitions corresponding to the 1960 Southern Pacific Transportation Company rules 
         as described in the "Rules and Regulations of the Transportation Department" booklet.</reference>
-  <reference>See http://sptco.railspot.com/SP_Rules-and-Regs/Rules-and-Regs_1960.htm</reference>
+  <reference>See http://www.sphts.org/resources/rulebook/</reference>
 
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2009</year><year>2010</year><holder>JMRI</holder>
@@ -55,13 +55,7 @@
       <reference>Page 90</reference>
     </aspect>
     <aspect>
-      <name>Block Signal Green</name>
-      <rule>Rule 282</rule>
-      <indication>Proceed except on diverging route</indication>
-      <reference>Page 91</reference>
-    </aspect>
-    <aspect>
-      <name>Block Signal Green-alt</name>
+      <name>Block Signal Green for Main Route</name>
       <rule>Rule 282</rule>
       <indication>Proceed except on diverging route</indication>
       <reference>Page 91</reference>
@@ -103,7 +97,7 @@
       <reference>Page 97</reference>
     </aspect>
     <aspect>
-      <name>Home Signal Yellow for diverging route</name>
+      <name>Home Signal Yellow for Diverging Route</name>
       <rule>Rule 288</rule>
       <indication>Proceed on diverging route at restricted speed.</indication>
       <reference>Page 98</reference>

@@ -28,6 +28,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2010-01-26</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Typo corrections</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>SPTCO-1960</aspecttable>
@@ -53,13 +59,13 @@
 
     <appearance>
       <aspectname>Approach Medium - Flashing Yellow</aspectname>
-      <show>yellow</show>
+      <show>flashyellow</show>
       <reference>Page 95 C</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-1-high-abs/rule-285-A.gif</imagelink>
     </appearance>
 
     <appearance>
-      <aspectname>Stop</aspectname>
+      <aspectname>Home Signal Red</aspectname>
       <show>red</show>
       <reference>Page 100 E</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-1-high-abs/rule-290.gif</imagelink>
