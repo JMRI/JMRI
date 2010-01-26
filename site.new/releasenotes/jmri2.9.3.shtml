@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.3.shtml,v 1.11 2010-01-26 04:19:27 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.3.shtml,v 1.12 2010-01-26 08:48:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -168,6 +168,9 @@ e.g. one that only shows a single color and dark, or
 two specific colors.
 
 <p>
+Andrew Berridge improved the SPROG serial communications
+
+<p>
 Dan Boudreau made a minor operations improvement with regards to engine roads:  
 The user can exclude a road for cars, but still allow an engine to be assigned to the train with the excluded car road.
 
@@ -189,7 +192,7 @@ and
 <a href="http://jmri.org/resources/icons/BritishRailSignals">associated images</a>.
 
 <p>
-Update to make it easier to
+Jason M'Sadoques provided an update to 
 <a href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">use an Android phone as a throttle</a>.
 
 <p>
@@ -234,6 +237,19 @@ Andrew Crosland updated the configuration files for building and running JMRI un
 
 <p>
 Harald Barth improved the SRCP implementation.
+
+<p>
+Andrew Crosland improved how the speed-step setting is saved with a Throttle
+
+<p>
+Dick Bronson provided a set of 
+<a href="http://jmri.org/xml/signals/SPTCO-1960/aspects.xml">SP 1960 signal definitions</a>
+
+<p>
+Andrew Berridge provided a first version of an XBox throttle
+
+<p>
+Dan Boudreau added a "Copy Route" to operations
 
 
 <!--#include virtual="/Footer" -->
