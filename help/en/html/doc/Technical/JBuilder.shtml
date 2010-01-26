@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JBuilder.shtml,v 1.7 2010-01-26 03:58:04 dan_boudreau Exp $ -->
+<!-- $Id: JBuilder.shtml,v 1.8 2010-01-26 04:01:32 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
 <TITLE>JMRI: Building with JBuilder</TITLE>
@@ -92,7 +92,7 @@ Note if you're using a 64 bit windows system change the library path to:
 the "Other" radio button and searching using the "Variables.." button.
 
 <P>You should now be completely operational. If you want debug
-messages sent to your console window, installed a modified default.lcf
+messages sent to your console window, install a modified default.lcf
 file to the JBuilder->workspace directory. Now have some fun making
 changes to the JMRI code!
 
