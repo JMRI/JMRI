@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.3.shtml,v 1.10 2010-01-22 17:13:04 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.3.shtml,v 1.11 2010-01-26 04:19:27 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -69,8 +69,7 @@ see our
 
 <h3>Older warnings</h3>
 
-This version of JMRI uses the new communications libraries introduced in 
-<a href="jmri2.9.2.shtml">JMRI 2.9.2</a>.
+This version of JMRI uses new communications libraries.
 On Windows, the installer should take care of all installation and deinstallation 
 required.  On Mac, no actions are necessary, the new distribution directory
 should just work.  On Linux, you may have to install and/or uninstall 
@@ -136,6 +135,9 @@ Joan Carrancà added a set of
 Dan Boudreau added two new build options for trains: by owner, and by built date.
 
 <p>
+The DecoderPro manual in the help pages has been extensively updated.
+
+<p>
 Paul Bender added a set of 
 <a href="http://jmri.org/xml/signals/SLSF-1973/index.shtml">signal definitions for the SLSF (Frisco) system </a>.
 
@@ -173,6 +175,11 @@ The user can exclude a road for cars, but still allow an engine to be assigned t
 Dan Boudreau added a new operations feature.  Allow users to move or terminate a train from the Trains window.
 
 <p>
+Kevin Dickerson added check-boxes for disabling various reminder prompts, along with a way
+to remember those during the next time the program runs, and a tool for resetting them if you
+change your mind.
+
+<p>
 Matt Harris fixed a spurious warning about "Insets" when running under Gnome-based Linux.
 
 <p>
@@ -195,14 +202,39 @@ Several updates to the Lionel TMCC support to fix multiple bugs.
 The TMCC support was badly broken in JMRI 2.4, and only with this version should be considered working.
 
 <p>
+Marc Fournier updated the version numbers in the MRC Athearn MP15 decoder definition.
+
+<p>
+Michael Mosher provided a decoder definition for the QSI Stock Car.
+
+<p>
+Michael Povel provided definitions for the TAMS LD-G-21 and LD-G-32 decoders.
+
+<p>
 David Duchamp updated Simple Signal Logic to use up to five sensors, which allows more complicated trackwork
 to be handled by Layout Editor.
+
+<p>
+Jack Shall updated the Tsunami Diesel definition to include the Kato KT100 models.
 
 <p>
 David Duchamp made Dispatcher enhancements for both manual running and future automatic running of trains.
 
 <p>
 Kevin Dickerson fixed how Signal Mast icons rotate in the Panel and Layout Editors.
+
+<p>
+Kevin Dickerson added a custom power on/off control to the SPROG menu.
+
+<p>
+Fixed a problem with the DecoderPro function map when using more than 12 function definitions.
+
+<p>
+Andrew Crosland updated the configuration files for building and running JMRI under NetBeans.
+
+<p>
+Harald Barth improved the SRCP implementation.
+
 
 <!--#include virtual="/Footer" -->
 

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.2.shtml,v 1.4 2010-01-22 17:12:48 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.2.shtml,v 1.5 2010-01-26 04:19:27 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -26,85 +26,10 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h2>
-      Release Notes for JMRI 2.9.2 release
+      Release Notes for JMRI 2.9.2
       </h2>
 
-	<p>Date: MMM NN, 2010</p>
-	<p>From: Bob Jacobsen</p>
-	<p>Subject: Test version 2.9.2 of JMRI/DecoderPro is available for download.
-
-<br><b>This is a draft release note only; the download links do not yet work</b>
-
-<h3>Notes:</h3>
-
-<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
-And please back up your JMRI files before installing this, in case you want to go 
-back to an earlier version.
-
-<p>This is the second in a series of test versions. We expect this series
-to end in a JMRI 2.10 (or perhaps JMRI 3.0) production release in Summer 2010. 
-
-<p>
-The only change in this test release is a new communications library, called "RXTX 2.2".
-This new library is incompatible with the previous one, and required numerous code
-changes in JMRI.  
-
-<p>
-Everything else in this test release is the same as the
-<a href="jmri2.9.1.shtml">JMRI 2.9.1</a>
-test release.
-
-<b><p>
-JMRI is now only available under the 
-<A HREF="/COPYING">GNU General Public License</a>. For more information, please
-see our 
-<a href="/Copyright.html">copyright and licensing page</a>.</p></b>
-
-<h3>New warnings for this version:</h3>
-
-This version of JMRI uses different communications libraries.
-On Windows, the installer should take care of all installation and deinstallation 
-required.  On Mac, no actions are necessary, the new distribution directory
-should just work.  On Linux, you may have to install and/or uninstall 
-various communications library parts, see the
-<a href="../install/Linux.html">JMRI Linux pages</a> for more info.
-
-<p>
-There is a known problem with SPROG Command Station Mode in this version.
-If you use that, you should not install this version of JMRI.  Wait until
-JMRI 2.9.3 is released with a fix.
-
-<h3>Older warnings</h3>
-
-We recently discovered that the Lionel TMCC support has had serious bugs since
-JMRI 2.4, and perhaps before that.  These are not fixed in this version, 
-but will be fixed in JMRI 2.9.3.  There's a temporary patch available if 
-these bugs are causing you problems.
-
-<p>
-The JInput USB library was updated to the current version in 
-<a href="jmri2.9.1.shtml">JMRI 2.9.1</a>, which (should) 
-have fixed problems on
-Windows Visata, Intel Macs and some Linux machines.  We don't have a way to check this with all possible
-input devices, so please check to make sure that your USB-attached devices still work.
-
-<p>
-When loading an older panel file containing signal head icons, you may
-get WARN messages about "did not locate lunar icon file" and "did not locate flashlunar icon file".
-To make these stop, just store the file again so that it's rewritten in the most recent format.
-
-<h3>Download links:</h3>
-
-<p>Please use these links for downloading:
-
-<p>MacOS X:
-     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.2.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.2.dmg/download</a>
-
-<p>Windows:
-     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.2.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.2.exe/download</a>
-
-<p>Linux:
-     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.2.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.2.tgz/download</a>
+<br><b>JMRI 2.9.2 was used for internal testing, and was never given general release.</b>
 
 
 <!--#include virtual="/Footer" -->
