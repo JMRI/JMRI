@@ -8,7 +8,7 @@ package jmri.jmrix.can.cbus;
  * Description:		Constants to represent CBUS protocol
  *
  * @author		Andrew Crosland   Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public final class CbusConstants {
     /**
@@ -33,6 +33,7 @@ public final class CbusConstants {
     public static final int CBUS_KLOC = 0x21;
 
     public static final int CBUS_RLOC = 0x40;
+    public static final int CBUS_STMOD = 0x44;
     public static final int CBUS_PCON = 0x45;
     public static final int CBUS_DSPD = 0x47;
     public static final int CBUS_SSTAT = 0x4C;
@@ -135,6 +136,14 @@ public final class CbusConstants {
     public static final int CBUS_F11 = 4;
     public static final int CBUS_F12 = 8;
 
+    /**
+     * Throttle modes
+     */
+    public static final int CBUS_SS_128 = 0;
+    public static final int CBUS_SS_14 = 1;
+    public static final int CBUS_SS_28_INTERLEAVE = 2;
+    public static final int CBUS_SS_28 = 3;
+    
     /**
      * Number of slots supported by the command station
      */

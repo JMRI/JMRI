@@ -12,13 +12,14 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanListener;
 
 import javax.swing.JOptionPane;
+import jmri.DccThrottle;
 
 /**
  * CBUS implementation of a ThrottleManager.
  * <P>
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author				Andrew Crosland  Copyright (C) 2009
- * @version 		$Revision: 1.6 $
+ * @version 		$Revision: 1.7 $
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener{
     private boolean _handleExpected = false;
@@ -175,6 +176,17 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         throttleRequestTimer.stop();
     }
 
+    /**
+     * What speed modes are supported by this system?                       
+     * value should be xor of possible modes specifed by the 
+     * DccThrottle interface
+     */
+    public int supportedSpeedModes() {
+        return(DccThrottle.SpeedStepMode128
+                | DccThrottle.SpeedStepMode28
+                | DccThrottle.SpeedStepMode14);
+    }
+    
 
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusThrottleManager.class.getName());

@@ -3,6 +3,7 @@ package jmri.jmrix.can.cbus;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
+import jmri.DccThrottle;
 import jmri.jmrix.AbstractThrottle;
 
 /**
@@ -13,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * with values from 0 to 127.
  * <P>
  * @author  Andrew Crosland Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class CbusThrottle extends AbstractThrottle {
     private CbusCommandStation cs = null;
@@ -89,6 +90,27 @@ public class CbusThrottle extends AbstractThrottle {
 
     }
 
+    /*
+     * setSpeedStepMode - set the speed step value.
+     * <P>
+     * Overridden to capture mode changes to be forwarded to the hardware.
+     * New throttles default to 128 step
+     * mode
+     * <P>
+     * @param Mode - the current speed step mode - default should be 128
+     *              speed step mode in most cases
+     */
+     public void setSpeedStepMode(int Mode) {
+         int mode;
+	     speedStepMode = Mode;
+         switch (speedStepMode) {
+             case DccThrottle.SpeedStepMode28: mode = CbusConstants.CBUS_SS_28; break;
+             case DccThrottle.SpeedStepMode14: mode = CbusConstants.CBUS_SS_14; break;
+             default: mode = CbusConstants.CBUS_SS_128; break;
+         }
+         cs.setSpeedSteps(_handle, mode);
+     }
+
     /**
      * Convert a CBUS speed integer to a float speed value
      */
@@ -106,7 +128,7 @@ public class CbusThrottle extends AbstractThrottle {
         return 0;
       else if (fSpeed < 0.f)
         return 1;   // estop
-        // add the 0.5 to handle float to int round for positive numbers
+      // add the 0.5 to handle float to int round for positive numbers
       return (int)(fSpeed * 126.f + 0.5) + 1 ;
     }
 
@@ -144,7 +166,7 @@ public class CbusThrottle extends AbstractThrottle {
                 (getF10() ? CbusConstants.CBUS_F10 : 0) |
                 (getF11() ? CbusConstants.CBUS_F11 : 0) |
                 (getF12() ? CbusConstants.CBUS_F12 : 0));
-        cs.setFunctions(2, _handle, new_fn);
+        cs.setFunctions(3, _handle, new_fn);
     }
 
     /**
@@ -233,7 +255,7 @@ public class CbusThrottle extends AbstractThrottle {
     protected void startRefresh() {
         mRefreshTimer = new javax.swing.Timer(4000, new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                timeout();
+                dspdTimeout();
             }
         });
         mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
@@ -243,10 +265,7 @@ public class CbusThrottle extends AbstractThrottle {
     /**
      * Internal routine to resend the speed on a timeout
      */
-    synchronized protected void timeout() {
-        // clear the last known layout_spd so that we will actually send the
-        // message.
-//	layout_spd = -1;
+    synchronized protected void dspdTimeout() {
         log.debug("Sending throttle keep alive speed/dir speed: " + speedSetting);
         setSpeedSetting(speedSetting);
     }

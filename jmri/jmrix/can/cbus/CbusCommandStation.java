@@ -17,7 +17,7 @@ import jmri.jmrix.can.TrafficController;
  * station state should always be referred to.
  *
  * @author      Andrew Crosland Copyright (C) 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class CbusCommandStation implements CommandStation, DccCommandStation, CanListener {
 
@@ -102,6 +102,19 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
         msg.setElement(1, handle);
         msg.setElement(2, group);
         msg.setElement(3, functions);
+        TrafficController.instance().sendCanMessage(msg, this);
+    }
+
+    /**
+     * Send a CBUS message to change the session speed step mode
+     * @param mode the speed step mode
+     */
+    protected void setSpeedSteps(int handle, int mode) {
+        log.debug("Set speed step mode " + mode + " for session handle" + handle);
+        CanMessage msg = new CanMessage(3);
+        msg.setOpCode(CbusConstants.CBUS_STMOD);
+        msg.setElement(1, handle);
+        msg.setElement(2, mode);
         TrafficController.instance().sendCanMessage(msg, this);
     }
 
