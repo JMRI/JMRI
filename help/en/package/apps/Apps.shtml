@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Apps.shtml,v 1.8 2010-01-23 19:32:15 jacobsen Exp $ -->
+<!-- $Id: Apps.shtml,v 1.9 2010-01-26 00:23:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -39,7 +39,7 @@ Help for specific main windows:
 Help on specific menus:
 <ul>
 <li>Edit - (<a href="AppConfigPanel.shtml">Preferences</a>)
-<li><a href="../../package/jmri/jmrit/ToolsMenu.shtml">Tools</a>
+<li><a href="../jmri/jmrit/ToolsMenu.shtml">Tools</a>
 <li><a href="../../html/apps/DecoderPro/Roster.shtml#menu">Roster</a>
 <li><a href="../jmri/jmrit/display/PanelMenuHelp.shtml">Panels</a>
 <li>(Menus specific to your layout connection will appear here)
