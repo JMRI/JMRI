@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.98 2010-01-26 04:16:01 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.99 2010-01-26 04:19:16 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -96,6 +96,7 @@
 	connection to an MS100.  Check out their great Java serial library!
 	<LI>Peter Brandenburg, for many CT Electronik decoder definitions, definitions for Haber &amp; Koenig decoders, 
 	and for creating the SPROG web page
+	<li>Chris Bradshaw, who fixed some broken links
 	<LI>Jerry Britton, who acquired and maintained the domain registration 
 	for decoderpro.com, despite Matt Katzer's
 	<a href="http://jmri.org/k/UDRP/index.shtml">despicable behavior</a>,
