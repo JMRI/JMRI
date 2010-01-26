@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: ToolsMenu.shtml,v 1.6 2010-01-09 22:25:56 jacobsen Exp $ -->
+<!-- $Id: ToolsMenu.shtml,v 1.7 2010-01-26 02:59:56 jacobsen Exp $ -->
 <title>JMRI: Tools Menu</title>
 
 <!-- Style -->
@@ -49,6 +49,7 @@ The Tools Menu gives access to the basic JMRI tools:
   <li><a href="beantable/LRouteTable.shtml">LRoutes</a>
   <li><a href="beantable/LogixTable.shtml">Logix</a>
   <li><a href="beantable/BlockTable.shtml">Blocks</a>
+  <li><a href="beantable/AudioTable.shtml">Audio</a>
   </ul>
 <li><a href="../../../html/tools/throttle/ThrottleMain.shtml">Throttles</a>
 <li><a href="../../../html/tools/consisttool/ConsistTool.shtml">Consisting Tool</a>
@@ -71,3 +72,5 @@ For more information, see also the
 <!--#include virtual="/Footer" -->
 </body>
 </html>
+
+ 	  	 
