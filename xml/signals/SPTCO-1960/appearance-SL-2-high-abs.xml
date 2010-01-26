@@ -29,10 +29,16 @@
         <revremark>Initial version</revremark>
     </revision>
     <revision>
-        <revnumber>1</revnumber>
+        <revnumber>1.01</revnumber>
         <date>2010-01-26</date>
         <authorinitials>DB</authorinitials>
         <revremark>Error corrections</revremark>
+    </revision>
+    <revision>
+        <revnumber>1.02</revnumber>
+        <date>2010-01-26</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Added missing aspect</revremark>
     </revision>
   </revhistory>
 
@@ -49,6 +55,14 @@
       <show>dark</show>
       <reference>Page 91 D</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-2-high-abs/rule-282.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Block Signal Green for Diverging Route</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Page 92 D</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-2-high-abs/rule-283.gif</imagelink>
     </appearance>
 
     <appearance>

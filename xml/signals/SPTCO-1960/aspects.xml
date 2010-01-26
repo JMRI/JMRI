@@ -45,6 +45,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Consistancy</revremark>
     </revision>
+    <revision>
+         <revnumber>1.21</revnumber>
+        <date>2010-01-26</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Consistancy</revremark>
+    </revision>
   </revhistory>
 
   <aspects>
@@ -61,7 +67,7 @@
       <reference>Page 91</reference>
     </aspect>
     <aspect>
-      <name>Block signal green for diverging route</name>
+      <name>Block Signal Green for Diverging Route</name>
       <rule>Rule 283</rule>
       <indication>Proceed on diverging route</indication>
       <reference>Page 92</reference>
