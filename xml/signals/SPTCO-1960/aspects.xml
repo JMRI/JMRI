@@ -141,7 +141,10 @@
   </aspects>
   
   <appearancefiles>
-    <!-- None yet -->
+    <appearancefile href="appearance-SL-1-high-abs.xml"/>
+    <appearancefile href="appearance-SL-1-high-pbs.xml"/>
+    <appearancefile href="appearance-SL-1-low.xml"/>
+    <appearancefile href="appearance-SL-2-high-abs.xml"/>
   </appearancefiles>
 
 </aspecttable>
