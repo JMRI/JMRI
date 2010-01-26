@@ -75,7 +75,7 @@ import javax.swing.*;
  * A link is required to be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class LayoutTurnout
@@ -134,6 +134,7 @@ public class LayoutTurnout
 	public Object connectD = null;		// double xover, RH Xover, LH Xover only
 	public int continuingSense = Turnout.CLOSED;
 	public boolean disabled = false;
+    public boolean disableWhenOccupied = false;
 	public Point2D center = new Point2D.Double(50.0,50.0);
 	public Point2D dispB = new Point2D.Double(20.0,0.0);
 	public Point2D dispC = new Point2D.Double(20.0,10.0);
@@ -150,6 +151,7 @@ public class LayoutTurnout
 		turnoutName = "";
 		mTurnoutListener = null;
 		disabled = false;
+        disableWhenOccupied = false;
 		block = null;
 		blockName = "";
 		layoutEditor = myPanel;
@@ -290,6 +292,9 @@ public class LayoutTurnout
 	public void setContinuingSense(int sense) {continuingSense=sense;}
 	public void setDisabled(boolean state) {disabled = state;}
 	public boolean isDisabled() {return disabled;}
+    
+    public void setDisableWhenOccupied(boolean state) {disableWhenOccupied = state;}
+	public boolean isDisabledWhenOccupied() {return disableWhenOccupied;}
 	public void setConnectA(Object o,int type) {
 		connectA = o;
 		if ( (type!=LayoutEditor.TRACK) && (type!=LayoutEditor.NONE) ) {
@@ -791,6 +796,12 @@ public class LayoutTurnout
 	 */
 	public void toggleTurnout() {
         if ((turnout!=null) && (!disabled)) {
+            if (disableWhenOccupied){
+                if(disableOccupiedTurnout()){
+                    log.debug("Turnout not changed as Block is Occupied");
+                    return;
+                }
+            }
 			// toggle turnout
 			if (turnout.getKnownState()==jmri.Turnout.CLOSED)
 				turnout.setCommandedState(jmri.Turnout.THROWN);
@@ -798,6 +809,49 @@ public class LayoutTurnout
 				turnout.setCommandedState(jmri.Turnout.CLOSED);
 		}
     }
+    
+    @SuppressWarnings("static-access")
+    private boolean disableOccupiedTurnout(){
+        if ((type==RH_TURNOUT) || (type==LH_TURNOUT) || (type==WYE_TURNOUT)){
+            if(block.getOccupancy()==block.OCCUPIED){
+                log.debug("Block " + blockName + "is Occupied");
+                return true;
+            }
+        }
+        if ((type==DOUBLE_XOVER)||(type==RH_XOVER)||(type==LH_XOVER)){
+            //If the turnout is set for straigh over, we need to deal with the straight over connecting blocks
+            if (turnout.getKnownState()==jmri.Turnout.CLOSED){
+                if ((block.getOccupancy()==block.OCCUPIED) && (blockB.getOccupancy()==block.OCCUPIED)){
+                    log.debug("Blocks " + blockName + " & " + blockBName + " are Occupied");
+                    return true;
+                }
+                if ((blockC.getOccupancy()==block.OCCUPIED) && (blockD.getOccupancy()==block.OCCUPIED)){
+                    log.debug("Blocks " + blockCName + " & " + blockDName + " are Occupied");
+                    return true;
+                }
+            }
+        
+        }
+        if ((type==DOUBLE_XOVER)||(type==LH_XOVER)){
+            if (turnout.getKnownState()==jmri.Turnout.THROWN){
+                if ((blockB.getOccupancy()==block.OCCUPIED) && (blockD.getOccupancy()==block.OCCUPIED)){
+                    log.debug("Blocks " + blockBName + " & " + blockDName + " are Occupied");
+                    return true;
+                }
+            }
+        }
+        
+        if ((type==DOUBLE_XOVER)||(type==RH_XOVER)){
+            if (turnout.getKnownState()==jmri.Turnout.THROWN){
+                if ((block.getOccupancy()==block.OCCUPIED) && (blockC.getOccupancy()==block.OCCUPIED)) {
+                    log.debug("Blocks " + block + " & " + blockCName + " are Occupied");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
 			
 	// initialization instance variables (used when loading a LayoutEditor)
 	public String connectAName = "";
@@ -877,6 +931,7 @@ public class LayoutTurnout
 
     JPopupMenu popup = null;
     JCheckBoxMenuItem disableItem = null;
+    JCheckBoxMenuItem disableWhenOccupiedItem = null;
 	LayoutEditorTools tools = null;
     /**
      * Display popup menu for information and editing
@@ -954,6 +1009,15 @@ public class LayoutTurnout
         disableItem.addActionListener(new ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					disabled = disableItem.isSelected();
+				}
+			});
+        if (disableWhenOccupiedItem==null)
+            disableWhenOccupiedItem = new JCheckBoxMenuItem(rb.getString("DisabledWhenOccupied"));
+        disableWhenOccupiedItem.setSelected(disableWhenOccupied);
+        popup.add(disableWhenOccupiedItem);
+        disableWhenOccupiedItem.addActionListener(new ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					disableWhenOccupied = disableWhenOccupiedItem.isSelected();
 				}
 			});
 		if (blockName.equals("")) popup.add(rb.getString("NoBlock"));

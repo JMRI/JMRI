@@ -17,7 +17,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.LayoutTurnout objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
@@ -100,6 +100,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
 		element.setAttribute("continuing", ""+p.getContinuingSense());		
         element.setAttribute("disabled", ""+(p.isDisabled()?"yes":"no"));
+        element.setAttribute("disableWhenOccupied", ""+(p.isDisabledWhenOccupied()?"yes":"no"));
 		Point2D coords = p.getCoordsCenter();
 		element.setAttribute("xcen", ""+coords.getX());
 		element.setAttribute("ycen", ""+coords.getY());
@@ -242,6 +243,10 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         if ((a = element.getAttribute("disabled"))!=null && a.getValue().equals("yes"))
             value = true;
         l.setDisabled(value);
+        value = false;
+        if ((a = element.getAttribute("disableWhenOccupied"))!=null && a.getValue().equals("yes"))
+            value = true;
+        l.setDisableWhenOccupied(value);
 		try {
 			x = element.getAttribute("xb").getFloatValue();
 			y = element.getAttribute("yb").getFloatValue();
