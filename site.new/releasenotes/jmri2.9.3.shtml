@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.3.shtml,v 1.12 2010-01-26 08:48:00 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.3.shtml,v 1.13 2010-01-26 14:34:40 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,7 +29,7 @@
       Release Notes for JMRI 2.9.3 release
       </h2>
 
-	<p>Date: MMM NN, 2010</p>
+	<p>Date: January NN, 2010</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.9.3 of JMRI/DecoderPro is available for download.
 
@@ -49,9 +49,10 @@ It contains
 many new features, including:
 
 <ul>
-<li>(two more signal systems)
-<li>settable preferences
-<li>
+<li>New communications libraries makes installation easier
+<li>Settable preferences for many warning and info dialogs
+<li>DecoderPro manual updated
+<li>Lionel TMCC updated
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -80,7 +81,7 @@ various communications library parts, see the
 The JInput USB library was updated to the current version in 
 <a href="jmri2.9.1.shtml">JMRI 2.9.1</a>, which (should) 
 have fixed problems on
-Windows Visata, Intel Macs and some Linux machines.  We don't have a way to check this with all possible
+Windows Vista, Intel Macs and some Linux machines.  We don't have a way to check this with all possible
 input devices, so please check to make sure that your USB-attached devices still work.
 
 <p>
@@ -101,8 +102,10 @@ To make these stop, just store the file again so that it's rewritten in the most
 <p>Linux:
      <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.3.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.3.tgz/download</a>
 
-<h3>Changes since test version 2.9.2</h3>
+<h3>Changes since test version 2.9.1</h3>
+(JMRI 2.9.2 was never released, so this section includes changes since JMRI 2.9.1)
 
+<p>
 Dan Boudreau made some improvements to programmer error messages, and to operations build messages.
 
 <p>
@@ -142,11 +145,7 @@ Paul Bender added a set of
 <a href="http://jmri.org/xml/signals/SLSF-1973/index.shtml">signal definitions for the SLSF (Frisco) system </a>.
 
 <p>
-David Duchamp fixed a minor bug in the Maple interface
-
-<p>
-Kevin Dickerson added the ability to set various warnings to not appear in the future, and
-save that setting from one run of the program to the next.
+David Duchamp fixed two bugs in the Maple interface
 
 <p>
 Kevin Dickerson added a page title to the roster print out that will either be
@@ -175,7 +174,7 @@ Dan Boudreau made a minor operations improvement with regards to engine roads:
 The user can exclude a road for cars, but still allow an engine to be assigned to the train with the excluded car road.
 
 <p>
-Dan Boudreau added a new operations feature.  Allow users to move or terminate a train from the Trains window.
+Dan Boudreau added a new operations feature: Allow users to move or terminate a train from the Trains window.
 
 <p>
 Kevin Dickerson added check-boxes for disabling various reminder prompts, along with a way
