@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -69,6 +69,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	public void initComponents(Route route) {
 				
 		_route = route;
+		String routeName = null;
 
 		// load managers
 		manager = RouteManager.instance();
@@ -89,7 +90,8 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     	routePane.setBorder(BorderFactory.createTitledBorder(""));
  		
 		if (_route != null){
-			routeNameTextField.setText(_route.getName());
+			routeName = _route.getName();
+			routeNameTextField.setText(routeName);
 			commentTextField.setText(_route.getComment());
 	      	routeModel.initTable(routeTable, route);
 	      	enableButtons(true);
@@ -155,6 +157,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
 		toolMenu.add(new PrintRouteAction(rb.getString("MenuItemPrint"), new Frame(), false, _route));
 		toolMenu.add(new PrintRouteAction(rb.getString("MenuItemPreview"), new Frame(), true, _route));
+		toolMenu.add(new RouteCopyAction(rb.getString("MenuItemCopy"), routeName));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true);

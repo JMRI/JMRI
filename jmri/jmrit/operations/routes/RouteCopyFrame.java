@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 public class RouteCopyFrame extends OperationsFrame {
 	
@@ -32,7 +32,9 @@ public class RouteCopyFrame extends OperationsFrame {
 
 	RoutesTableModel routesModel = new RoutesTableModel();
 	javax.swing.JTable routesTable = new javax.swing.JTable(routesModel);
+	RouteManager routeManager = RouteManager.instance();
 	JScrollPane routesPane;
+	String routeName;
 	
 	// labels
 	javax.swing.JLabel textCopyRoute = new javax.swing.JLabel(rb.getString("CopyRoute"));
@@ -85,13 +87,17 @@ public class RouteCopyFrame extends OperationsFrame {
 		addButtonAction(copyButton);
     }
     
+    public void setRouteName(String routeName){
+    	routeBox.setSelectedItem(routeManager.getRouteByName(routeName));
+    }
+    
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == copyButton){
 			log.debug("copy route button actived");
 			if (!checkName())
 				return;
-			RouteManager manager = RouteManager.instance();
-			Route newRoute = manager.getRouteByName(routeNameTextField.getText());
+
+			Route newRoute = routeManager.getRouteByName(routeNameTextField.getText());
 			if (newRoute != null){
 				reportRouteExists(rb.getString("add"));
 				return;
@@ -105,7 +111,7 @@ public class RouteCopyFrame extends OperationsFrame {
 				reportRouteDoesNotExist();
 				return;
 			}
-			newRoute = manager.newRoute(routeNameTextField.getText());
+			newRoute = routeManager.newRoute(routeNameTextField.getText());
 			// now copy
 			List<String> oldRouteLocations = oldRoute.getLocationsBySequenceList();
 			if (!invertCheckBox.isSelected()){
@@ -188,10 +194,13 @@ public class RouteCopyFrame extends OperationsFrame {
 	 * @return true if name is less than 26 characters
 	 */
 	private boolean checkName(){
-		if (routeNameTextField.getText().trim().equals(""))
+		if (routeNameTextField.getText().trim().equals("")){
+			JOptionPane.showMessageDialog(this,
+					rb.getString("EnterRouteName"), rb.getString("EnterRouteName"),
+					JOptionPane.ERROR_MESSAGE);
 			return false;
+		}
 		if (routeNameTextField.getText().length() > 25){
-			log.error("Route name must be less than 26 charaters");
 			JOptionPane.showMessageDialog(this,
 					rb.getString("RouteNameLess"), rb.getString("CanNotAddRoute"),
 					JOptionPane.ERROR_MESSAGE);
