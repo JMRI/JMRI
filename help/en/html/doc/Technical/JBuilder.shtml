@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JBuilder.shtml,v 1.6 2009-06-18 03:07:55 dan_boudreau Exp $ -->
+<!-- $Id: JBuilder.shtml,v 1.7 2010-01-26 03:58:04 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
 <TITLE>JMRI: Building with JBuilder</TITLE>
@@ -76,23 +76,21 @@ the Main class.
 <P>And enter the following VM arguments:
 <P>
 -Xms10m<Br>
--Xmx200m <Br>
+-Xmx300m <Br>
 -noverify <Br>
 -Dsun.java2d.d3d=false <Br>
 -Djava.security.policy=security.policy <Br>
--Djava.library.path=.;lib <Br>
+-Djava.library.path=.;lib;lib/windows/x86 <Br>
 -Djava.rmi.server.codebase=file:java/classes/ <Br>
 -Dsun.java2d.noddraw
+<p>
+Note if you're using a 64 bit windows system change the library path to:
+<p>
+-Djava.library.path=.;lib;lib/windows/x64
+
 <P>Now change the working directory to ${workspace_loc} by selecting
 the "Other" radio button and searching using the "Variables.." button.
 
-
-You should now be able to run DecoderPro from the JBuilder environment,
-but your serial port won't work if you're using Windows. To make the
-serial port operational, do the following:
-<P>Add the win32com.dll file to the JBuilder->workspace directory.
-<P>Add the javax.comm.properties file to the
-JBuilder2008->jre->jre->lib directory.
 <P>You should now be completely operational. If you want debug
 messages sent to your console window, installed a modified default.lcf
 file to the JBuilder->workspace directory. Now have some fun making
