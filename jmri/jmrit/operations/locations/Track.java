@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.33 $
+ * @version             $Revision: 1.34 $
  */
 public class Track {
 	
@@ -370,12 +370,11 @@ public class Track {
     
     private void setRoadNames(String[] roads){
     	if (roads.length == 0) return;
-       	int start = 0;
-    	if (roads[0].equals(""))
-    		start++;
     	jmri.util.StringUtil.sort(roads);
- 		for (int i=start; i<roads.length; i++)
- 			_roadList.add(roads[i]);
+    	for (int i=0; i<roads.length; i++){
+    		if (!roads[i].equals(""))
+    			_roadList.add(roads[i]);
+    	}
     }
     
     public void addRoadName(String road){
