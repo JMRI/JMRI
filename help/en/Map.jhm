@@ -328,6 +328,8 @@
 
 <mapID target="manual.Main_XpressNet_LZV100CM" url="manual/Main_XpressNet.shtml#LZV100CM"/>
 
+<mapID target="package.jmri.jmrit.beantable.SignalGroupTable" url="package/jmri/jmrit/beantable/SignalGroupTable.shtml"/>
+
 <mapID target="manual.Basic_Start" url="manual/Basic_Start.shtml"/>
 
 <mapID target="html.doc.Technical.JBuilder" url="html/doc/Technical/JBuilder.shtml"/>
@@ -1339,6 +1341,8 @@
 <mapID target="manual.Adv_FunctionLabel_Top" url="manual/Adv_FunctionLabel.shtml#Top"/>
 
 <mapID target="html.tools.Signals" url="html/tools/Signals.shtml"/>
+
+<mapID target="package.jmri.jmrit.beantable.SignalGroupAddEdit" url="package/jmri/jmrit/beantable/SignalGroupAddEdit.shtml"/>
 
 <mapID target="manual.Basic_Programming_Write Data" url="manual/Basic_Programming.shtml#Write Data"/>
 
