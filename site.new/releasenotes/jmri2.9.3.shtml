@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.3.shtml,v 1.13 2010-01-26 14:34:40 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.3.shtml,v 1.14 2010-01-27 17:46:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,11 +29,13 @@
       Release Notes for JMRI 2.9.3 release
       </h2>
 
-	<p>Date: January NN, 2010</p>
+	<p>Date: January 27, 2010</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.9.3 of JMRI/DecoderPro is available for download.
 
+<!-- 
 <br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
 
 <h3>Notes:</h3>
 
@@ -49,7 +51,7 @@ It contains
 many new features, including:
 
 <ul>
-<li>New communications libraries makes installation easier
+<li>New RXTX communications libraries makes installation easier
 <li>Settable preferences for many warning and info dialogs
 <li>DecoderPro manual updated
 <li>Lionel TMCC updated
@@ -68,8 +70,6 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-<h3>Older warnings</h3>
-
 This version of JMRI uses new communications libraries.
 On Windows, the installer should take care of all installation and deinstallation 
 required.  On Mac, no actions are necessary, the new distribution directory
@@ -78,6 +78,25 @@ various communications library parts, see the
 <a href="../install/Linux.html">JMRI Linux pages</a> for more info.
 
 <p>
+You may get some messages like:
+<code><pre>
+WARNING:  RXTX Version mismatch
+        Jar version = RXTX-2.2pre1
+        native lib Version = RXTX-2.2pre2
+</pre></code>
+and
+<code><pre>
+(some stuff)   INFO  - failed to set serial framing: gnu.io.UnsupportedCommOperationException: Not supported
+</pre></code>
+For now, these should be considered normal.  We'll try to get them
+removed before the next release.
+
+<p>
+Due to the inclusion of the new DecoderPro manual in the help files,
+these download files are significantly larger than previous ones.
+
+<h3>Older warnings</h3>
+
 The JInput USB library was updated to the current version in 
 <a href="jmri2.9.1.shtml">JMRI 2.9.1</a>, which (should) 
 have fixed problems on
