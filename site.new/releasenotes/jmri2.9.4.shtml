@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.1 2010-01-26 04:19:27 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.2 2010-01-27 04:17:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -102,6 +102,14 @@ To make these stop, just store the file again so that it's rewritten in the most
 
 <h3>Changes since test version 2.9.3</h3>
 
+Dick Bronson updated the SP 1960 signal definitions.
+
+<p>
+Kevin Dickerson added a new feature added to a turnout on the layout panel, 
+that prevents the turnout from being changed on the panel 
+if the blocks on the connecting path through the turnout are occupied, 
+thus helping to prevent accidental changing of turnouts when they are occupied.  
+Feature is disabled by default.
 <!--#include virtual="/Footer" -->
 
    </div><!-- closes #mainContent-->
