@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.54 $
+ * @version $Revision: 1.55 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -156,6 +156,15 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                         inconsistentText=userName;
                     if (unknownText==null)
                         unknownText=userName;
+                } else {
+                    if (activeText==null)
+                        activeText=rb.getString("SensorActive");
+                    if (inactiveText==null)
+                        inactiveText = rb.getString("SensorInactive");
+                    if (inconsistentText==null)
+                        inconsistentText=rb.getString("Inconsistent");
+                    if (unknownText==null)
+                        unknownText=rb.getString("Unknown");
                 }
             } else{
                 if (activeText==null)
@@ -916,9 +925,13 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 
             case 0x08 : colorBorderButtonGroup = new ButtonGroup();
                         colorBorderButtonGroup.add(r);
-                        if( getBorderColor()!=null)
+                        if((getBorderColor()!=null) && (color!=null)){
                             if (getBorderColor().getRGB() == color.getRGB()) r.setSelected(true);
-                        else r.setSelected(false);
+                            else r.setSelected(false);
+                        } else {
+                            if ((getBorderColor() == null) && (color==null)) r.setSelected(true);
+                            else r.setSelected(false);
+                        }
         }
         menu.add(r);
     }

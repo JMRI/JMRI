@@ -26,7 +26,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -49,7 +49,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         text = false;
 
         //Set the default signal heads for the layout editor
-        redName = "resources/icons/smallschematics/searchlights/left-red-short.gif";
+        /*redName = "resources/icons/smallschematics/searchlights/left-red-short.gif";
         flashRedName = "resources/icons/smallschematics/searchlights/left-flashred-short.gif";
         yellowName = "resources/icons/smallschematics/searchlights/left-yellow-short.gif";
         flashYellowName = "resources/icons/smallschematics/searchlights/left-flashyellow-short.gif";
@@ -69,7 +69,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         lunar = new NamedIcon(lunarName, lunarName);
         flashLunar = new NamedIcon(flashLunarName, flashLunarName);
         dark = new NamedIcon(darkName, darkName);
-        held = new NamedIcon(heldName, heldName);
+        held = new NamedIcon(heldName, heldName);*/
 
         setDisplayLevel(LayoutEditor.SIGNALS);
         displayState(SignalHead.RED);
@@ -528,8 +528,8 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         _editor.setIcon(7, "SignalHeadStateFlashingYellow", flashYellow);
         _editor.setIcon(8, "SignalHeadStateFlashingGreen", flashGreen);
         _editor.setIcon(9, "SignalHeadStateFlashingLunar", flashLunar);
-        makeAddIconFrame("EditSignal", "addIconsToPanel", 
-                                           "SelectSignal", _editor);
+        makeAddIconFrame("EditSignalHead", "addIconsToPanel", 
+                                           "SelectSignalHead", _editor);
         _editor.makeIconPanel();
         _editor.setPickList(PickListModel.signalHeadPickModelInstance());
 
