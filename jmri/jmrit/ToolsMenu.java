@@ -15,7 +15,7 @@ import java.util.*;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2008
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.37 $
+ * @version     $Revision: 1.38 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -49,6 +49,7 @@ public class ToolsMenu extends JMenu {
         tableMenu.add(new jmri.jmrit.beantable.LightTableAction(rb.getString("MenuItemLightTable")));
         tableMenu.add(new jmri.jmrit.beantable.SignalHeadTableAction(rb.getString("MenuItemSignalTable")));
         tableMenu.add(new jmri.jmrit.beantable.SignalMastTableAction(rb.getString("MenuItemSignalMastTable")));
+        tableMenu.add(new jmri.jmrit.beantable.SignalGroupTableAction("Signal Group"));
         tableMenu.add(new jmri.jmrit.beantable.ReporterTableAction(rb.getString("MenuItemReporterTable")));
         tableMenu.add(new jmri.jmrit.beantable.MemoryTableAction(rb.getString("MenuItemMemoryTable")));
         tableMenu.add(new jmri.jmrit.beantable.RouteTableAction(rb.getString("MenuItemRouteTable")));
@@ -100,7 +101,7 @@ public class ToolsMenu extends JMenu {
         add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction(rb.getString("MenuItemTurnoutControl")));
         add(new jmri.jmrit.blockboss.BlockBossAction(rb.getString("MenuItemSimpleSignal")));
         add(new jmri.jmrit.sensorgroup.SensorGroupAction(rb.getString("MenuItemSensorGroup")));
-        add(new jmri.jmrit.speedometer.SpeedometerAction(rb.getString("MenuItemSpeedometer")));
+    	add(new jmri.jmrit.speedometer.SpeedometerAction(rb.getString("MenuItemSpeedometer")));
         add(new jmri.jmrit.simplelightctrl.SimpleLightCtrlAction(rb.getString("MenuItemLightControl")));
         add(new jmri.jmrit.dispatcher.DispatcherAction(rb.getString("MenuItemDispatcher")));
 

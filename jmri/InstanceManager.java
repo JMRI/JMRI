@@ -18,6 +18,7 @@ import jmri.managers.DefaultConditionalManager;
 import jmri.managers.DefaultLogixManager;
 import jmri.managers.DefaultMemoryManager;
 import jmri.managers.DefaultRouteManager;
+import jmri.managers.DefaultSignalGroupManager;
 
 /**
  * Provides static members for locating various interface implementations.
@@ -43,7 +44,7 @@ import jmri.managers.DefaultRouteManager;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.57 $
+ * @version			$Revision: 1.58 $
  */
 public class InstanceManager {
 
@@ -132,7 +133,7 @@ public class InstanceManager {
     static public void setSignalMastManager(SignalMastManager p) {
         store(p, SignalMastManager.class);
     }
-
+    
     static public SignalSystemManager signalSystemManagerInstance()  { 
         SignalSystemManager m = getDefault(SignalSystemManager.class);
         if (m == null) {
@@ -141,8 +142,22 @@ public class InstanceManager {
         }
         return m;
     }
+
     static public void setSignalSystemManager(SignalSystemManager p) {
         store(p, SignalSystemManager.class);
+    }
+
+    static public SignalGroupManager signalGroupManagerInstance()  {
+        SignalGroupManager m = getDefault(SignalGroupManager.class);
+        if (m == null) {
+            m = new jmri.managers.DefaultSignalGroupManager();
+            setSignalGroupManager(m);
+        }
+        return m;
+    }
+
+    static public void setSignalGroupManager(SignalGroupManager p) {
+        store(p, SignalGroupManager.class);
     }
 
     static public BlockManager blockManagerInstance()  {
@@ -237,6 +252,15 @@ public class InstanceManager {
 	static public void addClockControl(ClockControl cc) {
 		instance().clockControl = cc;
 	}
+    
+    /*static public SignalGroupManager signalGroupManagerInstance()  {
+        if (instance().signalGroupManager != null) return instance().signalGroupManager;
+        // As a convenience, we create a default object if none was provided explicitly.
+        // This must be replaced when we start registering specific implementations
+        instance().signalGroupManager = new DefaultSignalGroupManager();
+        return instance().signalGroupManager;
+    }*/
+    
 
     static public ConsistManager consistManagerInstance() { return instance().consistManager; }
 
@@ -361,6 +385,17 @@ public class InstanceManager {
         if (p!=routeManager && routeManager!=null && log.isDebugEnabled()) log.debug("RouteManager instance is being replaced: "+p);
         if (p!=routeManager && routeManager==null && log.isDebugEnabled()) log.debug("RouteManager instance is being installed: "+p);
         routeManager = p;
+    }
+    
+    private SignalGroupManager signalGroupManager = null;
+    /*static public void setSignalGroupManager(SignalGroupManager p) {
+        instance().addSignalGroupManager(p);
+    }*/
+    
+    protected void addSignalGroupManager(SignalGroupManager p) {
+        if (p!=signalGroupManager && signalGroupManager!=null && log.isDebugEnabled()) log.debug("RouteManager instance is being replaced: "+p);
+        if (p!=signalGroupManager && signalGroupManager==null && log.isDebugEnabled()) log.debug("RouteManager instance is being installed: "+p);
+        signalGroupManager = p;
     }
 
     private LayoutBlockManager layoutBlockManager = null;
