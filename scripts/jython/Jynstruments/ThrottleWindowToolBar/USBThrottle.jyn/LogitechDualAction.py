@@ -6,6 +6,18 @@ class USBDriver :
         self.componentThrottleFrame = "pov"  # Component for throttle frames browsing
         self.valueNextThrottleFrame = 0.5
         self.valuePreviousThrottleFrame = 1
+        
+        # From there available only when no throttle is active in current window  
+        self.componentRosterBrowse = "pov"  # Component for roster browsing
+        self.valueNextRoster = 0.75
+        self.valuePreviousRoster = 0.25
+        
+        self.componentRosterSelect = "9"  # Component to select a roster
+        self.valueRosterSelect = 1
+        
+        # From there available only when a throttle is active in current window        
+        self.componentThrottleRelease = "9"  # Component to release current throttle
+        self.valueThrottleRelease = 1
 
         self.componentSpeed = "x"  # Analog axis component for curent throttle speed
         self.valueSpeedTrigger = 0.07
@@ -41,14 +53,14 @@ class USBDriver :
         self.componentF4 = "8" # Function button
         self.valueF4 = 1
         
-        self.componentF5 = "9" # Function button
+        self.componentF5 = "" # Function button
         self.valueF5 = 1
 
-        self.componentF6 = "10" # Function button
+        self.componentF6 = "" # Function button
         self.valueF6 = 1
 
-        self.componentF7 = "11" # Function button
+        self.componentF7 = "" # Function button
         self.valueF7 = 1
         
-        self.componentF8 = "12" # Function button
+        self.componentF8 = "" # Function button
         self.valueF8 = 1

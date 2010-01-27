@@ -53,9 +53,27 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                     if (value == self.driver.valuePreviousThrottleFrame) : #PREVIOUS
                         self.getContext().previousThrottleFrame()
 
+                
+                if (self.throttle == None) :
+                    # Browse through roster
+                    if (component == self.driver.componentRosterBrowse) :
+                        selectedIndex = self.addressPanel.getRosterSelectedIndex()
+                        self.addressPanel.setVisible(True)
+                        self.addressPanel.setIcon(False)
+                        if (value == self.driver.valueNextRoster) : #NEXT
+                            self.addressPanel.setRosterSelectedIndex(selectedIndex + 1)
+                        if (value == self.driver.valuePreviousRoster) : #PREVIOUS
+                            self.addressPanel.setRosterSelectedIndex(selectedIndex - 1)
+                    # Request a throttle
+                    if ((component == self.driver.componentRosterSelect) and (value == self.driver.valueRosterSelect)):
+                        self.addressPanel.selectRosterEntry()
+                        
                 # From there; curent throttle control, hence require a throttle
                 if (self.throttle != None) :
-
+                    # Release current throttle
+                    if ((component == self.driver.componentThrottleRelease) and (value == self.driver.valueThrottleRelease)):
+                        self.addressPanel.dispatchAddress()
+                        
                     # Speed
                     if (component == self.driver.componentSpeed) :
                         self.speedAction.setSpeedIncrement(value / valueSpeedDivider)
@@ -111,6 +129,7 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
             self.speedTimer.stop()
             event.oldValue.getAddressPanel().removeAddressListener(self)
             self.throttle = event.newValue.getAddressPanel().getThrottle()
+            self.addressPanel = event.newValue.getAddressPanel()
             self.speedAction.setThrottle( self.throttle )
             event.newValue.getAddressPanel().addAddressListener(self)
 
@@ -122,6 +141,7 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
         self.getContext().addPropertyChangeListener(self) #ThrottleFrame change
         self.getContext().getCurentThrottleFrame().getAddressPanel().addAddressListener(self) # change of throttle in curent frame
         self.throttle = self.getContext().getCurentThrottleFrame().getAddressPanel().getThrottle() # the throttle
+        self.addressPanel = self.getContext().getCurentThrottleFrame().getAddressPanel()
         self.speedAction =  SpeedAction()  #Speed increase thread
         self.speedAction.setThrottle( self.throttle )
         self.speedTimer = Timer(valueSpeedTimerRepeat, self.speedAction ) # Very important to use swing Timer object (see Swing and multithreading doc)
@@ -155,6 +175,7 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
         self.speedAction = None
         self.speedTimer = None
         self.throttle = None
+        self.addressPanel = None
         self.driver = None
         self.USBDriver = None
         self.getContext().removePropertyChangeListener(self)

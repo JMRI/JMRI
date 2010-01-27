@@ -78,7 +78,8 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
         self.sync.acquire()
         evt = self.evt
         self.sync.release()
-        self.speedTimer.stop() # In any case
+        if (self.speedTimer != None):
+            self.speedTimer.stop() # In any case
         # ThrottleFrames
         if ( evt.wasReleased(WRButtonEvent.RIGHT) ): # NEXT
              self.getContext().nextThrottleFrame()
