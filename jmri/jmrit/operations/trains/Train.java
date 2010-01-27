@@ -42,7 +42,7 @@ import jmri.jmrit.display.LayoutEditor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.60 $
+ * @version $Revision: 1.61 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -524,8 +524,11 @@ public class Train implements java.beans.PropertyChangeListener {
     List<String> _roadList = new ArrayList<String>();
     private void setRoadNames(String[] roads){
     	if (roads.length == 0) return;
+    	int start = 0;
+    	if (roads[0].equals(""))
+    		start++;
     	jmri.util.StringUtil.sort(roads);
- 		for (int i=0; i<roads.length; i++)
+ 		for (int i=start; i<roads.length; i++)
  			_roadList.add(roads[i]);
     }
     
@@ -605,8 +608,11 @@ public class Train implements java.beans.PropertyChangeListener {
     List<String> _ownerList = new ArrayList<String>();
     private void setOwnerNames(String[] owners){
     	if (owners.length == 0) return;
+       	int start = 0;
+    	if (owners[0].equals(""))
+    		start++;
     	jmri.util.StringUtil.sort(owners);
- 		for (int i=0; i<owners.length; i++)
+ 		for (int i=start; i<owners.length; i++)
  			_ownerList.add(owners[i]);
     }
     
