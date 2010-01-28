@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
-<!-- $Id: ZTC_213.xml,v 1.5 2007-09-21 05:49:35 jacobsen Exp $ -->
+<!-- $Id: ZTC_213.xml,v 1.6 2010-01-28 07:34:52 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,7 +14,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<decoder-config>
+<decoder-config
+    xmlns:xi = "http://www.w3.org/2001/XInclude"
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/decoder.xsd"
+>
 		<version author="Ian Birchenough(ian@birchenough.demon.co.uk)"
 			version="2" lastUpdated="20062105" />
 		<version author="Phil Grainger (phil.grainger@ca.com)"
