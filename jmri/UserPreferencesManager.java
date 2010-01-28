@@ -11,7 +11,7 @@ package jmri;
  * @see jmri.managers.DefaultUserMessagePreferences
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
  
 public interface UserPreferencesManager {
@@ -39,6 +39,28 @@ public interface UserPreferencesManager {
      * primary using class.
      */
     void setPreferenceState(String name, boolean state);
+    
+    /**
+     * Enquire as to the state of a user preference.
+     * <p>
+     * Preferences that have not been set will be 
+     * considered to be false.
+     *<p>
+     * The name is free-form, but to avoid ambiguity it should
+     * start with the package name (package.Class) for the
+     * primary using class.
+     */
+    public boolean getSessionPreferenceState(String name);
+    
+    /**
+     * Set the state of a user preference for the current session
+     * only
+     * <p>
+     * The name is free-form, but to avoid ambiguity it should
+     * start with the package name (package.Class) for the
+     * primary using class.
+     */
+    public void setSessionPreferenceState(String name, boolean state);
  
      // The reset is used after the preferences have been loaded for the first time
     public void resetChangeMade();
@@ -67,6 +89,17 @@ public interface UserPreferencesManager {
      * to show it in the future.
      */
     public void showInfoMessage(String title, String message, String preference);
+    
+        /**
+     * Show an info message ("don't forget ...")
+     * with a given dialog title and
+     * user message.
+     * Use a given preference name to determine whether
+     * to show it in the future.
+     * added flag to indicate that the message should be suppressed
+     * JMRI session only.
+     */
+    public void showInfoMessage(String title, String message, String preference, boolean sessionOnly, boolean alwaysRemember, org.apache.log4j.Level level);
     
      /**
      * Method to determine if the question of reloading JMRI should 

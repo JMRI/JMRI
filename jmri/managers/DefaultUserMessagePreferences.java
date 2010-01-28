@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+//import javax.swing.ImageIcon;
 import jmri.UserPreferencesManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
@@ -11,6 +12,7 @@ import javax.swing.*;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.UIManager;
 
 /**
  * Basic Implementation of the User Preferences Manager.
@@ -19,7 +21,7 @@ import java.awt.Toolkit;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
  
 public class DefaultUserMessagePreferences implements UserPreferencesManager {
@@ -60,6 +62,8 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     public boolean getPreferenceState(String name) {
         return preferenceList.contains(name);
     }
+    
+    public java.util.ArrayList<String> getPreferenceStateList() { return preferenceList; }
 
     public void setPreferenceState(String name, boolean state) {
         if (state) {
@@ -70,15 +74,42 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         } else {
             preferenceList.remove(name);
         }
-        _changeMade = true;
     }
-
-    // local to this class, not parent, for configure xml
-    public java.util.ArrayList<String> getPreferenceStateList() { return preferenceList; }
     
-    public void showInfoMessage(String title, String message, final String preference) {
+    //sessionList is used for messages to be suppressed for the current JMRI session only
+    java.util.ArrayList<String> sessionPreferenceList = new java.util.ArrayList<String>();
+    public boolean getSessionPreferenceState(String name) {
+        return sessionPreferenceList.contains(name);
+    }
+    
+    public void setSessionPreferenceState(String name, boolean state) {
+        if (state) {
+            if (!sessionPreferenceList.contains(name)){
+                sessionPreferenceList.add(name);
+            }
+        } else {
+            sessionPreferenceList.remove(name);
+        }
+    }
+    
+    public void showInfoMessage(String title, String message, String preference) {
+        showInfoMessage(title, message, preference, false, true, org.apache.log4j.Level.INFO);
+    }
+    
+    
+    public void showInfoMessage(String title, String message, final String preference, final boolean sessionOnly, final boolean alwaysRemember, org.apache.log4j.Level level) {
         final UserPreferencesManager p;
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        Icon icon= UIManager.getIcon("OptionPane.informationIcon");
+        if (level==org.apache.log4j.Level.ERROR){
+            icon = UIManager.getIcon("OptionPane.errorIcon");
+        } else if (level == org.apache.log4j.Level.WARN) {
+            UIManager.getIcon("OptionPane.warningIcon");
+        } 
+
+        if(p.getSessionPreferenceState(preference)){
+            return;
+        }
         if (!p.getPreferenceState(preference)){
             final JDialog dialog = new JDialog();
             dialog.setTitle(title);
@@ -90,6 +121,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
             
             JLabel question = new JLabel(message, JLabel.CENTER);
             question.setAlignmentX(Component.CENTER_ALIGNMENT);
+            question.setIcon(icon);
             container.add(question);
             
             JButton okButton = new JButton("Okay");
@@ -98,15 +130,25 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
             button.add(okButton);
             container.add(button);
             
+            final JCheckBox rememberSession = new JCheckBox("Skip message for this session only?");
+            if(sessionOnly){
+                rememberSession.setAlignmentX(Component.CENTER_ALIGNMENT);
+                rememberSession.setFont(rememberSession.getFont().deriveFont(10f));
+                container.add(rememberSession);
+            }
             final JCheckBox remember = new JCheckBox("Skip message in future?");
-            remember.setAlignmentX(Component.CENTER_ALIGNMENT);
-            remember.setFont(remember.getFont().deriveFont(10f));
-            container.add(remember);
-            
+            if(alwaysRemember){
+                remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+                remember.setFont(remember.getFont().deriveFont(10f));
+                container.add(remember);
+            }
             okButton.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
                     if(remember.isSelected()){
                         p.setPreferenceState(preference, true);
+                    }
+                    if(rememberSession.isSelected()){
+                        p.setSessionPreferenceState(preference, true);
                     }
                     dialog.dispose();
                 }
