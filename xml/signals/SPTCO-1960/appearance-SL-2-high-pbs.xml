@@ -24,65 +24,57 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
         <revnumber>1</revnumber>
-        <date>2009-01-25</date>
+        <date>2010-01-27</date>
         <authorinitials>DB</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
-    <revision>
-        <revnumber>1.1</revnumber>
-        <date>2010-01-01</date>
-        <authorinitials>RGJ</authorinitials>
-        <revremark>Add author and revision info</revremark>
-    </revision>    
- </revhistory>
+    </revision>
+  </revhistory>
 
   <aspecttable>SPTCO-1960</aspecttable>
-  <name>Single searchlight high permissive signal</name>
+  <name>Double Searchlight High signal with Flashing White Marker</name>
   <reference>As described in the July 1960 version of the "Rules and Regulations of the Transportation Department".</reference>
-  <description>Appearances for one-searchlight signal head with number or letter plate</description>
+  <description>Appearances for a two-searchlight signal head without other badging</description>
   
   <appearances>
 
     <appearance>
       <aspectname>Block Signal Green</aspectname>
       <show>green</show>
+      <show>dark</show>
       <reference>Page 90 D</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-1-high-pbs/rule-281.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-2-high-pbs/rule-281.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach Signal Yellow</aspectname>
       <show>yellow</show>
-      <reference>Page 94 D</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-1-high-pbs/rule-285.gif</imagelink>
+      <show>dark</show>
+      <reference>Page 94 E</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-2-high-pbs/rule-285.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach Medium - Flashing Yellow</aspectname>
       <show>flashyellow</show>
-      <reference>Page 95 C</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-1-high-pbs/rule-285-A.gif</imagelink>
+      <show>dark</show>
+      <reference>Page 94 E</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-2-high-pbs/rule-285A.gif</imagelink>
     </appearance>
 
     <appearance>
-      <aspectname>Distant Signal Yellow</aspectname>
-      <show>yellow</show>
-      <reference>Page 96 A</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-1-high-pbs/rule-286.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Grade Signal Red</aspectname>
+      <aspectname>Home Signal Red</aspectname>
       <show>red</show>
-      <reference>Page 97 B</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-1-high-pbs/rule-287.gif</imagelink>
+      <show>dark</show>
+      <reference>Page 100 F</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-2-high-pbs/rule-290.gif</imagelink>
     </appearance>
 
     <appearance>
-      <aspectname>Home Signal Red, with triangular plate</aspectname>
+      <aspectname>Flashing White</aspectname>
       <show>red</show>
-      <reference>Page 103 B</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-1-high-pbs/rule-293.gif</imagelink>
+      <show>flashlunar</show>
+      <reference>Page 102 A</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1960/SL-2-high-pbs/rule-292.gif</imagelink>
     </appearance>
 
   </appearances>
