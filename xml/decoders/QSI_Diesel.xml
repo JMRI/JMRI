@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
-<!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: QSI_Diesel.xml,v 1.9 2008-12-26 19:53:40 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!-- $Id: QSI_Diesel.xml,v 1.10 2010-01-28 07:26:05 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,7 +14,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<decoder-config>
+<decoder-config
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/decoder.xsd"
+>
   <version author="Howard G. Penny" version="6" lastUpdated="20050714"/>
 
 <!-- version 1 - modified for QSI CV.PI.SI format - Howard -->

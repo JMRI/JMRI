@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
-<!-- Copyright (C) JMRI 2002, 2004 All rights reserved -->
-<!-- $Id: 0NMRA.xml,v 1.10 2009-04-20 03:45:43 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007 All rights reserved -->
+<!-- $Id: 0NMRA.xml,v 1.11 2010-01-28 07:26:55 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,7 +14,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<decoder-config>
+<decoder-config
+    xmlns:xi = "http://www.w3.org/2001/XInclude"
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/decoder.xsd"
+>
 		<version author="Bob Jacobsen" version="4" lastUpdated="20031205"/>
 		<!-- version 3 - add consist direction - jake -->
 		<!-- version 4 - Minor formatting changes - Jack Shall -->
