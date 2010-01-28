@@ -3,7 +3,7 @@
 
 <!-- Schema for JMRI decoder definitions       -->
 
-<!-- $Id: decoder.xsd,v 1.4 2010-01-28 07:25:18 jacobsen Exp $ -->
+<!-- $Id: decoder.xsd,v 1.5 2010-01-28 07:34:31 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
@@ -187,6 +187,15 @@
 
   <xs:complexType name="ResetsType">
     <xs:sequence>
+      <xs:element name="factReset" minOccurs="0" maxOccurs="unbounded" >
+        <xs:complexType>
+          <xs:attribute name="label" type="xs:string"/>
+          <xs:attribute name="CV" type="xs:string"/>
+          <xs:attribute name="default" type="xs:string"/>
+          <xs:attribute name="comment" type="xs:string"/>
+          <xs:attribute name="item" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="ifactReset" minOccurs="0" maxOccurs="unbounded" >
         <xs:complexType>
           <xs:attribute name="label" type="xs:string"/>
@@ -195,6 +204,7 @@
           <xs:attribute name="PI" type="xs:string"/>
           <xs:attribute name="SI" type="xs:string"/>
           <xs:attribute name="default" type="xs:string"/>
+          <xs:attribute name="comment" type="xs:string"/>
           <xs:attribute name="item" type="xs:string"/>
         </xs:complexType>
       </xs:element>
