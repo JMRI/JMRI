@@ -20,7 +20,7 @@ import gnu.io.SerialPortEventListener;
  * Derived from the oaktree code.
  * @author			Bob Jacobsen   Copyright (C) 2006, 2007, 2008
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -50,7 +50,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
                 log.debug("Serial framing was observed as: "+activeSerialPort.isReceiveFramingEnabled()
                       +" "+activeSerialPort.getReceiveFramingByte());
             } catch (Exception ef) {
-                log.info("failed to set serial framing: "+ef);
+                log.debug("failed to set serial framing: "+ef);
             }
 
             // set timeout; framing should work before this anyway

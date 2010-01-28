@@ -20,7 +20,7 @@ import gnu.io.SerialPortEventListener;
  * Provide access to Oak Tree via a serial comm port.
  * Normally controlled by the oaktree.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -51,7 +51,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
                 log.debug("Serial framing was observed as: "+activeSerialPort.isReceiveFramingEnabled()
                       +" "+activeSerialPort.getReceiveFramingByte());
             } catch (Exception ef) {
-                log.info("failed to set serial framing: "+ef);
+                log.debug("failed to set serial framing: "+ef);
             }
 
             // set timeout; framing should work before this anyway
