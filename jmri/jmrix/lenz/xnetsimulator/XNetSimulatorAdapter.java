@@ -32,7 +32,7 @@ import java.io.PipedOutputStream;
  *      support infrastructure.
  * 
  * @author			Paul Bender, Copyright (C) 2009
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 
 public class XNetSimulatorAdapter extends XNetPortController implements Runnable{
@@ -125,7 +125,7 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
     }
     
     public boolean status() {return (pout!=null && pin!=null);}
-    
+   
     /**
      * Get an array of valid baud rates. This is currently just a message
      * saying its fixed
@@ -187,8 +187,12 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
                      reply.setElement(4,0x00); // set the parity byte to 0
                      reply.setParity();
                      break;
-                   case XNetConstants.EMERGENCY_OFF:
                    case XNetConstants.RESUME_OPS:
+			reply=normalOpsReply();
+                        break;
+                   case XNetConstants.EMERGENCY_OFF:
+                        reply=everythingOffReply();
+                        break;
                    case XNetConstants.SERVICE_MODE_CSRESULT:
                    case XNetConstants.CS_STATUS:              
                    default:
@@ -212,6 +216,8 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
                        }
                     // fall through
                case XNetConstants.EMERGENCY_STOP:
+                    reply=emergencyStopReply();
+                    break;
                case XNetConstants.ACC_OPER_REQ:
                    reply=okReply();
                    break;
@@ -265,6 +271,36 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
        XNetReply r=new XNetReply();
        r.setOpCode(XNetConstants.LI_MESSAGE_RESPONSE_HEADER);
        r.setElement(1,XNetConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS);
+       r.setElement(2,0x00); // set the parity byte to 0
+       r.setParity();
+       return r;
+    }
+
+    // Create a "Normal Operations Resumed" message
+    private XNetReply normalOpsReply(){
+       XNetReply r=new XNetReply();
+       r.setOpCode(XNetConstants.CS_INFO);
+       r.setElement(1,XNetConstants.BC_NORMAL_OPERATIONS);
+       r.setElement(2,0x00); // set the parity byte to 0
+       r.setParity();
+       return r;
+    }
+
+    // Create a broadcast "Everything Off" reply
+    private XNetReply everythingOffReply(){
+       XNetReply r=new XNetReply();
+       r.setOpCode(XNetConstants.CS_INFO);
+       r.setElement(1,XNetConstants.BC_EVERYTHING_OFF);
+       r.setElement(2,0x00); // set the parity byte to 0
+       r.setParity();
+       return r;
+    }
+
+    // Create a broadcast "Emergehcy Stop" reply
+    private XNetReply emergencyStopReply(){
+       XNetReply r=new XNetReply();
+       r.setOpCode(XNetConstants.BC_EMERGENCY_STOP);
+       r.setElement(1,XNetConstants.BC_EVERYTHING_OFF);
        r.setElement(2,0x00); // set the parity byte to 0
        r.setParity();
        return r;
