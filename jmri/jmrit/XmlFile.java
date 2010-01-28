@@ -32,7 +32,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.49 $
+ * @version	$Revision: 1.50 $
  */
 public abstract class XmlFile {
 
@@ -522,7 +522,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.49 2009-12-05 23:05:08 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.50 2010-01-28 07:39:43 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
@@ -601,6 +601,7 @@ public abstract class XmlFile {
     }
 
     static boolean verify = false;
+    static boolean include = true;
     static public boolean getVerify() { return verify; }
     static public void setVerify(boolean v) { verify = v; }
     
@@ -652,11 +653,11 @@ public abstract class XmlFile {
         builder.setEntityResolver(new jmri.util.JmriLocalEntityResolver());
         builder.setFeature("http://apache.org/xml/features/xinclude", true);
         builder.setFeature("http://apache.org/xml/features/xinclude/fixup-base-uris", false);
-
+        
         // for schema validation. Not needed for DTDs, so continue if not found now
         try {
-            builder.setFeature("http://apache.org/xml/features/validation/schema", true);
-            builder.setFeature("http://apache.org/xml/features/validation/schema-full-checking", true);
+            builder.setFeature("http://apache.org/xml/features/validation/schema", verify);
+            builder.setFeature("http://apache.org/xml/features/validation/schema-full-checking", verify);
 
             // parse namespaces, including the noNamespaceSchema
             builder.setFeature("http://xml.org/sax/features/namespaces", true);
