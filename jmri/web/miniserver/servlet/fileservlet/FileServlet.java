@@ -19,7 +19,7 @@ import jmri.web.miniserver.AbstractServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class FileServlet extends AbstractServlet {
@@ -47,9 +47,13 @@ public class FileServlet extends AbstractServlet {
             return;
         }
         // now reply
-        printHeader(out, getMimeType(filename));
-        copyFileContent(filename, res.getOutputStream());
-        
+        if (! isDirectory(filename) ) {
+            printHeader(out, getMimeType(filename));
+            copyFileContent(filename, res.getOutputStream());
+        } else {
+            printHeader(out, "text/html");
+            createDirectoryContent(filename, res.getOutputStream());
+        }        
     }
     
     public void destroy() {}
@@ -67,6 +71,13 @@ public class FileServlet extends AbstractServlet {
     Object[] args;
 
 
+    /** 
+     * Check if the file is a directory
+     */
+    boolean isDirectory(String filename) {
+        return new File(filename).isDirectory();
+    }
+    
     /**
      * Convert the request to a 
      * filename using the FileServletPaths
@@ -183,7 +194,7 @@ public class FileServlet extends AbstractServlet {
      *  http://www.coreservlets.com/.
      *  &copy; 2000 Marty Hall; may be freely used or adapted.
      */
-    private void copyFileContent(String filename, OutputStream out) throws IOException {
+    protected void copyFileContent(String filename, OutputStream out) throws IOException {
         InputStream in = null;
         try {
             // get file contents
@@ -206,10 +217,27 @@ public class FileServlet extends AbstractServlet {
         }
     }
     
+    protected void createDirectoryContent(String filename, OutputStream out) throws IOException {
+        log.debug("return directory listing");
+        File dir = new File(filename);
+        OutputStreamWriter writer = new OutputStreamWriter(out);
+        writer.write("<body><table>\n");
+        try {
+            // write out directory
+            for ( File f : dir.listFiles()) {
+                writer.write("<tr><td><a href=\""+f.getName()+"\">"+f.getName()+"</a></td></tr>\n");
+            }
+            writer.write("</table></body>");
+        } finally {
+            writer.flush();
+            out.flush();
+        }
+    }
+    
     // Send standard HTTP response for image/gif type
     // Use HTTP 1.0 for compatibility with all clients.
     
-    private void printHeader(PrintWriter out, String mime) {
+    protected void printHeader(PrintWriter out, String mime) {
         out.print
             ("HTTP/1.0 200 OK\r\n" +
              "Server: FileServlet\r\n" +
