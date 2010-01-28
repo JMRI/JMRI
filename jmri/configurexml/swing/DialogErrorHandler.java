@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
  * Shows each one, could save until end if needed.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
     
 public class DialogErrorHandler extends jmri.configurexml.ErrorHandler {
@@ -20,28 +20,25 @@ public class DialogErrorHandler extends jmri.configurexml.ErrorHandler {
         super.handle(e);
 
         // then do dialog
-        String m = e.description;
-        if (e.systemName!=null) m += "\n System name \""+e.systemName+"\"";
-        if (e.userName!=null && !e.userName.equals("")) m += "\n User name \""+e.userName+"\"";
-        if (e.operation!=null) m += "\n while "+e.operation;
-        if (e.adapter!=null) m += "\n in adaptor of type "+e.adapter.getClass().getName();
-        if (e.exception!=null) m += "\n Exception: "+e.exception.toString();
-        
+        String m = "<html>"+e.description;
+        if (e.systemName!=null) m += "<br> System name \""+e.systemName+"\"";
+        if (e.userName!=null && !e.userName.equals("")) m += "<br> User name \""+e.userName+"\"";
+        if (e.operation!=null) m += "<br> while "+e.operation;
+        if (e.adapter!=null) m += "<br> in adaptor of type "+e.adapter.getClass().getName();
+        if (e.exception!=null) m += "<br> Exception: "+e.exception.toString();
+        m +="</html>";
         if (e.level == org.apache.log4j.Level.ERROR) {
-            JOptionPane.showMessageDialog(null,
-                m, "Error during loading",
-                JOptionPane.ERROR_MESSAGE);
-
+            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                            showInfoMessage("Error during loading",m,e.description,true, false, e.level);
+                            
         } else if (e.level == org.apache.log4j.Level.WARN) {
-            JOptionPane.showMessageDialog(null,
-                m, "Warning during loading",
-                JOptionPane.WARNING_MESSAGE);
+            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                            showInfoMessage("Warning during loading",m,e.description, true, false, e.level);
         } else {
-            JOptionPane.showMessageDialog(null,
-                m, "Message during loading",
-                JOptionPane.PLAIN_MESSAGE);
+            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                        showInfoMessage("Message during loading",m,e.description,true, false, e.level);
         }
-    
+        
     }
     
     /**
