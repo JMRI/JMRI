@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2008 All rights reserved -->
-<!-- $Id: Zimo_MX620_v7-8.xml,v 1.4 2009-07-03 07:08:49 jacobsen Exp $ -->
+<!-- $Id: Zimo_MX620_v7-8.xml,v 1.5 2010-01-28 02:34:22 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -21,6 +21,7 @@
 		<version author="Nigel Cliffe ncliffe@btinternet.com and Mark Waters mark16w-jmri@yahoo.co.uk"
 			version="1.01" lastUpdated="20090222" />
 			
+<!-- 
      This decoder configuration file is based the Zimo_MX620_v6.xml V 1.01 file, dated 20080328.
      Re-instating CV 116 (bug fixed by Zimo in v7), Modified CV124, Extended CV 161,
      Extended CVs 125-132 and CVs 181-2.  
@@ -32,6 +33,7 @@
      This decoder XML is meant to be used with the "Comprehensive" programmer format.
      Continued the practice of using unrelated "item" names to place Zimo unique
      variables on the proper pane of the Comprehensive programmer.
+ -->
 
          <!-- V 1 new file -->
          <!-- V 1.01 Fixed error in CV161 mask -->
@@ -703,11 +705,11 @@
 			<decVal min="0" max="255"/>
 			</variable>
 		
-		<variable label="Special Function Mapping" CV="61" default="0" >
+		<variable label="Special Function Mapping" CV="61" default="0" comment="CV61" >
 		      <enumVal>
-				<enumChoice choice="NMRA Standard Mapping" tooltip="CV61=0"/>
-				<enumChoice choice="Alternative Mapping, use this page" value="97" tooltip="CV61=97"/>
-				<enumChoice choice="Use mapping stored by POM CV61=98 method" value="99" tooltip="CV61=99"/>
+				<enumChoice choice="NMRA Standard Mapping" />
+				<enumChoice choice="Alternative Mapping, use this page" value="97" />
+				<enumChoice choice="Use mapping stored by POM CV61=98 method" value="99" />
 				</enumVal>
 			</variable>
 

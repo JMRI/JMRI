@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005, 2006, 2007, 2008 All rights reserved -->
-<!-- $Id: MRC_Athearn_BigBoy_N.xml,v 1.1 2009-07-03 06:44:50 jacobsen Exp $ -->
+<!-- $Id: MRC_Athearn_BigBoy_N.xml,v 1.2 2010-01-28 02:34:22 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -37,8 +37,7 @@
         </model>
         </family>
 
-    <programming direct="yes" paged="yes" register="yes" ops="yes">
-    </programming>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
 
     <variables>
 

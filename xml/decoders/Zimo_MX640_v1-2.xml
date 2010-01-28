@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007 All rights reserved -->
-<!-- $Id: Zimo_MX640_v1-2.xml,v 1.3 2009-03-21 21:21:10 jacobsen Exp $ -->
+<!-- $Id: Zimo_MX640_v1-2.xml,v 1.4 2010-01-28 02:34:22 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -758,8 +758,8 @@
 		
 		<variable label="Special Function Mapping" CV="61" default="0" >
 		      <enumVal>
-				<enumChoice choice="NMRA Standard Mapping" tooltip="CV61=0"/>
-				<enumChoice choice="Use mapping stored by POM CV61=98 method" value="99" tooltip="CV61=99"/>
+				<enumChoice choice="NMRA Standard Mapping"/>
+				<enumChoice choice="Use mapping stored by POM CV61=98 method" value="99" />
 				</enumVal>
 			</variable>
 

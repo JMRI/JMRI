@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2006, 2007 All rights reserved -->
-<!-- $Id: MRC_Rapido_TurboTrain.xml,v 1.3 2009-11-30 03:40:18 jacobsen Exp $ -->
+<!-- $Id: MRC_Rapido_TurboTrain.xml,v 1.4 2010-01-28 02:34:22 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -33,8 +33,7 @@
 				<size length="0" width="0" height="0" units="mm" />
 			</model>
 		</family>
-		<programming direct="yes" paged="yes" register="yes" ops="yes">
-		</programming>
+		<programming direct="yes" paged="yes" register="yes" ops="yes" />
 
 		<variables>
 			<variable label="Primary Address" CV="1"

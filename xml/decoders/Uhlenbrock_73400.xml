@@ -141,12 +141,8 @@
 			</variable>
 			<variable label="Fixed or variable repetition rate" CV="54" tooltip="128 fixed or 132 speed dependant" default="0" mask="XXXXXVXX">
 				<enumVal>
-					<enumChoice choice="fixed repetition rate">
-						<enumChoice value="128"/>
-					</enumChoice>
-					<enumChoice choice="speed dependent repetition rate (default)">
-						<enumChoice value="132"/>
-					</enumChoice>
+					<enumChoice choice="fixed repetition rate" value="128"/>
+					<enumChoice choice="speed dependent repetition rate (default)" value="132"/>
 				</enumVal>
 			</variable>
 			<variable label="AD Timeslot" CV="58" default="8" tooltip="Increase if loc does not run smoothly at low speeds - Decrease if the top speed is too low after CV53 has been lowered">
@@ -166,15 +162,9 @@
 			</variable>
 			<variable label="Error register" CV="100" default="0" readOnly="yes" mask="XXXXXXVV" tooltip="0 = No error (reset error register)">
 				<enumVal>
-					<enumChoice choice="No error">
-						<enumChoice value="0"/>
-					</enumChoice>
-					<enumChoice choice="Motor short circuit">
-						<enumChoice value="1"/>
-					</enumChoice>
-					<enumChoice choice="Light short circuit">
-						<enumChoice value="2"/>
-					</enumChoice>
+					<enumChoice choice="No error" value="0" />
+					<enumChoice choice="Motor short circuit" value="1" />
+					<enumChoice choice="Light short circuit" value="2" />
 				</enumVal>
 			</variable>
 		</variables>

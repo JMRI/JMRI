@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2008 All rights reserved -->
-<!-- $Id: Zimo_MX680_v1-2.xml,v 1.1 2010-01-06 22:44:47 jacobsen Exp $ -->
+<!-- $Id: Zimo_MX680_v1-2.xml,v 1.2 2010-01-28 02:34:22 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -19,6 +19,7 @@
 		<version author="Mark Waters mark16w-jmri@yahoo.co.uk"
 			version="1" lastUpdated="20091216" />
 			
+<!-- 
      This decoder configuration file is based the Zimo_MX620_v9.xml V 1.01 file, dated 20090222.
 
      Based on the "Version 1 2008 02 15" English version of the ZIMO MX680
@@ -28,6 +29,7 @@
      This decoder XML is meant to be used with the "Comprehensive" programmer format.
      Continued the practice of using unrelated "item" names to place Zimo unique
      variables on the proper pane of the Comprehensive programmer.
+ -->
 
          <!-- V 1 new file -->
 

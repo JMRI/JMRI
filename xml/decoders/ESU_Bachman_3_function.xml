@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!--Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
-<!--$Id: ESU_Bachman_3_function.xml,v 1.2 2009-09-03 22:35:41 jacobsen Exp $ -->
+<!--$Id: ESU_Bachman_3_function.xml,v 1.3 2010-01-28 02:34:22 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -59,7 +59,7 @@
 		<variable label="Short Address" CV="1" default="3"
 			item="Short Address"
 			tooltip="2 digit address (Range 01-0128)">
-			<shortAddressVal min="01" max="128"/>
+			<shortAddressVal/>
             	</variable>
 
 		<variable label="Starting Voltage" CV="2" default="3"

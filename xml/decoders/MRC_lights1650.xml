@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005, 2006, 2007 All rights reserved -->
-<!-- $Id: MRC_lights1650.xml,v 1.1 2008-05-07 05:19:06 billchown Exp $ -->
+<!-- $Id: MRC_lights1650.xml,v 1.2 2010-01-28 02:34:22 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -31,8 +31,7 @@
 	</family>
 
 	<programming direct="yes" paged="yes"
-	                     register="yes" ops="yes">
-		</programming>
+	                     register="yes" ops="yes"/>
 
 	<variables>
 

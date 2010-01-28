@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005, 2006, 2007, 2008 All rights reserved          -->
-<!-- $Id: MRC_AthearnGenesisSD45-2.xml,v 1.2 2009-09-26 22:36:35 jacobsen Exp $ -->
+<!-- $Id: MRC_AthearnGenesisSD45-2.xml,v 1.3 2010-01-28 02:34:22 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -23,8 +23,7 @@
 		</model>
 	</family>
 
-	<programming direct="yes" paged="yes" register="yes" ops="yes">
-	</programming>
+	<programming direct="yes" paged="yes" register="yes" ops="yes"/>
 
 	<variables>
 		<variable label="Short Address" CV="1" item="Short Address" default="3" tooltip="CV01, Short Address" comment="Short address, range 1-127">

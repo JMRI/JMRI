@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2007 All rights reserved -->
-<!-- $Id: ZTC_4007.xml,v 1.2 2008-03-08 06:26:47 jacobsen Exp $ -->
+<!-- $Id: ZTC_4007.xml,v 1.3 2010-01-28 02:34:22 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -76,7 +76,7 @@
 						item="Long Address" >
 			<longAddressVal/></variable>
 			
-		<variable label="Speed Table/Mid Range Cab Speed Step" CV="25" default="100">
+		<variable label="Speed Table/Mid Range Cab Speed Step" CV="25" default="100"
 				comment="See RP 9.2.2 for more information. Values from 2 to 127 indicate preloaded speed tables. 0 or 1 means not used.  Values between 128 and 154 define the cab throttle position where the mid range decoder speed value is applied">
 				<decVal/></variable>
 
@@ -434,7 +434,7 @@
 			<label label=" " />
 			<display item="alt function" tooltip="Sets which functions operate in DC mode: 3=Directional lights" />
 			<label label=" " />
-			<display item="Analog" cv="12" tooltip="Read Only CV: 1=Yes" />
+			<display item="Analog" tooltip="Read Only CV: 1=Yes" />
 			
 		</column></row></column>
 </pane>

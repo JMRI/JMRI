@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2004, 2005, 2007 All rights reserved -->
-<!-- $Id: Digitrax_TF2.xml,v 1.1 2009-02-20 18:10:36 matthewharris Exp $ -->
+<!-- $Id: Digitrax_TF2.xml,v 1.2 2010-01-28 02:34:22 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -23,7 +23,7 @@
 	<version author="Matt Harris - matthew.john.harris@gmail.com"
 		 version="3" lastUpdated="20080724"/>
 	<version author="Matt Harris - matthew.john.harris@gmail.com"
-		 version="3.1" lastupdated="20080728"/>
+		 version="3.1" lastUpdated="20080728"/>
 	
 	<!-- Version 3.1                                                    -->
 	<!-- Modified CV29 by removing mask settings which had been causing -->

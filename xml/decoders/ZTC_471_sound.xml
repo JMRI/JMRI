@@ -148,11 +148,12 @@
 				</enumVal></variable>
 
 		<variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="0"
-			tooltip="CV13 bit 0; Check to enable function F1 when the unit is operating in analog power mode">>
+			tooltip="CV13 bit 0; Check to enable function F1 when the unit is operating in analog power mode">
 			<enumVal>
 				<enumChoice choice="off"/>
 				<enumChoice choice="on"/>
-				</enumVal></variable>
+		    </enumVal></variable>
+		    
 		<variable label="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0"
 			tooltip="CV13 bit 1; Check to enable function F2 when the unit is operating in analog power mode">
 			<enumVal>
