@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: panelfile.xsd,v 1.3 2010-01-17 05:58:46 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsd,v 1.4 2010-01-29 15:20:55 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
 <!--                                                                        -->
@@ -56,6 +56,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/timebase.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalheads.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalmasts.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalgroups.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/layoutblocks.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalelements.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/audio.xsd"/>
@@ -116,6 +117,7 @@ application
 
         <xs:element name="signalheads"  type="SignalHeadManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="signalmasts"  type="SignalMastManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="signalgroups" type="SignalGroupManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="layoutblocks" type="LayoutBlockManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="signalelements" type="SignalElementManagerType" minOccurs="0" maxOccurs="unbounded" />
 
