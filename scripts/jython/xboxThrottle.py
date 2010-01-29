@@ -12,13 +12,16 @@
 #    for running a train round a loop (for example)
 # 4. Some support for toggling functions though this may not be required (use standard throttle function
 #    locking?
-# 5. Multiple controllers will open multiple throttles (eventually will be two each)
-# 6. Selection of locos using the "hat" four-way switch. Start selects a loco, Back dispatches current loco
+# 5. Each controller will open its own throttle window
+# 6. Selection of locos using the "hat" four-way switch. Start selects a loco, Back dispatches 
+#    current loco. Using up and down on the hat switch will move between locos in the roster 
+#    (as long as the last loco has been "dispatched"
+# 7. Using left and right on the hat switch will select between throttle panels... Click the 
+#	 plus (+) button on the throttle window to add another panel
 # 
 # Future development ideas:
 # 1. Support right-hand joystick to control a second throttle
 # 2. Finish implementation of function buttons
-# 3. Have multiple throttles, use left and right hat switch to select between them
 #
 # Notes:
 # Hat switch is 0.0 for "released"
@@ -32,9 +35,18 @@
 # Original Xbox (not 360) controller
 # 
 # Currently tested on Windows only
+#
+# IMPORTANT Warnings:
+# 1. Make sure you set a "Dead zone" for each of the analogue sticks! If you
+# don't there will be too many events triggered and everything will slow right
+# down....
+#
+
 
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
+
+import math
 
 #
 # Set the name of the controller you're using
@@ -104,6 +116,10 @@ numThrottles = 0
 # and the number of controllers used
 numControllers = 0
 
+def isNaN(num): 
+    return num != num 
+
+
 # add listener for USB events
 class TreeListener(java.beans.PropertyChangeListener):
  
@@ -113,217 +129,157 @@ class TreeListener(java.beans.PropertyChangeListener):
   F0isOn = False
   #hash code is unique instance of controller
   controllerHashCode = 0 
+  throttleWindow = None
   controlPanel = None
   functionPanel = None
   addressPanel = None
-  
+  activeThrottleFrame = None
+   
   def __init__(self, controllerHashCode):
   	global numThrottles
   	global numControllers
   	self.controllerHashCode = controllerHashCode
   	# open a throttle window and get components
-	tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame()
+  	self.throttleWindow = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleWindow()
+	self.activeThrottleFrame = self.throttleWindow.addThrottleFrame()
 	# move throttle on screen so multiple throttles don't overlay each other
-	tf.setLocation(150 * numThrottles, 50 * numThrottles)
+	self.throttleWindow.setLocation(150 * numThrottles, 50 * numThrottles)
 	numThrottles += 1
 	numControllers += 1
-	tf.toFront()
-	self.controlPanel = tf.getControlPanel()
-	self.functionPanel = tf.getFunctionPanel()
-	self.addressPanel = tf.getAddressPanel()
+	self.activeThrottleFrame.toFront()
+	self.controlPanel = self.activeThrottleFrame.getControlPanel()
+	self.functionPanel = self.activeThrottleFrame.getFunctionPanel()
+	self.addressPanel = self.activeThrottleFrame.getAddressPanel()
+	self.throttleWindow.addPropertyChangeListener(self)
   
   def propertyChange(self, event):
-    if (event.propertyName == "Value") :
-      # event.oldValue is the UsbNode
-      #
-      # uncomment the following line to see controller names
-      #print "|"+event.oldValue.getController().toString()+"|"
-      #print event.oldValue.getController().getName()
-      #print event.oldValue.getController().hashCode()
-      #
-      # Select just the device (controller) we want
-      if (event.oldValue.getController().toString() == desiredControllerName 
-      and event.oldValue.getController().hashCode() == self.controllerHashCode) :
-        # event.newValue is the value, e.g. 1.0
-        # Check for desired component and act
-        component = event.oldValue.getComponent().toString()
-        value = event.newValue
-        # 
-        # uncomment the following to see the entries
-        print component, value
-        
-        #print "addr: " + self.addressPanel.getCurrentAddress().toString() 
-        
-        if (component == hatSwitch):
-        	#self.addressPanel.showRosterSelectorPopup()
-        	selectedIndex = self.addressPanel.getRosterSelectedIndex()
-        	if (value == 0.75):
-        		self.addressPanel.setRosterSelectedIndex(selectedIndex + 1)
-        	if (value == 0.25):
-        		self.addressPanel.setRosterSelectedIndex(selectedIndex - 1)
-        
-        if (component == componentStart and value > 0.5):
-        	self.addressPanel.selectRosterEntry()
-        	
-        if (component == componentBack and value > 0.5):
-        	self.addressPanel.dispatchAddress()
-        
-        #
-        #  uncomment the following to debug wheel (relative throttle) support
-        #if (component == "A" ) :
-        #    component = componentWheel
-        #    value = -1
-        #if (component == "S" ) :
-        #    component = componentWheel
-        #    value = 0
-        #if (component == "D" ) :
-        #    component = componentWheel
-        #    value = 1
-        #
-        # basic throttle keys
-        if (component == componentUp and value > 0.0) :
-            self.controlPanel.accelerate1()
-        if (component == componentDown and value > 0.0) :
-            self.controlPanel.decelerate1()
-        if (component == componentStop and value > 0.0) :
-            self.controlPanel.stop()
-        if (component == componentReverse) :
-            if (value > 0.0) : 
-                # reverse
-                self.controlPanel.setForwardDirection(False)
-                print "sFD False"
-            else : 
-                # forward
-                self.controlPanel.setForwardDirection(True)
-                print "SFD True"
-
-        # "Lock" the throttle
-        if (component == componentALock and value > 0.0) :
-            if self.locked:
-                self.locked = False
-                slider = self.controlPanel.getSpeedSlider()
-                slider.setValue(0)
-            else:
-                self.locked = True
-
-        # absolute throttle component
-        if (component == componentASlider) :
-            if not self.locked:
-                isfwd = self.controlPanel.getIsForward()
-                if value > 0 :
-                    # reverse
-                    if isfwd :
-                        self.controlPanel.setForwardDirection(False)
-                        forward = False
-                   
-                else :
-                    if not isfwd:
-                        self.controlPanel.setForwardDirection(True)
-                        forward = True
-                    value = - value
-                
-                # handle speed setting input
-                # limit range
-                if (value < sliderAMin) :
-                    value = sliderAMin
-                if (value > sliderAMax) :
-                    value = sliderAMax
-                # convert fraction of input to speed step
-                fraction = (value-sliderAMin)/(sliderAMax-sliderAMin)
-                slider = self.controlPanel.getSpeedSlider()
-                setting = int(round(fraction*(slider.getMaximum()-slider.getMinimum()), 0))
-                slider.setValue(setting)
-
-        # relative throttle component
-        if (component == componentWheel) :
-            # calculate new speed
-            slider = self.controlPanel.getSpeedSlider()
-            isfwd = self.controlPanel.getIsForward()
-            nowsetting = slider.getValue()
-            if (componentWheelReverses and not isfwd) :
-                # code direction into value as its sign
-                nowsetting = -1 * nowsetting
-            # update to new fraction
-            if (not componentWheelInverted and value > componentWheelUpperEdge) :
-                newsetting = nowsetting+componentWheelIncrement
-            elif (componentWheelInverted and value > componentWheelUpperEdge) :
-                newsetting = nowsetting-componentWheelIncrement
-            elif (not componentWheelInverted and value < componentWheelLowerEdge) :
-                newsetting = nowsetting-componentWheelIncrement
-            elif (componentWheelInverted and value < componentWheelLowerEdge) :
-                newsetting = nowsetting+componentWheelIncrement
-            else : 
-                newsetting = nowsetting  # don't do anything
-            print "At A: ", value, nowsetting, newsetting, self.controlPanel.getIsForward()
-            self.setdirection = False
-            if (componentWheelReverses) :
-                # negative values mean go in reverse
-                if (newsetting > 0 and not isfwd ) :
-                    self.setdirection = True
-                    self.newdirection = True
-                    print "Set FWD"
-                elif (newsetting < 0 ) :
-                    if (isfwd) :
-                        self.setdirection = True
-                        self.newdirection = False
-                        print "Set RVRS"
-                    newsetting = -1 * newsetting
-            else :
-                # do not drop down through zero
-                if (newsetting < 0 ) :
-                    newsetting = 0;
-            # truncate
-            if (newsetting < slider.getMinimum()) :
-                newsetting = slider.getMinimum()
-            if (newsetting > slider.getMaximum()) :
-                newsetting = slider.getMaximum()
-            # store the result as a scaled speed
-            slider.setValue(newsetting)
-            if (self.setdirection) :
-                self.controlPanel.setForwardDirection(self.newdirection)
-            print "At Z:", value, nowsetting, newsetting, self.controlPanel.getIsForward()
-
-        # function keys
-        if (component == componentF0) :
-            if self.F0isOn and value > 0.5:
-                self.functionPanel.getFunctionButtons()[0].changeState(0)
-                self.F0isOn = False
-            elif value > 0.5:
-                self.functionPanel.getFunctionButtons()[0].changeState(1)
-                self.F0isOn = True
-            
-        if (component == componentF1) :
-            if self.F1isOn and value > 0.5:
-                self.functionPanel.getFunctionButtons()[1].changeState(0)
-                self.F1isOn = False
-            elif value > 0.5:
-                self.functionPanel.getFunctionButtons()[1].changeState(1)
-                self.F1isOn = True
-
-            
-        if (component == componentF2) :
-            #Code for toggling (probably not required) F2:
-		#if self.F2isOn and value > 0.5:
-            #    self.functionPanel.getFunctionButtons()[2].changeState(0)
-            #    self.F2isOn = False
-            #elif value > 0.5:
-            #    self.functionPanel.getFunctionButtons()[2].changeState(1)
-            #    self.F2isOn = True
-		self.functionPanel.getFunctionButtons()[2].changeState(value>0.5)
-                
-        if (component == componentF3) :
-            self.functionPanel.getFunctionButtons()[3].changeState(value>0.5)
-        if (component == componentF4) :
-            self.functionPanel.getFunctionButtons()[4].changeState(value>0.5)
-        if (component == componentF5) :
-            self.functionPanel.getFunctionButtons()[5].changeState(value>0.5)
-        if (component == componentF6) :
-            self.functionPanel.getFunctionButtons()[6].changeState(value>0.5)
-        if (component == componentF7) :
-            self.functionPanel.getFunctionButtons()[7].changeState(value>0.5)
-        if (component == componentF8) :
-            self.functionPanel.getFunctionButtons()[8].changeState(value>0.5)
-        return
+  	if (event.propertyName == "ThrottleFrame") :  # Current throttle frame changed
+  		print "Throttle Frame changed"
+		#self.throttle = event.newValue.getAddressPanel().getThrottle()
+		#self.speedAction.setThrottle( self.throttle )
+		#self.activeThrottleFrame = self.throttleWindow.getCurentThrottleFrame()
+		self.addressPanel = event.newValue.getAddressPanel()
+		self.controlPanel = event.newValue.getControlPanel()
+		self.functionPanel = event.newValue.getFunctionPanel()
+		    
+	if (event.propertyName == "Value") :
+		# event.oldValue is the UsbNode
+		#
+		# uncomment the following line to see controller names
+		#print "|"+event.oldValue.getController().toString()+"|"
+		#print event.oldValue.getController().getName()
+		#print event.oldValue.getController().hashCode()
+		#
+		# Select just the device (controller) we want
+		if (event.oldValue.getController().toString() == desiredControllerName 
+		and event.oldValue.getController().hashCode() == self.controllerHashCode) :
+			# event.newValue is the value, e.g. 1.0
+			# Check for desired component and act
+			component = event.oldValue.getComponent().toString()
+			value = event.newValue
+			# 
+			# uncomment the following to see the entries
+			#print component, value
+			
+			#print "addr: " + self.addressPanel.getCurrentAddress().toString() 
+			
+			#Hat switch switches between locos and throttles in a window
+			if (component == hatSwitch):
+				#self.addressPanel.showRosterSelectorPopup()
+				selectedIndex = self.addressPanel.getRosterSelectedIndex()
+				if (value == 0.75):
+					self.addressPanel.setRosterSelectedIndex(selectedIndex + 1)
+				if (value == 0.25):
+					self.addressPanel.setRosterSelectedIndex(selectedIndex - 1)
+				if (value == 0.5 or value == 1):
+					if (value == 0.5):
+						# advance to next throttle frame
+						self.throttleWindow.nextThrottleFrame()
+					else :
+						# go to previous throttle frame
+						self.throttleWindow.previousThrottleFrame()
+					
+			if (component == componentStart and value > 0.5):
+				self.addressPanel.selectRosterEntry()
+				
+			if (component == componentBack and value > 0.5):
+				self.addressPanel.dispatchAddress()
+			
+			# "Lock" the throttle
+			if (component == componentALock and value > 0.0) :
+			    if self.locked:
+			        self.locked = False
+			        slider = self.controlPanel.getSpeedSlider()
+			        slider.setValue(0)
+			    else:
+			        self.locked = True
+			
+			# absolute throttle component
+			if (component == componentASlider) :
+			    if not self.locked:
+			        isfwd = self.controlPanel.getIsForward()
+			        if value > 0 :
+			            # reverse
+			            if isfwd :
+			                self.controlPanel.setForwardDirection(False)
+			                forward = False
+			           
+			        else :
+			            if not isfwd:
+			                self.controlPanel.setForwardDirection(True)
+			                forward = True
+			            value = - value
+			        
+			        # handle speed setting input
+			        # limit range
+			        if (value < sliderAMin) :
+			            value = sliderAMin
+			        if (value > sliderAMax) :
+			            value = sliderAMax
+			        # convert fraction of input to speed step
+			        fraction = (value-sliderAMin)/(sliderAMax-sliderAMin)
+			        slider = self.controlPanel.getSpeedSlider()
+			        setting = int(round(fraction*(slider.getMaximum()-slider.getMinimum()), 0))
+			        slider.setValue(setting)
+			
+			# function keys
+			#if (component == componentF0) :
+			#    if self.F0isOn and value > 0.5:
+			#        self.functionPanel.getFunctionButtons()[0].changeState(0)
+			#        self.F0isOn = False
+			#    elif value > 0.5:
+			#        self.functionPanel.getFunctionButtons()[0].changeState(1)
+			#        self.F0isOn = True
+			
+			if not isNaN(component) :
+				fNum = -1
+				if component == componentF0:
+					fNum = 0
+				elif component == componentF1:
+					fNum = 1
+				elif component == componentF2:
+					fNum = 2
+				elif component == componentF3:
+					fNum = 3
+				elif component == componentF4:
+					fNum = 4
+				elif component == componentF5:
+					fNum = 5
+				elif component == componentF6:
+					fNum = 6
+				elif component == componentF7:
+					fNum = 7
+				elif component == componentF8:
+					fNum = 8
+				
+				button = self.functionPanel.getFunctionButtons()[fNum]
+				if button.getIsLockable() :
+					if value > 0.5 :
+						state = button.getState()
+						button.changeState(not state)
+				else :
+					button.changeState(value > 0.5)
+			return
 
 #Iterate over the controllers, creating a new listener for each
 #controller of the type we are interested in
