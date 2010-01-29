@@ -5,7 +5,8 @@ package jmri;
 import jmri.Section;
 import jmri.TransitSection;
 import jmri.Block;
-import jmri.jmrit.display.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.util.JmriJFrame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ import jmri.implementation.AbstractNamedBean;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class Transit extends AbstractNamedBean
 					implements java.io.Serializable {

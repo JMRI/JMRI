@@ -14,11 +14,14 @@ import jmri.util.JUnitUtil;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2007
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class MemoryIconTest extends TestCase {
 
     MemoryIcon to = null;
+
+    jmri.jmrit.display.panelEditor.PanelEditor panel = 
+            new jmri.jmrit.display.panelEditor.PanelEditor("Test Panel");
 
 	public void testShowContent() {
         JFrame jf = new JFrame();
@@ -26,7 +29,7 @@ public class MemoryIconTest extends TestCase {
 
         jf.getContentPane().add(new javax.swing.JLabel("Expect \"data\" text:"));
         
-        to = new MemoryIcon();
+        to = new MemoryIcon("MemoryTest1", panel);
         jf.getContentPane().add(to);
         
         jmri.InstanceManager i = new jmri.InstanceManager(){
@@ -51,7 +54,7 @@ public class MemoryIconTest extends TestCase {
 
         jf.getContentPane().add(new javax.swing.JLabel("Expect blank: "));
         
-        to = new MemoryIcon();
+        to = new MemoryIcon("MemoryTest2", panel);
         jf.getContentPane().add(to);
         
         jmri.InstanceManager i = new jmri.InstanceManager(){
@@ -76,7 +79,7 @@ public class MemoryIconTest extends TestCase {
 
         jf.getContentPane().add(new javax.swing.JLabel("Expect red X default icon: "));
         
-        to = new MemoryIcon();
+        to = new MemoryIcon("MemoryTest3", panel);
         jf.getContentPane().add(to);
         
         jmri.InstanceManager i = new jmri.InstanceManager(){

@@ -327,7 +327,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
     * Make a change to a node in the displayed tree. Either its name
     * or the contents of its leaves (image references)
     */
-    public boolean NodeChange(CatalogTreeNode node, String name) {
+    public boolean nodeChange(CatalogTreeNode node, String name) {
         CatalogTreeNode cNode = getCorrespondingNode(node);
         cNode.setLeaves(node.getLeaves());
         AbstractCatalogTree tree = (AbstractCatalogTree)getCorespondingModel(node);
@@ -338,6 +338,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         _model.nodeChanged(node);
         updatePanel();
         ImageIndexEditor._indexChanged = true;
+        updatePanel();
         return true;
     }
 
@@ -770,7 +771,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
                         CatalogTreeNode node = (CatalogTreeNode)path.getLastPathComponent();
                         e.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
                         node.addLeaf(icon.getName(), icon.getURL());
-                        NodeChange(node, node.toString());
+                        nodeChange(node, node.toString());
                         e.dropComplete(true);
                         if (log.isDebugEnabled()) 
                             log.debug("DropJTree.drop COMPLETED for "+icon.getURL());

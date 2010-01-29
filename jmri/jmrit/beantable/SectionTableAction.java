@@ -23,7 +23,7 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 import jmri.util.JmriJFrame;
-import jmri.jmrit.display.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import java.util.ArrayList;
 
 /**
@@ -44,7 +44,7 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 // GT - 12-Oct-2009 - Added "Entry Block" column in entryPointTable
 

@@ -4,15 +4,15 @@ package jmri;
 
 import jmri.Block;
 import jmri.Sensor;
-import jmri.jmrit.display.LayoutEditor;
-import jmri.jmrit.display.ConnectivityUtil;
-import jmri.jmrit.display.PositionablePoint;
-import jmri.jmrit.display.LevelXing;
-import jmri.jmrit.display.LayoutTurnout;
-import jmri.jmrit.display.LayoutBlock;
-import jmri.jmrit.display.LayoutBlockManager;
-import jmri.jmrit.display.TrackNode;
-import jmri.jmrit.display.TrackSegment;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
+import jmri.jmrit.display.layoutEditor.PositionablePoint;
+import jmri.jmrit.display.layoutEditor.LevelXing;
+import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.jmrit.display.layoutEditor.TrackNode;
+import jmri.jmrit.display.layoutEditor.TrackSegment;
 
 import jmri.util.JmriJFrame;
 import java.util.ArrayList;
@@ -100,7 +100,7 @@ import java.beans.PropertyChangeListener;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class Section extends AbstractNamedBean
     implements  java.io.Serializable {

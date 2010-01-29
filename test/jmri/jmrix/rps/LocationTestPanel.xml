@@ -4,7 +4,7 @@
 
 <layout-config>
 
-  <paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml" name="RPS Location Test" x="20" y="22" height="639" width="781" editable="yes" positionable="yes" controlling="yes" hide="no" panelmenu="yes">
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="RPS Location Test" x="20" y="22" height="639" width="781" editable="yes" positionable="yes" controlling="yes" hide="no" panelmenu="yes">
 
      <sensoricon x="788" y="215" level="10" active="resources/icons/smallschematics/tracksegments/circuit-occupied.gif" error="resources/icons/smallschematics/tracksegments/circuit-error.gif" rotate="0" forcecontroloff="false" momentary="false" sxscale="12.40959188245664" syscale="-12.565053227901437" sxorigin="17" syorigin="404" showid="true" filter="27" class="jmri.jmrit.display.configurexml.RpsPositionIconXml" />
 
@@ -16,7 +16,7 @@
 
   </paneleditor>
 
-  <!--Written by JMRI version 1.7.5 on Sat Sep 16 14:46:29 PDT 2006 $Id: LocationTestPanel.xml,v 1.3 2009-03-23 23:34:59 jacobsen Exp $-->
+  <!--Written by JMRI version 1.7.5 on Sat Sep 16 14:46:29 PDT 2006 $Id: LocationTestPanel.xml,v 1.4 2010-01-29 10:35:04 pete_cressman Exp $-->
 
 </layout-config>
 

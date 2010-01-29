@@ -32,7 +32,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -513,8 +513,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	}
 	
 	private void loadIconComboBox (JComboBox comboBox){
-		LocoIcon li = new LocoIcon();
-    	String[] colors = li.getLocoColors();
+    	String[] colors = LocoIcon.getLocoColors();
     	for (int i=0; i<colors.length; i++){
     		comboBox.addItem(colors[i]);
     	}

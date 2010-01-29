@@ -27,7 +27,7 @@ import javax.swing.JTextField;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2004, 2007
  * @author      Adapted for metric system - S.K. Bosch
- * @version	$Revision: 1.26 $
+ * @version	$Revision: 1.27 $
  */
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
@@ -104,7 +104,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         pane1.add(new JLabel(" starts timers on "));
         pane1.add(startOnEntry);
         pane1.add(startOnExit);
-        startSensorIcon = new SensorIcon();
+        startSensorIcon = new SensorIcon(null);
         startSensorIcon.setToolTipText("Shows sensor state; click to change");
         pane1.add(startSensorIcon);
         getContentPane().add(pane1);
@@ -117,7 +117,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         pane2.add(new JLabel(" stops timer 1 on "));
         pane2.add(stopOnEntry1);
         pane2.add(stopOnExit1);
-        stopSensorIcon1 = new SensorIcon();
+        stopSensorIcon1 = new SensorIcon(null);
         stopSensorIcon1.setToolTipText("Shows sensor state; click to change");
         pane2.add(stopSensorIcon1);
         getContentPane().add(pane2);
@@ -130,7 +130,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
         pane3.add(new JLabel(" stops timer 2 on "));
         pane3.add(stopOnEntry2);
         pane3.add(stopOnExit2);
-        stopSensorIcon2 = new SensorIcon();
+        stopSensorIcon2 = new SensorIcon(null);
         stopSensorIcon2.setToolTipText("Shows sensor state; click to change");
         pane3.add(stopSensorIcon2);
         getContentPane().add(pane3);

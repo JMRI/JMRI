@@ -4,7 +4,7 @@ package jmri.jmrit.dispatcher;
 
 import jmri.Scale;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.display.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import java.io.File;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ import org.jdom.Element;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 
 public class OptionsFile extends jmri.jmrit.XmlFile {

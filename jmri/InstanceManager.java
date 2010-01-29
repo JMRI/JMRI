@@ -3,7 +3,7 @@
 package jmri;
 
 import jmri.implementation.DefaultClockControl;
-import jmri.jmrit.display.LayoutBlockManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.roster.RosterIconFactory;
@@ -44,7 +44,7 @@ import jmri.managers.DefaultSignalGroupManager;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.58 $
+ * @version			$Revision: 1.59 $
  */
 public class InstanceManager {
 

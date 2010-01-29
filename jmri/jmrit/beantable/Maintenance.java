@@ -10,6 +10,7 @@ import java.text.MessageFormat;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
@@ -36,6 +37,7 @@ import jmri.Turnout;
 import jmri.SignalHead;
 import jmri.InstanceManager;
 import jmri.jmrit.blockboss.BlockBossLogic;
+import jmri.jmrit.display.Positionable;
 
 /**
  * A collection of static utilities to provide cross referencing information
@@ -60,7 +62,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class Maintenance
@@ -873,12 +875,12 @@ public class Maintenance
                 }
             }
         }       
-        jmri.jmrit.display.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+        jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
         iter1 = lbm.getSystemNameList().iterator();
         while (iter1.hasNext()) {
             // get the next Logix
             String sName = iter1.next();
-            jmri.jmrit.display.LayoutBlock lb = lbm.getBySystemName(sName);
+            jmri.jmrit.display.layoutEditor.LayoutBlock lb = lbm.getBySystemName(sName);
             if (lb==null) {
                 log.error("Error getting LayoutBlock - "+sName);
                 break;
@@ -1118,16 +1120,17 @@ public class Maintenance
         }
         found = false;
         empty = true;
-        ArrayList<jmri.jmrit.display.PanelEditor> panelList = jmri.jmrit.display.PanelMenu.instance().getPanelEditorPanelList();
+        ArrayList<jmri.jmrit.display.Editor> panelList = jmri.jmrit.display.PanelMenu.instance().getEditorPanelList();
         for (int i=0; i<panelList.size(); i++) {
-            jmri.jmrit.display.PanelEditor panelEditor = panelList.get(i);
-            name = ((JFrame) panelEditor.getTarget().getTopLevelAncestor()).getTitle();
+            jmri.jmrit.display.Editor panelEditor = panelList.get(i);
+            name = panelEditor.getTitle();
             if (text != null) {
                 text.append(MessageFormat.format(rbm.getString("ReferenceTitle"),
                             new Object[] { " ", rbm.getString("Panel"), name, name}));
             }
-            for (int k=0; k<panelEditor.contents.size(); k++) {
-                Object o = panelEditor.contents.get(k);
+            List <Positionable> contents = panelEditor.getContents();
+            for (int k=0; k<contents.size(); k++) {
+                Positionable o = contents.get(k);
                 if (o.getClass().getName().equals("jmri.jmrit.display.SensorIcon")) {
                     name = ((jmri.jmrit.display.SensorIcon)o).getSensor().getSystemName();
                     if (name.equals(sysName))
@@ -1175,78 +1178,6 @@ public class Maintenance
                             referenceCount++;
                         }
                     }
-                }
-            }
-        }
-        ArrayList<jmri.jmrit.display.LayoutEditor> layoutList = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
-        for (int i=0; i<layoutList.size(); i++) {
-            jmri.jmrit.display.LayoutEditor layoutEditor = layoutList.get(i);
-            name = layoutEditor.getLayoutName();
-            if (text != null) {
-                text.append(MessageFormat.format(rbm.getString("ReferenceTitle"),
-                            new Object[] { " ", rbm.getString("Layout"), name, name}));
-            }
-            for (int k=0; k<layoutEditor.contents.size(); k++) {
-                Object o = layoutEditor.contents.get(k);
-                if (o.getClass().getName().equals("jmri.jmrit.display.SensorIcon")) {
-                    name = ((jmri.jmrit.display.SensorIcon)o).getSensor().getSystemName();
-                    if (name.equals(sysName))
-                    {
-                        if (text != null) {
-                            text.append(MessageFormat.format(rbm.getString("PanelReference"),
-                                        new Object[] { "\t", rbm.getString("Sensor")}));
-                        }
-                        found = true;
-                        referenceCount++;
-                    }
-                } else if (o.getClass().getName().equals("jmri.jmrit.display.TurnoutIcon")) {
-                    name = ((jmri.jmrit.display.TurnoutIcon)o).getTurnout().getSystemName();
-                    if (name.equals(sysName))
-                    {
-                        if (text != null) {
-                            text.append(MessageFormat.format(rbm.getString("PanelReference"),
-                                        new Object[] { "\t", rbm.getString("Turnout")}));
-                        }
-                        found = true;
-                        referenceCount++;
-                    }
-                } else if (o.getClass().getName().equals("jmri.jmrit.display.SignalHeadIcon")) {
-                    name = ((jmri.jmrit.display.SignalHeadIcon)o).getSignalHead().getSystemName();
-                    if (name.equals(sysName))
-                    {
-                        if (text != null) {
-                            text.append(MessageFormat.format(rbm.getString("PanelReference"),
-                                        new Object[] { "\t", rbm.getString("SignalHead")}));
-                        }
-                        found = true;
-                        referenceCount++;
-                    }
-                } else if (o.getClass().getName().equals("jmri.jmrit.display.MultiSensorIcon")) {
-                    jmri.jmrit.display.MultiSensorIcon msi = (jmri.jmrit.display.MultiSensorIcon)o;
-                    for (int j=0; j<msi.getNumEntries(); j++)  {
-                        name = msi.getSensorName(j);
-                        if (name.equals(sysName))
-                        {
-                            if (text != null) {
-                                text.append(MessageFormat.format(rbm.getString("PanelReference"),
-                                            new Object[] { "\t", rbm.getString("MultiSensor")}));
-                            }
-                            found = true;
-                            referenceCount++;
-                        }
-                    }
-                }
-            }
-            for (int k=0; k<layoutEditor.turnoutList.size(); k++) {
-                name  = layoutEditor.turnoutList.get(k).getTurnoutName();
-                if (name.equals(sysName) || name.equals(userName))
-                {
-                    if (text != null) {
-                        text.append(MessageFormat.format(rbm.getString("PanelReference"),
-                                    new Object[] { "\t", rbm.getString("Turnout")}));
-                    }
-                    found = true;
-                    referenceCount++;
                 }
             }
         }

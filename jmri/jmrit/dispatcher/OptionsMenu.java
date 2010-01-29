@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import jmri.Scale;
 
-import jmri.jmrit.display.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
  
 import java.awt.event.ActionEvent;
@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 
 public class OptionsMenu extends JMenu {

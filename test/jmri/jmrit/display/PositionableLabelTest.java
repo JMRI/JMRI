@@ -11,11 +11,13 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class PositionableLabelTest extends TestCase {
 
     JLabel to = null;
+    jmri.jmrit.display.panelEditor.PanelEditor panel = 
+            new jmri.jmrit.display.panelEditor.PanelEditor("Test Panel");
 
 	public void testShow() {
         JFrame jf = new JFrame();
@@ -34,7 +36,7 @@ public class PositionableLabelTest extends TestCase {
         whereButton.setBounds(0,0,70, 40);
         p.add(whereButton);
 
-        to = new PositionableLabel("here");
+        to = new PositionableLabel("here", panel);
         to.setBounds(80,80,40,40);
         p.add(to);
 

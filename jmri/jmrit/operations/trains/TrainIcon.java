@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 
 import jmri.jmrit.display.LocoIcon;
+import jmri.jmrit.display.Editor;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.routes.Route;
@@ -21,15 +22,15 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class TrainIcon extends LocoIcon {
 
  
-	public TrainIcon() {
+	public TrainIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
-    	super(); 
+    	super(editor); 
     }
  
     boolean enablePopUp = true;
@@ -37,51 +38,25 @@ public class TrainIcon extends LocoIcon {
     /**
      * Pop-up only if right click and not dragged 
      */
-    protected void showPopUp(MouseEvent e) {
-		//ours = this;
-		if (enablePopUp) {
-			JPopupMenu popup = new JPopupMenu();
-			if (train != null){
-				popup.add(new AbstractAction("Move") {
-					public void actionPerformed(ActionEvent e) {
-						train.move();
-					}
-				});
-				popup.add(makeTrainRouteMenu()); 
-				popup.add(new AbstractAction("Set X&Y") {
-					public void actionPerformed(ActionEvent e) {
-						if(!train.setTrainIconCoordinates())
-							JOptionPane.showMessageDialog(null, "See Operations -> Settings to enable Set X&Y",
-									"Set X&Y is disabled",
-									JOptionPane.ERROR_MESSAGE);
-					}
-				}
-				);
-			}
-			if (entry != null) {
-				popup.add(new AbstractAction("Throttle") {
-					public void actionPerformed(ActionEvent e) {
-						createThrottle();
-					}
-				});
-			}
-			popup.add(makeLocoIconMenu());
-			popup.add(makeFontSizeMenu());
-			popup.add(makeFontStyleMenu());
-			popup.add(makeFontColorMenu());
+    public void showPopUp(JPopupMenu popup) {
+        super.showPopUp(popup);
 
-			popup.add(new AbstractAction("Remove") {
-				public void actionPerformed(ActionEvent e) {
-					remove();
-					dispose();
-				}
-			});
-
-			// end creation of pop-up menu
-
-			popup.show(e.getComponent(), e.getX(), e.getY());
-		} else
-			enablePopUp = true;
+        if (train != null){
+            popup.add(new AbstractAction("Move") {
+                public void actionPerformed(ActionEvent e) {
+                    train.move();
+                }
+            });
+            popup.add(makeTrainRouteMenu()); 
+        }
+        if (entry != null) {
+            popup.add(new AbstractAction("Throttle") {
+                public void actionPerformed(ActionEvent e) {
+                    createThrottle();
+                }
+            });
+        }
+        popup.add(makeLocoIconMenu());
 	}
     
    

@@ -7,9 +7,9 @@ import jmri.Section;
 import jmri.EntryPoint;
 import jmri.Transit;
 import jmri.Turnout;
-import jmri.jmrit.display.LayoutEditor;
-import jmri.jmrit.display.LayoutTurnout;
-import jmri.jmrit.display.ConnectivityUtil;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008-2009
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 
 public class AutoTurnouts {

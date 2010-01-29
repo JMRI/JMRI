@@ -15,17 +15,19 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2007
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class ReporterIconTest extends TestCase {
 
     ReporterIcon to = null;
+    jmri.jmrit.display.panelEditor.PanelEditor panel = 
+            new jmri.jmrit.display.panelEditor.PanelEditor("Test Panel");
 
 	public void testShow() {
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        to = new ReporterIcon();
+        to = new ReporterIcon(panel);
         jf.getContentPane().add(to);
         
         // reset instance manager

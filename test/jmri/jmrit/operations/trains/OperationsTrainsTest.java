@@ -58,7 +58,7 @@ import jmri.jmrit.operations.routes.RouteManager;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -136,7 +136,9 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Train Name", "TESTTRAINNAME", train1.getName());
 		Assert.assertEquals("Train toString", "TESTTRAINNAME", train1.toString());
 
-		TrainIcon trainicon1 = new TrainIcon();
+        jmri.jmrit.display.panelEditor.PanelEditor panel = 
+                new jmri.jmrit.display.panelEditor.PanelEditor("Test Panel");
+		TrainIcon trainicon1 = new TrainIcon(panel);
 		trainicon1.setTrain(train1);
 		Assert.assertEquals("TrainIcon set train", "TESTTRAINNAME", trainicon1.getTrain().getName());
 	}

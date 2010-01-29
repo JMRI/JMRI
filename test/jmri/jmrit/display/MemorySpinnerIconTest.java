@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2009
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class MemorySpinnerIconTest extends TestCase {
 
@@ -23,17 +23,20 @@ public class MemorySpinnerIconTest extends TestCase {
     MemorySpinnerIcon toi2 = null;
     MemorySpinnerIcon toi3 = null;
 
+    jmri.jmrit.display.panelEditor.PanelEditor panel = 
+            new jmri.jmrit.display.panelEditor.PanelEditor("Test Panel");
+
 	public void testShow() {
         JmriJFrame jf = new JmriJFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        tos1 = new MemorySpinnerIcon();
+        tos1 = new MemorySpinnerIcon(panel);
         jf.getContentPane().add(tos1);
-        tos2 = new MemorySpinnerIcon();
+        tos2 = new MemorySpinnerIcon(panel);
         jf.getContentPane().add(tos2);
-        toi1 = new MemorySpinnerIcon();
+        toi1 = new MemorySpinnerIcon(panel);
         jf.getContentPane().add(toi1);
-        toi2 = new MemorySpinnerIcon();
+        toi2 = new MemorySpinnerIcon(panel);
         jf.getContentPane().add(toi2);
         
         jmri.InstanceManager i = new jmri.InstanceManager(){
@@ -51,9 +54,9 @@ public class MemorySpinnerIconTest extends TestCase {
         toi2.setMemory("IM2");
         jmri.InstanceManager.memoryManagerInstance().getMemory("IM2").setValue(new Integer(10));
 
-        tos3 = new MemorySpinnerIcon();
+        tos3 = new MemorySpinnerIcon(panel);
         jf.getContentPane().add(tos3);
-        toi3 = new MemorySpinnerIcon();
+        toi3 = new MemorySpinnerIcon(panel);
         jf.getContentPane().add(toi3);
         tos3.setMemory("IM1");
         toi3.setMemory("IM2");

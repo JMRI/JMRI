@@ -7,7 +7,7 @@ import jmri.Scale;
 import jmri.util.*;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import jmri.jmrit.display.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -44,7 +44,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2008-2010
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 

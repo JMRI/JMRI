@@ -15,17 +15,19 @@ import jmri.jmrix.rps.*;
  * Tests for the RpsIcon class.
  *
  * @author			Bob Jacobsen Copyright 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class RpsPositionIconTest extends TestCase {
 
     RpsPositionIcon rpsIcon;
+    jmri.jmrit.display.panelEditor.PanelEditor panel = 
+            new jmri.jmrit.display.panelEditor.PanelEditor("Test Panel");
 
 	public void testShow() {
         JFrame jf = new JFrame("RpsPositionIcon Test");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        rpsIcon = new RpsPositionIcon();
+        rpsIcon = new RpsPositionIcon(panel);
         jf.getContentPane().add(rpsIcon);
         
         jmri.InstanceManager i = new jmri.InstanceManager(){

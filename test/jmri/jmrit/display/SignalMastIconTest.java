@@ -12,11 +12,13 @@ import junit.framework.*;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2009
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SignalMastIconTest extends TestCase {
 
     SignalMastIcon to = null;
+    jmri.jmrit.display.panelEditor.PanelEditor panel = 
+            new jmri.jmrit.display.panelEditor.PanelEditor("Test Panel");
 
 	public void testShowText() {
 	    // this one is for Layout editor, which for now
@@ -24,7 +26,7 @@ public class SignalMastIconTest extends TestCase {
         JFrame jf = new JFrame("SignalMast Icon Text Test");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        to = new SignalMastIcon(null);
+        to = new SignalMastIcon(panel);
 
         jf.getContentPane().add(new JLabel("Should say Approach: "));
         jf.getContentPane().add(to);
@@ -65,7 +67,7 @@ public class SignalMastIconTest extends TestCase {
         JFrame jf = new JFrame("SignalMastIcon Icon Test");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        to = new SignalMastIcon();
+        to = new SignalMastIcon(panel);
 
         jf.getContentPane().add(new JLabel("Should be yellow/yellow: "));
         jf.getContentPane().add(to);

@@ -39,7 +39,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.101 $
+ * @version     $Revision: 1.102 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -64,7 +64,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
                     // Save block values prior to exit, if necessary
                     log.debug("Start writing block info");
                     try {
-                        new jmri.jmrit.display.BlockValueFile().writeBlockValues();
+                        new jmri.jmrit.display.layoutEditor.BlockValueFile().writeBlockValues();
                     } 
                     //catch (org.jdom.JDOMException jde) { log.error("Exception writing blocks: "+jde); }                           
                     catch (java.io.IOException ioe) { log.error("Exception writing blocks: "+ioe); }   

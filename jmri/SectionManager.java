@@ -2,7 +2,7 @@
 
 package jmri;
 
-import jmri.jmrit.display.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ import jmri.managers.AbstractManager;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class SectionManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -161,7 +161,7 @@ public class SectionManager extends AbstractManager
 	 */
 	public int removeDirectionSensorsFromSSL(LayoutEditor lePanel) {
 		if (lePanel==null) return -1;
-		jmri.jmrit.display.ConnectivityUtil cUtil = lePanel.getConnectivityUtil();
+		jmri.jmrit.display.layoutEditor.ConnectivityUtil cUtil = lePanel.getConnectivityUtil();
 		List<String> list = getSystemNameList();
 		if (list.size()<=0) return -2;
 		int numErrors = 0;

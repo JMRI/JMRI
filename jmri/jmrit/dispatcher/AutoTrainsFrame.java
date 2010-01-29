@@ -5,7 +5,7 @@ package jmri.jmrit.dispatcher;
 import jmri.util.*;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import jmri.jmrit.display.LayoutEditor;
+//import jmri.jmrit.display.LayoutEditor;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -37,7 +37,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 	

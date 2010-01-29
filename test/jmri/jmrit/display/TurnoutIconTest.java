@@ -13,17 +13,19 @@ import java.beans.PropertyChangeEvent;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class TurnoutIconTest extends TestCase {
 
     TurnoutIcon to = null;
+    jmri.jmrit.display.panelEditor.PanelEditor panel = 
+            new jmri.jmrit.display.panelEditor.PanelEditor("Test Panel");
 
 	public void testShow() {
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        to = new TurnoutIcon();
+        to = new TurnoutIcon(panel);
         jf.getContentPane().add(to);
         
         jmri.InstanceManager i = new jmri.InstanceManager(){

@@ -34,15 +34,14 @@ import jmri.jmrit.roster.RosterEntry;
 
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.jmrit.display.PanelMenu;
-import jmri.jmrit.display.PanelEditor;
-import jmri.jmrit.display.LayoutEditor;
+import jmri.jmrit.display.Editor;
 
 
 /**
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.62 $
+ * @version $Revision: 1.63 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1174,20 +1173,10 @@ public class Train implements java.beans.PropertyChangeListener {
 			trainIcon.remove();
 			trainIcon.dispose();
 		}
-		PanelEditor pe = PanelMenu.instance().getPanelEditorByName(
-				Setup.getPanelName());
-		LayoutEditor le = PanelMenu.instance().getLayoutEditorByName(
-				Setup.getPanelName());
-
-		if (pe != null) {
-			trainIcon = new TrainIcon();
-			pe.putLocoIcon(trainIcon);
-			// try layout editor
-		} else if (le != null) {
-			trainIcon = new TrainIcon();
-			le.putLocoIcon(trainIcon);
-		}
-		if (pe != null || le != null) {
+		Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
+		if (editor != null) {
+            trainIcon = new TrainIcon(editor);
+            editor.putItem(trainIcon);
 			trainIcon.setText(getIconName());
 			trainIcon.setTrain(this);
 			if (getIconName().length() > 9) {
