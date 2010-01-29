@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: Main_Menu.shtml,v 1.3 2010-01-23 06:55:57 jacobsen Exp $ -->
+<!-- $Id: Main_Menu.shtml,v 1.4 2010-01-29 03:05:23 jacobsen Exp $ -->
 <title>DecoderPro Menus</title>
 
 <!-- Style -->
@@ -168,7 +168,7 @@
   <li><strong>USB Input Control</strong></li>
   <li><strong>USB Device Viewer</strong></li>
   <li><strong>RailDriver Throttle</strong></li>
-  <li><strong>Start Mini Web Server</strong></li>
+  <li><a href="../html/web/index.shtml">Start Mini Web Server</a></li>
   <li><strong>Start Wi Throttle</strong></li>
 </ul>
 <h4><a href="Main_Window.shtml">Window</a></h4>
