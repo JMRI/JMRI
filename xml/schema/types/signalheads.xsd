@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: signalheads.xsd,v 1.6 2010-01-18 16:55:33 kevin-dickerson Exp $ -->
+<!-- $Id: signalheads.xsd,v 1.7 2010-01-29 17:55:56 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -84,9 +84,13 @@
               Define the XML stucture for storing the contents a NamedBeanHandle&lt;Turnout&gt;
               Handled inside other adapter classes at this point, so no xs:appinfo element here.                
               </xs:documentation></xs:annotation>
-              <xs:attribute name="defines" type="xs:string" use="required">
-                <xs:annotation><xs:documentation>Specifies which lamp/output/color this turnout drives</xs:documentation></xs:annotation>
-              </xs:attribute>
+              <xs:simpleContent>
+                  <xs:extension base="xs:string">
+                      <xs:attribute name="defines" type="xs:string" use="required">
+                        <xs:annotation><xs:documentation>Specifies user or system name</xs:documentation></xs:annotation>
+                      </xs:attribute>
+                  </xs:extension>
+              </xs:simpleContent>
           </xs:complexType>
         </xs:element>
         
