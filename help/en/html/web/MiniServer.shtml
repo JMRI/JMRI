@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: MiniServer.shtml,v 1.1 2008-08-03 03:59:06 jacobsen Exp $ -->
+<!-- $Id: MiniServer.shtml,v 1.2 2010-01-29 03:05:59 jacobsen Exp $ -->
 <title>JMRI: Mini Web Server</title>
 
 <!-- Style -->
@@ -49,16 +49,16 @@ the FileServlet (which serves the contents of local files), and
 mapping the URL that corresponds to JMRI panels via the
 <a href="FrameServlet.shtml">FrameServlet</a>.
 
-<dt>jmri/web//miniserver/Html.properties
+<dt>jmri/web/miniserver/Html.properties
 <dd>Provides the "boiler plate" text for HTTP replies and certain
 HTML responses.
 
-<dt>jmri/web//miniserver/servlet/fileservlet/FileServletPaths.properties
+<dt>jmri/web/miniserver/servlet/fileservlet/FileServletPaths.properties
 <dd>Maps URLs presented to the FileServlet to locations in the file system.
 This servlet is somewhat JMRI-specific, in that it knows about the location
 of the current JMRI preferences directory; see the comment at the front of the file.
 
-<dt>jmri/web//miniserver/servlet/fileservlet/FileServletTypes.properties
+<dt>jmri/web/miniserver/servlet/fileservlet/FileServletTypes.properties
 <dd>Specifies the MIME type to be returned for a file based on the
 file suffix.
 
