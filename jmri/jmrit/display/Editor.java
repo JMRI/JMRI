@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import java.awt.Font;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 
@@ -131,7 +132,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     private ArrayList <Positionable> _selectionGroup = null;  // items gathered inside fence
     private Positionable _currentSelection;
     private ToolTip _tooltip = null;
-    private Font _toolFont = new Font(Font.SERIF, Font.PLAIN, 10);
+    private Font _toolFont = new Font("Serif", Font.PLAIN, 10);
 
     // Accessible to editor views
     protected int xLoc = 0;     // x coord of selected Positionable
