@@ -72,6 +72,7 @@ public class JmriServer {
         }
      }
      
+     @SuppressWarnings("deprecation")
      public void stop(){
            listenThread.stop();
      }
