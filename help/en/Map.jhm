@@ -996,6 +996,8 @@
 
 <mapID target="html.hardware.acela.Names" url="html/hardware/acela/Names.shtml"/>
 
+<mapID target="package.jmri.jmrit.display.ControlPanelEditor" url="package/jmri/jmrit/display/ControlPanelEditor.shtml"/>
+
 <mapID target="manual.Comp_LightFX_Top" url="manual/Comp_LightFX.shtml#Top"/>
 
 <mapID target="manual.Ops_AddInterchange_Top" url="manual/Ops_AddInterchange.shtml#Top"/>
