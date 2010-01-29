@@ -28,7 +28,7 @@
   
   <aspecttable>BR</aspecttable>
 
-  <name>2 Aspect Signal Home + Distant</name>
+  <name>Semephore Home + Distant</name>
   
   <description>This uses two single heads to control the aspects, this would be used on a semaphore signal with both the home and distance signals located on the same mast</description>
   
