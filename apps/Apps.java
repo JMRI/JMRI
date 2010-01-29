@@ -39,7 +39,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.100 $
+ * @version     $Revision: 1.101 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -674,6 +674,10 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     static protected boolean log4JSetUp = false;
     
     static protected void initLog4J() {
+    	if (log4JSetUp){
+    		log.debug("initLog4J already initialized!");
+    		return;
+    	}
         log4JSetUp = true;
         // initialize log4j - from logging control file (lcf) only
         // if can find it!
