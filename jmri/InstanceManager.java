@@ -18,7 +18,6 @@ import jmri.managers.DefaultConditionalManager;
 import jmri.managers.DefaultLogixManager;
 import jmri.managers.DefaultMemoryManager;
 import jmri.managers.DefaultRouteManager;
-import jmri.managers.DefaultSignalGroupManager;
 
 /**
  * Provides static members for locating various interface implementations.
@@ -44,7 +43,7 @@ import jmri.managers.DefaultSignalGroupManager;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.59 $
+ * @version			$Revision: 1.60 $
  */
 public class InstanceManager {
 
@@ -150,6 +149,9 @@ public class InstanceManager {
     static public SignalGroupManager signalGroupManagerInstance()  {
         SignalGroupManager m = getDefault(SignalGroupManager.class);
         if (m == null) {
+            // ensure signal group manager exists first
+            signalMastManagerInstance();
+            // then create a new signal group manager and store
             m = new jmri.managers.DefaultSignalGroupManager();
             setSignalGroupManager(m);
         }
@@ -385,17 +387,6 @@ public class InstanceManager {
         if (p!=routeManager && routeManager!=null && log.isDebugEnabled()) log.debug("RouteManager instance is being replaced: "+p);
         if (p!=routeManager && routeManager==null && log.isDebugEnabled()) log.debug("RouteManager instance is being installed: "+p);
         routeManager = p;
-    }
-    
-    private SignalGroupManager signalGroupManager = null;
-    /*static public void setSignalGroupManager(SignalGroupManager p) {
-        instance().addSignalGroupManager(p);
-    }*/
-    
-    protected void addSignalGroupManager(SignalGroupManager p) {
-        if (p!=signalGroupManager && signalGroupManager!=null && log.isDebugEnabled()) log.debug("RouteManager instance is being replaced: "+p);
-        if (p!=signalGroupManager && signalGroupManager==null && log.isDebugEnabled()) log.debug("RouteManager instance is being installed: "+p);
-        signalGroupManager = p;
     }
 
     private LayoutBlockManager layoutBlockManager = null;
