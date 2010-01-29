@@ -34,7 +34,7 @@ import javax.swing.JMenuBar;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class PacketScript extends Apps {
 
@@ -62,7 +62,6 @@ public class PacketScript extends Apps {
         // show splash screen early
         splash(true);
 
-        initLog4J();
         log.info(apps.Apps.startupInfo("PacketScript"));
 
         setConfigFilename("PacketScriptConfig2.xml", args);

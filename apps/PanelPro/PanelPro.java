@@ -39,7 +39,7 @@ import javax.swing.JPanel;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 public class PanelPro extends Apps {
 
@@ -98,7 +98,6 @@ public class PanelPro extends Apps {
         // show splash screen early
         splash(true);
 
-        initLog4J();
         log.info(apps.Apps.startupInfo("PanelPro"));
 
         setConfigFilename("PanelProConfig2.xml", args);

@@ -39,7 +39,7 @@ import javax.swing.JPanel;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003-2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SignalPro extends Apps {
 
@@ -98,7 +98,6 @@ public class SignalPro extends Apps {
         // show splash screen early
         splash(true);
 
-        initLog4J();
         log.info(apps.Apps.startupInfo("SignalPro"));
 
         setConfigFilename("SignalProConfig2.xml", args);

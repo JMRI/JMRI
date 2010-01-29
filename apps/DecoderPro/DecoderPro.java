@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004, 2007
- * @version     $Revision: 1.60 $
+ * @version     $Revision: 1.61 $
  */
 public class DecoderPro extends Apps {
 
@@ -124,7 +124,6 @@ public class DecoderPro extends Apps {
         // show splash screen early
         splash(true);
 
-        initLog4J();
         log.info(apps.Apps.startupInfo("DecoderPro"));
 
         setConfigFilename("DecoderProConfig2.xml", args);

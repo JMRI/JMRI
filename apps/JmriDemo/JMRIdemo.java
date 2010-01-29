@@ -31,7 +31,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.68 $
+ * @version     $Revision: 1.69 $
  */
 public class JMRIdemo extends Apps {
 
@@ -69,7 +69,6 @@ public class JMRIdemo extends Apps {
         // show splash screen early
         splash(true);
 
-        initLog4J();
         log.info(apps.Apps.startupInfo("JMRIdemo"));
 
         setConfigFilename("JmriDemoConfig2.xml", args);

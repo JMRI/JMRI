@@ -39,7 +39,7 @@ import javax.swing.JPanel;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class DispatcherPro extends Apps {
 
@@ -98,7 +98,6 @@ public class DispatcherPro extends Apps {
         // show splash screen early
         splash(true);
 
-        initLog4J();
         log.info(apps.Apps.startupInfo("DispatcherPro"));
 
         setConfigFilename("DispatcherProConfig2.xml", args);

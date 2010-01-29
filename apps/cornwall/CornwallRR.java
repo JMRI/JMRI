@@ -31,7 +31,7 @@ import javax.swing.JMenuBar;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.28 $
  */
 public class CornwallRR extends Apps {
 
@@ -74,7 +74,6 @@ public class CornwallRR extends Apps {
         // show splash screen early
         splash(true);
 
-        initLog4J();
         log.info(apps.Apps.startupInfo("CornwallRR"));
 
         setConfigFilename("CornwallConfig2.xml", args);

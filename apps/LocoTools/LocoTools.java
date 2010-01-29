@@ -32,7 +32,7 @@ import javax.swing.JMenuBar;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.34 $
+ * @version     $Revision: 1.35 $
  */
 public class LocoTools extends Apps {
 
@@ -64,7 +64,6 @@ public class LocoTools extends Apps {
         // show splash screen early
         splash(true);
 
-        initLog4J();
         log.info(apps.Apps.startupInfo("LocoTools"));
 
         setConfigFilename("LocoToolsConfig2.xml", args);

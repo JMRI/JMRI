@@ -41,7 +41,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004, 2007
  * @author      Matthew Harris  copyright (c) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SoundPro extends Apps {
 
@@ -115,7 +115,6 @@ public class SoundPro extends Apps {
         // show splash screen early
         splash(true);
 
-        initLog4J();
         log.info(apps.Apps.startupInfo("SoundPro"));
 
         setConfigFilename("SoundProConfig2.xml", args);

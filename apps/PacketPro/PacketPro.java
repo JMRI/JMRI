@@ -36,7 +36,7 @@ import javax.swing.JFrame;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2002
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class PacketPro extends Apps {
 
@@ -55,7 +55,6 @@ public class PacketPro extends Apps {
         // show splash screen early
         splash(true);
 
-        initLog4J();
         log.info(apps.Apps.startupInfo("PacketPro"));
 
         setConfigFilename("PacketProConfig2.xml", args);

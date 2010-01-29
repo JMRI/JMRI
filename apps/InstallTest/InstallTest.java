@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  *
  * @author	Ken Cameron   Copyright 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class InstallTest extends Apps {
 
@@ -115,7 +115,6 @@ public class InstallTest extends Apps {
         // show splash screen early
         splash(true);
 
-        initLog4J();
         log.info(apps.Apps.startupInfo("InstallTest"));
 
         setConfigFilename("InstallTestConfig2.xml", args);
