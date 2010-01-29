@@ -31,7 +31,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.67 $
+ * @version     $Revision: 1.68 $
  */
 public class JMRIdemo extends Apps {
 
@@ -53,6 +53,7 @@ public class JMRIdemo extends Apps {
     protected void createMenus(JMenuBar menuBar, JFrame frame) {
         super.createMenus(menuBar, frame);
         developmentMenu(menuBar, frame);
+        menuBar.add(new jmri.jmris.ServerMenu());
     }
 
     /**
