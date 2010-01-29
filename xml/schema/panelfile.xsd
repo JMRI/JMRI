@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: panelfile.xsd,v 1.4 2010-01-29 15:20:55 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsd,v 1.5 2010-01-29 15:48:58 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
 <!--                                                                        -->
@@ -51,6 +51,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/reporters.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/memories.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/blocks.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/oblocks.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/sections.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/transits.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/timebase.xsd"/>
@@ -110,6 +111,7 @@ application
         <xs:element name="memorys"      type="MemoryManagerType" minOccurs="0" maxOccurs="unbounded" /> <!-- deprecated older spelling -->
 
         <xs:element name="blocks"       type="BlockManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="oblocks"      type="OBlockManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="sections"     type="SectionManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="transits"     type="TransitManagerType" minOccurs="0" maxOccurs="unbounded" />
 

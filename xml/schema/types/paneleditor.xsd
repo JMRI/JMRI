@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: paneleditor.xsd,v 1.1 2010-01-17 05:56:58 jacobsen Exp $ -->
+<!-- $Id: paneleditor.xsd,v 1.2 2010-01-29 15:48:58 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -66,6 +66,9 @@
       <xs:attribute name="positionable" type="yesNoType"/>
       <xs:attribute name="controlling" type="yesNoType"/>
       <xs:attribute name="animating" type="yesNoType"/>
+      <xs:attribute name="showcoordinates" type="yesNoType"/>
+      <xs:attribute name="hide" type="yesNoType"/>
+      <xs:attribute name="panelmenu" type="yesNoType"/>
       <xs:attribute name="showhelpbar" type="yesNoType"/>
       <xs:attribute name="drawgrid" type="yesNoType"/>
       <xs:attribute name="snaponadd" type="yesNoType"/>
