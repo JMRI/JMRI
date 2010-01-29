@@ -19,7 +19,7 @@ import jmri.web.miniserver.AbstractServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class FileServlet extends AbstractServlet {
@@ -219,15 +219,29 @@ public class FileServlet extends AbstractServlet {
     
     protected void createDirectoryContent(String filename, OutputStream out) throws IOException {
         log.debug("return directory listing");
+        java.text.DateFormat df = java.text.DateFormat.getDateTimeInstance();
         File dir = new File(filename);
         OutputStreamWriter writer = new OutputStreamWriter(out);
-        writer.write("<body><table>\n");
+        writer.write("<body>\n");
+        
+        writer.write("<table><tr><th>Name</th><th>Last modified</th><th>Size</th></tr><tr><th colspan=\"5\"><hr></th></tr>");
+
         try {
             // write out directory
             for ( File f : dir.listFiles()) {
-                writer.write("<tr><td><a href=\""+f.getName()+"\">"+f.getName()+"</a></td></tr>\n");
+                // writer.write("<tr><td><a href=\""+f.getName()+"\">"+f.getName()+"</a></td></tr>\n");
+
+                writer.write("<tr><td><a href=\""
+                    +f.getName()+(f.isDirectory() ? "/" : "")+"\">"
+                    +f.getName()+(f.isDirectory() ? "/" : "")+"</a></td><td align=\"right\">"
+                    +df.format(new java.util.Date(f.lastModified()))
+                    +"</td><td align=\"right\">"+f.length()+"</td></tr>");
+
             }
-            writer.write("</table></body>");
+            writer.write("<tr><th colspan=\"5\"><hr></th></tr></table>");
+            writer.write("<address>JMRI "+jmri.Version.name()+" Mini Server</address>" );
+            writer.write("</body></html>");
+
         } finally {
             writer.flush();
             out.flush();
