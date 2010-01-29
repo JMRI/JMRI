@@ -32,7 +32,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.50 $
+ * @version	$Revision: 1.51 $
  */
 public abstract class XmlFile {
 
@@ -506,6 +506,19 @@ public abstract class XmlFile {
     }
 
     /**
+     * Create the Document object to store a particular root Element,
+     * without a DocType DTD (e.g. for using a schema)
+     *
+     * @param root Root element of the final document
+     * @return new Document, with root installed
+     */
+    static public Document newDocument(Element root) {
+        Document doc = new Document(root);
+        addDefaultInfo(root);
+        return doc;
+    }
+
+    /**
      * Add default information to the XML before writing it out.
      * <P>
      * Currently, this is identification information as an XML comment. This includes:
@@ -522,7 +535,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.50 2010-01-28 07:39:43 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.51 2010-01-29 17:56:22 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
