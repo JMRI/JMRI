@@ -101,7 +101,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
-    void reset() {
+    public void reset() {
         if (_table != null) {
             _table.getSelectedRow();
             _table.clearSelection();
@@ -336,7 +336,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     * Used by Panel Editor to make the final installation of the icon(s)
     * into the user's Panel.
     */
-    protected NamedBean getTableSelection() {
+    public NamedBean getTableSelection() {
         int row = _table.getSelectedRow();
         if (row >= 0) {
             _table.clearSelection();
@@ -448,7 +448,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     protected void addAdditionalButtons(JPanel p) {}
 
-    boolean addIconIsEnabled() {
+    public boolean addIconIsEnabled() {
         return _addButton.isEnabled();
     }
 

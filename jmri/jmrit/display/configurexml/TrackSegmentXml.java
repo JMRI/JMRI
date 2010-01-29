@@ -2,9 +2,9 @@
 
 package jmri.jmrit.display.configurexml;
 
-import jmri.configurexml.*;
-import jmri.jmrit.display.LayoutEditor;
-import jmri.jmrit.display.TrackSegment;
+import jmri.configurexml.AbstractXmlAdapter;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.TrackSegment;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -12,7 +12,7 @@ import org.jdom.Element;
  * This module handles configuration for display.TrackSegment objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class TrackSegmentXml extends AbstractXmlAdapter {
 

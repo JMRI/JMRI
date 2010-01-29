@@ -55,15 +55,15 @@ public class MultiSensorIconAdder extends IconAdder {
     public static final String NamedBeanFlavorMime = DataFlavor.javaJVMLocalObjectMimeType +
                ";class=jmri.NamedBean";
 
-    MultiSensorIconAdder() {
+    public MultiSensorIconAdder() {
         super();
     }
 
-    MultiSensorIconAdder(String type) {
+    public MultiSensorIconAdder(String type) {
         super(type);
     }
 
-    void reset() {
+    public void reset() {
         _sensorMap = new HashMap <String, NamedBeanHandle<Sensor>>();
         _lastIndex = 0;
         super.reset();
@@ -81,7 +81,7 @@ public class MultiSensorIconAdder extends IconAdder {
 
         if (log.isDebugEnabled()) {
             if (_order.size() > 0) {
-                log.debug("order size= "+_order.size()+", last key= "+_order.get(_order.size()-1));
+                log.debug("SetIcon: order size= "+_order.size()+", last key= "+_order.get(_order.size()-1));
             }
         }
         super.setIcon(index, label, name);
@@ -95,7 +95,7 @@ public class MultiSensorIconAdder extends IconAdder {
             super.setIcon(i+3, label, entry.icon.getURL());
             _sensorMap.put(label, entry.namedSensor);
         }
-        if (log.isDebugEnabled()) log.debug("Size: sensors= "+_sensorMap.size()+
+        if (log.isDebugEnabled()) log.debug("setMultiIcon: Size: sensors= "+_sensorMap.size()+
                                             ", icons= "+_iconMap.size());
     }
 
@@ -292,6 +292,11 @@ public class MultiSensorIconAdder extends IconAdder {
         int index = _order.size();
         String name = "resources/icons/USS/plate/levers/l-vertical.gif";
         super.setIcon(index, "MultiSensorPosition " +_lastIndex++, new NamedIcon(name, name));
+        if (log.isDebugEnabled()) {
+            if (_order.size() > 0) {
+                log.debug("addIcon: order size= "+_order.size()+", last key= "+_order.get(_order.size()-1));
+            }
+        }
         valueChanged(null);
         makeIconPanel();
         this.invalidate();

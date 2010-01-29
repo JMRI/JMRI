@@ -1,8 +1,9 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.PanelEditor;
-import jmri.jmrit.display.LayoutEditor;
+import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MemoryIcon;
 import jmri.util.NamedBeanHandle;
 import jmri.Memory;
@@ -15,7 +16,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -103,17 +104,16 @@ public class MemoryIconXml extends PositionableLabelXml {
 		String shortClass = className.substring(lastDot+1,className.length());
 		if (shortClass.equals("PanelEditor")) {
 			pe = (PanelEditor) o;
-            l = new MemoryIcon();
+            l = new MemoryIcon("", pe);
 		}
 		else if (shortClass.equals("LayoutEditor")) {
 			le = (LayoutEditor) o;
-            l = new MemoryIcon(le);
-            le.memoryLabelList.add(l);
-            //l.setPanel(le);
+            l = new jmri.jmrit.display.layoutEditor.MemoryIcon(" ", le);
+            le.memoryLabelList.add((jmri.jmrit.display.layoutEditor.MemoryIcon)l);
 		}
 		else {
 			log.error("Unrecognizable class - "+className);
-            l = new MemoryIcon();
+            return;
 		}
         loadTextInfo(l, element);
         String name;
@@ -176,14 +176,17 @@ public class MemoryIconXml extends PositionableLabelXml {
             l.setLocation(x,y);
         else
             l.setOriginalLocation(x,y);
-            
-        a = element.getAttribute("defaulticon");
-        if (a!=null) l.setDefaultIcon(NamedIcon.getIconByName(a.getValue()));
-
-        if(pe!=null)
-            pe.putLabel(l);
-        else if (le!=null)
-            le.putLabel(l);
+ 
+         // find display level
+        int level = Editor.MEMORIES;
+        try {
+            level = element.getAttribute("level").getIntValue();
+        } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse level attribute!");
+        } catch ( NullPointerException e) {  // considered normal if the attribute not present
+        }
+        l.setDisplayLevel(level);
+        ((Editor)o).putItem(l);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryIconXml.class.getName());

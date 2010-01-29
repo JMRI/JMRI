@@ -19,13 +19,13 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Kevin Dickerson (SensorTextEditor version);
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class SensorTextEdit extends JmriJFrame 
 {
 
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.LayoutEditorBundle");
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
 	SensorIcon pl; 	// layout positional label tracked by this frame
 	static final String INIT = null;

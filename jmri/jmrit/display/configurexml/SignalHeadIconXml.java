@@ -4,18 +4,18 @@ package jmri.jmrit.display.configurexml;
 
 import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.PanelEditor;
-import jmri.jmrit.display.LayoutEditor;
+import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalHeadIcon;
 import jmri.util.NamedBeanHandle;
 import org.jdom.Attribute;
 import org.jdom.Element;
+import java.awt.Component;
 
 /**
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
@@ -39,20 +39,21 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         storeCommonAttributes(p, element);
         element.setAttribute("clickmode", ""+p.getClickMode());
         element.setAttribute("litmode", ""+p.getLitMode());
+
         element.addContent(storeIcon("held", p.getHeldIcon()));
         element.addContent(storeIcon("dark", p.getDarkIcon()));
         element.addContent(storeIcon("red", p.getRedIcon()));
         element.addContent(storeIcon("yellow", p.getYellowIcon()));
-        element.addContent(storeIcon("flashyellow", p.getFlashYellowIcon()));
         element.addContent(storeIcon("green", p.getGreenIcon()));
+        element.addContent(storeIcon("flashyellow", p.getFlashYellowIcon()));
         element.addContent(storeIcon("lunar", p.getLunarIcon()));
         element.addContent(storeIcon("flashred", p.getFlashRedIcon()));
         element.addContent(storeIcon("flashgreen", p.getFlashGreenIcon()));
         element.addContent(storeIcon("flashlunar", p.getFlashLunarIcon()));
+
         element.setAttribute("class", "jmri.jmrit.display.configurexml.SignalHeadIconXml");
         return element;
     }
-
 
     public boolean load(Element element) {
         log.error("Invalid method called");
@@ -62,32 +63,14 @@ public class SignalHeadIconXml extends PositionableLabelXml {
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
      * @param element Top level Element to unpack.
-     * @param o  PanelEditor as an Object
+     * @param o  PanelEditor or LayoutEditor as an Object
      */
     public void load(Element element, Object o) {
         // create the objects
-        String className = o.getClass().getName();
-		int lastDot = className.lastIndexOf(".");
-		PanelEditor pe = null;
-		LayoutEditor le = null;
-        SignalHeadIcon l;
+        Editor ed = (Editor)o;
+        SignalHeadIcon l = new SignalHeadIcon(ed);
         String name;
-        
-		String shortClass = className.substring(lastDot+1,className.length());
-		if (shortClass.equals("PanelEditor")) {
-			pe = (PanelEditor) o;
-            l = new SignalHeadIcon();
-            loadCommonAttributes(l, PanelEditor.SIGNALS.intValue(), element);
-		}
-		else if (shortClass.equals("LayoutEditor")) {
-			le = (LayoutEditor) o;
-            l = new SignalHeadIcon(le);
-            loadCommonAttributes(l, LayoutEditor.SIGNALS.intValue(), element);
-		}
-		else {
-			log.error("Unrecognizable class - "+className);
-            l = new SignalHeadIcon();
-		}
+        loadCommonAttributes(l, Editor.SIGNALS, element);
 
         Attribute attr = element.getAttribute("signalhead"); 
         if (attr == null) {
@@ -105,7 +88,6 @@ public class SignalHeadIconXml extends PositionableLabelXml {
             log.error("SignalHead named '"+attr.getValue()+"' not found.");
             return;
         }
-        
         int rotation = 0;
         try {
             attr = element.getAttribute("rotate");
@@ -142,14 +124,8 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         } catch (org.jdom.DataConversionException e) {
             log.error("Failed on litmode attribute: "+e);
         }
-        
-        if (pe!=null){
-            pe.putLabel(l);
-        }
-        else if (le!=null){
-            l.displayState(l.headState());
-            le.putSignal(l);
-        }
+
+        ed.putItem(l);
     }
     
     private void loadSignalIcon(String aspect, int rotation, SignalHeadIcon l, Element element, String name){
@@ -179,5 +155,4 @@ public class SignalHeadIconXml extends PositionableLabelXml {
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadIconXml.class.getName());
-
 }

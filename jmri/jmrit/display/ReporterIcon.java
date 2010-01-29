@@ -13,18 +13,15 @@ import javax.swing.*;
  * An icon to display info from a Reporter, e.g. transponder or RFID reader.<P>
  *
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class ReporterIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
-    public ReporterIcon() {
+    public ReporterIcon(Editor editor) {
         // super ctor call to make sure this is a String label
-        super("???");
-        if (getPanelEditor()!=null)
-            setDisplayLevel(PanelEditor.LABELS);
-        else
-            setDisplayLevel(LayoutEditor.LABELS);
+        super("???", editor);
+        setDisplayLevel(Editor.LABELS);
         setText("???");
     }
 
@@ -57,7 +54,6 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         if (reporter != null) {
             displayState();
             reporter.addPropertyChangeListener(this);
-            setProperToolTip();
         }
     }
 
@@ -71,10 +67,6 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         displayState();
     }
 
-    public void setProperToolTip() {
-        setToolTipText(getNameString());
-    }
-
     public String getNameString() {
         String name;
         if (reporter == null) name = rb.getString("NotConnected");
@@ -85,43 +77,6 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         return name;
     }
 
-
-    /**
-     * Pop-up displays the turnout name, allows you to rotate the icons
-     */
-    protected void showPopUp(MouseEvent e) {
-        if (!getEditable()) return;
-        ours = this;
-        popup = new JPopupMenu();
-        popup.add(new JMenuItem(getNameString()));
-
-        checkLocationEditable(popup, getNameString());
-        addFixedItem(popup);
-        
-        popup.add(makeBackgroundFontColorMenu());
-
-        /*popup.add(makeFontSizeMenu());
-
-        popup.add(makeFontStyleMenu());
-
-        popup.add(makeFontColorMenu());*/
-        
-        popup.add(new AbstractAction(rb.getString("EditIcon")) {
-                public void actionPerformed(ActionEvent e) {
-                    edit();
-                }
-            });
-
-        popup.add(new AbstractAction(rb.getString("Remove")) {
-            public void actionPerformed(ActionEvent e) {
-                remove();
-                dispose();
-            }
-        });
-
-
-        popup.show(e.getComponent(), e.getX(), e.getY());
-    }
 
     /**
      * Drive the current state of the display from the state of the
@@ -140,31 +95,29 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         return;
     }
 
-    void edit() {
-        if (_editorFrame != null) {
-            _editorFrame.setLocationRelativeTo(null);
-            _editorFrame.toFront();
+    protected void edit() {
+        if (showIconEditorFrame(this)) {
             return;
         }
-        _editor = new IconAdder();
+        _iconEditor = new IconAdder();
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 editReporter();
             }
         };
-        makeAddIconFrame("EditReporter", "addReportValueToPanel", 
-                                     "SelectReporter", _editor);
-        _editor.setPickList(PickListModel.reporterPickModelInstance());
-        _editor.complete(addIconAction, null, true, true);
-        _editor.setSelection(reporter);
+        _iconEditorFrame = makeAddIconFrame("EditReporter", "addReportValueToPanel", 
+                                     "SelectReporter", _iconEditor, this);
+        _iconEditor.setPickList(PickListModel.reporterPickModelInstance());
+        _iconEditor.complete(addIconAction, null, true, true);
+        _iconEditor.setSelection(reporter);
 
     }
     void editReporter() {
-        setReporter((Reporter)_editor.getTableSelection());
+        setReporter((Reporter)_iconEditor.getTableSelection());
         setSize(getPreferredSize().width, getPreferredSize().height);
-        _editorFrame.dispose();
-        _editorFrame = null;
-        _editor = null;
+        _iconEditorFrame.dispose();
+        _iconEditorFrame = null;
+        _iconEditor = null;
         invalidate();
     }
 
@@ -175,10 +128,10 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         super.dispose();
     }
 
-    protected int maxHeight() {
+    public int maxHeight() {
         return ((javax.swing.JLabel)this).getMaximumSize().height;  // defer to superclass
     }
-    protected int maxWidth() {
+    public int maxWidth() {
         return ((javax.swing.JLabel)this).getMaximumSize().width;  // defer to superclass
     }
 

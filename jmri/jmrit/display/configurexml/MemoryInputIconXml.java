@@ -1,7 +1,7 @@
 
 package jmri.jmrit.display.configurexml;
 
-import jmri.jmrit.display.PanelEditor;
+import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MemoryInputIcon;
 import jmri.util.NamedBeanHandle;
 import jmri.Memory;
@@ -12,7 +12,7 @@ import org.jdom.Attribute;
  * Handle configuration for display.MemorySpinnerIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class MemoryInputIconXml extends PositionableLabelXml {
 
@@ -56,7 +56,7 @@ public class MemoryInputIconXml extends PositionableLabelXml {
      */
 	public void load(Element element, Object o) {
         // create the objects
-        PanelEditor p = (PanelEditor)o;
+        Editor p = (Editor)o;
 
         int nCol = 2;
         try {
@@ -65,8 +65,8 @@ public class MemoryInputIconXml extends PositionableLabelXml {
             log.error("failed to convert colWidth attribute");
         }
 
-        MemoryInputIcon l = new MemoryInputIcon(nCol);
-        
+        MemoryInputIcon l = new MemoryInputIcon(nCol, p);
+
         String name;
         Attribute attr = element.getAttribute("memory"); 
         if (attr == null) {
@@ -97,7 +97,7 @@ public class MemoryInputIconXml extends PositionableLabelXml {
         l.setLocation(x,y);
  
          // find display level
-        int level = PanelEditor.MEMORIES.intValue();
+        int level = Editor.MEMORIES;
         try {
             level = element.getAttribute("level").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
@@ -106,9 +106,7 @@ public class MemoryInputIconXml extends PositionableLabelXml {
         }
         l.setDisplayLevel(level);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-
-        p.putJPanel(l);
-            
+        p.putItem(l);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryInputIconXml.class.getName());

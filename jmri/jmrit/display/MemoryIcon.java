@@ -28,38 +28,33 @@ import jmri.util.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
-    public MemoryIcon() {
-
-        // super ctor call to make sure this is an icon label
-        super(new NamedIcon("resources/icons/misc/X-red.gif",
-                            "resources/icons/misc/X-red.gif"));
-        icon = true;
-        text = false;
-        setDisplayLevel(PanelEditor.MEMORIES);
-        // have to do following explicitly, after the ctor
-        resetDefaultIcon();
+	NamedIcon defaultIcon = null;
+    // the associated Memory object
+    Memory memory = null;
+    // the map of icons
+    java.util.HashMap<String, NamedIcon> map = null;
+    private NamedBeanHandle<Memory> namedMemory;
+    
+    public MemoryIcon(String s, Editor editor) {
+        super(s, editor);
+        setDisplayLevel(Editor.MEMORIES);
+        _icon = true;   // also iconic
         updateSize();
     }
 
-    public MemoryIcon(LayoutEditor panel) {  //The layout editor memory is based upon a text label not an icon
-        // super ctor call to make sure this is an icon label
-        super(new String("   "));
-        icon = false;
-        text = true;
-        setDisplayLevel(LayoutEditor.LABELS);
-        // have to do following explicitly, after the ctor
-        //resetDefaultIcon();
-        //setPanel(panel);
-
+    public MemoryIcon(NamedIcon s, Editor editor) {
+        super(s, editor);
+        setDisplayLevel(Editor.LABELS);
+        _text = true;   // also has text from memory.
         updateSize();
     }
 
-    private void resetDefaultIcon() {
+    protected void resetDefaultIcon() {
         defaultIcon = new NamedIcon("resources/icons/misc/X-red.gif",
                             "resources/icons/misc/X-red.gif");
     }
@@ -74,18 +69,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 	}
 	
 	private void setMap() {
-        if (map==null) map = new java.util.HashMap<String,NamedIcon>();
+        if (map==null) map = new java.util.HashMap<String, NamedIcon>();
 	}
 	
-	NamedIcon defaultIcon = null;
-    String defaultText = "  ";
-    // the associated Memory object
-    Memory memory = null;
-    private NamedBeanHandle<Memory> namedMemory;
-    
-    // the map of icons
-    java.util.HashMap<String,NamedIcon> map = null;
-
     /**
      * Attached a named Memory to this display item
       * @param pName Used as a system/user name to lookup the Memory object
@@ -115,7 +101,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         memory = InstanceManager.memoryManagerInstance().provideMemory(m.getName());
         if (memory != null) {
             memory.addPropertyChangeListener(this);
-            setProperToolTip();
             displayState();
             namedMemory = m;
         }
@@ -123,7 +108,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
     public NamedBeanHandle<Memory> getMemory() { return namedMemory; }
     
-    public java.util.HashMap<String,NamedIcon> getMap() { return map; }
+    public java.util.HashMap<String, NamedIcon> getMap() { return map; }
 
     // display icons
 
@@ -136,26 +121,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         displayState(); // in case changed
     }
 
-    //private int height = -1;
-    /**
-     * This now uses the layout editor version below
-     * This may be called during the superclass ctor, so before 
-     * construction of this object is complete.  Be careful about that!
-     */
-    /*protected int maxHeight() {
-        return ((javax.swing.JLabel)this).getMaximumSize().height;  // defer to superclass
-    }*/
-    
-    //private int width = -1;
-    /**
-     * This now uses the layout editor version below
-     * This may be called during the superclass ctor, so before 
-     * construction of this object is complete.  Be careful about that!
-     */
-    /*protected int maxWidth() {
-        return ((javax.swing.JLabel)this).getMaximumSize().width;  // defer to superclass
-    }*/
-
     // update icon as state of Memory changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) log.debug("property change: "
@@ -164,10 +129,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 	if (e.getPropertyName().equals("value")) {
             displayState();
         }
-    }
-
-    public void setProperToolTip() {
-        setToolTipText(getNameString());
     }
 
     public String getNameString() {
@@ -193,117 +154,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      * Because this class can change between icon and text forms, 
      * we recreate the popup object each time.
      */
-    protected void showPopUp(MouseEvent e) {
-        if (!getEditable()) return;
-        ours = this;
-        popup = new JPopupMenu();
-        
-        popup.add(new JMenuItem(getNameString()));
-        checkLocationEditable(popup, getNameString());
-		if (layoutPanel!=null){
-            popup.add(new AbstractAction("Set x & y") {
-                public void actionPerformed(ActionEvent e) {
-                    String name = getText();
-                    displayCoordinateEdit(name);
-                }
-            });
-        }
-        if(text){
-            if (getFixedWidth()==0)
-                popup.add("Width= Auto");
-            else
-                popup.add("Width= " + getFixedWidth());
-                //popup.add("Width= " + this.fixedWidth);
-
-            if (getFixedHeight()==0)
-                popup.add("Height= Auto");           
-            else
-                popup.add("Height= " + getFixedHeight());
-                //popup.add("Height= " + this.fixedHeight);
-
-            if (((getFixedHeight()==0) || (getFixedWidth()==0))&&(text))
-               popup.add("Margin= " + this.getMargin());
-               
-        }
-        if (getHidden()) popup.add(rb.getString("Hidden"));
-        else popup.add(rb.getString("NotHidden"));
-        
-        popup.addSeparator();
-        if (layoutPanel!=null){
-            popup.add(new AbstractAction("Set x & y") {
-                public void actionPerformed(ActionEvent e) {
-                    String name = getText();
-                    displayCoordinateEdit(name);
-                }
-            });
-        }
-        if (icon) {
-            popup.add(new AbstractAction(rb.getString("Rotate")) {
-                public void actionPerformed(ActionEvent e) {
-                    // rotate all the icons, a real PITA
-                    java.util.Iterator<NamedIcon> iterator = map.values().iterator();
-                    while (iterator.hasNext()) {
-                        NamedIcon next = iterator.next();
-                        next.setRotation(next.getRotation()+1, ours);
-                    }
-                    displayState();
-                }
-            });
-
-            popup.add(new AbstractAction(rb.getString("Remove")) {
-                public void actionPerformed(ActionEvent e) {
-                    remove();
-                    dispose();
-                }
-            });
-            addFixedItem(popup);
-        } else if (text) {
-            //popup.add(makeFontSizeMenu());
-
-           //popup.add(makeFontStyleMenu());
-
-            //popup.add(makeFontColorMenu());
-            //New Entry
-            addTextEditEntry(popup);
-            //popup.add(makeTextJustificationMenu());
-            popup.add(makeBackgroundFontColorMenu());
-            
-            popup.add(textBorderMenu(getNameString()));
-            if ((getFixedWidth()==0)||(getFixedHeight()==0)){
-                popup.add(new AbstractAction("Set Margin Size") {
-                    public void actionPerformed(ActionEvent e) {
-                        String name = getNameString();
-                        marginSizeEdit(name);
-                    }
-                });
-            }
-
-            addFixedItem(popup);
-            addShowTooltipItem(popup);
-            
-            popup.add(new AbstractAction(rb.getString("Remove")) {
-                public void actionPerformed(ActionEvent e) {
-                    remove();
-                    dispose();
-                }
-            });
-            
-            popup.add(new AbstractAction("Set Fixed Size") {
-            public void actionPerformed(ActionEvent e) {
-                String name = getNameString();
-                fixedSizeEdit(name);
-            }
-        });
-
-        } else if (!text && !icon)
-            log.warn("showPopUp when neither text nor icon true");
-
-        popup.add(new AbstractAction(rb.getString("EditIcon")) {
-                public void actionPerformed(ActionEvent e) {
-                    edit();
-                }
-            });
-
+    public void showPopUp(JPopupMenu popup) {
         if (selectable) {
             popup.add(new JSeparator());
     
@@ -319,27 +170,35 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 });
             }
         }  // end of selectable
-
-        popup.add(setHiddenMenu());
-
-        popup.show(e.getComponent(), e.getX(), e.getY());
     }
-    
-    void addTextEditEntry(JPopupMenu popup) {
-        JMenu edit = new JMenu(rb.getString("EditText"));
-        popup.add(edit);
-        edit.add(makeFontSizeMenu());
-        edit.add(makeFontStyleMenu());
-        edit.add(makeFontColorMenu());
-        edit.add(makeTextJustificationMenu());
+
+    /**
+    * Rotate othogonally cannot be done to Label text - override
+    */
+    public void setRotateOrthogonalMenu(JPopupMenu popup) {
+    }
+    /**
+    * Rotatations cannot be done to Label text - override
+    */    
+    public void setRotateMenu(JPopupMenu popup) {
+    }
+    /**
+    * Image scaling cannot be done to Label text - override
+    */    
+    public void setScaleMenu(JPopupMenu popup) {
+    }
+    /**
+    * Text edits cannot be done to Memory text - override
+    */    
+    public void setTextEditMenu(JPopupMenu popup) {
     }
 
     /**
      * Drive the current state of the display from the state of the
      * Memory.
      */
-    void displayState() {
-        log.debug("displayState");
+    protected void displayState() {
+        if (log.isDebugEnabled()) log.debug("displayState");
     	if (memory == null) {  // use default if not connected yet
             setIcon(defaultIcon);
     		updateSize();
@@ -351,29 +210,20 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 		        // no map, attempt to show object directly
                 Object val = key;
                 if (val instanceof String) {
-                    if ((val.equals("")) && (getLayoutPanel()!=null))
-                        setText(defaultText);
-                    else
-                        setText((String) val);
+                    setText((String) val);
                     setIcon(null);
-                    text = true;
-                    icon = false;
-    		        updateSize();
-                    return;
+                    //_text = true;
+                    //_icon = false;
                 } else if (val instanceof javax.swing.ImageIcon) {
                     setIcon((javax.swing.ImageIcon) val);
                     setText(null);
-                    text = false;
-                    icon = true;
-    		        updateSize();
-                    return;
+                    //_text = false;
+                    //_icon = true;
                 } else if (val instanceof Number) {
                     setText(val.toString());
                     setIcon(null);
-                    text = true;
-                    icon = false;
-    		        updateSize();
-                    return;
+                    //_text = true;
+                    //_icon = false;
                 } else log.warn("can't display current value of "+memory.getSystemName()+
                                 ", val= "+val+" of Class "+val.getClass().getName());
 		    } else {
@@ -383,64 +233,55 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     
                     setText(null);
 				    super.setIcon(newicon);
-                    text = false;
-                    icon = true;
-    		        updateSize();
-				    return;
+                    //_text = false;
+                    //_icon = true;
 			    } else {
 			        // no match, use default
 		            setIcon(defaultIcon);
                     
                     setText(null);
-                    text = false;
-                    icon = true;
-    		        updateSize();
+                    //_text = false;
+                    //_icon = true;
 			    }
 		    }
 		} else {
-		    // If fall through to here, no Memory value, set icon to default.
-            // We only want to set the icon to default once a panel or layout editor has been set.
-            if (getLayoutPanel()!=null || getPanelEditor()!=null) {
-                if (getLayoutPanel()!=null) {
-                    setIcon(null);
-                    setText(defaultText);
-                    text = true;
-                    icon = false;
-                } else {
-                    setIcon(defaultIcon);
-                    setText(null);
-                    text = false;
-                    icon = true;
-                }
-                updateSize();
-            }
+            // use LayoutEditor's conventions
+            setIcon(null);
+            setText(" ");
+            //_text = true;
+            //_icon = false;
+            /* former PanelEditor's conventions
+            setIcon(defaultIcon);
+            setText(null);
+            _text = false;
+            _icon = true;
+            */
         }
+        updateSize();
     }
 
-    void edit() {
-        if (_editorFrame != null) {
-            _editorFrame.setLocationRelativeTo(null);
-            _editorFrame.toFront();
+    protected void edit() {
+        if (showIconEditorFrame(this)) {
             return;
         }
-        _editor = new IconAdder();
+        _iconEditor = new IconAdder();
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 editMemory();
             }
         };
-        makeAddIconFrame("EditMemory", "addMemValueToPanel", 
-                                             "SelectMemory", _editor);
-        _editor.setPickList(PickListModel.memoryPickModelInstance());
-        _editor.complete(addIconAction, null, true, true);
-        _editor.setSelection(memory);
+        _iconEditorFrame = makeAddIconFrame("EditMemory", "addMemValueToPanel", 
+                                             "SelectMemory", _iconEditor, this);
+        _iconEditor.setPickList(PickListModel.memoryPickModelInstance());
+        _iconEditor.complete(addIconAction, null, true, true);
+        _iconEditor.setSelection(memory);
     }
     void editMemory() {
-        setMemory(_editor.getTableSelection().getDisplayName());
+        setMemory(_iconEditor.getTableSelection().getDisplayName());
         updateSize();
-        _editorFrame.dispose();
-        _editorFrame = null;
-        _editor = null;
+        _iconEditorFrame.dispose();
+        _iconEditorFrame = null;
+        _iconEditor = null;
         invalidate();
     }
 
@@ -569,10 +410,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      * This may be called during the superclass ctor, so before 
      * construction of this object is complete.  Be careful about that!
      */
-      //This is now probably redundant and can use that provided in positionableLabel.
-    protected int maxHeight() {
-        if(isIcon() && namedIcon!=null){
-            return namedIcon.getIconHeight();
+    public int maxHeight() {
+        if(isIcon() && _namedIcon!=null){
+            return _namedIcon.getIconHeight();
         }
         if ((getFixedHeight()==0) && (getMargin()==0))
             return ((javax.swing.JLabel)this).getMaximumSize().height;  // defer to superclass
@@ -587,11 +427,10 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     /**
      * This may be called during the superclass ctor, so before 
      * construction of this object is complete.  Be careful about that!
-     */ 
-    //This is now probably redundant and can use that provided in positionableLabel.
-    protected int maxWidth() {
-        if(isIcon() && namedIcon!=null){
-            return namedIcon.getIconWidth();
+     */
+    public int maxWidth() {
+        if(isIcon() && _namedIcon!=null){
+            return _namedIcon.getIconWidth();
         }
         if ((getFixedWidth()==0) && (getMargin()==0))
             return ((javax.swing.JLabel)this).getMaximumSize().width;  // defer to superclass
@@ -602,11 +441,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         return getFixedWidth();
     }
 
-        private ButtonGroup justButtonGroup;
-    
     JMenu makeTextJustificationMenu() {
         JMenu justMenu = new JMenu("Justification");
-        justButtonGroup = new ButtonGroup();
         addJustificationMenuEntry(justMenu, LEFT);
         addJustificationMenuEntry(justMenu, RIGHT);
         addJustificationMenuEntry(justMenu, CENTRE);
@@ -614,6 +450,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
     
     void addJustificationMenuEntry(JMenu menu, final int just) {
+        ButtonGroup justButtonGroup = new ButtonGroup();
         JRadioButtonMenuItem r;
         switch(just){
             case LEFT :     r = new JRadioButtonMenuItem("LEFT");
@@ -670,7 +507,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         memory.setValue(_newMemory.getText());
     
     }
-
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryIcon.class.getName());
 }

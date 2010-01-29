@@ -24,19 +24,17 @@ import jmri.util.NamedBeanHandle;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
-    public TurnoutIcon() {
+    public TurnoutIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
-                            "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"));
-        setDisplayLevel(PanelEditor.TURNOUTS);
+                            "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"), editor);
+        _control = true;
         displayState(turnoutState());
-        icon = true;
-        text = false;
     }
 
     // the associated Turnout object
@@ -69,7 +67,6 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         if (namedTurnout != null) {
             displayState(turnoutState());
             getTurnout().addPropertyChangeListener(this);
-            setProperToolTip();
         } 
     }
 
@@ -113,7 +110,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         displayState(turnoutState());
     }
 
-    protected int maxHeight() {
+    public int maxHeight() {
         return Math.max(
                 Math.max( (closed!=null) ? closed.getIconHeight() : 0,
                         (thrown!=null) ? thrown.getIconHeight() : 0),
@@ -121,7 +118,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
                         (inconsistent!=null) ? inconsistent.getIconHeight() : 0)
             );
     }
-    protected int maxWidth() {
+    public int maxWidth() {
         return Math.max(
                 Math.max((closed!=null) ? closed.getIconWidth() : 0,
                         (thrown!=null) ? thrown.getIconWidth() : 0),
@@ -167,10 +164,6 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 		}
 	}
 
-    public void setProperToolTip() {
-        setToolTipText(getNameString());
-    }
-
     public String getNameString() {
         String name;
         if (namedTurnout == null) name = rb.getString("NotConnected");
@@ -186,51 +179,24 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     /**
      * Pop-up displays the turnout name, allows you to rotate the icons
      */
-    protected void showPopUp(MouseEvent e) {
-		if (!getEditable())
-			return;
-		ours = this;
-// create popup each time called, tristate added if turnout has feedback
-		popup = new JPopupMenu();
-		popup.add(new JMenuItem(getNameString()));
-		if (icon) popup.add(new AbstractAction(rb.getString("Rotate")) {
-				public void actionPerformed(ActionEvent e) {
-					closed.setRotation(closed.getRotation() + 1, ours);
-					thrown.setRotation(thrown.getRotation() + 1, ours);
-					unknown.setRotation(unknown.getRotation() + 1, ours);
-					inconsistent.setRotation(inconsistent.getRotation() + 1,
-							ours);
-					displayState(turnoutState());
-	                // bug fix, must repaint icons that have same width and height
-                    repaint();
-				}
-			});
-        checkLocationEditable(popup, getNameString());
-
-        addFixedItem(popup);
-
-		addDisableMenuEntry(popup);
-
+    public void showPopUp(JPopupMenu popup) {
 		// add tristate option if turnout has feedback
 		if (namedTurnout != null && getTurnout().getFeedbackMode() != Turnout.DIRECT) {
 			addTristateEntry(popup);
 		}
-
-        popup.add(new AbstractAction(rb.getString("EditIcon")) {
-                public void actionPerformed(ActionEvent e) {
-                    edit();
-                }
-            });
-		popup.add(new AbstractAction(rb.getString("Remove")) {
-			public void actionPerformed(ActionEvent e) {
-				remove();
-				dispose();
-			}
-		});
-
-		// end creation of pop-up menu
-		popup.show(e.getComponent(), e.getX(), e.getY());
 	}
+
+    /******** popup AbstractAction.actionPerformed method overrides *********/
+
+    protected void rotateOrthogonal() {
+        closed.setRotation(closed.getRotation() + 1, this);
+        thrown.setRotation(thrown.getRotation() + 1, this);
+        unknown.setRotation(unknown.getRotation() + 1, this);
+        inconsistent.setRotation(inconsistent.getRotation() + 1,this);
+        displayState(turnoutState());
+        // bug fix, must repaint icons that have same width and height
+        repaint();
+    }
 
     void scale(int s) {
         closed.scale(s, this);
@@ -256,41 +222,39 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         updateSize();
         switch (state) {
         case Turnout.UNKNOWN:
-            if (text) super.setText(rb.getString("UnKnown"));
-            if (icon) super.setIcon(unknown);
+            if (isText()) super.setText(rb.getString("UnKnown"));
+            if (isIcon()) super.setIcon(unknown);
             break;
         case Turnout.CLOSED:
-            if (text) super.setText(InstanceManager.turnoutManagerInstance().getClosedText());
-            if (icon) super.setIcon(closed);
+            if (isText()) super.setText(InstanceManager.turnoutManagerInstance().getClosedText());
+            if (isIcon()) super.setIcon(closed);
             break;
         case Turnout.THROWN:
-            if (text) super.setText(InstanceManager.turnoutManagerInstance().getThrownText());
-            if (icon) super.setIcon(thrown);
+            if (isText()) super.setText(InstanceManager.turnoutManagerInstance().getThrownText());
+            if (isIcon()) super.setIcon(thrown);
             break;
         default:
-            if (text) super.setText(rb.getString("Inconsistent"));
-            if (icon) super.setIcon(inconsistent);
+            if (isText()) super.setText(rb.getString("Inconsistent"));
+            if (isIcon()) super.setIcon(inconsistent);
             break;
         }
 
         return;
     }
 
-    void edit() {
-        if (_editorFrame != null) {
-            _editorFrame.setLocationRelativeTo(null);
-            _editorFrame.toFront();
+    protected void edit() {
+        if (showIconEditorFrame(this)) {
             return;
         }
-        _editor = new IconAdder();
-        _editor.setIcon(3, "TurnoutStateClosed", getClosedIcon());
-        _editor.setIcon(2, "TurnoutStateThrown", getThrownIcon());
-        _editor.setIcon(0, "BeanStateInconsistent", getInconsistentIcon());
-        _editor.setIcon(1, "BeanStateUnknown", getUnknownIcon());
-        makeAddIconFrame("EditTO", "addIconsToPanel", 
-                                           "SelectTO", _editor);
-        _editor.makeIconPanel();
-        _editor.setPickList(PickListModel.turnoutPickModelInstance());
+        _iconEditor = new IconAdder();
+        _iconEditor.setIcon(3, "TurnoutStateClosed", getClosedIcon());
+        _iconEditor.setIcon(2, "TurnoutStateThrown", getThrownIcon());
+        _iconEditor.setIcon(0, "BeanStateInconsistent", getInconsistentIcon());
+        _iconEditor.setIcon(1, "BeanStateUnknown", getUnknownIcon());
+        _iconEditorFrame = makeAddIconFrame("EditTO", "addIconsToPanel", 
+                                           "SelectTO", _iconEditor, this);
+        _iconEditor.makeIconPanel();
+        _iconEditor.setPickList(PickListModel.turnoutPickModelInstance());
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -299,22 +263,22 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         };
         ActionListener changeIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    _editor.addCatalog();
-                    _editorFrame.pack();
+                    _iconEditor.addCatalog();
+                    _iconEditorFrame.pack();
                 }
         };
-        _editor.complete(addIconAction, changeIconAction, true, true);
-        _editor.setSelection(getTurnout());
+        _iconEditor.complete(addIconAction, changeIconAction, true, true);
+        _iconEditor.setSelection(getTurnout());
     }
     void updateTurnout() {
-        setClosedIcon(_editor.getIcon("TurnoutStateClosed"));
-        setThrownIcon(_editor.getIcon("TurnoutStateThrown"));
-        setInconsistentIcon(_editor.getIcon("BeanStateInconsistent"));
-        setUnknownIcon(_editor.getIcon("BeanStateUnknown"));
-        setTurnout(_editor.getTableSelection().getDisplayName());
-        _editorFrame.dispose();
-        _editorFrame = null;
-        _editor = null;
+        setClosedIcon(_iconEditor.getIcon("TurnoutStateClosed"));
+        setThrownIcon(_iconEditor.getIcon("TurnoutStateThrown"));
+        setInconsistentIcon(_iconEditor.getIcon("BeanStateInconsistent"));
+        setUnknownIcon(_iconEditor.getIcon("BeanStateUnknown"));
+        setTurnout(_iconEditor.getTableSelection().getDisplayName());
+        _iconEditorFrame.dispose();
+        _iconEditorFrame = null;
+        _iconEditor = null;
         invalidate();
     }
 
@@ -323,9 +287,8 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
      * @param e
      */
     // Was mouseClicked, changed to mouseRelease to workaround touch screen driver limitation
-    public void mouseReleased(java.awt.event.MouseEvent e) {
-        super.mouseReleased(e);
-        if (!getControlling()) return;
+    public void doMouseReleased(java.awt.event.MouseEvent e) {
+        if (!isControlling()) return;
         if (getForceControlOff()) return;
         if (e.isMetaDown() || e.isAltDown() ) return;
         if (namedTurnout==null) {

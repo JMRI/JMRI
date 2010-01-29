@@ -1,8 +1,5 @@
 package jmri.jmrit.display.configurexml;
 
-//import jmri.jmrit.display.LayoutEditor;
-//import jmri.jmrit.display.LayoutReporterIcon;
-
 import org.jdom.Element;
 
 /**
@@ -14,7 +11,7 @@ import org.jdom.Element;
  *
  * @author Dave Duchamp Copyright: Copyright (c) 2008
  * @author Kevin Dickerson, Deprecated
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * @deprecated 2.7.8
  */
  

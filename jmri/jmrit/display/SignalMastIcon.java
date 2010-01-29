@@ -19,29 +19,17 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class SignalMastIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
-    public SignalMastIcon() {
+    public SignalMastIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
-        super(new NamedIcon("resources/icons/misc/X-red.gif","resources/icons/misc/X-red.gif"));
-        icon = true;
-        text = false;
-        
-        setDisplayLevel(PanelEditor.SIGNALS);
+        super(new NamedIcon("resources/icons/misc/X-red.gif","resources/icons/misc/X-red.gif"), editor);
+        _control = true;
     }
     
-    public SignalMastIcon(LayoutEditor panel){
-        // super ctor call to make sure this is an icon label
-        super("<empty>");
-        icon = false;
-        text = true;
-
-        setDisplayLevel(LayoutEditor.SIGNALS);
-    }
-
     private SignalMast mMast;
     private NamedBeanHandle<SignalMast> namedMast;
 
@@ -57,7 +45,6 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
         if (mMast != null) {
             displayState(mastState());
             mMast.addPropertyChangeListener(this);
-            setProperToolTip();
             namedMast = sh;
             pName=sh.getName();
         }
@@ -76,7 +63,6 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
             namedMast = new NamedBeanHandle<SignalMast>(pName, mMast);
             displayState(mastState());
             mMast.addPropertyChangeListener(this);
-            setProperToolTip();
         }
     }
 
@@ -101,17 +87,9 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
         if (log.isDebugEnabled()) log.debug("property change: "+e.getPropertyName()
                                             +" current state: "+mastState());
         displayState(mastState());
-        if (getLayoutPanel()!=null){
-            //super.layoutPanel.resetAwaitingIconChange();
-            getLayoutPanel().resetAwaitingIconChange();
-            getLayoutPanel().redrawPanel();
-        }
+        _editor.getTargetPanel().repaint(); 
     }
 
-    public void setProperToolTip() {
-        setToolTipText(getNameString());
-    }
-   
     public String getPName() { return pName; }
     
     public String getNameString() {
@@ -130,31 +108,7 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
     /**
      * Pop-up just displays the name
      */
-    protected void showPopUp(MouseEvent e) {
-        if (!getEditable()) return;
-        ours = this;
-        popup = new JPopupMenu();
-        popup.add(new JMenuItem(getNameString()));
-
-        checkLocationEditable(popup, getNameString());
-
-        addFixedItem(popup);
-        addDisableMenuEntry(popup);
-        if (layoutPanel!=null){
-            popup.add(new AbstractAction("Set x & y") {
-                public void actionPerformed(ActionEvent e) {
-                    String name = getText();
-                    displayCoordinateEdit(name);
-                }
-            });
-        }
-
-        popup.add(new AbstractAction(rb.getString("Remove")) {
-            public void actionPerformed(ActionEvent e) {
-                remove();
-                dispose();
-            }
-        });
+    public void showPopUp(JPopupMenu popup) {
 
         popup.add(new AbstractAction(rb.getString("EditLogic")) {
             public void actionPerformed(ActionEvent e) {
@@ -169,10 +123,6 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
                 f.setVisible(true);
             }
         });
-
-        popup.add(setHiddenMenu());
-        
-        popup.show(e.getComponent(), e.getX(), e.getY());
     }
     
     /**
@@ -187,7 +137,7 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
             log.debug("Display state "+state+" for "+mMast.getSystemName());
         }
         
-        if (text)
+        if (isText())
             super.setText(state);
         else {
             if (state !=null ) {

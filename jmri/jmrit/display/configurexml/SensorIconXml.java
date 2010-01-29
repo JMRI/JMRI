@@ -1,8 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.PanelEditor;
-import jmri.jmrit.display.LayoutEditor;
+import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SensorIcon;
 //import jmri.util.NamedBeanHandle;
 import org.jdom.Attribute;
@@ -15,7 +14,7 @@ import java.util.List;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -36,7 +35,6 @@ public class SensorIconXml extends PositionableLabelXml {
         Element element = new Element("sensoricon");
         element.setAttribute("sensor", p.getNameString());
         storeCommonAttributes(p, element);
-        element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
         element.setAttribute("momentary", p.getMomentary()?"true":"false");
         if (p.isIcon()){
             element.setAttribute("icon", "yes");
@@ -152,25 +150,8 @@ public class SensorIconXml extends PositionableLabelXml {
      * @param o  PanelEditor as an Object
      */
     public void load(Element element, Object o) {
-        // create the objects
-        // get object class and determine editor being used
-        String className = o.getClass().getName();
-		int lastDot = className.lastIndexOf(".");
-		PanelEditor pe = null;
-		LayoutEditor le = null;
-		String shortClass = className.substring(lastDot+1,className.length());
-		if (shortClass.equals("PanelEditor")) {
-			pe = (PanelEditor) o;
-		}
-		else if (shortClass.equals("LayoutEditor")) {
-			le = (LayoutEditor) o;
-		}
-		else {
-			log.error("Unrecognizable class - "+className);
-		}
-
+        Editor ed = (Editor)o;
         SensorIcon l;
-        
         String name;
         Attribute attr = element.getAttribute("sensor"); 
         if (attr == null) {
@@ -179,8 +160,6 @@ public class SensorIconXml extends PositionableLabelXml {
         } else {
             name = attr.getValue();
         }
-        
-        
         boolean icon=true;
         if (element.getAttribute("icon") != null){
             String yesno = element.getAttribute("icon").getValue();
@@ -197,38 +176,17 @@ public class SensorIconXml extends PositionableLabelXml {
             } catch (org.jdom.DataConversionException e) {
             } catch ( NullPointerException e) {  // considered normal if the attributes are not present
             }
-            l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
-            if(pe!=null)
-                pe.putLabel(l);
-            else if (le!=null)
-                le.putSensor(l);
+            l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", 
+                                             "resources/icons/smallschematics/tracksegments/circuit-error.gif"),
+                               ed);
             loadSensorIcon("active", rotation, l, element, name);
             loadSensorIcon("inactive", rotation, l, element, name);
             loadSensorIcon("unknown", rotation, l,element, name);
             loadSensorIcon("inconsistent", rotation, l,element, name);
-            //loadIconInfo(l, element);
         } else {
-            l = new SensorIcon(new String("  "));
-            if(pe!=null)
-                pe.putLabel(l);
-            else if (le!=null)
-                le.putSensor(l);
-
+            l = new SensorIcon(new String("  "), ed);
         }
-/*        if (element.getAttribute("icon")!=null){
-            if (element.getAttribute("icon").getValue().equals("no"))
-                l = new SensorIcon(new String("  "));
-            else l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
-        } else
-            l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", "resources/icons/smallschematics/tracksegments/circuit-error.gif"));*/
-
-        if (pe!=null){
-            //l.setPanel(pe);
-            loadCommonAttributes(l, PanelEditor.SENSORS.intValue(), element);
-        }else if (le!=null){
-            //l.setPanel(le);
-            loadCommonAttributes(l, LayoutEditor.SENSORS.intValue(), element);
-        }
+        loadCommonAttributes(l, Editor.SENSORS, element);
         
         loadTextInfo(l, element);
         
@@ -237,17 +195,15 @@ public class SensorIconXml extends PositionableLabelXml {
             l.setMomentary(true);
         else
             l.setMomentary(false);
+        //if (icon)
+        //    loadIconInfo(l, element);
         
         l.setSensor(name);
-
-        /*if(pe!=null)
-            pe.putLabel(l);
-        else if (le!=null)
-            le.putSensor(l);*/
-
+        ed.putItem(l);
     }
     
-    private void loadSensorIcon(String state, int rotation, SensorIcon l, Element element, String name){
+    private void loadSensorIcon(String state, int rotation, SensorIcon l, Element element, String name)
+    {
         NamedIcon icon = loadIcon(l,state, element);
         if (icon==null){
             if (element.getAttribute(state) != null) {

@@ -21,19 +21,18 @@ import javax.swing.JPopupMenu;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class LightIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
-    public LightIcon() {
+    public LightIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
-                            "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"));
-        setDisplayLevel(PanelEditor.LIGHTS);
+                            "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"), editor);
+        setDisplayLevel(Editor.LIGHTS);
+        _control = true;
         displayState(lightState());
-        icon = true;
-        text = false;
     }
 
     // the associated Light object
@@ -65,7 +64,6 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         if (light != null) {
             displayState(lightState());
             light.addPropertyChangeListener(this);
-            setProperToolTip();
         } 
     }
 
@@ -105,14 +103,14 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         displayState(lightState());
     }
 
-    protected int maxHeight() {
+    public int maxHeight() {
         return Math.max(
                 Math.max( (off!=null) ? off.getIconHeight() : 0,
                         (on!=null) ? on.getIconHeight() : 0),
                 (inconsistent!=null) ? inconsistent.getIconHeight() : 0
             );
     }
-    protected int maxWidth() {
+    public int maxWidth() {
         return Math.max(
                 Math.max((off!=null) ? off.getIconWidth() : 0,
                         (on!=null) ? on.getIconWidth() : 0),
@@ -143,10 +141,6 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
 		}
 	}
 
-    public void setProperToolTip() {
-        setToolTipText(getNameString());
-    }
-
     public String getNameString() {
         String name;
         if (light == null) name = rb.getString("NotConnected");
@@ -158,50 +152,18 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     }
 
 
-    /**
-     * Pop-up displays the light name, allows you to rotate the icons
-     */
-    protected void showPopUp(MouseEvent e) {
-		if (!getEditable())
-			return;
-		ours = this;
-// create popup each time called
-		popup = new JPopupMenu();
-		popup.add(new JMenuItem(getNameString()));
-		if (icon)
-			
-            checkLocationEditable(popup, getNameString());
-			
-			popup.add(new AbstractAction(rb.getString("Rotate")) {
-				public void actionPerformed(ActionEvent e) {
-					off.setRotation(off.getRotation() + 1, ours);
-					on.setRotation(on.getRotation() + 1, ours);
-					inconsistent.setRotation(inconsistent.getRotation() + 1, ours);
-					unknown.setRotation(unknown.getRotation() + 1, ours);
-							
-					displayState(lightState());
-	                // bug fix, must repaint icons that have same width and height
-                    repaint();
-				}
-			});
-        addFixedItem(popup);
-		addDisableMenuEntry(popup);
+    /******** popup AbstractAction.actionPerformed method overrides *********/
 
-        popup.add(new AbstractAction(rb.getString("EditIcon")) {
-                public void actionPerformed(ActionEvent e) {
-                    edit();
-                }
-            });
-		popup.add(new AbstractAction(rb.getString("Remove")) {
-			public void actionPerformed(ActionEvent e) {
-				remove();
-				dispose();
-			}
-		});
+    protected void rotateOrthogonal() {
+        off.setRotation(on.getRotation()+1, this);
+        on.setRotation(off.getRotation()+1, this);
+        unknown.setRotation(unknown.getRotation()+1, this);
+        inconsistent.setRotation(inconsistent.getRotation()+1, this);
+        displayState(lightState());
+        //bug fix, must repaint icons that have same width and height
+        repaint();
+    }
 
-		// end creation of pop-up menu
-		popup.show(e.getComponent(), e.getX(), e.getY());
-	}
 
     void scale(int s) {
         off.scale(s, this);
@@ -219,44 +181,19 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         displayState(lightState());
     }
 
-    /**
-	 * Drive the current state of the display from the state of the light.
-	 */
-    void displayState(int state) {
-        log.debug(getNameString() +" displayState "+state);
-        updateSize();
-        switch (state) {
-        case Light.OFF:
-            if (text) super.setText(InstanceManager.turnoutManagerInstance().getClosedText());
-            if (icon) super.setIcon(off);
-            break;
-        case Light.ON:
-            if (text) super.setText(InstanceManager.turnoutManagerInstance().getThrownText());
-            if (icon) super.setIcon(on);
-            break;
-        default:
-            if (text) super.setText(rb.getString("Inconsistent"));
-            if (icon) super.setIcon(inconsistent);
-            break;
-        }
-
-        return;
-    }
-
-    void edit() {
-        if (_editorFrame != null) {
-            _editorFrame.setLocationRelativeTo(null);
-            _editorFrame.toFront();
+    protected void edit() {
+        if (showIconEditorFrame(this)) {
             return;
         }
-        _editor = new IconAdder();
-        _editor.setIcon(3, "LightStateOff", off);
-        _editor.setIcon(2, "LightStateOn", on);
-        _editor.setIcon(0, "BeanStateInconsistent", inconsistent);
-        _editor.setIcon(1, "BeanStateUnknown", unknown);
-        makeAddIconFrame("EditLight", "addIconsToPanel", "SelectLight", _editor);
-        _editor.makeIconPanel();
-        _editor.setPickList(PickListModel.lightPickModelInstance());
+        _iconEditor = new IconAdder();
+        _iconEditor.setIcon(3, "LightStateOff", off);
+        _iconEditor.setIcon(2, "LightStateOn", on);
+        _iconEditor.setIcon(0, "BeanStateInconsistent", inconsistent);
+        _iconEditor.setIcon(1, "BeanStateUnknown", unknown);
+        _iconEditorFrame = makeAddIconFrame("EditLight", "addIconsToPanel", 
+                                            "SelectLight", _iconEditor, this);
+        _iconEditor.makeIconPanel();
+        _iconEditor.setPickList(PickListModel.lightPickModelInstance());
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -265,23 +202,48 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         };
         ActionListener changeIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    _editor.addCatalog();
-                    _editorFrame.pack();
+                    _iconEditor.addCatalog();
+                    _iconEditorFrame.pack();
                 }
         };
-        _editor.complete(addIconAction, changeIconAction, true, true);
-        _editor.setSelection(light);
+        _iconEditor.complete(addIconAction, changeIconAction, true, true);
+        _iconEditor.setSelection(light);
     }
     void updateLight() {
-        setOffIcon(_editor.getIcon("LightStateOff"));
-        setOnIcon(_editor.getIcon("LightStateOn"));
-        setUnknownIcon(_editor.getIcon("BeanStateUnknown"));
-        setInconsistentIcon(_editor.getIcon("BeanStateInconsistent"));
-        setLight((Light)_editor.getTableSelection());
-        _editorFrame.dispose();
-        _editorFrame = null;
-        _editor = null;
+        setOffIcon(_iconEditor.getIcon("LightStateOff"));
+        setOnIcon(_iconEditor.getIcon("LightStateOn"));
+        setUnknownIcon(_iconEditor.getIcon("BeanStateUnknown"));
+        setInconsistentIcon(_iconEditor.getIcon("BeanStateInconsistent"));
+        setLight((Light)_iconEditor.getTableSelection());
+        _iconEditorFrame.dispose();
+        _iconEditorFrame = null;
+        _iconEditor = null;
         invalidate();
+    }
+    /************* end popup action methods ****************/
+
+    /**
+	 * Drive the current state of the display from the state of the light.
+	 */
+    void displayState(int state) {
+        log.debug(getNameString() +" displayState "+state);
+        updateSize();
+        switch (state) {
+        case Light.OFF:
+            if (isText()) super.setText(InstanceManager.turnoutManagerInstance().getClosedText());
+            if (isIcon()) super.setIcon(off);
+            break;
+        case Light.ON:
+            if (isText()) super.setText(InstanceManager.turnoutManagerInstance().getThrownText());
+            if (isIcon()) super.setIcon(on);
+            break;
+        default:
+            if (isText()) super.setText(rb.getString("Inconsistent"));
+            if (isIcon()) super.setIcon(inconsistent);
+            break;
+        }
+
+        return;
     }
 
     /**
@@ -289,9 +251,8 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
      * @param e
      */
     // Was mouseClicked, changed to mouseRelease to workaround touch screen driver limitation
-    public void mouseReleased(java.awt.event.MouseEvent e) {
-        super.mouseReleased(e);
-        if (!getControlling()) return;
+    public void doMouseReleased(java.awt.event.MouseEvent e) {
+        if (!isControlling()) return;
         if (getForceControlOff()) return;
         if (e.isMetaDown() || e.isAltDown() ) return;
         if (light==null) {

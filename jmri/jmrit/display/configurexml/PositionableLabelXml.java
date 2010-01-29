@@ -2,8 +2,7 @@ package jmri.jmrit.display.configurexml;
 
 import jmri.configurexml.*;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.PanelEditor;
-import jmri.jmrit.display.LayoutEditor;
+import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PositionableLabel;
 import java.awt.Color;
 
@@ -15,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -36,23 +35,14 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         Element element = new Element("positionablelabel");
         storeCommonAttributes(p, element);
 
-        element.setAttribute("fixed", p.getFixed()?"true":"false");
-        element.setAttribute("showtooltip", p.getShowTooltip()?"true":"false");
-        
         if (p.isText()) {
             if (p.getText()!=null) element.setAttribute("text", p.getText());
             storeTextInfo(p, element);
         }
         
         if (p.isIcon() && p.getIcon()!=null) {
-            NamedIcon icon = (NamedIcon)p.getIcon();
-            if(p.getLayoutPanel()!=null){
-            	element.setAttribute("icon", icon.getURL());
-            	element.setAttribute("rotate", String.valueOf(icon.getRotation()));
-            }else{
-            	element.setAttribute("icon", "yes");
-            	element.addContent(storeIcon("icon", icon));
-            }
+            element.setAttribute("icon", "yes");
+            element.addContent(storeIcon("icon", (NamedIcon)p.getIcon()));
         }
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.PositionableLabelXml");
@@ -106,13 +96,14 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         element.setAttribute("y", ""+p.getY());
         element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
         element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
-        if(p.getHidden())
-            element.setAttribute("hidden", "yes");
+        element.setAttribute("hidden", p.isHidden()?"yes":"no");
+        element.setAttribute("positionable", p.isPositionable()?"true":"false");
+        element.setAttribute("showtooltip", p.showTooltip()?"true":"false");        
     }
 
-    public Element storeIcon(String attrName, NamedIcon icon) {
+    public Element storeIcon(String elemName, NamedIcon icon) {
 
-        Element element = new Element(attrName);
+        Element element = new Element(elemName);
         element.setAttribute("url", icon.getURL());        
         element.setAttribute("rotate", String.valueOf(icon.getRotation()));
         element.setAttribute("degrees", String.valueOf(icon.getDegrees()));
@@ -128,31 +119,14 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
      * @param element Top level Element to unpack.
-     * @param o  PanelEditor as an Object
+     * @param o  Editor as an Object
      */
     public void load(Element element, Object o) {
         // create the objects
-        //PanelEditor p = (PanelEditor)o;
         PositionableLabel l = null;
         
         // get object class and determine editor being used
-		String className = o.getClass().getName();
-		int lastDot = className.lastIndexOf(".");
-		PanelEditor pe = null;
-		LayoutEditor le = null;
-		String shortClass = className.substring(lastDot+1,className.length());
-		int level=5;
-        if (shortClass.equals("PanelEditor")) {
-			pe = (PanelEditor) o;
-            level = PanelEditor.LABELS.intValue();
-		}
-		else if (shortClass.equals("LayoutEditor")) {
-			le = (LayoutEditor) o;
-            level = LayoutEditor.LABELS.intValue();
-		}
-		else {
-			log.error("Unrecognizable class - "+className);
-		}
+		Editor editor = (Editor)o;
         if (element.getAttribute("icon")!=null) {
         	NamedIcon icon = null;
         	String name = element.getAttribute("icon").getValue();
@@ -161,43 +135,31 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         	}else{
         		icon = NamedIcon.getIconByName(name);
         	}
-        	l = new PositionableLabel(icon);
-    		loadCommonAttributes(l, level, element);
-        	try {
-        		Attribute a = element.getAttribute("rotate");
-        		if (a!=null) {
-        			int rotation = element.getAttribute("rotate").getIntValue();
-        			icon.setRotation(rotation, l);
-        		}
-        	} catch (org.jdom.DataConversionException e) {}
-        	NamedIcon nIcon = loadIcon(l,"icon", element);
-        	if (nIcon!=null) {
-        		l.updateIcon(nIcon);
-        	}
+            l = new PositionableLabel(icon, editor);
+            try {
+                Attribute a = element.getAttribute("rotate");
+                if (a!=null) {
+                    int rotation = element.getAttribute("rotate").getIntValue();
+                    icon.setRotation(rotation, l);
+                }
+            } catch (org.jdom.DataConversionException e) {}
+
+            NamedIcon nIcon = loadIcon(l,"icon", element);
+
+            if (nIcon!=null) {
+                l.updateIcon(nIcon);
+            }
+            //l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         } else if (element.getAttribute("text")!=null) {
-            l = new PositionableLabel(element.getAttribute("text").getValue());
-            loadCommonAttributes(l, level, element);
+            l = new PositionableLabel(element.getAttribute("text").getValue(), editor);
             loadTextInfo(l, element);
         
         } else {
-            log.error("PositionableLabel is null!");
-            return;
+        	log.error("PositionableLabel is null!");
+        	return;
         }
-        Attribute a = element.getAttribute("fixed");
-        if ( (a!=null) && a.getValue().equals("true"))
-            l.setFixed(true);
-        else
-            l.setFixed(false);
-            
-        a = element.getAttribute("showtooltip");
-        if ( (a!=null) && a.getValue().equals("false"))
-            l.setShowTooltip(false);
-        else
-            l.setShowTooltip(true);
-        if(pe!=null)
-            pe.putLabel(l);
-        else if (le!=null)
-            le.putLabel(l);
+        loadCommonAttributes(l, Editor.LABELS, element);
+        editor.putItem(l);
     }
 
     protected void loadTextInfo(PositionableLabel l, Element element) {
@@ -285,13 +247,12 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         }
     }
 	public void loadCommonAttributes(PositionableLabel l, int defaultLevel, Element element) {
-
         Attribute a = element.getAttribute("forcecontroloff");
         if ( (a!=null) && a.getValue().equals("true"))
             l.setForceControlOff(true);
         else
             l.setForceControlOff(false);
-        
+            
         // find coordinates
         int x = 0;
         int y = 0;
@@ -302,7 +263,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             log.error("failed to convert positional attribute");
         }
         l.setLocation(x,y);
-
+        
         // find display level
         int level = defaultLevel;
         try {
@@ -312,12 +273,23 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         } catch ( NullPointerException e) {  // considered normal if the attribute not present
         }
         l.setDisplayLevel(level);
+        
         a = element.getAttribute("hidden");
         if ( (a!=null) && a.getValue().equals("yes")){
             l.setHidden(true);
             l.setVisible(false);
         }
-        //l.updateSize();
+        a = element.getAttribute("positionable");
+        if ( (a!=null) && a.getValue().equals("true"))
+            l.setPositionable(true);
+        else
+            l.setPositionable(false);
+       
+        a = element.getAttribute("showtooltip");
+        if ( (a!=null) && a.getValue().equals("true"))
+            l.setShowTooltip(true);
+        else
+            l.setShowTooltip(false);    
     }
     
 	public NamedIcon loadIcon(PositionableLabel l, String attrName, Element element) {
@@ -344,10 +316,11 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 }
             } catch (org.jdom.DataConversionException dce) {}
         } else {
-            log.debug("loadIcon: \""+attrName+"\" for \""+l.getName()+"\" not found.");
+            log.debug("icon \""+attrName+"\" for \""+l.getName()+"\" not found.");
         }
         return icon;
     }
+    
     
     private NamedIcon getNamedIcon(String attrName, Element element){
         NamedIcon icon = null;
@@ -361,6 +334,5 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         return icon;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PanelEditorXml.class.getName());
-
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableLabelXml.class.getName());
 }

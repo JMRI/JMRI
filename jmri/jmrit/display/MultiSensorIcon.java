@@ -25,22 +25,19 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
-    public MultiSensorIcon() {
+    public MultiSensorIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
-                            "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
-        icon = true;
-        text = false;
-
-        setDisplayLevel(PanelEditor.SENSORS);
+                            "resources/icons/smallschematics/tracksegments/circuit-error.gif"), editor);
+        setDisplayLevel(Editor.SENSORS);
+        _control = true;
         displayState();
     }
-
 
     boolean updown = false;
     // if not updown, is rightleft
@@ -57,7 +54,6 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
             e.namedSensor = sensor;
             e.icon = icon;
             entries.add(e);
-            setProperToolTip();
             displayState();
         } else {
             log.error("Sensor not available, icon won't see changes");
@@ -116,24 +112,8 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         }
         if (e.getPropertyName().equals("KnownState")) {
             displayState();
-			if (layoutPanel!=null) {
-				layoutPanel.resetAwaitingIconChange();
-				layoutPanel.redrawPanel();
-			}
+            _editor.repaint();
         }
-    }
-
-   	/*LayoutEditor layoutPanel = null;*/
-    /**
-     * Set panel (called from Layout Editor)
-     */
-    /*protected void setPanel(LayoutEditor panel) {
-		super.setPanel(panel);
-		layoutPanel = panel;
-    }*/
-
-    public void setProperToolTip() {
-        setToolTipText(getNameString());
     }
 
     public String getNameString() {
@@ -141,60 +121,29 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         if ((entries == null) || (entries.size() < 1)) 
             name = rb.getString("NotConnected");
         else {
-            name = entries.get(0).namedSensor
-                    .getName();
+            name = entries.get(0).namedSensor.getName();
             for (int i = 1; i<entries.size(); i++) {
-                name += ","+entries.get(i).namedSensor
-                    .getName();
+                name += ","+entries.get(i).namedSensor.getName();
             }
         }
         return name;
     }
 
-    /**
-     * Pop-up just displays the sensor name
-     */
-    protected void showPopUp(MouseEvent e) {
-        if (!getEditable()) return;
-        ours = this;
-        popup = new JPopupMenu();
+    /******** popup AbstractAction.actionPerformed method overrides *********/
 
-        popup.add(new JMenuItem(getNameString()));
-
-        if (icon) popup.add(new AbstractAction("Rotate") {
-                public void actionPerformed(ActionEvent e) {
-                    for (int i = 0; i<entries.size(); i++) {
-                        NamedIcon icon = entries.get(i).icon;
-                        icon.setRotation(icon.getRotation()+1, ours);
-                    }
-                    inactive.setRotation(inactive.getRotation()+1, ours);
-                    unknown.setRotation(unknown.getRotation()+1, ours);
-                    inconsistent.setRotation(inconsistent.getRotation()+1, ours);
-                    displayState();
-                    // bug fix, must repaint icons that have same width and height
-                    repaint();
-                }
-            });
-        checkLocationEditable(popup, getNameString());
-
-        addFixedItem(popup);
-        addDisableMenuEntry(popup);
-
-        popup.add(new AbstractAction(rb.getString("EditIcon")) {
-                public void actionPerformed(ActionEvent e) {
-                    edit();
-                }
-            });
-
-        popup.add(new AbstractAction(rb.getString("Remove")) {
-                public void actionPerformed(ActionEvent e) {
-                    remove();
-                    dispose();
-                }
-            });
-
-        popup.show(e.getComponent(), e.getX(), e.getY());
+    protected void rotateOrthogonal() {
+        for (int i = 0; i<entries.size(); i++) {
+            NamedIcon icon = entries.get(i).icon;
+            icon.setRotation(icon.getRotation()+1, this);
+        }
+        inactive.setRotation(inactive.getRotation()+1, this);
+        unknown.setRotation(unknown.getRotation()+1, this);
+        inconsistent.setRotation(inconsistent.getRotation()+1, this);
+        displayState();
+        // bug fix, must repaint icons that have same width and height
+        repaint();
     }
+
 
     void scale(int s) {
         for (int i = 0; i<entries.size(); i++) {
@@ -219,13 +168,65 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     }
     
 
+    MultiSensorIconAdder _iconEditor;
+    protected void edit() {
+        if (showIconEditorFrame(this)) {
+            return;
+        }
+        _iconEditor = new MultiSensorIconAdder("MultiSensorEditor");
+        _iconEditor.setIcon(2, "SensorStateInactive", inactive);
+        _iconEditor.setIcon(0, "BeanStateInconsistent", inconsistent);
+        _iconEditor.setIcon(1, "BeanStateUnknown", unknown);
+        _iconEditor.setMultiIcon(entries);
+        _iconEditorFrame = makeAddIconFrame("EditMultiSensor", "addIconsToPanel", 
+                                           "SelectMultiSensor", _iconEditor, this);
+        _iconEditor.makeIconPanel();
+        _iconEditor.setPickList(PickListModel.sensorPickModelInstance());
+
+        ActionListener addIconAction = new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                updateSensor();
+            }
+        };
+        ActionListener changeIconAction = new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    _iconEditor.addCatalog();
+                    _iconEditorFrame.pack();
+                }
+        };
+        _iconEditor.complete(addIconAction, changeIconAction, true, true);
+    }
+
+    void updateSensor() {
+        setInactiveIcon(_iconEditor.getIcon("SensorStateInactive"));
+        setInconsistentIcon(_iconEditor.getIcon("BeanStateInconsistent"));
+        setUnknownIcon(_iconEditor.getIcon("BeanStateUnknown"));
+        for (int i = 0; i<entries.size(); i++) {
+            entries.get(i).namedSensor.getBean()
+                .removePropertyChangeListener(this);
+        }
+        int numPositions = _iconEditor.getNumIcons();
+        entries = new ArrayList<Entry>(numPositions);
+        for (int i=3; i<numPositions; i++) {
+            NamedIcon icon = _iconEditor.getIcon(i);
+            NamedBeanHandle<Sensor> namedSensor = _iconEditor.getSensor(i);
+            addEntry(namedSensor, icon);
+        }
+        setUpDown(_iconEditor.getUpDown());
+        _iconEditorFrame.dispose();
+        _iconEditorFrame = null;
+        _iconEditor = null;
+        invalidate();
+    }
+    /************* end popup action methods ****************/
+
     int displaying = -1;
     
     /**
      * Drive the current state of the display from the state of the
      * turnout.
      */
-    void displayState() {
+    public void displayState() {
 
         updateSize();
 
@@ -239,18 +240,18 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
 
             switch (state) {
             case Sensor.ACTIVE:
-                if (text) super.setText(rb.getString("Active"));
-                if (icon) super.setIcon(e.icon);
+                if (isText()) super.setText(rb.getString("Active"));
+                if (isIcon()) super.setIcon(e.icon);
                 foundActive = true;
                 displaying = i;
                 break;  // look at the next ones too
             case Sensor.UNKNOWN:
-                if (text) super.setText(rb.getString("UnKnown"));
-                if (icon) super.setIcon(unknown);
+                if (isText()) super.setText(rb.getString("UnKnown"));
+                if (isIcon()) super.setIcon(unknown);
                 return;  // this trumps all others
             case Sensor.INCONSISTENT:
-                if (text) super.setText(rb.getString("Inconsistent"));
-                if (icon) super.setIcon(inconsistent);
+                if (isText()) super.setText(rb.getString("Inconsistent"));
+                if (isIcon()) super.setIcon(inconsistent);
                 break;
             default:
                 break;
@@ -259,67 +260,14 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         // loop has gotten to here
         if (foundActive) return;  // set active
         // only case left is all inactive
-        if (text) super.setText(rb.getString("Inactive"));
-        if (icon) super.setIcon(inactive);     
+        if (isText()) super.setText(rb.getString("Inactive"));
+        if (isIcon()) super.setIcon(inactive);     
         return;
-    }
-    
-    MultiSensorIconAdder editor;
-    void edit() {
-        if (_editorFrame != null) {
-            _editorFrame.toFront();
-            return;
-        }
-        editor = new MultiSensorIconAdder();
-        editor.setIcon(2, "SensorStateInactive", inactive);
-        editor.setIcon(0, "BeanStateInconsistent", inconsistent);
-        editor.setIcon(1, "BeanStateUnknown", unknown);
-        editor.setMultiIcon(entries);
-        makeAddIconFrame("EditMultiSensor", "addIconsToPanel", 
-                                           "SelectMultiSensor", editor);
-        editor.makeIconPanel();
-        editor.setPickList(PickListModel.sensorPickModelInstance());
-
-        ActionListener addIconAction = new ActionListener() {
-            public void actionPerformed(ActionEvent a) {
-                updateSensor();
-            }
-        };
-        ActionListener changeIconAction = new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    editor.addCatalog();
-                    _editorFrame.pack();
-                }
-        };
-        editor.complete(addIconAction, changeIconAction, true, true);
-    }
-
-    void updateSensor() {
-        setInactiveIcon(editor.getIcon("SensorStateInactive"));
-        setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
-        setUnknownIcon(editor.getIcon("BeanStateUnknown"));
-        for (int i = 0; i<entries.size(); i++) {
-            entries.get(i).namedSensor.getBean()
-                .removePropertyChangeListener(this);
-        }
-        int numPositions = editor.getNumIcons();
-        entries = new ArrayList<Entry>(numPositions);
-        for (int i=3; i<numPositions; i++) {
-            NamedIcon icon = editor.getIcon(i);
-            NamedBeanHandle<Sensor> namedSensor = editor.getSensor(i);
-            addEntry(namedSensor, icon);
-        }
-        setUpDown(editor.getUpDown());
-        _editorFrame.dispose();
-        _editorFrame = null;
-        editor = null;
-        invalidate();
-    }
-
+    }    
 
     // Use largest size. If icons are not same size, 
     // this can result in drawing artifacts.
-    protected int maxHeight() {
+    public int maxHeight() {
         int size = Math.max(
                         ((inactive!=null) ? inactive.getIconHeight() : 0),
                 Math.max((unknown!=null) ? unknown.getIconHeight() : 0,
@@ -334,7 +282,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     
     // Use largest size. If icons are not same size, 
     // this can result in drawing artifacts.
-    protected int maxWidth() {
+    public int maxWidth() {
         int size = Math.max(
                         ((inactive!=null) ? inactive.getIconWidth() : 0),
                 Math.max((unknown!=null) ? unknown.getIconWidth() : 0,
@@ -346,27 +294,10 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         }
         return size;
     }
-    
-    /**
-     * (Temporarily) change occupancy on click
-     * @param e
-     */
-    public void mouseClicked(java.awt.event.MouseEvent e) {
-		// if using Layout Editor, let Layout Editor handle mouse clicked event
-		if (layoutPanel!=null) {
-			layoutPanel.handleMouseClicked(e,getX(),getY());
-			return;
-		}
-        super.mouseClicked(e);
-        /* moved to mouseRelease to workaround touch screen driver limitation
-        if (e.isAltDown() || e.isMetaDown()) return;
-		performMouseClicked(e, e.getX(), e.getY() );
-        */
-	}
-		
-	protected void performMouseClicked(java.awt.event.MouseEvent e, int xx, int yy) {
+    		
+	public void performMouseClicked(java.awt.event.MouseEvent e, int xx, int yy) {
         log.debug("performMouseClicked: buttonLive= "+buttonLive()+", click from ("+
-                 xx+", "+yy+") to ("+xClick+", "+yClick+")"); 
+                 xx+", "+yy+")"); 
         if (!buttonLive()) return;
         if (entries == null || entries.size() < 1) return;
         
@@ -390,9 +321,6 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         if (next < 0) next = 0;
         if (next >= entries.size()) next = entries.size()-1;
         int drop = displaying;
-		if (layoutPanel!=null && entries.get(next).namedSensor.getBean().getKnownState()!=Sensor.ACTIVE) {
-				layoutPanel.setAwaitingIconChange();
-		}
         try {
             entries.get(next).namedSensor.getBean().setKnownState(Sensor.ACTIVE);
             if (drop >= 0 && drop != next) entries.get(drop).namedSensor.getBean().setKnownState(Sensor.INACTIVE);
@@ -402,24 +330,15 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     }
 
     boolean buttonLive() {
-        if (!getControlling()) return false;
+        if (!isControlling()) return false;
         if (getForceControlOff()) return false;
         return true;        
     }
 
-    public void mousePressed(MouseEvent e) {
-        // do rest of mouse processing
-        super.mousePressed(e);
-    }
-
-    public void mouseReleased(MouseEvent e) {
-        if (panelEditor!=null){
-            if ( !e.isAltDown() &&  !e.isMetaDown() ) {
-                performMouseClicked(e, e.getX(), e.getY() );
-            }
-            // do rest of mouse processing
+    public void doMouseReleased(MouseEvent e) {
+        if ( !e.isAltDown() &&  !e.isMetaDown() ) {
+            performMouseClicked(e, e.getX(), e.getY() );
         }
-        super.mouseReleased(e);
     }
  
     public void dispose() {
@@ -428,13 +347,11 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
             entries.get(i).namedSensor.getBean()
                 .removePropertyChangeListener(this);
         }
-
         super.dispose();
     }
 
     class Entry {
         NamedBeanHandle<Sensor> namedSensor;
-        //Sensor sensor;
         NamedIcon icon; 
     }
     

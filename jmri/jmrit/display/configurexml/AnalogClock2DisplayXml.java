@@ -4,13 +4,15 @@ package jmri.jmrit.display.configurexml;
 
 import org.jdom.*;
 import jmri.configurexml.*;
-import jmri.jmrit.display.*;
-
+import jmri.jmrit.display.AnalogClock2Display;
+import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.Editor;
 /**
  * Handle configuration for display.AnalogClock2Display objects.
  *
  * @author  Howard G. Penny  Copyright (c) 2005
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class AnalogClock2DisplayXml
     extends AbstractXmlAdapter {
@@ -95,16 +97,8 @@ public class AnalogClock2DisplayXml
         if (scale != 1.0 && scale>0.1) { l.setScale(scale);  }
            	
 		// add the clock to the panel
-		if (pe!=null) {
-			int level = PanelEditor.CLOCK.intValue();
-			l.setDisplayLevel(level);
-			pe.putClock(l);
-		}
-		else if (le!=null) {
-			int level = LayoutEditor.CLOCK.intValue();
-			l.setDisplayLevel(level);
-			le.putClock(l);
-		}
+        l.setDisplayLevel(Editor.CLOCK);
+        ((Editor)o).putItem(l);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger

@@ -1,7 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.PanelEditor;
+import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.TurnoutIcon;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 
@@ -61,15 +61,14 @@ public class TurnoutIconXml extends PositionableLabelXml {
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
      * @param element Top level Element to unpack.
-     * @param o  PanelEditor as an Object
+     * @param o  Editor as an Object
      */
     @SuppressWarnings("null")
 	public void load(Element element, Object o) {
         // create the objects
-        PanelEditor p = (PanelEditor)o;
-        
-        TurnoutIcon l = new TurnoutIcon();
+        Editor p = (Editor)o;
 
+        TurnoutIcon l = new TurnoutIcon(p);
         int rotation = 0;
         try {
             Attribute a = element.getAttribute("rotate");
@@ -86,7 +85,7 @@ public class TurnoutIconXml extends PositionableLabelXml {
             return;
         }
 
-        loadCommonAttributes(l, PanelEditor.TURNOUTS.intValue(), element);
+        loadCommonAttributes(l, Editor.TURNOUTS, element);
 
         loadTurnoutIcon("closed", rotation, l, element, name);
         loadTurnoutIcon("thrown", rotation, l, element, name);
@@ -101,7 +100,7 @@ public class TurnoutIconXml extends PositionableLabelXml {
             
         l.setTurnout(name);
         
-        p.putLabel(l);
+        p.putItem(l);
     }
     
     private void loadTurnoutIcon(String state, int rotation, TurnoutIcon l, Element element, String name){

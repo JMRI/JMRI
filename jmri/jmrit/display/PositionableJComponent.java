@@ -2,240 +2,137 @@
 
 package jmri.jmrit.display;
 
-import javax.swing.JComponent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+//import java.awt.event.MouseListener;
+//import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 import java.awt.Container;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
-import javax.swing.JPopupMenu;
-import javax.swing.AbstractAction;
-import javax.swing.JMenuItem;
-import javax.swing.JCheckBoxMenuItem;
+import java.awt.event.ActionListener;
+
+import java.util.ResourceBundle;
+
+import javax.swing.*;
 import jmri.util.JmriJFrame;
 
 /**
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
-abstract class PositionableJComponent extends JComponent
-                        implements MouseMotionListener, MouseListener,
-                                    Positionable {
-    JmriJFrame _parentFrame;
+public class PositionableJComponent extends JComponent implements Positionable {
 
-    public PositionableJComponent(JmriJFrame parentFrame) {
-        _parentFrame = parentFrame;
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
+
+   	protected Editor _editor = null;
+    protected boolean debug = false;
+
+    private String _tooltip;
+    private boolean _showTooltip =true;
+    //private boolean _editable = true;
+    private boolean _positionable = true;
+    private boolean _savePositionable = true;
+    private boolean _viewCoordinates = false;
+    private boolean _controlling = true;
+    private boolean _hidden = false;
+	private int _displayLevel;
+
+    JMenuItem lock = null;
+    JCheckBoxMenuItem showTooltipItem = null;
+
+    public PositionableJComponent(Editor editor) {
+        _editor = editor;
         debug = log.isDebugEnabled();
-        setProperToolTip();
-        connect();
     }
 
-    /**
-     * For over-riding in the using classes:
-     */
-    public void setProperToolTip() { }
+    /***************** Positionable methods **********************/
 
-    /**
-     * Connect listeners
-     */
-    void connect() {
-        addMouseMotionListener(this);
-        addMouseListener(this);
+    public void setPositionable(boolean enabled) {
+        _positionable = enabled;
+        showHidden();
     }
+    public boolean isPositionable() { return _positionable; }
+/*
+    public void setEditable(boolean enabled) {_editable = enabled;}
+    public boolean getEditable() { return _editable; }
+*/     
+    public void setViewCoordinates(boolean enabled) { _viewCoordinates = enabled; }
+    public boolean getViewCoordinates() { return _viewCoordinates; }
 
-    void disconnect() {
-        removeMouseMotionListener(this);
-        removeMouseListener(this);
-    }
+    public void setControlling(boolean enabled) {_controlling = enabled;}
+    public boolean isControlling() { return _controlling; }
 
-   	LayoutEditor layoutPanel = null;
-    /**
-     * Set panel (called from Layout Editor)
-     */
-    protected void setPanel(LayoutEditor panel) {
-		layoutPanel = panel;
-    }
-
-	private Integer displayLevel;
-    public void setDisplayLevel(Integer l) { displayLevel = l; }
-    public void setDisplayLevel(int l) { setDisplayLevel(new Integer(l)); }
-    public Integer getDisplayLevel() { return displayLevel; }
-
-    // cursor location reference for this move (relative to object)
-    int xClick = 0;
-    int yClick = 0;
-
-    public void mousePressed(MouseEvent e) {
-		// if using LayoutEditor, let LayoutEditor handle the mouse pressed event
-		if (layoutPanel!=null) {
-			layoutPanel.handleMousePressed(e,this.getX(),this.getY());
-			return;
-		}
-        // remember where we are
-        xClick = e.getX();
-        yClick = e.getY();
-        // if (debug) log.debug("Pressed: "+where(e));
-        if (e.isPopupTrigger()) {
-            if (debug) log.debug("show popup");
-            showPopUp(e);
+    public void setHidden(boolean hide) {_hidden = hide; }
+    public boolean isHidden() { return _hidden;  }
+    public void showHidden() {
+        if(!_hidden || _editor.isEditable()) {
+            setVisible(true);
+        } else {
+            setVisible(false);
         }
     }
 
-    public void mouseReleased(MouseEvent e) {
-		// if using LayoutEditor, let LayoutEditor handle the mouse released event
-		if (layoutPanel!=null) {
-			layoutPanel.handleMouseReleased(e,getX(),getY());
-			return;
-		}
-        // if (debug) log.debug("Release: "+where(e));
-        if (e.isPopupTrigger()) {
-            if (debug) log.debug("show popup");
-            showPopUp(e);
-        }
+    public void setDisplayLevel(int l) {
+    	int oldDisplayLevel = _displayLevel;
+    	_displayLevel = l;
+    	if (oldDisplayLevel!=l) {
+    		log.debug("Changing label display level from "+oldDisplayLevel+" to "+_displayLevel);
+    		_editor.displayLevelChange(this);
+    	}
+    }
+    public int getDisplayLevel() { return _displayLevel; }
+
+    public void setShowTooltip(boolean set) {
+        _showTooltip = set;
+    }
+    public boolean showTooltip() {
+        return _showTooltip;
+    }
+    public void setTooltip(String tip) {
+        _tooltip = tip;
+    }
+    public String getTooltip() {
+        return _tooltip;
     }
 
-    public void mouseClicked(MouseEvent e) {
-        if (debug) log.debug("Clicked: "+where(e));
-        if (debug && e.isMetaDown()) log.debug("meta down");
-        if (debug && e.isAltDown()) log.debug(" alt down");
-        if (e.isPopupTrigger()) {
-            if (debug) log.debug("show popup");
-            showPopUp(e);
-        }
-    }
-    public void mouseExited(MouseEvent e) {
-        // if (debug) log.debug("Exited:  "+where(e));
-    }
-    public void mouseEntered(MouseEvent e) {
-        // if (debug) log.debug("Entered: "+where(e));
+    public String getNameString() {
+        return getName();
     }
 
-    public void mouseMoved(MouseEvent e) {
-		if (layoutPanel!=null) layoutPanel.setLoc((int)((getX()+e.getX())/layoutPanel.getZoomScale()),
-							(int)((getY()+e.getY())/layoutPanel.getZoomScale())); 
-        //if (debug) log.debug("Moved:   "+where(e));
+    // overide where used - e.g. momentary
+    public void doMousePressed(MouseEvent event) {
     }
-    public void mouseDragged(MouseEvent e) {
-		// if using LayoutEditor, let LayoutEditor handle the mouse dragged event
-		if (layoutPanel!=null) {
-			layoutPanel.handleMouseDragged(e,getX(),getY());
-			return;
-		}
-        if (e.isMetaDown()) {
-            if (!getPositionable()) return;
-            // update object postion by how far dragged
-            int xObj = getX()+(e.getX()-xClick);
-            int yObj = getY()+(e.getY()-yClick);
-            this.setLocation(xObj, yObj);
-            // and show!
-            this.repaint();
-        }
+    public void doMouseReleased(MouseEvent event) {
     }
-
-    String where(MouseEvent e) {
-        return ""+e.getX()+","+e.getY();
-    }
-
-    protected JPopupMenu popup = null;
-    protected JComponent ours;
 
     /**
      * For over-riding in the using classes: add item specific menu choices
      */
-    protected void addToPopup() { }
-
-    protected void showPopUp(MouseEvent e) {
-//        if (!getPopupEnabled()) return;  // We need to distinguish between popup and editable
-        if (!getEditable()) return;
-        if (popup == null) {
-            popup = new JPopupMenu();
-            popup.add(lock = newLockMenuItem(new AbstractAction("Lock Position") {
-                public void actionPerformed(ActionEvent e) {
-                    if (lock.isSelected()) {
-                        setPositionable(false);
-                    } else {
-                        setPositionable(true);
-                    }
-                }
-            }));
-            popup.add(new AbstractAction("Remove") {
-                public void actionPerformed(ActionEvent e) {
-                    remove();
-                    dispose();
-                }
-            });
-            this.addToPopup();
-        }
-        if (getPositionable()) {
-            lock.setSelected(false);
-        } else {
-            lock.setSelected(true);
-        }
-        popup.show(e.getComponent(), e.getX(), e.getY());
+    public void setRotateOrthogonalMenu(JPopupMenu popup){
+    }
+    public void setRotateMenu(JPopupMenu popup){
+    }
+    public void setScaleMenu(JPopupMenu popup){
+    }
+    public void setDisableControlMenu(JPopupMenu popup) {
+    }
+    public void showPopUp(JPopupMenu popup) {
     }
 
-    public JMenuItem newLockMenuItem(AbstractAction a) {
-      JCheckBoxMenuItem k = new JCheckBoxMenuItem((String)a.getValue(AbstractAction.NAME));
-      k.addActionListener(a);
-      if (!getPositionable()) k.setSelected(true);
-      return k;
+    JFrame _iconEditorFrame;
+    IconAdder _iconEditor;
+    public void setEditIconMenu(JPopupMenu popup) {
     }
 
-    JMenuItem italic = null;
-    JMenuItem bold = null;
-    JMenuItem lock = null;
-    boolean debug = false;
-
-    public void setPositionable(boolean enabled) {positionable = enabled;}
-    public boolean getPositionable() { return positionable; }
-    private boolean positionable = true;
-
-    public void setEditable(boolean enabled) {editable = enabled;}
-    public boolean getEditable() { return editable; }
-    private boolean editable = true;
-     
-    public void setViewCoordinates(boolean enabled) { viewCoordinates = enabled; }
-    public boolean getViewCoordinates() { return viewCoordinates; }
-    private boolean viewCoordinates = false;
-
-    public void setControlling(boolean enabled) {controlling = enabled;}
-    public boolean getControlling() { return controlling; }
-    private boolean controlling = true;
-
-//    public void setPopupEnabled(boolean enabled) {popupEnabled = enabled;}
-//    public boolean getPopupEnabled() { return popupEnabled; }
-//    private boolean popupEnabled = true;
-
-    /**
-     * Clean up when this object is no longer needed.  Should not
-     * be called while the object is still displayed; see remove()
-     */
-    public void dispose() {
-        if (popup != null) popup.removeAll();
-        popup = null;
-        ours = null;
-        disconnect();
-    }
+    /**************** end Positionable methods **********************/
 
     /**
      * Removes this object from display and persistance
      */
-    void remove() {
-		if (layoutPanel!=null) layoutPanel.removeObject(this);
-        // cleanup before "this" is removed
+    public void remove() {
+		_editor.removeFromContents(this);
         cleanup();
-        Point p = this.getLocation();
-        int w = this.getWidth();
-        int h = this.getHeight();
-        Container parent = this.getParent();
-        parent.remove(this);
-        // force redisplay
-        parent.validate();
-        parent.repaint(p.x,p.y,w,h);
-
         // remove from persistance by flagging inactive
         active = false;
     }
@@ -253,11 +150,5 @@ abstract class PositionableJComponent extends JComponent
         return active;
     }
     
-    /**
-     * For over-riding in the using classes
-     */
-    
-    public void setViewable(boolean enabled){ }
-
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableJComponent.class.getName());
 }

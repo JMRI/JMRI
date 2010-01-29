@@ -20,7 +20,7 @@ import javax.swing.JRadioButtonMenuItem;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class LocoIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -32,14 +32,15 @@ public class LocoIcon extends PositionableLabel implements java.beans.PropertyCh
     private static final String BLUE = "Blue";
     private static final String YELLOW = "Yellow";
 	
-	public LocoIcon() {
+	public LocoIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
     	super(new NamedIcon("resources/icons/markers/loco-white.gif",
-                            "resources/icons/markers/loco-white.gif"));
-        setDisplayLevel(PanelEditor.MARKERS);
-        icon = true;
-        text = true;
+                            "resources/icons/markers/loco-white.gif"), editor);
+        setDisplayLevel(Editor.MARKERS);
     }
+
+    // Markers are always positionable 
+    public void setPositionable(boolean enabled) { super.setPositionable(true); }
  
     // update icon as state of marker changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -49,47 +50,29 @@ public class LocoIcon extends PositionableLabel implements java.beans.PropertyCh
 	}
 
 
-    boolean enablePopUp = true;
     jmri.jmrit.throttle.ThrottleFrame tf = null;
     /**
      * Pop-up only if right click and not dragged 
      */
-    protected void showPopUp(MouseEvent e) {
-		ours = this;
-		if (enablePopUp) {
-			popup = new JPopupMenu();
-			if (entry != null) {
-				popup.add(new AbstractAction("Throttle") {
-					public void actionPerformed(ActionEvent e) {
-						tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
-						tf.getAddressPanel().setRosterEntry(entry);
-						tf.toFront();
-					}
-				});
-			}
-			popup.add(makeLocoIconMenu());
-			popup.add(makeFontSizeMenu());
-			popup.add(makeFontStyleMenu());
-			popup.add(makeFontColorMenu());
+    public void showPopUp(JPopupMenu popup) {
+        super.showPopUp(popup);
 
-			popup.add(new AbstractAction("Remove") {
-				public void actionPerformed(ActionEvent e) {
-					remove();
-					dispose();
-				}
-			});
-
-			// end creation of pop-up menu
-
-			popup.show(e.getComponent(), e.getX(), e.getY());
-		} else
-			enablePopUp = true;
+        if (entry != null) {
+            popup.add(new AbstractAction("Throttle") {
+                public void actionPerformed(ActionEvent e) {
+                    tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
+                    tf.getAddressPanel().setRosterEntry(entry);
+                    tf.toFront();
+                }
+            });
+        }
+        popup.add(makeLocoIconMenu());
 	}
     
     ButtonGroup locoButtonGroup = null;
     
     protected JMenu makeLocoIconMenu(){
-    	JMenu iconMenu = new JMenu("Loco color");
+    	JMenu iconMenu = new JMenu(rb.getString("LocoColor"));
     	locoButtonGroup = new ButtonGroup();
     	String[] colors = getLocoColors();
     	for (int i=0; i<colors.length; i++){
@@ -151,7 +134,7 @@ public class LocoIcon extends PositionableLabel implements java.beans.PropertyCh
     	}
     }
     
-    public String[] getLocoColors(){
+    public static String[] getLocoColors(){
     	String[] colors = {WHITE,GREEN,GRAY,RED,BLUE,YELLOW};
     	return colors;
     }
@@ -167,14 +150,7 @@ public class LocoIcon extends PositionableLabel implements java.beans.PropertyCh
     }
     
     public void mouseDragged(MouseEvent e) {
-		// if using LayoutEditor, let LayoutEditor handle the mouse dragged event
-		if (layoutPanel!=null) {
-			layoutPanel.handleMouseDragged(e,getX(),getY());
-			return;
-		}
-    	enablePopUp = false;
     	super.setPositionable(true);
-    	super.mouseDragged(e);
     }
  
     /**
@@ -182,7 +158,7 @@ public class LocoIcon extends PositionableLabel implements java.beans.PropertyCh
      * @param e
      */
     public void mouseClicked(java.awt.event.MouseEvent e) {
-        if (!getControlling()) return;
+        if (!isControlling()) return;
         if (getForceControlOff()) return;
         if (e.isMetaDown() || e.isAltDown() ) return;
         log.debug("No loco connection, can't process click");

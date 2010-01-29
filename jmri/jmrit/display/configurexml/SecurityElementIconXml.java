@@ -1,7 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.configurexml.*;
-import jmri.jmrit.display.PanelEditor;
+import jmri.configurexml.AbstractXmlAdapter;
+import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SecurityElementIcon;
 import jmri.jmrix.loconet.SecurityElement;
 
@@ -11,7 +11,7 @@ import org.jdom.Element;
  * Handle configuration for display.SecurityElementIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class SecurityElementIconXml extends AbstractXmlAdapter {
 
@@ -55,10 +55,8 @@ public class SecurityElementIconXml extends AbstractXmlAdapter {
      * @param o  PanelEditor as an Object
      */
     public void load(Element element, Object o) {
-        // create the objects
-        PanelEditor p = (PanelEditor)o;
-
-        SecurityElementIcon l = new SecurityElementIcon();
+        Editor ed = (Editor)o;
+        SecurityElementIcon l = new SecurityElementIcon(ed);
 
         l.setSecurityElement(element.getAttribute("number").getValue());
 
@@ -78,12 +76,8 @@ public class SecurityElementIconXml extends AbstractXmlAdapter {
         }
         l.setLocation(x,y);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-
-        // no putSecurityElement exists, so code is here
-        p.target.add(l, PanelEditor.SECURITY);
-        p.contents.add(l);
-        p.target.revalidate();
-
+        l.setDisplayLevel(Editor.SECURITY);
+        ed.putItem(l);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutIconXml.class.getName());

@@ -14,15 +14,17 @@ import javax.swing.*;
 
 import java.util.ArrayList;
 import jmri.util.JmriJFrame;
+import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 /**
  * Create the default "Panels" menu for use in a menubar.
  *
- * Also manages the Show Panel menu for both PanelEditor panels and LayoutEditor panels.
+ * Also manages the Show Panel menu for both all Editor panels.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004
  * @author  Dave Duchamp   Copyright 2007
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class PanelMenu extends JMenu {
     public PanelMenu() {
@@ -34,8 +36,9 @@ public class PanelMenu extends JMenu {
         // new panel is a submenu
 		//add(new jmri.jmrit.display.NewPanelAction());
         JMenu newPanel = new JMenu(rb.getString("MenuItemNew"));
-        newPanel.add(new PanelEditorAction(rb.getString("PanelEditor")));
-        newPanel.add(new LayoutEditorAction(rb.getString("LayoutEditor")));
+        newPanel.add(new jmri.jmrit.display.panelEditor.PanelEditorAction(rb.getString("PanelEditor")));
+        newPanel.add(new jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction(rb.getString("ControlPanelEditor")));
+        newPanel.add(new jmri.jmrit.display.layoutEditor.LayoutEditorAction(rb.getString("LayoutEditor")));
         add(newPanel);
         
         add(new jmri.configurexml.LoadXmlUserAction(rb.getString("MenuItemLoad")));
@@ -55,7 +58,7 @@ public class PanelMenu extends JMenu {
 	// operational variables
 	private JMenu panelsSubMenu	= null;
 	static private PanelMenu thisMenu = null;
-    private ArrayList<JmriJFrame> panelsList = new ArrayList<JmriJFrame>();  
+    private ArrayList<Editor> panelsList = new ArrayList<Editor>();  
 		
 	/** 
 	 * Provide method to reference this panel menu
@@ -75,28 +78,26 @@ public class PanelMenu extends JMenu {
 	 */
 	public void deletePanel (Object panel) {
 		if (panelsList.size()==0) return;
-		boolean found = false;
-		for (int i = 0; (i<panelsList.size()) && !found ; i++) {
+		for (int i = 0; i<panelsList.size(); i++) {
 			Object o = panelsList.get(i);
 			if (o == panel) {
-				found = true;
 				panelsList.remove(i);
 				panelsSubMenu.remove(i);
+                return;
 			}
 		}
 	}
 	
 	/**
-	 * Add LayoutEditor type panel to Show Panels sub menu
+	 * Add an Editor panel to Show Panels sub menu
 	 */
-    public void addLayoutEditorPanel(final LayoutEditor panel) {
+    public void addEditorPanel(final Editor panel) {
 		panelsList.add(panel);
         ActionListener a = new ActionListener() {
-				//final LayoutEditor thisPanel = panel;
 				public void actionPerformed(ActionEvent e) {
 					panel.setVisible(true);
 					panel.repaint();
-					updateLayoutEditorPanel(panel);
+					updateEditorPanel(panel);
 				}
 			};
         JCheckBoxMenuItem r = new JCheckBoxMenuItem(panel.getTitle());
@@ -107,145 +108,72 @@ public class PanelMenu extends JMenu {
     }
 	
 	/**
-	 * Update LayoutEditor type panel in Show Panels sub menu
+	 * Update an Editor type panel in Show Panels sub menu
 	 */
-	public void updateLayoutEditorPanel (LayoutEditor panel) {
+	public void updateEditorPanel (Editor panel) {
 		if (panelsList.size()==0) return;
-		boolean found = false;
-		for (int i = 0; (i<panelsList.size()) && !found ; i++) {
+		for (int i = 0; i<panelsList.size(); i++) {
 			Object o = panelsList.get(i);
 			if (o == panel) {
-				found = true;
 				JCheckBoxMenuItem r = (JCheckBoxMenuItem)panelsSubMenu.getItem(i);
 				if (panel.isVisible()) r.setSelected(false);
 				else r.setSelected(true);
+                return;
 			}
 		}
 	}	
 	
 	/**
-	 * Rename LayoutEditor type panel in Show Panels sub menu
+	 * Rename an Editor type panel in Show Panels sub menu
 	 */
-	public void renameLayoutEditorPanel (LayoutEditor panel) {
+	public void renameEditorPanel (Editor panel) {
 		if (panelsList.size()==0) return;
-		boolean found = false;
-		for (int i = 0; (i<panelsList.size()) && !found ; i++) {
+		for (int i = 0; i<panelsList.size(); i++) {
 			Object o = panelsList.get(i);
 			if (o == panel) {
-				found = true;
 				JCheckBoxMenuItem r = (JCheckBoxMenuItem)panelsSubMenu.getItem(i);
 				r.setText(panel.getTitle());
+                return;
 			}
 		}
 	}
 	
-	/**
-	 * Add PanelEditor type panel to Show Panels sub menu
-	 */
-    public void addPanelEditorPanel(final PanelEditor panel) {
-		panelsList.add(panel);
-        ActionListener a = new ActionListener() {
-				//final PanelEditor thisPanel = panel;
-				public void actionPerformed(ActionEvent e) {
-					panel.getFrame().setVisible(true);
-//					panel.repaint();
-					updatePanelEditorPanel(panel);
-				}
-			};
-		
-        JCheckBoxMenuItem r = new JCheckBoxMenuItem(panel.getFrame().getTitle());
-        r.addActionListener(a);
-        if (panel.getFrame().isVisible()) r.setSelected(true);
-        else r.setSelected(false);
-        panelsSubMenu.add(r);
-    }
-	
-	/**
-	 * Update PanelEditor type panel in Show Panels sub menu
-	 */
-	public void updatePanelEditorPanel (PanelEditor panel) {
-		if (panelsList.size()==0) return;
-		boolean found = false;
-		for (int i = 0; (i<panelsList.size()) && !found ; i++) {
-			Object o = panelsList.get(i);
-			if (o == panel) {
-				found = true;
-				JCheckBoxMenuItem r = (JCheckBoxMenuItem)panelsSubMenu.getItem(i);
-				if (panel.getFrame().isVisible()) r.setSelected(false);
-				else r.setSelected(true);
-			}
-		}
-	}	
-	
-	/**
-	 * Rename PanelEditor type panel in Show Panels sub menu
-	 */
-	public void renamePanelEditorPanel (PanelEditor panel) {
-		if (panelsList.size()==0) return;
-		boolean found = false;
-		for (int i = 0; (i<panelsList.size()) && !found ; i++) {
-			Object o = panelsList.get(i);
-			if (o == panel) {
-				found = true;
-				JCheckBoxMenuItem r = (JCheckBoxMenuItem)panelsSubMenu.getItem(i);
-				r.setText(panel.getFrame().getTitle());
-			}
-		}
-	}
 	/**
 	 * Determine if named panel already exists
 	 * returns true if named panel already loaded
 	 */
 	public boolean isPanelNameUsed (String name) {
 		if (panelsList.size()==0) return false;
-		boolean found = false;
-		for (int i = 0; (i<panelsList.size()) && !found ; i++) {
+		for (int i = 0; i<panelsList.size(); i++) {
 			try{
-				PanelEditor pe = (PanelEditor)panelsList.get(i);
-				if (pe.getFrame().getTitle().equals(name)) {
-					found = true;
-				}
-			} catch(Exception e){
-			}
-			try{
-				LayoutEditor le = (LayoutEditor)panelsList.get(i);
-				if (le.getTitle().equals(name)) {
-					found = true;
+				Editor editor = panelsList.get(i);
+				if (editor.getTargetFrame().getTitle().equals(name)) {
+					return true;
 				}
 			} catch(Exception e){
 			}
 		}
-		return found;
+		return false;
 	}
 	
-	public LayoutEditor getLayoutEditorByName (String name){
+	public Editor getEditorByName (String name){
 		if (panelsList.size()==0) return null;
 		for (int i = 0; (i<panelsList.size()); i++) {
 			try{
-				LayoutEditor le = (LayoutEditor)panelsList.get(i);
-				if (le.getTitle().equals(name)) {
-					return le;
+				Editor editor = panelsList.get(i);
+				if (editor.getTargetFrame().getTitle().equals(name)) {
+					return editor;
 				}
 			} catch(Exception e){
 			}
 		}
 		return null;
 	}
-	
-	public PanelEditor getPanelEditorByName (String name){
-		if (panelsList.size()==0) return null;
-		for (int i = 0; (i<panelsList.size()); i++) {
-			try{
-				PanelEditor pe = (PanelEditor)panelsList.get(i);
-				if (pe.getFrame().getTitle().equals(name)) {
-					return pe;
-				}
-			} catch(Exception e){
-			}
-		}
-		return null;
+
+	public ArrayList<Editor> getEditorPanelList() {
+		return panelsList;
 	}
-	
+
 	public ArrayList<LayoutEditor> getLayoutEditorPanelList() {
 		ArrayList<LayoutEditor> lePanelsList = new ArrayList<LayoutEditor>();
 		for (int i = 0; (i<panelsList.size()); i++) {
@@ -256,19 +184,7 @@ public class PanelMenu extends JMenu {
 			}
 		}				
 		return lePanelsList;
-	}
-	
-	public ArrayList<PanelEditor> getPanelEditorPanelList() {
-		ArrayList<PanelEditor> lePanelsList = new ArrayList<PanelEditor>();
-		for (int i = 0; (i<panelsList.size()); i++) {
-			try{
-				PanelEditor le = (PanelEditor)panelsList.get(i);
-				lePanelsList.add(le);
-			} catch(Exception e){
-			}
-		}				
-		return lePanelsList;
-	}
+	}	
 }
 
 

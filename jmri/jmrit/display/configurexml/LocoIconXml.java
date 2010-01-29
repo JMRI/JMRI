@@ -1,8 +1,9 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.PanelEditor;
-import jmri.jmrit.display.LayoutEditor;
+import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.Roster;
@@ -12,7 +13,7 @@ import org.jdom.Element;
  * Handle configuration for display.LocoIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class LocoIconXml extends PositionableLabelXml {
 
@@ -62,6 +63,7 @@ public class LocoIconXml extends PositionableLabelXml {
      * @param o  PanelEditor as an Object
      */
     public void load(Element element, Object o) {
+        LocoIcon l;
  		// get object class and determine editor being used
 		String className = o.getClass().getName();
 		int lastDot = className.lastIndexOf(".");
@@ -70,17 +72,20 @@ public class LocoIconXml extends PositionableLabelXml {
 		String shortClass = className.substring(lastDot+1,className.length());
 		if (shortClass.equals("PanelEditor")) {
 			pe = (PanelEditor) o;
+            l = new LocoIcon(pe);
+            pe.putItem(l);
 		}
 		else if (shortClass.equals("LayoutEditor")) {
 			le = (LayoutEditor) o;
+            l = new LocoIcon(le);
+            le.putItem(l);
 		}
 		else {
 			log.error("Unrecognizable class - "+className);
+            return;
 		}
        // create the objects
         String name = "error";
-
-        LocoIcon l = new LocoIcon();
         
         try {
             name = element.getAttribute("text").getValue();
@@ -102,11 +107,7 @@ public class LocoIconXml extends PositionableLabelXml {
         l.setLocation(x,y);
 
         // find display level
-		int level = 0;
-		if (pe!=null)
-			level = PanelEditor.MARKERS.intValue();
-		else if (le!=null)
-			level = LayoutEditor.MARKERS.intValue();
+		int level =  Editor.MARKERS;
         try {
             level = element.getAttribute("level").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
@@ -129,11 +130,6 @@ public class LocoIconXml extends PositionableLabelXml {
 		} catch (Exception e) {
 			log.debug("no roster entry");
 		}
-        
- 		if (pe!=null)
-			pe.putLocoIcon(l);
-		else if (le!=null)
-			le.putLocoIcon(l);
      }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIconXml.class.getName());

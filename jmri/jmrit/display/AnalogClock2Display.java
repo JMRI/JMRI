@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * <p>Time code copied in part from code for the Nixie clock by Bob Jacobsen </p>
  *
  * @author  Howard G. Penny - Copyright (C) 2005
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class AnalogClock2Display extends PositionableJComponent {
 
@@ -74,8 +74,8 @@ public class AnalogClock2Display extends PositionableJComponent {
     int centreX;
     int centreY;
 
-    public AnalogClock2Display(JmriJFrame parentFrame) {
-        super(parentFrame);
+    public AnalogClock2Display(Editor editor) {
+        super(editor);
         _scale = 1.0;
         clock = InstanceManager.timebaseInstance();
 
@@ -112,94 +112,33 @@ public class AnalogClock2Display extends PositionableJComponent {
             }
         });
         setSize(clockIcon.getIconHeight()); // set to default size
-        setEditable(true);
     }
 
     ButtonGroup rateButtonGroup = null;
     JMenuItem runMenu = null;
-	LayoutEditor layoutPanel = null;
-    /**
-     * Set panel (called from Layout Editor)
-     */
-    protected void setPanel(LayoutEditor panel) {
-		super.setPanel(panel);
-		layoutPanel = panel;
-    }
-	protected int getFaceWidth() {return faceSize;}
-	protected int getFaceHeight() {return faceSize;}
-	protected void showPopUp(MouseEvent event) {
-        setEditable(true);
-        super.showPopUp(event);
-	}	
+	
+    public int getFaceWidth() {return faceSize;}
+	public int getFaceHeight() {return faceSize;}
 
-    protected void addToPopup() {
-        if (popup != null) {
-            popup.insert(new JMenuItem("Fast Clock"), 0);
-            JMenu rateMenu = new JMenu("Clock rate");
-            rateButtonGroup = new ButtonGroup();
-            addRateMenuEntry(rateMenu, 1);
-            addRateMenuEntry(rateMenu, 2);
-            addRateMenuEntry(rateMenu, 4);
-            addRateMenuEntry(rateMenu, 8);
-            popup.insert(rateMenu, 1);
-            runMenu = new JMenuItem(getRun() ? "Stop" : "Start");
-            runMenu.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    setRun(!getRun());
-                    update();
-                }
-            });
-            popup.insert(runMenu, 2);
-            popup.insert(new AbstractAction(rb.getString("scale")) {
-                     public void actionPerformed(ActionEvent e) {
-                         makeTextBoxFrame("scale");
-                     }
-                 }, 3);
-        }
-    }
+    public void setScaleMenu(JPopupMenu popup){
 
-    JTextField _textBox;
-    JFrame _editorFrame;
-
-    void makeTextBoxFrame(String title) {
-        _editorFrame = new JFrame(rb.getString("Edit"));
-        JPanel p = new JPanel();
-        p.setLayout(new BorderLayout(5,5));
-        p.add(new JLabel(rb.getString(title)), BorderLayout.NORTH);
-        JPanel p2 = new JPanel();
-        p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
-        p.add(p2, BorderLayout.CENTER);
-        _textBox = new JTextField();
-        p2.add(_textBox);
-        JButton button = new JButton(rb.getString("Done"));
-        ours = this;
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent a) {
-                int num = 0;
-                try {
-                    num = Integer.parseInt(_textBox.getText());
-                } catch (NumberFormatException nfe) {
-                    _editorFrame.dispose();
-                    _editorFrame = null;
-                    return;
-                }
-                setScale(num/100.0);
-                _editorFrame.dispose();
-                _editorFrame = null;
-                repaint();
+        popup.add(new JMenuItem("Fast Clock"));
+        JMenu rateMenu = new JMenu("Clock rate");
+        rateButtonGroup = new ButtonGroup();
+        addRateMenuEntry(rateMenu, 1);
+        addRateMenuEntry(rateMenu, 2);
+        addRateMenuEntry(rateMenu, 4);
+        addRateMenuEntry(rateMenu, 8);
+        popup.add(rateMenu);
+        runMenu = new JMenuItem(getRun() ? "Stop" : "Start");
+        runMenu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setRun(!getRun());
+                update();
             }
         });
-        p.add(button, BorderLayout.SOUTH);
-        _editorFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-				public void windowClosing(java.awt.event.WindowEvent e) {
-                    _editorFrame.dispose();
-                    _editorFrame = null;
-                }
-            });
-        _editorFrame.getContentPane().add(p);
-        _editorFrame.setLocationRelativeTo(this);
-        _editorFrame.setVisible(true);
-        _editorFrame.pack();
+        popup.add(runMenu);
+        popup.add(CoordinateEdit.getScaleEditAction(this));
     }
 
     public double getScale() { return _scale; }
@@ -401,19 +340,6 @@ public class AnalogClock2Display extends PositionableJComponent {
         repaint();
     }
 
-    private Integer displayLevel;
-    public void setDisplayLevel(Integer l) {
-        displayLevel = l;
-    }
-
-    public void setDisplayLevel(int l) {
-        setDisplayLevel(new Integer(l));
-    }
-
-    public Integer getDisplayLevel() {
-        return displayLevel;
-    }
-
     public boolean getRun() {
         return clock.getRun();
     }
@@ -423,14 +349,11 @@ public class AnalogClock2Display extends PositionableJComponent {
     }
 
     void cleanup() {
-//        ((PanelEditor)_parentFrame).clockAddEnable(true);
     }
 
     public void dispose() {
         rateButtonGroup = null;
         runMenu = null;
-        super.dispose();
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger
-    .getLogger(AnalogClock2Display.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AnalogClock2Display.class.getName());
 }

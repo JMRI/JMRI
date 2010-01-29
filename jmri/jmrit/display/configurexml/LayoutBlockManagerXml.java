@@ -2,24 +2,25 @@
 
 package jmri.jmrit.display.configurexml;
 
+import jmri.configurexml.AbstractXmlAdapter;
 import jmri.InstanceManager;
-import jmri.configurexml.*;
-import jmri.jmrit.display.LayoutBlock;
-import jmri.jmrit.display.LayoutBlockManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.Sensor;
 import java.util.List;
 import org.jdom.Element;
-import org.jdom.Attribute;
-import java.awt.Color;
 
 /**
- * Provides the functionality for
- * configuring a LayoutBlockManager
- * <P>
+ * Dummy class, just present so files that refer to this 
+ * class (e.g. pre JMRI 2.8 files) can still be read by
+ * deferring to the present class.
  *
- * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.8 $
+ * @author Pete Cressman, Deprecated
+ * @version $Revision: 1.9 $
+ * @deprecated 2.9
  */
+ 
+@Deprecated
 public class LayoutBlockManagerXml extends AbstractXmlAdapter {
 
     public LayoutBlockManagerXml() {
@@ -32,53 +33,10 @@ public class LayoutBlockManagerXml extends AbstractXmlAdapter {
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-        Element layoutblocks = new Element("layoutblocks");
-        setStoreElementClass(layoutblocks);
-        LayoutBlockManager tm = (LayoutBlockManager) o;
-        if (tm!=null) {
-            java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
-            
-            // don't return an element if there is nothing to include
-            if (!iter.hasNext()) return null;
-            
-            while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname==null) log.error("System name null during LayoutBlock store");
-                log.debug("layoutblock system name is "+sname);
-                LayoutBlock b = tm.getBySystemName(sname);
-				if (b.getUseCount()>0) {
-					// save only those LayoutBlocks that are in use--skip abandoned ones
-					String uname = b.getUserName();
-					Element elem = new Element("layoutblock")
-								.setAttribute("systemName", sname);
-					if (uname!=null) elem.setAttribute("userName", uname);
-					if (b.getOccupancySensorName() != "") {
-						elem.setAttribute("occupancysensor", b.getOccupancySensorName());
-					}
-					elem.setAttribute("occupiedsense", ""+b.getOccupiedSense());
-					elem.setAttribute("trackcolor", b.colorToString(b.getBlockTrackColor()));
-					elem.setAttribute("occupiedcolor", b.colorToString(b.getBlockOccupiedColor()));
-					elem.setAttribute("extracolor", b.colorToString(b.getBlockExtraColor()));
-					layoutblocks.addContent(elem);
-					if (b.getMemoryName() != "") {
-						elem.setAttribute("memory", b.getMemoryName());
-					}
-				}
-			}
-		}
-		return (layoutblocks);	
+        jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml tmp = 
+            new jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml();
+        return tmp.store(o);
 	}
-
-    /**
-     * Subclass provides implementation to create the correct top
-     * element, including the type information.
-     * Default implementation is to use the local class here.
-     * @param layoutblocks The top-level element being created
-     */
-    public void setStoreElementClass(Element layoutblocks) {
-        layoutblocks.setAttribute("class",
-							"jmri.jmrit.display.configurexml.LayoutBlockManagerXml");
-    }
 
     public void load(Element element, Object o) {
         log.error("Invalid method called");
@@ -91,97 +49,9 @@ public class LayoutBlockManagerXml extends AbstractXmlAdapter {
      * @return true if successful
      */
     public boolean load(Element layoutblocks) {
-        // create the master object
-        replaceLayoutBlockManager();
-        // load individual layoutblocks
-        loadLayoutBlocks(layoutblocks);
-        return true;
-    }
-
-    /**
-     * Utility method to load the individual LayoutBlock objects.
-     * If there's no additional info needed for a specific layoutblock type,
-     * invoke this with the parent of the set of layoutblock elements.
-     * @param layoutblocks Element containing the layoutblock elements to load.
-     */
-    @SuppressWarnings("unchecked")
-	public void loadLayoutBlocks(Element layoutblocks) {
-		List<Element> layoutblockList = layoutblocks.getChildren("layoutblock");
-        if (log.isDebugEnabled()) log.debug("Found "+layoutblockList.size()+" layoutblocks");
-        LayoutBlockManager tm = InstanceManager.layoutBlockManagerInstance();
-
-        for (int i=0; i<layoutblockList.size(); i++) {
-            if ( ((layoutblockList.get(i))).getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+
-							((layoutblockList.get(i)))+" "+
-									((layoutblockList.get(i))).getAttributes());
-                break;
-            }
-            String sysName = ((layoutblockList.get(i))).
-												getAttribute("systemName").getValue();
-            String userName = null;
-            if ( ((layoutblockList.get(i))).getAttribute("userName") != null) {
-                userName = ((layoutblockList.get(i))).
-												getAttribute("userName").getValue();
-			}
-            LayoutBlock b = tm.createNewLayoutBlock(sysName, userName);
-            if (b!=null) {
-				// set attributes
-				Color color = b.stringToColor(((layoutblockList.get(i))).
-												getAttribute("trackcolor").getValue());
-				b.setBlockTrackColor(color);
-				color = b.stringToColor(((layoutblockList.get(i)))
-											.getAttribute("occupiedcolor").getValue());
-				b.setBlockOccupiedColor(color);
-				Attribute a = ((layoutblockList.get(i)))
-											.getAttribute("extracolor");
-				if (a!=null) {
-					b.setBlockExtraColor(b.stringToColor(a.getValue()));
-				}				
-				a = ((layoutblockList.get(i)))
-											.getAttribute("occupancysensor");
-				if (a!=null) {
-					b.setOccupancySensorName(a.getValue());
-				}
-				a = ((layoutblockList.get(i)))
-											.getAttribute("memory");
-				if (a!=null) {
-					b.setMemoryName(a.getValue());
-				}
-				a = ((layoutblockList.get(i))).
-											getAttribute("occupancysensorsense");
-				int sense = Sensor.ACTIVE;
-				try {
-					sense = ((layoutblockList.get(i))).
-											getAttribute("occupiedsense").getIntValue();
-				}		
-				catch (org.jdom.DataConversionException e) {
-					log.error("failed to convert occupiedsense attribute");
-				}
-				b.setOccupiedSense(sense);
-			}	
-	    }
-	}
-
-    /**
-     * Replace the current LayoutBlockManager, if there is one, with
-     * one newly created during a load operation. This is skipped
-     * if they are of the same absolute type.
-     */
-    protected void replaceLayoutBlockManager() {
-        if (InstanceManager.layoutBlockManagerInstance().getClass().getName()
-                .equals(LayoutBlockManager.class.getName()))
-            return;
-        // if old manager exists, remove it from configuration process
-        if (InstanceManager.layoutBlockManagerInstance() != null)
-            InstanceManager.configureManagerInstance().deregister(
-                InstanceManager.layoutBlockManagerInstance() );
-
-        // register new one with InstanceManager
-        LayoutBlockManager pManager = LayoutBlockManager.instance();
-        InstanceManager.setLayoutBlockManager(pManager);
-        // register new one for configuration
-        InstanceManager.configureManagerInstance().registerConfig(pManager);
+        jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml tmp = 
+            new jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml();
+        return tmp.load(layoutblocks);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutBlockManagerXml.class.getName());

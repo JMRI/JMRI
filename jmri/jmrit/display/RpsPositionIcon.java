@@ -19,19 +19,16 @@ import javax.swing.JCheckBoxMenuItem;
  * In this initial version, it ignores the ID, so there's only one icon.
  *
  * @author Bob Jacobsen Copyright (C) 2007
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class RpsPositionIcon extends PositionableLabel implements MeasurementListener {
 
-    public RpsPositionIcon() {
+    public RpsPositionIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
-                            "resources/icons/smallschematics/tracksegments/circuit-error.gif"));
-        icon = true;
-        text = false;
-
-        setDisplayLevel(PanelEditor.SENSORS);
+                            "resources/icons/smallschematics/tracksegments/circuit-error.gif"), editor);
+        _control = true;
         displayState();
         
         // blow up default font
@@ -61,10 +58,6 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         displayState();
     }
 
-    public void setProperToolTip() {
-        setToolTipText(getNameString());
-    }
-
     public String getNameString() {
         return "RPS Position Readout";
     }
@@ -72,23 +65,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
     /**
      * Pop-up contents
      */
-    protected void showPopUp(MouseEvent e) {
-        if (!getEditable()) return;
-        ours = this;
-        popup = new JPopupMenu();
-        popup.add(new JMenuItem(getNameString()));
-        
-        if (icon) popup.add(new AbstractAction("Rotate") {
-                public void actionPerformed(ActionEvent e) {
-                    active.setRotation(active.getRotation()+1, ours);
-                    error.setRotation(error.getRotation()+1, ours);
-                    displayState();
-                    // bug fix, must repaint icons that have same width and height
-                    repaint();
-                }
-            });
-        checkLocationEditable(popup, getNameString());
-        
+    public void showPopUp(JPopupMenu popup) {
 
         if (showIdItem == null) {
             showIdItem = new JCheckBoxMenuItem("Show ID");
@@ -122,15 +99,6 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
                 }
             });
 
-        addDisableMenuEntry(popup);
-        
-        popup.add(new AbstractAction("Remove") {
-                public void actionPerformed(ActionEvent e) {
-                    remove();
-                    dispose();
-                }
-            });
-
         // add help item
         JMenuItem item = new JMenuItem("Help");
         jmri.util.HelpUtil.addHelpToComponent(item, "package.jmri.jmrit.display.RpsIcon");
@@ -138,8 +106,18 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         
         // update position
         notify.setPosition(getX(), getY());
-        popup.show(e.getComponent(), e.getX(), e.getY());
     }
+
+    /******** popup AbstractAction.actionPerformed method overrides *********/
+
+    protected void rotateOrthogonal() {
+        active.setRotation(active.getRotation()+1, this);
+        error.setRotation(error.getRotation()+1, this);
+        displayState();
+        //bug fix, must repaint icons that have same width and height
+        repaint();
+    }
+
     void scale(int s) {
         active.scale(s, this);
         error.scale(s, this);
@@ -205,9 +183,9 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
     void displayState() {
 
         if (state) {
-            if (icon) super.setIcon(active);
+            if (isIcon()) super.setIcon(active);
         } else {
-            if (icon) super.setIcon(error);
+            if (isIcon()) super.setIcon(error);
         }
         
         updateSize();
@@ -215,10 +193,10 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         return;
     }
     
-    protected int maxHeight() {
+    public int maxHeight() {
         return getPreferredSize().height;
     }
-    protected int maxWidth() {
+    public int maxWidth() {
         return getPreferredSize().width;
     }
     
@@ -228,17 +206,18 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
     
     void toggleID(boolean value) {
         if (value) {
-            text = true;
+            _text = true;
         } else {
-            text = false;
+            
+            _text = false;
             setText(null);
         }
         displayState();
     }
     
-    public boolean isShowID() { return text; }
+    public boolean isShowID() { return _text; }
     public void setShowID(boolean mode) { 
-        text = mode;
+        _text = mode;
         displayState();
     }
     
@@ -261,7 +240,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         else 
             state = true;
             
-        if (text) super.setText(""+m.getReading().getID());
+        if (_text) super.setText(""+m.getReading().getID());
         displayState();
         
         // if the state is bad, leave icon in last position
@@ -292,48 +271,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
     }
     public String getFilter() { return filterNumber; }
     String filterNumber = null;
-    
-    /**
-     * (Temporarily) change occupancy on click
-     * @param e
-     */
-    public void mouseClicked(java.awt.event.MouseEvent e) {
-        super.mouseClicked(e);
-        if (e.isAltDown() || e.isMetaDown()) return;
-        if (getMomentary()) return; // click is only for non-momentary
-        if (!buttonLive()) return;
-
-        // if the click is supposed to do something, do it here
-    }
-
-    boolean buttonLive() {
-        if (!getControlling()) return false;
-        if (getForceControlOff()) return false;
-        return true;        
-    }
-
-    public void mousePressed(MouseEvent e) {
-        if (getMomentary() && buttonLive()) {
-            // this is a momentary button
-
-                // take momentary action for mouse down
-
-        }
-        // do rest of mouse processing
-        super.mousePressed(e);
-    }
-
-    public void mouseReleased(MouseEvent e) {
-        if (getMomentary() && buttonLive()) {
-            // this is a momentary button
-
-                // take momentary action for mouse up
-
-        }
-        // do rest of mouse processing
-        super.mouseReleased(e);
-    }
- 
+     
     public void dispose() {
         Distributor.instance().removeMeasurementListener(this);
         active = null;

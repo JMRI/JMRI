@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.FlowLayout;
 
 import javax.swing.AbstractAction;
@@ -16,6 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import jmri.util.NamedBeanHandle;
@@ -27,14 +27,13 @@ import jmri.util.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  * @since 2.7.2
  */
 
 public class MemoryInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
 
     JTextField  _textBox = new JTextField();
-    SpinnerNumberModel _spinCols = new SpinnerNumberModel(0,0,100,1);
     int _nCols; 
     
     // the associated Memory object
@@ -42,10 +41,10 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     private NamedBeanHandle<Memory> namedMemory;
     
     
-    public MemoryInputIcon(int nCols) {
-        super();
+    public MemoryInputIcon(int nCols, Editor editor) {
+        super(editor);
         _nCols = nCols;
-        setDisplayLevel(PanelEditor.LABELS);
+        setDisplayLevel(Editor.LABELS);
         
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(_textBox);
@@ -57,10 +56,11 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
                     }
                 }
             });
-        connect(_textBox);
         _textBox.setColumns(_nCols);
+        _textBox.addMouseMotionListener(this);
+        _textBox.addMouseListener(this);
     }
-    
+
     /**
      * Attached a named Memory to this display item
       * @param pName Used as a system/user name to lookup the Memory object
@@ -91,7 +91,6 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         if (memory != null) {
             displayState();
             memory.addPropertyChangeListener(this);
-            setProperToolTip();
             namedMemory = m;
         }
     }
@@ -101,16 +100,9 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     
     // update icon as state of Memory changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) log.debug("property change: "
-                                            +e.getPropertyName()
-                                            +" is now "+e.getNewValue());
-	if (e.getPropertyName().equals("value")) {
-            displayState();
+        if (e.getPropertyName().equals("value")) {
+                displayState();
         }
-    }
-
-    public void setProperToolTip() {
-        setToolTipText(getNameString());
     }
 
     public String getNameString() {
@@ -127,32 +119,22 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     public boolean isSelectable() { return selectable;}
     boolean selectable = false;
     
-    protected void addToPopup() {
-        popup.add(new AbstractAction(rb.getString("EditIcon")) {
-                public void actionPerformed(ActionEvent e) {
-                    edit();
-                }
-            });
-    }
-
     private void updateMemory() {
         if (memory == null) return;
         String str = _textBox.getText();
         memory.setValue(str);
     }
 
-    public void mouseExited(MouseEvent e) {
-        updateMemory();
-    }
-
-    void edit() {
-        if (_editorFrame != null) {
-            _editorFrame.setLocationRelativeTo(null);
-            _editorFrame.toFront();
+    /**
+    * Poppup menu iconEditor's ActionListener
+    */
+    SpinnerNumberModel _spinModel = new SpinnerNumberModel(0,0,100,1);
+    protected void edit() {
+        if (showIconEditorFrame(this)) {
             return;
         }
-        _editor = new IconAdder("MemoryEditor") {
-                JSpinner spinner = new JSpinner(_spinCols);
+        _iconEditor = new IconAdder("MemoryEditor") {
+                JSpinner spinner = new JSpinner(_spinModel);
                 protected void addAdditionalButtons(JPanel p) {
                     ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().setColumns(2);
                     spinner.setMaximumSize(spinner.getPreferredSize());
@@ -171,20 +153,20 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
                 editMemory();
             }
         };
-        makeAddIconFrame("EditInputBox", "addMemValueToPanel", 
-                                             "SelectMemory", _editor);
-        _editor.setPickList(PickListModel.memoryPickModelInstance());
-        _editor.complete(addIconAction, null, true, true);
-        _editor.setSelection(memory);
+        _iconEditorFrame = PositionableLabel.makeAddIconFrame("EditInputBox", "addMemValueToPanel", 
+                                             "SelectMemory", _iconEditor, this);
+        _iconEditor.setPickList(PickListModel.memoryPickModelInstance());
+        _iconEditor.complete(addIconAction, null, true, true);
+        _iconEditor.setSelection(memory);
     }
     void editMemory() {
-        setMemory(_editor.getTableSelection().getDisplayName());
-        _nCols = _spinCols.getNumber().intValue();
+        setMemory(_iconEditor.getTableSelection().getDisplayName());
+        _nCols = _spinModel.getNumber().intValue();
         _textBox.setColumns(_nCols);
         setSize(getPreferredSize().width+1, getPreferredSize().height);
-        _editorFrame.dispose();
-        _editorFrame = null;
-        _editor = null;
+        _iconEditorFrame.dispose();
+        _iconEditorFrame = null;
+        _iconEditor = null;
         validate();
     }
 
@@ -204,10 +186,12 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
             _textBox.setText("");            
     }
 
-    public void dispose() {
+    void cleanup() {
         memory.removePropertyChangeListener(this);
+        _textBox.removeMouseMotionListener(this);
+        _textBox.removeMouseListener(this);
+        _textBox = null;
         memory = null;
-        super.dispose();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryInputIcon.class.getName());

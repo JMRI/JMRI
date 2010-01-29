@@ -1,8 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.PanelEditor;
-import jmri.jmrit.display.LayoutEditor;
+import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MultiSensorIcon;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -13,7 +12,7 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class MultiSensorIconXml extends PositionableLabelXml {
 
@@ -62,25 +61,9 @@ public class MultiSensorIconXml extends PositionableLabelXml {
      */
     @SuppressWarnings("unchecked")
 	public void load(Element element, Object o) {
-		// get object class and determine editor being used
-		String className = o.getClass().getName();
-		int lastDot = className.lastIndexOf(".");
-		PanelEditor pe = null;
-		LayoutEditor le = null;
-		String shortClass = className.substring(lastDot+1,className.length());
-		if (shortClass.equals("PanelEditor")) {
-			pe = (PanelEditor) o;
-		}
-		else if (shortClass.equals("LayoutEditor")) {
-			le = (LayoutEditor) o;
-		}
-		else {
-			log.error("Unrecognizable class - "+className);
-		}
+		Editor pe = (Editor)o;
+        MultiSensorIcon l = new MultiSensorIcon(pe);
         // create the objects
-        String name;
-
-        MultiSensorIcon l = new MultiSensorIcon();
         int rotation = 0;
         try {
             rotation = element.getAttribute("rotate").getIntValue();
@@ -97,12 +80,7 @@ public class MultiSensorIconXml extends PositionableLabelXml {
         else
             l.setUpDown(false);
             
-		if (pe!=null){
-            loadCommonAttributes(l, PanelEditor.SENSORS.intValue(), element);
-		} else if (le!=null) {
-            l.setPanel(le);
-            loadCommonAttributes(l, LayoutEditor.SENSORS.intValue(), element);
-        }
+		loadCommonAttributes(l, Editor.SENSORS, element);
 
         // get the icon pairs & load
         List<Element> items = element.getChildren();
@@ -113,7 +91,7 @@ public class MultiSensorIconXml extends PositionableLabelXml {
                 String sensor = item.getAttribute("sensor").getValue();
                 NamedIcon icon;
                 if (item.getAttribute("url")!=null) {
-                    name = item.getAttribute("url").getValue();
+                    String name = item.getAttribute("url").getValue();
                     icon = NamedIcon.getIconByName(name);
                     try {
                         a = item.getAttribute("rotate");
@@ -134,19 +112,14 @@ public class MultiSensorIconXml extends PositionableLabelXml {
                         }
                     } catch (org.jdom.DataConversionException dce) {}
                 } else {
-                    name = item.getAttribute("icon").getValue();
+                    String name = item.getAttribute("icon").getValue();
                     icon = NamedIcon.getIconByName(name);
                     if (rotation!=0) icon.setRotation(rotation, l);
                 }
                 l.addEntry(sensor, icon);
             }
         }
-		
-		// add multi-sensor to the panel
-		if (pe!=null)
-			pe.putLabel(l);
-		else if (le!=null)
-			le.putMultiSensor(l);
+        pe.putItem(l);
     }
     
     private void loadSensorIcon(String state, int rotation, MultiSensorIcon l, Element element){

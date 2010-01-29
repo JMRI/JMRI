@@ -1,7 +1,11 @@
 package jmri.jmrit.display;
 
 import java.awt.Point;
-import java.awt.event.MouseListener;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 /**
  * Defines display objects.
@@ -20,32 +24,66 @@ import java.awt.event.MouseListener;
  *
  * <p>Copyright: Bob Jacobsen Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public interface Positionable  {
     public void setPositionable(boolean enabled);
-    public boolean getPositionable();
-    
+    public boolean isPositionable();
+/*    
     public void setEditable(boolean enabled);
-    public boolean getEditable();
-    
-    public void setViewable(boolean enabled);
-
+    public boolean isEditable();
+*/
+    public void setShowTooltip(boolean set);
+    public boolean showTooltip();
+    public void setTooltip(String tip);
+    public String getTooltip();
+/*
     public void setViewCoordinates(boolean enabled);
     public boolean getViewCoordinates();
-
+*/
     public void setControlling(boolean enabled);
-    public boolean getControlling();
+    public boolean isControlling();
 
-    public Integer getDisplayLevel();
-    public void setDisplayLevel(Integer l);
+    public void setHidden(boolean enabled);
+    public boolean isHidden();
+    public void showHidden();
+
+    public int getDisplayLevel();
+    public void setDisplayLevel(int l);
+
+    /** Methods to add popup menu items
+    */
+    public String getNameString();
+    public void setRotateOrthogonalMenu(JPopupMenu popup);
+    public void setRotateMenu(JPopupMenu popup);
+    public void setScaleMenu(JPopupMenu popup);
+    public void setEditIconMenu(JPopupMenu popup);
+    public void setDisableControlMenu(JPopupMenu popup);
+    /*
+    public void setFixedTextMenu(JPopupMenu popup);
+    public void setTextMarginMenu(JPopupMenu popup);
+    public void setBackgroundFontColorMenu(JPopupMenu popup);
+    public void setTextBorderMenu(JPopupMenu popup);
+    public void setTextEditMenu(JPopupMenu popup, String menuTitle);
+    */
+    public void showPopUp(JPopupMenu popup);
+
+    public void remove();
+
+    public void doMousePressed(MouseEvent event);
+    public void doMouseReleased(MouseEvent event);
 
     // The following are common for all JComponents
+    public Rectangle getBounds(Rectangle r);
+    public boolean contains(int x, int y);
     public int getX();
     public int getY();
     public Point getLocation();
     public void setLocation(int x, int y);
     public void setLocation(Point p);
-    public void addMouseListener(MouseListener l);
-    public void removeMouseListener(MouseListener l);
+    public void setVisible(boolean b);
+    public int getWidth();
+    public int getHeight();
+    public void invalidate();
+    public void repaint();
 }

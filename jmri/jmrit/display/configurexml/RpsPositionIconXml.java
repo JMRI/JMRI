@@ -1,7 +1,9 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.PanelEditor;
+import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.RpsPositionIcon;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -10,7 +12,7 @@ import org.jdom.Element;
  * Handle configuration for rps.RpsPositionIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class RpsPositionIconXml extends PositionableLabelXml {
 
@@ -65,11 +67,28 @@ public class RpsPositionIconXml extends PositionableLabelXml {
      * @param o  PanelEditor as an Object
      */
     public void load(Element element, Object o) {
-        // create the objects
-        PanelEditor p = (PanelEditor)o;
-        String name;
+		PanelEditor pe = null;
+		LayoutEditor le = null;
+        RpsPositionIcon l = null;
 
-        RpsPositionIcon l = new RpsPositionIcon();
+        String className = o.getClass().getName();
+		int lastDot = className.lastIndexOf(".");
+		String shortClass = className.substring(lastDot+1,className.length());
+		if (shortClass.equals("PanelEditor")) {
+			pe = (PanelEditor) o;
+            l = new RpsPositionIcon(pe);
+		}
+		else if (shortClass.equals("LayoutEditor")) {
+			le = (LayoutEditor) o;
+            l = new RpsPositionIcon(le);
+		}
+		else {
+			log.error("Unrecognizable class - "+className);
+            return;
+		}
+        loadCommonAttributes(l, Editor.SENSORS, element);
+        // create the objects
+        String name;
 
         NamedIcon active;
         name = element.getAttribute("active").getValue();
@@ -88,7 +107,6 @@ public class RpsPositionIconXml extends PositionableLabelXml {
             }
         } catch (org.jdom.DataConversionException e) {}
 
-        loadCommonAttributes(l, PanelEditor.SENSORS.intValue(), element);
         Attribute a = element.getAttribute("momentary");
         if ( (a!=null) && a.getValue().equals("true"))
             l.setMomentary(true);
@@ -126,8 +144,7 @@ public class RpsPositionIconXml extends PositionableLabelXml {
         if (icon!=null) { l.setActiveIcon(icon); }
         icon = loadIcon( l,"error", element);
         if (icon!=null) { l.setErrorIcon(icon); }
-
-        p.putLabel(l);
+        ((Editor)o).putItem(l);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsPositionIconXml.class.getName());

@@ -2,9 +2,9 @@
 
 package jmri.jmrit.display.configurexml;
 
-import jmri.configurexml.*;
-import jmri.jmrit.display.LayoutEditor;
-import jmri.jmrit.display.PositionablePoint;
+import jmri.configurexml.AbstractXmlAdapter;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import java.awt.geom.*;
@@ -13,7 +13,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.PositionablePoint objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class PositionablePointXml extends AbstractXmlAdapter {
 
