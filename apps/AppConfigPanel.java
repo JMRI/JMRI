@@ -22,7 +22,7 @@ import java.util.ArrayList;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.32 $
+ * @version	$Revision: 1.33 $
  */
 public class AppConfigPanel extends JPanel {
 
@@ -371,14 +371,14 @@ public class AppConfigPanel extends JPanel {
             if(p.getQuitAfterSave()==0x00){
                 final JDialog dialog = new JDialog();
                 dialog.setTitle(rb.getString("MessageShortQuitWarning"));
-                dialog.setLocationRelativeTo(null);
                 dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
                 JPanel container = new JPanel();
                 container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
                 container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-
+                Icon icon= UIManager.getIcon("OptionPane.questionIcon");
                 JLabel question = new JLabel(rb.getString("MessageLongQuitWarning"));
                 question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                question.setIcon(icon);
                 container.add(question);
                 final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
                 remember.setFont(remember.getFont().deriveFont(10f));
@@ -425,6 +425,13 @@ public class AppConfigPanel extends JPanel {
                 dialog.getContentPane().add(container);
                 dialog.pack();
                 dialog.setModal(true);
+                int w = dialog.getSize().width;
+                int h = dialog.getSize().height;
+                int x = (p.getScreen().width-w)/2;
+                int y = (p.getScreen().height-h)/2;
+
+// Move the window
+                dialog.setLocation(x, y);
                 dialog.setVisible(true);
             } else if (p.getQuitAfterSave()==0x02) {
 	            // end the program
