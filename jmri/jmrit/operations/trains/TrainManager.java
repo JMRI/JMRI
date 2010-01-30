@@ -28,7 +28,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.29 $
+ * @version	$Revision: 1.30 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -197,7 +197,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	Enumeration<Train> en =_trainHashTable.elements();
     	for (int i = 0; i < _trainHashTable.size(); i++){
     		train = en.nextElement();
-    		if (train.getName().equals(name))
+    		// windows file names are case independent
+    		if (train.getName().toLowerCase().equals(name.toLowerCase()))
     			return train;
       	}
     	log.debug("train "+name+" doesn't exist");
