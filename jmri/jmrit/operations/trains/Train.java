@@ -41,7 +41,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.63 $
+ * @version $Revision: 1.64 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1027,7 +1027,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			}else{
 				Color c = null;
 				// determine if line is a pickup or drop
-				if(line.startsWith(TrainCommon.BOX + rb.getString("Pickup"))){
+				if(line.startsWith(TrainCommon.BOX + rb.getString("Pickup")) ||
+						line.startsWith(TrainCommon.BOX + rb.getString("Engine"))){
 					//log.debug("found a pickup line");
 					c = Setup.getPickupColor();
 				}

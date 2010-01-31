@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.73 $
+ * @version             $Revision: 1.74 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1563,7 +1563,10 @@ public class TrainBuilder extends TrainCommon{
 		}
 		
 		if (engine != null){
-			addLine(fileOut, rb.getString("PickupEngineAt")+ " "+splitString(engine.getLocationName())+", "+engine.getTrackName());
+			String pickupText = rb.getString("PickupEngineAt");
+			if (engineList.size() > 1)
+				pickupText= rb.getString("PickupEnginesAt");
+			addLine(fileOut, pickupText+" "+splitString(engine.getLocationName())+", "+engine.getTrackName());
 		}
 		
 		List<String> carList = carManager.getCarsByTrainDestinationList(train);
@@ -1604,8 +1607,12 @@ public class TrainBuilder extends TrainCommon{
 						+ rb.getString("boundWith") +" " + cars + " " +rb.getString("cars")+", " +rl.getTrainLength()
 						+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
 			} else {
-				if(engine != null)
-					addLine(fileOut, BOX +rb.getString("DropEngineTo")+ " "+ splitString(engine.getDestinationTrackName())); 
+				if(engine != null){
+					String dropText = rb.getString("DropEngineTo");
+					if (engineList.size() > 1)
+						dropText = rb.getString("DropEnginesTo");
+					addLine(fileOut, BOX +dropText+ " "+ splitString(engine.getDestinationTrackName())); 
+				}
 				addLine(fileOut, rb.getString("TrainTerminatesIn")+ " " + routeLocationName);
 			}
 		}
