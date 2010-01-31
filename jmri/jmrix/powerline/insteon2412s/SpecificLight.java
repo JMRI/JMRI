@@ -25,7 +25,7 @@ import jmri.jmrix.powerline.*;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009
  * @author      Ken Cameron Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -94,9 +94,11 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
                 SerialTrafficController.instance().sendX10Sequence(out2, null);
             } else {
                 // going to low, send a real off
+
                 InsteonSequence out3 = new InsteonSequence();
                 out3.addFunction(insteonaddress, InsteonSequence.FUNCTION_OFF, 0);
                 SerialTrafficController.instance().sendInsteonSequence(out3, null);
+
                 // going to low, send max dim count low
                 InsteonSequence out2 = new InsteonSequence();
                 out2.addFunction(insteonaddress, InsteonSequence.FUNCTION_DIM, maxDimStep);
@@ -109,17 +111,28 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
             	log.debug("initIntensity: sent dim reset");
             }
         } else {
-            // going to high, send a real on
-            X10Sequence out3 = new X10Sequence();
-            out3.addAddress(housecode, devicecode);
-            out3.addFunction(housecode, X10Sequence.FUNCTION_ON, 0);
-            SerialTrafficController.instance().sendX10Sequence(out3, null);
-            // going to high, send max dim count high
-            X10Sequence out2 = new X10Sequence();
-            out2.addAddress(housecode, devicecode);
-            out2.addFunction(housecode, X10Sequence.FUNCTION_BRIGHT, maxDimStep);
-            // send
-            SerialTrafficController.instance().sendX10Sequence(out2, null);
+            if (!isInsteon) {
+                // going to high, send a real on
+                X10Sequence out3 = new X10Sequence();
+                out3.addAddress(housecode, devicecode);
+                out3.addFunction(housecode, X10Sequence.FUNCTION_ON, 0);
+                SerialTrafficController.instance().sendX10Sequence(out3, null);
+                // going to high, send max dim count high
+                X10Sequence out2 = new X10Sequence();
+                out2.addAddress(housecode, devicecode);
+                out2.addFunction(housecode, X10Sequence.FUNCTION_BRIGHT, maxDimStep);
+                // send
+                SerialTrafficController.instance().sendX10Sequence(out2, null);
+            } else {
+
+                InsteonSequence out3 = new InsteonSequence();
+                out3.addFunction(insteonaddress, InsteonSequence.FUNCTION_ON, 0);
+                SerialTrafficController.instance().sendInsteonSequence(out3, null);
+
+                InsteonSequence out2 = new InsteonSequence();
+                out2.addFunction(insteonaddress, InsteonSequence.FUNCTION_DIM, maxDimStep);
+                SerialTrafficController.instance().sendInsteonSequence(out2, null);
+            }
             
             lastOutputStep = maxDimStep;
             
@@ -164,11 +177,19 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
             return;
         
         } else if (sendSteps > 0) {
-            function = X10Sequence.FUNCTION_BRIGHT;
+            if (!isInsteon) {
+                function = X10Sequence.FUNCTION_BRIGHT;
+            } else {
+                function = InsteonSequence.FUNCTION_BRIGHT;
+            }
         	log.debug("function bright");
         }
         else {
-            function = X10Sequence.FUNCTION_DIM;
+            if (!isInsteon) {
+                function = X10Sequence.FUNCTION_DIM;
+            } else {
+                function = InsteonSequence.FUNCTION_DIM;
+            }
         	log.debug("function dim");
         }
 

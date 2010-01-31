@@ -28,7 +28,7 @@ import java.io.DataInputStream;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008, 2009
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -259,27 +259,61 @@ public class SpecificTrafficController extends SerialTrafficController {
             if ((char1 == 0x15)) {
                 msg.setElement(0, char1);
             } else {
-            if ((char1&0xFF) == 0x62) {  // 0x62 means send command.
-                msg.setElement(0, char1);
-                byte addr1 = readByteProtected(istream);
-                msg.setElement(1, addr1);
-                byte addr2 = readByteProtected(istream);
-                msg.setElement(2, addr2);
-                byte addr3 = readByteProtected(istream);
-                msg.setElement(3, addr3);
-                byte flag1 = readByteProtected(istream);
-                msg.setElement(4, flag1);
-                byte cmd1 = readByteProtected(istream);
-                msg.setElement(5, cmd1);
-                byte cmd2 = readByteProtected(istream);
-                msg.setElement(6, cmd2);
-                byte ack1 = readByteProtected(istream);
-                if (ack1 == 0x06) {  // 0x06 means command sent.
-                    msg.setElement(7, ack1);
+                if ((char1&0xFF) == 0x62) {  // 0x62 means send command.
+                    msg.setElement(0, char1);
+                    byte addr1 = readByteProtected(istream);
+                    msg.setElement(1, addr1);
+                    byte addr2 = readByteProtected(istream);
+                    msg.setElement(2, addr2);
+                    byte addr3 = readByteProtected(istream);
+                    msg.setElement(3, addr3);
+                    byte flag1 = readByteProtected(istream);
+                    msg.setElement(4, flag1);
+                    byte cmd1 = readByteProtected(istream);
+                    msg.setElement(5, cmd1);
+                    byte cmd2 = readByteProtected(istream);
+                    msg.setElement(6, cmd2);
+                    byte ack1 = readByteProtected(istream);
+//                    if (ack1 == 0x06) {  // 0x06 means command sent.
+                        msg.setElement(7, ack1);
+//                    }
+                } else {
+                    if ((char1&0xFF) == 0x50) {  // 0x62 means send command.
+                        msg.setElement(0, char1);
+                        byte addr1 = readByteProtected(istream);
+                        msg.setElement(1, addr1);
+                        byte addr2 = readByteProtected(istream);
+                        msg.setElement(2, addr2);
+                        byte addr3 = readByteProtected(istream);
+                        msg.setElement(3, addr3);
+                        byte faddr1 = readByteProtected(istream);
+                        msg.setElement(4, faddr1);
+                        byte faddr2 = readByteProtected(istream);
+                        msg.setElement(5, faddr2);
+                        byte faddr3 = readByteProtected(istream);
+                        msg.setElement(6, faddr3);
+                        byte flag1 = readByteProtected(istream);
+                        msg.setElement(7, flag1);
+                        byte cmd1 = readByteProtected(istream);
+                        msg.setElement(8, cmd1);
+                        byte cmd2 = readByteProtected(istream);
+                        msg.setElement(9, cmd2);
+                        byte ack1 = readByteProtected(istream);
+                        msg.setElement(10, ack1);
+                    } else {
+                        if ((char1&0xFF) == 0x63) {  // 0x62 means send command.
+                            msg.setElement(0, char1);
+                            byte addr1 = readByteProtected(istream);
+                            msg.setElement(1, addr1);
+                            byte addr2 = readByteProtected(istream);
+                            msg.setElement(2, addr2);
+                            byte addr3 = readByteProtected(istream);
+                            msg.setElement(3, addr3);
+                        } else {
+                            msg.setElement(0, char1);
+                        }
+                    }
                 }
-            } else {
-                msg.setElement(0, char1);
-            }
             }
         }
     }

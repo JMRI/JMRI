@@ -21,7 +21,7 @@ import jmri.jmrix.powerline.X10Sequence;
  * </ul>
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008, 2009
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
 public class SpecificMessage extends SerialMessage {
@@ -218,13 +218,13 @@ public class SpecificMessage extends SerialMessage {
         m.setElement(3,Integer.parseInt(b1, 16));
         m.setElement(4,Integer.parseInt(b2, 16));
         m.setElement(5,0x0F);
-        if (function == 2) {
+        if ((function == 2) | (function == 4) | (function == 5)) {
             m.setElement(6,0x11);
         } else {
             m.setElement(6,0x13);
         }
         if (dimcode > 0) {
-        	m.setElement(7, 0x50);
+        	m.setElement(7, Integer.parseInt(Integer.toHexString(dimcode), 16));
         } else {
         	m.setElement(7, 0x00);
         }
