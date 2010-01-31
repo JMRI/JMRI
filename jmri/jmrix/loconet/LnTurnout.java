@@ -36,7 +36,7 @@ import jmri.implementation.AbstractTurnout;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
  
  public class LnTurnout extends AbstractTurnout implements LocoNetListener {
@@ -91,16 +91,17 @@ import jmri.implementation.AbstractTurnout;
      protected void forwardCommandChangeToLayout(int s) {
          
          //deal with inversion
-         s = adjustStateForInversion(s);
-         
+         final int newstate = adjustStateForInversion(s);
+
          // send SWREQ for close/thrown ON
-         sendOpcSwReqMessage(s, true);
+         sendOpcSwReqMessage(newstate, true);
          // schedule SWREQ for closed/thrown off, unless in basic mode
          if (!binaryOutput) {
              meterTimer.schedule(new java.util.TimerTask(){
+                int state = newstate;
                 public void run() {
                     try {
-                        sendSetOffMessage();
+                        sendSetOffMessage(state);
                     } catch (Exception e) {
                         log.error("Exception occured while sending delayed off to turnout: "+e);
                     }
@@ -146,11 +147,13 @@ import jmri.implementation.AbstractTurnout;
          this.controller.sendLocoNetMessage(l);
     }
     
+    boolean pending = false;
+    
     /**
      * Set the turnout OFF, e.g. after a timeout
      */
-    void sendSetOffMessage() {
-        sendOpcSwReqMessage(adjustStateForInversion(getCommandedState()), false);
+    void sendSetOffMessage(int state) {
+        sendOpcSwReqMessage(adjustStateForInversion(state), false);
     }
     
      // implementing classes will typically have a function/listener to get
@@ -299,7 +302,7 @@ import jmri.implementation.AbstractTurnout;
          
      }
      
-     static public int METERINTERVAL = 150;
+     static public int METERINTERVAL = 100;  // msec wait before closed
      static java.util.Timer meterTimer = new java.util.Timer(true);
      
      static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnTurnout.class.getName());
