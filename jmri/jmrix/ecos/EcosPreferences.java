@@ -10,7 +10,7 @@ import jmri.implementation.QuietShutDownTask;
  * with JMRI.
  *
  * @author	Kevin Dickerson  Copyright (C) 2009
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 
 public class EcosPreferences {
@@ -40,9 +40,12 @@ public class EcosPreferences {
     }
     
     ShutDownTask ecosPreferencesShutDownTask = null;
-    
+
+    @SuppressWarnings("unused")
     private static final int ASK = 0x00; // ie always ask the question
+    @SuppressWarnings("unused")
     private static final int NO = 0x01; //ie never do the operation
+    @SuppressWarnings("unused")
     private static final int YES = 0x02; //ie always perform the operation
     
     private static boolean _changeMade = false;
