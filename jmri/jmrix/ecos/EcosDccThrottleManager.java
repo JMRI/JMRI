@@ -3,6 +3,8 @@ package jmri.jmrix.ecos;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
+import java.util.ArrayList;
+import jmri.ThrottleListener;
 
 import jmri.jmrix.AbstractThrottleManager;
 
@@ -13,7 +15,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @author	    Bob Jacobsen  Copyright (C) 2001, 2005
  * @author Modified by Kevin Dickerson
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class EcosDccThrottleManager extends AbstractThrottleManager implements EcosListener{
 
@@ -22,6 +24,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
      */
     public EcosDccThrottleManager() {
         super();
+        if (mInstance==null) mInstance = this;
 
     }
 
@@ -40,9 +43,12 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
     }
 
     public void requestThrottleSetup(LocoAddress address) {
-
+        /*Here we do not set notifythrottle, we simply create a new ecos throttle.
+        The ecos throttle in turn will notify the throttle manager of a successful or
+        unsuccessful throttle connection. */
         log.debug("new EcosDccThrottle for "+address);
-        notifyThrottleKnown(new EcosDccThrottle((DccLocoAddress)address), address);
+        new EcosDccThrottle((DccLocoAddress)address);
+        //notifyThrottleKnown(new EcosDccThrottle((DccLocoAddress)address), address);
     }
     
     public boolean hasDispatchFunction() { return false; }
@@ -66,6 +72,8 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
      */
     public boolean addressTypeUnique() { return true; }
 
+    protected boolean singleUse() { return false; }
+
     /*
      * Local method for deciding short/long address
      */
@@ -76,7 +84,20 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
     public int supportedSpeedModes() {
     	return(DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
         }
-
+        
+    public void throttleSetup(EcosDccThrottle throttle, LocoAddress address, boolean result){
+        /* this is called by the ecosdccthrottle, to inform the manager if it has successfully gained
+        control of a loco, when setting up the throttle.*/
+        if (result){
+            log.debug("Ecos Throttle has control over loco "+address);
+            notifyThrottleKnown(throttle, address);
+        }
+        else {
+            log.debug("Ecos Throttle has NO control over loco "+address);
+            failedThrottleRequest((DccLocoAddress) address);
+        }
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosDccThrottleManager.class.getName());
 
 }

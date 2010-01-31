@@ -1,46 +1,48 @@
 package jmri.jmrix.ecos.utilities;
 
-import java.util.List;
-
-import jmri.jmrit.decoderdefn.DecoderFile;
-import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrix.ecos.*;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrix.ecos.EcosListener;
-import jmri.jmrix.ecos.EcosLocoAddress;
-import jmri.jmrix.ecos.EcosLocoAddressManager;
-import jmri.jmrix.ecos.EcosMessage;
-import jmri.jmrix.ecos.EcosPreferences;
-import jmri.jmrix.ecos.EcosReply;
-import jmri.jmrix.ecos.EcosTrafficController;
+import jmri.jmrit.decoderdefn.*;
 
 public class RosterToEcos implements EcosListener{
 
-    private EcosLocoAddress objEcosLoco;
+    private EcosLocoAddress objEcosLoco=null;
     private EcosLocoAddressManager objEcosLocoManager;
-    private RosterEntry _re;
+    protected RosterEntry _re = null;
     private EcosPreferences ep;
+    //private String _rosterid;
     EcosTrafficController tc;
+    private boolean createloco;
     
     DecoderIndexFile decoderind = DecoderIndexFile.instance();
-    public RosterToEcos(){ }
+    
+    public RosterToEcos() { }
 
     public void createEcosLoco(RosterEntry re) {
+        if (createloco==true)
+            return;
+        createloco = true;
         tc = EcosTrafficController.instance();
         ep = EcosPreferences.instance();
         _re = re;
-        objEcosLocoManager = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+//<<<<<<< RosterToEcos.java
+
+        //objEcosLocoManager = jmri.jmrix.ecos.EcosLocoAddressManager.instance();
+		objEcosLocoManager = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+/*=======
+        
         //We go on a hunt to find an object with the dccaddress sent by our controller.
         
     
         objEcosLoco = objEcosLocoManager.provideByDccAddress(Integer.valueOf(re.getDccAddress()).intValue());
         List<DecoderFile> decoder = decoderind.matchingDecoderList(null, re.getDecoderFamily(), null, null, null, re.getDecoderModel());
         System.out.println(decoder);
+>>>>>>> 1.3*/
     
         tc = EcosTrafficController.instance();
-        //objEcosLoco.setDescription(description);
-        //objEcosLoco.
-        String message = "create(10, addr[" + re.getDccAddress() + "], name[\""+ description() +"\"], protocol["+ ep.getDefaultEcosProtocol()+"], append)";
-        System.out.println(message);
+
+        String message = "create(10, addr[" + _re.getDccAddress() + "], name[\""+ description() +"\"], protocol["+ ep.getDefaultEcosProtocol()+"], append)";
+
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
     
@@ -50,7 +52,7 @@ public class RosterToEcos implements EcosListener{
     
         String result ="";
         String str = ep.getEcosLocoDescription();
-        if (str==null){
+        if ((str==null) || (str.equals(""))){
             return _re.getId();
         }
         char comp = '%';
@@ -68,7 +70,6 @@ public class RosterToEcos implements EcosListener{
                 result = result + str.charAt(i);
             }
         }
-        System.out.println(result);
         return result;
     
     }
@@ -82,18 +83,25 @@ public class RosterToEcos implements EcosListener{
         String[] lines = msg.split("\n");
         if (lines[lines.length-1].contains("<END 0 (OK)>")){
             if (lines[0].startsWith("<REPLY create(10, addr")){
+                //System.out.println(msg);
                 for(int i =1; i<lines.length-1; i++) {
                     if(lines[i].contains("10 id[")){
+
                         start = lines[i].indexOf("[")+1;
                         end = lines[i].indexOf("]");
                         String EcosAddr = lines[i].substring(start, end);
-                        objEcosLoco.setEcosObject(EcosAddr);
-                        objEcosLocoManager.deregister(objEcosLoco);
-                        objEcosLocoManager.register(objEcosLoco);
+                        objEcosLoco = objEcosLocoManager.provideByEcosObject(EcosAddr);
                         objEcosLoco.setEcosTempEntry(false);
                         _re.putAttribute("EcosObject", EcosAddr);
                         objEcosLoco.setRosterId(_re.getId());
                         objEcosLoco.setEcosDescription(description());
+                        objEcosLoco.setEcosLocoAddress(Integer.parseInt(_re.getDccAddress()));
+                        objEcosLoco.setProtocol(ep.getDefaultEcosProtocol());
+                        _re.writeFile(null, null, null);
+                        jmri.jmrit.roster.Roster.instance().writeRosterFile();
+                        objEcosLocoManager.register(objEcosLoco);
+                        createloco = false;
+                        dispose();
                     }
                 }
             }
@@ -102,5 +110,13 @@ public class RosterToEcos implements EcosListener{
     
     public void message(EcosMessage m){
         
-    }    
+    }
+    void dispose(){
+        objEcosLoco = null;
+        objEcosLocoManager = null;
+        _re = null;
+        createloco = false;        
+    }
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterToEcos.class.getName());
 }

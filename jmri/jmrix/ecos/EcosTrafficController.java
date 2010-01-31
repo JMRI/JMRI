@@ -3,6 +3,7 @@
 package jmri.jmrix.ecos;
 
 import jmri.CommandStation;
+import java.util.List;
 
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -23,7 +24,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface, CommandStation {
 
@@ -124,9 +125,11 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     
     protected boolean unsolicitedSensorMessageSeen = false;
     
+    //Ecos doesn't support this function.
     protected AbstractMRMessage enterProgMode() {
         return EcosMessage.getProgMode();
     }
+    //Ecos doesn't support this function!
     protected AbstractMRMessage enterNormalMode() {
         return EcosMessage.getExitProgMode();
     }
@@ -142,6 +145,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
             self = new EcosTrafficController();
             // set as command station too
             jmri.InstanceManager.setCommandStation(self);
+            self.setAllowUnexpectedReply(true);
         }
         return self;
     }
@@ -180,6 +184,118 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return false;
     }
     
+    // Override the finalize method for this class
+    
+    public boolean sendWaitMessage(EcosMessage m, AbstractMRListener reply){
+        if(log.isDebugEnabled()) log.debug("Send a message and wait for the response");
+        if (ostream == null) return false;
+        m.setTimeout(500);
+        m.setRetries(100);
+        synchronized(getSelfLock()) {
+                forwardToPort(m, reply);
+                // wait for reply
+                try {
+                    if (xmtRunnable!=null)
+                        synchronized(xmtRunnable) {
+                            xmtRunnable.wait(m.getTimeout());
+                        }
+                } catch (InterruptedException e) { 
+                    Thread.currentThread().interrupt(); // retain if needed later
+                    log.error("transmit interrupted"); 
+                    return false;
+                }
+            }
+        return true;
+    }
+
+    protected void finalize() {
+        if(log.isDebugEnabled()) log.debug("Cleanup Starts");
+        if (ostream == null) return;    // no connection established
+        EcosPreferences p = EcosPreferences.instance();
+        if (p.getAdhocLocoFromEcos()==0x01) return; //Just a double check that we can delete locos
+        //AbstractMRMessage modeMsg=enterNormalMode();
+        AbstractMRMessage modeMsg;
+        List<String> en;
+        String ecosObject;
+
+        modeMsg =  new EcosMessage("release(10, view)");
+        modeMsg.setTimeout(50);
+        modeMsg.setRetries(100);
+        synchronized(getSelfLock()) {
+            forwardToPort(modeMsg, null);
+            // wait for reply
+            try {
+                if (xmtRunnable!=null)
+                    synchronized(xmtRunnable) {
+                        xmtRunnable.wait(modeMsg.getTimeout());
+                    }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // retain if needed later
+                log.error("transmit interrupted");
+            }
+        }
+
+        EcosTurnoutManager objEcosTurnManager = jmri.jmrix.ecos.EcosTurnoutManager.instance();
+        en = objEcosTurnManager.getEcosObjectList();
+        for(int i = 0; i<en.size(); i++) {
+            ecosObject = en.get(i);
+            modeMsg = new EcosMessage("release("+ecosObject+", view)");
+            modeMsg.setTimeout(50);
+            modeMsg.setRetries(100);
+            synchronized(getSelfLock()) {
+                forwardToPort(modeMsg, null);
+                // wait for reply
+                try {
+                    if (xmtRunnable!=null)
+                        synchronized(xmtRunnable) {
+                            xmtRunnable.wait(modeMsg.getTimeout());
+                        }
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt(); // retain if needed later
+                    log.error("transmit interrupted");
+                }
+            }
+        }
+
+        //EcosLocoAddressManager objEcosLocoManager = jmri.jmrix.ecos.EcosLocoAddressManager.instance();
+        EcosLocoAddressManager objEcosLocoManager = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+        en = objEcosLocoManager.getEcosObjectList();
+        for(int i = 0; i<en.size(); i++) {
+            ecosObject = en.get(i);
+            //we only delete locos if they were a temp entry.
+            if(objEcosLocoManager.getByEcosObject(ecosObject).getEcosTempEntry()) {
+                /*The ecos can be funny in not providing control on the first request, plus we have no way to determine if we have
+                therefore we send the request twice and hope we have control, failure not to have control isn't a problem as the loco
+                will simply be left on the ecos.*/
+                for(int x = 0; x<4; x++){
+                    switch (x) {
+                        case 3 : modeMsg = new EcosMessage("delete("+ecosObject+")");
+                                 break;
+                        case 2 : modeMsg = new EcosMessage("set("+ecosObject+", stop)");
+                                 break;
+                        default : modeMsg = new EcosMessage("request("+ecosObject+",control)");
+                                 break;
+                    }
+                    modeMsg.setTimeout(50);
+                    modeMsg.setRetries(100);
+                    synchronized(getSelfLock()) {
+                        forwardToPort(modeMsg, null);
+                        // wait for reply
+                        try {
+                            if (xmtRunnable!=null)
+                                synchronized(xmtRunnable) {
+                                    xmtRunnable.wait(modeMsg.getTimeout());
+                                }
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt(); // retain if needed later
+                            log.error("transmit interrupted");
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosTrafficController.class.getName());
 }
 

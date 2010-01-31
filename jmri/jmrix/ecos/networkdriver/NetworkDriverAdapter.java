@@ -16,7 +16,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class NetworkDriverAdapter extends EcosPortController {
 
@@ -39,6 +39,9 @@ public class NetworkDriverAdapter extends EcosPortController {
         jmri.InstanceManager.store(
                 new jmri.jmrix.ecos.EcosLocoAddressManager(),
                 jmri.jmrix.ecos.EcosLocoAddressManager.class);
+
+        //jmri.jmrix.ecos.EcosLocoAddressManager.instance();
+        jmri.jmrix.ecos.EcosPreferences.instance();
 
         /*jmri.InstanceManager.store(
                 new jmri.jmrix.ecos.EcosPreferences(),

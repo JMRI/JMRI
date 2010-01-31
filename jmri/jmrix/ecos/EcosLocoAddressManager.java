@@ -1,78 +1,122 @@
 
 package jmri.jmrix.ecos;
 
-import java.util.Enumeration;
+import jmri.jmrix.ecos.utilities.*;
 
+import java.util.Enumeration;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.Component;
+import jmri.ShutDownTask;
+import jmri.implementation.QuietShutDownTask;
 
 /**
  * Managers the Ecos Loco entries within JMRI.
  * @author Kevin Dickerson
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class EcosLocoAddressManager implements java.beans.PropertyChangeListener, EcosListener{
 
     protected static Hashtable <String, EcosLocoAddress> _tecos = new Hashtable<String, EcosLocoAddress>();   // stores known Ecos Object ids to DCC
-    protected static Hashtable <Integer, EcosLocoAddress> _tdcc = new Hashtable<Integer, EcosLocoAddress>();
+    protected static Hashtable <Integer, EcosLocoAddress> _tdcc = new Hashtable<Integer, EcosLocoAddress>();  // stores known DCC Address to Ecos Object ids
 
     public char systemLetter() { return 'U'; }
     public char typeLetter() { return 'Z'; }
 
-    private EcosLocoAddress l;
+    private static RosterEntry _re;
+    private static boolean addLocoToRoster = false;
 
-    public EcosLocoAddressManager(){
-         if (jmri.InstanceManager.configureManagerInstance()!=null) {
-            jmri.InstanceManager.configureManagerInstance().registerConfig(this);
-         }
-        tc = EcosTrafficController.instance();
-        tc.addEcosListener(this);
-        // ask to be notified
-        // We won't look to add new locos created on the ecos yet this can be added in at a later date.
-        /*EcosMessage m = new EcosMessage("request(10, view)");
-        tc.sendEcosMessage(m, this);*/
-
-        EcosMessage m = new EcosMessage("queryObjects(10, addr, name)");
-        tc.sendEcosMessage(m, this);
-        
-        //We want to keep an eye on locos being created on the ecos, even if they are done so by JMRI.
-        //Not sure what is going on here need to look at it properly
-        m = new EcosMessage("request(10, view)");
-        tc.sendEcosMessage(m, this);
-
-        //if (mInstance!=null) log.warn("Creating too many objects");
-        //mInstance = this;
-
-
+    public void clearLocoToRoster(){
+        addLocoToRoster = false;
     }
-    EcosTrafficController tc;
+    
+    public void setLocoToRoster(){
+        addLocoToRoster = true;
+    }
+    
+    public boolean getLocoToRoster(){
+        return addLocoToRoster;
+    }
+    EcosPreferences p = EcosPreferences.instance();
+    
+    ShutDownTask ecosLocoShutDownTask;
 
+    /*public EcosLocoAddressManager(){
+        if (jmri.InstanceManager.configureManagerInstance()!=null) {
+            jmri.InstanceManager.configureManagerInstance().registerConfig(this);
+        }
+    }*/
+    
+    public EcosLocoAddressManager(){
+        if (jmri.InstanceManager.configureManagerInstance()!=null) {
+            jmri.InstanceManager.configureManagerInstance().registerConfig(this);
+        }
+        if (_instance == null) {
+            _instance = this;
+            _instance.loadEcosData();
+        }
+    }
+    /*
+//        _instance = this;
+
+
+        if (_instance==null){
+            final EcosLocoAddressManager ecosLocoMan = (EcosLocoAddressManager)jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+            tc = EcosTrafficController.instance();
+            tc.addEcosListener(this);
+
+            Roster.instance().addPropertyChangeListener(this);
+
+            EcosMessage m = new EcosMessage("request(10, view)");
+            boolean result = tc.sendWaitMessage(m, this);
+
+            m = new EcosMessage("queryObjects(10, addr, name, protocol)");
+            tc.sendEcosMessage(m, this);
+            
+            if (ecosLocoShutDownTask==null) {
+                ecosLocoShutDownTask = new QuietShutDownTask("Ecos Loco Database Shutdown") {
+                    @Override
+                    public boolean doAction(){
+                        return dispose();
+                    }
+                };
+            }
+            if (jmri.InstanceManager.shutDownManagerInstance() !=null){
+                jmri.InstanceManager.shutDownManagerInstance().register(ecosLocoShutDownTask);
+            }
+        }
+        
+    }*/
+    
+    EcosTrafficController tc;
+    
     public EcosLocoAddress provideEcosLoco(String EcosObject, int DCCAddress) {
-        //EcosLocoAddress l;
-        l = getByEcosObject(EcosObject);
+        EcosLocoAddress l = getByEcosObject(EcosObject);
         if (l!=null) return l;
         l = new EcosLocoAddress(DCCAddress);
         l.setEcosObject(EcosObject);
         register(l);
         return l;
     }
+    
     public EcosLocoAddress provideByDccAddress(int dccAddress) {
-        //EcosLocoAddress l;
-        l = getByDccAddress(dccAddress);
+        EcosLocoAddress l = getByDccAddress(dccAddress);
         //Loco doesn't exist, so we shall create it.
         if (l!=null) return l;
         
         l = new EcosLocoAddress(dccAddress);
         register(l);
-        //return (EcosLocoAddress)_tdcc.get(dccAddress);
         return _tdcc.get(dccAddress);
     }
     
     public EcosLocoAddress provideByEcosObject(String ecosObject) {
-        //EcosLocoAddress l;
-        l = getByEcosObject(ecosObject);
+        EcosLocoAddress l = getByEcosObject(ecosObject);
         //Loco doesn't exist, so we shall create it.
         if (l!=null) return l;
         
@@ -119,11 +163,43 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
     }
 
     protected static EcosLocoAddressManager _instance = null;
-    static public synchronized EcosLocoAddressManager instance() {
+    /*public static synchronized EcosLocoAddressManager instance() {
         if (_instance == null) {
             _instance = new EcosLocoAddressManager();
+            _instance.loadEcosData();
         }
         return (_instance);
+    }*/
+    
+    private void loadEcosData(){
+
+        final EcosLocoAddressManager ecosLocoMan = (EcosLocoAddressManager)jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+        tc = EcosTrafficController.instance();
+        tc.addEcosListener(this);
+
+        Roster.instance().addPropertyChangeListener(this);
+
+        EcosMessage m = new EcosMessage("request(10, view)");
+        boolean result = tc.sendWaitMessage(m, this);
+
+        m = new EcosMessage("queryObjects(10, addr, name, protocol)");
+        tc.sendEcosMessage(m, this);
+        
+        if (ecosLocoShutDownTask==null) {
+            ecosLocoShutDownTask = new QuietShutDownTask("Ecos Loco Database Shutdown") {
+                @Override
+                public boolean doAction(){
+                    return dispose();
+                }
+            };
+        }
+        if (jmri.InstanceManager.shutDownManagerInstance() !=null){
+            jmri.InstanceManager.shutDownManagerInstance().register(ecosLocoShutDownTask);
+        }
+    }
+    
+    public void deleteEcosLoco(EcosLocoAddress s){
+        deregister(s);
     }
 
     public void register(EcosLocoAddress s) {
@@ -133,11 +209,11 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
 
         if(ecosObject !=null){
             _tecos.put(ecosObject, s);
+            firePropertyChange("length", null, new Integer(_tecos.size()));
         }
 
         int dccAddress = s.getEcosLocoAddress();
         _tdcc.put(dccAddress, s);
-        firePropertyChange("length", null, new Integer(_tecos.size()));
         firePropertyChange("length", null, new Integer(_tdcc.size()));
         // listen for name and state changes to forward
         s.addPropertyChangeListener(this);
@@ -161,13 +237,100 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
     }
     
     
-    public void dispose() {
+    private boolean disposefinal(){
         if (jmri.InstanceManager.configureManagerInstance()!= null)
             jmri.InstanceManager.configureManagerInstance().deregister(this);
         _tecos.clear();
         _tdcc.clear();
+        return true;
     }
+    
+    private boolean dispose(){
+        //System.out.println("checkTemporaryEntries()");
+        boolean hasTempEntries = false;
+        //List<String> list = getEcosObjectList();
+        Enumeration<String> en = _tecos.keys();
+        int i=0;
+        _tdcc.clear();
+        //This will remove/deregister non-temporary locos from the list.
+        while (en.hasMoreElements()) {
+            String ecosObject = en.nextElement();
+            if(_tecos.get(ecosObject).getEcosTempEntry())
+                hasTempEntries=true;
+            else {
+                deregister(getByEcosObject(ecosObject));
+                _tecos.remove(ecosObject);
+            }
+        }
+        
+        final EcosPreferences p = EcosPreferences.instance();
 
+        boolean result;
+        if(p.getAdhocLocoFromEcos()==0x01){
+            disposefinal();
+        } else if (!hasTempEntries) {
+            disposefinal();
+        }
+        else if((hasTempEntries) && (p.getAdhocLocoFromEcos()==0x00)){
+
+            final JDialog dialog = new JDialog();
+            dialog.setTitle("Remove Loco From ECoS?");
+            //test.setSize(300,130);
+            dialog.setLocation(300,200);
+            dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            JPanel container = new JPanel();
+            container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+            container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+            JLabel question = new JLabel("A number of locos have been created on the Ecos for temporary use");
+            question.setAlignmentX(Component.CENTER_ALIGNMENT);
+            container.add(question);
+            question = new JLabel("Do you want these locos removed from the Ecos?");
+            question.setAlignmentX(Component.CENTER_ALIGNMENT);
+            container.add(question);
+            final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+            remember.setFont(remember.getFont().deriveFont(10f));
+            remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+            //user preferences do not have the save option, but once complete the following line can be removed
+            //Need to get the method to save connection configuration.
+            remember.setVisible(true);
+            JButton yesButton = new JButton("Yes");
+            JButton noButton = new JButton("No");
+            JPanel button = new JPanel();
+            button.setAlignmentX(Component.CENTER_ALIGNMENT);
+            button.add(yesButton);
+            button.add(noButton);
+            container.add(button);
+            
+            noButton.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e) {
+                    if(remember.isSelected()){
+                        p.setAdhocLocoFromEcos(0x01);
+                    }
+                    disposefinal();
+                    dialog.dispose();
+                }
+            });
+            
+            yesButton.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e) {
+                    if(remember.isSelected()) {
+                        p.setAdhocLocoFromEcos(0x02);
+                    }
+                    dialog.dispose();
+                }
+            });
+            container.add(remember);
+            container.setAlignmentX(Component.CENTER_ALIGNMENT);
+            container.setAlignmentY(Component.CENTER_ALIGNMENT);
+            dialog.getContentPane().add(container);
+            dialog.pack();
+            dialog.setModal(true);
+            dialog.setVisible(true);
+        }
+        return true;
+    }
+    
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
@@ -179,28 +342,170 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
 
         /**
      * The PropertyChangeListener interface in this class is
-     * intended to keep track of user name changes to individual NamedBeans.
-     * It is not completely implemented yet. In particular, listeners
-     * are not added to newly registered objects.
+     * intended to keep track of roster entries and sync them up
+     * with the Ecos.
      */
     public void propertyChange(java.beans.PropertyChangeEvent e) {
+        
+        //If we are adding the loco to the roster from the ecos, we don't want to be adding it back to the ecos!
+        if(getLocoToRoster()) return;
+        if (e.getPropertyName().equals("add")){
+            _re = (RosterEntry) e.getNewValue();
 
+        } else if (e.getPropertyName().equals("saved")) {
+            if (_re!=null){
+                if (_re.getAttribute("EcosObject")!=null){
+                    _re = null;
+                    return;
+                }
+                //if the ecosobject attribute exists this would then indicate that it has already been created on the ecos
+                if (p.getAddLocoToEcos()==0x00){
+                    final JDialog dialog = new JDialog();
+                    dialog.setTitle("Add Loco to the ECoS?");
+                    //test.setSize(300,130);
+                    dialog.setLocation(300,200);
+                    dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                    JPanel container = new JPanel();
+                    container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+                    container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+                    JLabel question = new JLabel("Do you also want to add " + _re.getId() + " to the Ecos?");
+                    question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    container.add(question);
+                    final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                    remember.setFont(remember.getFont().deriveFont(10f));
+                    remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    //user preferences do not have the save option, but once complete the following line can be removed
+                    //Need to get the method to save connection configuration.
+                    remember.setVisible(true);
+                    JButton yesButton = new JButton("Yes");
+                    JButton noButton = new JButton("No");
+                    JPanel button = new JPanel();
+                    button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    button.add(yesButton);
+                    button.add(noButton);
+                    container.add(button);
+
+                    noButton.addActionListener(new ActionListener(){
+                        public void actionPerformed(ActionEvent e) {
+                            if(remember.isSelected()){
+                                p.setAddLocoToEcos(0x01);
+                            }
+                            _re=null;
+                            dialog.dispose();
+                        }
+                    });
+
+                    yesButton.addActionListener(new ActionListener(){
+                        public void actionPerformed(ActionEvent e) {
+                            if(remember.isSelected()) {
+                                p.setAddLocoToEcos(0x02);
+                            }
+                            RosterToEcos rosterToEcos = new RosterToEcos();
+                            rosterToEcos.createEcosLoco(_re);
+                            _re = null;
+                            dialog.dispose();
+                        }
+                    });
+                    container.add(remember);
+                    container.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    container.setAlignmentY(Component.CENTER_ALIGNMENT);
+                    dialog.getContentPane().add(container);
+                    dialog.pack();
+                    dialog.setModal(true);
+                    dialog.setVisible(true);
+                }
+                if(p.getAddLocoToEcos()==0x02){
+                    RosterToEcos rosterToEcos = new RosterToEcos();
+                    rosterToEcos.createEcosLoco(_re);
+                    _re = null;
+                }
+            }
+        } else if (e.getPropertyName().equals("remove")){
+            _re = (RosterEntry) e.getNewValue();
+            if (_re.getAttribute("EcosObject")!=null){
+                if (p.getRemoveLocoFromEcos()==0x02){
+                    RemoveObjectFromEcos removeObjectFromEcos = new RemoveObjectFromEcos();
+                    removeObjectFromEcos.removeObjectFromEcos(_re.getAttribute("EcosObject"));
+                    deleteEcosLoco(provideByEcosObject(_re.getAttribute("EcosObject")));
+                } else {
+                    final JDialog dialog = new JDialog();
+                    dialog.setTitle("Remove Loco From ECoS?");
+                    //test.setSize(300,130);
+                    dialog.setLocation(300,200);
+                    dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                    JPanel container = new JPanel();
+                    container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+                    container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+                    JLabel question = new JLabel("Do you also want to remove this loco from the Ecos");
+                    question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    container.add(question);
+                    final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                    remember.setFont(remember.getFont().deriveFont(10f));
+                    remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    //user preferences do not have the save option, but once complete the following line can be removed
+                    //Need to get the method to save connection configuration.
+                    remember.setVisible(true);
+                    JButton yesButton = new JButton("Yes");
+                    JButton noButton = new JButton("No");
+                    JPanel button = new JPanel();
+                    button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    button.add(yesButton);
+                    button.add(noButton);
+                    container.add(button);
+
+                    noButton.addActionListener(new ActionListener(){
+                        public void actionPerformed(ActionEvent e) {
+                            if(remember.isSelected()){
+                                p.setRemoveLocoFromEcos(0x01);
+                            }
+                            provideByEcosObject(_re.getAttribute("EcosObject")).setRosterId(null);
+                            dialog.dispose();
+                        }
+                    });
+
+                    yesButton.addActionListener(new ActionListener(){
+                        public void actionPerformed(ActionEvent e) {
+                            if(remember.isSelected()) {
+                                p.setRemoveLocoFromEcos(0x02);
+                            }
+                            RemoveObjectFromEcos removeObjectFromEcos = new RemoveObjectFromEcos();
+                            removeObjectFromEcos.removeObjectFromEcos(_re.getAttribute("EcosObject"));
+                            deleteEcosLoco(provideByEcosObject(_re.getAttribute("EcosObject")));
+                            dialog.dispose();
+                        }
+                    });
+                    container.add(remember);
+                    container.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    container.setAlignmentY(Component.CENTER_ALIGNMENT);
+                    dialog.getContentPane().add(container);
+                    dialog.pack();
+                    dialog.setModal(true);
+                    dialog.setVisible(true);
+                }
+            }
+            _re=null;
+        }
     }
 
     public void reply(EcosReply m) {
     // is this a list of Locos?
-        int startval;
-        int endval;
-        int addr;
-        String description;
-        String protocol;
+        //int startval;
+        //int endval;
+        //int addr;
+        //String description;
+        //String protocol;
         String strde;
         String msg = m.toString();
         String[] lines = msg.split("\n");
         log.debug("found "+(lines.length)+" response from Ecos");
         if (lines[lines.length-1].contains("<END 0 (OK)>")){
             //This needs restructuring it processes the list of locos
-            if (lines[0].startsWith("<REPLY queryObjects(10")){
+            if (lines[0].startsWith("<REPLY queryObjects(10)>")){
+                //System.out.println("A return of a simple list of objects");
+                checkLocoList(lines);
+            } else if (lines[0].startsWith("<REPLY queryObjects(10")){
                 //First line is the response header, the last line is the OK
                 for (int i = 1; i<lines.length-1; i++) {
                     if (lines[i].contains("addr[")) { // skip odd lines
@@ -211,71 +516,245 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
                         int object = Integer.parseInt(strde);
                         if ( (1000<=object) && (object<2000)) {
                             tmploco = provideByEcosObject(strde);
-                            getEcosCVs(tmploco);
+                            if(tmploco.getCV7()==null){
+                                tmploco.setCV7("0");
+                                getEcosCVs(tmploco);
+                            }
                         } else return;
                         if (lines[i].contains("addr")){
-                            startval=lines[i].indexOf("addr[")+5;
-                            endval=(lines[i].substring(startval)).indexOf("]")+startval;
-                            addr = Integer.parseInt(lines[i].substring(startval, endval));
-                            tmploco.setEcosLocoAddress(addr);
+                            tmploco.setEcosLocoAddress(GetEcosObjectNumber.getEcosObjectNumber(lines[i], "addr[", "]"));
                         }
                         if (lines[i].contains("name")){
-                            startval=lines[i].indexOf("name[")+6;
-                            endval=(lines[i].substring(startval)).indexOf("]")+startval-1;
-                            description=lines[i].substring(startval, endval);
-                            tmploco.setEcosDescription(description);
+                            tmploco.setEcosDescription(getName(lines[i]));
                         }
                         if (lines[i].contains("protocol")){
-                            startval=lines[i].indexOf("protocol[")+9;
-                            endval=(lines[i].substring(startval)).indexOf("]")+startval;
-                            protocol=lines[i].substring(startval, endval);
-                            tmploco.setProtocol(protocol);
+                            tmploco.setProtocol(getProtocol(lines[i]));
                         }
                         register(tmploco);
-
                      }
                 }
             }
-            //Don't think that the reply create bit is used here, need to check!
-            else if (lines[0].startsWith("<REPLY create(10, addr")){
+            //the locoAddressManager doesn't handle the creation of locos
+            /*else if (lines[0].startsWith("<REPLY create(10, addr")){
                 for(int i =1; i<lines.length-1; i++) {
                     if(lines[i].contains("10 id[")){
                         int start = lines[i].indexOf("[")+1;
                         int end = lines[i].indexOf("]");
                         String EcosAddr = lines[i].substring(start, end);
+                        System.out.println(EcosAddr + " " + lines[i]);
                         l.setEcosObject(EcosAddr);
                         register(l);
                     }
                 }
-            }
+            }*/
             //Need to really check if this all fits together correctly!  Might need to get the loco id from the reply string to
             //identify the loco correctly
             else if (lines[0].startsWith("<REPLY get(")){
-                startval=lines[0].indexOf("(")+1;
-                endval=(lines[0].substring(startval)).indexOf(",")+startval;
                 EcosLocoAddress tmploco;
-                //The first part of the messages is always the object id.
-                Integer.parseInt(lines[0].substring(startval, endval));
-                int object = Integer.parseInt(lines[0].substring(startval, endval));
+
+                int object = GetEcosObjectNumber.getEcosObjectNumber(lines[0], "(", ",");
                 if ( (1000<=object) && (object<2000)) {
-                    tmploco = provideByEcosObject(lines[0].substring(startval, endval));
+                    tmploco = provideByEcosObject(""+object);
+                    if(tmploco.getCV7()==null){
+                        tmploco.setCV7("0");
+                        getEcosCVs(tmploco);
+                    }
                 } else return;
                 for(int i =1; i<lines.length-1; i++) {
-                    if(lines[i].contains("cv[8")){
-                        int start = lines[i].indexOf(", ")+2;
-                        int end = lines[i].indexOf("]");
-                        tmploco.setCV8(lines[i].substring(start, end));
+                    if(lines[i].contains("cv[")){
+                        int startcvnum = lines[i].indexOf("[")+1;
+                        int endcvnum = (lines[i].substring(startcvnum)).indexOf(",")+startcvnum;
+                        int cvnum = Integer.parseInt(lines[i].substring(startcvnum, endcvnum));
+                        
+                        int startcvval = (lines[i].substring(endcvnum)).indexOf(", ")+endcvnum+2;
+                        int endcvval = (lines[i].substring(startcvval)).indexOf("]")+startcvval;
+                        String cvval = lines[i].substring(startcvval, endcvval);
+                        switch(cvnum){
+                            case 7 :    tmploco.setCV7(cvval);
+                                        break;
+                            case 8  :   tmploco.setCV8(cvval);
+                                        //System.out.println(tmploco.getEcosDescription());
+                                        checkInRoster(tmploco);
+                                        break;
+                        }
                     }
-                    if(lines[i].contains("cv[7")){
-                        int start = lines[i].indexOf(", ")+2;
-                        int end = lines[i].indexOf("]");
-                        tmploco.setCV7(lines[i].substring(start, end));
+                    if (lines[i].contains("addr")){
+                        tmploco.setEcosLocoAddress(GetEcosObjectNumber.getEcosObjectNumber(lines[i], "addr[", "]"));
+                        //tmploco.setEcosLocoAddress(getAddress(lines[i]));
                     }
+                    if (lines[i].contains("name")){
+                        tmploco.setEcosDescription(getName(lines[i]));
+                    }
+                    if (lines[i].contains("protocol")){
+                        tmploco.setProtocol(getProtocol(lines[i]));
+                    }
+                    register(tmploco);
+                }
 
+                /*if((p.getAddLocoToJMRI()==0x02) && addLocoToRoster){
+                    EcosLocoToRoster addLoco = new EcosLocoToRoster();
+                    addLoco.ecosLocoToRoster(""+object);
+                    //System.out.println("Code here to Add a loco to JMRI");
+                    //return;
+                }*/
+            } else if(lines[0].contains("<EVENT 10>")){
+                //System.out.println("We have a change in the loco database");
+                log.debug("We have received notification of a change in the Loco list");
+                if (lines.length==2){
+                    EcosMessage mout = new EcosMessage("queryObjects(10)");
+                    tc.sendEcosMessage(mout, this);
+                    //Version 3.0.1 of the software has an issue in that it stops sending updates on the 
+                    //loco objects when a delete has happened, we therefore need to release the old view
+                    //then re-request it.
+                    mout = new EcosMessage("release(10, view)");
+                    tc.sendEcosMessage(mout, this);
+                    mout = new EcosMessage("request(10, view)");
+                    tc.sendEcosMessage(mout, this);
+                } else if (lines[1].contains("msg[LIST_CHANGED]")){
+                    EcosMessage mout = new EcosMessage("queryObjects(10)");
+                    tc.sendEcosMessage(mout, this);
                 }
             }
         }
     }
+    
+    String getName(String line){
+        int startval;
+        int endval;
+        startval=line.indexOf("name[")+6;
+        endval=(line.substring(startval)).indexOf("]")+startval-1;
+        return line.substring(startval, endval);
+    }
+    
+    /*int getAddress(String line){
+        int startval;
+        int endval;
+        startval=line.indexOf("addr[")+5;
+        endval=(line.substring(startval)).indexOf("]")+startval;
+        return Integer.parseInt(line.substring(startval, endval));
+        
+    }*/
+    
+    String getProtocol(String line){
+        int startval;
+        int endval;
+        startval=line.indexOf("protocol[")+9;
+        endval=(line.substring(startval)).indexOf("]")+startval;
+        return line.substring(startval, endval);
+    }
+    
+    /* This is used after an event update form the ecos informing us of a change in the 
+     * loco list, we have to determine if it is an addition or delete.
+     * We should only ever do either a remove or an add in one go, if we are adding the loco
+     * to the roster otherwise this causes a problem with the roster list.
+     */
+    void checkLocoList(String[] ecoslines){
+        final EcosPreferences p = EcosPreferences.instance();
+        //System.out.println("Check loco list");
+        String loco;
+        for(int i=1; i<ecoslines.length-1; i++){
+            loco = ecoslines[i];
+            loco = loco.replaceAll("[\\n\\r]","");
+            //System.out.println("-" + loco +"-" +loco.length());
+            if(getByEcosObject(loco)==null){
+                log.debug("We are to add loco " + loco + " to the Ecos Loco List");
+                //System.out.println("We have a new loco to add " + loco);
+                EcosMessage mout = new EcosMessage("get(" + loco + ", addr, name, protocol)");
+                tc.sendEcosMessage(mout, this);
+                //This loco can be added to the roster
+                //addLocoToRoster = true;
+            }
+        }
+        
+        String[] jmrilist = getEcosObjectArray();
+        boolean nomatch = true;
+        for(int i=0; i<jmrilist.length; i++){
+            //System.out.println(jmrilist[i]);
+            nomatch=true;
+            for(int k=1; k<ecoslines.length-1;k++){
+                loco = ecoslines[k];
+                loco = loco.replaceAll("[\\n\\r]","");
+                if (loco.equals(jmrilist[i])){
+                    nomatch=false;
+                    break;
+                }
+            }
+            if(nomatch){
+                //System.out.println("We do not have a match, therefore this should be deleted from the Ecos loco Manager " + jmrilist[i]);
+                if(getByEcosObject(jmrilist[i]).getRosterId()!=null){
+                    final String rosterid = getByEcosObject(jmrilist[i]).getRosterId();
+                    final Roster _roster = Roster.instance();
+                    final RosterEntry re = _roster.entryFromTitle(rosterid);
+                    re.deleteAttribute("EcosObject");
+                    re.writeFile(null, null, null);
+                    Roster.instance().writeRosterFile();
+                    if(p.getRemoveLocoFromJMRI()==0x02){
+                        _roster.removeEntry(re);
+                        _roster.writeRosterFile();
+                    } else if (p.getRemoveLocoFromJMRI()==0x00) {
+                        final JDialog dialog = new JDialog();
+                        dialog.setTitle("Remove Roster Entry From JMRI?");
+                        //test.setSize(300,130);
+                        dialog.setLocation(300,200);
+                        dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                        JPanel container = new JPanel();
+                        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+                        container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+                        JLabel question = new JLabel(rosterid + " has been removed from the Ecos do you want to remove it from JMRI?");
+                        question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                        container.add(question);
+                        final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                        remember.setFont(remember.getFont().deriveFont(10f));
+                        remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+                        //user preferences do not have the save option, but once complete the following line can be removed
+                        //Need to get the method to save connection configuration.
+                        remember.setVisible(true);
+                        JButton yesButton = new JButton("Yes");
+                        JButton noButton = new JButton("No");
+                        JPanel button = new JPanel();
+                        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                        button.add(yesButton);
+                        button.add(noButton);
+                        container.add(button);
+
+                        noButton.addActionListener(new ActionListener(){
+                            public void actionPerformed(ActionEvent e) {
+                                if(remember.isSelected()){
+                                    p.setRemoveLocoFromJMRI(0x01);
+                                }
+                                dialog.dispose();
+                            }
+                        });
+
+                        yesButton.addActionListener(new ActionListener(){
+                            public void actionPerformed(ActionEvent e) {
+                                if(remember.isSelected()) {
+                                    p.setRemoveLocoFromJMRI(0x02);
+                                }
+                                setLocoToRoster();
+                                _roster.removeEntry(re);
+                                _roster.writeRosterFile();
+                                dialog.dispose();
+                            }
+                        });
+                        container.add(remember);
+                        container.setAlignmentX(Component.CENTER_ALIGNMENT);
+                        container.setAlignmentY(Component.CENTER_ALIGNMENT);
+                        dialog.getContentPane().add(container);
+                        dialog.pack();
+                        dialog.setModal(true);
+                        dialog.setVisible(true);
+                        
+                    
+                    }
+                }
+                //Even if we do not delete the loco from the roster, we need to remove it from the ecos list.
+                deregister(getByEcosObject(jmrilist[i]));
+            }
+        }
+    }
+    
     public void message(EcosMessage m){
         
     }
@@ -297,6 +776,87 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
         tc.sendEcosMessage(m, this);
         
         
+    }
+    /* This checks firstly to see if we syncronise up ecos loco objects and roster
+     * entries then to see if the Ecos loco is already registered with a roster
+     * entry.  If it isn't registered then we will call the procdure to add the
+     * loco from the ecos into the roster.
+     */
+    private void checkInRoster(final EcosLocoAddress tmploco){
+        final EcosPreferences p = EcosPreferences.instance();
+        if (p.getAddLocoToJMRI()==0x02){
+            setLocoToRoster();
+            EcosLocoToRoster tmp = new EcosLocoToRoster();
+            tmp.ecosLocoToRoster(tmploco.getEcosObject());
+        } else if(p.getAddLocoToJMRI()==0x00 && tmploco.AddToRoster() && (tmploco.getRosterId()==null)){
+            final JDialog dialog = new JDialog();
+            dialog.setTitle("Add Roster Entry From JMRI?");
+            dialog.setLocationRelativeTo(null);
+            dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            JPanel container = new JPanel();
+            container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+            container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+            JLabel question = new JLabel("Loco " + tmploco.getEcosDescription() + " has been add to the Ecos");
+            question.setAlignmentX(Component.CENTER_ALIGNMENT);
+            container.add(question);
+            
+            question = new JLabel("Do you want to add it to JMRI?");
+            question.setAlignmentX(Component.CENTER_ALIGNMENT);
+            container.add(question);
+            final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+            remember.setFont(remember.getFont().deriveFont(10f));
+            remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+            //user preferences do not have the save option, but once complete the following line can be removed
+            //Need to get the method to save connection configuration.
+            remember.setVisible(true);
+            JButton yesButton = new JButton("Yes");
+            JButton noButton = new JButton("No");
+            JPanel button = new JPanel();
+            button.setAlignmentX(Component.CENTER_ALIGNMENT);
+            button.add(yesButton);
+            button.add(noButton);
+            container.add(button);
+
+            noButton.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e) {
+                    tmploco.doNotAddToRoster();
+                    if(remember.isSelected()){
+                        p.setAddLocoToJMRI(0x01);
+                    }
+                    dialog.dispose();
+                }
+            });
+
+            yesButton.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e) {
+                    if(remember.isSelected()) {
+                        p.setAddLocoToJMRI(0x02);
+                    }
+                    EcosLocoToRoster tmp = new EcosLocoToRoster();
+                    tmp.ecosLocoToRoster(tmploco.getEcosObject());
+                    dialog.dispose();
+                }
+            });
+            container.add(remember);
+            container.setAlignmentX(Component.CENTER_ALIGNMENT);
+            container.setAlignmentY(Component.CENTER_ALIGNMENT);
+            dialog.getContentPane().add(container);
+            dialog.pack();
+            dialog.setModal(true);
+            dialog.setVisible(true);
+
+
+        }
+        /*if (p.getLocoMaster()!=0x00){
+            List<RosterEntry> re = Roster.instance().getEntriesWithAttributeKeyValue("EcosObject", tmploco.getEcosObject());
+            //It should be unique
+            if (re.size()==0){
+                EcosLocoToRoster tmp = new EcosLocoToRoster();
+                tmp.ecosLocoToRoster(tmploco.getEcosObject());
+               //System.out.println("Code here to add the loco? .." + tmploco.getEcosDescription() + ".");
+            }
+        }*/
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosLocoAddressManager.class.getName());

@@ -12,7 +12,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML*/ {
 
@@ -21,6 +21,7 @@ public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*e
     }
 
     public Element store(Object o) {
+        System.out.println("Is this called?");
         return null;
     }
 

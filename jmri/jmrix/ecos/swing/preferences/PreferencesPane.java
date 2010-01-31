@@ -3,10 +3,12 @@
 package jmri.jmrix.ecos.swing.preferences;
 
 //import jmri.InstanceManager;
-//import jmri.jmrit.XmlFile;
+import jmri.jmrit.XmlFile;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import jmri.jmrix.ecos.EcosPreferences;
+import java.awt.Component;
+import java.io.File;
 
 
 
@@ -16,7 +18,7 @@ import javax.swing.*;
  * Pane to show ECoS preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class PreferencesPane extends javax.swing.JPanel {
 
@@ -24,20 +26,24 @@ public class PreferencesPane extends javax.swing.JPanel {
     JPanel throttletabpanel = new JPanel();
     JPanel rostertabpanel = new JPanel();
     JPanel turnouttabpanel = new JPanel();
-    JCheckBox _addTurnoutsEcos;
-    JCheckBox _removeTurnoutsEcos;
-    JCheckBox _addTurnoutsJmri;
-    JCheckBox _removeTurnoutsJmri;
+    JComboBox _addTurnoutsEcos;
+    JComboBox _removeTurnoutsEcos;
+    JComboBox _addTurnoutsJmri;
+    JComboBox _removeTurnoutsJmri;
     JComboBox _masterControl;
-    JCheckBox _addLocosEcos;
-    JCheckBox _removeLocosEcos;
-    JCheckBox _addLocosJmri;
-    JCheckBox _removeLocosJmri;
+    JComboBox _addLocoEcos;
+    JComboBox _removeLocosEcos;
+    JComboBox _addLocoJmri;
+    JComboBox _removeLocosJmri;
     JTextField _ecosDescription;
     JRadioButton _adhocLocoEcosAsk;
     JRadioButton _adhocLocoEcosLeave;
     JRadioButton _adhocLocoEcosRemove;
+    JRadioButton _forceControlLocoEcosAsk;
+    JRadioButton _forceControlLocoEcosNever;
+    JRadioButton _forceControlLocoEcosAlways;
     ButtonGroup _adhocLocoEcos;
+    ButtonGroup _locoEcosControl;
     JCheckBox _rememberAdhocLocosEcos;
     JComboBox _defaultProtocol;
     EcosPreferences ep;
@@ -69,25 +75,46 @@ public class PreferencesPane extends javax.swing.JPanel {
     private JPanel turnoutTab(){
         turnouttabpanel.setLayout(new BoxLayout(turnouttabpanel, BoxLayout.Y_AXIS));
         
-        _addTurnoutsEcos  = new JCheckBox("Add Turnouts to the ECoS");
-        _addTurnoutsEcos.setSelected(ep.getAddTurnoutsToEcos());
-        _addTurnoutsEcos.setEnabled(false);
-        turnouttabpanel.add(_addTurnoutsEcos);
+        /*JPanel _addTurnoutsEcosPanel = new JPanel();
+        JLabel _addTurnoutsEcosLabel = new JLabel("Add Turnouts to the ECoS");
+        _addTurnoutsEcos = new JComboBox();
+        _addTurnoutsEcosPanel.add(_addTurnoutsEcosLabel);
+        initializeChoiceCombo(_addTurnoutsEcos);
+        if (ep.getAddTurnoutsToEcos()!=0x00)
+            setChoiceType(_addTurnoutsEcos, ep.getAddTurnoutsToEcos());
+        _addTurnoutsEcosPanel.add(_addTurnoutsEcos);
+        turnouttabpanel.add(_addTurnoutsEcosPanel);*/
         
-        _removeTurnoutsEcos  = new JCheckBox("Remove Turnouts from the ECoS");
-        _removeTurnoutsEcos.setSelected(ep.getRemoveTurnoutsFromEcos());
-        _removeTurnoutsEcos.setEnabled(false);
-        turnouttabpanel.add(_removeTurnoutsEcos);
+        JPanel _removeTurnoutsEcosPanel = new JPanel();
+        JLabel _removeTurnoutsEcosLabel = new JLabel("Remove Turnouts From the ECoS");
+        _removeTurnoutsEcos = new JComboBox();
+        _removeTurnoutsEcosPanel.add(_removeTurnoutsEcosLabel);
+        initializeChoiceCombo(_removeTurnoutsEcos);
+        if (ep.getRemoveTurnoutsFromEcos()!=0x00)
+            setChoiceType(_removeTurnoutsEcos, ep.getRemoveTurnoutsFromEcos());
+        _removeTurnoutsEcosPanel.add(_removeTurnoutsEcos);
+        turnouttabpanel.add(_removeTurnoutsEcosPanel);
         
-        _addTurnoutsJmri  = new JCheckBox("Add Turnouts to JMRI");
-        _addTurnoutsJmri.setSelected(ep.getAddTurnoutsToJMRI());
-        _addTurnoutsJmri.setEnabled(false);
-        turnouttabpanel.add(_addTurnoutsJmri);
+        JPanel _addTurnoutsJMRIPanel = new JPanel();
+        JLabel _addTurnoutsJMRILabel = new JLabel("Add Turnouts to JMRI");
+        _addTurnoutsJmri = new JComboBox();
+        _addTurnoutsJMRIPanel.add(_addTurnoutsJMRILabel);
+        initializeChoiceCombo(_addTurnoutsJmri);
+        if (ep.getAddTurnoutsToJMRI()!=0x00)
+            setChoiceType(_addTurnoutsJmri, ep.getAddTurnoutsToJMRI());
+        _addTurnoutsJMRIPanel.add(_addTurnoutsJmri);
+        turnouttabpanel.add(_addTurnoutsJMRIPanel);
         
-        _removeTurnoutsJmri  = new JCheckBox("Remove Turnouts from JMRI");
-        _removeTurnoutsJmri.setSelected(ep.getRemoveTurnoutsFromJMRI());
-        _removeTurnoutsJmri.setEnabled(false);
-        turnouttabpanel.add(_removeTurnoutsJmri);
+        JPanel _removeTurnoutsJMRIPanel = new JPanel();
+        JLabel _removeTurnoutsJMRILabel = new JLabel("Remove Turnouts from JMRI");
+        _removeTurnoutsJmri = new JComboBox();
+        _removeTurnoutsJMRIPanel.add(_removeTurnoutsJMRILabel);
+        initializeChoiceCombo(_removeTurnoutsJmri);
+        if (ep.getRemoveTurnoutsFromJMRI()!=0x00)
+            setChoiceType(_removeTurnoutsJmri, ep.getRemoveTurnoutsFromJMRI());
+        _removeTurnoutsJMRIPanel.add(_removeTurnoutsJmri);
+        turnouttabpanel.add(_removeTurnoutsJMRIPanel);
+        
         return turnouttabpanel;
     
     }
@@ -95,43 +122,83 @@ public class PreferencesPane extends javax.swing.JPanel {
     private JPanel rosterTab(){
         //rostertabpanel = new JPanel(new BoxLayout());
         
-        rostertabpanel.setLayout(new BoxLayout(rostertabpanel, BoxLayout.PAGE_AXIS));
+        rostertabpanel.setLayout(new BoxLayout(rostertabpanel, BoxLayout.Y_AXIS));
         
         JLabel _rosterLabel = new JLabel("These option control the Syncronisation of the JMRI Roster Database and the ECOS Database");
-        _rosterLabel.setLayout(new BoxLayout(_rosterLabel, BoxLayout.X_AXIS));
+        _rosterLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         rostertabpanel.add(_rosterLabel);
         
         JPanel _locomaster = new JPanel();
         JLabel _masterLocoLabel = new JLabel("Resolve conflicts between JMRI and the ECOS");
+        _masterLocoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         _locomaster.add(_masterLocoLabel);
         _masterControl = new JComboBox();
         initializeMasterControlCombo(_masterControl);
         if (ep.getLocoMaster()!=0x00)
             setMasterControlType(_masterControl, ep.getLocoMaster());
-        _masterControl.setEnabled(false);
+        //_masterControl.setEnabled(false);
         _locomaster.add(_masterControl);
         rostertabpanel.add(_locomaster);
         
+        JPanel _addlocoecospanel = new JPanel();
+        JLabel _addLocosEcosLabel = new JLabel("Add Locos to the ECoS");
+        _addLocoEcos = new JComboBox();
+        _addlocoecospanel.add(_addLocosEcosLabel);
+        initializeChoiceCombo(_addLocoEcos);
+        if (ep.getAddLocoToEcos()!=0x00)
+            setChoiceType(_addLocoEcos, ep.getAddLocoToEcos());
+        _addlocoecospanel.add(_addLocoEcos);
+        rostertabpanel.add(_addlocoecospanel);
+        //_addLocosEcos  = new JCheckBox("Add Locos to the ECoS");
+        //_addLocosEcos.setSelected(ep.getAddLocoToEcos());
+        //_addLocosEcos.setEnabled(false);
+        //rostertabpanel.add(_addLocosEcos);
         
-        _addLocosEcos  = new JCheckBox("Add Locos to the ECoS");
-        _addLocosEcos.setSelected(ep.getAddLocoToEcos());
-        _addLocosEcos.setEnabled(false);
-        rostertabpanel.add(_addLocosEcos);
-        
-        _removeLocosEcos  = new JCheckBox("Remove Locos from the ECoS");
+        /*_removeLocosEcos  = new JCheckBox("Remove Locos from the ECoS");
         _removeLocosEcos.setSelected(ep.getRemoveLocoFromEcos());
-        _removeLocosEcos.setEnabled(false);
-        rostertabpanel.add(_removeLocosEcos);
+        //_removeLocosEcos.setEnabled(false);
+        rostertabpanel.add(_removeLocosEcos);*/
+
+        JPanel _removelocosecospanel = new JPanel();
+        JLabel _removeLocosEcosLabel = new JLabel("Remove Locos from the ECoS");
+        _removeLocosEcos = new JComboBox();
+        _removelocosecospanel.add(_removeLocosEcosLabel);
+        initializeChoiceCombo(_removeLocosEcos);
+        if (ep.getRemoveLocoFromEcos()!=0x00)
+            setChoiceType(_removeLocosEcos, ep.getRemoveLocoFromEcos());
+        _removelocosecospanel.add(_removeLocosEcos);
+        rostertabpanel.add(_removelocosecospanel);
         
-        _addLocosJmri  = new JCheckBox("Add Locos to JMRI Roster");
+        
+        /*_addLocosJmri  = new JCheckBox("Add Locos to JMRI Roster");
         _addLocosJmri.setSelected(ep.getAddLocoToJMRI());
-        _addLocosJmri.setEnabled(false);
-        rostertabpanel.add(_addLocosJmri);
+        //_addLocosJmri.setEnabled(false);
+        rostertabpanel.add(_addLocosJmri);*/
         
-        _removeLocosJmri  = new JCheckBox("Remove Locos from JMRI Roster");
+        JPanel _addlocosjmripanel = new JPanel();
+        JLabel _addLocoJmriLabel = new JLabel("Add Locos to JMRI Roster");
+        _addLocoJmri = new JComboBox();
+        _addlocosjmripanel.add(_addLocoJmriLabel);
+        initializeChoiceCombo(_addLocoJmri);
+        if (ep.getAddLocoToJMRI()!=0x00)
+            setChoiceType(_addLocoJmri, ep.getAddLocoToJMRI());
+        _addlocosjmripanel.add(_addLocoJmri);
+        rostertabpanel.add(_addlocosjmripanel);
+        
+        /*_removeLocosJmri  = new JCheckBox("Remove Locos from JMRI Roster");
         _removeLocosJmri.setSelected(ep.getRemoveLocoFromJMRI());
         _removeLocosJmri.setEnabled(false);
-        rostertabpanel.add(_removeLocosJmri);
+        rostertabpanel.add(_removeLocosJmri);*/
+        
+        JPanel _removelocosjmripanel = new JPanel();
+        JLabel _removeLocosJmriLabel = new JLabel("Remove Locos from JMRI Roster");
+        _removeLocosJmri = new JComboBox();
+        _removelocosjmripanel.add(_removeLocosJmriLabel);
+        initializeChoiceCombo(_removeLocosJmri);
+        if (ep.getRemoveLocoFromJMRI()!=0x00)
+            setChoiceType(_removeLocosJmri, ep.getRemoveLocoFromJMRI());
+        _removelocosjmripanel.add(_removeLocosJmri);
+        rostertabpanel.add(_removelocosjmripanel);
         
         JPanel ecosDescriptionPanel = new JPanel();
         
@@ -154,17 +221,17 @@ public class PreferencesPane extends javax.swing.JPanel {
     
     private JPanel throttleTab(){
     
-            throttletabpanel.setLayout(new BoxLayout(throttletabpanel, BoxLayout.Y_AXIS));
+        throttletabpanel.setLayout(new BoxLayout(throttletabpanel, BoxLayout.Y_AXIS));
         
-        JLabel _throttleLabel = new JLabel("This option control what happens to a loco on the ECoS Database which has been");
+        JLabel _throttleLabel = new JLabel("This option control what happens to a loco on the ECoS Database that has been specifically created to enable a throttle to be used");
+        _throttleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         throttletabpanel.add(_throttleLabel);
-        _throttleLabel = new JLabel("specifically created to enable a throttle to be used");
-        throttletabpanel.add(_throttleLabel);        
-        _adhocLocoEcosAsk = new JRadioButton("Always ask when releasing loco");
-        
-        _adhocLocoEcosLeave = new JRadioButton("Always leave the Loco in the Ecos");
-        
-        _adhocLocoEcosRemove = new JRadioButton("Always remove the Loco from the Ecos");
+        /*_throttleLabel = new JLabel("specifically created to enable a throttle to be used");
+        throttletabpanel.add(_throttleLabel);*/
+        _throttleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        _adhocLocoEcosAsk = new JRadioButton("Always ask when quiting JMRI");
+        _adhocLocoEcosLeave = new JRadioButton("Always leave the Loco in the Ecos Database");
+        _adhocLocoEcosRemove = new JRadioButton("Always remove the Loco from the Ecos Database");
         switch (ep.getAdhocLocoFromEcos()){
             case 0  :   _adhocLocoEcosAsk.setSelected(true);
                         break;
@@ -179,15 +246,44 @@ public class PreferencesPane extends javax.swing.JPanel {
         _adhocLocoEcos.add(_adhocLocoEcosAsk);
         _adhocLocoEcos.add(_adhocLocoEcosLeave);
         _adhocLocoEcos.add(_adhocLocoEcosRemove);
-        /*_addAdhocLocosEcos  = new JCheckBox("Remove Adhoc Created Locos no the ECoS");
-        _addAdhocLocosEcos.setSelected(ep.getRemoveAdhocLocoFromEcos());*/
 
-        throttletabpanel.add(_adhocLocoEcosAsk);
+        JPanel adhocEcosGroup = new JPanel();
+        adhocEcosGroup.setLayout(new BoxLayout(adhocEcosGroup, BoxLayout.Y_AXIS));
+        adhocEcosGroup.add(_adhocLocoEcosAsk);
+        adhocEcosGroup.add(_adhocLocoEcosLeave);
+        adhocEcosGroup.add(_adhocLocoEcosRemove);
+        adhocEcosGroup.setAlignmentX(Component.CENTER_ALIGNMENT);
+        throttletabpanel.add(adhocEcosGroup);
+        
+        
+        /*throttletabpanel.add(_adhocLocoEcosAsk);
         throttletabpanel.add(_adhocLocoEcosLeave);
-        throttletabpanel.add(_adhocLocoEcosRemove);
-        //_rememberAdhocLocosEcos  = new JCheckBox("Always use this setting for all operations");
-        //_rememberAdhocLocosEcos.setSelected(ep.getAdhocLocoFromEcos());
-        //throttletabpanel.add(_rememberAdhocLocosEcos);
+        throttletabpanel.add(_adhocLocoEcosRemove);*/
+        
+        _throttleLabel = new JLabel("If JMRI can not get control of a loco, this sets how JMRI should react.");
+        _throttleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        throttletabpanel.add(_throttleLabel);
+        _forceControlLocoEcosAsk = new JRadioButton("Always ask when attempting to take control of a loco");
+        _forceControlLocoEcosNever = new JRadioButton("Never force control of a Loco");
+        _forceControlLocoEcosAlways = new JRadioButton("Always force control of a Loco");
+        switch (ep.getForceControlFromEcos()){
+            case 0x00  :   _forceControlLocoEcosAsk.setSelected(true);
+                        break;
+            case 0x01  :   _forceControlLocoEcosNever.setSelected(true);
+                        break;
+            case 0x02  :   _forceControlLocoEcosAlways.setSelected(true);
+                        break;
+            default :   _forceControlLocoEcosAsk.setSelected(true);
+                        break;
+        }
+        _locoEcosControl = new ButtonGroup();
+        JPanel locoEcosControlGroup = new JPanel();
+        locoEcosControlGroup.setLayout(new BoxLayout(locoEcosControlGroup, BoxLayout.Y_AXIS));
+        locoEcosControlGroup.add(_forceControlLocoEcosAsk);
+        locoEcosControlGroup.add(_forceControlLocoEcosNever);
+        locoEcosControlGroup.add(_forceControlLocoEcosAlways);
+        locoEcosControlGroup.setAlignmentX(Component.CENTER_ALIGNMENT);
+        throttletabpanel.add(locoEcosControlGroup);
         
         JPanel _defaultprotocolpanel = new JPanel();
 
@@ -205,15 +301,15 @@ public class PreferencesPane extends javax.swing.JPanel {
     }
     
     private void updateButtonPressed(){
-        EcosPreferences ep = EcosPreferences.instance();
-        ep.setRemoveLocoFromJMRI(_removeLocosJmri.isSelected());
-        ep.setAddLocoToJMRI(_addLocosJmri.isSelected());
-        ep.setRemoveLocoFromEcos(_removeLocosEcos.isSelected());
-        ep.setAddLocoToEcos(_addLocosEcos.isSelected());
-        ep.setRemoveTurnoutsFromJMRI(_removeTurnoutsJmri.isSelected());
-        ep.setAddTurnoutsToJMRI(_addTurnoutsJmri.isSelected());
-        ep.setRemoveTurnoutsFromEcos(_removeTurnoutsEcos.isSelected());
-        ep.setAddTurnoutsToEcos(_addTurnoutsEcos.isSelected());
+        //EcosPreferences ep = EcosPreferences.instance();
+        ep.setRemoveLocoFromJMRI(getChoiceType(_removeLocosJmri));
+        ep.setAddLocoToJMRI(getChoiceType(_addLocoJmri));
+        ep.setRemoveLocoFromEcos(getChoiceType(_removeLocosEcos));
+        ep.setAddLocoToEcos(getChoiceType(_addLocoEcos));
+        ep.setRemoveTurnoutsFromJMRI(getChoiceType(_removeTurnoutsJmri));
+        ep.setAddTurnoutsToJMRI(getChoiceType(_addTurnoutsJmri));
+        ep.setRemoveTurnoutsFromEcos(getChoiceType(_removeTurnoutsEcos));
+        //ep.setAddTurnoutsToEcos(getChoiceType(_addTurnoutsEcos));
         ep.setLocoMaster(getMasterControlType(_masterControl));
         ep.setDefaultEcosProtocol(getEcosProtocol(_defaultProtocol));
         ep.setEcosLocoDescription(_ecosDescription.getText());
@@ -222,18 +318,7 @@ public class PreferencesPane extends javax.swing.JPanel {
         else if (_adhocLocoEcosRemove.isSelected()) ep.setAdhocLocoFromEcos(2);
         else ep.setAdhocLocoFromEcos(0);
         
-        /*//Taken directly from the AppConfigPanel
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        // decide whether name is absolute or relative
-        File file = new File(mConfigFilename);
-        if (!file.isAbsolute()) {
-            // must be relative, but we want it to 
-            // be relative to the preferences directory
-            file = new File(XmlFile.prefsDir()+mConfigFilename);
-        }
-
-        InstanceManager.configureManagerInstance().storePrefs(file);*/
-        JOptionPane.showMessageDialog(null,"ECOS/JMRI Preferences Updated\nTo save the changes from the Main menu, \n goto Edit|Preferences and click on 'Save'","Update",javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        jmri.InstanceManager.configureManagerInstance().storePrefs();
     }
     
     String[] masterControlTypes = {"NOSYNC","WARNING","JMRI","ECoS"};
@@ -259,6 +344,31 @@ public class PreferencesPane extends javax.swing.JPanel {
         return masterControlCode[masterBox.getSelectedIndex()];
     
     }
+    
+    String[] choiceTypes = {"Always Ask","No","Yes"};
+    int[] masterChoiceCode = {0x00,0x01,0x02};
+    int numChoiceTypes = 3;  // number of entries in the above arrays
+    
+    private void initializeChoiceCombo(JComboBox masterCombo) {
+		masterCombo.removeAllItems();
+		for (int i = 0;i<numChoiceTypes;i++) {
+			masterCombo.addItem(choiceTypes[i]);
+		}
+	}
+    private void setChoiceType(JComboBox masterBox, int master){
+        for (int i = 0;i<numChoiceTypes;i++) {
+			if (master==masterChoiceCode[i]) {
+				masterBox.setSelectedIndex(i);
+				return;
+			}
+		}
+    }
+    
+    private int getChoiceType(JComboBox masterBox){
+        return masterChoiceCode[masterBox.getSelectedIndex()];
+    
+    }
+
 
     String[] ecosProtocolTypes = {"DCC14","DCC28", "DCC128", "MM14", "MM27", "MM28", "SX32", "MMFKT"};
     int numProtocolTypes = 8;  // number of entries in the above arrays

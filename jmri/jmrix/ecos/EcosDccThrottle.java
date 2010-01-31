@@ -3,8 +3,6 @@ package jmri.jmrix.ecos;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.jmrix.AbstractThrottle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -14,7 +12,7 @@ import javax.swing.*;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2009 by Kevin Dickerson
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 {
@@ -25,9 +23,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     int ecosretry = 0;
     private EcosLocoAddress objEcosLoco;
     private EcosLocoAddressManager objEcosLocoManager;
+    final EcosPreferences p = EcosPreferences.instance();
     //This boolean is used to prevent un-necessary commands from being sent to the ECOS if we have already lost
     //control of the object
     private boolean _haveControl = false;
+    private boolean _hadControl = false;
     
     public EcosDccThrottle(DccLocoAddress address)
     {
@@ -76,7 +76,13 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         
         this.address      = address;
         this.isForward    = true;
+
+        ecosretry         = 0;
+        //objEcosLocoManager = (EcosLocoAddressManager)jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+        //objEcosLocoManager = jmri.jmrix.ecos.EcosLocoAddressManager.instance();
+
         objEcosLocoManager = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+
         //We go on a hunt to find an object with the dccaddress sent by our controller.
         objEcosLoco = objEcosLocoManager.provideByDccAddress(address.getNumber());
 
@@ -97,12 +103,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 
         m = new EcosMessage(message);
 
-        message = "get("+this.objectNumber+", protocol)";
-        m = new EcosMessage(message);
-        tc.sendEcosMessage(m, this);
-
-        m = new EcosMessage(message);
-
         message = "get("+this.objectNumber+", speed)";
         m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
@@ -111,12 +111,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
 
-        m = new EcosMessage(message);
-        for(int i = 0; i<12;i++){
-            message = "get("+this.objectNumber+", func["+i+"])";
-            m = new EcosMessage(message);
-            tc.sendEcosMessage(m, this);
-        }
     }
 
     //The values here might need a bit of re-working
@@ -369,7 +363,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         int value;
         
         if (speed == this.speedSetting) return;
-        if (super.speedStepMode == SpeedStepMode128) {
+        /*if (super.speedStepMode == SpeedStepMode128) {
             value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
             if (value>0) value = value+1;  // skip estop
             if (value>127) value = 127;    // max possible speed
@@ -379,7 +373,14 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 	        if (value>0) value = value+1;  	// skip estop
 	        if (value>28) value = 28;    	// max possible speed
 	        if (value<0) value = 0;        	// emergency stop
-		}
+		}*/
+        // The ecos always references 128 steps, when using the speed command
+        // even if the speedsteps for the loco are 28, or 14 (ie marklin)
+        value = (int)((128-1)*speed);     // -1 for rescale to avoid estop
+        if (value>0) value = value+1;  // skip estop
+        if (value>128) value = 128;    // max possible speed
+        if (value<0) value = 0;        // emergency stop
+
         tc = EcosTrafficController.instance();
 
         if (value >0) {
@@ -428,59 +429,10 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
      */
     public void release() {
         if (!active) log.warn("release called when not active");
-
-        
-        if (objEcosLoco.getEcosTempEntry()){
-            final EcosPreferences p = EcosPreferences.instance();
-            if (p.getAdhocLocoFromEcos()==0){
-
-                final JFrame f = new JFrame("Remove Loco From ECoS?");
-                f.setSize(300, 130);
-                f.setLocation(300,200);
-                JPanel container = new JPanel();
-                JLabel question = new JLabel("Do you want to remove this loco from the ECoS?");
-                container.add(question);
-                final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
-                remember.setFont(remember.getFont().deriveFont(10f));
-                //user preferences do not have the save option, but once complete the following line can be removed
-                remember.setVisible(false);
-                JButton yesButton = new JButton("Yes");
-                JButton noButton = new JButton("No");
-                JPanel button = new JPanel();
-                button.add(yesButton);
-                button.add(noButton);
-                container.add(button);
-                
-                noButton.addActionListener(new ActionListener(){
-                    public void actionPerformed(ActionEvent e) {
-                        if(remember.isSelected()){
-                            p.setAdhocLocoFromEcos(0x01);
-                        }
-                        ReleaseLoco();
-                        f.dispose();
-                    }
-                });
-                
-                yesButton.addActionListener(new ActionListener(){
-                    public void actionPerformed(ActionEvent e) {
-                        if(remember.isSelected()) {
-                            p.setAdhocLocoFromEcos(0x02);
-                        }
-                        DeleteLocoEcos();
-                        f.dispose();
-                    }
-                });
-                container.add(remember);
-
-                f.getContentPane().add(container);
-                f.setVisible(true);
-                
-            }
-            else ReleaseLoco();
-        }
+        //Deleting of the loco is now handled when closing jmri.
         else ReleaseLoco();
-
         _haveControl = false;
+        _hadControl = false;
     }
 
     /**
@@ -503,19 +455,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         tc.sendEcosMessage(m, this);
     
     }
-    /**
-    * Need to check with the ecos to see what happens if we delete a loco that is still running!
-    *
-    */
-    private void DeleteLocoEcos() {
-        //put code in here to delete the loco from the database
-        //return address;
-        tc = EcosTrafficController.instance();
-        EcosMessage m;
-        String message = "delete(" +this.objectNumber+")";
-        m = new EcosMessage(message);
-        tc.sendEcosMessage(m, this);
-    }
 
     public void reply(EcosReply m) {
         int tmpstart;
@@ -525,6 +464,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         String msg = m.toString();
         String[] lines = msg.split("\n");
         log.debug("found "+(lines.length)+" response from Ecos");
+        //System.out.println("Throttle " + msg);
+        //System.out.println("End line is : " + lines[lines.length-1]);
         if (lines[lines.length-1].contains("<END 0 (OK)>")){
             if (lines[0].startsWith("<REPLY set("+this.objectNumber+",")){// || msg.startsWith("<EVENT "+this.objectNumber+">")) {
                 //log.debug("The last command was accepted by the ecos");
@@ -542,7 +483,10 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                             val = (msg.substring(start+1, end));
                              Float newSpeed = new Float ( floatSpeed(Integer.parseInt(val) ) ) ;
                              this.speedSetting = newSpeed;
-                             log.debug("new Speed "+ val +", " + newSpeed + " for "+this.address);
+                             if (this.speedSetting != newSpeed){
+                                 notifyPropertyChangeListener("SpeedSetting", this.speedSetting, newSpeed);
+                                 log.debug("new Speed "+ val +", " + newSpeed + " for "+this.address);
+                             }
                         }
                         else if(result.equals("stop")){
                             this.speedSetting = Float.valueOf(0).floatValue();
@@ -550,8 +494,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                         }
                         else if(result.equals("dir")){
                             val = (msg.substring(start+1, end));
-                            if (val.equals("0")) this.isForward = true;
-                            else this.isForward = false;
+                            boolean newDirection;
+                            if (val.equals("0")) newDirection=true;
+                            else newDirection = false;
+                            notifyPropertyChangeListener("IsForward", this.isForward, newDirection);
+                            this.isForward = newDirection;
                             log.debug("new direction "+ this.isForward +" for "+this.address);
                         }
                     }
@@ -572,11 +519,12 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                             val = (lines[i].substring(start+1, end));
                             if (val.contains("DCC128")) this.speedStepMode=SpeedStepMode128;
                             else if (val.contains("DCC28")) this.speedStepMode=SpeedStepMode28;
-
                         }
                         else if (result.equals("msg")){
                             val = (lines[i].substring(start+1, end));
+                            //We get this lost control error because we have registered as a viewer.
                             if (val.contains("CONTROL_LOST")){
+                                retryControl();
                                 log.debug("We have no control over the ecos object");
                                 _haveControl = false;
                                 javax.swing.JOptionPane.showMessageDialog(null,"We do not have control of loco " + this.address + "\n" + "Press Release and try again","No Control",javax.swing.JOptionPane.WARNING_MESSAGE);
@@ -588,7 +536,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                              Float newSpeed = new Float ( floatSpeed(Integer.parseInt(val) ) ) ;
                              log.debug("set new speed "+val+" for "+this.address);
                              if (this.speedSetting != newSpeed){
-                                notifyPropertyChangeListener("SpeedSetting", new Float(this.speedSetting), newSpeed);
+                                notifyPropertyChangeListener("SpeedSetting", this.speedSetting, newSpeed);
                                 this.speedSetting = newSpeed;
                                 log.debug("see new Speed "+ val +", " + newSpeed + " for "+this.address);
                              }
@@ -781,6 +729,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                         objEcosLocoManager.deregister(objEcosLoco);
                         objEcosLocoManager.register(objEcosLoco);
                         objEcosLoco.setEcosTempEntry(true);
+                        objEcosLoco.doNotAddToRoster();
                         this.objectNumber=EcosAddr;
                         getControl();
                     }
@@ -793,14 +742,17 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             else if (lines[0].startsWith("<REPLY request("+this.objectNumber)){
                 log.debug("We have control over "+this.objectNumber +" from the Ecos");
                 _haveControl = true;
+                if (!_hadControl){
+                    EcosDccThrottleManager.instance().throttleSetup(this, this.address, true);
+                }
             }
         }
-        else if (lines[lines.length-1].equals("<END 0 (NERROR_OK)>")){
+        else if (lines[lines.length-1].contains("<END 0 (NERROR_OK)>")){
             //Need to investigate this a bit futher to see what the significance of the message is
             //we may not have to worry much about it.
             log.info("Loco has been created on the ECoS Sucessfully.");
         }
-        else if (lines[lines.length-1].equals("<END 35 (NERROR_NOAPPEND)>")){
+        else if (lines[lines.length-1].contains("<END 35 (NERROR_NOAPPEND)>")){
             /**
             * This message occurs when have already created a loco, but have not appended it to
             * the database.  The Ecos will not allow another loco to be created until the previous
@@ -811,42 +763,13 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             log.info("Another loco create operation is already taking place unable to create another.");
 
         }
-        else if (lines[lines.length-1].equals("<END 25 (NERROR_NOCONTROL)>")){
+        else if (lines[lines.length-1].contains("<END 25 (NERROR_NOCONTROL)>")){
             /**
             * This section deals with no longer having control over the ecos loco object.
             * we try three times to request control, on the fourth attempt we try a forced
             * control, if that fails we inform the user and reset the counter to zero.
             */
-            log.info("We have no control over the ecos object " + this.objectNumber + "Retry Counter = "+ ecosretry);
-            if (ecosretry <3){
-                //It might be worth adding in a sleep/pause of discription between retries.
-                ecosretry++;
-                tc = EcosTrafficController.instance();
-
-                String message = "request("+this.objectNumber+", view, control)";
-                EcosMessage ms = new EcosMessage(message);
-                tc.sendEcosMessage(ms, this);
-            }
-            else if(ecosretry==3){
-                ecosretry++;
-                int val = javax.swing.JOptionPane.showConfirmDialog(null,"Unable to gain control of the Loco \n Another operator may have control of the Loco \n Do you want to attempt a forced take over?","No Control", JOptionPane.YES_NO_OPTION,javax.swing.JOptionPane.QUESTION_MESSAGE);
-                if (val==0)
-                {
-                    tc = EcosTrafficController.instance();
-                    String message = "request("+this.objectNumber+", view, control, force)";
-                    EcosMessage ms = new EcosMessage(message);
-                    tc.sendEcosMessage(ms, this);
-                }
-                
-                log.info("We have no control over the ecos object " + this.objectNumber + "Trying a forced control");
-                
-
-            }
-            else{
-                javax.swing.JOptionPane.showMessageDialog(null,"We have lost control over" + "\n" + this.address + " and the Ecos","No Control",javax.swing.JOptionPane.WARNING_MESSAGE);
-                ecosretry=0;
-            }
-            release();
+            retryControl();
         }
         else if (lines[lines.length-1].contains("<END 15 (NERROR_UNKNOWNID)>")){
             log.info("Loco can not be accessed via the Ecos Object Id " + this.objectNumber);
@@ -863,10 +786,62 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     
     private void createEcosLoco() {
         tc = EcosTrafficController.instance();
+
         String message = "create(10, addr[" + objEcosLoco.getEcosLocoAddress() + "], name[\"Created By JMRI\"], protocol[DCC128], append)";
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
     
+    }
+
+    private void retryControl(){
+        if(_haveControl) _hadControl=true;
+        _haveControl = false;
+        if (ecosretry <3){
+            //It might be worth adding in a sleep/pause of discription between retries.
+            ecosretry++;
+            tc = EcosTrafficController.instance();
+
+            String message = "request("+this.objectNumber+", control)";
+            EcosMessage ms = new EcosMessage(message);
+            tc.sendEcosMessage(ms, this);
+            log.error("We have no control over the ecos object " + this.objectNumber + " Retrying Attempt " + ecosretry);
+
+
+        }
+        else if(ecosretry==3){
+            ecosretry++;
+            int val=0;
+            if (p.getForceControlFromEcos()==0x00)
+                val = javax.swing.JOptionPane.showConfirmDialog(null,"Unable to gain control of the Loco \n Another operator may have control of the Loco \n Do you want to attempt a forced take over?","No Control", JOptionPane.YES_NO_OPTION,javax.swing.JOptionPane.QUESTION_MESSAGE);
+            else{
+                if(p.getForceControlFromEcos()==0x01)
+                    val=1;
+            }
+            if (val==0)
+            {
+                tc = EcosTrafficController.instance();
+                String message = "request("+this.objectNumber+", control, force)";
+                EcosMessage ms = new EcosMessage(message);
+                tc.sendEcosMessage(ms, this);
+            }
+            else
+                if(_hadControl) {
+                    notifyPropertyChangeListener("LostControl", 0, 0);
+                    _hadControl=false;
+                } else
+                    EcosDccThrottleManager.instance().throttleSetup(this, this.address, false);
+                
+                log.error("We have no control over the ecos object " + this.objectNumber + "Trying a forced control");
+        }
+        else{
+            //javax.swing.JOptionPane.showMessageDialog(null,"We have lost control over" + "\n" + this.address + " and the Ecos","No Control",javax.swing.JOptionPane.WARNING_MESSAGE);
+            ecosretry=0;
+            if(_hadControl) {
+                notifyPropertyChangeListener("LostControl", 0, 0);
+            } else
+                EcosDccThrottleManager.instance().throttleSetup(this, this.address, false);
+            release();
+        }
     }
 
     // initialize logging

@@ -14,11 +14,11 @@ import jmri.implementation.AbstractSensor;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class EcosSensor extends AbstractSensor {
 
-    final String prefix = "US";
+    final static String prefix = "US";
 
     int objectNumber = 0;
 

@@ -5,6 +5,7 @@ package jmri.jmrix.ecos;
 import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
 
+
 /**
  * Implement a Turnout via Ecos communications.
  * <P>
@@ -14,7 +15,7 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class EcosTurnout extends AbstractTurnout 
                          implements EcosListener {
@@ -172,7 +173,7 @@ public class EcosTurnout extends AbstractTurnout
             if (!masterObjectNumber){
                 //Here we are dealing with the second address
                 int turnaddr = _number-1;
-                Turnout t = EcosTurnoutManager.instance().getTurnout("UT"+turnaddr);
+                Turnout t = EcosTurnoutManager.instance().getTurnout(prefix+turnaddr);
                 secondstate = closed;
                 if(t.getKnownState()==CLOSED)
                     firststate=true;

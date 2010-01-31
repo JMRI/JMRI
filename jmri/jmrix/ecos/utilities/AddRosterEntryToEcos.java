@@ -4,14 +4,10 @@ package jmri.jmrix.ecos.utilities;
 
 
 import java.awt.event.ActionEvent;
-
-
 import javax.swing.AbstractAction;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-
-
 
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -34,7 +30,7 @@ import jmri.jmrit.roster.RosterEntry;
  * for more details.
  * <P>
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class AddRosterEntryToEcos extends AbstractAction {
 

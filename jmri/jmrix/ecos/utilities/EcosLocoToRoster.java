@@ -1,44 +1,40 @@
 package jmri.jmrix.ecos.utilities;
 
-import java.awt.BorderLayout;
-import java.awt.Label;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.Enumeration;
-import java.util.List;
+//import javax.swing.JOptionPane;
+//import javax.swing.JDesktopPane;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JToggleButton;
-import javax.swing.JTree;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
+import java.util.Enumeration;
+
+//import jmri.jmrix.ecos.EcosLocoAddressManager;
+//import jmri.jmrix.ecos.EcosLocoAddress;
+import jmri.jmrix.ecos.*;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.XmlFile;
+import jmri.jmrit.DccLocoAddressSelector;
+import jmri.jmrit.symbolicprog.*;
+import jmri.Programmer;
+
+import java.util.List;
+//import javax.swing.JLabel;
+import javax.swing.tree.TreeNode;
+import java.io.File;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import org.jdom.Element;
+
+import javax.swing.tree.TreePath;
+
+
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
-
-import jmri.jmrit.DccLocoAddressSelector;
-import jmri.jmrit.XmlFile;
-import jmri.jmrit.decoderdefn.DecoderFile;
-import jmri.jmrit.decoderdefn.DecoderIndexFile;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrix.ecos.EcosListener;
-import jmri.jmrix.ecos.EcosLocoAddress;
-import jmri.jmrix.ecos.EcosLocoAddressManager;
-import jmri.jmrix.ecos.EcosMessage;
-import jmri.jmrix.ecos.EcosReply;
-import jmri.jmrix.ecos.EcosTrafficController;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 
 public class EcosLocoToRoster implements EcosListener {
     
@@ -53,6 +49,11 @@ public class EcosLocoToRoster implements EcosListener {
     String _ecosObject;
     int _ecosObjectInt;
     Label _statusLabel = null;
+    CvTableModel        cvModel      = null;
+    IndexedCvTableModel iCvModel     = null;
+    Programmer          mProgrammer;
+    JLabel progStatus;
+//    Programmer pProg;
     protected JComboBox locoBox = null;
     protected JToggleButton iddecoder;
     JFrame frame;
@@ -63,7 +64,8 @@ public class EcosLocoToRoster implements EcosListener {
         frame = new JFrame();
         _ecosObject = ecosObject;
         _ecosObjectInt = Integer.parseInt(_ecosObject);
-        ecosManager = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+        ecosManager = (EcosLocoAddressManager)jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+        //ecosManager = jmri.jmrix.ecos.EcosLocoAddressManager.instance();
         ecosLoco = ecosManager.getByEcosObject(ecosObject);
         String rosterId=ecosLoco.getEcosDescription();
         if(checkDuplicate(rosterId)){
@@ -80,11 +82,9 @@ public class EcosLocoToRoster implements EcosListener {
         if (decoder.size()==1){
             DecoderFile pDecoderFile;
             pDecoderFile=decoder.get(0);
-            System.out.println(decoder.get(0));
             SelectedDecoder(pDecoderFile);
             
         } else {
-
         	ComboPanel();
         }
     }
@@ -109,10 +109,10 @@ public class EcosLocoToRoster implements EcosListener {
                 if (object==_ecosObjectInt){
                     for(int i =1; i<lines.length-1; i++) {
                             if(lines[i].contains("cv[")){
-                            //int startcvnum = lines[i].indexOf("[")+1;
-                            //int endcvnum = (lines[i].substring(startcvnum)).indexOf(",")+startcvnum;
-                            //int cvnum = Integer.parseInt(lines[i].substring(startcvnum, endcvnum));
-                            //int startcvval = (lines[i].substring(endcvnum)).indexOf(", ")+endcvnum+2;
+                            int startcvnum = lines[i].indexOf("[")+1;
+                            int endcvnum = (lines[i].substring(startcvnum)).indexOf(",")+startcvnum;
+                            int cvnum = Integer.parseInt(lines[i].substring(startcvnum, endcvnum));
+                            int startcvval = (lines[i].substring(endcvnum)).indexOf(", ")+endcvnum+2;
                             //int endcvval = (lines[i].substring(startcvval)).indexOf("]")+startcvval;
                             //int cvval = Integer.parseInt(lines[i].substring(startcvval, endcvval));
                             //String strcvnum = "CV"+cvnum;
@@ -138,13 +138,14 @@ public class EcosLocoToRoster implements EcosListener {
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         
         Roster.instance().writeRosterFile();
+        ecosManager.clearLocoToRoster();
     }
 
     JComboBox combo;
     
 	public void ComboPanel()
 	{
-       	frame.setTitle( "Decoder Selection" );
+       	frame.setTitle( "Decoder Selection For Loco " + ecosLoco.getEcosDescription() );
 		frame.getContentPane().setLayout( new BorderLayout() );
         
         JPanel topPanel = new JPanel();
@@ -155,7 +156,8 @@ public class EcosLocoToRoster implements EcosListener {
 
 		// Create a panel to hold all other components
 		topPanel.setLayout( new BorderLayout() );
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        //frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        //frame.setDefaultCloseOperation(frameclosed());
         JLabel jLabel1 = new JLabel("Decoder installed can not be identified, please select from the list below");
         JButton okayButton = new JButton("Okay");
         p1.add(jLabel1);
@@ -179,10 +181,15 @@ public class EcosLocoToRoster implements EcosListener {
         frame.setAlwaysOnTop(true);
         frame.setAlwaysOnTop(false);
         frame.setVisible( true );
+
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(WindowEvent winEvt) {
+            ecosManager.clearLocoToRoster();
+            }
+        });
         
         ActionListener okayButtonAction = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                //System.out.println(combo.getSelectedItem());
                 okayButton();
             }
         };
@@ -199,18 +206,19 @@ public class EcosLocoToRoster implements EcosListener {
     }
     
     private void okayButton(){
-                pDecoderFile=DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
+                    pDecoderFile=DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
                 SelectedDecoder(pDecoderFile);
                 frame.dispose();
     }
     
     private void SelectedDecoder(DecoderFile pDecoderFile) {
+        //pDecoderFile=DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
         re.setDecoderModel(pDecoderFile.getModel());
         re.setDecoderFamily(pDecoderFile.getFamily());    
 
         re.setDccAddress(Integer.toString(ecosLoco.getEcosLocoAddress()));
-        re.setLongAddress(true);
-        
+        //re.setLongAddress(true);
+
         re.setRoadName("");
         re.setRoadNumber("");
         re.setMfg("");
@@ -223,7 +231,31 @@ public class EcosLocoToRoster implements EcosListener {
         re.setDecoderComment("");    
         re.putAttribute("EcosObject", _ecosObject);
         re.ensureFilenameExists();
+        
+        mProgrammer   = null;
+        cvModel       = new CvTableModel(progStatus, mProgrammer);
+        iCvModel      = new IndexedCvTableModel(progStatus, mProgrammer);
+        variableModel = new VariableTableModel(progStatus, new String[]  {"CV", "Value"},
+                                                 cvModel, iCvModel);
+        resetModel    = new ResetTableModel(progStatus, mProgrammer);
         storeloco();
+        filename = "programmers"+File.separator+"Basic.xml";
+        loadProgrammerFile(re);
+        loadDecoderFile(pDecoderFile, re);
+        if(ecosLoco.getEcosLocoAddress()<=128){
+            variableModel.findVar("Short Address").setIntValue(ecosLoco.getEcosLocoAddress());
+            variableModel.findVar("Address Format").setIntValue(1);
+            re.setLongAddress(false);
+        } else {
+            variableModel.findVar("Extended Address").setIntValue(ecosLoco.getEcosLocoAddress());
+            variableModel.findVar("Address Format").setIntValue(1);
+            re.setLongAddress(true);
+        }
+        variableModel.findVar("Speed Step Mode").setIntValue(0);
+        if (ecosLoco.getProtocol().equals("DCC128"))
+            variableModel.findVar("Speed Step Mode").setIntValue(1);
+        
+        re.writeFile(cvModel, iCvModel, variableModel );
         JOptionPane.showMessageDialog(frame, "Loco Added to the JMRI Roster");
     }
     
@@ -383,7 +415,7 @@ public class EcosLocoToRoster implements EcosListener {
         this.selectDecoder(ecosLoco.getCV8(), ecosLoco.getCV7());
         return pane1a;
     }
-    JToggleButton addDecoderIdentButton() {
+    /*JToggleButton addDecoderIdentButton() {
         JToggleButton iddecoder = new JToggleButton("ButtonReadType");
         iddecoder.setToolTipText("TipSelectType");
             if (jmri.InstanceManager.programmerManagerInstance()!= null
@@ -399,7 +431,7 @@ public class EcosLocoToRoster implements EcosListener {
                 }
         });
         return iddecoder;
-    }
+    }*/
         // from http://www.codeguru.com/java/articles/143.shtml
     class DecoderTreeNode extends DefaultMutableTreeNode {
         private String toolTipText;
@@ -526,6 +558,76 @@ public class EcosLocoToRoster implements EcosListener {
 	        }
     	}
     }
+
+    Element modelElem = null;
+
+    Element decoderRoot = null; 
+    VariableTableModel  variableModel;
+    Element programmerRoot = null;
+    ResetTableModel     resetModel   = null;
+    
+    protected void loadDecoderFile(DecoderFile df, RosterEntry re) {
+        if (df == null) {
+            log.error("loadDecoder file invoked with null object");
+            return;
+        }
+        log.debug("loadDecoderFile from "+df.fileLocation
+                                        +" "+df.getFilename());
+
+        try {
+            decoderRoot = df.rootFromName(df.fileLocation+df.getFilename());
+        } catch (Exception e) { log.error("Exception while loading decoder XML file: "+df.getFilename()); }
+        // load variables from decoder tree
+        df.getProductID();
+        df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
+        
+        // load reset from decoder tree
+        if (variableModel.piCv() >= 0) {
+            resetModel.setPiCv(variableModel.piCv());
+        }
+        if (variableModel.siCv() >= 0) {
+            resetModel.setSiCv(variableModel.siCv());
+        }
+        df.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
+
+        // load function names
+        re.loadFunctions(decoderRoot.getChild("decoder").getChild("family").getChild("functionlabels"));
+        
+        // get the showEmptyPanes attribute, if yes/no update our state
+        if (decoderRoot.getAttribute("showEmptyPanes") != null) {
+            log.debug("Found in decoder "+decoderRoot.getAttribute("showEmptyPanes").getValue());
+        }
+        
+        // save the pointer to the model element
+        modelElem = df.getModelElement();
+    }
+    // From PaneProgFrame
+    protected void loadProgrammerFile(RosterEntry r) {
+        // Open and parse programmer file
+        XmlFile pf = new XmlFile(){};  // XmlFile is abstract
+        try {
+            programmerRoot = pf.rootFromName(filename);
+
+            readConfig(programmerRoot, r);
+            
+        }
+        catch (Exception e) {
+            log.error("exception reading programmer file: "+filename);
+            // provide traceback too
+            e.printStackTrace();
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+	void readConfig(Element root, RosterEntry r) {
+        // check for "programmer" element at start
+        Element base;
+        if ( (base = root.getChild("programmer")) == null) {
+            log.error("xml file top element is not programmer");
+            return;
+        }
+    }
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosLocoToRoster.class.getName());
 }
 /*

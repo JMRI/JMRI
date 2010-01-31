@@ -13,7 +13,7 @@ import jmri.Sensor;
  * s88 Bus Module and yy is the port on that module.
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                 implements EcosListener {
@@ -42,6 +42,8 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
     protected static Hashtable <Integer, Integer> _sport = new Hashtable<Integer, Integer>();   // stores known Ecos Object ids to DCC
     
     public char systemLetter() { return 'U'; }
+    
+    final static String prefix = "US";
 
     public Sensor createNewSensor(String systemName, String userName) {
         //int ports = Integer.valueOf(systemName.substring(2)).intValue();
@@ -78,11 +80,15 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                             String sensorSystemName;
                             _sport.put(object, ports);
                             for (int j=1; j<=ports; j++){
+                                StringBuffer sb = new StringBuffer();
+                                sb.append(prefix);
+                                sb.append(object);
+                                sb.append(":");
                                 //Little work around to pad single digit address out.
                                 if (j<10)
-                                    sensorSystemName="US"+object+":0"+j;
-                                else
-                                    sensorSystemName="US"+object+":"+j;
+                                    sb.append("0");
+                                sb.append(j);
+                                sensorSystemName = sb.toString();
                                 s=getSensor(sensorSystemName);
                                 if(s==null){
                                     es = (EcosSensor)provideSensor(sensorSystemName);
@@ -163,10 +169,15 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         for(int port =1; port<=_sport.get(object); port++){
             result = intState & k;
             //Little work around to pad single digit address out.
+            StringBuffer sb = new StringBuffer();
+            sb.append(prefix);
+            sb.append(object);
+            sb.append(":");
+            //Little work around to pad single digit address out.
             if (port<10)
-                sensorSystemName="US"+object+":0"+port;
-            else
-                sensorSystemName="US"+object+":"+port;
+                sb.append("0");
+            sb.append(port);
+            sensorSystemName = sb.toString();
             es=(EcosSensor)getSensor(sensorSystemName);
             if (result==0)
                 es.setOwnState(Sensor.INACTIVE);
@@ -174,9 +185,6 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                 es.setOwnState(Sensor.ACTIVE);
             k=k*2;
         }
-        
-    
-    
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosSensorManager.class.getName());

@@ -25,7 +25,7 @@ import jmri.util.table.ButtonRenderer;
 /**
  * Table data model for display of jmri.jmrix.ecos.EcosLocoAddressManager manager contents
  * @author		Kevin Dickerson   Copyright (C) 2009
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
 abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -215,7 +215,6 @@ abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractT
     }
 
     public void refreshSelections(){
-        System.out.println("Refresh of combo list " + ecosObjectIdList.size());
         Roster.instance().updateComboBoxGlobal(selections);
         selections.insertItemAt(" ",0);
         selections.setSelectedIndex(-1);
@@ -254,9 +253,7 @@ abstract public class EcosLocoTableDataModel extends javax.swing.table.AbstractT
             if (value==null)
                 return;
             if (value.equals(" ")){
-                System.out.println(ecosObjectIdList.get(row));
                 l = Roster.instance().getEntriesWithAttributeKeyValue("EcosObject", ecosObjectIdList.get(row));
-                System.out.println(l.size());
                 if(l.size()!=0){
                     l.get(0).deleteAttribute("EcosObject");
                     getByEcosObject(ecosObjectIdList.get(row)).setRosterId((String) value);
