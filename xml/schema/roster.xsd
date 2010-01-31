@@ -3,7 +3,7 @@
 
 <!-- Schema for JMRI roster support.          -->
 
-<!-- $Id: roster.xsd,v 1.3 2010-01-04 17:42:06 jacobsen Exp $ -->
+<!-- $Id: roster.xsd,v 1.4 2010-01-31 20:51:10 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
@@ -51,6 +51,14 @@
               <xs:element name="locomotive" minOccurs="1" maxOccurs="unbounded">
                 <xs:complexType>
                   <xs:sequence>
+                    
+                    <xs:element name="dateupdated" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                              This is an unchecked, unparsed field intended to hold a system-local date.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
                     
                     <xs:element name="decoder" minOccurs="1" maxOccurs="1">
                       <xs:complexType>

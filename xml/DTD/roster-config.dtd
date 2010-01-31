@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a locomotive roster -->
-<!-- $Id: roster-config.dtd,v 1.13 2009-09-14 18:22:43 kevin-dickerson Exp $ -->
+<!-- $Id: roster-config.dtd,v 1.14 2010-01-31 20:51:10 jacobsen Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007.                  -->
 <!--                                                                        -->
@@ -20,7 +20,9 @@
 
 <!-- The locomotive entries each define a specific locomotive -->
 
-<!ELEMENT locomotive (decoder, locoaddress*, functionlabels?, attributepairs?) >
+<!ELEMENT locomotive (dateupdated?, decoder, locoaddress*, functionlabels?, attributepairs?) >
+
+<!ELEMENT dateupdated (#PCDATA) >
 
 <!-- Key used in lists, etc - User identification for this loco -->
 <!ATTLIST locomotive id	CDATA #REQUIRED>          
