@@ -50,7 +50,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.53 $
+ * @version     $Revision: 1.54 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -1412,7 +1412,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 		ev2Label.setVisible(false);
 		eto2.setVisible(false);
 		es2Box.setVisible(false);
-        es2Box.setVisible(false);
+        es2aBox.setVisible(false);
 		ev3Label.setVisible(false);
 		eto3.setVisible(false);
 		es3Box.setVisible(false);
