@@ -3,14 +3,10 @@
 package jmri.jmrix.ecos.swing.preferences;
 
 //import jmri.InstanceManager;
-import jmri.jmrit.XmlFile;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import jmri.jmrix.ecos.EcosPreferences;
 import java.awt.Component;
-import java.io.File;
-
-
 
 import javax.swing.*;
 
@@ -18,7 +14,7 @@ import javax.swing.*;
  * Pane to show ECoS preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class PreferencesPane extends javax.swing.JPanel {
 
