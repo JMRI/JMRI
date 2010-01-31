@@ -35,6 +35,16 @@ CLASSNAME=apps.InstallTest.InstallTest
 # set DEBUG to anything to see debugging output
 # DEBUG=yes
 
+# if JMRI_HOME is defined, go there, else
+# change directory to where the script is located
+if [ "${JMRI_HOME}" ]
+then
+    cd "${JMRI_HOME}"
+else 
+    cd `dirname $0`
+fi
+[ "${DEBUG}" ] && echo "PWD: '${PWD}'"
+
 # build library path
 SYSLIBPATH=
 
@@ -91,16 +101,6 @@ then
       fi
     done
 fi
-
-# if JMRI_HOME is defined, go there, else
-# change directory to where the script is located
-if [ "${JMRI_HOME}" ]
-then
-    cd "${JMRI_HOME}"
-else 
-    cd `dirname $0`
-fi
-[ "${DEBUG}" ] && echo "PWD: '${PWD}'"
 
 # build classpath dynamically
 CP=".:classes:java/classes"
