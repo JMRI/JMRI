@@ -36,7 +36,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class SignalGroupSubTableAction {
@@ -806,10 +806,6 @@ public class SignalGroupSubTableAction {
                                             rbx.getString("ColumnLabelUserName"),
                                             rbx.getString("ColumnLabelInclude"),
                                             rbx.getString("ColumnLabelSetState")};
-    private static String[] COLUMN_SIG_NAMES = {rbx.getString("ColumnLabelSystemName"),
-                                            rbx.getString("ColumnLabelUserName"),
-                                            rbx.getString("ColumnLabelInclude"),
-                                            "On State", "Off State", "Edit"};
     private static String SET_TO_ACTIVE = rbx.getString("SensorActive");
     private static String SET_TO_INACTIVE = rbx.getString("SensorInactive");
     private static String SET_TO_CLOSED = InstanceManager.turnoutManagerInstance().getClosedText();
@@ -828,9 +824,6 @@ public class SignalGroupSubTableAction {
     private static int[] turnoutInputModeValues = new int[]{SignalGroup.ONCLOSED, SignalGroup.ONTHROWN,
                                             SignalGroup.VETOCLOSED, SignalGroup.VETOTHROWN};
 
-    private static String[] lockTurnoutInputModes = new String[]{"On "+InstanceManager.turnoutManagerInstance().getClosedText(),
-                                            "On "+InstanceManager.turnoutManagerInstance().getThrownText(),
-                                            "On Change"};
     //private static int[] lockTurnoutInputModeValues = new int[]{SignalGroup.ONCLOSED, SignalGroup.ONTHROWN, SignalGroup.ONCHANGE};    
 
     private ArrayList <SignalGroupTurnout> _turnoutList;      // array of all Turnouts
