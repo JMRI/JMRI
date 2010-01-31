@@ -1,10 +1,6 @@
 package jmri;
 
-import jmri.*;
 import jmri.util.NamedBeanHandle;
-import java.util.ArrayList;
-import java.beans.PropertyChangeEvent;
-
 
 /**
  * Conditional.java
@@ -57,13 +53,9 @@ public interface SignalGroup extends NamedBean {
     public void setPrimaryTrigger(String pName);
     
     public void setPrimaryInversed(boolean boo);
-    
-    public void setPrimaryTriggerState(int boo);
-    
+     
     public String getPrimaryTriggerName();
     public void clearAppearanceTrigger();
-    
-    //public int getPrimaryTriggerState();
     
     public boolean getPrimaryInversed();
     

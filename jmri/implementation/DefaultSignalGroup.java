@@ -3,7 +3,6 @@ package jmri.implementation;
 import jmri.*;
 import jmri.util.NamedBeanHandle;
 import java.util.ArrayList;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 
@@ -42,7 +41,6 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
     ArrayList <String> _triggerAppearances = new ArrayList<String>();
     
     private NamedBeanHandle<SignalMast> primaryTrigger;
-    private int primaryTriggerState;
     private boolean primaryInversed=false;
       
     private boolean headactive=false;
@@ -126,18 +124,10 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         return primaryTrigger.getName();
     }
     
-    /*public String getPrimaryTriggerState(){
-        return _triggerAppearances.get(0);
-    }*/
-    
     public void setPrimaryInversed(boolean boo){
         primaryInversed = boo;
     }
-    
-    public void setPrimaryTriggerState(int boo){
-        primaryTriggerState = boo;
-    }
-    
+       
     public boolean getPrimaryInversed(){
         return primaryInversed;
     }
@@ -453,7 +443,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
                 return _turnout.getBean();
             }
             
-            NamedBeanHandle getNamedTurnout() {
+            NamedBeanHandle<Turnout> getNamedTurnout() {
                 return _turnout;
             }
         }
@@ -547,7 +537,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
                 return _Sensor.getBean();
             }
             
-            NamedBeanHandle getNamedSensor() {
+            NamedBeanHandle<Sensor> getNamedSensor() {
                 return _Sensor;
             }
         }
