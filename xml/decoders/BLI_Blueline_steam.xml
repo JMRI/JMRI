@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
-<!-- $Id: BLI_Blueline_steam.xml,v 1.4 2007-09-21 05:49:30 jacobsen Exp $ -->
+<!-- $Id: BLI_Blueline_steam.xml,v 1.5 2010-01-31 16:09:04 r5gordini Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -428,25 +428,25 @@
             </enumVal>
         </variable>
 
-        <variable label="L1 parmeter 1" CV="161" mask="VVVVVVVV" default="10" 
+        <variable label="L1 parameter 1" CV="161" mask="VVVVVVVV" default="10" 
             item="Global lighting option 1"
             tooltip="-/On Time/On Time One/Start Point Power On" >
             <decVal />
         </variable>
 
-        <variable label="L1 parmeter 2" CV="162" mask="VVVVVVVV" default="10" 
+        <variable label="L1 parameter 2" CV="162" mask="VVVVVVVV" default="10" 
             item="Global lighting option 2"
             tooltip="-/Off Time/Off Time One/Ramp Up Time" >
             <decVal />
         </variable>
 
-        <variable label="L1 parmeter 3" CV="163" mask="VVVVVVVV" default="180" 
+        <variable label="L1 parameter 3" CV="163" mask="VVVVVVVV" default="180" 
             item="Global lighting option 3"
             tooltip="-/-/On Time Two/End Point Power On" >
             <decVal />
         </variable>
 
-        <variable label="L1 parmeter 4" CV="164" mask="VVVVVVVV" default="20" 
+        <variable label="L1 parameter 4" CV="164" mask="VVVVVVVV" default="20" 
             item="Global lighting option 4"
             tooltip="-/-/Off Time Two/Ramp Down Time" >
             <decVal />
