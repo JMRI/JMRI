@@ -46,7 +46,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.50 $
+ * @version	$Revision: 1.51 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -153,6 +153,9 @@ public class Roster extends XmlFile {
      * If a roster group has been selected then the results will be restricted
      * to those in the roster group.
      * <P>
+     * Only entries that exactly match the given parameters will be
+     * returned.  Null parameters mean to ignore that part of the match.
+     * <P>
      * The JComboBox is based on a common model object, so it updates
      * when the roster changes.
      */
@@ -177,6 +180,9 @@ public class Roster extends XmlFile {
     /**
      * Get a JComboBox representing the choices that match some information
      * regardless of which roster group has been selected.
+     * <P>
+     * Only entries that exactly match the given parameters will be
+     * returned.  Null parameters mean to ignore that part of the match.
      * <P>
      * The JComboBox is based on a common model object, so it updates
      * when the roster changes.
