@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: StartUpScripts.shtml,v 1.8 2010-01-25 14:25:15 jacobsen Exp $ -->
+<!-- $Id: StartUpScripts.shtml,v 1.9 2010-01-31 20:54:11 zoo Exp $ -->
 <title>JMRI: Startup Scripts</title>
 
 <!-- Style -->
@@ -76,6 +76,20 @@ change the current directory to there.
 Otherwise, change the current directory to where the script file
 is located.
 
+<dt>Library Files
+<dd>
+The RXTX Serial library requires some platform specific native libraries
+in order to interface to the serial port drivers.  JMRI applications need 
+to use the version of the library that is correct for the operating system
+and the CPU architecture.  
+<p>
+The two most common architectures at this time are <tt>i386</tt> and <tt>x86_64</tt>,
+respectively the 32 bit Intel and the 64 bit AMD/Intel systems.   
+<p>
+The startup scripts will use some common applications (<tt>arch</tt>, <tt>uname</tt>)
+to determine the current operating system and architecture, and then set up the 
+correct library paths for Java to find the right shared library files.
+
 <dt>Classpath
 <dd>
 The script builds the Java classpath automatically to contain,
@@ -114,17 +128,13 @@ The program sets a number of options for the JVM.  This includes
 the necessary program settings, setting memory limits, and various
 symbols to control operation.
 
-<p>
-We also set some options here that are only used
-on MacOS X.  
-This lets people use the the Linux scripts on MacOS X if they'd
-prefer shell scripts to application bundles.
-
 <dt>Alternate port names
 <dd>
 RXTX does not know about certain names for serial ports connected
 via USB.  This section looks for a few known names and adds them
-to the program if present.
+to the program if present.  If you have a device file name that JMRI
+cannot find, you can set the environment variable <tt>JMRI_SERIAL_PORTS</tt>
+to be comma-separated list of the names. 
 
 <dt>Java command
 <dd>Finally, the script puts all this together into a java command, which it executes.
@@ -143,7 +153,7 @@ from the distributed disk image onto the user's disk drive.
 
 <h3>Bundle Details</h3>
 
-JMRI has registered four application signatures: 
+JMRI has registered five application signatures: 
 <dl>
 <dt>JMRD<dd>DecoderPro
 <dt>JMRP<dd>PanelPro

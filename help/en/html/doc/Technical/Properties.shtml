@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Properties.shtml,v 1.1 2008-02-27 06:44:10 jacobsen Exp $ -->
+<!-- $Id: Properties.shtml,v 1.2 2010-01-31 20:54:11 zoo Exp $ -->
 <title>JMRI: System Properties</title>
 
 <!-- Style -->
@@ -57,14 +57,16 @@ JMRI uses it, on some systems, for locating the default
 locations for the preferences directory.
 
 <dt>
-javax.comm.rxtx.SerialPorts
+gnu.io.rxtx.SerialPorts
 <dd>
 The RXTX communications library uses this to specify 
 additional ports to use.  If you have e.g. a USB to serial
 adapter which is not showing up in the preferences chooser boxes,
 assign its name to this property.
 <p>
--Djavax.comm.rxtx.SerialPorts=/dev/ttyUSB0
+-Dgnu.io.rxtx.SerialPorts=/dev/ttyUSB0
+<p>
+The Linux startup scripts will do this if you have set the JMRI_SERIAL_PORT environment variable.
 
 </dl>
 

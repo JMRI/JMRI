@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: RP.shtml,v 1.2 2008-01-22 06:17:20 jacobsen Exp $ -->
+<!-- $Id: RP.shtml,v 1.3 2010-01-31 20:54:11 zoo Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -42,15 +42,13 @@ than the original AWT, and the price is right. In particular, we
 try to use the "Bean format" of setting and getting members, call-backs to
 notify of changes, etc, to make it easier to build applications from JMRI components.
 
-<LI>The Java communications toolbox (javax.comm) has worked fine on 
-Macintosh, OS/2 and Linux for serial I/O. We hope it works fine on other platforms. 
-For Windows, we had to move to 
-the Serialio package from
-<A HREF="http://Serialio.com">Serialio.com</a>
+<LI>JMRI uses the RXTX libraries to support serial communications on Macintosh,
+Linux and Windows.  On Windows only, the Serialio package from
+<A HREF="http://Serialio.com">Serialio.com</a> is also used
 to be able to use the MS100 baud rate.  To do this, the 
 jmri.jmrix.loconet.ms100.MS100Adapter class was converted to use
 Java reflection to decide which whether the Serialio package is
-available; on other systems, it uses javax.comm.
+available; on other systems, it uses RXTX.
 Note that our license for Serialio limits it to this use only;
 we are not permitted to distribute the libraries for other purposes.
 

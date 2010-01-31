@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Eclipse.shtml,v 1.5 2009-01-27 04:03:08 plocher Exp $ -->
+<!-- $Id: Eclipse.shtml,v 1.6 2010-01-31 20:54:11 zoo Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -202,12 +202,6 @@
       same names in the /java directory of your Eclipse workspace. (This is a 
       bit tricky using the standard Windows editors, because they don't like 
       files with null filetypes).</li>
-      <li>You'll also need to copy the file <code>javax.comm.properties</code> 
-      into the /java/lib subdirectory. If you are already running the production 
-      version of JMRI you will have this in the /lib subdirectory of your Java 
-      Runtime Environment (JRE). If not you'll need to get the <code>javax.comm</code> 
-      library from <a href="http://java.sun.com/products/javacomm/index.jsp">
-      java.sun.com</a>.</li>
       <li>Restart Eclipse, using the same workspace - you're <i>almost</i> 
       there, but not quite</li>
       <li>Pick the application you want to work with - they all use the same 
