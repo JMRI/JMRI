@@ -40,7 +40,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.43 $
+ * @version   $Revision: 1.44 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -171,6 +171,9 @@ public class RosterEntry {
     public void setURL(String s) { _URL = s; }
     public String getURL() { return _URL; }
 
+    public void setDateUpdated(String s) { _dateUpdated = s; }
+    public String getDateUpdated() { return _dateUpdated; }
+
     /**
      * Construct this Entry from XML. This member has to remain synchronized with the
      * detailed DTD in roster-config.xml
@@ -194,6 +197,9 @@ public class RosterEntry {
         if ((a = e.getAttribute("iconFilePath")) != null )  _iconFilePath = _resourcesBasePath+a.getValue();
         if ((a = e.getAttribute("URL")) != null )  _URL = a.getValue();
         org.jdom.Element e3;
+        if ((e3 = e.getChild("dateUpdated")) != null )  {
+            _dateUpdated = e3.getText();
+        }
         if ((e3 = e.getChild("locoaddress")) != null )  {
             DccLocoAddress la = (DccLocoAddress)((new jmri.configurexml.LocoAddressXml()).getAddress(e3));
             if (la!=null) {
@@ -394,6 +400,8 @@ public class RosterEntry {
         }
         e.setAttribute("URL", getURL());
 
+        if (! _dateUpdated.equals("")) 
+            e.addContent(new Element("dateUpdated").addContent(getDateUpdated()));
         org.jdom.Element d = new org.jdom.Element("decoder");
         d.setAttribute("model",getDecoderModel());
         d.setAttribute("family",getDecoderFamily());
@@ -520,6 +528,9 @@ public class RosterEntry {
             // do backup
             df.makeBackupFile(LocoFile.getFileLocation()+getFileName());
 
+            // changed 
+            changeDateUpdated();
+            
             // and finally write the file
             df.writeFile(f, cvModel, iCvModel, variableModel, this);
 
@@ -528,6 +539,14 @@ public class RosterEntry {
         }
     }
 
+    /**
+     * Mark the date updated, e.g. from storing this roster entry
+     */
+    void changeDateUpdated() {
+        java.text.DateFormat df = java.text.DateFormat.getDateTimeInstance();
+        setDateUpdated(df.format(new java.util.Date()));
+    }
+    
     /**
      * Store the root element of the JDOM tree representing this
      * RosterEntry.
@@ -774,7 +793,8 @@ public class RosterEntry {
     protected String _decoderModel = "";
     protected String _decoderFamily = "";
     protected String _decoderComment = "";
-
+    protected String _dateUpdated = "";
+    
     public static String getDefaultOwner() { return _defaultOwner; }
     public static void setDefaultOwner(String n) { _defaultOwner = n; }
     static private String _defaultOwner = "";

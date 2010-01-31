@@ -26,8 +26,9 @@ import java.util.List;
 /**
  * Display and edit a RosterEntry.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001; Dennis Miller Copyright 2004, 2005
- * @version	$Revision: 1.17 $
+ * @author	Bob Jacobsen   Copyright (C) 2001
+ * @author  Dennis Miller Copyright 2004, 2005
+ * @version	$Revision: 1.18 $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 
@@ -49,6 +50,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
     //leaving the contents visible
     JScrollPane commentScroller = new JScrollPane(comment,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
     JLabel filename 		= new JLabel();
+    JLabel dateUpdated   	= new JLabel();
     JLabel decoderModel 	= new JLabel();
     JLabel decoderFamily 	= new JLabel();
     JTextArea decoderComment	= new JTextArea(3,30);
@@ -75,16 +77,9 @@ public class RosterEntryPane extends javax.swing.JPanel  {
             addrSel.setAddress(tempAddr);
         }
         
-        roadName.setText(r.getRoadName());
-        roadNumber.setText(r.getRoadNumber());
-        mfg.setText(r.getMfg());
-        owner.setText(r.getOwner());
-        model.setText(r.getModel());
-        comment.setText(r.getComment());
-        decoderModel.setText(r.getDecoderModel());
-        decoderFamily.setText(r.getDecoderFamily());
-        decoderComment.setText(r.getDecoderComment());
-
+        // fill contents
+        updateGUI(r);
+        
         pane = this;
         re = r;
 
@@ -98,6 +93,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         decoderModel.setToolTipText(rb.getString("ToolTipDecoderModel"));
         decoderFamily.setToolTipText(rb.getString("ToolTipDecoderFamily"));
         filename.setToolTipText(rb.getString("ToolTipFilename"));
+        dateUpdated.setToolTipText(rb.getString("ToolTipDateUpdated"));
         id.addFocusListener(
             new FocusListener() {
                 public void focusGained(FocusEvent e){}
@@ -241,6 +237,16 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         filename.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(filename,cR);
         add(filename);
+
+        cL.gridy = 12;
+        JLabel row12Label = new JLabel(rb.getString("FieldDateUpdated"));
+        gbLayout.setConstraints(row12Label,cL);
+        add(row12Label);
+
+        cR.gridy = 12;
+        filename.setMinimumSize(minFieldDim);
+        gbLayout.setConstraints(dateUpdated,cR);
+        add(dateUpdated);
     }
 
     /**
@@ -304,6 +310,22 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         r.setDecoderComment(decoderComment.getText());
     }
 
+    /**
+     * File GUI from roster contents
+     */
+    public void updateGUI(RosterEntry r) {
+        roadName.setText(r.getRoadName());
+        roadNumber.setText(r.getRoadNumber());
+        mfg.setText(r.getMfg());
+        owner.setText(r.getOwner());
+        model.setText(r.getModel());
+        comment.setText(r.getComment());
+        decoderModel.setText(r.getDecoderModel());
+        decoderFamily.setText(r.getDecoderFamily());
+        decoderComment.setText(r.getDecoderComment());
+        dateUpdated.setText(r.getDateUpdated());
+    }
+    
     public void setDccAddress(String a) {
         DccLocoAddress addr = addrSel.getAddress();
         boolean m = true;

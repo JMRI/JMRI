@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Scans the roster directory for xml files, including any that are found.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class RecreateRosterAction extends AbstractAction {
 
@@ -53,7 +53,6 @@ public class RecreateRosterAction extends AbstractAction {
                 String[] attributes = toEntry.getAttributeList();
                 if (attributes!=null){
                     for(int x=0; x<attributes.length; x++){
-                        System.out.println(attributes[x]);
                         if(attributes[x].startsWith(roster.getRosterGroupPrefix())){
                             //We don't bother checking to see if the group already exists as this is done by the addRosterGroupList.
                             roster.addRosterGroupList(attributes[x].substring(roster.getRosterGroupPrefix().length()));
