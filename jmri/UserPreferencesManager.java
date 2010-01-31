@@ -2,6 +2,8 @@
 
 package jmri;
 
+import java.awt.Dimension;
+
 /**
  * Interface for the User Preferences Manager.
  * <P>
@@ -11,7 +13,7 @@ package jmri;
  * @see jmri.managers.DefaultUserMessagePreferences
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
  
 public interface UserPreferencesManager {
@@ -151,6 +153,8 @@ public interface UserPreferencesManager {
 
     public int getWarnAudioInUse();
     public void setWarnAudioInUse(int boo);
+
+    public Dimension getScreen();
 
     //public void displayRememberMsg();
     
