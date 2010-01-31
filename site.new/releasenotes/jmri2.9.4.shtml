@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.3 2010-01-27 17:46:58 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.4 2010-01-31 20:42:35 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -81,12 +81,8 @@ WARNING:  RXTX Version mismatch
         Jar version = RXTX-2.2pre1
         native lib Version = RXTX-2.2pre2
 </pre></code>
-and
-<code><pre>
-(some stuff)   INFO  - failed to set serial framing: gnu.io.UnsupportedCommOperationException: Not supported
-</pre></code>
-For now, these should be considered normal.  We'll try to get them
-removed before the next release.
+For now, this should be considered normal.  We'll try to get it
+removed before the next production release.
 
 <p>
 The JInput USB library was updated to the current version in 
@@ -115,6 +111,9 @@ To make these stop, just store the file again so that it's rewritten in the most
 
 <h3>Changes since test version 2.9.3</h3>
 
+Kevin Dickerson fixed a problem editing signal logic that had been introduced in JMRI 2.9.1.
+
+<p>
 Dick Bronson updated the SP 1960 signal definitions.
 
 <p>
@@ -130,6 +129,83 @@ Fixed a problem that prevented clicking on panels in the mini web server.
 <p>
 Dick Bronson improved the SP signal definitions
 
+<p>
+Kevin Dickerson added a "signal group" feature, still in development.
+
+<p>
+Many decoder files got small fixes so that they were entirely in the proper
+format.
+
+<p>
+Lionel Jeanson updated the USBThrottle so it now supports browsing through rosters and selecting one.
+
+<p>
+Lionel Jeanson provided a bug fix in wiimote throttle.
+
+<p>
+Many decoder definitions where changed over to use "XML Schema" instead of "DTDs" for their
+syntax checking.  This is a technical, internal change that will allow some other
+updates later.
+
+<p>
+Paul Bender add support for the Power manager to the Lenz XPressNet simulator.
+
+<p>
+Kevin Dickerson updated the preferences manager to show icons in warning/info dialogs,
+and to give more options to suppressing messages permanently or just this session.
+
+<p>
+The 
+<a href="http://jmri.org/help/en/html/web/index.shtml">Mini Web Server</a>
+can now display more types of information, including directory listings, 
+and better show the contents of JMRI XML files.
+
+<p>
+Dan Boudreau fixed a problem in the "Apps" infrastructure that caused it to 
+initialize twice.
+
+<p>
+Update of the SRCP server.
+
+<p>
+Andrew Berridge improves the XBox remote throttle.
+
+<p>
+Dan Boudreau changed the check of operations train names to be case-independent,
+because Windows file names are case-indepedent: "First" and "first" conflict.
+
+<p>
+By suggestion of Jim Betz, locomotive roster entries now show the last date they were
+stored.
+
+<p>
+Kevin Dickerson made a number of changes to the way that JMRI works with the ecos, 
+mainly in the handling of roster entries and the ecos database.
+
+<p>
+The panel editor and layout editor code has been extensively reworked. It's not
+intended that this cause any changes in how it appears to look to the user, but
+please let us know if you see any.
+
+<p>
+Bob Coleman updated the powerline insteon 2412s support.
+Catch reply message 50 (echo from a repeater) and clean up console output a bit
+Via an insteon 2412s an X10 device or a registered insteon device should turn on or off.
+Dim does not work yet.  Sensors do not work yet.  Just tested using Light table.
+Sometimes first commands to an insteon device fail -- once they have been retried they work.
+Note that Insteon devices must be registered to work.
+
+<p>
+Andrew Berridge made a small correction to the BLI Blueline decoder definition.
+
+<p>
+A problem that would occasionally cause a LocoNet-connected Double Output or Triple
+Output signal head to now show the most recent appearance.  The fix doesn't effect
+SE8c or non-LocoNet signal heads, so any problems with those should still be reported.
+
+<p>
+The roster now includes the date and time that the entry was last saved, as reported
+by the computer on which it was saved. No checking of this value is done.
 
 <!--#include virtual="/Footer" -->
 

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.3.shtml,v 1.14 2010-01-27 17:46:58 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.3.shtml,v 1.15 2010-01-31 20:42:35 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -76,6 +76,11 @@ required.  On Mac, no actions are necessary, the new distribution directory
 should just work.  On Linux, you may have to install and/or uninstall 
 various communications library parts, see the
 <a href="../install/Linux.html">JMRI Linux pages</a> for more info.
+
+<p>
+Some user of 64-bit Windows 7 have reported compatibility problems.
+The issue is associated with exactly which (32-bit or 64-bit) Java version
+is installed, and where it was placed.  This will be fixed in a later version.
 
 <p>
 You may get some messages like:
