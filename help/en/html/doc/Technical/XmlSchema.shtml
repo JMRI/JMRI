@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlSchema.shtml,v 1.4 2010-01-04 21:51:59 jacobsen Exp $ -->
+<!-- $Id: XmlSchema.shtml,v 1.5 2010-01-31 22:15:30 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -38,12 +38,17 @@ for configuration and panel information,
 and to create parts of the web site from other files.
 This page describes how we specify the 
 content of those files using 
-<a href="">XML schema</a>.
+<a href="http://www.w3schools.com/schema/schema_intro.asp">XML schema</a>.
+
+<p>
+For examples (not a tutorial!) on the structure of 
+our schema, see the 
+<a href="XmlSchemaExamples.shtml">examples page</a>.
 
 <h2>Access to Schema Definitions</h2>
 JMRI uses XML Schema to define the format of its files.
 <P>
-Those XML Schema  need to be available to the program when it
+Those XML Schema may need to be available to the program when it
 reads the files, as they define the default values of missing
 attributes and other needed information.
 <P>
@@ -59,7 +64,6 @@ needs them.
 <p/>
 
 <h2>Checking JMRI Schema</h2>
-
 
 XML Schema are more verbose than the DTDs we're used to.
 With that complexity, we get more expressing power, but
@@ -233,7 +237,7 @@ Sample XML:
 </pre></code>
 
 <p>
-Sample schema description:
+Sample schema description: (But see the real one, which is provided in schema/docbook)
 <code><pre>
     &lt;xs:element ref="docbook:copyright" minOccurs="1" maxOccurs="1" &gt;
       &lt;xs:annotation&gt;&lt;xs:documentation&gt;
