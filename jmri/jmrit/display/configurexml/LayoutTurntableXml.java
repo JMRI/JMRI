@@ -8,6 +8,6 @@ package jmri.jmrit.display.configurexml;
  *
  */
 public class LayoutTurntableXml extends 
-        jmri.jmrit.display.configurexml.LayoutTurntableXml  {
+        jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml  {
 
 }

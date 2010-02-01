@@ -8,6 +8,6 @@ package jmri.jmrit.display.configurexml;
  *
  */
 public class LayoutTurnoutXml extends 
-        jmri.jmrit.display.configurexml.LayoutTurnoutXml  {
+        jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml  {
 
 }

@@ -8,7 +8,7 @@ package jmri.jmrit.display.configurexml;
  *
  */
 public class LayoutPositionableLabelXml extends 
-        jmri.jmrit.display.configurexml.LayoutPositionableLabelXml  {
+        jmri.jmrit.display.layoutEditor.configurexml.LayoutPositionableLabelXml  {
 
 }
 

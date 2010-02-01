@@ -3,6 +3,7 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import jmri.configurexml.*;
+import jmri.jmrit.display.configurexml.*;
 
 import org.jdom.Element;
 
@@ -15,7 +16,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
  * @author Kevin Dickerson, Deprecated
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @deprecated 2.7.8
  */
   @Deprecated

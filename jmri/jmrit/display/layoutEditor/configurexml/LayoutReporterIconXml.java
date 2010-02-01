@@ -2,6 +2,8 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 
 import org.jdom.Element;
 
+import jmri.jmrit.display.configurexml.*;
+
 /**
  * Dummy class, just present so files that refer to this 
  * class (e.g. pre JMRI 2.7.8 files) can still be read by
@@ -11,7 +13,7 @@ import org.jdom.Element;
  *
  * @author Dave Duchamp Copyright: Copyright (c) 2008
  * @author Kevin Dickerson, Deprecated
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @deprecated 2.7.8
  */
  

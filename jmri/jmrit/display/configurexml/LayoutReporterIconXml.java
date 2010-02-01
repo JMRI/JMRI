@@ -8,6 +8,6 @@ package jmri.jmrit.display.configurexml;
  *
  */
 public class LayoutReporterIconXml extends 
-        jmri.jmrit.display.configurexml.LayoutReporterIconXml  {
+        jmri.jmrit.display.layoutEditor.configurexml.LayoutReporterIconXml  {
 
 }

@@ -2,10 +2,7 @@ package jmri.jmrit.display.layoutEditor.configurexml;
 
 import org.jdom.Element;
 import jmri.configurexml.*;
-//import java.awt.Color;
-//import org.jdom.DataConversionException;
-//import jmri.jmrit.display.PositionableLabel;
-//import org.jdom.Attribute;
+import jmri.jmrit.display.configurexml.*;
 
 /**
  * Dummy class, just present so files that refer to this 
@@ -14,10 +11,9 @@ import jmri.configurexml.*;
  *
  * @author David Duchamp Copyright: Copyright (c) 2009
  * @author Kevin Dickerson, Deprecated
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @deprecated 2.7.8
  */
-@Deprecated
 
 public class LayoutPositionableLabelXml extends AbstractXmlAdapter {
 

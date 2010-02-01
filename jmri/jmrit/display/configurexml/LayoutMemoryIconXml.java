@@ -7,7 +7,7 @@ package jmri.jmrit.display.configurexml;
  * @Deprecated 2.9.4
  *
  */
-public class LayoutTurntableXml extends 
-        jmri.jmrit.display.configurexml.LayoutTurntableXml  {
+public class LayoutMemoryIconXml extends 
+        jmri.jmrit.display.layoutEditor.configurexml.LayoutMemoryIconXml  {
 
 }
