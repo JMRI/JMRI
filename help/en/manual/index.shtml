@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: index.shtml,v 1.6 2010-01-23 19:11:38 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.7 2010-02-01 02:14:59 jacobsen Exp $ -->
 <title>Decoder Pro Manual: Index</title>
 
 <!-- Style -->
@@ -55,7 +55,7 @@ in some layout details, they will be essentially the same.</span>
 
 <div align="right">
 <p>
-<a href="https://sourceforge.net/projects/jmri/files/manuals/DecoderProManual_2_8.pdf">
+<a href="https://sourceforge.net/projects/jmri/files/manuals/DecoderProManual_2_8.pdf/download">
 Download a .PDF file of this manual.<br>
 (7 MB, 249 pages)
 </a></div>
