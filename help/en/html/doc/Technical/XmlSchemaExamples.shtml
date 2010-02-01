@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlSchemaExamples.shtml,v 1.1 2010-01-31 22:15:30 jacobsen Exp $ -->
+<!-- $Id: XmlSchemaExamples.shtml,v 1.2 2010-02-01 04:59:43 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -121,6 +121,23 @@ Then putting it on an attribute is simple:
 
 <code><pre>
 &lt;xs:attribute name="opsOnly" type="yesNoType"/&gt;
+</pre></code>
+
+<h2>Element with restricted text content</h2>
+
+Not an attribute, an element:
+
+<code><pre>
+&lt;xs:element name="relation"&gt;
+  &lt;xs:simpleType&gt;
+    &lt;xs:restriction base="xs:string"&gt;
+      &lt;xs:enumeration value="ge"/&gt;
+      &lt;xs:enumeration value="lt"/&gt;
+      &lt;xs:enumeration value="eq"/&gt;
+      &lt;xs:enumeration value="ne"/&gt;
+    &lt;/xs:restriction&gt;
+  &lt;/xs:simpleType&gt;
+&lt;/xs:element&gt;
 </pre></code>
 
 <!--#include virtual="/Footer" -->
