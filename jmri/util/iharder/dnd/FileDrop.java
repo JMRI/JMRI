@@ -418,7 +418,6 @@ public class FileDrop
     }   // end constructor
 
     
-    @SuppressWarnings("unchecked")
 	private static boolean supportsDnD()
     {   // Static Boolean
         if( supportsDnD == null )
