@@ -154,7 +154,6 @@ public class JLogoutputFrame
      * @param aTextPane 
      * @return A configured Appender
      */
-    @SuppressWarnings("unchecked")
     public JTextPaneAppender createAppender( JTextPane aTextPane )
     {
         JTextPaneAppender result = new JTextPaneAppender( myLayout, "Debug", myFilters.toArray( new Filter[0] ), aTextPane );
