@@ -1,7 +1,7 @@
 # Use an Xbox (original) controller as throttle(s)									`1AA
 #
 # Author: Andrew Berridge, 2010 - Based on USBThrottle.py, Bob Jacobsen, copyright 2008
-# (NOT YET!) Part of the JMRI distribution
+# Part of the JMRI distribution
 #
 # This is still experimental code and is under development. Currently, it supports:
 # 1. Left-hand joystick as throttle - up moves forwards, down reverses
@@ -37,16 +37,13 @@
 # Currently tested on Windows only
 #
 # IMPORTANT Warnings:
-# 1. Make sure you set a "Dead zone" for each of the analogue sticks! If you
-# don't there will be too many events triggered and everything will slow right
-# down....
+# 1. Make sure you set a "Dead zone" for each of the analogue sticks (in the
+# Windows Control planel)! If you don't there will be too many events triggered 
+# and everything will slow right down....
 #
 
-
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.3 $
-
-import math
+# $Revision: 1.4 $
 
 #
 # Set the name of the controller you're using
@@ -63,26 +60,6 @@ sliderAMax = 0.99        # value of componentASlider for max speed
 componentALock = "11"    # the left trigger
 
 hatSwitch = "Hat Switch" # The name of the Hat Switch
-
-#
-# Use the following if you have a relative analog or digital (on/off)
-# control you'd like to use to control speed
-#
-componentWheel = "Y Axis"       # relative device for throttle
-componentWheelInverted = True   # negative values is more positive speed
-componentWheelReverses = True   # will go through zero to change direction
-componentWheelIncrement = 1     # speed slider increment per click
-componentWheelUpperEdge =  0.2  # counts as a positive click if more than this
-componentWheelLowerEdge = -0.2  # counts as a negative click if less than this
-
-#
-# Set the follow to buttons you want to control speed
-# and direction of the locomotive
-#
-componentUp = ""       # button, click to raise speed
-componentDown = ""     # button, click to raise speed
-componentStop = ""     # button, sets stop when clicked
-componentReverse = ""  # button, reverse when on, forward when off
 
 #
 # Set the following to the buttons you want
@@ -151,13 +128,26 @@ class TreeListener(java.beans.PropertyChangeListener):
 	self.functionPanel = self.activeThrottleFrame.getFunctionPanel()
 	self.addressPanel = self.activeThrottleFrame.getAddressPanel()
 	self.throttleWindow.addPropertyChangeListener(self)
+	self.activeThrottleFrame.addPropertyChangeListener(self)
   
   def propertyChange(self, event):
+  	if (event.propertyName == "ancestor"):
+  		#print "ancestor property change - closing throttle window"
+  		# Remove all property change listeners and
+  		# dereference all throttle components
+  		self.activeThrottleFrame.removePropertyChangeListener(self)
+		self.throttleWindow.removePropertyChangeListener(self)
+  		self.activeThrottleFrame = None
+  		self.controlPanel = None
+		self.functionPanel = None
+		self.addressPanel = None
+		self.throttleWindow = None
+		# Now remove this propertyChangeListener from the model
+		global model
+		model.removePropertyChangeListener(self)
+		
   	if (event.propertyName == "ThrottleFrame") :  # Current throttle frame changed
-  		print "Throttle Frame changed"
-		#self.throttle = event.newValue.getAddressPanel().getThrottle()
-		#self.speedAction.setThrottle( self.throttle )
-		#self.activeThrottleFrame = self.throttleWindow.getCurentThrottleFrame()
+  		#print "Throttle Frame changed"
 		self.addressPanel = event.newValue.getAddressPanel()
 		self.controlPanel = event.newValue.getControlPanel()
 		self.functionPanel = event.newValue.getFunctionPanel()
@@ -179,7 +169,7 @@ class TreeListener(java.beans.PropertyChangeListener):
 			value = event.newValue
 			# 
 			# uncomment the following to see the entries
-			#print component, value
+			# print component, value
 			
 			#print "addr: " + self.addressPanel.getCurrentAddress().toString() 
 			
@@ -198,12 +188,15 @@ class TreeListener(java.beans.PropertyChangeListener):
 					else :
 						# go to previous throttle frame
 						self.throttleWindow.previousThrottleFrame()
+				return
 					
 			if (component == componentStart and value > 0.5):
 				self.addressPanel.selectRosterEntry()
+				return
 				
 			if (component == componentBack and value > 0.5):
 				self.addressPanel.dispatchAddress()
+				return
 			
 			# "Lock" the throttle
 			if (component == componentALock and value > 0.0) :
@@ -213,7 +206,8 @@ class TreeListener(java.beans.PropertyChangeListener):
 			        slider.setValue(0)
 			    else:
 			        self.locked = True
-			
+				return
+						
 			# absolute throttle component
 			if (component == componentASlider) :
 			    if not self.locked:
@@ -241,44 +235,37 @@ class TreeListener(java.beans.PropertyChangeListener):
 			        slider = self.controlPanel.getSpeedSlider()
 			        setting = int(round(fraction*(slider.getMaximum()-slider.getMinimum()), 0))
 			        slider.setValue(setting)
-			
-			# function keys
-			#if (component == componentF0) :
-			#    if self.F0isOn and value > 0.5:
-			#        self.functionPanel.getFunctionButtons()[0].changeState(0)
-			#        self.F0isOn = False
-			#    elif value > 0.5:
-			#        self.functionPanel.getFunctionButtons()[0].changeState(1)
-			#        self.F0isOn = True
-			
-			if not isNaN(component) :
-				fNum = -1
-				if component == componentF0:
-					fNum = 0
-				elif component == componentF1:
-					fNum = 1
-				elif component == componentF2:
-					fNum = 2
-				elif component == componentF3:
-					fNum = 3
-				elif component == componentF4:
-					fNum = 4
-				elif component == componentF5:
-					fNum = 5
-				elif component == componentF6:
-					fNum = 6
-				elif component == componentF7:
-					fNum = 7
-				elif component == componentF8:
-					fNum = 8
+				return
 				
-				button = self.functionPanel.getFunctionButtons()[fNum]
-				if button.getIsLockable() :
-					if value > 0.5 :
-						state = button.getState()
-						button.changeState(not state)
-				else :
-					button.changeState(value > 0.5)
+			#print component, value
+			fNum = -1
+			if component == componentF0:
+				fNum = 0
+			elif component == componentF1:
+				fNum = 1
+			elif component == componentF2:
+				fNum = 2
+			elif component == componentF3:
+				fNum = 3
+			elif component == componentF4:
+				fNum = 4
+			elif component == componentF5:
+				fNum = 5
+			elif component == componentF6:
+				fNum = 6
+			elif component == componentF7:
+				fNum = 7
+			elif component == componentF8:
+				fNum = 8
+			
+			button = self.functionPanel.getFunctionButtons()[fNum]
+			if button.getIsLockable() :
+				if value > 0.5 :
+					state = button.getState()
+					button.changeState(not state)
+			else :
+				button.changeState(value > 0.5)
+
 			return
 
 #Iterate over the controllers, creating a new listener for each
