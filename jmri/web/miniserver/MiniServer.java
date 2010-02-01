@@ -29,7 +29,7 @@ import jmri.web.miniserver.servlet.echoservlet.EchoServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class MiniServer extends NetworkServer {
@@ -68,8 +68,14 @@ public class MiniServer extends NetworkServer {
     
     public void handleConnection(Socket server)
         throws IOException {
-        log.info(serverName + ": got connection from " +
-             server.getInetAddress().getHostName());
+
+        String connectionName = server.getInetAddress().getHostName();
+        if (connectionName.equals(lastConnectionName))
+            log.debug(serverName + ": got connection from " +connectionName);
+        else 
+            log.info(serverName + ": got connection from " +connectionName+" (only reporting 1st one)");
+        lastConnectionName = connectionName;
+        
         BufferedReader in = SocketUtil.getReader(server);
         
         ServletRequest req = new MiniServletRequest(in);
@@ -98,6 +104,8 @@ public class MiniServer extends NetworkServer {
         
     }
 
+    static String lastConnectionName = "";
+    
     /**
      * Scan URL, trying to make the longest match against
      * the servlet properties.  
