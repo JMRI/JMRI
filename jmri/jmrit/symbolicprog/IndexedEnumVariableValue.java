@@ -16,7 +16,7 @@ import java.util.List;
  * Extends VariableValue to represent a enumerated indexed variable.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.12 $
+ * @version   $Revision: 1.13 $
  *
  */
 public class IndexedEnumVariableValue extends VariableValue
@@ -232,6 +232,15 @@ public class IndexedEnumVariableValue extends VariableValue
         }
     }
 
+    public void setAvailable(boolean a) {
+        System.out.println("setting "+comboVars.size()+","+comboCBs.size()+" available "+a);
+        for (int i = 0; i<comboVars.size(); i++) 
+            comboVars.get(i).setVisible(a);
+        for (int i = 0; i<comboCBs.size(); i++) 
+            comboCBs.get(i).setVisible(a);
+        super.setAvailable(a);
+    }
+    
     private int _progState = 0;
     private static final int IDLE = 0;
     private static final int WRITING_PI4R = 1;
@@ -266,13 +275,13 @@ public class IndexedEnumVariableValue extends VariableValue
         if (getInfoOnly() || getWriteOnly()) state = false;
         (_cvVector.elementAt(_row)).setToRead(state);
     }
-    public boolean isToRead() { return (_cvVector.elementAt(_row)).isToRead(); }
+    public boolean isToRead() { return getAvailable() && (_cvVector.elementAt(_row)).isToRead(); }
 
     public void setToWrite(boolean state) {
         if (getInfoOnly() || getReadOnly()) state = false;
         (_cvVector.elementAt(_row)).setToWrite(state);
     }
-    public boolean isToWrite() { return (_cvVector.elementAt(_row)).isToWrite(); }
+    public boolean isToWrite() { return getAvailable() && (_cvVector.elementAt(_row)).isToWrite(); }
 
     public boolean isChanged() {
         CvValue cv = (_cvVector.elementAt(_row));
@@ -476,7 +485,7 @@ public class IndexedEnumVariableValue extends VariableValue
      * model between this object and the real JComboBox value.
      *
      * @author  Bob Jacobsen   Copyright (C) 2001
-     * @version $Revision: 1.12 $
+     * @version $Revision: 1.13 $
      */
     public class iVarComboBox extends JComboBox {
 

@@ -36,7 +36,7 @@ import java.awt.event.ItemEvent;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.81 $
+ * @version   $Revision: 1.82 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -1210,6 +1210,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             JOptionPane.showMessageDialog(this, rbt.getString("ErrorDuplicateID"));
             return false;
         }
+        
         // reload the RosterEntry
         updateDccAddress();
         _rPane.update(_rosterEntry);
@@ -1222,7 +1223,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             JOptionPane.showMessageDialog(this, rbt.getString("PromptFillInID"));
             return false;
         }
-
+        
         // if there isn't a filename, store using the id
         _rosterEntry.ensureFilenameExists();
         String filename = _rosterEntry.getFileName();
@@ -1236,6 +1237,9 @@ abstract public class PaneProgFrame extends JmriJFrame
         // and store an updated roster file
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         Roster.writeRosterFile();
+
+        // save date changed, update
+        _rPane.updateGUI(_rosterEntry);
 
         // show OK status
         progStatus.setText(java.text.MessageFormat.format(

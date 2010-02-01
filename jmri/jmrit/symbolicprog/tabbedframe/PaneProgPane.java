@@ -63,7 +63,7 @@ import java.util.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.69 $
+ * @version   $Revision: 1.70 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -1467,12 +1467,14 @@ public class PaneProgPane extends javax.swing.JPanel
         if ( (attr = var.getAttribute("label")) != null
              && (temp = attr.getValue()) != null )
             label = temp;
-        JLabel l = new JLabel(" "+label+" ");
 
         // get representation; store into the list to be programmed
         JComponent rep = getRepresentation(name, var);
         if (i>=0) varList.add(new Integer(i));
 
+        // create the paired label
+        JLabel l = new WatchingLabel(" "+label+" ", rep);
+        
         // now handle the four orientations
         // assemble v from label, rep
 

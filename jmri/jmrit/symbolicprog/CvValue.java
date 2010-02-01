@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.27 $
+ * @version   $Revision: 1.28 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -560,7 +560,7 @@ public class CvValue extends AbstractValue implements ProgListener {
             timer.start();
         }
         if (log.isDebugEnabled()) log.debug("CV progOpReply end of handling CV "+_num);
-        }
+    }
 
     void errorTimeout() {
         setState(UNKNOWN);
@@ -568,11 +568,6 @@ public class CvValue extends AbstractValue implements ProgListener {
         _busy = false;
         notifyBusyChange(true, _busy);
     }
-
-    // handle parameter notification
-    java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener p) { prop.removePropertyChangeListener(p); }
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener p) { prop.addPropertyChangeListener(p); }
 
     // clean up connections when done
     public void dispose() {

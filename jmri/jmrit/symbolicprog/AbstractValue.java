@@ -3,6 +3,8 @@
 package jmri.jmrit.symbolicprog;
 
 import java.awt.Color;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 /**
  * Define common base class methods for CvValue and VariableValue classes
@@ -14,12 +16,16 @@ import java.awt.Color;
  * The ToWrite parameter (boolean, unbound) is used to remember whether
  * this object has been read during a "write all" operation.  This allows
  * removal of duplicate operations.
- *
+ * <P>
+ * The Available parameter (boolean, unbound) remembers whether the variable
+ * should be displayed, programmed, etc.
+ * 
  * Description:		Represents a single CV value
  * @author			Bob Jacobsen   Copyright (C) 2001, 2005
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public abstract class AbstractValue {
+    PropertyChangeSupport prop = new PropertyChangeSupport(this);
 
     // method to handle color changes for states
     abstract void setColor(Color c);
@@ -102,5 +108,23 @@ public abstract class AbstractValue {
             default:
                 return "<unexpected value: "+val+">";
         }
+    }
+
+    public void setAvailable(boolean available) {
+        boolean oldval = this.available;
+        this.available = available;
+        if (oldval != this.available) {
+            prop.firePropertyChange("Available", new Boolean(oldval), new Boolean(available));
+        }
+    }
+    public boolean getAvailable() { return available; }
+    private boolean available = true;
+
+    public void addPropertyChangeListener(PropertyChangeListener p) {
+        prop.addPropertyChangeListener(p);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener p) {
+        prop.removePropertyChangeListener(p);
     }
 }

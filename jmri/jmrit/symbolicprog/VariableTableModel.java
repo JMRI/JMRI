@@ -4,16 +4,13 @@ package jmri.jmrit.symbolicprog;
 
 import jmri.jmrit.decoderdefn.DecoderFile;
 
-import java.util.List;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Vector;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import java.awt.event.*;
+import java.beans.*;
+import java.util.*;
+
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -21,10 +18,10 @@ import org.jdom.Element;
  * Table data model for display of variables in symbolic programmer.
  * Also responsible for loading from the XML file...
  *
- * @author    Bob Jacobsen   Copyright (C) 2001, 2006
- * @author    Howard G. Penny   Copyright (C) 2005
- * @author 		Daniel Boudreau Copyright (C) 2007
- * @version   $Revision: 1.41 $
+ * @author      Bob Jacobsen        Copyright (C) 2001, 2006, 2010
+ * @author      Howard G. Penny     Copyright (C) 2005
+ * @author      Daniel Boudreau     Copyright (C) 2007
+ * @version     $Revision: 1.42 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -174,8 +171,15 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         setFileDirty(true);
     }
 
-    // for loading config:
-    // Read from an Element to configure the row
+    /**
+     * Load one row in the VariableTableModel,
+     * by reading in the Element containing its
+     * definition.
+     * <p>
+     * Invoked from DecoderFile
+     * @param row number of row to fill
+     * @param e Element of type "variable"
+     */
     @SuppressWarnings("unchecked")
 	public void setRow(int row, Element e) {
         // get the values for the VariableValue ctor
@@ -194,44 +198,17 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if (e.getAttribute("mask") != null)
             mask = e.getAttribute("mask").getValue();
         else {
-            log.debug("Element missing mask attribute: "+name);
             mask ="VVVVVVVV";
         }
 
-        int minVal = 0;
-        int maxVal = 255;
-
-        boolean readOnly = false;
-        if (e.getAttribute("readOnly") != null) {
-            readOnly = e.getAttribute("readOnly").getValue().equals("yes") ? true : false;
-            if (log.isDebugEnabled()) log.debug("found readOnly "+e.getAttribute("readOnly").getValue());
-        } else {
-            log.debug("Element missing readOnly attribute: "+name);
-        }
-
-        boolean infoOnly = false;
-        if (e.getAttribute("infoOnly") != null) {
-            infoOnly = e.getAttribute("infoOnly").getValue().equals("yes") ? true : false;
-            if (log.isDebugEnabled()) log.debug("found readOnly "+e.getAttribute("infoOnly").getValue());
-        } else {
-            log.debug("Element missing readOnly attribute: "+name);
-        }
-
-        boolean writeOnly = false;
-        if (e.getAttribute("writeOnly") != null) {
-            writeOnly = e.getAttribute("writeOnly").getValue().equals("yes") ? true : false;
-            if (log.isDebugEnabled()) log.debug("found writeOnly "+e.getAttribute("writeOnly").getValue());
-        } else {
-            log.debug("Element missing readOnly attribute: "+name);
-        }
-
-        boolean opsOnly = false;
-        if (e.getAttribute("opsOnly") != null) {
-            opsOnly = e.getAttribute("opsOnly").getValue().equals("yes") ? true : false;
-            if (log.isDebugEnabled()) log.debug("found opsOnly "+e.getAttribute("opsOnly").getValue());
-        } else {
-            log.debug("Element missing readOnly attribute: "+name);
-        }
+        boolean readOnly = e.getAttribute("readOnly")!=null ?
+                                e.getAttribute("readOnly").getValue().equals("yes") : false;
+        boolean infoOnly = e.getAttribute("infoOnly")!=null ?
+                                e.getAttribute("infoOnly").getValue().equals("yes") : false;
+        boolean writeOnly = e.getAttribute("writeOnly")!=null ?
+                                e.getAttribute("writeOnly").getValue().equals("yes") : false;
+        boolean opsOnly = e.getAttribute("opsOnly")!=null ?
+                                e.getAttribute("opsOnly").getValue().equals("yes") : false;
         
         // Ops mode doesn't allow reads, therefore we must disable read buttons
 		if (_cvModel.getProgrammer() != null
@@ -251,31 +228,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         _writeButtons.addElement(bw);
         JButton br = new JButton("Read");
         _readButtons.addElement(br);
-
-        if (readOnly || infoOnly) { // readOnly or infoOnly, config write, read buttons
-            if (writeOnly){
-                bw.setEnabled(true);
-                bw.setActionCommand("W" + row);
-                bw.addActionListener(this);
-            } else {
-                bw.setEnabled(false);
-            }
-            if (infoOnly) {
-                br.setEnabled(false);
-            } else {
-                br.setActionCommand("R"+row);
-                br.addActionListener(this);
-            }
-        } else { // not readOnly or infoOnly, config write, read buttons
-            bw.setActionCommand("W" + row);
-            bw.addActionListener(this);
-            if (writeOnly) {
-                br.setEnabled(false);
-            } else {
-                br.setActionCommand("R" + row);
-                br.addActionListener(this);
-            }
-        }
+        setButtonsReadWrite(readOnly, infoOnly, writeOnly, bw, br, row);
 
         if (_cvModel == null) {
             log.error("CvModel reference is null; cannot add variables");
@@ -285,135 +238,43 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
   
             _cvModel.addCV(""+CV, readOnly, infoOnly, writeOnly);
 
-        // have to handle various value types, see "snippet"
-        Attribute a;
+        // decode and handle specific types
         Element child;
         VariableValue v = null;
         if ( (child = e.getChild("decVal")) != null) {
-            if ( (a = child.getAttribute("min")) != null)
-                minVal = Integer.valueOf(a.getValue()).intValue();
-            if ( (a = child.getAttribute("max")) != null)
-                maxVal = Integer.valueOf(a.getValue()).intValue();
-            v = new DecVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
-                                     CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
+            v = processDecVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
 
         } else if ( (child = e.getChild("hexVal")) != null) {
-            if ( (a = child.getAttribute("min")) != null)
-                minVal = Integer.valueOf(a.getValue(),16).intValue();
-            if ( (a = child.getAttribute("max")) != null)
-                maxVal = Integer.valueOf(a.getValue(),16).intValue();
-            v = new HexVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
-                                     CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
+            v = processHexVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
 
         } else if ( (child = e.getChild("enumVal")) != null) {
-            List<Element> l = child.getChildren("enumChoice");
-            EnumVariableValue v1 = new EnumVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
-                                                         CV, mask, 0, l.size()-1, _cvModel.allCvVector(), _status, item);
-            v = v1; // v1 is of EnunVariableValue type, so doesn't need casts
-            v1.nItems(l.size());
-            for (int k=0; k< l.size(); k++) {
-                // is a value specified?
-                Element enumChElement = l.get(k);
-                Attribute valAttr = enumChElement.getAttribute("value");
-                if ( valAttr==null)
-                    v1.addItem(enumChElement.getAttribute("choice").getValue());
-                else {
-                    v1.addItem(enumChElement.getAttribute("choice").getValue(),
-                                Integer.parseInt(valAttr.getValue()));
-                }
-            }
-            v1.lastItem();
+            v = processEnumVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
 
         } else if ( (child = e.getChild("compositeVal")) != null) {
-            List<Element> lChoice = child.getChildren("compositeChoice");
-            CompositeVariableValue v1 = new CompositeVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
-                                                         CV, mask, 0, lChoice.size()-1, _cvModel.allCvVector(), _status, item);
-            v = v1;  // v1 is of CompositeVariableType, so doesn't need casts
             // loop over the choices
-            for (int k=0; k< lChoice.size(); k++) {
-                // Create the choice
-                Element choiceElement = lChoice.get(k);
-                String choice = choiceElement.getAttribute("choice").getValue();
-                v1.addChoice(choice);
-                // for each choice, capture the settings
-                List<Element> lSetting = choiceElement.getChildren("compositeSetting");
-                for (int n=0; n< lSetting.size(); n++) {
-                    Element settingElement = lSetting.get(n);
-                    String varName = settingElement.getAttribute("label").getValue();
-                    String value = settingElement.getAttribute("value").getValue();
-                    v1.addSetting(choice, varName, findVar(varName), value);
-                }
-                
-            }
-            v1.lastItem();
+            v = processCompositeVal(child, name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item);
 
         } else if ( (child = e.getChild("speedTableVal")) != null) {
-            if ( (a = child.getAttribute("min")) != null)
-                minVal = Integer.valueOf(a.getValue()).intValue();
-            if ( (a = child.getAttribute("max")) != null)
-                maxVal = Integer.valueOf(a.getValue()).intValue();
-            Attribute entriesAttr = child.getAttribute("entries");
-            int entries = 28;
-            try {
-                if (entriesAttr!=null) entries = entriesAttr.getIntValue();
-            } catch (org.jdom.DataConversionException e1) {}
 
-            // ensure all CVs exist
-            for (int i=0; i<entries; i++) { _cvModel.addCV(""+(CV+i), readOnly, infoOnly, writeOnly); }
-
-            v = new SpeedTableVarValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
-                                       CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item, entries);
+            v = processSpeedTableVal(child, CV, readOnly, infoOnly, writeOnly, name, comment, opsOnly, mask, item);
 
         } else if ( (child = e.getChild("longAddressVal")) != null) {
-            _cvModel.addCV(""+(CV+1), readOnly, infoOnly, writeOnly);  // ensure 2nd CV exists
-            v = new LongAddrVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
-                                          CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
+            v = processLongAddressVal(CV, readOnly, infoOnly, writeOnly, name, comment, opsOnly, mask, item);
+
         } else if ( (child = e.getChild("shortAddressVal")) != null) {
-            ShortAddrVariableValue v1 = new ShortAddrVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
-                                     CV, mask, _cvModel.allCvVector(), _status, item);
-            v = v1;
-            // get specifics if any
-            List<Element> l = child.getChildren("shortAddressChanges");
-            for (int k=0; k< l.size(); k++)
-                try {
-                    v1.setModifiedCV(l.get(k).getAttribute("cv").getIntValue());
-                }
-                catch (org.jdom.DataConversionException e1) {
-                    log.error("invalid cv attribute in short address element of decoder file");
-                }
+            v = processShortAddressVal(name, comment, readOnly, infoOnly, writeOnly, opsOnly, CV, mask, item, child);
 
         } else if ( (child = e.getChild("splitVal")) != null) {
-            if ( (a = child.getAttribute("min")) != null)
-                minVal = Integer.valueOf(a.getValue()).intValue();
-            if ( (a = child.getAttribute("max")) != null)
-                maxVal = Integer.valueOf(a.getValue()).intValue();
-            int highCV = CV+1;
-            if ( (a = child.getAttribute("highCV")) != null)
-                highCV = Integer.valueOf(a.getValue()).intValue();
-            int factor = 1;
-            if ( (a = child.getAttribute("factor")) != null)
-                factor = Integer.valueOf(a.getValue()).intValue();
-            int offset = 0;
-            if ( (a = child.getAttribute("offset")) != null)
-                offset = Integer.valueOf(a.getValue()).intValue();
-            String uppermask = "VVVVVVVV";
-            if ( (a = child.getAttribute("upperMask")) != null)
-                uppermask = a.getValue();
+            v = processSplitVal(child, CV, readOnly, infoOnly, writeOnly, name, comment, opsOnly, mask, item);
 
-            _cvModel.addCV(""+(highCV), readOnly, infoOnly, writeOnly);  // ensure 2nd CV exists
-            v = new SplitVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly,
-                                       CV, mask, minVal, maxVal, _cvModel.allCvVector(),
-                                       _status, item,
-                                       highCV, factor, offset, uppermask);
         } else {
             reportBogus();
             return;
         }
 
-        // back to general processing
-        // add tooltip text if present
-        if ( (a = e.getAttribute("tooltip")) != null)
-            v.setToolTipText(a.getValue());
+        processModifierElements(e,v);
+
+        setToolTip(e, v);
 
         // record new variable, update state, hook up listeners
         rowVector.addElement(v);
@@ -421,19 +282,80 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         v.addPropertyChangeListener(this);
 
         // set to default value if specified (CV load may later override this)
-        if ( (a = e.getAttribute("default")) != null) {
-            String val = a.getValue();
-            if (log.isDebugEnabled()) log.debug("Found default value: "+val+" for "+name);
-            v.setIntValue(Integer.valueOf(val).intValue());
+        if (setDefaultValue(e, v)) {
             _cvModel.getCvByNumber(CV).setState(VariableValue.FROMFILE);  // correct for transition to "edited"
         }
     }
 
+    /**
+     * If there are any modifier elements, process them
+     * by e.g. setting attributes on the VariableValue
+     */
+    protected void processModifierElements(Element e, VariableValue v) {
+        // currently only looks for one instance and one type
+        Element q = e.getChild("qualifier");
+        if (q == null) return;
+
+        String variableRef = q.getChild("variableref").getText();
+        String relation = q.getChild("relation").getText();
+        String value = q.getChild("value").getText();
+
+        // find the variable
+        int index = findVarIndex(variableRef);
+        if (index >= 0) {
+            // found, attach the qualifier object
+            ValueQualifier vq = new ValueQualifier(v, rowVector.get(index), Integer.parseInt(value), relation);
+        } else {
+            log.error("didn't find variable referenced: "+variableRef);
+        }
+    }
+
+    /**
+     * Create an IndexedVariableValue object of a specific
+     * type from a describing element.
+     * @return null if no valid element
+     * @throws java.lang.NumberFormatException
+     */
+    protected VariableValue createIndexedVariableFromElement(Element e, int row, String name, String comment, String cvName, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, int cv, String mask, String item, String productID) throws NumberFormatException {
+        VariableValue iv = null;
+        Element child;
+        if ((child = e.getChild("indexedVal")) != null) {
+            iv = processIndexedVal(child, row, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, item);
+        } else if ((child = e.getChild("ienumVal")) != null) {
+            iv = processIEnumVal(child, row, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, item, productID);
+        } else if ((child = e.getChild("indexedPairVal")) != null) {
+            iv = processIndexedPairVal(child, row, readOnly, infoOnly, writeOnly, name, comment, cvName, opsOnly, cv, mask, item);
+        }
+        return iv;
+    }
+
+    /**
+     * If there's a "default" attribute, set that value to start
+     * @return true if the value was set
+     */
+    protected boolean setDefaultValue(Element e, VariableValue v) {
+        Attribute a;
+        if ( (a = e.getAttribute("default")) != null) {
+            String val = a.getValue();
+            v.setIntValue(Integer.valueOf(val).intValue());
+            return true;
+        }
+        return false;
+    }
     private int _piCv = -1;
     public int piCv() {return _piCv;}
     private int _siCv = -1;
     public int siCv() {return _siCv;}
     
+    /**
+     * Load one row in the IndexedVariableTableModel,
+     * by reading in the Element containing its
+     * definition.
+     * <p>
+     * Invoked from DecoderFile
+     * @param row number of row to fill
+     * @param e Element of type "variable"
+     */
     @SuppressWarnings("unchecked")
 	public int setIndxRow(int row, Element e, String productID) {
         if (DecoderFile.isIncluded(e, productID) == false) {
@@ -460,159 +382,59 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if (e.getAttribute("mask") != null)
             mask = e.getAttribute("mask").getValue();
         else {
-            log.debug("Element missing mask attribute: "+name);
             mask ="VVVVVVVV";
         }
 
-        int minVal = 0;
-        int maxVal = 255;
+        boolean readOnly = e.getAttribute("readOnly")!=null ?
+                                e.getAttribute("readOnly").getValue().equals("yes") : false;
+        boolean infoOnly = e.getAttribute("infoOnly")!=null ?
+                                e.getAttribute("infoOnly").getValue().equals("yes") : false;
+        boolean writeOnly = e.getAttribute("writeOnly")!=null ?
+                                e.getAttribute("writeOnly").getValue().equals("yes") : false;
+        boolean opsOnly = e.getAttribute("opsOnly")!=null ?
+                                e.getAttribute("opsOnly").getValue().equals("yes") : false;
 
-        boolean readOnly = e.getAttribute("readOnly").getValue().equals("yes") ? true : false;
-        boolean infoOnly = e.getAttribute("infoOnly").getValue().equals("yes") ? true : false;
-        boolean writeOnly = e.getAttribute("writeOnly").getValue().equals("yes") ? true : false;
-        boolean opsOnly = e.getAttribute("opsOnly").getValue().equals("yes") ? true : false;
 
         JButton br = new JButton("Read");
         _readButtons.addElement(br);
         JButton bw = new JButton("Write");
         _writeButtons.addElement(bw);
 
-        if (readOnly || infoOnly) { // readOnly or infoOnly, config write, read buttons
-            if (writeOnly){
-                bw.setEnabled(true);
-                bw.setActionCommand("W" + row);
-                bw.addActionListener(this);
-            } else {
-                bw.setEnabled(false);
-            }
-            if (infoOnly) {
-                br.setEnabled(false);
-            } else {
-                br.setActionCommand("R"+row);
-                br.addActionListener(this);
-            }
-        } else { // not readOnly or infoOnly, config write, read buttons
-            bw.setActionCommand("W" + row);
-            bw.addActionListener(this);
-            if (writeOnly) {
-                br.setEnabled(false);
-            } else {
-                br.setActionCommand("R" + row);
-                br.addActionListener(this);
-            }
-        }
+        setButtonsReadWrite(readOnly, infoOnly, writeOnly, bw, br, row);
 
         if (_indxCvModel == null) {
             log.error("IndexedCvModel reference is null; can not add variables");
             return -1;
         }
 
+        // add the information to the CV model
         int _newRow = _indxCvModel.addIndxCV(row, cvName, _piCv, piVal, _siCv, siVal, cv, readOnly, infoOnly, writeOnly);
         if( _newRow != row) {
             row = _newRow;
             if (log.isDebugEnabled()) log.debug("new row is "+_newRow+", row was "+row);
         }
 
-        // have to handle various value types, see "snippet"
-        Attribute a;
-        Element child;
-        VariableValue iv = null;
-        if ( (child = e.getChild("indexedVal")) != null) {
-            if ( (a = child.getAttribute("min")) != null)
-                minVal = Integer.valueOf(a.getValue()).intValue();
-            if ( (a = child.getAttribute("max")) != null)
-                maxVal = Integer.valueOf(a.getValue()).intValue();
-            iv = new IndexedVariableValue(row, name, comment, cvName,
-                                          readOnly, infoOnly, writeOnly, opsOnly,
-                                          cv, mask, minVal, maxVal, _indxCvModel.allIndxCvVector(),
-                                          _status, item );
+        // Find and process the specific content types
+        VariableValue iv;
+        iv = createIndexedVariableFromElement(e, row, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, item, productID);
 
-        } else if ( (child = e.getChild("ienumVal")) != null) {
-            List<Element> l = child.getChildren("ienumChoice");
-            IndexedEnumVariableValue v1 = new IndexedEnumVariableValue(row, name, comment, cvName,
-                readOnly, infoOnly, writeOnly, opsOnly,
-                cv, mask, _indxCvModel.allIndxCvVector(),
-                _status, item);
-            iv = v1;
-            for (int x = 0; x < l.size(); x++) {
-                Element ex = l.get(x);
-                if (DecoderFile.isIncluded(ex, productID) == false) {
-                    l.remove(x);
-                    x--;
-                }
-            }
-            v1.nItems(l.size());
-            for (int k=0; k< l.size(); k++) {
-                Element enumChElement = l.get(k);
-                // is a value specified?
-                Attribute valAttr = enumChElement.getAttribute("value");
-                if (valAttr == null)
-                    v1.addItem(enumChElement.getAttribute("choice").
-                               getValue());
-                else {
-                    v1.addItem(enumChElement.getAttribute("choice").
-                               getValue(),
-                               Integer.parseInt(valAttr.getValue()));
-                }
-            }
-            v1.lastItem();
-
-        } else if (( child = e.getChild("indexedPairVal")) != null) {
-            if ((a = child.getAttribute("min")) != null)
-                minVal = Integer.valueOf(a.getValue()).intValue();
-            if ((a = child.getAttribute("max")) != null)
-                maxVal = Integer.valueOf(a.getValue()).intValue();
-            int factor = 1;
-            if ((a = child.getAttribute("factor")) != null)
-                factor = Integer.valueOf(a.getValue()).intValue();
-            int offset = 0;
-            if ((a = child.getAttribute("offset")) != null)
-                offset = Integer.valueOf(a.getValue()).intValue();
-            String uppermask = "VVVVVVVV";
-            if ((a = child.getAttribute("upperMask")) != null)
-                uppermask = a.getValue();
-            String highCVname = "";
-            int highCVnumber = -1;
-            int highCVpiVal = -1;
-            int highCVsiVal = -1;
-            if ((a = child.getAttribute("highCVname")) != null) {
-                highCVname = a.getValue();
-                int x = highCVname.indexOf('.');
-                highCVnumber = Integer.valueOf(highCVname.substring(0, x)).intValue();
-                int y = highCVname.indexOf('.',x+1);
-                if (y > 0) {
-                    highCVpiVal = Integer.valueOf(highCVname.substring(x+1, y)).intValue();
-                    x = highCVname.lastIndexOf('.');
-                    highCVsiVal = Integer.valueOf(highCVname.substring(x+1)).intValue();
-                } else {
-                    x = highCVname.lastIndexOf('.');
-                    highCVpiVal = Integer.valueOf(highCVname.substring(x+1)).intValue();
-                }
-            }
-            // ensure highCVnumber exists
-            int highCVrow = _indxCvModel.addIndxCV(row, highCVname,
-                                                   _piCv, highCVpiVal, _siCv, highCVsiVal, highCVnumber,
-                                                   readOnly, infoOnly, writeOnly);
-            iv = new IndexedPairVariableValue(row, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly,
-                                       cv, mask, minVal, maxVal, _indxCvModel.allIndxCvVector(),
-                                       _status, item, highCVrow, highCVname, factor, offset, uppermask);
-
-        } else {
-            reportBogus();
+        if (iv == null) {
+           // trouble reporting
+           reportBogus();
             return -1;
         }
 
-        // back to general processing
-        // add tooltip text if present
-        if ( (a = e.getAttribute("tooltip")) != null) {
-            iv.setToolTipText(a.getValue());
-        }
+        processModifierElements(e,iv);
+
+        setToolTip(e, iv);
+
         // record new variable, update state, hook up listeners
         rowVector.addElement(iv);
         iv.setState(VariableValue.FROMFILE);
         iv.addPropertyChangeListener(this);
 
         // set to default value if specified (CV load may later override this)
+        Attribute a;
         if ((a = e.getAttribute("default")) != null) {
             String val = a.getValue();
             if (log.isDebugEnabled()) log.debug("Found default value: "+val+" for "+name);
@@ -626,6 +448,298 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             _indxCvModel.getCvByRow(row).setState(VariableValue.UNKNOWN);
         }
         return row;
+    }
+
+    protected VariableValue processCompositeVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, int CV, String mask, String item) {
+        VariableValue v;
+        @SuppressWarnings("unchecked")
+        List<Element> lChoice = child.getChildren("compositeChoice");
+        CompositeVariableValue v1 = new CompositeVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, 0, lChoice.size() - 1, _cvModel.allCvVector(), _status, item);
+        v = v1; // v1 is of CompositeVariableType, so doesn't need casts
+        // loop over the choices
+        for (int k = 0; k < lChoice.size(); k++) {
+            // Create the choice
+            Element choiceElement = lChoice.get(k);
+            String choice = choiceElement.getAttribute("choice").getValue();
+            v1.addChoice(choice);
+            // for each choice, capture the settings
+            @SuppressWarnings("unchecked")
+            List<Element> lSetting = choiceElement.getChildren("compositeSetting");
+            for (int n = 0; n < lSetting.size(); n++) {
+                Element settingElement = lSetting.get(n);
+                String varName = settingElement.getAttribute("label").getValue();
+                String value = settingElement.getAttribute("value").getValue();
+                v1.addSetting(choice, varName, findVar(varName), value);
+            }
+        }
+        v1.lastItem();
+        return v;
+    }
+
+    protected VariableValue processDecVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, int CV, String mask, String item) throws NumberFormatException {
+        VariableValue v;
+        Attribute a;
+        int minVal = 0;
+        int maxVal = 255;
+        if ((a = child.getAttribute("min")) != null) {
+            minVal = Integer.valueOf(a.getValue()).intValue();
+        }
+        if ((a = child.getAttribute("max")) != null) {
+            maxVal = Integer.valueOf(a.getValue()).intValue();
+        }
+        v = new DecVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
+        return v;
+    }
+
+    protected VariableValue processEnumVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, int CV, String mask, String item) throws NumberFormatException {
+        VariableValue v;
+        @SuppressWarnings("unchecked")
+        List<Element> l = child.getChildren("enumChoice");
+        EnumVariableValue v1 = new EnumVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, 0, l.size() - 1, _cvModel.allCvVector(), _status, item);
+        v = v1; // v1 is of EnunVariableValue type, so doesn't need casts
+        v1.nItems(l.size());
+        for (int k = 0; k < l.size(); k++) {
+            // is a value specified?
+            Element enumChElement = l.get(k);
+            Attribute valAttr = enumChElement.getAttribute("value");
+            if (valAttr == null) {
+                v1.addItem(enumChElement.getAttribute("choice").getValue());
+            } else {
+                v1.addItem(enumChElement.getAttribute("choice").getValue(), Integer.parseInt(valAttr.getValue()));
+            }
+        }
+        v1.lastItem();
+        return v;
+    }
+
+    protected VariableValue processHexVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, int CV, String mask, String item) throws NumberFormatException {
+        VariableValue v;
+        Attribute a;
+        int minVal = 0;
+        int maxVal = 255;
+        if ((a = child.getAttribute("min")) != null) {
+            minVal = Integer.valueOf(a.getValue(), 16).intValue();
+        }
+        if ((a = child.getAttribute("max")) != null) {
+            maxVal = Integer.valueOf(a.getValue(), 16).intValue();
+        }
+        v = new HexVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
+        return v;
+    }
+
+    protected VariableValue processIEnumVal(Element child, int row, String name, String comment, String cvName, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, int cv, String mask, String item, String productID) throws NumberFormatException {
+        VariableValue iv;
+        @SuppressWarnings("unchecked")
+        List<Element> l = child.getChildren("ienumChoice");
+        IndexedEnumVariableValue v1 = new IndexedEnumVariableValue(row, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, _indxCvModel.allIndxCvVector(), _status, item);
+        iv = v1;
+        for (int x = 0; x < l.size(); x++) {
+            Element ex = l.get(x);
+            if (DecoderFile.isIncluded(ex, productID) == false) {
+                l.remove(x);
+                x--;
+            }
+        }
+        v1.nItems(l.size());
+        for (int k = 0; k < l.size(); k++) {
+            Element enumChElement = l.get(k);
+            // is a value specified?
+            Attribute valAttr = enumChElement.getAttribute("value");
+            if (valAttr == null) {
+                v1.addItem(enumChElement.getAttribute("choice").getValue());
+            } else {
+                v1.addItem(enumChElement.getAttribute("choice").getValue(), Integer.parseInt(valAttr.getValue()));
+            }
+        }
+        v1.lastItem();
+        return iv;
+    }
+
+    protected VariableValue processIndexedPairVal(Element child, int row, boolean readOnly, boolean infoOnly, boolean writeOnly, String name, String comment, String cvName, boolean opsOnly, int cv, String mask, String item) throws NumberFormatException {
+        VariableValue iv;
+        int minVal = 0;
+        int maxVal = 255;
+        Attribute a;
+        if ((a = child.getAttribute("min")) != null) {
+            minVal = Integer.valueOf(a.getValue()).intValue();
+        }
+        if ((a = child.getAttribute("max")) != null) {
+            maxVal = Integer.valueOf(a.getValue()).intValue();
+        }
+        int factor = 1;
+        if ((a = child.getAttribute("factor")) != null) {
+            factor = Integer.valueOf(a.getValue()).intValue();
+        }
+        int offset = 0;
+        if ((a = child.getAttribute("offset")) != null) {
+            offset = Integer.valueOf(a.getValue()).intValue();
+        }
+        String uppermask = "VVVVVVVV";
+        if ((a = child.getAttribute("upperMask")) != null) {
+            uppermask = a.getValue();
+        }
+        String highCVname = "";
+        int highCVnumber = -1;
+        int highCVpiVal = -1;
+        int highCVsiVal = -1;
+        if ((a = child.getAttribute("highCVname")) != null) {
+            highCVname = a.getValue();
+            int x = highCVname.indexOf('.');
+            highCVnumber = Integer.valueOf(highCVname.substring(0, x)).intValue();
+            int y = highCVname.indexOf('.', x + 1);
+            if (y > 0) {
+                highCVpiVal = Integer.valueOf(highCVname.substring(x + 1, y)).intValue();
+                x = highCVname.lastIndexOf('.');
+                highCVsiVal = Integer.valueOf(highCVname.substring(x + 1)).intValue();
+            } else {
+                x = highCVname.lastIndexOf('.');
+                highCVpiVal = Integer.valueOf(highCVname.substring(x + 1)).intValue();
+            }
+        }
+        // ensure highCVnumber exists
+        int highCVrow = _indxCvModel.addIndxCV(row, highCVname, _piCv, highCVpiVal, _siCv, highCVsiVal, highCVnumber, readOnly, infoOnly, writeOnly);
+        iv = new IndexedPairVariableValue(row, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, minVal, maxVal, _indxCvModel.allIndxCvVector(), _status, item, highCVrow, highCVname, factor, offset, uppermask);
+        return iv;
+    }
+
+    protected VariableValue processIndexedVal(Element child, int row, String name, String comment, String cvName, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, int cv, String mask, String item) throws NumberFormatException {
+        VariableValue iv;
+        int minVal = 0;
+        int maxVal = 255;
+        Attribute a;
+        if ((a = child.getAttribute("min")) != null) {
+            minVal = Integer.valueOf(a.getValue()).intValue();
+        }
+        if ((a = child.getAttribute("max")) != null) {
+            maxVal = Integer.valueOf(a.getValue()).intValue();
+        }
+        iv = new IndexedVariableValue(row, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, minVal, maxVal, _indxCvModel.allIndxCvVector(), _status, item);
+        return iv;
+    }
+
+    protected VariableValue processLongAddressVal(int CV, boolean readOnly, boolean infoOnly, boolean writeOnly, String name, String comment, boolean opsOnly, String mask, String item) {
+        VariableValue v;
+        int minVal = 0;
+        int maxVal = 255;
+        _cvModel.addCV("" + (CV + 1), readOnly, infoOnly, writeOnly); // ensure 2nd CV exists
+        v = new LongAddrVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item);
+        return v;
+    }
+
+    protected VariableValue processShortAddressVal(String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, int CV, String mask, String item, Element child) {
+        VariableValue v;
+        ShortAddrVariableValue v1 = new ShortAddrVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, _cvModel.allCvVector(), _status, item);
+        v = v1;
+        // get specifics if any
+        @SuppressWarnings("unchecked")
+        List<Element> l = child.getChildren("shortAddressChanges");
+        for (int k = 0; k < l.size(); k++) {
+            try {
+                v1.setModifiedCV(l.get(k).getAttribute("cv").getIntValue());
+            } catch (org.jdom.DataConversionException e1) {
+                log.error("invalid cv attribute in short address element of decoder file");
+            }
+        }
+        return v;
+    }
+
+    protected VariableValue processSpeedTableVal(Element child, int CV, boolean readOnly, boolean infoOnly, boolean writeOnly, String name, String comment, boolean opsOnly, String mask, String item) throws NumberFormatException {
+        VariableValue v;
+        Attribute a;
+        int minVal = 0;
+        int maxVal = 255;
+        if ((a = child.getAttribute("min")) != null) {
+            minVal = Integer.valueOf(a.getValue()).intValue();
+        }
+        if ((a = child.getAttribute("max")) != null) {
+            maxVal = Integer.valueOf(a.getValue()).intValue();
+        }
+        Attribute entriesAttr = child.getAttribute("entries");
+        int entries = 28;
+        try {
+            if (entriesAttr != null) {
+                entries = entriesAttr.getIntValue();
+            }
+        } catch (org.jdom.DataConversionException e1) {
+        }
+        // ensure all CVs exist
+        for (int i = 0; i < entries; i++) {
+            _cvModel.addCV("" + (CV + i), readOnly, infoOnly, writeOnly);
+        }
+        v = new SpeedTableVarValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item, entries);
+        return v;
+    }
+
+    protected VariableValue processSplitVal(Element child, int CV, boolean readOnly, boolean infoOnly, boolean writeOnly, String name, String comment, boolean opsOnly, String mask, String item) throws NumberFormatException {
+        VariableValue v;
+        Attribute a;
+        int minVal = 0;
+        int maxVal = 255;
+        if ((a = child.getAttribute("min")) != null) {
+            minVal = Integer.valueOf(a.getValue()).intValue();
+        }
+        if ((a = child.getAttribute("max")) != null) {
+            maxVal = Integer.valueOf(a.getValue()).intValue();
+        }
+        int highCV = CV + 1;
+        if ((a = child.getAttribute("highCV")) != null) {
+            highCV = Integer.valueOf(a.getValue()).intValue();
+        }
+        int factor = 1;
+        if ((a = child.getAttribute("factor")) != null) {
+            factor = Integer.valueOf(a.getValue()).intValue();
+        }
+        int offset = 0;
+        if ((a = child.getAttribute("offset")) != null) {
+            offset = Integer.valueOf(a.getValue()).intValue();
+        }
+        String uppermask = "VVVVVVVV";
+        if ((a = child.getAttribute("upperMask")) != null) {
+            uppermask = a.getValue();
+        }
+        _cvModel.addCV("" + (highCV), readOnly, infoOnly, writeOnly); // ensure 2nd CV exists
+        v = new SplitVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item, highCV, factor, offset, uppermask);
+        return v;
+    }
+
+    protected void setButtonsReadWrite(boolean readOnly, boolean infoOnly, boolean writeOnly, JButton bw, JButton br, int row) {
+        if (readOnly || infoOnly) {
+            // readOnly or infoOnly, config write, read buttons
+            if (writeOnly) {
+                bw.setEnabled(true);
+                bw.setActionCommand("W" + row);
+                bw.addActionListener(this);
+            } else {
+                bw.setEnabled(false);
+            }
+            if (infoOnly) {
+                br.setEnabled(false);
+            } else {
+                br.setActionCommand("R" + row);
+                br.addActionListener(this);
+            }
+        } else {
+            // not readOnly or infoOnly, config write, read buttons
+            bw.setActionCommand("W" + row);
+            bw.addActionListener(this);
+            if (writeOnly) {
+                br.setEnabled(false);
+            } else {
+                br.setActionCommand("R" + row);
+                br.addActionListener(this);
+            }
+        }
+    }
+
+    protected void setToolTip(Element e, VariableValue v) {
+        // back to general processing
+        // add tooltip text if present
+        {
+            Attribute a;
+            if ((a = e.getAttribute("tooltip")) != null) {
+                v.setToolTipText(a.getValue());
+            }
+        }
     }
 
     void reportBogus() {

@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
  * @author   Howard G. Penny Copyright (C) 2005
- * @version  $Revision: 1.34 $
+ * @version  $Revision: 1.35 $
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 
@@ -216,7 +216,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * to be sufficient for many subclasses.
      */
     public void setToRead(boolean state) {
-        if (getInfoOnly() || getWriteOnly()) state = false;
+        if (getInfoOnly() || getWriteOnly() || !getAvailable()) state = false;
         _cvVector.elementAt(getCvNum()).setToRead(state);
     }
     /**
@@ -230,9 +230,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * to be sufficient for many subclasses.
      */
     public void setToWrite(boolean state) {
-        if (getInfoOnly() || getReadOnly()) {
-            if (log.isDebugEnabled() && state && getInfoOnly()) log.debug("setToWrite forced false due to getInfoOnly");
-            if (log.isDebugEnabled() && state && getReadOnly()) log.debug("setToWrite forced false due to getInfoOnly");
+        if (getInfoOnly() || getReadOnly() || !getAvailable()) {
             state = false;
         }
         if (log.isDebugEnabled()) log.debug("setToWrite("+state+") for "+label()+" via CvNum "+getCvNum());
@@ -260,11 +258,6 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         if (newBusy != oldBusy) prop.firePropertyChange("Busy", new Boolean(oldBusy), new Boolean(newBusy));
     }
     private boolean _busy = false;
-
-    // handle outgoing parameter notification
-    java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener p) { prop.removePropertyChangeListener(p); }
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener p) { prop.addPropertyChangeListener(p); }
 
     // tool to handle masking, updating
     protected int maskVal(String maskString) {

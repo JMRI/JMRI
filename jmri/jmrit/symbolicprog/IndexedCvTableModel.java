@@ -19,7 +19,7 @@ import jmri.*;
  *
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version   $Revision: 1.16 $
+ * @version   $Revision: 1.17 $
  */
 public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -61,7 +61,7 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
     }
 
     /**
-     * FInd the existing IndexedCV
+     * Find the existing IndexedCV
      * that matches a particular name
      */
     public CvValue getMatchingIndexedCV(String name) {

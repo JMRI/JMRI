@@ -2,28 +2,24 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.beans.PropertyChangeListener;
-import java.util.Hashtable;
-import java.util.Vector;
+import java.awt.*;
+import java.awt.event.*;
+import java.beans.*;
+import java.util.*;
 
-import javax.swing.JLabel;
-import javax.swing.JSlider;
-import javax.swing.JTextField;
+import javax.swing.*;
+import javax.swing.table.*;
 import javax.swing.text.Document;
 
-import java.util.ArrayList;
+import org.jdom.Attribute;
+import org.jdom.Element;
 
 /**
  * Extends VariableValue to represent an indexed variable
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.15 $
+ * @author    Bob Jacobsen   Copyright (C) 2010
+ * @version   $Revision: 1.16 $
  */
 public class IndexedVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
@@ -186,16 +182,27 @@ public class IndexedVariableValue extends VariableValue
             return b;
         }
         else {
-            JTextField value = new VarTextField(_value.getDocument(),_value.getText(), 3, this);
+            VarTextField value = new VarTextField(_value.getDocument(),_value.getText(), 3, this);
             if (getReadOnly() || getInfoOnly()) {
                 value.setEditable(false);
             }
             updateRepresentation(value);
+            valuereps.add(value);
             return value;
         }
     }
 
+    public void setAvailable(boolean a) {
+        for (int i = 0; i<sliders.size(); i++) 
+            sliders.get(i).setVisible(a);
+        for (int i = 0; i<valuereps.size(); i++) 
+            valuereps.get(i).setVisible(a);
+        super.setAvailable(a);
+    }
+    
     ArrayList<IndexedVarSlider> sliders = new ArrayList<IndexedVarSlider>();
+    ArrayList<VarTextField> valuereps = new ArrayList<VarTextField>();
+    
     private int _progState = 0;
     private static final int IDLE = 0;
     private static final int WRITING_PI4R = 1;
@@ -255,13 +262,13 @@ public class IndexedVariableValue extends VariableValue
     }
 
     public void setToRead(boolean state) {
-        if (getInfoOnly() || getWriteOnly()) state = false;
+        if (getInfoOnly() || getWriteOnly() || !getAvailable()) state = false;
         (_cvVector.elementAt(_row)).setToRead(state);
     }
     public boolean isToRead() { return (_cvVector.elementAt(_row)).isToRead(); }
 
     public void setToWrite(boolean state) {
-        if (getInfoOnly() || getReadOnly()) state = false;
+        if (getInfoOnly() || getReadOnly() || !getAvailable()) state = false;
         (_cvVector.elementAt(_row)).setToWrite(state);
     }
     public boolean isToWrite() { return (_cvVector.elementAt(_row)).isToWrite(); }
@@ -469,13 +476,11 @@ public class IndexedVariableValue extends VariableValue
     // stored value
     JTextField _value = null;
 
-
-
     /* Internal class extends a JTextField so that its color is consistent with
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.15 $
+     * @version     $Revision: 1.16 $
      */
     public class VarTextField extends JTextField {
 
