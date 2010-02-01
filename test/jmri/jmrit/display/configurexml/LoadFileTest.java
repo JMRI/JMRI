@@ -16,7 +16,7 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
 
@@ -54,9 +54,7 @@ public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
                 outFileStream.readLine();
                 outLine = outFileStream.readLine();
             }
-            System.out.println(inLine);
-            System.out.println(outLine);
-            System.out.println("--");
+
             if (!inLine.startsWith("  <!--Written by JMRI version")
                 && !inLine.startsWith("<layout-config")   // might have schema
                 && !inLine.startsWith("  <timebase")   // time changes from timezone to timezone
