@@ -89,38 +89,40 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      */
     public void notifyFunctionStateChanged(int functionNumber, boolean isSet)
     {
-        switch (functionNumber)
-        {
-            case 0: throttle.setF0(isSet); break;
-            case 1: throttle.setF1(isSet); break;
-            case 2: throttle.setF2(isSet); break;
-            case 3: throttle.setF3(isSet); break;
-            case 4: throttle.setF4(isSet); break;
-            case 5: throttle.setF5(isSet); break;
-            case 6: throttle.setF6(isSet); break;
-            case 7: throttle.setF7(isSet); break;
-            case 8: throttle.setF8(isSet); break;
-            case 9: throttle.setF9(isSet); break;
-            case 10: throttle.setF10(isSet); break;
-            case 11: throttle.setF11(isSet); break;
-            case 12: throttle.setF12(isSet); break;
-            case 13: throttle.setF13(isSet); break;
-            case 14: throttle.setF14(isSet); break;
-            case 15: throttle.setF15(isSet); break;
-            case 16: throttle.setF16(isSet); break;
-            case 17: throttle.setF17(isSet); break;
-            case 18: throttle.setF18(isSet); break;
-            case 19: throttle.setF19(isSet); break;
-            case 20: throttle.setF20(isSet); break;
-            case 21: throttle.setF21(isSet); break;
-            case 22: throttle.setF22(isSet); break;
-            case 23: throttle.setF23(isSet); break;
-            case 24: throttle.setF24(isSet); break;
-            case 25: throttle.setF25(isSet); break;
-            case 26: throttle.setF26(isSet); break;
-            case 27: throttle.setF27(isSet); break;
-            case 28: throttle.setF28(isSet); break;
-        }
+    	if(throttle != null) {
+	        switch (functionNumber)
+	        {
+	            case 0: throttle.setF0(isSet); break;
+	            case 1: throttle.setF1(isSet); break;
+	            case 2: throttle.setF2(isSet); break;
+	            case 3: throttle.setF3(isSet); break;
+	            case 4: throttle.setF4(isSet); break;
+	            case 5: throttle.setF5(isSet); break;
+	            case 6: throttle.setF6(isSet); break;
+	            case 7: throttle.setF7(isSet); break;
+	            case 8: throttle.setF8(isSet); break;
+	            case 9: throttle.setF9(isSet); break;
+	            case 10: throttle.setF10(isSet); break;
+	            case 11: throttle.setF11(isSet); break;
+	            case 12: throttle.setF12(isSet); break;
+	            case 13: throttle.setF13(isSet); break;
+	            case 14: throttle.setF14(isSet); break;
+	            case 15: throttle.setF15(isSet); break;
+	            case 16: throttle.setF16(isSet); break;
+	            case 17: throttle.setF17(isSet); break;
+	            case 18: throttle.setF18(isSet); break;
+	            case 19: throttle.setF19(isSet); break;
+	            case 20: throttle.setF20(isSet); break;
+	            case 21: throttle.setF21(isSet); break;
+	            case 22: throttle.setF22(isSet); break;
+	            case 23: throttle.setF23(isSet); break;
+	            case 24: throttle.setF24(isSet); break;
+	            case 25: throttle.setF25(isSet); break;
+	            case 26: throttle.setF26(isSet); break;
+	            case 27: throttle.setF27(isSet); break;
+	            case 28: throttle.setF28(isSet); break;
+	        }
+    	}
     }
 
     /**
@@ -335,7 +337,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.53 $
+	 * @version $Revision: 1.54 $
 	 */
     class FunctionButtonKeyListener extends KeyAdapter {
     	private boolean keyReleased = true;
