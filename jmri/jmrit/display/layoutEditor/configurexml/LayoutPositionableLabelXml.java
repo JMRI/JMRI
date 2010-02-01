@@ -11,10 +11,11 @@ import jmri.jmrit.display.configurexml.*;
  *
  * @author David Duchamp Copyright: Copyright (c) 2009
  * @author Kevin Dickerson, Deprecated
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @deprecated 2.7.8
  */
 
+@Deprecated
 public class LayoutPositionableLabelXml extends AbstractXmlAdapter {
 
     public LayoutPositionableLabelXml() {
