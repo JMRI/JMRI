@@ -6,7 +6,7 @@ package jmri.jmrit.symbolicprog;
  * Qualify a variable on greater than or equal a number
  *
  * @author			Bob Jacobsen   Copyright (C) 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  *
  */
 public class ValueQualifier extends AbstractQualifier {
@@ -37,7 +37,6 @@ public class ValueQualifier extends AbstractQualifier {
     public ValueQualifier(AbstractValue qualifiedVal, AbstractValue watchedVal, int value, String relation) {
         super(qualifiedVal, watchedVal);
 
-        System.out.println("relation starts as "+relation);
         this.test = Test.decode(relation);
         this.value = value;
     }
