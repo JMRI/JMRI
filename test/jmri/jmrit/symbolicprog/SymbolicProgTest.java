@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
 /**
  * Test the jmri.jmrix.symbolicprog package.
  * @author			Bob Jacobsen Copyright 2006
- * @version         $Revision: 1.18 $
+ * @version         $Revision: 1.19 $
  */
 public class SymbolicProgTest extends TestCase {
 
@@ -58,11 +58,16 @@ public class SymbolicProgTest extends TestCase {
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrameTest.suite());
         suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.CheckProgrammerNames.suite());
+        suite.addTest(jmri.jmrit.symbolicprog.tabbedframe.QualifiedVarTest.suite());
         return suite;
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    protected void setUp() throws Exception { 
+        super.setUp();
+        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+    }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }
