@@ -11,10 +11,9 @@ import java.io.BufferedReader;
  * we can move to servlets later on.
  *
  * @author  Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
-@SuppressWarnings("deprecation")
 public class MiniServletRequest implements javax.servlet.ServletRequest {
     public MiniServletRequest(BufferedReader in) {
         this.in = in;
@@ -130,6 +129,7 @@ public class MiniServletRequest implements javax.servlet.ServletRequest {
         return null;
     }
     
+    @Deprecated
     public String getRealPath(String s) {
         reportUnimplemented("getRealPath");
         return null;
