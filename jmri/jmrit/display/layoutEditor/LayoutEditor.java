@@ -52,7 +52,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutEditor extends Editor {
@@ -4079,8 +4079,8 @@ public class LayoutEditor extends Editor {
 
     /**
      *  Control whether target panel items are editable.
-     *  Does this by invoke the {@link Positionable#setEditable} function of
-     *  each item on the target panel. This also controls the relevant pop-up menu items
+     *  Does this by invoke the {@link Editor#setAllEditable} function of
+     *  the parent class. This also controls the relevant pop-up menu items
      *  (which are the primary way that items are edited).
      * @param state true for editable.
      */

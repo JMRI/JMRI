@@ -8,8 +8,8 @@ import javax.swing.AbstractAction;
  * Start a LayoutEditor.
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.1 $
- * @see         jmri.jmrit.display.PanelEditorAction
+ * @version	$Revision: 1.2 $
+ * @see         jmri.jmrit.display.panelEditor.PanelEditorAction
  */
 public class LayoutEditorAction extends AbstractAction {
 

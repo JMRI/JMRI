@@ -305,7 +305,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /************************ Options setup **********************/
     /**
      *  Control whether target panel items are editable.
-     *  Does this by invoke the {@link Positionable#setEditable} function of
+     *  Does this by invoke the {@link Positionable#setEditable(boolean)} function of
      *  each item on the target panel. This also controls the relevant pop-up menu items
      *  (which are the primary way that items are edited).
      * @param state true for editable.

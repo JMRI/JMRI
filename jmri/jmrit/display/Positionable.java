@@ -14,17 +14,18 @@ import javax.swing.JPopupMenu;
  * <UL>
  * <LI>Being positioned by being dragged around on the screen.
  * (See {@link #setPositionable})
- * <LI>Having their properties edited. (See {@link #setEditable})
+ * <LI>Being hidden. (See {@link #setHidden})
  * <LI>Controlling the layout. (See {@link #setControlling})
  * </OL>
  * These are manipulated externally, for example by a
- * {@link PanelEditor}.  They are generally not stored
+ * subclass of {@link Editor}.
+ * They are generally not stored
  * directly as part of the state of the object, though they
  * could be, but as part of the state of the external control.
  *
- * <p>Copyright: Bob Jacobsen Copyright (c) 2002</p>
- * @author Bob Jacobsen
- * @version $Revision: 1.9 $
+ * @author Bob Jacobsen Copyright (c) 2002
+ * @author Pete Cressman Copyright (c) 2010
+ * @version $Revision: 1.10 $
  */
 public interface Positionable  {
     public void setPositionable(boolean enabled);

@@ -64,9 +64,10 @@ import javax.swing.JDialog;
  * drops from icons dragged from a Catalog preview pane. 
  * <P>See {@link SensorIcon} for an item
  * that might want to have that type of information, and
- * {@link PanelEditor} for an example of how to use this.
+ * {@link jmri.jmrit.display.panelEditor.PanelEditor} 
+ * for an example of how to use this.
  *
- * @author Pete Cressman  Copyright (c) 2009
+ * @author Pete Cressman  Copyright (c) 2009, 2010
  */
 
 public class IconAdder extends JPanel implements ListSelectionListener {

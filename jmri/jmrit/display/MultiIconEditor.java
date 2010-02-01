@@ -16,12 +16,13 @@ import javax.swing.JPanel;
  * for use in creating a panel icon.
  * <P>See {@link SensorIcon} for an item
  * that might want to have that type of information, and
- * {@link PanelEditor} for an example of how to use this.
+ * {@link jmri.jmrit.display.panelEditor.PanelEditor}
+ * for an example of how to use this.
  *
  * @author Bob Jacobsen  Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * @see jmri.jmrit.display.SensorIcon
- * @see jmri.jmrit.display.PanelEditor
+ * @see jmri.jmrit.display.panelEditor.PanelEditor
  * @see jmri.jmrit.catalog
  */
 

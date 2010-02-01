@@ -9,8 +9,8 @@ import javax.swing.AbstractAction;
  * Start a ControlPanelEditor.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.1 $
- * @see         jmri.jmrit.display.ControlPanelEditorAction
+ * @version	$Revision: 1.2 $
+ * @see         jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction
  */
 public class ControlPanelEditorAction extends AbstractAction {
 
