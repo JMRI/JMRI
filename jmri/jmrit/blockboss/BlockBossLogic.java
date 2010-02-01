@@ -113,7 +113,7 @@ import java.util.Hashtable;
  * signal (along the track with the green signal).
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2005
- * @version     $Revision: 1.34 $
+ * @version     $Revision: 1.35 $
  * 
  * Revisions to add facing point sensors, approach lighting, and check box
  * to limit speed. Dick Bronosn (RJB) 2006
@@ -715,7 +715,7 @@ public class BlockBossLogic extends Siglet {
             appearance = SignalHead.RED;
         if (watchSensor4!=null && watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
-        if (watchSensor5!=null && watchSensor4.getBean().getKnownState() != Sensor.INACTIVE) 
+        if (watchSensor5!=null && watchSensor5.getBean().getKnownState() != Sensor.INACTIVE) 
             appearance = SignalHead.RED;
             
         if (watchTurnout!=null && watchTurnout.getBean().getKnownState() != Turnout.CLOSED)
