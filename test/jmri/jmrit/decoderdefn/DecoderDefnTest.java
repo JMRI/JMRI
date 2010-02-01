@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.decoderdefn package
  * @author			Bob Jacobsen
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class DecoderDefnTest extends TestCase {
 
@@ -29,9 +29,10 @@ public class DecoderDefnTest extends TestCase {
 	// test suite from all defined tests
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.jmrit.decoderdefn");
-		suite.addTest(jmri.jmrit.decoderdefn.IdentifyDecoderTest.suite());
-		suite.addTest(jmri.jmrit.decoderdefn.DecoderIndexFileTest.suite());
-		suite.addTest(jmri.jmrit.decoderdefn.DecoderFileTest.suite());
+		suite.addTest(IdentifyDecoderTest.suite());
+		suite.addTest(DecoderIndexFileTest.suite());
+		suite.addTest(DecoderFileTest.suite());
+		suite.addTest(SchemaTest.suite());
 		return suite;
 	}
 

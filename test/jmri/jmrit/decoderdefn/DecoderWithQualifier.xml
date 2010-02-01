@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 
 <!-- Made from the QSI_Diesel_Ver7.xml file for testing purposes           -->
-<!-- $Id: DecoderWithQualifier.xml,v 1.1 2010-01-28 07:39:19 jacobsen Exp $ -->
+<!-- $Id: DecoderWithQualifier.xml,v 1.2 2010-02-01 05:03:02 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -92,7 +92,7 @@
       </ienumVal>
       <qualifier>
         <variableref>Minor Version Number</variableref>
-        <relation>greater</relation>
+        <relation>ge</relation>
         <value>100</value>
       </qualifier>
     </ivariable>

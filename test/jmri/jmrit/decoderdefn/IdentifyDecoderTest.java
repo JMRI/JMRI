@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmrit.roster.IdentifyDecoder class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class IdentifyDecoderTest extends TestCase {
 
@@ -66,5 +66,8 @@ public class IdentifyDecoderTest extends TestCase {
                 TestSuite suite = new TestSuite(IdentifyDecoderTest.class);
                 return suite;
         }
-
+        public void setUp() throws Exception {
+            super.setUp();
+            jmri.util.JUnitUtil.resetInstanceManager();
+        }
 }
