@@ -21,7 +21,7 @@ import javax.swing.UIManager;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
  
 public class DefaultUserMessagePreferences implements UserPreferencesManager {
@@ -55,8 +55,10 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         }
     }
 
-    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-
+    public Dimension getScreen() { 
+        return Toolkit.getDefaultToolkit().getScreenSize();
+    }
+    
     java.util.ArrayList<String> preferenceList = new java.util.ArrayList<String>();
     
     public boolean getPreferenceState(String name) {
@@ -158,8 +160,8 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
             dialog.pack();
             int w = dialog.getSize().width;
             int h = dialog.getSize().height;
-            int x = (dim.width-w)/2;
-            int y = (dim.height-h)/2;
+            int x = (getScreen().width-w)/2;
+            int y = (getScreen().height-h)/2;
 
 // Move the window
             dialog.setLocation(x, y);
