@@ -117,7 +117,8 @@ public class FunctionButton extends JToggleButton implements ActionListener
 	}
 
     /**
-     * Set the state of the function
+     * Set the state of the function button. Does NOT 
+     * notify any listeners
      * @param isOn True if the function should be active.
      */
     public void setState(boolean isOn)
