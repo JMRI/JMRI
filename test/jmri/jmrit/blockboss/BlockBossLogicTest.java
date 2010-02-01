@@ -17,7 +17,7 @@ import jmri.Turnout;
 /**
  * Tests for the BlockBossLogic class
  * @author	Bob Jacobsen
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class BlockBossLogicTest extends TestCase {
 	
@@ -153,6 +153,7 @@ public class BlockBossLogicTest extends TestCase {
         p.setSensor2("2");
         p.setSensor3("3");
         p.setSensor4("4");
+        p.setSensor5("10");
         
         p.setTurnout("1");
         
@@ -173,6 +174,7 @@ public class BlockBossLogicTest extends TestCase {
         Assert.assertEquals("sensor2", "2", p.getSensor2());
         Assert.assertEquals("sensor3", "3", p.getSensor3());
         Assert.assertEquals("sensor4", "4", p.getSensor4());
+        Assert.assertEquals("sensor5", "10", p.getSensor5());
 
         Assert.assertEquals("turnout1", "1", p.getTurnout());
         
@@ -198,6 +200,7 @@ public class BlockBossLogicTest extends TestCase {
         p.setSensor2("IS2");
         p.setSensor3("IS3");
         p.setSensor4("IS4");
+        p.setSensor5("IS10");
         
         p.setTurnout("IT1");
         
@@ -218,6 +221,7 @@ public class BlockBossLogicTest extends TestCase {
         Assert.assertEquals("sensor2", "IS2", p.getSensor2());
         Assert.assertEquals("sensor3", "IS3", p.getSensor3());
         Assert.assertEquals("sensor4", "IS4", p.getSensor4());
+        Assert.assertEquals("sensor5", "IS10", p.getSensor5());
 
         Assert.assertEquals("turnout1", "IT1", p.getTurnout());
         
@@ -240,7 +244,7 @@ public class BlockBossLogicTest extends TestCase {
     // Ensure minimal setup for log4J
 
     Turnout t1, t2, t3;
-    Sensor s1, s2, s3, s4, s5, s6, s7, s8, s9;
+    Sensor s1, s2, s3, s4, s5, s6, s7, s8, s9, s10;
     SignalHead h1, h2, h3, h4;
     
     /**
@@ -281,6 +285,7 @@ public class BlockBossLogicTest extends TestCase {
         s7 = InstanceManager.sensorManagerInstance().newSensor("IS7", "7");
         s8 = InstanceManager.sensorManagerInstance().newSensor("IS8", "8");
         s9 = InstanceManager.sensorManagerInstance().newSensor("IS9", "9");
+        s10 = InstanceManager.sensorManagerInstance().newSensor("IS10", "10");
 
         h1 = new jmri.implementation.VirtualSignalHead("IH1","1");
         InstanceManager.signalHeadManagerInstance().register(h1);
