@@ -8,6 +8,6 @@ package jmri.jmrit.display.configurexml;
  *
  */
 public class LayoutSensorIconXml extends 
-        jmri.jmrit.layoutEditor.display.configurexml.LayoutSensorIconXml  {
+        jmri.jmrit.display.layoutEditor.configurexml.LayoutSensorIconXml  {
 
 }
