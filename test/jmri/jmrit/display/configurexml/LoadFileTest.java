@@ -16,7 +16,7 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
 
@@ -45,15 +45,23 @@ public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
         String inLine;
         String outLine;
         while ( (inLine = inFileStream.readLine())!=null && (outLine = outFileStream.readLine())!=null) {
+
             while (inLine.startsWith("    <memory")) {
                 inLine = inFileStream.readLine();
             }
             while (outLine.startsWith("    <memory")) {
                 outLine = outFileStream.readLine();
             }
+
+            while (inLine.startsWith("<!DOCTYPE layout-config")) { // DTD versions change
+                inLine = inFileStream.readLine();
+            }
+            while (outLine.startsWith("<!DOCTYPE layout-config")) {
+                outLine = outFileStream.readLine();
+            }
+
             if (!inLine.startsWith("  <!--Written by JMRI version")
                 && !inLine.startsWith("  <timebase")   // time changes from timezone to timezone
-                && !inLine.startsWith("<!DOCTYPE layout-config")   // DTD versions change
                 && !inLine.startsWith("<?xml-stylesheet")   // Linux seems to put attributes in different order
                 && !inLine.startsWith("    <memory")   // time changes
                 && !inLine.startsWith("  <paneleditor class="))   // outfile writes class for backward compatibility
