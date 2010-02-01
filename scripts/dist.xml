@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.47 $ -->
+<!-- Revision $Revision: 1.48 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -79,6 +79,7 @@
     <delete file="Windows/JMRI/lib/UmlGraph-5.2.jar" />
     <delete file="Windows/JMRI/lib/junit.jar" />
     <delete file="Windows/JMRI/lib/jfcunit.jar" />
+    <delete file="Windows/JMRI/lib/ecj.jar" />
     <delete dir="Windows/lib/linux"/>
     <delete dir="Windows/lib/macosx"/>
     <delete dir="Windows/JMRI/lib/win32" />
@@ -118,6 +119,7 @@
     <delete file="MacOSX/JMRI/lib/junit.jar" />
     <delete file="MacOSX/JMRI/lib/jfcunit.jar" />
     <delete file="MacOSX/JMRI/lib/Serialio.jar" />
+    <delete file="MacOSX/JMRI/lib/ecj.jar" />
     <delete dir="MacOSX/lib/linux"/>
     <delete dir="MacOSX/lib/windows"/>
     <delete dir="MacOSX/JMRI/lib/win32" />
@@ -175,6 +177,7 @@
     <delete file="Linux/JMRI/lib/junit.jar" />
     <delete file="Linux/JMRI/lib/jfcunit.jar" />
     <delete file="Linux/JMRI/lib/Serialio.jar" />
+    <delete file="Linux/JMRI/lib/ecj.jar" />
     <delete dir="Linux/lib/linux"/>
     <delete dir="Linux/lib/windows"/>
     <delete dir="Linux/JMRI/lib/win32" />
