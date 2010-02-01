@@ -46,7 +46,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.51 $
+ * @version	$Revision: 1.52 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -165,7 +165,7 @@ public class Roster extends XmlFile {
         JComboBox b = new JComboBox();
         b.setRenderer(new RosterComboListRenderer());
         for (int i = 0; i < l.size(); i++) {
-            RosterEntry r = _list.get(i);
+            RosterEntry r = l.get(i);
             if(_rostergroup!=null){
                 if(r.getAttribute(getRosterGroupWP())!=null){
                     if(r.getAttribute(getRosterGroupWP()).equals("yes"))
@@ -193,7 +193,7 @@ public class Roster extends XmlFile {
         JComboBox b = new JComboBox();
         b.setRenderer(new RosterComboListRenderer());
         for (int i = 0; i < l.size(); i++) {
-            RosterEntry r = _list.get(i);
+            RosterEntry r = l.get(i);
             b.addItem(r.titleString());
         }
         return b;

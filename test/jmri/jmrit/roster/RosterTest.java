@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster package & jmrit.roster.Roster class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 public class RosterTest extends TestCase {
 
@@ -62,9 +62,60 @@ public class RosterTest extends TestCase {
         e.setRoadNumber("123");
         e.setRoadName("UP");
         r.addEntry(e);
-        Assert.assertEquals("search for 0 ", 0, r.matchingList(null, "321", null, null, null, null, null).size());
-        Assert.assertEquals("search for 1 ", 1, r.matchingList("UP", null,  null, null, null, null, null).size());
-        Assert.assertEquals("search for 3 ", 3, r.matchingList(null, "123", null, null, null, null, null).size());
+        
+        java.util.List<RosterEntry> l;
+        l = r.matchingList(null, "321", null, null, null, null, null);
+        Assert.assertEquals("search for 0 ", 0, l.size());
+
+        l = r.matchingList("UP", null, null, null, null, null, null);
+        Assert.assertEquals("search for 1 ", 1, l.size());
+        Assert.assertEquals("search for 1 ", "UP", l.get(0).getRoadName());
+        Assert.assertEquals("search for 1 ", "123", l.get(0).getRoadNumber());
+        
+        l = r.matchingList(null, "123", null, null, null, null, null);
+        Assert.assertEquals("search for 3 ", 3, l.size());
+        Assert.assertEquals("search for 3 ", "SP", l.get(2).getRoadName());
+        Assert.assertEquals("search for 3 ", "123", l.get(2).getRoadNumber());
+        Assert.assertEquals("search for 3 ", "UP", l.get(0).getRoadName());
+        Assert.assertEquals("search for 3 ", "123", l.get(0).getRoadNumber());
+    }
+
+    public void testComboBox() {
+        Roster r = new Roster();
+        RosterEntry e;
+        e = new RosterEntry("file name Bob");
+        e.setRoadNumber("123");
+        e.setRoadName("SP");
+        e.setId("entry 1");
+        r.addEntry(e);
+        e = new RosterEntry("file name Bill");
+        e.setRoadNumber("123");
+        e.setRoadName("ATSF");
+        e.setDecoderModel("81");
+        e.setDecoderFamily("33");
+        e.setId("entry 2");
+        r.addEntry(e);
+        e = new RosterEntry("file name Ben");
+        e.setRoadNumber("123");
+        e.setRoadName("UP");
+        e.setId("entry 3");
+        r.addEntry(e);
+        
+        javax.swing.JComboBox box;
+        
+        box = r.matchingComboBox(null, "321", null, null, null, null, null);
+        Assert.assertEquals("search for zero matches", 0, box.getItemCount() );
+
+        box = r.matchingComboBox("UP", null, null, null, null, null, null);
+        Assert.assertEquals("search for one match", 1, box.getItemCount() );
+        Assert.assertEquals("search for one match", "entry 3", box.getItemAt(0) );
+
+        box = r.matchingComboBox(null, "123", null, null, null, null, null);
+        Assert.assertEquals("search for three matches", 3, box.getItemCount() );
+        Assert.assertEquals("search for three matches", "entry 1", box.getItemAt(0) );
+        Assert.assertEquals("search for three matches", "entry 2", box.getItemAt(1) );
+        Assert.assertEquals("search for three matches", "entry 3", box.getItemAt(2) );
+
     }
 
     public void testBackupFile() throws Exception {
