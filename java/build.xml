@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009, 2010 -->
-<!-- Revision $Revision: 1.62 $ -->
+<!-- Revision $Revision: 1.63 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -155,6 +155,8 @@
     </javac>
   </target>
 
+
+
   <!-- Note if modifying the debug target, please be sure to up date the -->
   <!-- NetBeans IDE debug target in nbproject/ide-targets.xml -->
   <target name="debug" depends="init, copyfiles" description="compile source with debugging on, omitting tests">
@@ -169,6 +171,26 @@
            debug="yes" >
        <compilerarg value="-Xlint"/>
        <compilerarg value="-Xlint:-serial"/>
+       <classpath refid="project.class.path"    />
+    </javac>
+  </target>
+
+
+
+  <target name="warnings" depends="clean, init, copyfiles" 
+	  description="compile source with warning generation on, omitting tests">
+    <!-- Compile the java code from ${source} into ${target} -->
+    <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
+    <javac srcdir="${source}" 
+           destdir="${target}" 
+           source="${source_version}" 
+           target="${jre_version}" 
+ 	       includeantruntime="false"
+           debug="yes" >
+       <compilerclasspath>
+	      <pathelement path="../lib/ecj.jar" />
+       </compilerclasspath>	
+       <compilerarg value="@ecj.warning.options"/>
        <classpath refid="project.class.path"    />
     </javac>
   </target>
@@ -218,8 +240,25 @@
        </and>
      </condition>
 
-     <condition property="baseArch" value="${os.arch}">
+     <condition property="baseArch" value="x64">
+       <and>
 	 <os family="windows" />
+         <or>
+	   <equals arg1="${os.arch}" arg2='x86_64' />
+	   <equals arg1="${os.arch}" arg2='x64' />
+	   <equals arg1="${os.arch}" arg2='amd64' />
+	 </or>
+       </and>
+     </condition>
+
+     <condition property="baseArch" value="x86">
+       <and>
+	 <os family="windows" />
+         <or>
+	   <equals arg1="${os.arch}" arg2='i386' />
+	   <equals arg1="${os.arch}" arg2='x86' />
+	 </or>
+       </and>
      </condition>
 
      <condition property="baseArch" value="i386">
