@@ -15,7 +15,7 @@ import org.jdom.output.*;
  * Make sure an XML file is readable, and validates OK
  *
  * @author	Bob Jacobsen   Copyright (C) 2005, 2007
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  * @see         jmri.jmrit.XmlFile
  * @see         jmri.jmrit.XmlFileCheckAction
  */
@@ -51,7 +51,6 @@ public class XmlFileValidateAction extends AbstractAction {
                 // again to validate the entire file
                 // without losing the error message
                 XmlFile.verify = false;
-                XmlFile xf = new XmlFile(){};
                 Document doc;
                 try {
                     InputStream stream = new BufferedInputStream(new FileInputStream(file));
@@ -85,7 +84,7 @@ public class XmlFileValidateAction extends AbstractAction {
                 builder.setFeature("http://xml.org/sax/features/namespaces", true);
                 try {
                     XmlFile.verify = true;
-                    Element received = builder.build(input).getRootElement();
+                    builder.build(input).getRootElement();
                 } catch (Exception ex2) {
                     JOptionPane.showMessageDialog(_who,"Err(2): "+ex2);
                     return;
