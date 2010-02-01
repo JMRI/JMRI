@@ -3,7 +3,7 @@
 
 <!-- Schema for JMRI decoder definitions       -->
 
-<!-- $Id: decoder.xsd,v 1.5 2010-01-28 07:34:31 jacobsen Exp $ -->
+<!-- $Id: decoder.xsd,v 1.6 2010-02-01 04:59:22 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
@@ -251,8 +251,25 @@
   <xs:complexType name="QualifierType">
     <xs:sequence minOccurs="1" maxOccurs="1">
       <xs:element name="variableref" />
-      <xs:element name="relation" />
-      <xs:element name="value" />
+      <xs:element name="relation">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="ge"/>
+            <xs:enumeration value="gt"/>
+            <xs:enumeration value="lt"/>
+            <xs:enumeration value="le"/>
+            <xs:enumeration value="eq"/>
+            <xs:enumeration value="ne"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="value">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:int" />
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
 
