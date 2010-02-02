@@ -72,7 +72,6 @@ public class PanelEditor extends Editor implements ItemListener {
 
     JTextField nextX = new JTextField(rb.getString("DefaultX"),4);
     JTextField nextY = new JTextField(rb.getString("DefaultY"),4);
-    JTextField _panelNameBox = new JTextField(20);
 
     JCheckBox editableBox = new JCheckBox(rb.getString("CheckBoxEditable"));
     JCheckBox positionableBox = new JCheckBox(rb.getString("CheckBoxPositionable"));
@@ -261,7 +260,7 @@ public class PanelEditor extends Editor implements ItemListener {
                         setAllEditable(editableBox.isSelected());
                     }
                 });
-            editableBox.setSelected(true);
+            editableBox.setSelected(isEditable());
             // positionable item
             contentPane.add(positionableBox);
             positionableBox.addActionListener(new ActionListener() {
@@ -269,7 +268,7 @@ public class PanelEditor extends Editor implements ItemListener {
                         setAllPositionable(positionableBox.isSelected());
                     }
                 });                    
-            positionableBox.setSelected(true);
+            positionableBox.setSelected(allPositionable());
             // controlable item
             contentPane.add(controllingBox);
             controllingBox.addActionListener(new ActionListener() {
@@ -277,7 +276,7 @@ public class PanelEditor extends Editor implements ItemListener {
                         setAllControlling(controllingBox.isSelected());
                     }
                 });                    
-            controllingBox.setSelected(true);
+            controllingBox.setSelected(allControlling());
             // hidden item
             contentPane.add(hiddenBox);
             hiddenBox.addActionListener(new ActionListener() {
@@ -285,23 +284,23 @@ public class PanelEditor extends Editor implements ItemListener {
                         setShowHidden(hiddenBox.isSelected());
                     }
                 });                    
-            hiddenBox.setSelected(true);
+            hiddenBox.setSelected(showHidden());
 
             contentPane.add(showCoordinatesBox);
-            showCoordinatesBox.setSelected(false);
             showCoordinatesBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                 	setShowCoordinates(showCoordinatesBox.isSelected());
                 }
             });
+            showCoordinatesBox.setSelected(showCoordinates());
 
             contentPane.add(menuBox);
-            menuBox.setSelected(true);
             menuBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setPanelMenu(menuBox.isSelected());
                 }
             });
+            menuBox.setSelected(true);
 
             // Show/Hide Scroll Bars
             JPanel scrollPanel = new JPanel();
@@ -345,6 +344,18 @@ public class PanelEditor extends Editor implements ItemListener {
 
         if (_debug) log.debug("PanelEditor ctor done.");
     }  // end ctor
+
+    /**
+     * After construction, initialize all the widgets to their saved config settings.
+     */
+    public void initView() {
+        editableBox.setSelected(isEditable());
+        positionableBox.setSelected(allPositionable());
+        controllingBox.setSelected(allControlling());
+        showCoordinatesBox.setSelected(showCoordinates());
+        hiddenBox.setSelected(showHidden());
+        menuBox.setSelected(getTargetFrame().getJMenuBar().isVisible());
+    }
 
     class ComboBoxItem {
         String name;
@@ -564,8 +575,8 @@ public class PanelEditor extends Editor implements ItemListener {
                 popup.addSeparator();
                 pl.setFixedTextMenu(popup);        
                 pl.setTextMarginMenu(popup);        
-                popup.addSeparator();
                 pl.setBackgroundFontColorMenu(popup);        
+                popup.addSeparator();
                 pl.setTextBorderMenu(popup);        
                 popup.addSeparator();
                 pl.setTextFontMenu(popup);

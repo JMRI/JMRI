@@ -330,6 +330,19 @@ public class ControlPanelEditor extends Editor implements ItemListener {
         if (_debug) log.debug("ControlPanelEditor ctor done.");
     }  // end ctor
 
+    /**
+     * After construction, initialize all the widgets to their saved config settings.
+     */
+    public void initView() {
+        _panelNameBox.setText(((JFrame)getTargetPanel().getTopLevelAncestor()).getTitle());
+        editableBox.setSelected(isEditable());
+        positionableBox.setSelected(allPositionable());
+        controllingBox.setSelected(allControlling());
+        showCoordinatesBox.setSelected(showCoordinates());
+        hiddenBox.setSelected(showHidden());
+        menuBox.setSelected(getTargetFrame().getJMenuBar().isVisible());
+    }
+
     class ComboBoxItem {
         String name;
         ComboBoxItem(String n) {
@@ -574,7 +587,7 @@ public class ControlPanelEditor extends Editor implements ItemListener {
         popup.show((Component)p, p.getWidth()/2, p.getHeight()/2);
     }
 
-	
+
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControlPanelEditor.class.getName());
 }

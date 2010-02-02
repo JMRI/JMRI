@@ -16,7 +16,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class PanelEditorXml extends AbstractXmlAdapter {
 
@@ -159,6 +159,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         boolean hide = false;
         if ((a = element.getAttribute("hide"))!=null && a.getValue().equals("yes"))
             hide = true;
+        panel.setShowHidden(value);
 
         value = true;
         if ((a = element.getAttribute("panelmenu"))!=null && a.getValue().equals("no"))
@@ -186,6 +187,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         // reset the size and position, in case the display caused it to change
         panel.getTargetFrame().setLocation(x,y);
         panel.getTargetFrame().setSize(width,height);
+        panel.initView();
         return result;
     }
 
