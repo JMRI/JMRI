@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 
@@ -30,9 +30,8 @@ public class PositionableJComponent extends JComponent implements Positionable {
 
     private String _tooltip;
     private boolean _showTooltip =true;
-    //private boolean _editable = true;
+    private boolean _editable = true;
     private boolean _positionable = true;
-    private boolean _savePositionable = true;
     private boolean _viewCoordinates = false;
     private boolean _controlling = true;
     private boolean _hidden = false;
@@ -53,10 +52,10 @@ public class PositionableJComponent extends JComponent implements Positionable {
         showHidden();
     }
     public boolean isPositionable() { return _positionable; }
-/*
+
     public void setEditable(boolean enabled) {_editable = enabled;}
-    public boolean getEditable() { return _editable; }
-*/     
+    public boolean isEditable() { return _editable; }
+     
     public void setViewCoordinates(boolean enabled) { _viewCoordinates = enabled; }
     public boolean getViewCoordinates() { return _viewCoordinates; }
 

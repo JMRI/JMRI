@@ -336,16 +336,20 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     /**
     * Used by Panel Editor to make the final installation of the icon(s)
     * into the user's Panel.
+    * <P>Note! the selection is cleared. When two successive calls are made, the
+    * 2nd will always return null, regardless of the 1st return.
     */
     public NamedBean getTableSelection() {
         int row = _table.getSelectedRow();
         if (row >= 0) {
+            NamedBean b = _pickListModel.getBeanAt(row);
             _table.clearSelection();
             _addButton.setEnabled(false);
             _addButton.setToolTipText(null);
             this.validate();
-            return _pickListModel.getBeanAt(row);
-        }
+            if (log.isDebugEnabled()) log.debug("getTableSelection: row= "+row+", bean= "+b.getDisplayName());
+            return b;
+        } else if (log.isDebugEnabled()) log.debug("getTableSelection: row=0");
         return null;
     }
 
