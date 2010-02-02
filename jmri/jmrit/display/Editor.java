@@ -90,10 +90,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     final public static int SCROLL_VERTICAL   = 3;
 
     static final public ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
-
-    static boolean showCloseInfoMessage = true;	//display info message when closing panel
-    
     public boolean _debug = false;
+
+    boolean showCloseInfoMessage = true;	//display info message when closing panel
+    
     protected ArrayList <Positionable> _contents = new ArrayList<Positionable>();
     private JLayeredPane _targetPanel;
     private JFrame  _targetFrame;
@@ -164,7 +164,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     * An Editor may or may not choose to use 'this' as its frame or
     * the interior class 'TargetPane' for its targetPanel
     */
-    protected void setTargetPanel(JLayeredPane targetPanel, JFrame frame) {
+    protected void setTargetPanel(JLayeredPane targetPanel, JmriJFrame frame) {
         if (targetPanel == null){
             _targetPanel = new TargetPane();
         } else {
@@ -175,6 +175,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         } else {
             _targetFrame = frame;
         }
+        _targetFrame.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         _panelScrollPane = new JScrollPane(_targetPanel);
         _panelScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         _panelScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -523,6 +524,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     showCloseInfoMessage = false;
                     break;
                 default:    // dialog closed - do nothing
+                    _targetFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
             }
             if (_debug) 
                 log.debug("targetWindowClosing: selectedValue= "+selectedValue);
