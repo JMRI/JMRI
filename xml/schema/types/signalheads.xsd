@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: signalheads.xsd,v 1.7 2010-01-29 17:55:56 jacobsen Exp $ -->
+<!-- $Id: signalheads.xsd,v 1.8 2010-02-02 04:28:43 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -14,11 +14,6 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
-<!-- Need annotations                                                 -->
-<!-- Attributes need to get types right esp. for enumerated           -->
-<!-- Attributes need REQUIRED/IMPLIED                                 -->
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
@@ -38,8 +33,9 @@
             <jmri:usingclass configurexml="true">jmri.managers.configurexml.AbstractSignalHeadManagerXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
-      <xs:sequence>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element name="signalhead" type="SignalHeadType" minOccurs="0" maxOccurs="unbounded" />      
+        <xs:element name="dccsignalhead" type="DccSignalHeadType" minOccurs="0" maxOccurs="unbounded" />      
       </xs:sequence>
       <xs:attribute name="class" type="xs:string" use="required" />
     </xs:complexType>
@@ -50,7 +46,6 @@
           Define the XML stucture for storing the contents of one SignalHead implementation.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.implementation.configurexml.DccSignalHeadXml</jmri:usingclass>
             <jmri:usingclass configurexml="true">jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml</jmri:usingclass>
             <jmri:usingclass configurexml="true">jmri.implementation.configurexml.LsDecSignalHeadXml</jmri:usingclass>
             <jmri:usingclass configurexml="true">jmri.implementation.configurexml.MergSD2SignalHeadXml</jmri:usingclass>
@@ -66,7 +61,7 @@
       </xs:annotation>
       <xs:sequence>
 
-        <xs:element name="comment" minOccurs="0" maxOccurs="1" />
+        <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
 
         <xs:element name="turnout" minOccurs="0" maxOccurs="unbounded" >
           <xs:annotation><xs:documentation>
@@ -84,25 +79,29 @@
               Define the XML stucture for storing the contents a NamedBeanHandle&lt;Turnout&gt;
               Handled inside other adapter classes at this point, so no xs:appinfo element here.                
               </xs:documentation></xs:annotation>
-              <xs:simpleContent>
-                  <xs:extension base="xs:string">
-                      <xs:attribute name="defines" type="xs:string" use="required">
-                        <xs:annotation><xs:documentation>Specifies user or system name</xs:documentation></xs:annotation>
-                      </xs:attribute>
-                  </xs:extension>
-              </xs:simpleContent>
+              <xs:attribute name="defines" type="xs:string" use="required">
+                <xs:annotation><xs:documentation>Specifies user or system name</xs:documentation></xs:annotation>
+              </xs:attribute>
           </xs:complexType>
         </xs:element>
         
         <xs:element name="appearance" minOccurs="0" maxOccurs="unbounded" >
-          <xs:complexType >
+          <xs:complexType> 
+            <xs:simpleContent>
               <xs:annotation><xs:documentation>
               Define the XML stucture for storing the contents a Signal Appearance;
               for a given state on a single output signal
-              </xs:documentation></xs:annotation>
-              <xs:attribute name="defines" type="xs:string" use="required">
-                <xs:annotation><xs:documentation>Specifies the appearance which is associated with the turnout state</xs:documentation></xs:annotation>
-              </xs:attribute>
+              </xs:documentation>
+              <xs:appinfo>
+                <jmri:usingclass configurexml="true">jmri.managers.configurexml.SingleTurnoutSignalHeadXml</jmri:usingclass>
+              </xs:appinfo>
+              </xs:annotation>
+              <xs:extension base="signalColorType">
+                <xs:attribute name="defines" type="xs:string" use="required">
+                  <xs:annotation><xs:documentation>Specifies the appearance which is associated with the turnout state</xs:documentation></xs:annotation>
+                </xs:attribute>
+              </xs:extension>
+            </xs:simpleContent>
           </xs:complexType>
         </xs:element>
 
@@ -111,6 +110,21 @@
       <xs:attribute name="systemName" type="systemNameType" use="required" />
       <xs:attribute name="userName" type="nullUserNameType" />
       <xs:attribute name="home" type="yesNoType" />
+    </xs:complexType>
+
+    <xs:complexType name="DccSignalHeadType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing the contents of one DccSignalHead implementation.
+          Obsolete/deprecated in 2.7.7, but around for until files are rewritten
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.implementation.configurexml.DccSignalHeadXml</jmri:usingclass>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="systemName" type="systemNameType" use="required" />
+      <xs:attribute name="userName" type="nullUserNameType" />
     </xs:complexType>
 
 </xs:schema>

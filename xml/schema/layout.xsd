@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: layout.xsd,v 1.1 2010-01-29 17:55:08 jacobsen Exp $ -->
+<!-- $Id: layout.xsd,v 1.2 2010-02-02 04:28:43 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
 <!--                                                                        -->
@@ -21,6 +21,18 @@
 <!-- Need annotations                                                 -->
 <!-- Attributes need to get types right esp. for enumerated           -->
 <!-- Attributes need REQUIRED/IMPLIED                                 -->
+
+<!-- 
+Top Level Elements not brought over from DTD 
+
+securityelements - thought to be obsolete
+aspectgenerator - thought to be obsolete
+
+application - obsolete container element for gui/connection/programmer
+preferences - never fully defined in DTD
+signals - obsolete, EMPTY, never used
+
+-->
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
@@ -45,6 +57,7 @@
         </xs:appinfo>
     </xs:annotation>
 
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/connection.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/turnouts.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/sensors.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/lights.xsd"/>
@@ -71,36 +84,85 @@
     <xs:complexType>
       <xs:sequence minOccurs="0" maxOccurs="unbounded" >
 
-<!-- 
-Top Level Elements from DTD (remove when done) 
-programmer
-roster
-perform
-preferences
- 
-securityelements
-aspectgenerator
-oblocks
-paneleditor
-application
-
--->
-
         <xs:element name="gui" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+                <xs:documentation>
+                  Defines options for the GUI configuration
+                </xs:documentation>
+                <xs:appinfo>
+                    <jmri:usingclass configurexml="yes">jmri.configurexml.GuiLafConfigPaneXml</jmri:usingclass>
+                </xs:appinfo>
+            </xs:annotation>
             <xs:complexType>
                 <xs:attribute name="LAFclass" type="xs:string"/>
-                <xs:attribute name="class" type="xs:string"/>
+                <xs:attribute name="class" type="xs:string" use="required" />
                 <xs:attribute name="LocaleLanguage" type="xs:string"/>
                 <xs:attribute name="LocaleCountry" type="xs:string"/>
                 <xs:attribute name="LocaleVariant" type="xs:string"/>
             </xs:complexType>
         </xs:element>
-      
-        <xs:element name="connection" minOccurs="0" maxOccurs="unbounded">
+            
+        <xs:element name="programmer" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+                <xs:documentation>
+                  Defines DecoderPro configuration options
+                </xs:documentation>
+                <xs:appinfo>
+                    <jmri:usingclass configurexml="yes">jmri.jmrit.symbolicprog.configurexml.ProgrammerConfigPaneXml</jmri:usingclass>
+                </xs:appinfo>
+            </xs:annotation>
             <xs:complexType>
-                <xs:attribute name="class" type="xs:string"/>
+                <xs:attribute name="class" type="xs:string" use="required"/>
+                <xs:attribute name="verifyBeforeWrite" type="yesNoType" default="no"/>
+                <xs:attribute name="showEmptyPanes" type="yesNoType" default="yes" />
+                <xs:attribute name="defaultFile" type="xs:string" default="Basic.xml"/>
             </xs:complexType>
         </xs:element>
+      
+        <xs:element name="roster" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+                <xs:documentation>
+                  Defines DecoderPro roster applications re location, default owner
+                </xs:documentation>
+                <xs:appinfo>
+                    <jmri:usingclass configurexml="yes">jmri.jmrit.roster.configurexml.RosterConfigPaneXml</jmri:usingclass>
+                </xs:appinfo>
+            </xs:annotation>
+            <xs:complexType>
+                <xs:attribute name="class" type="xs:string" use="required"/>
+                <xs:attribute name="directory" type="xs:string" />
+                <xs:attribute name="ownerDefault" type="xs:string" />
+            </xs:complexType>
+        </xs:element>
+      
+        <xs:element name="perform" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+                <xs:documentation>
+                  Defines things to do when the file is loaded (usually when the app starts up, as this is in config file)
+                </xs:documentation>
+                <xs:appinfo>
+                    <jmri:usingclass configurexml="yes">apps.configurexml.PerformActionModelXml</jmri:usingclass>
+                    <jmri:usingclass configurexml="yes">apps.configurexml.CreateButtonModelXml</jmri:usingclass>
+                    <jmri:usingclass configurexml="yes">apps.configurexml.PerformFileModelXml</jmri:usingclass>
+                </xs:appinfo>
+            </xs:annotation>
+            <xs:complexType>
+                <xs:attribute name="class" type="xs:token" use="required"/>
+                <xs:attribute name="type" default="Action">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:token">
+                      <xs:enumeration value="Action"/>
+                      <xs:enumeration value="ScriptFile"/>
+                      <xs:enumeration value="XmlFile"/>
+                      <xs:enumeration value="Button"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+                <xs:attribute name="name" type="xs:string" use="required"/>
+            </xs:complexType>
+        </xs:element>
+
+        <xs:element name="connection"   type="ConnectionType" minOccurs="0" maxOccurs="unbounded" />
       
 
         <xs:element name="turnouts"     type="TurnoutManagerType" minOccurs="0" maxOccurs="unbounded" />

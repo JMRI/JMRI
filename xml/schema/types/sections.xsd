@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: sections.xsd,v 1.3 2010-01-11 10:28:12 jacobsen Exp $ -->
+<!-- $Id: sections.xsd,v 1.4 2010-02-02 04:28:43 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -66,7 +66,7 @@
         </xs:element>
             
       </xs:sequence>
-      <xs:attribute name="class" type="xs:string"/>
+      <xs:attribute name="class" type="xs:string" use="required"/>
     </xs:complexType>
 
 </xs:schema>

@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI aspect-signaling support.                          -->
 
-<!-- $Id: appearancetable.xsd,v 1.16 2010-01-17 04:52:14 jacobsen Exp $ -->
+<!-- $Id: appearancetable.xsd,v 1.17 2010-02-02 04:28:43 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -103,7 +103,7 @@
                       "aspect" element in the "aspects.xml" file.
                       </xs:documentation></xs:annotation>
                     </xs:element>
-                    <xs:element name="show" type="SignalColorType" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element name="show" type="signalColorType" minOccurs="0" maxOccurs="unbounded" />
                     <xs:element name="reference" minOccurs="0" maxOccurs="unbounded" />
                     <xs:element name="comment" minOccurs="0" maxOccurs="unbounded" />
                     

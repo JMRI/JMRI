@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: timebase.xsd,v 1.2 2010-01-06 20:54:41 jacobsen Exp $ -->
+<!-- $Id: timebase.xsd,v 1.3 2010-02-02 04:28:43 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -39,7 +39,7 @@
             <jmri:usingclass configurexml="true">jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
-      <xs:attribute name="class" type="xs:string"/>
+      <xs:attribute name="class" type="xs:string" use="required"/>
       <xs:attribute name="time" type="xs:string"/>
       <xs:attribute name="rate" type="xs:float"/>
       <xs:attribute name="run" type="yesNoType"/>

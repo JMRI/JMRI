@@ -3,7 +3,7 @@
 
 <!-- Test schema for JMRI I/O support. Not for use before JMRI 2.9.1        -->
 
-<!-- $Id: general.xsd,v 1.5 2010-01-11 03:51:42 jacobsen Exp $ -->
+<!-- $Id: general.xsd,v 1.6 2010-02-02 04:28:43 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -30,6 +30,8 @@
   <xs:annotation>
     <xs:documentation>
       General types used across many JMRI XML Schema.
+      Leading-capital-letter names are Complex types for e.g. elements,
+      leading-lowercase are simple types for e.g. attributes and simple elements
     </xs:documentation>
   </xs:annotation>
 
@@ -50,6 +52,7 @@
         <xs:documentation>
           General definition of "userName" attribute type.
           Centralized so we can later enforce naming, linking, etc.
+          Zero length content not allowed, see also nullUserNameType
         </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:normalizedString">
@@ -82,7 +85,7 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="SignalColorType">
+  <xs:simpleType name="signalColorType">
     <xs:annotation>
         <xs:documentation>
           General definition of string that's a valid signal color
@@ -102,13 +105,16 @@
   </xs:simpleType>
 
 
-  <xs:simpleType name="CommentType">
+  <xs:simpleType name="commentType">
     <xs:annotation>
         <xs:documentation>
           General definition of "comment" element found in many others.
           This a comment that's loaded to and from the program, not
           documentation of the instance file.
         </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="no" /> <!-- not yet centralized -->
+        </xs:appinfo>
     </xs:annotation>
     <xs:restriction base="xs:string" />
   </xs:simpleType>
