@@ -15,7 +15,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LayoutEditorXml extends AbstractXmlAdapter {
 
@@ -405,6 +405,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setVisible(true);    // always show the panel
         panel.setAllEditable(edValue);
 		panel.resetDirty();
+        panel.initView();
 
         // register the resulting panel for later configuration
         InstanceManager.configureManagerInstance().registerUser(panel);
