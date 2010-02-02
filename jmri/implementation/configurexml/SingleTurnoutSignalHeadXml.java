@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle XML configuration for SingleTurnoutSignalHead objects.
  * Based Upon DoubleTurnoutSignalHeadXML by Bob Jacobsen
  * @author Kevin Dickerson: Copyright (c) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -60,26 +60,27 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
     private String getSignalColour(int mAppearance){
         switch(mAppearance){
             case SignalHead.RED:
-                    return "RED";
+                    return "red";
         	case SignalHead.FLASHRED:
-                    return "FLASHRED";
+                    return "flashred";
         	case SignalHead.YELLOW:
-                    return "YELLOW";
+                    return "yellow";
         	case SignalHead.FLASHYELLOW:
-                    return "FLASHYELLOW";
+                    return "flashyellow";
         	case SignalHead.GREEN:
-                    return "GREEN";
+                    return "green";
         	case SignalHead.FLASHGREEN:
-                    return "FLASHGREEN";
+                    return "flashgreen";
             case SignalHead.LUNAR:
-                    return "LUNAR";
+                    return "lunar";
             case SignalHead.FLASHLUNAR:
-                    return "FLASHLUNAR";
+                    return "flashlunar";
+            case SignalHead.DARK:
+                    return "dark";
         	default:
                     log.warn("Unexpected appearance: "+mAppearance);
                 // go dark
-        	case SignalHead.DARK:
-                    return "DARK";
+                    return "dark";
         }
     }
 
@@ -138,18 +139,19 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
-    @SuppressWarnings("fallthrough")
+    
     private int getIntFromColour(String colour){
-        if (colour.equals("RED")) return SignalHead.RED;
-        else if (colour.equals("YELLOW")) return SignalHead.YELLOW;
-        else if (colour.equals("GREEN")) return SignalHead.GREEN;
-        else if (colour.equals("LUNAR")) return SignalHead.LUNAR;
-        else if (colour.equals("DARK")) return SignalHead.DARK;
-        else if (colour.equals("FLASHRED")) return SignalHead.FLASHRED;
-        else if (colour.equals("FLASHYELLOW")) return SignalHead.FLASHYELLOW;
-        else if (colour.equals("FLASHGREEN")) return SignalHead.FLASHGREEN;
-        else if (colour.equals("FLASHLUNAR")) return SignalHead.FLASHLUNAR;
-        log.warn("Unexpected appearance: "+colour);
+        String c = colour.toLowerCase();
+        if (c.equals("red")) return SignalHead.RED;
+        else if (c.equals("yellow")) return SignalHead.YELLOW;
+        else if (c.equals("green")) return SignalHead.GREEN;
+        else if (c.equals("lunar")) return SignalHead.LUNAR;
+        else if (c.equals("dark")) return SignalHead.DARK;
+        else if (c.equals("flashred")) return SignalHead.FLASHRED;
+        else if (c.equals("flashyellow")) return SignalHead.FLASHYELLOW;
+        else if (c.equals("flashgreen")) return SignalHead.FLASHGREEN;
+        else if (c.equals("flashlunar")) return SignalHead.FLASHLUNAR;
+        else log.warn("Unexpected appearance: "+colour);
         return SignalHead.DARK;
     
     }
