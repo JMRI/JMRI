@@ -28,7 +28,7 @@ import jmri.util.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -43,7 +43,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     public MemoryIcon(String s, Editor editor) {
         super(s, editor);
         setDisplayLevel(Editor.MEMORIES);
-        _icon = true;   // also iconic
+        resetDefaultIcon();
+//        _icon = true;   // also iconic
         updateSize();
     }
 
@@ -61,7 +62,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     
 	public void setDefaultIcon(NamedIcon n) {
         defaultIcon = n;
-        displayState(); // in case changed
 	}
 	
 	public NamedIcon getDefaultIcon() {
@@ -245,17 +245,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 			    }
 		    }
 		} else {
-            // use LayoutEditor's conventions
-            setIcon(null);
-            setText(" ");
-            //_text = true;
-            //_icon = false;
-            /* former PanelEditor's conventions
             setIcon(defaultIcon);
             setText(null);
-            _text = false;
-            _icon = true;
-            */
         }
         updateSize();
     }
@@ -298,7 +289,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
     
     //Imports from the old Layout Memory Icon Code.
-    
+/*    
     private int originalX=0;
     private int originalY=0;
     
@@ -391,7 +382,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             setSize(maxWidth(), maxHeight());
         }
     }*/
- 
+/* 
     public void setLocation(int x, int y){
 
         super.setLocation(x,y);
@@ -405,7 +396,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             }
         }
     }
-    
+*/    
     /**
      * This may be called during the superclass ctor, so before 
      * construction of this object is complete.  Be careful about that!
@@ -440,7 +431,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
          //   return getFixedWidth();
         return getFixedWidth();
     }
-
+/*
     JMenu makeTextJustificationMenu() {
         JMenu justMenu = new JMenu("Justification");
         addJustificationMenuEntry(justMenu, LEFT);
@@ -470,8 +461,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         else r.setSelected(false);
         menu.add(r);
     }
-    
-    public void updateSize() {
+*/    
+/*    public void updateSize() {
         if(isIcon()){
             setSize(this.maxWidth(), this.maxHeight());
         } else {
@@ -486,7 +477,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             this.setSize(this.maxWidth(), this.maxHeight());
         }
     }
-    
+*/    
     public void mouseClicked(java.awt.event.MouseEvent e) {
         if (e.getClickCount() == 2){ 
             editMemoryValue();

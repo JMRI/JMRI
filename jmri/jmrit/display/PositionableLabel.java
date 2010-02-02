@@ -40,7 +40,7 @@ import javax.swing.border.LineBorder;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.76 $
+ * @version $Revision: 1.77 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -682,6 +682,16 @@ public class PositionableLabel extends JLabel implements Positionable {
         setJustification();
     }
         
+    public void setJustification(String just){
+        if (just.equals("right"))
+            justification=RIGHT;
+        else if (just.equals("centre"))
+            justification=CENTRE;
+        else
+            justification=LEFT;
+        setJustification();
+    }
+    
     private void setJustification(){
         if (getFixedWidth()==0){
             switch (justification){
