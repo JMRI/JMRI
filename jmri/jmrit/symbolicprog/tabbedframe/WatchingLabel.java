@@ -7,16 +7,15 @@ package jmri.jmrit.symbolicprog.tabbedframe;
  * invisible if when the other component is
  *
  * @author			Bob Jacobsen   Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  *
  */
 public class WatchingLabel extends javax.swing.JLabel  {
-    public WatchingLabel(String n, javax.swing.JComponent c) {
-        super(n);
+    public WatchingLabel(String name, javax.swing.JComponent c) {
+        super(name);
         
         comp = c;
         self = this;
-        this.name = name;
         
         comp.addComponentListener(new java.awt.event.ComponentListener(){
             public void componentHidden(java.awt.event.ComponentEvent e) {
@@ -38,5 +37,4 @@ public class WatchingLabel extends javax.swing.JLabel  {
     
     javax.swing.JComponent comp;
     javax.swing.JComponent self;
-    String name;
 }

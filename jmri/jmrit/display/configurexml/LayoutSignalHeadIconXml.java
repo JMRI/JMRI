@@ -8,7 +8,6 @@ package jmri.jmrit.display.configurexml;
  *
  */
 @Deprecated
-@SuppressWarnings("deprecation")
 public class LayoutSignalHeadIconXml extends 
         jmri.jmrit.display.layoutEditor.configurexml.LayoutSignalHeadIconXml  {
 

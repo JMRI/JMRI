@@ -21,7 +21,7 @@ import org.jdom.Element;
  * @author      Bob Jacobsen        Copyright (C) 2001, 2006, 2010
  * @author      Howard G. Penny     Copyright (C) 2005
  * @author      Daniel Boudreau     Copyright (C) 2007
- * @version     $Revision: 1.42 $
+ * @version     $Revision: 1.43 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -180,7 +180,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * @param row number of row to fill
      * @param e Element of type "variable"
      */
-    @SuppressWarnings("unchecked")
 	public void setRow(int row, Element e) {
         // get the values for the VariableValue ctor
         String name = e.getAttribute("label").getValue(); 	// Note the name variable is actually the label attribute
@@ -304,7 +303,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         int index = findVarIndex(variableRef);
         if (index >= 0) {
             // found, attach the qualifier object
-            ValueQualifier vq = new ValueQualifier(v, rowVector.get(index), Integer.parseInt(value), relation);
+            new ValueQualifier(v, rowVector.get(index), Integer.parseInt(value), relation);
         } else {
             log.error("didn't find variable referenced: "+variableRef);
         }
@@ -356,7 +355,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * @param row number of row to fill
      * @param e Element of type "variable"
      */
-    @SuppressWarnings("unchecked")
 	public int setIndxRow(int row, Element e, String productID) {
         if (DecoderFile.isIncluded(e, productID) == false) {
             if (log.isDebugEnabled()) log.debug("include not match, return row - 1 ="+(row-1));
