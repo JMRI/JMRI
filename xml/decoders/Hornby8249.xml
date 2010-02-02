@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: Hornby8249.xml,v 1.1 2008-08-24 02:31:12 jacobsen Exp $ -->
+<!-- $Id: Hornby8249.xml,v 1.2 2010-02-02 20:21:08 r5gordini Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,18 +17,21 @@
 
 <decoder-config>
 		<version author="Bob Jacobsen rgj1927@pacbell.net"
-			version="1" lastUpdated="20080821" />
-		<!-- Decoder used in Hornby engines -->
+			version="1" lastUpdated="20080821" ></version>
+		<!-- Decoder used in Hornby engines --><version
+			author="Andrew Berridge" lastUpdated="200100202" version="1.1"
+			comment="Added correct version id (13)">
+</version>
 
-<decoder>
-	<family name="R8249" mfg="Hornby">
-			
-		<model model="R8249" numOuts="4" numFns="4" 
-		    nmraWarrant="yes" nmraWarrantStart="200808" 
-		    maxTotalCurrent="0.5A" maxMotorCurrent="0.5A" >
-		    <size length="17" width="10" height="3.5" units="mm"/>
-        </model>
-		    <!-- don't know version id, maybe lowVersionID="13"?  -->
+	<decoder>
+	<family name="R8249" mfg="Hornby" lowVersionID="13">
+
+		<model model="R8249" numOuts="4" numFns="4" nmraWarrant="yes"
+			nmraWarrantStart="200808" maxTotalCurrent="0.5A"
+			maxMotorCurrent="0.5A">
+			<size length="17" width="10" height="3.5" units="mm" />
+		</model>
+		<!-- don't know version id, maybe lowVersionID="13"?  -->
 
 	</family>
 
