@@ -1,8 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.panelEditor.PanelEditor;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.RpsPositionIcon;
 import org.jdom.Attribute;
@@ -12,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for rps.RpsPositionIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class RpsPositionIconXml extends PositionableLabelXml {
 
@@ -67,25 +65,9 @@ public class RpsPositionIconXml extends PositionableLabelXml {
      * @param o  PanelEditor as an Object
      */
     public void load(Element element, Object o) {
-		PanelEditor pe = null;
-		LayoutEditor le = null;
-        RpsPositionIcon l = null;
+		Editor ed = (Editor)o;
+        RpsPositionIcon l = new RpsPositionIcon(ed);
 
-        String className = o.getClass().getName();
-		int lastDot = className.lastIndexOf(".");
-		String shortClass = className.substring(lastDot+1,className.length());
-		if (shortClass.equals("PanelEditor")) {
-			pe = (PanelEditor) o;
-            l = new RpsPositionIcon(pe);
-		}
-		else if (shortClass.equals("LayoutEditor")) {
-			le = (LayoutEditor) o;
-            l = new RpsPositionIcon(le);
-		}
-		else {
-			log.error("Unrecognizable class - "+className);
-            return;
-		}
         loadCommonAttributes(l, Editor.SENSORS, element);
         // create the objects
         String name;
@@ -144,7 +126,7 @@ public class RpsPositionIconXml extends PositionableLabelXml {
         if (icon!=null) { l.setActiveIcon(icon); }
         icon = loadIcon( l,"error", element);
         if (icon!=null) { l.setErrorIcon(icon); }
-        ((Editor)o).putItem(l);
+        ed.putItem(l);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsPositionIconXml.class.getName());
