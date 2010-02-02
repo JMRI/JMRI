@@ -12,7 +12,7 @@ import junit.framework.*;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2009
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SignalMastIconTest extends TestCase {
 
@@ -27,7 +27,8 @@ public class SignalMastIconTest extends TestCase {
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
         to = new SignalMastIcon(panel);
-
+        to.setShowAutoText(true);
+        
         jf.getContentPane().add(new JLabel("Should say Approach: "));
         jf.getContentPane().add(to);
         
@@ -68,8 +69,9 @@ public class SignalMastIconTest extends TestCase {
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
         to = new SignalMastIcon(panel);
-
-        jf.getContentPane().add(new JLabel("Should be yellow/yellow: "));
+        to.setShowAutoText(false);
+        
+        jf.getContentPane().add(new JLabel("Should be yellow/red: "));
         jf.getContentPane().add(to);
         
         // reset instance manager & create test heads
@@ -91,7 +93,7 @@ public class SignalMastIconTest extends TestCase {
         );
 
 	    SignalMast s = InstanceManager.signalMastManagerInstance()
-	                        .provideSignalMast("IF$shsm:basic:one-searchlight:IH1");
+	                        .provideSignalMast("IF$shsm:basic:two-searchlight:IH1:IH2");
 	    
 	    s.setAspect("Clear");
 
