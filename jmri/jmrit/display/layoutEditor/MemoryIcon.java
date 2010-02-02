@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 
 public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
-    String defaultText = "  ";
+    String defaultText = "   ";
 
     public MemoryIcon(String s, LayoutEditor panel) {
         super(s, panel);
@@ -23,6 +23,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
     }
 
     public void displayState() {
+        setDefaultIcon(null);
         super.displayState();
         if (getMemory() != null && getMemory().getBean()!=null && getMemory().getBean().getValue()==null) {
             setIcon(null);
