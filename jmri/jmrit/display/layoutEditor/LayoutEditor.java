@@ -52,7 +52,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LayoutEditor extends Editor {
@@ -128,9 +128,13 @@ public class LayoutEditor extends Editor {
 
     private JCheckBox sensorBox = new JCheckBox(rb.getString("SensorIcon"));
     private JTextField nextSensor = new JTextField(5);
+    private MultiIconEditor sensorIconEditor = null;
+    private JFrame sensorFrame;
     
     private JCheckBox signalBox = new JCheckBox(rb.getString("SignalIcon"));
     private JTextField nextSignalHead = new JTextField(5);
+    public MultiIconEditor signalIconEditor = null;
+    public JFrame signalFrame;
     
     private JCheckBox textLabelBox = new JCheckBox(rb.getString("TextLabel"));
     private JTextField textLabel = new JTextField(8);
@@ -139,9 +143,11 @@ public class LayoutEditor extends Editor {
     private JTextField textMemory = new JTextField(8);
     
     private JCheckBox iconLabelBox = new JCheckBox(rb.getString("IconLabel"));
+    private MultiIconEditor iconEditor = null;
+    private JFrame iconFrame = null;
 
     private JCheckBox multiSensorBox = new JCheckBox(rb.getString("MultiSensor")+"...");
-    private JFrame multiSensorFrame = null;
+    private MultiSensorIconFrame multiSensorFrame = null;
     
     private JLabel xLabel = new JLabel("00");
     private JLabel yLabel = new JLabel("00");
@@ -438,19 +444,48 @@ public class LayoutEditor extends Editor {
 		sensorBox.setToolTipText(rb.getString("SensorBoxToolTip"));
         top4.add (nextSensor);
 		nextSensor.setToolTipText(rb.getString("SensorIconToolTip"));
-        super.addSensorEditor();
+        sensorIconEditor = new MultiIconEditor(4);
+        sensorIconEditor.setIcon(0, "Active:","resources/icons/smallschematics/tracksegments/circuit-occupied.gif");
+        sensorIconEditor.setIcon(1, "Inactive", "resources/icons/smallschematics/tracksegments/circuit-empty.gif");
+        sensorIconEditor.setIcon(2, "Inconsistent:", "resources/icons/smallschematics/tracksegments/circuit-error.gif");
+        sensorIconEditor.setIcon(3, "Unknown:","resources/icons/smallschematics/tracksegments/circuit-error.gif");
+        sensorIconEditor.complete();
+        sensorFrame = new JFrame(rb.getString("EditSensorIcons"));
+		sensorFrame.getContentPane().add(new JLabel("  "+rb.getString("IconChangeInfo")+"  "),BorderLayout.NORTH);
+        sensorFrame.getContentPane().add(sensorIconEditor);
+        sensorFrame.pack();
 		// signal icon
 		top4.add (new JLabel("    "));
         top4.add (signalBox);
 		signalBox.setToolTipText(rb.getString("SignalBoxToolTip"));
         top4.add (nextSignalHead);
-		nextSignalHead.setToolTipText(rb.getString("SignalIconToolTip"));
-        addSignalHeadEditor();
+		nextSignalHead.setToolTipText(rb.getString("SignalIconToolTip"));		
+        signalIconEditor = new MultiIconEditor(10);
+		signalIconEditor.setIcon(0, "Red:","resources/icons/smallschematics/searchlights/left-red-short.gif");
+		signalIconEditor.setIcon(1, "Flash red:", "resources/icons/smallschematics/searchlights/left-flashred-short.gif");
+		signalIconEditor.setIcon(2, "Yellow:", "resources/icons/smallschematics/searchlights/left-yellow-short.gif");
+		signalIconEditor.setIcon(3, "Flash yellow:", "resources/icons/smallschematics/searchlights/left-flashyellow-short.gif");
+		signalIconEditor.setIcon(4, "Green:","resources/icons/smallschematics/searchlights/left-green-short.gif");
+		signalIconEditor.setIcon(5, "Flash green:","resources/icons/smallschematics/searchlights/left-flashgreen-short.gif");
+		signalIconEditor.setIcon(6, "Dark:","resources/icons/smallschematics/searchlights/left-dark-short.gif");
+		signalIconEditor.setIcon(7, "Held:","resources/icons/smallschematics/searchlights/left-held-short.gif");
+        signalIconEditor.setIcon(8, "Lunar","resources/icons/smallschematics/searchlights/left-lunar-short-marker.gif");
+        signalIconEditor.setIcon(9, "Flash Lunar","resources/icons/smallschematics/searchlights/left-flashlunar-short-marker.gif");
+        signalIconEditor.complete();
+        signalFrame = new JFrame(rb.getString("EditSignalIcons"));
+		signalFrame.getContentPane().add(new JLabel("  "+rb.getString("IconChangeInfo")+"  "),BorderLayout.NORTH);
+        signalFrame.getContentPane().add(signalIconEditor);
+        signalFrame.pack();
 		// icon label
 		top4.add (new JLabel("    "));
         top4.add (iconLabelBox);
 		iconLabelBox.setToolTipText(rb.getString("IconLabelToolTip"));
-        addIconEditor();
+        iconEditor = new MultiIconEditor(1);
+        iconEditor.setIcon(0, "","resources/icons/smallschematics/tracksegments/block.gif");
+        iconEditor.complete();
+        iconFrame = new JFrame(rb.getString("EditIcon"));
+        iconFrame.getContentPane().add(iconEditor);
+        iconFrame.pack();
 
 		topEditBar.add(top4);
         contentPane.add(topEditBar);
@@ -505,6 +540,19 @@ public class LayoutEditor extends Editor {
 		// establish link to LayoutEditorAuxTools
 		auxTools = new LayoutEditorAuxTools(thisPanel);
 		if (auxTools==null) log.error("Unable to create link to LayoutEditorAuxTools"); 
+    }
+
+    public void initView() {
+        editModeItem.setSelected(isEditable());
+        positionableItem.setSelected(allPositionable());
+        controlItem.setSelected(allControlling());
+        //private JCheckBoxMenuItem animationItem = null;
+        //private JCheckBoxMenuItem showHelpItem = null;
+        //private JCheckBoxMenuItem showGridItem = null;
+        //private JCheckBoxMenuItem snapToGridOnAddItem = null;
+        //private JCheckBoxMenuItem snapToGridOnMoveItem = null;
+        //private JCheckBoxMenuItem antialiasingOnItem = null;
+        //private JCheckBoxMenuItem skipTurnoutItem = null;
     }
 
     public void setSize(int w, int h) {
@@ -580,7 +628,7 @@ public class LayoutEditor extends Editor {
 						tools = new LayoutEditorTools(thisPanel);
 					}
 					// bring up signals at turnout tool dialog
-					tools.setSignalsAtTurnout(getIconFrame("SignalEditor"));
+					tools.setSignalsAtTurnout(signalIconEditor,signalFrame);
                 }
             });
 		// set signals at block boundary
@@ -592,7 +640,7 @@ public class LayoutEditor extends Editor {
 						tools = new LayoutEditorTools(thisPanel);
 					}
 					// bring up signals at block boundary tool dialog
-					tools.setSignalsAtBlockBoundary(getIconFrame("SignalEditor"));
+					tools.setSignalsAtBlockBoundary(signalIconEditor,signalFrame);
                 }
             });
 		// set signals at crossover turnout
@@ -604,7 +652,7 @@ public class LayoutEditor extends Editor {
 						tools = new LayoutEditorTools(thisPanel);
 					}
 					// bring up signals at double crossover tool dialog
-					tools.setSignalsAtXoverTurnout(getIconFrame("SignalEditor"));
+					tools.setSignalsAtXoverTurnout(signalIconEditor,signalFrame);
                 }
             });
 		// set signals at level crossing
@@ -616,7 +664,7 @@ public class LayoutEditor extends Editor {
 						tools = new LayoutEditorTools(thisPanel);
 					}
 					// bring up signals at level crossing tool dialog
-					tools.setSignalsAtLevelXing(getIconFrame("SignalEditor"));
+					tools.setSignalsAtLevelXing(signalIconEditor,signalFrame);
                 }
             });
 		// set signals at throat-to-throat turnouts
@@ -628,7 +676,7 @@ public class LayoutEditor extends Editor {
 						tools = new LayoutEditorTools(thisPanel);
 					}
 					// bring up signals at throat-to-throat turnouts tool dialog
-					tools.setSignalsAtTToTTurnouts(getIconFrame("SignalEditor"));
+					tools.setSignalsAtTToTTurnouts(signalIconEditor,signalFrame);
                 }
             });
 		// set signals at 3-way turnout
@@ -640,7 +688,7 @@ public class LayoutEditor extends Editor {
 						tools = new LayoutEditorTools(thisPanel);
 					}
 					// bring up signals at 3-way turnout tool dialog
-					tools.setSignalsAt3WayTurnout(getIconFrame("SignalEditor"));
+					tools.setSignalsAt3WayTurnout(signalIconEditor,signalFrame);
                 }
             });
 	}
@@ -660,7 +708,7 @@ public class LayoutEditor extends Editor {
 					awaitingIconChange = false;
                 }
             });
-        editModeItem.setSelected(true);
+        editModeItem.setSelected(isEditable());
 		// positionable item
         positionableItem = new JCheckBoxMenuItem(rb.getString("AllowRepositioning"));
         optionMenu.add(positionableItem);
@@ -669,7 +717,7 @@ public class LayoutEditor extends Editor {
                     setAllPositionable(positionableItem.isSelected());
                 }
             });                    
-        positionableItem.setSelected(true);
+        positionableItem.setSelected(allPositionable());
 		// controlable item
 		controlItem = new JCheckBoxMenuItem(rb.getString("AllowLayoutControl"));
         optionMenu.add(controlItem);
@@ -678,7 +726,7 @@ public class LayoutEditor extends Editor {
                     setAllControlling(controlItem.isSelected());
                 }
             });                    
-        controlItem.setSelected(true);
+        controlItem.setSelected(allControlling());
 
 		// animation item
 		animationItem = new JCheckBoxMenuItem(rb.getString("AllowTurnoutAnimation"));
@@ -3814,14 +3862,18 @@ public class LayoutEditor extends Editor {
      */
     void addSensor() {
 		if ((nextSensor.getText()).trim().length()<=0) {
-            JFrame frame = super.getIconFrame("SensorEditor");
-            if (frame!=null) 
-                frame.setVisible(true);
+			JOptionPane.showMessageDialog(this,rb.getString("Error10"),
+						rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-        SensorIcon l = super.putSensor();
+        SensorIcon l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", 
+                                                    "resources/icons/smallschematics/tracksegments/circuit-error.gif"),this);
+        l.setActiveIcon(sensorIconEditor.getIcon(0));
+        l.setInactiveIcon(sensorIconEditor.getIcon(1));
+        l.setInconsistentIcon(sensorIconEditor.getIcon(2));
+        l.setUnknownIcon(sensorIconEditor.getIcon(3));
 		l.setSensor(nextSensor.getText().trim());
-
+		//Sensor xSensor = l.getSensor();
 		if (l.getSensor() != null) {
 			if ( (l.getNamedSensor().getName()==null) || 
 					(!(l.getNamedSensor().getName().equals(nextSensor.getText().trim()))) ) 
@@ -3830,12 +3882,8 @@ public class LayoutEditor extends Editor {
         nextSensor.setText(l.getNamedSensor().getName());
         setNextLocation(l);
 		setDirty(true);
-    }
-
-    public void putSignal(SignalHeadIcon l) {
         putItem(l);
     }
-
 
     /**
      * Add a signal head to the Panel
@@ -3845,31 +3893,46 @@ public class LayoutEditor extends Editor {
 		String tName = nextSignalHead.getText().trim();
         SignalHead mHead = null;
 		if ( (tName!=null) && (tName!="") ) {
-			mHead = InstanceManager.signalHeadManagerInstance().getBySystemName(tName.toUpperCase());
+			mHead = InstanceManager.signalHeadManagerInstance().getSignalHead(tName);
+			/*if (mHead == null) 
+				mHead = InstanceManager.signalHeadManagerInstance().getByUserName(tName);
+			else */
+			nextSignalHead.setText(tName);
 		}
         if (mHead == null) {
 			// There is no signal head corresponding to this name
-            JFrame frame = super.getIconFrame("SignalEditor");
-            if (frame!=null) 
-                frame.setVisible(true);
+			JOptionPane.showMessageDialog(thisPanel,
+					java.text.MessageFormat.format(rb.getString("Error9"),
+					new Object[]{tName}),
+					rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 			return;
-		} else {
-			nextSignalHead.setText(mHead.getSystemName());
-        }
+		}
 		// create and set up signal icon	
-        IconAdder signalIconEditor = super.getIconEditor("SignalEditor");
-        SignalHeadIcon l = putSignalHead();
-
+        SignalHeadIcon l = new SignalHeadIcon(this);
+        l.setRedIcon(signalIconEditor.getIcon(0));
+        l.setFlashRedIcon(signalIconEditor.getIcon(1));
+        l.setYellowIcon(signalIconEditor.getIcon(2));
+        l.setFlashYellowIcon(signalIconEditor.getIcon(3));
+        l.setGreenIcon(signalIconEditor.getIcon(4));
+        l.setFlashGreenIcon(signalIconEditor.getIcon(5));
+        l.setDarkIcon(signalIconEditor.getIcon(6));
+        l.setHeldIcon(signalIconEditor.getIcon(7));
+        l.setLunarIcon(signalIconEditor.getIcon(8));
+        l.setFlashLunarIcon(signalIconEditor.getIcon(9));
         l.setSignalHead(tName);
-		SignalHead xSignal = l.getSignalHead();
+		/*SignalHead xSignal = l.getSignalHead().getBean();
 		if (xSignal != null) {
 			if ( (xSignal.getUserName()==null) || (xSignal.getUserName().equals("")) || 
 						(!(xSignal.getUserName().equals(nextSignalHead.getText().trim()))) ) {
 				nextSignalHead.setText(xSignal.getSystemName());
 			}
-		}
+		}*/
         setNextLocation(l);
 		setDirty(true);
+        putItem(l);
+    }
+    public void putSignal(SignalHeadIcon l) {
+        putItem(l);
     }
 
     SignalHead getSignalHead(String name) {
@@ -3953,6 +4016,17 @@ public class LayoutEditor extends Editor {
    }
 
     /**
+     * Add an icon to the target
+     */
+    void addIcon() {
+        PositionableLabel l = new PositionableLabel(iconEditor.getIcon(0), this);
+        setNextLocation(l);
+        l.setDisplayLevel(ICONS);
+		setDirty(true);
+        putItem(l);
+    }
+    
+    /**
      * Add a loco marker to the target
      */
     public LocoIcon addLocoIcon (String name){
@@ -4020,19 +4094,20 @@ public class LayoutEditor extends Editor {
     void startMultiSensor() {
 		multiLocX = xLoc;
 		multiLocY = yLoc;
-        JFrameItem multiSensorFrame = super.getIconFrame("MultiSensorEditor");
         if (multiSensorFrame == null) {
-            multiSensorFrame = super.addMultiSensorEditor();
-        }
+            // create a common edit frame
+            multiSensorFrame = new MultiSensorIconFrame(this);
+            multiSensorFrame.initComponents();
+            multiSensorFrame.pack();
+        }  
         multiSensorFrame.setVisible(true);
     }
     // Invoked when window has new multi-sensor ready
-    public MultiSensorIcon addMultiSensor() {
-        MultiSensorIcon l = super.addMultiSensor();
+    public void addMultiSensor(MultiSensorIcon l) {
 		l.setLocation(multiLocX,multiLocY);
 		setDirty(true);
-		l.setViewCoordinates(true);
-        return l;
+        putItem(l);
+		multiSensorFrame = null;
     }
  
     /**

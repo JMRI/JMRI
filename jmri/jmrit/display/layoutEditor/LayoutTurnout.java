@@ -75,7 +75,7 @@ import javax.swing.*;
  * A link is required to be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutTurnout
@@ -1057,23 +1057,23 @@ public class LayoutTurnout
 					if ( (getTurnoutType()==DOUBLE_XOVER) || (getTurnoutType()==RH_XOVER) ||
 											(getTurnoutType()==LH_XOVER) ) {	
 						tools.setSignalsAtXoverTurnoutFromMenu(instance,
-							layoutEditor.getIconFrame("SignalEditor"));						
+							layoutEditor.signalIconEditor,layoutEditor.signalFrame);						
 					}
 					else if (linkType==NO_LINK) {
 						tools.setSignalsAtTurnoutFromMenu(instance,
-							layoutEditor.getIconFrame("SignalEditor"));											
+							layoutEditor.signalIconEditor,layoutEditor.signalFrame);											
 					}
 					else if (linkType==THROAT_TO_THROAT) {
 						tools.setThroatToThroatFromMenu(instance,linkedTurnoutName,
-							layoutEditor.getIconFrame("SignalEditor"));
+							layoutEditor.signalIconEditor,layoutEditor.signalFrame);
 					}
 					else if (linkType==FIRST_3_WAY) {
 						tools.set3WayFromMenu(turnoutName, linkedTurnoutName,
-							layoutEditor.getIconFrame("SignalEditor"));
+							layoutEditor.signalIconEditor,layoutEditor.signalFrame);
 					}
 					else if (linkType==SECOND_3_WAY) {
 						tools.set3WayFromMenu(linkedTurnoutName, turnoutName,
-							layoutEditor.getIconFrame("SignalEditor"));
+							layoutEditor.signalIconEditor,layoutEditor.signalFrame);
 					}
 				}
 			});

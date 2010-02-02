@@ -26,8 +26,7 @@ import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.blockboss.BlockBossLogic;
 
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.IconAdder;
+import jmri.jmrit.display.MultiSensorIcon;
 import jmri.jmrit.display.SignalHeadIcon;
 
 /**
@@ -37,14 +36,14 @@ import jmri.jmrit.display.SignalHeadIcon;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutEditorTools 
 {
 
 	// Defined text resource
-	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.LayoutEditorBundle");
 	
 	// constants
 	private int NONE = 0;  // Signal at Turnout Positions
@@ -60,7 +59,7 @@ public class LayoutEditorTools
 	
 	// operational instance variables shared between tools
 	private LayoutEditor layoutEditor = null;
-    private IconAdder signalIconEditor = null;
+    private MultiIconEditor signalIconEditor = null;
     private JFrame signalFrame = null;
 	private boolean needRedraw = false;
 	private BlockBossLogic logic = null;
@@ -120,15 +119,15 @@ public class LayoutEditorTools
 	private SignalHead divergingHead = null;
 
 	// display dialog for Set Signals at Turnout tool
-	public void setSignalsAtTurnoutFromMenu( LayoutTurnout to, Editor.JFrameItem theFrame ) {
+	public void setSignalsAtTurnoutFromMenu( LayoutTurnout to, 
+					MultiIconEditor theEditor, JFrame theFrame ) {
 		turnoutFromMenu = true;
 		layoutTurnout = to;
 		turnout = to.getTurnout();
 		turnoutNameField.setText(to.getTurnoutName());
-		setSignalsAtTurnout(theFrame);
+		setSignalsAtTurnout(theEditor,theFrame);
 	}
-	public void setSignalsAtTurnout(Editor.JFrameItem theFrame ) {
-        IconAdder theEditor = theFrame.getEditor();
+	public void setSignalsAtTurnout( MultiIconEditor theEditor, JFrame theFrame ) {
 		signalIconEditor = theEditor;
 		signalFrame = theFrame;
 		if (setSignalsOpen) {
@@ -614,7 +613,7 @@ public class LayoutEditorTools
 	private NamedIcon testIcon = null;
 	private void placeThroatContinuing() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutHorizontal && layoutTurnoutThroatLeft ) {
 			setSignalHeadOnPanel(2,throatContinuingField.getText().trim(),
 				(int)(layoutTurnout.getCoordsA().getX()-testIcon.getIconWidth()),
@@ -639,7 +638,7 @@ public class LayoutEditorTools
 	}
 	private void placeThroatDiverging() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutHorizontal && layoutTurnoutThroatLeft ) {
 			setSignalHeadOnPanel(2,throatDivergingField.getText().trim(),
 				(int)(layoutTurnout.getCoordsA().getX()-4-(2*testIcon.getIconWidth())),
@@ -663,7 +662,7 @@ public class LayoutEditorTools
 	}
 	private void placeContinuing(String signalHeadName) {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutHorizontal && layoutTurnoutThroatLeft && layoutTurnoutBUp) {
 			setSignalHeadOnPanel(0,signalHeadName,
 				(int)(layoutTurnout.getCoordsB().getX()),
@@ -707,7 +706,7 @@ public class LayoutEditorTools
 	}
 	private void placeDiverging(String signalHeadName) {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutHorizontal && layoutTurnoutThroatLeft && layoutTurnoutBUp) {
 			setSignalHeadOnPanel(0,signalHeadName,
 				(int)(layoutTurnout.getCoordsC().getX()),
@@ -1076,16 +1075,14 @@ public class LayoutEditorTools
 	public void setSignalHeadOnPanel(int rotation, String headName,
 					int xLoc, int yLoc) {
 		SignalHeadIcon l = new SignalHeadIcon(layoutEditor);
-        l.setRedIcon(signalIconEditor.getIcon("SignalHeadStateRed"));
-        l.setFlashRedIcon(signalIconEditor.getIcon("SignalHeadStateFlashingRed"));
-        l.setYellowIcon(signalIconEditor.getIcon("SignalHeadStateYellow"));
-        l.setFlashYellowIcon(signalIconEditor.getIcon("SignalHeadStateFlashingYellow"));
-        l.setGreenIcon(signalIconEditor.getIcon("SignalHeadStateGreen"));
-        l.setFlashGreenIcon(signalIconEditor.getIcon("SignalHeadStateFlashingGreen"));
-        l.setDarkIcon(signalIconEditor.getIcon("SignalHeadStateDark"));
-        l.setHeldIcon(signalIconEditor.getIcon("SignalHeadStateHeld"));
-        l.setDarkIcon(signalIconEditor.getIcon("SignalHeadStateLunar"));
-        l.setHeldIcon(signalIconEditor.getIcon("SignalHeadStateFlashingLunar"));
+        l.setRedIcon(signalIconEditor.getIcon(0));
+        l.setFlashRedIcon(signalIconEditor.getIcon(1));
+        l.setYellowIcon(signalIconEditor.getIcon(2));
+        l.setFlashYellowIcon(signalIconEditor.getIcon(3));
+        l.setGreenIcon(signalIconEditor.getIcon(4));
+        l.setFlashGreenIcon(signalIconEditor.getIcon(5));
+        l.setDarkIcon(signalIconEditor.getIcon(6));
+        l.setHeldIcon(signalIconEditor.getIcon(7));
 		l.setSignalHead(headName);
 		l.setLocation(xLoc,yLoc);
 		if (rotation>0) {
@@ -1647,17 +1644,18 @@ public class LayoutEditorTools
 	private SignalHead westBoundHead = null;
 
 	// display dialog for Set Signals at Block Boundary tool
-	public void setSignalsAtBlockBoundaryFromMenu( PositionablePoint p, Editor.JFrameItem theFrame ) {
+	public void setSignalsAtBlockBoundaryFromMenu( PositionablePoint p, MultiIconEditor theEditor, 
+					JFrame theFrame ) {
 		boundaryFromMenu = true;
 		boundary = p;
 		block1NameField.setText(boundary.getConnect1().getLayoutBlock().getID());
 		block2NameField.setText(boundary.getConnect2().getLayoutBlock().getID());
-		setSignalsAtBlockBoundary(theFrame);
+		setSignalsAtBlockBoundary(theEditor,theFrame);
 		return;
 	}		
 		
-	public void setSignalsAtBlockBoundary( Editor.JFrameItem theFrame ) {
-		signalIconEditor = theFrame.getEditor();;
+	public void setSignalsAtBlockBoundary( MultiIconEditor theEditor, JFrame theFrame ) {
+		signalIconEditor = theEditor;
 		signalFrame = theFrame;
 		if (setSignalsAtBoundaryOpen) {
 			setSignalsAtBoundaryFrame.setVisible(true);
@@ -2022,7 +2020,7 @@ public class LayoutEditorTools
 	}
 	private void placeEastBound() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		Point2D p = boundary.getCoords();
 		if (trackHorizontal) {
 			setSignalHeadOnPanel(2,eastBoundField.getText().trim(),
@@ -2037,7 +2035,7 @@ public class LayoutEditorTools
 	}
 	private void placeWestBound() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		Point2D p = boundary.getCoords();
 		if (trackHorizontal) {
 			setSignalHeadOnPanel(0,westBoundField.getText().trim(),
@@ -2173,7 +2171,8 @@ public class LayoutEditorTools
 	private JLabel xoverTurnoutNameLabel = new JLabel("");
 
 	// display dialog for Set Signals at Crossover Turnout tool
-	public void setSignalsAtXoverTurnoutFromMenu( LayoutTurnout to, Editor.JFrameItem theFrame ) {
+	public void setSignalsAtXoverTurnoutFromMenu( LayoutTurnout to, 
+					MultiIconEditor theEditor, JFrame theFrame ) {
 		xoverFromMenu = true;
 		layoutTurnout = to;
 		turnout = to.getTurnout();
@@ -2184,10 +2183,10 @@ public class LayoutEditorTools
 			return;
 		}
 		xoverTurnoutName = layoutTurnout.getTurnoutName();
-		setSignalsAtXoverTurnout(theFrame);
+		setSignalsAtXoverTurnout(theEditor,theFrame);
 	}
-	public void setSignalsAtXoverTurnout( Editor.JFrameItem theFrame ) {
-		signalIconEditor = theFrame.getEditor();
+	public void setSignalsAtXoverTurnout( MultiIconEditor theEditor, JFrame theFrame ) {
+		signalIconEditor = theEditor;
 		signalFrame = theFrame;
 		if (!xoverFromMenu) {
 			xoverTurnoutName = JOptionPane.showInputDialog(layoutEditor, 
@@ -2894,7 +2893,7 @@ public class LayoutEditorTools
 	}
 	private void placeA1() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutHorizontal && layoutTurnoutThroatLeft ) {
 			setSignalHeadOnPanel(2,a1Field.getText().trim(),
 				(int)(layoutTurnout.getCoordsA().getX()-testIcon.getIconWidth()),
@@ -2918,7 +2917,7 @@ public class LayoutEditorTools
 	}
 	private void placeA2() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutHorizontal && layoutTurnoutThroatLeft ) {
 			setSignalHeadOnPanel(2,a2Field.getText().trim(),
 				(int)(layoutTurnout.getCoordsA().getX()-4-(2*testIcon.getIconWidth())),
@@ -2942,7 +2941,7 @@ public class LayoutEditorTools
 	}
 	private void placeB1() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutHorizontal && layoutTurnoutThroatLeft ) {
 			setSignalHeadOnPanel(0,b1Field.getText().trim(),
 				(int)(layoutTurnout.getCoordsB().getX()),
@@ -2966,7 +2965,7 @@ public class LayoutEditorTools
 	}
 	private void placeB2() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutHorizontal && layoutTurnoutThroatLeft ) {
 			setSignalHeadOnPanel(0,b2Field.getText().trim(),
 				(int)(layoutTurnout.getCoordsB().getX()+4+testIcon.getIconWidth()),
@@ -2990,7 +2989,7 @@ public class LayoutEditorTools
 	}
 	private void placeC1() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutHorizontal && layoutTurnoutThroatLeft ) {
 			setSignalHeadOnPanel(0,c1Field.getText().trim(),
 				(int)(layoutTurnout.getCoordsC().getX()),
@@ -3014,7 +3013,7 @@ public class LayoutEditorTools
 	}
 	private void placeC2() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutHorizontal && layoutTurnoutThroatLeft ) {
 			setSignalHeadOnPanel(0,c2Field.getText().trim(),
 				(int)(layoutTurnout.getCoordsC().getX()+4+testIcon.getIconWidth()),
@@ -3038,7 +3037,7 @@ public class LayoutEditorTools
 	}
 	private void placeD1() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutHorizontal && layoutTurnoutThroatLeft ) {
 			setSignalHeadOnPanel(2,d1Field.getText().trim(),
 				(int)(layoutTurnout.getCoordsD().getX()-testIcon.getIconWidth()),
@@ -3062,7 +3061,7 @@ public class LayoutEditorTools
 	}
 	private void placeD2() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutHorizontal && layoutTurnoutThroatLeft ) {
 			setSignalHeadOnPanel(2,d2Field.getText().trim(),
 				(int)(layoutTurnout.getCoordsD().getX()-4-(2*testIcon.getIconWidth())),
@@ -3296,16 +3295,17 @@ public class LayoutEditorTools
 	private SignalHead dHead = null;
 
 	// display dialog for Set Signals at Level Crossing tool
-	public void setSignalsAtLevelXingFromMenu (LevelXing xing, Editor.JFrameItem theFrame ) {
+	public void setSignalsAtLevelXingFromMenu (LevelXing xing, MultiIconEditor theEditor, 
+			JFrame theFrame ) {
 		xingFromMenu = true;
 		levelXing = xing;
 		blockANameField.setText(levelXing.getBlockNameAC());
 		blockCNameField.setText(levelXing.getBlockNameBD());
-		setSignalsAtLevelXing(theFrame);
+		setSignalsAtLevelXing(theEditor,theFrame);
 		return;
 	}		
-	public void setSignalsAtLevelXing( Editor.JFrameItem theFrame ) {
-		signalIconEditor = theFrame.getEditor();
+	public void setSignalsAtLevelXing( MultiIconEditor theEditor, JFrame theFrame ) {
+		signalIconEditor = theEditor;
 		signalFrame = theFrame;
 		if (setSignalsAtXingOpen) {
 			setSignalsAtXingFrame.setVisible(true);
@@ -3857,7 +3857,7 @@ public class LayoutEditorTools
 	}
 	private void placeXingA() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		Point2D p = levelXing.getCoordsA();
 		if (levelXingACHorizontal && levelXingALeft) {
 			setSignalHeadOnPanel(2,aField.getText().trim(),
@@ -3882,7 +3882,7 @@ public class LayoutEditorTools
 	}
 	private void placeXingB() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		Point2D p = levelXing.getCoordsB();
 		if (levelXingACVertical && levelXingBLeft) {
 			setSignalHeadOnPanel(2,bField.getText().trim(),
@@ -3907,7 +3907,7 @@ public class LayoutEditorTools
 	}
 	private void placeXingC() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		Point2D p = levelXing.getCoordsC();
 		if (levelXingACHorizontal && (!levelXingALeft) ) {
 			setSignalHeadOnPanel(2,cField.getText().trim(),
@@ -3932,7 +3932,7 @@ public class LayoutEditorTools
 	}
 	private void placeXingD() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		Point2D p = levelXing.getCoordsD();
 		if (levelXingACVertical && (!levelXingBLeft) ) {
 			setSignalHeadOnPanel(2,dField.getText().trim(),
@@ -4137,9 +4137,8 @@ public class LayoutEditorTools
 	private boolean	layoutTurnout1BLeft = false;
 	private boolean	layoutTurnout2BUp = false;
 	private boolean	layoutTurnout2BLeft = false;
-
 	public void setThroatToThroatFromMenu( LayoutTurnout to, String linkedTurnoutName,
-					Editor.JFrameItem theFrame ) {
+					MultiIconEditor theEditor, JFrame theFrame ) {
 		turnout1NameField.setText(to.getTurnoutName());
 		turnout2NameField.setText(linkedTurnoutName);
 		a1TToTField.setText("");
@@ -4150,10 +4149,10 @@ public class LayoutEditorTools
 		c2TToTField.setText("");
 		d1TToTField.setText("");
 		d2TToTField.setText("");
-		setSignalsAtTToTTurnouts(theFrame);
+		setSignalsAtTToTTurnouts(theEditor,theFrame);
 	}	
-	public void setSignalsAtTToTTurnouts( Editor.JFrameItem theFrame ) {
-		signalIconEditor = theFrame.getEditor();
+	public void setSignalsAtTToTTurnouts( MultiIconEditor theEditor, JFrame theFrame ) {
+		signalIconEditor = theEditor;
 		signalFrame = theFrame;
 		if (setSignalsAtTToTOpen) {
 			setSignalsAtTToTFrame.setVisible(true);
@@ -5063,7 +5062,7 @@ public class LayoutEditorTools
 	private void placeA1TToT(String headName) {
 		// place head near the continuing track of turnout 1
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && layoutTurnout1BUp ) {
 			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()),
@@ -5107,7 +5106,7 @@ public class LayoutEditorTools
 	}
 	private void placeA2TToT(String headName) {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && layoutTurnout1BUp ) {
 			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout1.getCoordsB().getX()+4+testIcon.getIconWidth()),
@@ -5151,7 +5150,7 @@ public class LayoutEditorTools
 	}
 	private void placeB1TToT(String headName) {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && layoutTurnout1BUp) {
 			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()),
@@ -5195,7 +5194,7 @@ public class LayoutEditorTools
 	}
 	private void placeB2TToT(String headName) {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnout1Horizontal && layoutTurnout1ThroatLeft && layoutTurnout1BUp) {
 			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout1.getCoordsC().getX()+4+testIcon.getIconWidth()),
@@ -5239,7 +5238,7 @@ public class LayoutEditorTools
 	}
 	private void placeC1TToT(String headName) {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && layoutTurnout2BUp ) {
 			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()),
@@ -5283,7 +5282,7 @@ public class LayoutEditorTools
 	}
 	private void placeC2TToT(String headName) {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && layoutTurnout2BUp ) {
 			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout2.getCoordsB().getX()+4+testIcon.getIconWidth()),
@@ -5327,7 +5326,7 @@ public class LayoutEditorTools
 	}
 	private void placeD1TToT(String headName) {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && layoutTurnout2BUp) {
 			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()),
@@ -5371,7 +5370,7 @@ public class LayoutEditorTools
 	}
 	private void placeD2TToT(String headName) {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnout2Horizontal && layoutTurnout2ThroatLeft && layoutTurnout2BUp) {
 			setSignalHeadOnPanel(0,headName,
 				(int)(layoutTurnout2.getCoordsC().getX()+4+testIcon.getIconWidth()),
@@ -5721,7 +5720,7 @@ public class LayoutEditorTools
 	private boolean	layoutTurnoutBBLeft = false;
 
 	public void set3WayFromMenu(String aName, String bName,
-					Editor.JFrameItem theFrame ) {
+					MultiIconEditor theEditor, JFrame theFrame ) {
 		turnoutANameField.setText(aName);
 		turnoutBNameField.setText(bName);
 		a13WayField.setText("");
@@ -5730,10 +5729,10 @@ public class LayoutEditorTools
 		b3WayField.setText("");
 		c3WayField.setText("");
 		d3WayField.setText("");
-		setSignalsAt3WayTurnout(theFrame);
+		setSignalsAt3WayTurnout(theEditor,theFrame);
 	}		
-	public void setSignalsAt3WayTurnout( Editor.JFrameItem theFrame ) {
-		signalIconEditor = theFrame.getEditor();
+	public void setSignalsAt3WayTurnout( MultiIconEditor theEditor, JFrame theFrame ) {
+		signalIconEditor = theEditor;
 		signalFrame = theFrame;
 		if (setSignalsAt3WayOpen) {
 			setSignalsAt3WayFrame.setVisible(true);
@@ -6473,7 +6472,7 @@ public class LayoutEditorTools
 	}
 	private void place3WayThroatContinuing() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutAHorizontal && layoutTurnoutAThroatLeft ) {
 			setSignalHeadOnPanel(2,a13WayField.getText().trim(),
 				(int)(layoutTurnoutA.getCoordsA().getX()-testIcon.getIconWidth()),
@@ -6497,7 +6496,7 @@ public class LayoutEditorTools
 	}
 	private void place3WayThroatDivergingA() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutAHorizontal && layoutTurnoutAThroatLeft ) {
 			setSignalHeadOnPanel(2,a23WayField.getText().trim(),
 				(int)(layoutTurnoutA.getCoordsA().getX()-(2*testIcon.getIconWidth())),
@@ -6521,7 +6520,7 @@ public class LayoutEditorTools
 	}
 	private void place3WayThroatDivergingB() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutAHorizontal && layoutTurnoutAThroatLeft ) {
 			setSignalHeadOnPanel(2,a33WayField.getText().trim(),
 				(int)(layoutTurnoutA.getCoordsA().getX()-(3*testIcon.getIconWidth())),
@@ -6545,7 +6544,7 @@ public class LayoutEditorTools
 	}
 	private void place3WayDivergingA() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutAHorizontal && layoutTurnoutAThroatLeft && layoutTurnoutABUp) {
 			setSignalHeadOnPanel(0,b3WayField.getText().trim(),
 				(int)(layoutTurnoutA.getCoordsC().getX()),
@@ -6589,7 +6588,7 @@ public class LayoutEditorTools
 	}
 	private void place3WayContinuing() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutBHorizontal && layoutTurnoutBThroatLeft && layoutTurnoutBBUp) {
 			setSignalHeadOnPanel(0,c3WayField.getText().trim(),
 				(int)(layoutTurnoutB.getCoordsB().getX()),
@@ -6633,7 +6632,7 @@ public class LayoutEditorTools
 	}
 	private void place3WayDivergingB() {
 		if (testIcon == null)
-			testIcon = signalIconEditor.getIcon("SignalHeadStateRed");
+			testIcon = signalIconEditor.getIcon(0);
 		if( layoutTurnoutBHorizontal && layoutTurnoutBThroatLeft && layoutTurnoutBBUp) {
 			setSignalHeadOnPanel(0,d3WayField.getText().trim(),
 				(int)(layoutTurnoutB.getCoordsC().getX()),

@@ -27,7 +27,7 @@ import javax.swing.JSeparator;
  * serves as a place to store them.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class PositionablePoint
@@ -217,7 +217,7 @@ public class PositionablePoint
 					}
 					// bring up signals at level crossing tool dialog
 					tools.setSignalsAtBlockBoundaryFromMenu(instance,
-						layoutEditor.getIconFrame("SignalEditor"));						
+						layoutEditor.signalIconEditor,layoutEditor.signalFrame);						
 					}
 				});
 		}			

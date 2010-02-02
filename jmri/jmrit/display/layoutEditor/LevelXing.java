@@ -35,7 +35,7 @@ import javax.swing.*;
  *		by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LevelXing 
@@ -354,7 +354,7 @@ public class LevelXing
 					}
 					// bring up signals at level crossing tool dialog
 					tools.setSignalsAtLevelXingFromMenu(instance,
-						layoutEditor.getIconFrame("SignalEditor"));						
+						layoutEditor.signalIconEditor,layoutEditor.signalFrame);						
 				}
 			});
 		}			
