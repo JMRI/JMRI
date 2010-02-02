@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: layouteditor.xsd,v 1.3 2010-02-02 04:28:43 jacobsen Exp $ -->
+<!-- $Id: layouteditor.xsd,v 1.4 2010-02-02 07:06:17 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -50,32 +50,49 @@
         <xs:element name="tracksegment"         minOccurs="0" maxOccurs="unbounded" />
             
       </xs:sequence>
-      <xs:attribute name="class" type="xs:string" use="required"/>
+      <xs:attribute name="class" type="xs:string" use="required" />
       <xs:attribute name="name" type="xs:string"/>
-      <xs:attribute name="x" type="xs:integer"/>
-      <xs:attribute name="y" type="xs:integer"/>
-      <xs:attribute name="height" type="xs:integer"/>
-      <xs:attribute name="width" type="xs:integer"/>
-      <xs:attribute name="windowheight" type="xs:integer"/>
-      <xs:attribute name="windowwidth" type="xs:integer"/>
+      <xs:attribute name="x" type="xs:integer" use="required" />
+      <xs:attribute name="y" type="xs:integer" use="required" />
+      <xs:attribute name="windowheight" type="xs:integer" use="required" />
+      <xs:attribute name="windowwidth" type="xs:integer" use="required" />
       <xs:attribute name="panelheight" type="xs:integer"/>
-      <xs:attribute name="panelwidth" type="xs:integer"/>
-      <xs:attribute name="sliders" type="yesNoType"/>
-      <xs:attribute name="scrollable" type="xs:string"/> <!-- "none", others? -->
-      <xs:attribute name="editable" type="yesNoType"/>
-      <xs:attribute name="positionable" type="yesNoType"/>
-      <xs:attribute name="controlling" type="yesNoType"/>
-      <xs:attribute name="animating" type="yesNoType"/>
-      <xs:attribute name="showhelpbar" type="yesNoType"/>
-      <xs:attribute name="drawgrid" type="yesNoType"/>
-      <xs:attribute name="snaponadd" type="yesNoType"/>
-      <xs:attribute name="snaponmove" type="yesNoType"/>
-      <xs:attribute name="antialiasing" type="yesNoType"/>
-      <xs:attribute name="mainlinetrackwidth" type="xs:integer"/>
-      <xs:attribute name="sidetrackwidth" type="xs:integer"/>
+      <xs:attribute name="panelwidth" type="xs:integer" use="required" />
+      <xs:attribute name="height" type="xs:integer" >
+        <xs:annotation><xs:documentation>
+          Deprecated since JMRI 2.2
+        </xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="width" type="xs:integer" >
+        <xs:annotation><xs:documentation>
+          Deprecated since JMRI 2.2
+        </xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="sliders" type="yesNoType" default="yes"/>
+      <xs:attribute name="scrollable" default="both">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="none"/>
+            <xs:enumeration value="both"/>
+            <xs:enumeration value="horizontal"/>
+            <xs:enumeration value="vertical"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="editable" type="yesNoType" default="yes" />
+      <xs:attribute name="positionable" type="yesNoType" default="yes" />
+      <xs:attribute name="controlling" type="yesNoType" default="yes" />
+      <xs:attribute name="animating" type="yesNoType" default="yes" />
+      <xs:attribute name="showhelpbar" type="yesNoType" default="yes" />
+      <xs:attribute name="drawgrid" type="yesNoType" default="yes" />
+      <xs:attribute name="snaponadd" type="yesNoType" default="yes" />
+      <xs:attribute name="snaponmove" type="yesNoType" default="yes" />
+      <xs:attribute name="antialiasing" type="yesNoType" default="yes" />
+      <xs:attribute name="mainlinetrackwidth" type="xs:integer" use="required" />
+      <xs:attribute name="sidetrackwidth" type="xs:integer" use="required" />
       <xs:attribute name="xscale" type="xs:float"/>
       <xs:attribute name="yscale" type="xs:float"/>
-      <xs:attribute name="defaulttrackcolor" type="xs:string"/> <!-- color -->
+      <xs:attribute name="defaulttrackcolor" type="xs:string" use="required" /> <!-- color -->
       <xs:attribute name="defaulttextcolor" type="xs:string"/> <!-- color -->
       <xs:attribute name="turnoutbx" type="xs:float"/>
       <xs:attribute name="turnoutcx" type="xs:float"/>
