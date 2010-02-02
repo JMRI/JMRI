@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: logix.xsd,v 1.5 2010-02-02 04:28:43 jacobsen Exp $ -->
+<!-- $Id: logix.xsd,v 1.6 2010-02-02 07:07:11 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -15,10 +15,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-
-<!-- Need annotations                                                 -->
-<!-- Attributes need to get types right esp. for enumerated           -->
-<!-- Attributes need REQUIRED/IMPLIED                                 -->
+<!-- This file contains definitions for both Logix and Conditionals, -->
+<!-- since they are so intimately coupled -->
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
@@ -47,12 +45,12 @@
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
               <xs:element name="logixConditional" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
-                  <xs:attribute name="systemName" type="systemNameType" />
+                  <xs:attribute name="systemName" type="systemNameType" use="required" />
                   <xs:attribute name="order" type="xs:nonNegativeInteger" />
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
-            <xs:attribute name="systemName" type="systemNameType" />
+            <xs:attribute name="systemName" type="systemNameType" use="required" />
             <xs:attribute name="userName" type="userNameType" />
             <xs:attribute name="enabled" type="yesNoType" />
           </xs:complexType>
@@ -78,28 +76,28 @@
             <xs:sequence>
               <xs:element name="conditionalStateVariable" minOccurs="0" maxOccurs="unbounded" >
                 <xs:complexType>
-                  <xs:attribute name="operator" type="xs:integer" />
-                  <xs:attribute name="negated" type="yesNoType" />
-                  <xs:attribute name="type" type="xs:integer" />
-                  <xs:attribute name="systemName" type="systemNameType" />
-                  <xs:attribute name="dataString" type="xs:string" />
-                  <xs:attribute name="num1" type="xs:integer" />
-                  <xs:attribute name="num2" type="xs:integer" />
-                  <xs:attribute name="triggersCalc" type="yesNoType" />
+                  <xs:attribute name="operator" type="xs:integer" use="required" />
+                  <xs:attribute name="negated" type="yesNoType" default="no" />
+                  <xs:attribute name="type" type="xs:integer" use="required" />
+                  <xs:attribute name="systemName" type="systemNameType" use="required" />
+                  <xs:attribute name="dataString" type="xs:string" use="required" />
+                  <xs:attribute name="num1" type="xs:integer" use="required" />
+                  <xs:attribute name="num2" type="xs:integer" use="required" />
+                  <xs:attribute name="triggersCalc" type="yesNoType" default="yes" />
                 </xs:complexType>
               </xs:element>
               <xs:element name="conditionalAction" minOccurs="0" maxOccurs="unbounded" >
                 <xs:complexType>
-                  <xs:attribute name="option" type="xs:integer" />
-                  <xs:attribute name="type" type="xs:integer" />
-                  <xs:attribute name="systemName" type="systemNameType" />
-                  <xs:attribute name="data" type="xs:string" />
-                  <xs:attribute name="delay" type="xs:integer" />
-                  <xs:attribute name="string" type="xs:string" />
+                  <xs:attribute name="option" type="xs:integer" use="required" />
+                  <xs:attribute name="type" type="xs:integer" use="required" />
+                  <xs:attribute name="systemName" type="systemNameType" use="required" />
+                  <xs:attribute name="data" type="xs:string" use="required" />
+                  <xs:attribute name="delay" type="xs:integer" use="required" />
+                  <xs:attribute name="string" type="xs:string" use="required" />
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
-            <xs:attribute name="systemName" type="systemNameType" />
+            <xs:attribute name="systemName" type="systemNameType" use="required"/>
             <xs:attribute name="userName" type="nullUserNameType" /> 
             <xs:attribute name="antecedent" type="xs:string" />
             <xs:attribute name="logicType" type="xs:integer" />
