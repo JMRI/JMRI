@@ -4,10 +4,14 @@ package jmri.jmrix.sprog.serialdriver;
 
 import jmri.jmrix.sprog.SprogPortController;
 import jmri.jmrix.sprog.SprogTrafficController;
+import jmri.jmrix.sprog.SprogProgrammer;
+import jmri.jmrix.sprog.SprogProgrammerManager;
+import jmri.jmrix.sprog.SprogConstants.SprogMode;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.util.TooManyListenersException;
 
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
@@ -29,7 +33,7 @@ import gnu.io.SerialPort;
  * "AJB" indicate changes or observations by me
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  */
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -58,9 +62,11 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
             // set RTS high, DTR high
             activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
             activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
-
             // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            activeSerialPort.setFlowControlMode(0);
+            //AJB: Removed Jan 2010 - 
+            //Setting flow control mode to zero kills comms - SPROG doesn't send data
+            //Concern is that will disabling this affect other SPROGs? Serial ones? 
+            //activeSerialPort.setFlowControlMode(0);
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
@@ -89,7 +95,15 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
                          +"  CD: "+activeSerialPort.isCD()
                          );
             }
-
+            
+            //AJB - add Sprog Traffic Controller as event listener
+            try {
+                activeSerialPort.addEventListener(SprogTrafficController.instance());
+             } catch (TooManyListenersException e) {}
+             
+             // AJB - activate the DATA_AVAILABLE notifier
+             activeSerialPort.notifyOnDataAvailable(true);
+             
             opened = true;
 
         } catch (gnu.io.NoSuchPortException p) {
@@ -114,37 +128,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
 
     }
 
-    /**
-     * set up all of the other objects to operate with an Sprog command
-     * station connected to this port
-     */
-    public void configure() {
-        // connect to the traffic controller
-        SprogTrafficController.instance().connectPort(this);
-
-        jmri.jmrix.sprog.SprogProgrammer.instance();  // create Programmer in InstanceManager
-
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.sprog.SprogPowerManager());
-
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.sprog.SprogTurnoutManager());
-
-        jmri.InstanceManager.setCommandStation(new jmri.jmrix.sprog.SprogCommandStation());
-
-        jmri.InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
-
-        // start operation
-        // sourceThread = new Thread(p);
-        // sourceThread.start();
-        //Andrew Berridge - removed Jan 2010
-        //sinkThread = new Thread(SprogTrafficController.instance());
-        //sinkThread.start();
-
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogThrottleManager());
-
-        jmri.jmrix.sprog.ActiveFlag.setActive();
-
-    }
-
+ 
     // base class methods for the SprogPortController interface
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -171,7 +155,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
      * Get an array of valid baud rates. This is currently only 19,200 bps
      */
     public String[] validBaudRates() {
-        return new String[]{"9,600 bps"};
+        return new String[]{"9,600 bps","19,200 bps"};
     }
 
     /**
@@ -184,7 +168,8 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
      */
     public String option1Name() { return ""; }
 
-
+    
+    
     /**
      * Get an array of valid values for "option 2"; used to display valid options.
      * May not be null, but may have zero entries
@@ -199,12 +184,38 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
 
     private boolean opened = false;
     InputStream serialStream = null;
-
-    static public SerialDriverAdapter instance() {
+    
+	static public SerialDriverAdapter instance() {
         if (mInstance == null) mInstance = new SerialDriverAdapter();
         return mInstance;
     }
     static SerialDriverAdapter mInstance = null;
+    
+    /**
+     * set up all of the other objects to operate with an Sprog command
+     * station connected to this port
+     */
+    public void configure() {
+        // connect to the traffic controller
+        SprogTrafficController.instance().connectPort(this);
+
+//        jmri.jmrix.sprog.SprogProgrammer.instance();  // create Programmer in InstanceManager
+        jmri.InstanceManager.setProgrammerManager(new SprogProgrammerManager(new SprogProgrammer(), SprogMode.SERVICE));
+
+        jmri.InstanceManager.setPowerManager(new jmri.jmrix.sprog.SprogPowerManager());
+
+        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.sprog.SprogTurnoutManager());
+
+        jmri.InstanceManager.setCommandStation(new jmri.jmrix.sprog.SprogCommandStation());
+
+        jmri.InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
+
+        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogThrottleManager());
+
+        jmri.jmrix.sprog.ActiveFlag.setActive();
+
+    }
+    
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 

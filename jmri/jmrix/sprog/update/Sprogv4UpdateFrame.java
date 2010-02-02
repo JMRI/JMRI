@@ -6,13 +6,14 @@ import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogTrafficController;
+import jmri.jmrix.sprog.SprogConstants.SprogState;
 
 import javax.swing.*;
 
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class Sprogv4UpdateFrame
     extends SprogUpdateFrame
@@ -103,7 +104,7 @@ public class Sprogv4UpdateFrame
         if (log.isDebugEnabled()) {
           log.debug("Found v4 bootloader prompt");
         }
-        tc.setSprogState(tc.V4BOOTMODE);
+        tc.setSprogState(SprogState.V4BOOTMODE);
         openFileChooserButton.setEnabled(true);
 
         // We remain in this state until program button is pushed
@@ -114,7 +115,7 @@ public class Sprogv4UpdateFrame
                                         "SPROG v4 Bootloader", JOptionPane.ERROR_MESSAGE);
         log.error("Bad reply to SETBOOT request");
         bootState = IDLE;
-        tc.setSprogState(SprogTrafficController.NORMAL);
+        tc.setSprogState(SprogState.NORMAL);
         return;
       }
     }
@@ -130,7 +131,7 @@ public class Sprogv4UpdateFrame
         if (sprogType == null) {
           sprogType = new String("SPROG");
         }
-        tc.setSprogState(SprogTrafficController.V4BOOTMODE);
+        tc.setSprogState(SprogState.V4BOOTMODE);
 
         // We remain in this state until program button is pushed
 
@@ -138,7 +139,7 @@ public class Sprogv4UpdateFrame
       else {
         log.error("Bad reply to RD_VER request");
         bootState = IDLE;
-        tc.setSprogState(tc.NORMAL);
+        tc.setSprogState(SprogState.NORMAL);
         return;
       }
     }
@@ -161,7 +162,7 @@ public class Sprogv4UpdateFrame
         // Houston, we have a problem
         log.error("Bad reply to write request");
         bootState = IDLE;
-        tc.setSprogState(SprogTrafficController.NORMAL);
+        tc.setSprogState(SprogState.NORMAL);
         return;
       }
     }
@@ -181,7 +182,7 @@ public class Sprogv4UpdateFrame
 
         bootState = IDLE;
       }
-      tc.setSprogState(SprogTrafficController.NORMAL);
+      tc.setSprogState(SprogState.NORMAL);
     }
     else if (bootState == V4RESET) {
       // v4 should have auto reset
@@ -201,7 +202,7 @@ public class Sprogv4UpdateFrame
 
       }
 
-      tc.setSprogState(SprogTrafficController.NORMAL);
+      tc.setSprogState(SprogState.NORMAL);
     }
     else {
       // Houston, we have a problem
@@ -209,7 +210,7 @@ public class Sprogv4UpdateFrame
         log.debug("Reply in unknown state");
       }
       bootState = IDLE;
-      tc.setSprogState(SprogTrafficController.NORMAL);
+      tc.setSprogState(SprogState.NORMAL);
       return;
     }
   }
@@ -221,7 +222,7 @@ public class Sprogv4UpdateFrame
       log.debug("Request bootloader version");
     }
     // allow parsing of bootloader replies
-    tc.setSprogState(SprogTrafficController.V4BOOTMODE);
+    tc.setSprogState(SprogState.V4BOOTMODE);
     bootState = VERREQSENT;
     msg = SprogMessage.getv4ExtAddr();
     tc.sendSprogMessage(msg, this);
@@ -234,8 +235,7 @@ public class Sprogv4UpdateFrame
       if (log.isDebugEnabled()) {
         log.debug("Send write Flash " + hexFile.getAddress());
       }
-      msg = new SprogMessage(SprogMessage.MAXSIZE
-                             ).getV4WriteFlash(hexFile.getAddress(),
+      msg = SprogMessage.getV4WriteFlash(hexFile.getAddress(),
                                                hexFile.getData(), 0);
     }
     else {
@@ -274,7 +274,7 @@ public class Sprogv4UpdateFrame
     if (log.isDebugEnabled()) {
       log.debug("Send end of file ");
     }
-    msg = new SprogMessage(SprogMessage.MAXSIZE).getV4EndOfFile();
+    msg = SprogMessage.getV4EndOfFile();
     bootState = EOFSENT;
     statusBar.setText("Write End Of File");
     tc.sendSprogMessage(msg, this);
@@ -288,7 +288,7 @@ public class Sprogv4UpdateFrame
 
   public synchronized void connectButtonActionPerformed(java.awt.event.
       ActionEvent e) {
-    tc.setSprogState(tc.NORMAL);
+    tc.setSprogState(SprogState.NORMAL);
     sprogType = null;
     // At this point we do not know what state SPROG is in
     // send CR to attempt to wake it up
@@ -340,14 +340,14 @@ public class Sprogv4UpdateFrame
       }
       statusBar.setText("Fatal error - unable to connect");
       bootState = IDLE;
-      tc.setSprogState(SprogTrafficController.NORMAL);
+      tc.setSprogState(SprogState.NORMAL);
     }
     else if (bootState == WRITESENT) {
       log.error("timeout in WRITESENT!");
       // This is fatal!
       statusBar.setText("Fatal error - unable to write");
       bootState = IDLE;
-      tc.setSprogState(SprogTrafficController.NORMAL);
+      tc.setSprogState(SprogState.NORMAL);
     }
     else if (bootState == NULLWRITE) {
       if (hexFile.read() > 0) {

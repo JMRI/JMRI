@@ -9,7 +9,7 @@ import jmri.PowerManager;
  * PowerManager implementation for controlling SPROG layout power.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SprogPowerManager implements PowerManager, SprogListener {
 
@@ -41,7 +41,7 @@ public class SprogPowerManager implements PowerManager, SprogListener {
             firePropertyChange("Power", null, null);
             // send "Kill main track"
             SprogMessage l = SprogMessage.getKillMain();
-            tc.sendSprogMessage(l, this);
+            for (int i = 0; i < 3; i++) tc.sendSprogMessage(l, this);
         }
         firePropertyChange("Power", null, null);
     }

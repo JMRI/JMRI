@@ -2,6 +2,7 @@
 
 package jmri.jmrix.sprog;
 
+import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.Programmer;
 
@@ -10,23 +11,19 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Andrew crosland Copyright (C) 2001
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SprogProgrammerManager  extends DefaultProgrammerManager {
-
-    public static final int SERVICE = 0;
-    public static final int OPS = 1;
-
-    //private Programmer localProgrammer;
-    private int mode;
+	//private Programmer localProgrammer;
+    private SprogMode mode;
 
     public SprogProgrammerManager(Programmer serviceModeProgrammer) {
         super(serviceModeProgrammer);
         //localProgrammer = serviceModeProgrammer;
-        this.mode = SERVICE;
+        this.mode = SprogMode.SERVICE;
     }
 
-    public SprogProgrammerManager(Programmer serviceModeProgrammer, int mode) {
+    public SprogProgrammerManager(Programmer serviceModeProgrammer, SprogMode mode) {
         super(serviceModeProgrammer);
         //localProgrammer = serviceModeProgrammer;
         this.mode = mode;
@@ -38,12 +35,12 @@ public class SprogProgrammerManager  extends DefaultProgrammerManager {
      * @return true
      */
     public boolean isAddressedModePossible() {
-      if (mode == OPS) {return true;}
+      if (mode == SprogMode.OPS) {return true;}
       else return false;
     }
 
     public boolean isGlobalProgrammerAvailable() {
-      if (mode == SERVICE) {return true;}
+      if (mode == SprogMode.SERVICE) {return true;}
       else return false;
     }
 

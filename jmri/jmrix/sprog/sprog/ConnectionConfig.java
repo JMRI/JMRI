@@ -2,13 +2,15 @@
 
 package jmri.jmrix.sprog.sprog;
 
+import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
+
 
 /**
  * Definition of objects to handle configuring a layout connection
  * via an SPROG SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 

@@ -5,7 +5,9 @@ package jmri.jmrix.sprog;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
-import jmri.jmrix.sprog.sprog.SerialDriverAdapter;
+
+import jmri.jmrix.sprog.SprogConstants.SprogState;
+import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
 
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
@@ -24,11 +26,17 @@ import gnu.io.SerialPortEventListener;
  * Removed Runnable implementation and methods for it
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener  {
 
 	private SprogReply reply = new SprogReply();
+	
+	private boolean waitingForReply = false;
+	SprogListener lastSender = null;
+
+    private SprogState sprogState = SprogState.NORMAL;
+
 	
 	public SprogTrafficController() {
 		if (log.isDebugEnabled()) log.debug("setting instance: "+this);
@@ -86,19 +94,11 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 			}
 	}
 
-	SprogListener lastSender = null;
 
-        // Current SPROG state
-        public static final int NORMAL = 0;
-        public static final int SIIBOOTMODE = 1;
-        public static final int V4BOOTMODE = 2;
-
-        private int sprogState = NORMAL;
-
-        public int getSprogState() { return sprogState; }
-        public void setSprogState(int s) {
-          sprogState = s;
-          if (s==V4BOOTMODE) {
+        public SprogState getSprogState() { return sprogState; }
+        public void setSprogState(SprogState s) {
+          this.sprogState = s;
+          if (s==SprogState.V4BOOTMODE) {
             // enable flow control - required for sprog v4 bootloader
             SerialDriverAdapter.instance().setHandshake(SerialPort.FLOWCONTROL_RTSCTS_IN
                                                         | SerialPort.FLOWCONTROL_RTSCTS_OUT);
@@ -111,9 +111,9 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
           }
           if (log.isDebugEnabled()) log.debug("Setting sprogState " + s);
         }
-        public boolean isNormalMode() {return sprogState == NORMAL; }
-        public boolean isSIIBootMode() {return sprogState == SIIBOOTMODE; }
-        public boolean isV4BootMode() {return sprogState == V4BOOTMODE; }
+        public boolean isNormalMode() {return sprogState == SprogState.NORMAL; }
+        public boolean isSIIBootMode() {return sprogState == SprogState.SIIBOOTMODE; }
+        public boolean isV4BootMode() {return sprogState == SprogState.V4BOOTMODE; }
 
 
 	@SuppressWarnings("unchecked")
@@ -140,7 +140,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
             }
           }
 
-          // forward to the last listener who send a message
+          // forward to the last listener who sent a message
           // this is done _second_ so monitoring can have already stored the reply
           // before a response is sent
           if (lastSender != null) lastSender.reply(r);
@@ -150,31 +150,28 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         /**
          * Forward a preformatted message to the actual interface.
          */
-        public void sendSprogMessage(SprogMessage m, SprogListener reply) {
+        public synchronized void sendSprogMessage(SprogMessage m, SprogListener replyTo) {
+       
+          if (waitingForReply) {
+        	  try {
+        		  wait(100);  //Will wait until notify()ed or 100ms timeout
+        	  } catch (InterruptedException e) {}
+          }
+          waitingForReply = true;
+
           if (log.isDebugEnabled()) log.debug("sendSprogMessage message: ["+m+"]");
           // remember who sent this
-          lastSender = reply;
+          lastSender = replyTo;
 
           // notify all _other_ listeners
-          notifyMessage(m, reply);
-
+          notifyMessage(m, replyTo);
+          
           // stream to port in single write, as that's needed by serial
-          int len = m.getNumDataElements();
-
-          // space for carriage return if required
-          int cr = 0;
-          if (!isSIIBootMode()) { cr = 1; }
-
-          byte msg[] = new byte[len+cr];
-
-          for (int i=0; i< len; i++)
-            msg[i] = (byte) m.getElement(i);
-          if (!isSIIBootMode()) { msg[len] = 0x0d; }
-
           try {
             if (ostream != null) {
-              if (log.isDebugEnabled()) log.debug("write message: "+msg);
-              ostream.write(msg);
+              //System.out.println("message: " + m.toString());
+              if (log.isDebugEnabled()) log.debug("write message: "+m.getFormattedMessage(sprogState));
+              ostream.write(m.getFormattedMessage(sprogState));
             }
             else {
             // no stream connected
@@ -183,8 +180,8 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         }
         catch (Exception e) {
           log.warn("sendMessage: Exception: "+e.toString());
-        }
-      }
+        } 
+    }
 
 
         // methods to connect/disconnect to a source of data in a LnPortController
@@ -231,131 +228,14 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         // data members to hold the streams
 	DataInputStream istream = null;
 	OutputStream ostream = null;
-
-
-	/**
-	 * Handle incoming characters.  This is a permanent loop,
-	 * looking for input messages in character form on the
-	 * stream connected to the PortController via <code>connectPort</code>.
-	 * Terminates with the input stream breaking out of the try block.
-	 * 
-	 * AJB Jan 2010 - neither method below is required any more - 
-	 * incoming data handled by event-driven method - serialEvent
-	 * 
-	 */
-	/*public void run() {
-        while (true) {   // loop permanently, stream close will exit via exception
-            try {
-              handleOneIncomingReply();
-            }
-            catch (java.io.IOException e) {
-              log.warn("run: Exception: "+e.toString());
-            }
-          }
-        }
         
-        void handleOneIncomingReply() throws java.io.IOException {
-          // we sit in this until the message is complete, relying on
-          // threading to let other stuff happen
-
-          // Create output message
-          SprogReply msg = new SprogReply();
-          // message exists, now fill it
-         
-          int i;
-          for (i = 0; i < SprogReply.maxSize; i++) {
-        		byte char1 = istream.readByte();
-        		msg.setElement(i, char1);
-            if (endReply(msg)) break;
-          }
-
-          // message is complete, dispatch it !!
-          if (log.isDebugEnabled()) log.debug("dispatch reply of length "+i);
-          {
-            final SprogReply thisMsg = msg;
-            if (unsolicited) {
-              log.debug("Unsolicited Reply");
-              thisMsg.setUnsolicited();
-            }
-            final SprogTrafficController thisTC = this;
-            // return a notification via the queue to ensure end
-            Runnable r = new Runnable() {
-              SprogReply msgForLater = thisMsg;
-              SprogTrafficController myTC = thisTC;
-              public void run() {
-                log.debug("Delayed notify starts");
-                myTC.notifyReply(msgForLater);
-              }
-            };
-            javax.swing.SwingUtilities.invokeLater(r);
-          }
-        }
-*/
-        /*
-         * Normal SPROG replies will end with the prompt for the next command
-         * Bootloader will end with ETX with no preceding DLE
-         * SPROG v4 bootloader replies "L>" on entry and replies "." at other
-         * times
-        */
        boolean endReply(SprogReply msg) {
-         if (endNormalReply(msg)) return true;
-         if (endBootReply(msg)) return true;
-         if (endBootloaderReply(msg)) return true;
-         return false;
+         return msg.endNormalReply() || msg.endBootReply() || 
+         	msg.endBootloaderReply(this.getSprogState());
        }
 
-       boolean endNormalReply(SprogReply msg) {
-         // Detect that the reply buffer ends with "P> " or "R> " (note ending space)
-         int num = msg.getNumDataElements();
-         if ( num >= 3) {
-           // ptr is offset of last element in SprogReply
-           int ptr = num-1;
-           if (msg.getElement(ptr)   != ' ') return false;
-           if (msg.getElement(ptr-1) != '>') return false;
-           if ((msg.getElement(ptr-2) != 'P')&&(msg.getElement(ptr-2) != 'R')) return false;
-           // Now see if it's unsolicited !O for overload
-           unsolicited = false;
-           if ( num >= 5 ) {
-             for (int i = 0; i < num-1; i++) {
-               if ((msg.getElement(i) == '!')) unsolicited = true;
-             }
-           }
-           return true;
-         }
-         else return false;
-       }
 
-       boolean endBootReply(SprogReply msg) {
-         // Detect that the reply buffer ends with ETX with no preceding DLE
-         // This is the end of a SPROG II bootloader reply or the end of
-         // a SPROG v4 echoing the botloader version request
-         int num = msg.getNumDataElements();
-         if ( num >= 2) {
-           // ptr is offset of last element in SprogReply
-           int ptr = num-1;
-           if ((msg.getElement(ptr) & 0xff)   != SprogMessage.ETX) return false;
-           if ((msg.getElement(ptr-1) & 0xff) == SprogMessage.DLE) return false;
-           return true;
-         }
-         else return false;
-       }
-
-       boolean endBootloaderReply(SprogReply msg) {
-         // Detect that the reply buffer ends with "L>" or "." from a SPROG v4
-         // bootloader
-         int num = msg.getNumDataElements();
-         int ptr = num-1;
-         if ((sprogState == V4BOOTMODE) && ((msg.getElement(ptr)   == '.')
-                                            || (msg.getElement(ptr)   == 'S'))) return true;
-         if ( num >= 2) {
-           // ptr is offset of last element in SprogReply
-           if (msg.getElement(ptr)   != '>') return false;
-           if (msg.getElement(ptr-1) != 'L') return false;
-           return true;
-         }
-         else return false;
-       }
-
+ 
        private boolean unsolicited;
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogTrafficController.class.getName());
@@ -400,10 +280,14 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 	      }
 	}
 	/**
-	 * Send the current reply - built using data from seriaEvent
+	 * Send the current reply - built using data from serialEvent
 	 */
 	private void sendreply() {
         //send the reply
+		synchronized(this) {
+			waitingForReply = false;
+			notify();
+		}
         if (log.isDebugEnabled()) log.debug("dispatch reply of length "+this.reply.getNumDataElements());
         {
           final SprogReply thisReply = this.reply;
@@ -413,6 +297,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
           }
           final SprogTrafficController thisTC = this;
           // return a notification via the queue to ensure end
+          //System.out.println("reply " + this.reply.toString());
           Runnable r = new Runnable() {
             SprogReply msgForLater = thisReply;
             SprogTrafficController myTC = thisTC;
@@ -423,8 +308,10 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
           };
           javax.swing.SwingUtilities.invokeLater(r);
         }
+        
         //Create a new reply, ready to be filled
         this.reply = new SprogReply();
+
 	}
 }
 

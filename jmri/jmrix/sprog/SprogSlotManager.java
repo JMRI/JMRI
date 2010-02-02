@@ -25,7 +25,7 @@ import jmri.jmrix.sprog.sprogslotmon.*;
  * uses enum, etc.</P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
  *              Andrew Crosland         (C) 2006 ported to SPROG
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SprogSlotManager extends SprogCommandStation implements SprogListener, CommandStation, Runnable {
 
@@ -57,25 +57,7 @@ public class SprogSlotManager extends SprogCommandStation implements SprogListen
         if (packet.length>=7) log.error("Only 6-byte packets accepted: "+packet.length);
         log.debug("Send packet length "+packet.length);
 
-        SprogMessage m = new SprogMessage(1+(packet.length*3));
-        int i = 0; // counter of byte in output message
-        int j = 0; // counter of byte in input packet
-
-        m.setElement(i++, 'O');  // "O " starts output packet
-
-        // add each byte of the input message
-        for (j=0; j<packet.length; j++) {
-            m.setElement(i++,' ');
-            String s = Integer.toHexString(packet[j]&0xFF).toUpperCase();
-            if (s.length() == 1) {
-                m.setElement(i++, '0');
-                m.setElement(i++, s.charAt(0));
-            } else {
-                m.setElement(i++, s.charAt(0));
-                m.setElement(i++, s.charAt(1));
-            }
-        }
-
+        SprogMessage m = new SprogMessage(packet);
         SprogTrafficController.instance().sendSprogMessage(m, this);
     }
 

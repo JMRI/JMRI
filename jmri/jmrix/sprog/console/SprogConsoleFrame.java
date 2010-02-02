@@ -19,7 +19,7 @@ import jmri.jmrix.sprog.SprogConstants;
  * to send some commands while slot manager is active
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
     
@@ -262,9 +262,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
     
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        SprogMessage m = new SprogMessage(cmdTextField.getText().length());
-        for (int i=0; i<cmdTextField.getText().length(); i++)
-            m.setElement(i, cmdTextField.getText().charAt(i));
+        SprogMessage m = new SprogMessage(cmdTextField.getText());
         // Messages sent by us will not be forwarded back so add to display manually
         nextLine("cmd: \""+m.toString()+"\"\n", "");
         SprogTrafficController.instance().sendSprogMessage(m, this);

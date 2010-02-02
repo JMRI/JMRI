@@ -3,6 +3,7 @@
 package jmri.jmrix.sprog;
 
 import jmri.Programmer;
+import jmri.jmrix.sprog.SprogConstants.SprogState;
 
 /**
  * Encodes a message to an SPROG command station.
@@ -11,7 +12,7 @@ import jmri.Programmer;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
 
@@ -37,6 +38,34 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
             log.error("invalid length in call to ctor");
         _nDataChars = i;
         _dataChars = new int[i];
+    }
+    
+    /**
+     * Creates a new SprogMessage containing a byte array to represent
+     * a packet to output
+     * @param packet The contents of the packet
+     */
+    public SprogMessage(byte [] packet ) {
+    	this(1+(packet.length*3));
+        int i = 0; // counter of byte in output message
+        int j = 0; // counter of byte in input packet
+
+        this.setElement(i++, 'O');  // "O " starts output packet
+
+        // add each byte of the input message
+        for (j=0; j<packet.length; j++) {
+            this.setElement(i++,' ');
+            String s = Integer.toHexString(packet[j]&0xFF).toUpperCase();
+            if (s.length() == 1) {
+                this.setElement(i++, '0');
+                this.setElement(i++, s.charAt(0));
+            } else {
+                this.setElement(i++, s.charAt(0));
+                this.setElement(i++, s.charAt(1));
+            }
+        }
+        
+
     }
 
     // from String
@@ -64,6 +93,7 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
     // accessors to the bulk data
     public int getNumDataElements() {return _nDataChars;}
     public int getElement(int n) {return _dataChars[n];}
+    
     public void setElement(int n, int v) {
       if (!SprogTrafficController.instance().isSIIBootMode()) {v &= 0x7f;}
       _dataChars[n] = v;
@@ -193,7 +223,29 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
         }
         return s;
     }
-
+    
+    /**
+     * Get formatted message for direct output to stream - this is the final 
+     * format of the message as a byte array
+     * @param sprogState a SprogState variable representing the current state
+     * of the Sprog
+     * @return the formatted message as a byte array
+     */
+    public byte[] getFormattedMessage(SprogState sprogState) {
+	    int len = this.getNumDataElements();
+	
+	    // space for carriage return if required
+	    int cr = 0;
+	    if (sprogState != SprogState.SIIBOOTMODE) { cr = 1; }
+	
+	    byte msg[] = new byte[len+cr];
+	
+	    for (int i=0; i< len; i++)
+	      msg[i] = (byte) this.getElement(i);
+	    if (sprogState != SprogState.SIIBOOTMODE) { msg[len] = 0x0d; }
+	    return msg;
+    }
+    
     // diagnose format
     public boolean isKillMain() {
       return getOpCode() == '-';

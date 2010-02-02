@@ -8,7 +8,7 @@ package jmri.jmrix.sprog.sprogCS;
  * via an SPROG SerialDriverAdapter object.
  *
  * @author      Andrew Crosland   Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -28,7 +28,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
     public String name() { return "SPROG Command Station"; }
 
-    protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
+    protected void setInstance() { adapter = SprogCSSerialDriverAdapter.instance(); }
 }
 
 /* @(#)ConnectionConfig.java */

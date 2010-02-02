@@ -6,13 +6,14 @@ import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogTrafficController;
+import jmri.jmrix.sprog.SprogConstants.SprogState;
 
 import javax.swing.*;
 
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SprogIIUpdateFrame
     extends SprogUpdateFrame
@@ -39,7 +40,7 @@ public class SprogIIUpdateFrame
                                         "Connect to Bootloader", JOptionPane.ERROR_MESSAGE);
       log.error("Malformed bootloader reply");
       bootState = IDLE;
-      tc.setSprogState(SprogTrafficController.NORMAL);
+      tc.setSprogState(SprogState.NORMAL);
       return;
     }
     if ( (bootState != RESETSENT) && tc.isSIIBootMode() && !m.getChecksum()) {
@@ -47,7 +48,7 @@ public class SprogIIUpdateFrame
 //                                        "Connect to Bootloader", JOptionPane.ERROR_MESSAGE);
       log.error("Bad bootloader checksum");
       bootState = IDLE;
-      tc.setSprogState(SprogTrafficController.NORMAL);
+      tc.setSprogState(SprogState.NORMAL);
       return;
     }
     replyString = m.toString();
@@ -108,7 +109,7 @@ public class SprogIIUpdateFrame
         tc.sendSprogMessage(msg, this);
         if (sprogType.indexOf("II") > 0) {
           // SPROG II will not reply to this so just wait a while
-          tc.setSprogState(tc.SIIBOOTMODE);
+          tc.setSprogState(SprogState.SIIBOOTMODE);
           try {
             Thread.sleep(500);
           }
@@ -145,7 +146,7 @@ public class SprogIIUpdateFrame
       else {
         log.error("Bad reply to RD_VER request");
         bootState = IDLE;
-        tc.setSprogState(SprogTrafficController.NORMAL);
+        tc.setSprogState(SprogState.NORMAL);
 //        SprogAlertDialog ad = new SprogAlertDialog(this, "Connect to Bootloader", "Unable to connect to bootloader");
         JOptionPane.showMessageDialog(this, "Unable to connect to bootloader", 
                                         "Connect to Bootloader", JOptionPane.ERROR_MESSAGE);
@@ -189,7 +190,7 @@ public class SprogIIUpdateFrame
 //                                        "SPROG II Bootloader", JOptionPane.ERROR_MESSAGE);
         log.error("Bad reply to erase request");
         bootState = IDLE;
-        tc.setSprogState(SprogTrafficController.NORMAL);
+        tc.setSprogState(SprogState.NORMAL);
         return;
       }
     }
@@ -216,7 +217,7 @@ public class SprogIIUpdateFrame
 //                                        "SPROG II Bootloader", JOptionPane.ERROR_MESSAGE);
         log.error("Bad reply to write request");
         bootState = IDLE;
-        tc.setSprogState(SprogTrafficController.NORMAL);
+        tc.setSprogState(SprogState.NORMAL);
         return;
       }
     }
@@ -230,7 +231,7 @@ public class SprogIIUpdateFrame
         if (log.isDebugEnabled()) {
           log.debug("Reset SPROG");
         }
-        msg = new SprogMessage(SprogMessage.MAXSIZE).getReset();
+        msg = SprogMessage.getReset();
         bootState = RESETSENT;
         tc.sendSprogMessage(msg, this);
         startLongTimer();
@@ -241,7 +242,7 @@ public class SprogIIUpdateFrame
 //                                        "SPROG II Bootloader", JOptionPane.ERROR_MESSAGE);
         log.error("Bad reply to SPROG Mode request");
         bootState = IDLE;
-        tc.setSprogState(SprogTrafficController.NORMAL);
+        tc.setSprogState(SprogState.NORMAL);
         return;
       }
     }
@@ -254,7 +255,7 @@ public class SprogIIUpdateFrame
 
       statusBar.setText("Ready");
 
-      tc.setSprogState(SprogTrafficController.NORMAL);
+      tc.setSprogState(SprogState.NORMAL);
       bootState = IDLE;
     }
     else {
@@ -263,7 +264,7 @@ public class SprogIIUpdateFrame
         log.debug("Reply in unknown state");
       }
       bootState = IDLE;
-      tc.setSprogState(SprogTrafficController.NORMAL);
+      tc.setSprogState(SprogState.NORMAL);
       return;
     }
   }
@@ -274,7 +275,7 @@ public class SprogIIUpdateFrame
       log.debug("Request bootloader version");
     }
     // allow parsing of bootloader replies
-    tc.setSprogState(tc.SIIBOOTMODE);
+    tc.setSprogState(SprogState.SIIBOOTMODE);
     bootState = VERREQSENT;
     msg = SprogMessage.getReadBootVersion();
     tc.sendSprogMessage(msg, this);
@@ -286,7 +287,7 @@ public class SprogIIUpdateFrame
       if (log.isDebugEnabled()) {
         log.debug("Send write EE " + hexFile.getAddress());
       }
-      msg = new SprogMessage(SprogMessage.MAXSIZE).getWriteEE(hexFile.
+      msg = SprogMessage.getWriteEE(hexFile.
           getAddress(),
           hexFile.getData());
     }
@@ -340,7 +341,7 @@ public class SprogIIUpdateFrame
       log.debug("Erase Flash " + eraseAddress);
     }
     int rows = 8; // 512 bytes
-    msg = new SprogMessage(SprogMessage.MAXSIZE).getEraseFlash(eraseAddress,
+    msg = SprogMessage.getEraseFlash(eraseAddress,
         rows);
     bootState = ERASESENT;
     statusBar.setText("Erase " + eraseAddress);
@@ -369,7 +370,7 @@ public class SprogIIUpdateFrame
 
   public synchronized void connectButtonActionPerformed(java.awt.event.
       ActionEvent e) {
-    tc.setSprogState(SprogTrafficController.NORMAL);
+    tc.setSprogState(SprogState.NORMAL);
     sprogType = null;
     // At this point we do not know what sort of SPROG is connected
     // nor what state it is in
@@ -421,7 +422,7 @@ public class SprogIIUpdateFrame
     if (log.isDebugEnabled()) {
       log.debug("Set SPROG mode");
     }
-    msg = new SprogMessage(SprogMessage.MAXSIZE).getWriteEE(0xff, new int[] {0});
+    msg = SprogMessage.getWriteEE(0xff, new int[] {0});
     bootState = SPROGMODESENT;
     tc.sendSprogMessage(msg, this);
     startLongTimer();
@@ -458,7 +459,7 @@ public class SprogIIUpdateFrame
                                     "Fatal Error", JOptionPane.ERROR_MESSAGE);
       statusBar.setText("Fatal error - unable to connect");
       bootState = IDLE;
-      tc.setSprogState(SprogTrafficController.NORMAL);
+      tc.setSprogState(SprogState.NORMAL);
     }
     else if (bootState == WRITESENT) {
       log.error("timeout in WRITESENT!");
@@ -468,7 +469,7 @@ public class SprogIIUpdateFrame
                                     "Fatal Error", JOptionPane.ERROR_MESSAGE);
       statusBar.setText("Fatal error - unable to write");
       bootState = IDLE;
-      tc.setSprogState(SprogTrafficController.NORMAL);
+      tc.setSprogState(SprogState.NORMAL);
     }
     else if (bootState == NULLWRITE) {
       if (hexFile.read() > 0) {

@@ -1,24 +1,36 @@
 // SprogReply.java
-
 package jmri.jmrix.sprog;
+
+import jmri.jmrix.AbstractMRReply;
+import jmri.jmrix.sprog.SprogConstants.SprogState;
 
 /**
  * SprogReply.java
  *
- * Description:		Carries the reply to an SprogMessage
+ * Description:		Carries the reply to a SprogMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @author			Andrew Berridge - refactored, cleaned up, Feb 2010
+ * @version			$Revision: 1.8 $
  */
-public class SprogReply {
-	// This should be an extension af AbstractMRReply and needs re-factoring
-
+public class SprogReply extends AbstractMRReply {
+	// Longest boot reply is 256bytes each preceded by DLE + 2xSTX + ETX
+	static public int maxSize = 515;
+    private boolean _isBoot = false;
+    
 	// create a new one
 	public  SprogReply() {
-          _isBoot = false;
-          unsolicited = false;
+		super();
 	}
+	
+    // no need to do anything
+    protected int skipPrefix(int index) {
+        return index;
+    }
 
-	// copy one
+	/**
+	 * Create a new SprogReply as a deep copy of an existing SprogReply
+	 * @param m the SprogReply to copy
+	 */
 	@SuppressWarnings("null")
 	public  SprogReply(SprogReply m) {
           this();
@@ -26,73 +38,63 @@ public class SprogReply {
 			log.error("copy ctor of null message");
 		_nDataChars = m._nDataChars;
                 _isBoot = m._isBoot;
-                unsolicited = m.unsolicited;
+                if (m.isUnsolicited()) super.setUnsolicited();
 		for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
 	}
+	
+    /**
+     * Create a SprogReply from a String
+     * @param replyString a String containing the contents of the reply
+     * @param isBoot a boolean indicating if this is a boot reply
+     */
+    public SprogReply(String replyString, boolean isBoot) {
+      this(replyString);
+      _isBoot = isBoot;
+    }
+    
+    public SprogReply(String replyString) {
+    	super(replyString);
+    }
 
-	// from String
-	public SprogReply(String s) {
-          this();
-		_nDataChars = s.length();
-		for (int i = 0; i<_nDataChars; i++)
-			_dataChars[i] = s.charAt(i);
-	}
+    /**
+     *  Is this reply indicating that an overload condition was detected?
+     * @return
+     */
+    public boolean isOverload() {
+      return (this.toString().indexOf("!O") >= 0);
+    }
 
-        // from String
-        public SprogReply(String s, boolean b) {
-          this();
-                _nDataChars = s.length();
-                for (int i = 0; i<_nDataChars; i++)
-                        _dataChars[i] = s.charAt(i);
-                _isBoot = b;
+    /**
+     * Is this reply indicating that a general error has occurred?
+     * @return
+     */
+    public boolean isError() {
+      return (this.toString().indexOf("!E") >= 0);
+    }
+
+    // Check and strip framing characters and DLE from a sprog bootloader reply
+    public boolean strip() {
+        char tmp[] = new char[_nDataChars];
+        int j = 0;
+        _isBoot = true; // definitely a boot message
+        // Check framing characters
+        if (_dataChars[0] != SprogMessage.STX) {return false;}
+        if (_dataChars[1] != SprogMessage.STX) {return false;}
+        if (_dataChars[_nDataChars-1] != SprogMessage.ETX) {return false;}
+
+        // Ignore framing characters and strip DLEs
+        for (int i = 2; i < _nDataChars - 1; i++) {
+            if (_dataChars[i] == SprogMessage.DLE) {i++;}
+            tmp[j++] = (char) _dataChars[i];
         }
 
-	public void setOpCode(int i) { _dataChars[0]= (char)i;}
-	public int getOpCode() {return _dataChars[0];}
-
-        public final void setUnsolicited() { unsolicited = true; }
-
-        public boolean isUnsolicited() { return unsolicited; }
-
-        public boolean isOverload() {
-          return (this.toString().indexOf("!O") >= 0);
+        // Copy back to original SprogReply
+        for (int i = 0; i < j; i++) {
+            _dataChars[i] = tmp[i];
         }
-
-        public boolean isError() {
-          return (this.toString().indexOf("!E") >= 0);
-        }
-
-	// accessors to the bulk data
-	public int getNumDataElements() {return _nDataChars;}
-	public int getElement(int n) {return _dataChars[n];}
-	public void setElement(int n, int v) {
-		_dataChars[n] = (char) v;
-		_nDataChars = Math.max(_nDataChars, n+1);
-	}
-
-        // Check and strip framing characters and DLE from a sprog bootloader reply
-        public boolean strip() {
-            char tmp[] = new char[_nDataChars];
-            int j = 0;
-            _isBoot = true; // definitely a boot message
-            // Check framing characters
-            if (_dataChars[0] != SprogMessage.STX) {return false;}
-            if (_dataChars[1] != SprogMessage.STX) {return false;}
-            if (_dataChars[_nDataChars-1] != SprogMessage.ETX) {return false;}
-
-            // Ignore framing characters and strip DLEs
-            for (int i = 2; i < _nDataChars - 1; i++) {
-                if (_dataChars[i] == SprogMessage.DLE) {i++;}
-                tmp[j++] = _dataChars[i];
-            }
-
-            // Copy back to original SprogReply
-            for (int i = 0; i < j; i++) {
-                _dataChars[i] = tmp[i];
-            }
-            _nDataChars = j;
-            return true;
-        }
+        _nDataChars = j;
+        return true;
+    }
 
         // Check and strip checksum from a sprog bootloader reply
         // Assumes framing and DLE chars have been stripped
@@ -105,17 +107,18 @@ public class SprogReply {
             return ((checksum & 0xff) == 0);
         }
 
-	// display format
-        // display format
+        /**
+         * Returns a string representation of this SprogReply
+         */
         public String toString() {
             String s = "";
             if (_isBoot || (_dataChars[0] == SprogMessage.STX)) {
               for (int i=0; i<_nDataChars; i++) {
-                  s+="<"+(_dataChars[i] & 0xff)+">";
+                  s+="<"+(((char)_dataChars[i]) & 0xff)+">";
               }
             } else {
               for (int i=0; i<_nDataChars; i++) {
-                  s+=_dataChars[i];
+                  s+=(char)_dataChars[i];
               }
             }
             return s;
@@ -149,21 +152,16 @@ public class SprogReply {
           return val;
         }
 
-	int match(String s) {
-		// find a specific string in the reply
-		String rep = new String(_dataChars, 0, _nDataChars);
-		return rep.indexOf(s);
-	}
+        /**
+         * Returns the index of String s in the reply
+         */
+		public int match(String s) {
+			// find a specific string in the reply
+			String rep = new String(_dataChars, 0, _nDataChars);
+			return rep.indexOf(s);
+		}
 
-        int skipWhiteSpace(int index) {
-          // start at index, passing any whitespace & control characters at the start of the buffer
-          while (index < getNumDataElements()-1 &&
-                 ((char)getElement(index) <= ' '))
-            index++;
-          return index;
-        }
-
-        int skipEqual(int index) {
+        private int skipEqual(int index) {
           // start at index, skip over the equals and hex prefix
           int len = "= h".length();
           if ( getNumDataElements() >= index+len-1
@@ -175,15 +173,66 @@ public class SprogReply {
           return index;
         }
 
-        // Longest boot reply is 256bytes each preceded by DLE + 2xSTX + ETX
-	static public int maxSize = 515;
+        
+        /*
+         * Normal SPROG replies will end with the prompt for the next command
+         * Bootloader will end with ETX with no preceding DLE
+         * SPROG v4 bootloader replies "L>" on entry and replies "." at other
+         * times
+        */
+        public boolean endNormalReply() {
+            // Detect that the reply buffer ends with "P> " or "R> " (note ending space)
+            int num = this.getNumDataElements();
+            if ( num >= 3) {
+              // ptr is offset of last element in SprogReply
+              int ptr = num-1;
+              if (this.getElement(ptr)   != ' ') return false;
+              if (this.getElement(ptr-1) != '>') return false;
+              if ((this.getElement(ptr-2) != 'P')&&(this.getElement(ptr-2) != 'R')) return false;
+              // Now see if it's unsolicited !O for overload
+              if ( num >= 5 ) {
+                for (int i = 0; i < num-1; i++) {
+                  if ((this.getElement(i) == '!')) super.setUnsolicited();
+                }
+              }
+              return true;
+            }
+            else return false;
+          }
+        
+        public boolean endBootReply() {
+            // Detect that the reply buffer ends with ETX with no preceding DLE
+            // This is the end of a SPROG II bootloader reply or the end of
+            // a SPROG v4 echoing the botloader version request
+            int num = this.getNumDataElements();
+            if ( num >= 2) {
+              // ptr is offset of last element in SprogReply
+              int ptr = num-1;
+              if ((this.getElement(ptr) & 0xff)   != SprogMessage.ETX) return false;
+              if ((this.getElement(ptr-1) & 0xff) == SprogMessage.DLE) return false;
+              return true;
+            }
+            else return false;
+          }
 
-	// contents (private)
-	private int _nDataChars;
-	private char _dataChars[] = new char[maxSize];
-       private boolean _isBoot = false;
-       private boolean unsolicited;
+          public boolean endBootloaderReply(SprogState sprogState) {
+            // Detect that the reply buffer ends with "L>" or "." from a SPROG v4
+            // bootloader
+            int num = this.getNumDataElements();
+            int ptr = num-1;
+            if ((sprogState == SprogState.V4BOOTMODE) && ((this.getElement(ptr)   == '.')
+            		|| (this.getElement(ptr)   == 'S'))) return true;
+            if ( num >= 2) {
+              // ptr is offset of last element in SprogReply
+              if (this.getElement(ptr)   != '>') return false;
+              if (this.getElement(ptr-1) != 'L') return false;
+              return true;
+            }
+            else return false;
+          }
 
+        
+    
    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogReply.class.getName());
 
 }

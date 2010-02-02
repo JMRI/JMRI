@@ -3,7 +3,7 @@ package jmri.jmrix.sprog.sprogCS.configurexml;
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.sprog.sprogCS.ConnectionConfig;
-import jmri.jmrix.sprog.sprogCS.SerialDriverAdapter;
+import jmri.jmrix.sprog.sprogCS.SprogCSSerialDriverAdapter;
 
 /**
  * Handle XML persistance of layout connections by persistening
@@ -16,7 +16,7 @@ import jmri.jmrix.sprog.sprogCS.SerialDriverAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author Andrew Crosland Copyright: Copyright (c) 2006
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -25,7 +25,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     }
 
     protected void getInstance() {
-        adapter = SerialDriverAdapter.instance();
+        adapter = SprogCSSerialDriverAdapter.instance();
     }
 
     protected void register() {

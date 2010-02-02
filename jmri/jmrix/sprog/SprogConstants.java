@@ -7,15 +7,20 @@ package jmri.jmrix.sprog;
  *
  * Description:		Constants to represent values seen in SPROG traffic
  * @author		Andrew Crosland   Copyright (C) 2006 from LnConstants.java
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public final class SprogConstants {
 
   /* SPROG mode */
   public final static int SPROG = 0;
   public final static int SPROG_CS = 1;
+  
+  // Current SPROG state
+  public enum SprogState {NORMAL, SIIBOOTMODE, V4BOOTMODE}
 
-  /* Maximum number of slots for soft command station */
+  public enum SprogMode {SERVICE, OPS}
+
+/* Maximum number of slots for soft command station */
   public final static int MAX_SLOTS = 16;
 
   /* How many times to repeat an accessory or function packet in the S queue */

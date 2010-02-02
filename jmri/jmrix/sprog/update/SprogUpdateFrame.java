@@ -6,13 +6,14 @@ import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogTrafficController;
+import jmri.jmrix.sprog.SprogConstants.SprogState;
 
 import javax.swing.*;
 
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SprogUpdateFrame
     extends jmri.util.JmriJFrame
@@ -74,7 +75,7 @@ public class SprogUpdateFrame
     // connect to the TrafficManager
     tc = SprogTrafficController.instance();
     tc.addSprogListener(this);
-    tc.setSprogState(SprogTrafficController.NORMAL);
+    tc.setSprogState(SprogState.NORMAL);
   }
 
   public void dispose() {

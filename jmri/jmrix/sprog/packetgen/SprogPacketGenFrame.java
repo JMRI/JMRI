@@ -12,7 +12,7 @@ import jmri.jmrix.sprog.SprogReply;
 /**
  * Frame for user input of Sprog messages.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SprogPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.sprog.SprogListener {
 
@@ -62,10 +62,7 @@ public class SprogPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
 	}
 
   	public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-  		SprogMessage m = new SprogMessage(packetTextField.getText().length());
-  		for (int i=0; i<packetTextField.getText().length(); i++)
-  			m.setElement(i, packetTextField.getText().charAt(i));
-
+  		SprogMessage m = new SprogMessage(packetTextField.getText());
   		SprogTrafficController.instance().sendSprogMessage(m, this);
   	}
 
