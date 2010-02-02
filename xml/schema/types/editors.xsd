@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: editors.xsd,v 1.1 2010-02-02 07:06:31 jacobsen Exp $ -->
+<!-- $Id: editors.xsd,v 1.2 2010-02-02 07:42:32 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                           -->
 <!--                                                                        -->
@@ -31,16 +31,60 @@
     </xs:documentation>
   </xs:annotation>
 
+    <xs:complexType name="EditorCommonAttributesType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing an icon reference
+          See jmri.jmrit.display.configurexml.PositionableLabelXml#storeCommonAttributes
+        </xs:documentation>
+      </xs:annotation>
+      <xs:attribute name="x" type="xs:int" />
+      <xs:attribute name="y" type="xs:int" />
+      <xs:attribute name="level" type="xs:int" />
+      <xs:attribute name="forcecontroloff" type="trueFalseType" />
+      <xs:attribute name="hidden" type="yesNoType" />
+      <xs:attribute name="positionable" type="trueFalseType" />
+      <xs:attribute name="showtooltip" type="trueFalseType" />
+    </xs:complexType>
+
     <xs:complexType name="EditorIconType">
       <xs:annotation>
         <xs:documentation>
           Define the XML stucture for storing an icon reference
+          See jmri.jmrit.display.configurexml.PositionableLabelXml#storeIcon
         </xs:documentation>
       </xs:annotation>
       <xs:attribute name="url" type="xs:string" />
       <xs:attribute name="rotate" type="xs:string" />
       <xs:attribute name="degrees" type="xs:float" />
       <xs:attribute name="scale" type="xs:float" />
+    </xs:complexType>
+
+    <xs:complexType name="EditorTextInfoType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing text information
+          See jmri.jmrit.display.configurexml.PositionableLabelXml#storeTextInfo
+        </xs:documentation>
+      </xs:annotation>
+      <xs:attribute name="text" type="xs:string" />
+      <xs:attribute name="red" type="xs:int" />
+      <xs:attribute name="green" type="xs:int" />
+      <xs:attribute name="blue" type="xs:int" />
+      <xs:attribute name="redBack" type="xs:int" />
+      <xs:attribute name="greenBack" type="xs:int" />
+      <xs:attribute name="blueBack" type="xs:int" />
+      <!-- following are in code, not in 2.9.4 DTD -->
+      <xs:attribute name="size" type="xs:int" />
+      <xs:attribute name="style" type="xs:string" />
+      <xs:attribute name="margin" type="xs:int" />
+      <xs:attribute name="borderSize" type="xs:int" />
+      <xs:attribute name="redBorder" type="xs:int" />
+      <xs:attribute name="greenBorder" type="xs:int" />
+      <xs:attribute name="blueBorder" type="xs:int" />
+      <xs:attribute name="fixedWidth" type="xs:string" />
+      <xs:attribute name="fixedHeight" type="xs:string" />
+      
     </xs:complexType>
 
   

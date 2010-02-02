@@ -3,7 +3,7 @@
 
 <!-- Test schema for JMRI I/O support. Not for use before JMRI 2.9.1        -->
 
-<!-- $Id: general.xsd,v 1.6 2010-02-02 04:28:43 jacobsen Exp $ -->
+<!-- $Id: general.xsd,v 1.7 2010-02-02 07:42:32 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -82,6 +82,18 @@
     <xs:restriction base="xs:token">
       <xs:enumeration value="yes"/>
       <xs:enumeration value="no"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="trueFalseType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of string that's either "true" or "false".
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="true"/>
+      <xs:enumeration value="false"/>
     </xs:restriction>
   </xs:simpleType>
 
