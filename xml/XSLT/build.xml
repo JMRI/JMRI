@@ -1,6 +1,6 @@
 <!-- an ANT build.xml file for JMRI XSLT -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005 -->
-<!-- Revision $Revision: 1.19 $ -->
+<!-- Revision $Revision: 1.20 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -51,6 +51,12 @@
     <mkdir dir="${target}"/>
     <mkdir dir="${toDTD}"/>
     <mkdir dir="${propertiesdir}"/>
+  </target>
+
+  <target name="clean" depends="init"
+  			description="remove results">
+    <delete dir="${target}" />
+    <delete dir="${propertiesdir}"/>
   </target>
 
   <target name="copyDTD" description="ensure local DTD file copies present where needed for processing">
