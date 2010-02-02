@@ -16,7 +16,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -98,20 +98,25 @@ public class MemoryIconXml extends PositionableLabelXml {
         // get object class and determine editor being used
         String className = o.getClass().getName();
 		int lastDot = className.lastIndexOf(".");
-		PanelEditor pe = null;
-		LayoutEditor le = null;
+		Editor ed = null;
+		//PanelEditor pe = null;
+		//LayoutEditor le = null;
         MemoryIcon l;
 		String shortClass = className.substring(lastDot+1,className.length());
 		if (shortClass.equals("PanelEditor")) {
-			pe = (PanelEditor) o;
-            l = new MemoryIcon("", pe);
+			ed = (PanelEditor) o;
+            l = new MemoryIcon("", (PanelEditor)ed);
 		}
 		else if (shortClass.equals("LayoutEditor")) {
-			le = (LayoutEditor) o;
-            l = new jmri.jmrit.display.layoutEditor.MemoryIcon(" ", le);
-            le.memoryLabelList.add((jmri.jmrit.display.layoutEditor.MemoryIcon)l);
+			ed = (LayoutEditor) o;
+            l = new jmri.jmrit.display.layoutEditor.MemoryIcon("   ", (LayoutEditor)ed);
+            ((LayoutEditor)ed).memoryLabelList.add((jmri.jmrit.display.layoutEditor.MemoryIcon)l);
 		}
-		else {
+		else if (o instanceof jmri.jmrit.display.Editor) {
+			ed = (Editor) o;
+            l = new MemoryIcon("", ed);
+        }
+        else {
 			log.error("Unrecognizable class - "+className);
             return;
 		}
@@ -186,7 +191,7 @@ public class MemoryIconXml extends PositionableLabelXml {
         } catch ( NullPointerException e) {  // considered normal if the attribute not present
         }
         l.setDisplayLevel(level);
-        ((Editor)o).putItem(l);
+        ed.putItem(l);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryIconXml.class.getName());
