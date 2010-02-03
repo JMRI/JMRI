@@ -14,14 +14,14 @@ import javax.swing.JPanel;
 /**
  * Provides a simple editor for selecting N NamedIcons, perhaps
  * for use in creating a panel icon.
- * <P>See {@link SensorIcon} for an item
+ * <P>See {@link jmri.jmrit.display.SensorIcon} for an item
  * that might want to have that type of information, and
- * {@link LayoutEditor} for an example of how to use this.
+ * {@link jmri.jmrit.display.layoutEditor.LayoutEditor} for an example of how to use this.
  *
  * @author Bob Jacobsen  Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @see jmri.jmrit.display.SensorIcon
- * @see jmri.jmrit.display.LayoutEditor
+ * @see jmri.jmrit.display.layoutEditor.LayoutEditor
  * @see jmri.jmrit.catalog
  */
 

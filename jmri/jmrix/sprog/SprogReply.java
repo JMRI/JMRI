@@ -10,7 +10,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogState;
  * Description:		Carries the reply to a SprogMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Andrew Berridge - refactored, cleaned up, Feb 2010
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SprogReply extends AbstractMRReply {
 	// Longest boot reply is 256bytes each preceded by DLE + 2xSTX + ETX
@@ -58,7 +58,6 @@ public class SprogReply extends AbstractMRReply {
 
     /**
      *  Is this reply indicating that an overload condition was detected?
-     * @return
      */
     public boolean isOverload() {
       return (this.toString().indexOf("!O") >= 0);
@@ -66,7 +65,6 @@ public class SprogReply extends AbstractMRReply {
 
     /**
      * Is this reply indicating that a general error has occurred?
-     * @return
      */
     public boolean isError() {
       return (this.toString().indexOf("!E") >= 0);
