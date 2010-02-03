@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlSchemaExamples.shtml,v 1.2 2010-02-01 04:59:43 jacobsen Exp $ -->
+<!-- $Id: XmlSchemaExamples.shtml,v 1.3 2010-02-03 06:17:40 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -138,6 +138,35 @@ Not an attribute, an element:
     &lt;/xs:restriction&gt;
   &lt;/xs:simpleType&gt;
 &lt;/xs:element&gt;
+</pre></code>
+
+<h2>Attribute Groups</h2>
+
+Attribute Groups are good for representing a set of attributes
+read and written together by a common service routine.  
+Example definition:
+
+<code><pre>
+&lt;xs:attributeGroup name="EditorCommonAttributesGroup"&gt;
+  &lt;xs:annotation&gt;
+    &lt;xs:documentation&gt;
+      Define the XML stucture for storing common PositionableLabel child attributes
+    &lt;/xs:documentation&gt;
+    &lt;xs:appinfo&gt;
+      jmri.jmrit.display.configurexml.PositionableLabelXml#storeCommonAttributes
+    &lt;/xs:appinfo&gt;
+  &lt;/xs:annotation&gt;
+  &lt;xs:attribute name="x" type="xs:int" use="required" /&gt;
+  &lt;xs:attribute name="y" type="xs:int" use="required" /&gt;
+  &lt;xs:attribute name="level" type="xs:int" /&gt;
+  &lt;xs:attribute name="forcecontroloff" type="trueFalseType" default="false" /&gt;
+&lt;/xs:attributeGroup&gt;
+</pre></code>
+
+and example use in some later type:
+
+<code><pre>
+&lt;xs:attributeGroup ref="EditorCommonAttributesGroup" /&gt;
 </pre></code>
 
 <!--#include virtual="/Footer" -->

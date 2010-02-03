@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlSchema.shtml,v 1.5 2010-01-31 22:15:30 jacobsen Exp $ -->
+<!-- $Id: XmlSchema.shtml,v 1.6 2010-02-03 06:17:40 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -45,6 +45,13 @@ For examples (not a tutorial!) on the structure of
 our schema, see the 
 <a href="XmlSchemaExamples.shtml">examples page</a>.
 
+<p>
+The current schema can be seen online in the 
+<a href="http://jmri.org/xml/schema">schema directory</a>.
+The most commonly used one is the 
+<a href="http://jmri.org/xml/schema/layout.xsd">panelfile schema</a>.  See below on how it's 
+organized.
+
 <h2>Access to Schema Definitions</h2>
 JMRI uses XML Schema to define the format of its files.
 <P>
@@ -84,7 +91,7 @@ but it's still a very useful check.
 <p>
 Using the JMRI "Validate XML File" tool in the "Debug" menu to
 validate a .xml file ("instance file") that uses your new or 
-updated schema is an important check of both.
+updated schema is an important check of both. 
 
 <p>
 You should also add a 
@@ -128,26 +135,19 @@ can certainly switch to it.
 
 <h2>Developing JMRI Schema</h2>
 
-
-<h3>The Venetian Blind Pattern</h3>
-
-http://www.ibm.com/developerworks/xml/library/ws-soa-xmlwsdl.html#N1012B
-
-But check out this one:
-http://developers.sun.com/jsenterprise/archive/nb_enterprise_pack/reference/techart/design_patterns.html
-http://www.javapassion.com/webservices/XMLSchemaDesignPatterns.pdf
-
-<p>
-Our approach is based on the structure of the underlying code:
-A particular *Xml class is the unit of reuse.
-
-<p>
 Overall structure of the schema; planning for inclusion, merging and reuse; 
 planning for extension.
 
-Lots of classes descend from jmri.configurexml.XmAdapter:
-<a href="http://jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">see JavaDoc</a>
+<p>
+Our preferred organization for XML schema
+is based on the structure of the underlying code:
+A particular *Xml class is the unit of reuse.
 
+<p>
+Lots of classes descend from jmri.configurexml.XmAdapter:
+(<a href="http://jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">see JavaDoc</a>)
+
+<p>
 By convention, provide &lt;xsd:annotation&gt;&lt;xsd:appinfo&gt; element containing
 the class name that reads/writes and element:
 <pre><code>
@@ -161,6 +161,26 @@ the class name that reads/writes and element:
     &lt;/xs:annotation&gt;
 </code></pre>
 
+<h3>The Venetian Blind Pattern</h3>
+
+Links to more information at
+<a href="http://www.ibm.com/developerworks/xml/library/ws-soa-xmlwsdl.html#N1012B">DeveloperWorks</a>.
+<a href="http://developers.sun.com/jsenterprise/archive/nb_enterprise_pack/reference/techart/design_patterns.html">developers.sun</a>,
+<a href="http://www.javapassion.com/webservices/XMLSchemaDesignPatterns.pdf">javapassion</a>
+
+<h3>Available Defined Types</h3>
+
+<dl>
+<dt>systemNameType<dd>System names, to eventually be tightened up to a real test of validity
+<dt>userNameType<dd>User names, not including the empty name
+<dt>nullUserNameType<dd>User names, with an empty value allowed
+<dt>beanNameType<dd>Either user or system name
+<dt>turnoutStateType<dd>closed, thrown
+<dt>signalColorType<dd>red, yellow, etc
+<dt>yesNoType<dd>yes, no
+<dt>trueFalseType<dd>true, false
+</dl>
+
 <h2>External Standards and Future Work</h2>
 
 The 
@@ -168,7 +188,7 @@ The
 defines a number of schema and schema elements that have become 
 well-known standards. Were possible, we should use those 
 <a href="http://www.oasis-open.org/specs/index.php">standard elements</a>
-to improve inter-operability. Perhaps the first ones of interest are:
+to improve inter-operability. The first ones of interest are:
 <ul>
 <li><a href="http://docbook.org/">DockBook</a> defines elements for several concepts we use:
     <ul>
@@ -177,11 +197,14 @@ to improve inter-operability. Perhaps the first ones of interest are:
     <li>revision history (http://www.docbook.org/tdg/en/html/revhistory.html)
     </ul>
 
-http://www.docbook.org/specs/docbook-5.0-spec-cs-01.html
-http://www.docbook.org/xml/5.0/xsd/
-http://www.docbook.org/xml/5.0/xsd/docbook.xsd
-
-We have our own subset that we use, because 
+See
+<ul>
+<li><a href="http://www.docbook.org/specs/docbook-5.0-spec-cs-01.html">http://www.docbook.org/specs/docbook-5.0-spec-cs-01.html</a>
+<li><a href="http://www.docbook.org/xml/5.0/xsd/">http://www.docbook.org/xml/5.0/xsd/</a>
+<li><a href="http://www.docbook.org/xml/5.0/xsd/docbook.xsd">http://www.docbook.org/xml/5.0/xsd/docbook.xsd</a>
+</ul>
+<p>
+We have our own DocBook subset that we use, because 
 the full DocBook 5.0 schema takes a very long time to parse, 
 and isn't fully consistent with versions of other software that we use.
 We use the normal DocBook 5.0 namespace, so we can later easily convert to 
@@ -196,6 +219,7 @@ so that we can later convert with finite work.
 though aimed at business 
 transactions, defines elements to represent parties (companies, people), 
 devices, model numbers, etc.
+
 <li><a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=office">OpenDocument</a> 
 (OODF) defines a set of elements and structures for 
 computations as part of its spreadsheet module. (But they provide Relax-NG schema, not W3C XML Schema,
