@@ -44,7 +44,7 @@ import java.io.File;
  * for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  * @see jmri.InstanceManager
  * @see jmri.configurexml.ConfigXmlManager
  */
@@ -88,6 +88,11 @@ public interface ConfigureManager {
      * Where that information is stored is implementation-specific.
      */
     public void storePrefs();
+    
+    /**
+     * Stores just preferences information.
+     */
+    public void storePrefs(File file);
 
     /**
      * Stores just configuration information.

@@ -22,7 +22,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.73 $
+ * @version $Revision: 1.74 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -248,11 +248,15 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Writes prefs to a predefined File location.
      */
     public void storePrefs() {
-        Element root = initStore();
-        addPrefsStore(root);
-        finalStore(root, prefsFile);
+        storePrefs(prefsFile);
     }
     
+    public void storePrefs(File file) {
+        Element root = initStore();
+        addPrefsStore(root);
+        finalStore(root, file);
+    }
+
     /**
      * Set location for preferences file. 
      * <p>
