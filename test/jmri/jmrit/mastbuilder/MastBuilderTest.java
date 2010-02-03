@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Tests for the jmrit.mastbuilder package & jmrit.mastbuilder.MastBuilder class.
  * @author	Bob Jacobsen     Copyright (C) 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class MastBuilderTest extends TestCase {
 
@@ -21,7 +21,7 @@ public class MastBuilderTest extends TestCase {
         JFrame j = new JFrame();
         j.add(p);
         j.pack();
-        j.show();
+        j.setVisible(true);
     }
 
 
