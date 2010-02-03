@@ -18,7 +18,7 @@ import jmri.util.JmriJFrame;
  * positionable labels
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
@@ -51,8 +51,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getCoordinateEditAction(final Positionable pos) {
         return new AbstractAction(rb.getString("SetXY")) {
-                Positionable comp;
-
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
@@ -67,8 +65,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getLevelEditAction(final Positionable pos) {
         return new AbstractAction(rb.getString("SetLevel")) {
-                Positionable comp;
-
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
@@ -83,8 +79,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getTooltipEditAction(final Positionable pos) {
         return new AbstractAction(rb.getString("SetTooltip")) {
-                Positionable comp;
-
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
@@ -99,8 +93,6 @@ public class CoordinateEdit extends JmriJFrame {
     
     public static AbstractAction getBorderEditAction(final Positionable pos) {
         return new AbstractAction(rb.getString("SetBorderSize")) {
-                Positionable comp;
-
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
@@ -115,8 +107,6 @@ public class CoordinateEdit extends JmriJFrame {
 
     public static AbstractAction getMarginEditAction(final Positionable pos) {
         return new AbstractAction(rb.getString("SetMarginSize")) {
-                Positionable comp;
-
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);

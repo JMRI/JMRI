@@ -15,17 +15,15 @@ import jmri.jmris.AbstractTurnoutServer;
  * Simple Server interface between the JMRI power manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 
 public class simpleTurnoutServer extends AbstractTurnoutServer {
 
-   private DataInputStream input;
    private DataOutputStream output;
 
    public simpleTurnoutServer(DataInputStream inStream,DataOutputStream outStream){
 
-        input=inStream;
         output=outStream;
     }
 

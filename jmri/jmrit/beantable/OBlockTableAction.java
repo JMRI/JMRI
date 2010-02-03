@@ -1079,7 +1079,6 @@ public class OBlockTableAction extends AbstractAction {
             }
         }
 
-        @SuppressWarnings("unchecked")
         private void makeList() {
              ArrayList <Portal> tempList = new ArrayList <Portal>();
              // save portals that do not have all their blocks yet

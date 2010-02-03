@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class SignalGroupTableAction extends AbstractTableAction {
@@ -703,7 +703,6 @@ public class SignalGroupTableAction extends AbstractTableAction {
         return true;
     }
 
-    @SuppressWarnings("null")
 	SignalGroup checkNamesOK() {
         // Get system name and user name
         String sName = _systemName.getText().toUpperCase();

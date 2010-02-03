@@ -16,7 +16,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -105,7 +105,7 @@ public class MemoryIconXml extends PositionableLabelXml {
 		String shortClass = className.substring(lastDot+1,className.length());
 		if (shortClass.equals("PanelEditor")) {
 			ed = (PanelEditor) o;
-            l = new MemoryIcon("", (PanelEditor)ed);
+            l = new MemoryIcon("", ed);
 		}
 		else if (shortClass.equals("LayoutEditor")) {
 			ed = (LayoutEditor) o;
