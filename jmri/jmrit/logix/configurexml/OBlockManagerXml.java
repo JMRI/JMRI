@@ -41,7 +41,6 @@ public class OBlockManagerXml // extends XmlFile
      * @param o Object to store, of type BlockManager
      * @return Element containing the complete info
      */
-    @SuppressWarnings("unchecked")
     public Element store(Object o) {
         Element blocks = new Element("oblocks");
         blocks.setAttribute("class","jmri.jmrit.logix.configurexml.OBlockManagerXml");

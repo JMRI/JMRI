@@ -110,7 +110,6 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         }    
     }
         
-    @SuppressWarnings("fallthrough")
 	protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
             switch (mAppearance) {

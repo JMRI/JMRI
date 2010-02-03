@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle XML configuration for SingleTurnoutSignalHead objects.
  * Based Upon DoubleTurnoutSignalHeadXML by Bob Jacobsen
  * @author Kevin Dickerson: Copyright (c) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -56,7 +56,6 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
 
         return element;
     }
-    @SuppressWarnings("fallthrough")
     private String getSignalColour(int mAppearance){
         switch(mAppearance){
             case SignalHead.RED:

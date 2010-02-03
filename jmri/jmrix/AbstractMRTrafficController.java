@@ -27,7 +27,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.70 $
+ * @version         $Revision: 1.71 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -655,7 +655,6 @@ abstract public class AbstractMRTrafficController {
      * Dummy routine, to be filled by protocols that
      * have to skip some start-of-message characters.
      */
-    @SuppressWarnings("unused")
 	protected void waitForStartOfReply(DataInputStream istream) throws java.io.IOException {}
     
     /**

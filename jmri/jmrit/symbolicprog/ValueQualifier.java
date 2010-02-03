@@ -6,7 +6,7 @@ package jmri.jmrit.symbolicprog;
  * Qualify a variable on greater than or equal a number
  *
  * @author			Bob Jacobsen   Copyright (C) 2010
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  *
  */
 public class ValueQualifier extends AbstractQualifier {
@@ -54,6 +54,8 @@ public class ValueQualifier extends AbstractQualifier {
                 return now < value;
             case EQ: 
                 return now == value;
+            case NE: 
+                return now != value;
         }
         return false;       // shouldn't happen?
     }
