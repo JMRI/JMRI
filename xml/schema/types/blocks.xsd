@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: blocks.xsd,v 1.4 2010-02-02 04:28:43 jacobsen Exp $ -->
+<!-- $Id: blocks.xsd,v 1.5 2010-02-03 05:58:58 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -72,7 +72,7 @@
               </xs:element>
             </xs:sequence>
             <xs:attribute name="systemName" type="systemNameType" />
-            <xs:attribute name="userName" type="userNameType" />
+            <xs:attribute name="userName" type="nullUserNameType" />
             <xs:attribute name="length" type="xs:float" />
             <xs:attribute name="curve" type="xs:integer" />
           </xs:complexType>

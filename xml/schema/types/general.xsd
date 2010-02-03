@@ -3,7 +3,7 @@
 
 <!-- Test schema for JMRI I/O support. Not for use before JMRI 2.9.1        -->
 
-<!-- $Id: general.xsd,v 1.7 2010-02-02 07:42:32 jacobsen Exp $ -->
+<!-- $Id: general.xsd,v 1.8 2010-02-03 05:58:58 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -70,6 +70,29 @@
     </xs:annotation>
     <xs:restriction base="xs:normalizedString">
       <xs:minLength value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="beanNameType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of a name, either a 
+          system or user name (non-null).
+          Centralized so we can later enforce naming, linking, etc.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:union memberTypes="userNameType systemNameType"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="turnoutStateType">
+    <xs:annotation>
+        <xs:documentation>
+          Provide possible states of turnouts for e.g. attributes
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="closed"/>
+      <xs:enumeration value="thrown"/>
     </xs:restriction>
   </xs:simpleType>
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: editors.xsd,v 1.2 2010-02-02 07:42:32 jacobsen Exp $ -->
+<!-- $Id: editors.xsd,v 1.3 2010-02-03 05:58:58 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                           -->
 <!--                                                                        -->
@@ -31,28 +31,14 @@
     </xs:documentation>
   </xs:annotation>
 
-    <xs:complexType name="EditorCommonAttributesType">
-      <xs:annotation>
-        <xs:documentation>
-          Define the XML stucture for storing an icon reference
-          See jmri.jmrit.display.configurexml.PositionableLabelXml#storeCommonAttributes
-        </xs:documentation>
-      </xs:annotation>
-      <xs:attribute name="x" type="xs:int" />
-      <xs:attribute name="y" type="xs:int" />
-      <xs:attribute name="level" type="xs:int" />
-      <xs:attribute name="forcecontroloff" type="trueFalseType" />
-      <xs:attribute name="hidden" type="yesNoType" />
-      <xs:attribute name="positionable" type="trueFalseType" />
-      <xs:attribute name="showtooltip" type="trueFalseType" />
-    </xs:complexType>
-
     <xs:complexType name="EditorIconType">
       <xs:annotation>
         <xs:documentation>
           Define the XML stucture for storing an icon reference
-          See jmri.jmrit.display.configurexml.PositionableLabelXml#storeIcon
         </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PositionableLabelXml#storeIcon
+        </xs:appinfo>
       </xs:annotation>
       <xs:attribute name="url" type="xs:string" />
       <xs:attribute name="rotate" type="xs:string" />
@@ -64,8 +50,10 @@
       <xs:annotation>
         <xs:documentation>
           Define the XML stucture for storing text information
-          See jmri.jmrit.display.configurexml.PositionableLabelXml#storeTextInfo
         </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PositionableLabelXml#storeTextInfo
+        </xs:appinfo>
       </xs:annotation>
       <xs:attribute name="text" type="xs:string" />
       <xs:attribute name="red" type="xs:int" />
@@ -88,4 +76,250 @@
     </xs:complexType>
 
   
+    <xs:attributeGroup name="EditorCommonAttributesGroup">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing common PositionableLabel child attributes
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PositionableLabelXml#storeCommonAttributes
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:attribute name="x" type="xs:int" use="required" />
+      <xs:attribute name="y" type="xs:int" use="required" />
+      <xs:attribute name="level" type="xs:int" />
+      <xs:attribute name="forcecontroloff" type="trueFalseType" default="false" />
+      <xs:attribute name="hidden" type="yesNoType" default="no" />
+      <xs:attribute name="positionable" type="trueFalseType" />
+      <xs:attribute name="showtooltip" type="trueFalseType" default="true" />
+    </xs:attributeGroup>
+
+    <xs:complexType name="EditorPositionableLabelType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing a PositionableLabel
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.PositionableLabelXml
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup" />
+
+      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="fixedWidth" type="xs:string" />
+      <xs:attribute name="fixedHeight" type="xs:string" />
+      <xs:attribute name="rotate" type="xs:string" />
+      <xs:attribute name="icon" type="xs:string" />
+      <xs:attribute name="text" type="xs:string" />
+      <xs:attribute name="size" type="xs:string" />
+      <xs:attribute name="style" type="xs:string" />
+      <xs:attribute name="margin" type="xs:int" />
+      <xs:attribute name="red" type="xs:int" />
+      <xs:attribute name="green" type="xs:int" />
+      <xs:attribute name="blue" type="xs:int" />
+      <xs:attribute name="redBack" type="xs:int" />
+      <xs:attribute name="greenBack" type="xs:int" />
+      <xs:attribute name="blueBack" type="xs:int" />
+      <xs:attribute name="redBorder" type="xs:int" />
+      <xs:attribute name="greenBorder" type="xs:int" />
+      <xs:attribute name="blueBorder" type="xs:int" />
+      <xs:attribute name="justification" default="left" >
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="centre"/>
+            <xs:enumeration value="right"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="fixed" type="trueFalseType" />
+
+      <xs:attribute name="height" type="xs:integer" >
+        <xs:annotation><xs:documentation>
+          Deprecated since JMRI 2.2
+        </xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="width" type="xs:integer" >
+        <xs:annotation><xs:documentation>
+          Deprecated since JMRI 2.2
+        </xs:documentation></xs:annotation>
+      </xs:attribute>
+
+    </xs:complexType>
+    
+    <xs:complexType name="EditorSensorIconType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML stucture for storing a SensorIcon
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.SensorIconXml
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="active" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="inactive" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="inconsistent" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="unknown" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="activeText" type="EditorTextInfoType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="inactiveText" type="EditorTextInfoType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="unknownText" type="EditorTextInfoType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="inconsistentText" type="EditorTextInfoType" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+
+      <xs:attributeGroup ref="EditorCommonAttributesGroup" />
+
+      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="sensor" type="xs:string" />
+      <xs:attribute name="momentary" type="trueFalseType" />
+      <xs:attribute name="icon" type="xs:string" />
+      <xs:attribute name="text" type="xs:string" />
+      <xs:attribute name="rotate" type="xs:string" />
+      <xs:attribute name="sxscale" type="xs:string" />
+      <xs:attribute name="sxorigin" type="xs:string" />
+      <xs:attribute name="syscale" type="xs:string" />
+      <xs:attribute name="syorigin" type="xs:string" />
+      <xs:attribute name="filter" type="xs:string" />
+      <xs:attribute name="showid" type="trueFalseType" />
+      <xs:attribute name="fixed" type="trueFalseType" />
+      <xs:attribute name="borderSize" type="xs:string" />
+      <xs:attribute name="redBorder" type="xs:int" />
+      <xs:attribute name="greenBorder" type="xs:int" />
+      <xs:attribute name="blueBorder" type="xs:int" />
+      <xs:attribute name="size" type="xs:string" />
+      <xs:attribute name="style" type="xs:string" />
+      <xs:attribute name="margin" type="xs:int" />
+      <xs:attribute name="fixedWidth" type="xs:string" />
+      <xs:attribute name="fixedHeight" type="xs:string" />
+      <xs:attribute name="selectable" type="xs:string" />
+      <xs:attribute name="defaulticon" type="xs:string" />
+      
+      <xs:attribute name="height" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="width" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="active" type="xs:string" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="inactive" type="xs:string" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="unknown" type="xs:string" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="inconsistent" type="xs:string" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="activeText" type="xs:string" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="inactiveText" type="xs:string" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="unknownText" type="xs:string" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="inconsistentText" type="xs:string" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+
+      <xs:attribute name="redBack" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="greenBack" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blueBack" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+        
+      <xs:attribute name="redActiveBack" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="greenActiveBack" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blueActiveBack" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+        
+      <xs:attribute name="redInActiveBack" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="greenInActiveBack" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blueInActiveBack" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+        
+      <xs:attribute name="redUnknownBack" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="greenUnknownBack" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blueUnknownBack" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+        
+      <xs:attribute name="redInconsistentBack" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="greenInconsistentBack" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blueInconsistentBack" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+        
+      <xs:attribute name="redActive" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="greenActive" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blueActive" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+        
+      <xs:attribute name="redInActive" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="greenInActive" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blueInActive" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+        
+      <xs:attribute name="redUnknown" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="greenUnknown" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blueUnknown" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+        
+      <xs:attribute name="redInconsistent" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="greenInconsistent" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="blueInconsistent" type="xs:integer" >
+        <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
+      </xs:attribute>        
+
+    </xs:complexType>
+
 </xs:schema>

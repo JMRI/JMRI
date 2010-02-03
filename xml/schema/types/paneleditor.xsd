@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: paneleditor.xsd,v 1.4 2010-02-02 07:06:17 jacobsen Exp $ -->
+<!-- $Id: paneleditor.xsd,v 1.5 2010-02-03 05:58:58 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -43,11 +43,14 @@
         
         <xs:element name="positionablelabel"    minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="positionablepoint"    minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="turnouticon"          minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="sensoricon"           minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="memoryicon"           minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="signalheadicon"       minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="reportericon"         minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="layoutturnout"        minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="tracksegment"         minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="multisensoricon"      minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="fastclock"            minOccurs="0" maxOccurs="unbounded" />
             
       </xs:sequence>
       <xs:attribute name="class" type="xs:string" use="required" />

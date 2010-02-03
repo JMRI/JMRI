@@ -1,6 +1,6 @@
 <!-- Defines XML documenting a JMRI config, esp. information -->
 <!-- on program preferences, hardware configuration, and user items -->
-<!-- $Id: layout-config-2-9-4.dtd,v 1.1 2010-01-29 15:20:18 jacobsen Exp $ -->
+<!-- $Id: layout-config-2-9-4.dtd,v 1.2 2010-02-03 05:58:58 jacobsen Exp $ -->
 
 <!-- This DTD is part of version 2.9.1 development.  Do not modify it       -->
 <!-- after version 2.9.1 is released.  For more information,                -->
@@ -185,7 +185,7 @@
     <!ATTLIST audiolistener systemName  CDATA #REQUIRED>
     <!ATTLIST audiolistener userName    CDATA #IMPLIED>
 
-  <!ELEMENT audiobuffer (url, looppoint, comment?) >
+  <!ELEMENT audiobuffer (url, looppoint?, comment?) >
     <!ATTLIST audiobuffer systemName    CDATA #REQUIRED>
     <!ATTLIST audiobuffer userName      CDATA #IMPLIED>
 

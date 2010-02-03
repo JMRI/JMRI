@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: routes.xsd,v 1.5 2010-02-02 07:07:11 jacobsen Exp $ -->
+<!-- $Id: routes.xsd,v 1.6 2010-02-03 05:58:58 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -99,7 +99,7 @@
             <xs:attribute name="controlTurnoutState" type="xs:string" /> <!-- CLOSED/THROWN/? -->
             <xs:attribute name="controlLockTurnout" type="xs:string" />
             <xs:attribute name="controlLockTurnoutState" type="xs:string" /> <!-- CLOSED/THROWN/? -->
-            <xs:attribute name="addDelay" type="xs:int" /> <!-- CLOSED/THROWN/? -->
+            <xs:attribute name="addedDelay" type="xs:int" />
           </xs:complexType>
         </xs:element>
             
