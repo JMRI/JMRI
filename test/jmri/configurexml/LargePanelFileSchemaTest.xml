@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="http://www.jmri.org/xml/XSLT/panelfile.xsl"?>
-
-<layout-config
-    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/panelfile.xsd"
-        >
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout.xsd">
   <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
     <operations automate="false">
       <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
@@ -845,7 +841,7 @@
     <positionablepoint ident="A2" type="1" x="199.0" y="151.0" connect1name="T33" connect2name="T2" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
     <positionablepoint ident="A3" type="1" x="180.0" y="60.0" connect1name="T3" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
   </LayoutEditor>
-  <!--Written by JMRI version 2.7.7 on Tue Dec 29 23:34:19 EST 2009 $Id: LargePanelFileSchemaTest.xml,v 1.1 2010-01-04 23:08:33 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.7 on Tue Dec 29 23:34:19 EST 2009 $Id: LargePanelFileSchemaTest.xml,v 1.2 2010-02-03 06:33:34 jacobsen Exp $-->
 </layout-config>
 
 

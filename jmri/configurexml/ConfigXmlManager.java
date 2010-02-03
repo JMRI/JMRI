@@ -22,7 +22,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.72 $
+ * @version $Revision: 1.73 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -31,7 +31,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Define the current DTD version string for the layout-config DTD.
      * See the <A HREF="package-summary.html#DTD">DTD versioning discussion</a>
      */
-    static final public String dtdVersion = "2-9-1";
+    static final public String dtdVersion = "2-9-4";
     
     public ConfigXmlManager() {
     }
@@ -171,6 +171,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     protected Element initStore() {
         Element root = new Element("layout-config");
+        root.setAttribute("noNamespaceSchemaLocation",
+                    "http://jmri.org/xml/schema/layout.xsd",
+                    org.jdom.Namespace.getNamespace("xsi",
+                      "http://www.w3.org/2001/XMLSchema-instance"));
         return root;
     }
     protected void addPrefsStore(Element root) {
@@ -209,10 +213,11 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     protected void finalStore(Element root, File file) {
         try {
-            Document doc = newDocument(root, dtdLocation+"layout-config-"+dtdVersion+".dtd");
+            // Document doc = newDocument(root, dtdLocation+"layout-config-"+dtdVersion+".dtd");
+            Document doc = newDocument(root);
 
             // add XSLT processing instruction
-            // <?xml-stylesheet type="text/xsl" href="XSLT/DecoderID.xsl"?>
+            // <?xml-stylesheet type="text/xsl" href="XSLT/panelfile.xsl"?>
             java.util.Map<String,String> m = new java.util.HashMap<String,String>();
             m.put("type", "text/xsl");
             m.put("href", xsltLocation+"panelfile.xsl");
