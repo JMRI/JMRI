@@ -377,7 +377,6 @@ public class PanelEditor extends Editor implements ItemListener {
     /*
     *  itemListener for JComboBox
     */
-    @SuppressWarnings("null")
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
             ComboBoxItem item = (ComboBoxItem)e.getItem();
