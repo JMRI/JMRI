@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: Hornby8249.xml,v 1.2 2010-02-02 20:21:08 r5gordini Exp $ -->
+<!-- $Id: Hornby8249.xml,v 1.3 2010-02-03 06:44:44 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,11 +17,11 @@
 
 <decoder-config>
 		<version author="Bob Jacobsen rgj1927@pacbell.net"
-			version="1" lastUpdated="20080821" ></version>
-		<!-- Decoder used in Hornby engines --><version
+			version="1" lastUpdated="20080821" />
+		<!-- Decoder used in Hornby engines -->
+		<version
 			author="Andrew Berridge" lastUpdated="200100202" version="1.1"
-			comment="Added correct version id (13)">
-</version>
+			comment="Added correct version id (13)" />
 
 	<decoder>
 	<family name="R8249" mfg="Hornby" lowVersionID="13">
