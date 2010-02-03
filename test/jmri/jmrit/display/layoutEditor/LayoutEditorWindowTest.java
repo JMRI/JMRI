@@ -14,7 +14,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the LayoutEditor 
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class LayoutEditorWindowTest extends jmri.util.SwingTestCase {
 
@@ -25,7 +25,8 @@ public class LayoutEditorWindowTest extends jmri.util.SwingTestCase {
 	    // load and display sample file
 	    java.io.File f = new java.io.File("java/test/jmri/jmrit/display/layoutEditor/SimpleLayoutEditorTest.xml");
         cm.load(f);
-                
+        sleep(100); // time for internal listeners to calm down
+        
         // Find new window by name (should be more distinctive, comes from sample file)
         LayoutEditor le = (LayoutEditor) jmri.util.JmriJFrame.getFrame("My Layout");
         
