@@ -13,7 +13,6 @@ import java.awt.RenderingHints;
 import java.awt.Graphics2D;
 
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 
 /**
  * Extend an ImageIcon to remember the name from which it was created
@@ -26,7 +25,7 @@ import javax.swing.JComponent;
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -60,7 +59,6 @@ public class NamedIcon extends ImageIcon {
         mRotation = 0;
         _deg = 0;
         _scale = 1.0;
-        _transform = null;
     }
 
     /**
@@ -114,14 +112,16 @@ public class NamedIcon extends ImageIcon {
      * Set the 0-3 number of 90-degree rotations needed to properly
      * display this icon
      */
-    public void setRotation(int pRotation, Component pComponent) {
+    public void setRotation(int pRotation, Component comp) {
         if (pRotation>3) pRotation = 0;
         if (pRotation<0) pRotation = 3;
         mRotation = pRotation;
-        setImage(createRotatedImage(mDefaultImage, pComponent, mRotation));
-        _transform = null;      // each rotation type normalizes the other
+        setImage(createRotatedImage(mDefaultImage, comp, mRotation));
+        _transformR = new AffineTransform();      // each rotation type normalizes the other
         _deg = 0;
-        _scale = 1.0;
+        int w = (int)Math.ceil(_scale*getIconWidth());
+        int h = (int)Math.ceil(_scale*getIconHeight());
+        transformImage(w, h, _transformS, comp);
     }
 
     private String mName=null;
@@ -210,24 +210,27 @@ public class NamedIcon extends ImageIcon {
     }
     private int _deg;
     private double _scale;
-    private AffineTransform _transform;
-    public int getDegrees() { return _deg%360; }
+    private AffineTransform _transformR = new AffineTransform();    // rotations
+    private AffineTransform _transformS = new AffineTransform();    // scaling
+
+    public int getDegrees() { return _deg; }
     public double getScale() { return _scale; }
-    public void setLoad(int d, double s, JComponent comp) {
-        if (d==0 && s==1.0) { return; }
-        scale(s, comp);
-        rotate(d, comp);
-    }
-    
-    private void makeCompositeTransform(AffineTransform t) {
-        if (_transform==null) {
-            _transform = t;
-        } else {
-            _transform.preConcatenate(t);
+
+    public void setLoad(int d, double s, Component comp) {
+        if (d!=0) {
+            rotate(d, comp);
+        }
+        if (s!=1.0) {
+            scale(s, comp);
         }
     }
 
-    public void transformImage(int w, int h, AffineTransform t, JComponent comp) {
+    public void transformImage(int w, int h, AffineTransform t, Component comp) {
+        if (w<=0 || h<=0) {
+            if (log.isDebugEnabled()) log.debug("transformImage bad coords "+
+                                           ((jmri.jmrit.display.Positionable)comp).getNameString());
+            return;
+        }
         BufferedImage bufIm = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bufIm.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, 
@@ -244,35 +247,61 @@ public class NamedIcon extends ImageIcon {
         mRotation = 3;      // each rotation type normalizes the other
     }
 
+    void debugDraw(String op, Component c) {
+        jmri.jmrit.display.Positionable pos = (jmri.jmrit.display.Positionable)c;
+        java.awt.Rectangle r = c.getBounds();
+        log.debug(pos.getNameString()+" "+op);
+        System.out.println("\tBounds at ("+r.x+", "+r.y+") width= "+r.width+", height= "+r.height); 
+        System.out.println("\tLocation at ("+c.getX()+", "+c.getY()+") width= "+
+                           c.getWidth()+", height= "+c.getHeight()); 
+    }
     /**
     *  Scale as a percentage
-    */
-    public void scale(int s, JComponent comp) {
+    *
+    public void scale(int s, Component comp) {
         //log.info("scale= "+s+", "+getDescription());
         if (s<1) { return; }
         scale(s/100.0, comp);
     }
+    */
 
-    public void scale(double scale, JComponent comp) {
-        if (_transform==null || scale==1.0) {
+    public void scale(double scale, Component comp) {
+        if (log.isDebugEnabled()) debugDraw("Before scaling of "+scale, comp);
+        if (scale==1.0) {
+            double w = getIconWidth();
+            double h = getIconHeight();
             setImage(mDefaultImage);
+            _transformS = new AffineTransform();
             _scale=1.0;
+            double rad = _deg*Math.PI/180.0;
+            int width = (int)Math.ceil(Math.abs(h*Math.sin(rad)) + Math.abs(w*Math.cos(rad)));
+            int heigth = (int)Math.ceil(Math.abs(h*Math.cos(rad)) + Math.abs(w*Math.sin(rad)));
+            transformImage(width, heigth, _transformR, comp);
+            if (log.isDebugEnabled()) debugDraw("After scaling _scale= "+_scale, comp);
+            return;
         }
         int w = (int)Math.ceil(scale*getIconWidth());
         int h = (int)Math.ceil(scale*getIconHeight());
         AffineTransform t = AffineTransform.getScaleInstance(scale, scale);
         transformImage(w, h, t, comp);
+        _transformS.preConcatenate(t);
         _scale *= scale;
-        makeCompositeTransform(t);
+        if (log.isDebugEnabled()) debugDraw("After scaling _scale= "+_scale, comp);
     }
     
     /**
     * Rotate from anchor point (upper left corner) and shift into place
     */
-    public void rotate(int deg, JComponent comp) {
-        //log.info("rotate= "+deg+", "+getDescription());
-        if (_transform==null) {
+    public void rotate(int deg, Component comp) {
+        if (log.isDebugEnabled()) debugDraw("Before Rotation of "+deg, comp);
+        if (deg==0) {
             setImage(mDefaultImage);
+            _transformR = new AffineTransform();
+            _deg = 0;
+            int w = (int)Math.ceil(_scale*getIconWidth());
+            int h = (int)Math.ceil(_scale*getIconHeight());
+            transformImage(w, h, _transformS, comp);
+            return;
         }
         int degree = deg%360;
         if (degree<0){
@@ -296,8 +325,10 @@ public class NamedIcon extends ImageIcon {
         AffineTransform r = AffineTransform.getRotateInstance(rad);
         t.concatenate(r);
         transformImage(width, heigth, t, comp);
+        _transformR.preConcatenate(t);
         _deg += deg;
-        makeCompositeTransform(t);
+        _deg =_deg%360;
+        if (log.isDebugEnabled()) debugDraw("After Rotation _deg="+_deg, comp);
     }
 
     /**

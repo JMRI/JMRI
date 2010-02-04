@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -145,7 +145,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     }
 
 
-    void scale(int s) {
+    public void setScale(double s) {
         for (int i = 0; i<entries.size(); i++) {
             NamedIcon icon = entries.get(i).icon;
             icon.scale(s, this);

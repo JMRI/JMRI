@@ -26,7 +26,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.57 $
+ * @version $Revision: 1.58 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -350,7 +350,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     
     }
 
-    void scale(int s) {
+    public void setScale(double s) {
         green.scale(s, this);
         red.scale(s, this);
         yellow.scale(s, this);
