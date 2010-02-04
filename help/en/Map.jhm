@@ -296,6 +296,8 @@
 
 <mapID target="html.tools.signaling.Logic" url="html/tools/signaling/Logic.shtml"/>
 
+<mapID target="package.jmri.jmrit.display.marginSizeEdit" url="package/jmri/jmrit/display/marginSizeEdit.shtml"/>
+
 <mapID target="html.doc.Technical.AppStructure" url="html/doc/Technical/AppStructure.shtml"/>
 
 <mapID target="glossary.index" url="glossary/index.shtml"/>
@@ -459,6 +461,8 @@
 <mapID target="package.jmri.jmrit.beantable.ReporterTable" url="package/jmri/jmrit/beantable/ReporterTable.shtml"/>
 
 <mapID target="html.hardware.XPressNet.CreateXNetLogFile" url="html/hardware/XPressNet/CreateXNetLogFile.shtml"/>
+
+<mapID target="html.doc.Technical.XmlSchemaExamples" url="html/doc/Technical/XmlSchemaExamples.shtml"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter4_SaveThrottlePreferences" url="html/tools/throttle/ThrottleChapter4.shtml#SaveThrottlePreferences"/>
 
@@ -1016,13 +1020,15 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_Schedules" url="package/jmri/jmrit/operations/Operations.shtml#Schedules"/>
 
-<mapID target="package.jmri.jmrit.display.EnterTrackWidth" url="package/jmri/jmrit/display/EnterTrackWidth.shtml"/>
-
 <mapID target="package.jmri.jmrix.nce.consist.NceConsistEditFrame" url="package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml"/>
+
+<mapID target="package.jmri.jmrit.display.EnterTrackWidth" url="package/jmri/jmrit/display/EnterTrackWidth.shtml"/>
 
 <mapID target="html.hardware.can.cbus.Names" url="html/hardware/can/cbus/Names.shtml"/>
 
 <mapID target="package.jmri.jmrit.beantable.MemoryTable" url="package/jmri/jmrit/beantable/MemoryTable.shtml"/>
+
+<mapID target="package.jmri.jmrix.ecos.swing.preferencesframe.PreferencesFrame" url="package/jmri/jmrix/ecos/swing/preferencesframe/PreferencesFrame.shtml"/>
 
 <mapID target="manual.Main_RPS_DebuggerWin" url="manual/Main_RPS.shtml#DebuggerWin"/>
 
@@ -1046,9 +1052,9 @@
 
 <mapID target="package.jmri.jmrit.beantable.SensorTable" url="package/jmri/jmrit/beantable/SensorTable.shtml"/>
 
-<mapID target="manual.Main_LocoNet_CommandStation" url="manual/Main_LocoNet.shtml#CommandStation"/>
-
 <mapID target="manual.Comp_SoundLevels" url="manual/Comp_SoundLevels.shtml"/>
+
+<mapID target="manual.Main_LocoNet_CommandStation" url="manual/Main_LocoNet.shtml#CommandStation"/>
 
 <mapID target="manual.Main_LocoNet_SlotMonitor" url="manual/Main_LocoNet.shtml#SlotMonitor"/>
 
@@ -1450,6 +1456,8 @@
 
 <mapID target="manual.Comp_SoundLevels_Top" url="manual/Comp_SoundLevels.shtml#Top"/>
 
+<mapID target="package.jmri.jmrit.roster.swing.RosterGroupAssociation" url="package/jmri/jmrit/roster/swing/RosterGroupAssociation.shtml"/>
+
 <mapID target="manual.Main_Roster_DeleteRoster" url="manual/Main_Roster.shtml#DeleteRoster"/>
 
 <mapID target="package.jmri.jmrix.cmri.serial.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/cmri/serial/nodeconfig/NodeConfigFrame.shtml"/>
@@ -1506,6 +1514,8 @@
 
 <mapID target="manual.Ops_SelectTrainsRoutes" url="manual/Ops_SelectTrainsRoutes.shtml"/>
 
+<mapID target="package.jmri.jmrit.display.fixedSizeEdit" url="package/jmri/jmrit/display/fixedSizeEdit.shtml"/>
+
 <mapID target="html.doc.Technical.XmlView" url="html/doc/Technical/XmlView.shtml"/>
 
 <mapID target="package.jmri.jmrit.display.TranslateSelection" url="package/jmri/jmrit/display/TranslateSelection.shtml"/>
@@ -1513,6 +1523,8 @@
 <mapID target="package.jmri.jmrit.display.SetSignalsAtTurnout" url="package/jmri/jmrit/display/SetSignalsAtTurnout.shtml"/>
 
 <mapID target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame" url="package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml"/>
+
+<mapID target="package.jmri.jmrit.display.textBorderSizeEdit" url="package/jmri/jmrit/display/textBorderSizeEdit.shtml"/>
 
 <mapID target="manual.Start_DecoderPro_Top" url="manual/Start_DecoderPro.shtml#Top"/>
 
@@ -1530,9 +1542,9 @@
 
 <mapID target="manual.Main_LocoNet_SendPacket" url="manual/Main_LocoNet.shtml#SendPacket"/>
 
-<mapID target="manual.Main_QSI" url="manual/Main_QSI.shtml"/>
-
 <mapID target="package.jmri.jmrix.nce.clockmon.ClockMonFrame" url="package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml"/>
+
+<mapID target="manual.Main_QSI" url="manual/Main_QSI.shtml"/>
 
 <mapID target="manual.Main_Panels_NewPanel" url="manual/Main_Panels.shtml#NewPanel"/>
 
