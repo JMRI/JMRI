@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.4 2010-01-31 20:42:35 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.5 2010-02-04 20:48:41 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -206,6 +206,20 @@ SE8c or non-LocoNet signal heads, so any problems with those should still be rep
 <p>
 The roster now includes the date and time that the entry was last saved, as reported
 by the computer on which it was saved. No checking of this value is done.
+
+<p>
+david zuhn updated the Linux start-up scripts.
+
+<p>
+Fixed a bug in the way Roster populates the various selected combo boxes.
+
+<p>
+Kevin Dickerson added "invert" to SPROG-driven turnouts.
+
+<p>
+Matt Harris updated the Windows launch script to properly handle mixed systems
+with 32-bit Java on 64-bit Windows.
+
 
 <!--#include virtual="/Footer" -->
 

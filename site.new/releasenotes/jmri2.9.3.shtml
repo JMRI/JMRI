@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.3.shtml,v 1.15 2010-01-31 20:42:35 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.3.shtml,v 1.16 2010-02-04 20:48:41 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -81,6 +81,11 @@ various communications library parts, see the
 Some user of 64-bit Windows 7 have reported compatibility problems.
 The issue is associated with exactly which (32-bit or 64-bit) Java version
 is installed, and where it was placed.  This will be fixed in a later version.
+
+<p>
+This version does work fine with MacOS X 10.5 (Leopard) and 10.6 (Snow Leopard), but 
+some users of earlier versions have reported problems.  If you're using MacOS X 10.4, 
+you should probably wait for the next release.
 
 <p>
 You may get some messages like:
