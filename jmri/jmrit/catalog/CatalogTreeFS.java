@@ -66,7 +66,7 @@ public class CatalogTreeFS extends AbstractCatalogTree {
             insertNodeInto(newElement, pParent, pParent.getChildCount());
             String[] sp = fp.list();
             for (int i=0; i<sp.length; i++) {
-                if (log.isDebugEnabled()) log.debug("Descend into resource: "+sp[i]);
+                //if (log.isDebugEnabled()) log.debug("Descend into resource: "+sp[i]);
                 insertNodes(sp[i], pPath+"/"+sp[i], newElement);
             }
         } else /* leaf */ {
