@@ -12,7 +12,7 @@ import jmri.jmrit.display.Editor;
  * Handle configuration for display.AnalogClock2Display objects.
  *
  * @author  Howard G. Penny  Copyright (c) 2005
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class AnalogClock2DisplayXml
     extends AbstractXmlAdapter {
@@ -58,24 +58,8 @@ public class AnalogClock2DisplayXml
      */
 	public void load(Element element, Object o) {
 		// get object class and create the clock object
-		String className = o.getClass().getName();
-		int lastDot = className.lastIndexOf(".");
-		PanelEditor pe = null;
-		LayoutEditor le = null;
-		AnalogClock2Display l = null;
-		String shortClass = className.substring(lastDot+1,className.length());
-		if (shortClass.equals("PanelEditor")) {
-			pe = (PanelEditor) o;
-			l = new AnalogClock2Display(pe);		
-		}
-		else if (shortClass.equals("LayoutEditor")) {
-			le = (LayoutEditor) o;
-			l = new AnalogClock2Display(le);		
-		}
-		else {
-			log.error("Unrecognizable class - "+className);
-            return;
-		}
+        Editor ed = (Editor)o;
+		AnalogClock2Display l = new AnalogClock2Display(ed);
 
         // find coordinates
         int x = 0;
@@ -94,11 +78,11 @@ public class AnalogClock2DisplayXml
         l.setOpaque(false);
         l.update();
         l.setLocation(x, y);
-        if (scale != 1.0 && scale>0.1) { l.setScale(scale);  }
+        if (scale != 1.0 && 10.0>scale && scale>0.1) { l.setScale(scale);  }
            	
 		// add the clock to the panel
         l.setDisplayLevel(Editor.CLOCK);
-        ((Editor)o).putItem(l);
+        ed.putItem(l);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger
