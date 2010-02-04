@@ -4,6 +4,7 @@
 ; - This is used to launch a JMRI application on Microsoft Windows.
 ; - It performs the following:
 ; -   find the Java installation
+; -   determines appropriate native libraries based on JRE architecture
 ; -   build a dynamic ClassPath
 ; -   find the installed memory
 ; -   launch Java with the specified class
@@ -21,6 +22,10 @@
 
 ; -------------------------------------------------------------------------
 ; - Version History
+; -------------------------------------------------------------------------
+; - Version 0.1.7.0
+; - Update to correctly identify JRE architecture on x64 systems and set
+; - path to appropriate native libraries
 ; -------------------------------------------------------------------------
 ; - Version 0.1.6.0
 ; - correct bug that caused crash when launching with single quote in path
@@ -56,14 +61,15 @@
 ; - Basic information
 ; - These should be edited to suit the application
 ; -------------------------------------------------------------------------
-!define AUTHOR   "Matt Harris"     ; Author name
-!define APP      "LaunchJMRI"      ; Application name
-!define VER      "0.1.6.0"         ; Launcher version
-!define PNAME    "${APP}"          ; Name of launcher
+!define AUTHOR   "Matt Harris for JMRI"         ; Author name
+!define APP      "LaunchJMRI"                   ; Application name
+!define COPYRIGHT "© 1997-2010 JMRI Community"  ; Copyright string
+!define VER      "0.1.7.0"                      ; Launcher version
+!define PNAME    "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
-!define ICON     "decpro5.ico"     ; Launcher icon
-!define MINMEM   10                ; Minimum memory in Mbyte
-!define MAXMEM   200               ; Maximum memory in Mbyte
+!define ICON     "decpro5.ico"                  ; Launcher icon
+!define MINMEM   10                             ; Minimum memory in Mbyte
+!define MAXMEM   200                            ; Maximum memory in Mbyte
 
 ; -------------------------------------------------------------------------
 ; - End of basic information
@@ -80,6 +86,8 @@ Var OPTIONS    ; holds the JRE options
 Var CALCMAXMEM ; holds the calculated maximum memory
 Var PARAMETERS ; holds the commandline parameters (class and config file)
 Var NOISY      ; used to determine if console should be visible or not
+Var x64        ; used to determine OS architecture
+Var x64JRE     ; used to determine JRE architecture
 
 ; -------------------------------------------------------------------------
 ; - WinAPI constants
@@ -123,7 +131,7 @@ LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 VIProductVersion "${VER}"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "${APP}"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "Comments" "Used to launch a JMRI application."
-VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "Created by ${AUTHOR}"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "${COPYRIGHT}"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "by ${AUTHOR}"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "${APP}"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${VER}"
@@ -136,16 +144,42 @@ Section "Main"
 
   DetailPrint "CommandLine: $PARAMETERS"
 
+  ; -- First determine if we're running on x64
+  DetailPrint "Testing for x64..."
+  System::Call kernel32::GetCurrentProcess()i.s
+  System::Call kernel32::IsWow64Process(is,*i.s)
+  Pop $x64
+  DetailPrint "Result: $x64"
+  
   ; -- Find the JAVA install
+  
+  ; -- Initialise JRE architecture variable
+  StrCpy $x64JRE 0
+  
+  ; -- If we're running x64, first check for 64-bit JRE
+  StrCmp 0 $x64 JRESearch
+    DetailPrint "Setting x64 registry view..."
+    SetRegView 64
+    StrCpy $x64JRE 1
 
   ; -- Read from machine registry
-  ClearErrors
-  ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
-  ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment\$R1" "JavaHome"
-  StrCpy $R0 "$R0\bin\java.exe"
+  JRESearch:
+    ClearErrors
+    ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
+    ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment\$R1" "JavaHome"
+    StrCpy $R0 "$R0\bin\java.exe"
 
   ; -- Not found
   IfErrors 0 JreFound
+    ; -- If we've got an error here on x64, switch to the 32-bit registry
+    ; -- and retry
+    StrCmp 0 $x64JRE JRENotFound
+      SetRegView 32
+      DetailPrint "Setting x86 registry view..."
+      StrCpy $x64JRE 0
+      Goto JRESearch
+    
+  JreNotFound:
     MessageBox MB_OK|MB_ICONSTOP "Java not found!"
     Goto Exit
 
@@ -154,17 +188,11 @@ Section "Main"
   DetailPrint "JavaPath: $JAVAPATH"
 
   ; -- Get the memory status
-  ; -- First determine if we're running on x64
-  DetailPrint "Testing for x64..."
-  System::Call kernel32::GetCurrentProcess()i.s
-  System::Call kernel32::IsWow64Process(is,*i.s)
-  Pop $0
-  DetailPrint "Result: $0"
-  StrCmp $0 "0" Notx64
+  StrCmp 0 $x64 Notx64
   Call GetSystemMemoryStatus64
   Goto CalcFreeMem
   Notx64:
-  Call GetSystemMemoryStatus
+    Call GetSystemMemoryStatus
   CalcFreeMem:
   System::Int64Op $4 / 1048576
   Pop $4
@@ -185,7 +213,15 @@ Section "Main"
   StrCpy $OPTIONS "$OPTIONS -noverify"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
-  StrCpy $OPTIONS "$OPTIONS -Djava.library.path=.;lib"
+  StrCmp 1 $x64JRE x64Libs x86Libs
+  x86Libs:
+    ; -- 32-bit libraries
+    StrCpy $OPTIONS "$OPTIONS -Djava.library.path=.;lib;lib\x86"
+    Goto LibsDone
+  x64Libs:
+    ; -- 64-bit libraries
+    StrCpy $OPTIONS "$OPTIONS -Djava.library.path=.;lib;lib\x64"
+  LibsDone:
   StrCpy $OPTIONS "$OPTIONS -Djava.rmi.server.codebase=file:java/classes/"
   ; -- ddraw is disabled to get around Swing performance problems in Java 1.5.0
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.noddraw"
