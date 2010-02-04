@@ -15,7 +15,7 @@ import jmri.Turnout;
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005
  * @author J.M. (Mark) Knox Copyright (C) 2005
  *
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SprogCSTurnout extends AbstractTurnout {
 
@@ -58,6 +58,10 @@ public class SprogCSTurnout extends AbstractTurnout {
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout){
 		if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton ST"+_number);
     }
+
+    public boolean canInvert() {
+		return true;
+	}
 
     int _number;   // turnout number
 

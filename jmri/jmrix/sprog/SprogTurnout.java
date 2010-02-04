@@ -16,7 +16,7 @@ import jmri.Turnout;
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005
  * @author J.M. (Mark) Knox Copyright (C) 2005
  *
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class SprogTurnout extends AbstractTurnout {
 
@@ -100,6 +100,10 @@ public class SprogTurnout extends AbstractTurnout {
         SprogTrafficController.instance().sendSprogMessage(m, null);
 
     }
+
+    public boolean canInvert() {
+		return true;
+	}
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogTurnout.class.getName());
 
