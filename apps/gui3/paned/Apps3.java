@@ -26,7 +26,7 @@ import javax.swing.event.*;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen   Copyright 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class Apps3 {
 
@@ -91,11 +91,12 @@ public class Apps3 {
         
         rightTop.setBorder(BorderFactory.createLineBorder(Color.black));
         rightTop.setLayout(new BoxLayout(rightTop, BoxLayout.Y_AXIS));
-        rightTop.add(new JLabel("(Put the DecoderPro Roster Pane here,"));
-        rightTop.add(new JLabel("plus a way to select which variables to work on)"));  // (makeSensorTableDemo());
+        rightTop.add(new JLabel("Sensor Table"));
+        rightTop.add(new jmri.jmrit.beantable.sensor.SensorTablePanel());
         
-        rightBottom.setLayout(new BoxLayout(rightBottom, BoxLayout.X_AXIS));
-        rightBottom.add(new JLabel("(specific info being worked on goes here)"));
+        rightBottom.setLayout(new BoxLayout(rightBottom, BoxLayout.Y_AXIS));
+        rightBottom.add(new JLabel("Add Sensor"));
+        rightBottom.add(new jmri.jmrit.beantable.sensor.AddSensorPanel());
 
         right = new JSplitPane(JSplitPane.VERTICAL_SPLIT, rightTop, rightBottom);
         right.setOneTouchExpandable(true);
