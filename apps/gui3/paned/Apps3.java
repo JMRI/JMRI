@@ -26,7 +26,7 @@ import javax.swing.event.*;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen   Copyright 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class Apps3 {
 
@@ -95,7 +95,7 @@ public class Apps3 {
         rightTop.add(new JLabel("plus a way to select which variables to work on)"));  // (makeSensorTableDemo());
         
         rightBottom.setLayout(new BoxLayout(rightBottom, BoxLayout.X_AXIS));
-        rightBottom.add(new JLabel("(specific pane being work on goes here)"));
+        rightBottom.add(new JLabel("(specific info being worked on goes here)"));
 
         right = new JSplitPane(JSplitPane.VERTICAL_SPLIT, rightTop, rightBottom);
         right.setOneTouchExpandable(true);
@@ -117,67 +117,12 @@ public class Apps3 {
     
     protected JScrollPane makeLeftTree() {
         JTree tree;
-        DefaultMutableTreeNode topNode;
+        TreeNode topNode;
         
-        topNode = new DefaultMutableTreeNode("My Layout");
+        topNode = jmri.util.JTreeUtil.loadTree("config/Gui3LeftTree.xml");
+        
         tree = new JTree(topNode);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);        
-
-
-        DefaultMutableTreeNode level1Node;
-        DefaultMutableTreeNode level2Node;
-        DefaultMutableTreeNode level3Node;
-        
-        
-        level1Node = new DefaultMutableTreeNode("Preferences");
-        //e.setNotify(newNode, this);
-        topNode.add(level1Node);
-        level2Node = new DefaultMutableTreeNode("Link 1");
-        level1Node.add(level2Node);
-        level2Node = new DefaultMutableTreeNode("Link 2");
-        level1Node.add(level2Node);
-        level2Node = new DefaultMutableTreeNode("Gui");
-        level1Node.add(level2Node);
-        
-        level1Node = new DefaultMutableTreeNode("Devices");
-        //e.setNotify(newNode, this);
-        topNode.add(level1Node);
-        level2Node = new DefaultMutableTreeNode("Sensors");
-        level1Node.add(level2Node);
-        level2Node = new DefaultMutableTreeNode("Turnouts");
-        level1Node.add(level2Node);
-        level2Node = new DefaultMutableTreeNode("Lights");
-        level1Node.add(level2Node);
-
-        level1Node = new DefaultMutableTreeNode("Roster");
-        //e.setNotify(newNode, this);
-        topNode.add(level1Node);
-        level2Node = new DefaultMutableTreeNode("My Locos");
-        level1Node.add(level2Node);
-
-          level3Node = new DefaultMutableTreeNode("SP 4554");
-          level2Node.add(level3Node);
-          level3Node = new DefaultMutableTreeNode("UP 2411");
-          level2Node.add(level3Node);
-          level3Node = new DefaultMutableTreeNode("UP 2451");
-          level2Node.add(level3Node);
-          level3Node = new DefaultMutableTreeNode("UP 5768");
-          level2Node.add(level3Node);
-
-        level2Node = new DefaultMutableTreeNode("Club Locos");
-        level1Node.add(level2Node);
-
-          level3Node = new DefaultMutableTreeNode("UP 5768");
-          level2Node.add(level3Node);
-
-        level2Node = new DefaultMutableTreeNode("New Entry");
-        level1Node.add(level2Node);
-
-        // lay out
-        tree.scrollPathToVisible(new TreePath(level2Node.getPath()));
-
-        // Listen for when the selection changes.
-        //tree.addTreeSelectionListener(this);
         
         // install in scroll area
         JScrollPane treeView = new JScrollPane(tree);
@@ -189,122 +134,13 @@ public class Apps3 {
     protected void addMainMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         
-        // add some samples to show
-        menuBar.add(createFileMenu());
-        menuBar.add(createEditMenu());
-        menuBar.add(createViewMenu());
-        menuBar.add(createTablesMenu());
-        menuBar.add(createToolsMenu());
-        menuBar.add(createHardwareMenu());
-        menuBar.add(createWindowMenu());
-        menuBar.add(createHelpMenu());
-        
-        // TODO: needs the Mac code from Apps.createMenus()
-        
+        JMenu[] menus = jmri.util.JMenuUtil.loadMenu("config/Gui3Menus.xml");
+        for (JMenu j : menus) 
+            menuBar.add(j);
+
         mainFrame.setJMenuBar(menuBar);
     }
     
-    protected JMenu createFileMenu() {
-        JMenu r = new JMenu("File");
-        r.add(new JMenuItem("New ..."));
-        r.add(new JMenuItem("Open ..."));
-        r.add(new JMenuItem("Loco Roster ..."));
-        r.add(new JMenuItem("Close"));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Save"));
-        r.add(new JMenuItem("Save as ..."));
-        r.add(new JMenuItem("Export ..."));
-        r.add(new JMenuItem("Import ..."));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Run Script ..."));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Print Setup ..."));
-        r.add(new JMenuItem("Print Preview ..."));
-        r.add(new JMenuItem("Print ..."));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Exit"));
-        return r;
-    }
-    
-    protected JMenu createEditMenu() {
-        JMenu r = new JMenu("Edit");
-        r.add(new JMenuItem("Undo"));
-        r.add(new JMenuItem("Repeat"));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Cut"));
-        r.add(new JMenuItem("Copy"));
-        r.add(new JMenuItem("Paste"));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Preferences ..."));
-        return r;
-    }
-    
-    protected JMenu createViewMenu() {
-        JMenu r = new JMenu("View");
-        r.add(new JMenuItem("Clock"));
-        r.add(new JMenuItem("Command Toolbar"));
-        r.add(new JMenuItem("Startup Panel"));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Simple/adv Roster"));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Script Input"));
-        r.add(new JMenuItem("Script Output"));
-        return r;
-    }
-    
-    protected JMenu createTablesMenu() {
-        JMenu r = new JMenu("Tables");
-        r.add(new JMenuItem("Turnouts"));
-        r.add(new JMenuItem("Sensors"));
-        r.add(new JMenuItem("Lights"));
-        r.add(new JMenuItem("Signal Heads"));
-        r.add(new JMenuItem("Reporters"));
-        r.add(new JMenuItem("Memory Variables"));
-        r.add(new JMenuItem("Routes"));
-        r.add(new JMenuItem("LRoutes"));
-        r.add(new JMenuItem("Logix"));
-        r.add(new JMenuItem("Blocks"));
-        r.add(new JMenuItem("Sections"));
-        r.add(new JMenuItem("Transits"));
-        r.add(new JMenuItem("Audio"));
-        return r;
-    }
-    
-    protected JMenu createToolsMenu() {
-        JMenu r = new JMenu("Tools");
-        r.add(new JMenuItem("Single CV Programmer"));
-        r.add(new JMenuItem("Power Control"));
-        r.add(new JMenuItem("Turnout Control"));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Simple Signal Logic ..."));
-        r.add(new JMenuItem("Sensor Groups ..."));
-        r.add(new JMenuItem("Speedometer ..."));
-        r.add(new JMenuItem("Light Control"));
-        r.add(new JMenuItem("Dispatcher"));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Send DCC Packet"));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Operations ..."));
-        r.add(new JMenuItem("USS CTC Tools ..."));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Preferences ..."));
-        return r;
-    }
-    
-    protected JMenu createHardwareMenu() {
-        JMenu r = new JMenu("Hardware");
-        return r;
-    }
-    
-    protected JMenu createWindowMenu() {
-        JMenu r = new JMenu("Window");
-        return r;
-    }
-    
-    protected JMenu createHelpMenu() {
-        JMenu r = new JMenu("Help");
-        return r;
-    }
     
     protected void installConfigurationManager() {
         InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
