@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * <p>Time code copied in part from code for the Nixie clock by Bob Jacobsen </p>
  *
  * @author  Howard G. Penny - Copyright (C) 2005
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class AnalogClock2Display extends PositionableJComponent {
 
@@ -37,7 +37,6 @@ public class AnalogClock2Display extends PositionableJComponent {
     NamedIcon jmriIcon;
     NamedIcon scaledIcon;
     NamedIcon clockIcon;
-    double _scale;         // user's scaling factor
 
     int hourX[] = {
          -12, -11, -25, -10, -10, 0, 10, 10, 25, 11, 12};
@@ -76,11 +75,14 @@ public class AnalogClock2Display extends PositionableJComponent {
 
     public AnalogClock2Display(Editor editor) {
         super(editor);
-        _scale = 1.0;
         clock = InstanceManager.timebaseInstance();
 
         rate = (int) clock.userGetRate();
 
+        init();
+    }
+
+    void init() {
         // Load the JMRI logo and clock face
         // Icons are the original size version kept for to allow for mulitple resizing
         // and scaled Icons are the version scaled for the panel size
@@ -141,9 +143,15 @@ public class AnalogClock2Display extends PositionableJComponent {
         popup.add(CoordinateEdit.getScaleEditAction(this));
     }
 
-    public double getScale() { return _scale; }
+    public String getNameString() {
+        return "Clock";
+    }
 
     public void setScale(double scale) {
+        if (scale==1.0) {
+            init();
+            return;
+        }
         AffineTransform t = AffineTransform.getScaleInstance(scale, scale);
         int w = (int)Math.ceil(scale*clockIcon.getIconWidth());
         int h = (int)Math.ceil(scale*clockIcon.getIconHeight());
@@ -155,7 +163,8 @@ public class AnalogClock2Display extends PositionableJComponent {
         h = (int)Math.ceil(scale*jmriIcon.getIconHeight());
         jmriIcon.transformImage(w, h, t, null);
         setSize(clockIcon.getIconHeight());
-        _scale *= scale;
+        scale *= getScale();
+        super.setScale(scale);
     }
 
     void addRateMenuEntry(JMenu menu, final int newrate) {

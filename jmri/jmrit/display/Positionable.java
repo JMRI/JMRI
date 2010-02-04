@@ -25,7 +25,7 @@ import javax.swing.JPopupMenu;
  *
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public interface Positionable  {
     public void setPositionable(boolean enabled);
@@ -68,6 +68,9 @@ public interface Positionable  {
     public void setTextEditMenu(JPopupMenu popup, String menuTitle);
     */
     public void showPopUp(JPopupMenu popup);
+
+    public void setScale(double s);
+    public double getScale();
 
     public void remove();
 

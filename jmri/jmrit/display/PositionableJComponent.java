@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 
@@ -36,12 +36,14 @@ public class PositionableJComponent extends JComponent implements Positionable {
     private boolean _controlling = true;
     private boolean _hidden = false;
 	private int _displayLevel;
+    private double _scale;         // user's scaling factor
 
     JMenuItem lock = null;
     JCheckBoxMenuItem showTooltipItem = null;
 
     public PositionableJComponent(Editor editor) {
         _editor = editor;
+        _scale = 1.0;
         debug = log.isDebugEnabled();
     }
 
@@ -93,6 +95,12 @@ public class PositionableJComponent extends JComponent implements Positionable {
     }
     public String getTooltip() {
         return _tooltip;
+    }
+    public void setScale(double s) {
+        _scale = s;
+    }
+    public double getScale() {
+        return _scale;
     }
 
     public String getNameString() {

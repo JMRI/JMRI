@@ -22,7 +22,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
@@ -39,12 +39,14 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     private boolean _controlling = true;
     private boolean _hidden = false;
 	private int _displayLevel;
+    private double _scale;         // user's scaling factor
 
     JMenuItem lock = null;
     JCheckBoxMenuItem showTooltipItem = null;
     
     public PositionableJPanel(Editor editor) {
         _editor = editor;
+        _scale = 1.0;
         debug = log.isDebugEnabled();
     }
 
@@ -91,6 +93,12 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     }
     public String getTooltip() {
         return _tooltip;
+    }
+    public void setScale(double s) {
+        _scale = s;
+    }
+    public double getScale() {
+        return _scale;
     }
 
     public String getNameString() {
