@@ -375,7 +375,7 @@ public class EcosLocoToRoster implements EcosListener {
         dTree.setRootVisible(false);
         dTree.setShowsRootHandles(true);
         dTree.setScrollsOnExpand(true);
-        jmri.util.JTreeUtil.setExpandsSelectedPaths(dTree,true);
+        dTree.setExpandsSelectedPaths(true);
 
         dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
         // tree listener

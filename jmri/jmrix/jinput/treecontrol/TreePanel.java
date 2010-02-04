@@ -29,7 +29,7 @@ import jmri.jmrix.jinput.UsbNode;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class TreePanel extends JPanel {
     public TreePanel() {
@@ -49,7 +49,7 @@ public class TreePanel extends JPanel {
         dTree.setRootVisible(false);
         dTree.setShowsRootHandles(true);
         dTree.setScrollsOnExpand(true);
-        jmri.util.JTreeUtil.setExpandsSelectedPaths(dTree, true);
+        dTree.setExpandsSelectedPaths(true);
 
         dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
 

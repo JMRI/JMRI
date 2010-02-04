@@ -38,7 +38,7 @@ import java.util.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -155,7 +155,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
         dTree.setRootVisible(false);
         dTree.setShowsRootHandles(true);
         dTree.setScrollsOnExpand(true);
-        jmri.util.JTreeUtil.setExpandsSelectedPaths(dTree,true);
+        dTree.setExpandsSelectedPaths(true);
 
         dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
         // tree listener

@@ -40,7 +40,7 @@ import javax.swing.tree.TreePath;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright 2002
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class CatalogPane extends JPanel {
     JLabel preview = new JLabel();
@@ -57,7 +57,7 @@ public class CatalogPane extends JPanel {
         dTree.setRootVisible(false);
         dTree.setShowsRootHandles(true);
         dTree.setScrollsOnExpand(true);
-        jmri.util.JTreeUtil.setExpandsSelectedPaths(dTree, true);
+        dTree.setExpandsSelectedPaths(true);
 
         dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
 
