@@ -28,7 +28,7 @@
   
   <aspecttable>BR</aspecttable>
 
-  <name>Semephore Home + Distant</name>
+  <name>Semephore Home + Distant Signal</name>
   
   <description>This uses two single heads to control the aspects, this would be used on a semaphore signal with both the home and distance signals located on the same mast</description>
   
@@ -38,7 +38,7 @@
       <aspectname>Proceed</aspectname>
       <show>green</show>
       <show>green</show>
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeDistantClear.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeDistantProceed.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed-sema-h-d.gif</imagelink>
     </appearance>
 

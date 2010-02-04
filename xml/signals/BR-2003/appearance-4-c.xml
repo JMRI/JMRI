@@ -23,7 +23,13 @@
         <date>2010-01-18</date>
         <authorinitials>KD</authorinitials>
         <revremark>Initial Version</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2010-02-02</date>
+        <authorinitials>KD</authorinitials>
+        <revremark>Change Call On to Off</revremark>
+    </revision> 
   </revhistory>
   
   <aspecttable>BR</aspecttable>
@@ -89,7 +95,7 @@
     </appearance>
     
     <appearance>
-      <aspectname>Call On</aspectname>
+      <aspectname>Off</aspectname>
       <show>red</show>
       <show>lunar</show>
       

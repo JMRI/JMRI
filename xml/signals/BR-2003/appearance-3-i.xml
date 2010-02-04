@@ -41,6 +41,7 @@
       <show>dark</show>
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls3Proceed.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed.gif</imagelink>
+      
     </appearance>
 
     <appearance>

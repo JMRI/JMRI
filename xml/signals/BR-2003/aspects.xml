@@ -3,7 +3,7 @@
 
 <aspecttable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+    xsi:noNamespaceSchemaLocation = "http://localhost/xml/schema/aspecttable.xsd"
 >
   <name>BR-2003</name>
   <date>2003</date>
@@ -25,96 +25,76 @@
         <date>2010-01-15</date>
         <authorinitials>KD</authorinitials>
         <revremark>Initial Release</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2010-02-02</date>
+        <authorinitials>KD</authorinitials>
+        <revremark>Change position light signal names to "on" and "off", Remove Call-On and change to On</revremark>
+    </revision> 
   </revhistory>
 
   <aspects>
-
     <aspect>
       <name>Proceed</name>
-      <indication>Green Aspect Showing</indication>
-      <description>Next signal displaying proceed aspect</description>
+      <indication>Next signal displaying proceed aspect</indication>
+      <description>Green Aspect Showing</description>
       <reference>Section 2.1, 2.2</reference>
       <comment></comment>
     </aspect>
     
     <aspect>
       <name>Preliminary Caution</name>
-      <indication>Double Yellow Aspects Showing</indication>
-      <description>Proceed: be prepared to find the next signal displaying one yellow aspect</description>
+      <indication>Proceed: be prepared to find the next signal displaying one yellow aspect</indication>
+      <description>Double Yellow Aspects Showing</description>
       <comment>4 Aspect Signals Only</comment>
     </aspect>
     
      <aspect>
       <name>Flash Preliminary Caution</name>
-      <indication>Flashing Double Yellow Aspects Showing</indication>
-      <description>Proceed: be prepared to find the next signal displaying one flashing yellow aspect</description>
+      <indication>Proceed: be prepared to find the next signal displaying one flashing yellow aspect</indication>
+      <description>Flashing Double Yellow Aspects Showing</description>
       <reference>Section 2.5</reference>
       <comment>4 Aspect Signals Only with a diverging route.</comment>
     </aspect>
     
     <aspect>
       <name>Caution</name>
-      <indication>Yellow Aspect Showing</indication>
-      <description>Proceed: be prepared to stop at the next signal</description>
+      <indication>Proceed: be prepared to stop at the next signal</indication>
+      <description>Yellow Aspect Showing</description>
       <reference>Section 2.1, 2.2</reference>
       <comment></comment>
     </aspect>
     
     <aspect>
       <name>Flash Caution</name>
-      <indication>Flashing Yellow Aspect Showing</indication>
-      <description>Proceed: the next signal will be at caution with a junction indicator showing</description>
+      <indication>Proceed: the next signal will be at caution with a junction indicator showing</indication>
+      <description>Flashing Yellow Aspect Showing</description>
       <reference>Section 2.5, 2.6</reference>
       <comment>3+4 Aspect Signals Only with a diverging route.</comment>
     </aspect>
     
-    
     <aspect>
       <name>Danger</name>
-      <indication>Red Aspect Showing</indication>
-      <description>Stop</description>
-      <reference>Section 2.1, 2.2</reference>
+      <indication>Stop</indication>
+      <description>On all Main Signals this is a Red Aspect Showing, on Semaphore the home signal arm is Horizontal.  Position Light Signals, will either display two red or yellow lights, a red or yellow and a white light.  Where a red lights are used, this indicates stop.  Where a yellow lights are used This indicates stop, if the points are set for a route that would take the movement onto a running line. Movements are allowed to pass the signal if it is being made towards a shunt neck or siding.</description>
+      <reference>Section 2.1, 2.2, 2.7</reference>
       <comment></comment>
     </aspect>
     
     <aspect>
-      <name>Call On</name>
-      <indication>Red Aspect and Two White Aspect Showing</indication>
-      <description>If the main Signal is showing Danger and the position-light signal displays two white lights at 45degrees, this authorises the driver to proceed at caution towards the next stop signal, Buffer stop and be prepared to stop short of any obstruction.</description>
+      <name>Off</name>
+      <indication>Proceed at Caution</indication>
+      <description>If the position-light signal displays two white lights at 45degrees, this authorises the driver to proceed at caution towards the next stop signal or buffer stop and be prepared to stop short of any obstruction.</description>
       <reference>Section 2.7</reference>
       <comment></comment>
     </aspect>
     
     <aspect>
-      <name>Junction Indicator</name>
-      <indication>Taking a diverging route</indication>
-      <description>To show that a train is being signalled to a route to the left or right of the straight route</description>
-      <reference>Section 2.3</reference>
-      <comment></comment>
-    </aspect>
-    
-    <aspect>
-      <name>Stop</name>
-      <indication>Red and White Aspect Showing</indication>
-      <description>This indicates stop.</description>
-      <reference>Section 2.7</reference>
-      <comment></comment>
-    </aspect>
-    
-    <aspect>
-      <name>Stop (Yellow/White)</name>
-      <indication>Yellow and White Aspect Showing</indication>
-      <description>This indicates stop, if the points are set for a route that would take the movement onto a running line. Movements are allowed to pass the signal if it is being made towards a shunt neck or siding.</description>
-      <reference>Section 2.7</reference>
-      <comment></comment>
-    </aspect>
-    
-    <aspect>
-      <name>Proceed at Caution</name>
-      <indication>Two White Aspect Showing</indication>
-      <description>If the position-light signal displays two white lights at 45degrees, this authorises the driver to proceed at caution towards the next stop signal, Buffer stop and be prepared to stop short of any obstruction.</description>
-      <reference>Section 2.7</reference>
+      <name>On</name>
+      <indication>Stop</indication>
+      <description>Position Light Signal, will either display two red or yellow lights, a red or yellow and a white light.  Where red lights are used, this indicates stop.  Where yellow lights are used This indicates stop, if the points are set for a route that would take the movement onto a running line. Movements are allowed to pass the signal if it is being made towards a shunt neck or siding.</description>
+      <reference>Section 2.1, 2.2, 2.7</reference>
       <comment></comment>
     </aspect>
 

@@ -32,6 +32,10 @@
   
   <description>This uses 4 single state signal heads to represent the main signal</description>
 
+  <name>Sample of full file format</name>
+  
+  <description></description>
+  
   <appearances>
 
     <appearance>
@@ -42,6 +46,7 @@
       <show>dark</show>
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls4Proceed.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed-4.gif</imagelink>
+      
     </appearance>
 
     <appearance>
@@ -49,7 +54,8 @@
       <show>dark</show>
       <show>dark</show>
       <show>yellow</show>
-      <show>dark</show>     
+      <show>dark</show>
+      
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls4Caution.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Caution-4.gif</imagelink>
     </appearance>
@@ -60,6 +66,7 @@
       <show>dark</show>
       <show>flashyellow</show>
       <show>dark</show>
+      
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls4FlashCaution.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/FlashCaution-4.gif</imagelink>
     </appearance>
@@ -70,6 +77,7 @@
       <show>dark</show>
       <show>yellow</show>
       <show>dark</show>
+      
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls4PriCaution.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/PriCaution-4.gif</imagelink>
     </appearance>
@@ -80,6 +88,7 @@
       <show>dark</show>
       <show>flashyellow</show>
       <show>dark</show>
+      
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls4FlashPriCaution.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/FlashPriCaution-4.gif</imagelink>
     </appearance>
@@ -90,6 +99,7 @@
       <show>dark</show>
       <show>dark</show>
       <show>red</show>
+      
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/cls4Danger.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Danger-4.gif</imagelink>
     </appearance>

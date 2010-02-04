@@ -22,7 +22,13 @@
         <date>2010-01-18</date>
         <authorinitials>KD</authorinitials>
         <revremark>Initial Version</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2010-02-02</date>
+        <authorinitials>KD</authorinitials>
+        <revremark>Change Stop Aspect to On & proceed at Caution to Off</revremark>
+    </revision> 
   </revhistory>
   
   <aspecttable>BR</aspecttable>
@@ -39,19 +45,19 @@
   <appearances>
 
     <appearance>
-      <aspectname>Proceed at Caution</aspectname>
+      <aspectname>Off</aspectname>
       <show>lunar</show>
       
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/clsPLCaution.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/PLCaution.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/clsPLOff.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/PLOff.gif</imagelink>
     </appearance>
 
     <appearance>
-      <aspectname>Stop (Yellow/White)</aspectname>
+      <aspectname>On</aspectname>
       <show>yellow</show>
       
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/clsPLYDanger.gif</imagelink>
-      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/PLYDanger.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/clsPLYOn.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/PLYOn.gif</imagelink>
     </appearance>
 
   </appearances>
