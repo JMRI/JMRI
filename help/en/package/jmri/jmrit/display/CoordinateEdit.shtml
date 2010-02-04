@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CoordinateEdit.shtml,v 1.4 2010-02-04 07:23:55 pete_cressman Exp $ -->
+<!-- $Id: CoordinateEdit.shtml,v 1.5 2010-02-04 21:09:20 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Coordinate Edit Help</TITLE>
@@ -58,13 +58,16 @@ Enter the width and height for a fixed region to contain the item.</P>
 
 <H2>Rotating an Icon</H2>
 Enter the angle in degrees to rotate the icon an additional amount 
-from its present position.  To restore the original angle,size and 
+from its present position.  To restore the icon to its original angle,
+enter the value 0.  To restore the original angle, size and 
 position, click on the Rotate (Orthogonal) item.</P>
 
 <H2>Scaling an Icon</H2>
 Enter the percentage to increase or decrease the size of the icon an 
 additional amount from its
-present size. To restore the icon to its original size, enter the value 100. </P>
+present size. To restore the icon to its original size, enter the value 100.
+To restore the original angle, size and 
+position, click on the Rotate (Orthogonal) item.</P>
 
 <H2>Changing the Text</H2>
 Enter the desired text in the text box.</P>
