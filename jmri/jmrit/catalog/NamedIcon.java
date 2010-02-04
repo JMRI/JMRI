@@ -17,7 +17,7 @@ import javax.swing.JComponent;
 
 /**
  * Extend an ImageIcon to remember the name from which it was created
- * and provide rotation services.
+ * and provide rotation & scaling services.
  *<p>
  * We store both a "URL" for finding the file this was made from
  * (so we can load this later), plus a shorter "name" for display.
@@ -26,7 +26,7 @@ import javax.swing.JComponent;
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -254,8 +254,9 @@ public class NamedIcon extends ImageIcon {
     }
 
     public void scale(double scale, JComponent comp) {
-        if (_transform==null) {
+        if (_transform==null || scale==1.0) {
             setImage(mDefaultImage);
+            _scale=1.0;
         }
         int w = (int)Math.ceil(scale*getIconWidth());
         int h = (int)Math.ceil(scale*getIconHeight());
