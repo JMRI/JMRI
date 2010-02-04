@@ -26,7 +26,7 @@ import javax.swing.event.*;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen   Copyright 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class Apps3 {
 
@@ -197,33 +197,15 @@ public class Apps3 {
     
     
     protected void addMainToolBar() {
-        JToolBar toolBar = new JToolBar("My Layout toolbar", JToolBar.HORIZONTAL);
+        //JToolBar toolBar = new JToolBar("My Layout toolbar", JToolBar.HORIZONTAL);
         
-        toolBar.add(new JButton("Preferences"));
-        toolBar.add(new JButton("New Loco"));
-        toolBar.add(new JButton(new ImageIcon("resources/icons/misc/Checkmark-green.gif")));
-        toolBar.add(new JButton("Help"));
-        
-
-//         toolBar.add(new JButton(new AbstractAction("Preferences"){
-//                 public void actionPerformed(ActionEvent e) {
-//                                         addPreferencesFrame();
-//                 }
-//             }));
-
-//         toolBar.add(new JButton(new AbstractAction("sample button 2"){
-//                 public void actionPerformed(ActionEvent e) {
-//                                         addASampleFrame();
-//                 }
-//             }));
-// 
-//         toolBar.add(new JButton(new AbstractAction("sample button 3"){
-//                 public void actionPerformed(ActionEvent e) {
-//                                         addASampleFrame();
-//                 }
-//             }));
-        
-        // this takes up space down the left side until made floating
+        //toolBar.add(new JButton("Preferences"));
+        //toolBar.add(new JButton("New Loco"));
+        //toolBar.add(new JButton(new ImageIcon("resources/icons/misc/Checkmark-green.gif")));
+        //toolBar.add(new JButton("Help"));
+          
+        JToolBar toolBar = jmri.util.JToolBarUtil.loadToolBar("config/Gui3MainToolBar.xml");
+        // this takes up space at the top until pulled to floating
         mainFrame.getContentPane().add(toolBar, BorderLayout.NORTH);
         //desktop.add(toolBar);
     }
