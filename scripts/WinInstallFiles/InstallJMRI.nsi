@@ -50,6 +50,13 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.10.0
+; - Update to correctly identify JRE architecture when installing on 64-bit
+; - systems.
+; -------------------------------------------------------------------------
+; - Version 0.1.9.0
+; - Update installer for new library structure
+; -------------------------------------------------------------------------
 ; - Version 0.1.8.0
 ; - Update installer for migration to new version of RXTX ensuring that
 ; - correct version of the .dll is installed for 32-bit or 64-bit
@@ -139,7 +146,7 @@
 !define COPYRIGHT "© 1997-2010 JMRI Community"  ; Copyright string
 !define JMRI_VER  "2.9.3"                       ; Application version
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.9.0"                     ; Installer version
+!define INST_VER  "0.1.10.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -160,6 +167,8 @@ Var JREINSTALLCOUNT ; a counter holding times around the JRE install loop
 Var REMOVEOLDINSTALL ; a flag to determine if old installer to be removed
 Var REMOVEOLDJMRI.BACKUPONLY ; a flag to determine if we should back-up
 Var UPGRADING ; a flag to determine if we are upgrading
+Var x64 ; flag to determine if we're installing in x64 or not
+Var x64JRE ; flag to determine if we've got a 64-bit JRE
 
 ; -------------------------------------------------------------------------
 ; - Compiler Flags (to reduce executable size, saves some bytes)
@@ -298,55 +307,74 @@ VIAddVersionKey /LANG=${LANG_ENGLISH} "OriginalFilename" "${PNAME}.exe"
 ; -------------------------------------------------------------------------
 SectionGroup "JMRI Core Files" SEC_CORE
 
+  Section "-CleanUp" ; SEC_CLEANUP
+    SectionIn RO  ; This section always selected
+    
+    ; -- Clean up of JMRI folder
+    SetOutPath "$INSTDIR"
+
+    ; -- Delete old .jar & support files in destination directory
+    Delete "$OUTDIR\jh.1.1.2.jar"
+    Delete "$OUTDIR\jh.jar"
+    Delete "$OUTDIR\jdom-jdk11.jar"
+
+    ; -- Delete old .jar & support files in lib/ directory
+    Delete "$OUTDIR\lib\crimson.jar"
+
+    ; -- Delete .jar & support files installed using previous layout
+    Delete "$OUTDIR\activation.jar"
+    Delete "$OUTDIR\ch.ntb.usb.jar"
+    Delete "$OUTDIR\comm.jar"
+    Delete "$OUTDIR\crimson.jar"
+    Delete "$OUTDIR\ExternalLinkContentViewerUI.jar"
+    Delete "$OUTDIR\gluegen-rt.dll"
+    Delete "$OUTDIR\gluegen-rt.jar"
+    Delete "$OUTDIR\javacsv.jar"
+    Delete "$OUTDIR\javax.comm.properties"
+    Delete "$OUTDIR\jdom.jar"
+    Delete "$OUTDIR\jhall.jar"
+    Delete "$OUTDIR\jinput-dx8.dll"
+    Delete "$OUTDIR\jinput-raw.dll"
+    Delete "$OUTDIR\jinput-wintab.dll"
+    Delete "$OUTDIR\jinput.jar"
+    Delete "$OUTDIR\joal.jar"
+    Delete "$OUTDIR\joal_native.dll"
+    Delete "$OUTDIR\jspWin.dll"
+    Delete "$OUTDIR\jython.jar"
+    Delete "$OUTDIR\LibusbJava.dll"
+    Delete "$OUTDIR\log4j.jar"
+    Delete "$OUTDIR\mailapi.jar"
+    Delete "$OUTDIR\MRJAdapter.jar"
+    Delete "$OUTDIR\security.policy"
+    Delete "$OUTDIR\Serialio.jar"
+    Delete "$OUTDIR\servlet.jar"
+    Delete "$OUTDIR\smtp.jar"
+    Delete "$OUTDIR\vecmath.jar"
+    Delete "$OUTDIR\win32com.dll"
+    Delete "$OUTDIR\xercesImpl.jar"
+
+    ; -- Delete .dll files from previous x64/x86 layout
+    Delete "$OUTDIR\lib\jinput-raw_64.dll"
+    Delete "$OUTDIR\lib\jinput-dx8_64.dll"
+    Delete "$OUTDIR\lib\rxtxSerial.dll"
+    Delete "$OUTDIR\lib\LibusbJava.dll"
+    Delete "$OUTDIR\lib\gluegen-rt.dll"
+    Delete "$OUTDIR\lib\jinput-dx8.dll"
+    Delete "$OUTDIR\lib\jinput-raw.dll"
+    Delete "$OUTDIR\lib\jinput-wintab.dll"
+    Delete "$OUTDIR\lib\joal_native.dll"
+
+    ; -- Delete old messages.log file from program folder
+    Delete "$OUTDIR\messages.log"
+
+  SectionEnd ; SEC_CLEANUP
+  
   Section "Main" SEC_MAIN
     SectionIn RO  ; This section always selected
     ; -- Check for JRE
     Call CheckJRE
     ; -- Main JMRI files
     SetOutPath "$INSTDIR"
-    
-    ; -- Delete old .jar & support files in destination directory
-    Delete "$INSTDIR\jh.1.1.2.jar"
-    Delete "$INSTDIR\jh.jar"
-    Delete "$INSTDIR\jdom-jdk11.jar"
-    
-    ; -- Delete old .jar & support files in lib/ directory
-    Delete "$INSTDIR\lib\crimson.jar"
-
-    ; -- Delete .jar & support files installed using previous layout
-    Delete "$INSTDIR\activation.jar"
-    Delete "$INSTDIR\ch.ntb.usb.jar"
-    Delete "$INSTDIR\comm.jar"
-    Delete "$INSTDIR\crimson.jar"
-    Delete "$INSTDIR\ExternalLinkContentViewerUI.jar"
-    Delete "$INSTDIR\gluegen-rt.dll"
-    Delete "$INSTDIR\gluegen-rt.jar"
-    Delete "$INSTDIR\javacsv.jar"
-    Delete "$INSTDIR\javax.comm.properties"
-    Delete "$INSTDIR\jdom.jar"
-    Delete "$INSTDIR\jhall.jar"
-    Delete "$INSTDIR\jinput-dx8.dll"
-    Delete "$INSTDIR\jinput-raw.dll"
-    Delete "$INSTDIR\jinput-wintab.dll"
-    Delete "$INSTDIR\jinput.jar"
-    Delete "$INSTDIR\joal.jar"
-    Delete "$INSTDIR\joal_native.dll"
-    Delete "$INSTDIR\jspWin.dll"
-    Delete "$INSTDIR\jython.jar"
-    Delete "$INSTDIR\LibusbJava.dll"
-    Delete "$INSTDIR\log4j.jar"
-    Delete "$INSTDIR\mailapi.jar"
-    Delete "$INSTDIR\MRJAdapter.jar"
-    Delete "$INSTDIR\security.policy"
-    Delete "$INSTDIR\Serialio.jar"
-    Delete "$INSTDIR\servlet.jar"
-    Delete "$INSTDIR\smtp.jar"
-    Delete "$INSTDIR\vecmath.jar"
-    Delete "$INSTDIR\win32com.dll"
-    Delete "$INSTDIR\xercesImpl.jar"
-    
-    ; -- Delete old messages.log file from program folder
-    Delete "$INSTDIR\messages.log"
     
     ; -- Install main JMRI files
     ; -- Library & Support Files now moved from here
@@ -368,36 +396,16 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- are removed
     
     StrCmp $UPGRADING "1" 0 InstallComLib
-    Delete "$JAVADIR\lib\javax.comm.properties"
-    Delete "$JAVADIR\lib\ext\Serialio.jar"
-    Delete "$JAVADIR\bin\jspWin.dll"
-    Delete "$JAVADIR\bin\win32com.dll"
+      Delete "$JAVADIR\lib\javax.comm.properties"
+      Delete "$JAVADIR\lib\ext\Serialio.jar"
+      Delete "$JAVADIR\bin\jspWin.dll"
+      Delete "$JAVADIR\bin\win32com.dll"
     
     InstallComLib:
-    SetOutPath "$INSTDIR\lib"
+      SetOutPath "$INSTDIR\lib"
     
-    ; -- SerialIO native library
-    File /a "${SRCDIR}\jspWin.dll"
-    
-    ; -- Check if we're running on x64
-    Call CheckIf64bit
-    Pop $0
-    
-    StrCmp $0 "0" Notx64 Isx64
-    Isx64:
-      File /a "${SRCDIR}\lib\windows\x64\jinput-raw_64.dll"
-      File /a "${SRCDIR}\lib\windows\x64\jinput-dx8_64.dll"
-      File /a "${SRCDIR}\lib\windows\x64\rxtxSerial.dll"
-      Goto DoneComLib
-    Notx64:
-      File /a "${SRCDIR}\lib\windows\x86\LibusbJava.dll"
-      File /a "${SRCDIR}\lib\windows\x86\gluegen-rt.dll"
-      File /a "${SRCDIR}\lib\windows\x86\jinput-dx8.dll"
-      File /a "${SRCDIR}\lib\windows\x86\jinput-raw.dll"
-      File /a "${SRCDIR}\lib\windows\x86\jinput-wintab.dll"
-      File /a "${SRCDIR}\lib\windows\x86\joal_native.dll"
-      File /a "${SRCDIR}\lib\windows\x86\rxtxSerial.dll"
-    DoneComLib:
+      ; -- SerialIO native library
+      File /a "${SRCDIR}\jspWin.dll"
 
   SectionEnd ; SEC_COMLIB
 
@@ -412,9 +420,22 @@ SectionGroup "JMRI Core Files" SEC_CORE
     SectionIn RO  ; This section always selected
     ; -- Library files installed here
     SetOutPath "$INSTDIR\lib"
+    
     ; -- Match all files in 'lib' but do not recurse into sub-directories
     File /a "${SRCDIR}\lib\*.*"
     
+    ; -- Install x86 library files
+    SetOutPath "$INSTDIR\lib\x86"
+    
+    ; -- Match all files in 'lib\windows\x86' but do not recurse into sub-directories
+    File /a "${SRCDIR}\lib\windows\x86\*.*"
+    
+    ; -- Install x64 library files
+    SetOutPath "$INSTDIR\lib\x64"
+
+    ; -- Match all files in 'lib\windows\x64' but do not recurse into sub-directories
+    File /a "${SRCDIR}\lib\windows\x64\*.*"
+
     ; -- Extract and run OpenAL library installer in silent mode
     ; [Ignored for now]
     ;SetOutPath "$TEMP"
@@ -717,17 +738,22 @@ LangString MESSAGE_INVALID_DIRECTORY ${LANG_ENGLISH} "This not a valid installat
 
 Function .onInit
 ; -------------------------------------------------------------------------
-; - On installer initialisation, initialise MultiUser header and check for
-; - old InstallerVise installed version of JMRI
+; - On installer initialisation, initialise MultiUser header and check OS
+; - architecture
 ; -------------------------------------------------------------------------
 
   !insertmacro MULTIUSER_INIT
+  
+  ; -- Determine OS architecture
+  Call CheckIf64bit
+  Pop $x64
   
 FunctionEnd
 
 Function un.onInit
 ; -------------------------------------------------------------------------
-; - On uninstaller initialisation, initialise MultiUser header
+; - On uninstaller initialisation, initialise MultiUser header and check
+; - InstallMode
 ; -------------------------------------------------------------------------
 
   !insertmacro MULTIUSER_UNINIT
@@ -786,6 +812,15 @@ Function CheckJRE
   Push $1
   Push $2
   Push $3
+  
+  ; -- Initialise JRE architecture variable
+  StrCpy $x64JRE 0
+  
+  ; -- If we're running x64, first check for 64-bit JRE
+  StrCmp 0 $x64 JRESearch
+    DetailPrint "Setting x64 registry view..."
+    SetRegView 64
+    StrCpy $x64JRE 1
 
   ; -- Read from host machine registry
   JRESearch:
@@ -796,6 +831,16 @@ Function CheckJRE
 
     ; -- Not found
     IfErrors 0 JRECheck
+      ; -- If we've got an error here on x64, switch to the 32-bit registry,
+      ; -- decrease the counter and then re-try
+      StrCmp 0 $x64 JREInitInstall
+        SetRegView 32
+        DetailPrint "Setting x86 registry view..."
+        StrCpy $x64JRE 0
+        IntOp $JREINSTALLCOUNT $JREINSTALLCOUNT - 1
+        Goto JRESearch
+      
+  JREInitInstall:
       StrCpy $3 "No JAVA installation found"
       ; -- If this is the first time around the loop then try to run/download a JRE
       ; -- If this is a subsequent time, something went wrong with the JRE install
@@ -862,11 +907,17 @@ Function CheckJRE
     Delete $JREINSTALLER ; If downloaded, delete the temporary downloaded file
 
   JREInstallComplete:
-    Goto JreSearch
+    Goto JRESearch
 
-  JreFound:
+  JREFound:
     ; -- We've successfully located a suitable JRE version.
+    ; -- If this was found within the x64 registry view, reset to x86
+    ; -- registry view so that our entries are placed in the expected place.
+    StrCmp 0 $x64JRE JREDone
+      DetailPrint "Reverting to x86 registry view..."
+      SetRegView 32
 
+  JREDone:
     ; -- Restore variables from the stack
     Pop $3
     Pop $2
