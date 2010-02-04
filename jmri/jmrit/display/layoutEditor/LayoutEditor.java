@@ -52,7 +52,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LayoutEditor extends Editor {
@@ -2017,8 +2017,8 @@ public class LayoutEditor extends Editor {
     public void mousePressed(MouseEvent event) 
     {
 		// initialize cursor position
-        _anchorX = event.getX();
-        _anchorY = event.getY();
+        _anchorX = xLoc;
+        _anchorY = yLoc;
 		calcLocation(event,0,0);
         if (isEditable()) {
 			boolean prevSelectionActive = selectionActive;

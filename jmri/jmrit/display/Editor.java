@@ -258,8 +258,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
         }
         public void paint(Graphics g) {
-            super.paint(g);
             paintTargetPanel(g);
+            super.paint(g);
             if (_selectRect != null) {
                 Graphics2D g2d = (Graphics2D)g;
                 //Draw a rectangle on top of the image.
@@ -528,7 +528,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
             if (_debug) 
                 log.debug("targetWindowClosing: selectedValue= "+selectedValue);
-		}
+		} else {
+            _targetFrame.setVisible(false);   // doesn't remove the editor!
+            jmri.jmrit.display.PanelMenu.instance().updateEditorPanel(this);
+        }
     }
 
     /************************* Popup Item Methods ***********************/
