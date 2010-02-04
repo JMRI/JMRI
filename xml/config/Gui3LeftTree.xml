@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="http://jmri.org/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
+
+<node
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
+>
+
+  <name>My Layout</name>
+
+  <node><name>Preferences</name>
+    <node><name>Link 1 - LocoNet</name>
+    </node>
+    <node><name>Link 2 - C/MRI</name>
+    </node>
+    <node><name>New Link</name>
+    </node>
+    <node><name>GUI</name>
+    </node>
+    <node><name>Startup Options</name>
+        <node><name>Load Files</name>
+        </node>
+        <node><name>Perform Actions</name>
+        </node>
+        <node><name>Run Scripts</name>
+        </node>
+        <node><name>Add Buttons</name>
+        </node>
+    </node>
+  </node>
+
+  <node><name>Roster</name>
+    <node><name>All Entries</name>
+        <node><name>SP 4554</name>
+        </node>
+        <node><name>UP 2411</name>
+        </node>
+        <node><name>UP 2451</name>
+        </node>
+        <node><name>UP 5768</name>
+        </node>
+        <node><name>New Entry</name>
+        </node>
+    </node>
+    <node><name>Club Locos</name>
+        <node><name>SP 4554</name>
+        </node>
+        <node><name>UP 5768</name>
+        </node>
+        <node><name>New Entry</name>
+        </node>
+    </node>
+    <node><name>Diesels</name>
+        <node><name>UP 5768</name>
+        </node>
+        <node><name>New Entry</name>
+        </node>
+    </node>
+    <node><name>Add Group</name>
+    </node>
+  </node>
+
+  <node><name>Controls</name>
+    <node><name>Power Control</name>
+    </node>
+    <node><name>Turnout Control</name>
+    </node>
+    <node><name>Light Control</name>
+    </node>
+    <node><name>Send DCC Packet</name>
+    </node>
+    <node><name>Speedometer</name>
+    </node>
+  </node>
+
+  <node><name>Operations</name>
+  </node>
+
+  <node><name>Clocks</name>
+    <node><name>Setup Fast Clock</name>
+    </node>
+    <node><name>Nixie Clock</name>
+    </node>
+    <node><name>LCD Clock</name>
+    </node>
+    <node><name>Analog Clock</name>
+    </node>
+  </node>
+
+  <node><name>Devices</name>
+    <node><name>Turnouts</name>
+    </node>
+    <node><name>Sensors</name>
+    </node>
+    <node><name>Lights</name>
+    </node>
+    <node><name>Signals Heads</name>
+    </node>
+    <node><name>Signal Masts</name>
+    </node>
+    <node><name>Signal Groups</name>
+    </node>
+    <node><name>Reporters</name>
+    </node>
+    <node><name>Memory Variables</name>
+    </node>
+    <node><name>Routes</name>
+    </node>
+    <node><name>LRoutes</name>
+    </node>
+    <node><name>Logix</name>
+    </node>
+    <node><name>Occupancy Blocks</name>
+    </node>
+    <node><name>Blocks</name>
+    </node>
+    <node><name>Sections</name>
+    </node>
+    <node><name>Transits</name>
+    </node>
+    <node><name>Audio</name>
+    </node>
+    <node><name>Sensor Groups</name>
+    </node>
+    <node><name>Simple Signal Logic</name>
+    </node>
+  </node>
+
+  <node><name>Throttles</name>
+    <node><name>Throttle 1</name>
+    </node>
+    <node><name>UP 5768</name>
+    </node>
+    <node><name>New Throttle</name>
+    </node>
+    <node><name>Consisting Tool</name>
+    </node>
+  </node>
+
+  <node><name>LocoNet</name>
+    <node><name>Monitor LocoNet</name>
+    </node>
+    <node><name>Monitor Slots</name>
+    </node>
+    <node><name>Monitor Clock</name>
+    </node>
+    <node><name>Configure SE8c</name>
+    </node>
+    <node><name>Configure LocoIO</name>
+    </node>
+    <node><name>Configure BDL16/BDL168</name>
+    </node>
+    <node><name>Configure PM4/PM42</name>
+    </node>
+    <node><name>Configure DS64</name>
+    </node>
+    <node><name>Configure Command Station</name>
+    </node>
+    <node><name>Configure LocoNet ID</name>
+    </node>
+    <node><name>Servers</name>
+        <node><name>Start LocoNet Server</name>
+        </node>
+        <node><name>Start LocoNetOverTCP Server</name>
+        </node>
+    </node>
+    <node><name>Send Throttle Messages</name>
+    </node>
+    <node><name>Send LocoNet Packet</name>
+    </node>
+    <node><name>Download Sounds</name>
+    </node>
+    <node><name>Sound File Editor</name>
+    </node>
+    <node><name>Download Firmware</name>
+    </node>
+    <node><name>Set PR3 Mode</name>
+    </node>
+  </node>
+
+  <node><name>C/MRI</name>
+  </node>
+
+  <node><name>Debugging Tools</name>
+  </node>
+
+</node>
+  
