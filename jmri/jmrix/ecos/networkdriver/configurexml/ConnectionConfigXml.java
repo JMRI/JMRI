@@ -23,7 +23,7 @@ import javax.swing.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 208
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -140,31 +140,31 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         List<Element> ecosPref = e.getChildren("commandStationPreferences");
         EcosPreferences p = EcosPreferences.instance();
         for (int i=0; i<ecosPref.size();i++){
-            if (ecosPref.get(i).getAttribute("addTurnoutsToCS") != null){
-                String yesno = ecosPref.get(i).getAttribute("addTurnoutsToCS").getValue();
+            if (ecosPref.get(i).getAttribute("addTurnoutToCS") != null){
+                String yesno = ecosPref.get(i).getAttribute("addTurnoutToCS").getValue();
                 if ( (yesno!=null) && (!yesno.equals("")) ) {
                     if (yesno.equals("yes")) p.setAddTurnoutsToEcos(0x02);
                     else if (yesno.equals("no")) p.setAddTurnoutsToEcos(0x01);
                 }
             }
-            if (ecosPref.get(i).getAttribute("removeTurnoutsFromCS") != null){
-                String yesno = ecosPref.get(i).getAttribute("removeTurnoutsFromCS").getValue();
+            if (ecosPref.get(i).getAttribute("removeTurnoutFromCS") != null){
+                String yesno = ecosPref.get(i).getAttribute("removeTurnoutFromCS").getValue();
                 if ( (yesno!=null) && (!yesno.equals("")) ) {
                     if (yesno.equals("yes")) p.setRemoveTurnoutsFromEcos(0x02);
                     else if (yesno.equals("no")) p.setRemoveTurnoutsFromEcos(0x01);
                 }
             }
             
-            if (ecosPref.get(i).getAttribute("addTurnoutsToJMRI") != null){
-                String yesno = ecosPref.get(i).getAttribute("addTurnoutsToJMRI").getValue();
+            if (ecosPref.get(i).getAttribute("addTurnoutToJMRI") != null){
+                String yesno = ecosPref.get(i).getAttribute("addTurnoutToJMRI").getValue();
                 if ( (yesno!=null) && (!yesno.equals("")) ) {
                     if (yesno.equals("yes")) p.setAddTurnoutsToJMRI(0x02);
                     else if (yesno.equals("no")) p.setAddTurnoutsToJMRI(0x01);
                 }
             }
             
-            if (ecosPref.get(i).getAttribute("removeTurnoutsFromJMRI") != null){
-                String yesno = ecosPref.get(i).getAttribute("removeTurnoutsFromJMRI").getValue();
+            if (ecosPref.get(i).getAttribute("removeTurnoutFromJMRI") != null){
+                String yesno = ecosPref.get(i).getAttribute("removeTurnoutFromJMRI").getValue();
                 if ( (yesno!=null) && (!yesno.equals("")) ) {
                     if (yesno.equals("yes")) p.setRemoveTurnoutsFromJMRI(0x02);
                     else if (yesno.equals("no")) p.setRemoveTurnoutsFromJMRI(0x01);
