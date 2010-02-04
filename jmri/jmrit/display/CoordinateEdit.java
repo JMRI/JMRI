@@ -16,9 +16,26 @@ import jmri.util.JmriJFrame;
 /**
  * Displays and allows user to modify x & y coordinates of
  * positionable labels
+ * This class has been generalized to provide popup edit dialogs for 
+ * positionable item properties when TextFields are needed to input data.
+ * The current list of properties served is:
+ * <LI>
+ *  modify x & y coordinates 
+ *  modify level
+ *  modify tooltip
+ *  modify border size
+ *  modify margin size
+ *  modify fixed size
+ *  modify rotation degress
+ *  modify scaling
+ *  modify text
+ *  </LI>
+ * To use, write a static method that provides the dialog frame.  Then
+ * write an initX method that customizes the dialog for the property.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.11 $
+ * @author Pete Cressman Copyright (C) 2010
+ * @version $Revision: 1.12 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
@@ -29,6 +46,7 @@ public class CoordinateEdit extends JmriJFrame {
 	Positionable pl; 			// positional label tracked by this frame
 	int oldX;
 	int oldY;
+    double oldD;
     String oldStr;
 
 	// member declarations
@@ -513,7 +531,6 @@ public class CoordinateEdit extends JmriJFrame {
 		});
 		cancelButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-                //((PositionableLabel)pl).rotate(oldX);
                 dispose();
 			}
 		});
@@ -521,17 +538,18 @@ public class CoordinateEdit extends JmriJFrame {
 	}
 
     public void initScale() {
-        PositionableLabel pLabel = (PositionableLabel)pl;
-        int scale = (int)Math.round(((NamedIcon)pLabel.getIcon()).getScale()*100);
-        oldX = scale;
+        //int scale = (int)Math.round(pl.getScale()*100);
+        oldD = pl.getScale();
 
         textX = new javax.swing.JLabel();
-		textX.setText("Scale= "+scale);
+		textX.setText("Scale= "+oldD*100);
+//		textX.setText("Scale= "+scale);
 		textX.setVisible(true);
 
-        SpinnerNumberModel model = new SpinnerNumberModel(0,-1000,1000,1);
+        SpinnerNumberModel model = new SpinnerNumberModel(100.0,1.0,5000.0,1.0);
         spinX = new javax.swing.JSpinner(model);
-        spinX.setValue(new Integer(scale));
+        if (log.isDebugEnabled()) { log.debug("scale%= "+(int)Math.round(oldD*100));
+        }
         spinX.setToolTipText("Enter scale percentage");
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
@@ -547,15 +565,14 @@ public class CoordinateEdit extends JmriJFrame {
 
 		okButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-                int l = ((Number)spinX.getValue()).intValue();
-                ((PositionableLabel)pl).scale(l);
-                textX.setText("Scale= " + l);
+                pl.setScale(((Number)spinX.getValue()).doubleValue()/100);
+                textX.setText("Scale= " + pl.getScale()*100);
+//                textX.setText("Scale= " + (int)Math.round(pl.getScale()*100));
                 dispose();
 			}
 		});
 		cancelButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-                //((PositionableLabel)pl).scale(oldX);
                 dispose();
 			}
 		});

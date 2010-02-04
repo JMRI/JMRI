@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CoordinateEdit.shtml,v 1.3 2009-08-02 22:07:22 pete_cressman Exp $ -->
+<!-- $Id: CoordinateEdit.shtml,v 1.4 2010-02-04 07:23:55 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Coordinate Edit Help</TITLE>
@@ -23,28 +23,51 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Coordinate Editor</H1>
+<H1>The Label and Icon Property Editor</H1>
 
-This editor allows you move an icon by setting its x and y 
-coordinates. There are two text boxes where you can optionally enter the
+This editor allows you modify the properties of the elements on your panel.
+
+<H2>Setting x and y Coordinates</H2>
+There are two text boxes where you can optionally enter the
 x and y coordinates that you desire and by pressing the "Set" button the
 icon will move to that location. If you wish to return the icon to its
 original location when the editor was opened, press the "Cancel" button
 and the editor will move the icon back to its original position and
 close the editor window.
 
-<P>You can also move an icon relative to its current position by
-entering + or - and the number of pixels you wish it to move. For
-example, entering +5 in the x coordinate box and pressing "Set" will
-move the icon 5 pixels to the right. Entering -10 in the y coordinate
-box and pressing "Set" will move an icon up 10 pixels. The editor will
-also accept just + and - in the text box if you want to move the icon
+<P>Use the spinner if you want to move the icon
 one pixel.</P>
 
-<P>This editor also allows you to set the level at which the icon is 
-displayed.  The levels range from 1 to 10, with 10 being the top layer.
+<H2>Changing the display Level</H2>
+Enter the desired display level in the text box.
+The levels range from 1 to 10, with 10 being the top layer.
 Use the level setting to place one icon above another to get the view
-you want on your panel.
+you want on your panel.</P>
+
+<H2>Changing the Tooltip Text</H2>
+Enter the text you want to display as a tooltip for the panel item.</P>
+
+<H2>Setting the Size of the Border</H2>
+Enter the size in pixels for the border width.</P>
+
+<H2>Setting the Size of the Margin</H2>
+Enter the width and height for the Margin.</P>
+
+<H2>Setting the Fixed Size</H2>
+Enter the width and height for a fixed region to contain the item.</P>
+
+<H2>Rotating an Icon</H2>
+Enter the angle in degrees to rotate the icon an additional amount 
+from its present position.  To restore the original angle,size and 
+position, click on the Rotate (Orthogonal) item.</P>
+
+<H2>Scaling an Icon</H2>
+Enter the percentage to increase or decrease the size of the icon an 
+additional amount from its
+present size. To restore the icon to its original size, enter the value 100. </P>
+
+<H2>Changing the Text</H2>
+Enter the desired text in the text box.</P>
 
 <!--#include virtual="/Footer" -->
 </BODY>
