@@ -1,8 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.panelEditor.PanelEditor;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.roster.RosterEntry;
@@ -13,7 +11,7 @@ import org.jdom.Element;
  * Handle configuration for display.LocoIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class LocoIconXml extends PositionableLabelXml {
 
@@ -60,37 +58,17 @@ public class LocoIconXml extends PositionableLabelXml {
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
      * @param element Top level Element to unpack.
-     * @param o  PanelEditor as an Object
+     * @param o  an Editor as an Object
      */
     public void load(Element element, Object o) {
-        LocoIcon l;
- 		// get object class and determine editor being used
-		String className = o.getClass().getName();
-		int lastDot = className.lastIndexOf(".");
-		PanelEditor pe = null;
-		LayoutEditor le = null;
-		String shortClass = className.substring(lastDot+1,className.length());
-		if (shortClass.equals("PanelEditor")) {
-			pe = (PanelEditor) o;
-            l = new LocoIcon(pe);
-            pe.putItem(l);
-		}
-		else if (shortClass.equals("LayoutEditor")) {
-			le = (LayoutEditor) o;
-            l = new LocoIcon(le);
-            le.putItem(l);
-		}
-		else {
-			log.error("Unrecognizable class - "+className);
-            return;
-		}
+		Editor ed = (Editor) o;;
+        LocoIcon l= new LocoIcon(ed);
        // create the objects
         String name = "error";
-        
         try {
             name = element.getAttribute("text").getValue();
          } catch ( Exception e) {
-            log.error("failed to get loco text attribute");
+            log.error("failed to get loco text attribute ex= "+e);
         }
         l.setText (name);
         loadTextInfo(l, element);
@@ -102,7 +80,7 @@ public class LocoIconXml extends PositionableLabelXml {
             x = element.getAttribute("x").getIntValue();
             y = element.getAttribute("y").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
-            log.error("failed to convert positional attribute");
+            log.error("failed to convert positional attribute ex= "+e);
         }
         l.setLocation(x,y);
 
@@ -111,7 +89,7 @@ public class LocoIconXml extends PositionableLabelXml {
         try {
             level = element.getAttribute("level").getIntValue();
         } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse level attribute!");
+            log.warn("Could not parse level attribute! ex= "+e);
         } catch ( NullPointerException e) {  // considered normal if the attribute not present
         }
         l.setDisplayLevel(level);
@@ -120,16 +98,18 @@ public class LocoIconXml extends PositionableLabelXml {
 			name = element.getAttribute("icon").getValue();
 			l.setIcon(NamedIcon.getIconByName(name));
 		} catch (Exception e) {
-			log.error("failed to get icon attribute");
+			log.error("failed to get icon attribute ex= "+e);
 		}
 		
+        String rosterId = null;
 		try{
-			String rosterId = element.getAttribute("rosterentry").getValue();
+			rosterId = element.getAttribute("rosterentry").getValue();
 			RosterEntry entry = Roster.instance().entryFromTitle(rosterId);
 			l.setRosterEntry(entry);
 		} catch (Exception e) {
-			log.debug("no roster entry");
+			log.debug("no roster entry for "+rosterId+", ex= "+e);
 		}
+        ed.putLocoIcon(l);
      }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIconXml.class.getName());
