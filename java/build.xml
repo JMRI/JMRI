@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009, 2010 -->
-<!-- Revision $Revision: 1.65 $ -->
+<!-- Revision $Revision: 1.66 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -340,7 +340,7 @@
  </target>
 
 
-  <target name="gui3demo3" depends="debug, runtime-library-selection" description="build and run GUI test Demo3 app">
+  <target name="gui3mdi" depends="debug, runtime-library-selection" description="build and run GUI3 MDI demo app">
     <java classname="apps.gui3.demo3.Demo3"
           dir=".."
 	  fork="yes" >
@@ -357,7 +357,7 @@
  </target>
 
 
-  <target name="gui3paned" depends="debug, runtime-library-selection" description="build and run GUI test Paned app">
+  <target name="gui3ide" depends="debug, runtime-library-selection" description="build and run GUI3 IDE demo app">
     <java classname="apps.gui3.paned.Paned"
           dir=".."
 	  fork="yes" >
@@ -372,7 +372,6 @@
        <!-- <arg value="${antargline}"/> -->
     </java>
  </target>
-
 
   <target name="installtest" depends="debug, runtime-library-selection" description="build and run InstallTest app">
     <property name="antargline" value="InstallTestConfig2.xml" />
