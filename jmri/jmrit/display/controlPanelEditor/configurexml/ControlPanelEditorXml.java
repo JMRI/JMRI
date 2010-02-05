@@ -16,7 +16,7 @@ import org.jdom.*;
  * Handle configuration for {@link ControlPanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
@@ -99,14 +99,12 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         String name = "Panel";
         if (element.getAttribute("name")!=null)
             name = element.getAttribute("name").getValue();
-        // create the objects
-        ControlPanelEditor panel = new ControlPanelEditor(name);
-        //panel.makeFrame(name);
         // confirm that panel hasn't already been loaded
         if(jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)){
         	log.warn("File contains a panel with the same name (" + name + ") as an existing panel");
         	result = false;
         }
+        ControlPanelEditor panel = new ControlPanelEditor(name);
 		jmri.jmrit.display.PanelMenu.instance().addEditorPanel(panel);
         panel.getTargetFrame().setLocation(x,y);
         panel.getTargetFrame().setSize(width,height);

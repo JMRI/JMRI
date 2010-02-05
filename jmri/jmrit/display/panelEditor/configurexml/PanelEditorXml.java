@@ -16,7 +16,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class PanelEditorXml extends AbstractXmlAdapter {
 
@@ -99,14 +99,13 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         String name = "Panel";
         if (element.getAttribute("name")!=null)
             name = element.getAttribute("name").getValue();
-        // create the objects
-        PanelEditor panel = new PanelEditor(name);
-        //panel.makeFrame(name);
         // confirm that panel hasn't already been loaded
         if(jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)){
         	log.warn("File contains a panel with the same name (" + name + ") as an existing panel");
         	result = false;
         }
+        PanelEditor panel = new PanelEditor(name);
+        //panel.makeFrame(name);
 		jmri.jmrit.display.PanelMenu.instance().addEditorPanel(panel);
         panel.getTargetFrame().setLocation(x,y);
         panel.getTargetFrame().setSize(width,height);

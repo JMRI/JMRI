@@ -24,7 +24,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004
  * @author  Dave Duchamp   Copyright 2007
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 public class PanelMenu extends JMenu {
     public PanelMenu() {
@@ -95,16 +95,19 @@ public class PanelMenu extends JMenu {
 		panelsList.add(panel);
         ActionListener a = new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					panel.setVisible(true);
-					panel.repaint();
+                    if (panel instanceof LayoutEditor) {
+                        panel.setVisible(true);
+                        panel.repaint();
+                    } else {
+                        panel.getTargetFrame().setVisible(true);
+                    }
 					updateEditorPanel(panel);
 				}
 			};
         JCheckBoxMenuItem r = new JCheckBoxMenuItem(panel.getTitle());
         r.addActionListener(a);
-        if (panel.isVisible()) r.setSelected(true);
-        else r.setSelected(false);
         panelsSubMenu.add(r);
+        updateEditorPanel (panel);
     }
 	
 	/**
@@ -116,8 +119,13 @@ public class PanelMenu extends JMenu {
 			Object o = panelsList.get(i);
 			if (o == panel) {
 				JCheckBoxMenuItem r = (JCheckBoxMenuItem)panelsSubMenu.getItem(i);
-				if (panel.isVisible()) r.setSelected(false);
-				else r.setSelected(true);
+                if (panel instanceof LayoutEditor) {
+                    if (panel.isVisible()) r.setSelected(true);
+                    else r.setSelected(false);
+                } else {
+                    if (panel.getTargetFrame().isVisible()) r.setSelected(true);
+                    else r.setSelected(false);
+                }
                 return;
 			}
 		}

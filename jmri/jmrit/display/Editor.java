@@ -217,7 +217,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public class TargetPane extends JLayeredPane 
     {
         int h = 100;
-        int w = 100;
+        int w = 150;
         public TargetPane() {
             setLayout(null);
         }
@@ -522,6 +522,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     break;
                 case 2:
                     showCloseInfoMessage = false;
+                    _targetFrame.setVisible(false);   // doesn't remove the editor!
+                    jmri.jmrit.display.PanelMenu.instance().updateEditorPanel(this);
                     break;
                 default:    // dialog closed - do nothing
                     _targetFrame.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -735,8 +737,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         locoFrame.pack();
 		locoFrame.setVisible(true);
     }    
-    public void inputLoco() {
-     }
 
     /**
      * Remove marker icons from panel
@@ -1083,7 +1083,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         };
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
-                addMemory();
+                putMemory();
             }
         };
         JFrameItem frame = makeAddIconFrame("MemoryEditor", "addMemValueToPanel", "SelectMemory", editor);
@@ -1151,7 +1151,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
-                addBackground();
+                putBackground();
             }
         };
         ActionListener changeIconAction = new ActionListener() {
@@ -1309,7 +1309,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         putItem(l);
     }
 
-    void addMemory() {
+    void putMemory() {
         MemoryIcon l = new MemoryIcon(new NamedIcon("resources/icons/misc/X-red.gif",
                             "resources/icons/misc/X-red.gif"), this);
         IconAdder memoryIconEditor = getIconEditor("MemoryEditor");
@@ -1369,7 +1369,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Button pushed, add a background image. Note that a background image
      * differs from a regular icon only in the level at which it's presented.
      */
-    void addBackground() {
+    void putBackground() {
         // most likely the image is scaled.  get full size from URL
         IconAdder bkgrndEditor = getIconEditor("BackgroundEditor");
         String url = bkgrndEditor.getIcon("background").getURL();
@@ -1589,22 +1589,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     public void dispose() {		
+        if (_debug) log.debug("Editor delete done.");
 		// delete panel - deregister the panel for saving 
         InstanceManager.configureManagerInstance().deregister(this);
 		jmri.jmrit.display.PanelMenu.instance().deletePanel(this);
 		setVisible(false);		
         _contents.clear();
-        /* remove marker frames
-		if (locoRosterFrame != null) {
-			locoRosterFrame.setVisible(false);
-			locoRosterFrame = null;
-		}
-		if (locoFrame != null) {
-			locoFrame.setVisible(false);
-			locoFrame = null;
-		}*/
-        // clean up GUI aspects
-        this.removeAll();
+        removeAll();
         super.dispose();
     }
 
