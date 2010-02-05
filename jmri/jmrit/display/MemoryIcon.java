@@ -28,7 +28,7 @@ import jmri.util.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -288,115 +288,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         super.dispose();
     }
     
-    //Imports from the old Layout Memory Icon Code.
-/*    
-    private int originalX=0;
-    private int originalY=0;
-    
-    static final int LEFT   = 0x00;
-    static final int RIGHT  = 0x02;
-    static final int CENTRE = 0x04;
-    
-    private int justification=LEFT; //Default is always left    
-    
-    public void setJustification(int just){
-        justification=just;
-        setJustification();
-    }
-    
-    public void setJustification(String just){
-        if (just.equals("right"))
-            justification=RIGHT;
-        else if (just.equals("centre"))
-            justification=CENTRE;
-        else
-            justification=LEFT;
-        setJustification();
-    }
-    
-    private void setJustification(){
-        if (getFixedWidth()==0){
-            switch (justification){
-                case RIGHT :    setOriginalLocation(this.getX()+this.maxWidth(), this.getY());
-                                break;
-                case CENTRE :   setOriginalLocation(this.getX()+(this.maxWidth()/2), this.getY());
-                                break;
-            }
-            this.setHorizontalAlignment(JLabel.CENTER);
-            updateSize();
-        }
-        else{
-            switch (justification){
-                case LEFT :     this.setHorizontalAlignment(JLabel.LEFT);
-                                break;
-                case RIGHT :    this.setHorizontalAlignment(JLabel.RIGHT);
-                                break;
-                case CENTRE :   this.setHorizontalAlignment(JLabel.CENTER);
-                                break;
-                default     :   this.setHorizontalAlignment(JLabel.CENTER);
-            }
-        }
-    }
-    
-    public void setOriginalLocation(int x, int y){
-        originalX=x;
-        originalY=y;
-        updateSize();
-    }
-    
-    public int getJustification(){
-        return justification;
-    }
-    
-    public int getOriginalX(){
-        return originalX;
-    }
-    
-    public int getOriginalY(){
-        return originalY;
-    }
-    /*private int fixedWidth=0;
-    private int fixedHeight=0;
-    
-    public int getFixedWidth(){
-        return fixedWidth;
-    }
-    
-    public int getFixedHeight(){
-        return fixedHeight;
-    }*/
-    
-    /*public void setFixedSize(int width, int height){
-        
-        fixedWidth=width;
-        fixedHeight=height;
-        if ((width!=0) && (height!=0)){
-            setJustification();
-            setSize(fixedWidth, fixedHeight);
-        } else if ((width!=0) && (height==0)){
-            setJustification();
-            setSize(fixedWidth, maxHeight());
-        } else if ((width==0) && (height!=0)){
-            setSize(maxWidth(), fixedHeight);
-        } else {
-            setSize(maxWidth(), maxHeight());
-        }
-    }*/
-/* 
-    public void setLocation(int x, int y){
-
-        super.setLocation(x,y);
-
-        if (getFixedWidth()==0){
-            switch (justification){
-                case RIGHT :    setOriginalLocation(this.getX()+this.maxWidth(), this.getY());
-                                break;
-                case CENTRE :   setOriginalLocation(this.getX()+(this.maxWidth()/2), this.getY());
-                                break;
-            }
-        }
-    }
-*/    
     /**
      * This may be called during the superclass ctor, so before 
      * construction of this object is complete.  Be careful about that!
@@ -431,54 +322,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
          //   return getFixedWidth();
         return getFixedWidth();
     }
-/*
-    JMenu makeTextJustificationMenu() {
-        JMenu justMenu = new JMenu("Justification");
-        addJustificationMenuEntry(justMenu, LEFT);
-        addJustificationMenuEntry(justMenu, RIGHT);
-        addJustificationMenuEntry(justMenu, CENTRE);
-        return justMenu;
-    }
     
-    void addJustificationMenuEntry(JMenu menu, final int just) {
-        ButtonGroup justButtonGroup = new ButtonGroup();
-        JRadioButtonMenuItem r;
-        switch(just){
-            case LEFT :     r = new JRadioButtonMenuItem("LEFT");
-                            break;
-            case RIGHT:     r = new JRadioButtonMenuItem("RIGHT");
-                            break;
-            case CENTRE:    r = new JRadioButtonMenuItem("CENTRE");
-                            break;
-            default :       r = new JRadioButtonMenuItem("LEFT");
-        }
-        r.addActionListener(new ActionListener() {
-            //final int justification = just;
-            public void actionPerformed(ActionEvent e) { setJustification(just); }
-        });
-        justButtonGroup.add(r);
-        if (justification == just) r.setSelected(true);
-        else r.setSelected(false);
-        menu.add(r);
-    }
-*/    
-/*    public void updateSize() {
-        if(isIcon()){
-            setSize(this.maxWidth(), this.maxHeight());
-        } else {
-            if (getFixedWidth()==0){
-                switch (justification){
-                    case RIGHT :    super.setLocation(this.getOriginalX()-this.maxWidth(), this.getOriginalY());
-                                    break;
-                    case CENTRE :   super.setLocation(this.getOriginalX()-(this.maxWidth()/2), this.getOriginalY());
-                                    break;
-                }
-            }
-            this.setSize(this.maxWidth(), this.maxHeight());
-        }
-    }
-*/    
-    public void mouseClicked(java.awt.event.MouseEvent e) {
+public void mouseClicked(java.awt.event.MouseEvent e) {
         if (e.getClickCount() == 2){ 
             editMemoryValue();
         }
