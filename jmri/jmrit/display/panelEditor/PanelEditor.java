@@ -104,7 +104,7 @@ public class PanelEditor extends Editor implements ItemListener {
         setAllEditable(true);
         setShowHidden(true);
         super.setTargetPanel(null, makeFrame(name));
-        super.setTargetPanelSize(300, 300);
+        super.setTargetPanelSize(400, 300);
         // set scrollbar initial state
         setScroll(SCROLL_BOTH);
 
@@ -324,9 +324,6 @@ public class PanelEditor extends Editor implements ItemListener {
         // register the resulting panel for later configuration
         InstanceManager.configureManagerInstance().registerUser(this);
 
-        // move this editor panel off the panel's position
-        setLocation(250,0);
-
         // when this window closes, set contents of target uneditable
         addWindowListener(new java.awt.event.WindowAdapter() {
             PanelEditor panelEd;
@@ -342,6 +339,8 @@ public class PanelEditor extends Editor implements ItemListener {
         // and don't destroy the window
         setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 
+        // move this editor panel off the panel's position
+         getTargetFrame().setLocationRelativeTo(this);
         if (_debug) log.debug("PanelEditor ctor done.");
     }  // end ctor
 
