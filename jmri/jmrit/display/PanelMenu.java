@@ -20,11 +20,12 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 /**
  * Create the default "Panels" menu for use in a menubar.
  *
- * Also manages the Show Panel menu for both all Editor panels.
+ * Also manages the Show Panel menu for all Editor panels.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004
  * @author  Dave Duchamp   Copyright 2007
- * @version     $Revision: 1.19 $
+ * @author  Pete Cressman   Copyright 2010
+ * @version     $Revision: 1.20 $
  */
 public class PanelMenu extends JMenu {
     public PanelMenu() {
@@ -77,12 +78,13 @@ public class PanelMenu extends JMenu {
 	 * Delete a panel from Show Panel sub menu
 	 */
 	public void deletePanel (Object panel) {
+        if (log.isDebugEnabled()) log.debug("deletePanel");
 		if (panelsList.size()==0) return;
 		for (int i = 0; i<panelsList.size(); i++) {
 			Object o = panelsList.get(i);
 			if (o == panel) {
-				panelsList.remove(i);
 				panelsSubMenu.remove(i);
+                panelsList.remove(panel);
                 return;
 			}
 		}
@@ -193,6 +195,7 @@ public class PanelMenu extends JMenu {
 		}				
 		return lePanelsList;
 	}	
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PanelMenu.class.getName());
 }
 
 

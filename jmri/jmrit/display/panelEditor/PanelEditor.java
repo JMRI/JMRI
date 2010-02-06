@@ -62,7 +62,7 @@ import java.util.ArrayList;
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
  * @author  Matthew Harris Copyright: Copyright (c) 2009
- * @author  Pete Cressman Copyright: Copyright (c) 2009
+ * @author  Pete Cressman Copyright: Copyright (c) 2009, 2010
  * 
  */
 

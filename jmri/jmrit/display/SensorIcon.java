@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.57 $
+ * @version $Revision: 1.58 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -154,14 +154,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     public NamedBeanHandle <Sensor> getNamedSensor() {
         return namedSensor;
     }
-    /*public void setFixedSize(int width, int height){
-        super.setFixedSize(width, height);
-        if(getLayoutPanel()!=null){
-            getLayoutPanel().redrawPanel();
-            System.out.println("redraw");
-        } else
-            System.out.println("failed redraw");
-    }*/
+    
     // display icons
     String activeName = "resources/icons/smallschematics/tracksegments/circuit-occupied.gif";
     NamedIcon active = new NamedIcon(activeName, activeName);

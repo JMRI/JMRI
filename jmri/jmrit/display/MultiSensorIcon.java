@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -296,19 +296,22 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     }
     		
 	public void performMouseClicked(java.awt.event.MouseEvent e, int xx, int yy) {
-        log.debug("performMouseClicked: buttonLive= "+buttonLive()+", click from ("+
-                 xx+", "+yy+")"); 
+        if (log.isDebugEnabled()) log.debug("performMouseClicked: buttonLive= "+buttonLive()+", click from ("+
+                 xx+", "+yy+") displaying="+displaying); 
         if (!buttonLive()) return;
         if (entries == null || entries.size() < 1) return;
         
-        // here, find the click and change state
-       
         // find if we want to increment or decrement
         boolean dec = false;
-        if (updown) {
+/*        if (updown) {
             if (yy > (inactive.getIconHeight()/2)) dec = true;
         } else {
             if (xx < (inactive.getIconWidth()/2)) dec = true;
+        }   */
+        if (updown) {
+            if ((yy-getY()) > maxHeight()/2) dec = true;
+        } else {
+            if ((xx-getX()) < maxWidth()/2) dec = true;
         }
         
         // get new index
@@ -320,7 +323,9 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         }
         if (next < 0) next = 0;
         if (next >= entries.size()) next = entries.size()-1;
+
         int drop = displaying;
+        if (log.isDebugEnabled()) log.debug("dec= "+dec+" displaying="+displaying+" next= "+next );       
         try {
             entries.get(next).namedSensor.getBean().setKnownState(Sensor.ACTIVE);
             if (drop >= 0 && drop != next) entries.get(drop).namedSensor.getBean().setKnownState(Sensor.INACTIVE);

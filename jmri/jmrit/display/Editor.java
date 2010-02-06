@@ -141,6 +141,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected int _anchorX;     // x coord when mousePressed
     protected int _anchorY;     // y coord when mousePressed
 
+    private double _paintScale = 1.0;   // scale for _targetPanel drawing
+
     // map of icon editor frames (incl, icon editor) keyed by name
     HashMap <String, JFrameItem> _iconEditorFrame = new HashMap <String, JFrameItem>();
 
@@ -202,12 +204,22 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return _targetPanel.getSize();
     }
      
-    protected JComponent getTargetPanel() {
+    protected final JComponent getTargetPanel() {
         return _targetPanel;
     }
 
-    public JFrame getTargetFrame() {
+    public final JFrame getTargetFrame() {
         return _targetFrame;
+    }
+
+    /**
+     * Get/Set scale for TargetPane drawing
+     */
+    protected final double getPaintScale() {
+        return _paintScale;
+    }
+    protected final void setPaintScale(double scale) {
+        _paintScale = scale;
     }
 
     /**
@@ -258,10 +270,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
         }
         public void paint(Graphics g) {
-            paintTargetPanel(g);
+            Graphics2D g2d = (Graphics2D)g;
+            g2d.scale(_paintScale,_paintScale);
             super.paint(g);
+            paintTargetPanel(g);
             if (_selectRect != null) {
-                Graphics2D g2d = (Graphics2D)g;
                 //Draw a rectangle on top of the image.
                 java.awt.Stroke stroke = g2d.getStroke();
                 Color color = g2d.getColor();
@@ -272,7 +285,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 g2d.setColor(color);
             }
             if (_tooltip != null) {
-                Graphics2D g2d = (Graphics2D)g;
                 //g2d.setFont(_toolFont);
                 Color color = g2d.getColor();
                 Font font = g2d.getFont();
@@ -294,7 +306,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
         }
     }
-	
+/*	
     protected JScrollBar getTargetHorizontalScrollBar() {
         return _panelScrollPane.getHorizontalScrollBar();
     }
@@ -302,7 +314,28 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected JScrollBar getTargetVerticalScrollBar() {
         return _panelScrollPane.getVerticalScrollBar();
     }
-
+*/
+    protected void setScrollbarScale(double factor) {
+		double ratio = factor/getPaintScale();
+		Dimension dim = getTargetPanelSize();
+		int tpWidth = (int)((dim.width)*ratio);
+		int tpHeight = (int)((dim.height)*ratio);
+		setTargetPanelSize(tpWidth,tpHeight);
+		// compute new scroll bar positions in order to keep image centered
+        JScrollBar horScroll = _panelScrollPane.getHorizontalScrollBar();
+        JScrollBar vertScroll = _panelScrollPane.getVerticalScrollBar();
+		int hScroll = horScroll.getVisibleAmount()/2;
+		hScroll = (int)((horScroll.getValue() + hScroll) * ratio) - hScroll;
+		int vScroll = vertScroll.getVisibleAmount()/2;
+		vScroll = (int)((vertScroll.getValue() + vScroll) * ratio) - vScroll;
+		// set scrollbars maximum range (otherwise setValue may fail);
+		horScroll.setMaximum((int)((horScroll.getMaximum())*ratio));
+		vertScroll.setMaximum((int)((vertScroll.getMaximum())*ratio));
+		// set scroll bar positions
+		horScroll.setValue(hScroll);
+		vertScroll.setValue(vScroll);
+		repaint();
+    }
      
     /************************ Options setup **********************/
     /**
@@ -518,7 +551,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     jmri.jmrit.display.PanelMenu.instance().updateEditorPanel(this);
                     break;
                 case 1:
-                    deletePanel();  // disposes everything
+                    if (deletePanel() ) { // disposes everything
+                        dispose();
+                    }
                     break;
                 case 2:
                     showCloseInfoMessage = false;
@@ -1577,6 +1612,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     * On return of 'true', caller should call dispose()
     */
 	public boolean deletePanel() {
+        if (_debug) log.debug("deletePanel");
 		// verify deletion
 		int selectedValue = JOptionPane.showOptionDialog(_targetPanel,
 				rb.getString("QuestionA")+"\n"+rb.getString("QuestionB"),
@@ -1585,11 +1621,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 				new Object[]{rb.getString("ButtonYesDelete"),rb.getString("ButtonNoCancel")},
 				rb.getString("ButtonNoCancel"));
         // return without deleting if "No" response
-		return (selectedValue == 1);
+		return (selectedValue == JOptionPane.YES_OPTION);
     }
 
     public void dispose() {		
-        if (_debug) log.debug("Editor delete done.");
+        if (_debug) log.debug("Editor delete and dispose done.");
 		// delete panel - deregister the panel for saving 
         InstanceManager.configureManagerInstance().deregister(this);
 		jmri.jmrit.display.PanelMenu.instance().deletePanel(this);
@@ -1966,6 +2002,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * After construction, initialize all the widgets to their saved config settings.
      */
     abstract public void initView();
+    
+
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Editor.class.getName());
