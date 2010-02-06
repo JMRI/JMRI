@@ -25,7 +25,7 @@ import javax.swing.ImageIcon;
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -148,7 +148,8 @@ public class NamedIcon extends ImageIcon {
      * @return new Image object containing the rotated input image
      */
     public Image createRotatedImage(Image pImage, Component pComponent, int pRotation) {
-
+        if (log.isDebugEnabled()) log.debug("createRotatedImage: pRotation= "+pRotation+
+                                       ", mRotation= "+mRotation);
         if (pRotation == 0) return pImage;
 
         MediaTracker mt = new MediaTracker(pComponent);
@@ -217,6 +218,10 @@ public class NamedIcon extends ImageIcon {
     public double getScale() { return _scale; }
 
     public void setLoad(int d, double s, Component comp) {
+        if (d!=0 || s!=1.0) {
+            setImage(createRotatedImage(mDefaultImage, comp, 0));
+            mRotation = 3;
+        }
         if (d!=0) {
             rotate(d, comp);
         }
@@ -244,7 +249,6 @@ public class NamedIcon extends ImageIcon {
         g2d.drawImage(getImage(), t, comp);
         setImage(bufIm);
         g2d.dispose();
-        mRotation = 3;      // each rotation type normalizes the other
     }
 
     void debugDraw(String op, Component c) {
