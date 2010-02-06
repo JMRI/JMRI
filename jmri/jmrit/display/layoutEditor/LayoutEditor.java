@@ -52,7 +52,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class LayoutEditor extends Editor {
@@ -162,7 +162,6 @@ public class LayoutEditor extends Editor {
     //private int numTurnouts = 0;
 	private TrackSegment newTrack = null;
 	private boolean panelChanged = false;
-	private double zoomScale = 1.0;
 
 	// selection variables
 	private boolean selectionActive = false;
@@ -546,13 +545,6 @@ public class LayoutEditor extends Editor {
         editModeItem.setSelected(isEditable());
         positionableItem.setSelected(allPositionable());
         controlItem.setSelected(allControlling());
-        //private JCheckBoxMenuItem animationItem = null;
-        //private JCheckBoxMenuItem showHelpItem = null;
-        //private JCheckBoxMenuItem showGridItem = null;
-        //private JCheckBoxMenuItem snapToGridOnAddItem = null;
-        //private JCheckBoxMenuItem snapToGridOnMoveItem = null;
-        //private JCheckBoxMenuItem antialiasingOnItem = null;
-        //private JCheckBoxMenuItem skipTurnoutItem = null;
     }
 
     public void setSize(int w, int h) {
@@ -1007,29 +999,12 @@ public class LayoutEditor extends Editor {
 	}
 	
 	private void setZoom(double factor) {
-		double ratio = factor/zoomScale;
-		zoomScale = factor;
+		//zoomScale = factor;
+        setPaintScale(factor);
 		// set scroll pane size
-		Dimension dim = getTargetPanelSize();
-		int tpWidth = (int)((dim.width)*ratio);
-		int tpHeight = (int)((dim.height)*ratio);
-		setTargetPanelSize(tpWidth,tpHeight);
-		// compute new scroll bar positions in order to keep image centered
-        JScrollBar horScroll = super.getTargetHorizontalScrollBar();
-        JScrollBar vertScroll = super.getTargetVerticalScrollBar();
-		int hScroll = horScroll.getVisibleAmount()/2;
-		hScroll = (int)((horScroll.getValue() + hScroll) * ratio) - hScroll;
-		int vScroll = vertScroll.getVisibleAmount()/2;
-		vScroll = (int)((vertScroll.getValue() + vScroll) * ratio) - vScroll;
-		// set scrollbars maximum range (otherwise setValue may fail);
-		horScroll.setMaximum((int)((horScroll.getMaximum())*ratio));
-		vertScroll.setMaximum((int)((vertScroll.getMaximum())*ratio));
-		// set scroll bar positions
-		horScroll.setValue(hScroll);
-		vertScroll.setValue(vScroll);
-		repaint();
+        setScrollbarScale(factor);
 	}
-	protected double getZoomScale() {return zoomScale;}
+
 	private Point2D windowCenter() {
 		// Returns window's center coordinates converted to layout space
 		// Used for initial setup of turntables and reporters
@@ -1040,8 +1015,8 @@ public class LayoutEditor extends Editor {
 		pt.y += dim.height/2 + 40; // 40 = approx. difference between upper and lower menu areas
 		// Now convert to layout space
 		SwingUtilities.convertPointFromScreen(pt, getTargetPanel());
-		pt.x /= zoomScale;
-		pt.y /= zoomScale;
+		pt.x /= getPaintScale();
+		pt.y /= getPaintScale();
 		return pt;
 	}
 	private void setupMarkerMenu(JMenuBar menuBar) {
@@ -1859,8 +1834,8 @@ public class LayoutEditor extends Editor {
 		windowWidth = dim.width;
 		// Compute layout size based on LayoutPane size
 		dim = getTargetPanelSize();
-		panelHeight = (int)(dim.height/zoomScale);
-		panelWidth = (int)(dim.width/zoomScale);
+		panelHeight = (int)(dim.height/getPaintScale());
+		panelWidth = (int)(dim.width/getPaintScale());
 		Point pt = getLocationOnScreen();
 		upperLeftX = pt.x;
 		upperLeftY = pt.y;
@@ -2006,8 +1981,8 @@ public class LayoutEditor extends Editor {
 	 * Get mouse coordinates and adjust for zoom
 	 */
 	private void calcLocation(MouseEvent event, int dX, int dY) {
-		xLoc = (int)((event.getX() + dX)/zoomScale);
-		yLoc = (int)((event.getY() + dY)/zoomScale);
+		xLoc = (int)((event.getX() + dX)/getPaintScale());
+		yLoc = (int)((event.getY() + dY)/getPaintScale());
 		dLoc.setLocation(xLoc,yLoc);
 	}
 	
@@ -2685,12 +2660,11 @@ public class LayoutEditor extends Editor {
 			}
 			// check if clicking a sensor or a multiSensor
 			else if (!awaitingIconChange) {
-				/*MultiSensorIcon m = checkMultiSensors(dLoc);
+				MultiSensorIcon m = checkMultiSensors(dLoc);
 				if (m!=null) {
-					m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
-									(int)(dLoc.getY()-m.getY()));
+					m.doMouseReleased(event);
 					whenReleased = event.getWhen();
-				}*/
+				}
 				SensorIcon s = checkSensorIcons(dLoc);
 				if (s!=null) {
 					whenReleased = event.getWhen();
@@ -2726,12 +2700,11 @@ public class LayoutEditor extends Editor {
 		}
 		// check if clicking on sensor or multisensor out of edit mode
 		else if ( (!isDragging) && (!awaitingIconChange) ) {
-			/*MultiSensorIcon m = checkMultiSensors(dLoc);
+			MultiSensorIcon m = checkMultiSensors(dLoc);
 			if (m!=null) {
-				m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
-									(int)(dLoc.getY()-m.getY()));
+                m.doMouseReleased(event);
 				whenReleased = event.getWhen();
-			}*/
+			}
 			SensorIcon s = checkSensorIcons(dLoc);
 			if (s!=null) {
 				s.doMouseReleased(event);
@@ -2827,6 +2800,7 @@ public class LayoutEditor extends Editor {
         if (p.isPositionable()) {
             setShowCoordinatesMenu(p, popup);
         }
+        setDisplayLevelMenu(p, popup);
         setPositionableMenu(p, popup);
 
           // items not common to all
@@ -2876,11 +2850,11 @@ public class LayoutEditor extends Editor {
 					(!awaitingIconChange) && (!event.isShiftDown()) && (!event.isControlDown()) ) {
 			calcLocation(event, 0, 0);
             			// check if on a multi sensor icon
-			/*MultiSensorIcon m = checkMultiSensors(dLoc);
+			MultiSensorIcon m = checkMultiSensors(dLoc);
 			if (m!=null) {
-				m.performMouseClicked(event, (int)(dLoc.getX()-m.getX()), 
-									(int)(dLoc.getY()-m.getY()));
-			}*/
+                setAwaitingIconChange();
+                m.doMouseReleased(event);
+			}
 			SensorIcon s = checkSensorIcons(dLoc);
 			if (s!=null) {
                 setAwaitingIconChange();
@@ -3873,6 +3847,7 @@ public class LayoutEditor extends Editor {
         l.setInconsistentIcon(sensorIconEditor.getIcon(2));
         l.setUnknownIcon(sensorIconEditor.getIcon(3));
 		l.setSensor(nextSensor.getText().trim());
+        l.setDisplayLevel(SENSORS);
 		//Sensor xSensor = l.getSensor();
 		if (l.getSensor() != null) {
 			if ( (l.getNamedSensor().getName()==null) || 
@@ -4147,8 +4122,6 @@ public class LayoutEditor extends Editor {
 		pointList.clear();
 		xingList.clear();
 		turntableList.clear();
-        // clean up GUI aspects
-        this.removeAll();
         return true;
     }
 
@@ -4500,7 +4473,6 @@ public class LayoutEditor extends Editor {
         Graphics2D g2 = (Graphics2D)g;
         // Optional antialising, to eliminate (reduce) staircase on diagonal lines
         if(antialiasingOn) g2.setRenderingHints(antialiasing);
-        g2.scale(zoomScale,zoomScale);
         if (isEditable() && drawGrid) drawPanelGrid(g2);
         g2.setColor(defaultTrackColor);			
         main = false;
