@@ -5,14 +5,12 @@ package jmri.jmrit.display.configurexml;
 import org.jdom.*;
 import jmri.configurexml.*;
 import jmri.jmrit.display.AnalogClock2Display;
-import jmri.jmrit.display.panelEditor.PanelEditor;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.Editor;
 /**
  * Handle configuration for display.AnalogClock2Display objects.
  *
  * @author  Howard G. Penny  Copyright (c) 2005
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class AnalogClock2DisplayXml
     extends AbstractXmlAdapter {
@@ -54,7 +52,7 @@ public class AnalogClock2DisplayXml
     /**
      * Create an AnalogClock2Display, then add to a target JLayeredPane
      * @param element Top level Element to unpack.
-     * @param o  PanelEditor or LayoutEditor as an Object
+     * @param o an Editor as an Object
      */
 	public void load(Element element, Object o) {
 		// get object class and create the clock object

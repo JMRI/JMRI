@@ -14,7 +14,7 @@ import java.util.List;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -147,7 +147,7 @@ public class SensorIconXml extends PositionableLabelXml {
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
      * @param element Top level Element to unpack.
-     * @param o  PanelEditor as an Object
+     * @param o  an Editor as an Object
      */
     public void load(Element element, Object o) {
         Editor ed = (Editor)o;
@@ -195,8 +195,6 @@ public class SensorIconXml extends PositionableLabelXml {
             l.setMomentary(true);
         else
             l.setMomentary(false);
-        //if (icon)
-        //    loadIconInfo(l, element);
         
         l.setSensor(name);
         ed.putItem(l);
@@ -222,53 +220,6 @@ public class SensorIconXml extends PositionableLabelXml {
         }
     }
     
-    /*void loadIconInfo(SensorIcon l, Element element){
-        String name;
-        NamedIcon icon = loadIcon( l,"active", element);
-        if (icon!=null) { l.setActiveIcon(icon); }
-
-        icon = loadIcon( l,"inactive", element);
-        if (icon!=null) { l.setInactiveIcon(icon); }
-
-        icon = loadIcon( l,"unknown", element);
-        if (icon!=null) { l.setUnknownIcon(icon); }
-
-        icon = loadIcon( l,"inconsistent", element);
-        if (icon!=null) { l.setInconsistentIcon(icon); }
-        
-        //This deals with the old format of the files from the layout editor.
-        if(icon==null){
-            NamedIcon active;
-            name = element.getAttribute("active").getValue();
-            l.setActiveIcon(active = NamedIcon.getIconByName(name));
-            NamedIcon inactive;
-            name = element.getAttribute("inactive").getValue();
-            l.setInactiveIcon(inactive = NamedIcon.getIconByName(name));
-
-            NamedIcon unknown;
-            name = element.getAttribute("unknown").getValue();
-            l.setUnknownIcon(unknown = NamedIcon.getIconByName(name));
-
-            NamedIcon inconsistent;
-            name = element.getAttribute("inconsistent").getValue();
-            l.setInconsistentIcon(inconsistent = NamedIcon.getIconByName(name));
-
-            try {
-                Attribute a = element.getAttribute("rotate");
-                if (a!=null) {
-                    int rotation = element.getAttribute("rotate").getIntValue();
-                    active.setRotation(rotation, l);
-                    inactive.setRotation(rotation, l);
-                    inconsistent.setRotation(rotation, l);
-                    unknown.setRotation(rotation, l);
-                }
-            } catch (org.jdom.DataConversionException e) {}
-        }
-
-    
-    }*/
-    
-
     void loadTextInfo(SensorIcon l, Element element){
         Attribute a = element.getAttribute("size");
         try {
@@ -301,227 +252,6 @@ public class SensorIconXml extends PositionableLabelXml {
             loadSensorTextState("InActive", l, element);
             loadSensorTextState("Unknown", l, element);
             loadSensorTextState("Inconsistent", l, element);
-            /*List<Element> textList = element.getChildren("activeText");
-            if (log.isDebugEnabled()) log.debug("Found "+textList.size()+" activeText objects");
-            if (textList.size()>0) {
-                Element elem = textList.get(0);
-                try {
-                    name = elem.getAttribute("text").getValue();
-                    l.setActiveText(name);
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-                try {
-                    int red = elem.getAttribute("red").getIntValue();
-                    int blue = elem.getAttribute("blue").getIntValue();
-                    int green = elem.getAttribute("green").getIntValue();
-                    l.setTextActive(new Color(red, green, blue));
-                } catch ( org.jdom.DataConversionException e) {
-                    log.warn("Could not parse color attributes!");
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-                try {
-                    int red = elem.getAttribute("redBack").getIntValue();
-                    int blue = elem.getAttribute("blueBack").getIntValue();
-                    int green = elem.getAttribute("greenBack").getIntValue();
-                    l.setBackgroundActive(new Color(red, green, blue));
-                } catch ( org.jdom.DataConversionException e) {
-                    log.warn("Could not parse color attributes!");
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-            
-            } else {
-                if (element.getAttribute("active")!=null){
-                    name = element.getAttribute("active").getValue();
-                    l.setActiveText(name);
-                }
-                try {
-                    int red = element.getAttribute("redActive").getIntValue();
-                    int blue = element.getAttribute("blueActive").getIntValue();
-                    int green = element.getAttribute("greenActive").getIntValue();
-                    l.setTextActive(new Color(red, green, blue));
-                } catch ( org.jdom.DataConversionException e) {
-                    log.warn("Could not parse color attributes!");
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-                try {
-                    int red = element.getAttribute("redActiveBack").getIntValue();
-                    int blue = element.getAttribute("blueActiveBack").getIntValue();
-                    int green = element.getAttribute("greenActiveBack").getIntValue();
-                    l.setBackgroundActive(new Color(red, green, blue));
-                } catch ( org.jdom.DataConversionException e) {
-                    log.warn("Could not parse color attributes!");
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-            }
-            
-            textList = element.getChildren("inactiveText");
-            if (log.isDebugEnabled()) log.debug("Found "+textList.size()+" inactiveText objects");
-            if (textList.size()>0) {
-                Element elem = textList.get(0);
-                try {
-                    name = elem.getAttribute("text").getValue();
-                    l.setActiveText(name);
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-                try {
-                    int red = elem.getAttribute("red").getIntValue();
-                    int blue = elem.getAttribute("blue").getIntValue();
-                    int green = elem.getAttribute("green").getIntValue();
-                    l.setTextInActive(new Color(red, green, blue));
-                    //l.setOpaque(true);
-                 } catch ( org.jdom.DataConversionException e) {
-                    log.warn("Could not parse color attributes!");
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-                try {
-                    int red = elem.getAttribute("redBack").getIntValue();
-                    int blue = elem.getAttribute("blueBack").getIntValue();
-                    int green = elem.getAttribute("greenBack").getIntValue();
-                    l.setBackgroundInActive(new Color(red, green, blue));
-                    //l.setOpaque(true);
-                 } catch ( org.jdom.DataConversionException e) {
-                    log.warn("Could not parse color attributes!");
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-        
-            } else {
-                try {
-                    name = element.getAttribute("inactive").getValue();
-                    l.setInactiveText(name);
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-                try {
-                    int red = element.getAttribute("redInActive").getIntValue();
-                    int blue = element.getAttribute("blueInActive").getIntValue();
-                    int green = element.getAttribute("greenInActive").getIntValue();
-                    l.setTextInActive(new Color(red, green, blue));
-                    //l.setOpaque(true);
-                 } catch ( org.jdom.DataConversionException e) {
-                    log.warn("Could not parse color attributes!");
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-                try {
-                    int red = element.getAttribute("redInActiveBack").getIntValue();
-                    int blue = element.getAttribute("blueInActiveBack").getIntValue();
-                    int green = element.getAttribute("greenInActiveBack").getIntValue();
-                    l.setBackgroundInActive(new Color(red, green, blue));
-                    //l.setOpaque(true);
-                 } catch ( org.jdom.DataConversionException e) {
-                    log.warn("Could not parse color attributes!");
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-            }
-            textList = element.getChildren("unknownText");
-            if (log.isDebugEnabled()) log.debug("Found "+textList.size()+" unknownText objects");
-            if (textList.size()>0) {
-                Element elem = textList.get(0);
-                try {
-                    name = elem.getAttribute("text").getValue();
-                    l.setActiveText(name);
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-                try {
-                    int red = elem.getAttribute("red").getIntValue();
-                    int blue = elem.getAttribute("blue").getIntValue();
-                    int green = elem.getAttribute("green").getIntValue();
-                    l.setTextUnknown(new Color(red, green, blue));
-                    //l.setOpaque(true);
-                 } catch ( org.jdom.DataConversionException e) {
-                    log.warn("Could not parse color attributes!");
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-                try {
-                    int red = elem.getAttribute("redBack").getIntValue();
-                    int blue = elem.getAttribute("blueBack").getIntValue();
-                    int green = elem.getAttribute("greenBack").getIntValue();
-                    l.setBackgroundUnknown(new Color(red, green, blue));
-                    //l.setOpaque(true);
-                 } catch ( org.jdom.DataConversionException e) {
-                    log.warn("Could not parse color attributes!");
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-        
-            } else {
-                try {
-                    name = element.getAttribute("unknown").getValue();
-                    l.setUnknownText(name);
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-                try {
-                    int red = element.getAttribute("redUnknown").getIntValue();
-                    int blue = element.getAttribute("blueUnknown").getIntValue();
-                    int green = element.getAttribute("greenUnknown").getIntValue();
-                    l.setTextUnknown(new Color(red, green, blue));
-                 } catch ( org.jdom.DataConversionException e) {
-                    log.warn("Could not parse color attributes!");
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-                try {
-                    int red = element.getAttribute("redUnknownBack").getIntValue();
-                    int blue = element.getAttribute("blueUnknownBack").getIntValue();
-                    int green = element.getAttribute("greenUnknownBack").getIntValue();
-                    l.setBackgroundUnknown(new Color(red, green, blue));
-                   // l.setOpaque(true);
-                 } catch ( org.jdom.DataConversionException e) {
-                    log.warn("Could not parse color attributes!");
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-            }
-            textList = element.getChildren("inconsistentText");
-            if (log.isDebugEnabled()) log.debug("Found "+textList.size()+" inconsistentText objects");
-            if (textList.size()>0) {
-                Element elem = textList.get(0);
-                try {
-                    name = elem.getAttribute("text").getValue();
-                    l.setInconsistentText(name);
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-                try {
-                    int red = elem.getAttribute("red").getIntValue();
-                    int blue = elem.getAttribute("blue").getIntValue();
-                    int green = elem.getAttribute("green").getIntValue();
-                    l.setTextInconsistent(new Color(red, green, blue));
-                    //l.setOpaque(true);
-                 } catch ( org.jdom.DataConversionException e) {
-                    log.warn("Could not parse color attributes!");
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-                try {
-                    int red = elem.getAttribute("redBack").getIntValue();
-                    int blue = elem.getAttribute("blueBack").getIntValue();
-                    int green = elem.getAttribute("greenBack").getIntValue();
-                    l.setBackgroundInconsistent(new Color(red, green, blue));
-                    //l.setOpaque(true);
-                 } catch ( org.jdom.DataConversionException e) {
-                    log.warn("Could not parse color attributes!");
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-        
-            } else {
-                try {
-                    name = element.getAttribute("inconsistent").getValue();
-                    l.setInconsistentText(name);
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-                try {
-                    int red = element.getAttribute("redInconsistent").getIntValue();
-                    int blue = element.getAttribute("blueInconsistent").getIntValue();
-                    int green = element.getAttribute("greenInconsistent").getIntValue();
-                    l.setTextInconsistent(new Color(red, green, blue));
-                 } catch ( org.jdom.DataConversionException e) {
-                    log.warn("Could not parse color attributes!");
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-                try {
-                    int red = element.getAttribute("redInconsistentBack").getIntValue();
-                    int blue = element.getAttribute("blueInconsistentBack").getIntValue();
-                    int green = element.getAttribute("greenInconsistentBack").getIntValue();
-                    l.setBackgroundInconsistent(new Color(red, green, blue));
-                 } catch ( org.jdom.DataConversionException e) {
-                    log.warn("Could not parse color attributes!");
-                } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-                }
-            }*/
             int margin=0;
             try {
                 margin=element.getAttribute("margin").getIntValue();

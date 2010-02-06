@@ -13,7 +13,7 @@ import org.jdom.Element;
  * deferring to the present class.
  *
  * @author Pete Cressman, Deprecated
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  * @deprecated 2.9
  */
  
@@ -24,7 +24,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Default implementation for storing the contents of PanelEditor
+     * Default implementation for storing the contents of LayoutEditor
      * @param o Object to store, of type LayoutSensorIcon
      * @return Element containing the complete info
      */

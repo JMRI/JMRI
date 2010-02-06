@@ -15,7 +15,7 @@ import java.awt.Component;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
@@ -63,7 +63,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
      * @param element Top level Element to unpack.
-     * @param o  PanelEditor or LayoutEditor as an Object
+     * @param o  an Editor as an Object
      */
     public void load(Element element, Object o) {
         // create the objects

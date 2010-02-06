@@ -1,7 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MemoryIcon;
@@ -16,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -91,23 +90,14 @@ public class MemoryIconXml extends PositionableLabelXml {
      * Load, starting with the memoryicon element, then
      * all the value-icon pairs
      * @param element Top level Element to unpack.
-     * @param o  PanelEditor as an Object
+     * @param o an Editor as an Object
      */
     @SuppressWarnings("unchecked")
 	public void load(Element element, Object o) {
         // get object class and determine editor being used
-        String className = o.getClass().getName();
-		int lastDot = className.lastIndexOf(".");
 		Editor ed = null;
-		//PanelEditor pe = null;
-		//LayoutEditor le = null;
         MemoryIcon l;
-		String shortClass = className.substring(lastDot+1,className.length());
-		if (shortClass.equals("PanelEditor")) {
-			ed = (PanelEditor) o;
-            l = new MemoryIcon("", ed);
-		}
-		else if (shortClass.equals("LayoutEditor")) {
+		if (o instanceof LayoutEditor) {
 			ed = (LayoutEditor) o;
             l = new jmri.jmrit.display.layoutEditor.MemoryIcon("   ", (LayoutEditor)ed);
             ((LayoutEditor)ed).memoryLabelList.add((jmri.jmrit.display.layoutEditor.MemoryIcon)l);
@@ -117,7 +107,7 @@ public class MemoryIconXml extends PositionableLabelXml {
             l = new MemoryIcon("", ed);
         }
         else {
-			log.error("Unrecognizable class - "+className);
+			log.error("Unrecognizable class - "+o.getClass().getName());
             return;
 		}
         loadTextInfo(l, element);
@@ -142,7 +132,6 @@ public class MemoryIconXml extends PositionableLabelXml {
             //element.getAttribute("memory").getValue()));
         
          // find display level
-        //int level = PanelEditor.MEMORIES.intValue();
         try {
             int level = element.getAttribute("level").getIntValue();
             l.setDisplayLevel(level);

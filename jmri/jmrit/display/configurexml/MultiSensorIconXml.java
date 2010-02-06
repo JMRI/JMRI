@@ -12,7 +12,7 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class MultiSensorIconXml extends PositionableLabelXml {
 
@@ -57,7 +57,7 @@ public class MultiSensorIconXml extends PositionableLabelXml {
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
      * @param element Top level Element to unpack.
-     * @param o  PanelEditor or LayoutEditor as an Object
+     * @param o  an Editor an Object
      */
     @SuppressWarnings("unchecked")
 	public void load(Element element, Object o) {

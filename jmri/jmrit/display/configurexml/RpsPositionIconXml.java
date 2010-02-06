@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for rps.RpsPositionIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class RpsPositionIconXml extends PositionableLabelXml {
 
@@ -62,7 +62,7 @@ public class RpsPositionIconXml extends PositionableLabelXml {
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
      * @param element Top level Element to unpack.
-     * @param o  PanelEditor as an Object
+     * @param o  an Editor as an Object
      */
     public void load(Element element, Object o) {
 		Editor ed = (Editor)o;

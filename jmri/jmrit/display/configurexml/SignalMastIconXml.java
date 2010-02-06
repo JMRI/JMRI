@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalMastIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SignalMastIconXml extends PositionableLabelXml {
 
@@ -49,7 +49,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
     /**
      * Create a SignalMastIcon, then add
      * @param element Top level Element to unpack.
-     * @param o  PanelEditor as an Object
+     * @param o  an Editor as an Object
      */
     public void load(Element element, Object o) {
         // create the objects

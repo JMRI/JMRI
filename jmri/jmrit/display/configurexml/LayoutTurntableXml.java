@@ -7,6 +7,7 @@ package jmri.jmrit.display.configurexml;
  * @deprecated 2.9.4
  *
  */
+@Deprecated
 public class LayoutTurntableXml extends 
         jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml  {
 

@@ -11,7 +11,7 @@ import org.jdom.Element;
  * Handle configuration for display.SecurityElementIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class SecurityElementIconXml extends AbstractXmlAdapter {
 
@@ -52,7 +52,7 @@ public class SecurityElementIconXml extends AbstractXmlAdapter {
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
      * @param element Top level Element to unpack.
-     * @param o  PanelEditor as an Object
+     * @param o  an Editor as an Object
      */
     public void load(Element element, Object o) {
         Editor ed = (Editor)o;
