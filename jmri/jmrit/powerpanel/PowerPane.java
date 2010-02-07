@@ -13,10 +13,18 @@ import java.util.ResourceBundle;
 
 /**
  * Pane for power control
- * @author	    Bob Jacobsen   Copyright (C) 2001
- * @version	    $Revision: 1.5 $
+ * @author	    Bob Jacobsen   Copyright (C) 2001, 2010
+ * @version	    $Revision: 1.6 $
  */
-public class PowerPane extends javax.swing.JPanel implements java.beans.PropertyChangeListener {
+public class PowerPane extends jmri.util.swing.JmriPanel 
+            implements java.beans.PropertyChangeListener {
+
+    public String getHelpTarget() { 
+        return "package.jmri.jmrit.powerpanel.PowerPanelFrame";
+    }
+    public String getTitle() { 
+        return res.getString("TitlePowerPanel");
+    }
 
     // GUI member declarations
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
@@ -38,7 +46,7 @@ public class PowerPane extends javax.swing.JPanel implements java.beans.Property
             });
 
         // general GUI config
-        setLayout(new GridLayout(2,2));
+        setLayout(new jmri.util.javaworld.GridLayout2(2,2));
 
         // install items in GUI
         add(new JLabel(res.getString("LabelLayoutPower")));
