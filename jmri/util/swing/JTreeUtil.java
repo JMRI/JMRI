@@ -1,11 +1,13 @@
 // JTreeUtil.java
 
-package jmri.util;
+package jmri.util.swing;
 
 import javax.swing.JTree;
 import javax.swing.tree.*;
 import java.io.File;
 import org.jdom.*;
+
+import jmri.util.swing.*;
 
 /**
  * Common utility methods for working with JTrees.
@@ -14,12 +16,12 @@ import org.jdom.*;
  * creating a tree from an XML definition
  *
  * @author Bob Jacobsen  Copyright 2003, 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.1 $
  */
 
-public class JTreeUtil {
+public class JTreeUtil extends GuiUtilBase {
 
-    static public TreeNode loadTree(String filename) {
+    static public TreeNode loadTree(String filename, WindowInterface wi) {
         Element root;
         
         try {
@@ -28,17 +30,19 @@ public class JTreeUtil {
             log.error("Could not parse JTree file \""+filename+"\" due to: "+e);
             return null;
         }
-        return treeFromElement(root);
+        return treeFromElement(root, wi);
     }
     
-    static DefaultMutableTreeNode treeFromElement(Element main) {
+    static DefaultMutableTreeNode treeFromElement(Element main, WindowInterface wi) {
         String name = "<none>";
         Element e = main.getChild("name");
         if (e != null) name = e.getText();
+
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(name);
-        
+        node.setUserObject(actionFromNode(main, wi));
+
         for (Object child : main.getChildren("node")) {
-            node.add(treeFromElement((Element)child));
+            node.add(treeFromElement((Element)child, wi));
         }
         return node;
     }

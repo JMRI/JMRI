@@ -1,10 +1,11 @@
 // JMenuUtil.java
 
-package jmri.util;
+package jmri.util.swing;
 
 import javax.swing.*;
 import java.io.File;
 import org.jdom.*;
+import jmri.util.swing.*;
 
 /**
  * Common utility methods for working with JMenus.
@@ -16,9 +17,9 @@ import org.jdom.*;
  * @version $Revision: 1.1 $
  */
 
-public class JMenuUtil {
+public class JMenuUtil extends GuiUtilBase {
 
-    static public JMenu[] loadMenu(String filename) {
+    static public JMenu[] loadMenu(String filename, WindowInterface wi) {
         Element root;
         
         try {
@@ -27,29 +28,29 @@ public class JMenuUtil {
             log.error("Could not parse JMenu file \""+filename+"\" due to: "+e);
             return null;
         }
-        int n = root.getChildren("menu").size();
+        int n = root.getChildren("node").size();
         JMenu[] retval = new JMenu[n];
         
         int i = 0;
-        for (Object child : root.getChildren("menu")) {
-            retval[i++] = jMenuFromElement((Element)child);
+        for (Object child : root.getChildren("node")) {
+            retval[i++] = jMenuFromElement((Element)child, wi);
         }
         return retval;
     }
     
-    static JMenu jMenuFromElement(Element main) {
+    static JMenu jMenuFromElement(Element main, WindowInterface wi) {
         String name = "<none>";
         Element e = main.getChild("name");
         if (e != null) name = e.getText();
         JMenu menu = new JMenu(name);
         
-        for (Object item : main.getChildren()) {
+        for (Object item : main.getChildren("node")) {
             Element child = (Element) item;
-            if (child.getName().equals("node")) {
-                String n = child.getChild("name").getText();
-                menu.add(new JMenuItem(n));
-            } else if (child.getName().equals("menu")) {
-                menu.add(jMenuFromElement(child));
+            if (child.getChildren("node").size() == 0) {  // leaf
+                Action act = actionFromNode(child, wi);
+                menu.add(new JMenuItem(act));
+            } else {
+                menu.add(jMenuFromElement(child, wi)); // not leaf
             }
         }
         return menu;
