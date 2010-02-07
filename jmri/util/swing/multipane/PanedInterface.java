@@ -13,7 +13,7 @@ import jmri.util.swing.*;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class PanedInterface implements jmri.util.swing.WindowInterface {
@@ -39,7 +39,8 @@ public class PanedInterface implements jmri.util.swing.WindowInterface {
         destination.revalidate();
         frame.resetRightToPreferredSizes();
         
-        actions.add(act);
+        if (act != null)
+            actions.add(act);
     }
 
     public void show(final jmri.util.swing.JmriPanel child, 
