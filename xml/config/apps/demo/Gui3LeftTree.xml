@@ -25,6 +25,9 @@
     <node><name>Monitor LocoNet</name>
         <panel>jmri.jmrix.loconet.locomon.LocoMonPane</panel>
     </node>
+    <node><name>Sensors</name>
+      <panel>jmri.jmrit.beantable.sensor.SensorTablePanel</panel>
+    </node>
   </node>
 
 </nodes>
