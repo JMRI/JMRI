@@ -14,7 +14,7 @@ import jmri.util.swing.*;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class MultiPaneWindow extends jmri.util.JmriJFrame {
@@ -58,7 +58,6 @@ public class MultiPaneWindow extends jmri.util.JmriJFrame {
         rightTop.add(new JLabel("(Need some default content here)"));
         
         rightBottom.setLayout(new BoxLayout(rightBottom, BoxLayout.Y_AXIS));
-        rightBottom.add(new JLabel("(Need some default content here)"));
 
         rightUpDownSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, rightTop, rightBottom);
         rightUpDownSplitPane.setOneTouchExpandable(true);
