@@ -28,7 +28,7 @@ import javax.swing.event.*;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen   Copyright 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class Apps3 {
 
@@ -45,6 +45,7 @@ public class Apps3 {
         // TODO setConfigFilename("Demo3Config3.xml", args)
     }
 
+    protected String nameString = "JMRI GUI3 Demo";
     protected String configFilename = "jmriprefs3.xml";  // this appears multiple places, needs rationalization
     boolean configOK;
     
@@ -58,6 +59,7 @@ public class Apps3 {
         installConfigurationManager();
         installShutDownManager();
         addDefaultShutDownTasks();
+        installManagers();
         initializeHelpSystem();
         loadPreferenceFile();
         
@@ -108,13 +110,26 @@ public class Apps3 {
 
     protected void createMainFrame() {
         // create and populate main window
-        mainFrame = new MultiPaneWindow("JMRI GUI3 Demo", "apps/demo");
+        mainFrame = new MultiPaneWindow(nameString, "apps/demo");
     }
     
     protected void installConfigurationManager() {
-        jmri.configurexml.ConfigXmlManager c = new jmri.configurexml.ConfigXmlManager();
-        InstanceManager.setConfigureManager(c);
+        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
+        InstanceManager.setConfigureManager(cm);
         log.debug("config manager installed");
+        // Install Config Manager error handler
+        cm.setErrorHandler(new jmri.configurexml.swing.DialogErrorHandler());
+
+    }
+    
+    protected void installManagers() {
+        // Install a history manager
+        jmri.InstanceManager.store(new jmri.jmrit.revhistory.FileHistory(), jmri.jmrit.revhistory.FileHistory.class);
+        // record startup
+        jmri.InstanceManager.getDefault(jmri.jmrit.revhistory.FileHistory.class).addOperation("app", nameString, null);
+        
+        // Install a user preferences manager
+        jmri.InstanceManager.store(new jmri.managers.DefaultUserMessagePreferences(), jmri.UserPreferencesManager.class);        
     }
 
     protected void loadPreferenceFile() {
