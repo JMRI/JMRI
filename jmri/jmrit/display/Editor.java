@@ -763,6 +763,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
             });			
         locoFrame.pack();
+        if(_targetFrame != null)
+        	locoFrame.setLocation(_targetFrame.getLocation());
 		locoFrame.setVisible(true);
     }    
 
@@ -771,14 +773,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     protected void removeMarkers() {
 		log.debug("Remove markers");
-		for (int i = 0; i < _contents.size(); i++) {
+		for (int i=_contents.size()-1; i>=0; i--) {
             Positionable il = _contents.get(i);
             if (il instanceof LocoIcon) {
-                _contents.remove(il);
-                ((LocoIcon)il).dispose();
+                ((LocoIcon)il).remove();
             }
 		}
-		_targetPanel.repaint();
 	}
     
     /*
