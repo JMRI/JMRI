@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: index.shtml,v 1.7 2010-02-07 04:13:09 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.8 2010-02-07 04:36:04 jacobsen Exp $ -->
 <title>JMRI: Web Access</title>
 
 <!-- Style -->
@@ -194,6 +194,11 @@ format by a web browser.
 The JMRI web server works with your browser to 
 do this formatting.
 You can then view, print, save, etc the formatted file.
+For example, to display "MyFile.xml" from the JMRI preferences directory, use
+<code><pre>
+<a href="http://localhost:12080/prefs/MyFile.xml">http://localhost:12080/prefs/MyFile.xml</a>
+</pre></code>
+
 
 <p>
 
