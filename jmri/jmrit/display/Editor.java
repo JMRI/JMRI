@@ -25,10 +25,6 @@ import javax.swing.event.ListSelectionEvent;
 import jmri.CatalogTree;
 import jmri.InstanceManager;
 import jmri.Light;
-import jmri.Turnout;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.Memory;
 import jmri.Reporter;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -196,8 +192,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected void setTargetPanelSize(int w, int h) {
         if (_debug) log.debug("setTargetPanelSize now w="+w+", h="+h);
         _targetPanel.setSize(w, h);
-        _targetFrame.setSize(w, h);
         _targetPanel.invalidate();
+        _targetFrame.setSize(w, h);
+        _targetFrame.pack();
     }
 
     protected Dimension getTargetPanelSize() {
@@ -299,7 +296,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 g2d.setColor(Color.blue);
                 g2d.draw(bds);
                 g2d.setColor(Color.black);
-                tl.draw(g2d, (float)(_tooltip.getX()-bds.getWidth()/2), (float)_tooltip.getY());
+                tl.draw(g2d, (float)(_tooltip.getX()-bds.getWidth()/2), _tooltip.getY());
                 g2d.setColor(color);
                 g2d.setFont(font);
 
@@ -375,12 +372,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public void setAllPositionable(boolean state) {
         _positionable = state;
         for (int i = 0; i<_contents.size(); i++) {
-            Positionable p = _contents.get(i);
-            if (p instanceof LocoIcon){
-                p.setPositionable(true);
-            } else {
-                p.setPositionable(state);
-            }
+        	Positionable p = _contents.get(i);
+        	p.setPositionable(state);
         }
         for (int i=0; i<NUM_LEVELS; i++) {
             _positionableLevels[i] = state;
@@ -1963,8 +1956,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             } else {
                 selection = selections.get(0); 
             }
-        } else {
-            selection = null;
         }
         if (selection!=null && (_showTooltip || selection.showTooltip())) {
             showToolTip(selection);
