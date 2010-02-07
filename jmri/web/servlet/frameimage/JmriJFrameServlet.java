@@ -35,13 +35,13 @@ import javax.servlet.ServletResponse;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class JmriJFrameServlet implements Servlet {
 
-    String clickRetryTime = "0.5";
-    String noclickRetryTime = "1.0";
+    String clickRetryTime = "1.0";
+    String noclickRetryTime = "5.0";
     
     protected int maxRequestLines = 50;
     protected String serverName = "JFrameServer";
@@ -96,6 +96,16 @@ public class JmriJFrameServlet implements Servlet {
             if (modifiers.length()>0) modifiers = modifiers.substring(1, modifiers.length());
             frameName = frameName.substring(0,frameName.indexOf("?"));
         }
+        
+        // if the click time is being updated, find that and remove from modifiers
+        if (modifiers != null && modifiers.startsWith("retry=")) {
+            modifiers = modifiers.substring(6);
+            int end = modifiers.indexOf("?");
+            if (end<=0) end = modifiers.length();
+            noclickRetryTime = modifiers.substring(0, end);
+            modifiers = modifiers.substring(Math.min(end+1, modifiers.length()));
+            if (modifiers.length() == 0) modifiers = null;
+        }
         // remove any type suffix
         String suffix = null;
         if (frameName.contains(".")) {
@@ -129,7 +139,7 @@ public class JmriJFrameServlet implements Servlet {
             } catch (Exception ec) {
                 log.error("Exception in click code: "+ec);
             }
-        
+
         // Send a reply depending on type
         if (suffix == null) 
             imageReply(frameName, out, frame, res);
@@ -148,7 +158,11 @@ public class JmriJFrameServlet implements Servlet {
     }
     
     void htmlReply(String name, PrintWriter out, JmriJFrame frame, ServletResponse res, boolean click ) {
-        Object[] args = new String[] {"localhost", name, click?clickRetryTime:noclickRetryTime};  // 3rd is retry time
+        // 0 is host
+        // 1 is name
+        // 2 is retry in META tag, click or noclick retry
+        // 3 is retry in next URL, future retry
+        Object[] args = new String[] {"localhost", name, click?clickRetryTime:noclickRetryTime, noclickRetryTime};
         out.println(java.text.MessageFormat.format(rb.getString("StandardHeader"), args));
         out.println(java.text.MessageFormat.format(rb.getString("StandardDocType"), args));
         out.println(java.text.MessageFormat.format(rb.getString("StandardFront"), args));
