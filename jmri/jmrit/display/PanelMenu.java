@@ -14,7 +14,7 @@ import javax.swing.*;
 
 import java.util.ArrayList;
 import jmri.util.JmriJFrame;
-import jmri.jmrit.display.panelEditor.PanelEditor;
+//import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 /**
@@ -25,7 +25,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * @author	Bob Jacobsen   Copyright 2003, 2004
  * @author  Dave Duchamp   Copyright 2007
  * @author  Pete Cressman   Copyright 2010
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class PanelMenu extends JMenu {
     public PanelMenu() {
@@ -77,14 +77,17 @@ public class PanelMenu extends JMenu {
 	/**
 	 * Delete a panel from Show Panel sub menu
 	 */
-	public void deletePanel (Object panel) {
+	public void deletePanel (Editor panel) {
         if (log.isDebugEnabled()) log.debug("deletePanel");
 		if (panelsList.size()==0) return;
 		for (int i = 0; i<panelsList.size(); i++) {
 			Object o = panelsList.get(i);
 			if (o == panel) {
-				panelsSubMenu.remove(i);
+                if (!(panel instanceof LayoutEditor) ) {
+                    panel.getTargetFrame().dispose();
+                }
                 panelsList.remove(panel);
+				panelsSubMenu.remove(i);
                 return;
 			}
 		}
