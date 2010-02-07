@@ -28,9 +28,9 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
-public class BeanTablePane extends JPanel {
+public class BeanTablePane extends jmri.util.swing.JmriPanel {
 
     BeanTableDataModel		dataModel;
     JTable			dataTable;

@@ -5,21 +5,30 @@ package jmri.jmrit.beantable.sensor;
 import javax.swing.*;
 import java.awt.event.*;
 
+import jmri.util.swing.*;
+
 /**
  * Swing action to create and register a
  * SensorTable GUI in a JPanel
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009, 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class SensorTablePanel extends jmri.jmrit.beantable.BeanTablePane {
 
-    public SensorTablePanel() {
+    public SensorTablePanel() {        
+    }
     
+    public void initComponents() throws Exception {
         createModel();
         init(m);
         
+        // fill lower panel
+        jmri.util.swing.JmriPanel p = new jmri.jmrit.beantable.sensor.AddSensorPanel();
+        p.initComponents();
+        p.setMinimumSize(new java.awt.Dimension(0,0));
+        getWindowInterface().show(p, null, jmri.util.swing.WindowInterface.Hint.EXTEND);
     }
     
     jmri.jmrit.beantable.sensor.SensorTableDataModel m;

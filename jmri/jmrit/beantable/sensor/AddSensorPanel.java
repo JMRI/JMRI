@@ -15,10 +15,10 @@ import java.util.ResourceBundle;
  * JPanel to create a new Sensor
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
-public class AddSensorPanel extends JPanel {
+public class AddSensorPanel extends jmri.util.swing.JmriPanel {
 
     public AddSensorPanel() {
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -46,7 +46,7 @@ public class AddSensorPanel extends JPanel {
             add(p);
 
             JButton ok;
-            add(ok = new JButton(rb.getString("ButtonOK")));
+            add(ok = new JButton(rb.getString("ButtonAddSensor")));
             ok.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     okPressed(e);
