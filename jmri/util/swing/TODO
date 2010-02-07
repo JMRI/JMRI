@@ -1,0 +1,28 @@
+Things to do:
+
+* A single action provides one pane. Need a way to cache
+    between separate instances, so that e.g. a "Foo" menu
+    item and tool bar button will show the _same_ panel instance?
+    
+* Put the right stuff in the help menu depending on what's displayed,
+    and where the focus is?
+    
+* SDI needs to get menu, title and help info right
+
+* How do to "double click to open in a new window?"
+
+* Add icons to tree with a custom renderer that looks for one in the Action?
+
+* Have editing Sensor Table, but not merged the two forms (original JmriJFrame
+    and new JmriPanel form)
+
+* Create actions for Window menu - paned mode will have multiple
+    windows with same name?
+    
+* MDI mode hasn't gone far
+
+* Apps3 in apps3.paned needs to move up to apps3, so it forms the
+    new base for multiple kinds, include an SDI mode.
+    
+* documentation of Menu/Tree/ToolBar XML form!
+
