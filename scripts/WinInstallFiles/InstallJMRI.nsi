@@ -833,7 +833,7 @@ Function CheckJRE
     IfErrors 0 JRECheck
       ; -- If we've got an error here on x64, switch to the 32-bit registry,
       ; -- decrease the counter and then re-try
-      StrCmp 0 $x64 JREInitInstall
+      StrCmp 0 $x64JRE JREInitInstall
         SetRegView 32
         DetailPrint "Setting x86 registry view..."
         StrCpy $x64JRE 0
