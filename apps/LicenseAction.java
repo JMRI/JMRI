@@ -9,19 +9,28 @@ import java.awt.*;
 import javax.swing.*;
 import java.io.*;
 
+import jmri.util.swing.*;
+
 /**
  * Swing action to display the JMRI license
  *
- * @author	    Bob Jacobsen    Copyright (C) 2004
- * @version         $Revision: 1.4 $
+ * @author	    Bob Jacobsen    Copyright (C) 2004, 2010
+ * @version         $Revision: 1.5 $
  */
-public class LicenseAction extends AbstractAction {
+public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
 
-    public LicenseAction() { super();}
+    public LicenseAction() { super("License");}
 
-    public void actionPerformed(ActionEvent ev) {
+    public LicenseAction(String s, Icon i, WindowInterface w) {
+        super(s, i, w);
+    }
+    public LicenseAction(String s, WindowInterface w) {
+        super(s, w);
+    }
 
-        JFrame frame = new JFrame();
+    public jmri.util.swing.JmriPanel makePanel() {
+        jmri.util.swing.JmriPanel p = new JmriPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         
         JScrollPane jScrollPane = new JScrollPane();
         JTextPane textPane = new JTextPane();
@@ -45,19 +54,13 @@ public class LicenseAction extends AbstractAction {
         // set up display
         textPane.setEditable(false);
         jScrollPane.getViewport().add(textPane);
-        frame.getContentPane().add(jScrollPane);
-        
-        // configure for display
-        frame.setSize(new Dimension(660, 550));
-        frame.pack();
+        p.add(jScrollPane);        
 
         // start scrolled to top
         JScrollBar b = jScrollPane.getVerticalScrollBar();
         b.setValue(b.getMaximum());
 
-        // show
-		frame.setVisible(true);
-		
+        return p;
     }
 }
 
