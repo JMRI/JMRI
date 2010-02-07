@@ -32,7 +32,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.51 $
+ * @version	$Revision: 1.52 $
  */
 public abstract class XmlFile {
 
@@ -48,12 +48,11 @@ public abstract class XmlFile {
      *<dd>(Note leading slash) Works if there's a copy of the xml directory at the root of
      * whatever served the XML file, e.g. the JMRI web site or a local computer running a server.
      * Doesn't work for e.g. yahoo groups files.
-     *<dt>xml/XSLT/
-     *<dd>Local reference, works for files at root level of e.g. the JMRI web server, and 
-     *also for local files in the JMRI install directory
+     *<dt>http://jmri.org/xml/XSLT/
+     *<dd>Works well for files on the JMRI.org web server, but only that.
      *</dl>
      */
-    static public String xsltLocation = "http://www.jmri.org/xml/XSLT/";
+    static public String xsltLocation = "/xml/XSLT/";
     
     /**
      * Read the contents of an XML file from its filename.  
@@ -535,7 +534,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.51 2010-01-29 17:56:22 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.52 2010-02-07 04:33:50 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
