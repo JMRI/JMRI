@@ -32,5 +32,29 @@
   JavaHelpSearch</data>
 </view>
 
+<view>
+  <name>Favorites</name>
+  <label>Favorites</label>
+  <type>javax.help.FavoritesView</type>
+</view>
+
+<presentation default="true" displayviewimages="true">
+    <name>main window</name>
+    <size width="700" height="500" />
+    <location x="100" y="100" />
+    <title>JMRI Help</title>
+    <image>toplevelfolder</image>
+    <toolbar>
+	    <helpaction>javax.help.BackAction</helpaction>
+	    <helpaction>javax.help.ForwardAction</helpaction>
+	    <helpaction>javax.help.SeparatorAction</helpaction>
+	    <helpaction>javax.help.HomeAction</helpaction>
+	    <helpaction>javax.help.FavoritesAction</helpaction>
+	    <helpaction>javax.help.ReloadAction</helpaction>
+	    <helpaction>javax.help.SeparatorAction</helpaction>
+	    <helpaction>javax.help.PrintAction</helpaction>
+	    <helpaction>javax.help.PrintSetupAction</helpaction>
+    </toolbar>
+</presentation>
 
 </helpset>
