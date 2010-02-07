@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.5 2010-02-04 20:48:41 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.6 2010-02-07 19:03:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -64,6 +64,10 @@ see our
 <a href="/Copyright.html">copyright and licensing page</a>.</p></b>
 
 <h3>New warnings for this version:</h3>
+
+If you're using a Lenz XPressNet connection, please
+uncheck the "Check Buffer Status" box in the preference
+pane where you selected the Lenz protocol.
 
 <h3>Older warnings</h3>
 
@@ -220,6 +224,20 @@ Kevin Dickerson added "invert" to SPROG-driven turnouts.
 Matt Harris updated the Windows launch script to properly handle mixed systems
 with 32-bit Java on 64-bit Windows.
 
+<p>
+Many improvements to the built-in
+<a href="http://jmri.org/help/en/html/web/index.shtml">mini web server</a>,
+including improvements to iPhone support and allowing more browser types to
+display JMRI panel files.
+
+<p>
+The communications library issues that prevented JMRI 2.9.3 from being used
+on Mac OS X 1o.4 has been fixed.
+
+<p>
+Help system now can directly print help pages. See the new icons
+at the top of any help screen. Also, you can know mark a page as
+a "favorite" and easily come back to it later.
 
 <!--#include virtual="/Footer" -->
 

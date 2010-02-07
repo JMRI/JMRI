@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.3.shtml,v 1.16 2010-02-04 20:48:41 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.3.shtml,v 1.17 2010-02-07 19:03:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -76,6 +76,11 @@ required.  On Mac, no actions are necessary, the new distribution directory
 should just work.  On Linux, you may have to install and/or uninstall 
 various communications library parts, see the
 <a href="../install/Linux.html">JMRI Linux pages</a> for more info.
+
+<p>
+If you're using a Lenz XPressNet connection, please
+uncheck the "Check Buffer Status" box in the preference
+pane where you selected the Lenz protocol.
 
 <p>
 Some user of 64-bit Windows 7 have reported compatibility problems.
