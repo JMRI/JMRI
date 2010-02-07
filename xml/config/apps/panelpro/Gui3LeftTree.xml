@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="http://jmri.org/xml/XSLT/aspecttable.xsl" type="text/xsl"?>
 
-<node
+<nodes
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
 >
 
@@ -26,6 +27,9 @@
         </node>
         <node><name>Add Buttons</name>
         </node>
+    </node>
+    <node><name>Tabbed window</name>
+        <panel>apps.gui3.TabbedPreferences</panel>
     </node>
   </node>
 
@@ -62,6 +66,7 @@
 
   <node><name>Controls</name>
     <node><name>Power Control</name>
+        <adapter>jmri.jmrit.powerpanel.PowerPanelAction</adapter>
     </node>
     <node><name>Turnout Control</name>
     </node>
@@ -139,6 +144,7 @@
 
   <node><name>LocoNet</name>
     <node><name>Monitor LocoNet</name>
+        <panel>jmri.jmrix.loconet.locomon.LocoMonPane</panel>
     </node>
     <node><name>Monitor Slots</name>
     </node>
@@ -184,5 +190,5 @@
   <node><name>Debugging Tools</name>
   </node>
 
-</node>
+</nodes>
   
