@@ -5,6 +5,8 @@ package apps.gui3.paned;
 import jmri.*;
 import jmri.jmrit.XmlFile;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.*;
+import jmri.util.swing.multipane.MultiPaneWindow;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -26,7 +28,7 @@ import javax.swing.event.*;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen   Copyright 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class Apps3 {
 
@@ -38,12 +40,12 @@ public class Apps3 {
         // TODO Launch splash screen: splash(true)
 
         jmri.util.Log4JUtil.initLog4J();
-        log.info(jmri.util.Log4JUtil.startupInfo("Demo3"));
+        log.info(jmri.util.Log4JUtil.startupInfo("Gui3IDE"));
 
         // TODO setConfigFilename("Demo3Config3.xml", args)
     }
 
-    protected String configFilename = null;
+    protected String configFilename = "jmriprefs3.xml";  // this appears multiple places, needs rationalization
     boolean configOK;
     
     /**
@@ -54,59 +56,47 @@ public class Apps3 {
     public Apps3() {
         // pre-GUI work
         installConfigurationManager();
-        loadPreferenceFile();
         installShutDownManager();
         addDefaultShutDownTasks();
+        initializeHelpSystem();
+        loadPreferenceFile();
+        
+        // create test dummy objects
+        createDemoScaffolding();
         
         // create GUI
         createMainFrame();
-        addMainToolBar();
-        addMainMenuBar();
-        //addASampleFrame();
-        displayMainFrame();
+        
+        // set to min size for demo
+        displayMainFrame( new Dimension(800, 600));  // or mainFrame.getMaximumSize()
+    }
+        
+    MultiPaneWindow mainFrame;
+    
+    protected void initializeHelpSystem() {
+        try {
+
+            // initialize system and check for success
+            boolean ok = jmri.util.HelpUtil.initOK();
+            
+            // tell help to use default browser for external types
+            javax.help.SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
+    
+            // help items are set in the various Tree/Menu/Toolbar constructors        
+        } catch (java.lang.Throwable e3) {
+            log.error("Unexpected error creating help: "+e3);
+        }
     }
     
-    
-    JPanel          desktop;
-    
-    JmriJFrame      mainFrame;
-    JPanel          left = new JPanel();
-    JSplitPane      right;
-    JPanel          rightTop = new JPanel();
-    JPanel          rightBottom = new JPanel();
-    
-    protected void createMainFrame() {
-        mainFrame = new JmriJFrame("My Layout");
-        
-        
-        left.add(new JLabel("Left"));
-        
+    protected void createDemoScaffolding() {
         jmri.managers.InternalSensorManager m = new jmri.managers.InternalSensorManager();
         InstanceManager.setSensorManager(m);
         InstanceManager.sensorManagerInstance().provideSensor("IS1");
         InstanceManager.sensorManagerInstance().provideSensor("IS2");
         InstanceManager.sensorManagerInstance().provideSensor("IS3");
-
-        
-        
-        rightTop.setBorder(BorderFactory.createLineBorder(Color.black));
-        rightTop.setLayout(new BoxLayout(rightTop, BoxLayout.Y_AXIS));
-        rightTop.add(new JLabel("Sensor Table"));
-        rightTop.add(new jmri.jmrit.beantable.sensor.SensorTablePanel());
-        
-        rightBottom.setLayout(new BoxLayout(rightBottom, BoxLayout.Y_AXIS));
-        rightBottom.add(new JLabel("Add Sensor"));
-        rightBottom.add(new jmri.jmrit.beantable.sensor.AddSensorPanel());
-
-        right = new JSplitPane(JSplitPane.VERTICAL_SPLIT, rightTop, rightBottom);
-        right.setOneTouchExpandable(true);
-        JSplitPane p = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, makeLeftTree(), right);
-        p.setOneTouchExpandable(true);
-        
-        mainFrame.getContentPane().add(p, BorderLayout.CENTER);
     }
-    
-    protected JComponent makeSensorTableDemo() {
+
+    protected JComponent getSensorTableDemo() {
         // put a table in rightTop
         jmri.jmrit.beantable.BeanTableDataModel dataModel = new jmri.jmrit.beantable.sensor.SensorTableDataModel();
         jmri.util.com.sun.TableSorter sorter = new jmri.util.com.sun.TableSorter(dataModel);
@@ -115,37 +105,16 @@ public class Apps3 {
         JScrollPane dataScroll	= new JScrollPane(dataTable);
         return dataScroll;
     }
-    
-    protected JScrollPane makeLeftTree() {
-        JTree tree;
-        TreeNode topNode;
-        
-        topNode = jmri.util.JTreeUtil.loadTree("config/Gui3LeftTree.xml");
-        
-        tree = new JTree(topNode);
-        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);        
-        
-        // install in scroll area
-        JScrollPane treeView = new JScrollPane(tree);
-        treeView.setMinimumSize(new Dimension(250,600));
-        treeView.setPreferredSize(new Dimension(250,600));
-        return treeView;
-    }
-    
-    protected void addMainMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
-        
-        JMenu[] menus = jmri.util.JMenuUtil.loadMenu("config/Gui3Menus.xml");
-        for (JMenu j : menus) 
-            menuBar.add(j);
 
-        mainFrame.setJMenuBar(menuBar);
+    protected void createMainFrame() {
+        // create and populate main window
+        mainFrame = new MultiPaneWindow("JMRI GUI3 Demo", "apps/demo");
     }
-    
     
     protected void installConfigurationManager() {
-        InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
-        log.debug("start load config file");
+        jmri.configurexml.ConfigXmlManager c = new jmri.configurexml.ConfigXmlManager();
+        InstanceManager.setConfigureManager(c);
+        log.debug("config manager installed");
     }
 
     protected void loadPreferenceFile() {
@@ -197,20 +166,6 @@ public class Apps3 {
     }
     
     
-    protected void addMainToolBar() {
-        //JToolBar toolBar = new JToolBar("My Layout toolbar", JToolBar.HORIZONTAL);
-        
-        //toolBar.add(new JButton("Preferences"));
-        //toolBar.add(new JButton("New Loco"));
-        //toolBar.add(new JButton(new ImageIcon("resources/icons/misc/Checkmark-green.gif")));
-        //toolBar.add(new JButton("Help"));
-          
-        JToolBar toolBar = jmri.util.JToolBarUtil.loadToolBar("config/Gui3MainToolBar.xml");
-        // this takes up space at the top until pulled to floating
-        mainFrame.getContentPane().add(toolBar, BorderLayout.NORTH);
-        //desktop.add(toolBar);
-    }
-    
     /**
      * Set a toolbar to be initially floating.
      * This doesn't quite work right.
@@ -253,7 +208,6 @@ public class Apps3 {
         
         // show
         frame.setVisible(true);
-        desktop.add(frame);
     }
     
     jmri.GuiLafConfigPane guiPrefs;
@@ -282,8 +236,8 @@ public class Apps3 {
     }
     
     
-    protected void displayMainFrame() {
-        mainFrame.setSize(mainFrame.getMaximumSize());
+    protected void displayMainFrame(Dimension d) {
+        mainFrame.setSize(d);
         mainFrame.setVisible(true);
     }
     
