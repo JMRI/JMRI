@@ -5,10 +5,15 @@ package jmri.util;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.Icon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import java.awt.event.ActionEvent;
 
 import java.net.URL;
 
@@ -20,7 +25,7 @@ import java.net.URL;
  * It assumes that Java Help 1.1.8 is in use
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class HelpUtil {
@@ -101,7 +106,7 @@ public class HelpUtil {
     static boolean init = false;
     static boolean failed = true;
         
-    static boolean initOK() {
+    static public boolean initOK() {
         if (!init) {
             init = true;
             try {
@@ -120,7 +125,7 @@ public class HelpUtil {
                     return false;
                 }
                 globalHelpBroker = globalHelpSet.createHelpBroker();
-    
+
             } catch (java.lang.NoSuchMethodError e2) {
                 log.error("Is jh.jar available? Error starting help system: "+e2);
             }
@@ -129,9 +134,23 @@ public class HelpUtil {
         return !failed;
     }
     
+    static public HelpBroker getGlobalHelpBroker() {
+        return globalHelpBroker;
+    }
+
+    static public Action getHelpAction(final String name, final Icon icon, final String id) {
+        return new AbstractAction(name, icon) {
+            String helpID = id;
+            public void actionPerformed(ActionEvent event) {
+                globalHelpBroker.setCurrentID(helpID);
+                globalHelpBroker.setDisplayed(true);
+            }
+        };
+    }
+    
     static HelpSet globalHelpSet;
     static HelpBroker globalHelpBroker;
-
+    
     // initialize logging
     static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(HelpUtil.class.getName());
 }
