@@ -20,7 +20,7 @@ import javax.swing.*;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public interface WindowInterface {
@@ -46,7 +46,7 @@ public interface WindowInterface {
      * Should 2nd and subsequent requests
      * for a panel (e.g. in an Action) create a
      * new instance, or provide the 1st one?
-     *@returns true if multiple instances should be provided,
+     *@return true if multiple instances should be provided,
      *         false if only one should be provided.
      */
     public boolean multipleInstances();
