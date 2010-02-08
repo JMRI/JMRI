@@ -534,56 +534,60 @@ public class ControlPanelEditor extends Editor implements ItemListener {
     protected void showPopUp(Positionable p, MouseEvent event) {
         JPopupMenu popup = new JPopupMenu();
 
-        popup.add(p.getNameString());
+        if (p.doPopupMenu()) {
+            popup.add(p.getNameString());
 
-        setPositionableMenu(p, popup);
+            setPositionableMenu(p, popup);
 
-        if (p.isPositionable()) {
-            setShowCoordinatesMenu(p, popup);
-            setShowAlignmentMenu(p, popup);
+            if (p.isPositionable()) {
+                setShowCoordinatesMenu(p, popup);
+                setShowAlignmentMenu(p, popup);
+            }
+            setDisplayLevelMenu(p, popup);
+            setHiddenMenu(p, popup);
+
+                 // items not common to all, but common to type
+            if (p instanceof PositionableLabel ) {
+                PositionableLabel pl = (PositionableLabel)p;
+                if (pl.isIcon()) {
+                    popup.addSeparator();
+                    pl.setRotateOrthogonalMenu(popup);        
+                    pl.setRotateMenu(popup);        
+                    pl.setScaleMenu(popup);        
+                    popup.addSeparator();
+                    pl.setEditIconMenu(popup);        
+                }
+                if (pl.isText()) {
+                    popup.addSeparator();
+                    pl.setFixedTextMenu(popup);        
+                    popup.addSeparator();
+                    pl.setTextMarginMenu(popup);        
+                    pl.setBackgroundFontColorMenu(popup);        
+                    popup.addSeparator();
+                    pl.setTextBorderMenu(popup);        
+                    popup.addSeparator();
+                    pl.setTextFontMenu(popup);
+                    pl.setTextEditMenu(popup);
+                    pl.setTextJustificationMenu(popup);
+                    popup.addSeparator();
+                }
+                if (pl.isControl()) {
+                    pl.setDisableControlMenu(popup);
+                }
+            } else if (p instanceof PositionableJComponent ) {
+                p.setScaleMenu(popup);        
+            } else if (p instanceof PositionableJPanel ) {
+                p.setEditIconMenu(popup);        
+            }
+            // for Positionables with unique settings
+            p.showPopUp(popup);
+
+            setShowTooltipMenu(p, popup);
+
+            setRemoveMenu(p, popup);
+        } else {
+            p.showPopUp(popup);
         }
-        setDisplayLevelMenu(p, popup);
-        setHiddenMenu(p, popup);
-
-             // items not common to all, but common to type
-        if (p instanceof PositionableLabel ) {
-            PositionableLabel pl = (PositionableLabel)p;
-            if (pl.isIcon()) {
-                popup.addSeparator();
-                pl.setRotateOrthogonalMenu(popup);        
-                pl.setRotateMenu(popup);        
-                pl.setScaleMenu(popup);        
-                popup.addSeparator();
-                pl.setEditIconMenu(popup);        
-            }
-            if (pl.isText()) {
-                popup.addSeparator();
-                pl.setFixedTextMenu(popup);        
-                popup.addSeparator();
-                pl.setTextMarginMenu(popup);        
-                pl.setBackgroundFontColorMenu(popup);        
-                popup.addSeparator();
-                pl.setTextBorderMenu(popup);        
-                popup.addSeparator();
-                pl.setTextFontMenu(popup);
-                pl.setTextEditMenu(popup);
-                pl.setTextJustificationMenu(popup);
-                popup.addSeparator();
-            }
-            if (pl.isControl()) {
-                pl.setDisableControlMenu(popup);
-            }
-        } else if (p instanceof PositionableJComponent ) {
-            p.setScaleMenu(popup);        
-        } else if (p instanceof PositionableJPanel ) {
-            p.setEditIconMenu(popup);        
-        }
-        // for Positionables with unique settings
-        p.showPopUp(popup);
-
-        setShowTooltipMenu(p, popup);
-
-        setRemoveMenu(p, popup);
         popup.show((Component)p, p.getWidth()/2, p.getHeight()/2);
     }
 

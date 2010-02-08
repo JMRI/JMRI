@@ -52,7 +52,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class LayoutEditor extends Editor {
@@ -498,6 +498,7 @@ public class LayoutEditor extends Editor {
         super.setTargetPanel(null, null);
         super.setTargetPanelSize(width, height);
         setSize(screenDim.width, screenDim.height);
+        topEditBar.setSize(screenDim.width, topEditBar.getPreferredSize().height);
         
 		// setup help bar
 		helpBar = new JPanel();
@@ -545,6 +546,20 @@ public class LayoutEditor extends Editor {
         editModeItem.setSelected(isEditable());
         positionableItem.setSelected(allPositionable());
         controlItem.setSelected(allControlling());
+        switch (_scrollState) {
+            case SCROLL_NONE:
+                scrollNone.setSelected(true);
+                break;
+            case SCROLL_BOTH:
+                scrollBoth.setSelected(true);
+                break;
+            case SCROLL_HORIZONTAL:
+                scrollHorizontal.setSelected(true);
+                break;
+            case SCROLL_VERTICAL:
+                scrollVertical.setSelected(true);
+                break;
+        }
     }
 
     public void setSize(int w, int h) {
@@ -999,10 +1014,7 @@ public class LayoutEditor extends Editor {
 	}
 	
 	private void setZoom(double factor) {
-		//zoomScale = factor;
         setPaintScale(factor);
-		// set scroll pane size
-        setScrollbarScale(factor);
 	}
 
 	private Point2D windowCenter() {
@@ -1907,12 +1919,13 @@ public class LayoutEditor extends Editor {
 		}	
 	}    
     
-    
     public void setScroll(int state) {
-        if (isEditable()) { return; }
-        super.setScroll(state);
+        if (isEditable()) { 
+            super.setScroll(SCROLL_BOTH);
+        } else {
+            super.setScroll(state);
+        }
     }
-    
 	
 	/** 
 	 * Add a layout turntable at location specified
@@ -2795,47 +2808,50 @@ public class LayoutEditor extends Editor {
     protected void showPopUp(Positionable p, MouseEvent event) {
         JPopupMenu popup = new JPopupMenu();
 
-        popup.add(p.getNameString());
+        if (p.doPopupMenu()) {
+            popup.add(p.getNameString());
 
-        if (p.isPositionable()) {
-            setShowCoordinatesMenu(p, popup);
-        }
-        setDisplayLevelMenu(p, popup);
-        setPositionableMenu(p, popup);
-
-          // items not common to all
-        if (p instanceof PositionableLabel ) {
-            PositionableLabel pl = (PositionableLabel)p;
-            if (pl.isIcon()) {
-                popup.addSeparator();
-                pl.setRotateOrthogonalMenu(popup);        
-                popup.addSeparator();
-                pl.setEditIconMenu(popup);        
-            } else if (pl.isText()) {
-                popup.addSeparator();
-                pl.setFixedTextMenu(popup);        
-                pl.setTextMarginMenu(popup);        
-                popup.addSeparator();
-                pl.setBackgroundFontColorMenu(popup);        
-                pl.setTextBorderMenu(popup);        
-                popup.addSeparator();
-                pl.setTextFontMenu(popup);
-                pl.setTextEditMenu(popup);
-                pl.setTextJustificationMenu(popup);
+            if (p.isPositionable()) {
+                setShowCoordinatesMenu(p, popup);
             }
-            if (pl.isControl()) {
-                pl.setDisableControlMenu(popup);
+            setDisplayLevelMenu(p, popup);
+            setPositionableMenu(p, popup);
+
+              // items not common to all
+            if (p instanceof PositionableLabel ) {
+                PositionableLabel pl = (PositionableLabel)p;
+                if (pl.isIcon()) {
+                    popup.addSeparator();
+                    pl.setRotateOrthogonalMenu(popup);        
+                    popup.addSeparator();
+                    pl.setEditIconMenu(popup);        
+                } else if (pl.isText()) {
+                    popup.addSeparator();
+                    pl.setFixedTextMenu(popup);        
+                    pl.setTextMarginMenu(popup);        
+                    popup.addSeparator();
+                    pl.setBackgroundFontColorMenu(popup);        
+                    pl.setTextBorderMenu(popup);        
+                    popup.addSeparator();
+                    pl.setTextFontMenu(popup);
+                    pl.setTextEditMenu(popup);
+                    pl.setTextJustificationMenu(popup);
+                }
+                if (pl.isControl()) {
+                    pl.setDisableControlMenu(popup);
+                }
+            } else if (p instanceof PositionableJComponent ) {
+                ((PositionableJComponent)p).setScaleMenu(popup);        
             }
-        } else if (p instanceof PositionableJComponent ) {
-            ((PositionableJComponent)p).setScaleMenu(popup);        
-        }
 
-        // for Positionables with unique settings
-        p.showPopUp(popup);
+            // for Positionables with unique settings
+            p.showPopUp(popup);
 
-        setRemoveMenu(p, popup);
-        setHiddenMenu(p, popup);
-        
+            setRemoveMenu(p, popup);
+            setHiddenMenu(p, popup);
+        } else {
+            p.showPopUp(popup);
+        }        
         popup.show((Component)p, p.getWidth()/2, p.getHeight()/2);
     }
 
@@ -4132,15 +4148,17 @@ public class LayoutEditor extends Editor {
      *  (which are the primary way that items are edited).
      * @param state true for editable.
      */
-    public void setAllEditable(boolean state) {
-        super.setAllEditable(state);
-        topEditBar.setVisible(state);
-        setShowHidden(state);
-        if (state) {
+    public void setAllEditable(boolean visible) {
+    	int restoreScroll = _scrollState;
+        super.setAllEditable(visible);
+        topEditBar.setVisible(visible);
+        setShowHidden(visible);
+        if (visible) {
         	setScroll(SCROLL_BOTH);
+        	_scrollState = restoreScroll;
         	helpBar.setVisible(showHelpBar);
         } else {
-        	//setScroll(_scrollState);
+        	setScroll(_scrollState);
         	helpBar.setVisible(false);
         }
         awaitingIconChange = false;
