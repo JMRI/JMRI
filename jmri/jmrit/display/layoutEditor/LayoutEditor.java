@@ -52,7 +52,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class LayoutEditor extends Editor {
@@ -2852,7 +2852,8 @@ public class LayoutEditor extends Editor {
         } else {
             p.showPopUp(popup);
         }        
-        popup.show((Component)p, p.getWidth()/2, p.getHeight()/2);
+        popup.show((Component)p, p.getWidth()/2+(int)((getPaintScale()-1.0)*p.getX()),
+                    p.getHeight()/2+(int)((getPaintScale()-1.0)*p.getY()));
     }
 
 	private long whenReleased = 0;
