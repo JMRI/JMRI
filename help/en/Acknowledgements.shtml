@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.100 2010-02-01 08:33:14 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.101 2010-02-08 07:01:05 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -60,6 +60,7 @@
 	made important contributions to the base code, added Lenz XPA support,
 	wrote the Lenz feedback code, wrote the Lenz consisting support,
 	provided the SLSF (Frisco) signals,
+	provided the jmris server tree,
 	and in general has made more contributions than can be counted.
     <li>Andrew Berridge, who debugged and fixed problems with the SPROG 
     serial interface
@@ -217,7 +218,7 @@
 	<li>Matthew Harris, who provided instructions for installing JMRI on EeePCs,
 	updated the roster pane to work on small screens,
 	improved handling of screen insets,
-	provided a shutdown task,
+	provided a shutdown task, wrote our Windows installers, 
 	greatly improved the handling of scroll bars on panels, 
 	and added greatly improved audio capabilities.
 	<LI>Phil Hartung, who provided some CTC graphics
