@@ -52,7 +52,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class LayoutEditor extends Editor {
@@ -4147,14 +4147,14 @@ public class LayoutEditor extends Editor {
      *  Does this by invoke the {@link Editor#setAllEditable} function of
      *  the parent class. This also controls the relevant pop-up menu items
      *  (which are the primary way that items are edited).
-     * @param state true for editable.
+     * @param editable true for editable.
      */
-    public void setAllEditable(boolean visible) {
+    public void setAllEditable(boolean editable) {
     	int restoreScroll = _scrollState;
-        super.setAllEditable(visible);
-        topEditBar.setVisible(visible);
-        setShowHidden(visible);
-        if (visible) {
+        super.setAllEditable(editable);
+        topEditBar.setVisible(editable);
+        setShowHidden(editable);
+        if (editable) {
         	setScroll(SCROLL_BOTH);
         	_scrollState = restoreScroll;
         	helpBar.setVisible(showHelpBar);
