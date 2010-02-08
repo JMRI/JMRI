@@ -176,8 +176,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         _targetFrame.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         _panelScrollPane = new JScrollPane(_targetPanel);
-        _panelScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        _panelScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        //_panelScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        //_panelScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         Container contentPane = _targetFrame.getContentPane();
         contentPane.add(_panelScrollPane);
         _targetFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -187,6 +187,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         });
         _targetPanel.addMouseListener(this);
         _targetPanel.addMouseMotionListener(this);
+        _targetFrame.pack();
         _targetFrame.setVisible(true);
     }
 
@@ -194,7 +195,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (_debug) log.debug("setTargetPanelSize now w="+w+", h="+h);
         _targetPanel.setSize(w, h);
         _targetPanel.invalidate();
-        _targetFrame.setSize(w, h);
+        //_targetFrame.setSize(w, h);
         _targetFrame.pack();
     }
 
@@ -216,8 +217,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected final double getPaintScale() {
         return _paintScale;
     }
-    protected final void setPaintScale(double scale) {
-        _paintScale = scale;
+    protected final void setPaintScale(double newScale) {
+		double ratio = newScale/_paintScale;
+        _paintScale = newScale;
+        setScrollbarScale(ratio);
     }
 
     /**
@@ -269,7 +272,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         public void paint(Graphics g) {
             Graphics2D g2d = (Graphics2D)g;
-            g2d.scale(_paintScale,_paintScale);
+            g2d.scale(_paintScale, _paintScale);
             super.paint(g);
             paintTargetPanel(g);
             if (_selectRect != null) {
@@ -292,7 +295,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 bds.setRect(bds.getX()+_tooltip.getX()-bds.getWidth()/2-4, 
                             bds.getY()+_tooltip.getY()-4, 
                             bds.getWidth()+5, bds.getHeight()+5);
-                g2d.setColor(Color.yellow);
+                g2d.setColor(Color.white);
                 g2d.fill(bds);
                 g2d.setColor(Color.blue);
                 g2d.draw(bds);
@@ -304,21 +307,16 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
         }
     }
-/*	
-    protected JScrollBar getTargetHorizontalScrollBar() {
-        return _panelScrollPane.getHorizontalScrollBar();
-    }
-
-    protected JScrollBar getTargetVerticalScrollBar() {
-        return _panelScrollPane.getVerticalScrollBar();
-    }
-*/
-    protected void setScrollbarScale(double factor) {
-		double ratio = factor/getPaintScale();
-		Dimension dim = getTargetPanelSize();
+    
+    private void setScrollbarScale(double ratio) {
+		//Dimension dim = getTargetPanelSize();
+        //Dimension dim = _targetPanel.getPreferredSize();
+        Dimension dim = _targetPanel.getMaximumSize();
 		int tpWidth = (int)((dim.width)*ratio);
 		int tpHeight = (int)((dim.height)*ratio);
-		setTargetPanelSize(tpWidth,tpHeight);
+		//setTargetPanelSize(tpWidth,tpHeight);
+        _targetPanel.setSize(tpWidth,tpHeight);
+        if (_debug) log.debug("setScrollbarScale: ratio= "+ratio+", tpWidth= "+tpWidth+", tpHeight= "+tpHeight);
 		// compute new scroll bar positions in order to keep image centered
         JScrollBar horScroll = _panelScrollPane.getHorizontalScrollBar();
         JScrollBar vertScroll = _panelScrollPane.getVerticalScrollBar();
@@ -487,12 +485,15 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _scrollState = state;
 	}
 
-	public void setScroll(String state) {
-        if (state.equals("none") || state.equals("no")) this.setScroll(SCROLL_NONE);
-        else if (state.equals("horizontal")) this.setScroll(SCROLL_HORIZONTAL);
-        else if (state.equals("vertical")) this.setScroll(SCROLL_VERTICAL);
-        else this.setScroll(SCROLL_BOTH); // anything else is both
+    public void setScroll(String strState) {
+        int state = SCROLL_BOTH;
+        if (strState.equalsIgnoreCase("none") || strState.equalsIgnoreCase("no")) state = SCROLL_NONE;
+        else if (strState.equals("horizontal")) state = SCROLL_HORIZONTAL;
+        else if (strState.equals("vertical")) state = SCROLL_VERTICAL;
+        if (_debug) log.debug("setScroll: strState= "+strState+", state= "+state);
+        setScroll(state);
     }
+    
 
     public String getScrollable() {
         String value = new String();
@@ -1633,6 +1634,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     public void dispose() {		
         if (_debug) log.debug("Editor delete and dispose done.");
+        Iterator <JFrameItem> iter = _iconEditorFrame.values().iterator();
+        while (iter.hasNext()) {
+            JFrameItem frame = iter.next();
+            frame.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+            frame.dispose();
+        }
 		// delete panel - deregister the panel for saving 
         InstanceManager.configureManagerInstance().deregister(this);
 		jmri.jmrit.display.PanelMenu.instance().deletePanel(this);
