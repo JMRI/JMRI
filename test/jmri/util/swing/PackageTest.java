@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.util.swing tree
  *
  * @author	    Bob Jacobsen  Copyright 2003
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class PackageTest extends TestCase {
     
@@ -30,6 +30,7 @@ public class PackageTest extends TestCase {
         suite.addTest(JmriAbstractActionTest.suite());
         suite.addTest(jmri.util.swing.multipane.PackageTest.suite());
         suite.addTest(jmri.util.swing.sdi.PackageTest.suite());
+        suite.addTest(jmri.util.swing.mdi.PackageTest.suite());
 
         return suite;
     }
