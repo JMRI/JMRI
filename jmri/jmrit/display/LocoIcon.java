@@ -20,7 +20,7 @@ import javax.swing.JRadioButtonMenuItem;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class LocoIcon extends PositionableLabel {
@@ -118,27 +118,27 @@ public class LocoIcon extends PositionableLabel {
     public void setLocoColor(String color){
     	log.debug("Set loco color to " + color);
     	if(color.equals(WHITE)){
-    		super.setIcon (white);
+    		super.updateIcon (white);
     		setForeground (Color.black);
     	}
     	if(color.equals(GREEN)){
-    		super.setIcon (green);
+    		super.updateIcon (green);
     		setForeground (Color.black);
     	}
     	if(color.equals(GRAY)){
-    		super.setIcon (gray);
+    		super.updateIcon (gray);
     		setForeground (Color.white);
     	}
     	if(color.equals(RED)){
-    		super.setIcon (red);
+    		super.updateIcon (red);
     		setForeground (Color.white);
     	}
     	if(color.equals(BLUE)){
-    		super.setIcon (blue);
+    		super.updateIcon (blue);
     		setForeground (Color.white);
     	}
     	if(color.equals(YELLOW)){
-    		super.setIcon (yellow);
+    		super.updateIcon (yellow);
     		setForeground (Color.black);
     	}
     }

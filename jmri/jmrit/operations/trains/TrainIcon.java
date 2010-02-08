@@ -16,12 +16,12 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 
 /**
- * An icon that displays the position of a loco on a panel.<P>
+ * An icon that displays the position of a train icon on a panel.<P>
  * The icon can always be repositioned and its popup menu is
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class TrainIcon extends LocoIcon {
@@ -32,8 +32,6 @@ public class TrainIcon extends LocoIcon {
     	super(editor); 
     }
  
-    boolean enablePopUp = true;
-    jmri.jmrit.throttle.ThrottleFrame tf = null;
     /**
      * Pop-up only if right click and not dragged 
      */
@@ -58,8 +56,6 @@ public class TrainIcon extends LocoIcon {
         popup.add(makeLocoIconMenu());
 	}
     
-   
-    
     Train train = null;
     
     public void setTrain (Train train){
@@ -79,6 +75,8 @@ public class TrainIcon extends LocoIcon {
     private int getConsistNumber(){
     	return consistNumber;
     }
+    
+    jmri.jmrit.throttle.ThrottleFrame tf = null;
     
     private void createThrottle(){
     	tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();

@@ -41,7 +41,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.64 $
+ * @version $Revision: 1.65 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1128,10 +1128,11 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 		if (trainIcon != null && trainIcon.isActive()){
 			setTrainIconColor();
+			trainIcon.setShowTooltip(true);
 			if (getCurrentLocationName().equals(""))
-				trainIcon.setToolTipText(getDescription() + " "+TERMINATED+" ("+ getTrainTerminatesName()+")");
+				trainIcon.setTooltip(getDescription() + " "+TERMINATED+" ("+ getTrainTerminatesName()+")");
 			else
-				trainIcon.setToolTipText(getDescription() + " at " + getCurrentLocationName() + " next "+getNextLocationName());
+				trainIcon.setTooltip(getDescription() + " at " + getCurrentLocationName() + " next "+getNextLocationName());
 			if (rl != null){
 				if (rl.getTrainIconX()!=0 || rl.getTrainIconY()!=0){
 					if (animation)
@@ -1175,10 +1176,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			trainIcon.dispose();
 		}
 		Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
-		if (editor != null) {
-            trainIcon = new TrainIcon(editor);
-            editor.putItem(trainIcon);
-			trainIcon.setText(getIconName());
+		if (editor != null) { 
+            trainIcon = editor.addTrainIcon(getIconName());
 			trainIcon.setTrain(this);
 			if (getIconName().length() > 9) {
 				trainIcon.setFontSize(8.f);

@@ -30,6 +30,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.operations.trains.TrainIcon;
 
 import jmri.util.JmriJFrame;
 
@@ -844,6 +845,19 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public void displayLevelChange(Positionable l){
     	removeFromTarget(l);
     	addToTarget(l);
+    }
+    
+    public TrainIcon addTrainIcon (String name){
+    	TrainIcon l = new TrainIcon(this);
+        l.setText(name);
+        putTrainIcon(l);
+    	return l;
+    }
+    
+    public void putTrainIcon(TrainIcon l) {
+        l.setHorizontalTextPosition(SwingConstants.CENTER);
+    	l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+    	putItem(l);
     }
 
     public LocoIcon addLocoIcon (String name){
@@ -1922,7 +1936,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (event.isPopupTrigger() || (!event.isMetaDown() && !event.isAltDown())) { return; }
 
         if (_currentSelection!=null) {
-            if (!_currentSelection.isPositionable() && !(_currentSelection instanceof LocoIcon)) { return; }
+            if (!_currentSelection.isPositionable()) { return; }
             int deltaX = event.getX() - _lastX;
             int deltaY = event.getY() - _lastY;
             if (_selectionGroup!=null) {
