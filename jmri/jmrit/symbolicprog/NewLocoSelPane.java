@@ -30,11 +30,11 @@ import java.util.List;
  *
  * @author  Bob Jacobsen   Copyright (C) 2001, 2002
  * @author  Howard G. Penny Copyright (C) 2005
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  * @see     jmri.jmrit.decoderdefn.IdentifyDecoder
  * @see     jmri.jmrit.roster.IdentifyLoco
  */
-public class NewLocoSelPane extends javax.swing.JPanel  {
+public class NewLocoSelPane extends jmri.util.swing.JmriPanel  {
 
     public NewLocoSelPane(JLabel s) {
         _statusLabel = s;

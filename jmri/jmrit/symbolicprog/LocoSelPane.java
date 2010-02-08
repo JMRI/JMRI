@@ -10,9 +10,9 @@ package jmri.jmrit.symbolicprog;
  * the {@link ProgDefault} class in revision 1.3 (JMRI 1.5.3) and later.
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
-public class LocoSelPane extends javax.swing.JPanel {
+public class LocoSelPane extends jmri.util.swing.JmriPanel {
 
 	public LocoSelPane() {
 	}
