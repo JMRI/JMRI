@@ -1,5 +1,9 @@
 Things to do:
 
+* Default left window content could be a loco & status page.
+
+* How to get back to the main status page? Do we need to?
+
 * A single action provides one pane. Need a way to cache
     between separate instances, so that e.g. a "Foo" menu
     item and tool bar button will show the _same_ panel instance?
@@ -37,3 +41,6 @@ Things to do:
     
 * documentation of Menu/Tree/ToolBar XML form!
 
+* The MDI chain isn't handling titles, help, dispose
+    properly, needs a JfcTest routine
+    
