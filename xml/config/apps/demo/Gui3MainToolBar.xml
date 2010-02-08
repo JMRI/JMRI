@@ -34,6 +34,9 @@
   <node><name>License</name>
     <adapter>apps.LicenseAction</adapter>
   </node>
+  <node><name>New Loco</name>
+    <panel>jmri.jmrit.symbolicprog.LocoSelTreePane</panel>
+  </node>
 
 </nodes>
   
