@@ -15,7 +15,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LayoutEditorXml extends AbstractXmlAdapter {
 
@@ -74,8 +74,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 		int num = contents.size();
 		if (num>0) {
 			for (int i=0; i<num; i++) {
-				Object sub = contents.get(i);
-				if (sub!=null) {
+				Positionable sub = contents.get(i);
+				if (sub!=null && sub.storeItem()) {
 					try {
 						Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
 						if (e!=null) panel.addContent(e);
@@ -394,6 +394,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 		panel.setConnections();
 			
         // display the results
+        panel.setAllEditable(edValue);  // set first since other attribute use this setting
         panel.setShowHelpBar(hbValue);
 		panel.setDrawGrid(dgValue);
 		panel.setSnapOnAdd(sgaValue);
@@ -403,7 +404,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.pack();
 		panel.setLayoutDimensions(windowWidth, windowHeight, x, y, panelWidth, panelHeight);
         panel.setVisible(true);    // always show the panel
-        panel.setAllEditable(edValue);
 		panel.resetDirty();
         panel.initView();
 

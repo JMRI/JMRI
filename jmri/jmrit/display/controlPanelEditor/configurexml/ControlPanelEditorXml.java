@@ -16,7 +16,7 @@ import org.jdom.*;
  * Handle configuration for {@link ControlPanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
@@ -54,13 +54,15 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         List <Positionable> contents = p.getContents();
         if (log.isDebugEnabled()) log.debug("N elements: "+contents.size());
         for (int i=0; i<contents.size(); i++) {
-            Object sub = contents.get(i);
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e!=null) panel.addContent(e);
-            } catch (Exception e) {
-                log.error("Error storing panel element: "+e);
-                e.printStackTrace();
+            Positionable sub = contents.get(i);
+            if (sub!=null && sub.storeItem()) {
+                try {
+                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                    if (e!=null) panel.addContent(e);
+                } catch (Exception e) {
+                    log.error("Error storing panel element: "+e);
+                    e.printStackTrace();
+                }
             }
         }
 
