@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XCode.shtml,v 1.3 2009-10-23 07:32:28 jacobsen Exp $ -->
+<!-- $Id: XCode.shtml,v 1.4 2010-02-08 01:42:48 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -34,92 +34,56 @@
 
 <H1>JMRI: Building with XCode</H1>
 
-MacOS X 10.3 and later comes with the XCode suite of 
-programming tools.  We're starting to learn how to build JMRI
-with this.  This page contains the info we have so far.
-<P>
-<PRE>
-Step 0: Getting Ready (Only needed once)
-Generate a new Xcode Project "Somewhere"(Nopossible path conflict with
-anything existing....)
-- Select: Ant-based Application Jar
-- Name it JMRI
-- Save (Finish)
-- Quit
-- Only take the jmri.xcode file and copy it into the JMRI folder right
-next to the build.xml file. Delete the rest....
-- Start the jmri.xcode at its new location
-- Select the Targets -> jmri
-- write jar into the Arguments field
+<H2>Introduction</H2>
+<p>Recent versions of <b>MacOS X</b> come with <b>Xcode</b>, a software 
+development system developed for the Macintosh by Apple Computer. 
+Xcode can be used to work with JMRI.
 
-Step 1: Source Code compilation
-Start XCode 1.5 and press compile
---> Now the jmri.jar should be built at its intended location
+<p>The instructions below assume a fresh checkout of JMRI, along with a recent 
+version of Xcode.
 
-Step 2: Program compilation
-Start the Jar Bundler, found under Developer/Applications/Java Tools
-"Build Information":
-Choose the jmri.jar as Main Class and select the program to be compiled
-Add a nice picture
-Check the rest of the Options on this page
-"Classpath and Files":
-Add all libs to Additions to Classpath
-"Properties":
-Add the VM Options and the Additional properties found in the build.xml
-Press Create Applicetion and select Program Name
+<H2>Procedure to setup JMRI on Xcode</H2>
+<ol>
+<li><p>Start <b>Xcode,</b> dismiss any window that appears, and uncheck return to 
+this window, etc.</p></li>
+<li><p>Select <b>Window>Organizer</b>. ( Note: Xcode now uses the Organizer window 
+for Java, instead of the main Xcode window used in early  versions of Xcode.)</p></li>
+<li><p>At the bottom left of the organizer window, in the "<b>+</b>" popup select 
+"<b>Add Existing Folder...</b>"</p></li>
+<li><p>Navigate to the "<b>java</b>" folder in your checkout of JMRI, and click 
+<b>Open</b>.</p></li>
+<li><p>Select "<b>java</b>" in the Organizer window. Click the <b>Clean</b> icon 
+at the top of the Organizer window.  When that completes, hold down the 
+<b>Build</b> icon, and select <b>ant 'compile</b>'.  This will compile all the 
+JMRI source.</p></li>  
+<li><p>Selecting <b>Build>ant 'jar'</b> will build a <b>jmri.jar</b> file.  The 
+jar file is placed in your checkout folder.</p></li>
+<li><p>To view or edit an existing source module, open the <b>java</b> folder at 
+the top left in Organizer window (click the triangle on the left), then open the 
+<b>sr</b>c folder, then the <b>apps</b> or <b>jmri</b> folder, etc. to find the 
+file you're interested in.</p></li>
+<li><p> To create an <b>ant 'panelpro'</b> entry in the Build list:</p>
+	<ol type=a>
+	<li><p>Select "<b>Edit Actions...</b>" in the Build list.</p></li>
+	<li><p>Select <b>ant 'compile'</b> in the list at the left, and copy the 
+	command that shows in the box on the right.</p></li>
+	<li><p>In the <b>+</b> popup at the lower left, select "<b>New Shell 
+	Script</b>".</p></li>
+	<li><p>Change "<b>Shell Script</b>" to "<b>ant 'panelpro'</b> " in the list 
+	on the left. </p></li>
+	<li><p>Paste the text you copied in b into the right box, and change 
+	"<b>compile</b>" to "<b>panelpro</b>".</p></li>
+	<li><p>Click <b>OK</b>.</p></li>
+	</ol>
+   <p><b>Note:</b> Selecting <b>ant 'panelpro'</b> in the Build list, will 
+   compile, build, and run <b>PanelPro</b>, with error and warning messages 
+   displayed in an Xcode window.</p></li>
+<li><p> You can follow 8 to set up to easily run any of the ant commands JMRI uses.
+</ol>
+<b>CAUTION:</b> This procedure requires JMRI 2.9.2 or later.  It has been tested 
+using MacOS X 10.6.2, using Xcode 3.2.1.  Earlier versions of JMRI (without the 
+latest RXTX), may not find serial ports when JMRI is run from Xcode.</p>
 
-Now you should find a nice program.....
-
-Unfortunately I did not find any way to save the entries in Jar
-Builder so you will need to redo everything anytime you start it.....
-</PRE>
-
-<h2>Alternate Instructions for XCode 3</h2>
-
-<pre>
-Open Terminal
-
-% cd (somewhere you want to do this)
-   
-% mkdir xcode
-
-% mkdir xcode
-
-Launch XCode (I used 3.1.3)
-
-"New Project"
-   select "Java Application"
-   click "Choose..."
-   save as 'java' in the 'xcode' directory you created
-
-
-% cd xcode
-% mv java/build.xml java/build.xml.old
-% cvs -q checkout all
-
-% cd java
-% rm src/AboutBox.java
-% rm src/PrefPane.java
-% rm src/java.java
-
-% open java.xcodeproj/ 
-
-select executables -> java, click "Info";
-    general tab ->  select "Custom Directory" and set the xcode/java directory
-    
- 
- Project -> Edit Active Target "java"
-    uncheck pass build settings
-    set arguements to: $(ACTION)
-    
-Project - > edit executable
-    name: DecoderPro
-    path: /usr/bin/ant
-    arguments, add: decoderpro
-    
-
-"Build and Run" button should work!
-</pre>
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->
