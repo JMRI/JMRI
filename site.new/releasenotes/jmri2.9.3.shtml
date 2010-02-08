@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.3.shtml,v 1.17 2010-02-07 19:03:49 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.3.shtml,v 1.18 2010-02-08 05:03:05 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -87,6 +87,10 @@ Some user of 64-bit Windows 7 have reported compatibility problems.
 The issue is associated with exactly which (32-bit or 64-bit) Java version
 is installed, and where it was placed.  This will be fixed in a later version.
 
+
+<p>There's a temporary fix for the 64-bit Windows 7 compatibility
+issue. See <a href="http://groups.yahoo.com/group/jmriusers/files/Windows%20RXTX%2032-bit">Windows
+RXTX 32-bit</a> in the Files area for JMRI users.
 <p>
 This version does work fine with MacOS X 10.5 (Leopard) and 10.6 (Snow Leopard), but 
 some users of earlier versions have reported problems.  If you're using MacOS X 10.4, 
