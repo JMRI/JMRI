@@ -1629,7 +1629,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
 
-    /****************** Mouse Mwthods ***********************/
+    /****************** Mouse Methods ***********************/
 
     public void showToolTip(Positionable selection) {
         String tip = selection.getTooltip();
@@ -1897,7 +1897,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                         isEditableLevel(_currentSelection.getDisplayLevel())) {
             showPopUp(_currentSelection, event);
         } else {
-            if (_currentSelection != null) {
+            if (_currentSelection != null && !_dragging) {
                 _currentSelection.doMouseReleased(event);
             }
             if (allPositionable() && _selectRect!=null) {

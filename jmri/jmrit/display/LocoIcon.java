@@ -19,11 +19,11 @@ import javax.swing.JRadioButtonMenuItem;
  * The icon can always be repositioned and its popup menu is
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2010
+ * @version $Revision: 1.10 $
  */
 
-public class LocoIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
+public class LocoIcon extends PositionableLabel {
 
     private static final String WHITE = "White";		//loco background colors
     private static final String GREEN = "Green";
@@ -37,20 +37,29 @@ public class LocoIcon extends PositionableLabel implements java.beans.PropertyCh
     	super(new NamedIcon("resources/icons/markers/loco-white.gif",
                             "resources/icons/markers/loco-white.gif"), editor);
         setDisplayLevel(Editor.MARKERS);
+        setShowTooltip(false);
+        _text = true;	//Markers are an icon with text
     }
 
     // Markers are always positionable 
-    public void setPositionable(boolean enabled) { super.setPositionable(true); }
- 
-    // update icon as state of marker changes
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-		if (log.isDebugEnabled())
-			log.debug("property change: " + getText() + " " + e.getPropertyName() + " is now "
-					+ e.getNewValue());
-	}
-
-
+    public void setPositionable(boolean enabled) {super.setPositionable(true);}
+    
+    // Markers always have a popup menu
+    public void setEditable(boolean enabled) {super.setEditable(true);}
+    
     jmri.jmrit.throttle.ThrottleFrame tf = null;
+    
+    public void doMouseReleased(MouseEvent e) {
+    	if (e.isPopupTrigger()){
+    		if(log.isDebugEnabled())
+    			log.debug("mouse released create mini locoicon popup menu");
+    		JPopupMenu popup = new JPopupMenu();
+    		showPopUp(popup);
+    		setRemoveMenu(popup);
+            popup.show(this, this.getWidth()/2, this.getHeight()/2);
+    	}  	
+    }
+    
     /**
      * Pop-up only if right click and not dragged 
      */
@@ -138,6 +147,14 @@ public class LocoIcon extends PositionableLabel implements java.beans.PropertyCh
     	String[] colors = {WHITE,GREEN,GRAY,RED,BLUE,YELLOW};
     	return colors;
     }
+    
+    private void setRemoveMenu(JPopupMenu popup) {
+    	popup.add(new AbstractAction(rb.getString("Remove")) {
+    		public void actionPerformed(ActionEvent e) { 
+    			remove();
+    		}
+    	});
+    }
                   
     protected RosterEntry entry = null;
     
@@ -149,20 +166,5 @@ public class LocoIcon extends PositionableLabel implements java.beans.PropertyCh
     	return entry;
     }
     
-    public void mouseDragged(MouseEvent e) {
-    	super.setPositionable(true);
-    }
- 
-    /**
-     * Update the marker when the icon is clicked
-     * @param e
-     */
-    public void mouseClicked(java.awt.event.MouseEvent e) {
-        if (!isControlling()) return;
-        if (getForceControlOff()) return;
-        if (e.isMetaDown() || e.isAltDown() ) return;
-        log.debug("No loco connection, can't process click");
-     }
-
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIcon.class.getName());
 }
