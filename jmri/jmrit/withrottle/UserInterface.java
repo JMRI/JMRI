@@ -10,7 +10,7 @@ package jmri.jmrit.withrottle;
  *	Create a window for WiThrottle information, advertise service, and create a thread for it to run in.
  *
  *	@author Brett Hoffman   Copyright (C) 2009
- *	@version $Revision: 1.12 $
+ *	@version $Revision: 1.13 $
  */
 
 import java.awt.event.*;
@@ -24,6 +24,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.net.NetworkInterface;
+import java.net.InetAddress;
 
 import javax.jmdns.*;
 
@@ -203,7 +206,33 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
                     jmdns);
             
             portLabel.setText(serviceInfo.getName());
-            manualPortLabel.setText(socket.getInetAddress().getLocalHost().getHostAddress().toString()+":"+port);
+            //Determine the first externally accessable IP address for this system. This is presented in the GUI for
+            //those users who can't, or don't want to use ZeroConf to connect to the WiThrottle.
+            //Adapted from http://www.rgagnon.com/javadetails/java-0390.html
+            String bound_ip_address=new String();
+            try
+            {
+              Enumeration network_interface_list=NetworkInterface.getNetworkInterfaces();
+              network_interfaces: while(network_interface_list.hasMoreElements()) {
+                Enumeration interface_addresses=((NetworkInterface)network_interface_list.nextElement()).getInetAddresses();
+                while(interface_addresses.hasMoreElements()){
+                  InetAddress ip=(InetAddress)interface_addresses.nextElement();
+                  bound_ip_address=ip.getHostAddress();
+                  if(!bound_ip_address.equals("0.0.0.0") && !bound_ip_address.regionMatches(0, "127", 0, 3))
+                  {
+                    //Find just the first "real" IP address to present in the GUI. If the user has set up a multihomed
+                    //computer, chances are that he knows enough about networking to know which IP address he should use
+                    //to connect to this service.
+                    break network_interfaces;
+                  }
+                  //In case we don't find a "real" IP address, there's no sense in presenting a loopback address. Novice
+                  //users might actually try to connect to it, and not understand why it doesn't work.
+                  bound_ip_address="";
+                }
+              }
+            }
+            catch(Exception except) { log.error("Failed to determine this system's IP address: "+except.toString()); }
+            manualPortLabel.setText(bound_ip_address+":"+port);
         } catch (java.io.IOException e2) {
             log.error("JmDNS Failure");
             portLabel.setText("failed to advertise service");
@@ -323,5 +352,7 @@ class ServerThread extends Thread {
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ServerThread.class.getName());
 }
+
+ 	  	 
 
  	  	 
