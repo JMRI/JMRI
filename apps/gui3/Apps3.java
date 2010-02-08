@@ -5,11 +5,15 @@ package apps.gui3;
 import jmri.*;
 import jmri.jmrit.XmlFile;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.*;
+import jmri.util.swing.multipane.MultiPaneWindow;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import javax.swing.*;
+import javax.swing.tree.*;
+import javax.swing.event.*;
 
 /**
  * Base class for GUI3 JMRI applications.
@@ -24,9 +28,9 @@ import javax.swing.*;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen   Copyright 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
-public class Apps3 {
+public abstract class Apps3 {
 
     /**
      * Initial actions before 
@@ -36,12 +40,13 @@ public class Apps3 {
         // TODO Launch splash screen: splash(true)
 
         jmri.util.Log4JUtil.initLog4J();
-        log.info(jmri.util.Log4JUtil.startupInfo("Demo3"));
+        log.info(jmri.util.Log4JUtil.startupInfo("Gui3IDE"));
 
         // TODO setConfigFilename("Demo3Config3.xml", args)
     }
 
-    protected String configFilename = null;
+    protected String nameString = "JMRI GUI3 Demo";
+    protected String configFilename = "jmriprefs3.xml";  // this appears multiple places, needs rationalization
     boolean configOK;
     
     /**
@@ -52,161 +57,79 @@ public class Apps3 {
     public Apps3() {
         // pre-GUI work
         installConfigurationManager();
-        log.info("need to set up the new load-file error handling");
-        try {
-            loadPreferenceFile();
-        } catch (JmriException e) {
-            log.error("Error loading preferences: "+e);
-        }
         installShutDownManager();
         addDefaultShutDownTasks();
+        installManagers();
+        initializeHelpSystem();
+        loadPreferenceFile();
+        
+        // create test dummy objects
+        createDemoScaffolding();
         
         // create GUI
         createMainFrame();
-        addMainToolBar();
-        addMainMenuBar();
-        addASampleFrame();
-        displayMainFrame();
-    }
-    
-    
-    
-    JmriJFrame      mainFrame;
-    JDesktopPane    desktop;
-    
-    protected void createMainFrame() {
-        mainFrame = new JmriJFrame("dummy name");
-        desktop = new JDesktopPane();
         
-        mainFrame.getContentPane().add(desktop, BorderLayout.CENTER);
+        // set to min size for demo
+        displayMainFrame( new Dimension(800, 600));  // or mainFrame.getMaximumSize()
     }
-    
-    protected void addMainMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
         
-        // add some samples to show
-        menuBar.add(createFileMenu());
-        menuBar.add(createEditMenu());
-        menuBar.add(createViewMenu());
-        menuBar.add(createTablesMenu());
-        menuBar.add(createToolsMenu());
-        menuBar.add(createHardwareMenu());
-        menuBar.add(createWindowMenu());
-        menuBar.add(createHelpMenu());
-        
-        // TODO: needs the Mac code from Apps.createMenus()
-        
-        mainFrame.setJMenuBar(menuBar);
+    protected JmriJFrame mainFrame;
+    
+    protected void initializeHelpSystem() {
+        try {
+
+            // initialize system and check for success
+            boolean ok = jmri.util.HelpUtil.initOK();
+            
+            // tell help to use default browser for external types
+            javax.help.SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
+    
+            // help items are set in the various Tree/Menu/Toolbar constructors        
+        } catch (java.lang.Throwable e3) {
+            log.error("Unexpected error creating help: "+e3);
+        }
     }
     
-    protected JMenu createFileMenu() {
-        JMenu r = new JMenu("File");
-        r.add(new JMenuItem("New ..."));
-        r.add(new JMenuItem("Open ..."));
-        r.add(new JMenuItem("Loco Roster ..."));
-        r.add(new JMenuItem("Close"));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Save"));
-        r.add(new JMenuItem("Save as ..."));
-        r.add(new JMenuItem("Export ..."));
-        r.add(new JMenuItem("Import ..."));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Run Script ..."));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Print Setup ..."));
-        r.add(new JMenuItem("Print Preview ..."));
-        r.add(new JMenuItem("Print ..."));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Exit"));
-        return r;
-    }
-    
-    protected JMenu createEditMenu() {
-        JMenu r = new JMenu("Edit");
-        r.add(new JMenuItem("Undo"));
-        r.add(new JMenuItem("Repeat"));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Cut"));
-        r.add(new JMenuItem("Copy"));
-        r.add(new JMenuItem("Paste"));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Preferences ..."));
-        return r;
-    }
-    
-    protected JMenu createViewMenu() {
-        JMenu r = new JMenu("View");
-        r.add(new JMenuItem("Clock"));
-        r.add(new JMenuItem("Command Toolbar"));
-        r.add(new JMenuItem("Startup Panel"));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Simple/adv Roster"));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Script Input"));
-        r.add(new JMenuItem("Script Output"));
-        return r;
-    }
-    
-    protected JMenu createTablesMenu() {
-        JMenu r = new JMenu("Tables");
-        r.add(new JMenuItem("Turnouts"));
-        r.add(new JMenuItem("Sensors"));
-        r.add(new JMenuItem("Lights"));
-        r.add(new JMenuItem("Signal Heads"));
-        r.add(new JMenuItem("Reporters"));
-        r.add(new JMenuItem("Memory Variables"));
-        r.add(new JMenuItem("Routes"));
-        r.add(new JMenuItem("LRoutes"));
-        r.add(new JMenuItem("Logix"));
-        r.add(new JMenuItem("Blocks"));
-        r.add(new JMenuItem("Sections"));
-        r.add(new JMenuItem("Transits"));
-        r.add(new JMenuItem("Audio"));
-        return r;
-    }
-    
-    protected JMenu createToolsMenu() {
-        JMenu r = new JMenu("Tools");
-        r.add(new JMenuItem("Single CV Programmer"));
-        r.add(new JMenuItem("Power Control"));
-        r.add(new JMenuItem("Turnout Control"));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Simple Signal Logic ..."));
-        r.add(new JMenuItem("Sensor Groups ..."));
-        r.add(new JMenuItem("Speedometer ..."));
-        r.add(new JMenuItem("Light Control"));
-        r.add(new JMenuItem("Dispatcher"));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Send DCC Packet"));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Operations ..."));
-        r.add(new JMenuItem("USS CTC Tools ..."));
-        r.add(new JSeparator());
-        r.add(new JMenuItem("Preferences ..."));
-        return r;
-    }
-    
-    protected JMenu createHardwareMenu() {
-        JMenu r = new JMenu("Hardware");
-        return r;
-    }
-    
-    protected JMenu createWindowMenu() {
-        JMenu r = new JMenu("Window");
-        return r;
-    }
-    
-    protected JMenu createHelpMenu() {
-        JMenu r = new JMenu("Help");
-        return r;
-    }
-    
-    protected void installConfigurationManager() {
-        InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
-        log.debug("start load config file");
+    protected void createDemoScaffolding() {
+        jmri.managers.InternalSensorManager m = new jmri.managers.InternalSensorManager();
+        InstanceManager.setSensorManager(m);
+        InstanceManager.sensorManagerInstance().provideSensor("IS1");
+        InstanceManager.sensorManagerInstance().provideSensor("IS2");
+        InstanceManager.sensorManagerInstance().provideSensor("IS3");
     }
 
-    protected void loadPreferenceFile() throws JmriException {
+    protected JComponent getSensorTableDemo() {
+        // put a table in rightTop
+        jmri.jmrit.beantable.BeanTableDataModel dataModel = new jmri.jmrit.beantable.sensor.SensorTableDataModel();
+        jmri.util.com.sun.TableSorter sorter = new jmri.util.com.sun.TableSorter(dataModel);
+    	JTable dataTable = new JTable(sorter);
+        sorter.setTableHeader(dataTable.getTableHeader());        
+        JScrollPane dataScroll	= new JScrollPane(dataTable);
+        return dataScroll;
+    }
+
+    abstract protected void createMainFrame();
+    
+    protected void installConfigurationManager() {
+        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
+        InstanceManager.setConfigureManager(cm);
+        log.debug("config manager installed");
+        // Install Config Manager error handler
+        cm.setErrorHandler(new jmri.configurexml.swing.DialogErrorHandler());
+
+    }
+    
+    protected void installManagers() {
+        // Install a history manager
+        jmri.InstanceManager.store(new jmri.jmrit.revhistory.FileHistory(), jmri.jmrit.revhistory.FileHistory.class);
+        // record startup
+        jmri.InstanceManager.getDefault(jmri.jmrit.revhistory.FileHistory.class).addOperation("app", nameString, null);
+        
+        // Install a user preferences manager
+        jmri.InstanceManager.store(new jmri.managers.DefaultUserMessagePreferences(), jmri.UserPreferencesManager.class);        
+    }
+
+    protected void loadPreferenceFile() {
         if (configFilename != null) {
             log.debug("configure from specified file "+configFilename);
         } else {
@@ -223,11 +146,10 @@ public class Apps3 {
         }
         try {
             configOK = InstanceManager.configureManagerInstance().load(file);
-        } catch (jmri.JmriException e) {
+            log.debug("end load config file, OK="+configOK);
+        } catch (Exception e) {
             configOK = false;
-            throw e;
         }
-        log.debug("end load config file, OK="+configOK);
     }
     
     protected void installShutDownManager() {
@@ -256,32 +178,6 @@ public class Apps3 {
     }
     
     
-    protected void addMainToolBar() {
-        JToolBar toolBar = new JToolBar("(Close to dock)", JToolBar.VERTICAL);
-        
-        toolBar.add(new JButton(new AbstractAction("Preferences"){
-                public void actionPerformed(ActionEvent e) {
-                                        addPreferencesFrame();
-                }
-            }));
-
-        toolBar.add(new JButton(new AbstractAction("sample button 2"){
-                public void actionPerformed(ActionEvent e) {
-                                        addASampleFrame();
-                }
-            }));
-
-        toolBar.add(new JButton(new AbstractAction("sample button 3"){
-                public void actionPerformed(ActionEvent e) {
-                                        addASampleFrame();
-                }
-            }));
-        
-        // this takes up space down the left side until made floating
-        mainFrame.getContentPane().add(toolBar, BorderLayout.EAST);
-        //desktop.add(toolBar);
-    }
-    
     /**
      * Set a toolbar to be initially floating.
      * This doesn't quite work right.
@@ -294,13 +190,8 @@ public class Apps3 {
     // All the following needs to be in a separate preferences frame
     // class! How about switching AppConfigPanel to tabbed?
     protected void addPreferencesFrame() {
-        JInternalFrame frame = new JInternalFrame("Preferences",
-                                            true, //resizable
-                                            true, //closable
-                                            true, //maximizable
-                                            true);//iconifiable
-        frame.setLocation(200+50*count,200+50*count);
-        count++;
+        JPanel frame = new JPanel();
+        frame.setLocation(200,200);
         
         // content
         JTabbedPane p = new JTabbedPane();
@@ -326,17 +217,9 @@ public class Apps3 {
             });
 
         frame.add(p2);
-        frame.pack();
         
         // show
         frame.setVisible(true);
-        desktop.add(frame);
-
-        try {
-            frame.setSelected(true);
-        } catch (java.beans.PropertyVetoException e) {}
-
-        frame.moveToFront();
     }
     
     jmri.GuiLafConfigPane guiPrefs;
@@ -361,35 +244,12 @@ public class Apps3 {
             file = new File(XmlFile.prefsDir()+configFilename);
         }
 
-        InstanceManager.configureManagerInstance().storePrefs(file);
+        InstanceManager.configureManagerInstance().storePrefs();
     }
     
-    static int count = 0;
-    protected void addASampleFrame() {
-        JInternalFrame sample = new JInternalFrame("sample internal frame",
-                                            true, //resizable
-                                            true, //closable
-                                            true, //maximizable
-                                            true);//iconifiable
-        sample.setLocation(200+50*count,200+50*count);
-        count++;
-
-        // content
-        sample.setSize(300,200);
-
-        // show
-        sample.setVisible(true);
-        desktop.add(sample);
-
-        try {
-            sample.setSelected(true);
-        } catch (java.beans.PropertyVetoException e) {}
-
-        sample.moveToFront();
-    }
     
-    protected void displayMainFrame() {
-        mainFrame.setSize(mainFrame.getMaximumSize());
+    protected void displayMainFrame(Dimension d) {
+        mainFrame.setSize(d);
         mainFrame.setVisible(true);
     }
     

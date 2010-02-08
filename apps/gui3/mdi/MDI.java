@@ -1,6 +1,8 @@
-// Demo3.java
+// MDI.java
 
-package apps.gui3.demo3;
+package apps.gui3.mdi;
+
+import jmri.util.swing.mdi.MdiMainFrame;
 
 /**
  * The JMRI application for developing the 3rd GUI
@@ -20,10 +22,15 @@ package apps.gui3.demo3;
  * for more details.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004, 2007, 2009, 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.1 $
  */
-public class Demo3 extends apps.gui3.demo.Apps3 {
+public class MDI extends apps.gui3.Apps3 {
 
+    protected void createMainFrame() {
+        // create and populate main window
+        mainFrame = new MdiMainFrame(nameString, "apps/demo");
+    }
+    
     // Main entry point
     public static void main(String args[]) {
 
@@ -32,14 +39,14 @@ public class Demo3 extends apps.gui3.demo.Apps3 {
         preInit();
         
         // create the program object
-        Demo3 app = new Demo3();
+        MDI app = new MDI();
         
         // do final post initialization processing
         app.postInit();
         
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Demo3.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MDI.class.getName());
 }
 
 
