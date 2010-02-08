@@ -25,7 +25,7 @@ import javax.swing.JPopupMenu;
  *
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public interface Positionable  {
     public void setPositionable(boolean enabled);
@@ -73,6 +73,23 @@ public interface Positionable  {
     public double getScale();
 
     public void remove();
+
+    /**
+     * Store a permanent copy of this Positionable
+     * The editorXml will call this method to find out whether it
+     * should store this Positionable item.
+     * @return true if the Editor should store this in the configuration file
+     * @return false if if the Editor should not store this object
+     */
+    public boolean storeItem();
+    /**
+     * Use the 'Standard' presentation of the popup menu items.
+     * The editor will call this method to find out whether it
+     * should creates any popup menu items.
+     * @return true if Editor may add the standardpopup menu items
+     * @return false if this Positionable will do all the popup menu items
+    */
+    public boolean doPopupMenu();
 
     public void doMousePressed(MouseEvent event);
     public void doMouseReleased(MouseEvent event);

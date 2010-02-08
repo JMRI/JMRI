@@ -40,7 +40,7 @@ import javax.swing.border.LineBorder;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.78 $
+ * @version $Revision: 1.79 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -168,6 +168,12 @@ public class PositionableLabel extends JLabel implements Positionable {
     public void doMouseReleased(MouseEvent event) {
     }
 
+    public boolean storeItem() {
+        return true;
+    }
+    public boolean doPopupMenu() {
+        return true;
+    }
     /**************** end Positionable methods **********************/
     
     /**

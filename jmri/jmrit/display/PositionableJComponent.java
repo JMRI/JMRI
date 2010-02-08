@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 
@@ -113,6 +113,12 @@ public class PositionableJComponent extends JComponent implements Positionable {
     public void doMouseReleased(MouseEvent event) {
     }
 
+    public boolean storeItem() {
+        return true;
+    }
+    public boolean doPopupMenu() {
+        return true;
+    }
     /**
      * For over-riding in the using classes: add item specific menu choices
      */
