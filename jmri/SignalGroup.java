@@ -3,9 +3,19 @@ package jmri;
 import jmri.util.NamedBeanHandle;
 
 /**
- * Conditional.java
+ * SignalGroup.java
  *
- * A Conditional type to provide runtime support for Densor Groups.
+ * The Signal Group is used to represent European subsidary signals that would be sited with a 
+ * signal mast.  Such subsidary signals would be used to indicated routes, junctions and allowable
+ * speeds.  Each such route/junction/speed would be represented by a single output signal, that 
+ * is either off or on.  Within the group on one such signal would be allowed on at any one time.
+ *
+ * The group is attached to a signal mast, and can be configured to be activated depending upon that
+ * masts appearance.
+ * The
+ * Each signal head within the group is defined with a On and Off appearance, and a set of 
+ * criteria in the form of matching turnouts and sensor states, that must be met for the head to be 
+ * set On.
  * <P>
  * This file is part of JMRI.
  * <P>
@@ -26,82 +36,263 @@ import jmri.util.NamedBeanHandle;
 
 public interface SignalGroup extends NamedBean {
 
-    public void addSignalHead(NamedBeanHandle<SignalHead> sh);
-    
-    public void addSignalHead(String pName);
-    
+    /**
+     * Set enabled status.
+     */
+     
     public void setEnabled(boolean boo);
     
+    /**
+     * Get enabled status
+    */
     public boolean getEnabled();
     
-    //public jmri.implementation.DefaultSignalGroup.SignalHeadItem getSignalHeadItemByIndex(int x);
+    /**
+     *  Sets the main Signal Mast to which the Group belongs
+     */
+   
+    public void setSignalMast(String pName);
     
-    //public jmri.implementation.DefaultSignalGroup.SignalHeadItem getSignalHeadItem(int x);
+     /**
+     *  Get the name of the main Signal Mast
+     */
+    public String getSignalMastName();
     
+     /**
+     *  Get the SignalMast
+     */
+    public SignalMast getSignalMast();
+    
+    /**
+     *  Clear the list of SignalMast Appearances that trigger the group
+     */
+    public void clearSignalMastAppearance();
+    
+     /**
+     *  Add an appearance that can trigger the group activation
+     */
+    public void addSignalMastAppearance(String sppearance);
+    
+    public int getNumSignalMastAppearances();
+    
+    /**
+     * Method to get a SignalMast Appearance by Index
+     *  Returns null if there are no Appearances with that index
+     */
+    public String getSignalMastAppearanceByIndex(int x);
+    
+    /**
+     * Inquire if a SignalMast Appearance is included.
+     */
+    public boolean isSignalMastAppearanceIncluded(String appearance);
+    
+    /**
+    * Remove a SignalMast Appearance from the set of triggers.
+    */
+    public void deleteSignalMastAppearance(String appearance);
+    
+     /**
+     * Add a Signal Head to the Group
+     * @param sh The SignalHead as a Named Bean
+     */
+    public void addSignalHead(NamedBeanHandle<SignalHead> sh);
+    
+     /**
+     * Add a Signal Head to the Group
+     * @param pName The SignalHead as a Name
+     */
+    public void addSignalHead(String pName);
+    
+    /**
+     * Method to get a SignalHead by Index
+     *  Returns null if there are no Signal Heads with that index
+     */
+    public String getSignalHeadItemNameByIndex(int n);
+    
+    /**
+     * Method to get the On State of a SignalState at Index n
+     * <P>
+     * @return -1 if there are less than 'n' SignalHeads defined
+     */
+    public int getSignalHeadOnStateByIndex(int n);
+    
+    /**
+     * Method to get the Off State of a SignalState at Index n
+     * <P>
+     * @return -1 if there are less than 'n' SignalHeads defined
+     */
+    public int getSignalHeadOffStateByIndex(int n);
+    
+    /**
+    * Delete Signal Head by Name
+    */
+    public void deleteSignalHead(String pName);
+    
+    /**
+    * Delete Signal Head by NamedBean
+    */    
+    public void deleteSignalHead(NamedBeanHandle<SignalHead> sh);
+
     public int getNumSignalHeadItems();
     
+    /**
+     * Method to inquire if a Signal Head is included in this Group
+     */
     public boolean isSignalIncluded(String systemName);
     
+     /**
+     * Method to get the On State of Signal Head
+     * @parm name The name of the SignalHead we are querying
+     */
     public int getSignalHeadOnState(String name);
     
+    /**
+     * Method to get the Off State of Signal Head
+     * @parm name The name of the SignalHead we are querying
+     */
     public int getSignalHeadOffState(String name);
     
+    /**
+     * Sets the On State of the Signal in the Group
+     * @param name The SignalHead Name
+     * @param state The Apperance that the SignalHead will change to 
+     *      when the conditions are met.
+     */
     public void setSignalHeadOnState(String name, int state);
     
+    /**
+     * Sets the Off State of the Signal in the Group
+     * @param name The SignalHead Name
+     * @param state The Apperance that the SignalHead will change to 
+     *      when the conditions are NOT met.
+     */    
     public void setSignalHeadOffState(String name, int state);
-   
-    public void setPrimaryTrigger(String pName);
     
-    public void setPrimaryInversed(boolean boo);
-     
-    public String getPrimaryTriggerName();
-    public void clearAppearanceTrigger();
-    
-    public boolean getPrimaryInversed();
-    
-    public void addTriggerAppearance(String sppearance);
-
-    public int getNumTriggerAppearances();
-    
-    public String getTriggerAppearanceByIndex(int x);
-    
-    public String getSignalHeadItemNameByIndex(int n);
-    public int getSignalHeadOnStateByIndex(int n);
-
-    public int getSignalHeadOffStateByIndex(int n);
+    /**
+    * Sets whether the sensors and turnouts should be treated as seperate
+    * calculations or as one, when determining if the signal head should be
+    * on or off.
+    */
+    public void setSensorTurnoutOper(String pSignal, boolean boo);
     
     public boolean getSensorTurnoutOperByIndex(int x);
     
+    /**
+     * Method to get the number of turnouts used to determine the On state
+     * for the signalhead at index x
+     * <P>
+     * @return -1 if there are less than 'n' SignalHeads defined
+     */
     public int getNumSignalHeadTurnoutsByIndex(int x);
-    
-    public boolean isTriggerAppearanceIncluded(String appearance);
-    
-    public void deleteTriggerAppearance(String appearance);
-    
-    public void deleteSignalHead(String pName);
-    
-    public void deleteSignalHead(NamedBeanHandle<SignalHead> sh);
-    
+
+    /**
+    * Method to add a Turnout and its state to a signal head.
+    * <p>
+    * @param mHead SignalHead we are adding the turnout to
+    * @param mTurn Turnout as a String either User or System Name
+    * @param state The State that the turnout must be set to.
+    */
     public void setSignalHeadAlignTurnout(String mHead, String mTurn, int state);
     
+    /**
+     * Inquire if a Turnout is included in the Signal Head Calculation.
+     * @param pSignal Name of the Signal Head
+     * @param pTurnout Name of the Turnout
+     */
     public boolean isTurnoutIncluded(String pSignal, String pTurnout);
+    
+    /**
+    * Gets the state of the Turnout for the given Signal Head in the group
+    * @param pSignal Name of the Signal Head
+    * @param pTurnout Name of the Turnout within the Group
+    * @returns -1 if the turnout or signal head is invalid
+    */
     public int getTurnoutState(String pSignal, String pTurnout);
+    
+    /**
+    * Gets the state of the Turnout for the given Signal Head at index x
+    * @param x Signal Head at index x
+    * @param pTurnout Name of the Turnout within the Group
+    * @returns -1 if the turnout or signal head is invalid
+    */
     public int getTurnoutStateByIndex(int x, String pTurnout);
+    
+    /**
+    * Gets the state of the Turnout at index x, for the given Signal Head at index x
+    * @param x Signal Head at index x
+    * @param pTurnout Turnout at index pTurnout
+    * @returns -1 if the turnout or signal head is invalid
+    */
     public int getTurnoutStateByIndex(int x, int pTurnout);
+    
+     /**
+    * Gets the Name of the Turnout at index x, for the given Signal Head at index x
+    * @param x Signal Head at index x
+    * @param pTurnout Turnout at index pTurnout
+    * @returns null if the turnout or signal head is invalid
+    */
     public String getTurnoutNameByIndex(int x, int pTurnout);
     
-    public void setSignalHeadAlignSensor(String mHead, String mTurn, int state);
-    public boolean isSensorIncluded(String pSignal, String pTurnout);
-    public int getSensorState(String pSignal, String pTurnout);
+    /**
+    * Method to add a Sensor and its state to a signal head.
+    * <p>
+    * @param mHead SignalHead we are adding the sensor to
+    * @param mSensor Sensor as a String either User or System Name
+    * @param state The State that the sensor must be set to.
+    */
+    public void setSignalHeadAlignSensor(String mHead, String mSen, int state);
+    
+    /**
+     * Inquire if a Sensor is included in the Signal Head Calculation.
+     * @param pSignal Name of the Signal Head
+     * @param pSensor Name of the Sensor
+     */
+    public boolean isSensorIncluded(String pSignal, String pSensor);
+    
+    /**
+    * Gets the state of the Sensor for the given Signal Head in the group
+    * @param pSignal Name of the Signal Head
+    * @param pSensor Name of the Sensor within the Group
+    * @returns -1 if the sensor or signal head is invalid
+    */
+    public int getSensorState(String pSignal, String pSensor);
+    
+    /**
+    * Gets the state of the Sensor for the given Signal Head at index x
+    * @param x Signal Head at index x
+    * @param pTurnout Name of the Sensor within the Group
+    * @returns -1 if the sensor or signal head is invalid
+    */
     public int getSensorStateByIndex(int x, int pSensor);
+    
+    /**
+    * Gets the state of the Sensor at index x, for the given Signal Head at index x
+    * @param x Signal Head at index x
+    * @param pTurnout Sensor at index pTurnout
+    * @returns null if the sensor or signal head is invalid
+    */
     public String getSensorNameByIndex(int x, int pSensor);
+    
     public boolean getSensorTurnoutOper(String pSignal);
     
+    /**
+     * Method to get the number of Sensors used to determine the On state
+     * for the signalhead at index x
+     * <P>
+     * @return -1 if there are less than 'n' SignalHeads defined
+     */
     public int getNumSignalHeadSensorsByIndex(int x);
     
-    public void setSensorTurnoutOper(String pSignal, boolean boo);
-    
+    /**
+     * Delete all Turnouts for a given SignalHead in the group
+     * @param pSignal SignalHead Name
+     */
     public void clearSignalTurnout(String pSignal);
+    
+     /**
+     * Delete all Sensors for a given SignalHead in the group
+     * @param pSignal SignalHead Name
+     */
     public void clearSignalSensor(String pSignal);
     
     public int getState();
@@ -110,14 +301,9 @@ public interface SignalGroup extends NamedBean {
     
     static final int ONACTIVE = 0;    // route fires if sensor goes active
     static final int ONINACTIVE = 1;  // route fires if sensor goes inactive
-    static final int VETOACTIVE = 2;  // sensor must be active for route to fire
-    static final int VETOINACTIVE = 3;  // sensor must be inactive for route to fire
     
     static final int ONCLOSED = 2;    // route fires if turnout goes closed
     static final int ONTHROWN = 4;  // route fires if turnout goes thrown
-    static final int VETOCLOSED = 8;  // turnout must be closed for route to fire
-    static final int VETOTHROWN = 16;  // turnout must be thrown for route to fire
-
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalGroup.class.getName());
 }

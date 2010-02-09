@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle XML configuration for a DefaultSignalGroupManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DefaultSignalGroupManagerXml 
             extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -43,16 +43,12 @@ public class DefaultSignalGroupManagerXml
             e.setAttribute("userName", p.getUserName());
             //storeCommon(p, e);
             element.addContent(e);
-            for (int x=0; x<p.getNumTriggerAppearances(); x++){
-                Element app = new Element("appearance").setAttribute("valid", p.getTriggerAppearanceByIndex(x));
+            for (int x=0; x<p.getNumSignalMastAppearances(); x++){
+                Element app = new Element("appearance").setAttribute("valid", p.getSignalMastAppearanceByIndex(x));
                 e.addContent(app);
             }
-            e.setAttribute("primaryTrigger", p.getPrimaryTriggerName());
+            e.setAttribute("signalMast", p.getSignalMastName());
             //e.setAttribute("primaryTriggerState", getSignalColour(p.getPrimaryTriggerState()));
-            if(p.getPrimaryInversed())
-                e.setAttribute("primaryTriggerInveresed", "yes");
-            else
-                e.setAttribute("primaryTriggerInveresed", "no");
             
             for (int x=0; x<p.getNumSignalHeadItems(); x++){
             
@@ -146,6 +142,7 @@ public class DefaultSignalGroupManagerXml
             SignalGroup m;
             Element e = list.get(i);
             String primary;
+            String yesno;
             boolean inverse =false;
             int state =0x00;
             Attribute a;
@@ -157,21 +154,13 @@ public class DefaultSignalGroupManagerXml
             if (a != null)
                 m.setUserName(a.getValue());
                 
-            primary = e.getAttribute("primaryTrigger").getValue();
-            m.setPrimaryTrigger(primary);
-            
-            String yesno = e.getAttribute("primaryTriggerInveresed").getValue();
-            if ( (yesno!=null) && (!yesno.equals("")) ) {
-                if (yesno.equals("yes")) inverse=true;
-                else if (yesno.equals("no")) inverse=false;
-            }
-            
-            m.setPrimaryInversed(inverse);
+            primary = e.getAttribute("signalMast").getValue();
+            m.setSignalMast(primary);
             
             List<Element> appList = e.getChildren("appearance");
             for(int y = 0; y<appList.size(); y++){
                 String value = appList.get(y).getAttribute("valid").getValue();
-                m.addTriggerAppearance(value);
+                m.addSignalMastAppearance(value);
             }
             //loadCommon(m, e);
             List<Element> signalHeadList = list.get(i).getChildren("signalHead");
