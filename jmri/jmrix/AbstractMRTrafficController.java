@@ -27,7 +27,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.71 $
+ * @version         $Revision: 1.72 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -566,7 +566,13 @@ abstract public class AbstractMRTrafficController {
             controller = p;
             // and start threads
             xmtThread = new Thread(xmtRunnable = new Runnable() {
-                    public void run() { transmitLoop(); }
+                    public void run() { 
+                                        try {
+                                            transmitLoop(); 
+                                            } catch (Throwable e) {
+                                                log.fatal("Transmit thread terminated prematurely by: "+e, e);
+                                            }
+                                      }
                 });
             xmtThread.setName("Transmit");
             xmtThread.start();
