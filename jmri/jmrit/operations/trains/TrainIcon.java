@@ -21,7 +21,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class TrainIcon extends LocoIcon {
@@ -35,51 +35,59 @@ public class TrainIcon extends LocoIcon {
     /**
      * Pop-up only if right click and not dragged 
      */
-    public void showPopUp(JPopupMenu popup) {
-        super.showPopUp(popup);
+	public void showPopUp(JPopupMenu popup) {
+		//super.showPopUp(popup);
 
-        if (train != null){
-            popup.add(new AbstractAction("Move") {
-                public void actionPerformed(ActionEvent e) {
-                    train.move();
-                }
-            });
-            popup.add(makeTrainRouteMenu()); 
-        }
-        if (entry != null) {
-            popup.add(new AbstractAction("Throttle") {
-                public void actionPerformed(ActionEvent e) {
-                    createThrottle();
-                }
-            });
-        }
-        popup.add(makeLocoIconMenu());
+		if (train != null){
+			popup.add(new AbstractAction("Move") {
+				public void actionPerformed(ActionEvent e) {
+					train.move();
+				}
+			});
+			popup.add(makeTrainRouteMenu()); 
+			popup.add(new AbstractAction("Set X&Y") {
+				public void actionPerformed(ActionEvent e) {
+					if(!train.setTrainIconCoordinates())
+						JOptionPane.showMessageDialog(null, "See Operations -> Settings to enable Set X&Y",
+								"Set X&Y is disabled",
+								JOptionPane.ERROR_MESSAGE);
+				}
+			});
+		}
+		if (entry != null) {
+			popup.add(new AbstractAction("Throttle") {
+				public void actionPerformed(ActionEvent e) {
+					createThrottle();
+				}
+			});
+		}
+		popup.add(makeLocoIconMenu());
 	}
-    
-    Train train = null;
-    
-    public void setTrain (Train train){
-    	this.train = train;
-    }
-    
-    public Train getTrain (){
-    	return train;
-    }
-    
-    int consistNumber = 0;
-    
-    public void setConsistNumber (int cN){
-    	this.consistNumber =   cN;
-    }
-        
-    private int getConsistNumber(){
-    	return consistNumber;
-    }
-    
-    jmri.jmrit.throttle.ThrottleFrame tf = null;
-    
-    private void createThrottle(){
-    	tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
+
+	Train train = null;
+
+	public void setTrain (Train train){
+		this.train = train;
+	}
+
+	public Train getTrain (){
+		return train;
+	}
+
+	int consistNumber = 0;
+
+	public void setConsistNumber (int cN){
+		this.consistNumber =   cN;
+	}
+
+	private int getConsistNumber(){
+		return consistNumber;
+	}
+
+	jmri.jmrit.throttle.ThrottleFrame tf = null;
+
+	private void createThrottle(){
+		tf = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleFrame();
 		if (getConsistNumber() > 0){
 			if (JOptionPane.showConfirmDialog(null,
 					"Send function commands to lead loco?", "Consist Throttle",
@@ -91,21 +99,21 @@ public class TrainIcon extends LocoIcon {
 			tf.getAddressPanel().setRosterEntry(entry);
 		}
 		tf.toFront();
-    }
-    
-    private JMenu makeTrainRouteMenu(){
-    	JMenu routeMenu = new JMenu("Route");
-    	Route route = train.getRoute();
-    	if (route == null)
-    		return routeMenu;
-    	List<String> routeList = route.getLocationsBySequenceList();
-    	CarManager carManager = CarManager.instance();
-    	List<String> carList = carManager.getCarsByTrainList(train);
-    	for (int r=0; r<routeList.size(); r++){
-    		int pickupCars = 0;
-    		int dropCars = 0;
-    		String current = "     ";
- 			RouteLocation rl = route.getLocationById(routeList.get(r));
+	}
+
+	private JMenu makeTrainRouteMenu(){
+		JMenu routeMenu = new JMenu("Route");
+		Route route = train.getRoute();
+		if (route == null)
+			return routeMenu;
+		List<String> routeList = route.getLocationsBySequenceList();
+		CarManager carManager = CarManager.instance();
+		List<String> carList = carManager.getCarsByTrainList(train);
+		for (int r=0; r<routeList.size(); r++){
+			int pickupCars = 0;
+			int dropCars = 0;
+			String current = "     ";
+			RouteLocation rl = route.getLocationById(routeList.get(r));
 			if (train.getCurrentLocation() == rl)
 				current = "-> ";
 			for (int j=0; j<carList.size(); j++){
@@ -127,10 +135,10 @@ public class TrainIcon extends LocoIcon {
 				routeMenu.add(current + rl.getName() +"  (" + pickups + drops +" )");
 			else
 				routeMenu.add(current + rl.getName());
-    	}
-    	return routeMenu;
-    }
-    
- 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIcon.class.getName());
+		}
+		return routeMenu;
+	}
+
+
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIcon.class.getName());
 }
