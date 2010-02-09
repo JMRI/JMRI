@@ -363,7 +363,6 @@ public class ControlPanelEditor extends Editor implements ItemListener {
     /*
     *  itemListener for JComboBox
     */
-    @SuppressWarnings("null")
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
             ComboBoxItem item = (ComboBoxItem)e.getItem();
@@ -374,11 +373,6 @@ public class ControlPanelEditor extends Editor implements ItemListener {
                 _addIconBox.setSelectedIndex(-1);
                 return;
             }
-            IconAdder editor = null;
-            ActionListener addIconAction = null;
-            ActionListener changeIconAction = null;
-            PickListModel pickList = null;
-            boolean addToTable = true;
             int which = _addIconBox.getSelectedIndex();
             _addIconBox.setSelectedIndex(-1);
             switch (which) {

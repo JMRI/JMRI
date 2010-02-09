@@ -386,7 +386,6 @@ public class PanelEditor extends Editor implements ItemListener {
                 _addIconBox.setSelectedIndex(-1);
                 return;
             }
-            ActionListener changeIconAction = null;
             // Classic PanelEditor has separate text entry field
             int which = _addIconBox.getSelectedIndex()+1;
             _addIconBox.setSelectedIndex(-1);

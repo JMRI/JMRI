@@ -309,9 +309,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
     
     private void setScrollbarScale(double ratio) {
-		//Dimension dim = getTargetPanelSize();
+		Dimension dim = _targetPanel.getSize();
         //Dimension dim = _targetPanel.getPreferredSize();
-        Dimension dim = _targetPanel.getMaximumSize();
+        //Dimension dim = _targetPanel.getMaximumSize();
 		int tpWidth = (int)((dim.width)*ratio);
 		int tpHeight = (int)((dim.height)*ratio);
 		//setTargetPanelSize(tpWidth,tpHeight);
@@ -695,6 +695,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }.init(p));
     }
 
+    /************************* End Popup Methods ***********************/
+    /******************** Marker Menu ****************************/
+
     protected void locoMarkerFromRoster() {
         final JmriJFrame locoRosterFrame = new JmriJFrame();
         locoRosterFrame.getContentPane().setLayout(new FlowLayout());
@@ -783,20 +786,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 		}
 	}
     
-    /*
-    private AbstractAction setRemoveMenu(Positionable p) {
-        return new AbstractAction(rb.getString("Remove")) {
-            Positionable comp;
-            public void actionPerformed(ActionEvent e) { 
-                comp.remove();
-            }
-            AbstractAction init(Positionable pos) {
-                comp = pos;
-                return this;
-            }
-        }.init(p);
-    } */
-    /************************* End Popup Methods ***********************/
+    /************************* End Markewr Menu Methods ***********************/
     
     /************** Adding content to the panel ***********************/
 

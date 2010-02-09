@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.58 $
+ * @version $Revision: 1.59 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -594,7 +594,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         return menu;
     }
 
-    void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,
+    protected void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,
                            final String name, final Color color, final int colorType) {
         ActionListener a = new ActionListener() {
             //final String desiredName = name;

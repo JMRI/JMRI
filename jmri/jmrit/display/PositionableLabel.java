@@ -40,7 +40,7 @@ import javax.swing.border.LineBorder;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.79 $
+ * @version $Revision: 1.80 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -537,7 +537,58 @@ public class PositionableLabel extends JLabel implements Positionable {
         popup.add(colorMenu);
     }
 
-    public void makeColorMenu(JMenu colorMenu, int type) {
+    JCheckBoxMenuItem disableItem = null;
+    public void setDisableControlMenu(JPopupMenu popup) {
+        disableItem = new JCheckBoxMenuItem(rb.getString("Disable"));
+        disableItem.setSelected(getForceControlOff());
+        popup.add(disableItem);
+        disableItem.addActionListener(new ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                setForceControlOff(disableItem.isSelected());
+            }
+        });
+    }
+
+    public void setScale(double s) {
+        _namedIcon.scale(s, this);
+        setIcon(_namedIcon);
+        updateSize();
+    }
+    public double getScale() {
+        return ((NamedIcon)getIcon()).getScale();
+    }
+
+    void rotate(int deg) {
+        _namedIcon.rotate(deg, this);
+        setIcon(_namedIcon);
+        updateSize();
+    }
+    
+    JCheckBoxMenuItem tristateItem = null;
+    void addTristateEntry(JPopupMenu popup) {
+    	tristateItem = new JCheckBoxMenuItem(rb.getString("Tristate"));
+    	tristateItem.setSelected(getTristate());
+        popup.add(tristateItem);
+        tristateItem.addActionListener(new ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                setTristate(tristateItem.isSelected());
+            }
+        });
+    }
+
+    public void setTextFontMenu(JPopupMenu popup) {
+        JMenu edit = new JMenu(rb.getString("EditFont"));
+        edit.add(makeFontSizeMenu());
+        edit.add(makeFontStyleMenu());
+        JMenu colorMenu = new JMenu(rb.getString("FontColor"));
+        makeColorMenu(colorMenu, FONT_COLOR);
+        edit.add(colorMenu);
+        popup.add(edit);
+    }
+
+    /************************ Popup Color utilities *************************/
+
+    protected void makeColorMenu(JMenu colorMenu, int type) {
         ButtonGroup buttonGrp = new ButtonGroup();
         addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Black"), Color.black, type);
         addColorMenuEntry(colorMenu, buttonGrp, rb.getString("DarkGray"),Color.darkGray, type);
@@ -553,7 +604,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Clear"), null, type);
     }
 
-    void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,
+    protected void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,
                            final String name, final Color color, final int colorType) {
         ActionListener a = new ActionListener() {
             //final String desiredName = name;
@@ -611,55 +662,6 @@ public class PositionableLabel extends JLabel implements Positionable {
             if (color==null)  r.setSelected(true);
             else  r.setSelected(false);
         }
-    }
-
-    JCheckBoxMenuItem disableItem = null;
-    public void setDisableControlMenu(JPopupMenu popup) {
-        disableItem = new JCheckBoxMenuItem(rb.getString("Disable"));
-        disableItem.setSelected(getForceControlOff());
-        popup.add(disableItem);
-        disableItem.addActionListener(new ActionListener(){
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                setForceControlOff(disableItem.isSelected());
-            }
-        });
-    }
-
-    public void setScale(double s) {
-        _namedIcon.scale(s, this);
-        setIcon(_namedIcon);
-        updateSize();
-    }
-    public double getScale() {
-        return ((NamedIcon)getIcon()).getScale();
-    }
-
-    void rotate(int deg) {
-        _namedIcon.rotate(deg, this);
-        setIcon(_namedIcon);
-        updateSize();
-    }
-    
-    JCheckBoxMenuItem tristateItem = null;
-    void addTristateEntry(JPopupMenu popup) {
-    	tristateItem = new JCheckBoxMenuItem(rb.getString("Tristate"));
-    	tristateItem.setSelected(getTristate());
-        popup.add(tristateItem);
-        tristateItem.addActionListener(new ActionListener(){
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                setTristate(tristateItem.isSelected());
-            }
-        });
-    }
-
-    public void setTextFontMenu(JPopupMenu popup) {
-        JMenu edit = new JMenu(rb.getString("EditFont"));
-        edit.add(makeFontSizeMenu());
-        edit.add(makeFontStyleMenu());
-        JMenu colorMenu = new JMenu(rb.getString("FontColor"));
-        makeColorMenu(colorMenu, FONT_COLOR);
-        edit.add(colorMenu);
-        popup.add(edit);
     }
 
     public void setTextEditMenu(JPopupMenu popup) {
