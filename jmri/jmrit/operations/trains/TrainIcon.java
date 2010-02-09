@@ -21,7 +21,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class TrainIcon extends LocoIcon {
@@ -54,13 +54,7 @@ public class TrainIcon extends LocoIcon {
 				}
 			});
 		}
-		if (entry != null) {
-			popup.add(new AbstractAction("Throttle") {
-				public void actionPerformed(ActionEvent e) {
-					createThrottle();
-				}
-			});
-		}
+		popup.add(new ThrottleAction("Throttle")); 
 		popup.add(makeLocoIconMenu());
 	}
 
@@ -139,6 +133,16 @@ public class TrainIcon extends LocoIcon {
 		return routeMenu;
 	}
 
-
+	public class ThrottleAction extends AbstractAction {	
+	    public ThrottleAction(String actionName) {
+	        super(actionName);
+	        // only enable if connected to an NCE system
+			if (entry == null)
+				setEnabled(false);
+	    }
+		public void actionPerformed(ActionEvent e) {
+			createThrottle();
+		}
+	}
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIcon.class.getName());
 }
