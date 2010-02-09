@@ -44,7 +44,7 @@ RXTXcomm.jar, librxtxSerial.jnilib
   From Rxtx-2.2pre2  http://rxtx.qbang.org (http://rxtx.qbang.org/pub/rxtx/rxtx-2.2pre2-bins.zip)
   The win32 and win64 directories contain the necessary rxtxSerial.dll for the two windows varients
   The i686-pc-linux-gnu directory contains two .so libraries for 32-bit Linux
-  The MacOS X librxtxSerial.jnilib was built for MacOS X 10.4 by John Plocjer 2010-02-04
+  The MacOS X librxtxSerial.jnilib was built for MacOS X 10.4 by John Plocher 2010-02-04
   
 security.policy
  (JMRI file)
@@ -80,7 +80,11 @@ jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
 
 servlet.jar:
   jakarta-servletapi-3.2.3-src/lib/servlet.jar
-  
+
+swing-worker-1.2.jar
+    SwingWorker 1.2 (Backport of SwingWorker from Java 1.6)
+    from https://swingworker.dev.java.net/servlets/ProjectDocumentList
+    
 libusb-jar (ch.ntb.usb.jar)
         http://inf.ntb.ch/infoportal/help/index.jsp?topic=/ch.ntb.infoportal/tools.html
         http://libusb.wiki.sourceforge.net/
