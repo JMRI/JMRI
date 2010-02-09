@@ -36,7 +36,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class SignalGroupSubTableAction {
@@ -55,7 +55,7 @@ public class SignalGroupSubTableAction {
     public SignalGroupSubTableAction(String s) {
 
     }
-    public SignalGroupSubTableAction() { this("SignalGroup Table");}
+    public SignalGroupSubTableAction() { this("SignalGroup Head Edit Table");}
 
     String helpTarget() {
         return "package.jmri.jmrit.beantable.SignalGroupTable";
@@ -105,9 +105,7 @@ public class SignalGroupSubTableAction {
         String mode;
         if (sig!=null){
             mode = (String)box.getSelectedItem();
-            System.out.println("Selected Value " + mode);
             result = jmri.util.StringUtil.getStateFromName(mode, sig.getValidStates(), sig.getValidStateNames());
-            System.out.println("value is " + result);
         }
         else {
             mode = (String)box.getSelectedItem();
@@ -165,39 +163,28 @@ public class SignalGroupSubTableAction {
     JLabel signalOffStateLabel = new JLabel("State when conditions are not met");
     JLabel userLabel = new JLabel("Select the conditions that must be met to set this Signal Head on");
     
-    JButton updateButton = new JButton("Done");
+    JButton updateSubButton = new JButton("Done");
     
-    static String createInst = "To create a new SignalGroup, enter definition, then click 'Add SignalGroup'.";
-    static String editInst = "To edit an existing SignalGroup, enter system name, then click 'Edit SignalGroup'.";
-    static String updateInst = "To change this SignalGroup, make changes above, then click 'Update SignalGroup'.";
-    static String cancelInst = "To leave Edit mode, without changing this SignalGroup, click 'Cancel',";
+    static String updateInst = "To change this SignalGroup, make changes above, then click 'Done'.";
 
-    JLabel status1 = new JLabel(createInst);
-    JLabel status2 = new JLabel(editInst);
+    JLabel status1 = new JLabel(updateInst);
     
     JPanel p2xt = null;   // Turnout list table
     JPanel p2xs = null;   // Sensor list table
-    JPanel p2xsi = null;   // Signal list table
 
     SignalGroup curSignalGroup = null;
-    boolean SignalGroupDirty = false;  // true to fire reminder to save work
-    boolean editMode = false;
     String curSignal;
 
     void editSignal(SignalGroup g, String signal) {
         curSignalGroup = g;
         curSignal = signal;
-        System.out.println(signal);
         
         SignalHead sig = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(curSignal);
+        
         _OnAppearance = new JComboBox(sig.getValidStateNames());
         _OffAppearance = new JComboBox(sig.getValidStateNames());
         _systemName= new JLabel(signal);
         _systemName.setVisible(true);
-        editMode = true;
-		/*if (editMode) {
-			cancelEdit();
-		}*/
         
         jmri.TurnoutManager tm = InstanceManager.turnoutManagerInstance();
         List<String> systemNameList = tm.getSystemNameList();
@@ -248,6 +235,13 @@ public class SignalGroupSubTableAction {
 
             contentPane.add(p);
             
+            if (InstanceManager.signalHeadManagerInstance().getBySystemName(curSignal).getClass().getName().contains("SingleTurnoutSignalHead")){
+                jmri.implementation.SingleTurnoutSignalHead Signal = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.signalHeadManagerInstance().getBySystemName(curSignal);
+                if ((g.getSignalHeadOnState(curSignal)==0x00) && (g.getSignalHeadOffState(curSignal)==0x00)){
+                    g.setSignalHeadOnState(curSignal, Signal.getOnAppearance());
+                    g.setSignalHeadOffState(curSignal, Signal.getOffAppearance());
+                }
+            }
             
             setSignalStateBox(g.getSignalHeadOnState(curSignal), _OnAppearance);
             setSignalStateBox(g.getSignalHeadOffState(curSignal), _OffAppearance);
@@ -295,9 +289,9 @@ public class SignalGroupSubTableAction {
             JPanel p21t = new JPanel();
             p21t.setLayout(new BoxLayout(p21t, BoxLayout.Y_AXIS));
             p21t.add(new JLabel("Please select "));
-            p21t.add(new JLabel(" Turnouts that must "));
-            p21t.add(new JLabel(" must be set "));
-            p21t.add(new JLabel(" for the signal ."));
+            p21t.add(new JLabel("Sensors to be "));
+            p21t.add(new JLabel("included in  "));
+            p21t.add(new JLabel("this Signal Group."));
             p2xt.add(p21t);
             _SignalGroupTurnoutModel = new SignalGroupTurnoutModel();
             JTable SignalGroupTurnoutTable = jmri.util.JTableUtil.sortableDataModel(_SignalGroupTurnoutModel);
@@ -402,13 +396,13 @@ public class SignalGroupSubTableAction {
            
              
             // add lock control table
-            JPanel p4 = new JPanel();
+            /*JPanel p4 = new JPanel();
             p4.setLayout(new BoxLayout(p4, BoxLayout.Y_AXIS));
             
 			// complete this panel
             Border p4Border = BorderFactory.createEtchedBorder();
             p4.setBorder(p4Border);
-            contentPane.add(p4);
+            contentPane.add(p4);*/
             
             // add notes panel
             JPanel pa = new JPanel();
@@ -416,11 +410,7 @@ public class SignalGroupSubTableAction {
             JPanel p1 = new JPanel();
             p1.setLayout(new FlowLayout());
             p1.add(status1);
-            JPanel p2 = new JPanel();
-            p2.setLayout(new FlowLayout());
-            p2.add(status2);
             pa.add(p1);
-            pa.add(p2);
             Border pBorder = BorderFactory.createEtchedBorder();
             pa.setBorder(pBorder);
             contentPane.add(pa);
@@ -429,28 +419,26 @@ public class SignalGroupSubTableAction {
             pb.setLayout(new FlowLayout());
 
             // Update SignalGroup button
-            pb.add(updateButton);
-            updateButton.addActionListener(new ActionListener() {
+            pb.add(updateSubButton);
+            updateSubButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    updatePressed(e, false);
+                    updateSubPressed(e, false);
                 }
             });
-            updateButton.setToolTipText("Change this SignalGroup and leave Edit mode");
+            updateSubButton.setToolTipText("Change this SignalGroup and leave Edit mode");
 
-            
-            updateButton.setVisible(true);
+            p2xtSpace.setVisible(false);
+            p2xsSpace.setVisible(false);
+            updateSubButton.setVisible(true);
             contentPane.add(pb);
             addFrame.pack();
-            p2xtSpace.setVisible(false);
+            
         }
         // set listener for window closing
         addFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     addFrame.setVisible(false);
-                    // if in Edit, cancel edit mode
-                    if (editMode) {
-                        cancelEdit();
-                    }
+                    cancelEdit();
                     _SignalGroupSensorModel.dispose();
                     _SignalGroupTurnoutModel.dispose();
                 }
@@ -492,11 +480,8 @@ public class SignalGroupSubTableAction {
             }
         }
     
-
         status1.setText(updateInst);
-        status2.setText(cancelInst);
-        status2.setVisible(true);
-        updateButton.setVisible(true);
+        updateSubButton.setVisible(true);
 }
 
     void setColumnToHoldButton(JTable table, int column, JButton sample) {
@@ -553,77 +538,37 @@ public class SignalGroupSubTableAction {
     }
 
     /**
-     * Responds to the Delete button
-     */
-    void deletePressed(ActionEvent e) {
-
-        curSignalGroup = null;
-        finishUpdate();
-    }
-
-    /**
      * Responds to the Update button - update to SignalGroup Table
      */
-    void updatePressed(ActionEvent e, boolean newSignalGroup ) {
-
+    void updateSubPressed(ActionEvent e, boolean newSignalGroup ) {
         curSignalGroup.clearSignalTurnout(curSignal);
         curSignalGroup.clearSignalSensor(curSignal);
 
         initializeIncludedList();
         setTurnoutInformation(curSignalGroup);
         setSensorInformation(curSignalGroup);
-        System.out.println("On Appearance " + _OnAppearance.getSelectedItem());
-        System.out.println("Off Appearance " + _OffAppearance.getSelectedItem());
         curSignalGroup.setSignalHeadOnState(curSignal, signalStateFromBox(_OnAppearance));
         curSignalGroup.setSignalHeadOffState(curSignal, signalStateFromBox(_OffAppearance));
         curSignalGroup.setSensorTurnoutOper(curSignal, operFromBox(_SensorTurnoutOper));
         // add control Sensors and a control Turnout if entered in the window
-
         finishUpdate();
-        status1.setText((newSignalGroup ? "New SignalGroup created: ":"SignalGroup updated: ")
-                        +", "+ _includedTurnoutList.size()
-                        +" Turnouts, "+_includedSensorList.size()+" Sensors");
-        addFrame.setVisible(false);
     }
 
     void finishUpdate() {
         // move to show all turnouts if not there
         cancelIncludedOnly();
+        updateSubButton.setVisible(false);
 
-        status2.setText(editInst);
-        status2.setVisible(true);
-
-        updateButton.setVisible(false);
-
-        SignalGroupDirty = true;
-
-        editMode = false;
-        if (curSignalGroup != null) {
-//            curSignalGroup.activateSignalGroup();    
-        }
         addFrame.setVisible(false);
-    }
-
-
-    /**
-     * Responds to the Cancel button
-     */
-    void cancelPressed(ActionEvent e) {
-        cancelEdit();
     }
     
     /** 
      * Cancels edit mode
      */
     void cancelEdit() {
-        if (editMode) {
-            status1.setText(createInst);
-            status2.setText(editInst);
-            finishUpdate();
-            // get out of edit mode
-            editMode = false;
-            curSignalGroup = null;
-        }
+        // get out of edit mode
+        curSignalGroup = null;
+        finishUpdate();
     }
     
     /** 
@@ -672,6 +617,14 @@ public class SignalGroupSubTableAction {
         public static final int UNAME_COLUMN = 1;
         public static final int INCLUDE_COLUMN = 2;
         public static final int STATE_COLUMN = 3;
+        
+        public String getDisplayName(int r){
+            if (((String) getValueAt(r, UNAME_COLUMN)!=null)||(!((String) getValueAt(r, UNAME_COLUMN)).equals(""))){
+                return (String) getValueAt(r, UNAME_COLUMN);
+            } else {
+                return (String) getValueAt(r, SNAME_COLUMN);
+            }
+        }
         
     }
     
@@ -811,20 +764,15 @@ public class SignalGroupSubTableAction {
     private static String SET_TO_CLOSED = InstanceManager.turnoutManagerInstance().getClosedText();
     private static String SET_TO_THROWN = InstanceManager.turnoutManagerInstance().getThrownText();
 
-    private static String[] sensorInputModes = new String[]{"On Active", "On Inactive", "Veto Active", "Veto Inactive"};
-    private static int[] sensorInputModeValues = new int[]{SignalGroup.ONACTIVE, SignalGroup.ONINACTIVE, 
-                                            SignalGroup.VETOACTIVE, SignalGroup.VETOINACTIVE};
+    private static String[] sensorInputModes = new String[]{"Active", "Inactive"};
+    private static int[] sensorInputModeValues = new int[]{SignalGroup.ONACTIVE, SignalGroup.ONINACTIVE};
                                             
     private static String[] signalStates = new String[]{rbx.getString("StateSignalHeadDark"), rbx.getString("StateSignalHeadRed"), rbx.getString("StateSignalHeadYellow"), rbx.getString("StateSignalHeadGreen"), rbx.getString("StateSignalHeadLunar")};
     private static int[] signalStatesValues = new int[]{SignalHead.DARK, SignalHead.RED, SignalHead.YELLOW, SignalHead.GREEN, SignalHead.LUNAR}; 
 
-    private static String[] turnoutInputModes = new String[]{"On "+InstanceManager.turnoutManagerInstance().getClosedText(),
-                                            "On "+InstanceManager.turnoutManagerInstance().getThrownText(),
-                                            "Veto Closed", "Veto Thrown"};
-    private static int[] turnoutInputModeValues = new int[]{SignalGroup.ONCLOSED, SignalGroup.ONTHROWN,
-                                            SignalGroup.VETOCLOSED, SignalGroup.VETOTHROWN};
-
-    //private static int[] lockTurnoutInputModeValues = new int[]{SignalGroup.ONCLOSED, SignalGroup.ONTHROWN, SignalGroup.ONCHANGE};    
+    private static String[] turnoutInputModes = new String[]{InstanceManager.turnoutManagerInstance().getClosedText(),
+                                            InstanceManager.turnoutManagerInstance().getThrownText() };
+    private static int[] turnoutInputModeValues = new int[]{SignalGroup.ONCLOSED, SignalGroup.ONTHROWN };
 
     private ArrayList <SignalGroupTurnout> _turnoutList;      // array of all Turnouts
     private ArrayList <SignalGroupTurnout> _includedTurnoutList; 
@@ -871,7 +819,6 @@ public class SignalGroupSubTableAction {
                     return _userName;
             }
             return _sysName;
-            
         }
     }
 

@@ -8,6 +8,7 @@ import jmri.NamedBean;
 import jmri.SignalGroup;
 import jmri.Sensor;
 import jmri.SignalHead;
+import jmri.SignalMast;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import java.awt.event.FocusEvent;
@@ -39,7 +40,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class SignalGroupTableAction extends AbstractTableAction {
@@ -77,12 +78,10 @@ public class SignalGroupTableAction extends AbstractTableAction {
     		public int getColumnCount(){ return 6;}
 
     		public String getColumnName(int col) {
-    			//if (col==VALUECOL) return "";  // no heading on "Set"
     			if (col==SETCOL) return "";    // no heading on "Edit"
     			if (col==ENABLECOL) return "Enabled";
                 if (col==COMMENTCOL) return "Comment";
                 if (col==DELETECOL) return "";
-    			//if (col==LOCKCOL) return "Locked";
     			else return super.getColumnName(col);
 		    }
     		public Class<?> getColumnClass(int col) {
@@ -90,7 +89,6 @@ public class SignalGroupTableAction extends AbstractTableAction {
     			if (col==ENABLECOL) return Boolean.class;
                 if (col==DELETECOL) return JButton.class;
                 if (col==COMMENTCOL) return String.class;
-    			//if (col==LOCKCOL) return Boolean.class;
     			else return super.getColumnClass(col);
 		    }
     		public int getPreferredWidth(int col) {
@@ -98,7 +96,6 @@ public class SignalGroupTableAction extends AbstractTableAction {
     			if (col==ENABLECOL) return new JTextField(6).getPreferredSize().width;
                 if (col==COMMENTCOL) return new JTextField(15).getPreferredSize().width;
                 if (col==DELETECOL) return new JTextField(22).getPreferredSize().width;
-    			//if (col==LOCKCOL) return new JTextField(6).getPreferredSize().width;
     			else return super.getPreferredWidth(col);
 		    }
     		public boolean isCellEditable(int row, int col) {
@@ -106,11 +103,6 @@ public class SignalGroupTableAction extends AbstractTableAction {
     			if (col==SETCOL) return true;
     			if (col==ENABLECOL) return true;
                 if (col==DELETECOL) return true;
-    			// SignalGroup lock is available if turnouts are lockable
-    			/*if (col==LOCKCOL) {
-    				SignalGroup r = (SignalGroup)getBySystemName((String)getValueAt(row, SYSNAMECOL));
-    				return r.canLock();
-    			}*/
     			else return super.isCellEditable(row,col);
 			}    		
     		public Object getValueAt(int row, int col) {
@@ -147,11 +139,6 @@ public class SignalGroupTableAction extends AbstractTableAction {
                         }
                     WindowMaker t = new WindowMaker(row);
 					javax.swing.SwingUtilities.invokeLater(t);
-                    /*
-                    addPressed(null);
-                    _systemName.setText((String)getValueAt(row, SYSNAMECOL));
-                    editPressed(null); // don't really want to stop SignalGroup w/o user action
-                    */
     			}
     			else if (col==ENABLECOL) {
                     // alternate
@@ -165,7 +152,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
                     fireTableRowsUpdated(row, row);
                         }
                 else if (col==DELETECOL) {
-            // button fired, delete Bean
+                    // button fired, delete Bean
                     deleteBean(row, col);
                 }
 
@@ -180,7 +167,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
               }
               
               void configDeleteColumn(JTable table) {
-        // have the delete column hold a button
+                // have the delete column hold a button
                 setColumnToHoldButton(table, DELETECOL, 
                 new JButton(AbstractTableAction.rb.getString("ButtonDelete")));
             }
@@ -233,22 +220,6 @@ public class SignalGroupTableAction extends AbstractTableAction {
         return "package.jmri.jmrit.beantable.SignalGroupTable";
     }
 
-    int sensorModeFromBox(JComboBox box) {
-        String mode = (String)box.getSelectedItem();
-        int result = jmri.util.StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
-        
-        if (result<0) {
-            log.warn("unexpected mode string in sensorMode: "+mode);
-            throw new IllegalArgumentException();
-        }
-        return result;
-    }
- 
-    void setSensorModeBox(int mode, JComboBox box) {
-        String result = jmri.util.StringUtil.getNameFromState(mode, sensorInputModeValues, sensorInputModes);
-        box.setSelectedItem(result);
-    }
-    
     int signalStateFromBox(JComboBox box) {
         String mode = (String)box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, signalStatesValues, signalStates);
@@ -265,33 +236,11 @@ public class SignalGroupTableAction extends AbstractTableAction {
         box.setSelectedItem(result);
     }
     
-    
-    boolean operFromBox(JComboBox box) {
-        String mode = (String)box.getSelectedItem();
-        int result = jmri.util.StringUtil.getStateFromName(mode, operValues, oper);
-        
-        if (result<0) {
-            log.warn("unexpected mode string in sensorMode: "+mode);
-            throw new IllegalArgumentException();
-        }
-        if (result == 0) return false;
-        else return true;
-    }
-    
-    void setoperBox(boolean mode, JComboBox box) {
-        int _mode = 0;
-        if (mode) _mode = 1;
-        String result = jmri.util.StringUtil.getNameFromState(_mode, operValues, oper);
-        box.setSelectedItem(result);
-    }
-       
     JTextField _systemName = new JTextField(10);
     JTextField _userName = new JTextField(22);
 
     JmriJFrame addFrame = null;
 
-    JScrollPane _SignalGroupTurnoutScrollPane;
-    JScrollPane _SignalGroupSensorScrollPane;
     SignalGroupSignalModel _SignalGroupSignalModel;
     JScrollPane _SignalGroupSignalScrollPane;
     
@@ -299,8 +248,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
     JScrollPane _SignalAppearanceScrollPane;
 
 
-    JTextField mainSignal = new JTextField(8);
-    JComboBox mainSignalOperation = new JComboBox(oper);
+    JTextField mainSignal = new JTextField(30);
     
     ButtonGroup selGroup = null;
     JRadioButton allButton = null;   
@@ -310,24 +258,11 @@ public class SignalGroupTableAction extends AbstractTableAction {
     JLabel userLabel = new JLabel("SignalGroup User Name:");
     JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
     
-    JButton createButton = new JButton("Add SignalGroup");
-    JButton editButton = new JButton("Edit SignalGroup");
     JButton deleteButton = new JButton("Delete SignalGroup");
-    JButton updateButton = new JButton("Update SignalGroup");
-    JButton cancelButton = new JButton("Cancel");
-    //JButton exportButton = new JButton("Export to Logix");
-    
-    static String createInst = "To create a new SignalGroup, enter definition, then click 'Add SignalGroup'.";
-    //static String editInst = "To edit an existing SignalGroup, enter system name, then click 'Edit SignalGroup'.";
-    static String updateInst = "To change this SignalGroup, make changes above, then click 'Update SignalGroup'.";
-    static String cancelInst = "To leave Edit mode, without changing this SignalGroup, click 'Cancel',";
+    JButton updateButton = new JButton("Done");
 
-    JLabel status1 = new JLabel(createInst);
-    //JLabel status2;
-    
-    JPanel p2xt = null;   // Turnout list table
-    JPanel p2xs = null;   // Sensor list table
-    JPanel p2xsi = null;   // Signal list table
+    JPanel p2xs = null;   // SignalHead list table
+    JPanel p2xsi = null;   // SignalHead list table
     JPanel p3xsi = null; 
 
     SignalGroup curSignalGroup = null;
@@ -335,9 +270,9 @@ public class SignalGroupTableAction extends AbstractTableAction {
     boolean editMode = false;
 
     void addPressed(ActionEvent e) {
-		if (editMode) {
+		/*if (editMode) {
 			cancelEdit();
-		}
+		}*/
         jmri.TurnoutManager tm = InstanceManager.turnoutManagerInstance();
         List<String> systemNameList = tm.getSystemNameList();
         _mastAppearancesList = null;
@@ -376,7 +311,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
             p.setLayout(new FlowLayout());
             p.add(userLabel);
             p.add(_userName);
-            _userName.setToolTipText("Enter user name for new SignalGroup, e.g. Clear Mainline.");
+            _userName.setToolTipText("Enter user name for new SignalGroup, e.g. Junction Indicator on Signal 1.");
 
             contentPane.add(p);
             // add Turnout Display Choice
@@ -423,8 +358,8 @@ public class SignalGroupTableAction extends AbstractTableAction {
             JPanel p32 = new JPanel();
             p32.add(new JLabel("Signal Mast: "));
             p32.add(mainSignal);
-            p32.add(new JLabel("Appearance Logic"));
-            p32.add(mainSignalOperation);
+            //p32.add(new JLabel("Appearance Logic"));
+            //p32.add(mainSignalOperation);
             mainSignal.setText("");
             p3.add(p32);
             
@@ -472,7 +407,10 @@ public class SignalGroupTableAction extends AbstractTableAction {
                 new FocusListener() {
                 public void focusGained(FocusEvent e){}
                 public void focusLost(FocusEvent e) {
-                    setValidSignalAppearances();
+                    if(curSignalGroup==null)
+                        setValidSignalAppearances();
+                    else if (!mainSignal.getText().equals(curSignalGroup.getSignalMastName()))
+                        setValidSignalAppearances();
                 }
             }
         );
@@ -504,7 +442,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
                 tmodel.setSortingStatus(SignalGroupSignalModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
             } catch (ClassCastException e3) {}  // if not a sortable table model
             SignalGroupSignalTable.setRowSelectionAllowed(false);
-            SignalGroupSignalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480,80));
+            SignalGroupSignalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480,160));
             TableColumnModel SignalGroupSignalColumnModel = SignalGroupSignalTable.getColumnModel();
             TableColumn includeColumnSi = SignalGroupSignalColumnModel.
                                                 getColumn(SignalGroupSignalModel.INCLUDE_COLUMN);
@@ -545,36 +483,16 @@ public class SignalGroupTableAction extends AbstractTableAction {
             contentPane.add(p2xsi);
             p2xsi.setVisible(true);
             
-			// complete this panel
-            /*Border p4Border = BorderFactory.createEtchedBorder();
-            p4.setBorder(p4Border);
-            contentPane.add(p4);*/
-            
+           
             // add notes panel
             JPanel pa = new JPanel();
             pa.setLayout(new BoxLayout(pa, BoxLayout.Y_AXIS));
-            JPanel p1 = new JPanel();
-            p1.setLayout(new FlowLayout());
-            p1.add(status1);
-            //JPanel p2 = new JPanel();
-            //p2.setLayout(new FlowLayout());
-            //p2.add(status2);
-            pa.add(p1);
-            //pa.add(p2);
+
             Border pBorder = BorderFactory.createEtchedBorder();
             pa.setBorder(pBorder);
             contentPane.add(pa);
-            // add buttons - Add SignalGroup button
             JPanel pb = new JPanel();
             pb.setLayout(new FlowLayout());
-            pb.add(createButton);
-            createButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    createPressed(e);
-                }
-            });
-            createButton.setToolTipText("Add a new SignalGroup using data entered above");
-
             pb.add(deleteButton);
             deleteButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -586,21 +504,20 @@ public class SignalGroupTableAction extends AbstractTableAction {
             pb.add(updateButton);
             updateButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    updatePressed(e, false);
+                    updatePressed(e, false, true);
                 }
             });
             updateButton.setToolTipText("Change this SignalGroup and leave Edit mode");
-
-            cancelButton.setVisible(false);
             updateButton.setVisible(true);
-            createButton.setVisible(true);
-            deleteButton.setVisible(false);
             contentPane.add(pb);
             // pack and release space
             addFrame.pack();
             p2xsiSpace.setVisible(false);
         }
         // set listener for window closing
+        else {
+            mainSignal.setText("");
+        }
         addFrame.addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     // remind to save, if SignalGroup was created or edited
@@ -611,10 +528,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
                     }
                     // hide addFrame
                     addFrame.setVisible(false);
-                    // if in Edit, cancel edit mode
-                    if (editMode) {
-                        cancelEdit();
-                    }
+                    finishUpdate();
                     _SignalGroupSignalModel.dispose();
                     _AppearanceModel.dispose();
 
@@ -642,12 +556,9 @@ public class SignalGroupTableAction extends AbstractTableAction {
      * Initialize list of included turnout positions
      */
     void initializeIncludedList() {
-        _includedMastAppearancesList = new ArrayList<TriggerMastAppearances>();
-        //System.out.println("Mast Appearance list initialize " + _mastAppearancesList.size());
+        _includedMastAppearancesList = new ArrayList<SignalMastAppearances>();
         for (int i=0; i<_mastAppearancesList.size();i++){
-            //System.out.println(_mastAppearancesList.get(i).getAppearance());
             if (_mastAppearancesList.get(i).isIncluded()) {
-                //System.out.println("Include");
                 _includedMastAppearancesList.add(_mastAppearancesList.get(i));
             }
         
@@ -660,24 +571,12 @@ public class SignalGroupTableAction extends AbstractTableAction {
         }
     }
 
-    /**
-     * Responds to the Add button
-     */
-    void createPressed(ActionEvent e) {
-        if (!checkNewNamesOK()) {
-            return;
-        }
-        updatePressed(e, true);
-//        status2.setText(editInst);
-        // activate the SignalGroup
-    }
-
     boolean checkNewNamesOK() {
         // Get system name and user name
         String sName = _systemName.getText().toUpperCase();
         String uName = _userName.getText();
         if (sName.length()==0) {
-            status1.setText("Please enter a system name and user name.");
+            javax.swing.JOptionPane.showMessageDialog(null,"System Name field can not be left blank","System Name Error",javax.swing.JOptionPane.WARNING_MESSAGE);
             return false;
         }
         SignalGroup g = null;
@@ -686,7 +585,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
             g = jmri.InstanceManager.signalGroupManagerInstance().getByUserName(uName);
             if (g!=null) {
                 // SignalGroup with this user name already exists
-                status1.setText("Error - SignalGroup with this user name already exists.");
+                javax.swing.JOptionPane.showMessageDialog(null,"Signal Group with this username already exists","User Name Error",javax.swing.JOptionPane.WARNING_MESSAGE);
                 return false;
             }
             else {
@@ -697,7 +596,19 @@ public class SignalGroupTableAction extends AbstractTableAction {
         g = jmri.InstanceManager.signalGroupManagerInstance().getBySystemName(sName);
         if (g!=null) {
             // SignalGroup already exists
-            status1.setText("Error - SignalGroup with this system name already exists.");
+            javax.swing.JOptionPane.showMessageDialog(null,"A SignalGroup with this system name already exists","System Name Error",javax.swing.JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+    
+    boolean checkValidSignalMast(){
+        String mast = mainSignal.getText();
+        SignalMast mMast = InstanceManager.signalMastManagerInstance().getBySystemName(mast);
+        if (mMast == null) mMast = InstanceManager.signalMastManagerInstance().getByUserName(mast);
+        if (mMast == null){
+            log.warn("did not find a SignalMast named "+mast);
+            javax.swing.JOptionPane.showMessageDialog(null,"SignalMast is not valid.","Error",javax.swing.JOptionPane.WARNING_MESSAGE);
             return false;
         }
         return true;
@@ -708,7 +619,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
         String sName = _systemName.getText().toUpperCase();
         String uName = _userName.getText();
         if (sName.length()==0) {
-            status1.setText("Please enter a system name and user name.");
+            javax.swing.JOptionPane.showMessageDialog(null,"Please enter a system name and user name.","Error",javax.swing.JOptionPane.WARNING_MESSAGE);
             return null;
         }
         SignalGroup g = jmri.InstanceManager.signalGroupManagerInstance().provideSignalGroup(sName, uName);
@@ -716,29 +627,33 @@ public class SignalGroupTableAction extends AbstractTableAction {
             // should never get here
             log.error("Unknown failure to create SignalGroup with System Name: "+sName);
         }
-//        g.deActivateSignalGroup();
         return g;
     }
-
     
     int setSignalInformation(SignalGroup g) {
         for (int i=0; i<g.getNumSignalHeadItems(); i++) {
             String sig = g.getSignalHeadItemNameByIndex(i);
             boolean valid = false;
-            //System.out.println("Listed in our signal items "+sig);
             for (int x = 0; x<_includedSignalList.size(); x++) {
                 SignalGroupSignal s = _includedSignalList.get(x);
                 String si = s.getSysName();
-                //System.out.println("List item " +si);
                 if (sig.equals(si)){
                     valid = true;
-                    //System.out.println("we should not remove " + si);
                     break;
                 }
             }
             if (!valid){
-               // System.out.println("We should remove");
                 g.deleteSignalHead(sig);
+            }
+        }
+        
+        for (int i=0; i<_includedSignalList.size(); i++){
+            SignalGroupSignal s = _includedSignalList.get(i);
+            String sig = s.getDisplayName();
+            if (!g.isSignalIncluded(sig)){
+                g.addSignalHead(sig);
+                g.setSignalHeadOnState(sig, s.getOnStateInt());
+                g.setSignalHeadOffState(sig, s.getOffStateInt());
             }
         }
         
@@ -746,11 +661,9 @@ public class SignalGroupTableAction extends AbstractTableAction {
     }
     
     void setMastAppearanceInformation(SignalGroup g) {
-        g.clearAppearanceTrigger();
-        //System.out.println(_includedMastAppearancesList.size());
+        g.clearSignalMastAppearance();
         for (int x = 0; x<_includedMastAppearancesList.size(); x++) {
-            //System.out.println(_includedMastAppearancesList.get(x).getAppearance());
-            g.addTriggerAppearance(_includedMastAppearancesList.get(x).getAppearance());
+            g.addSignalMastAppearance(_includedMastAppearancesList.get(x).getAppearance());
         }
     }
 
@@ -763,12 +676,9 @@ public class SignalGroupTableAction extends AbstractTableAction {
         String signalSystemName = mainSignal.getText();
         if (signalSystemName.length() > 0) {
             SignalHead s1 = InstanceManager.signalHeadManagerInstance().getSignalHead(signalSystemName);
-            /*if ( (s1==null) || (!g.addSensorToSignalGroup(sensorSystemName, sensorModeFromBox(sensor1mode))) ) {
-                log.error("Unexpected failure to add Sensor '"+sensorSystemName+
-                                            "' to SignalGroup '"+g.getSystemName()+"'.");
-            }*/
+            if (s1!=null)
+                g.setSignalMast(signalSystemName);
         }
-
     }
     
     void setValidSignalAppearances(){
@@ -777,12 +687,11 @@ public class SignalGroupTableAction extends AbstractTableAction {
             return;
         java.util.Vector<String> appear = sh.getValidAspects();
 
-        _mastAppearancesList = new ArrayList <TriggerMastAppearances> (appear.size());
+        _mastAppearancesList = new ArrayList <SignalMastAppearances> (appear.size());
         for(int i = 0; i<appear.size(); i++){
-            _mastAppearancesList.add(new TriggerMastAppearances(appear.get(i)));
+            _mastAppearancesList.add(new SignalMastAppearances(appear.get(i)));
         }
          _AppearanceModel.fireTableDataChanged();
-        
     }
     
     /**
@@ -794,32 +703,28 @@ public class SignalGroupTableAction extends AbstractTableAction {
         SignalGroup g = jmri.InstanceManager.signalGroupManagerInstance().getBySystemName(sName);
         if (g==null) {
             // SignalGroup does not exist, so cannot be edited
-            status1.setText("SignalGroup with the entered System Name was not found.");
             return;
         }
         // SignalGroup was found, make its system name not changeable
         curSignalGroup = g;
         
-        jmri.SignalMast sh = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(g.getPrimaryTriggerName());
+        jmri.SignalMast sh = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(g.getSignalMastName());
         java.util.Vector<String> appear = sh.getValidAspects();
 
-        _mastAppearancesList = new ArrayList <TriggerMastAppearances> (appear.size());
+        _mastAppearancesList = new ArrayList <SignalMastAppearances> (appear.size());
 
         for(int i = 0; i<appear.size(); i++){
-            _mastAppearancesList.add(new TriggerMastAppearances(appear.get(i)));
+            _mastAppearancesList.add(new SignalMastAppearances(appear.get(i)));
         }
         
         fixedSystemName.setText(sName);
         fixedSystemName.setVisible(true);
         _systemName.setVisible(false);
-        mainSignal.setText(g.getPrimaryTriggerName());
-
-        setoperBox(g.getPrimaryInversed(), mainSignalOperation);
+        mainSignal.setText(g.getSignalMastName());
 
         _userName.setText(g.getUserName());
         int setRow = 0;
-        
-        
+
          for (int i=_signalList.size()-1; i>=0; i--) {
             SignalGroupSignal signal = _signalList.get(i);
             String tSysName = signal.getSysName();
@@ -830,17 +735,17 @@ public class SignalGroupTableAction extends AbstractTableAction {
                 setRow = i;
             } else {
                 signal.setIncluded(false);
-                signal.setOnState(SignalHead.DARK);
-                signal.setOffState(SignalHead.DARK);
+                //signal.setOnState(SignalHead.DARK);
+                //signal.setOffState(SignalHead.DARK);
             }
         }
         _SignalGroupSignalScrollPane.getVerticalScrollBar().setValue(setRow*ROW_HEIGHT);
         _SignalGroupSignalModel.fireTableDataChanged();  
         
         for (int i=0; i<_mastAppearancesList.size(); i++){
-            TriggerMastAppearances appearance = _mastAppearancesList.get(i);
+            SignalMastAppearances appearance = _mastAppearancesList.get(i);
             String app = appearance.getAppearance();
-            if (g.isTriggerAppearanceIncluded(app)){
+            if (g.isSignalMastAppearanceIncluded(app)){
                 appearance.setIncluded(true);
                 setRow = i;
             } else {
@@ -853,19 +758,11 @@ public class SignalGroupTableAction extends AbstractTableAction {
         _AppearanceModel.fireTableDataChanged();
         initializeIncludedList();
 
-        // set up buttons and notes
-        status1.setText(updateInst);
-        //status2.setText(cancelInst);
-//        status2.setVisible(true);
-        deleteButton.setVisible(true);
-        cancelButton.setVisible(true);
         updateButton.setVisible(true);
-        //editButton.setVisible(false);
-        createButton.setVisible(false);
         fixedSystemName.setVisible(true);
         _systemName.setVisible(false);
         editMode = true;
-    }   // editPressed
+    }
 
     /**
      * Responds to the Delete button
@@ -879,94 +776,50 @@ public class SignalGroupTableAction extends AbstractTableAction {
     /**
      * Responds to the Update button - update to SignalGroup Table
      */
-    void updatePressed(ActionEvent e, boolean newSignalGroup ) {
+    void updatePressed(ActionEvent e, boolean newSignalGroup, boolean close) {
         // Check if the User Name has been changed
+        if (curSignalGroup == null){
+            if (!checkNewNamesOK()) {
+                return;
+            }
+        }
+        if (!checkValidSignalMast())
+            return;
         String uName = _userName.getText();
         SignalGroup g = checkNamesOK();
         if (g == null) {
             return;
         }
+        curSignalGroup = g;
         // user name is unique, change it
         g.setUserName(uName);
         initializeIncludedList();
         setSignalInformation(g);
         setMastAppearanceInformation(g);
 
-        g.setPrimaryTrigger(mainSignal.getText());
-        g.setPrimaryInversed(operFromBox(mainSignalOperation));
-      
-        curSignalGroup = g;
-        //finishUpdate();
-        status1.setText((newSignalGroup ? "New SignalGroup created: ":"SignalGroup updated: ")
-                        +uName+", "+ _includedSignalList.size()
-                        +" Signals");
+        g.setSignalMast(mainSignal.getText());
+        if(close)
+            finishUpdate();
     }
 
     void finishUpdate() {
-        // move to show all turnouts if not there
-        cancelIncludedOnly();
-        // Provide feedback to user 
-        // switch GUI back to selection mode
-        //status2.setText(editInst);
-        //status2.setVisible(true);
-        deleteButton.setVisible(false);
-        cancelButton.setVisible(false);
-        updateButton.setVisible(false);
-        //editButton.setVisible(true);
-        createButton.setVisible(true);
-        fixedSystemName.setVisible(false);
-        clearPage();
-        _systemName.setVisible(true);
-        // reactivate the SignalGroup
-        SignalGroupDirty = true;
-        // get out of edit mode
-        editMode = false;
-        if (curSignalGroup != null) {
-//            curSignalGroup.activateSignalGroup();    
-        }
         
-    }
-
-    void clearPage() {
         _systemName.setVisible(true);
+        fixedSystemName.setVisible(false);
         _systemName.setText("");
         _userName.setText("");
         mainSignal.setText("");
         for (int i=_signalList.size()-1; i>=0; i--) {
             _signalList.get(i).setIncluded(false);
         }
-    }
-
-    /**
-     * Responds to the Cancel button
-     */
-    void cancelPressed(ActionEvent e) {
-        cancelEdit();
-    }
-    
-    /** 
-     * Cancels edit mode
-     */
-    void cancelEdit() {
-        if (editMode) {
-            status1.setText(createInst);
-            //status2.setText(editInst);
-            finishUpdate();
-            // get out of edit mode
-            editMode = false;
-            curSignalGroup = null;
+        for (int i=_mastAppearancesList.size()-1; i>=0; i--) {
+            _mastAppearancesList.get(i).setIncluded(false);
         }
+        mainSignal.setText("");
+        curSignalGroup=null;
+        addFrame.setVisible(false);
+        
     }
-    
-    /** 
-     * Cancels included Turnouts only option
-     */
-    void cancelIncludedOnly() {
-        if (!showAll) {
-            allButton.doClick();
-        }
-    }
-
     
     public class SignalMastAppearanceModel extends AbstractTableModel implements PropertyChangeListener
     {
@@ -1018,7 +871,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
         }
 
         public Object getValueAt (int r,int c) {
-            ArrayList <TriggerMastAppearances> appearList = null;
+            ArrayList <SignalMastAppearances> appearList = null;
             if (showAll) {
                 appearList = _mastAppearancesList;
             }
@@ -1041,7 +894,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
         }
 
         public void setValueAt(Object type,int r,int c) {
-            ArrayList <TriggerMastAppearances> appearList = null;
+            ArrayList <SignalMastAppearances> appearList = null;
             if (showAll) {
                 appearList = _mastAppearancesList;
             }
@@ -1092,8 +945,6 @@ public class SignalGroupTableAction extends AbstractTableAction {
         public static final int UNAME_COLUMN = 1;
         public static final int INCLUDE_COLUMN = 2;
         public static final int STATE_COLUMN = 3;
-        
-        
         
     }
     
@@ -1166,6 +1017,14 @@ public class SignalGroupTableAction extends AbstractTableAction {
             }
         }
 
+        public String getDisplayName(int r){
+            if (((String) getValueAt(r, UNAME_COLUMN)!=null)&&(!((String) getValueAt(r, UNAME_COLUMN)).equals(""))){
+                return (String) getValueAt(r, UNAME_COLUMN);
+            } else {
+                return (String) getValueAt(r, SNAME_COLUMN);
+            }
+        }
+
         public void setValueAt(Object type,int r,int c) {
             ArrayList <SignalGroupSignal> signalList = null;
             if (showAll) {
@@ -1185,20 +1044,21 @@ public class SignalGroupTableAction extends AbstractTableAction {
                     signalList.get(r).setSetOffState((String)type);
                     break;
                 case EDIT_COLUMN:
-                        class WindowMaker implements Runnable {
-                        final int row;
-                        WindowMaker(int r){
-                            row = r;
+                    signalList.get(r).setIncluded(((Boolean)true).booleanValue());
+                    class WindowMaker implements Runnable {
+                    final int row;
+                    WindowMaker(int r){
+                        row = r;
+                    }
+                    public void run() {
+                            //Thread.yield();
+                        signalEditPressed(row);
+                            //_systemName.setText((String)getValueAt(row, SYSNAMECOL));
+                            //editPressed(null); 
                         }
-                        public void run() {
-                                //Thread.yield();
-                            signalEditPressed(row);
-                                //_systemName.setText((String)getValueAt(row, SYSNAMECOL));
-                                //editPressed(null); 
-                            }
-                        }
-                        WindowMaker t = new WindowMaker(r);
-                        javax.swing.SwingUtilities.invokeLater(t);
+                    }
+                    WindowMaker t = new WindowMaker(r);
+                    javax.swing.SwingUtilities.invokeLater(t);
                     
             }
         }
@@ -1210,16 +1070,20 @@ public class SignalGroupTableAction extends AbstractTableAction {
     JmriJFrame signalEditFrame = null;
     
     void signalEditPressed(int row){
-        if(curSignalGroup==null)
-            createPressed(null);
-        if(!curSignalGroup.isSignalIncluded((String) _SignalGroupSignalModel.getValueAt(row, SignalGroupSignalModel.SNAME_COLUMN))){
-            curSignalGroup.addSignalHead((String) _SignalGroupSignalModel.getValueAt(row, SignalGroupSignalModel.SNAME_COLUMN));
+        if(curSignalGroup==null){
+            if (!checkNewNamesOK()) {
+                return;
+            }
+            if (!checkValidSignalMast())
+                return;
+            updatePressed(null, true, false);
         }
-        _SignalGroupSignalModel.setValueAt(true, row, SignalGroupSignalModel.INCLUDE_COLUMN);
+        if(!curSignalGroup.isSignalIncluded((String) _SignalGroupSignalModel.getDisplayName(row))){
+            curSignalGroup.addSignalHead((String) _SignalGroupSignalModel.getDisplayName(row));
+        }
         _SignalGroupSignalModel.fireTableDataChanged();
         SignalGroupSubTableAction editSignalHead = new SignalGroupSubTableAction();
-        //System.out.println("Value to pass " + (String) _SignalGroupSignalModel.getValueAt(row, SignalGroupSignalModel.SNAME_COLUMN));
-        editSignalHead.editSignal(curSignalGroup, (String) _SignalGroupSignalModel.getValueAt(row, SignalGroupSignalModel.SNAME_COLUMN));
+        editSignalHead.editSignal(curSignalGroup, (String) _SignalGroupSignalModel.getDisplayName(row));
     }
 
 
@@ -1236,64 +1100,52 @@ public class SignalGroupTableAction extends AbstractTableAction {
                                             rbx.getString("ColumnLabelInclude"),
                                             "On State", "Off State", "Edit"};
 
-    private static String[] sensorInputModes = new String[]{"On Active", "On Inactive", "Veto Active", "Veto Inactive"};
-    private static int[] sensorInputModeValues = new int[]{SignalGroup.ONACTIVE, SignalGroup.ONINACTIVE, 
-                                            SignalGroup.VETOACTIVE, SignalGroup.VETOINACTIVE};
-                                            
     private static String[] signalStates = new String[]{rbx.getString("StateSignalHeadDark"), rbx.getString("StateSignalHeadRed"), rbx.getString("StateSignalHeadYellow"), rbx.getString("StateSignalHeadGreen"), rbx.getString("StateSignalHeadLunar")};
     private static int[] signalStatesValues = new int[]{SignalHead.DARK, SignalHead.RED, SignalHead.YELLOW, SignalHead.GREEN, SignalHead.LUNAR}; 
-
-    private static String[] oper = new String[]{"", "NOT"};
-    private static int[] operValues = new int[]{0x00, 0x01};
    
     private ArrayList <SignalGroupSignal> _signalList;        // array of all Sensorsy
     private ArrayList <SignalGroupSignal> _includedSignalList;
     
-    private ArrayList <TriggerMastAppearances> _mastAppearancesList;        // array of all Sensorsy
-    private ArrayList <TriggerMastAppearances> _includedMastAppearancesList;
+    private ArrayList <SignalMastAppearances> _mastAppearancesList;        // array of all Sensorsy
+    private ArrayList <SignalMastAppearances> _includedMastAppearancesList;
 
-    private abstract class SignalGroupElement {
-        String _sysName;
-        String _userName;
+    private class SignalGroupSignal {
+    
+        String _sysName=null;
+        String _userName=null;
         boolean _included;
-        int _setToState;
-
-        SignalGroupElement(String sysName, String userName) {
+        
+        SignalGroupSignal(String sysName, String userName) {
             _sysName = sysName;
             _userName = userName;
             _included = false;
-            _setToState = Sensor.INACTIVE;
+            if (InstanceManager.signalHeadManagerInstance().getBySystemName(_sysName).getClass().getName().contains("SingleTurnoutSignalHead")){
+                jmri.implementation.SingleTurnoutSignalHead Signal = (jmri.implementation.SingleTurnoutSignalHead) InstanceManager.signalHeadManagerInstance().getBySystemName(_sysName);
+                _onState=Signal.getOnAppearance();
+                _offState=Signal.getOffAppearance();
+            }
         }
+        
         String getSysName() {
             return _sysName;
         }
         String getUserName() {
             return _userName;
         }
+        
+        String getDisplayName(){
+            if((_userName!=null) && (!_userName.equals("")))
+                return _userName;
+            else
+                return _sysName;
+        }
+        
         boolean isIncluded() {
             return _included;
         }
         void setIncluded(boolean include) {
             _included = include;
         }
-        abstract String getSetToState();
-        abstract void setSetToState(String state);
-
-        int getState() {
-            return _setToState;
-        }
-        void setState(int state) {
-            _setToState = state;
-        }
-    }
-
-    private class SignalGroupSignal extends SignalGroupElement {
-        SignalGroupSignal(String sysName, String userName) {
-            super(sysName, userName);
-        }
-        
-        void setSetToState(String x) {}
-        String getSetToState() { return null; }
         
         String getOnState() {
             switch (_onState) {
@@ -1307,6 +1159,14 @@ public class SignalGroupTableAction extends AbstractTableAction {
                     return rbx.getString("StateSignalHeadGreen");
                 case SignalHead.LUNAR:
                     return rbx.getString("StateSignalHeadLunar");
+                case SignalHead.FLASHRED:
+                    return rbx.getString("StateSignalHeadFlashRed");
+                case SignalHead.FLASHYELLOW:
+                    return rbx.getString("StateSignalHeadFlashYellow");
+                case SignalHead.FLASHGREEN:
+                    return rbx.getString("StateSignalHeadFlashGreen");
+                case SignalHead.FLASHLUNAR:
+                    return rbx.getString("StateSignalHeadFlashLunar");
             }
             return "";
         }
@@ -1322,9 +1182,20 @@ public class SignalGroupTableAction extends AbstractTableAction {
                     return rbx.getString("StateSignalHeadGreen");
                 case SignalHead.LUNAR:
                     return rbx.getString("StateSignalHeadLunar");
+                case SignalHead.FLASHRED:
+                    return rbx.getString("StateSignalHeadFlashRed");
+                case SignalHead.FLASHYELLOW:
+                    return rbx.getString("StateSignalHeadFlashYellow");
+                case SignalHead.FLASHGREEN:
+                    return rbx.getString("StateSignalHeadFlashGreen");
+                case SignalHead.FLASHLUNAR:
+                    return rbx.getString("StateSignalHeadFlashLunar");
             }
             return "";
         }
+        
+        int getOnStateInt(){ return _onState;}
+        int getOffStateInt(){ return _offState;}
 
         void setSetOnState(String state) {
             if (state.equals(rbx.getString("StateSignalHeadDark"))) {
@@ -1337,6 +1208,14 @@ public class SignalGroupTableAction extends AbstractTableAction {
                 _onState = SignalHead.GREEN;
             } else if (state.equals(rbx.getString("StateSignalHeadLunar"))) {
                 _onState = SignalHead.LUNAR;
+            } else if (state.equals(rbx.getString("StateSignalHeadFlashRed"))) {
+                _onState = SignalHead.FLASHRED;
+            } else if (state.equals(rbx.getString("StateSignalHeadFlashYellow"))) {
+                _onState = SignalHead.FLASHYELLOW;
+            } else if (state.equals(rbx.getString("StateSignalHeadFlashGreen"))) {
+                _onState = SignalHead.FLASHGREEN;
+            } else if (state.equals(rbx.getString("StateSignalHeadFlashLunar"))) {
+                _onState = SignalHead.FLASHLUNAR;
             }
         }
         
@@ -1351,6 +1230,14 @@ public class SignalGroupTableAction extends AbstractTableAction {
                 _offState = SignalHead.GREEN;
             } else if (state.equals(rbx.getString("StateSignalHeadLunar"))) {
                 _offState = SignalHead.LUNAR;
+            } else if (state.equals(rbx.getString("StateSignalHeadFlashRed"))) {
+                _offState = SignalHead.FLASHRED;
+            } else if (state.equals(rbx.getString("StateSignalHeadFlashYellow"))) {
+                _offState = SignalHead.FLASHYELLOW;
+            } else if (state.equals(rbx.getString("StateSignalHeadFlashGreen"))) {
+                _offState = SignalHead.FLASHGREEN;
+            } else if (state.equals(rbx.getString("StateSignalHeadFlashLunar"))) {
+                _offState = SignalHead.FLASHLUNAR;
             }
         }
         
@@ -1363,17 +1250,10 @@ public class SignalGroupTableAction extends AbstractTableAction {
         public void setOffState(int state){
             _offState = state;
         }
-        public int getOnIntState(){
-        return _onState;
-        }
-        
-        public int getOffIntState(){
-        return _offState;
-        }
     }
     
-    private class TriggerMastAppearances{
-        TriggerMastAppearances(String appearance){
+    private class SignalMastAppearances{
+        SignalMastAppearances(String appearance){
             _appearance=appearance;
         }
         boolean _include;
