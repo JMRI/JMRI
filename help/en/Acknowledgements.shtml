@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.101 2010-02-08 07:01:05 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.102 2010-02-09 08:19:25 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -237,6 +237,7 @@
 	<LI>John Jabour, who created the excellent LocoBuffer and thereby made 
 	reliable LocoNet communications routine
 	<LI>Bob Jacobsen, who wrote some of the early code and does packaging and user support
+	<li>Martin Jahner, who built a replacement library for Mac OS X
     <LI>Lionel Jeanson, who added images to the roster,
         updated the throttle to add preferences for displaying them,
         cleaned up some code problems in the throttle,
@@ -249,6 +250,7 @@
     <LI>Scott Kitts, who helped debug the new communications library for 
     MacOS X
 	<LI>Tony Koester, who helped with signalling
+	<LI>James Koretsky, who contributed the Burlington Northern 1989 signal definition
 	<LI>Ross Kudlick researched options switches on Digitrax command stations
 	<LI>Nick Kulp, who helped test much of the C/MRI and signaling logic, presented
 	<A href="http://jmri.org/community/clinics/NickKulpMarch2004/index.html">a nice clinic</a> on
@@ -265,7 +267,8 @@
 	website <A HREF="http://www.lundsten.dk/us_signaling">http://www.lundsten.dk/us_signaling</a>.
 <a name="M"></A>
     <LI>Jason M'Sadoques, who created the 
-        <a href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">Android phone throttle application</a>.
+        <a href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">Android phone throttle application</a>
+        and improved the WiThrottle support.
 	<LI>Jim Malone, who created a decoder file definition the Digitrax DN163K1a
 	<LI>Mark Marowicz, who provided the CT Electronik SL 51 decoder definition
     <li>David McDowell of the North Raleigh Model Railroad Club created
@@ -313,7 +316,8 @@
     <li>Ronnie Pinkerton, who worked on a throttle update
 	<LI>Rob Plevier, who provided instructions for running JMRI on OpenSUSE GNU/Linux
 	<LI>John Plocher, who make good suggestions on XML DTD items,
-	created the infrastructure for this web site, and lead the construction of the demo layout for the JavaOne show.
+	created the infrastructure for this web site, lead the construction of the demo layout for the JavaOne show,
+	worked on GUI updates, and built a replacement library for Mac OS X 10.4.
 	<LI>Herb Poppe, who diagnosed a problem in some Digitrax decoder definitions
 	<li>Michael Povel, who provided definitions for TAMS decoders
 	<li>Gerry Pruss, who provided information on connecting to the QSI Programmer
