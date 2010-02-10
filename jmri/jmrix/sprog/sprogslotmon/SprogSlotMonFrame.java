@@ -2,7 +2,7 @@
 
 package jmri.jmrix.sprog.sprogslotmon;
 
-import jmri.jmrix.sprog.SprogSlotManager;
+import jmri.jmrix.sprog.SprogCommandStation;
 import jmri.jmrix.sprog.SprogConstants;
 
 import java.awt.Dimension;
@@ -29,7 +29,7 @@ import jmri.util.JTableUtil;
  * @author	Bob Jacobsen   Copyright (C) 2001
  *              Andrew Crosland          (C) 2006 ported to SPROG
  *                                           2008 Use JmriJframe
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
 
@@ -72,13 +72,13 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
       estopAllButton.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
           log.debug("Estop all button pressed");
-          SprogSlotManager.instance().estopAll();
+          SprogCommandStation.instance().estopAll();
         }
       });
 
       estopAllButton.addMouseListener(new MouseListener() {
         public void mousePressed(MouseEvent e) {
-          SprogSlotManager.instance().estopAll();
+          SprogCommandStation.instance().estopAll();
         }
         public void mouseExited(MouseEvent e) {}
         public void mouseEntered(MouseEvent e) {}

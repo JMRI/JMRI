@@ -2,7 +2,7 @@
 
 package jmri.jmrix.sprog.sprogslotmon;
 
-import jmri.jmrix.sprog.SprogSlotManager;
+import jmri.jmrix.sprog.SprogCommandStation;
 
 import java.awt.event.ActionEvent;
 
@@ -14,7 +14,7 @@ import javax.swing.AbstractAction;
  *
  * @author	Bob Jacobsen    Copyright (C) 2001
  *              Andrew Crosland           (C) 2006 ported to SPROG
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class SprogSlotMonAction extends AbstractAction {
@@ -25,7 +25,7 @@ public class SprogSlotMonAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
 
         // create SlotManager if it doesn't exist
-        SprogSlotManager.instance();
+        SprogCommandStation.instance();
 
         // create a SprogSlotMonFrame
         SprogSlotMonFrame f = new SprogSlotMonFrame();

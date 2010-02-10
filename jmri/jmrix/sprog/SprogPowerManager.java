@@ -4,19 +4,21 @@ package jmri.jmrix.sprog;
 
 import jmri.JmriException;
 import jmri.PowerManager;
+import jmri.jmrix.AbstractMessage;
 
 /**
  * PowerManager implementation for controlling SPROG layout power.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SprogPowerManager implements PowerManager, SprogListener {
 
+    SprogTrafficController trafficController = null;
     public SprogPowerManager() {
         // connect to the TrafficManager
-        tc = SprogTrafficController.instance();
-        tc.addSprogListener(this);
+        trafficController = SprogTrafficController.instance();
+        trafficController.addSprogListener(this);
     }
 
     int power = UNKNOWN;
@@ -33,7 +35,7 @@ public class SprogPowerManager implements PowerManager, SprogListener {
             onReply = PowerManager.ON;
             // send "Enable main track"
             SprogMessage l = SprogMessage.getEnableMain();
-            tc.sendSprogMessage(l, this);
+            trafficController.sendSprogMessage(l, this);
         } else if (v==OFF) {
             // configure to wait for reply
             waiting = true;
@@ -41,7 +43,7 @@ public class SprogPowerManager implements PowerManager, SprogListener {
             firePropertyChange("Power", null, null);
             // send "Kill main track"
             SprogMessage l = SprogMessage.getKillMain();
-            for (int i = 0; i < 3; i++) tc.sendSprogMessage(l, this);
+            for (int i = 0; i < 3; i++) trafficController.sendSprogMessage(l, this);
         }
         firePropertyChange("Power", null, null);
     }
@@ -59,12 +61,12 @@ public class SprogPowerManager implements PowerManager, SprogListener {
 
     // to free resources when no longer used
     public void dispose() throws JmriException {
-        tc.removeSprogListener(this);
-        tc = null;
+        trafficController.removeSprogListener(this);
+        trafficController = null;
     }
 
     private void checkTC() throws JmriException {
-        if (tc == null) throw new JmriException("attempt to use SprogPowerManager after dispose");
+        if (trafficController == null) throw new JmriException("attempt to use SprogPowerManager after dispose");
     }
 
     // to hear of changes
@@ -77,18 +79,16 @@ public class SprogPowerManager implements PowerManager, SprogListener {
         pcs.removePropertyChangeListener(l);
     }
 
-    SprogTrafficController tc = null;
-
     // to listen for status changes from Sprog system
-    public void reply(SprogReply m) {
+    public void notifyReply(SprogReply m) {
         if (waiting) {
             power = onReply;
             firePropertyChange("Power", null, null);
         }
         waiting = false;
     }
-
-    public void message(SprogMessage m) {
+    
+    public void notifyMessage(SprogMessage m) {
         if (m.isKillMain() ) {
             // configure to wait for reply
             waiting = true;
@@ -98,6 +98,15 @@ public class SprogPowerManager implements PowerManager, SprogListener {
             waiting = true;
             onReply = PowerManager.ON;
         }
+    }
+    
+    public void notify(AbstractMessage m) {
+    	if (m instanceof SprogMessage) {
+    		this.notifyMessage((SprogMessage) m);
+    	} else {
+    		this.notifyReply((SprogReply) m);
+    	}
+    	
     }
 
 }

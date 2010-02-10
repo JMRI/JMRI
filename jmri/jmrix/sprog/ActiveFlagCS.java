@@ -3,14 +3,14 @@
 package jmri.jmrix.sprog;
 
 /**
- * Provide a flag to indicate that the system provided by
+ * Provide a flag to indicate that the subsystem provided by
  * this package is active.
  * <P>
  * This is a very light-weight class, carrying only the flag,
  * so as to limit the number of unneeded class loading.
  *
  * @author		Andrew Crosland  Copyright (C) 2006
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 abstract public class ActiveFlagCS {
 

@@ -5,6 +5,7 @@ package jmri.jmrix.sprog;
 import jmri.InstanceManager;
 import jmri.PowerManager;
 import jmri.Programmer;
+import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.AbstractProgrammer;
 
 import java.beans.PropertyChangeEvent;
@@ -15,7 +16,7 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the Sprog programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
@@ -188,11 +189,10 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         }
     }
 
-    public void message(SprogMessage m) {
-        log.error("message received unexpectedly: "+m.toString());
-    }
-
-    synchronized public void reply(SprogReply m) {
+    public void notifyMessage(SprogMessage m) {}
+    
+    synchronized public void notifyReply(SprogReply reply) {
+    	
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
             if (log.isDebugEnabled()) log.debug("reply in NOTPROGRAMMING state");
@@ -200,7 +200,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         } else if (progState == MODESENT) {
             if (log.isDebugEnabled()) log.debug("reply in MODESENT state");
             // see if reply is the acknowledge of program mode; if not, wait
-            if ( m.match("P") == -1 ) return;
+            if ( reply.match("P") == -1 ) return;
             // here ready to send the read/write command
             progState = COMMANDSENT;
             // see why waiting
@@ -224,8 +224,8 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
             // operation done, capture result, then have to leave programming mode
             progState = RETURNSENT;
             // check for errors
-            if (m.match("No Ack") >= 0) {
-                if (log.isDebugEnabled()) log.debug("handle error reply "+m);
+            if (reply.match("No Ack") >= 0) {
+                if (log.isDebugEnabled()) log.debug("handle error reply "+reply);
                 // perhaps no loco present? Fail back to end of programming
                 progState = NOTPROGRAMMING;
                 controller().sendSprogMessage(SprogMessage.getExitProgMode(), this);
@@ -235,7 +235,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
                 // see why waiting
                 if (_progRead) {
                     // read was in progress - get return value
-                    _val = m.value();
+                    _val = reply.value();
                 }
                 startShortTimer();
                 controller().sendSprogMessage(SprogMessage.getExitProgMode(), this);

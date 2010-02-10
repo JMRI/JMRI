@@ -11,7 +11,7 @@ import javax.swing.*;
 /**
  * Get the firmware version of the attached SPROG
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SprogVersionFrame
         extends SprogUpdateFrame
@@ -21,7 +21,7 @@ public class SprogVersionFrame
         super();
     }
     
-    String sprogUSB = null;
+    String sprogUSB = "";
     
     public void initComponents() throws Exception {
         setTitle(title());
@@ -41,9 +41,9 @@ public class SprogVersionFrame
 
     }
     
-    public void message(SprogMessage m) {}   // Ignore
+    public void notifyMessage(SprogMessage m) {}   // Ignore
 
-    synchronized public void reply(SprogReply m) {
+    synchronized public void notifyReply(SprogReply m) {
         replyString = m.toString();
         if (bootState == IDLE) {
             if (log.isDebugEnabled()) {

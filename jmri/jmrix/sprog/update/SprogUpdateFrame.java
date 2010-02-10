@@ -11,13 +11,15 @@ import jmri.jmrix.sprog.SprogConstants.SprogState;
 import javax.swing.*;
 
 /**
- * Frame for SPROG firmware update utility.
+ * Frame for SPROG firmware update utility. 
+ * 
+ * Andrew Berridge - Feb 2010 - removed implementation of SprogListener - wasn't being used
+ * 
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class SprogUpdateFrame
-    extends jmri.util.JmriJFrame
-    implements SprogListener {
+    extends jmri.util.JmriJFrame {
 
   // member declarations
   protected JButton connectButton = new JButton();
@@ -74,19 +76,12 @@ public class SprogUpdateFrame
   protected void init() {
     // connect to the TrafficManager
     tc = SprogTrafficController.instance();
-    tc.addSprogListener(this);
     tc.setSprogState(SprogState.NORMAL);
   }
 
   public void dispose() {
-    tc.removeSprogListener(this);
     tc = null;
     super.dispose();
-  }
-
-  public void message(SprogMessage m) {}   // Ignore
-
-  synchronized public void reply(SprogReply m) {
   }
 
   //private void requestBoot() {

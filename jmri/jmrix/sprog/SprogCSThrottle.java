@@ -5,7 +5,7 @@ import jmri.DccLocoAddress;
 
 import jmri.jmrix.AbstractThrottle;
 
-import jmri.jmrix.sprog.SprogSlotManager;
+import jmri.jmrix.sprog.SprogCommandStation;
 
 /**
  * An implementation of DccThrottle with code specific to a SPROG Command
@@ -16,7 +16,7 @@ import jmri.jmrix.sprog.SprogSlotManager;
  * <P>
  *
  * @author	Andrew Crosland  Copyright (C) 2006
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SprogCSThrottle extends AbstractThrottle
 {
@@ -46,11 +46,11 @@ public class SprogCSThrottle extends AbstractThrottle
         this.isForward    = true;
 
         // Find our command station
-        commandStation = (SprogSlotManager) jmri.InstanceManager.commandStationInstance();
+        commandStation = (SprogCommandStation) jmri.InstanceManager.commandStationInstance();
 
     }
 
-    private SprogSlotManager commandStation;
+    private SprogCommandStation commandStation;
     private int address;
 
     /**
@@ -58,9 +58,15 @@ public class SprogCSThrottle extends AbstractThrottle
      * adding it to the S queue
      */
     protected void sendFunctionGroup1() {
-        commandStation.function0Through4Packet(address,
-                                               getF0(), getF1(), getF2(), getF3(), getF4());
+       commandStation.function0Through4Packet(address,
+                                              getF0(), getF0Momentary(), 
+                                              getF1(), getF1Momentary(),
+                                              getF2(), getF2Momentary(),
+                                              getF3(), getF3Momentary(),
+                                              getF4(), getF4Momentary());
+
     }
+    
 
     /**
      * Send the message to set the state of functions F5, F6, F7, F8 by#
@@ -68,7 +74,10 @@ public class SprogCSThrottle extends AbstractThrottle
      */
     protected void sendFunctionGroup2() {
         commandStation.function5Through8Packet(address,
-                                               getF5(), getF6(), getF7(), getF8());
+                                               getF5(), getF5Momentary(),
+                                               getF6(), getF6Momentary(),
+                                               getF7(), getF7Momentary(),
+                                               getF8(), getF8Momentary());
     }
 
     /**
@@ -77,7 +86,10 @@ public class SprogCSThrottle extends AbstractThrottle
      */
     protected void sendFunctionGroup3() {
         commandStation.function9Through12Packet(address,
-                                                getF9(), getF10(), getF11(), getF12());
+                                                getF9(), getF9Momentary(),
+                                                getF10(), getF10Momentary(),
+                                                getF11(), getF11Momentary(),
+                                                getF12(), getF12Momentary());
     }
 
     /**
@@ -92,7 +104,7 @@ public class SprogCSThrottle extends AbstractThrottle
         if (value>0) value = value+1;  // skip estop
         if (value>127) value = 127;    // max possible speed
         if (value<0) value = 1;        // emergency stop
-        commandStation.speedStep128Packet(address, value, isForward );
+        commandStation.setSpeed(address, value, isForward );
     }
 
     public void setIsForward(boolean forward) {

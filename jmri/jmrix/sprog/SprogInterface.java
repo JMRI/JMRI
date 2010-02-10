@@ -7,7 +7,7 @@ package jmri.jmrix.sprog;
  * command station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 
 public interface SprogInterface {
@@ -17,7 +17,7 @@ public interface SprogInterface {
 
     /**
      * Test operational status of interface.
-     * @return true is interface implementation is operational.
+     * @return true if interface implementation is operational.
      */
     boolean status();
 

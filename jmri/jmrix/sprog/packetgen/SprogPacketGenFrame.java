@@ -5,6 +5,7 @@ package jmri.jmrix.sprog.packetgen;
 import java.awt.*;
 import javax.swing.*;
 
+import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
@@ -12,9 +13,9 @@ import jmri.jmrix.sprog.SprogReply;
 /**
  * Frame for user input of Sprog messages.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
-public class SprogPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.sprog.SprogListener {
+public class SprogPacketGenFrame extends jmri.util.JmriJFrame {
 
 	// member declarations
 	javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
@@ -63,10 +64,7 @@ public class SprogPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jm
 
   	public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
   		SprogMessage m = new SprogMessage(packetTextField.getText());
-  		SprogTrafficController.instance().sendSprogMessage(m, this);
+  		SprogTrafficController.instance().SendSprogMessage(m);
   	}
-
-  	public void  message(SprogMessage m) {}  // ignore replies
-  	public void  reply(SprogReply r) {} // ignore replies
 
 }

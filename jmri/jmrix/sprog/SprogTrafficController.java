@@ -6,6 +6,8 @@ import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 
+import jmri.jmrix.AbstractMessage;
+import jmri.jmrix.AbstractPortController;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
 
@@ -26,7 +28,7 @@ import gnu.io.SerialPortEventListener;
  * Removed Runnable implementation and methods for it
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener  {
 
@@ -65,36 +67,6 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 				}
 		}
 
-
-	/**
-	 * Forward a SprogMessage to all registered SprogInterface listeners.
-	 */
-	@SuppressWarnings("unchecked")
-	protected void notifyMessage(SprogMessage m, SprogListener notMe) {
-		// make a copy of the listener vector to synchronized not needed for transmit
-		Vector<SprogListener> v;
-		synchronized(this)
-			{
-				v = (Vector<SprogListener>) cmdListeners.clone();
-			}
-		// forward to all listeners
-		int cnt = v.size();
-		for (int i=0; i < cnt; i++) {
-			SprogListener client = v.elementAt(i);
-			if (notMe != client) {
-				if (log.isDebugEnabled()) log.debug("notify client: "+client);
-				try {
-					client.message(m);
-					}
-				catch (Exception e)
-					{
-						log.warn("notify: During dispatch to "+client+"\nException "+e);
-					}
-				}
-			}
-	}
-
-
         public SprogState getSprogState() { return sprogState; }
         public void setSprogState(SprogState s) {
           this.sprogState = s;
@@ -115,40 +87,76 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         public boolean isSIIBootMode() {return sprogState == SprogState.SIIBOOTMODE; }
         public boolean isV4BootMode() {return sprogState == SprogState.V4BOOTMODE; }
 
+    @SuppressWarnings("unchecked")
+	private synchronized Vector<SprogListener> getCopyOfListeners()   {
+    		return (Vector<SprogListener>) cmdListeners.clone();
+    	
+    }
 
-	@SuppressWarnings("unchecked")
-	protected void notifyReply(SprogReply r) {
-          // make a copy of the listener vector to synchronized (not needed for transmit?)
-          Vector<SprogListener> v;
-          synchronized(this)
-          {
-            v = (Vector<SprogListener>) cmdListeners.clone();
-          }
-          // forward to all listeners
-          int cnt = v.size();
-          for (int i=0; i < cnt; i++) {
-            SprogListener client = v.elementAt(i);
-            if (log.isDebugEnabled()) log.debug("notify client: "+client);
-            try {
-              // skip forwarding to the last sender for now, we'll get them later
-              if (lastSender != client)
-                client.reply(r);
-            }
-            catch (Exception e)
-            {
-              log.warn("notify: During dispatch to "+client+"\nException "+e);
-            }
-          }
-
+    protected void notifyMessage(SprogMessage m, SprogListener originator) {
+    	for(SprogListener listener : this.getCopyOfListeners() ) {
+		      try {
+		    	  //don't send it back to the originator!
+		    	  if (listener != originator) {
+		    		  // skip forwarding to the last sender for now, we'll get them later
+				      if (lastSender != listener) listener.notifyMessage(m);
+		    	  }
+		      }  catch (Exception e)
+	            {
+	              log.warn("notify: During dispatch to "+listener+"\nException "+e);
+	            }
+			}
+        // forward to the last listener who sent a message
+        // this is done _second_ so monitoring can have already stored the reply
+        // before a response is sent
+        if (lastSender != null && lastSender != originator) lastSender.notifyMessage(m);
+    }
+    
+	protected synchronized void notifyReply(SprogReply r) {
+			for(SprogListener listener : this.getCopyOfListeners() ) {
+		      try {
+		    	  //if is message don't send it back to the originator!
+		    	  // skip forwarding to the last sender for now, we'll get them later
+				  if (lastSender != listener) listener.notifyReply(r);
+		    	  
+		      }  catch (Exception e)
+	            {
+	              log.warn("notify: During dispatch to "+listener+"\nException "+e);
+	            }
+			}
           // forward to the last listener who sent a message
           // this is done _second_ so monitoring can have already stored the reply
           // before a response is sent
-          if (lastSender != null) lastSender.reply(r);
+          if (lastSender != null) lastSender.notifyReply(r);
         }
 
+	    /**
+	     * Forward a preformatted message to the interface
+	     * 
+	     * @param m
+	     */
+		public void SendSprogMessage(SprogMessage m) {
+			// stream to port in single write, as that's needed by serial
+			try {
+				if (ostream != null) {
+				   //System.out.println("message: " + m.toString());
+				   if (log.isDebugEnabled()) log.debug("write message: "+m.getFormattedMessage(sprogState));
+				   ostream.write(m.getFormattedMessage(sprogState));
+				}
+				else {
+				   // no stream connected
+					log.warn("sendMessage: no connection established");
+				}
+			}
+			catch (Exception e) {
+			  log.warn("sendMessage: Exception: "+e.toString());
+			} 
+		}
 
         /**
-         * Forward a preformatted message to the actual interface.
+         * Forward a preformatted message to the actual interface 
+         * (by calling SendSprogMessage(SprogMessage) after notifying any listeners 
+         * Notifies listeners
          */
         public synchronized void sendSprogMessage(SprogMessage m, SprogListener replyTo) {
        
@@ -162,35 +170,20 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
           if (log.isDebugEnabled()) log.debug("sendSprogMessage message: ["+m+"]");
           // remember who sent this
           lastSender = replyTo;
-
           // notify all _other_ listeners
           notifyMessage(m, replyTo);
-          
-          // stream to port in single write, as that's needed by serial
-          try {
-            if (ostream != null) {
-              //System.out.println("message: " + m.toString());
-              if (log.isDebugEnabled()) log.debug("write message: "+m.getFormattedMessage(sprogState));
-              ostream.write(m.getFormattedMessage(sprogState));
-            }
-            else {
-            // no stream connected
-            log.warn("sendMessage: no connection established");
-          }
-        }
-        catch (Exception e) {
-          log.warn("sendMessage: Exception: "+e.toString());
-        } 
+          this.SendSprogMessage(m);
+
     }
 
 
         // methods to connect/disconnect to a source of data in a LnPortController
-	private SprogPortController controller = null;
+	private AbstractPortController controller = null;
 
 	/**
 	 * Make connection to existing PortController object.
 	 */
-	public void connectPort(SprogPortController p) {
+	public void connectPort(AbstractPortController  p) {
 			istream = p.getInputStream();
 			ostream = p.getOutputStream();
 			if (controller != null)
@@ -202,7 +195,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 	 * Break connection to existing SprogPortController object. Once broken,
 	 * attempts to send via "message" member will fail.
 	 */
-	public void disconnectPort(SprogPortController p) {
+	public void disconnectPort(AbstractPortController p) {
 			istream = null;
 			ostream = null;
 			if (controller != p)
@@ -299,11 +292,11 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
           // return a notification via the queue to ensure end
           //System.out.println("reply " + this.reply.toString());
           Runnable r = new Runnable() {
-            SprogReply msgForLater = thisReply;
+            SprogReply replyForLater = thisReply;
             SprogTrafficController myTC = thisTC;
             public void run() {
               log.debug("Delayed notify starts");
-              myTC.notifyReply(msgForLater);
+              myTC.notifyReply(replyForLater);
             }
           };
           javax.swing.SwingUtilities.invokeLater(r);

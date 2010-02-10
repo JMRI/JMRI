@@ -12,7 +12,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogState;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
 
@@ -86,51 +86,44 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
         for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
     }
 
-    public void setOpCode(int i) { _dataChars[0]=i;}
-    public int getOpCode() {return _dataChars[0];}
-    public String getOpCodeHex() { return "0x"+Integer.toHexString(getOpCode()); }
-
-    // accessors to the bulk data
-    public int getNumDataElements() {return _nDataChars;}
-    public int getElement(int n) {return _dataChars[n];}
     
     public void setElement(int n, int v) {
       if (!SprogTrafficController.instance().isSIIBootMode()) {v &= 0x7f;}
       _dataChars[n] = v;
     }
 
-    public void setLength(int i) { _dataChars[1]=i;}
+    private void setLength(int i) { _dataChars[1]=i;}
 
-    public void setV4Length(int i) {
+    private void setV4Length(int i) {
         _dataChars[0] = hexDigit((i&0xf0)>>4);
         _dataChars[1] = hexDigit(i&0xf);
     }
 
-    public void setAddress(int i) {
+    private void setAddress(int i) {
         _dataChars[2] = i&0xff;
         _dataChars[3] = (i>>8)&0xff;
         _dataChars[4] = i>>16;
     }
 
-    public void setV4Address(int i) {
+    private void setV4Address(int i) {
         _dataChars[2] = hexDigit((i&0xf000)>>12);
         _dataChars[3] = hexDigit((i&0xf00)>>8);
         _dataChars[4] = hexDigit((i&0xf0)>>4);
         _dataChars[5] = hexDigit(i&0xf);
     }
 
-    public void setV4RecType(int i) {
+    private void setV4RecType(int i) {
         _dataChars[6] = hexDigit((i&0xf0)>>4);
         _dataChars[7] = hexDigit(i&0xf);
     }
 
-    public void setData(int [] d) {
+    private void setData(int [] d) {
         for (int i = 0; i < d.length; i++) {
             _dataChars[5+i] = d[i];
         }
     }
 
-    public void setV4Data(int [] d) {
+    private void setV4Data(int [] d) {
         int j = 8;
         for (int i = 0; i < d.length; i++) {
             _dataChars[j++] = hexDigit((d[i]&0xf0)>>4);
@@ -138,7 +131,7 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
         }
     }
 
-    public void setChecksum() {
+    private void setChecksum() {
       int checksum = 0;
       for (int i = 0; i < _nDataChars - 1; i++) {
         checksum += _dataChars[i];
@@ -150,7 +143,7 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
       _dataChars[_nDataChars - 1] = checksum;
     }
 
-    public void setV4Checksum(int length, int addr, int type, int [] data) {
+    private void setV4Checksum(int length, int addr, int type, int [] data) {
       int checksum = length + ((addr&0xff00)>>8) + (addr&0xff) + type;
       for (int i = 0; i < data.length; i++) {
         checksum += data[i];
@@ -172,7 +165,7 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
       }
     }
 
-    public SprogMessage frame() {
+    private SprogMessage frame() {
       int j = 2;
       // Create new message to hold the framed one
       SprogMessage f = new SprogMessage(MAXSIZE);
@@ -193,7 +186,7 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
       return f;
     }
 
-    public SprogMessage v4frame() {
+    private SprogMessage v4frame() {
       int i=0;
       // Create new message to hold the framed one
       SprogMessage f = new SprogMessage(MAXSIZE);
@@ -218,6 +211,8 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
             }
         } else {
             for (int i=0; i<_nDataChars; i++) {
+            	/* AJB - should this be a cast to a char? I can't test as I 
+            	 * don't have a suitable SPROG */
                 s+="<"+_dataChars[i]+">";
             }
         }
@@ -348,11 +343,11 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * Send a DCC packet
+     * Get a message containing a DCC packet
      * @param bytes byte[]
      * @return SprogMessage
      */
-    static public SprogMessage sendPacketMessage(byte[] bytes) {
+    static public SprogMessage getPacketMessage(byte[] bytes) {
       SprogMessage m = new SprogMessage(1+3*bytes.length);
       int i = 0; // counter to make it easier to format the message
 
@@ -464,10 +459,6 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
       m.setChecksum();
       return m.frame();
     }
-
-    // contents (private)
-    private int _nDataChars = 0;
-    private int _dataChars[] = null;
 
     // [AC] 11/09/2002
     private static String addSpace(SprogMessage m, int offset) {

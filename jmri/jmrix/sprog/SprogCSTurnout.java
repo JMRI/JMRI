@@ -15,7 +15,7 @@ import jmri.Turnout;
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005
  * @author J.M. (Mark) Knox Copyright (C) 2005
  *
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SprogCSTurnout extends AbstractTurnout {
 
@@ -26,7 +26,7 @@ public class SprogCSTurnout extends AbstractTurnout {
         super("ST"+number);
         _number = number;
 
-        commandStation = SprogSlotManager.instance();
+        commandStation = SprogCommandStation.instance();
     }
 
     public int getNumber() { return _number; }
@@ -50,8 +50,8 @@ public class SprogCSTurnout extends AbstractTurnout {
         }
     }
     
-    private SprogSlotManager commandStation;
-    public void setCommandStation(SprogSlotManager command){
+    private SprogCommandStation commandStation;
+    public void setCommandStation(SprogCommandStation command){
         commandStation = command;
     }
     

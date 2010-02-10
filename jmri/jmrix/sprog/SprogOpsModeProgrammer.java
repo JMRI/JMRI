@@ -3,7 +3,7 @@
 package jmri.jmrix.sprog;
 
 import jmri.*;
-import jmri.jmrix.sprog.SprogSlotManager;
+import jmri.jmrix.sprog.SprogCommandStation;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the SPROG command
@@ -13,7 +13,7 @@ import jmri.jmrix.sprog.SprogSlotManager;
  *
  * @see             jmri.Programmer
  * @author			Andrew Crosland Copyright (C) 2006
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SprogOpsModeProgrammer extends SprogProgrammer  {
 
@@ -39,7 +39,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer  {
         _cv = CV;
 
         // Add the packet to the queue rather than send it directly
-        SprogSlotManager.instance().opsModepacket(mAddress, mLongAddr, CV, val);
+        SprogCommandStation.instance().opsModepacket(mAddress, mLongAddr, CV, val);
         notifyProgListenerEnd(_val, jmri.ProgListener.OK);
     }
 
@@ -68,7 +68,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer  {
         return (mode==Programmer.OPSBYTEMODE);
     }
 
-    synchronized public void reply(SprogReply m) {
+    synchronized public void notifyReply(SprogReply m) {
         // We will not see any replies
     }
 

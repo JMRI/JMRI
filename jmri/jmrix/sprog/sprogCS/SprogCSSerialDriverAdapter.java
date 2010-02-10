@@ -2,11 +2,10 @@
 
 package jmri.jmrix.sprog.sprogCS;
 
-import jmri.jmrix.sprog.SprogPortController;
 import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogProgrammer;
 import jmri.jmrix.sprog.SprogProgrammerManager;
-import jmri.jmrix.sprog.SprogSlotManager;
+import jmri.jmrix.sprog.SprogCommandStation;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 
 import java.io.DataInputStream;
@@ -31,7 +30,7 @@ import gnu.io.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Andrew Crosland   Copyright (C) 2006
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SprogCSSerialDriverAdapter 
 extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
@@ -56,9 +55,9 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
 //        jmri.InstanceManager.setCommandStation(new jmri.jmrix.sprog.SprogSoftCommandStation());
         // Start the command station queuing thread
         log.debug("start command station queuing thread");
-        slotThread = new Thread(jmri.jmrix.sprog.SprogSlotManager.instance());
+        slotThread = new Thread(jmri.jmrix.sprog.SprogCommandStation.instance());
         slotThread.start();
-        jmri.InstanceManager.setCommandStation(SprogSlotManager.instance());
+        jmri.InstanceManager.setCommandStation(SprogCommandStation.instance());
 
         jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogCSThrottleManager());
 

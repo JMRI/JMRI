@@ -13,7 +13,7 @@ import javax.swing.*;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class Sprogv4UpdateFrame
     extends SprogUpdateFrame
@@ -36,9 +36,10 @@ public class Sprogv4UpdateFrame
         // add help menu to window
         addHelpMenu("package.jmri.jmrix.sprog.update.Sprogv4UpdateFrame", true);
     }
-    
+  
+  public void notifyMessage(SprogMessage m){}
 
-  synchronized public void reply(SprogReply m) {
+  synchronized public void notifyReply(SprogReply m) {
     replyString = m.toString();
     if (bootState == IDLE) {
       if (log.isDebugEnabled()) {

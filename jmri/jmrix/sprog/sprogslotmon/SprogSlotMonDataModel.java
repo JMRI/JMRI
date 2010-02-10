@@ -5,7 +5,7 @@ package jmri.jmrix.sprog.sprogslotmon;
 import jmri.jmrix.sprog.SprogConstants;
 import jmri.jmrix.sprog.SprogSlot;
 import jmri.jmrix.sprog.SprogSlotListener;
-import jmri.jmrix.sprog.SprogSlotManager;
+import jmri.jmrix.sprog.SprogCommandStation;
 
 import javax.swing.*;
 
@@ -13,7 +13,7 @@ import javax.swing.*;
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
  *                      Andrew Crosland          (C) 2006 ported to SPROG
- * @version		$Revision: 1.7 $
+ * @version		$Revision: 1.8 $
  */
 public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener  {
 
@@ -30,7 +30,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
 
     SprogSlotMonDataModel(int row, int column) {
       // connect to SprogSlotManager for updates
-      SprogSlotManager.instance().addSlotListener(this);
+      SprogCommandStation.instance().addSlotListener(this);
     }
 
 
@@ -51,7 +51,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
       int n = 0;
       int nMin = 0;
       for (int i=nMin; i<nMax; i++) {
-        SprogSlot s = SprogSlotManager.instance().slot(i);
+        SprogSlot s = SprogCommandStation.instance().slot(i);
         if (s.isFree() != true) n++;
       }
       return n;
@@ -106,7 +106,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
 
     @SuppressWarnings("null")
 	public Object getValueAt(int row, int col) {
-        SprogSlot s = SprogSlotManager.instance().slot(slotNum(row));
+        SprogSlot s = SprogCommandStation.instance().slot(slotNum(row));
         if (s == null) log.error("slot pointer was null for slot row: "+row+" col: "+col);
 
         switch (col) {
@@ -165,7 +165,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
 
     public void setValueAt(Object value, int row, int col) {
         // check for in use
-        SprogSlot s = SprogSlotManager.instance().slot(slotNum(row));
+        SprogSlot s = SprogCommandStation.instance().slot(slotNum(row));
         if (s == null) {
             log.error("slot pointer was null for slot row: "+row+" col: "+col);
             return;
@@ -243,7 +243,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
 
       int slotNum = -1;
       if (_allSlots) {          // this will be row until we show only active slots
-        slotNum = s.getSlot();  // and we are displaying the System slots
+        slotNum = s.getSlotNumber();  // and we are displaying the System slots
       }
       log.debug("Received notification of changed slot: "+slotNum);
       // notify the JTable object that a row has changed; do that in the Swing thread!
@@ -286,7 +286,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         int nMin = 0;
         int nMax = SprogConstants.MAX_SLOTS;
         for (slotNum=nMin; slotNum<nMax; slotNum++) {
-            SprogSlot s = SprogSlotManager.instance().slot(slotNum);
+            SprogSlot s = SprogCommandStation.instance().slot(slotNum);
             if (_allSlots || s.slotStatus() != SprogConstants.SLOT_FREE) n++;
             if (n == row) break;
         }
@@ -294,7 +294,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
     }
 
     public void dispose() {
-        SprogSlotManager.instance().removeSlotListener(this);
+        SprogCommandStation.instance().removeSlotListener(this);
         // table.removeAllElements();
         // table = null;
     }

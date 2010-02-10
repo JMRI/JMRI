@@ -13,7 +13,7 @@ import javax.swing.*;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SprogIIUpdateFrame
     extends SprogUpdateFrame
@@ -32,8 +32,9 @@ public class SprogIIUpdateFrame
       super.initComponents();
     }
     
-
-  synchronized public void reply(SprogReply m) {
+  public void notifyMessage(SprogMessage m) {}
+  
+  synchronized public void notifyReply(SprogReply m) {
     // If SPROG II is in boot mode, check message framing and checksum
     if ( (bootState != RESETSENT) && tc.isSIIBootMode() && !m.strip()) {
       JOptionPane.showMessageDialog(this, "Malformed  bootloader reply", 
@@ -310,8 +311,7 @@ public class SprogIIUpdateFrame
       if (log.isDebugEnabled()) {
         log.debug("Send write Flash " + hexFile.getAddress());
       }
-      msg = new SprogMessage(SprogMessage.MAXSIZE
-                             ).getWriteFlash(hexFile.getAddress(),
+      msg = SprogMessage.getWriteFlash(hexFile.getAddress(),
                                              hexFile.getData());
     }
     else {
