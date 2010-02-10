@@ -52,7 +52,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class LayoutEditor extends Editor {
@@ -499,7 +499,8 @@ public class LayoutEditor extends Editor {
         super.setTargetPanelSize(width, height);
         setSize(screenDim.width, screenDim.height);
         topEditBar.setSize(screenDim.width, topEditBar.getPreferredSize().height);
-        
+        super.setDefaultToolTip(new ToolTip(null,0,0,new Font("SansSerif", Font.PLAIN, 12),
+                                                     Color.black, new Color(215, 225, 255), Color.black));
 		// setup help bar
 		helpBar = new JPanel();
         helpBar.setLayout(new BoxLayout(helpBar, BoxLayout.Y_AXIS));
@@ -2121,12 +2122,6 @@ public class LayoutEditor extends Editor {
 						}
 					}
 				}
-                if (selectedObject==null) {
-                    selectedObject = checkSensorIcons(dLoc);
-                     if (selectedObject!=null) {
-                            ((Positionable)selectedObject).doMousePressed(event);
-                     }
-                }
 				// initialize starting selection - cancel any previous selection rectangle
 				selectionActive = true;
 				selectionX = dLoc.getX();
@@ -2171,6 +2166,12 @@ public class LayoutEditor extends Editor {
 			LocoIcon lo = checkMarkers(dLoc);
 			if (lo!=null) delayedPopupTrigger = true;
 		}
+        if (!event.isPopupTrigger() && !isDragging) {
+            List <Positionable> selections = getSelectedItems(event);
+            if (selections.size() > 0) {
+                selections.get(0).doMousePressed(event);
+            }
+        }
         return;
     }
 	
@@ -2584,6 +2585,7 @@ public class LayoutEditor extends Editor {
 
     public void mouseReleased(MouseEvent event)
     {   
+        super.setToolTip(null);
 		// initialize mouse position
 		calcLocation(event, 0, 0);
         if (isEditable()) {
@@ -2671,19 +2673,6 @@ public class LayoutEditor extends Editor {
 				LayoutTurnout t = (LayoutTurnout)selectedObject;
 				t.toggleTurnout();
 			}
-			// check if clicking a sensor or a multiSensor
-			else if (!awaitingIconChange) {
-				MultiSensorIcon m = checkMultiSensors(dLoc);
-				if (m!=null) {
-					m.doMouseReleased(event);
-					whenReleased = event.getWhen();
-				}
-				SensorIcon s = checkSensorIcons(dLoc);
-				if (s!=null) {
-					whenReleased = event.getWhen();
-					s.doMouseReleased(event);
-				}
-			}
 			if ( (trackBox.isSelected()) && (beginObject!=null) && (foundObject!=null) ) {
 				// user let up shift key before releasing the mouse when creating a track segment
 				setCursor(Cursor.getDefaultCursor());
@@ -2711,19 +2700,13 @@ public class LayoutEditor extends Editor {
                 }
             }
 		}
-		// check if clicking on sensor or multisensor out of edit mode
-		else if ( (!isDragging) && (!awaitingIconChange) ) {
-			MultiSensorIcon m = checkMultiSensors(dLoc);
-			if (m!=null) {
-                m.doMouseReleased(event);
-				whenReleased = event.getWhen();
-			}
-			SensorIcon s = checkSensorIcons(dLoc);
-			if (s!=null) {
-				s.doMouseReleased(event);
-				whenReleased = event.getWhen();
-			}
-		}		
+        if (!event.isPopupTrigger() && !isDragging) {
+            List <Positionable> selections = getSelectedItems(event);
+            if (selections.size() > 0) {
+                selections.get(0).doMouseReleased(event);
+                whenReleased = event.getWhen();
+            }
+        }
 		if (selectedObject!=null) {
 			// An object was selected, deselect it
 			prevSelectedObject = selectedObject;
@@ -2866,16 +2849,9 @@ public class LayoutEditor extends Editor {
 		if ( (!event.isMetaDown()) && (!event.isPopupTrigger()) && (!event.isAltDown()) &&
 					(!awaitingIconChange) && (!event.isShiftDown()) && (!event.isControlDown()) ) {
 			calcLocation(event, 0, 0);
-            			// check if on a multi sensor icon
-			MultiSensorIcon m = checkMultiSensors(dLoc);
-			if (m!=null) {
-                setAwaitingIconChange();
-                m.doMouseReleased(event);
-			}
-			SensorIcon s = checkSensorIcons(dLoc);
-			if (s!=null) {
-                setAwaitingIconChange();
-                s.doMouseReleased(event);
+            List <Positionable> selections = getSelectedItems(event);
+            if (selections.size() > 0) {
+                selections.get(0).doMouseReleased(event);
             }
 		}
 		else if ( event.isPopupTrigger() ) {
@@ -2895,10 +2871,18 @@ public class LayoutEditor extends Editor {
 
     public void mouseMoved(MouseEvent event)
     {
+        calcLocation(event, 0, 0);
         if (isEditable()) {
-			calcLocation(event, 0, 0);
             xLabel.setText(Integer.toString(xLoc));
             yLabel.setText(Integer.toString(yLoc));
+        }else {
+            List <Positionable> selections = getSelectedItems(event);
+            if (selections.size() > 0) {
+                showToolTip(selections.get(0), event); 
+            } else {
+                super.setToolTip(null);
+            }
+            repaint();
         }
         return;
     }
@@ -2915,6 +2899,11 @@ public class LayoutEditor extends Editor {
             xLabel.setText(Integer.toString(xLoc));
             yLabel.setText(Integer.toString(yLoc));
 		}
+        if (event.isPopupTrigger() || (!event.isMetaDown() && !event.isAltDown())) {
+            if (selectedObject!=null) {
+                ((Positionable)selectedObject).doMouseReleased(event);
+            }
+        }
 		Point2D newPos = new Point2D.Double(dLoc.getX() + startDel.getX(),
 						dLoc.getY() + startDel.getY());
 		if ((selectedObject!=null) && (event.isMetaDown() || event.isAltDown()) && (selectedPointType==MARKER)) {
@@ -3964,7 +3953,7 @@ public class LayoutEditor extends Editor {
 		    } else {
 			    backgroundImage.add((PositionableLabel)l);
             }
-		}	
+		}
     }
     
      /**
@@ -5544,6 +5533,20 @@ public class LayoutEditor extends Editor {
         return false;
     }
 	
+    /**
+    * override
+    */
+    public void showToolTip(Positionable selection, MouseEvent event) {
+        if (selection.getDisplayLevel()>BKG) {
+            ToolTip tip = selection.getTooltip();
+            tip.setLocation(selection.getX() + selection.getWidth()/2, event.getY());
+            tip.setText(selection.getNameString());
+            setToolTip(tip);
+        } else {
+            setToolTip(null);
+        }
+    }
+
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutEditor.class.getName());
 }

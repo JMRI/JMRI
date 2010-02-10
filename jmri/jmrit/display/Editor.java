@@ -12,14 +12,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import java.awt.Font;
-import java.awt.font.TextLayout;
-import java.awt.geom.Rectangle2D;
-
 import java.awt.*;
 import javax.swing.*;
 
-//import javax.swing.event.MouseInputAdapter;
 import javax.swing.event.ListSelectionEvent;
 
 import jmri.CatalogTree;
@@ -64,7 +59,8 @@ import jmri.util.JmriJFrame;
  * 
  */
 
-abstract public class Editor extends JmriJFrame implements MouseListener, MouseMotionListener {
+abstract public class Editor extends JmriJFrame implements MouseListener, MouseMotionListener,
+                                ActionListener {
 
     final public static int BKG       = 1;
     final public static int TEMP      = 2;
@@ -129,8 +125,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     private boolean _dragging = false;
     private ArrayList <Positionable> _selectionGroup = null;  // items gathered inside fence
     private Positionable _currentSelection;
+    private ToolTip _defaultToolTip;
     private ToolTip _tooltip = null;
-    private Font _toolFont = new Font("Serif", Font.PLAIN, 10);
 
     // Accessible to editor views
     protected int xLoc = 0;     // x coord of selected Positionable
@@ -150,11 +146,15 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _editableLevels[i] = true;
             _positionableLevels[i] = true;
         }
-
+        _defaultToolTip = new ToolTip(null, 0, 0);
     }
 
     public List <Positionable> getContents() {
         return _contents;
+    }
+
+    public void setDefaultToolTip(ToolTip dtt) {
+        _defaultToolTip = dtt;
     }
 
     /***************** setting the main panel and frame ****************/
@@ -222,6 +222,52 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _paintScale = newScale;
         setScrollbarScale(ratio);
     }
+    
+    ToolTipTimer _tooltipTimer;
+    protected void setToolTip(ToolTip tt) {
+        if (tt==null) {
+            _tooltip = null;
+            if (_tooltipTimer != null) {
+                _tooltipTimer.stop();
+                _tooltipTimer = null;
+            }
+
+        } else if (_tooltip==null && _tooltipTimer==null) {
+            _tooltipTimer = new ToolTipTimer(1000, this, tt);
+            _tooltipTimer.setRepeats(false);
+            _tooltipTimer.start();
+        }
+    }
+
+    /**
+    * Wait 1 sec then show tooltip.  Wait another 4 sec and disaappear
+    */
+    public void actionPerformed(ActionEvent event) {
+        //if (_debug) log.debug("_tooltipTimer actionPerformed: Timer on= "+(_tooltipTimer!=null));
+        if (_tooltipTimer!=null) {
+            _tooltip = _tooltipTimer.getTooltip();
+            _tooltipTimer.stop();
+        }
+        if (_tooltip!=null) {
+            _tooltipTimer = new ToolTipTimer(5000, this, null);
+            _tooltipTimer.setRepeats(false);
+            _tooltipTimer.start();
+        } else {
+            _tooltipTimer = null;
+        }
+        _targetPanel.repaint();
+    }
+
+    class ToolTipTimer extends Timer {
+        ToolTip tooltip;
+        ToolTipTimer(int delay, ActionListener listener, ToolTip tip) {
+            super(delay, listener);
+            tooltip = tip;
+        }
+        ToolTip getTooltip() {
+            return tooltip;
+        }
+    }
 
     /**
      *  Special internal class to allow drawing of layout to a JLayeredPane
@@ -286,24 +332,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 g2d.setColor(color);
             }
             if (_tooltip != null) {
-                //g2d.setFont(_toolFont);
-                Color color = g2d.getColor();
-                Font font = g2d.getFont();
-                //g.drawString(_tooltip.getTip(), _tooltip.getX(), _tooltip.getY());
-                TextLayout tl = new TextLayout(_tooltip.getTip(), _toolFont, g2d.getFontRenderContext());
-                Rectangle2D bds = tl.getBounds();
-                bds.setRect(bds.getX()+_tooltip.getX()-bds.getWidth()/2-4, 
-                            bds.getY()+_tooltip.getY()-4, 
-                            bds.getWidth()+5, bds.getHeight()+5);
-                g2d.setColor(Color.white);
-                g2d.fill(bds);
-                g2d.setColor(Color.blue);
-                g2d.draw(bds);
-                g2d.setColor(Color.black);
-                tl.draw(g2d, (float)(_tooltip.getX()-bds.getWidth()/2), _tooltip.getY());
-                g2d.setColor(color);
-                g2d.setFont(font);
-
+                _tooltip.paint(g2d);
             }
         }
     }
@@ -867,6 +896,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public void putItem(Positionable l) {
         l.invalidate();
         l.setPositionable(true);
+        l.setTooltip(new ToolTip(_defaultToolTip, l));
         addToTarget(l);
         _contents.add(l);
     }
@@ -1642,38 +1672,24 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     /****************** Mouse Methods ***********************/
 
-    public void showToolTip(Positionable selection) {
-        String tip = selection.getTooltip();
-        if (tip == null && selection.showTooltip()) {
+    public void showToolTip(Positionable selection, MouseEvent event) {
+        ToolTip tip = selection.getTooltip();
+        String txt = tip.getText();
+        if (txt==null) {
             int system = jmri.util.SystemType.getType();
             if (system==jmri.util.SystemType.MACOSX) {
-                tip = java.text.MessageFormat.format(rb.getString("ToolTipGenericMac"), selection.getNameString());
+                txt = java.text.MessageFormat.format(rb.getString("ToolTipGenericMac"), selection.getNameString());
             }
             else if (system==jmri.util.SystemType.WINDOWS) {
-                tip = java.text.MessageFormat.format(rb.getString("ToolTipGenericWin"), selection.getNameString());
+                txt = java.text.MessageFormat.format(rb.getString("ToolTipGenericWin"), selection.getNameString());
             }
             else {
-                tip = java.text.MessageFormat.format(rb.getString("ToolTipGeneric"), selection.getNameString());
+                txt = java.text.MessageFormat.format(rb.getString("ToolTipGeneric"), selection.getNameString());
             }
+            tip.setText(txt);
         }
-        if (tip != null) {
-            _tooltip = new ToolTip(tip, selection.getX()+selection.getWidth()/2, selection.getY()+selection.getHeight()/2);
-        } else {
-            _tooltip = null;
-        }
-    }
-
-    class ToolTip {
-        String _tip;
-        int _x, _y;
-        ToolTip(String tip, int x, int y) {
-            _tip = tip;
-            _x = x;
-            _y = y;
-        }
-        String getTip() { return _tip; }
-        int getX() { return _x; }
-        int getY() { return _y; }
+        tip.setLocation(selection.getX() + selection.getWidth()/2, event.getY());
+        setToolTip(tip);
     }
 
     /**
@@ -1697,7 +1713,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     * Return a List of all items whose bounding rectangle contain the mouse position.
     * ordered from top level to bottom
     */
-    private List <Positionable> getSelectedItems(MouseEvent event) {
+    protected List <Positionable> getSelectedItems(MouseEvent event) {
         int x = event.getX();
         int y = event.getY();
         Rectangle rect = new Rectangle();
@@ -1852,11 +1868,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     */
 
     public void mousePressed(MouseEvent event) {
+        _tooltip = null;
         if (_debug) log.debug("mousePressed at ("+event.getX()+","+event.getY()+") _dragging="+_dragging);
         _anchorX = event.getX();
         _anchorY = event.getY();
         _lastX = _anchorX;
-        _lastY = _anchorY;        
+        _lastY = _anchorY;
         List <Positionable> selections = getSelectedItems(event);
 
         if (_dragging) {
@@ -1888,6 +1905,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     public void mouseReleased(MouseEvent event) {
+        _tooltip = null;
         if (_debug) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+") dragging= "+_dragging
                               +" selectRect is "+(_selectRect==null? "null":"not null"));
         List <Positionable> selections = getSelectedItems(event);
@@ -1921,7 +1939,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
         }
         _dragging = false;
-        _tooltip = null;
         _targetPanel.repaint();
     }
 
@@ -1930,8 +1947,19 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     public void mouseDragged(MouseEvent event) {
         _tooltip = null;
-        if (event.isPopupTrigger() || (!event.isMetaDown() && !event.isAltDown())) { return; }
-
+        if (event.isPopupTrigger() || (!event.isMetaDown() && !event.isAltDown())) {
+            if (_currentSelection!=null) {
+                List <Positionable> selections = getSelectedItems(event);
+                if (selections.size() > 0) {
+                    if (selections.get(0)!=_currentSelection) {
+                        _currentSelection.doMouseReleased(event);
+                    }
+                } else {
+                    _currentSelection.doMouseReleased(event);
+                }
+            }
+            return; 
+        }
         if (_currentSelection!=null) {
             if (!_currentSelection.isPositionable()) { return; }
             int deltaX = event.getX() - _lastX;
@@ -1956,6 +1984,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     public void mouseMoved(MouseEvent event) {
+        _tooltip = null;
         //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")"); 
         if (_dragging || event.isPopupTrigger()) { return; }
 
@@ -1968,10 +1997,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 selection = selections.get(0); 
             }
         }
-        if (selection!=null && (_showTooltip || selection.showTooltip())) {
-            showToolTip(selection);
+        if (selection!=null && selection.getDisplayLevel()>BKG &&
+                                (_showTooltip || selection.showTooltip())) {
+            showToolTip(selection, event);
         } else {
-            _tooltip = null;
+            setToolTip(null);
         }
         _targetPanel.repaint();
     }
@@ -1980,6 +2010,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     public void mouseExited(MouseEvent event) {
+        _tooltip = null;
     }
 
     /*********************** Abstract Methods ************************/

@@ -22,7 +22,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
@@ -31,7 +31,7 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
    	protected Editor _editor = null;
     protected boolean debug = false;
 
-    private String _tooltip;
+    private ToolTip _tooltip;
     private boolean _showTooltip =true;
     private boolean _editable = true;
     private boolean _positionable = true;
@@ -88,10 +88,10 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     public boolean showTooltip() {
         return _showTooltip;
     }
-    public void setTooltip(String tip) {
+    public void setTooltip(ToolTip tip) {
         _tooltip = tip;
     }
-    public String getTooltip() {
+    public ToolTip getTooltip() {
         return _tooltip;
     }
     public void setScale(double s) {

@@ -35,7 +35,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
@@ -324,13 +324,13 @@ public class CoordinateEdit extends JmriJFrame {
 	}
 
     public void initSetTip() {
-        oldStr = pl.getTooltip();
+        oldStr = pl.getTooltip().getText();
         textX = new javax.swing.JLabel();
 		textX.setText("Tooltip ");
 		textX.setVisible(true);
 
         xTextField = new javax.swing.JTextField(15);
-		xTextField.setText(pl.getTooltip());
+		xTextField.setText(pl.getTooltip().getText());
 		xTextField.setToolTipText("Enter Tooltip");
 		xTextField.setMaximumSize(new Dimension(
 				xTextField.getMaximumSize().width+100, xTextField.getPreferredSize().height));
@@ -346,13 +346,13 @@ public class CoordinateEdit extends JmriJFrame {
 
 		okButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-                pl.setTooltip(xTextField.getText());
+                pl.getTooltip().setText(xTextField.getText());
                 dispose();
 			}
 		});
 		cancelButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-                pl.setTooltip(oldStr);
+                pl.getTooltip().setText(oldStr);
                 dispose();
 			}
 		});

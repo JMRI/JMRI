@@ -25,7 +25,7 @@ import javax.swing.JPopupMenu;
  *
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public interface Positionable  {
     public void setPositionable(boolean enabled);
@@ -36,8 +36,8 @@ public interface Positionable  {
 
     public void setShowTooltip(boolean set);
     public boolean showTooltip();
-    public void setTooltip(String tip);
-    public String getTooltip();
+    public void setTooltip(ToolTip tip);
+    public ToolTip getTooltip();
 
     public void setViewCoordinates(boolean enabled);
     public boolean getViewCoordinates();

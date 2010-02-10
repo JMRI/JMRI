@@ -585,6 +585,19 @@ public class ControlPanelEditor extends Editor implements ItemListener {
         popup.show((Component)p, p.getWidth()/2, p.getHeight()/2);
     }
 
+    /**
+    * override
+    */
+    public void showToolTip(Positionable selection) {
+        if (selection.getDisplayLevel()>BKG) {
+            ToolTip tip = selection.getTooltip();
+            tip.setLocation(selection);
+            tip.setText(selection.getNameString());
+            setToolTip(tip);
+        } else {
+            setToolTip(null);
+        }
+    }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControlPanelEditor.class.getName());

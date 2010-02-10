@@ -40,7 +40,7 @@ import javax.swing.border.LineBorder;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.80 $
+ * @version $Revision: 1.81 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -68,7 +68,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected boolean _control = false;
     protected NamedIcon _namedIcon;
 
-    private String _tooltip;
+    private ToolTip _tooltip;
     private boolean _showTooltip =true;
     private boolean _editable = true;
     private boolean _positionable = true;
@@ -149,10 +149,10 @@ public class PositionableLabel extends JLabel implements Positionable {
     public boolean showTooltip() {
         return _showTooltip;
     }
-    public void setTooltip(String tip) {
+    public void setTooltip(ToolTip tip) {
         _tooltip = tip;
     }
-    public String getTooltip() {
+    public ToolTip getTooltip() {
         return _tooltip;
     }
 
