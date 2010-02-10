@@ -16,7 +16,7 @@ import jmri.NmraPacket;
  * <P>
  * @author			Andrew Crosland Copyright (C) 2006
  * @author			Andrew Berridge 2010
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
  public class SprogSlot {
 	 
@@ -84,7 +84,11 @@ private boolean f5to8Packet = false;
       */
      public void set(int address, byte [] payload, int repeat) {
        addr = address;
-       this.payload = Arrays.copyOf(payload, payload.length);
+
+       // Arrays.copyOf(payload, payload.length), a Java 1.6 construct
+       this.payload = new byte[payload.length];
+       for (int i = 0; i<payload.length; i++) this.payload[i] = payload[i];
+       
        this.setRepeat(repeat);
        status = SprogConstants.SLOT_IN_USE;
      }
@@ -288,8 +292,11 @@ private boolean f5to8Packet = false;
       * @return a byte array containing the payload of this slot
       */
      public byte[] getPayload() {
-       byte [] p;
-       p = Arrays.copyOf(payload, getPayloadLength());
+
+       // p = Arrays.copyOf(payload, getPayloadLength()), a Java 1.6 construct
+       byte [] p = new byte[getPayloadLength()];
+       for (int i = 0; i<getPayloadLength(); i++) p[i] = payload[i];
+
        //decrement repeat counter if appropriate
        doRepeat();
        return p;
