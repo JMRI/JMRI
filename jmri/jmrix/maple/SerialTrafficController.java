@@ -29,7 +29,7 @@ import java.io.DataInputStream;
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Bob Jacobsen, Dave Duchamp, adapt to use for Maple 2008, 2009, 2010
  *
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  * @since 2.3.7
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
@@ -116,6 +116,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 	// The Maple poll response does not contain an address, so the following is needed.
 	private int mSavedPollAddress = 1;
 	public int getSavedPollAddress() {return mSavedPollAddress;}
+	private int mCurrentNodeIndexInPoll = -1;
     
     /**
      *  Handles output and polling for Maple Serial Nodes
@@ -141,6 +142,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 			}
 			if (endBitNumber==mOutputBits.getNumOutputBits()) mNeedSend = false;			
 			SerialMessage m = mOutputBits.createOutPacket(mStartBitNumber, endBitNumber);
+			mCurrentNodeIndexInPoll = -1;
 			
 			// update the starting bit number if additional packets are needed
 			if (mNeedSend) 	mStartBitNumber = endBitNumber+1;
@@ -154,6 +156,8 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 		SerialMessage m = SerialMessage.getPoll(
 							getNode(curSerialNodeIndex).getNodeAddress(), mStartPollAddress, count);
 		mSavedPollAddress = mStartPollAddress;
+		mCurrentNodeIndexInPoll = curSerialNodeIndex;
+		
 		// check if additional packet is needed
 		if ((mStartPollAddress+count-1)<mInputBits.getNumInputBits()) {
 			mNeedAdditionalPollPacket = true;
@@ -174,7 +178,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 
     protected void handleTimeout(AbstractMRMessage m,AbstractMRListener l) {
 		if (m.getElement(3)=='W' && m.getElement(4)=='C') {
-			wrTimeoutCount ++;
+			wrTimeoutCount ++;    // should not happen
 		}
 		else if (m.getElement(3)=='R' && m.getElement(4)=='C') {
 			if (mNeedAdditionalPollPacket) {
@@ -192,13 +196,13 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
     
     protected void resetTimeout(AbstractMRMessage m) {
-		if (getNode(curSerialNodeIndex-1)==null) {
-			log.error("Timeout of non-configured device - "+curSerialNodeIndex);
+		if (mCurrentNodeIndexInPoll<0) {
+			wrTimeoutCount = 0;    // should never happen - outputs should not be timed
 		}
 		else {
 			// don't use super behavior, as timeout to init, transmit message is normal
-			// and inform node
-			getNode(curSerialNodeIndex-1).resetTimeout(m);
+			// inform node
+			getNode(mCurrentNodeIndexInPoll).resetTimeout(m);
 		}        
     }
     
