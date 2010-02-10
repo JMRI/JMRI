@@ -17,14 +17,14 @@ import javax.swing.JOptionPane;
  * Provide an abstract base for *PortController classes.
  * <P>
  * This is complicated by the lack of multiple inheritance.
- * SerialPortAdapter is an Interface, and it's implementing
+ * SerialPortAdapter is an Interface, and its implementing
  * classes also inherit from various PortController types.  But we
  * want some common behaviours for those, so we put them here.
  *
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 abstract public class AbstractPortController implements SerialPortAdapter {
 
