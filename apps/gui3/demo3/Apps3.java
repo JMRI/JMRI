@@ -1,6 +1,6 @@
 // Apps3.java
 
-package apps.gui3.demo;
+package apps.gui3.demo3;
 
 import jmri.*;
 import jmri.jmrit.XmlFile;
@@ -24,7 +24,7 @@ import javax.swing.*;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen   Copyright 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class Apps3 {
 
