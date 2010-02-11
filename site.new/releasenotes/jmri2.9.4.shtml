@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.6 2010-02-07 19:03:49 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.7 2010-02-11 16:43:27 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -238,6 +238,20 @@ on Mac OS X 1o.4 has been fixed.
 Help system now can directly print help pages. See the new icons
 at the top of any help screen. Also, you can know mark a page as
 a "favorite" and easily come back to it later.
+
+<p>
+Jason M'Sadoques improved the WiThrottle support to pick the best
+IP address for display when several are present, and to not 
+display internal-only addresses that won't work for external access.
+
+<p>
+David Duchamp updated the instructions for building with XCode.
+
+<p>
+Dan Boudreau improved the operations train icon:  
+Popup menu now always displays the "Throttle" option.  
+"Throttle" is disabled if roster entry doesn't exist for the loco.
+
 
 <!--#include virtual="/Footer" -->
 
