@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for classes in the jmri.jmrit.sensorgroup package
  * @author	Bob Jacobsen  Copyright 2003, 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SensorGroupTest extends TestCase {
 
@@ -37,6 +37,19 @@ public class SensorGroupTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(SensorGroupTest.class);
         return suite;
+    }
+
+    // The minimal setup for log4J
+    protected void setUp() throws Exception { 
+        apps.tests.Log4JFixture.setUp(); 
+        super.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
+    }
+    protected void tearDown() throws Exception { 
+        jmri.util.JUnitUtil.resetInstanceManager();
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown(); 
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorGroupTest.class.getName());
