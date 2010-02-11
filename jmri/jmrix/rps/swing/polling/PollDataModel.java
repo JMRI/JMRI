@@ -17,7 +17,7 @@ import javax.swing.table.*;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class PollDataModel extends AbstractTableModel
     implements MeasurementListener {
@@ -102,6 +102,11 @@ public class PollDataModel extends AbstractTableModel
     public Object getValueAt (int r,int c) {
         // r is row number, from 0
         Measurement m;
+        if (Engine.instance() == null )
+            log.warn("returning null because of missing Engine.instance()");
+        if (Engine.instance().getTransmitter(r) == null) 
+            log.warn("returning null because of missing Engine.instance().getTransmitter("+r+")");
+        
         double val;
         switch (c) {
         case NAMECOL:
