@@ -4,11 +4,15 @@
 # your computer's speakers if you have the "speak" command 
 # installed.
 #
+# For an example of this in action:
+#  http://www.youtube.com/user/2sk21#p/a/u/0/0rDqBob3Vpk
+#  (visited February 2010)
+#
 # Author: Bob Jacobsen, copyright 2005, 2008
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 
 # Define routine to map status numbers to text
 def stateName(state) :
