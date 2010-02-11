@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.45 $
+ * @version $Revision: 1.46 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -337,7 +337,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
     }
     
     
-    private NamedIcon getNamedIcon(String attrName, Element element){
+    protected NamedIcon getNamedIcon(String attrName, Element element){
         NamedIcon icon = null;
         Element elem = element.getChild(attrName);
         if (elem != null) {

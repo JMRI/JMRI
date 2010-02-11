@@ -11,7 +11,7 @@ import org.jdom.Element;
  * Handle configuration for display.LocoIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class LocoIconXml extends PositionableLabelXml {
 
@@ -30,20 +30,16 @@ public class LocoIconXml extends PositionableLabelXml {
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
         Element element = new Element("locoicon");
+        storeCommonAttributes(p, element);
 
         // include contents
         element.setAttribute("text", p.getText());
-        element.setAttribute("x", ""+p.getX());
-        element.setAttribute("y", ""+p.getY());
-        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
-        NamedIcon icon = (NamedIcon)p.getIcon();
-        element.setAttribute("icon", icon.getURL());
+        storeTextInfo(p, element);
+        element.setAttribute("icon", "yes");
+        element.addContent(storeIcon("icon", (NamedIcon)p.getIcon()));
         RosterEntry entry = p.getRosterEntry();
         if (entry != null)
         	element.setAttribute("rosterentry", entry.getId());
-        
-        storeTextInfo(p, element);
-        
         element.setAttribute("class", "jmri.jmrit.display.configurexml.LocoIconXml");
 
         return element;
@@ -61,8 +57,11 @@ public class LocoIconXml extends PositionableLabelXml {
      * @param o  an Editor as an Object
      */
     public void load(Element element, Object o) {
-		Editor ed = (Editor) o;;
+		Editor ed = (Editor) o;
         LocoIcon l= new LocoIcon(ed);
+        
+        loadCommonAttributes(l, Editor.MARKERS, element);
+        
        // create the objects
         String name = "error";
         try {
@@ -73,34 +72,19 @@ public class LocoIconXml extends PositionableLabelXml {
         l.setText (name);
         loadTextInfo(l, element);
         
-        // find coordinates
-        int x = 0;
-        int y = 0;
+        NamedIcon icon;
         try {
-            x = element.getAttribute("x").getIntValue();
-            y = element.getAttribute("y").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.error("failed to convert positional attribute ex= "+e);
-        }
-        l.setLocation(x,y);
-
-        // find display level
-		int level =  Editor.MARKERS;
-        try {
-            level = element.getAttribute("level").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse level attribute! ex= "+e);
-        } catch ( NullPointerException e) {  // considered normal if the attribute not present
-        }
-        l.setDisplayLevel(level);
-        
-         try {
 			name = element.getAttribute("icon").getValue();
-			l.setIcon(NamedIcon.getIconByName(name));
 		} catch (Exception e) {
 			log.error("failed to get icon attribute ex= "+e);
 		}
-		
+    	if (name.equals("yes")){
+    		icon = loadIcon(l, "icon", element);
+    	}else{
+    		icon = NamedIcon.getIconByName(name);
+    	}
+    	l.updateIcon(icon);
+    	
         String rosterId = null;
 		try{
 			rosterId = element.getAttribute("rosterentry").getValue();
