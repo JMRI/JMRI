@@ -5,6 +5,7 @@ package jmri.jmrix.sprog;
 import jmri.CommandStation;
 import jmri.NmraPacket;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Vector;
 
@@ -29,7 +30,7 @@ import jmri.jmrix.sprog.sprogslotmon.*;
  * reduces code duplication </P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
  *              Andrew Crosland         (C) 2006 ported to SPROG
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SprogCommandStation implements CommandStation, SprogListener, Runnable {
 
@@ -434,15 +435,16 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         currentSlot = currentSlot%SprogConstants.MAX_SLOTS;
       }
       s = slots.get(currentSlot);
-
+      byte [] ret = s.getPayload();
 	  currentSlot = currentSlot % SprogConstants.MAX_SLOTS;
 	  currentSlot ++;
+	  
       if (s.isFinished()) {
     	  notifySlotListeners(s);
-    	  return null;
+    	  //return null;
       } 
 
-      return s.getPayload();
+      return ret;
     }
 
     /*
