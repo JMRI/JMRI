@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.Rectangle2D;
 
 import java.awt.*;
 import javax.swing.*;
@@ -188,7 +189,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _targetPanel.addMouseListener(this);
         _targetPanel.addMouseMotionListener(this);
         _targetFrame.pack();
-        _targetFrame.setVisible(true);
     }
 
     protected void setTargetPanelSize(int w, int h) {
@@ -206,6 +206,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected final JComponent getTargetPanel() {
         return _targetPanel;
     }
+    protected final JScrollPane getPanelScrollPane() {
+        return _panelScrollPane;
+    }
 
     public final JFrame getTargetFrame() {
         return _targetFrame;
@@ -214,7 +217,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /**
      * Get/Set scale for TargetPane drawing
      */
-    protected final double getPaintScale() {
+    public final double getPaintScale() {
         return _paintScale;
     }
     protected final void setPaintScale(double newScale) {
@@ -332,7 +335,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 g2d.setColor(color);
             }
             if (_tooltip != null) {
-                _tooltip.paint(g2d);
+                _tooltip.paint(g2d, _paintScale);
             }
         }
     }
@@ -343,7 +346,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         //Dimension dim = _targetPanel.getMaximumSize();
 		int tpWidth = (int)((dim.width)*ratio);
 		int tpHeight = (int)((dim.height)*ratio);
-		//setTargetPanelSize(tpWidth,tpHeight);
         _targetPanel.setSize(tpWidth,tpHeight);
         if (_debug) log.debug("setScrollbarScale: ratio= "+ratio+", tpWidth= "+tpWidth+", tpHeight= "+tpHeight);
 		// compute new scroll bar positions in order to keep image centered
@@ -913,9 +915,53 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     /************** Icon editors for adding content ************/
 
+    static final public String[] ICON_EDITORS = {"SensorEditor", "RightTOEditor", "LeftTOEditor",
+                        "SignalHeadEditor", "SignalMastEditor", "MemoryEditor", "ReporterEditor",
+                        "LightEditor", "BackgroundEditor", "MultiSensorEditor", "IconEditor"};
+    /**
+    * @param Icon editor's name
+    */
     public JFrameItem getIconFrame(String name) {
-        return _iconEditorFrame.get(name);
+        JFrameItem frame = _iconEditorFrame.get(name);
+        if (frame==null) {
+            if ("SensorEditor".equals(name)) {
+                addSensorEditor();
+            } else if ("RightTOEditor".equals(name)) {
+                addRightTOEditor();
+            } else if ("LeftTOEditor".equals(name)) {
+                addLeftTOEditor();
+            } else if ("SignalHeadEditor".equals(name)) {
+                addSignalHeadEditor();
+            } else if ("SignalMastEditor".equals(name)) {
+                addSignalMastEditor();
+            } else if ("MemoryEditor".equals(name)) {
+                addMemoryEditor();
+            } else if ("ReporterEditor".equals(name)) {
+                addReporterEditor();
+            } else if ("LightEditor".equals(name)) {
+                addLightEditor();
+            } else if ("BackgroundEditor".equals(name)) {
+                addBackgroundEditor();
+            } else if ("MultiSensorEditor".equals(name)) {
+                addMultiSensorEditor();
+            } else if ("IconEditor".equals(name)) {
+                addIconEditor();
+            } else {
+                log.error("No such Icon Editor \""+name+"\"");
+                return null;
+            }
+            // frame added in the above switch 
+            frame = _iconEditorFrame.get(name);
+            frame.setLocation(frameLocationX, frameLocationY);
+            frameLocationX += DELTA;
+            frameLocationY += DELTA;
+        }
+        frame.setVisible(true);
+        return frame;
     }
+    public int frameLocationX = 0;
+    public int frameLocationY = 0;
+    static final int DELTA = 20; 
 
     public IconAdder getIconEditor(String name) {
         return _iconEditorFrame.get(name).getEditor();
@@ -1034,7 +1080,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     protected void addSignalHeadEditor() {
-        IconAdder editor = new IconAdder("SignalEditor");
+        IconAdder editor = new IconAdder("SignalHeadEditor");
         editor.setIcon(0, "SignalHeadStateRed",
             "resources/icons/smallschematics/searchlights/left-red-marker.gif");
         editor.setIcon(1, "SignalHeadStateYellow", 
@@ -1058,7 +1104,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
         JFrameItem frame = makeAddIconFrame("SignalHeadEditor", "addIconsToPanel", 
                                                        "SelectSignalHead", editor);
-        _iconEditorFrame.put("SignalEditor", frame);
+        _iconEditorFrame.put("SignalHeadEditor", frame);
         editor.setPickList(PickListModel.signalHeadPickModelInstance());
 
         ActionListener addIconAction = new ActionListener() {
@@ -1342,7 +1388,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     protected SignalHeadIcon putSignalHead() {
         SignalHeadIcon l = new SignalHeadIcon(this);
-        IconAdder editor = getIconEditor("SignalEditor");
+        IconAdder editor = getIconEditor("SignalHeadEditor");
         l.setRedIcon(editor.getIcon("SignalHeadStateRed"));
         l.setFlashRedIcon(editor.getIcon("SignalHeadStateFlashingRed"));
         l.setYellowIcon(editor.getIcon("SignalHeadStateYellow"));
@@ -1714,8 +1760,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     * ordered from top level to bottom
     */
     protected List <Positionable> getSelectedItems(MouseEvent event) {
-        int x = event.getX();
-        int y = event.getY();
+        double x = event.getX();
+        double y = event.getY();
         Rectangle rect = new Rectangle();
         ArrayList <Positionable> selections = new ArrayList <Positionable>();
         for (int i=0; i<_contents.size(); i++) {
@@ -1723,7 +1769,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             rect= p.getBounds(rect);
             //if (_debug) log.debug("getSelectedItems: rect= ("+rect.x+","+rect.y+
             //                      ") width= "+rect.width+", height= "+rect.height);
-            if (rect.contains(x, y)) {
+            Rectangle2D.Double rect2D = new Rectangle2D.Double(rect.x*_paintScale,
+                                                               rect.y*_paintScale,
+                                                               rect.width*_paintScale,
+                                                               rect.height*_paintScale);
+            if (rect2D.contains(x, y)) {
                 boolean added =false;
                 int level = p.getDisplayLevel();
                 for (int k=0; k<selections.size(); k++) {
@@ -1868,7 +1918,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     */
 
     public void mousePressed(MouseEvent event) {
-        _tooltip = null;
+        setToolTip(null);
         if (_debug) log.debug("mousePressed at ("+event.getX()+","+event.getY()+") _dragging="+_dragging);
         _anchorX = event.getX();
         _anchorY = event.getY();
@@ -1905,7 +1955,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     public void mouseReleased(MouseEvent event) {
-        _tooltip = null;
+        setToolTip(null);
         if (_debug) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+") dragging= "+_dragging
                               +" selectRect is "+(_selectRect==null? "null":"not null"));
         List <Positionable> selections = getSelectedItems(event);
@@ -1946,7 +1996,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     public void mouseDragged(MouseEvent event) {
-        _tooltip = null;
+        setToolTip(null);
         if (event.isPopupTrigger() || (!event.isMetaDown() && !event.isAltDown())) {
             if (_currentSelection!=null) {
                 List <Positionable> selections = getSelectedItems(event);
@@ -1984,7 +2034,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     public void mouseMoved(MouseEvent event) {
-        _tooltip = null;
         //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")"); 
         if (_dragging || event.isPopupTrigger()) { return; }
 
@@ -2010,7 +2059,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     public void mouseExited(MouseEvent event) {
-        _tooltip = null;
+        setToolTip(null);
     }
 
     /*********************** Abstract Methods ************************/

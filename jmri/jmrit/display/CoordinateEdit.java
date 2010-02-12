@@ -35,7 +35,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
@@ -192,6 +192,20 @@ public class CoordinateEdit extends JmriJFrame {
             };
     }
     //////////////////////////////////////////////////////////////
+
+    public static AbstractAction getZoomEditAction(final Positionable pos) {
+        return new AbstractAction(rb.getString("Zoom")) {
+                public void actionPerformed(ActionEvent e) {
+                    CoordinateEdit f = new CoordinateEdit();
+                    f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
+                    f.init(rb.getString("Zoom"), pos);
+                    f.initZoom();
+                    f.setVisible(true);	
+                    f.setLocation(100,100);
+                }
+            };
+    }
+    ////////////////////////////////////////////////////////////// 
 
 	public CoordinateEdit() {
 		super();
@@ -546,7 +560,7 @@ public class CoordinateEdit extends JmriJFrame {
 //		textX.setText("Scale= "+scale);
 		textX.setVisible(true);
 
-        SpinnerNumberModel model = new SpinnerNumberModel(100.0,1.0,5000.0,1.0);
+        SpinnerNumberModel model = new SpinnerNumberModel(100.0,10.0,5000.0,1.0);
         spinX = new javax.swing.JSpinner(model);
         if (log.isDebugEnabled()) { log.debug("scale%= "+(int)Math.round(oldD*100));
         }
@@ -621,6 +635,49 @@ public class CoordinateEdit extends JmriJFrame {
 		cancelButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
                 ((PositionableLabel)pl).setText(oldStr);
+                dispose();
+			}
+		});
+		pack();
+	}
+
+    public void initZoom() {
+        //int scale = (int)Math.round(pl.getScale()*100);
+        oldD = pl.getScale();
+
+        textX = new javax.swing.JLabel();
+		textX.setText("Scale= "+oldD*100);
+//		textX.setText("Scale= "+scale);
+		textX.setVisible(true);
+
+        SpinnerNumberModel model = new SpinnerNumberModel(100.0,1.0,5000.0,1.0);
+        spinX = new javax.swing.JSpinner(model);
+        if (log.isDebugEnabled()) { log.debug("scale%= "+(int)Math.round(oldD*100));
+        }
+        spinX.setToolTipText("Enter scale percentage");
+        spinX.setMaximumSize(new Dimension(
+				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
+
+		getContentPane().setLayout(new GridBagLayout());
+		
+		addItem(lableName, 0, 0);
+		addItem(nameText, 1, 0);
+		addItem(textX, 0, 1);
+		addItem(spinX, 1, 1);
+		addItem(cancelButton, 0, 2);
+		addItem(okButton, 1, 2);
+
+		okButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+                double s = ((Number)spinX.getValue()).doubleValue()/100;
+                pl.setScale(s);
+                ((PositionableJComponent)pl)._editor.setPaintScale(s);
+                textX.setText("Scale= " + pl.getScale()*100);
+                dispose();
+			}
+		});
+		cancelButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
                 dispose();
 			}
 		});

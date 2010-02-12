@@ -35,7 +35,7 @@ public class ToolTip {
         _ty = y;
         _tFont = new Font("Serif", Font.PLAIN, 11);
         _fontColor = Color.black;
-        _backgroundColor = new Color(255, 250, 170);
+        _backgroundColor = new Color(255, 250, 200);
         _borderColor = Color.blue;
     }
 
@@ -105,20 +105,20 @@ public class ToolTip {
     }
 
 
-    public void paint(Graphics2D g2d) {
+    public void paint(Graphics2D g2d, double scale) {
         Color color = g2d.getColor();
         Font font = g2d.getFont();
         TextLayout tl = new TextLayout(_tip, _tFont, g2d.getFontRenderContext());
         Rectangle2D bds = tl.getBounds();
         bds.setRect(bds.getX()+_tx-bds.getWidth()/2-9, 
-                    _ty-bds.getHeight()-9, 
+                    (_ty/scale)-bds.getHeight()-9, 
                     bds.getWidth()+9, bds.getHeight()+9);
         g2d.setColor(_backgroundColor);
         g2d.fill(bds);
         g2d.setColor(_borderColor);
         g2d.draw(bds);
         g2d.setColor(_fontColor);
-        tl.draw(g2d, (float)(_tx-bds.getWidth()/2), (float)(_ty-4));
+        tl.draw(g2d, (float)(_tx-bds.getWidth()/2), (float)(_ty/scale-4));
         g2d.setColor(color);
         g2d.setFont(font);
     }
