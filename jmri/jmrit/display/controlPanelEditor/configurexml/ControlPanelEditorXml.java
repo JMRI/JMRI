@@ -16,7 +16,7 @@ import org.jdom.*;
  * Handle configuration for {@link ControlPanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
@@ -45,6 +45,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("editable", ""+(p.isEditable()?"yes":"no"));
         panel.setAttribute("positionable", ""+(p.allPositionable()?"yes":"no"));
         panel.setAttribute("showcoordinates", ""+(p.showCoordinates()?"yes":"no"));
+        panel.setAttribute("showtooltips", ""+(p.showTooltip()?"yes":"no"));
         panel.setAttribute("controlling", ""+(p.allControlling()?"yes":"no"));
         panel.setAttribute("hide", p.isVisible()?"no":"yes");
         panel.setAttribute("panelmenu", frame.getJMenuBar().isVisible()?"yes":"no");
@@ -152,13 +153,18 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         panel.setShowCoordinates(value);
 
         value = true;
+        if ((a = element.getAttribute("showtooltips"))!=null && a.getValue().equals("no"))
+            value = false;
+        panel.setAllShowTooltip(value);
+
+        value = true;
         if ((a = element.getAttribute("controlling"))!=null && a.getValue().equals("no"))
             value = false;
         panel.setAllControlling(value);
 
-        boolean hide = false;
+        value = false;
         if ((a = element.getAttribute("hide"))!=null && a.getValue().equals("yes"))
-            hide = true;
+            value = true;
         panel.setShowHidden(value);
 
         value = true;
@@ -173,8 +179,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
         // display the results, with the editor in back
         panel.pack();
-
-        if (!hide) panel.setVisible(true);    // show the editor if wanted
 
         // we don't pack the target frame here, because size was specified
         // TODO: Work out why, when calling this method, panel size is increased

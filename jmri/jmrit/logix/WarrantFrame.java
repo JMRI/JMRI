@@ -1575,9 +1575,9 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             bName = _warrant.getCurrentBlockOrder().getBlock().getDisplayName();
         }
         _throttleCommands.add(new ThrottleSetting(time, cmd, value, bName));
+        _commandModel.fireTableDataChanged();
 
         scrollCommandTable(_commandModel.getRowCount());
-        _commandModel.fireTableDataChanged();
     }
 
     protected void scrollCommandTable(int row) {

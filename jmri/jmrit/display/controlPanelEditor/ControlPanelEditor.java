@@ -15,12 +15,7 @@ import jmri.util.JmriJFrame;
 
 import jmri.jmrit.display.*;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -33,7 +28,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import jmri.jmrit.display.Editor;
-import javax.swing.BoxLayout;
 import javax.swing.*;
 
 import java.util.ArrayList;
@@ -76,24 +70,28 @@ import java.util.ArrayList;
  * 
  */
 
-public class ControlPanelEditor extends Editor implements ItemListener {
+public class ControlPanelEditor extends Editor {
 
     public boolean _debug;
+    private JMenuBar _menuBar;
+    private JMenu _editMenu;
+    private JMenu _fileMenu;
+    private JMenu _optionMenu;
+    private JMenu _iconMenu;
+    private JMenu _zoomMenu;
+    private JMenu _markerMenu;
+    private JMenu _warrantMenu;
 
-    JTextField nextX = new JTextField(rb.getString("DefaultX"),4);
-    JTextField nextY = new JTextField(rb.getString("DefaultY"),4);
-    JTextField _panelNameBox = new JTextField(20);
-
-    JCheckBox editableBox = new JCheckBox(rb.getString("CheckBoxEditable"));
-    JCheckBox positionableBox = new JCheckBox(rb.getString("CheckBoxPositionable"));
-    JCheckBox controllingBox = new JCheckBox(rb.getString("CheckBoxControlling"));
-    JCheckBox showCoordinatesBox = new JCheckBox(rb.getString("CheckBoxShowCoordinates"));
-    JCheckBox hiddenBox = new JCheckBox(rb.getString("CheckBoxHidden"));
-    JCheckBox menuBox = new JCheckBox(rb.getString("CheckBoxMenuBar"));
-    JLabel scrollableLabel = new JLabel(rb.getString("ComboBoxScrollable"));
-    JComboBox scrollableComboBox = new JComboBox();
-
-    JComboBox _addIconBox;
+    private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(rb.getString("CheckBoxEditable"));
+    private JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(rb.getString("CheckBoxPositionable"));
+    private JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(rb.getString("CheckBoxControlling"));
+    private JCheckBoxMenuItem showCoordinatesBox = new JCheckBoxMenuItem(rb.getString("CheckBoxShowCoordinates"));
+    private JCheckBoxMenuItem showTooltipBox = new JCheckBoxMenuItem(rb.getString("CheckBoxShowTooltips"));
+    private JCheckBoxMenuItem hiddenBox = new JCheckBoxMenuItem(rb.getString("CheckBoxHidden"));
+    private JRadioButtonMenuItem scrollBoth = new JRadioButtonMenuItem(rb.getString("ScrollBoth"));
+    private JRadioButtonMenuItem scrollNone = new JRadioButtonMenuItem(rb.getString("ScrollNone"));
+    private JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(rb.getString("ScrollHorizontal"));
+    private JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(rb.getString("ScrollVertical"));
 
     public ControlPanelEditor(String name) {
         super(name);
@@ -101,30 +99,194 @@ public class ControlPanelEditor extends Editor implements ItemListener {
         java.awt.Container contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
-        // common items
-        JPanel common = new JPanel();
-        common.setLayout(new FlowLayout());
-        common.add(new JLabel(" x:"));
-        common.add(nextX);
-        common.add(new JLabel(" y:"));
-        common.add(nextY);
-        contentPane.add(common);
-        setAllEditable(true);
-        setShowHidden(true);
-        super.setTargetPanel(null, makeFrame(name));
+        // make menus
+        _menuBar = new JMenuBar();
+        makeIconMenu();
+        makeZoomMenu();
+        makeOptionMenu();
+        makeFileMenu();
+
+        // add menus used for both edit mode and user mode
+        _markerMenu = new JMenu(rb.getString("MenuMarker"));
+        _menuBar.add(_markerMenu);
+        _markerMenu.add(new AbstractAction(rb.getString("AddLoco")){
+        	public void actionPerformed(ActionEvent e) {
+        		locoMarkerFromInput();
+            }
+        });
+        _markerMenu.add(new AbstractAction(rb.getString("AddLocoRoster")){
+        	public void actionPerformed(ActionEvent e) {
+        		locoMarkerFromRoster();
+            }
+        });
+        _markerMenu.add(new AbstractAction(rb.getString("RemoveMarkers")){
+        	public void actionPerformed(ActionEvent e) {
+        		removeMarkers();
+            }
+        });
+
+        _menuBar.add(jmri.jmrit.logix.WarrantTableAction.makeWarrantMenu());
+
+        setJMenuBar(_menuBar);
+        addHelpMenu("package.jmri.jmrit.display.ControlPanelEditor", true);
+
+        super.setTargetPanel(null, null);
         super.setTargetPanelSize(300, 300);
         // set scrollbar initial state
         setScroll(SCROLL_BOTH);
+        scrollBoth.setSelected(true);
+    }
 
-        // add menu - not using PanelMenu, because it now
-        // has other stuff in it?
-        JMenuBar menuBar = new JMenuBar();
-        JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
-        menuBar.add(fileMenu);
-        fileMenu.add(new jmri.jmrit.display.NewPanelAction(rb.getString("MenuItemNew")));
-        fileMenu.add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStore")));
+    private void makeIconMenu() {
+        _iconMenu = new JMenu(rb.getString("MenuIcon"));
+        _menuBar.add(_iconMenu, 0);
+
+        JMenuItem addItem = new JMenuItem(rb.getString("TextLabelEditor"));
+        _iconMenu.add(addItem);
+        addItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					addTextEditor();
+                }
+            });
+
+        ActionListener openEditorAction = new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                String name = e.getActionCommand();
+                openEditorFrame(name);
+            }
+        };
+        for (int i = 0; i < ICON_EDITORS.length; i++) {
+            JMenuItem mi = new JMenuItem(rb.getString(ICON_EDITORS[i]));
+            mi.setActionCommand(ICON_EDITORS[i]);
+            mi.addActionListener(openEditorAction);
+            _iconMenu.add(mi);                                                  
+        }
+    }
+
+    private void makeZoomMenu() {
+        _zoomMenu = new JMenu(rb.getString("MenuZoom"));
+        _menuBar.add(_zoomMenu, 0);
+        JMenuItem addItem = new JMenuItem(rb.getString("NoZoom"));
+        _zoomMenu.add(addItem);
+        addItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    zoomRestore();
+                }
+            });
+
+        addItem = new JMenuItem(rb.getString("Zoom"));
+        _zoomMenu.add(addItem);
+        PositionableJComponent z = new PositionableJComponent(this);
+        z.setScale(getPaintScale());
+        addItem.addActionListener(CoordinateEdit.getZoomEditAction(z));
+
+        addItem = new JMenuItem(rb.getString("ZoomFit"));
+        _zoomMenu.add(addItem);
+        addItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					zoomToFit();
+                }
+            });
+    }
+    private void makeOptionMenu() {
+        _optionMenu = new JMenu(rb.getString("MenuOption"));
+        _menuBar.add(_optionMenu, 0);
+        // Editable
+        _optionMenu.add(editableBox);
+        editableBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    setAllEditable(editableBox.isSelected());
+                }
+            });
+        editableBox.setSelected(isEditable());
+        // positionable item
+        _optionMenu.add(positionableBox);
+        positionableBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    setAllPositionable(positionableBox.isSelected());
+                }
+            });                    
+        positionableBox.setSelected(allPositionable());
+        // controlable item
+        _optionMenu.add(controllingBox);
+        controllingBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    setAllControlling(controllingBox.isSelected());
+                }
+            });                    
+        controllingBox.setSelected(allControlling());
+        // hidden item
+        _optionMenu.add(hiddenBox);
+        hiddenBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    setShowHidden(hiddenBox.isSelected());
+                }
+            });                    
+        hiddenBox.setSelected(showHidden());
+
+        _optionMenu.add(showCoordinatesBox);
+        showCoordinatesBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setShowCoordinates(showCoordinatesBox.isSelected());
+            }
+        });
+        showCoordinatesBox.setSelected(showCoordinates());
+
+        _optionMenu.add(showTooltipBox);
+        showTooltipBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setAllShowTooltip(showTooltipBox.isSelected());
+            }
+        });
+        showTooltipBox.setSelected(showTooltip());
+
+		// Show/Hide Scroll Bars
+        JMenu scrollMenu = new JMenu(rb.getString("ComboBoxScrollable"));
+        _optionMenu.add(scrollMenu);
+        ButtonGroup scrollGroup = new ButtonGroup();
+        scrollGroup.add(scrollBoth);
+        scrollMenu.add(scrollBoth);
+        scrollBoth.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    setScroll(SCROLL_BOTH);
+                    repaint();
+                }
+            });
+        scrollGroup.add(scrollNone);
+        scrollMenu.add(scrollNone);
+        scrollNone.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    setScroll(SCROLL_NONE);
+                    repaint();
+                }
+            });
+        scrollGroup.add(scrollHorizontal);
+        scrollMenu.add(scrollHorizontal);
+        scrollHorizontal.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    setScroll(SCROLL_HORIZONTAL);
+                    repaint();
+                }
+            });
+        scrollGroup.add(scrollVertical);
+        scrollMenu.add(scrollVertical);
+        scrollVertical.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    setScroll(SCROLL_VERTICAL);
+                    repaint();
+                }
+            });
+    }
+    
+    private void makeFileMenu() {
+        _fileMenu = new JMenu(rb.getString("MenuFile"));
+        _menuBar.add(_fileMenu, 0);
+        _fileMenu.add(new jmri.jmrit.display.NewPanelAction(rb.getString("MenuItemNew")));
+        _fileMenu.add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStore")));
         JMenuItem storeIndexItem = new JMenuItem(rb.getString("MIStoreImageIndex"));
-        fileMenu.add(storeIndexItem);
+        _fileMenu.add(storeIndexItem);
         storeIndexItem.addActionListener(new ActionListener() {
                 ControlPanelEditor panelEd;
                 public void actionPerformed(ActionEvent event) {
@@ -148,10 +310,10 @@ public class ControlPanelEditor extends Editor implements ItemListener {
                     return this;
                 }
             }.init(this));
-        fileMenu.add(editItem);
-        fileMenu.addSeparator();
+        _fileMenu.add(editItem);
+        _fileMenu.addSeparator();
         JMenuItem deleteItem = new JMenuItem(rb.getString("DeletePanel"));
-        fileMenu.add(deleteItem);
+        _fileMenu.add(deleteItem);
         deleteItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
 					if (deletePanel() ) {
@@ -159,11 +321,146 @@ public class ControlPanelEditor extends Editor implements ItemListener {
                     }
                 }
             });
+        _fileMenu.addSeparator();
+        editItem = new JMenuItem(rb.getString("CloseEditor"));
+        _fileMenu.add(editItem);
+        editItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    setEditable(false);
+                }
+            });
+    }
 
-        setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.display.ControlPanelEditor", true);
+    public void setEditable(boolean edit) {
+        if (edit) {
+            _menuBar.remove(_editMenu);
+            if (_iconMenu==null) {
+                makeIconMenu();
+            } else {
+                _menuBar.add(_iconMenu, 0);
+            }
+            if (_zoomMenu==null) {
+                makeZoomMenu();
+            } else {
+                _menuBar.add(_zoomMenu, 0);
+            }
+            if (_optionMenu==null) {
+                makeOptionMenu();
+            } else {
+                _menuBar.add(_optionMenu, 0);
+            }
+            if (_fileMenu==null) {
+                makeFileMenu();
+            } else {
+                _menuBar.add(_fileMenu, 0);
+            }
+        } else {
+            _menuBar.remove(_fileMenu);
+            _menuBar.remove(_optionMenu);
+            _menuBar.remove(_zoomMenu);
+            _menuBar.remove(_iconMenu);
+            if (_editMenu==null) {
+                _editMenu = new JMenu(rb.getString("MenuEdit"));
+                _editMenu.add(new AbstractAction(rb.getString("OpenEditor")) {
+                        public void actionPerformed(ActionEvent e) {
+                            setEditable(true);
+                        }
+                });
+            }
+            _menuBar.add(_editMenu, 0);
+        }
+        setAllEditable(edit);
+        _menuBar.validate();
+    }
 
-        // allow naming the panel
+    private void zoomRestore() {
+        List <Positionable> contents = getContents();
+        for (int i=0; i<contents.size(); i++) {
+            Positionable p = contents.get(i);
+            p.setLocation(p.getX()+_fitX, p.getY()+_fitY);
+        }
+        setPaintScale(1.0);
+    }
+
+    int _fitX = 0;
+    int _fitY = 0;
+    private void zoomToFit() {
+        double minX = 1000.0;
+        double maxX = 0.0;
+        double minY = 1000.0;
+        double maxY = 0.0;
+        List <Positionable> contents = getContents();
+        for (int i=0; i<contents.size(); i++) {
+            Positionable p = contents.get(i);
+            minX = Math.min(p.getX(), minX); 
+            minY = Math.min(p.getY(), minY);
+            maxX = Math.max(p.getX()+p.getWidth(), maxX);
+            maxY = Math.max(p.getY()+p.getHeight(), maxY);
+        }
+        _fitX = (int)Math.floor(minX);
+        _fitY = (int)Math.floor(minY);
+
+        JFrame frame = getTargetFrame();
+        Container contentPane = getTargetFrame().getContentPane();
+        Dimension dim = contentPane.getSize();
+        Dimension d = getTargetPanel().getSize();
+        getTargetPanel().setSize((int)Math.ceil(maxX-minX), (int)Math.ceil(maxY-minY));
+
+        JScrollPane scrollPane = getPanelScrollPane();
+        scrollPane.getHorizontalScrollBar().setValue(0);
+        scrollPane.getVerticalScrollBar().setValue(0);
+        JViewport viewPort = scrollPane.getViewport();
+        Dimension dv = viewPort.getExtentSize();
+
+        int dX = frame.getWidth()-dv.width;
+        int dY = frame.getHeight()-dv.height;
+        if (_debug) log.debug("zoomToFit: layoutWidth= "+(maxX-minX)+", layoutHeight= "+(maxY-minY)+
+                              "\n\tframeWidth= "+frame.getWidth()+", frameHeight= "+frame.getHeight()+
+                              ", viewWidth= "+dv.width+", viewHeight= "+dv.height+
+                              "\n\tconWidth= "+dim.width+", conHeight= "+dim.height+
+                              ", panelWidth= "+d.width+", panelHeight= "+d.height);
+        double ratioX = (maxX-minX)/dv.width;
+        double ratioY = (maxY-minY)/dv.height;
+        double ratio = 1.0;
+        if (ratioX<ratioY) {
+            if (ratioX>1.0) {
+                ratio = ratioX;
+            } else {
+                ratio = ratioY;
+            }
+        } else {
+            if (ratioY<1.0) {
+                ratio = ratioX;
+            } else {
+                ratio = ratioY;
+            }
+        }
+        _fitX = (int)Math.floor(minX);
+        _fitY = (int)Math.floor(minY);
+        for (int i=0; i<contents.size(); i++) {
+            Positionable p = contents.get(i);
+            p.setLocation(p.getX()-_fitX, p.getY()-_fitY);
+        }
+        setScroll(SCROLL_NONE);
+        scrollNone.setSelected(true);
+        setPaintScale(ratio);
+        getTargetPanel().setSize((int)Math.ceil(maxX), (int)Math.ceil(maxY));
+        frame.setSize((int)Math.ceil((maxX-minX)/ratio)+dX, (int)Math.ceil((maxY-minY)/ratio)+dY);
+        if (_debug) log.debug("zoomToFit: ratio= "+ratio+", w= "+(maxX-minX)+", h= "+(maxY-minY)+ 
+                              ", frameWidth= "+frame.getWidth()+", frameHeight= "+frame.getHeight());
+    }
+
+    private void openEditorFrame(String name) {
+        JFrameItem frame = super.getIconFrame(name);
+        if (frame != null) {
+            frame.getEditor().reset();
+            frame.setVisible(true);
+        } else {
+            log.error("Unable to open Icon Editor \""+name+"\"");
+        }
+    }
+
+        /* allow naming the panel
         {
             JPanel namep = new JPanel();
             namep.setLayout(new FlowLayout());
@@ -203,300 +500,34 @@ public class ControlPanelEditor extends Editor implements ItemListener {
             namep.add(boxPanel);
             contentPane.add(namep);
         }
-        // Selection of the type of entity for the icon to represent is done from a combobox
-        _addIconBox = new JComboBox();
-        _addIconBox.setMinimumSize(new Dimension(75,75));
-        _addIconBox.setMaximumSize(new Dimension(200,200));
-        _addIconBox.addItem(new ComboBoxItem("TextLabelEditor"));
-        _addIconBox.addItem(new ComboBoxItem("RightTOEditor"));
-        _addIconBox.addItem(new ComboBoxItem("LeftTOEditor"));
-        _addIconBox.addItem(new ComboBoxItem("SensorEditor"));
-        _addIconBox.addItem(new ComboBoxItem("SignalHeadEditor"));
-        _addIconBox.addItem(new ComboBoxItem("SignalMastEditor"));
-        _addIconBox.addItem(new ComboBoxItem("MemoryEditor"));
-        _addIconBox.addItem(new ComboBoxItem("ReporterEditor"));
-        _addIconBox.addItem(new ComboBoxItem("LightEditor"));
-        _addIconBox.addItem(new ComboBoxItem("BackgroundEditor"));
-        _addIconBox.addItem(new ComboBoxItem("MultiSensorEditor"));
-        _addIconBox.addItem(new ComboBoxItem("AddRPSreporter"));
-        _addIconBox.addItem(new ComboBoxItem("AddFastClock"));
-        _addIconBox.addItem(new ComboBoxItem("IconEditor"));
-        _addIconBox.setSelectedIndex(-1);
-        _addIconBox.addItemListener(this);  // must be AFTER no selection is set
-        JPanel p1 = new JPanel();
-        p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
-        JPanel p2 = new JPanel();
-        p2.setLayout(new FlowLayout());
-        p2.add(new JLabel(rb.getString("selectTypeIcon")));
-        p1.add(p2);
-        p1.add(_addIconBox);
-        contentPane.add(p1);
-
-        // Build resource catalog and load CatalogTree.xml now
-        jmri.jmrit.catalog.CatalogPanel catalog = new jmri.jmrit.catalog.CatalogPanel();
-        catalog.createNewBranch("IFJAR", "Program Directory", "resources");
-
-        // edit, position, control controls
-        {
-            // edit mode item
-            contentPane.add(editableBox);
-            editableBox.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent event) {
-                        setAllEditable(editableBox.isSelected());
-                    }
-                });
-            editableBox.setSelected(true);
-            // positionable item
-            contentPane.add(positionableBox);
-            positionableBox.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent event) {
-                        setAllPositionable(positionableBox.isSelected());
-                    }
-                });                    
-            positionableBox.setSelected(true);
-            // controlable item
-            contentPane.add(controllingBox);
-            controllingBox.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent event) {
-                        setAllControlling(controllingBox.isSelected());
-                    }
-                });                    
-            controllingBox.setSelected(true);
-            // hidden item
-            contentPane.add(hiddenBox);
-            hiddenBox.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent event) {
-                        setShowHidden(hiddenBox.isSelected());
-                    }
-                });                    
-            hiddenBox.setSelected(true);
-
-            contentPane.add(showCoordinatesBox);
-            showCoordinatesBox.setSelected(false);
-            showCoordinatesBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                	setShowCoordinates(showCoordinatesBox.isSelected());
-                }
-            });
-
-            contentPane.add(menuBox);
-            menuBox.setSelected(true);
-            menuBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    setPanelMenu(menuBox.isSelected());
-                }
-            });
-
-            // Show/Hide Scroll Bars
-            JPanel scrollPanel = new JPanel();
-            scrollPanel.setLayout(new FlowLayout());
-            scrollableLabel.setLabelFor(scrollableComboBox);
-            scrollPanel.add(scrollableLabel);
-            scrollPanel.add(scrollableComboBox);
-            contentPane.add(scrollPanel);
-            scrollableComboBox.addItem(rb.getString("ScrollNone"));
-            scrollableComboBox.addItem(rb.getString("ScrollBoth"));
-            scrollableComboBox.addItem(rb.getString("ScrollHorizontal"));
-            scrollableComboBox.addItem(rb.getString("ScrollVertical"));
-            scrollableComboBox.setSelectedIndex(SCROLL_BOTH);
-            scrollableComboBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    setScroll(scrollableComboBox.getSelectedIndex());
-                }
-            });
-       }
-
-        // register the resulting panel for later configuration
-        InstanceManager.configureManagerInstance().registerUser(this);
-
-        // move this editor panel off the panel's position
-        setLocation(250,0);
-
-        // when this window closes, set contents of target uneditable
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            ControlPanelEditor panelEd;
-				public void windowClosing(java.awt.event.WindowEvent e) {
-                    setAllPositionable(false);
-                    jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(panelEd);
-                }
-                java.awt.event.WindowAdapter init(ControlPanelEditor pe) {
-                    panelEd = pe;
-                    return this;
-                }
-            }.init(this));
-        // and don't destroy the window
-        setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
-
-        if (_debug) log.debug("ControlPanelEditor ctor done.");
-    }  // end ctor
 
     /**
      * After construction, initialize all the widgets to their saved config settings.
      */
     public void initView() {
-        _panelNameBox.setText(((JFrame)getTargetPanel().getTopLevelAncestor()).getTitle());
         editableBox.setSelected(isEditable());
         positionableBox.setSelected(allPositionable());
         controllingBox.setSelected(allControlling());
         showCoordinatesBox.setSelected(showCoordinates());
+        showTooltipBox.setSelected(showTooltip());
         hiddenBox.setSelected(showHidden());
-        menuBox.setSelected(getTargetFrame().getJMenuBar().isVisible());
-    }
-
-    class ComboBoxItem {
-        String name;
-        ComboBoxItem(String n) {
-            name = n;
-        }
-        String getName() {
-            return name;
-        }
-        public String toString() {
-            return rb.getString(name);
-        }
-    }
-
-    int locationX = 0;
-    int locationY = 0;
-    static final int DELTA = 20; 
-
-    /*
-    *  itemListener for JComboBox
-    */
-    public void itemStateChanged(ItemEvent e) {
-        if (e.getStateChange() == ItemEvent.SELECTED) {
-            ComboBoxItem item = (ComboBoxItem)e.getItem();
-            JFrameItem frame = super.getIconFrame(item.getName());
-            if (frame != null) {
-                frame.getEditor().reset();
-                frame.setVisible(true);
-                _addIconBox.setSelectedIndex(-1);
-                return;
-            }
-            int which = _addIconBox.getSelectedIndex();
-            _addIconBox.setSelectedIndex(-1);
-            switch (which) {
-                case 0:
-                    addTextEditor();
-                    // no frame (uses JOptionPane)
-                    return;
-                case 1:
-                    addRightTOEditor();
-                    break;
-                case 2:
-                    addLeftTOEditor();
-                    break;
-                case 3:
-                    addSensorEditor();
-                    break;
-                case 4:
-                    addSignalHeadEditor();
-                    break;
-                case 5:
-                    addSignalMastEditor();
-                    break;
-                case 6:
-                    addMemoryEditor();
-                    break;
-                case 7:
-                    addReporterEditor();
-                    break;
-                case 8:
-                    addLightEditor();
-                    break;
-                case 9:
-                    addBackgroundEditor();
-                    break;
-                case 10:
-                    addMultiSensorEditor();
-                    break;
-                case 11:
-                    addRpsReporter();
-                    return;
-                case 12:
-                    addClock();
-                    return;
-                case 13:
-                    addIconEditor();
-                    break;
-                default:
-                    return;
-            }
-            // frame added in the above switch 
-            frame = super.getIconFrame(item.getName());
-            frame.setLocation(locationX, locationY);
-            locationX += DELTA;
-            locationY += DELTA;
-            frame.setVisible(true);
-            _addIconBox.setSelectedIndex(-1);
+        switch (_scrollState) {
+            case SCROLL_NONE:
+                scrollNone.setSelected(true);
+                break;
+            case SCROLL_BOTH:
+                scrollBoth.setSelected(true);
+                break;
+            case SCROLL_HORIZONTAL:
+                scrollHorizontal.setSelected(true);
+                break;
+            case SCROLL_VERTICAL:
+                scrollVertical.setSelected(true);
+                break;
         }
     }
 
-   /**
-     * Handle close of editor window.
-     * <P>
-     * Overload/override method in JmriJFrame parent, 
-     * which by default is permanently closing the window.
-     * Here, we just want to make it invisible, so we
-     * don't dispose it (yet).
-     **/
-    public void windowClosing(java.awt.event.WindowEvent e) {
-        setVisible(false);
-    }
 
-    /**
-     * Create sequence of panels, etc, for layout:
-     * JFrame contains its ContentPane
-     *    which contains a JPanel with BoxLayout (p1)
-     *       which contains a JScollPane (js)
-     *            which contains the targetPane
-     *
-     */
-    public JmriJFrame makeFrame(String name) {
-        JmriJFrame targetFrame = new JmriJFrame(name);
-
-
-        //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
-        JMenuBar menuBar = new JMenuBar();
-        JMenu editMenu = new JMenu(rb.getString("MenuEdit"));
-        menuBar.add(editMenu);
-        editMenu.add(new AbstractAction(rb.getString("OpenEditor")) {
-                public void actionPerformed(ActionEvent e) {
-                    setVisible(true);
-                }
-            });
-		editMenu.addSeparator();
-        editMenu.add(new AbstractAction(rb.getString("DeletePanel")){
-                public void actionPerformed(ActionEvent e) {
-                    if (deletePanel()) {
-                        dispose();
-                    }
-                }
-            });
-        targetFrame.setJMenuBar(menuBar);
-        // add maker menu
-        JMenu markerMenu = new JMenu(rb.getString("MenuMarker"));
-        menuBar.add(markerMenu);
-        markerMenu.add(new AbstractAction(rb.getString("AddLoco")){
-        	public void actionPerformed(ActionEvent e) {
-        		locoMarkerFromInput();
-            }
-        });
-        markerMenu.add(new AbstractAction(rb.getString("AddLocoRoster")){
-        	public void actionPerformed(ActionEvent e) {
-        		locoMarkerFromRoster();
-            }
-        });
-        markerMenu.add(new AbstractAction(rb.getString("RemoveMarkers")){
-        	public void actionPerformed(ActionEvent e) {
-        		removeMarkers();
-            }
-        });
-         
-        targetFrame.addHelpMenu("package.jmri.jmrit.display.PanelTarget", true);
-        return targetFrame;
-
-    }
 
     /*************** implementation of Abstract Editor methods ***********/
     /**
@@ -504,6 +535,7 @@ public class ControlPanelEditor extends Editor implements ItemListener {
 	 *   time.  Deletion must be accomplished via the Delete this panel menu item.
      */
     protected void targetWindowClosingEvent(java.awt.event.WindowEvent e) {
+        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(this);
         targetWindowClosing(true);
     }
 
@@ -514,11 +546,26 @@ public class ControlPanelEditor extends Editor implements ItemListener {
      * Set an object's location when it is created.
      */
     public void setNextLocation(Positionable obj) {
-        int x = Integer.parseInt(nextX.getText());
-        int y = Integer.parseInt(nextY.getText());
-        obj.setLocation(x,y);
+        try {
+            Point pt = MouseInfo.getPointerInfo().getLocation();
+            if (_debug) log.debug("mouse pt: ("+pt.x+", "+pt.y+")");
+            SwingUtilities.convertPointFromScreen(pt, getTargetPanel());
+            if (_debug) log.debug("converted pt: ("+pt.x+", "+pt.y+")");
+            obj.setLocation(0, 0);
+
+        } catch (Exception ex) {
+            obj.setLocation(0, 0);
+        }
     }    
 
+    public void mouseEntered(MouseEvent event) {
+        //if (_debug) log.debug("mouseEntered pt: ("+event.getX()+", "+event.getY()+")");
+    }
+
+    public void mouseExited(MouseEvent event) {
+        //if (_debug) log.debug("mouseExited pt: ("+event.getX()+", "+event.getY()+")");
+        setToolTip(null);
+    }
     /**
     *  Create popup for a Positionable object
     * Popup items common to all positionable objects are done before
@@ -583,20 +630,6 @@ public class ControlPanelEditor extends Editor implements ItemListener {
             p.showPopUp(popup);
         }
         popup.show((Component)p, p.getWidth()/2, p.getHeight()/2);
-    }
-
-    /**
-    * override
-    */
-    public void showToolTip(Positionable selection) {
-        if (selection.getDisplayLevel()>BKG) {
-            ToolTip tip = selection.getTooltip();
-            tip.setLocation(selection);
-            tip.setText(selection.getNameString());
-            setToolTip(tip);
-        } else {
-            setToolTip(null);
-        }
     }
 
     // initialize logging
