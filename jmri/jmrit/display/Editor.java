@@ -1972,8 +1972,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         } else {
             _currentSelection = null;
         }
-        if (event.isPopupTrigger() && _currentSelection != null && !_dragging &&
-                        isEditableLevel(_currentSelection.getDisplayLevel())) {
+        if (event.isPopupTrigger() && _currentSelection != null && !_dragging) {
             showPopUp(_currentSelection, event);
         } else {
             if (_currentSelection != null && !_dragging) {
