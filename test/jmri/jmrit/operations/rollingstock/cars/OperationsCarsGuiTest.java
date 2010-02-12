@@ -9,10 +9,13 @@ import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import junit.extensions.jfcunit.*;
+import junit.extensions.jfcunit.finder.*;
+import junit.extensions.jfcunit.eventdata.*;
 
-import java.awt.Window;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 import java.util.List;
 
@@ -20,9 +23,9 @@ import java.util.List;
  * Tests for the Operations Cars GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
-public class OperationsCarsGuiTest extends TestCase {
+public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
 	synchronized void releaseThread() {
 		try {
@@ -34,7 +37,7 @@ public class OperationsCarsGuiTest extends TestCase {
 		}
 	}
 	
-	public void testCarsTableFrame(){
+	public void testCarsTableFrame() throws Exception {
 		// remove previous cars
 		CarManager.instance().dispose();
 		// add Owner1 and Owner2
@@ -118,7 +121,8 @@ public class OperationsCarsGuiTest extends TestCase {
 		Assert.assertEquals("5th car in sort by number list", c5.getId(), cars.get(4));
 		
 		// now sort by built date
-		ctf.sortByBuilt.doClick();
+		//ctf.sortByBuilt.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByBuilt ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by built list", c5.getId(), cars.get(0));
 		Assert.assertEquals("2nd car in sort by built list", c4.getId(), cars.get(1));
@@ -127,7 +131,8 @@ public class OperationsCarsGuiTest extends TestCase {
 		Assert.assertEquals("5th car in sort by built list", c1.getId(), cars.get(4));
 		
 		// now sort by color
-		ctf.sortByColor.doClick();
+		//ctf.sortByColor.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByColor ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by color list", c4.getId(), cars.get(0));
 		Assert.assertEquals("2nd car in sort by color list", c2.getId(), cars.get(1));
@@ -135,13 +140,16 @@ public class OperationsCarsGuiTest extends TestCase {
 		Assert.assertEquals("4th car in sort by color list", c1.getId(), cars.get(3));
 		Assert.assertEquals("5th car in sort by color list", c3.getId(), cars.get(4));
 
-		ctf.sortByDestination.doClick();
+		//ctf.sortByDestination.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByDestination ) );
 		//TODO add destinations
-		ctf.sortByKernel.doClick();
+		//ctf.sortByKernel.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByKernel ) );
 		//TODO add kernels
 		
 		// now sort by load
-		ctf.sortByLoad.doClick();
+		//ctf.sortByLoad.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByLoad ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by load list", c2.getId(), cars.get(0));
 		Assert.assertEquals("2nd car in sort by load list", c4.getId(), cars.get(1));
@@ -149,11 +157,13 @@ public class OperationsCarsGuiTest extends TestCase {
 		Assert.assertEquals("4th car in sort by load list", c3.getId(), cars.get(3));
 		Assert.assertEquals("5th car in sort by load list", c5.getId(), cars.get(4));	
 		
-		ctf.sortByLocation.doClick();
+		//ctf.sortByLocation.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByLocation ) );
 		//TODO add locations
 		
 		// now sort by moves
-		ctf.sortByMoves.doClick();
+		//ctf.sortByMoves.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByMoves ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by move list", c5.getId(), cars.get(0));
 		Assert.assertEquals("2nd car in sort by move list", c4.getId(), cars.get(1));
@@ -162,7 +172,8 @@ public class OperationsCarsGuiTest extends TestCase {
 		Assert.assertEquals("5th car in sort by move list", c1.getId(), cars.get(4));
 
 		// test sort by number again
-		ctf.sortByNumber.doClick();
+		//ctf.sortByNumber.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByNumber ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by number list 2", c1.getId(), cars.get(0));
 		Assert.assertEquals("2nd car in sort by number list 2", c4.getId(), cars.get(1));
@@ -171,7 +182,8 @@ public class OperationsCarsGuiTest extends TestCase {
 		Assert.assertEquals("5th car in sort by number list 2", c5.getId(), cars.get(4));
 
 		// test sort by owner
-		ctf.sortByOwner.doClick();
+		//ctf.sortByOwner.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByOwner ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by owner list", c4.getId(), cars.get(0));
 		Assert.assertEquals("2nd car in sort by owner list", c3.getId(), cars.get(1));
@@ -180,7 +192,8 @@ public class OperationsCarsGuiTest extends TestCase {
 		Assert.assertEquals("5th car in sort by owner list", c1.getId(), cars.get(4));
 
 		// test sort by rfid
-		ctf.sortByRfid.doClick();
+		//ctf.sortByRfid.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByRfid ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by rfid list", c5.getId(), cars.get(0));
 		Assert.assertEquals("2nd car in sort by rfid list", c2.getId(), cars.get(1));
@@ -189,7 +202,8 @@ public class OperationsCarsGuiTest extends TestCase {
 		Assert.assertEquals("5th car in sort by rfid list", c3.getId(), cars.get(4));
 
 		// test sort by road
-		ctf.sortByRoad.doClick();
+		//ctf.sortByRoad.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByRoad ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by road list", c3.getId(), cars.get(0));
 		Assert.assertEquals("2nd car in sort by road list", c1.getId(), cars.get(1));
@@ -197,11 +211,13 @@ public class OperationsCarsGuiTest extends TestCase {
 		Assert.assertEquals("4th car in sort by road list", c4.getId(), cars.get(3));
 		Assert.assertEquals("5th car in sort by road list", c2.getId(), cars.get(4));
 
-		ctf.sortByTrain.doClick();
+		//ctf.sortByTrain.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByTrain ) );
 		//TODO add trains
 		
 		// test sort by type
-		ctf.sortByType.doClick();
+		//ctf.sortByType.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByType ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by type list", c2.getId(), cars.get(0));
 		Assert.assertEquals("2nd car in sort by type list", c1.getId(), cars.get(1));
@@ -211,17 +227,22 @@ public class OperationsCarsGuiTest extends TestCase {
 
 		// test find text field
 		ctf.findCarTextBox.setText("2");
-		ctf.findButton.doClick();
+		//ctf.findButton.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, ctf.findButton ) );
 		// table is sorted by type, cars with number 2 are in the first and last rows
 		Assert.assertEquals("find car by number 1st", 0, ctf.carsTable.getSelectedRow());
-		ctf.findButton.doClick();
+		//ctf.findButton.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, ctf.findButton ) );
 		Assert.assertEquals("find car by number 2nd", 4, ctf.carsTable.getSelectedRow());
 
 		// create the CarEditFrame
-		ctf.addButton.doClick();
+		//ctf.addButton.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, ctf.addButton ) );
 		
 	}
 
+	List<String> tempCars;
+	
 	public void testCarEditFrame(){	
 		CarEditFrame f = new CarEditFrame();
 		f.setTitle("Test Add Car Frame");
@@ -237,7 +258,8 @@ public class OperationsCarsGuiTest extends TestCase {
 		f.builtTextField.setText("1999");
 		f.ownerComboBox.setSelectedItem("Owner1");
 		f.commentTextField.setText("test car comment field");
-		f.saveButton.doClick();
+		//f.saveButton.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		
 		CarManager cManager = CarManager.instance();
 		Car c6 = cManager.getCarByRoadAndNumber("SP", "6");
@@ -256,23 +278,29 @@ public class OperationsCarsGuiTest extends TestCase {
 		Assert.assertFalse("no fred", c6.hasFred());
 		Assert.assertFalse("not hazardous", c6.isHazardous());
 		
-		f.cabooseCheckBox.doClick();
+		//f.cabooseCheckBox.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, f.cabooseCheckBox ) );
 		Assert.assertFalse("still not a caboose", c6.isCaboose());
-		f.saveButton.doClick();
+		//f.saveButton.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		Assert.assertTrue("now a caboose", c6.isCaboose());
 		Assert.assertFalse("not hazardous 2", c6.isHazardous());
 		
-		f.fredCheckBox.doClick();
+		//f.fredCheckBox.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, f.fredCheckBox ) );
 		Assert.assertTrue("still a caboose", c6.isCaboose());
 		Assert.assertFalse("still no fred", c6.hasFred());
-		f.saveButton.doClick();
+		//f.saveButton.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		Assert.assertFalse("no longer a caboose", c6.isCaboose());
 		Assert.assertTrue("now has a fred", c6.hasFred());
 		Assert.assertFalse("not hazardous 3", c6.isHazardous());
 		
-		f.hazardousCheckBox.doClick();
+		//f.hazardousCheckBox.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, f.hazardousCheckBox ) );
 		Assert.assertFalse("still not hazardous 3", c6.isHazardous());
-		f.saveButton.doClick();
+		//f.saveButton.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		Assert.assertFalse("still no longer a caboose", c6.isCaboose());
 		Assert.assertTrue("still has a fred", c6.hasFred());
 		Assert.assertTrue("now hazardous", c6.isHazardous());
@@ -306,7 +334,8 @@ public class OperationsCarsGuiTest extends TestCase {
 		Assert.assertFalse("car is not hazardous", f.hazardousCheckBox.isSelected());
 		
 		// test delete button
-		f.deleteButton.doClick();
+		//f.deleteButton.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteButton ) );
 		
 		// should have 5 cars now
 		Assert.assertEquals("number of cars", 5, cManager.getNumEntries());
@@ -316,11 +345,14 @@ public class OperationsCarsGuiTest extends TestCase {
 		CarAttributeEditFrame f = new CarAttributeEditFrame();
 		f.initComponents(CarEditFrame.COLOR);		
 		f.addTextBox.setText("Pink");
-		f.addButton.doClick();
+		//f.addButton.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
 		// new color should appear at start of list
 		Assert.assertEquals("new color","Pink",f.comboBox.getItemAt(0));
 		
-		f.deleteButton.doClick();
+		//f.deleteButton.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteButton ) );
+
 		// red is the first default color
 		Assert.assertEquals("old color","Red",f.comboBox.getItemAt(0));
 		
@@ -339,7 +371,8 @@ public class OperationsCarsGuiTest extends TestCase {
 		Assert.assertEquals("previous kernel 1","TwoCars", f.comboBox.getItemAt(1));
 		
 		f.addTextBox.setText("TestKernel");
-		f.addButton.doClick();
+		//f.addButton.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
 		// new kernel should appear at start of list after blank
 		Assert.assertEquals("new kernel","TestKernel", f.comboBox.getItemAt(1));
 		
@@ -350,7 +383,8 @@ public class OperationsCarsGuiTest extends TestCase {
 		
 		// now try and delete
 		f.comboBox.setSelectedItem("TestKernel");
-		f.deleteButton.doClick();
+		//f.deleteButton.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteButton ) );
 		// blank is the first default kernel
 		Assert.assertEquals("space 2","",f.comboBox.getItemAt(0));
 		Assert.assertEquals("previous kernel 2","TwoCars", f.comboBox.getItemAt(1));	
@@ -371,7 +405,8 @@ public class OperationsCarsGuiTest extends TestCase {
 		CarLoadEditFrame f = new CarLoadEditFrame();
 		f.initComponents("Boxcar");
 		f.addTextBox.setText("New Load");
-		f.addButton.doClick();
+		//f.addButton.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
 		// new load should appear at start of list
 		Assert.assertEquals("new color","New Load",f.comboBox.getItemAt(0));
 	}
@@ -390,38 +425,27 @@ public class OperationsCarsGuiTest extends TestCase {
 	// a way to press the okay button
 	private void testReplace(CarAttributeEditFrame f){
 		caef = f;
-		// test replace button
-		// the replace opens a dialog window to confirm the replace which 
-		// in turn stops the thread, so create a new thread to this this.
-		Runnable r  = new Runnable() {
-			public void run() {
-				caef.replaceButton.doClick();
-			}
-		};
+		//  (with JfcUnit, not pushing this off to another thread)
+	    // put replace button
+	    getHelper().enterClickAndLeave( new MouseEventData( OperationsCarsGuiTest.this, 
+				                                            caef.replaceButton ) );
+				                                            
+		// Locate resulting dialog box
+        java.util.List dialogList = new DialogFinder(null).findAll(f);
+        javax.swing.JDialog d = (javax.swing.JDialog) dialogList.get(0);
+        // Find the "Yes" button
+        AbstractButtonFinder finder = new AbstractButtonFinder("Yes" );
+        javax.swing.JButton button = ( javax.swing.JButton ) finder.find( d, 0);
+        Assert.assertNotNull("Yes button found", button);   
+        // Click "Yes" button
+        getHelper().enterClickAndLeave( new MouseEventData( this, button ) );
 		
-		Thread t = new Thread(r);
-		t.start();
-		
-		// need to wait for dialog to appear
-		Window windows[] = f.getOwnedWindows();
-		while(windows.length == 0){
-			Thread.yield();
-			windows = f.getOwnedWindows();
-		}
-		// There is only one dialog window so take the first
-		Window w = windows[0];
-		// need to wait for dialog window to be in focus
-		while(!w.isFocused()){
-			Thread.yield();
-		}
-	
-		w.setVisible(false);
-		w.dispose();
 	}
 	
 	// Ensure minimal setup for log4J
 	@Override
-	protected void setUp() {
+	protected void setUp() throws Exception {
+        super.setUp();
 		apps.tests.Log4JFixture.setUp();
 		
 		// Repoint OperationsXml to JUnitTest subdirectory
@@ -454,5 +478,8 @@ public class OperationsCarsGuiTest extends TestCase {
 
 	// The minimal setup for log4J
 	@Override
-	protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void tearDown() throws Exception { 
+        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
+    }
 }
