@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: getcode.shtml,v 1.7 2010-02-12 17:22:54 jacobsen Exp $ -->
+<!-- $Id: getcode.shtml,v 1.8 2010-02-12 17:29:09 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -115,7 +115,7 @@ Getting and updating the code with tortoisecvs
 <p>
 To get a initial checkout from CVS for your own use after installing
 http://www.tortoisecvs.org/. Make a new directory for the project, by
-creating a folder named "JMRISourceCode". Right Click on
+creating a folder named "JMRISourceCode". Right Click (control-click) on
 that folder and select CVS CVS Checkout". 
 In the pane that opens for the CVSROOT enter < :pserver:jmri.cvs.sourceforge.net:/cvsroot/jmri>
 For the Server enter < jmri.cvs.sourceforge.net>. 
