@@ -30,7 +30,7 @@ import jmri.jmrix.sprog.sprogslotmon.*;
  * reduces code duplication </P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
  *              Andrew Crosland         (C) 2006 ported to SPROG
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class SprogCommandStation implements CommandStation, SprogListener, Runnable {
 
@@ -334,8 +334,8 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         	//Slow down loop repeat rate if we've been idle for a while,
         	//otherwise repeat frequently for responsiveness
         	if (idleCount > 10) {
-        		log.debug("sleeping 800ms");
-        		Thread.sleep(800);
+        		log.debug("sleeping 250ms");
+        		Thread.sleep(250);
         	} else {
         		Thread.sleep(10);
         	}
@@ -429,7 +429,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     private byte [] getNextPacket() {
       SprogSlot s;
       
-      if (getInUseCount() == 0) return null;
+      if (!isBusy()) return null;
       while (slots.get(currentSlot).isFree()) {
         currentSlot++;
         currentSlot = currentSlot%SprogConstants.MAX_SLOTS;
@@ -486,6 +486,16 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         	if (!s.isFree()) result ++;
         }
         return result;
+    }
+    /**
+     * 
+     * @return a boolean if the command station is busy - i.e. it has at least one occupied slot
+     */
+    public boolean isBusy() {
+    	for (SprogSlot s: slots) {
+    		if (!s.isFree()) return true;
+    	}
+    	return false;
     }
 
     // initialize logging
