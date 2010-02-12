@@ -77,6 +77,7 @@ public class PanelEditor extends Editor implements ItemListener {
     JCheckBox positionableBox = new JCheckBox(rb.getString("CheckBoxPositionable"));
     JCheckBox controllingBox = new JCheckBox(rb.getString("CheckBoxControlling"));
     JCheckBox showCoordinatesBox = new JCheckBox(rb.getString("CheckBoxShowCoordinates"));
+    JCheckBox showTooltipBox = new JCheckBox(rb.getString("CheckBoxShowTooltips"));
     JCheckBox hiddenBox = new JCheckBox(rb.getString("CheckBoxHidden"));
     JCheckBox menuBox = new JCheckBox(rb.getString("CheckBoxMenuBar"));
     JLabel scrollableLabel = new JLabel(rb.getString("ComboBoxScrollable"));
@@ -294,6 +295,14 @@ public class PanelEditor extends Editor implements ItemListener {
             });
             showCoordinatesBox.setSelected(showCoordinates());
 
+            contentPane.add(showTooltipBox);
+            showTooltipBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                	setAllShowTooltip(showTooltipBox.isSelected());
+                }
+            });
+            showTooltipBox.setSelected(showTooltip());
+
             contentPane.add(menuBox);
             menuBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -352,6 +361,7 @@ public class PanelEditor extends Editor implements ItemListener {
         positionableBox.setSelected(allPositionable());
         controllingBox.setSelected(allControlling());
         showCoordinatesBox.setSelected(showCoordinates());
+        showTooltipBox.setSelected(showTooltip());
         hiddenBox.setSelected(showHidden());
         menuBox.setSelected(getTargetFrame().getJMenuBar().isVisible());
     }
@@ -384,9 +394,10 @@ public class PanelEditor extends Editor implements ItemListener {
                 frame.getEditor().reset();
                 frame.setVisible(true);
                 _addIconBox.setSelectedIndex(-1);
-                return;
+            } else {
+                log.error("Unable to open Icon Editor \""+item.getName()+"\"");
             }
-            // Classic PanelEditor has separate text entry field
+            /* Classic PanelEditor has separate text entry field
             int which = _addIconBox.getSelectedIndex()+1;
             _addIconBox.setSelectedIndex(-1);
             switch (which) {
@@ -442,7 +453,9 @@ public class PanelEditor extends Editor implements ItemListener {
             locationX += DELTA;
             locationY += DELTA;
             frame.setVisible(true);
+            
             _addIconBox.setSelectedIndex(-1);
+            */
         }
     }
 
@@ -507,6 +520,8 @@ public class PanelEditor extends Editor implements ItemListener {
             }
         });
          
+        menuBar.add(jmri.jmrit.logix.WarrantTableAction.makeWarrantMenu());
+
         targetFrame.addHelpMenu("package.jmri.jmrit.display.PanelTarget", true);
         return targetFrame;
 
