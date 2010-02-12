@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.59 $
+ * @version $Revision: 1.60 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -120,7 +120,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                 inactiveText = rb.getString("SensorInactive");
                 textColorInActive=Color.yellow;
             }
-                inactiveText = rb.getString("SensorInactive");
+                //inactiveText = rb.getString("SensorInactive");
             if (inconsistentText==null)
                 inconsistentText=rb.getString("Inconsistent");
             if (unknownText==null)
