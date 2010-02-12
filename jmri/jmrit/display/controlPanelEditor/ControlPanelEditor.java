@@ -93,6 +93,9 @@ public class ControlPanelEditor extends Editor {
     private JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(rb.getString("ScrollHorizontal"));
     private JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(rb.getString("ScrollVertical"));
 
+    private Positionable _waitingToAdd;     // newly created item to be placed
+    private boolean _newItem = false;       // item newly created
+
     public ControlPanelEditor(String name) {
         super(name);
         _debug = log.isDebugEnabled();
@@ -419,9 +422,10 @@ public class ControlPanelEditor extends Editor {
                               ", viewWidth= "+dv.width+", viewHeight= "+dv.height+
                               "\n\tconWidth= "+dim.width+", conHeight= "+dim.height+
                               ", panelWidth= "+d.width+", panelHeight= "+d.height);
-        double ratioX = (maxX-minX)/dv.width;
-        double ratioY = (maxY-minY)/dv.height;
-        double ratio = 1.0;
+        double ratioX = dv.width/(maxX-minX);
+        double ratioY = dv.height/(maxY-minY);
+        double ratio = Math.min(ratioX, ratioY);
+        /*
         if (ratioX<ratioY) {
             if (ratioX>1.0) {
                 ratio = ratioX;
@@ -434,18 +438,21 @@ public class ControlPanelEditor extends Editor {
             } else {
                 ratio = ratioY;
             }
-        }
+        } */
         _fitX = (int)Math.floor(minX);
         _fitY = (int)Math.floor(minY);
         for (int i=0; i<contents.size(); i++) {
             Positionable p = contents.get(i);
             p.setLocation(p.getX()-_fitX, p.getY()-_fitY);
         }
+        setScroll(SCROLL_BOTH);
+        setPaintScale(ratio);
         setScroll(SCROLL_NONE);
         scrollNone.setSelected(true);
-        setPaintScale(ratio);
-        getTargetPanel().setSize((int)Math.ceil(maxX), (int)Math.ceil(maxY));
-        frame.setSize((int)Math.ceil((maxX-minX)/ratio)+dX, (int)Math.ceil((maxY-minY)/ratio)+dY);
+        //getTargetPanel().setSize((int)Math.ceil(maxX), (int)Math.ceil(maxY));
+        frame.setSize((int)Math.ceil((maxX-minX)*ratio)+dX, (int)Math.ceil((maxY-minY)*ratio)+dY);
+        scrollPane.getHorizontalScrollBar().setValue(0);
+        scrollPane.getVerticalScrollBar().setValue(0);
         if (_debug) log.debug("zoomToFit: ratio= "+ratio+", w= "+(maxX-minX)+", h= "+(maxY-minY)+ 
                               ", frameWidth= "+frame.getWidth()+", frameHeight= "+frame.getHeight());
     }
@@ -525,10 +532,72 @@ public class ControlPanelEditor extends Editor {
                 scrollVertical.setSelected(true);
                 break;
         }
+        // all items put into
+        _newItem = true;
     }
 
+    /***************** Overrided methods of Editor *******************/
 
-
+    public void putItem(Positionable l) {
+        if (_newItem && l.getDisplayLevel()>BKG) {
+            _waitingToAdd = l;
+        } else {
+            super.putItem(l);
+        }
+    }
+    
+    public void mousePressed(MouseEvent event) {
+        if (_waitingToAdd==null) {
+            super.mousePressed(event);
+        }
+    }
+    public void mouseReleased(MouseEvent event) {
+        if (_waitingToAdd==null) {
+            super.mouseReleased(event);
+        } else {
+            if (_debug) log.debug("mouseReleased DROP at pt: ("+event.getX()+", "+event.getY()+")");
+            _waitingToAdd = null;       // drop
+            getTargetPanel().repaint();
+        }
+    }
+    public void mouseDragged(MouseEvent event) {
+        if (_waitingToAdd==null) {
+            super.mouseDragged(event);
+        }
+    }
+    public void mouseMoved(MouseEvent event) {
+        if (_waitingToAdd==null) {
+            super.mouseMoved(event);
+        } else {
+            int deltaX = event.getX() - _lastX;
+            int deltaY = event.getY() - _lastY;
+            moveItem(_waitingToAdd, deltaX, deltaY);
+            _lastX = event.getX();
+            _lastY = event.getY();
+            getTargetPanel().repaint();
+        }
+    }
+    public void mouseEntered(MouseEvent event) {
+        //if (_debug) log.debug("mouseEntered pt: ("+event.getX()+", "+event.getY()+")");
+        if (_waitingToAdd==null) {
+            super.mouseEntered(event);
+        } else {
+            if (_debug) log.debug("mouseEntered pt: ("+event.getX()+", "+event.getY()+")");
+            _lastX = event.getX();
+            _lastY = event.getY();
+            _waitingToAdd.setLocation((int)(_lastX/getPaintScale()), 
+                                      (int)((_lastY-_waitingToAdd.getHeight())/getPaintScale()) );
+            //_waitingToAdd.setLocation(_lastX, _lastY-_waitingToAdd.getHeight());
+            super.putItem(_waitingToAdd);
+            getTargetPanel().repaint();
+        }
+    }
+/*
+    public void mouseExited(MouseEvent event) {
+        //if (_debug) log.debug("mouseExited pt: ("+event.getX()+", "+event.getY()+")");
+        setToolTip(null);
+    }
+*/
     /*************** implementation of Abstract Editor methods ***********/
     /**
      * The target window has been requested to close, don't delete it at this
@@ -546,26 +615,9 @@ public class ControlPanelEditor extends Editor {
      * Set an object's location when it is created.
      */
     public void setNextLocation(Positionable obj) {
-        try {
-            Point pt = MouseInfo.getPointerInfo().getLocation();
-            if (_debug) log.debug("mouse pt: ("+pt.x+", "+pt.y+")");
-            SwingUtilities.convertPointFromScreen(pt, getTargetPanel());
-            if (_debug) log.debug("converted pt: ("+pt.x+", "+pt.y+")");
-            obj.setLocation(0, 0);
-
-        } catch (Exception ex) {
-            obj.setLocation(0, 0);
-        }
+        obj.setLocation(0, 0);
     }    
 
-    public void mouseEntered(MouseEvent event) {
-        //if (_debug) log.debug("mouseEntered pt: ("+event.getX()+", "+event.getY()+")");
-    }
-
-    public void mouseExited(MouseEvent event) {
-        //if (_debug) log.debug("mouseExited pt: ("+event.getX()+", "+event.getY()+")");
-        setToolTip(null);
-    }
     /**
     *  Create popup for a Positionable object
     * Popup items common to all positionable objects are done before
@@ -629,7 +681,8 @@ public class ControlPanelEditor extends Editor {
         } else {
             p.showPopUp(popup);
         }
-        popup.show((Component)p, p.getWidth()/2, p.getHeight()/2);
+        popup.show((Component)p, p.getWidth()/2+(int)((getPaintScale()-1.0)*p.getX()),
+                    p.getHeight()/2+(int)((getPaintScale()-1.0)*p.getY()));
     }
 
     // initialize logging
