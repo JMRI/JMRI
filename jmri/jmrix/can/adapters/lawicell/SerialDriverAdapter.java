@@ -16,7 +16,7 @@ import gnu.io.SerialPort;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002, 2008
  * @author			Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SerialDriverAdapter extends PortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -185,6 +185,12 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
+    
+    
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.MERG;
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 

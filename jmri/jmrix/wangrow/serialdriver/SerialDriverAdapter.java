@@ -33,7 +33,7 @@ import gnu.io.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -174,6 +174,11 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         return mInstance;
     }
     static SerialDriverAdapter mInstance = null;
+    
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.WANGROW;
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 

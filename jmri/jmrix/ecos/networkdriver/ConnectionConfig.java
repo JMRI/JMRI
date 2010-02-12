@@ -9,7 +9,7 @@ import javax.swing.*;
  * via a NetworkDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -17,11 +17,13 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
      * Ctor for an object being created during load process;
      * Swing init is deferred.
      */
-    public ConnectionConfig(String h, String p, String m){
+    public ConnectionConfig(String h, String p, String m, String manu){
         super();
         hostName = h;
         portNumber = p;
         mode = m;
+        if (manufacturerName!=null)
+            manufacturerName=manu;
     }
     /**
      * Ctor for a functional Swing object with no prexisting adapter
@@ -34,6 +36,11 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
     String hostName ="";
     public JTextField port;
     String portNumber ="15471";
+    
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.ESU;
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
 
     String mode = "";
     
@@ -90,5 +97,6 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
         log.error("Unexpected call to setInstance");
         new Exception().printStackTrace();
     }
+    
 }
 

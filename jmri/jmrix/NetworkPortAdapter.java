@@ -13,7 +13,7 @@ import java.net.*;
  *
  *
  * @author      Paul Bender  Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @see         jmri.jmrix.NetworkConfigException
  */
 abstract public class NetworkPortAdapter extends AbstractPortController{
@@ -110,7 +110,6 @@ abstract public class NetworkPortAdapter extends AbstractPortController{
         return null;
     }
    
-
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetworkPortAdapter.class.getName());
     
 }

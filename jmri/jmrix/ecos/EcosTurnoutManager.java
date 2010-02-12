@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * System names are "UTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                 implements EcosListener {
@@ -375,102 +375,109 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         for(int i=0; i<jmrilist.length; i++){
             //System.out.println(jmrilist[i]);
             nomatch=true;
+            String strTurnout=jmrilist[i];
             for(int k=1; k<ecoslines.length-1;k++){
-                String strTurnout = ecoslines[k];
-                System.out.println(strTurnout + " " + jmrilist[i]);
+                strTurnout = ecoslines[k];
+                System.out.println(ecoslines[k] + " " + strTurnout);
 //                turnout = turnout.replaceAll("[\\n\\r]","");
-                if (strTurnout.equals(jmrilist[i])){
+                if (strTurnout.equals(ecoslines[k])){
                     System.out.println("match");
                     nomatch=false;
-                    final EcosTurnout et = (EcosTurnout) getByEcosObject(Integer.parseInt(strTurnout));
-                    _tecos.remove(Integer.parseInt(strTurnout));
-                    if (p.getRemoveTurnoutsFromJMRI()==0x02) {
-                        //Remove turnout
-                        deregister(et);
-                    } else if (p.getRemoveTurnoutsFromJMRI()==0x00){
-                        final JDialog dialog = new JDialog();
-                        dialog.setTitle("Delete Turnout");
-                        dialog.setLocationRelativeTo(null);
-                        dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-                        JPanel container = new JPanel();
-                        container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-                        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-
-                        JLabel question = new JLabel("A Turnout " + et.getSystemName() + "has been deleted on the ECOS");
-                        question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                        container.add(question);
-                        question = new JLabel("Do you want to remove this turnout from JMRI");
-                        question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                        container.add(question);
-                        final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
-                        remember.setFont(remember.getFont().deriveFont(10f));
-                        remember.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-                        JButton yesButton = new JButton("Yes");
-                        JButton noButton = new JButton("No");
-                        JPanel button = new JPanel();
-                        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-                        button.add(yesButton);
-                        button.add(noButton);
-                        container.add(button);
-                        
-                        noButton.addActionListener(new ActionListener(){
-                            public void actionPerformed(ActionEvent e) {
-                                if(remember.isSelected()){
-                                    p.setRemoveTurnoutsFromJMRI(0x01);
-                                }
-                                
-                                dialog.dispose();
-                            }
-                        });
-                        
-                        yesButton.addActionListener(new ActionListener(){
-                            final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-                            public void actionPerformed(ActionEvent e) {
-                                if(remember.isSelected()) {
-                                    p.setRemoveTurnoutsFromJMRI(0x02);
-                                }
-                                int count = et.getNumPropertyChangeListeners()-1; // one is this table
-                                if (log.isDebugEnabled()) log.debug("Delete with "+count);
-                                if ((!noWarnDelete) && (count >0)) {
-                                    String msg = java.text.MessageFormat.format(
-                                                rb.getString("DeletePrompt")+"\n"
-                                                +rb.getString("ReminderInUse"),
-                                                new Object[]{et.getSystemName(),""+count});
-                                     // verify deletion
-                                    int val = javax.swing.JOptionPane.showOptionDialog(null, 
-                                            msg, rb.getString("WarningTitle"), 
-                                            javax.swing.JOptionPane.YES_NO_CANCEL_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE, null,
-                                            new Object[]{rb.getString("ButtonYes"),
-                                                         rb.getString("ButtonYesPlus"),
-                                                         rb.getString("ButtonNo")},
-                                            rb.getString("ButtonNo"));
-                                    if (val == 2) {
-                                        _tecos.remove(et.getObject());
-                                        dialog.dispose();
-                                        return;  // return without deleting
-                                    }
-                                    if (val == 1) { // suppress future warnings
-                                        noWarnDelete = true;
-                                    }
-                                }
-                                // finally OK, do the actual delete
-                                deleteEcosTurnout(et);
-                                dialog.dispose();
-                            }
-                        });
-                        container.add(remember);
-                        container.setAlignmentX(Component.CENTER_ALIGNMENT);
-                        container.setAlignmentY(Component.CENTER_ALIGNMENT);
-                        dialog.getContentPane().add(container);
-                        dialog.pack();
-                        dialog.setModal(true);
-                        dialog.setVisible(true);
-                    } else {
-                        //We will need to remove the turnout from our list as it no longer exists on the ecos.
-                        _tecos.remove(et.getObject());
-                    }
                     break;
+                }
+            }
+            
+            if (nomatch) {
+                
+                final EcosTurnout et = (EcosTurnout) getByEcosObject(Integer.parseInt(strTurnout));
+                _tecos.remove(Integer.parseInt(strTurnout));
+                if (p.getRemoveTurnoutsFromJMRI()==0x02) {
+                    //Remove turnout
+                    _tecos.remove(et.getObject());
+                    deregister(et);
+                } else if (p.getRemoveTurnoutsFromJMRI()==0x00){
+                    final JDialog dialog = new JDialog();
+                    dialog.setTitle("Delete Turnout");
+                    dialog.setLocationRelativeTo(null);
+                    dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                    JPanel container = new JPanel();
+                    container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+                    container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+
+                    JLabel question = new JLabel("A Turnout " + et.getSystemName() + "has been deleted on the ECOS");
+                    question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    container.add(question);
+                    question = new JLabel("Do you want to remove this turnout from JMRI");
+                    question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    container.add(question);
+                    final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                    remember.setFont(remember.getFont().deriveFont(10f));
+                    remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                    JButton yesButton = new JButton("Yes");
+                    JButton noButton = new JButton("No");
+                    JPanel button = new JPanel();
+                    button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    button.add(yesButton);
+                    button.add(noButton);
+                    container.add(button);
+                    
+                    noButton.addActionListener(new ActionListener(){
+                        public void actionPerformed(ActionEvent e) {
+                            if(remember.isSelected()){
+                                p.setRemoveTurnoutsFromJMRI(0x01);
+                            }
+                            
+                            dialog.dispose();
+                        }
+                    });
+                    
+                    yesButton.addActionListener(new ActionListener(){
+                        final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
+                        public void actionPerformed(ActionEvent e) {
+                            if(remember.isSelected()) {
+                                p.setRemoveTurnoutsFromJMRI(0x02);
+                            }
+                            int count = et.getNumPropertyChangeListeners()-1; // one is this table
+                            if (log.isDebugEnabled()) log.debug("Delete with "+count);
+                            if ((!noWarnDelete) && (count >0)) {
+                                String msg = java.text.MessageFormat.format(
+                                            rb.getString("DeletePrompt")+"\n"
+                                            +rb.getString("ReminderInUse"),
+                                            new Object[]{et.getSystemName(),""+count});
+                                 // verify deletion
+                                int val = javax.swing.JOptionPane.showOptionDialog(null, 
+                                        msg, rb.getString("WarningTitle"), 
+                                        javax.swing.JOptionPane.YES_NO_CANCEL_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE, null,
+                                        new Object[]{rb.getString("ButtonYes"),
+                                                     rb.getString("ButtonYesPlus"),
+                                                     rb.getString("ButtonNo")},
+                                        rb.getString("ButtonNo"));
+                                if (val == 2) {
+                                    _tecos.remove(et.getObject());
+                                    deregister(et);
+                                    dialog.dispose();
+                                    return;  // return without deleting
+                                }
+                                if (val == 1) { // suppress future warnings
+                                    noWarnDelete = true;
+                                }
+                            }
+                            // finally OK, do the actual delete
+                            deleteEcosTurnout(et);
+                            dialog.dispose();
+                        }
+                    });
+                    container.add(remember);
+                    container.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    container.setAlignmentY(Component.CENTER_ALIGNMENT);
+                    dialog.getContentPane().add(container);
+                    dialog.pack();
+                    dialog.setModal(true);
+                    dialog.setVisible(true);
+                } else {
+                    //We will need to remove the turnout from our list as it no longer exists on the ecos.
+                    _tecos.remove(et.getObject());
                 }
             }
         }

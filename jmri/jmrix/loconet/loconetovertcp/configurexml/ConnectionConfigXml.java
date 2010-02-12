@@ -23,7 +23,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -39,7 +39,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     public Element store(Object o) {
         ConnectionConfig c = (ConnectionConfig)o;
         Element e = new Element("connection");
-
+        e.setAttribute("manufacturer", c.getManufacturer());
         e.setAttribute("class", this.getClass().getName());
         e.setAttribute("hostname",c.host.getText());
         e.setAttribute("port",c.port.getText());
@@ -58,7 +58,11 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         String hostName   = e.getAttribute("hostname").getValue();
         String portNumber = e.getAttribute("port").getValue();
         String cmdStation = e.getAttribute("cmd-station").getValue();
-
+        String manufacturer = null;
+        try { 
+            manufacturer = e.getAttribute("manufacturer").getValue();
+        } catch ( NullPointerException ex) { //Considered normal if not present
+        }
         // notify
         JFrame f = new JFrame("LocoNetOverTcp network connection");
         f.getContentPane().add(new JLabel("Connecting to "+hostName+":"+portNumber));
@@ -85,7 +89,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         f.dispose();
 
         // register, so can be picked up
-        register(hostName, portNumber);
+        register(hostName, portNumber, manufacturer);
         return result;
     }
 
@@ -93,8 +97,8 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         log.error("unexpected call to register()");
         new Exception().printStackTrace();
     }
-    protected void register(String host, String port) {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, port));
+    protected void register(String host, String port, String manufacturer) {
+        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, port, manufacturer));
     }
 
     // initialize logging

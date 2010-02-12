@@ -10,7 +10,7 @@ import jmri.implementation.QuietShutDownTask;
  * with JMRI.
  *
  * @author	Kevin Dickerson  Copyright (C) 2009
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 
 public class EcosPreferences {
@@ -246,7 +246,7 @@ public class EcosPreferences {
     * also be created on the ECOS.
     * Currently not implemented.
     */    
-    protected static int _addturnoutstoecos = YES;
+    protected static int _addturnoutstoecos = ASK;
     
     public int getAddTurnoutsToEcos(){
         return _addturnoutstoecos;

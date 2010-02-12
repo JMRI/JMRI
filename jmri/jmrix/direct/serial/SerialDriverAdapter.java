@@ -31,7 +31,7 @@ import Serialio.SerialPortLocal;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2004
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SerialDriverAdapter extends PortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -280,6 +280,11 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
         return mInstance;
     }
     static SerialDriverAdapter mInstance = null;
+    
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.OTHER;
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 

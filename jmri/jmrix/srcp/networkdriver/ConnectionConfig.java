@@ -9,7 +9,7 @@ import javax.swing.*;
  * via a NetworkDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -66,5 +66,10 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
         log.error("Unexpected call to setInstance");
         new Exception().printStackTrace();
     }
+    
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.SRCP;
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
 }
 

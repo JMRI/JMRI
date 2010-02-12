@@ -21,7 +21,7 @@ import javax.swing.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -37,7 +37,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     public Element store(Object o) {
         ConnectionConfig c = (ConnectionConfig)o;
         Element e = new Element("connection");
-
+        e.setAttribute("manufacturer", c.getManufacturer());
         e.setAttribute("port", c.host.getText());
         e.setAttribute("option1", c.port.getText());
 
@@ -73,6 +73,12 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             log.error("Error opening connection to "+hostName+" was: "+ex);
             result = false;
         }
+        
+        String manufacturer = null;
+        try { 
+            manufacturer = e.getAttribute("manufacturer").getValue();
+        } catch ( NullPointerException ex) { //Considered normal if not present
+        }
 
         // configure the other instance objects
         client.configure();
@@ -81,7 +87,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         f.dispose();
 
         // register, so can be picked up
-        register(hostName, portNumber);
+        register(hostName, portNumber, manufacturer);
         return result;
     }
 
@@ -89,8 +95,8 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         log.error("unexpected call to register()");
         new Exception().printStackTrace();
     }
-    protected void register(String host, String port) {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, port));
+    protected void register(String host, String port, String manufacturer) {
+        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, port, manufacturer));
     }
 
     // initialize logging

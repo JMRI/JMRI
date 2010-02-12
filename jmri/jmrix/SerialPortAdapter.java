@@ -8,7 +8,7 @@ package jmri.jmrix;
  *
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  * @see         jmri.jmrix.SerialConfigException
  */
 public interface SerialPortAdapter extends PortAdapter {
@@ -99,4 +99,15 @@ public interface SerialPortAdapter extends PortAdapter {
     public String handlePortBusy(gnu.io.PortInUseException p,
                             String portName,
                             org.apache.log4j.Logger log);
+                            
+    
+     /**
+     * Return the System Manufacturers Name
+     */
+    public String getManufacturer();
+    
+    /**
+    * Set the System Manufacturers Name
+    */
+    public void setManufacturer(String Manufacturer);
 }

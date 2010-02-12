@@ -9,7 +9,7 @@ package jmri.jmrix.nce.usbdriver;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -28,6 +28,13 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
     }
 
     public String name() { return "NCE USB"; }
+    
+    String manufacturerName = "NCE";
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
+    
+    public boolean isOptList1Advanced() { return false; }
 
     protected void setInstance() { adapter = UsbDriverAdapter.instance(); }
 }

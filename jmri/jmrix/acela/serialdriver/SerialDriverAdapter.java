@@ -24,7 +24,7 @@ import gnu.io.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
  *              Based on Mrc example, modified to establish Acela support. 
@@ -180,6 +180,11 @@ public class SerialDriverAdapter extends AcelaPortController  implements jmri.jm
         return mInstance;
     }
     static SerialDriverAdapter mInstance = null;
+    
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.CTI;
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 }

@@ -11,7 +11,7 @@ package jmri.jmrix.lenz.ztc640;
  * connection.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  *
  * @see ZTC640Adapter
  */
@@ -32,6 +32,11 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
     }
 
     public String name() { return "ZTC Controls ZTC640"; }
+    
+    String manufacturerName = "ZTC";
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
 
     protected void setInstance() { adapter = ZTC640Adapter.instance(); }
 }

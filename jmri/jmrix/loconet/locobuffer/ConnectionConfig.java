@@ -1,6 +1,7 @@
 // ConnectionConfig.java
 
 package jmri.jmrix.loconet.locobuffer;
+import javax.swing.JPanel;
 
 
 /**
@@ -8,7 +9,7 @@ package jmri.jmrix.loconet.locobuffer;
  * via a LocoBufferAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -25,6 +26,8 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
     public ConnectionConfig() {
         super();
     }
+    
+    public boolean isOptList2Advanced() { return false; }
 
     public String name() { return "LocoNet LocoBuffer"; }
 

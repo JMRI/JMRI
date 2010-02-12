@@ -20,7 +20,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -36,7 +36,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     public Element store(Object o) {
         jmri.jmrix.loconet.locormi.ConnectionConfig c = (jmri.jmrix.loconet.locormi.ConnectionConfig)o;
         Element e = new Element("connection");
-
+        e.setAttribute("manufacturer", c.getManufacturer());
         e.setAttribute("port", c.host.getText());
 
         e.setAttribute("class", this.getClass().getName());
@@ -76,6 +76,12 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             connected = false;
             result = false;
         }
+        
+        String manufacturer = null;
+        try { 
+            manufacturer = e.getAttribute("manufacturer").getValue();
+        } catch ( NullPointerException ex) { //Considered normal if not present
+        }
 
         // configure the other instance objects
         client.configureLocalServices();
@@ -86,7 +92,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         }
 
         // register, so can be picked up
-        register(hostName);
+        register(hostName, manufacturer);
         return result;
     }
 
@@ -96,8 +102,8 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         log.error("unexpected call to register()");
         new Exception().printStackTrace();
     }
-    protected void register(String host) {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host));
+    protected void register(String host, String manufacturer) {
+        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, manufacturer));
     }
 
     // initialize logging

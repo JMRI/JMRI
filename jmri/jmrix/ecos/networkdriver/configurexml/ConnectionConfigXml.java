@@ -23,7 +23,7 @@ import javax.swing.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 208
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -39,7 +39,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     public Element store(Object o) {
         ConnectionConfig c = (ConnectionConfig)o;
         Element e = new Element("connection");
-
+        e.setAttribute("manufacturer", c.getManufacturer());
         e.setAttribute("port", c.host.getText());
         e.setAttribute("option1", c.port.getText());
         e.setAttribute("option2", c.getMode());
@@ -127,6 +127,12 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             log.error("Error opening connection to "+hostName+" was: "+ex);
             result = false;
         }
+        
+        String manufacturer = null;
+        try { 
+            manufacturer = e.getAttribute("manufacturer").getValue();
+        } catch ( NullPointerException ex) { //Considered normal if not present
+        }
 
         // configure the other instance objects
         client.configure();
@@ -135,7 +141,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         f.dispose();
 
         // register, so can be picked up
-        register(hostName, portNumber, mode);
+        register(hostName, portNumber, mode, manufacturer);
         
         List<Element> ecosPref = e.getChildren("commandStationPreferences");
         EcosPreferences p = EcosPreferences.instance();
@@ -238,8 +244,8 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         log.error("unexpected call to register()");
         new Exception().printStackTrace();
     }
-    protected void register(String host, String port, String mode) {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, port, mode));
+    protected void register(String host, String port, String mode, String manufacturer) {
+        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, port, mode, manufacturer));
         //InstanceManager.configureManagerInstance().registerPref(new jmri.jmrix.ecos.EcosPreferences());
     }
     

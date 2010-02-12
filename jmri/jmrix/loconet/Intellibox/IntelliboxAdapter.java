@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author          Bob Jacobsen    Copyright (C) 2005
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class IntelliboxAdapter extends LocoBufferAdapter {
 
@@ -78,5 +78,10 @@ public void configure() {
         return m3Instance;
     }
     static private IntelliboxAdapter m3Instance = null;
+    
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.UHLEN;
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
 
 }

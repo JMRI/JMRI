@@ -33,7 +33,7 @@ import gnu.io.SerialPort;
  * "AJB" indicate changes or observations by me
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.25 $
+ * @version	$Revision: 1.26 $
  */
 public class SerialDriverAdapter extends AbstractPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -215,6 +215,11 @@ public class SerialDriverAdapter extends AbstractPortController implements jmri.
         jmri.jmrix.sprog.ActiveFlag.setActive();
 
     }
+    
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.SPROG;
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
     
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());

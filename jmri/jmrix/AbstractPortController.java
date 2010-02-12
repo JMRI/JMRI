@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 abstract public class AbstractPortController implements SerialPortAdapter {
 
@@ -230,6 +230,14 @@ abstract public class AbstractPortController implements SerialPortAdapter {
         if (mOpt2 == null) return validOption2()[0];
         return mOpt2;
     }
+    
+    /**
+    * Get and set of the Manufacturer for network (TCP/IP) based
+    * connections is handled by the ConnectionConfig code in each
+    * connector.  this is here as we implement the serialdriveradpter.
+    */
+    public String getManufacturer() { return null; }
+    public void setManufacturer(String Manufacturer) {}
 
     static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractPortController.class.getName());
 

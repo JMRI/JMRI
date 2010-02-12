@@ -1,6 +1,7 @@
 // ConnectionConfig.java
 
 package jmri.jmrix.loconet.pr3;
+import javax.swing.JPanel;
 
 
 /**
@@ -8,7 +9,7 @@ package jmri.jmrix.loconet.pr3;
  * via a PR2Adapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -27,6 +28,8 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
     }
 
     public String name() { return "LocoNet PR3"; }
+    
+    public boolean isOptList2Advanced() { return false; }
 
     protected void setInstance() { adapter = jmri.jmrix.loconet.pr3.PR3Adapter.instance(); }
 }

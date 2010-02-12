@@ -12,7 +12,7 @@ import javax.swing.JTextField;
  * via LocoNet RMI.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -20,9 +20,10 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
      * Ctor for an object being created during load process;
      * Swing init is deferred.
      */
-    public ConnectionConfig(String p){
+    public ConnectionConfig(String p, String m){
         super();
         hostName = p;
+        if (m!=null) manufacturerName = m;
     }
     /**
      * Ctor for a functional Swing object with no prexisting adapter
@@ -59,9 +60,17 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
         if (t != null && !t.equals("")) return t;
         else return "(none)";
     }
+    
+    public boolean isOptList2Advanced() { return false; }
+    
     protected void setInstance() {
         log.error("Unexpected call to setInstance");
         new Exception().printStackTrace();
     }
+    
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.DIGITRAX;
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
 }
 

@@ -10,7 +10,7 @@ import gnu.io.SerialPort;
  * refers to the switch settings on the new LocoBuffer-USB
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class LocoBufferUsbAdapter extends LocoBufferAdapter {
 
@@ -81,6 +81,11 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
         return m2Instance;
     }
     static private LocoBufferUsbAdapter m2Instance = null;
+    
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.DIGITRAX;
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoBufferUsbAdapter.class.getName());
 }

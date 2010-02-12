@@ -27,7 +27,7 @@ import gnu.io.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -445,6 +445,11 @@ public class SerialAdapter extends jmri.jmrix.AbstractPortController implements 
             return null;
         }
     }
+    
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.NAC;
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialAdapter.class.getName());
 

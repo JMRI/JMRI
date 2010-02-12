@@ -10,7 +10,7 @@ import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
  * via an SPROG SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -29,7 +29,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
     }
 
     public String name() { return "SPROG"; }
-
+    
     protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }
 

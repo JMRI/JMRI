@@ -30,7 +30,7 @@ import gnu.io.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Andrew Crosland   Copyright (C) 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SprogCSSerialDriverAdapter 
 extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
@@ -72,6 +72,11 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
         return mInstance;
     }
     static SprogCSSerialDriverAdapter mInstance = null;
+    
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.SPROG;
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogCSSerialDriverAdapter.class.getName());
 

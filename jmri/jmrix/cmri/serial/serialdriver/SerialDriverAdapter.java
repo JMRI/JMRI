@@ -20,7 +20,7 @@ import gnu.io.SerialPortEventListener;
  * Provide access to C/MRI via a serial comm port.
  * Normally controlled by the cmri.serial.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.28 $
+ * @version			$Revision: 1.29 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -287,6 +287,11 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         return mInstance;
     }
     static SerialDriverAdapter mInstance = null;
+    
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.CMRI;
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 

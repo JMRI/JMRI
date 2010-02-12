@@ -8,7 +8,7 @@ package jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author      Andrew Crosland 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -27,6 +27,8 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
     }
 
     public String name() { return "CAN via MERG CAN-RS or CAN-USB"; }
+    
+    public boolean isOptList2Advanced() { return false; }
 
     protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }

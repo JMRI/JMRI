@@ -30,7 +30,7 @@ import java.io.*;
  * into service mode. 
  *
  * @author			Paul Bender (C) 2009
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 
 public class LIUSBServerAdapter extends XNetPortController {
@@ -230,6 +230,8 @@ public class LIUSBServerAdapter extends XNetPortController {
 		 
                   public void configure(){
                   }
+                  public String getManufacturer() { return null; }
+                  public void setManufacturer(String manu) { }
         }
 
         // Internal class for communication port connection
@@ -242,6 +244,9 @@ public class LIUSBServerAdapter extends XNetPortController {
 
                   public void configure(){
                   }
+                  
+                  public String getManufacturer() { return null; }
+                  public void setManufacturer(String manu) { }
 
         }
 
@@ -273,7 +278,10 @@ public class LIUSBServerAdapter extends XNetPortController {
         keepAliveTimer.start();
     }
 
-
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LIUSBServerAdapter.class.getName());
 

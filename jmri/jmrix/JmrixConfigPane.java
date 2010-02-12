@@ -5,11 +5,13 @@ package jmri.jmrix;
 import jmri.InstanceManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
 /**
@@ -28,7 +30,7 @@ import javax.swing.JSeparator;
  * configuration GUI, and responding to its changes.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004
- * @version	$Revision: 1.53 $
+ * @version	$Revision: 1.54 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -111,10 +113,13 @@ public class JmrixConfigPane extends JPanel {
     }
 
     JComboBox modeBox = new JComboBox();
+    JComboBox manuBox = new JComboBox();
 
     JPanel details = new JPanel();
-    String[] classNameList;
-    ConnectionConfig[] classList;
+    String[] classConnectionNameList;
+    ConnectionConfig[] classConnectionList;
+    String[] manufactureNameList;
+
 
     /**
      * Use "instance" to get one of these.  That allows it
@@ -122,73 +127,160 @@ public class JmrixConfigPane extends JPanel {
      */
     private JmrixConfigPane(ConnectionConfig original) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        classNameList = availableProtocolClasses();
-        classList = new ConnectionConfig[classNameList.length+1];
 
-        // get the list of ConnectionConfig items into a selection box
-        modeBox.addItem(NONE_SELECTED);
+        manuBox.addItem(NONE_SELECTED);
+        //manuBox.setModel(new javax.swing.DefaultComboBoxModel(jmri.jmrix.DCCManufacturerList.getSystemNames()))
         int n=1;
-        for (int i=0; i<classNameList.length; i++) {
-            String className = classNameList[i];
-            try {
-                ConnectionConfig config;
-                if (original!=null && original.getClass().getName().equals(className)) {
-                    config = original;
-                    log.debug("matched existing config object");
-                    modeBox.addItem(config.name());
-                    modeBox.setSelectedItem(config.name());
-                } else {
-                    Class<?> cl = Class.forName(classNameList[i]);
-                    config = (ConnectionConfig)cl.newInstance();
-                    modeBox.addItem(config.name());
+        manufactureNameList = jmri.jmrix.DCCManufacturerList.getSystemNames();
+        for (int i=0; i<manufactureNameList.length; i++) {
+            String manuName = manufactureNameList[i];
+            if (original!=null && original.getManufacturer().equals(manuName)){
+                manuBox.addItem(manuName);
+                manuBox.setSelectedItem(manuName);
+            } else {
+                manuBox.addItem(manuName);
+            }
+        
+        }
+        manuBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateComboConnection();
+            }
+        });
+
+        
+        // get the list of ConnectionConfig items into a selection box
+        String[] classConnectionNameList = jmri.jmrix.DCCManufacturerList.getConnectionList((String)manuBox.getSelectedItem());
+        classConnectionList = new jmri.jmrix.ConnectionConfig[classConnectionNameList.length+1];
+        modeBox.addItem(NONE_SELECTED);
+        if(manuBox.getSelectedIndex()!=0){
+            modeBox.setEnabled(true);
+        } else {
+            modeBox.setSelectedIndex(0);
+            modeBox.setEnabled(false);        
+        }
+        n=1;
+        if (manuBox.getSelectedIndex()!=0){
+            for (int i=0; i<classConnectionNameList.length; i++) {
+                String className = classConnectionNameList[i];
+                try {
+                    ConnectionConfig config;
+                    if (original!=null && original.getClass().getName().equals(className)) {
+                        config = original;
+                        log.debug("matched existing config object");
+                        modeBox.addItem(config.name());
+                        modeBox.setSelectedItem(config.name());
+                        if (classConnectionNameList.length==1){
+                            modeBox.setSelectedIndex(1);
+                        }
+                    } else {
+                        Class<?> cl = Class.forName(classConnectionNameList[i]);
+                        config = (ConnectionConfig)cl.newInstance();
+                        modeBox.addItem(config.name());
+                    }
+                    classConnectionList[n++] = config;
+                } catch (NullPointerException e) {
+                    log.debug("Attempt to load "+classConnectionNameList[i]+" failed: "+e);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    log.debug("Attempt to load "+classConnectionNameList[i]+" failed: "+e);
                 }
-                classList[n++] = config;
-            } catch (NullPointerException e) {
-                log.debug("Attempt to load "+classNameList[i]+" failed: "+e);
-                e.printStackTrace();
-            } catch (Exception e) {
-                log.debug("Attempt to load "+classNameList[i]+" failed: "+e);
             }
         }
-        add(modeBox);
-        add(details);
-        add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-
         modeBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 selection();
             }
         });
+        JPanel manufacturerPanel = new JPanel();
+        manufacturerPanel.setLayout(new GridLayout(2,2));
+        //JPanel manufacturerPanel = new JPanel();
+        manufacturerPanel.add(new JLabel("System Manufacturer : "));
+        manufacturerPanel.add(manuBox);
+        //JPanel connectionPanel = new JPanel();
+        manufacturerPanel.add(new JLabel("System Connection : "));
+        manufacturerPanel.add(modeBox);
+        add(manufacturerPanel);
+        //add(connectionPanel);
+        add(details);
+        add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+
+        //updateComboConnection();
         selection();  // first time through, pretend we've selected a value
         			  // to load the rest of the GUI
     }
 
+    public void updateComboConnection() {
+        modeBox.removeAllItems();
+        modeBox.addItem(NONE_SELECTED);
+        String[] classConnectionNameList = jmri.jmrix.DCCManufacturerList.getConnectionList((String)manuBox.getSelectedItem());
+        classConnectionList = new jmri.jmrix.ConnectionConfig[classConnectionNameList.length+1];
+        
+        if(manuBox.getSelectedIndex()!=0){
+            modeBox.setEnabled(true);
+        } else {
+            modeBox.setSelectedIndex(0);
+            modeBox.setEnabled(false);        
+        }
+        
+        int n=1;
+        if (manuBox.getSelectedIndex()!=0){
+            for (int i=0; i<classConnectionNameList.length; i++) {
+                String classConnectionName = classConnectionNameList[i];
+                try {
+                    jmri.jmrix.ConnectionConfig config;
+                    Class<?> cl = Class.forName(classConnectionNameList[i]);
+                    config = (jmri.jmrix.ConnectionConfig)cl.newInstance();
+                    modeBox.addItem(config.name());
+                    classConnectionList[n++] = config;
+                    if (classConnectionNameList.length==1){
+                        modeBox.setSelectedIndex(1);
+                    }
+                } catch (NullPointerException e) {
+                    log.debug("Attempt to load "+classConnectionNameList[i]+" failed: "+e);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    log.debug("Attempt to load "+classConnectionNameList[i]+" failed: "+e);
+                }
+            }
+        }
+    }
+    
     void selection() {
         int current = modeBox.getSelectedIndex();
         details.removeAll();
         // first choice is -no- protocol chosen
         if (log.isDebugEnabled()) log.debug("new selection is "+current
         							+" "+modeBox.getSelectedItem());
-        if (current!=0) classList[current].loadDetails(details);
+        if ((current!=0)&&(current!=-1)){
+            classConnectionList[current].loadDetails(details);
+            classConnectionList[current].setManufacturer((String) manuBox.getSelectedItem());
+        }
         validate();
         if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
         repaint();
+    }
+    
+    public String getCurrentManufacturerName() {
+        int current = modeBox.getSelectedIndex();
+        if (current==0) return "(none)";
+        return classConnectionList[current].getManufacturer();
     }
 
     public String getCurrentProtocolName() {
         int current = modeBox.getSelectedIndex();
         if (current==0) return "(none)";
-        return classList[current].name();
+        return classConnectionList[current].name();
     }
     public String getCurrentProtocolInfo() {
         int current = modeBox.getSelectedIndex();
         if (current==0) return "(none)";
-        return classList[current].getInfo();
+        return classConnectionList[current].getInfo();
     }
 
     public Object getCurrentObject() {
         int current = modeBox.getSelectedIndex();
-        if (current!=0) return classList[current];
+        if (current!=0) return classConnectionList[current];
         return null;
     }
     

@@ -24,7 +24,7 @@ import java.io.DataOutputStream;
  *	and separated by a space. Variable whitespace is not (yet) supported
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class Port extends AbstractPortController {
 
@@ -92,6 +92,11 @@ public class Port extends AbstractPortController {
 	    v.addElement("(None)");
 	    return v;
     }
+    
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.MERG;
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Port.class.getName());
 }
