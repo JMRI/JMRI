@@ -33,9 +33,9 @@ public class ToolTip {
         _tip = text;
         _tx = x;
         _ty = y;
-        _tFont = new Font("Serif", Font.PLAIN, 11);
+        _tFont = new Font("Serif", Font.PLAIN, 12);
         _fontColor = Color.black;
-        _backgroundColor = new Color(255, 250, 200);
+        _backgroundColor = new Color(255, 250, 210);
         _borderColor = Color.blue;
     }
 
@@ -111,8 +111,8 @@ public class ToolTip {
         TextLayout tl = new TextLayout(_tip, _tFont, g2d.getFontRenderContext());
         Rectangle2D bds = tl.getBounds();
         bds.setRect(bds.getX()+_tx-bds.getWidth()/2-9, 
-                    (_ty/scale)-bds.getHeight()-9, 
-                    bds.getWidth()+9, bds.getHeight()+9);
+                    (_ty/scale)-bds.getHeight()-8, 
+                    bds.getWidth()+9, bds.getHeight()+8);
         g2d.setColor(_backgroundColor);
         g2d.fill(bds);
         g2d.setColor(_borderColor);

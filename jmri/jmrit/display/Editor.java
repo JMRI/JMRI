@@ -117,8 +117,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     private boolean[] _positionableLevels = new boolean[NUM_LEVELS];
 
     // mouse methods variables
-    private int _lastX;
-    private int _lastY;
+    protected int _lastX;
+    protected int _lastY;
     BasicStroke DASHED_LINE = new BasicStroke(1f, BasicStroke.CAP_BUTT, 
                                     BasicStroke.JOIN_BEVEL,
                                     10f, new float[] {10f, 10f}, 0f);
@@ -252,7 +252,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _tooltipTimer.stop();
         }
         if (_tooltip!=null) {
-            _tooltipTimer = new ToolTipTimer(5000, this, null);
+            _tooltipTimer = new ToolTipTimer(4000, this, null);
             _tooltipTimer.setRepeats(false);
             _tooltipTimer.start();
         } else {
@@ -688,7 +688,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     * if showable, provide a dialog menu to edit it.
     */
     public void setShowTooltipMenu(Positionable p, JPopupMenu popup) {
-        if (showTooltip()) {
+        //if (showTooltip()) {
             JCheckBoxMenuItem showTooltipItem = new JCheckBoxMenuItem(rb.getString("ShowTooltip"));
             showTooltipItem.setSelected(p.showTooltip());
             showTooltipItem.addActionListener(new ActionListener(){
@@ -707,7 +707,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             if (p.showTooltip()) {
                 popup.add(CoordinateEdit.getTooltipEditAction(p));
             }
-        }
+        //}
     }
         
     /**
@@ -817,7 +817,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 		}
 	}
     
-    /************************* End Markewr Menu Methods ***********************/
+    /************************* End Marker Menu Methods ***********************/
     
     /************** Adding content to the panel ***********************/
 
@@ -834,7 +834,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     
-    public PositionableLabel addLabel(String text) {
+    protected PositionableLabel addLabel(String text) {
         PositionableLabel l = new PositionableLabel(text, this);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(LABELS);
@@ -1744,9 +1744,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected void moveItem(Positionable p, int deltaX, int deltaY) {
         //if (_debug) log.debug("moveItem at ("+p.getX()+","+p.getY()+") delta ("+deltaX+", "+deltaY+")");
         if (p.isPositionable()) {
-            int xObj = p.getX() + deltaX;
-            int yObj = p.getY() + deltaY;
-            // don't allow negative placement, icon can become unreachable
+            int xObj = p.getX() + (int)Math.round(deltaX/getPaintScale());
+            int yObj = p.getY() + (int)Math.round(deltaY/getPaintScale());
+            // don't allow negative placement, icon can become unreachable 
             if (xObj < 0) xObj = 0;
             if (yObj < 0) yObj = 0;
             p.setLocation(xObj, yObj);
@@ -2047,7 +2047,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
         }
         if (selection!=null && selection.getDisplayLevel()>BKG &&
-                                selection.showTooltip()) {
+                                (_showTooltip || selection.showTooltip())) {
             showToolTip(selection, event);
         } else {
             setToolTip(null);
