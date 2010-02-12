@@ -20,9 +20,9 @@ package apps.gui3.demo3;
  * for more details.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004, 2007, 2009, 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
-public class Demo3 extends apps.gui3.demo.Apps3 {
+public class Demo3 extends apps.gui3.demo3.Apps3 {
 
     // Main entry point
     public static void main(String args[]) {
