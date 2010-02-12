@@ -2047,7 +2047,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
         }
         if (selection!=null && selection.getDisplayLevel()>BKG &&
-                                (_showTooltip || selection.showTooltip())) {
+                                selection.showTooltip()) {
             showToolTip(selection, event);
         } else {
             setToolTip(null);
