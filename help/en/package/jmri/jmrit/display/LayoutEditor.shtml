@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.19 2010-01-09 22:25:56 jacobsen Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.20 2010-02-12 17:17:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -114,7 +114,7 @@ JMRI/PanelPro Layout Editor</b></a>
 and its two associated demonstration .xml files.
 
 <a name="start"><H2>Getting Started with Layout Editor</H2>
-
+<P>
 To get familiar with the Layout Editor user interface, try the following:</P>
 <P>
 1. Select <b>New panel...</b>, then <b>Layout Editor</b> in the Panels menu.
@@ -1221,3 +1221,5 @@ signals should be placed before actually installing them on your layout.</p>
 </body>
 </html>
 
+
+ 	  	 
