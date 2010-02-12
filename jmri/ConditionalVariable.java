@@ -330,7 +330,7 @@ public class ConditionalVariable {
 					log.error("invalid memory name= \""+_name+"\" in state variable");
 					return (false);
 				}
-				String value1 = (String)m.getValue();
+				String value1 = m.getValue().toString();
                 String value2 = null;
                 boolean caseInsensitive = ((_type == Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE) ||
                                             (_type == Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE));
@@ -341,7 +341,7 @@ public class ConditionalVariable {
                         log.error("invalid data memory name= \""+_dataString+"\" in state variable");
                         return (false);
                     }
-                    value2 = (String)m2.getValue();
+                    value2 = m2.getValue().toString();
                 } else {
                     value2 = _dataString;
                 }
