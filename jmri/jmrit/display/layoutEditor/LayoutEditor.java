@@ -52,7 +52,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class LayoutEditor extends Editor {
@@ -423,7 +423,7 @@ public class LayoutEditor extends Editor {
 					if (sensorBox.isSelected())
                         name = "SensorEditor";
 					else if (signalBox.isSelected())
-						name = "SignalEditor";
+						name = "SignalHeadEditor";
 					else if (iconLabelBox.isSelected())
 						name = "IconEditor";
                     JFrameItem frame = ed.getIconFrame(name);
