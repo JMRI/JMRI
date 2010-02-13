@@ -1734,7 +1734,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
             tip.setText(txt);
         }
-        tip.setLocation(selection.getX() + selection.getWidth()/2, event.getY());
+        tip.setLocation(selection.getX()+selection.getWidth()/2, selection.getY()+selection.getHeight());
+//        tip.setLocation(selection.getX() + selection.getWidth()/2, event.getY());
         setToolTip(tip);
     }
 
@@ -1935,7 +1936,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             } else {
                 _currentSelection = selections.get(0); 
             }
-            if (!event.isPopupTrigger()) {
+            if (event.isPopupTrigger()) {
+                showPopUp(_currentSelection, event);
+            } else {
                 _currentSelection.doMousePressed(event);
             }
         } else {
