@@ -25,7 +25,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * @author	Bob Jacobsen   Copyright 2003, 2004
  * @author  Dave Duchamp   Copyright 2007
  * @author  Pete Cressman   Copyright 2010
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 public class PanelMenu extends JMenu {
     public PanelMenu() {
@@ -83,7 +83,8 @@ public class PanelMenu extends JMenu {
 		for (int i = 0; i<panelsList.size(); i++) {
 			Object o = panelsList.get(i);
 			if (o == panel) {
-                if (!(panel instanceof LayoutEditor) ) {
+                // Editors that are their own TargetFrame dispose themselves
+                if (!panel.equals(panel.getTargetFrame()) ) {
                     panel.getTargetFrame().dispose();
                 }
                 panelsList.remove(panel);
