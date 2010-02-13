@@ -95,9 +95,11 @@ public class ControlPanelEditor extends Editor {
 
     private Positionable _waitingToAdd;     // newly created item to be placed
     private boolean _newItem = false;       // item newly created
+    private String _name;
 
     public ControlPanelEditor(String name) {
         super(name);
+        _name = name;
         _debug = log.isDebugEnabled();
         java.awt.Container contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -372,6 +374,7 @@ public class ControlPanelEditor extends Editor {
             }
             _menuBar.add(_editMenu, 0);
         }
+        setTitle(edit);
         setAllEditable(edit);
         _menuBar.validate();
     }
@@ -467,6 +470,17 @@ public class ControlPanelEditor extends Editor {
         }
     }
 
+
+    public void setTitle(boolean edit) {
+        if (edit) {
+            super.setTitle();
+        } else {
+            if (_name==null || _name.length()==0) {
+                _name = "Control Panel";
+            }
+            super.setTitle(_name);
+        }
+    }
         /* allow naming the panel
         {
             JPanel namep = new JPanel();

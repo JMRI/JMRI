@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
  * Start a ControlPanelEditor.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @see         jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction
  */
 public class ControlPanelEditorAction extends AbstractAction {
@@ -23,7 +23,7 @@ public class ControlPanelEditorAction extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-			String name = "Panel";
+			String name = "Control Panel";
 			for (int i = 2; i < 100; i++){
 				if(jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)){
 					name = "Panel " +i;
