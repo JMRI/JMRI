@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * System names are "UTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                 implements EcosListener {
@@ -177,9 +177,11 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                 else if (name==null)
                                     name = lines[i].substring(start, end);
                                 //name = name + " " +
-                                et.setUserName(name);
+                                //et.setUserName(name);
                             }
                         }
+                        if (name!=null)
+                            et.setUserName(name);
                     }
                 }
             } 
@@ -559,6 +561,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                 }
             }
         }
+        super.propertyChange(e);
     }
 
     public void deleteEcosTurnout(EcosTurnout et){
