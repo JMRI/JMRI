@@ -57,6 +57,7 @@ import jmri.util.JmriJFrame;
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
  * @author  Matthew Harris Copyright: Copyright (c) 2009
  * @author  Pete Cressman Copyright: Copyright (c) 2009, 2010
+ * @version			$Revision 1.0 $
  * 
  */
 
@@ -919,7 +920,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                         "SignalHeadEditor", "SignalMastEditor", "MemoryEditor", "ReporterEditor",
                         "LightEditor", "BackgroundEditor", "MultiSensorEditor", "IconEditor"};
     /**
-    * @param Icon editor's name
+    * @param name Icon editor's name
     */
     public JFrameItem getIconFrame(String name) {
         JFrameItem frame = _iconEditorFrame.get(name);
