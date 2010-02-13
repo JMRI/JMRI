@@ -3,7 +3,7 @@
 
 <!-- Test schema for JMRI I/O support. Not for use before JMRI 2.9.1        -->
 
-<!-- $Id: general.xsd,v 1.8 2010-02-03 05:58:58 jacobsen Exp $ -->
+<!-- $Id: general.xsd,v 1.9 2010-02-13 22:39:35 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -34,6 +34,26 @@
       leading-lowercase are simple types for e.g. attributes and simple elements
     </xs:documentation>
   </xs:annotation>
+
+  <xs:attribute name="lang" xmlns:xml="http://www.w3.org/XML/1998/namespace" type="xs:language">
+    <xs:annotation>
+      <xs:documentation>
+      Specify the natural language for an element.
+      This is a global attribute, schema-valid in 
+      any JMRI element, but may not be processed in all 
+      of them.
+      For more information on use, see the 
+      <a href="http://www.w3.org/International/questions/qa-when-xmllang">W3C I8N page</a>.
+      </xs:documentation>
+    </xs:annotation>
+<!-- 
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+          <xs:pattern value="[a-z][a-z]|[a-z][a-z]_[A-Z][A-Z]"/>
+      </xs:restriction>
+    </xs:simpleType>
+ -->
+  </xs:attribute>
 
   <xs:simpleType name="systemNameType">
     <xs:annotation>
