@@ -6,16 +6,14 @@ import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsXml;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import junit.extensions.jfcunit.*;
 import junit.extensions.jfcunit.finder.*;
 import junit.extensions.jfcunit.eventdata.*;
 
-import java.awt.*;
-import java.awt.event.*;
 import java.io.File;
 import java.util.List;
 
@@ -23,7 +21,7 @@ import java.util.List;
  * Tests for the Operations Cars GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
@@ -50,6 +48,9 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		cr.addName("UP");
 		cr.addName("AA");
 		cr.addName("SP");
+		
+		// enable rfid field
+		Setup.setRfidEnabled(true);
 		
 		CarsTableFrame ctf = new CarsTableFrame(true, null, null);	
 		// show all cars?
@@ -360,8 +361,12 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 	}
 	
 	public void testCarAttributeEditFrameKernel(){
-		// create TwoCars kernel
+		// remove all kernels
 		CarManager cm = CarManager.instance();
+		List<String> kList = cm.getKernelNameList();
+		for (int i=0; i<kList.size(); i++)
+			cm.deleteKernel(kList.get(i));
+		// create TwoCars kernel
 		cm.newKernel("TwoCars");
 		
 		CarAttributeEditFrame f = new CarAttributeEditFrame();
@@ -382,7 +387,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		testReplace(f);	
 		
 		// now try and delete
-		f.comboBox.setSelectedItem("TestKernel");
+		f.comboBox.setSelectedItem("TestKernel2");
 		//f.deleteButton.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteButton ) );
 		// blank is the first default kernel
@@ -423,6 +428,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 	CarAttributeEditFrame caef;
 	//TODO this test only closes the confirmation window, need to figure out
 	// a way to press the okay button
+	@SuppressWarnings("unchecked")
 	private void testReplace(CarAttributeEditFrame f){
 		caef = f;
 		//  (with JfcUnit, not pushing this off to another thread)
@@ -431,8 +437,8 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 				                                            caef.replaceButton ) );
 				                                            
 		// Locate resulting dialog box
-        java.util.List dialogList = new DialogFinder(null).findAll(f);
-        javax.swing.JDialog d = (javax.swing.JDialog) dialogList.get(0);
+        List<javax.swing.JDialog> dialogList = new DialogFinder(null).findAll(f);
+        javax.swing.JDialog d = dialogList.get(0);
         // Find the "Yes" button
         AbstractButtonFinder finder = new AbstractButtonFinder("Yes" );
         javax.swing.JButton button = ( javax.swing.JButton ) finder.find( d, 0);
