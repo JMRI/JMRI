@@ -1,4 +1,4 @@
-# Use an Xbox (original) controller as throttle(s)									`1AA
+# Use an Xbox (original) controller as throttle(s)									
 #
 # Author: Andrew Berridge, 2010 - Based on USBThrottle.py, Bob Jacobsen, copyright 2008
 # Part of the JMRI distribution
@@ -43,7 +43,7 @@
 #
 
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 
 #
 # Set the name of the controller you're using
@@ -77,6 +77,8 @@ componentF8 = ""    # F8 follows this
 
 componentStart = "7"
 componentBack = "8"
+
+componentLeftStick = "9" # The button on the left stick. Used as E-stop in this configuration
 
 # from here down is the code for the throttle
 # Generally, you shouldn't touch it unless you're debugging a problem
@@ -120,7 +122,7 @@ class TreeListener(java.beans.PropertyChangeListener):
   	self.throttleWindow = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleWindow()
 	self.activeThrottleFrame = self.throttleWindow.addThrottleFrame()
 	# move throttle on screen so multiple throttles don't overlay each other
-	self.throttleWindow.setLocation(150 * numThrottles, 50 * numThrottles)
+	self.throttleWindow.setLocation(400 * numThrottles, 50 * numThrottles)
 	numThrottles += 1
 	numControllers += 1
 	self.activeThrottleFrame.toFront()
@@ -236,7 +238,9 @@ class TreeListener(java.beans.PropertyChangeListener):
 			        setting = int(round(fraction*(slider.getMaximum()-slider.getMinimum()), 0))
 			        slider.setValue(setting)
 				return
-				
+			if component == componentLeftStick: #emergency stop!
+				self.controlPanel.stop()
+				print "Emergency Stop!"
 			#print component, value
 			fNum = -1
 			if component == componentF0:
