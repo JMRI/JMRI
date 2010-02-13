@@ -8,7 +8,7 @@ package jmri.jmrix.lenz.ztc640;
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  *
  */
 public class ConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
@@ -23,7 +23,6 @@ public class ConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
             tempList[x] = masterList[i];
             x++;
         }
-        System.out.println(tempList[0]);
         return tempList;
     }
 
