@@ -41,9 +41,11 @@ public class Log4JFixture extends java.lang.Object {
                 // only log warnings and above
                 org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.WARN);
             }
+            // install default exception handlers
+            System.setProperty("sun.awt.exception.handler", jmri.util.exceptionhandler.AwtHandler.class.getName());
+            Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
 		}
 	}
 
   	static org.apache.log4j.Logger log = null;
-
 }

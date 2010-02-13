@@ -21,7 +21,7 @@ import jmri.InstanceManager;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003, 2005, 2007, 2010
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class FacelessApp {
 	static String name = "Faceless App";
@@ -67,6 +67,9 @@ public class FacelessApp {
             }
         }
         catch (java.lang.NoSuchMethodError e) { log.error("Exception starting logging: "+e); }
+        // install default exception handlers
+        System.setProperty("sun.awt.exception.handler", jmri.util.exceptionhandler.AwtHandler.class.getName());
+        Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
     }
 
 	/**
