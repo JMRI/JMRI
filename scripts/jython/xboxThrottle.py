@@ -18,6 +18,8 @@
 #    (as long as the last loco has been "dispatched"
 # 7. Using left and right on the hat switch will select between throttle panels... Click the 
 #	 plus (+) button on the throttle window to add another panel
+# 8. Emergency stop! Push the left stick down to trigger its button. This will
+# e-stop the current throttle
 # 
 # Future development ideas:
 # 1. Support right-hand joystick to control a second throttle
@@ -43,7 +45,7 @@
 #
 
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 
 #
 # Set the name of the controller you're using
