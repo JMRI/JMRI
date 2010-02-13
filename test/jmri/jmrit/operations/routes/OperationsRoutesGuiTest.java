@@ -10,8 +10,9 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.jmrit.operations.locations.LocationManager;
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import junit.extensions.jfcunit.finder.*;
+import junit.extensions.jfcunit.eventdata.*;
 
 import java.io.File;
 import java.util.List;
@@ -20,19 +21,9 @@ import java.util.List;
  * Tests for the Operations Routes GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class OperationsRoutesGuiTest extends TestCase {
-	
-	synchronized void releaseThread() {
-		try {
-			Thread.sleep(20);
-			// super.wait(100);
-		}
-		catch (InterruptedException e) {
-			Assert.fail("failed due to InterruptedException");
-		}
-	}
+public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
 	
 	public void testRoutesTableFrame(){
 		// remove previous routes
@@ -62,7 +53,8 @@ public class OperationsRoutesGuiTest extends TestCase {
 		Assert.assertEquals("5th route", "Test Route E", f.routesModel.getValueAt(4, RoutesTableModel.NAMECOLUMN));
 			
 		// create add route frame
-		f.addButton.doClick();
+		//f.addButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
 		
 		// create edit route frame
 		f.routesModel.setValueAt(null, 2, RoutesTableModel.EDITCOLUMN);
@@ -75,7 +67,8 @@ public class OperationsRoutesGuiTest extends TestCase {
 		
 		f.routeNameTextField.setText("New Test Route");
 		f.commentTextField.setText("New Text Route Comment");
-		f.addRouteButton.doClick();
+		//f.addRouteButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addRouteButton ) );
 		
 		RouteManager rManager = RouteManager.instance();
 		Assert.assertEquals("should be 6 routes", 6, rManager.getRoutesByNameList().size());
@@ -86,18 +79,24 @@ public class OperationsRoutesGuiTest extends TestCase {
 		// Add some locations to the route
 		LocationManager lManager = LocationManager.instance();
 		f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc B"));
-		f.addLocationButton.doClick();
+		//f.addLocationButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addLocationButton ) );
 		f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc D"));
-		f.addLocationButton.doClick();
+		//f.addLocationButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addLocationButton ) );
 		f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc A"));
-		f.addLocationButton.doClick();
+		//f.addLocationButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addLocationButton ) );
 		
 		// put the next two locations at the start of the route
-		f.addLocAtTop.doClick();
+		//f.addLocAtTop.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addLocAtTop ) );
 		f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc C"));
-		f.addLocationButton.doClick();
+		//f.addLocationButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addLocationButton ) );
 		f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc E"));
-		f.addLocationButton.doClick();
+		//f.addLocationButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addLocationButton ) );
 		
 		// confirm that the route sequence is correct
 		List<String> routeLocations = newRoute.getLocationsBySequenceList();
@@ -108,12 +107,14 @@ public class OperationsRoutesGuiTest extends TestCase {
 		Assert.assertEquals("5th location", "Test Loc A", newRoute.getLocationById(routeLocations.get(4)).getName());
 		
 		f.routeNameTextField.setText("Newer Test Route");
-		f.saveRouteButton.doClick();
+		//f.saveRouteButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveRouteButton ) );
 		
 		Assert.assertEquals("changed route name", "Newer Test Route", newRoute.getName());
 		
 		// test delete button
-		f.deleteRouteButton.doClick();
+		//f.deleteRouteButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteRouteButton ) );
 		Assert.assertEquals("should be 5 routes", 5, rManager.getRoutesByNameList().size());
 	}
 	
@@ -131,7 +132,8 @@ public class OperationsRoutesGuiTest extends TestCase {
 	
 	// Ensure minimal setup for log4J
 	@Override
-	protected void setUp() {
+    protected void setUp() throws Exception { 
+        super.setUp();
 		apps.tests.Log4JFixture.setUp();
 		
 		// Repoint OperationsXml to JUnitTest subdirectory
@@ -164,5 +166,8 @@ public class OperationsRoutesGuiTest extends TestCase {
 
 	// The minimal setup for log4J
 	@Override
-	protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void tearDown() throws Exception { 
+        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
+    }
 }

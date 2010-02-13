@@ -21,20 +21,10 @@ import java.util.List;
  * Tests for the Operations Cars GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
-	synchronized void releaseThread() {
-		try {
-			Thread.sleep(20);
-			// super.wait(100);
-		}
-		catch (InterruptedException e) {
-			Assert.fail("failed due to InterruptedException");
-		}
-	}
-	
 	public void testCarsTableFrame() throws Exception {
 		// remove previous cars
 		CarManager.instance().dispose();

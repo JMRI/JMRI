@@ -8,34 +8,29 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import junit.extensions.jfcunit.*;
+import junit.extensions.jfcunit.finder.*;
+import junit.extensions.jfcunit.eventdata.*;
 
 import java.io.File;
 import java.util.List;
+
+import javax.swing.*;
 
 /**
  * Tests for the Operations Locations GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
-public class OperationsLocationsGuiTest extends TestCase {
+public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	
 	final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
-	synchronized void releaseThread() {
-		try {
-			Thread.sleep(20);
-			// super.wait(100);
-		}
-		catch (InterruptedException e) {
-			Assert.fail("failed due to InterruptedException");
-		}
-	}
-	
 	public void testLocationsTableFrame(){
 		// clear out previous locations
 		LocationManager.instance().dispose();	
@@ -52,7 +47,7 @@ public class OperationsLocationsGuiTest extends TestCase {
 		Location l5 = lManager.newLocation("Test Loc A");
 		l5.setLength(1005);
 		LocationsTableFrame f = new LocationsTableFrame();
-		f.setVisible(true);
+		//f.setVisible(true);
 		
 		// should be 5 rows
 		Assert.assertEquals("number of rows", 5, f.locationsModel.getRowCount());
@@ -70,8 +65,9 @@ public class OperationsLocationsGuiTest extends TestCase {
 		Assert.assertEquals("4th loc length", "1002", f.locationsModel.getValueAt(3, LocationsTableModel.LENGTHCOLUMN));
 		Assert.assertEquals("5th loc length", "1001", f.locationsModel.getValueAt(4, LocationsTableModel.LENGTHCOLUMN));
 		
-		// create add location frame
-		f.addButton.doClick();
+		// create add location frame by clicking add button
+		//f.addButton.doClick();
+        getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
 		
 		// create edit location frame
 		f.locationsModel.setValueAt(null, 2, LocationsTableModel.EDITCOLUMN);
@@ -83,7 +79,9 @@ public class OperationsLocationsGuiTest extends TestCase {
 		f.initComponents(null);
 		
 		f.locationNameTextField.setText("New Test Location");
-		f.addLocationButton.doClick();
+		//f.addLocationButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addLocationButton ) );
+
 		
 		LocationManager lManager = LocationManager.instance();
 		Assert.assertEquals("should be 6 locations", 6, lManager.getLocationsByNameList().size());
@@ -92,24 +90,30 @@ public class OperationsLocationsGuiTest extends TestCase {
 		Assert.assertNotNull(newLoc);
 		
 		// add a siding track
-		f.addYardButton.doClick();
+		//f.addYardButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addYardButton ) );
 		
 		// add an interchange track
-		f.addInterchangeButton.doClick();
+		//f.addInterchangeButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addInterchangeButton ) );
 		
 		// add a staging track
-		f.addStagingButton.doClick();
+		//f.addStagingButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addStagingButton ) );
 		
 		// add a yard track
-		f.addYardButton.doClick();
+		//f.addYardButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addYardButton ) );
 		
 		f.locationNameTextField.setText("Newer Test Location");
-		f.saveLocationButton.doClick();
+		//f.saveLocationButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveLocationButton ) );
 		
 		Assert.assertEquals("changed location name", "Newer Test Location", newLoc.getName());
 		
 		// test delete button
-		f.deleteLocationButton.doClick();
+		//f.deleteLocationButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteLocationButton ) );
 		Assert.assertEquals("should be 5 locations", 5, lManager.getLocationsByNameList().size());
 	}
 	
@@ -127,22 +131,29 @@ public class OperationsLocationsGuiTest extends TestCase {
 		// create two interchange tracks
 		f.trackNameTextField.setText("new interchange track");
 		f.trackLengthTextField.setText("321");
-		f.addTrackButton.doClick();
+		//f.addTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("2nd interchange track");
 		f.trackLengthTextField.setText("4331");
-		f.addTrackButton.doClick();
+		//f.addTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		// deselect east and south check boxes
-		f.eastCheckBox.doClick();
-		f.southCheckBox.doClick();
+		//f.eastCheckBox.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.eastCheckBox ) );
+		//f.southCheckBox.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.southCheckBox ) );
 		
 		// accept only UP road
-		f.roadNameInclude.doClick();
+		//f.roadNameInclude.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameInclude ) );
 		f.comboBoxRoads.setSelectedItem("UP");
-		f.addRoadButton.doClick();
+		//f.addRoadButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addRoadButton ) );
 		
-		f.saveTrackButton.doClick();
+		//f.saveTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
 		
 		Track t = l.getTrackByName("new interchange track", Track.INTERCHANGE);	
 		Assert.assertNotNull("new interchange track", t);
@@ -162,12 +173,16 @@ public class OperationsLocationsGuiTest extends TestCase {
 		// check track accepts Boxcars
 		Assert.assertTrue("2nd interchange track accepts Boxcars", t.acceptsTypeName("Boxcar"));
 		// test clear car types button
-		f.clearButton.doClick();
-		f.saveTrackButton.doClick();	
+		//f.clearButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.clearButton ) );
+		//f.saveTrackButton.doClick();	
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
 		Assert.assertFalse("2nd interchange track doesn't accept Boxcars", t.acceptsTypeName("Boxcar"));
 		
-		f.setButton.doClick();
-		f.saveTrackButton.doClick();
+		//f.setButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
+		//f.saveTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
 		Assert.assertTrue("2nd interchange track accepts Boxcars again", t.acceptsTypeName("Boxcar"));	
 	}
 	
@@ -181,27 +196,36 @@ public class OperationsLocationsGuiTest extends TestCase {
 		// create three siding tracks
 		f.trackNameTextField.setText("new siding track");
 		f.trackLengthTextField.setText("1223");
-		f.addTrackButton.doClick();
+		//f.addTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("2nd siding track");
 		f.trackLengthTextField.setText("9999");
-		f.addTrackButton.doClick();
+		//f.addTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("3rd siding track");
 		f.trackLengthTextField.setText("1010");
-		f.addTrackButton.doClick();
+		//f.addTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		// deselect east, west and north check boxes
-		f.eastCheckBox.doClick();
-		f.westCheckBox.doClick();
-		f.northCheckBox.doClick();
+		//f.eastCheckBox.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.eastCheckBox ) );
+		//f.westCheckBox.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.westCheckBox ) );
+		//f.northCheckBox.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.northCheckBox ) );
 		
 		// exclude UP road
-		f.roadNameExclude.doClick();
+		//f.roadNameExclude.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameExclude ) );
 		f.comboBoxRoads.setSelectedItem("UP");
-		f.addRoadButton.doClick();
+		//f.addRoadButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addRoadButton ) );
 		
-		f.saveTrackButton.doClick();
+		//f.saveTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
 		
 		Track t = l.getTrackByName("new siding track", null);	
 		Assert.assertNotNull("new siding track", t);
@@ -227,7 +251,8 @@ public class OperationsLocationsGuiTest extends TestCase {
 		Assert.assertTrue("3rd siding Road2", t.acceptsRoadName("Road2"));
 		
 		// create the schedule edit frame
-		f.editScheduleButton.doClick();
+		//f.editScheduleButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.editScheduleButton ) );
 	}
 	
 	/**
@@ -243,26 +268,34 @@ public class OperationsLocationsGuiTest extends TestCase {
 		// create four staging tracks
 		f.trackNameTextField.setText("new staging track");
 		f.trackLengthTextField.setText("34");
-		f.addTrackButton.doClick();
+		//f.addTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("2nd staging track");
 		f.trackLengthTextField.setText("3456");
-		f.addTrackButton.doClick();
+		//f.addTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("3rd staging track");
 		f.trackLengthTextField.setText("1");
-		f.addTrackButton.doClick();
+		//f.addTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("4th staging track");
 		f.trackLengthTextField.setText("12");
-		f.addTrackButton.doClick();
+		//f.addTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		// deselect east, west and south check boxes
-		f.northCheckBox.doClick();
-		f.westCheckBox.doClick();
-		f.southCheckBox.doClick();
+		//f.northCheckBox.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.northCheckBox ) );
+		//f.westCheckBox.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.westCheckBox ) );
+		//f.southCheckBox.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.southCheckBox ) );
 		
-		f.saveTrackButton.doClick();
+		//f.saveTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
 		
 		Track t = l.getTrackByName("new staging track", null);	
 		Assert.assertNotNull("new staging track", t);
@@ -301,26 +334,34 @@ public class OperationsLocationsGuiTest extends TestCase {
 		// create four yard tracks
 		f.trackNameTextField.setText("new yard track");
 		f.trackLengthTextField.setText("43");
-		f.addTrackButton.doClick();
+		//f.addTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("2nd yard track");
 		f.trackLengthTextField.setText("6543");
-		f.addTrackButton.doClick();
+		//f.addTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("3rd yard track");
 		f.trackLengthTextField.setText("1");
-		f.addTrackButton.doClick();
+		//f.addTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		f.trackNameTextField.setText("4th yard track");
 		f.trackLengthTextField.setText("21");
-		f.addTrackButton.doClick();
+		//f.addTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTrackButton ) );
 		
 		// deselect east, west and south check boxes
-		f.eastCheckBox.doClick();
-		f.westCheckBox.doClick();
-		f.southCheckBox.doClick();
+		//f.eastCheckBox.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.eastCheckBox ) );
+		//f.westCheckBox.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.westCheckBox ) );
+		//f.southCheckBox.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.southCheckBox ) );
 		
-		f.saveTrackButton.doClick();
+		//f.saveTrackButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
 		
 		Track t = l.getTrackByName("new yard track", null);	
 		Assert.assertNotNull("new yard track", t);
@@ -401,7 +442,8 @@ public class OperationsLocationsGuiTest extends TestCase {
 		f.initComponents(null, l, t);
 		f.scheduleNameTextField.setText("Test Schedule A");
 		f.commentTextField.setText("Test Comment");
-		f.addScheduleButton.doClick();
+		//f.addScheduleButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addScheduleButton ) );
 		
 		// was the schedule created?
 		ScheduleManager m = ScheduleManager.instance();
@@ -410,16 +452,22 @@ public class OperationsLocationsGuiTest extends TestCase {
 		
 		// now add some car types to the schedule
 		f.typeBox.setSelectedItem("Boxcar");
-		f.addTypeButton.doClick();
+		//f.addTypeButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
 		f.typeBox.setSelectedItem("Flat");
-		f.addTypeButton.doClick();
+		//f.addTypeButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
 		f.typeBox.setSelectedItem("Coil Car");
-		f.addTypeButton.doClick();
+		//f.addTypeButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
 		// put Gondola at start of list
 		f.typeBox.setSelectedItem("Tanker");
-		f.addLocAtTop.doClick();
-		f.addTypeButton.doClick();
-		f.saveScheduleButton.doClick();
+		//f.addLocAtTop.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addLocAtTop ) );
+		//f.addTypeButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
+		//f.saveScheduleButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveScheduleButton ) );
 		
 		List<String> list = s.getItemsBySequenceList();
 		Assert.assertEquals("number of items", 4, list.size());
@@ -433,7 +481,8 @@ public class OperationsLocationsGuiTest extends TestCase {
 		si = s.getItemById(list.get(3));		
 		Assert.assertEquals("3rd type", "Coil Car", si.getType());
 		
-		f.deleteScheduleButton.doClick();
+		//f.deleteScheduleButton.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteScheduleButton ) );
 		s = m.getScheduleByName("Test Schedule A");	
 		Assert.assertNull("Test Schedule A exists", s);
 	}
@@ -445,7 +494,8 @@ public class OperationsLocationsGuiTest extends TestCase {
 	
 	// Ensure minimal setup for log4J
 	@Override
-	protected void setUp() {
+    protected void setUp() throws Exception { 
+        super.setUp();
 		apps.tests.Log4JFixture.setUp();
 		
 		// Repoint OperationsXml to JUnitTest subdirectory
@@ -477,5 +527,8 @@ public class OperationsLocationsGuiTest extends TestCase {
 
 	// The minimal setup for log4J
 	@Override
-	protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void tearDown() throws Exception { 
+        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
+    }
 }
