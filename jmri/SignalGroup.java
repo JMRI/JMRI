@@ -205,7 +205,7 @@ public interface SignalGroup extends NamedBean {
     * Gets the state of the Turnout for the given Signal Head in the group
     * @param pSignal Name of the Signal Head
     * @param pTurnout Name of the Turnout within the Group
-    * @returns -1 if the turnout or signal head is invalid
+    * @return -1 if the turnout or signal head is invalid
     */
     public int getTurnoutState(String pSignal, String pTurnout);
     
@@ -213,7 +213,7 @@ public interface SignalGroup extends NamedBean {
     * Gets the state of the Turnout for the given Signal Head at index x
     * @param x Signal Head at index x
     * @param pTurnout Name of the Turnout within the Group
-    * @returns -1 if the turnout or signal head is invalid
+    * @return -1 if the turnout or signal head is invalid
     */
     public int getTurnoutStateByIndex(int x, String pTurnout);
     
@@ -221,7 +221,7 @@ public interface SignalGroup extends NamedBean {
     * Gets the state of the Turnout at index x, for the given Signal Head at index x
     * @param x Signal Head at index x
     * @param pTurnout Turnout at index pTurnout
-    * @returns -1 if the turnout or signal head is invalid
+    * @return -1 if the turnout or signal head is invalid
     */
     public int getTurnoutStateByIndex(int x, int pTurnout);
     
@@ -229,7 +229,7 @@ public interface SignalGroup extends NamedBean {
     * Gets the Name of the Turnout at index x, for the given Signal Head at index x
     * @param x Signal Head at index x
     * @param pTurnout Turnout at index pTurnout
-    * @returns null if the turnout or signal head is invalid
+    * @return null if the turnout or signal head is invalid
     */
     public String getTurnoutNameByIndex(int x, int pTurnout);
     
@@ -253,7 +253,7 @@ public interface SignalGroup extends NamedBean {
     * Gets the state of the Sensor for the given Signal Head in the group
     * @param pSignal Name of the Signal Head
     * @param pSensor Name of the Sensor within the Group
-    * @returns -1 if the sensor or signal head is invalid
+    * @return -1 if the sensor or signal head is invalid
     */
     public int getSensorState(String pSignal, String pSensor);
     
@@ -261,7 +261,7 @@ public interface SignalGroup extends NamedBean {
     * Gets the state of the Sensor for the given Signal Head at index x
     * @param x Signal Head at index x
     * @param pTurnout Name of the Sensor within the Group
-    * @returns -1 if the sensor or signal head is invalid
+    * @return -1 if the sensor or signal head is invalid
     */
     public int getSensorStateByIndex(int x, int pSensor);
     
@@ -269,7 +269,7 @@ public interface SignalGroup extends NamedBean {
     * Gets the state of the Sensor at index x, for the given Signal Head at index x
     * @param x Signal Head at index x
     * @param pTurnout Sensor at index pTurnout
-    * @returns null if the sensor or signal head is invalid
+    * @return null if the sensor or signal head is invalid
     */
     public String getSensorNameByIndex(int x, int pSensor);
     
