@@ -73,7 +73,7 @@ import javax.swing.JTextArea;
  * so that Jython code can easily use some of the methods.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.41 $
+ * @version     $Revision: 1.42 $
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -108,16 +108,23 @@ public class AbstractAutomaton implements Runnable {
      * This is invoked on currentThread.
      */
     public void run() {
-        inThread = true;
-        init();
-        // the real processing in the next statement is in handle();
-        // and the loop call is just doing accounting
-        while (handle()) {
-        	count++;
-        	summary.loop(this);
+        try {
+            inThread = true;
+            init();
+            // the real processing in the next statement is in handle();
+            // and the loop call is just doing accounting
+            while (handle()) {
+                count++;
+                summary.loop(this);
+            }
+            log.debug("normal termination, handle() returned false");
+            currentThread = null;
+            done();
+        } catch (ThreadDeath e1) {
+            log.debug("Received ThreadDeath, likely due to stop(): "+e1, e1);
+        } catch (Exception e2) {
+            log.warn("Exception ends AbstractAutomaton thread: "+e2, e2);
         }
-        currentThread = null;
-        done();
     }
 
     /**
@@ -127,7 +134,10 @@ public class AbstractAutomaton implements Runnable {
      */
     @SuppressWarnings("deprecation")
     public void stop() {
-        if (currentThread == null) log.error("Stop with currentThread null!");
+        if (currentThread == null) {
+            log.error("Stop with currentThread null!");
+            return;
+        }
         currentThread.stop();
         currentThread = null;
         done();
