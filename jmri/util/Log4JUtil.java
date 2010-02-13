@@ -12,8 +12,8 @@ import java.util.Enumeration;
  * than a real class, as (so far) all of the operations have needed no state
  * information.
  *
- * @author Bob Jacobsen  Copyright 2009
- * @version $Revision: 1.1 $
+ * @author Bob Jacobsen  Copyright 2009, 2010
+ * @version $Revision: 1.2 $
  */
 
 public class Log4JUtil {
@@ -39,6 +39,9 @@ public class Log4JUtil {
             }
         }
         catch (java.lang.NoSuchMethodError e) { log.error("Exception starting logging: "+e); }
+        // install default exception handlers
+        System.setProperty("sun.awt.exception.handler", jmri.util.exceptionhandler.AwtHandler.class.getName());
+        Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
     }
 
     @SuppressWarnings("unchecked")

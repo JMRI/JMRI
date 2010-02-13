@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.util tree
  *
  * @author	    Bob Jacobsen  Copyright 2003
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 public class UtilTest extends TestCase {
 
@@ -26,15 +26,17 @@ public class UtilTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.util.UtilTest");   // no tests in this class itself
+
         suite.addTest(FileUtilTest.suite());
         suite.addTest(JUnitAppenderTest.suite());
+        suite.addTest(NamedBeanHandleTest.suite());
         suite.addTest(OrderedHashtableTest.suite());
         suite.addTest(StringUtilTest.suite());
         suite.addTest(SwingTestCaseTest.suite());
-        suite.addTest(NamedBeanHandleTest.suite());
 
-        suite.addTest(jmri.util.swing.PackageTest.suite());
         suite.addTest(jmri.util.docbook.DocBookTest.suite());
+        suite.addTest(jmri.util.exceptionhandler.PackageTest.suite());
+        suite.addTest(jmri.util.swing.PackageTest.suite());
 
         return suite;
     }
