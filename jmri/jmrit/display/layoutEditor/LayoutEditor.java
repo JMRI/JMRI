@@ -52,7 +52,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class LayoutEditor extends Editor {
@@ -5539,7 +5539,8 @@ public class LayoutEditor extends Editor {
     public void showToolTip(Positionable selection, MouseEvent event) {
         if (selection.getDisplayLevel()>BKG) {
             ToolTip tip = selection.getTooltip();
-            tip.setLocation(selection.getX() + selection.getWidth()/2, event.getY());
+            tip.setLocation(selection.getX()+selection.getWidth()/2, selection.getY()+selection.getHeight());
+//            tip.setLocation(selection.getX() + selection.getWidth()/2, event.getY());
             tip.setText(selection.getNameString());
             setToolTip(tip);
         } else {
