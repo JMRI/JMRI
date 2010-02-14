@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.10 2010-02-14 19:33:53 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.11 2010-02-14 22:19:25 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -281,6 +281,9 @@ JMRI mini web server, and try these two URLs:
 Kevin Dickerson improved the synchronization of turnouts between JMRI and 
 an eCos command station.
 
+<p>
+A new "virtual" connection has been added, so you can try the programs
+without selecting any particular type of layout hardware.
 
 <!--#include virtual="/Footer" -->
 
