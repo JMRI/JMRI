@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: index.shtml,v 1.9 2010-02-14 02:39:28 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.10 2010-02-14 19:33:53 jacobsen Exp $ -->
 <title>JMRI: Web Access</title>
 
 <!-- Style -->
@@ -203,6 +203,16 @@ For example, to display "MyFile.xml" from the JMRI preferences directory, use
 
 JMRI provides XML and Ajax access via a
 <a href="http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">XML IO custom servlet</a>.
+
+<p>
+There are two sample pages that show how this can be used:
+<dl>
+<dt><a href="http://localhost:12080/web/request.xml">web/request.xml</a>
+<dd>Makes a single XML request for all available sensors, and shows their status in a table.
+<dt><a href="http://localhost:12080/web/monitor.xml">web/monitor.xml</a>
+<dd>Uses delayed requests to monitor the status of all sensors, 
+updating a table when any change.
+</dl>
 
 <p>
 By default, this is configured to handle URLs that start with "/xmlio".

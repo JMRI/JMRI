@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: XMLIO.shtml,v 1.3 2010-02-14 06:10:00 jacobsen Exp $ -->
+<!-- $Id: XMLIO.shtml,v 1.4 2010-02-14 19:33:53 jacobsen Exp $ -->
 <title>JMRI: XML IO Servlet</title>
 
 <!-- Style -->
@@ -36,9 +36,9 @@ By default, the JMRI mini server will send any URL that starts with /xmlio to th
 <p>
 There are two sample pages that show how this can be used:
 <dl>
-<dt>web/request.xml
+<dt><a href="http://localhost/web/request.xml">web/request.xml</a>
 <dd>Makes a single XML request for all available sensors, and shows their status in a table.
-<dt>web/monitor.xml
+<dt><a href="http://localhost:12080/web/monitor.xml">web/monitor.xml</a>
 <dd>Uses delayed requests to monitor the status of all sensors, 
 updating a table when any change.
 </dl>
