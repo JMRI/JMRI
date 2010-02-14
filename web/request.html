@@ -29,21 +29,24 @@ var req;
 
 // retrieve XML document (reusable generic function);
 // parameter is URL string that includes the XML request
-function loadXMLDoc(url) {
+function loadXMLDoc(url, data) {
     // branch for native XMLHttpRequest object
     if (window.XMLHttpRequest) {
         req = new XMLHttpRequest();
         req.onreadystatechange = processReqChange;
-        req.open("GET", url, true);
-        req.send(null);
+        req.open("POST", url, true);
+        req.send(data);
+        // GET method also works for short requests:
+        // req.open("GET", url+"/"+data, true);
+        // req.send(null);
     // branch for IE/Windows ActiveX version
     } else if (window.ActiveXObject) {
         isIE = true;
         req = new ActiveXObject("Microsoft.XMLHTTP");
         if (req) {
             req.onreadystatechange = processReqChange;
-            req.open("GET", url, true);
-            req.send();
+            req.open("POST", url, true);
+            req.send(data);
         }
     }
 }
@@ -71,7 +74,7 @@ function loadDoc(evt) {
         var elem = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
 
         try {
-            loadXMLDoc("/xmlio/<xmlio><list><type>sensor</type></list><list><type>turnout</type></list></xmlio>");
+            loadXMLDoc("/xmlio","<xmlio><list><type>sensor</type></list><list><type>turnout</type></list></xmlio>");
         }
         catch(e) {
             var msg = (typeof e == "string") ? e : ((e.message) ? e.message : "Unknown Error");
