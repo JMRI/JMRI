@@ -63,6 +63,8 @@ function processReqChange() {
 
 // invoked by button push, sends an XML request
 function loadDoc(evt) {
+    // hide button to prevent repush
+    document.getElementById("button").style.visibility="hidden";
     // equalize W3C/IE event models to get event object
     evt = (evt) ? evt : ((window.event) ? window.event : null);
     if (evt) {
@@ -70,7 +72,7 @@ function loadDoc(evt) {
         var elem = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
 
         try {
-            loadXMLDoc("/xmlio/<xmlio><list><type>sensor</type></list><list><type>turnout</type></list></xmlio>");
+            loadXMLDoc("/xmlio/<xmlio><list><type>sensor</type></list></xmlio>");
         }
         catch(e) {
             var msg = (typeof e == "string") ? e : ((e.message) ? e.message : "Unknown Error");
@@ -120,6 +122,7 @@ function processReturn() {
     var div = document.getElementById("results");
     div.innerHTML = "";
     
+    // make and show table
     var tbl  = document.createElement("table");
     var tblB = document.createElement("tbody");
     // creating all cells
@@ -136,7 +139,10 @@ function processReturn() {
     }
     tbl.appendChild(tblB);
     div.appendChild(tbl);
-    tbl.setAttribute("border", "4");    
+    tbl.setAttribute("border", "4");   
+    
+    // send the next request
+    loadXMLDoc("/xmlio/"+req.responseText);
 }
 
 
@@ -146,9 +152,9 @@ function processReturn() {
 <body>
 <h1>XMLIO Demo</h1>
 <hr /> 
-This sample page retrieves and displays the entire content of a JMRI instance.
+This sample page pulls the full set of JMRI sensors, and then monitors them.
 <form>
-<button type="button" id="button" onClick="loadDoc(event)">Update</button>
+<button type="button" id="button" onClick="loadDoc(event)">Start</button>
 </form>
 
 <!-- location for result table -->
