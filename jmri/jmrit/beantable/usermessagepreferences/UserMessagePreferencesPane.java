@@ -11,9 +11,9 @@ import javax.swing.*;
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
-public class UserMessagePreferencesPane extends javax.swing.JPanel {
+public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
 
     jmri.UserPreferencesManager p;
     
@@ -117,28 +117,37 @@ public class UserMessagePreferencesPane extends javax.swing.JPanel {
         //applicationtabpanel = new JPanel(new BoxLayout());
         JPanel tableDeleteTabPanel = new JPanel();
         tableDeleteTabPanel.setLayout(new BoxLayout(tableDeleteTabPanel, BoxLayout.Y_AXIS));
-        JPanel tableDeleteInfoPanel = new JPanel();
-        JLabel tableDeleteInfoLabel = new JLabel("These options determine whether you are prompted before deleting an item, if not what action is taken.");
-        tableDeleteInfoPanel.add(tableDeleteInfoLabel);
-        tableDeleteTabPanel.add(tableDeleteInfoPanel);
-        tableDeleteInfoLabel = new JLabel("Note: if No is selected in any of these items then the item will never be deleted!");
-        tableDeleteInfoPanel = new JPanel();
-        tableDeleteInfoLabel.setFont(tableDeleteInfoLabel.getFont().deriveFont(10f));
-        tableDeleteInfoPanel.add(tableDeleteInfoLabel);
-        tableDeleteTabPanel.add(tableDeleteInfoPanel);
 
-        tableDeleteTabPanel.add(addQuestionButton(_warnAudioInUse = new JComboBox(), "Audio", p.getWarnAudioInUse()));
-        tableDeleteTabPanel.add(addQuestionButton(_warnBlockInUse = new JComboBox(), "Block", p.getWarnBlockInUse()));
-        //tableDeleteTabPanel.add(addQuestionButton(_warnLRouteInUse = new JComboBox(), "LRoute", p.getWarnLRouteInUse()));
-        tableDeleteTabPanel.add(addQuestionButton(_warnLightInUse = new JComboBox(), "Light", p.getWarnLightInUse()));    
-        tableDeleteTabPanel.add(addQuestionButton(_warnSectionInUse = new JComboBox(), "Section", p.getWarnSectionInUse()));
-        tableDeleteTabPanel.add(addQuestionButton(_warnMemoryInUse = new JComboBox(), "Memory", p.getWarnMemoryInUse()));
-        tableDeleteTabPanel.add(addQuestionButton(_warnReporterInUse = new JComboBox(), "Reporter", p.getWarnReporterInUse()));
-        tableDeleteTabPanel.add(addQuestionButton(_warnSensorInUse = new JComboBox(), "Sensor", p.getWarnSensorInUse()));
-        tableDeleteTabPanel.add(addQuestionButton(_warnSignalMastInUse = new JComboBox(), "SignalMast", p.getWarnSignalMastInUse()));
-        tableDeleteTabPanel.add(addQuestionButton(_warnSignalHeadInUse = new JComboBox(), "SignalHead", p.getWarnSignalHeadInUse()));
-        tableDeleteTabPanel.add(addQuestionButton(_warnTransitInUse = new JComboBox(), "Transit", p.getWarnTransitInUse()));
-        tableDeleteTabPanel.add(addQuestionButton(_warnTurnoutInUse = new JComboBox(), "Turnout", p.getWarnTurnoutInUse()));
+        JLabel tableDeleteInfoLabel = new JLabel("These options determine whether you are prompted before deleting an item,", JLabel.CENTER);
+        tableDeleteInfoLabel.setAlignmentX(0.5f);
+        tableDeleteTabPanel.add(tableDeleteInfoLabel);
+
+        tableDeleteInfoLabel = new JLabel("or if not, what action should be taken.", JLabel.CENTER);
+        tableDeleteInfoLabel.setAlignmentX(0.5f);
+        tableDeleteTabPanel.add(tableDeleteInfoLabel);
+
+        tableDeleteInfoLabel = new JLabel("Note: if No is selected in any of these items then the item will never be deleted!");
+        tableDeleteInfoLabel.setFont(tableDeleteInfoLabel.getFont().deriveFont(10f));
+        tableDeleteInfoLabel.setAlignmentX(0.5f);
+        tableDeleteTabPanel.add(tableDeleteInfoLabel);
+
+        JPanel inside = new JPanel();
+        inside.setLayout(new jmri.util.javaworld.GridLayout2(6,2*2));
+        
+        addQuestionComboBoxToGrid(inside, _warnAudioInUse = new JComboBox(), "Audio", p.getWarnAudioInUse());
+        addQuestionComboBoxToGrid(inside, _warnBlockInUse = new JComboBox(), "Block", p.getWarnBlockInUse());
+        //addQuestionComboBoxToGrid(inside, _warnLRouteInUse = new JComboBox(), "LRoute", p.getWarnLRouteInUse());
+        addQuestionComboBoxToGrid(inside, _warnLightInUse = new JComboBox(), "Light", p.getWarnLightInUse());    
+        addQuestionComboBoxToGrid(inside, _warnSectionInUse = new JComboBox(), "Section", p.getWarnSectionInUse());
+        addQuestionComboBoxToGrid(inside, _warnMemoryInUse = new JComboBox(), "Memory", p.getWarnMemoryInUse());
+        addQuestionComboBoxToGrid(inside, _warnReporterInUse = new JComboBox(), "Reporter", p.getWarnReporterInUse());
+        addQuestionComboBoxToGrid(inside, _warnSensorInUse = new JComboBox(), "Sensor", p.getWarnSensorInUse());
+        addQuestionComboBoxToGrid(inside, _warnSignalMastInUse = new JComboBox(), "SignalMast", p.getWarnSignalMastInUse());
+        addQuestionComboBoxToGrid(inside, _warnSignalHeadInUse = new JComboBox(), "SignalHead", p.getWarnSignalHeadInUse());
+        addQuestionComboBoxToGrid(inside, _warnTransitInUse = new JComboBox(), "Transit", p.getWarnTransitInUse());
+        addQuestionComboBoxToGrid(inside, _warnTurnoutInUse = new JComboBox(), "Turnout", p.getWarnTurnoutInUse());
+        
+        tableDeleteTabPanel.add(inside);
         
         return tableDeleteTabPanel;
     }
@@ -180,6 +189,16 @@ public class UserMessagePreferencesPane extends javax.swing.JPanel {
         p.finishLoading();
     }
     
+    private void addQuestionComboBoxToGrid(JPanel p, JComboBox _combo, String label, int value){
+        JLabel _comboLabel = new JLabel(label, JLabel.RIGHT);
+        p.add(_comboLabel);
+        
+        initializeChoiceCombo(_combo);
+        if (value!=0x00)
+            setChoiceType(_combo, value);
+        p.add(_combo);
+    }
+
     private JPanel addQuestionButton(JComboBox _combo, String label, int value){
         JPanel _comboPanel = new JPanel();
         JLabel _comboLabel = new JLabel(label);
