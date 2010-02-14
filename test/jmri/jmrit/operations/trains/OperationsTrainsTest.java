@@ -58,7 +58,7 @@ import jmri.jmrit.operations.routes.RouteManager;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.48 $
+ * @version $Revision: 1.49 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -130,17 +130,17 @@ public class OperationsTrainsTest extends TestCase {
 
 	// test TrainIcon attributes
 	public void testTrainIconAttributes() {
-		Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
+		Train train1 = new Train("TESTTRAINID", "TESTNAME");
 
 		Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
-		Assert.assertEquals("Train Name", "TESTTRAINNAME", train1.getName());
-		Assert.assertEquals("Train toString", "TESTTRAINNAME", train1.toString());
+		Assert.assertEquals("Train Name", "TESTNAME", train1.getName());
+		Assert.assertEquals("Train toString", "TESTNAME", train1.toString());
 
-        jmri.jmrit.display.panelEditor.PanelEditor panel = 
-                new jmri.jmrit.display.panelEditor.PanelEditor("Test Panel");
-		TrainIcon trainicon1 = new TrainIcon(panel);
+		jmri.jmrit.display.panelEditor.PanelEditor editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test Panel");
+        Assert.assertNotNull("New editor", editor);
+		TrainIcon trainicon1 = editor.addTrainIcon("TestName");
 		trainicon1.setTrain(train1);
-		Assert.assertEquals("TrainIcon set train", "TESTTRAINNAME", trainicon1.getTrain().getName());
+		Assert.assertEquals("TrainIcon set train", "TESTNAME", trainicon1.getTrain().getName());
 	}
 
 	// test Train attributes

@@ -11,7 +11,6 @@ import jmri.jmrit.operations.locations.LocationManager;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import junit.extensions.jfcunit.finder.*;
 import junit.extensions.jfcunit.eventdata.*;
 
 import java.io.File;
@@ -21,7 +20,7 @@ import java.util.List;
  * Tests for the Operations Routes GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
 	

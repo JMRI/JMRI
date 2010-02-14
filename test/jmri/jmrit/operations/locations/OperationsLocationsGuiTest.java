@@ -12,20 +12,16 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import junit.extensions.jfcunit.*;
-import junit.extensions.jfcunit.finder.*;
 import junit.extensions.jfcunit.eventdata.*;
 
 import java.io.File;
 import java.util.List;
 
-import javax.swing.*;
-
 /**
  * Tests for the Operations Locations GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	
@@ -180,7 +176,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertFalse("2nd interchange track doesn't accept Boxcars", t.acceptsTypeName("Boxcar"));
 		
 		//f.setButton.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.setButton ) );
 		//f.saveTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
 		Assert.assertTrue("2nd interchange track accepts Boxcars again", t.acceptsTypeName("Boxcar"));	

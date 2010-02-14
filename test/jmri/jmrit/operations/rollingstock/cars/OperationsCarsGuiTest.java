@@ -2,7 +2,10 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
+import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsXml;
@@ -21,7 +24,7 @@ import java.util.List;
  * Tests for the Operations Cars GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
@@ -38,6 +41,22 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		cr.addName("UP");
 		cr.addName("AA");
 		cr.addName("SP");
+		// add locations
+		LocationManager lManager = LocationManager.instance();
+		Location westford = lManager.newLocation("Westford");
+		Track westfordYard = westford.addTrack("Yard", Track.YARD);
+		westfordYard.setLength(300);
+		Track westfordSiding = westford.addTrack("Siding", Track.SIDING);
+		westfordSiding.setLength(300);
+		Track westfordAble = westford.addTrack("Able", Track.SIDING);
+		westfordAble.setLength(300);
+		Location boxford = lManager.newLocation("Boxford");
+		Track boxfordYard = boxford.addTrack("Yard", Track.YARD);
+		boxfordYard.setLength(300);
+		Track boxfordJacobson = boxford.addTrack("Jacobson", Track.SIDING);
+		boxfordJacobson.setLength(300);
+		Track boxfordHood = boxford.addTrack("Hood", Track.SIDING);
+		boxfordHood.setLength(300);
 		
 		// enable rfid field
 		Setup.setRfidEnabled(true);
@@ -63,6 +82,8 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		c1.setWeightTons("Tons of Weight");
 		c1.setCaboose(true);
 		c1.setComment("Test Car NH 1 Comment");
+		Assert.assertEquals("c1 location", Car.OKAY, c1.setLocation(westford, westfordYard));
+		Assert.assertEquals("c1 destination", Car.OKAY, c1.setDestination(boxford, boxfordJacobson));
 
 		Car c2 = cManager.newCar("UP", "2");
 		c2.setBuilt("2004");
@@ -77,29 +98,38 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Car c3 = cManager.newCar("AA", "3");
 		c3.setBuilt("2006");
 		c3.setColor("White");
+		c3.setLength("30");
 		c3.setLoad("LA");
 		c3.setMoves(40);
 		c3.setOwner("AB");
 		c3.setRfid("RFID 5");
 		c3.setType("Gon");
+		Assert.assertEquals("c3 location", Car.OKAY, c3.setLocation(boxford, boxfordHood));
+		Assert.assertEquals("c3 destination", Car.OKAY, c3.setDestination(boxford, boxfordYard));
 		
 		Car c4 = cManager.newCar("SP", "2");
 		c4.setBuilt("1990");
 		c4.setColor("Black");
+		c4.setLength("45");
 		c4.setLoad("EA");
 		c4.setMoves(30);
 		c4.setOwner("AAA");
 		c4.setRfid("RFID 4");
-		c4.setType("Tankcar");
+		c4.setType("Tanker");
+		Assert.assertEquals("c4 location", Car.OKAY, c4.setLocation(westford, westfordSiding));
+		Assert.assertEquals("c4 destination", Car.OKAY, c4.setDestination(boxford, boxfordHood));
 		
 		Car c5 = cManager.newCar("NH", "5");
 		c5.setBuilt("1956");
 		c5.setColor("Brown");
+		c5.setLength("25");
 		c5.setLoad("LL");
 		c5.setMoves(25);
 		c5.setOwner("DAB");
 		c5.setRfid("RFID 1");
-		c5.setType("Coilcar");
+		c5.setType("Coil Car");
+		Assert.assertEquals("c5 location", Car.OKAY, c5.setLocation(westford, westfordAble));
+		Assert.assertEquals("c5 destination", Car.OKAY, c5.setDestination(westford, westfordAble));
 		
 		Assert.assertEquals("number of cars", "5", ctf.numCars.getText());
 	
@@ -112,7 +142,6 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("5th car in sort by number list", c5.getId(), cars.get(4));
 		
 		// now sort by built date
-		//ctf.sortByBuilt.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByBuilt ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by built list", c5.getId(), cars.get(0));
@@ -122,7 +151,6 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("5th car in sort by built list", c1.getId(), cars.get(4));
 		
 		// now sort by color
-		//ctf.sortByColor.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByColor ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by color list", c4.getId(), cars.get(0));
@@ -131,15 +159,18 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("4th car in sort by color list", c1.getId(), cars.get(3));
 		Assert.assertEquals("5th car in sort by color list", c3.getId(), cars.get(4));
 
-		//ctf.sortByDestination.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByDestination ) );
-		//TODO add destinations
-		//ctf.sortByKernel.doClick();
+		cars = ctf.carsModel.getSelectedCarList();
+		Assert.assertEquals("1st car in sort by destination list", c2.getId(), cars.get(0));
+		Assert.assertEquals("2nd car in sort by destination list", c4.getId(), cars.get(1));
+		Assert.assertEquals("3rd car in sort by destination list", c1.getId(), cars.get(2));
+		Assert.assertEquals("4th car in sort by destination list", c3.getId(), cars.get(3));
+		Assert.assertEquals("5th car in sort by destination list", c5.getId(), cars.get(4));
+
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByKernel ) );
 		//TODO add kernels
 		
 		// now sort by load
-		//ctf.sortByLoad.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByLoad ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by load list", c2.getId(), cars.get(0));
@@ -148,12 +179,16 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("4th car in sort by load list", c3.getId(), cars.get(3));
 		Assert.assertEquals("5th car in sort by load list", c5.getId(), cars.get(4));	
 		
-		//ctf.sortByLocation.doClick();
+		// now sort by location
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByLocation ) );
-		//TODO add locations
-		
+        cars = ctf.carsModel.getSelectedCarList();
+        Assert.assertEquals("1st car in sort by location list", c2.getId(), cars.get(0));
+		Assert.assertEquals("2nd car in sort by location list", c3.getId(), cars.get(1));
+		Assert.assertEquals("3rd car in sort by location list", c5.getId(), cars.get(2));
+		Assert.assertEquals("4th car in sort by location list", c4.getId(), cars.get(3));
+		Assert.assertEquals("5th car in sort by location list", c1.getId(), cars.get(4));
+	
 		// now sort by moves
-		//ctf.sortByMoves.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByMoves ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by move list", c5.getId(), cars.get(0));
@@ -163,7 +198,6 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("5th car in sort by move list", c1.getId(), cars.get(4));
 
 		// test sort by number again
-		//ctf.sortByNumber.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByNumber ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by number list 2", c1.getId(), cars.get(0));
@@ -173,7 +207,6 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("5th car in sort by number list 2", c5.getId(), cars.get(4));
 
 		// test sort by owner
-		//ctf.sortByOwner.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByOwner ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by owner list", c4.getId(), cars.get(0));
@@ -183,7 +216,6 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("5th car in sort by owner list", c1.getId(), cars.get(4));
 
 		// test sort by rfid
-		//ctf.sortByRfid.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByRfid ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by rfid list", c5.getId(), cars.get(0));
@@ -193,7 +225,6 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("5th car in sort by rfid list", c3.getId(), cars.get(4));
 
 		// test sort by road
-		//ctf.sortByRoad.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByRoad ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by road list", c3.getId(), cars.get(0));
@@ -202,12 +233,10 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("4th car in sort by road list", c4.getId(), cars.get(3));
 		Assert.assertEquals("5th car in sort by road list", c2.getId(), cars.get(4));
 
-		//ctf.sortByTrain.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByTrain ) );
 		//TODO add trains
 		
 		// test sort by type
-		//ctf.sortByType.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.sortByType ) );
 		cars = ctf.carsModel.getSelectedCarList();
 		Assert.assertEquals("1st car in sort by type list", c2.getId(), cars.get(0));
@@ -218,16 +247,13 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
 		// test find text field
 		ctf.findCarTextBox.setText("2");
-		//ctf.findButton.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.findButton ) );
 		// table is sorted by type, cars with number 2 are in the first and last rows
 		Assert.assertEquals("find car by number 1st", 0, ctf.carsTable.getSelectedRow());
-		//ctf.findButton.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.findButton ) );
 		Assert.assertEquals("find car by number 2nd", 4, ctf.carsTable.getSelectedRow());
 
 		// create the CarEditFrame
-		//ctf.addButton.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.addButton ) );
 		
 	}
@@ -249,7 +275,6 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		f.builtTextField.setText("1999");
 		f.ownerComboBox.setSelectedItem("Owner1");
 		f.commentTextField.setText("test car comment field");
-		//f.saveButton.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		
 		CarManager cManager = CarManager.instance();
@@ -269,28 +294,22 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertFalse("no fred", c6.hasFred());
 		Assert.assertFalse("not hazardous", c6.isHazardous());
 		
-		//f.cabooseCheckBox.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, f.cabooseCheckBox ) );
 		Assert.assertFalse("still not a caboose", c6.isCaboose());
-		//f.saveButton.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		Assert.assertTrue("now a caboose", c6.isCaboose());
 		Assert.assertFalse("not hazardous 2", c6.isHazardous());
 		
-		//f.fredCheckBox.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, f.fredCheckBox ) );
 		Assert.assertTrue("still a caboose", c6.isCaboose());
 		Assert.assertFalse("still no fred", c6.hasFred());
-		//f.saveButton.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		Assert.assertFalse("no longer a caboose", c6.isCaboose());
 		Assert.assertTrue("now has a fred", c6.hasFred());
 		Assert.assertFalse("not hazardous 3", c6.isHazardous());
 		
-		//f.hazardousCheckBox.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, f.hazardousCheckBox ) );
 		Assert.assertFalse("still not hazardous 3", c6.isHazardous());
-		//f.saveButton.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		Assert.assertFalse("still no longer a caboose", c6.isCaboose());
 		Assert.assertTrue("still has a fred", c6.hasFred());
@@ -325,7 +344,6 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertFalse("car is not hazardous", f.hazardousCheckBox.isSelected());
 		
 		// test delete button
-		//f.deleteButton.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteButton ) );
 		
 		// should have 5 cars now
@@ -336,18 +354,24 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		CarAttributeEditFrame f = new CarAttributeEditFrame();
 		f.initComponents(CarEditFrame.COLOR);		
 		f.addTextBox.setText("Pink");
-		//f.addButton.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
 		// new color should appear at start of list
 		Assert.assertEquals("new color","Pink",f.comboBox.getItemAt(0));
-		
-		//f.deleteButton.doClick();
-        getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteButton ) );
+		 
+		// test replace
+		f.comboBox.setSelectedItem("Pink");
+		f.addTextBox.setText("Pinker");
+	    // push replace button
+	    getHelper().enterClickAndLeave( new MouseEventData( this, f.replaceButton ) );
+	    // need to also push the "Yes" button in the dialog window
+	    pressDialogButton(f, "Yes");
+	    // did the replace work?
+	    Assert.assertEquals("replaced Pink with Pinker","Pinker",f.comboBox.getItemAt(0));
 
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteButton ) );
 		// red is the first default color
 		Assert.assertEquals("old color","Red",f.comboBox.getItemAt(0));
 		
-		testReplace(f);	
 	}
 	
 	public void testCarAttributeEditFrameKernel(){
@@ -366,7 +390,6 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("previous kernel 1","TwoCars", f.comboBox.getItemAt(1));
 		
 		f.addTextBox.setText("TestKernel");
-		//f.addButton.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
 		// new kernel should appear at start of list after blank
 		Assert.assertEquals("new kernel","TestKernel", f.comboBox.getItemAt(1));
@@ -374,11 +397,15 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		// test replace
 		f.comboBox.setSelectedItem("TestKernel");
 		f.addTextBox.setText("TestKernel2");
-		testReplace(f);	
+	    // push replace button
+	    getHelper().enterClickAndLeave( new MouseEventData( this, f.replaceButton ) );
+	    // need to also push the "Yes" button in the dialog window
+	    pressDialogButton(f, "Yes");
+	    // did the replace work?
+	    Assert.assertEquals("replaced TestKernel with TestKernel2","TestKernel2",f.comboBox.getItemAt(1));
 		
 		// now try and delete
 		f.comboBox.setSelectedItem("TestKernel2");
-		//f.deleteButton.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteButton ) );
 		// blank is the first default kernel
 		Assert.assertEquals("space 2","",f.comboBox.getItemAt(0));
@@ -400,10 +427,9 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		CarLoadEditFrame f = new CarLoadEditFrame();
 		f.initComponents("Boxcar");
 		f.addTextBox.setText("New Load");
-		//f.addButton.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
 		// new load should appear at start of list
-		Assert.assertEquals("new color","New Load",f.comboBox.getItemAt(0));
+		Assert.assertEquals("new load","New Load",f.comboBox.getItemAt(0));
 	}
 	
 	public void testCarSetFrame(){
@@ -415,27 +441,18 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		f.loadCar(c3);
 	}
 	
-	CarAttributeEditFrame caef;
-	//TODO this test only closes the confirmation window, need to figure out
-	// a way to press the okay button
 	@SuppressWarnings("unchecked")
-	private void testReplace(CarAttributeEditFrame f){
-		caef = f;
-		//  (with JfcUnit, not pushing this off to another thread)
-	    // put replace button
-	    getHelper().enterClickAndLeave( new MouseEventData( OperationsCarsGuiTest.this, 
-				                                            caef.replaceButton ) );
-				                                            
+	private void pressDialogButton(CarAttributeEditFrame f, String buttonName){
+		//  (with JfcUnit, not pushing this off to another thread)			                                            
 		// Locate resulting dialog box
         List<javax.swing.JDialog> dialogList = new DialogFinder(null).findAll(f);
         javax.swing.JDialog d = dialogList.get(0);
-        // Find the "Yes" button
-        AbstractButtonFinder finder = new AbstractButtonFinder("Yes" );
+        // Find the button
+        AbstractButtonFinder finder = new AbstractButtonFinder(buttonName);
         javax.swing.JButton button = ( javax.swing.JButton ) finder.find( d, 0);
-        Assert.assertNotNull("Yes button found", button);   
-        // Click "Yes" button
-        getHelper().enterClickAndLeave( new MouseEventData( this, button ) );
-		
+        Assert.assertNotNull("button not found", button);   
+        // Click button
+        getHelper().enterClickAndLeave( new MouseEventData( this, button ) );		
 	}
 	
 	// Ensure minimal setup for log4J

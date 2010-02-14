@@ -11,16 +11,17 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.extensions.jfcunit.finder.*;
 import junit.extensions.jfcunit.eventdata.*;
+import jmri.util.JmriJFrame;
+
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.Window;
 import java.util.List;
 
 /**
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 
@@ -163,16 +164,6 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.setButton ) );
 		Assert.assertTrue("train accepts car type Flat 2", t.acceptsTypeName("Flat"));
 		
-		// test car road options
-		//trainEditFrame.roadNameExclude.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.roadNameExclude ) );
-		Assert.assertEquals("train car road exclude", Train.EXCLUDEROADS, t.getRoadOption());
-		//trainEditFrame.roadNameInclude.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.roadNameInclude ) );
-		Assert.assertEquals("train car road include", Train.INCLUDEROADS, t.getRoadOption());
-		//trainEditFrame.roadNameAll.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.roadNameAll ) );
-		Assert.assertEquals("train car road all", Train.ALLROADS, t.getRoadOption());
 		
 		// test engine fields
 		Assert.assertEquals("number of engines", "0", t.getNumberEngines());
@@ -230,20 +221,32 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("location 1", p, tmanager.getTrainEditFramePosition());
 		Assert.assertEquals("size 1", new Dimension(650,600), tmanager.getTrainEditFrameSize());
 		
+		// test build options
+		TrainEditBuildOptionsFrame f = new TrainEditBuildOptionsFrame();
+		f.initComponents(trainEditFrame);
+		
+		// test car road options
+		//trainEditFrame.roadNameExclude.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameExclude ) );
+		Assert.assertEquals("train car road exclude", Train.EXCLUDEROADS, t.getRoadOption());
+		//trainEditFrame.roadNameInclude.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameInclude ) );
+		Assert.assertEquals("train car road include", Train.INCLUDEROADS, t.getRoadOption());
+		//trainEditFrame.roadNameAll.doClick();
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameAll ) );
+		Assert.assertEquals("train car road all", Train.ALLROADS, t.getRoadOption());
+
+		//TODO test owner and build date options
 		// test delete button
 		// the delete opens a dialog window to confirm the delete
 		//trainEditFrame.deleteTrainButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.deleteTrainButton ) );
-		
-		// Locate resulting dialog box
-        List<javax.swing.JDialog> dialogList = new DialogFinder(null).findAll(trainEditFrame);
-        javax.swing.JDialog d = dialogList.get(0);
-        // Find the "Yes" button
-        AbstractButtonFinder finder = new AbstractButtonFinder("Yes" );
-        javax.swing.JButton button = ( javax.swing.JButton ) finder.find( d, 0);
-        Assert.assertNotNull("Yes button found", button);   
-        // Click "Yes" button
-        getHelper().enterClickAndLeave( new MouseEventData( this, button ) );
+		// don't delete, we need this train for the next two tests 
+		// testTrainBuildOptionFrame() and testTrainEditFrameRead()
+		pressDialogButton(trainEditFrame, "No");
+	}
+	
+	public void testTrainEditFrameBuildOptionFrame(){
 
 	}
 	
@@ -333,7 +336,20 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 			Location l = lmanager.getLocationById(locations.get(i));
 			Assert.assertTrue("print switchlist 3", l.getSwitchList());
 		}
-
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void pressDialogButton(JmriJFrame f, String buttonName){
+		//  (with JfcUnit, not pushing this off to another thread)			                                            
+		// Locate resulting dialog box
+        List<javax.swing.JDialog> dialogList = new DialogFinder(null).findAll(f);
+        javax.swing.JDialog d = dialogList.get(0);
+        // Find the button
+        AbstractButtonFinder finder = new AbstractButtonFinder(buttonName);
+        javax.swing.JButton button = ( javax.swing.JButton ) finder.find( d, 0);
+        Assert.assertNotNull("button not found", button);   
+        // Click button
+        getHelper().enterClickAndLeave( new MouseEventData( this, button ) );		
 	}
 	
 	// Ensure minimal setup for log4J
