@@ -128,8 +128,10 @@ function processReturn() {
         var cell = document.createElement("td");
         cell.appendChild(document.createTextNode(getElementTextNS("", "type", items[i], 0)));
         row.appendChild(cell);
+        cell = document.createElement("td");
         cell.appendChild(document.createTextNode(getElementTextNS("", "name", items[i], 0)));
         row.appendChild(cell);
+        cell = document.createElement("td");
         cell.appendChild(document.createTextNode(getElementTextNS("", "value", items[i], 0)));
         row.appendChild(cell);
         tblB.appendChild(row);
@@ -137,6 +139,7 @@ function processReturn() {
     tbl.appendChild(tblB);
     div.appendChild(tbl);
     tbl.setAttribute("border", "4");    
+    tbl.setAttribute("cellpadding", "3");    
 }
 
 

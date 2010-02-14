@@ -72,7 +72,7 @@ function loadDoc(evt) {
         var elem = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
 
         try {
-            loadXMLDoc("/xmlio/<xmlio><list><type>sensor</type></list></xmlio>");
+            loadXMLDoc("/xmlio/<xmlio><list><type>sensor</type><list><type>turnout</type></list></xmlio>");
         }
         catch(e) {
             var msg = (typeof e == "string") ? e : ((e.message) ? e.message : "Unknown Error");
@@ -131,15 +131,18 @@ function processReturn() {
         var cell = document.createElement("td");
         cell.appendChild(document.createTextNode(getElementTextNS("", "type", items[i], 0)));
         row.appendChild(cell);
+        cell = document.createElement("td");
         cell.appendChild(document.createTextNode(getElementTextNS("", "name", items[i], 0)));
         row.appendChild(cell);
+        cell = document.createElement("td");
         cell.appendChild(document.createTextNode(getElementTextNS("", "value", items[i], 0)));
         row.appendChild(cell);
         tblB.appendChild(row);
     }
     tbl.appendChild(tblB);
     div.appendChild(tbl);
-    tbl.setAttribute("border", "4");   
+    tbl.setAttribute("border", "4");    
+    tbl.setAttribute("cellpadding", "3");    
     
     // send the next request
     loadXMLDoc("/xmlio/"+req.responseText);
