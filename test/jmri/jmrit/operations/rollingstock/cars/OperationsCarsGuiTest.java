@@ -24,13 +24,15 @@ import java.util.List;
  * Tests for the Operations Cars GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
 	public void testCarsTableFrame() throws Exception {
 		// remove previous cars
 		CarManager.instance().dispose();
+		CarRoads.instance().dispose();
+
 		// add Owner1 and Owner2
 		CarOwners co = CarOwners.instance();
 		co.addName("Owner1");
