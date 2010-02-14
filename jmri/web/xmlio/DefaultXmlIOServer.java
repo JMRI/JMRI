@@ -24,7 +24,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -35,7 +35,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
         @SuppressWarnings("unchecked")
         List<Element> lists = new ArrayList(e.getChildren("list"));
         for (Element list : lists) {
-            //iter.remove();  // remove <list> element from iter, and from parent
+            e.removeContent(list);
             String type = list.getChild("type").getText();
             if (type.equals("turnout")) {
                 // add an element for each turnout
