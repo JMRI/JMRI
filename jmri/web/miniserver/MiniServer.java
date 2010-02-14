@@ -29,7 +29,7 @@ import jmri.web.miniserver.servlet.echoservlet.EchoServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class MiniServer extends NetworkServer {
@@ -82,7 +82,7 @@ public class MiniServer extends NetworkServer {
         ServletResponse res = new MiniServletResponse(server);
         
         // get the request string, being sure to be able to put Reader back
-        in.mark(200);
+        in.mark(2000);   // If this is exceeded, probably should be using POST
         String line = in.readLine();
         in.reset();
         
