@@ -19,7 +19,7 @@ import org.jdom.Element;
  *
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author    Bob Jacobsen   Copyright (C) 2010
- * @version   $Revision: 1.16 $
+ * @version   $Revision: 1.17 $
  */
 public class IndexedVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
@@ -265,13 +265,13 @@ public class IndexedVariableValue extends VariableValue
         if (getInfoOnly() || getWriteOnly() || !getAvailable()) state = false;
         (_cvVector.elementAt(_row)).setToRead(state);
     }
-    public boolean isToRead() { return (_cvVector.elementAt(_row)).isToRead(); }
+    public boolean isToRead() { return getAvailable() && (_cvVector.elementAt(_row)).isToRead(); }
 
     public void setToWrite(boolean state) {
         if (getInfoOnly() || getReadOnly() || !getAvailable()) state = false;
         (_cvVector.elementAt(_row)).setToWrite(state);
     }
-    public boolean isToWrite() { return (_cvVector.elementAt(_row)).isToWrite(); }
+    public boolean isToWrite() { return getAvailable() && (_cvVector.elementAt(_row)).isToWrite(); }
 
     public boolean isChanged() {
         CvValue cv = (_cvVector.elementAt(_row));
@@ -480,7 +480,7 @@ public class IndexedVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.16 $
+     * @version     $Revision: 1.17 $
      */
     public class VarTextField extends JTextField {
 
