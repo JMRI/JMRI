@@ -44,7 +44,7 @@ import jmri.web.xmlio.*;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class XMLIOServlet implements Servlet, XmlIORequestor {
@@ -89,12 +89,19 @@ public class XMLIOServlet implements Servlet, XmlIORequestor {
             log.error("IO Exception reading request: "+e);
         }
 
+        if (log.isDebugEnabled()) {
+            log.debug("buffer contains:");
+            for (int j = 0; j<i; j++) 
+                log.debug(" "+j+":"+inputLines[j]);
+            log.debug("end buffer");
+        }
+        
         // get the writer from the response
         out = res.getWriter();
         
         // parse request
         String request = parseRequest(inputLines, i);
-
+        
         if (builder == null) builder = jmri.jmrit.XmlFile.getBuilder(false);
 
         Reader reader = new StringReader(request);
@@ -181,31 +188,60 @@ public class XMLIOServlet implements Servlet, XmlIORequestor {
      * Parse input lines to extract request
      */
     String parseRequest(String[] input, int len) {
-        // expect "GET /key/Frame HTTP/1.1"
+        // expect "GET /xmlio HTTP/1.1"
+        // or
+        // "POST /xmlio HTTP/1.1
         //
-        // remove GET and key from front
-        log.debug("get request of "+len+" lines: "+input[0]);
-        String part = input[0].substring(5, input[0].length());
-        part = part.substring(part.indexOf('/'), part.length());
         
-        // remove HTTP from back
-        String rawRequest = part.substring(0, part.lastIndexOf(" HTTP"));
+        if (input[0].toUpperCase().startsWith("GET")) {
+            // remove GET and key from front
+            if (log.isDebugEnabled()) log.debug("GET request of "+len+" lines: "+input[0]);
+            String part = input[0].substring(5, input[0].length());
+            part = part.substring(part.indexOf('/'), part.length());
+            
+            // remove HTTP from back
+            String rawRequest = part.substring(0, part.lastIndexOf(" HTTP"));
+            
+            // decode
+            String request = "<error>";
+            try {
+                URI u = new URI(rawRequest);
+                if (log.isDebugEnabled()) log.debug("URI ["+u+"]");
+                request = u.getSchemeSpecificPart();
+                // drop leading "/"
+                request = request.substring(1, request.length());
+            } catch (java.net.URISyntaxException e4) {
+                log.error("error in URI: "+e4);
+            }
+            if (log.isDebugEnabled()) log.debug("request is ["+request+"]");
+            
+            return request;
         
-        // decode
-        String request = "<error>";
-        try {
-            URI u = new URI(rawRequest);
-            if (log.isDebugEnabled()) log.debug("URI ["+u+"]");
-            request = u.getSchemeSpecificPart();
-            // drop leading "/"
-            request = request.substring(1, request.length());
-        } catch (java.net.URISyntaxException e4) {
-            log.error("error in URI: "+e4);
+        } else if (input[0].toUpperCase().startsWith("POST")) {
+            if (log.isDebugEnabled()) log.debug("POST request of "+len+" lines: "+input[0]);
+
+            // strip header by finding empty line
+            int i = 0;
+            while (i<len) {
+                if (input[i] == null || input[i].equals(""))
+                    break;
+                i++;
+            }
+            i++;  // i is not index of 1st data
+            
+            String request = "";
+            while (i<len) {
+                request += input[i];
+                i++;
+            }
+            
+            return request;
+        } else {
+            log.error("Unexpected request format: "+input[0]);
+            return null;
         }
-        if (log.isDebugEnabled()) log.debug("request is ["+request+"]");
-        
-        return request;
     }
+
 
     // Normal Web page requests use GET, so this server can simply
     // read a line at a time. However, HTML forms can also use 
