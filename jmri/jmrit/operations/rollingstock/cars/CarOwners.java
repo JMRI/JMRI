@@ -11,7 +11,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the owner names that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class CarOwners {
 	
@@ -33,8 +33,14 @@ public class CarOwners {
 		return _instance;
 	}
 
-    public void dispose() {
+    public synchronized void dispose() {
     	list.clear();
+    	 	
+    	// remove all listeners
+    	for (java.beans.PropertyChangeListener p : pcs.getPropertyChangeListeners() )
+    	    pcs.removePropertyChangeListener(p);
+        
+        _instance = null;
     }
 
     List<String> list = new ArrayList<String>();

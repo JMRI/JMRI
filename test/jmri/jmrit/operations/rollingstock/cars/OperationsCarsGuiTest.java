@@ -24,7 +24,7 @@ import java.util.List;
  * Tests for the Operations Cars GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
@@ -117,7 +117,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		c4.setMoves(30);
 		c4.setOwner("AAA");
 		c4.setRfid("RFID 4");
-		c4.setType("Tanker");
+		c4.setType("Tank Food");
 		Assert.assertEquals("c4 location", Car.OKAY, c4.setLocation(westford, westfordSiding));
 		Assert.assertEquals("c4 destination", Car.OKAY, c4.setDestination(boxford, boxfordHood));
 		
@@ -371,8 +371,8 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 	    Assert.assertEquals("replaced Pink with Pinker","Pinker",f.comboBox.getItemAt(0));
 
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteButton ) );
-		// red is the first default color
-		Assert.assertEquals("old color","Red",f.comboBox.getItemAt(0));
+		// black is the first default color
+		Assert.assertEquals("old color","Black",f.comboBox.getItemAt(0));
 		
 	}
 	

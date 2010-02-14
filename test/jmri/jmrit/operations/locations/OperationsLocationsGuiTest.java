@@ -21,7 +21,7 @@ import java.util.List;
  * Tests for the Operations Locations GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	
@@ -456,8 +456,8 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		f.typeBox.setSelectedItem("Coil Car");
 		//f.addTypeButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addTypeButton ) );
-		// put Gondola at start of list
-		f.typeBox.setSelectedItem("Tanker");
+		// put Tank Food at start of list
+		f.typeBox.setSelectedItem("Tank Food");
 		//f.addLocAtTop.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addLocAtTop ) );
 		//f.addTypeButton.doClick();
@@ -469,7 +469,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("number of items", 4, list.size());
 		
 		ScheduleItem si = s.getItemById(list.get(0));		
-		Assert.assertEquals("1st type", "Tanker", si.getType());
+		Assert.assertEquals("1st type", "Tank Food", si.getType());
 		si = s.getItemById(list.get(1));		
 		Assert.assertEquals("2nd type", "Boxcar", si.getType());
 		si = s.getItemById(list.get(2));		

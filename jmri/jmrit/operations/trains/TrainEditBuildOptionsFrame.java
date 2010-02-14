@@ -32,7 +32,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of a train's build options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -250,7 +250,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		// get notified if car roads gets modified
 		CarRoads.instance().addPropertyChangeListener(this);
 		CarOwners.instance().addPropertyChangeListener(this);
-		
+		setVisible(true);
 	}
 	
 	// Save

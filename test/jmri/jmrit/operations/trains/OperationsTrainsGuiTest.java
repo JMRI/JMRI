@@ -21,7 +21,7 @@ import java.util.List;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 
@@ -43,9 +43,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		f.setVisible(true);
 		f.setSize(400,200);
 		f.setLocation(10,20);
-		//f.sortByName.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.sortByName ) );
-		//f.saveButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		
 		// frame location can move just a bit on MacOS
@@ -59,13 +57,9 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertFalse("Build Report", tmanager.getBuildReport());
 		Assert.assertFalse("Print Review", tmanager.getPrintPreview());
 		
-		//f.sortByTime.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.sortByTime ) );
-		//f.buildMsgBox.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.buildMsgBox ) );
-		//f.buildReportBox.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.buildReportBox ) );
-		//f.saveButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		
 		// frame location can move just a bit on MacOS
@@ -83,13 +77,9 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("location 2", p, tmanager.getTrainsFramePosition());
 		Assert.assertEquals("size 2", new Dimension(400,200), tmanager.getTrainsFrameSize());
 		
-		//f.sortById.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.sortById ) );
-		//f.buildMsgBox.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.buildMsgBox ) );
-		//f.printPreviewBox.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.printPreviewBox ) );
-		//f.saveButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		
 		// frame location can move just a bit on MacOS
@@ -103,28 +93,24 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertTrue("Print Review 3", tmanager.getPrintPreview());
 
 		// create the TrainEditFrame
-		//f.addButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
 		
 		// create the TrainSwichListEditFrame
-		//f.printSwitchButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.printSwitchButton ) );
 	}
 	
-	TrainEditFrame trainEditFrame;
 	/**
 	 * This test relies on OperationsTrainsTest having been run to initialize
 	 * the train fields.
 	 */
 	public void testTrainEditFrame(){
-		trainEditFrame = new TrainEditFrame();
+		TrainEditFrame trainEditFrame = new TrainEditFrame();
 		trainEditFrame.setTitle("Test Add Train Frame");
 		trainEditFrame.initComponents(null);
 		// fill in name and description fields
 		trainEditFrame.trainNameTextField.setText("Test Train Name");
 		trainEditFrame.trainDescriptionTextField.setText("Test Train Description");
 		trainEditFrame.commentTextArea.setText("Test Train Comment");
-		//trainEditFrame.addTrainButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.addTrainButton ) );
 		
 		TrainManager tmanager = TrainManager.instance();
@@ -145,7 +131,6 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		trainEditFrame.minuteBox.setSelectedItem("45");
 		// shouldn't change until Save
 		Assert.assertEquals("train comment", "00:00", t.getDepartureTime());
-		//trainEditFrame.saveTrainButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.saveTrainButton ) );
 		Assert.assertEquals("train comment", "15:45", t.getDepartureTime());
 		
@@ -153,18 +138,14 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		trainEditFrame.routeBox.setSelectedIndex(3);	// the 3rd item should be "Test Route C"
 		Assert.assertEquals("train route 2", "Test Route C", t.getRoute().getName());
 		// test route edit button
-		//trainEditFrame.editButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.editButton ) );
 		
 		// test car types using the clear and set buttons
-		//trainEditFrame.clearButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.clearButton ) );
 		Assert.assertFalse("train accepts car type Flat 1", t.acceptsTypeName("Flat"));
-		//trainEditFrame.setButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.setButton ) );
 		Assert.assertTrue("train accepts car type Flat 2", t.acceptsTypeName("Flat"));
-		
-		
+			
 		// test engine fields
 		Assert.assertEquals("number of engines", "0", t.getNumberEngines());
 		Assert.assertEquals("engine model", "", t.getEngineModel());
@@ -177,7 +158,6 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("number of engines 1", "0", t.getNumberEngines());
 		Assert.assertEquals("engine model 1", "", t.getEngineModel());
 		Assert.assertEquals("engine road 1", "", t.getEngineRoad());
-		//trainEditFrame.saveTrainButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.saveTrainButton ) );
 		Assert.assertEquals("number of engines 2", "3", t.getNumberEngines());
 		Assert.assertEquals("engine model 2", "GP40", t.getEngineModel());
@@ -185,35 +165,27 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		
 		// test caboose and FRED buttons and fields
 		// require a car with FRED
-		//trainEditFrame.fredRadioButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.fredRadioButton ) );
 		// shouldn't change until Save
 		Assert.assertEquals("train requirements 1", Train.NONE, t.getRequirements());
-		//trainEditFrame.saveTrainButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.saveTrainButton ) );
 		Assert.assertEquals("train requirements 2", Train.FRED, t.getRequirements());
-		//trainEditFrame.cabooseRadioButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.cabooseRadioButton ) );
-		//trainEditFrame.saveTrainButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.saveTrainButton ) );
 		Assert.assertEquals("train requirements 3", Train.CABOOSE, t.getRequirements());
 		Assert.assertEquals("caboose road 1", "", t.getCabooseRoad());
 		// shouldn't change until Save
 		trainEditFrame.roadCabooseBox.setSelectedItem("NH");
 		Assert.assertEquals("caboose road 2", "", t.getCabooseRoad());
-		//trainEditFrame.saveTrainButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.saveTrainButton ) );
 		Assert.assertEquals("caboose road 3", "NH", t.getCabooseRoad());
-		//trainEditFrame.noneRadioButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.noneRadioButton ) );
-		//trainEditFrame.saveTrainButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.saveTrainButton ) );
 		Assert.assertEquals("train requirements 4", Train.NONE, t.getRequirements());
 
 		// test frame size and location
 		trainEditFrame.setSize(650,600);
 		trainEditFrame.setLocation(25,30);
-		//trainEditFrame.saveTrainButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.saveTrainButton ) );
 
 		// frame location can move just a bit on MacOS
@@ -221,25 +193,8 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("location 1", p, tmanager.getTrainEditFramePosition());
 		Assert.assertEquals("size 1", new Dimension(650,600), tmanager.getTrainEditFrameSize());
 		
-		// test build options
-		TrainEditBuildOptionsFrame f = new TrainEditBuildOptionsFrame();
-		f.initComponents(trainEditFrame);
-		
-		// test car road options
-		//trainEditFrame.roadNameExclude.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameExclude ) );
-		Assert.assertEquals("train car road exclude", Train.EXCLUDEROADS, t.getRoadOption());
-		//trainEditFrame.roadNameInclude.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameInclude ) );
-		Assert.assertEquals("train car road include", Train.INCLUDEROADS, t.getRoadOption());
-		//trainEditFrame.roadNameAll.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameAll ) );
-		Assert.assertEquals("train car road all", Train.ALLROADS, t.getRoadOption());
-
-		//TODO test owner and build date options
 		// test delete button
 		// the delete opens a dialog window to confirm the delete
-		//trainEditFrame.deleteTrainButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.deleteTrainButton ) );
 		// don't delete, we need this train for the next two tests 
 		// testTrainBuildOptionFrame() and testTrainEditFrameRead()
@@ -247,6 +202,56 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 	}
 	
 	public void testTrainEditFrameBuildOptionFrame(){
+		// test build options
+		TrainManager tmanager = TrainManager.instance();
+		Train t = tmanager.getTrainByName("Test Train Name");
+		
+		TrainEditFrame trainEditFrame = new TrainEditFrame();
+		trainEditFrame.setTitle("Test Build Options Train Frame");
+		trainEditFrame.initComponents(t);
+		
+		TrainEditBuildOptionsFrame f = new TrainEditBuildOptionsFrame();
+		f.initComponents(trainEditFrame);
+		f.setTitle("Test Train Build Options");
+		
+		// test car road options
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameExclude ) );
+		Assert.assertEquals("train car road exclude", Train.EXCLUDEROADS, t.getRoadOption());
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameInclude ) );
+		Assert.assertEquals("train car road include", Train.INCLUDEROADS, t.getRoadOption());		
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameAll ) );
+		Assert.assertEquals("train car road all", Train.ALLROADS, t.getRoadOption());
+		
+		// test car owner options
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.ownerNameExclude ) );
+		Assert.assertEquals("train car owner exclude", Train.EXCLUDEOWNERS, t.getOwnerOption());
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.ownerNameInclude ) );
+		Assert.assertEquals("train car owner include", Train.INCLUDEOWNERS, t.getOwnerOption());		
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.ownerNameAll ) );
+		Assert.assertEquals("train car owner all", Train.ALLOWNERS, t.getOwnerOption());
+
+		// test car date options
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.builtDateAfter ) );
+		f.builtAfterTextField.setText("1956");
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrainButton ) );
+		Assert.assertEquals("train car built after", "1956", t.getBuiltStartYear());
+		
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.builtDateBefore ) );
+		f.builtBeforeTextField.setText("2010");
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrainButton ) );
+		Assert.assertEquals("train car built before", "2010", t.getBuiltEndYear());		
+		
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.builtDateRange ) );
+		f.builtAfterTextField.setText("1888");
+		f.builtBeforeTextField.setText("2000");
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrainButton ) );
+		Assert.assertEquals("train car built after range", "1888", t.getBuiltStartYear());
+		Assert.assertEquals("train car built before range", "2000", t.getBuiltEndYear());	
+		
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.builtDateAll ) );
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrainButton ) );
+		Assert.assertEquals("train car built after all", "", t.getBuiltStartYear());
+		Assert.assertEquals("train car built before all", "", t.getBuiltEndYear());		
 
 	}
 	
@@ -292,16 +297,12 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		f.initComponents("Boxcar");
 		
 		// remove Boxcar from trains
-		//f.clearButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.clearButton ) );
-		//f.saveButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		Assert.assertFalse("accepts Boxcar 2", t.acceptsTypeName("Boxcar"));
 
 		// now add Boxcar to trains
-		//f.setButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.setButton ) );
-		//f.saveButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		Assert.assertTrue("accepts Boxcar 3", t.acceptsTypeName("Boxcar"));
 	}
@@ -319,23 +320,43 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 			Assert.assertTrue("print switchlist 1", l.getSwitchList());
 		}
 		// now clear all locations
-		//f.clearButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.clearButton ) );
-		//f.saveButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		for (int i=0; i<locations.size(); i++){
 			Location l = lmanager.getLocationById(locations.get(i));
 			Assert.assertFalse("print switchlist 2", l.getSwitchList());
 		}
 		// now set all locations
-		//f.setButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.setButton ) );
-		//f.saveButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		for (int i=0; i<locations.size(); i++){
 			Location l = lmanager.getLocationById(locations.get(i));
 			Assert.assertTrue("print switchlist 3", l.getSwitchList());
 		}
+	}
+	
+	/**
+	 * Test that delete train works
+	 */
+	public void testTrainEditFrameDelete(){
+		TrainManager tmanager = TrainManager.instance();
+		Train t = tmanager.getTrainByName("Test Train Name");
+		
+		TrainEditFrame trainEditFrame = new TrainEditFrame();
+		trainEditFrame.setTitle("Test Delete Train Frame");
+		trainEditFrame.initComponents(t);
+		
+		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.deleteTrainButton ) );
+		// And now press the confirmation button
+		pressDialogButton(trainEditFrame, "Yes");
+		
+		t = tmanager.getTrainByName("Test Train Name");
+		Assert.assertNull("train deleted", t);
+		
+		// Now add it back
+		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.addTrainButton ) );
+		t = tmanager.getTrainByName("Test Train Name");
+		Assert.assertNotNull("train added", t);
 	}
 	
 	@SuppressWarnings("unchecked")

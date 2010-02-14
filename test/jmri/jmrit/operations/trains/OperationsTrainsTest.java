@@ -58,7 +58,7 @@ import jmri.jmrit.operations.routes.RouteManager;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.49 $
+ * @version $Revision: 1.50 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -2944,6 +2944,8 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertTrue("train 3 should accept Boxcar", train3.acceptsTypeName("Boxcar"));
 
 		// now test road name replace
+		CarRoads cr = CarRoads.instance();
+		cr.addName("CP");
 				
 		loc1trk1.setRoadOption(Track.INCLUDEROADS);
 		loc1trk1.addRoadName("CP");
@@ -2963,7 +2965,6 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Caboose road", "CP", train1.getCabooseRoad());
 		Assert.assertEquals("Engine road", "CP", train1.getEngineRoad());
 
-		CarRoads cr = CarRoads.instance();
 		cr.replaceName("CP", "UP");
 		
 		Assert.assertFalse("after replace track loc1trk1 should Not accept road CP", loc1trk1.acceptsRoadName("CP"));
@@ -4127,8 +4128,8 @@ public class OperationsTrainsTest extends TestCase {
 		apps.tests.Log4JFixture.setUp();
 
 		// Need to clear out TrainManager global variables
-		TrainManager manager = TrainManager.instance();
-		manager.dispose();
+		TrainManager.instance().dispose();
+		LocationManager.instance().dispose();
 	}
 
 	public OperationsTrainsTest(String s) {
