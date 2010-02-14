@@ -32,7 +32,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.52 $
+ * @version	$Revision: 1.53 $
  */
 public abstract class XmlFile {
 
@@ -534,7 +534,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.52 2010-02-07 04:33:50 jacobsen Exp $";
+                        +" $Id: XmlFile.java,v 1.53 2010-02-14 03:23:48 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }
@@ -659,7 +659,7 @@ public abstract class XmlFile {
         return userFileChooser(filter, suffix1, null);
     }
 
-    SAXBuilder getBuilder(boolean verify) {
+    public static SAXBuilder getBuilder(boolean verify) {
         SAXBuilder builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser",verify);  // argument controls validation
         
         builder.setEntityResolver(new jmri.util.JmriLocalEntityResolver());
