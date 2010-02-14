@@ -13,7 +13,7 @@ import java.net.*;
  *
  *
  * @author      Paul Bender  Copyright (C) 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @see         jmri.jmrix.NetworkConfigException
  */
 abstract public class NetworkPortAdapter extends AbstractPortController{
@@ -53,6 +53,7 @@ abstract public class NetworkPortAdapter extends AbstractPortController{
             return "Unexpected error while opening TCP connection with "+ipAddress+":"+port+": "+e;
         } catch (java.io.IOException ex) {
             log.error("init (network): Exception: " +ex.toString());
+            ex.printStackTrace();
             ConnectionStatus.instance().setConnectionState(ipAddress+":"+port, ConnectionStatus.CONNECTION_DOWN);
             return "Unexpected error while opening TCP connection with "+ipAddress+":"+port+": "+ex;
         }
@@ -90,13 +91,18 @@ abstract public class NetworkPortAdapter extends AbstractPortController{
 	
     // base class methods for the PortAdapter interface
     public DataInputStream getInputStream() {
-        if (pin == null ) 
-            log.error("getInputStream called before load(), stream not available");
+        if (pin == null ) {
+            log.error("getInputStream called before load(), stream not available");         
+            throw(new java.lang.NullPointerException());
+        }
         return pin;
     }
     
     public DataOutputStream getOutputStream() {
-        if (pout==null) log.error("getOutputStream called before load(), stream not available");
+        if (pout==null) {
+            log.error("getOutputStream called before load(), stream not available");
+            throw(new java.lang.NullPointerException());
+        }
      	return pout;
     }
     

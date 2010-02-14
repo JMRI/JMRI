@@ -19,7 +19,8 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008
- * @version	$Revision: 1.5 $
+ * @author	Paul Bender Copyright (C) 2010
+ * @version	$Revision: 1.6 $
  */
 public class NetworkDriverAdapter extends SRCPPortController {
 
@@ -56,64 +57,11 @@ public class NetworkDriverAdapter extends SRCPPortController {
         jmri.jmrix.srcp.ActiveFlag.setActive();
     }
 
-    // base class methods for the SRCPPortController interface
-    public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-        }
-        try {
-            return new DataInputStream(socket.getInputStream());
-        } catch (java.io.IOException ex1) {
-            log.error("Exception getting input stream: "+ex1);
-            return null;
-        }
-    }
-
-    public void connect(String host, int port) {
-        try {
-            socket = new Socket(host, port);
-            opened = true;
-        } catch (Exception e) {
-            log.error("error opening SRCP network connection: "+e);
-        }
-    }
-
-    public DataOutputStream getOutputStream() {
-        if (!opened) log.error("getOutputStream called before load(), stream not available");
-        try {
-            return new DataOutputStream(socket.getOutputStream());
-        }
-     	catch (java.io.IOException e) {
-            log.error("getOutputStream exception: "+e);
-     	}
-     	return null;
-    }
-
-    public boolean status() {return opened;}
-
-    // private control members
-    private boolean opened = false;
-
     static public NetworkDriverAdapter instance() {
         if (mInstance == null) mInstance = new NetworkDriverAdapter();
         return mInstance;
     }
     static NetworkDriverAdapter mInstance = null;
-
-    Socket socket;
-
-    public Vector<String> getPortNames() {
-        log.error("Unexpected call to getPortNames");
-        return null;
-    }
-    public String openPort(String portName, String appName)  {
-        log.error("Unexpected call to openPort");
-        return null;
-    }
-    public String[] validBaudRates() {
-        log.error("Unexpected call to validBaudRates");
-        return null;
-    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetworkDriverAdapter.class.getName());
 

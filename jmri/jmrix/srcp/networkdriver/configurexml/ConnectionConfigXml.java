@@ -21,7 +21,8 @@ import javax.swing.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @author Paul Bender Copyright: Copyright (c) 2010
+ * @version $Revision: 1.4 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -56,7 +57,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         String portNumber = e.getAttribute("option1").getValue();
 
         // notify
-        JFrame f = new JFrame("EasyDCC network connection");
+        JFrame f = new JFrame("SRCP network connection");
         f.getContentPane().add(new JLabel("Connecting to "+hostName+":"+portNumber));
         f.pack();
         f.setVisible(true);
@@ -67,7 +68,8 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
         // start the connection
         try {
-            client.connect(hostName, Integer.parseInt(portNumber));
+            client.openPort(hostName, Integer.parseInt(portNumber),"JMRI SRCP Client");
+            result= client.status();
         } catch (Exception ex) {
             log.error("Error opening connection to "+hostName+" was: "+ex);
             result = false;
