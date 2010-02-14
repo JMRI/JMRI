@@ -30,7 +30,7 @@ import javax.swing.JSeparator;
  * configuration GUI, and responding to its changes.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004
- * @version	$Revision: 1.54 $
+ * @version	$Revision: 1.55 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -195,10 +195,10 @@ public class JmrixConfigPane extends JPanel {
         JPanel manufacturerPanel = new JPanel();
         manufacturerPanel.setLayout(new GridLayout(2,2));
         //JPanel manufacturerPanel = new JPanel();
-        manufacturerPanel.add(new JLabel("System Manufacturer : "));
+        manufacturerPanel.add(new JLabel("System Manufacturer : ", JLabel.RIGHT));
         manufacturerPanel.add(manuBox);
         //JPanel connectionPanel = new JPanel();
-        manufacturerPanel.add(new JLabel("System Connection : "));
+        manufacturerPanel.add(new JLabel("System Connection : ",  JLabel.RIGHT));
         manufacturerPanel.add(modeBox);
         add(manufacturerPanel);
         //add(connectionPanel);
