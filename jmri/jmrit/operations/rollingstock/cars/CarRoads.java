@@ -14,7 +14,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the road names that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class CarRoads {
 	
@@ -40,8 +40,14 @@ public class CarRoads {
 		return _instance;
 	}
 
-    public void dispose() {
+    public synchronized void dispose() {
     	list.clear();
+    	
+    	// remove all listeners
+    	for (java.beans.PropertyChangeListener p : pcs.getPropertyChangeListeners() )
+    	    pcs.removePropertyChangeListener(p);
+        
+        _instance = null;
     }
 
     List<String> list = new ArrayList<String>();
@@ -115,7 +121,9 @@ public class CarRoads {
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
-    protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
+    protected void firePropertyChange(String p, Object old, Object n) { 
+        pcs.firePropertyChange(p,old,n);
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarRoads.class.getName());
 }
