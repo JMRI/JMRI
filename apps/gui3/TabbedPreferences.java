@@ -6,6 +6,9 @@ import jmri.*;
 import jmri.jmrit.XmlFile;
 import jmri.util.swing.JmriPanel;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -16,7 +19,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TabbedPreferences extends JmriPanel {
 
@@ -26,18 +29,22 @@ public class TabbedPreferences extends JmriPanel {
     // class! How about switching AppConfigPanel to tabbed?
     public TabbedPreferences() {
         
-        JTabbedPane p = new JTabbedPane();
-        p.add("Connection 1", comm1 = jmri.jmrix.JmrixConfigPane.instance(1));
-        p.add("GUI", guiPrefs = new jmri.GuiLafConfigPane());
-        p.add("Programmer", new jmri.jmrit.symbolicprog.ProgrammerConfigPane());
-        p.add("Actions", new apps.PerformActionPanel());
-        p.add("Buttons", new apps.CreateButtonPanel());
-        p.add("Files", new apps.PerformFilePanel());
-        p.add("Scripts", new apps.PerformScriptPanel());
-        p.add("Roster", new jmri.jmrit.roster.RosterConfigPane());
+        addItem("Connection 1", jmri.jmrix.JmrixConfigPane.instance(1));
+        addItem("Connection 2", jmri.jmrix.JmrixConfigPane.instance(2));
+        addItem("Connection 3", jmri.jmrix.JmrixConfigPane.instance(3));
+        addItem("Connection 4", jmri.jmrix.JmrixConfigPane.instance(4));
+        addItem("Programmer", new jmri.jmrit.symbolicprog.ProgrammerConfigPane());
+        addItem("GUI", new jmri.GuiLafConfigPane());
+        addItem("Actions", new apps.PerformActionPanel());
+        addItem("Buttons", new apps.CreateButtonPanel());
+        addItem("Files", new apps.PerformFilePanel());
+        addItem("Scripts", new apps.PerformScriptPanel());
+        addItem("Roster", new jmri.jmrit.roster.RosterConfigPane());
 
+        pane.add("Messages", new jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane());
+        
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(p);
+        add(pane);
         JButton save = new JButton("Save");
         add(save);
         save.addActionListener( new ActionListener() {
@@ -46,6 +53,15 @@ public class TabbedPreferences extends JmriPanel {
                 }
             });
     }
+    
+    void addItem(String title, JComponent item) {
+        pane.add(title, item);
+        items.add(item);  
+    }
+    
+    List<Object> items = new ArrayList<Object>();
+    
+    JTabbedPane pane = new JTabbedPane();
     
     jmri.jmrix.JmrixConfigPane comm1;
     jmri.GuiLafConfigPane guiPrefs;
@@ -59,9 +75,10 @@ public class TabbedPreferences extends JmriPanel {
         InstanceManager.configureManagerInstance().removePrefItems();
 
         // put the new items on the persistance list
-        InstanceManager.configureManagerInstance().registerPref(comm1);
-        InstanceManager.configureManagerInstance().registerPref(guiPrefs);
-
+        for (Object o : items) {
+            InstanceManager.configureManagerInstance().registerPref(o);
+        }
+        
         // write file
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         // decide whether name is absolute or relative
