@@ -22,14 +22,14 @@ import jmri.web.miniserver.servlet.echoservlet.EchoServlet;
  *  form. You can send GET or POST data; either way, the
  *  resultant page will show what your browser sent.
  *<P>
- *  Taken from Core Web Programming from 
+ *  Adapted with permission from Core Web Programming from 
  *  Prentice Hall and Sun Microsystems Press,
  *  http://www.corewebprogramming.com/.
  *  &copy; 2001 Marty Hall and Larry Brown;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class MiniServer extends NetworkServer {

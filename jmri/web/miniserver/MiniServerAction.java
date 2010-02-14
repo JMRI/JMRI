@@ -14,7 +14,7 @@ import jmri.util.zeroconf.ZeroConfUtil;
  * Action to start a miniserver
  *
  * @author	    Bob Jacobsen    Copyright (C) 2004
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class MiniServerAction extends AbstractAction {
 
@@ -71,7 +71,7 @@ public class MiniServerAction extends AbstractAction {
     
     class ServerThread extends Thread {
         public void run() {
-            new MiniServer(port, 0) {
+            new ThreadedMiniServer(port, 0) {
                 void notifyServerStarted() {
                     // switch to Swing and notify
                     javax.swing.SwingUtilities.invokeLater(new Runnable(){
