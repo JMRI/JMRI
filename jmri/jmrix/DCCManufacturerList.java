@@ -7,11 +7,12 @@ package jmri.jmrix;
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  *
  */
 public class DCCManufacturerList {
     
+    public static final String NONE = "Virtual Connection";
     public static final String LENZ = "Lenz";
     public static final String HORNBY = "Hornby";
     public static final String ESU = "ESU";
@@ -44,6 +45,7 @@ public class DCCManufacturerList {
     
     final static private String[] systemNames = new String[]{
           
+          NONE,
           ATLAS,
           CMRI,
           CTI,
@@ -79,6 +81,7 @@ public class DCCManufacturerList {
     }
 
     public static String[] getConnectionList(String System) {
+        if(System.equals(NONE)) { return new jmri.jmrix.internal.ConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(LENZ)) { return new jmri.jmrix.lenz.ConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(HORNBY)) { return new jmri.jmrix.lenz.hornbyelite.ConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(ESU)) { return new jmri.jmrix.ecos.ConnectionTypeList().getAvailableProtocolClasses(); }
