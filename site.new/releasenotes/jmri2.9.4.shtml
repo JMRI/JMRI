@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.7 2010-02-11 16:43:27 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.8 2010-02-14 04:50:21 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -235,7 +235,7 @@ The communications library issues that prevented JMRI 2.9.3 from being used
 on Mac OS X 1o.4 has been fixed.
 
 <p>
-Help system now can directly print help pages. See the new icons
+The help system can now directly print help pages. See the new icons
 at the top of any help screen. Also, you can know mark a page as
 a "favorite" and easily come back to it later.
 
@@ -248,10 +248,34 @@ display internal-only addresses that won't work for external access.
 David Duchamp updated the instructions for building with XCode.
 
 <p>
+The built-in JMRI web server is now multithreaded to improve performance.
+
+<p>
 Dan Boudreau improved the operations train icon:  
 Popup menu now always displays the "Throttle" option.  
 "Throttle" is disabled if roster entry doesn't exist for the loco.
 
+<p>
+Improved how Conditionals convert Mmeory contents so they can be compared, etc.
+
+<p>
+Added default exception handlers so that uncaught exceptions will 
+now put information into the log files.
+
+<p>
+Andrew Berridge added an "estop" to the XBox throttle on the
+left stick button.
+
+<p>
+Kevin Dickerson improved how you set the protocol in the preferences.
+
+<p>
+The 
+<a href="http://jmri.org/help/en/html/web/XMLIO.shtml">XML IO</a> 
+package has been updated. To see a demonstration, start the 
+JMRI mini web server, and try these two URLs:
+<a href="http://localhost/web/request.html">http://localhost/web/request.html</a> and
+<a href="http://localhost/web/monitor.html">http://localhost/web/monitor.html</a>.
 
 <!--#include virtual="/Footer" -->
 
