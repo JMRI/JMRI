@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.8 2010-02-14 04:50:21 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.9 2010-02-14 06:26:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -276,6 +276,11 @@ package has been updated. To see a demonstration, start the
 JMRI mini web server, and try these two URLs:
 <a href="http://localhost/web/request.html">http://localhost/web/request.html</a> and
 <a href="http://localhost/web/monitor.html">http://localhost/web/monitor.html</a>.
+
+<p>
+Kevin Dickerson improved the synchronization of turnouts between JMRI and 
+an eCos command station.
+
 
 <!--#include virtual="/Footer" -->
 
