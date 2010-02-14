@@ -44,10 +44,10 @@ import jmri.web.xmlio.*;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
-public class XMLIOServlet implements Servlet {
+public class XMLIOServlet implements Servlet, XmlIORequestor {
 
     String clickRetryTime = "1.0";
     String noclickRetryTime = "5.0";
@@ -90,7 +90,7 @@ public class XMLIOServlet implements Servlet {
         }
 
         // get the writer from the response
-        PrintWriter out = res.getWriter();
+        out = res.getWriter();
         
         // parse request
         String request = parseRequest(inputLines, i);
@@ -98,7 +98,6 @@ public class XMLIOServlet implements Servlet {
         if (builder == null) builder = jmri.jmrit.XmlFile.getBuilder(false);
 
         Reader reader = new StringReader(request);
-        Document doc = null;
         try {
             doc = builder.build(reader);
         } catch (JDOMException e1) {
@@ -106,6 +105,51 @@ public class XMLIOServlet implements Servlet {
         }
         Element root = doc.getRootElement();
         
+        // start processing reply
+        if (factory == null) factory = new XmlIOFactory();
+        XmlIOServer srv = factory.getServer();
+
+        // if list elements present, do immediate operation
+        if (root.getChild("list") != null) {
+            log.debug("immediate reply");
+            Element result = null;
+            try {
+                result = srv.immediateRequest(root);
+            } catch (jmri.JmriException e1) {
+                log.error("JmriException while creating reply: "+e1, e1);
+            }
+            sendReply(doc);
+            return;
+        }        
+        
+        // do monitoring operation
+        try {
+            // start processing the request
+            thread = Thread.currentThread();
+            srv.monitorRequest(root, this);
+            log.debug("stalling thread, waiting for reply");
+            
+            try {
+                Thread.sleep(10000000000000L);  // really long
+            } catch (InterruptedException e) {
+                log.debug("Interrupted");
+            }
+            log.debug("thread resumes after reply");
+            sendReply(doc);
+        } catch (jmri.JmriException e1) {
+            log.error("JmriException while creating reply: "+e1, e1);
+        }
+    }
+    
+    Document doc = null;
+    PrintWriter out;
+    Thread thread;
+    
+    public void monitorReply(Element e) {
+        thread.interrupt();
+    }
+    
+    protected void sendReply(Document doc) {
         // send reply header
         out.print("HTTP/1.0 200 OK\r\n");
         out.print("Server: JMRI\r\n");
@@ -113,26 +157,17 @@ public class XMLIOServlet implements Servlet {
         out.print("Cache-Control: no-cache\r\n");
         out.println();
         
-        // get an immediate reply
-        if (factory == null) factory = new XmlIOFactory();
-
-        XmlIOServer srv = factory.getServer();
-        
-        Element result = null;
-        try {
-            result = srv.immediateRequest(root);
-        } catch (jmri.JmriException e1) {
-            log.error("JmriException while creating reply: "+e1, e1);
-        }
-        
-        // turn around and send back
+        // format and send reply
         if (fmt == null) {
             fmt = new XMLOutputter();
             fmt.setFormat(org.jdom.output.Format.getPrettyFormat());
         }
         
-        fmt.output(doc, out);  // new element is within existing document
-        
+        try {
+            fmt.output(doc, out);  // new element is within existing document
+        } catch (IOException e) {
+            log.error("IOException while in fmt.output: "+e,e);
+        }
         
         // send dummy reply
         //out.println("<xmlio><item><type>sensor</type><name>IS1</name><value>3</value></item></xmlio>");
