@@ -24,12 +24,49 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
 
     public Element immediateRequest(Element e) throws JmriException {
+    
+        // first, process any "list" elements
+        @SuppressWarnings("unchecked")
+        List<Element> lists = new ArrayList(e.getChildren("list"));
+        for (Element list : lists) {
+            //iter.remove();  // remove <list> element from iter, and from parent
+            String type = list.getChild("type").getText();
+            if (type.equals("turnout")) {
+                // add an element for each turnout
+                TurnoutManager m = InstanceManager.turnoutManagerInstance();
+                List<String> names = m.getSystemNameList();
+                for (String name : names) {
+                    Turnout t = m.getTurnout(name);
+                    if (t.getUserName() != null && !t.getUserName().equals(""))
+                        name = t.getUserName();
+                    Element n = new Element("item");
+                    n.addContent(new Element("type").addContent("turnout"));
+                    n.addContent(new Element("name").addContent(name));
+                    e.addContent(n);
+                }
+            } else if (type.equals("sensor")) {
+                // add an element for each sensor
+                SensorManager m = InstanceManager.sensorManagerInstance();
+                List<String> names = m.getSystemNameList();
+                for (String name : names) {
+                    Sensor t = m.getSensor(name);
+                    if (t.getUserName() != null && !t.getUserName().equals(""))
+                        name = t.getUserName();
+                    Element n = new Element("item");
+                    n.addContent(new Element("type").addContent("sensor"));
+                    n.addContent(new Element("name").addContent(name));
+                    e.addContent(n);
+                }            
+            } else log.warn("Unexpected type in list element: "+type);
+        }
+        
+        // then handle the specific items elements.
         @SuppressWarnings("unchecked")
         List<Element> items = e.getChildren("item");
         for (Element item : items) {
@@ -38,7 +75,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             
             if (type.equals("turnout")) immediateWriteTurnout(name, item);
             else if (type.equals("sensor")) immediateWriteSensor(name, item);
-            else log.warn("Unexpected type: "+type);
+            else log.warn("Unexpected type in item: "+type);
         }
         
         for (Element item : items) {
@@ -107,6 +144,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
         for (Element item : items) {
             String type = item.getChild("type").getText();
             String name = item.getChild("name").getText();
+            if (item.getChild("value") == null) return true;  // if no value, consider changed
             
             if (type.equals("turnout")) changed |= monitorProcessTurnout(name, item);
             else if (type.equals("sensor")) changed |= monitorProcessSensor(name, item);
