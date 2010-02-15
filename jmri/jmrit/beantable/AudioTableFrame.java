@@ -5,6 +5,7 @@ package jmri.jmrit.beantable;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -38,7 +39,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AudioTableFrame extends JmriJFrame {
 
@@ -113,40 +114,19 @@ public class AudioTableFrame extends JmriJFrame {
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.configurexml.SaveMenu());
 
-        // TODO: Fix printing and print preview
         JMenuItem printItem = new JMenuItem(rbapps.getString("PrintTable"));
-        //fileMenu.add(printItem);
+        fileMenu.add(printItem);
         final jmri.util.JmriJFrame tableFrame = this;
         printItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    HardcopyWriter writer = null;
                     try {
-                        writer = new HardcopyWriter(tableFrame,tableFrame.getTitle() ,10, .8, .5, .5, .5, false);
-                    } catch (HardcopyWriter.PrintCanceledException ex) {
-                        //log.debug("Print cancelled");
-                        return;
+                        MessageFormat footerFormat = new MessageFormat("Page {0,number}");
+                        listenerDataTable.print(JTable.PrintMode.FIT_WIDTH , new MessageFormat("Listener Table"), footerFormat);
+                        bufferDataTable.print(JTable.PrintMode.FIT_WIDTH , new MessageFormat("Buffer Table"), footerFormat);
+                        sourceDataTable.print(JTable.PrintMode.FIT_WIDTH , new MessageFormat("Source Table"), footerFormat);
+                    } catch (java.awt.print.PrinterException e1) {
+                        log.warn("error printing: "+e1,e1);
                     }
-                    writer.increaseLineSpacing(20);
-                    listenerDataModel.printTable(writer);
-                    bufferDataModel.printTable(writer);
-                    sourceDataModel.printTable(writer);
-                }
-        });
-        JMenuItem previewItem = new JMenuItem(rbapps.getString("PreviewTable"));
-        //fileMenu.add(previewItem);
-        previewItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    HardcopyWriter writer = null;
-                    try {
-                        writer = new HardcopyWriter(tableFrame,tableFrame.getTitle() ,10, .8, .5, .5, .5, true);
-                    } catch (HardcopyWriter.PrintCanceledException ex) {
-                        //log.debug("Print cancelled");
-                        return;
-                    }
-                    writer.increaseLineSpacing(20);
-                    listenerDataModel.printTable(writer);
-                    bufferDataModel.printTable(writer);
-                    sourceDataModel.printTable(writer);
                 }
         });
 
@@ -234,7 +214,7 @@ public class AudioTableFrame extends JmriJFrame {
         super.dispose();
     }
 
-    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AudioTableFrame.class.getName());
+    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AudioTableFrame.class.getName());
 
 }
 

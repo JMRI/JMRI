@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.MessageFormat;
 
 import jmri.util.com.sun.TableSorter;
 
@@ -28,7 +29,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 
@@ -76,30 +77,13 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         final jmri.util.JmriJFrame tableFrame = this;
         printItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    HardcopyWriter writer = null;
                     try {
-                        writer = new HardcopyWriter(tableFrame,tableFrame.getTitle() ,10, .8, .5, .5, .5, false);
-                    } catch (HardcopyWriter.PrintCanceledException ex) {
-                        //log.debug("Print cancelled");
-                        return;
+                        MessageFormat headerFormat = new MessageFormat(getTitle());
+                        MessageFormat footerFormat = new MessageFormat("Page {0,number}");
+                        dataTable.print(JTable.PrintMode.FIT_WIDTH , headerFormat, footerFormat);
+                    } catch (java.awt.print.PrinterException e1) {
+                        log.warn("error printing: "+e1,e1);
                     }
-					writer.increaseLineSpacing(20);
-                    dataModel.printTable(writer);
-                }
-        });
-        JMenuItem previewItem = new JMenuItem(rb.getString("PreviewTable"));
-        fileMenu.add(previewItem);        
-        previewItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    HardcopyWriter writer = null;
-                    try {
-                        writer = new HardcopyWriter(tableFrame,tableFrame.getTitle() ,10, .8, .5, .5, .5, true);
-                    } catch (HardcopyWriter.PrintCanceledException ex) {
-                        //log.debug("Print cancelled");
-                        return;
-                    }
-					writer.increaseLineSpacing(20);
-                    dataModel.printTable(writer);
                 }
         });
 
@@ -172,4 +156,6 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         dataScroll = null;
         super.dispose();
     }
+
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BeanTableFrame.class.getName());
 }
