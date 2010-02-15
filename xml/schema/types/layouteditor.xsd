@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: layouteditor.xsd,v 1.5 2010-02-03 05:58:58 jacobsen Exp $ -->
+<!-- $Id: layouteditor.xsd,v 1.6 2010-02-15 01:27:46 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -41,18 +41,20 @@
       </xs:annotation>
       <xs:sequence minOccurs="0" maxOccurs="unbounded" >
         
-        <xs:element name="positionablelabel"    type="EditorPositionableLabelType"  minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="positionablepoint"    minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="turnouticon"          minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="sensoricon"           type="EditorSensorIconType"         minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="memoryicon"           minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="signalheadicon"       minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="reportericon"         minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="layoutturnout"        minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="tracksegment"         minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="fastclock"            minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="multisensoricon"      minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="levelxing"            minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="positionablelabel"  type="EditorPositionableLabelType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="positionablepoint"  type="EditorPositionablePointType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="turnouticon"        type="EditorTurnoutIconType"       minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="sensoricon"         type="EditorSensorIconType"        minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="memoryicon"         type="EditorMemoryIconType"        minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="signalheadicon"     type="EditorSignalHeadIconType"    minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="reportericon"       type="EditorReporterIconType"      minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="layoutturnout"      type="EditorLayoutTurnoutType"     minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="tracksegment"       type="EditorTrackSegmentType"      minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="fastclock"          type="EditorFastClockIconType"     minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="multisensoricon"    type="EditorMultiSensorIconType"   minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="levelxing"          type="EditorLevelXingType"         minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="layoutturnouttable" type="EditorLayoutTurntableType"   minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="locoicon"           type="EditorLocoIconType"          minOccurs="0" maxOccurs="unbounded" />
             
       </xs:sequence>
       <xs:attribute name="class" type="xs:string" use="required" />
