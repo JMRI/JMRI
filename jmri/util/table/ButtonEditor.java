@@ -30,6 +30,8 @@ public class ButtonEditor extends BasicCellEditor
         super(button);
         button.addActionListener(this);
         button.addMouseListener(this);
+        button.putClientProperty("JComponent.sizeVariant","small");
+        button.putClientProperty("JButton.buttonType","square");
     }
 
     public void setForeground(Color foreground) {

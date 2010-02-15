@@ -22,6 +22,8 @@ public class ButtonRenderer extends JButton
     public ButtonRenderer() {
         this.border = getBorder();
         this.setOpaque(true);
+        putClientProperty("JComponent.sizeVariant","small");
+        putClientProperty("JButton.buttonType","square");
     }
 
     public void setForeground(Color foreground) {

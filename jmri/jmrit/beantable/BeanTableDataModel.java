@@ -23,7 +23,7 @@ import java.util.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.32 $
+ * @version		$Revision: 1.33 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -268,7 +268,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             
             noButton.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
-                    //there is no point in remebering this the user will never be
+                    //there is no point in remembering this the user will never be
                     //able to delete a bean!
                     /*if(remember.isSelected()){
                         setDisplayDeleteMsg(0x01);
@@ -372,7 +372,11 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     }
 
     public JButton configureButton() {
-        return new JButton(AbstractTableAction.rbean.getString("BeanStateInconsistent"));
+        // pick a large size
+        JButton b = new JButton(AbstractTableAction.rbean.getString("BeanStateInconsistent"));
+        b.putClientProperty("JComponent.sizeVariant","small");
+        b.putClientProperty("JButton.buttonType","square");
+        return b;
     }
 
     void configDeleteColumn(JTable table) {
