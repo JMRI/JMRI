@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.11 2010-02-14 22:19:25 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.12 2010-02-15 08:11:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -284,6 +284,15 @@ an eCos command station.
 <p>
 A new "virtual" connection has been added, so you can try the programs
 without selecting any particular type of layout hardware.
+
+<p>
+Printing of tables has been reworked.  This fixes the ordering problems, etc,
+but also changes the appearance of the printout.  That will probably require
+some additional tweaking.
+
+<p>
+The buttons inside tables have been made smaller so that tables will fit
+better on smaller screens.
 
 <!--#include virtual="/Footer" -->
 
