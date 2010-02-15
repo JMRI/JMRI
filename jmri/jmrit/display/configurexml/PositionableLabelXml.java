@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -311,15 +311,11 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         NamedIcon icon = getNamedIcon(attrName, element);
         if (icon != null) {
             try {
+                int deg = 0;
             	Element elem = element.getChild(attrName);
-                Attribute a = elem.getAttribute("rotate");
+                Attribute a = elem.getAttribute("degrees");
                 if (a!=null) {
-                    int rotation = a.getIntValue();
-                    icon.setRotation(rotation, l);
-                }
-                a = elem.getAttribute("degrees");
-                if (a!=null) {
-                    int deg = a.getIntValue();
+                    deg = a.getIntValue();
                     double scale = 1.0;
                     a =  elem.getAttribute("scale");
                     if (a!=null)
@@ -328,6 +324,13 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                     }
                     //l.setIcon(icon);
                     icon.setLoad(deg, scale, l);
+                }
+                if ( deg==0) {
+                    a = elem.getAttribute("rotate");
+                    if (a!=null) {
+                        int rotation = a.getIntValue();
+                        icon.setRotation(rotation, l);
+                    }
                 }
             } catch (org.jdom.DataConversionException dce) {}
         } else {

@@ -25,7 +25,8 @@ import javax.swing.ImageIcon;
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
- * @version $Revision: 1.21 $
+ * @author  Pete Cressman Copyright: Copyright (c) 2009, 2010
+ * @version $Revision: 1.22 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -220,7 +221,7 @@ public class NamedIcon extends ImageIcon {
     public void setLoad(int d, double s, Component comp) {
         if (d!=0 || s!=1.0) {
             setImage(createRotatedImage(mDefaultImage, comp, 0));
-            mRotation = 3;
+            //mRotation = 3;
         }
         if (d!=0) {
             rotate(d, comp);

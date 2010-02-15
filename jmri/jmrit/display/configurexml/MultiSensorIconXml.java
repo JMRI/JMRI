@@ -12,7 +12,7 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class MultiSensorIconXml extends PositionableLabelXml {
 
@@ -89,19 +89,21 @@ public class MultiSensorIconXml extends PositionableLabelXml {
             Element item = items.get(i);
             if (item.getAttribute("sensor")!=null) {
                 String sensor = item.getAttribute("sensor").getValue();
+                /*
+                NamedIcon icon = loadIcon(l, "url", item);
+                if (icon==null) {
+                    icon = loadIcon(l, "icon", item);
+                }
+                */
                 NamedIcon icon;
                 if (item.getAttribute("url")!=null) {
                     String name = item.getAttribute("url").getValue();
                     icon = NamedIcon.getIconByName(name);
                     try {
-                        a = item.getAttribute("rotate");
-                        if (a!=null) {
-                            rotation = a.getIntValue();
-                            icon.setRotation(rotation, l);
-                        }
+                        int deg = 0;
                         a = item.getAttribute("degrees");
                         if (a!=null) {
-                            int deg = a.getIntValue();
+                            deg = a.getIntValue();
                             double scale = 1.0;
                             a =  item.getAttribute("scale");
                             if (a!=null)
@@ -110,12 +112,20 @@ public class MultiSensorIconXml extends PositionableLabelXml {
                             }
                             icon.setLoad(deg, scale, l);
                         }
+                        if (deg==0) {
+                            a = item.getAttribute("rotate");
+                            if (a!=null) {
+                                rotation = a.getIntValue();
+                                icon.setRotation(rotation, l);
+                            }
+                        }
                     } catch (org.jdom.DataConversionException dce) {}
                 } else {
                     String name = item.getAttribute("icon").getValue();
                     icon = NamedIcon.getIconByName(name);
                     if (rotation!=0) icon.setRotation(rotation, l);
                 }
+              
                 l.addEntry(sensor, icon);
             }
         }
