@@ -2,17 +2,15 @@
 
 package jmri.jmrit.powerpanel;
 
-import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 
-import javax.swing.AbstractAction;
 
 /**
  * Swing action to create and register a
  * PowerPanelFrame object.
  *
  * @author	    Bob Jacobsen    Copyright (C) 2001, 2010
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class PowerPanelAction extends jmri.util.swing.JmriNamedPaneAction {
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");

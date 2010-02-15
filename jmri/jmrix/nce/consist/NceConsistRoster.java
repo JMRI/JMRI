@@ -3,7 +3,6 @@
 package jmri.jmrix.nce.consist;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +41,7 @@ import org.jdom.ProcessingInstruction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001; Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  * @see NceConsistRosterEntry
  */
 public class NceConsistRoster extends XmlFile {

@@ -5,7 +5,6 @@ package jmri.jmrit.powerpanel;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
-import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,7 +13,7 @@ import java.util.ResourceBundle;
 /**
  * Pane for power control
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2010
- * @version	    $Revision: 1.6 $
+ * @version	    $Revision: 1.7 $
  */
 public class PowerPane extends jmri.util.swing.JmriPanel 
             implements java.beans.PropertyChangeListener {

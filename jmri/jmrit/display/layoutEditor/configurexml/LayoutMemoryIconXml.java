@@ -1,7 +1,6 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
 import jmri.configurexml.*;
-import jmri.jmrit.display.configurexml.*;
 
 import org.jdom.Element;
 
@@ -13,7 +12,7 @@ import org.jdom.Element;
  *
  * @author David Duchamp Copyright: Copyright (c) 2009
  * @author Kevin Dickerson, Deprecated
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @deprecated 2.7.8
  */
 @Deprecated

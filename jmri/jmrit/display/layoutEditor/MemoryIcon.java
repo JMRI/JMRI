@@ -1,7 +1,4 @@
 package jmri.jmrit.display.layoutEditor;
-
-import jmri.jmrit.display.Editor;
-import java.awt.event.MouseEvent;
 /**
  * An icon to display a status of a Memory.<P>
  */

@@ -1,13 +1,11 @@
 package jmri.configurexml.swing;
 
-import javax.swing.JOptionPane;
-
 /**
  * Swing dialog for reporting errors while loading.
  * Shows each one, could save until end if needed.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
     
 public class DialogErrorHandler extends jmri.configurexml.ErrorHandler {

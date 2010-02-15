@@ -5,21 +5,16 @@ package jmri.jmrit.display;
 //import java.awt.event.MouseListener;
 //import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
-import java.awt.Container;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import java.util.ResourceBundle;
 
 import javax.swing.*;
-import jmri.util.JmriJFrame;
 
 /**
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 

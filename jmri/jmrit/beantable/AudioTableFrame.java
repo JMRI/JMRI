@@ -19,7 +19,6 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
 import jmri.util.JTableUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.com.sun.TableSorter;
-import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
  *
@@ -39,7 +38,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class AudioTableFrame extends JmriJFrame {
 

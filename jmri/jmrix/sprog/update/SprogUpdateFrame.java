@@ -2,9 +2,7 @@
 
 package jmri.jmrix.sprog.update;
 
-import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
-import jmri.jmrix.sprog.SprogReply;
 import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 
@@ -16,7 +14,7 @@ import javax.swing.*;
  * Andrew Berridge - Feb 2010 - removed implementation of SprogListener - wasn't being used
  * 
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class SprogUpdateFrame
     extends jmri.util.JmriJFrame {

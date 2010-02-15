@@ -1,33 +1,17 @@
 package jmri.jmrit.display.panelEditor;
 
 import jmri.InstanceManager;
-import jmri.Light;
-import jmri.Turnout;
-import jmri.Sensor;
-import jmri.SignalHead;
-//import jmri.Manager;
-import jmri.Memory;
-import jmri.Reporter;
-//import jmri.NamedBean;
 import jmri.jmrit.catalog.ImageIndexEditor;
-import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 
 import jmri.jmrit.display.*;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ResourceBundle;
 
 import jmri.jmrit.display.Editor;
-import javax.swing.BoxLayout;
 import javax.swing.*;
 
-import java.util.ArrayList;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items

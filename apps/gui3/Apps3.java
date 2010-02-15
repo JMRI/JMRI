@@ -5,15 +5,11 @@ package apps.gui3;
 import jmri.*;
 import jmri.jmrit.XmlFile;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.*;
-import jmri.util.swing.multipane.MultiPaneWindow;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import javax.swing.*;
-import javax.swing.tree.*;
-import javax.swing.event.*;
 
 /**
  * Base class for GUI3 JMRI applications.
@@ -28,7 +24,7 @@ import javax.swing.event.*;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen   Copyright 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public abstract class Apps3 {
 

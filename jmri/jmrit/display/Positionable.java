@@ -3,8 +3,6 @@ package jmri.jmrit.display;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 /**
@@ -25,7 +23,7 @@ import javax.swing.JPopupMenu;
  *
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public interface Positionable  {
     public void setPositionable(boolean enabled);

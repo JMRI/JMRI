@@ -2,14 +2,11 @@
 
 package jmri.jmrix.srcp;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-
 /**
  * Abstract base for classes representing a SRCP communications port
- * @author			Bob Jacobsen    Copyright (C) 2001, 2008
+ * @author			Bob Jacobsen    Copyright (C) 2001, 2008, 2010
  * @author			Paul Bender     Copyright (C) 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public abstract class SRCPPortController extends jmri.jmrix.NetworkPortAdapter {
 	// base class. Implementations will provide InputStream and OutputStream

@@ -18,7 +18,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -62,7 +61,7 @@ import jmri.jmrit.display.Positionable;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class Maintenance

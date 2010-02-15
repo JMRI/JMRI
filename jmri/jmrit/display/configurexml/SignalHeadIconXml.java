@@ -9,13 +9,12 @@ import jmri.jmrit.display.SignalHeadIcon;
 import jmri.util.NamedBeanHandle;
 import org.jdom.Attribute;
 import org.jdom.Element;
-import java.awt.Component;
 
 /**
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.40 $
+ * @version $Revision: 1.41 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 

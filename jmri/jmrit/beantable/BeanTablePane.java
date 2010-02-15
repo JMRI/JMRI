@@ -9,7 +9,6 @@ import java.awt.*;
 
 import jmri.util.com.sun.TableSorter;
 
-import jmri.util.davidflanagan.HardcopyWriter;
 
 
 /**
@@ -27,7 +26,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class BeanTablePane extends jmri.util.swing.JmriPanel {
 

@@ -8,8 +8,6 @@ import jmri.Memory;
 import jmri.Reporter;
 import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 
 import jmri.jmrit.display.*;
@@ -52,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class LayoutEditor extends Editor {

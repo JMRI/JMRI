@@ -4,7 +4,6 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrix.rps.*;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
@@ -19,7 +18,7 @@ import javax.swing.JCheckBoxMenuItem;
  * In this initial version, it ignores the ID, so there's only one icon.
  *
  * @author Bob Jacobsen Copyright (C) 2007
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class RpsPositionIcon extends PositionableLabel implements MeasurementListener {

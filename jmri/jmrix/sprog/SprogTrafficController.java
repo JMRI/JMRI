@@ -6,7 +6,6 @@ import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 
-import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.AbstractPortController;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
@@ -28,7 +27,7 @@ import gnu.io.SerialPortEventListener;
  * Removed Runnable implementation and methods for it
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener  {
 

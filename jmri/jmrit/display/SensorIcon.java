@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JCheckBoxMenuItem;
 //From layout editor
@@ -24,7 +23,7 @@ import jmri.util.NamedBeanHandle;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.60 $
+ * @version $Revision: 1.61 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {

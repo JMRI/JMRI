@@ -1,15 +1,7 @@
 package jmri.jmrit.display.controlPanelEditor;
 
 import jmri.InstanceManager;
-import jmri.Light;
-import jmri.Turnout;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.Memory;
-import jmri.Reporter;
 import jmri.jmrit.catalog.ImageIndexEditor;
-import jmri.jmrit.catalog.NamedIcon;
-import jmri.util.JmriJFrame;
 
 import jmri.jmrit.display.*;
 
@@ -17,9 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.util.HashMap;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import jmri.jmrit.display.Editor;
 import javax.swing.*;

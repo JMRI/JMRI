@@ -4,7 +4,6 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.SignalGroup;
 import jmri.SignalGroupManager;
-import jmri.managers.DefaultSignalGroupManager;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ import org.jdom.Element;
  * Handle XML configuration for a DefaultSignalGroupManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class DefaultSignalGroupManagerXml 
             extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {

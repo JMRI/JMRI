@@ -5,15 +5,13 @@ package jmri.jmrix.sprog.packetgen;
 import java.awt.*;
 import javax.swing.*;
 
-import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogMessage;
-import jmri.jmrix.sprog.SprogReply;
 
 /**
  * Frame for user input of Sprog messages.
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2010
+ * @version			$Revision: 1.8 $
  */
 public class SprogPacketGenFrame extends jmri.util.JmriJFrame {
 

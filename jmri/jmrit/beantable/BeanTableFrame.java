@@ -11,7 +11,6 @@ import java.text.MessageFormat;
 
 import jmri.util.com.sun.TableSorter;
 
-import jmri.util.davidflanagan.HardcopyWriter;
 
 
 /**
@@ -29,7 +28,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.26 $
+ * @version	$Revision: 1.27 $
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 

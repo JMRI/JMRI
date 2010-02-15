@@ -6,7 +6,6 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.SignalGroup;
-import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.util.table.ButtonEditor;
@@ -40,7 +39,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class SignalGroupTableAction extends AbstractTableAction {

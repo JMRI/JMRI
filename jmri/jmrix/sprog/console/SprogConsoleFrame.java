@@ -5,7 +5,6 @@ package jmri.jmrix.sprog.console;
 import java.awt.*;
 import javax.swing.*;
 
-import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.sprog.SprogCommandStation;
 import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogMessage;
@@ -20,7 +19,7 @@ import jmri.jmrix.sprog.SprogConstants;
  * to send some commands while slot manager is active
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
     

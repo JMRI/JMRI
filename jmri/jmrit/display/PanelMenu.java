@@ -4,8 +4,6 @@ package jmri.jmrit.display;
 
 import java.util.ResourceBundle;
 
-import javax.swing.JMenu;
-import javax.swing.JSeparator;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +11,6 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import java.util.ArrayList;
-import jmri.util.JmriJFrame;
 //import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
@@ -25,7 +22,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * @author	Bob Jacobsen   Copyright 2003, 2004
  * @author  Dave Duchamp   Copyright 2007
  * @author  Pete Cressman   Copyright 2010
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 public class PanelMenu extends JMenu {
     public PanelMenu() {

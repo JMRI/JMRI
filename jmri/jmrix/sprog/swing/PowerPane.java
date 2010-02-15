@@ -2,7 +2,6 @@
 
 package jmri.jmrix.sprog.swing;
 
-import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
 import java.awt.GridLayout;
@@ -10,13 +9,12 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.util.ResourceBundle;
-import jmri.jmrit.powerpanel.*;
 import jmri.jmrix.sprog.*;
 
 /**
  * Pane for power control
  * @author	    Bob Jacobsen   Copyright (C) 2001
- * @version	    $Revision: 1.1 $
+ * @version	    $Revision: 1.2 $
  */
 public class PowerPane extends javax.swing.JPanel implements java.beans.PropertyChangeListener {
 

@@ -2,8 +2,6 @@
 
 package jmri.jmrit.mastbuilder;
 
-import jmri.*;
-
 import java.awt.*;
 
 import javax.swing.*;
@@ -12,7 +10,7 @@ import javax.swing.*;
  * Pane for building mast definitions
  *
  * @author	    Bob Jacobsen   Copyright (C) 2010
- * @version	    $Revision: 1.1 $
+ * @version	    $Revision: 1.2 $
  */
 public class MastBuilderPane extends javax.swing.JPanel {
 

@@ -5,7 +5,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -19,7 +18,7 @@ import org.jdom.Element;
  * deferring to the present class.
  *
  * @author Pete Cressman, Deprecated
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  * @deprecated 2.9
  */
  

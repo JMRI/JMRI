@@ -11,7 +11,6 @@ import javax.swing.*;
 
 import jmri.*;
 import jmri.jmrit.catalog.*;
-import jmri.util.JmriJFrame;
 
 /**
  * <p>An Analog Clock for displaying in a panel</p>
@@ -19,7 +18,7 @@ import jmri.util.JmriJFrame;
  * <p>Time code copied in part from code for the Nixie clock by Bob Jacobsen </p>
  *
  * @author  Howard G. Penny - Copyright (C) 2005
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class AnalogClock2Display extends PositionableJComponent {
 

@@ -26,7 +26,6 @@ import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.blockboss.BlockBossLogic;
 
-import jmri.jmrit.display.MultiSensorIcon;
 import jmri.jmrit.display.SignalHeadIcon;
 
 /**
@@ -36,7 +35,7 @@ import jmri.jmrit.display.SignalHeadIcon;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LayoutEditorTools 

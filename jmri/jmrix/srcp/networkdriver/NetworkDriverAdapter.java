@@ -8,9 +8,6 @@ import jmri.jmrix.srcp.SRCPProgrammer;
 import jmri.jmrix.srcp.SRCPProgrammerManager;
 import jmri.jmrix.srcp.SRCPTrafficController;
 
-import java.io.*;
-import java.net.*;
-import java.util.Vector;
 
 /**
  * Implements SerialPortAdapter for the SRCP system network connection.
@@ -18,9 +15,9 @@ import java.util.Vector;
  * an SRCP server (daemon) via a telnet connection.
  * Normally controlled by the NetworkDriverFrame class.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008, 2010
  * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class NetworkDriverAdapter extends SRCPPortController {
 

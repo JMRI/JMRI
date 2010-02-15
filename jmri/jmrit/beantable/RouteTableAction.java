@@ -19,7 +19,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Component;
 
 import java.beans.PropertyChangeListener;
 
@@ -44,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.58 $
+ * @version     $Revision: 1.59 $
  */
 
 public class RouteTableAction extends AbstractTableAction {

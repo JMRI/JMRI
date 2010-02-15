@@ -9,12 +9,6 @@ import jmri.jmrix.AbstractMRTrafficController;
 
 import jmri.jmrix.lenz.XNetReply;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
 import java.io.*;
 
@@ -30,7 +24,7 @@ import java.io.*;
  * into service mode. 
  *
  * @author			Paul Bender (C) 2009
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 
 public class LIUSBServerAdapter extends XNetPortController {

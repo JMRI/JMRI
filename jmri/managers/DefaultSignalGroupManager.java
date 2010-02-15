@@ -11,7 +11,6 @@ import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.jdom.Element;
 
 /**
  * Default implementation of a SignalGroupManager.
@@ -21,7 +20,7 @@ import org.jdom.Element;
  *
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class DefaultSignalGroupManager extends AbstractManager
     implements SignalGroupManager, java.beans.PropertyChangeListener {

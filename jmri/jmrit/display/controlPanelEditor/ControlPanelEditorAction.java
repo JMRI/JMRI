@@ -1,6 +1,5 @@
 package jmri.jmrit.display.controlPanelEditor;
 
-import jmri.util.JmriJFrame;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -9,7 +8,7 @@ import javax.swing.AbstractAction;
  * Start a ControlPanelEditor.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  * @see         jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction
  */
 public class ControlPanelEditorAction extends AbstractAction {

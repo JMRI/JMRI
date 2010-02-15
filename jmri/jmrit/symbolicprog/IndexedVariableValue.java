@@ -8,18 +8,15 @@ import java.beans.*;
 import java.util.*;
 
 import javax.swing.*;
-import javax.swing.table.*;
 import javax.swing.text.Document;
 
-import org.jdom.Attribute;
-import org.jdom.Element;
 
 /**
  * Extends VariableValue to represent an indexed variable
  *
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author    Bob Jacobsen   Copyright (C) 2010
- * @version   $Revision: 1.17 $
+ * @version   $Revision: 1.18 $
  */
 public class IndexedVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
@@ -480,7 +477,7 @@ public class IndexedVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.17 $
+     * @version     $Revision: 1.18 $
      */
     public class VarTextField extends JTextField {
 
