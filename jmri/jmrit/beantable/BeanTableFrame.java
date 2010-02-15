@@ -29,7 +29,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.24 $
+ * @version	$Revision: 1.25 $
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 
@@ -79,8 +79,8 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
                 public void actionPerformed(ActionEvent e) {
                     try {
                         MessageFormat headerFormat = new MessageFormat(getTitle());
-                        MessageFormat footerFormat = new MessageFormat("Page {0,number}");
-                        dataTable.print(JTable.PrintMode.FIT_WIDTH , headerFormat, footerFormat);
+                        MessageFormat footerFormat = new MessageFormat(getTitle()+" page {0,number}");
+                        dataTable.print(JTable.PrintMode.FIT_WIDTH , null, footerFormat);
                     } catch (java.awt.print.PrinterException e1) {
                         log.warn("error printing: "+e1,e1);
                     }
