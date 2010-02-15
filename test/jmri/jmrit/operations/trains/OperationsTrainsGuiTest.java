@@ -6,6 +6,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.setup.Control;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -21,7 +22,7 @@ import java.util.List;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 
@@ -39,10 +40,8 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 	}
 	
 	public void testTrainsTableFrame(){
-		TrainManager tmanager = TrainManager.instance();
 		TrainsTableFrame f = new TrainsTableFrame();
 		f.setVisible(true);
-		f.setSize(400,200);
 		f.setLocation(10,20);
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.sortByName ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
@@ -50,9 +49,10 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		// frame location can move just a bit on MacOS
 		Point p = f.getLocation();
 		
-		Assert.assertEquals("sort by 2", TrainsTableFrame.NAME, tmanager.getTrainsFrameSortBy());
+		TrainManager tmanager = TrainManager.instance();
+		Assert.assertEquals("sort by name", TrainsTableFrame.NAME, tmanager.getTrainsFrameSortBy());
 		Assert.assertEquals("location 1", p, tmanager.getTrainsFramePosition());
-		Assert.assertEquals("size 1", new Dimension(400,200), tmanager.getTrainsFrameSize());
+		Assert.assertEquals("default size", new Dimension(Control.panelWidth,Control.panelHeight), tmanager.getTrainsFrameSize());
 		Assert.assertFalse("Build Messages", tmanager.getBuildMessages());
 		Assert.assertFalse("Build Report", tmanager.getBuildReport());
 		Assert.assertFalse("Print Review", tmanager.getPrintPreview());
@@ -67,15 +67,16 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		
 		f.setSize(610,250);
 		f.setLocation(20,10);
+		f.validate();
 		
-		Assert.assertEquals("sort by 3", TrainsTableFrame.TIME, tmanager.getTrainsFrameSortBy());
+		Assert.assertEquals("sort by time", TrainsTableFrame.TIME, tmanager.getTrainsFrameSortBy());
 		Assert.assertTrue("Build Messages 2", tmanager.getBuildMessages());
 		Assert.assertTrue("Build Report 2", tmanager.getBuildReport());
 		Assert.assertFalse("Print Review 2", tmanager.getPrintPreview());
 
 		// frame location shouldn't have moved yet
-		Assert.assertEquals("location 2", p, tmanager.getTrainsFramePosition());
-		Assert.assertEquals("size 2", new Dimension(400,200), tmanager.getTrainsFrameSize());
+		Assert.assertEquals("location check", p, tmanager.getTrainsFramePosition());
+		Assert.assertEquals("size check", new Dimension(Control.panelWidth,Control.panelHeight), tmanager.getTrainsFrameSize());
 		
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.sortById ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.buildMsgBox ) );
@@ -85,7 +86,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		// frame location can move just a bit on MacOS
 		p = f.getLocation();
 		
-		Assert.assertEquals("sort by 1", TrainsTableFrame.ID, tmanager.getTrainsFrameSortBy());
+		Assert.assertEquals("sort by id", TrainsTableFrame.ID, tmanager.getTrainsFrameSortBy());
 		Assert.assertEquals("location 3", p, tmanager.getTrainsFramePosition());
 		Assert.assertEquals("size 3", new Dimension(610,250), tmanager.getTrainsFrameSize());
 		Assert.assertFalse("Build Messages 3", tmanager.getBuildMessages());
