@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
-<!-- Copyright (C) JMRI 2005, 2007, 2009 All rights reserved -->
-<!-- $Id: BLI_Blueline_Paragon2_Diesel.xml,v 1.2 2009-04-20 05:51:08 jacobsen Exp $ -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id: BLI_Blueline_Paragon2_Diesel.xml,v 1.3 2010-02-15 02:32:33 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,7 +14,12 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<decoder-config>
+<decoder-config
+    xmlns:xi = "http://www.w3.org/2001/XInclude"
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/decoder.xsd"
+>
+
         <version author="Bob Jacobsen" version="1" lastUpdated="200090407"/>
         
         <!-- Version 1 New file from 1.03 manual and BLI_Blueline_diesel v5 -->
