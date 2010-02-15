@@ -16,7 +16,7 @@ import org.jdom.*;
  * Handle configuration for {@link ControlPanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
@@ -37,7 +37,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         Point posn = frame.getLocation();
 
         panel.setAttribute("class", "jmri.jmrit.display.configurexml.PanelEditorXml");
-        panel.setAttribute("name", ""+frame.getTitle());
+        panel.setAttribute("name", ""+frame.getName());
         panel.setAttribute("x", ""+posn.x);
         panel.setAttribute("y", ""+posn.y);
         panel.setAttribute("height", ""+size.height);
@@ -99,7 +99,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             result = false;
         }
         // find the name
-        String name = "Panel";
+        String name = "Control Panel";
         if (element.getAttribute("name")!=null)
             name = element.getAttribute("name").getValue();
         // confirm that panel hasn't already been loaded
@@ -112,8 +112,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         panel.getTargetFrame().setLocation(x,y);
         panel.getTargetFrame().setSize(width,height);
         
-        panel.setTitle();
-
         // load the contents
         List<Element> items = element.getChildren();
         for (int i = 0; i<items.size(); i++) {
@@ -191,6 +189,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         // reset the size and position, in case the display caused it to change
         panel.getTargetFrame().setLocation(x,y);
         panel.getTargetFrame().setSize(width,height);
+        panel.setTitle();
         panel.initView();
         return result;
     }

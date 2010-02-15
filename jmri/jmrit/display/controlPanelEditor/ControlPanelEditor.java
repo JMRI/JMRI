@@ -80,7 +80,6 @@ public class ControlPanelEditor extends Editor {
     private JMenu _iconMenu;
     private JMenu _zoomMenu;
     private JMenu _markerMenu;
-    private JMenu _warrantMenu;
 
     private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(rb.getString("CheckBoxEditable"));
     private JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(rb.getString("CheckBoxPositionable"));
@@ -95,11 +94,11 @@ public class ControlPanelEditor extends Editor {
 
     private Positionable _waitingToAdd;     // newly created item to be placed
     private boolean _newItem = false;       // item newly created
-    private String _name;
+//    private String _name;
 
     public ControlPanelEditor(String name) {
         super(name);
-        _name = name;
+        setName(name);
         _debug = log.isDebugEnabled();
         java.awt.Container contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -140,6 +139,10 @@ public class ControlPanelEditor extends Editor {
         // set scrollbar initial state
         setScroll(SCROLL_BOTH);
         scrollBoth.setSelected(true);
+        super.setDefaultToolTip(new ToolTip(null,0,0,new Font("Serif", Font.PLAIN, 12),
+                                                     Color.black, new Color(255, 250, 210), Color.black));
+        // register the resulting panel for later configuration
+        InstanceManager.configureManagerInstance().registerUser(this);
     }
 
     private void makeIconMenu() {
@@ -289,6 +292,7 @@ public class ControlPanelEditor extends Editor {
         _fileMenu = new JMenu(rb.getString("MenuFile"));
         _menuBar.add(_fileMenu, 0);
         _fileMenu.add(new jmri.jmrit.display.NewPanelAction(rb.getString("MenuItemNew")));
+
         _fileMenu.add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStore")));
         JMenuItem storeIndexItem = new JMenuItem(rb.getString("MIStoreImageIndex"));
         _fileMenu.add(storeIndexItem);
@@ -302,7 +306,14 @@ public class ControlPanelEditor extends Editor {
                     return this;
                 }
             }.init(this));
-        JMenuItem editItem = new JMenuItem(rb.getString("editIndexMenu"));
+
+        JMenuItem editItem = new JMenuItem(rb.getString("renamePanelMenu"));
+        PositionableJComponent z = new PositionableJComponent(this);
+        z.setScale(getPaintScale());
+        editItem.addActionListener(CoordinateEdit.getNameEditAction(z));
+        _fileMenu.add(editItem);
+
+        editItem = new JMenuItem(rb.getString("editIndexMenu"));
         editItem.addActionListener(new ActionListener() {
                 ControlPanelEditor panelEd;
                 public void actionPerformed(ActionEvent e) {
@@ -316,6 +327,7 @@ public class ControlPanelEditor extends Editor {
                 }
             }.init(this));
         _fileMenu.add(editItem);
+
         _fileMenu.addSeparator();
         JMenuItem deleteItem = new JMenuItem(rb.getString("DeletePanel"));
         _fileMenu.add(deleteItem);
@@ -374,8 +386,8 @@ public class ControlPanelEditor extends Editor {
             }
             _menuBar.add(_editMenu, 0);
         }
-        setTitle(edit);
         setAllEditable(edit);
+        setTitle();
         _menuBar.validate();
     }
 
@@ -471,57 +483,18 @@ public class ControlPanelEditor extends Editor {
     }
 
 
-    public void setTitle(boolean edit) {
-        if (edit) {
-            super.setTitle();
+    public void setTitle() {
+        String name = getName();
+        if (name==null || name.length()==0) {
+            name = "Control Panel";
+        }
+        if (isEditable()) {
+            super.setTitle(name+" "+rb.getString("LabelEditor"));
         } else {
-            if (_name==null || _name.length()==0) {
-                _name = "Control Panel";
-            }
-            super.setTitle(_name);
+            super.setTitle(name);
         }
     }
-        /* allow naming the panel
-        {
-            JPanel namep = new JPanel();
-            namep.setLayout(new FlowLayout());
-            JButton b = new JButton(rb.getString("SetPanelName"));
-            b.addActionListener(new ActionListener() {
-                ControlPanelEditor editor;
-                public void actionPerformed(ActionEvent e) {
-                    // prompt for name
-                    String newName = _panelNameBox.getText();
-                    if (newName==null || newName.trim().length()==0) {
-                    	JOptionPane.showMessageDialog(null, rb.getString("NoName"), rb.getString("Warning"),
-                    			JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                    
-                    if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(newName)){
-                    	JOptionPane.showMessageDialog(null, rb.getString("CanNotRename"), rb.getString("PanelExist"),
-                    			JOptionPane.ERROR_MESSAGE);
-                    	return;
-                    }
-                    if (getTargetPanel().getTopLevelAncestor()!=null) {
-                         ((JFrame)getTargetPanel().getTopLevelAncestor()).setTitle(newName);
-                    }
-                    editor.setTitle();
-					jmri.jmrit.display.PanelMenu.instance().renameEditorPanel(editor);
-                }
-                ActionListener init(ControlPanelEditor e) {
-                    editor = e;
-                    return this;
-                }
-            }.init(this));
-            JPanel boxPanel = new JPanel();
-            boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.Y_AXIS));
-            boxPanel.add(new JLabel(rb.getString("PromptPanelName")));
-            boxPanel.add(_panelNameBox);
-            namep.add(b);
-            namep.add(boxPanel);
-            contentPane.add(namep);
-        }
-
+    
     /**
      * After construction, initialize all the widgets to their saved config settings.
      */

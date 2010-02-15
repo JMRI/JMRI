@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
  * Start a ControlPanelEditor.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @see         jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction
  */
 public class ControlPanelEditorAction extends AbstractAction {
@@ -34,6 +34,7 @@ public class ControlPanelEditorAction extends AbstractAction {
 			frame.setLocation(20,20);
         
 			frame.setTitle();
+            frame.initView();
 
 			frame.pack();
 			frame.setVisible(true);
