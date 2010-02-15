@@ -36,7 +36,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.38 $
+ * @version     $Revision: 1.39 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -202,7 +202,7 @@ public class LightTableAction extends AbstractTableAction {
                         break;
                     default: 
                         newState = Light.OFF; 
-                        this.log.warn("Unexpected Light state "+oldState+" becomes OFF");
+                        BeanTableDataModel.log.warn("Unexpected Light state "+oldState+" becomes OFF");
                         break;
                 }
                ((Light)t).setState(newState);

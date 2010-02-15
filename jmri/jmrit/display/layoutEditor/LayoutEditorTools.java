@@ -35,7 +35,7 @@ import jmri.jmrit.display.SignalHeadIcon;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class LayoutEditorTools 
@@ -1524,7 +1524,7 @@ public class LayoutEditorTools
 				if (track.getLayoutBlock()!=t.getLayoutBlock()) return null;
 				obj = x;				
 			}
-			else if (type>=layoutEditor.TURNTABLE_RAY_OFFSET) {
+			else if (type>=LayoutEditor.TURNTABLE_RAY_OFFSET) {
 				hitEndBumper = true;
 				return null;
 			}

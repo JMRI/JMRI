@@ -18,7 +18,7 @@ import java.awt.Color;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LayoutBlockManagerXml extends AbstractXmlAdapter {
 
@@ -56,9 +56,9 @@ public class LayoutBlockManagerXml extends AbstractXmlAdapter {
 						elem.setAttribute("occupancysensor", b.getOccupancySensorName());
 					}
 					elem.setAttribute("occupiedsense", ""+b.getOccupiedSense());
-					elem.setAttribute("trackcolor", b.colorToString(b.getBlockTrackColor()));
-					elem.setAttribute("occupiedcolor", b.colorToString(b.getBlockOccupiedColor()));
-					elem.setAttribute("extracolor", b.colorToString(b.getBlockExtraColor()));
+					elem.setAttribute("trackcolor", LayoutBlock.colorToString(b.getBlockTrackColor()));
+					elem.setAttribute("occupiedcolor", LayoutBlock.colorToString(b.getBlockOccupiedColor()));
+					elem.setAttribute("extracolor", LayoutBlock.colorToString(b.getBlockExtraColor()));
 					layoutblocks.addContent(elem);
 					if (b.getMemoryName() != "") {
 						elem.setAttribute("memory", b.getMemoryName());
@@ -127,16 +127,16 @@ public class LayoutBlockManagerXml extends AbstractXmlAdapter {
             LayoutBlock b = tm.createNewLayoutBlock(sysName, userName);
             if (b!=null) {
 				// set attributes
-				Color color = b.stringToColor(((layoutblockList.get(i))).
+				Color color = LayoutBlock.stringToColor(((layoutblockList.get(i))).
 												getAttribute("trackcolor").getValue());
 				b.setBlockTrackColor(color);
-				color = b.stringToColor(((layoutblockList.get(i)))
+				color = LayoutBlock.stringToColor(((layoutblockList.get(i)))
 											.getAttribute("occupiedcolor").getValue());
 				b.setBlockOccupiedColor(color);
 				Attribute a = ((layoutblockList.get(i)))
 											.getAttribute("extracolor");
 				if (a!=null) {
-					b.setBlockExtraColor(b.stringToColor(a.getValue()));
+					b.setBlockExtraColor(LayoutBlock.stringToColor(a.getValue()));
 				}				
 				a = ((layoutblockList.get(i)))
 											.getAttribute("occupancysensor");

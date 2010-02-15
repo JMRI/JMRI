@@ -22,7 +22,7 @@ import jmri.jmrix.maple.OutputBits;
  *
  * @author	Bob Jacobsen   Copyright (C) 2004, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2009
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -83,10 +83,10 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public void initComponents() {
         setTitle(rb.getString("WindowTitle"));
-		inputBits = InputBits.instance().getNumInputBits();
-		pollTimeoutTime = InputBits.instance().getTimeoutTime();
-		outputBits = OutputBits.instance().getNumOutputBits();
-		sendDelay = OutputBits.instance().getSendDelay();
+		inputBits = InputBits.getNumInputBits();
+		pollTimeoutTime = InputBits.getTimeoutTime();
+		outputBits = OutputBits.getNumOutputBits();
+		sendDelay = OutputBits.getSendDelay();
 			
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -310,14 +310,14 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 //        pulseWidth = curNode.getPulseWidth();
 //        pulseWidthField.setText(Integer.toString(pulseWidth));
 		// set up number of input and output bits
-		inputBits = InputBits.instance().getNumInputBits();
+		inputBits = InputBits.getNumInputBits();
 		numInputField.setText(Integer.toString(inputBits));
-		outputBits = OutputBits.instance().getNumOutputBits();
+		outputBits = OutputBits.getNumOutputBits();
 		numOutputField.setText(Integer.toString(outputBits));
 		// set up poll timeout and send delay
-		pollTimeoutTime = InputBits.instance().getTimeoutTime();
+		pollTimeoutTime = InputBits.getTimeoutTime();
 		pollTimeoutField.setText(Integer.toString(pollTimeoutTime));
-		sendDelay = OutputBits.instance().getSendDelay();
+		sendDelay = OutputBits.getSendDelay();
 		sendDelayField.setText(Integer.toString(sendDelay));
         // Switch buttons
         editMode = true;
@@ -471,12 +471,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      *    Also, the node type must be set and in 'nodeType'
      */
     void setNodeParameters() {
-        // pollTimeoutTime is common for all node types
-		InputBits.instance().setTimeoutTime(pollTimeoutTime);
-		OutputBits.instance().setSendDelay(sendDelay);
-		InputBits.instance().setNumInputBits(inputBits);
-		OutputBits.instance().setNumOutputBits(outputBits);
-//        // pulse width is common for all node types
+        // following parameters are common for all node types
+		InputBits.setTimeoutTime(pollTimeoutTime);
+		OutputBits.setSendDelay(sendDelay);
+		InputBits.setNumInputBits(inputBits);
+		OutputBits.setNumOutputBits(outputBits);
 //        curNode.setPulseWidth(pulseWidth);
     }
     

@@ -14,7 +14,7 @@ package jmri.jmrix.maple;
  *		node number in the address.
   * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2009
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class SerialAddress {
 
@@ -157,13 +157,13 @@ public class SerialAddress {
         }
         int bit = getBitFromSystemName(systemName);
         if ( ( type=='T' ) || (type=='L') ) {
-            if ( ( bit <= 0 ) || ( bit > OutputBits.instance().getNumOutputBits() ) ) {
+            if ( ( bit <= 0 ) || ( bit > OutputBits.getNumOutputBits() ) ) {
                 // The bit is not valid for this configuration
                 return false;
             }
         }
         else if ( type=='S' ) {
-            if ( ( bit <= 0 ) || ( bit > InputBits.instance().getNumInputBits() ) ) {
+            if ( ( bit <= 0 ) || ( bit > InputBits.getNumInputBits() ) ) {
                 // The bit is not valid for this configuration
                 return false;
             }

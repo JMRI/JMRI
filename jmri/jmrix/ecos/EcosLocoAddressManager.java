@@ -19,7 +19,7 @@ import jmri.implementation.QuietShutDownTask;
 /**
  * Managers the Ecos Loco entries within JMRI.
  * @author Kevin Dickerson
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class EcosLocoAddressManager implements java.beans.PropertyChangeListener, EcosListener{
 
@@ -687,10 +687,10 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
                     final RosterEntry re = _roster.entryFromTitle(rosterid);
                     re.deleteAttribute("EcosObject");
                     re.writeFile(null, null, null);
-                    Roster.instance().writeRosterFile();
+                    Roster.writeRosterFile();
                     if(p.getRemoveLocoFromJMRI()==0x02){
                         _roster.removeEntry(re);
-                        _roster.writeRosterFile();
+                        Roster.writeRosterFile();
                     } else if (p.getRemoveLocoFromJMRI()==0x00) {
                         final JDialog dialog = new JDialog();
                         dialog.setTitle("Remove Roster Entry From JMRI?");
@@ -734,7 +734,7 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
                                 }
                                 setLocoToRoster();
                                 _roster.removeEntry(re);
-                                _roster.writeRosterFile();
+                                Roster.writeRosterFile();
                                 dialog.dispose();
                             }
                         });

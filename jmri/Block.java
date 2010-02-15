@@ -82,7 +82,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  * @author  Dave Duchamp Copywright (C) 2009
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
@@ -258,7 +258,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
                 // normal case, transfer value object 
                 setValue(next.getBlock().getValue());
                 setDirection(next.getFromBlockDirection());
-                if (log.isDebugEnabled()) log.debug("Block "+getSystemName()+" gets new value from "+next.getBlock().getSystemName()+", direction="+next.decodeDirection(getDirection()));
+                if (log.isDebugEnabled()) log.debug("Block "+getSystemName()+" gets new value from "+next.getBlock().getSystemName()+", direction="+Path.decodeDirection(getDirection()));
             } else if (next == null) log.error("unexpected next==null processing signal in block "+getSystemName());
             else if (next.getBlock() == null) log.error("unexpected next.getBlock()=null processing signal in block "+getSystemName());
         }
@@ -281,7 +281,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
                 // found one block with proper direction, assume that
                 setValue(next.getBlock().getValue());
                 setDirection(next.getFromBlockDirection());
-                if (log.isDebugEnabled()) log.debug("Block "+getSystemName()+" with direction "+Path.decodeDirection(getDirection())+" gets new value from "+next.getBlock().getSystemName()+", direction="+next.decodeDirection(getDirection()));
+                if (log.isDebugEnabled()) log.debug("Block "+getSystemName()+" with direction "+Path.decodeDirection(getDirection())+" gets new value from "+next.getBlock().getSystemName()+", direction="+Path.decodeDirection(getDirection()));
             } else {
                 // no unique path with correct direction - this happens frequently from noise in block detectors!!
                 log.debug("count of "+count+" ACTIVE neightbors with proper direction can't be handled for block "+getSystemName());

@@ -36,7 +36,7 @@ import java.awt.event.ItemEvent;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.82 $
+ * @version   $Revision: 1.83 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -447,11 +447,11 @@ abstract public class PaneProgFrame extends JmriJFrame
             log.warn("loadDecoder file invoked with null object");
             return;
         }
-        if (log.isDebugEnabled()) log.debug("loadDecoderFile from "+df.fileLocation
+        if (log.isDebugEnabled()) log.debug("loadDecoderFile from "+DecoderFile.fileLocation
                                         +" "+df.getFilename());
 
         try {
-            decoderRoot = df.rootFromName(df.fileLocation+df.getFilename());
+            decoderRoot = df.rootFromName(DecoderFile.fileLocation+df.getFilename());
         } catch (Exception e) { log.error("Exception while loading decoder XML file: "+df.getFilename(), e); }
         // load variables from decoder tree
         df.getProductID();

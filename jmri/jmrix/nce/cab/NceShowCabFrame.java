@@ -119,7 +119,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 				;bit7 - 0 = type a or type b cab, 1=type c or d
  * 
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -415,7 +415,7 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     	int count = 100;
        	while (waiting > 0){
     		try{
-    			NceCabUpdateThread.sleep(60);
+    			Thread.sleep(60);
     		} catch (Exception e){
     			//return false;
     		}

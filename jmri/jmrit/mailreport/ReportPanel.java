@@ -16,7 +16,7 @@ import javax.swing.*;
  * people can retrieve it.  
  * <P>
  * @author			Bob Jacobsen   Copyright (C) 2009
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class ReportPanel extends JPanel {
 
@@ -115,7 +115,7 @@ public class ReportPanel extends JPanel {
         // add the log if OK
         if (checkLog.isSelected()) {
             // search for an appender that stores a file
-            for (java.util.Enumeration<org.apache.log4j.Appender> en = log.getRootLogger().getAllAppenders(); en.hasMoreElements() ;) {
+            for (java.util.Enumeration<org.apache.log4j.Appender> en = org.apache.log4j.Logger.getRootLogger().getAllAppenders(); en.hasMoreElements() ;) {
                 // does this have a file?
                 org.apache.log4j.Appender a = en.nextElement();
                 // see if it's one of the ones we know

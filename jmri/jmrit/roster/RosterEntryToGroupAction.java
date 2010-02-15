@@ -27,7 +27,7 @@ import java.awt.event.ActionListener;
  * for more details.
  * <P>
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class RosterEntryToGroupAction extends AbstractAction {
 
@@ -50,8 +50,8 @@ public class RosterEntryToGroupAction extends AbstractAction {
     public void actionPerformed(ActionEvent event) {
         
         roster = Roster.instance();
-        String curRosterGroup = roster.getRosterGroup();
-        roster.setRosterGroup(null);
+        String curRosterGroup = Roster.getRosterGroup();
+        Roster.setRosterGroup(null);
 
         selections = roster.rosterGroupBox();
         if (lastGroupSelect!=null){
@@ -71,7 +71,7 @@ public class RosterEntryToGroupAction extends AbstractAction {
         log.debug("Dialog value "+retval+" selected "+selections.getSelectedIndex()+":"
                   +selections.getSelectedItem()+ ", " + rosterEntry.getSelectedIndex()+":" + rosterEntry.getSelectedItem());
         if (retval != 1) {
-            roster.setRosterGroup(curRosterGroup);
+            Roster.setRosterGroup(curRosterGroup);
             return;
         }
         
@@ -80,9 +80,9 @@ public class RosterEntryToGroupAction extends AbstractAction {
         RosterEntry re = roster.entryFromTitle(selEntry);
         String selGroup = roster.getRosterGroupPrefix()+(String) selections.getSelectedItem();
         re.putAttribute(selGroup, "yes");
-        roster.writeRosterFile();
+        Roster.writeRosterFile();
         re.updateFile();
-        roster.setRosterGroup(curRosterGroup);
+        Roster.setRosterGroup(curRosterGroup);
         actionPerformed(event);
     }
 

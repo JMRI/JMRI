@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class SignalGroupTableAction extends AbstractTableAction {
@@ -380,13 +380,13 @@ public class SignalGroupTableAction extends AbstractTableAction {
             try {
                 jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter)SignalAppearanceTable.getModel());
                 tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-                tmodel.setSortingStatus(_AppearanceModel.APPEAR_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
+                tmodel.setSortingStatus(SignalGroupTableAction.SignalMastAppearanceModel.APPEAR_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
             } catch (ClassCastException e3) {}  // if not a sortable table model
             SignalAppearanceTable.setRowSelectionAllowed(false);
             SignalAppearanceTable.setPreferredScrollableViewportSize(new java.awt.Dimension(200,80));
             TableColumnModel SignalAppearanceColumnModel = SignalAppearanceTable.getColumnModel();
             TableColumn includeColumnA = SignalAppearanceColumnModel.
-                                                getColumn(_AppearanceModel.INCLUDE_COLUMN);
+                                                getColumn(SignalGroupTableAction.SignalMastAppearanceModel.INCLUDE_COLUMN);
             includeColumnA.setResizable(false);
             includeColumnA.setMinWidth(30);
             includeColumnA.setMaxWidth(60);
@@ -1077,7 +1077,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
                 return;
             updatePressed(null, true, false);
         }
-        if(!curSignalGroup.isSignalIncluded((String) _SignalGroupSignalModel.getDisplayName(row))){
+        if(!curSignalGroup.isSignalIncluded(_SignalGroupSignalModel.getDisplayName(row))){
             curSignalGroup.addSignalHead( _SignalGroupSignalModel.getDisplayName(row));
         }
         _SignalGroupSignalModel.fireTableDataChanged();

@@ -22,7 +22,7 @@ import org.jdom.*;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Bob Jacobsen, Dave Duchamp Copyright (c) 2009 - Maple modifications
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -87,10 +87,10 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
             
             // create node (they register themselves)
             SerialNode node = new SerialNode(addr, 0);
-            InputBits.instance().setTimeoutTime(delay);
-			InputBits.instance().setNumInputBits(numinput);
-			OutputBits.instance().setSendDelay(senddelay);
-			OutputBits.instance().setNumOutputBits(numoutput);
+            InputBits.setTimeoutTime(delay);
+			InputBits.setNumInputBits(numinput);
+			OutputBits.setSendDelay(senddelay);
+			OutputBits.setNumOutputBits(numoutput);
 //			node.setPulseWidth(pulseWidth);
             
             // Trigger initialization of this Node to reflect these parameters

@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -72,12 +72,12 @@ public class BlockTableAction extends AbstractTableAction {
 
         	public String getValue(String name) {
         		if (name == null) {
-        			super.log.warn("requested getValue(null)");
+        			BeanTableDataModel.log.warn("requested getValue(null)");
         			return "(no name)";
         		}
         		Block b = InstanceManager.blockManagerInstance().getBySystemName(name);
         		if (b == null) {
-        			super.log.debug("requested getValue(\""+name+"\"), Block doesn't exist");
+        			BeanTableDataModel.log.debug("requested getValue(\""+name+"\"), Block doesn't exist");
         			return "(no Block)";
         		}
         		Object m = b.getValue();
@@ -103,12 +103,12 @@ public class BlockTableAction extends AbstractTableAction {
     		public Object getValueAt(int row, int col) {
     			// some error checking
     			if (row >= sysNameList.size()){
-    				super.log.debug("requested getValueAt(\""+row+"\"), row outside of range");
+    				BeanTableDataModel.log.debug("requested getValueAt(\""+row+"\"), row outside of range");
     				return "Error table size";
     			}
 				Block b = (Block)getBySystemName(sysNameList.get(row));
 				if (b == null) {
-					super.log.debug("requested getValueAt(\""+row+"\"), Block doesn't exist");
+					BeanTableDataModel.log.debug("requested getValueAt(\""+row+"\"), Block doesn't exist");
 					return "(no Block)";
 				}
 	   			if (col==DIRECTIONCOL) {
@@ -203,7 +203,7 @@ public class BlockTableAction extends AbstractTableAction {
 			}
 
 			public JButton configureButton() {
-				super.log.error("configureButton should not have been called");
+				BeanTableDataModel.log.error("configureButton should not have been called");
 				return null;
 			}
         };

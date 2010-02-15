@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class PrintRosterAction  extends AbstractAction {
 
@@ -44,7 +44,7 @@ public class PrintRosterAction  extends AbstractAction {
         // obtain a HardcopyWriter to do this
         Roster r = Roster.instance();
         String title = "DecoderPro Roster";
-        String rosterGroup = r.getRosterGroup();
+        String rosterGroup = Roster.getRosterGroup();
         if(rosterGroup==null){
             title = title + " All Entries";
         } else {
@@ -69,8 +69,8 @@ public class PrintRosterAction  extends AbstractAction {
         log.debug("Roster list size: "+l.size());
         for (i = 0; i<l.size(); i++) {
             if(rosterGroup!=null){
-                if(l.get(i).getAttribute(r.getRosterGroupWP())!=null){
-                    if(l.get(i).getAttribute(r.getRosterGroupWP()).equals("yes"))
+                if(l.get(i).getAttribute(Roster.getRosterGroupWP())!=null){
+                    if(l.get(i).getAttribute(Roster.getRosterGroupWP()).equals("yes"))
                         l.get(i).printEntry(writer);
                 }
             }

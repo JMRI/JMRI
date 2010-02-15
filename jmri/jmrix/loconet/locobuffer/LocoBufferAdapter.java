@@ -22,7 +22,7 @@ import gnu.io.SerialPortEventListener;
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.39 $
+ * @version			$Revision: 1.40 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -42,7 +42,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
             // filter out line printers 
-            if (id.getPortType() != id.PORT_PARALLEL )
+            if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL )
             	// accumulate the names in a vector
             	portNameVector.addElement(id.getName());
         }

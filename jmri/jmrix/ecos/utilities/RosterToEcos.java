@@ -98,7 +98,7 @@ public class RosterToEcos implements EcosListener{
                         objEcosLoco.setEcosLocoAddress(Integer.parseInt(_re.getDccAddress()));
                         objEcosLoco.setProtocol(ep.getDefaultEcosProtocol());
                         _re.writeFile(null, null, null);
-                        jmri.jmrit.roster.Roster.instance().writeRosterFile();
+                        jmri.jmrit.roster.Roster.writeRosterFile();
                         objEcosLocoManager.register(objEcosLoco);
                         createloco = false;
                         dispose();

@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author			Bob Jacobsen  Copyright (C) 2006
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
@@ -158,8 +158,8 @@ public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetLi
         gc.gridy++;
       }
       JScrollPane js = new JScrollPane(options);
-      js.setVerticalScrollBarPolicy(js.VERTICAL_SCROLLBAR_AS_NEEDED);
-      js.setHorizontalScrollBarPolicy(js.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+      js.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+      js.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
       getContentPane().add(js);
       
     }

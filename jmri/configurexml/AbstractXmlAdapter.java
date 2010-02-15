@@ -4,7 +4,7 @@ package jmri.configurexml;
  * Abstract class to provide basic error handling for XmlAdapter
  *
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @see XmlAdapter
  */
 
@@ -32,20 +32,10 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
                 String userName, 
                 Throwable exception) throws JmriConfigureXmlException
     {
-        if (c!=null) {
-            c.creationErrorEncountered(
+        ConfigXmlManager.creationErrorEncountered(
                 null, null,
                 level, description, systemName, userName, exception
-            );
-        } else {
-            // report locally; deprecated
-            String m = description;
-            if (systemName!=null) m += "; System name \""+systemName+"\"";
-            if (userName!=null) m += "; User name \""+userName+"\"";
-            if (exception!=null) m += "; Exception: "+exception.toString();
-        
-            log.log(level, m);
-        }
+        );
     }
      
     private ConfigXmlManager c;

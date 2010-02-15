@@ -29,7 +29,7 @@ import Serialio.SerialPortLocal;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.33 $
+ * @version			$Revision: 1.34 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -121,7 +121,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
             while (portIDs.hasMoreElements()) {
                 CommPortIdentifier id = portIDs.nextElement();
                 // filter out line printers 
-                if (id.getPortType() != id.PORT_PARALLEL )
+                if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL )
                 	// accumulate the names in a vector
                 	portNameVector.addElement(id.getName());
             }

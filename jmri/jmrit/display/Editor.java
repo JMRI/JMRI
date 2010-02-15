@@ -1,21 +1,14 @@
 package jmri.jmrit.display;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 import java.util.List;
-import java.util.ResourceBundle;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.geom.Rectangle2D;
 
 import java.awt.*;
-import javax.swing.*;
+import java.awt.event.*;
+import java.awt.geom.Rectangle2D;
 
+import javax.swing.*;
+import javax.swing.Timer;  // disambiguate java.util.Timer
 import javax.swing.event.ListSelectionEvent;
 
 import jmri.CatalogTree;
@@ -27,7 +20,6 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.operations.trains.TrainIcon;
-
 import jmri.util.JmriJFrame;
 
 /**
@@ -498,20 +490,20 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (_debug) log.debug("setScroll "+state);
         switch (state) {
             case SCROLL_NONE:
-                _panelScrollPane.setVerticalScrollBarPolicy(_panelScrollPane.VERTICAL_SCROLLBAR_NEVER);
-                _panelScrollPane.setHorizontalScrollBarPolicy(_panelScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                _panelScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+                _panelScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
                 break;
             case SCROLL_BOTH:
-                _panelScrollPane.setVerticalScrollBarPolicy(_panelScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-                _panelScrollPane.setHorizontalScrollBarPolicy(_panelScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+                _panelScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+                _panelScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
                 break;
             case SCROLL_HORIZONTAL:
-                _panelScrollPane.setVerticalScrollBarPolicy(_panelScrollPane.VERTICAL_SCROLLBAR_NEVER);
-                _panelScrollPane.setHorizontalScrollBarPolicy(_panelScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+                _panelScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+                _panelScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
                 break;
             case SCROLL_VERTICAL:
-                _panelScrollPane.setVerticalScrollBarPolicy(_panelScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-                _panelScrollPane.setHorizontalScrollBarPolicy(_panelScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                _panelScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+                _panelScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
                 break;
         }
         _scrollState = state;

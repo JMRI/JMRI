@@ -11,7 +11,7 @@ import java.awt.GridBagConstraints;
 /**
  * Frame controlling a single turnout
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 	
@@ -203,7 +203,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 			} else {
 				turnout.addPropertyChangeListener(this);
 				updateTurnoutStatusFields();
-				if (turnout.getCommandedState() == turnout.CLOSED) {
+				if (turnout.getCommandedState() == Turnout.CLOSED) {
 					nowStateLabel.setText(InstanceManager
 							.turnoutManagerInstance().getClosedText());
 				}
@@ -234,7 +234,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 			} else {
 				turnout.addPropertyChangeListener(this);
 				updateTurnoutStatusFields();
-				if (turnout.getCommandedState() == turnout.THROWN) {
+				if (turnout.getCommandedState() == Turnout.THROWN) {
 					nowStateLabel.setText(InstanceManager
 							.turnoutManagerInstance().getThrownText());
 				}

@@ -337,7 +337,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.54 $
+	 * @version $Revision: 1.55 $
 	 */
     class FunctionButtonKeyListener extends KeyAdapter {
     	private boolean keyReleased = true;
@@ -461,9 +461,9 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     public Element getXml()
     {
         Element me = new Element("FunctionPanel");
-        java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1+this.NUM_FUNCTION_BUTTONS);
+        java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1+FunctionPanel.NUM_FUNCTION_BUTTONS);
         children.add(WindowPreferences.getPreferences(this));
-        for (int i=0; i<this.NUM_FUNCTION_BUTTONS; i++)       
+        for (int i=0; i<FunctionPanel.NUM_FUNCTION_BUTTONS; i++)       
             children.add(functionButton[i].getXml());       
         me.setContent(children);
         return me;
@@ -514,7 +514,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         	log.debug("RosterEntry found: "+rosterEntry.getId());
         initGUI();	// need to rebuild panel in all cases to update button texts
         int maxi = 0;
-        for (int i=0; i<this.NUM_FUNCTION_BUTTONS; i++)
+        for (int i=0; i<FunctionPanel.NUM_FUNCTION_BUTTONS; i++)
         {
            try
            {

@@ -41,7 +41,7 @@ import javax.swing.table.TableColumnModel;
  *
  * @author			Bob Jacobsen   Copyright (C) 2007
  * @author			Pete Cressman   Copyright (C) 2009
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
@@ -216,8 +216,8 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         ArrayList <ConditionalAction> actionList = new ArrayList<ConditionalAction>();
         int count = 0;
         for (int i = 0; i<_sensorModel.getRowCount(); i++) {
-            if ((Boolean)_sensorModel.getValueAt(i,_sensorModel.INCLUDE_COLUMN)) {
-                String sensor = (String)_sensorModel.getValueAt(i,_sensorModel.SNAME_COLUMN);
+            if ((Boolean)_sensorModel.getValueAt(i,BeanTableModel.INCLUDE_COLUMN)) {
+                String sensor = (String)_sensorModel.getValueAt(i,BeanTableModel.SNAME_COLUMN);
                 variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_OR,
                                                          Conditional.TYPE_SENSOR_ACTIVE, sensor, true));
                 actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
@@ -246,7 +246,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
     void viewPressed() {
         for (int i = 0; i<_sensorModel.getRowCount(); i++) {
-             _sensorModel.setValueAt(Boolean.FALSE, i, _sensorModel.INCLUDE_COLUMN);
+             _sensorModel.setValueAt(Boolean.FALSE, i, BeanTableModel.INCLUDE_COLUMN);
         }
         // look for name in List panel
         String group = (String)_sensorGroupList.getSelectedValue();
@@ -267,8 +267,8 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                 String sensor = name.substring(prefix.length());
                 // find and check that sensor
                 for (int j=_sensorModel.getRowCount()-1; j>=0; j--) {
-                    if (_sensorModel.getValueAt(j,_sensorModel.SNAME_COLUMN).equals(sensor)) {
-                        _sensorModel.setValueAt(Boolean.TRUE, j, _sensorModel.INCLUDE_COLUMN);
+                    if (_sensorModel.getValueAt(j,BeanTableModel.SNAME_COLUMN).equals(sensor)) {
+                        _sensorModel.setValueAt(Boolean.TRUE, j, BeanTableModel.INCLUDE_COLUMN);
                         setRow = j;
                     }
                 }
@@ -290,8 +290,8 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                         for (int k=0; k<variableList.size(); k++) {
                             String sensor = variableList.get(k).getName();
                             for (int j=_sensorModel.getRowCount()-1; j>=0; j--) {
-                                if (_sensorModel.getValueAt(j,_sensorModel.SNAME_COLUMN).equals(sensor)) {
-                                    _sensorModel.setValueAt(Boolean.TRUE, j, _sensorModel.INCLUDE_COLUMN);
+                                if (_sensorModel.getValueAt(j,BeanTableModel.SNAME_COLUMN).equals(sensor)) {
+                                    _sensorModel.setValueAt(Boolean.TRUE, j, BeanTableModel.INCLUDE_COLUMN);
                                     setRow = j;
                                 }
                             }
@@ -320,7 +320,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         _sensorGroupList.getSelectionModel().clearSelection();
         _nameField.setText("");
         for (int i = 0; i<_sensorModel.getRowCount(); i++) {
-             _sensorModel.setValueAt(Boolean.FALSE, i, _sensorModel.INCLUDE_COLUMN);
+             _sensorModel.setValueAt(Boolean.FALSE, i, BeanTableModel.INCLUDE_COLUMN);
         }
         _sensorModel.fireTableDataChanged();
     }

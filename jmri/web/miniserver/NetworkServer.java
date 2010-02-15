@@ -15,7 +15,7 @@ import java.io.*;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class NetworkServer {
@@ -44,7 +44,7 @@ public class NetworkServer {
     int i=0;
     try {
       listener = new ServerSocket(port);
-      log.info(" Server starts on address: "+listener.getInetAddress().getLocalHost().getHostAddress()+" port "+port); 
+      log.info(" Server starts on address: "+InetAddress.getLocalHost().getHostAddress()+" port "+port); 
       notifyServerStarted();  
       Socket server;
       while((i++ < maxConnections) || (maxConnections == 0)) {

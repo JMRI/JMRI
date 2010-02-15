@@ -4,16 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
+import java.awt.event.*;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
@@ -50,7 +41,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.74 $
+ * @version    $Revision: 1.75 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
@@ -731,7 +722,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.74 $
+     * @version    $Revision: 1.75 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -889,7 +880,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         public void mouseReleased(MouseEvent e)
         {
             if (log.isDebugEnabled()) log.debug("released "+(e.getModifiers() & MouseEvent.BUTTON1_MASK)+" "+e.isPopupTrigger()
-                                                +" "+(e.getModifiers() & (MouseEvent.ALT_MASK+e.META_MASK+MouseEvent.CTRL_MASK)));
+                                                +" "+(e.getModifiers() & (MouseEvent.ALT_MASK+InputEvent.META_MASK+MouseEvent.CTRL_MASK)));
             if (e.isPopupTrigger())
                 {
                     try {

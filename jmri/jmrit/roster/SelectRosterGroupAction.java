@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
  * for more details.
  * <P>
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SelectRosterGroupAction extends AbstractAction {
 
@@ -54,7 +54,7 @@ public class SelectRosterGroupAction extends AbstractAction {
         // create a dialog to select the roster entry
         JComboBox selections = roster.rosterGroupBox();
         selections.addItem("Global");
-        String currentgroup = roster.getRosterGroup();
+        String currentgroup = Roster.getRosterGroup();
         if (currentgroup==null) currentgroup = "Global";
         int retval = JOptionPane.showOptionDialog(_who,
                                                   "Select one roster group to work with\nCurrent Active Group is " + currentgroup, "Select roster group",
@@ -65,7 +65,7 @@ public class SelectRosterGroupAction extends AbstractAction {
         if (retval != 1) return;
         String entry = (String) selections.getSelectedItem();
 
-        roster.setRosterGroup(entry);
+        Roster.setRosterGroup(entry);
     }
 
 

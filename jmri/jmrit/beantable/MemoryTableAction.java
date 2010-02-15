@@ -24,7 +24,7 @@ import jmri.util.JmriJFrame;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -94,7 +94,7 @@ public class MemoryTableAction extends AbstractTableAction {
 				// return (e.getPropertyName().indexOf("alue")>=0);
 			}
 			public JButton configureButton() {
-				super.log.error("configureButton should not have been called");
+				BeanTableDataModel.log.error("configureButton should not have been called");
 				return null;
 			}
         };

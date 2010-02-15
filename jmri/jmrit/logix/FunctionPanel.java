@@ -54,7 +54,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     {
         if (log.isDebugEnabled()) log.debug("Throttle found");
         _throttle = t;
-        for (int i=0; i<this.NUM_FUNCTION_BUTTONS; i++)
+        for (int i=0; i<FunctionPanel.NUM_FUNCTION_BUTTONS; i++)
         {
            try {
                 int functionNumber = functionButton[i].getIdentity();
@@ -328,7 +328,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.4 $
+	 * @version $Revision: 1.5 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{

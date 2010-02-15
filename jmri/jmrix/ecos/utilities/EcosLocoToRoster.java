@@ -64,7 +64,7 @@ public class EcosLocoToRoster implements EcosListener {
         frame = new JFrame();
         _ecosObject = ecosObject;
         _ecosObjectInt = Integer.parseInt(_ecosObject);
-        ecosManager = (EcosLocoAddressManager)jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+        ecosManager = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
         //ecosManager = jmri.jmrix.ecos.EcosLocoAddressManager.instance();
         ecosLoco = ecosManager.getByEcosObject(ecosObject);
         String rosterId=ecosLoco.getEcosDescription();
@@ -137,7 +137,7 @@ public class EcosLocoToRoster implements EcosListener {
         
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         
-        Roster.instance().writeRosterFile();
+        Roster.writeRosterFile();
         ecosManager.clearLocoToRoster();
     }
 
@@ -571,11 +571,11 @@ public class EcosLocoToRoster implements EcosListener {
             log.error("loadDecoder file invoked with null object");
             return;
         }
-        log.debug("loadDecoderFile from "+df.fileLocation
+        log.debug("loadDecoderFile from "+DecoderFile.fileLocation
                                         +" "+df.getFilename());
 
         try {
-            decoderRoot = df.rootFromName(df.fileLocation+df.getFilename());
+            decoderRoot = df.rootFromName(DecoderFile.fileLocation+df.getFilename());
         } catch (Exception e) { log.error("Exception while loading decoder XML file: "+df.getFilename()); }
         // load variables from decoder tree
         df.getProductID();
@@ -621,8 +621,7 @@ public class EcosLocoToRoster implements EcosListener {
     @SuppressWarnings("unchecked")
 	void readConfig(Element root, RosterEntry r) {
         // check for "programmer" element at start
-        Element base;
-        if ( (base = root.getChild("programmer")) == null) {
+        if ( root.getChild("programmer") == null) {
             log.error("xml file top element is not programmer");
             return;
         }

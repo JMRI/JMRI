@@ -5,7 +5,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
 
 /**
  * @author Alex Shepherd Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 class LnMessageClientPollThread extends Thread{
     LnMessageClient parent = null ;
@@ -20,7 +20,7 @@ class LnMessageClientPollThread extends Thread{
     public void run() {
         try{
             Object[] lnMessages = null ;
-            while( !this.interrupted() ){
+            while( !Thread.interrupted() ){
                 lnMessages = parent.lnMessageBuffer.getMessages( parent.pollTimeout ) ;
 
                 if( lnMessages != null ){

@@ -12,7 +12,7 @@ package jmri.jmrix.maple;
  * are included. These are added during transmission.
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -107,7 +107,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
         m.setChecksum(12);        
 
-        m.setTimeout(InputBits.instance().getTimeoutTime());    
+        m.setTimeout(InputBits.getTimeoutTime());    
         return m;
     }
 

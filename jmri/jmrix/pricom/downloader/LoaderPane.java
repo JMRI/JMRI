@@ -21,7 +21,7 @@ import java.io.DataInputStream;
 /**
  * Pane for downloading software updates to PRICOM products
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.17 $
+ * @version	    $Revision: 1.18 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -377,7 +377,7 @@ public class LoaderPane extends javax.swing.JPanel {
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
             // filter out line printers 
-            if (id.getPortType() != id.PORT_PARALLEL )
+            if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL )
             	// accumulate the names in a vector
             	portNameVector.addElement(id.getName());
         }

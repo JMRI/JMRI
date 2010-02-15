@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS polling.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class PollTablePane extends javax.swing.JPanel {
 
@@ -53,7 +53,7 @@ public class PollTablePane extends javax.swing.JPanel {
         
         try {
             jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter)pollTable.getModel());
-            tmodel.setSortingStatus(pollModel.ADDRCOL, jmri.util.com.sun.TableSorter.ASCENDING);
+            tmodel.setSortingStatus(PollDataModel.ADDRCOL, jmri.util.com.sun.TableSorter.ASCENDING);
         } catch (ClassCastException e3) {}  // if not a sortable table model
         pollTable.setRowSelectionAllowed(false);
         pollTable.setPreferredScrollableViewportSize(new java.awt.Dimension(580,80));

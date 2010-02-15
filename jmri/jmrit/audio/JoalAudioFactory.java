@@ -3,12 +3,12 @@
 package jmri.jmrit.audio;
 
 import java.util.List;
+
 import jmri.Audio;
 import jmri.AudioManager;
 import jmri.InstanceManager;
-import net.java.games.joal.AL;
-import net.java.games.joal.ALException;
-import net.java.games.joal.ALFactory;
+
+import net.java.games.joal.*;
 import net.java.games.joal.util.ALut;
 
 /**
@@ -74,7 +74,7 @@ import net.java.games.joal.util.ALut;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class JoalAudioFactory extends AbstractAudioFactory {
 
@@ -217,35 +217,35 @@ public class JoalAudioFactory extends AbstractAudioFactory {
         int checkMultiChannel;
 
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_QUAD8");
-        if (checkMultiChannel!=al.AL_FALSE) {
+        if (checkMultiChannel!=ALConstants.AL_FALSE) {
             AL_FORMAT_QUAD8 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_QUAD16");
-        if (checkMultiChannel!=al.AL_FALSE) {
+        if (checkMultiChannel!=ALConstants.AL_FALSE) {
             AL_FORMAT_QUAD16 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_51CHN8");
-        if (checkMultiChannel!=al.AL_FALSE) {
+        if (checkMultiChannel!=ALConstants.AL_FALSE) {
             AL_FORMAT_51CHN8 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_51CHN16");
-        if (checkMultiChannel!=al.AL_FALSE) {
+        if (checkMultiChannel!=ALConstants.AL_FALSE) {
             AL_FORMAT_51CHN16 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_61CHN8");
-        if (checkMultiChannel!=al.AL_FALSE) {
+        if (checkMultiChannel!=ALConstants.AL_FALSE) {
             AL_FORMAT_61CHN8 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_61CHN16");
-        if (checkMultiChannel!=al.AL_FALSE) {
+        if (checkMultiChannel!=ALConstants.AL_FALSE) {
             AL_FORMAT_61CHN16 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_71CHN8");
-        if (checkMultiChannel!=al.AL_FALSE) {
+        if (checkMultiChannel!=ALConstants.AL_FALSE) {
             AL_FORMAT_71CHN8 = checkMultiChannel;
         }
         checkMultiChannel = al.alGetEnumValue("AL_FORMAT_71CHN16");
-        if (checkMultiChannel!=al.AL_FALSE) {
+        if (checkMultiChannel!=ALConstants.AL_FALSE) {
             AL_FORMAT_71CHN16 = checkMultiChannel;
         }
         log.debug("8-bit quadrophonic supported? "
@@ -344,9 +344,9 @@ public class JoalAudioFactory extends AbstractAudioFactory {
     public void setDistanceAttenuated(boolean attenuated) {
         super.setDistanceAttenuated(attenuated);
         if (isDistanceAttenuated()) {
-            al.alDistanceModel(al.AL_INVERSE_DISTANCE_CLAMPED);
+            al.alDistanceModel(ALConstants.AL_INVERSE_DISTANCE_CLAMPED);
         } else {
-            al.alDistanceModel(al.AL_NONE);
+            al.alDistanceModel(ALConstants.AL_NONE);
         }
     }
 

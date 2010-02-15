@@ -61,13 +61,13 @@ import javax.vecmath.Point3d;
 * <P>
  * @author	Robert Ashenfelter  Copyright (C) 2008
  * @author	Bob Jacobsen  Copyright (C) 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class Ash2_2Algorithm extends AbstractCalculator {
 
     public Ash2_2Algorithm(Point3d[] sensors, double vsound, int offset) {
         this(sensors, vsound);
-        this.offset = offset;
+        Ash2_2Algorithm.offset = offset;
     }
 
     public Ash2_2Algorithm(Point3d[] sensors, double vsound) {

@@ -35,7 +35,7 @@ import java.awt.event.ActionListener;
  * for more details.
  * <P>
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class RemoveRosterEntryToGroupAction extends AbstractAction {
 
@@ -62,8 +62,8 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     public void actionPerformed(ActionEvent event) {
         frame = new JmriJFrame("DisAssociate Loco from Group");
         Roster roster = Roster.instance();
-        curRosterGroup = roster.getRosterGroup();
-        roster.setRosterGroup(null);
+        curRosterGroup = Roster.getRosterGroup();
+        Roster.setRosterGroup(null);
         rosterBox = roster.fullRosterComboBox();
         groupBox = roster.rosterGroupBox();
         updateRosterEntry((String) groupBox.getSelectedItem());
@@ -98,7 +98,7 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
         frame.pack();
         frame.setVisible(true);
 
-        roster.setRosterGroup(curRosterGroup);
+        Roster.setRosterGroup(curRosterGroup);
     }
 
     /**
@@ -121,20 +121,20 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
         RosterEntry re = Roster.instance().entryFromTitle((String) rosterBox.getSelectedItem());
         re.deleteAttribute(group);
         re.updateFile();
-        Roster.instance().writeRosterFile();
+        Roster.writeRosterFile();
         Roster.instance().updateComboBox(rosterBox);
         frame.pack();
     
     }
     
     public void dispose(){
-        Roster.instance().setRosterGroup(curRosterGroup);
+        Roster.setRosterGroup(curRosterGroup);
         frame.dispose();
     
     }
     
     public void updateRosterEntry(String group) {
-        Roster.instance().setRosterGroup(group);
+        Roster.setRosterGroup(group);
         Roster.instance().updateComboBox(rosterBox);
         frame.pack();
     }

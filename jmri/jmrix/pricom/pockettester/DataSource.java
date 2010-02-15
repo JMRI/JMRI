@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
@@ -284,7 +284,7 @@ public class DataSource extends jmri.util.JmriJFrame {
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
             // filter out line printers 
-            if (id.getPortType() != id.PORT_PARALLEL )
+            if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL )
             	// accumulate the names in a vector
             	portNameVector.addElement(id.getName());
         }

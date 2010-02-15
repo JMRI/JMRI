@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2010
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.30 $
+ * @version    $Revision: 2.31 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -748,16 +748,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     
     protected int getDccAddressHigh()
     {
-	return XNetTrafficController.instance()
-            .getCommandStation()
-            .getDCCAddressHigh(this.address);
+	    return LenzCommandStation.getDCCAddressHigh(this.address);
     }
     
     protected int getDccAddressLow()
     {
-	return XNetTrafficController.instance()
-            .getCommandStation()
-            .getDCCAddressLow(this.address);
+	    return LenzCommandStation.getDCCAddressLow(this.address);
     }
     
     // sendStatusInformation sends a request to get the speed,direction

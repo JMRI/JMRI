@@ -24,7 +24,7 @@ import javax.swing.*;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen   Copyright 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public abstract class Apps3 {
 
@@ -111,7 +111,7 @@ public abstract class Apps3 {
         InstanceManager.setConfigureManager(cm);
         log.debug("config manager installed");
         // Install Config Manager error handler
-        cm.setErrorHandler(new jmri.configurexml.swing.DialogErrorHandler());
+        jmri.configurexml.ConfigXmlManager.setErrorHandler(new jmri.configurexml.swing.DialogErrorHandler());
 
     }
     

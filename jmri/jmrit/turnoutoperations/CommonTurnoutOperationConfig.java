@@ -43,7 +43,9 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
 		intervalSpinner.setMinimumSize(new Dimension(100,20));
 
                 intervalSpinner.setModel(
-                        new SpinnerNumberModel(myOp.getInterval(), myOp.minInterval, myOp.maxInterval, myOp.intervalStepSize)); // val, min, max, step
+                        new SpinnerNumberModel(myOp.getInterval(), 
+                                        CommonTurnoutOperation.minInterval, CommonTurnoutOperation.maxInterval, 
+                                        CommonTurnoutOperation.intervalStepSize)); // val, min, max, step
 
 		hbox1.add(intervalSpinner);
 		hbox2.add(new JLabel("Times to try:   "));
@@ -51,7 +53,8 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
 		maxTriesSpinner.setMinimumSize(new Dimension(100,20));
 
                 maxTriesSpinner.setModel(
-                        new SpinnerNumberModel(myOp.getMaxTries(), myOp.minMaxTries, myOp.maxMaxTries, 1)); // val, min, max, step
+                        new SpinnerNumberModel(myOp.getMaxTries(), 
+                                        CommonTurnoutOperation.minMaxTries, CommonTurnoutOperation.maxMaxTries, 1)); // val, min, max, step
 
 		hbox2.add(maxTriesSpinner);
 

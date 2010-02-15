@@ -429,8 +429,8 @@ public class OBlockTableAction extends AbstractAction {
             _portalModel = new PortalTableModel();
             _portalModel.init();
             JTable portalTable = new DnDJTable(_portalModel);
-            portalTable.getColumnModel().getColumn(_portalModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
-            portalTable.getColumnModel().getColumn(_portalModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
+            portalTable.getColumnModel().getColumn(OBlockTableAction.PortalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
+            portalTable.getColumnModel().getColumn(OBlockTableAction.PortalTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
             //portalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             for (int i=0; i<_portalModel.getColumnCount(); i++) {
                 int width = _portalModel.getPreferredWidth(i);
@@ -519,10 +519,10 @@ public class OBlockTableAction extends AbstractAction {
             blockPathModel.init();
             JTable blockPathTable = new DnDJTable(blockPathModel);
             //blockPathTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
-            blockPathTable.getColumnModel().getColumn(blockPathModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));
-            blockPathTable.getColumnModel().getColumn(blockPathModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
-            blockPathTable.getColumnModel().getColumn(blockPathModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
-            blockPathTable.getColumnModel().getColumn(blockPathModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
+            blockPathTable.getColumnModel().getColumn(OBlockTableAction.BlockPathTableModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));
+            blockPathTable.getColumnModel().getColumn(OBlockTableAction.BlockPathTableModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
+            blockPathTable.getColumnModel().getColumn(OBlockTableAction.BlockPathTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
+            blockPathTable.getColumnModel().getColumn(OBlockTableAction.BlockPathTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
             //blockPathTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             blockPathTable.setDragEnabled(true);
             //blockPathTable.setDropMode(DropMode.USE_SELECTION);
@@ -565,9 +565,9 @@ public class OBlockTableAction extends AbstractAction {
             JTable PathTurnoutTable = new DnDJTable(PathTurnoutModel);
             JComboBox box = new JComboBox(turnoutStates);
             //PathTurnoutTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
-            PathTurnoutTable.getColumnModel().getColumn(PathTurnoutModel.SETTINGCOLUMN).setCellEditor(new DefaultCellEditor(box));
-            PathTurnoutTable.getColumnModel().getColumn(PathTurnoutModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
-            PathTurnoutTable.getColumnModel().getColumn(PathTurnoutModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
+            PathTurnoutTable.getColumnModel().getColumn(OBlockTableAction.PathTurnoutTableModel.SETTINGCOLUMN).setCellEditor(new DefaultCellEditor(box));
+            PathTurnoutTable.getColumnModel().getColumn(OBlockTableAction.PathTurnoutTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
+            PathTurnoutTable.getColumnModel().getColumn(OBlockTableAction.PathTurnoutTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
             //PathTurnoutTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             for (int i=0; i<PathTurnoutModel.getColumnCount(); i++) {
                 int width = PathTurnoutModel.getPreferredWidth(i);

@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * different that it doesn't use this base class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007, 2008
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  * @see         jmri.jmrit.XmlFile
  */
 abstract public class AbstractRosterItemAction extends AbstractAction {
@@ -159,7 +159,7 @@ abstract public class AbstractRosterItemAction extends AbstractAction {
     void addToEntryToRoster() {
         // add the new entry to the roster & write it out
         Roster.instance().addEntry(mToEntry);
-        Roster.instance().writeRosterFile();
+        Roster.writeRosterFile();
     }
 
     // initialize logging

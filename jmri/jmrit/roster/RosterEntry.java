@@ -40,7 +40,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.44 $
+ * @version   $Revision: 1.45 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -774,7 +774,7 @@ public class RosterEntry {
 
         LocoFile lf = new LocoFile();  // used as a temporary
         try {
-            mRootElement = lf.rootFromName(lf.getFileLocation()+getFileName());
+            mRootElement = lf.rootFromName(LocoFile.getFileLocation()+getFileName());
         } catch (Exception e) { log.error("Exception while loading loco XML file: "+getFileName()+" exception: "+e); }
     }
 

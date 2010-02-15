@@ -26,7 +26,7 @@ import java.lang.Integer;
 /**
  * Frame for running assignment list.
  * @author	 Dave Duchamp   Copyright (C) 2006
- * @version	 $Revision: 1.5 $
+ * @version	 $Revision: 1.6 $
  */
 public class ListFrame extends jmri.util.JmriJFrame {
 
@@ -254,8 +254,8 @@ public class ListFrame extends jmri.util.JmriJFrame {
 			selNode = s;
 			selNodeNum = nAdd;
 			// prepare the information line
-			numInputBits = InputBits.instance().getNumInputBits();
-			numOutputBits = OutputBits.instance().getNumOutputBits();
+			numInputBits = InputBits.getNumInputBits();
+			numOutputBits = OutputBits.getNumOutputBits();
 			nodeInfoText.setText(" - "+numInputBits+" "+rb.getString("InputBitsAnd")+" "+
 							numOutputBits+" "+rb.getString("OutputBits"));
 		}

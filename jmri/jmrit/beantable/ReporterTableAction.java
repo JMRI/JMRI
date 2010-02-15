@@ -25,7 +25,7 @@ import jmri.util.JmriJFrame;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -94,7 +94,7 @@ public class ReporterTableAction extends AbstractTableAction {
 				// return (e.getPropertyName().indexOf("Report")>=0);
 			}
 			public JButton configureButton() {
-				this.log.error("configureButton should not have been called");
+				BeanTableDataModel.log.error("configureButton should not have been called");
 				return null;
 			}
         };

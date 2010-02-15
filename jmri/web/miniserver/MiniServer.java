@@ -29,7 +29,7 @@ import jmri.web.miniserver.servlet.echoservlet.EchoServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class MiniServer extends NetworkServer {
@@ -146,7 +146,7 @@ public class MiniServer extends NetworkServer {
     
     public String getLocalAddress() {
         try {
-            return listener.getInetAddress().getLocalHost().getHostAddress().toString();
+            return InetAddress.getLocalHost().getHostAddress().toString();
         } catch (java.net.UnknownHostException e) {
             return "(unknown host)";
         }

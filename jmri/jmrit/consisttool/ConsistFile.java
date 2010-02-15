@@ -17,7 +17,7 @@ import org.jdom.Element;
  * This class manipulates files conforming to the consist-roster-config DTD.
  *
  * @author      Paul Bender Copyright (C) 2008
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 
 class ConsistFile extends jmri.jmrit.XmlFile {
@@ -29,7 +29,7 @@ class ConsistFile extends jmri.jmrit.XmlFile {
           ConsistMan=jmri.InstanceManager.consistManagerInstance();
           // set the location to a subdirectory of the defined roster
           // directory
-          setFileLocation(jmri.jmrit.roster.Roster.instance().getFileLocation()+
+          setFileLocation(jmri.jmrit.roster.Roster.getFileLocation()+
                           "roster"+File.separator+"consist");
        }
 

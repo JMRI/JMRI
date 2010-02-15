@@ -48,7 +48,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 
 
@@ -89,12 +89,12 @@ public class TransitTableAction extends AbstractTableAction {
 
        	public String getValue(String name) {
         		if (name == null) {
-        			super.log.warn("requested getValue(null)");
+        			BeanTableDataModel.log.warn("requested getValue(null)");
         			return "(no name)";
         		}
         		Transit z = InstanceManager.transitManagerInstance().getBySystemName(name);
         		if (z == null) {
-        			super.log.debug("requested getValue(\""+name+"\"), Transit doesn't exist");
+        			BeanTableDataModel.log.debug("requested getValue(\""+name+"\"), Transit doesn't exist");
         			return "(no Transit)";
         		}
 				return "Transit";
@@ -190,7 +190,7 @@ public class TransitTableAction extends AbstractTableAction {
 			}
 
 			public JButton configureButton() {
-				super.log.error("configureButton should not have been called");
+				BeanTableDataModel.log.error("configureButton should not have been called");
 				return null;
 			}
         };

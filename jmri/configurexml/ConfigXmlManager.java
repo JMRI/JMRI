@@ -22,7 +22,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.74 $
+ * @version $Revision: 1.75 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -493,7 +493,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
     
     static ErrorHandler handler = new ErrorHandler();
-    public void setErrorHandler(ErrorHandler handler) { this.handler = handler; }
+    static public void setErrorHandler(ErrorHandler handler) { ConfigXmlManager.handler = handler; }
     
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConfigXmlManager.class.getName());

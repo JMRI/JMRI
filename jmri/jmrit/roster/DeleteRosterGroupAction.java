@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
  * for more details.
  * <P>
  * @author	Kevin Dickerson  Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
   */
 public class DeleteRosterGroupAction extends AbstractAction {
 
@@ -69,7 +69,7 @@ public class DeleteRosterGroupAction extends AbstractAction {
 
         // delete the roster grouping
         roster.delRosterGroupList(entry);
-        roster.writeRosterFile();
+        Roster.writeRosterFile();
 
     }
 

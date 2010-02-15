@@ -29,7 +29,7 @@ import java.io.DataInputStream;
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Bob Jacobsen, Dave Duchamp, adapt to use for Maple 2008, 2009, 2010
  *
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  * @since 2.3.7
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
@@ -136,11 +136,11 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         // send Output packet if needed
 		if (mNeedSend) {
 			int endBitNumber = mStartBitNumber + 98;
-			if (endBitNumber>mOutputBits.getNumOutputBits()) {
-				endBitNumber = mOutputBits.getNumOutputBits();
+			if (endBitNumber>OutputBits.getNumOutputBits()) {
+				endBitNumber = OutputBits.getNumOutputBits();
 				mNeedSend = false;
 			}
-			if (endBitNumber==mOutputBits.getNumOutputBits()) mNeedSend = false;			
+			if (endBitNumber==OutputBits.getNumOutputBits()) mNeedSend = false;			
 			SerialMessage m = mOutputBits.createOutPacket(mStartBitNumber, endBitNumber);
 			mCurrentNodeIndexInPoll = -1;
 			
@@ -150,8 +150,8 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 		}
         // poll for Sensor input
 		int count = 99;
-		if (count>(mInputBits.getNumInputBits()-mStartPollAddress+1)) {
-			count = mInputBits.getNumInputBits()-mStartPollAddress+1;
+		if (count>(InputBits.getNumInputBits()-mStartPollAddress+1)) {
+			count = InputBits.getNumInputBits()-mStartPollAddress+1;
 		}
 		SerialMessage m = SerialMessage.getPoll(
 							getNode(curSerialNodeIndex).getNodeAddress(), mStartPollAddress, count);
@@ -159,7 +159,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 		mCurrentNodeIndexInPoll = curSerialNodeIndex;
 		
 		// check if additional packet is needed
-		if ((mStartPollAddress+count-1)<mInputBits.getNumInputBits()) {
+		if ((mStartPollAddress+count-1)<InputBits.getNumInputBits()) {
 			mNeedAdditionalPollPacket = true;
 			mStartPollAddress = mStartPollAddress+99;
 		}

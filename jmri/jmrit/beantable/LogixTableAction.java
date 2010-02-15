@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.60 $
+ * @version $Revision: 1.61 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -3434,7 +3434,7 @@ public class LogixTableAction extends AbstractTableAction {
         _curVariable.setName(name);
         result = _curVariable.evaluate();
         if (log.isDebugEnabled()) log.debug("State Variable \""+name+"\"of type "+
-                                            _curVariable.getTestTypeString(testType)+
+                                            ConditionalVariable.getTestTypeString(testType)+
                                             " state= "+ result);
 		return (true);
 	}   /* validateVariable */

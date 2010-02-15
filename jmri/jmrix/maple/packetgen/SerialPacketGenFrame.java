@@ -19,7 +19,7 @@ import javax.swing.JSeparator;
 /**
  * Frame for user input of serial messages
  * @author	Bob Jacobsen   Copyright (C) 2002, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.maple.SerialListener {
 
@@ -91,7 +91,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     }
 
     public void pollButtonActionPerformed(java.awt.event.ActionEvent e) {
-		int endAddr = InputBits.instance().getNumInputBits();
+		int endAddr = InputBits.getNumInputBits();
 		if (endAddr>99) endAddr = 99;
         SerialMessage msg = SerialMessage.getPoll(Integer.valueOf(uaAddrField.getText()).intValue(),1,endAddr);
         SerialTrafficController.instance().sendSerialMessage(msg, this);

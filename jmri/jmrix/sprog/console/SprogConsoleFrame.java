@@ -19,7 +19,7 @@ import jmri.jmrix.sprog.SprogConstants;
  * to send some commands while slot manager is active
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
     
@@ -439,7 +439,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                     }
                 }
             }
-        } else if (state == state.CURRENTQUERYSENT) {
+        } else if (state == SprogConsoleFrame.State.CURRENTQUERYSENT) {
             tmpString = new String(replyString.substring(replyString.indexOf("=") + 
                         1, replyString.indexOf("=") + 4));
             // Value returned is number of ADC steps 0f 4.88mV across 0.47 ohms

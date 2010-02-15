@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.74 $
+ * @version             $Revision: 1.75 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1492,7 +1492,7 @@ public class TrainBuilder extends TrainCommon{
 			}
 		}
 		// check go see if track will accept the train's car and engine roads
-		if (train.getRoadOption().equals(train.INCLUDEROADS)){
+		if (train.getRoadOption().equals(Train.INCLUDEROADS)){
 			String[] roads = train.getRoadNames();
 			for (int i=0; i<roads.length; i++){
 				if (!terminateStageTrack.acceptsTypeName(roads[i]))

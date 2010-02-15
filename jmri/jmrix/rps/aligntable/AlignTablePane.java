@@ -24,7 +24,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class AlignTablePane extends javax.swing.JPanel {
 
@@ -60,7 +60,7 @@ public class AlignTablePane extends javax.swing.JPanel {
         
         try {
             jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter)alignTable.getModel());
-            tmodel.setSortingStatus(alignModel.NUMCOL, jmri.util.com.sun.TableSorter.ASCENDING);
+            tmodel.setSortingStatus(AlignTablePane.AlignModel.NUMCOL, jmri.util.com.sun.TableSorter.ASCENDING);
         } catch (ClassCastException e3) {}  // if not a sortable table model
         alignTable.setRowSelectionAllowed(false);
         alignTable.setPreferredScrollableViewportSize(new java.awt.Dimension(580,80));

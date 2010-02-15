@@ -35,7 +35,7 @@ import javax.swing.JOptionPane;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  * @see         jmri.jmrit.XmlFile
  */
 public class DeleteRosterItemAction extends AbstractAction {
@@ -77,21 +77,21 @@ public class DeleteRosterItemAction extends AbstractAction {
         log.debug("resolves to \""+filename+"\", \""+fullFilename+"\"");
 
         // prompt for one last chance
-        if(roster.getRosterGroup()==null){
+        if (Roster.getRosterGroup()==null){
             if (!userOK(entry, filename, fullFilename)) return;
             // delete it from roster
             roster.removeEntry(roster.entryFromTitle(entry));
         }
         else {
             RosterEntry r = roster.entryFromTitle(entry);
-            String group = roster.getRosterGroupPrefix()+roster.getRosterGroup();
+            String group = roster.getRosterGroupPrefix()+Roster.getRosterGroup();
             r.deleteAttribute(group);
             r.updateFile();
         }
-        roster.writeRosterFile();
+        Roster.writeRosterFile();
 
         // backup the file & delete it
-        if(roster.getRosterGroup()==null){
+        if (Roster.getRosterGroup()==null){
             try {
                 // ensure preferences will be found
                 XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());

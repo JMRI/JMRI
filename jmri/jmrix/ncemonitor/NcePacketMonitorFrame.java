@@ -20,7 +20,7 @@ import java.io.DataInputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -374,7 +374,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
             // filter out line printers 
-            if (id.getPortType() != id.PORT_PARALLEL )
+            if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL )
             	// accumulate the names in a vector
             	portNameVector.addElement(id.getName());
         }
