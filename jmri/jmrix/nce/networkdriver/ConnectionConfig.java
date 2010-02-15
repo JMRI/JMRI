@@ -9,7 +9,7 @@ import javax.swing.*;
  * via a NetworkDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -37,7 +37,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
     String mode = "";
     
-    public String name() { return "NCE via network"; }
+    public String name() { return "Network Interface"; }
     String manufacturerName = jmri.jmrix.DCCManufacturerList.NCE;
     
     public String getManufacturer() { return manufacturerName; }
