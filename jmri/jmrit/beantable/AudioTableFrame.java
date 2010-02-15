@@ -39,7 +39,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class AudioTableFrame extends JmriJFrame {
 
@@ -116,7 +116,6 @@ public class AudioTableFrame extends JmriJFrame {
 
         JMenuItem printItem = new JMenuItem(rbapps.getString("PrintTable"));
         fileMenu.add(printItem);
-        final jmri.util.JmriJFrame tableFrame = this;
         printItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     try {

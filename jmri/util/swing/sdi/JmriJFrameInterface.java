@@ -2,8 +2,6 @@
 
 package jmri.util.swing.sdi;
 
-import javax.swing.*;
-
 /**
  * Display a JmriPanel in a JFrame of its own.
  *
@@ -12,7 +10,7 @@ import javax.swing.*;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class JmriJFrameInterface implements jmri.util.swing.WindowInterface {

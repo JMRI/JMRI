@@ -5,7 +5,6 @@ import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.internal.ConnectionConfig;
 
 import org.jdom.*;
-import javax.swing.*;
 
 /**
  * Handle XML persistance of virtual layout connections
@@ -15,7 +14,7 @@ import javax.swing.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -29,7 +28,6 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     }
 
     public Element store(Object o) {
-        ConnectionConfig c = (ConnectionConfig)o;
         Element e = new Element("connection");
 
         e.setAttribute("class", this.getClass().getName());

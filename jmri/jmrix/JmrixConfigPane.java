@@ -30,7 +30,7 @@ import javax.swing.JSeparator;
  * configuration GUI, and responding to its changes.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004
- * @version	$Revision: 1.56 $
+ * @version	$Revision: 1.57 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -227,7 +227,6 @@ public class JmrixConfigPane extends JPanel {
         int n=1;
         if (manuBox.getSelectedIndex()!=0){
             for (int i=0; i<classConnectionNameList.length; i++) {
-                String classConnectionName = classConnectionNameList[i];
                 try {
                     jmri.jmrix.ConnectionConfig config;
                     Class<?> cl = Class.forName(classConnectionNameList[i]);

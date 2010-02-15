@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle XML configuration for a DefaultSignalGroupManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class DefaultSignalGroupManagerXml 
             extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -226,7 +226,6 @@ public class DefaultSignalGroupManagerXml
         log.error("Invalid method called");
     }
     
-    @SuppressWarnings("fallthrough")
     private int getIntFromColour(String colour){
         if (colour.equals("RED")) return SignalHead.RED;
         else if (colour.equals("YELLOW")) return SignalHead.YELLOW;
@@ -237,7 +236,7 @@ public class DefaultSignalGroupManagerXml
         else if (colour.equals("FLASHYELLOW")) return SignalHead.FLASHYELLOW;
         else if (colour.equals("FLASHGREEN")) return SignalHead.FLASHGREEN;
         else if (colour.equals("FLASHLUNAR")) return SignalHead.FLASHLUNAR;
-        log.warn("Unexpected appearance: "+colour);
+        else log.warn("Unexpected appearance: "+colour);
         return SignalHead.DARK;
     
     }

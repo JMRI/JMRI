@@ -2,11 +2,8 @@
 
 package jmri.util.swing;
 
-import javax.swing.JTree;
 import javax.swing.tree.*;
 import org.jdom.*;
-
-import jmri.util.swing.*;
 
 /**
  * Common utility methods for working with JTrees.
@@ -15,7 +12,7 @@ import jmri.util.swing.*;
  * creating a tree from an XML definition
  *
  * @author Bob Jacobsen  Copyright 2003, 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class JTreeUtil extends GuiUtilBase {

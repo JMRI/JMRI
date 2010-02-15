@@ -30,7 +30,7 @@ import jmri.jmrix.sprog.sprogslotmon.*;
  * reduces code duplication </P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
  *              Andrew Crosland         (C) 2006 ported to SPROG
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class SprogCommandStation implements CommandStation, SprogListener, Runnable {
 
@@ -176,7 +176,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     		  f2, f2Momentary, 
     		  f3, f3Momentary, 
     		  f4, f4Momentary);
-      if (s!=null) { notifySlotListeners(s); }
+      notifySlotListeners(s);
     }
 
     public void function5Through8Packet(int address,
@@ -186,7 +186,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                                         boolean f8, boolean f8Momentary) {
         SprogSlot s = this.findF5to8Packet(address);
         s.f5to8packet(address, f5, f5Momentary, f6, f6Momentary, f7, f7Momentary, f8, f8Momentary);
-        if (s!=null) { notifySlotListeners(s); }
+        notifySlotListeners(s);
     }
 
     public void function9Through12Packet(int address,
@@ -196,7 +196,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
                                          boolean f12, boolean f12Momentary) {
         SprogSlot s = this.findF9to12Packet(address);
         s.f9to12packet(address, f9, f9Momentary, f10, f10Momentary, f11, f11Momentary, f12, f12Momentary);
-        if (s!=null) { notifySlotListeners(s); }
+        notifySlotListeners(s);
     }
 
     public void setSpeed(int address, int spd, boolean isForward) {
@@ -275,7 +275,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * Trigger the notification of all SlotListeners.
      * @param s The changed slot to notify.
      */
-    @SuppressWarnings("unchecked")
 	private synchronized void notifySlotListeners(SprogSlot s) {
     	if (log.isDebugEnabled()) log.debug("notify "+slotListeners.size()
                 +" SlotListeners about slot for address"

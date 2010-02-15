@@ -13,7 +13,6 @@ import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import jmri.util.JmriJFrame;
 import jmri.web.xmlio.*;
 
 /** 
@@ -37,7 +36,7 @@ import jmri.web.xmlio.*;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class XMLIOServlet implements Servlet, XmlIORequestor {
@@ -112,9 +111,8 @@ public class XMLIOServlet implements Servlet, XmlIORequestor {
         // if list elements present, do immediate operation
         if (root.getChild("list") != null) {
             log.debug("immediate reply");
-            Element result = null;
             try {
-                result = srv.immediateRequest(root);
+                srv.immediateRequest(root);  // modifies 'doc' in place
             } catch (jmri.JmriException e1) {
                 log.error("JmriException while creating reply: "+e1, e1);
             }

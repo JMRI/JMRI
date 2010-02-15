@@ -4,13 +4,12 @@ package jmri.util.swing;
 
 import javax.swing.*;
 import org.jdom.*;
-import jmri.util.swing.*;
 
 /**
  * Common utility methods for working with GUI items
  *
  * @author Bob Jacobsen  Copyright 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class GuiUtilBase {

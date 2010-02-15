@@ -5,14 +5,12 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-import jmri.util.swing.*;
-
 /**
  * Abstract base for actions that will work with
  * multiple JMRI GUIs
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
  
 abstract public class JmriAbstractAction extends javax.swing.AbstractAction {

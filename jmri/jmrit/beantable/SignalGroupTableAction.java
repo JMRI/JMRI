@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class SignalGroupTableAction extends AbstractTableAction {
@@ -1079,11 +1079,11 @@ public class SignalGroupTableAction extends AbstractTableAction {
             updatePressed(null, true, false);
         }
         if(!curSignalGroup.isSignalIncluded((String) _SignalGroupSignalModel.getDisplayName(row))){
-            curSignalGroup.addSignalHead((String) _SignalGroupSignalModel.getDisplayName(row));
+            curSignalGroup.addSignalHead( _SignalGroupSignalModel.getDisplayName(row));
         }
         _SignalGroupSignalModel.fireTableDataChanged();
         SignalGroupSubTableAction editSignalHead = new SignalGroupSubTableAction();
-        editSignalHead.editSignal(curSignalGroup, (String) _SignalGroupSignalModel.getDisplayName(row));
+        editSignalHead.editSignal(curSignalGroup, _SignalGroupSignalModel.getDisplayName(row));
     }
 
 

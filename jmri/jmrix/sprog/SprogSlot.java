@@ -2,9 +2,6 @@
 
 package jmri.jmrix.sprog;
 
-import java.util.Arrays;
-import java.util.Vector;
-
 import jmri.NmraPacket;
 
 /**
@@ -16,7 +13,7 @@ import jmri.NmraPacket;
  * <P>
  * @author			Andrew Crosland Copyright (C) 2006
  * @author			Andrew Berridge 2010
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
  public class SprogSlot {
 	 

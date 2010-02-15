@@ -1,15 +1,13 @@
 // ConnectionConfig.java
 
 package jmri.jmrix.loconet.pr3;
-import javax.swing.JPanel;
-
 
 /**
  * Definition of objects to handle configuring a PR3 layout connection
  * via a PR2Adapter object.
  *
- * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2008
- * @version	$Revision: 1.2 $
+ * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2008, 2010
+ * @version	$Revision: 1.3 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 

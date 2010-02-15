@@ -4,7 +4,6 @@ package jmri.util.swing;
 
 import javax.swing.*;
 import org.jdom.*;
-import jmri.util.swing.*;
 
 /**
  * Common utility methods for working with JToolBars.
@@ -13,7 +12,7 @@ import jmri.util.swing.*;
  * creating a JToolBar from an XML definition
  *
  * @author Bob Jacobsen  Copyright 2003, 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class JToolBarUtil extends GuiUtilBase {

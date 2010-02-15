@@ -28,7 +28,7 @@ import javax.swing.event.*;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen   Copyright 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class Apps3 {
 
@@ -78,8 +78,8 @@ public abstract class Apps3 {
     protected void initializeHelpSystem() {
         try {
 
-            // initialize system and check for success
-            boolean ok = jmri.util.HelpUtil.initOK();
+            // initialize help system
+            jmri.util.HelpUtil.initOK();
             
             // tell help to use default browser for external types
             javax.help.SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");

@@ -1,15 +1,13 @@
 // ConnectionConfig.java
 
 package jmri.jmrix.loconet.locobuffer;
-import javax.swing.JPanel;
-
 
 /**
  * Definition of objects to handle configuring an LocoBuffer layout connection
  * via a LocoBufferAdapter object.
  *
- * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.4 $
+ * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2010
+ * @version	$Revision: 1.5 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 

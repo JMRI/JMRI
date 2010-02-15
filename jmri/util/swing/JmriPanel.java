@@ -2,8 +2,6 @@
 
 package jmri.util.swing;
 
-import javax.swing.*;
-
 /**
  * JPanel extension to handle automatic creation
  * of window title and help reference.
@@ -12,7 +10,7 @@ import javax.swing.*;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class JmriPanel extends javax.swing.JPanel {
