@@ -27,7 +27,7 @@ import jmri.util.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  * @since 2.7.2
  */
 
@@ -51,7 +51,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         _textBox.addKeyListener(new KeyAdapter() {
                 public void keyReleased(KeyEvent e){
                     int key = e.getKeyCode();
-                    if (key == KeyEvent.VK_ENTER) {
+                    if (key==KeyEvent.VK_ENTER || key==KeyEvent.VK_TAB) {
                         updateMemory();
                     }
                 }
@@ -59,6 +59,11 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         _textBox.setColumns(_nCols);
         _textBox.addMouseMotionListener(this);
         _textBox.addMouseListener(this);
+    }
+
+    public void mouseExited(java.awt.event.MouseEvent e) {
+        updateMemory();
+        super.mouseExited(e);
     }
 
     /**

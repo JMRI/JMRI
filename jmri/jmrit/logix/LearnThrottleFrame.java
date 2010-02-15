@@ -38,7 +38,7 @@ import jmri.jmrit.throttle.FunctionButton;
 import jmri.jmrit.throttle.KeyListenerInstaller;
 import jmri.util.JmriJFrame;
 
-import java.awt.*;
+//import java.awt.*;
 //import java.awt.event.*;
 //import java.util.ResourceBundle;
 
@@ -54,7 +54,7 @@ import java.awt.*;
  * @author     Bob Jacobsen    Copyright 2008
  
  * @author     Pete Cressman   Copyright 2009
- * @version    $Revision: 1.7 $
+ * @version    $Revision: 1.8 $
  */
 
 public class LearnThrottleFrame extends JmriJFrame implements java.beans.PropertyChangeListener
@@ -372,7 +372,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.7 $
+     * @version    $Revision: 1.8 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {

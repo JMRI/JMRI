@@ -5,10 +5,8 @@ import jmri.Light;
 import jmri.Turnout;
 import jmri.Sensor;
 import jmri.SignalHead;
-//import jmri.Manager;
 import jmri.Memory;
 import jmri.Reporter;
-//import jmri.NamedBean;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
@@ -18,10 +16,6 @@ import jmri.jmrit.display.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.List;
@@ -29,8 +23,6 @@ import java.util.ResourceBundle;
 
 import jmri.jmrit.display.Editor;
 import javax.swing.*;
-
-import java.util.ArrayList;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items

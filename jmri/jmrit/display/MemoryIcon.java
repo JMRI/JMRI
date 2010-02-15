@@ -3,23 +3,15 @@ package jmri.jmrit.display;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.jmrit.catalog.NamedIcon;
-//import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 
-//New imports used in layout editor
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.ButtonGroup;
-import javax.swing.JMenu;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
-import javax.swing.JLabel;
 import jmri.util.NamedBeanHandle;
 
 /**
@@ -28,7 +20,7 @@ import jmri.util.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.40 $
+ * @version $Revision: 1.41 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -321,12 +313,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         //else if ((getFixedWidth()!=0) && (getMargin()!=0))
          //   return getFixedWidth();
         return getFixedWidth();
-    }
-    
-public void mouseClicked(java.awt.event.MouseEvent e) {
-        if (e.getClickCount() == 2){ 
-            editMemoryValue();
-        }
     }
     
     private void editMemoryValue(){
