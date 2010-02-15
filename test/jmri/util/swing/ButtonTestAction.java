@@ -3,7 +3,6 @@
  package jmri.util.swing;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 
 import jmri.util.swing.*;
 
@@ -11,7 +10,7 @@ import jmri.util.swing.*;
  * Test for popping test window content.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
  
 public class ButtonTestAction extends jmri.util.swing.JmriAbstractAction {
