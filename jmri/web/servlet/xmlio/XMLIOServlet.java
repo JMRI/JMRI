@@ -2,19 +2,12 @@ package jmri.web.servlet.xmlio;
 
 import java.net.*;
 import java.io.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
 
 import java.util.StringTokenizer;
 
 import org.jdom.*;
 import org.jdom.input.*;
 import org.jdom.output.*;
-
-import javax.imageio.*;
-
-import javax.swing.*;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
@@ -44,7 +37,7 @@ import jmri.web.xmlio.*;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class XMLIOServlet implements Servlet, XmlIORequestor {
