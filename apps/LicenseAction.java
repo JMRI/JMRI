@@ -3,9 +3,7 @@
 package apps;
 
 import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
 
-import java.awt.*;
 import javax.swing.*;
 import java.io.*;
 
@@ -15,7 +13,7 @@ import jmri.util.swing.*;
  * Swing action to display the JMRI license
  *
  * @author	    Bob Jacobsen    Copyright (C) 2004, 2010
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
 

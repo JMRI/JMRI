@@ -3,7 +3,6 @@
  package jmri.util.swing;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 
 import jmri.util.swing.*;
 
@@ -11,7 +10,7 @@ import jmri.util.swing.*;
  * Action to create and load a JmriPanel from just its name.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
  
 public class JmriNamedPaneAction extends JmriAbstractAction {

@@ -4,7 +4,6 @@ package jmri.util.swing;
 
 import javax.swing.JTree;
 import javax.swing.tree.*;
-import java.io.File;
 import org.jdom.*;
 
 import jmri.util.swing.*;
@@ -16,7 +15,7 @@ import jmri.util.swing.*;
  * creating a tree from an XML definition
  *
  * @author Bob Jacobsen  Copyright 2003, 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class JTreeUtil extends GuiUtilBase {
