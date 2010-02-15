@@ -21,7 +21,7 @@ import java.util.List;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 
@@ -39,6 +39,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 	}
 	
 	public void testTrainsTableFrame(){
+		TrainManager tmanager = TrainManager.instance();
 		TrainsTableFrame f = new TrainsTableFrame();
 		f.setVisible(true);
 		f.setSize(400,200);
@@ -49,7 +50,6 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		// frame location can move just a bit on MacOS
 		Point p = f.getLocation();
 		
-		TrainManager tmanager = TrainManager.instance();
 		Assert.assertEquals("sort by 2", TrainsTableFrame.NAME, tmanager.getTrainsFrameSortBy());
 		Assert.assertEquals("location 1", p, tmanager.getTrainsFramePosition());
 		Assert.assertEquals("size 1", new Dimension(400,200), tmanager.getTrainsFrameSize());
