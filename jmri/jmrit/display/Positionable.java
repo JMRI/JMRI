@@ -25,7 +25,7 @@ import javax.swing.JPopupMenu;
  *
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public interface Positionable  {
     public void setPositionable(boolean enabled);
@@ -51,6 +51,8 @@ public interface Positionable  {
 
     public int getDisplayLevel();
     public void setDisplayLevel(int l);
+
+    public Editor getEditor();
 
     /** Methods to add popup menu items
     */

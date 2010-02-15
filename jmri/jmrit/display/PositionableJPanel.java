@@ -22,7 +22,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
@@ -105,6 +105,10 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         return getName();
     }
 
+    public Editor getEditor(){
+        return _editor;
+    }
+    
     // overide where used - e.g. momentary
     public void doMousePressed(MouseEvent event) {
     }

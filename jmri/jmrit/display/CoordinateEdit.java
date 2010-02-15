@@ -18,7 +18,10 @@ import jmri.util.JmriJFrame;
  * positionable labels
  * This class has been generalized to provide popup edit dialogs for 
  * positionable item properties when TextFields are needed to input data.
- * The current list of properties served is:
+ * <P>
+ * The class name no longer identifies the full purpose of the class, However
+ * the name is retained because coordinate editing was the genesis.
+ * The current list of properties served for editing is:
  * <LI>
  *  modify x & y coordinates 
  *  modify level
@@ -28,14 +31,16 @@ import jmri.util.JmriJFrame;
  *  modify fixed size
  *  modify rotation degress
  *  modify scaling
- *  modify text
+ *  modify text labels
+ *  modify zoom scaling
+ *  modify panel name
  *  </LI>
  * To use, write a static method that provides the dialog frame.  Then
  * write an initX method that customizes the dialog for the property.
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
@@ -50,7 +55,6 @@ public class CoordinateEdit extends JmriJFrame {
     String oldStr;
 
 	// member declarations
-	javax.swing.JLabel lableName = new javax.swing.JLabel();
 	javax.swing.JLabel nameText = new javax.swing.JLabel();
 	javax.swing.JLabel textX;
 	javax.swing.JLabel textY;
@@ -72,7 +76,7 @@ public class CoordinateEdit extends JmriJFrame {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("SetXY"), pos);
+                    f.init(rb.getString("SetXY"), pos, true);
                     f.initSetXY();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -86,7 +90,7 @@ public class CoordinateEdit extends JmriJFrame {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("SetLevel"), pos);
+                    f.init(rb.getString("SetLevel"), pos, true);
                     f.initSetLevel();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -100,7 +104,7 @@ public class CoordinateEdit extends JmriJFrame {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("SetTooltip"), pos);
+                    f.init(rb.getString("SetTooltip"), pos, true);
                     f.initSetTip();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -114,7 +118,7 @@ public class CoordinateEdit extends JmriJFrame {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("SetBorderSize"), pos);
+                    f.init(rb.getString("SetBorderSize"), pos, true);
                     f.initBorder();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -128,7 +132,7 @@ public class CoordinateEdit extends JmriJFrame {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("SetMarginSize"), pos);
+                    f.init(rb.getString("SetMarginSize"), pos, true);
                     f.initMargin();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -142,7 +146,7 @@ public class CoordinateEdit extends JmriJFrame {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("SetFixedSize"), pos);
+                    f.init(rb.getString("SetFixedSize"), pos, true);
                     f.initFixedSize();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -156,7 +160,7 @@ public class CoordinateEdit extends JmriJFrame {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("rotate"), pos);
+                    f.init(rb.getString("rotate"), pos, true);
                     f.initRotate();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -170,7 +174,7 @@ public class CoordinateEdit extends JmriJFrame {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("scale"), pos);
+                    f.init(rb.getString("scale"), pos, true);
                     f.initScale();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -184,7 +188,7 @@ public class CoordinateEdit extends JmriJFrame {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString(title), pos);
+                    f.init(rb.getString(title), pos, false);
                     f.initText();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -198,10 +202,26 @@ public class CoordinateEdit extends JmriJFrame {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("Zoom"), pos);
+                    f.init(rb.getString("Zoom"), pos, false);
                     f.initZoom();
                     f.setVisible(true);	
-                    f.setLocation(100,100);
+                    //f.setLocation(100,100);
+                    f.setLocationRelativeTo(pos.getEditor().getTargetPanel());
+                }
+            };
+    }
+    ////////////////////////////////////////////////////////////// 
+
+    public static AbstractAction getNameEditAction(final Positionable pos) {
+        return new AbstractAction(rb.getString("renamePanelMenu")) {
+                public void actionPerformed(ActionEvent e) {
+                    CoordinateEdit f = new CoordinateEdit();
+                    f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
+                    f.init(rb.getString("renamePanelMenu"), pos, false);
+                    f.initSetName();
+                    f.setVisible(true);	
+                    //f.setLocation(100,100);
+                    f.setLocationRelativeTo(pos.getEditor().getTargetPanel());
                 }
             };
     }
@@ -215,22 +235,23 @@ public class CoordinateEdit extends JmriJFrame {
 		super.windowClosed(e);
 	}
 
-	public void init(String title, Positionable pos) {
+	public void init(String title, Positionable pos, boolean showName) {
         pl = pos;
-		lableName.setText("Name: ");
-		lableName.setVisible(true);
-		
-		nameText.setText(pos.getNameString());
-		nameText.setVisible(true);
-
-		okButton.setText("  Set  ");
+        if (showName) {
+            nameText.setText(java.text.MessageFormat.format(rb.getString("namelabel"), pos.getNameString()));
+            nameText.setVisible(true);
+        }
+		okButton.setText(rb.getString("Set"));
 		okButton.setVisible(true);
 
-		cancelButton.setText(" Cancel ");
+		cancelButton.setText(rb.getString("Cancel"));
 		cancelButton.setVisible(true);
 
+        Dimension dim = (new JButton("XXXXXXXX")).getPreferredSize();
+        okButton.setMinimumSize(dim);
+        cancelButton.setMinimumSize(dim);
 		setTitle(title);
-        setLocation(pl.getLocation());
+        //setLocation(pl.getLocation());
     }
 
     public void initSetXY() {
@@ -269,15 +290,8 @@ public class CoordinateEdit extends JmriJFrame {
         spinY.addChangeListener(listener);
 
 		getContentPane().setLayout(new GridBagLayout());
-		
-		addItem(lableName, 0, 0);
-		addItem(nameText, 1, 0);
-		addItem(textX, 0, 1);
-		addItem(spinX, 1, 1);
-		addItem(textY, 0, 2);
-		addItem(spinY, 1, 2);
-		addItem(cancelButton, 0, 3);
-		addItem(okButton, 1, 3);
+
+        addSpinItems(true);
 
 		okButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -313,12 +327,7 @@ public class CoordinateEdit extends JmriJFrame {
 
 		getContentPane().setLayout(new GridBagLayout());
 		
-		addItem(lableName, 0, 0);
-		addItem(nameText, 1, 0);
-		addItem(textX, 0, 1);
-		addItem(spinX, 1, 1);
-		addItem(cancelButton, 0, 2);
-		addItem(okButton, 1, 2);
+        addSpinItems(false);
 
 		okButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -351,12 +360,7 @@ public class CoordinateEdit extends JmriJFrame {
 
 		getContentPane().setLayout(new GridBagLayout());
 		
-		addItem(lableName, 0, 0);
-		addItem(nameText, 1, 0);
-		addItem(textX, 0, 1);
-		addItem(xTextField, 1, 1);
-		addItem(cancelButton, 0, 2);
-		addItem(okButton, 1, 2);
+        addTextItems();
 
 		okButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -390,12 +394,7 @@ public class CoordinateEdit extends JmriJFrame {
 
 		getContentPane().setLayout(new GridBagLayout());
 		
-		addItem(lableName, 0, 0);
-		addItem(nameText, 1, 0);
-		addItem(textX, 0, 1);
-		addItem(spinX, 1, 1);
-		addItem(cancelButton, 0, 2);
-		addItem(okButton, 1, 2);
+        addSpinItems(false);
 
 		okButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -431,12 +430,7 @@ public class CoordinateEdit extends JmriJFrame {
 
 		getContentPane().setLayout(new GridBagLayout());
 		
-		addItem(lableName, 0, 0);
-		addItem(nameText, 1, 0);
-		addItem(textX, 0, 1);
-		addItem(spinX, 1, 1);
-		addItem(cancelButton, 0, 2);
-		addItem(okButton, 1, 2);
+        addSpinItems(false);
 
 		okButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -482,14 +476,7 @@ public class CoordinateEdit extends JmriJFrame {
 
 		getContentPane().setLayout(new GridBagLayout());
 		
-		addItem(lableName, 0, 0);
-		addItem(nameText, 1, 0);
-		addItem(textX, 0, 1);
-		addItem(spinX, 1, 1);
-		addItem(textY, 0, 2);
-		addItem(spinY, 1, 2);
-		addItem(cancelButton, 0, 3);
-		addItem(okButton, 1, 3);
+        addSpinItems(true);
 
 		okButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -516,30 +503,25 @@ public class CoordinateEdit extends JmriJFrame {
         oldX = ((NamedIcon)pLabel.getIcon()).getDegrees();
 
         textX = new javax.swing.JLabel();
-		textX.setText("Angle= "+((NamedIcon)pLabel.getIcon()).getDegrees());
+		textX.setText(java.text.MessageFormat.format(rb.getString("Angle"),((NamedIcon)pLabel.getIcon()).getDegrees()));
 		textX.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(0,-360,360,1);
         spinX = new javax.swing.JSpinner(model);
         spinX.setValue(new Integer(((NamedIcon)pLabel.getIcon()).getDegrees()));
-        spinX.setToolTipText("Enter rotate degrees");
+        spinX.setToolTipText(rb.getString("enterDegrees"));
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
 
 		getContentPane().setLayout(new GridBagLayout());
 		
-		addItem(lableName, 0, 0);
-		addItem(nameText, 1, 0);
-		addItem(textX, 0, 1);
-		addItem(spinX, 1, 1);
-		addItem(cancelButton, 0, 2);
-		addItem(okButton, 1, 2);
+        addSpinItems(false);
 
 		okButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
                 int l = ((Number)spinX.getValue()).intValue();
                 ((PositionableLabel)pl).rotate(l);
-                textX.setText("Angle= " + l);
+                textX.setText(java.text.MessageFormat.format(rb.getString("Angle"), l));
                 dispose();
 			}
 		});
@@ -556,32 +538,25 @@ public class CoordinateEdit extends JmriJFrame {
         oldD = pl.getScale();
 
         textX = new javax.swing.JLabel();
-		textX.setText("Scale= "+oldD*100);
-//		textX.setText("Scale= "+scale);
+		textX.setText(java.text.MessageFormat.format(rb.getString("Scale"), oldD*100));
 		textX.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(100.0,10.0,5000.0,1.0);
         spinX = new javax.swing.JSpinner(model);
         if (log.isDebugEnabled()) { log.debug("scale%= "+(int)Math.round(oldD*100));
         }
-        spinX.setToolTipText("Enter scale percentage");
+        spinX.setToolTipText(rb.getString("enterScale"));
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
 
 		getContentPane().setLayout(new GridBagLayout());
 		
-		addItem(lableName, 0, 0);
-		addItem(nameText, 1, 0);
-		addItem(textX, 0, 1);
-		addItem(spinX, 1, 1);
-		addItem(cancelButton, 0, 2);
-		addItem(okButton, 1, 2);
+        addSpinItems(false);
 
 		okButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
                 pl.setScale(((Number)spinX.getValue()).doubleValue()/100);
-                textX.setText("Scale= " + pl.getScale()*100);
-//                textX.setText("Scale= " + (int)Math.round(pl.getScale()*100));
+                textX.setText(java.text.MessageFormat.format(rb.getString("Scale"), pl.getScale()*100));
                 dispose();
 			}
 		});
@@ -608,12 +583,7 @@ public class CoordinateEdit extends JmriJFrame {
 
 		getContentPane().setLayout(new GridBagLayout());
 		
-		addItem(lableName, 0, 0);
-		addItem(nameText, 1, 0);
-		addItem(textX, 0, 1);
-		addItem(xTextField, 1, 1);
-		addItem(cancelButton, 0, 2);
-		addItem(okButton, 1, 2);
+		addTextItems();
 
 		okButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -642,37 +612,30 @@ public class CoordinateEdit extends JmriJFrame {
 	}
 
     public void initZoom() {
-        //int scale = (int)Math.round(pl.getScale()*100);
         oldD = pl.getScale();
 
         textX = new javax.swing.JLabel();
-		textX.setText("Scale= "+oldD*100);
-//		textX.setText("Scale= "+scale);
+		textX.setText(java.text.MessageFormat.format(rb.getString("Scale"), oldD*100));
 		textX.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(100.0,1.0,5000.0,1.0);
         spinX = new javax.swing.JSpinner(model);
         if (log.isDebugEnabled()) { log.debug("scale%= "+(int)Math.round(oldD*100));
         }
-        spinX.setToolTipText("Enter scale percentage");
+        spinX.setToolTipText(rb.getString("enterZoom"));
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
 
 		getContentPane().setLayout(new GridBagLayout());
 		
-		addItem(lableName, 0, 0);
-		addItem(nameText, 1, 0);
-		addItem(textX, 0, 1);
-		addItem(spinX, 1, 1);
-		addItem(cancelButton, 0, 2);
-		addItem(okButton, 1, 2);
+        addSpinItems(false);
 
 		okButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
                 double s = ((Number)spinX.getValue()).doubleValue()/100;
                 pl.setScale(s);
-                ((PositionableJComponent)pl)._editor.setPaintScale(s);
-                textX.setText("Scale= " + pl.getScale()*100);
+                pl.getEditor().setPaintScale(s);
+                textX.setText(java.text.MessageFormat.format(rb.getString("Scale"), pl.getScale()*100));
                 dispose();
 			}
 		});
@@ -685,10 +648,68 @@ public class CoordinateEdit extends JmriJFrame {
 	}
 
 
-	private void addItem(JComponent c, int x, int y) {
+    public void initSetName() {
+        oldStr = pl.getEditor().getName();
+
+        textX = new javax.swing.JLabel();
+		textX.setText(java.text.MessageFormat.format(rb.getString("namelabel"), oldStr));
+		textX.setVisible(true);
+
+        xTextField = new javax.swing.JTextField(15);
+		xTextField.setText(oldStr);
+		xTextField.setToolTipText(rb.getString("PromptNewName"));
+		xTextField.setMaximumSize(new Dimension(
+				xTextField.getMaximumSize().width+100, xTextField.getPreferredSize().height));
+
+		getContentPane().setLayout(new GridBagLayout());
+		
+		addTextItems();
+
+		okButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+                String t = xTextField.getText();
+                Editor ed = pl.getEditor();
+                ed.setName(t);
+                ed.setTitle();
+                textX.setText(java.text.MessageFormat.format(rb.getString("namelabel"), t));
+                dispose();
+			}
+		});
+		cancelButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+                pl.getEditor().setName(oldStr);
+                dispose();
+			}
+		});
+		pack();
+	}
+
+    private void addSpinItems(boolean addY) {
+        addItem(nameText, 0, 0, 2);
+        addItem(textX, 0, 1, 1);
+        addItem(spinX, 1, 1, 1);
+        if (addY) {
+            addItem(textY, 0, 2, 1);
+            addItem(spinY, 1, 2, 1);
+        } else {
+            addItem(cancelButton, 0, 2, 1);
+            addItem(okButton, 1, 2, 1);
+        }
+    }
+
+    private void addTextItems() {
+        addItem(nameText, 0, 0, 2);
+        addItem(textX, 0, 1, 1);
+        addItem(xTextField, 1, 1, 1);
+        addItem(cancelButton, 0, 2, 1);
+        addItem(okButton, 1, 2, 1);
+    }
+
+	private void addItem(JComponent c, int x, int y, int w) {
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.gridx = x;
 		gc.gridy = y;
+        gc.gridwidth = w;
 		gc.weightx = 100.0;
 		gc.weighty = 100.0;
 		getContentPane().add(c, gc);

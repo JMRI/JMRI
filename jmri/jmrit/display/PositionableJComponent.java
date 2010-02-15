@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 
@@ -107,6 +107,10 @@ public class PositionableJComponent extends JComponent implements Positionable {
         return getName();
     }
 
+    public Editor getEditor(){
+        return _editor;
+    }
+    
     // overide where used - e.g. momentary
     public void doMousePressed(MouseEvent event) {
     }

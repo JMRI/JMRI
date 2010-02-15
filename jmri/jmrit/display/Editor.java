@@ -1590,8 +1590,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (_targetPanel.getTopLevelAncestor()!=null) {
             name=((JFrame)_targetPanel.getTopLevelAncestor()).getTitle();
         }
-        if (name==null || name.equals("")) super.setTitle("Editor");
-        super.setTitle(name+" "+rb.getString("LabelEditor"));
+        if (name==null || name.equals("")) super.setTitle(rb.getString("LabelEditor"));
+        else super.setTitle(name+" "+rb.getString("LabelEditor"));
         Iterator <JFrameItem> iter = _iconEditorFrame.values().iterator();
         while (iter.hasNext()) {
             JFrameItem frame = iter.next();
