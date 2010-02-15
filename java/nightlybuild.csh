@@ -115,6 +115,7 @@ endif
 
 # put warnings in the log
 ant warnings >>& nightlybuildlog.txt
+
 # build and upload the jar file and decoder zip file
 echo Start jar build and upload >>& nightlybuildlog.txt
 ant mark >>& nightlybuildlog.txt
