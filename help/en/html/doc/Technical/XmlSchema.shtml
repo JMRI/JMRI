@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlSchema.shtml,v 1.6 2010-02-03 06:17:40 jacobsen Exp $ -->
+<!-- $Id: XmlSchema.shtml,v 1.7 2010-02-15 07:52:46 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -49,8 +49,8 @@ our schema, see the
 The current schema can be seen online in the 
 <a href="http://jmri.org/xml/schema">schema directory</a>.
 The most commonly used one is the 
-<a href="http://jmri.org/xml/schema/layout.xsd">panelfile schema</a>.  See below on how it's 
-organized.
+<a href="http://jmri.org/xml/schema/layout.xsd">layout.xsd schema for panel files</a>.  
+See below on how it's organized.
 
 <h2>Access to Schema Definitions</h2>
 JMRI uses XML Schema to define the format of its files.
@@ -69,6 +69,70 @@ JMRI itself, via the jmri.jmrit.XmlFile class, provides
 support for locating those files when the XML parser
 needs them.  
 <p/>
+
+<h2>Developing JMRI Schema</h2>
+
+Our preferred organization for XML schema
+is based on the structure of the underlying code:
+A particular *Xml class is the unit of reuse.
+
+<p>
+Lots of classes descend from jmri.configurexml.XmAdapter:
+(<a href="http://jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">see JavaDoc</a>)
+
+<p>
+By convention, provide &lt;xsd:annotation&gt;&lt;xsd:appinfo&gt; element containing
+the class name that reads/writes the element:
+<pre><code>
+    &lt;xs:annotation&gt;
+        &lt;xs:documentation&gt;
+        Some human readable docs go here
+        &lt;/xs:documentation&gt;
+        &lt;xs:appinfo&gt;
+            &lt;jmri:usingclass configurexml="false"&gt;jmri.managers.DefaultSignalSystemManager&lt;/jmri:usingclass&gt;
+        &lt;/xs:appinfo&gt;
+    &lt;/xs:annotation&gt;
+</code></pre>
+
+<h3>The Venetian Blind Pattern</h3>
+
+We are moving toward structuring our XML using the "Venetian Blind pattern".
+In this style, the top level elements that are written by classes have types defined for them.
+Any elements that are within those are defined anonymously, within those elements.
+For an example of this, see the 
+<a href="http://jmri.org/xml/schema/types/sensors.xsd">types/sensors.xsd</a> file,
+which defines a type for the "sensors" element written for SensorManagers.
+Within that, there is included a definition of a "Sensor" element, and a "comment"
+element within that.
+
+<p>
+This limits the number of types, and keeps the schema files roughly aligned with
+the classes that do the reading and writing.
+
+<p>
+There are a few items (elements and attribute groups) that extend across multiple types.
+They are defined in the 
+<a href="http://jmri.org/xml/schema/types/general.xsd">types/general.xsd</a> file.
+
+
+<p>
+More information on XML schema design patterns is available at
+<a href="http://www.ibm.com/developerworks/xml/library/ws-soa-xmlwsdl.html#N1012B">DeveloperWorks</a>.
+<a href="http://developers.sun.com/jsenterprise/archive/nb_enterprise_pack/reference/techart/design_patterns.html">developers.sun</a>, and
+<a href="http://www.javapassion.com/webservices/XMLSchemaDesignPatterns.pdf">javapassion</a>.
+
+<h3>Available Defined Types</h3>
+
+<dl>
+<dt>systemNameType<dd>System names, to eventually be tightened up to a real test of validity
+<dt>userNameType<dd>User names, not including the empty name
+<dt>nullUserNameType<dd>User names, with an empty value allowed
+<dt>beanNameType<dd>Either user or system name
+<dt>turnoutStateType<dd>closed, thrown
+<dt>signalColorType<dd>red, yellow, etc
+<dt>yesNoType<dd>yes, no
+<dt>trueFalseType<dd>true, false
+</dl>
 
 <h2>Checking JMRI Schema</h2>
 
@@ -132,54 +196,6 @@ produces, click on this link to the
 <a href="http://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a> schema file.
 If anybody knows of a better stylesheet, we
 can certainly switch to it.
-
-<h2>Developing JMRI Schema</h2>
-
-Overall structure of the schema; planning for inclusion, merging and reuse; 
-planning for extension.
-
-<p>
-Our preferred organization for XML schema
-is based on the structure of the underlying code:
-A particular *Xml class is the unit of reuse.
-
-<p>
-Lots of classes descend from jmri.configurexml.XmAdapter:
-(<a href="http://jmri.org/JavaDoc/doc/jmri/configurexml/XmlAdapter.html">see JavaDoc</a>)
-
-<p>
-By convention, provide &lt;xsd:annotation&gt;&lt;xsd:appinfo&gt; element containing
-the class name that reads/writes and element:
-<pre><code>
-    &lt;xs:annotation&gt;
-        &lt;xs:documentation&gt;
-        Some human readable docs go here
-        &lt;/xs:documentation&gt;
-        &lt;xs:appinfo&gt;
-            &lt;jmri:usingclass configurexml="false"&gt;jmri.managers.DefaultSignalSystemManager&lt;/jmri:usingclass&gt;
-        &lt;/xs:appinfo&gt;
-    &lt;/xs:annotation&gt;
-</code></pre>
-
-<h3>The Venetian Blind Pattern</h3>
-
-Links to more information at
-<a href="http://www.ibm.com/developerworks/xml/library/ws-soa-xmlwsdl.html#N1012B">DeveloperWorks</a>.
-<a href="http://developers.sun.com/jsenterprise/archive/nb_enterprise_pack/reference/techart/design_patterns.html">developers.sun</a>,
-<a href="http://www.javapassion.com/webservices/XMLSchemaDesignPatterns.pdf">javapassion</a>
-
-<h3>Available Defined Types</h3>
-
-<dl>
-<dt>systemNameType<dd>System names, to eventually be tightened up to a real test of validity
-<dt>userNameType<dd>User names, not including the empty name
-<dt>nullUserNameType<dd>User names, with an empty value allowed
-<dt>beanNameType<dd>Either user or system name
-<dt>turnoutStateType<dd>closed, thrown
-<dt>signalColorType<dd>red, yellow, etc
-<dt>yesNoType<dd>yes, no
-<dt>trueFalseType<dd>true, false
-</dl>
 
 <h2>External Standards and Future Work</h2>
 
