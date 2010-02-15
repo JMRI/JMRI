@@ -2199,9 +2199,9 @@ public class OBlockTableAction extends AbstractAction {
                              +tr.getClass().getName());
                 }
             } catch(IOException ioe) {
-                ioe.printStackTrace();
+                log.warn("caught IOException", ioe);
             } catch(UnsupportedFlavorException ufe) {
-                ufe.printStackTrace();
+                log.warn("caught UnsupportedFlavorException",ufe);
             }
             if (log.isDebugEnabled()) log.debug("DropJTree.drop REJECTED!");
             evt.rejectDrop();
