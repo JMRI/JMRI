@@ -8,7 +8,7 @@ import javax.swing.*;
  * Definition of objects to handle configuring a virtual layout connection
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
@@ -19,7 +19,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
         super();
     }
 
-    public String name() { return "Virtual Connection"; }
+    public String name() { return "No Connection"; }
 
 	/**
 	 * Don't need parent implementation of this

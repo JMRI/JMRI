@@ -7,12 +7,12 @@ package jmri.jmrix;
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  *
  */
 public class DCCManufacturerList {
     
-    public static final String NONE = "Virtual Connection";
+    public static final String NONE = "None";  // internal only
     public static final String LENZ = "Lenz";
     public static final String HORNBY = "Hornby";
     public static final String ESU = "ESU";
