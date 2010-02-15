@@ -9,10 +9,11 @@ import javax.swing.*;
  * via a NetworkDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
+	public final static String NAME = "Network Interface";
     /**
      * Ctor for an object being created during load process;
      * Swing init is deferred.
@@ -37,7 +38,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
     String mode = "";
     
-    public String name() { return "Network Interface"; }
+    public String name() { return NAME; }
     String manufacturerName = jmri.jmrix.DCCManufacturerList.NCE;
     
     public String getManufacturer() { return manufacturerName; }

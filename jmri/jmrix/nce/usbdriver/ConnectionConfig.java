@@ -9,10 +9,12 @@ package jmri.jmrix.nce.usbdriver;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 
+	public final static String NAME = "NCE USB";
+	
     /**
      * Ctor for an object being created during load process;
      * Swing init is deferred.
@@ -27,7 +29,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
         super();
     }
 
-    public String name() { return "NCE USB"; }
+    public String name() { return NAME; }
     
     String manufacturerName = "NCE";
     

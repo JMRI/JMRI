@@ -19,7 +19,7 @@ import jmri.jmrix.ConnectionStatus;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  * 
  */
 
@@ -175,8 +175,8 @@ public class NceConnectionStatus implements NceListener {
 		if (epromState == ERROR4_STATE) {
 			if (JOptPane_ERROR_MESSAGES_ENABLED)
 				JOptionPane.showMessageDialog(null,
-								"Wrong NCE layout connection selected in Preferences. "
-										+ "Change the layout connection to \"NCE\" or \"NCE via network\".",
+								"Wrong NCE System Connection selected in Preferences. "
+										+ "Change the System Connection to \""+jmri.jmrix.nce.serialdriver.ConnectionConfig.NAME+"\" or \""+jmri.jmrix.nce.networkdriver.ConnectionConfig.NAME+"\".",
 								"Error", JOptionPane.ERROR_MESSAGE);
 			epromState = CHECK_STATE;
 			return null;
@@ -185,8 +185,8 @@ public class NceConnectionStatus implements NceListener {
 		if (epromState == ERROR5_STATE) {
 			if (JOptPane_ERROR_MESSAGES_ENABLED)
 				JOptionPane.showMessageDialog(null,
-								"Wrong NCE layout connection selected in Preferences. "
-										+ "Change the layout connection to \"NCE USB\" and the system to \"Power Cab\".",
+								"Wrong NCE System Connection selected in Preferences. "
+										+ "Change the System Connection to \""+jmri.jmrix.nce.usbdriver.ConnectionConfig.NAME+"\" and the system to \"Power Cab\".",
 								"Error", JOptionPane.ERROR_MESSAGE);
 			epromState = CHECK_STATE;
 			return null;
@@ -195,8 +195,8 @@ public class NceConnectionStatus implements NceListener {
 		if (epromState == ERROR6_STATE) {
 			if (JOptPane_ERROR_MESSAGES_ENABLED)
 				JOptionPane.showMessageDialog(null,
-								"Wrong NCE layout connection selected in Preferences. "
-										+ "Change the layout connection to \"NCE USB\" and the system to \"Smart Booster SB3\".",
+								"Wrong NCE System Connection selected in Preferences. "
+										+ "Change the System Connection to \""+jmri.jmrix.nce.usbdriver.ConnectionConfig.NAME+"\" and the system to \"Smart Booster SB3\".",
 								"Error", JOptionPane.ERROR_MESSAGE);
 			epromState = CHECK_STATE;
 			return null;
@@ -205,8 +205,8 @@ public class NceConnectionStatus implements NceListener {
 		if (epromState == ERROR7_STATE) {
 			if (JOptPane_ERROR_MESSAGES_ENABLED)
 				JOptionPane.showMessageDialog(null,
-								"Wrong NCE layout connection selected in Preferences. "
-										+ "Change the layout connection to \"NCE USB\" and the system to \"Power Pro\".",
+								"Wrong NCE System Connection selected in Preferences. "
+										+ "Change the System Connection to \""+jmri.jmrix.nce.usbdriver.ConnectionConfig.NAME+"\" and the system to \"Power Pro\".",
 								"Error", JOptionPane.ERROR_MESSAGE);
 			epromState = CHECK_STATE;
 			return null;
@@ -288,7 +288,7 @@ public class NceConnectionStatus implements NceListener {
 			if (VV == VV_1999 || (VV == VV_2004 && MM == MM_2004) || (VV == VV_2007 && MM == MM_2007))
 				// make sure system connection is not NCE USB
 				if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
-					log.error("Layout connection is incorrect, detected Power Pro");
+					log.error("System Connection is incorrect, detected Power Pro");
 					epromState = ERROR4_STATE;
 				}
 
@@ -296,15 +296,15 @@ public class NceConnectionStatus implements NceListener {
 			if (VV == VV_USB && MM == MM_USB) {
 				// USB detected, check to see if user preferences are correct
 				if (mm == mm_USB_PwrCab	&& NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_POWERCAB) {
-					log.error("Layout connection is incorrect, detected USB connected to a PowerCab");
+					log.error("System Connection is incorrect, detected USB connected to a PowerCab");
 					epromState = ERROR5_STATE;
 				}
 				if (mm == mm_USB_SB3 && NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_SB3) {
-					log.error("Layout connection is incorrect, detected USB connected to a Smart Booster SB3");
+					log.error("System Connection is incorrect, detected USB connected to a Smart Booster SB3");
 					epromState = ERROR6_STATE;
 				}
 				if (mm == mm_USB_PH && NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_POWERHOUSE) {
-					log.error("Layout connection is incorrect, detected USB connected to a Power Pro");
+					log.error("System Connection is incorrect, detected USB connected to a Power Pro");
 					epromState = ERROR7_STATE;
 				}
 			}
