@@ -16,7 +16,7 @@ import org.jdom.*;
  * Handle configuration for {@link ControlPanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
@@ -36,7 +36,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         Dimension size = frame.getSize();
         Point posn = frame.getLocation();
 
-        panel.setAttribute("class", "jmri.jmrit.display.configurexml.PanelEditorXml");
+        panel.setAttribute("class", "jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml");
         panel.setAttribute("name", ""+frame.getName());
         panel.setAttribute("x", ""+posn.x);
         panel.setAttribute("y", ""+posn.y);

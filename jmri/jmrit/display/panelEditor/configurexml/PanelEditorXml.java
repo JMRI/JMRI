@@ -16,7 +16,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class PanelEditorXml extends AbstractXmlAdapter {
 
@@ -36,7 +36,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         Dimension size = frame.getSize();
         Point posn = frame.getLocation();
 
-        panel.setAttribute("class", "jmri.jmrit.display.configurexml.PanelEditorXml");
+        panel.setAttribute("class", "jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml");
         panel.setAttribute("name", ""+frame.getTitle());
         panel.setAttribute("x", ""+posn.x);
         panel.setAttribute("y", ""+posn.y);
