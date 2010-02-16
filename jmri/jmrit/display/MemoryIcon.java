@@ -20,7 +20,7 @@ import jmri.util.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -36,13 +36,14 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         super(s, editor);
         setDisplayLevel(Editor.MEMORIES);
         resetDefaultIcon();
-//        _icon = true;   // also iconic
+        _icon = true;   // also iconic
         updateSize();
     }
 
     public MemoryIcon(NamedIcon s, Editor editor) {
         super(s, editor);
         setDisplayLevel(Editor.LABELS);
+        defaultIcon = s;
         _text = true;   // also has text from memory.
         updateSize();
     }
@@ -202,20 +203,21 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 		        // no map, attempt to show object directly
                 Object val = key;
                 if (val instanceof String) {
-                    setText((String) val);
-                    setIcon(null);
-                    //_text = true;
-                    //_icon = false;
+                    String str = (String)val;
+                    if (str.trim().length()==0) {
+                        setText(str);
+                        setIcon(defaultIcon);
+                    } else {
+                        setText(str);
+                        setIcon(null);
+                    }
+                    if (log.isDebugEnabled()) log.debug("String str= \""+str+"\"");
                 } else if (val instanceof javax.swing.ImageIcon) {
                     setIcon((javax.swing.ImageIcon) val);
                     setText(null);
-                    //_text = false;
-                    //_icon = true;
                 } else if (val instanceof Number) {
                     setText(val.toString());
                     setIcon(null);
-                    //_text = true;
-                    //_icon = false;
                 } else log.warn("can't display current value of "+memory.getSystemName()+
                                 ", val= "+val+" of Class "+val.getClass().getName());
 		    } else {
@@ -225,18 +227,14 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     
                     setText(null);
 				    super.setIcon(newicon);
-                    //_text = false;
-                    //_icon = true;
 			    } else {
 			        // no match, use default
-		            setIcon(defaultIcon);
-                    
+		            setIcon(defaultIcon);                    
                     setText(null);
-                    //_text = false;
-                    //_icon = true;
 			    }
 		    }
 		} else {
+            if (log.isDebugEnabled()) log.debug("memory null");
             setIcon(defaultIcon);
             setText(null);
         }
@@ -268,66 +266,32 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         invalidate();
     }
 
-    /*public void updateSize() {
-    	//height = -1;
-    	//width = -1;
-        super.updateSize();
-    }*/
-    
     public void dispose() {
         memory.removePropertyChangeListener(this);
         memory = null;
         super.dispose();
     }
     
-    /**
-     * This may be called during the superclass ctor, so before 
-     * construction of this object is complete.  Be careful about that!
-     */
-    public int maxHeight() {
-        if(isIcon() && _namedIcon!=null){
-            return _namedIcon.getIconHeight();
+    public void doMouseReleased(java.awt.event.MouseEvent e) {
+        //if (log.isDebugEnabled()) log.debug("doMouseReleased");
+        if (e.getClickCount() == 2){ 
+            editMemoryValue();
         }
-        if ((getFixedHeight()==0) && (getMargin()==0))
-            return ((javax.swing.JLabel)this).getMaximumSize().height;  // defer to superclass
-        else if ((getFixedHeight()==0) && (getMargin()!=0))
-            return ((javax.swing.JLabel)this).getMaximumSize().height+(getMargin()*2);
-        //else if ((getFixedHeight()!=0) && (getMargin()!=0))
-        return getFixedHeight();
-        //return getFixedHeight()+(getBorderSize()*2);
-    }
-    
-    //private int width = -1;
-    /**
-     * This may be called during the superclass ctor, so before 
-     * construction of this object is complete.  Be careful about that!
-     */
-    public int maxWidth() {
-        if(isIcon() && _namedIcon!=null){
-            return _namedIcon.getIconWidth();
-        }
-        if ((getFixedWidth()==0) && (getMargin()==0))
-            return ((javax.swing.JLabel)this).getMaximumSize().width;  // defer to superclass
-        else if ((getFixedWidth()==0) && (getMargin()!=0))
-            return ((javax.swing.JLabel)this).getMaximumSize().width+(getMargin()*2);
-        //else if ((getFixedWidth()!=0) && (getMargin()!=0))
-         //   return getFixedWidth();
-        return getFixedWidth();
-    }
+    }    
     
     private void editMemoryValue(){
-        JTextField _newMemory = new JTextField(20);
+        JTextField newMemory = new JTextField(20);
         if (memory.getValue()!=null)
-            _newMemory.setText(memory.getValue().toString());
-        Object[] options = {"Cancel", "OK", _newMemory};
+            newMemory.setText(memory.getValue().toString());
+        Object[] options = {"Cancel", "OK", newMemory};
         int retval = JOptionPane.showOptionDialog(null,
                                                   "Edit Current Memory Value", memory.getSystemName(),
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,
                                                   options, options[2] );
 
         if (retval != 1) return;
-        memory.setValue(_newMemory.getText());
-    
+        memory.setValue(newMemory.getText());
+        updateSize();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryIcon.class.getName());

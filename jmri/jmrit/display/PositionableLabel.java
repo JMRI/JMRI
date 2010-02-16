@@ -36,7 +36,7 @@ import javax.swing.border.LineBorder;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.82 $
+ * @version $Revision: 1.83 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -254,15 +254,16 @@ public class PositionableLabel extends JLabel implements Positionable {
      * state, e.g. if one or more of the icons that might be displayed
      * is changed
      */
-    protected void updateSize(){
+    public void updateSize() {
+        //if (debug) log.debug("updateSize()");
         setSize(maxWidth(), maxHeight());
-        if (_icon && _text) {
+        if ( _namedIcon!=null && _text) {
             //we have a combined icon/text therefore the icon is central to the text.
             setIconTextGap (-(_namedIcon.getIconWidth()+maxWidth())/2);
         }
     }
     
-    public int maxWidth(){
+    public int maxWidth() {
         int max = 0;
         if (fixedWidth!=0) {
             max = fixedWidth;
@@ -274,11 +275,11 @@ public class PositionableLabel extends JLabel implements Positionable {
                 max = MIN_SIZE;
             }
         } else {
-            if(_icon) {
-                max = _namedIcon.getIconWidth();
+            if(_text && getText()!=null) {
+                max = getFontMetrics(getFont()).stringWidth(getText());
             }
-            if(_text) {
-                max = Math.max(getMaximumSize().width, max);
+            if(_icon && _namedIcon!=null) {
+                max = Math.max(_namedIcon.getIconWidth(), max);
             }
             if (margin!=0) {
                 max += margin*2;
@@ -300,11 +301,11 @@ public class PositionableLabel extends JLabel implements Positionable {
                 max = MIN_SIZE;
             }
         } else {
-            if(_icon) {
-                max = _namedIcon.getIconHeight();
-            }
             if(_text) {
-                max = Math.max(getMaximumSize().height, max);
+                max = getFontMetrics(getFont()).getHeight();
+            }
+            if(_icon && _namedIcon!=null) {
+                max = Math.max(_namedIcon.getIconHeight(), max);
             }
             if (margin!=0) {
                 max += margin*2;

@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
@@ -593,9 +593,11 @@ public class CoordinateEdit extends JmriJFrame {
                 if (pp.isIcon()) {
                     pp._text = hasText; 
                     pp.setText(t);
+                    pp.updateSize();
                     dispose();
                 } else if (hasText) {
                     pp.setText(t);
+                    pp.updateSize();
                     dispose();
                 } else {
                     xTextField.setText("Item disappears with null text!");
@@ -604,7 +606,9 @@ public class CoordinateEdit extends JmriJFrame {
 		});
 		cancelButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-                ((PositionableLabel)pl).setText(oldStr);
+                PositionableLabel pp = (PositionableLabel)pl;
+                pp.setText(oldStr);
+                pp.updateSize();
                 dispose();
 			}
 		});
