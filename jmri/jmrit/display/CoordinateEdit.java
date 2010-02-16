@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
@@ -691,6 +691,8 @@ public class CoordinateEdit extends JmriJFrame {
         if (addY) {
             addItem(textY, 0, 2, 1);
             addItem(spinY, 1, 2, 1);
+            addItem(cancelButton, 0, 3, 1);
+            addItem(okButton, 1, 3, 1);
         } else {
             addItem(cancelButton, 0, 2, 1);
             addItem(okButton, 1, 2, 1);
