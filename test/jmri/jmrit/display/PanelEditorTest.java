@@ -2,17 +2,14 @@ package jmri.jmrit.display;
 
 import java.io.File;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import junit.framework.*;
 
 /**
  * PanelEditorTest.java
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class PanelEditorTest extends TestCase {
 

@@ -9,16 +9,13 @@ import javax.swing.JPanel;
 import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import junit.framework.*;
 
 /**
  * Test PaneProg with qualified variables
  *
  * @author			Bob Jacobsen    Copyright 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class QualifiedVarTest extends TestCase {
 

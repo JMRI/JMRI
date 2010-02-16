@@ -2,17 +2,14 @@
 
 package jmri.jmrit.mastbuilder;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import junit.framework.*;
 
 import javax.swing.*;
 
 /**
  * Tests for the jmrit.mastbuilder package & jmrit.mastbuilder.MastBuilder class.
  * @author	Bob Jacobsen     Copyright (C) 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class MastBuilderTest extends TestCase {
 

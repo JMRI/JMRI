@@ -4,9 +4,7 @@ package jmri.jmrit.decoderdefn;
 
 import jmri.jmrit.XmlFile;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import junit.framework.*;
 
 //import jmri.InstanceManager;
 
@@ -15,7 +13,7 @@ import junit.framework.TestSuite;
  * 
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.3
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SchemaTest extends jmri.configurexml.LoadFileTestBase {
 
