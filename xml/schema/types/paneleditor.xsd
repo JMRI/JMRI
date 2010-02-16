@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: paneleditor.xsd,v 1.7 2010-02-16 05:39:44 jacobsen Exp $ -->
+<!-- $Id: paneleditor.xsd,v 1.8 2010-02-16 08:16:30 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -33,25 +33,26 @@
     <xs:complexType name="PanelEditorType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a PanelEditor panel.
+          Define the XML stucture for storing the contents of a Panel Editor or Control Panel Editor panel.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.display.configurexml.PanelEditorXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.display.panel.editor.configurexml.PanelEditorXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence minOccurs="0" maxOccurs="unbounded" >
         
-        <xs:element name="positionablelabel"    type="EditorPositionableLabelType"  minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="positionablelabel" type="EditorPositionableLabelType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="positionablepoint" type="EditorPositionablePointType" minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="turnouticon"       type="EditorTurnoutIconType"    minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="sensoricon"        type="EditorSensorIconType"    minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="memoryicon"        type="EditorMemoryIconType"    minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="signalheadicon"    type="EditorSignalHeadIconType" minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="reportericon"      type="EditorReporterIconType"  minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="layoutturnout"     type="EditorLayoutTurnoutType"   minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="multisensoricon"   type="EditorMultiSensorIconType" minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="fastclock"         type="EditorFastClockIconType" minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="locoicon"          type="EditorLocoIconType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="turnouticon"       type="EditorTurnoutIconType"       minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="sensoricon"        type="EditorSensorIconType"        minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="memoryicon"        type="EditorMemoryIconType"        minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="signalheadicon"    type="EditorSignalHeadIconType"    minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="reportericon"      type="EditorReporterIconType"      minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="layoutturnout"     type="EditorLayoutTurnoutType"     minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="multisensoricon"   type="EditorMultiSensorIconType"   minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="fastclock"         type="EditorFastClockIconType"     minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="locoicon"          type="EditorLocoIconType"          minOccurs="0" maxOccurs="unbounded" />
             
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required" />
@@ -66,7 +67,7 @@
       <xs:attribute name="hide" type="yesNoType" default="no" />
       <xs:attribute name="showcoordinates" type="yesNoType" default="no"/>
       <xs:attribute name="panelmenu" type="yesNoType" default="yes"/>
-      <xs:attribute name="scrollable" type="xs:string"/> <!-- "none", others? -->
+      <xs:attribute name="scrollable" type="scrollableType"/>
 
     </xs:complexType>
 

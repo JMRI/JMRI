@@ -3,7 +3,7 @@
 
 <!-- Test schema for JMRI I/O support. Not for use before JMRI 2.9.1        -->
 
-<!-- $Id: general.xsd,v 1.10 2010-02-16 05:37:05 jacobsen Exp $ -->
+<!-- $Id: general.xsd,v 1.11 2010-02-16 08:16:30 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -113,6 +113,60 @@
     <xs:restriction base="xs:token">
       <xs:enumeration value="closed"/>
       <xs:enumeration value="thrown"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="scrollableType">
+    <xs:annotation>
+        <xs:documentation>
+          Provide possible types of scrolling for a window
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="none"/>
+      <xs:enumeration value="horizontal"/>
+      <xs:enumeration value="vertical"/>
+      <xs:enumeration value="both"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="screenColorType">
+    <xs:annotation>
+        <xs:documentation>
+          Provide possible colors for screen use, not for signals.
+          See jmri.jmrit.display.layoutEditor.LayoutBlock.colorText
+          (until refactored?).
+          Code indicates leading capital letters, but files are 
+          available with all-lower case.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Black"/>
+      <xs:enumeration value="DarkGray"/>
+      <xs:enumeration value="Gray"/>
+      <xs:enumeration value="LightGray"/>
+      <xs:enumeration value="White"/>
+      <xs:enumeration value="Red"/>
+      <xs:enumeration value="Pink"/>
+      <xs:enumeration value="Orange"/>
+      <xs:enumeration value="Yellow"/>
+      <xs:enumeration value="Green"/>
+      <xs:enumeration value="Blue"/>
+      <xs:enumeration value="Magenta"/>
+      <xs:enumeration value="Cyan"/>
+      <xs:enumeration value="black"/>
+      <xs:enumeration value="darkgray"/>
+      <xs:enumeration value="gray"/>
+      <xs:enumeration value="lightgray"/>
+      <xs:enumeration value="white"/>
+      <xs:enumeration value="red"/>
+      <xs:enumeration value="pink"/>
+      <xs:enumeration value="orange"/>
+      <xs:enumeration value="yellow"/>
+      <xs:enumeration value="green"/>
+      <xs:enumeration value="blue"/>
+      <xs:enumeration value="magenta"/>
+      <xs:enumeration value="cyan"/>
     </xs:restriction>
   </xs:simpleType>
 

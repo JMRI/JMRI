@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: layouteditor.xsd,v 1.7 2010-02-16 05:38:49 jacobsen Exp $ -->
+<!-- $Id: layouteditor.xsd,v 1.8 2010-02-16 08:16:30 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -72,16 +72,7 @@
         <xs:annotation><xs:documentation>Deprecated since JMRI 2.2</xs:documentation></xs:annotation>
       </xs:attribute>
       <xs:attribute name="sliders" type="yesNoType" default="yes"/>
-      <xs:attribute name="scrollable" default="both">
-        <xs:simpleType>
-          <xs:restriction base="xs:token">
-            <xs:enumeration value="none"/>
-            <xs:enumeration value="both"/>
-            <xs:enumeration value="horizontal"/>
-            <xs:enumeration value="vertical"/>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
+      <xs:attribute name="scrollable" type="scrollableType" default="both" />
       <xs:attribute name="editable" type="yesNoType" default="yes" />
       <xs:attribute name="positionable" type="yesNoType" default="yes" />
       <xs:attribute name="controlling" type="yesNoType" default="yes" />
@@ -95,8 +86,8 @@
       <xs:attribute name="sidetrackwidth" type="xs:integer" use="required" />
       <xs:attribute name="xscale" type="xs:float"/>
       <xs:attribute name="yscale" type="xs:float"/>
-      <xs:attribute name="defaulttrackcolor" type="xs:string" use="required" /> <!-- color -->
-      <xs:attribute name="defaulttextcolor" type="xs:string"/> <!-- color -->
+      <xs:attribute name="defaulttrackcolor" type="screenColorType" use="required" />
+      <xs:attribute name="defaulttextcolor" type="screenColorType"/>
       <xs:attribute name="turnoutbx" type="xs:float"/>
       <xs:attribute name="turnoutcx" type="xs:float"/>
       <xs:attribute name="turnoutwid" type="xs:float"/>
