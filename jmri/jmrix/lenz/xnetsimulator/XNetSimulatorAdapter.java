@@ -32,7 +32,7 @@ import java.io.PipedOutputStream;
  *      support infrastructure.
  * 
  * @author			Paul Bender, Copyright (C) 2009
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 
 public class XNetSimulatorAdapter extends XNetPortController implements Runnable{
@@ -296,7 +296,7 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
        return r;
     }
 
-    // Create a broadcast "Emergehcy Stop" reply
+    // Create a broadcast "Emergecy Stop" reply
     private XNetReply emergencyStopReply(){
        XNetReply r=new XNetReply();
        r.setOpCode(XNetConstants.BC_EMERGENCY_STOP);
