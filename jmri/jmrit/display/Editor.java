@@ -20,7 +20,11 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.operations.trains.TrainIcon;
+import jmri.jmrit.revhistory.FileHistory;
+import org.jdom.Element;
+
 import jmri.util.JmriJFrame;
+import jmri.configurexml.*;
 
 /**
  * This is the Model and a Controller for panel editor Views. 
@@ -83,9 +87,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     
     protected ArrayList <Positionable> _contents = new ArrayList<Positionable>();
     private JLayeredPane _targetPanel;
-    private JFrame  _targetFrame;
+    private JFrame      _targetFrame;
 	private JScrollPane _panelScrollPane;
-
+/*
     public enum TriState {TRUE, FALSE, NOTSET;
     
         public boolean isTrue() {
@@ -95,7 +99,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             return (this == NOTSET);
         }
     }
-    
+*/    
 	// Option menu items 
 	protected int _scrollState = SCROLL_NONE;
     private boolean _editable = true;
@@ -135,6 +139,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     public Editor(String name) {
         super(name);
+        setName(name);
         _debug = log.isDebugEnabled();
         for (int i=0; i<NUM_LEVELS; i++) {
             _editableLevels[i] = true;
@@ -590,6 +595,56 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
     }
 
+    @SuppressWarnings("unchecked")
+    protected void changeView(String className) {
+        FileHistory r = InstanceManager.getDefault(FileHistory.class);
+        if (r!=null) {
+            List<FileHistory.OperationMemo> list = r.getList();
+            FileHistory.OperationMemo m = list.get(list.size()-1);
+            java.io.File dir = LoadStoreBaseAction.userFileChooser.getCurrentDirectory();
+            java.io.File file = new java.io.File(dir, m.filename);
+            if (!file.exists()) {
+                JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(rb.getString("CantFindFile"),
+                                              file.getPath()), rb.getString("errorTitle"),JOptionPane.ERROR_MESSAGE);
+                file = LoadXmlConfigAction.getFile(LoadStoreBaseAction.userFileChooser);
+            }
+            log.info("Config file= "+file.getPath());
+            boolean result = false;
+            if (file!=null) {
+                try {
+                    ConfigXmlManager configMgr = (ConfigXmlManager)InstanceManager.configureManagerInstance();
+                    Element root = configMgr.rootFromFile(file);
+                    List <Element> panels = root.getChildren("paneleditor");
+                    for (int i = 0; i<panels.size(); i++) {
+                        Element panel = panels.get(i);
+
+                        String name = "";
+                        if (panel.getAttribute("name")!=null)
+                            name = panel.getAttribute("name").getValue();
+                        if (name.equals(getName())) {
+                            XmlAdapter adapter = (XmlAdapter)Class.forName(className).newInstance();
+                            //adapter.setConfigXmlManager(InstanceManager.configureManagerInstance());
+                            adapter.setConfigXmlManager(configMgr);
+                            boolean loadStatus = adapter.load(panel);
+                            log.debug("load status for "+className+" is "+loadStatus);
+                            result = true;
+                            break;
+                        }
+                    }
+                    if (result) {
+                        dispose();
+                    } else {
+                        log.error("No panel name matching \""+getName()+"\" found in file: "+m.filename);
+                    }
+                } catch (Exception e) {
+                    log.error("Problem loading File: "+file.getPath()+", e= "+e);
+                }
+            }
+        } else {
+            log.error("Cannot read file history");
+        }
+    }
+
     /************************* Popup Item Methods ***********************/
     /**
     * These methods are to be called from the editor view's showPopUp method
@@ -781,7 +836,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
                 else {
                     JOptionPane.showMessageDialog(locoFrame,rb.getString("ErrorEnterLocoID"),
-                                    rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+                                    rb.getString("errorTitle"),JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -945,7 +1000,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
             // frame added in the above switch 
             frame = _iconEditorFrame.get(name);
-            frame.setLocation(frameLocationX, frameLocationY);
+            //frame.setLocation(frameLocationX, frameLocationY);
+            frame.setLocationRelativeTo(this);
             frameLocationX += DELTA;
             frameLocationY += DELTA;
         }
@@ -959,10 +1015,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public IconAdder getIconEditor(String name) {
         return _iconEditorFrame.get(name).getEditor();
     }
-    IconAdder editor = null;
-    ActionListener addIconAction = null;
-    ActionListener changeIconAction = null;
-    PickListModel pickList = null;
 
     /**
      * Add a label to the target
@@ -1119,7 +1171,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
 
     protected void addSignalMastEditor() {
-        editor = new IconAdder("SignalMastEditor");
+        IconAdder editor = new IconAdder("SignalMastEditor");
 
         JFrameItem frame = makeAddIconFrame("SignalMastEditor", "addIconsToPanel", 
                                            "SelectSignalMast", editor);
@@ -1198,7 +1250,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     protected void addReporterEditor() {
         IconAdder editor = new IconAdder("ReporterEditor");
-        addIconAction = new ActionListener() {
+        ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 addReporter();
             }

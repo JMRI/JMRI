@@ -80,7 +80,6 @@ public class ControlPanelEditor extends Editor {
 
     public ControlPanelEditor(String name) {
         super(name);
-        setName(name);
         _debug = log.isDebugEnabled();
         java.awt.Container contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -296,6 +295,7 @@ public class ControlPanelEditor extends Editor {
         _fileMenu.add(editItem);
 
         editItem = new JMenuItem(rb.getString("editIndexMenu"));
+        _fileMenu.add(editItem);
         editItem.addActionListener(new ActionListener() {
                 ControlPanelEditor panelEd;
                 public void actionPerformed(ActionEvent e) {
@@ -308,7 +308,14 @@ public class ControlPanelEditor extends Editor {
                     return this;
                 }
             }.init(this));
+
+        editItem = new JMenuItem(rb.getString("PEView"));
         _fileMenu.add(editItem);
+        editItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					changeView("jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml");
+                }
+            });
 
         _fileMenu.addSeparator();
         JMenuItem deleteItem = new JMenuItem(rb.getString("DeletePanel"));

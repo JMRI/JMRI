@@ -128,6 +128,15 @@ public class PanelEditor extends Editor implements ItemListener {
                 }
             }.init(this));
         fileMenu.add(editItem);
+
+        editItem = new JMenuItem(rb.getString("CPEView"));
+        fileMenu.add(editItem);
+        editItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					changeView("jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml");
+                }
+            });
+
         fileMenu.addSeparator();
         JMenuItem deleteItem = new JMenuItem(rb.getString("DeletePanel"));
         fileMenu.add(deleteItem);
