@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003-2010
- * @version			$Revision: 2.5 $
+ * @version			$Revision: 2.6 $
  */
 abstract public class AbstractXNetInitilizationManager {
 
@@ -68,10 +68,7 @@ abstract public class AbstractXNetInitilizationManager {
          //Send Information request to LI100/LI100
          /* First, we need to send a request for the Command Station
             hardware and software version */
-	    XNetMessage msg=XNetTrafficController.instance()
-                                                 .getCommandStation()
-                                                 .getCSVersionRequestMessage();
-
+	    XNetMessage msg=XNetMessage.getCSVersionRequestMessage();
           //Then Send the version request to the controller
           XNetTrafficController.instance().sendXNetMessage(msg,this);	  
 

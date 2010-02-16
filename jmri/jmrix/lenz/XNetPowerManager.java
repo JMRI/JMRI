@@ -4,7 +4,7 @@
  * Description:		PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version			$Revision: 2.6 $
+ * @version			$Revision: 2.7 $
  */
 
 package jmri.jmrix.lenz;
@@ -19,8 +19,7 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 		tc = XNetTrafficController.instance();
 		tc.addXNetListener(XNetInterface.CS_INFO, this);
 		// request the current command station status
-		tc.sendXNetMessage(tc.getCommandStation()
-                                     .getCSStatusRequestMessage(),this);
+		tc.sendXNetMessage(XNetMessage.getCSStatusRequestMessage(),this);
 	}
 
 	int power = UNKNOWN;
@@ -30,16 +29,10 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 		checkTC();
 		if (v==ON) {
 			// send RESUME_OPS
-			XNetMessage l = new XNetMessage(3);
-			l.setElement(0,XNetConstants.CS_REQUEST);
-			l.setElement(1,XNetConstants.RESUME_OPS);
-			tc.sendXNetMessage(l, this);
+			tc.sendXNetMessage(XNetMessage.getResumeOperationsMsg(), this);
 		} else if (v==OFF) {
 			// send EMERGENCY_OFF
-			XNetMessage l = new XNetMessage(3);
-			l.setElement(0,XNetConstants.CS_REQUEST);
-			l.setElement(1,XNetConstants.EMERGENCY_OFF);
-			tc.sendXNetMessage(l, this);
+			tc.sendXNetMessage(XNetMessage.getEmergencyOffMsg(), this);
 		}
 		firePropertyChange("Power", null, null);
 	}

@@ -10,7 +10,7 @@ package jmri.jmrix.lenz;
  * to the a Lenz Command Station, on an XPressNet network.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 2.11 $
+ * @version			$Revision: 2.12 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.CommandStation {
 
@@ -83,49 +83,11 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.Com
     }
 
     /**
-     * Generate the message to request the Command Station 
-     * Hardware/Software Version
-     **/
-     public XNetMessage getCSVersionRequestMessage() {
-	XNetMessage msg=new XNetMessage(3);   
-        msg.setElement(0,XNetConstants.CS_REQUEST);
-        msg.setElement(1,XNetConstants.CS_VERSION);
-        msg.setParity(); // Set the parity bit
-        return msg;
-     } 
-
-    /**
      * Provides the version string returned during the initial check.
      * This function is not yet implemented...
      **/
     public String getVersionString() { return "<unknown>"; }
 
-    /**
-     * Generate the message to request the Command Station 
-     * Status
-     **/
-     public XNetMessage getCSStatusRequestMessage() {
-	XNetMessage msg=new XNetMessage(3);   
-        msg.setElement(0,XNetConstants.CS_REQUEST);
-        msg.setElement(1,XNetConstants.CS_STATUS);
-        msg.setParity(); // Set the parity bit
-        return msg;
-     } 
-
-    /**
-     * Generate the message to set the Command Station 
-     * to Auto or Manual restart mode.
-     **/
-     public XNetMessage getCSAutoStartMessage(boolean autoMode) {
-	XNetMessage msg=new XNetMessage(4);   
-        msg.setElement(0,XNetConstants.CS_SET_POWERMODE);
-        msg.setElement(1,XNetConstants.CS_SET_POWERMODE);
-	if(autoMode) msg.setElement(2,XNetConstants.CS_POWERMODE_AUTO);
-	   else msg.setElement(2,XNetConstants.CS_POWERMODE_MANUAL);
-        msg.setParity(); // Set the parity bit
-        return msg;
-     } 
-    
     /* 
      * The next group of messages has to do with determining if the
      * command station has, and is currently in service mode 

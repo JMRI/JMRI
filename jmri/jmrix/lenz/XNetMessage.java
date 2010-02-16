@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003-2010
- * @version			$Revision: 2.18 $
+ * @version			$Revision: 2.19 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -594,6 +594,66 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         msg.setParity();
         return(msg);
     }
+
+   /*
+    * Build a Resume operations Message
+    */ 
+    public static XNetMessage getResumeOperationsMsg(){
+       XNetMessage msg = new XNetMessage(3);
+       msg.setElement(0,XNetConstants.CS_REQUEST);
+       msg.setElement(1,XNetConstants.RESUME_OPS);
+       msg.setParity();
+       return(msg);
+    }
+
+   /*
+    * Build an Emergency Off Message
+    */ 
+    public static XNetMessage getEmergencyOffMsg(){
+       XNetMessage msg = new XNetMessage(3);
+       msg.setElement(0,XNetConstants.CS_REQUEST);
+       msg.setElement(1,XNetConstants.EMERGENCY_OFF);
+       msg.setParity();
+       return(msg);
+    }
+
+    /**
+     * Generate the message to request the Command Station
+     * Hardware/Software Version
+     **/
+     public static XNetMessage getCSVersionRequestMessage() {
+        XNetMessage msg=new XNetMessage(3);
+        msg.setElement(0,XNetConstants.CS_REQUEST);
+        msg.setElement(1,XNetConstants.CS_VERSION);
+        msg.setParity(); // Set the parity bit
+        return msg;
+     }
+
+    /**
+     * Generate the message to request the Command Station
+     * Status
+     **/
+     public static XNetMessage getCSStatusRequestMessage() {
+        XNetMessage msg=new XNetMessage(3);
+        msg.setElement(0,XNetConstants.CS_REQUEST);
+        msg.setElement(1,XNetConstants.CS_STATUS);
+        msg.setParity(); // Set the parity bit
+        return msg;
+     }
+
+    /**
+     * Generate the message to set the Command Station
+     * to Auto or Manual restart mode.
+     **/
+     public static XNetMessage getCSAutoStartMessage(boolean autoMode) {
+        XNetMessage msg=new XNetMessage(4);
+        msg.setElement(0,XNetConstants.CS_SET_POWERMODE);
+        msg.setElement(1,XNetConstants.CS_SET_POWERMODE);
+        if(autoMode) msg.setElement(2,XNetConstants.CS_POWERMODE_AUTO);
+           else msg.setElement(2,XNetConstants.CS_POWERMODE_MANUAL);
+        msg.setParity(); // Set the parity bit
+        return msg;
+     }
 
 	// initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetMessage.class.getName());

@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  * reset the command station.
  *
  * @author			Paul Bender  Copyright (C) 2005-2010
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XNetListener {
 
@@ -249,9 +249,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
 
     // get the current automatic/manual mode
     synchronized void amModeGet() {
-	   XNetMessage msg=XNetTrafficController.instance()
-						.getCommandStation()
-						.getCSStatusRequestMessage();
+	   XNetMessage msg=XNetMessage.getCSStatusRequestMessage();
            XNetTrafficController.instance().sendXNetMessage(msg,this);
 	   amModeGetButton.setSelected(false);
 	   status.setText(rb.getString("LZ100StatusRetrieveMode"));
@@ -263,9 +261,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
 		if(autoMode) log.debug("Auto Mode True");
 		   else log.debug("Auto Mode False");
 	   }
-	   XNetMessage msg=XNetTrafficController.instance()
-						.getCommandStation()
-						.getCSAutoStartMessage(autoMode);
+	   XNetMessage msg=XNetMessage.getCSAutoStartMessage(autoMode);
            XNetTrafficController.instance().sendXNetMessage(msg,this);
 	   amModeSetButton.setSelected(false);
 	   status.setText(rb.getString("LZ100StatusSetMode"));
