@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: turnouts.xsd,v 1.5 2010-02-02 04:28:43 jacobsen Exp $ -->
+<!-- $Id: turnouts.xsd,v 1.6 2010-02-16 05:37:20 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
 <!--                                                                        -->
@@ -49,7 +49,7 @@
         <xs:element name="turnout" type="TurnoutType" minOccurs="0" maxOccurs="unbounded" />
             
       </xs:sequence>
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
   </xs:complexType>
 
   <xs:complexType name="TurnoutType">
@@ -83,7 +83,7 @@
 
   <xs:complexType name="OperationType">
       <xs:attribute name="name" type="xs:string" use="required" />
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="interval" type="xs:int" />
       <xs:attribute name="maxtries" type="xs:int" />
       <xs:attribute name="parameter1" type="xs:string" />

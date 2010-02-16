@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: editors.xsd,v 1.4 2010-02-15 01:27:46 jacobsen Exp $ -->
+<!-- $Id: editors.xsd,v 1.5 2010-02-16 05:38:25 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                           -->
 <!--                                                                        -->
@@ -109,7 +109,7 @@
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup" />
 
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="fixedWidth" type="xs:string" />
       <xs:attribute name="fixedHeight" type="xs:string" />
       <xs:attribute name="rotate" type="xs:string" />
@@ -162,7 +162,7 @@
         </xs:appinfo>
       </xs:annotation>
 
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="ident" type="xs:string" use="required" />
       <xs:attribute name="type" type="xs:string" use="required" />
       <xs:attribute name="x" type="xs:float" use="required" />
@@ -197,7 +197,7 @@
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup" />
 
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="sensor" type="beanNameType" />
       <xs:attribute name="momentary" type="trueFalseType" />
       <xs:attribute name="icon" type="xs:string" />
@@ -367,7 +367,7 @@
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup" />
 
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
       
       <xs:attribute name="rotate" type="xs:string" />
       <xs:attribute name="text" type="xs:string" />
@@ -408,7 +408,7 @@
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup" />
 
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="size" type="xs:string" />
       <xs:attribute name="style" type="xs:string" />
       <xs:attribute name="red" type="xs:int" />
@@ -457,7 +457,7 @@
         </xs:appinfo>
       </xs:annotation>
 
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="x" type="xs:int" use="required" />
       <xs:attribute name="y" type="xs:int" use="required" />
       <xs:attribute name="scale" type="xs:float" use="required" />
@@ -497,7 +497,7 @@
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup" />
 
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="updown" type="xs:string" />
 
       <xs:attribute name="active" type="xs:string" >
@@ -542,7 +542,7 @@
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup" />
 
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="rotate" type="xs:string" />
       <xs:attribute name="signalhead" type="beanNameType" />
       <xs:attribute name="clickmode" type="xs:string" />
@@ -609,7 +609,7 @@
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup" />
 
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="turnout" type="beanNameType" />
       <xs:attribute name="rotate" type="xs:string" />
       <xs:attribute name="tristate" type="trueFalseType" />
@@ -645,7 +645,7 @@
         </xs:appinfo>
       </xs:annotation>
 
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="ident" type="xs:string" use="required" />
       <xs:attribute name="type" type="xs:string" use="required" />
       <xs:attribute name="continuing" type="xs:string" use="required" />
@@ -694,7 +694,7 @@
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup" />
 
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="icon" type="xs:string" />
       <xs:attribute name="text" type="xs:string" />
       <xs:attribute name="size" type="xs:string" />
@@ -715,7 +715,7 @@
         </xs:appinfo>
       </xs:annotation>
 
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="ident" type="xs:string" use="required" />
       <xs:attribute name="blockname" type="beanNameType"/>  <!-- required in DTD, missing from some files -->
       <xs:attribute name="connect1name" type="beanNameType" use="required" />
@@ -742,7 +742,7 @@
         </xs:appinfo>
       </xs:annotation>
 
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="ident" type="xs:string" use="required" />
 
       <xs:attribute name="blocknameac" type="beanNameType" />

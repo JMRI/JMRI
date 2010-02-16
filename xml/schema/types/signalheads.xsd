@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: signalheads.xsd,v 1.10 2010-02-03 05:58:58 jacobsen Exp $ -->
+<!-- $Id: signalheads.xsd,v 1.11 2010-02-16 05:37:26 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -37,7 +37,7 @@
         <xs:element name="signalhead" type="SignalHeadType" minOccurs="0" maxOccurs="unbounded" />      
         <xs:element name="dccsignalhead" type="DccSignalHeadType" minOccurs="0" maxOccurs="unbounded" />      
       </xs:sequence>
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
     </xs:complexType>
 
     <xs:complexType name="SignalHeadType">
@@ -124,7 +124,7 @@
         </xs:element>
 
       </xs:sequence>
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="systemName" type="systemNameType" use="required" />
       <xs:attribute name="userName" type="nullUserNameType" />
       <xs:attribute name="home" type="yesNoType" />
@@ -141,7 +141,7 @@
             <jmri:usingclass configurexml="true">jmri.implementation.configurexml.DccSignalHeadXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
-      <xs:attribute name="class" type="xs:string" use="required" />
+      <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="systemName" type="systemNameType" use="required" />
       <xs:attribute name="userName" type="nullUserNameType" />
     </xs:complexType>

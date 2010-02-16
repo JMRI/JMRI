@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: layout.xsd,v 1.4 2010-02-15 01:27:46 jacobsen Exp $ -->
+<!-- $Id: layout.xsd,v 1.5 2010-02-16 05:37:59 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
 <!--                                                                        -->
@@ -97,7 +97,7 @@ signals - obsolete, EMPTY, never used
             </xs:annotation>
             <xs:complexType>
                 <xs:attribute name="LAFclass" type="xs:string"/>
-                <xs:attribute name="class" type="xs:string" use="required" />
+                <xs:attribute name="class" type="classType" use="required" />
                 <xs:attribute name="LocaleLanguage" type="xs:string"/>
                 <xs:attribute name="LocaleCountry" type="xs:string"/>
                 <xs:attribute name="LocaleVariant" type="xs:string"/>
@@ -114,7 +114,7 @@ signals - obsolete, EMPTY, never used
                 </xs:appinfo>
             </xs:annotation>
             <xs:complexType>
-                <xs:attribute name="class" type="xs:string" use="required"/>
+                <xs:attribute name="class" type="classType" use="required"/>
                 <xs:attribute name="verifyBeforeWrite" type="yesNoType" default="no"/>
                 <xs:attribute name="showEmptyPanes" type="yesNoType" default="yes" />
                 <xs:attribute name="defaultFile" type="xs:string" default="Basic.xml"/>
@@ -131,7 +131,7 @@ signals - obsolete, EMPTY, never used
                 </xs:appinfo>
             </xs:annotation>
             <xs:complexType>
-                <xs:attribute name="class" type="xs:string" use="required"/>
+                <xs:attribute name="class" type="classType" use="required"/>
                 <xs:attribute name="directory" type="xs:string" />
                 <xs:attribute name="ownerDefault" type="xs:string" />
             </xs:complexType>
@@ -149,7 +149,7 @@ signals - obsolete, EMPTY, never used
                 </xs:appinfo>
             </xs:annotation>
             <xs:complexType>
-                <xs:attribute name="class" type="xs:token" use="required"/>
+                <xs:attribute name="class" type="classType" use="required"/>
                 <xs:attribute name="type" default="Action">
                   <xs:simpleType>
                     <xs:restriction base="xs:token">
