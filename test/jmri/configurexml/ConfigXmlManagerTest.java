@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
  * <P>
  * Uses the local preferences for test files.
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class ConfigXmlManagerTest extends TestCase {
 
@@ -84,9 +84,9 @@ public class ConfigXmlManagerTest extends TestCase {
     }
 
     public void testAdapterName() {
-        ConfigXmlManager c = new ConfigXmlManager();
+        //ConfigXmlManager c = new ConfigXmlManager();
         Assert.assertEquals("String class adapter", "java.lang.configurexml.StringXml",
-                            c.adapterName(""));
+        		ConfigXmlManager.adapterName(""));
     }
 
     public void testFindFile() throws FileNotFoundException, IOException {

@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the EasyDccProgrammer class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.12 $
+ * @version         $Revision: 1.13 $
  */
 
 package jmri.jmrix.easydcc;
@@ -177,7 +177,7 @@ public class EasyDccProgrammerTest extends TestCase {
 	 	*/
 		public Vector<EasyDccMessage> outbound = new Vector<EasyDccMessage>();  // public OK here, so long as this is a test class
 		public void sendEasyDccMessage(EasyDccMessage m, jmri.jmrix.easydcc.EasyDccListener l) {
-			if (this.log.isDebugEnabled()) this.log.debug("sendEasyDccMessage ["+m+"]");
+			if (log.isDebugEnabled()) log.debug("sendEasyDccMessage ["+m+"]");
 			// save a copy
 			outbound.addElement(m);
                         lastSender = l;
@@ -191,13 +191,13 @@ public class EasyDccProgrammerTest extends TestCase {
 		 */
 		protected void sendTestMessage (EasyDccMessage m) {
 			// forward a test message to Listeners
-			if (this.log.isDebugEnabled()) this.log.debug("sendTestMessage    ["+m+"]");
+			if (log.isDebugEnabled()) log.debug("sendTestMessage    ["+m+"]");
 			notifyMessage(m, null);
 			return;
 		}
 		protected void sendTestReply (EasyDccReply m) {
 			// forward a test message to Listeners
-			if (this.log.isDebugEnabled()) this.log.debug("sendTestReply    ["+m+"]");
+			if (log.isDebugEnabled()) log.debug("sendTestReply    ["+m+"]");
 			notifyReply(m, lastSender);
 			return;
 		}

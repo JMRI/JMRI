@@ -11,21 +11,21 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the InputBits class
  * @author		Dave Duchamp  2009
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
 public class InputBitsTest extends TestCase {
 		
     private InputBits ibit = new InputBits();
        
     public void testConstructor1() {
-        Assert.assertNotNull("check instance", ibit.instance());
+        Assert.assertNotNull("check instance", InputBits.instance());
     }
 
     public void testAccessors() {
-        ibit.setNumInputBits(72);
-		ibit.setTimeoutTime(1500);
-        Assert.assertEquals("check numInputBits", 72, ibit.getNumInputBits());
-        Assert.assertEquals("check timeoutTime", 1500, ibit.getTimeoutTime());
+    	InputBits.setNumInputBits(72);
+    	InputBits.setTimeoutTime(1500);
+        Assert.assertEquals("check numInputBits", 72, InputBits.getNumInputBits());
+        Assert.assertEquals("check timeoutTime", 1500, InputBits.getTimeoutTime());
     }
 	
     public void testMarkChangesInitial() {

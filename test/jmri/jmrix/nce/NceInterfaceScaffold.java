@@ -9,7 +9,7 @@ import java.util.Vector;
  * Stands in for the NceTrafficController class
  * 
  * @author			Bob Jacobsen
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
     class NceInterfaceScaffold extends NceTrafficController {
         public NceInterfaceScaffold() {
@@ -25,7 +25,7 @@ import java.util.Vector;
          */
         public Vector<NceMessage> outbound = new Vector<NceMessage>();  // public OK here, so long as this is a test class
         public void sendNceMessage(NceMessage m, jmri.jmrix.nce.NceListener l) {
-            if (this.log.isDebugEnabled()) this.log.debug("sendNceMessage ["+m+"]");
+            if (log.isDebugEnabled()) log.debug("sendNceMessage ["+m+"]");
             // save a copy
             outbound.addElement(m);
             mLastSender = l;
@@ -38,13 +38,13 @@ import java.util.Vector;
          */
         protected void sendTestMessage (NceMessage m) {
             // forward a test message to Listeners
-            if (this.log.isDebugEnabled()) this.log.debug("sendTestMessage    ["+m+"]");
+            if (log.isDebugEnabled()) log.debug("sendTestMessage    ["+m+"]");
             notifyMessage(m, null);
             return;
         }
         protected void sendTestReply (NceReply m, NceProgrammer p) {
             // forward a test message to Listeners
-            if (this.log.isDebugEnabled()) this.log.debug("sendTestReply    ["+m+"]");
+            if (log.isDebugEnabled()) log.debug("sendTestReply    ["+m+"]");
             notifyReply(m, p);
             return;
         }

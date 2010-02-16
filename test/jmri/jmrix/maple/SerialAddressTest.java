@@ -12,7 +12,7 @@ import jmri.util.JUnitAppender;
 /**
  * JUnit tests for the SerialAddress utility class.
  * @author	Dave Duchamp Copyright 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialAddressTest extends TestCase {
 
@@ -83,10 +83,10 @@ public class SerialAddressTest extends TestCase {
         SerialNode b = new SerialNode(99,0);
 
 	public void testValidSystemNameConfig() {
-			InputBits ibit = new InputBits();
-			OutputBits obit = new OutputBits();
-			ibit.setNumInputBits(40);
-			obit.setNumOutputBits(201);
+			//InputBits ibit = new InputBits();
+			//OutputBits obit = new OutputBits();
+			InputBits.setNumInputBits(40);
+			OutputBits.setNumOutputBits(201);
             Assert.assertTrue("valid config KL47", SerialAddress.validSystemNameConfig("KL47",'L') );
             Assert.assertTrue("valid config KS17", SerialAddress.validSystemNameConfig("KS17",'S') );
             Assert.assertTrue("valid config KL148", SerialAddress.validSystemNameConfig("KL148",'L') );

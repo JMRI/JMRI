@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.roster.RosterEntryPane class.
  * @author	Bob Jacobsen     Copyright (C) 2001, 2002
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class CopyRosterItemActionTest extends TestCase {
 
@@ -18,10 +18,10 @@ public class CopyRosterItemActionTest extends TestCase {
      */
     public void testCopy() throws java.io.IOException, java.io.FileNotFoundException {
         // create a special roster
-        Roster r = RosterTest.createTestRoster();
+        //Roster r = RosterTest.createTestRoster();
         // make that the default; not that test roster uses special name
-        r.resetInstance();
-        r.instance();
+        Roster.resetInstance();
+        Roster.instance();
 
         // copy the item
         CopyRosterItemAction a = new CopyRosterItemAction("copy", null){

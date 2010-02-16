@@ -11,7 +11,7 @@ import junit.extensions.jfcunit.*;
  * been bypassed for now.
  *
  * @author	Bob Jacobsen - Copyright 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @since 2.5.3
  */
  
@@ -29,12 +29,12 @@ public class SwingTestCase extends JFCTestCase {
     }
     
     protected void leaveAllWindowsOpen() {
-        getHelper().addSystemWindow(".");  // all windows left open
+    	TestHelper.addSystemWindow(".");  // all windows left open
     }
     
     protected void tearDown() throws Exception {
         leaveAllWindowsOpen();
-        getHelper().cleanUp( this );
+        TestHelper.cleanUp( this );
         super.tearDown( );
     }
     

@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the SerialSensorManager class.
  * @author	Bob Jacobsen  Copyright 2003, 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SerialSensorManagerTest extends TestCase {
 
@@ -34,8 +34,8 @@ public class SerialSensorManagerTest extends TestCase {
         Sensor s11 = s.provideSensor("11");
 		Assert.assertNotNull("found s11", s11);
         Assert.assertTrue("right name s11", s11.getSystemName().equals("KS11"));
-		InputBits ibit = new InputBits();
-		ibit.setNumInputBits(1000);
+		//InputBits ibit = new InputBits();
+		InputBits.setNumInputBits(1000);
         Sensor s248 = s.provideSensor("KS248");
 		Assert.assertNotNull("found s248", s248);
         Assert.assertTrue("right name s248", s248.getSystemName().equals("KS248"));

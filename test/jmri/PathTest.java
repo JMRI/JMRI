@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the Path class
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class PathTest extends TestCase {
 
@@ -69,21 +69,21 @@ public class PathTest extends TestCase {
     }
     
     public void testFormat(){
-        Path p = new Path();
+        //Path p = new Path();
         // default direction
-        Assert.assertTrue("None", p.decodeDirection(Path.NONE).equals("None"));
-        Assert.assertTrue("Left", p.decodeDirection(Path.LEFT).equals("Left"));
-        Assert.assertTrue("Right", p.decodeDirection(Path.RIGHT).equals("Right"));
-        Assert.assertTrue("Up", p.decodeDirection(Path.UP).equals("Up"));
-        Assert.assertTrue("Down", p.decodeDirection(Path.DOWN).equals("Down"));
-        Assert.assertTrue("CW", p.decodeDirection(Path.CW).equals("CW"));
-        Assert.assertTrue("CCW", p.decodeDirection(Path.CCW).equals("CCW"));
-        Assert.assertTrue("East", p.decodeDirection(Path.EAST).equals("East"));
-        Assert.assertTrue("West", p.decodeDirection(Path.WEST).equals("West"));
-        Assert.assertTrue("North", p.decodeDirection(Path.NORTH).equals("North"));
-        Assert.assertTrue("South", p.decodeDirection(Path.SOUTH).equals("South"));
-        Assert.assertTrue("Unknown", p.decodeDirection(0x100000).equals("Unknown: 0x100000"));
-        Assert.assertEquals("South|Up", p.decodeDirection(Path.SOUTH|Path.UP), "South, Up");
+        Assert.assertTrue("None", Path.decodeDirection(Path.NONE).equals("None"));
+        Assert.assertTrue("Left", Path.decodeDirection(Path.LEFT).equals("Left"));
+        Assert.assertTrue("Right", Path.decodeDirection(Path.RIGHT).equals("Right"));
+        Assert.assertTrue("Up", Path.decodeDirection(Path.UP).equals("Up"));
+        Assert.assertTrue("Down", Path.decodeDirection(Path.DOWN).equals("Down"));
+        Assert.assertTrue("CW", Path.decodeDirection(Path.CW).equals("CW"));
+        Assert.assertTrue("CCW", Path.decodeDirection(Path.CCW).equals("CCW"));
+        Assert.assertTrue("East", Path.decodeDirection(Path.EAST).equals("East"));
+        Assert.assertTrue("West", Path.decodeDirection(Path.WEST).equals("West"));
+        Assert.assertTrue("North", Path.decodeDirection(Path.NORTH).equals("North"));
+        Assert.assertTrue("South", Path.decodeDirection(Path.SOUTH).equals("South"));
+        Assert.assertTrue("Unknown", Path.decodeDirection(0x100000).equals("Unknown: 0x100000"));
+        Assert.assertEquals("South|Up", Path.decodeDirection(Path.SOUTH|Path.UP), "South, Up");
         
     }
     

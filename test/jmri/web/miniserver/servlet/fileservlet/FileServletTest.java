@@ -12,13 +12,13 @@ import junit.framework.TestSuite;
  * Tests for the FileServlet class.
  *
  * @author	    Bob Jacobsen  Copyright 2008
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class FileServletTest extends TestCase {
 
     public void testFindPath() {
         FileServlet fs = new FileServlet();
-        fs.paths = new TestPaths();
+        FileServlet.paths = new TestPaths();
         
         String result;
         
@@ -34,8 +34,8 @@ public class FileServletTest extends TestCase {
 
     public void testFindType() {
         FileServlet fs = new FileServlet();
-        fs.paths = new TestPaths();
-        fs.types = new TestMIME();
+        FileServlet.paths = new TestPaths();
+        FileServlet.types = new TestMIME();
         
         String result;
         

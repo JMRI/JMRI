@@ -12,25 +12,25 @@ import jmri.jmrix.AbstractMRMessage;
 /**
  * JUnit tests for the OutputBits class
  * @author		Dave Duchamp  2009
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 public class OutputBitsTest extends TestCase {
 		
     private OutputBits obit = new OutputBits();
        
     public void testConstructor1() {
-        Assert.assertNotNull("check instance", obit.instance());
+        Assert.assertNotNull("check instance", OutputBits.instance());
     }
 
     public void testAccessors() {
-        obit.setNumOutputBits(75);
-		obit.setSendDelay(250);
-        Assert.assertEquals("check numOutputBits", 75, obit.getNumOutputBits());
-        Assert.assertEquals("check sendDelay", 250, obit.getSendDelay());
+    	OutputBits.setNumOutputBits(75);
+    	OutputBits.setSendDelay(250);
+        Assert.assertEquals("check numOutputBits", 75, OutputBits.getNumOutputBits());
+        Assert.assertEquals("check sendDelay", 250, OutputBits.getSendDelay());
     }
     
     public void testWriteOutputBits1() {
-		obit.setNumOutputBits(48);
+    	OutputBits.setNumOutputBits(48);
         obit.setOutputBit(2,false);
         obit.setOutputBit(1,false);
         obit.setOutputBit(23,false);
