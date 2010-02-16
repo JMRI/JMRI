@@ -7,6 +7,10 @@ import java.io.*;
 import java.lang.*;
 import java.util.Vector;
 
+// imports for ZeroConf.
+import javax.jmdns.*;
+import jmri.util.zeroconf.ZeroConfUtil;
+
 /**
  * This is the main JMRI Server implementation.
  *
@@ -17,12 +21,14 @@ public class JmriServer {
 
      protected int portNo = 3000; // Port to listen to for new clients.
      protected ServerSocket connectSocket;
+     protected ServiceInfo serviceInfo;
+     protected JmDNS jmdns;
      private Thread listenThread = null;
      private Vector<clientListener> connectedClientThreads = new Vector<clientListener>();
 
      private static JmriServer _instance = null;
 
-     static JmriServer instance(){
+     public static JmriServer instance(){
          if(_instance==null) _instance=new JmriServer();
          return _instance;
      }
@@ -43,7 +49,12 @@ public class JmriServer {
 	}
 
 	this.portNo = port;
-
+ 
+        try{
+              jmdns = JmDNS.create();
+        }catch (IOException e){
+              log.error("JmDNS creation failed.");
+        }
 
      }
 
@@ -69,27 +80,46 @@ public class JmriServer {
         if(listenThread==null) {
            listenThread = new Thread(new newClientListener(connectSocket));
            listenThread.start();
+           advertise();
         }
      }
-     
+    
+     // Advertise the service with ZeroConf
+     protected void advertise(){
+           try {
+                serviceInfo = ZeroConfUtil.advertiseService(
+                    ZeroConfUtil.getServerName("JMRI"),
+                    "_jmri._tcp.local.",
+                    portNo,
+                    jmdns);
+
+           } catch (java.io.IOException e) {
+               log.error("JmDNS Failure");
+           }
+
+     }
+ 
      @SuppressWarnings("deprecation")
      public void stop(){
            listenThread.stop();
+           jmdns.unregisterService(serviceInfo);
      }
 
      // Internal thread to listen for new connections
      class newClientListener implements Runnable {
 
         ServerSocket listenSocket = null;
+        boolean running = true;
 
         public newClientListener(ServerSocket socket) {
+
 	   listenSocket = socket;
         }
 
         public void run() {
 	   // Listen for connection requests
 	   try{
-	      while(true) {
+	      while(running) {
 	         Socket clientSocket = listenSocket.accept();
 	         if(log.isDebugEnabled())
 		    log.debug(" Client Connected ");
@@ -99,6 +129,19 @@ public class JmriServer {
 		log.error("IOException while Listening for clients");
 	   }
 	}
+
+        public void stop(){
+                //super.stop();
+                running=false;
+                try{
+                    listenSocket.close();
+                    if(log.isDebugEnabled()) 
+                       log.debug("Listen Socket closed");
+                } catch (IOException e){
+                    log.error("socket in ThreadedServer won't close");
+                 return;
+           }
+        }
 
      } // end of newClientListener class
 

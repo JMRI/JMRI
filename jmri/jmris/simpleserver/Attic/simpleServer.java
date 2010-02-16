@@ -16,14 +16,14 @@ import jmri.InstanceManager;
  * There is currently no handshaking in this server.  You may just start 
  * sending commands.
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  *
  */
 public class simpleServer extends JmriServer{
 
      private static JmriServer _instance = null;
 
-     static JmriServer instance(){
+     public static JmriServer instance(){
          if(_instance==null) _instance=new simpleServer();
          return _instance;
      }

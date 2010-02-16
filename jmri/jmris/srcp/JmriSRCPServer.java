@@ -9,12 +9,16 @@ import java.io.*;
 import java.lang.*;
 import java.util.Vector;
 
+// imports for ZeroConf.
+import javax.jmdns.*;
+import jmri.util.zeroconf.ZeroConfUtil;
+
 import jmri.InstanceManager;
 
 /**
  * This is an implementaiton of SRCP for JMRI.
  * @author Paul Bender Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  *
  */
 public class JmriSRCPServer extends JmriServer{
@@ -27,7 +31,8 @@ public class JmriSRCPServer extends JmriServer{
      private int SRCPSERVERMODE = 1;
      private static JmriServer _instance = null;
 
-     static JmriServer instance(){
+
+     public static JmriServer instance(){
          if(_instance==null) _instance=new JmriSRCPServer();
          return _instance;
      }
@@ -39,6 +44,21 @@ public class JmriSRCPServer extends JmriServer{
 
      public JmriSRCPServer(int port) {
 	super(port);
+     }
+
+     // Advertise the service with ZeroConf
+     protected void advertise(){
+           try {
+                serviceInfo = ZeroConfUtil.advertiseService(
+                    ZeroConfUtil.getServerName("SRCP 0.8.3"),
+                    "_srcp._tcp.local.",
+                    portNo,
+                    jmdns);
+           
+           } catch (java.io.IOException e) {
+               log.error("JmDNS Failure");
+           }
+     
      }
 
      // Handle communication to a client through inStream and outStream
@@ -98,6 +118,7 @@ public class JmriSRCPServer extends JmriServer{
                   outStream.writeBytes("402 ERROR unsufficient data\n");
 	      }
            } else if (SRCPSERVERMODE == COMMANDMODE ){
+
               int bus;
               if(cmd.startsWith("GET")){
                         index=cmd.indexOf(" ",index)+1;
