@@ -1002,15 +1002,15 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             frame = _iconEditorFrame.get(name);
             //frame.setLocation(frameLocationX, frameLocationY);
             frame.setLocationRelativeTo(this);
-            frameLocationX += DELTA;
-            frameLocationY += DELTA;
+            //frameLocationX += DELTA;
+            //frameLocationY += DELTA;
         }
         frame.setVisible(true);
         return frame;
     }
-    public int frameLocationX = 0;
-    public int frameLocationY = 0;
-    static final int DELTA = 20; 
+    //public int frameLocationX = 0;
+    //public int frameLocationY = 0;
+    //static final int DELTA = 20; 
 
     public IconAdder getIconEditor(String name) {
         return _iconEditorFrame.get(name).getEditor();

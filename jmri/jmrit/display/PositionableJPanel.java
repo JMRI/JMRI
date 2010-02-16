@@ -16,7 +16,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
@@ -180,42 +180,28 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     }
     
     public void mousePressed(MouseEvent e) {
-        _editor.mousePressed(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(), 
-                                            e.getX()+this.getX(), e.getY()+this.getY(), 
-                                            e.getClickCount(), e.isPopupTrigger())); 
+        _editor.mousePressed(e); 
     }
 
     public void mouseReleased(MouseEvent e) {
-        _editor.mouseReleased(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(), 
-                                            e.getX()+this.getX(), e.getY()+this.getY(), 
-                                            e.getClickCount(), e.isPopupTrigger())); 
+        _editor.mouseReleased(e); 
     }
 
     public void mouseClicked(MouseEvent e) {
-        _editor.mouseClicked(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(), 
-                                            e.getX()+this.getX(), e.getY()+this.getY(), 
-                                            e.getClickCount(), e.isPopupTrigger())); 
+        _editor.mouseClicked(e); 
     }
     public void mouseExited(MouseEvent e) {
-        _editor.mouseClicked(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(), 
-                                            e.getX()+this.getX(), e.getY()+this.getY(), 
-                                            e.getClickCount(), e.isPopupTrigger())); 
+        _editor.mouseClicked(e); 
     }
     public void mouseEntered(MouseEvent e) {
-        _editor.mouseExited(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(), 
-                                            e.getX()+this.getX(), e.getY()+this.getY(), 
-                                            e.getClickCount(), e.isPopupTrigger())); 
+        _editor.mouseExited(e); 
     }
 
     public void mouseMoved(MouseEvent e) {
-        _editor.mouseMoved(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(), 
-                                            e.getX()+this.getX(), e.getY()+this.getY(), 
-                                            e.getClickCount(), e.isPopupTrigger())); 
+        _editor.mouseMoved(e); 
     }
     public void mouseDragged(MouseEvent e) {
-        _editor.mouseDragged(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(), 
-                                            e.getX()+this.getX(), e.getY()+this.getY(), 
-                                            e.getClickCount(), e.isPopupTrigger())); 
+        _editor.mouseDragged(e); 
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableJPanel.class.getName());
