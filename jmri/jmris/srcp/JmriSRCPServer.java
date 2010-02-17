@@ -18,7 +18,7 @@ import jmri.InstanceManager;
 /**
  * This is an implementaiton of SRCP for JMRI.
  * @author Paul Bender Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  *
  */
 public class JmriSRCPServer extends JmriServer{
@@ -70,7 +70,7 @@ public class JmriSRCPServer extends JmriServer{
         int runmode=HANDSHAKEMODE;
 
         // interface components
-        JmriSRCPPowerServer powerServer = new JmriSRCPPowerServer(inStream,outStream);
+        JmriSRCPPowerServer powerServer = new JmriSRCPPowerServer(outStream);
 
         // Start by sending a welcome message
         outStream.writeBytes("SRCP 0.8.3\n");

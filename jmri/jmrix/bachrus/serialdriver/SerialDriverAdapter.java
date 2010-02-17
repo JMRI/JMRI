@@ -28,7 +28,7 @@ import gnu.io.SerialPort;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
  * @author	Andrew Crosland   Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SerialDriverAdapter extends SpeedoPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -134,8 +134,6 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
         jmri.jmrix.bachrus.ActiveFlag.setActive();
 
     }
-
-    private Thread sinkThread;
 
     // base class methods for the SprogPortController interface
     public DataInputStream getInputStream() {
