@@ -19,7 +19,7 @@ import jmri.implementation.QuietShutDownTask;
 /**
  * Managers the Ecos Loco entries within JMRI.
  * @author Kevin Dickerson
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class EcosLocoAddressManager implements java.beans.PropertyChangeListener, EcosListener{
 
@@ -173,14 +173,14 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
     
     private void loadEcosData(){
 
-        final EcosLocoAddressManager ecosLocoMan = (EcosLocoAddressManager)jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+        final EcosLocoAddressManager ecosLocoMan = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
         tc = EcosTrafficController.instance();
         tc.addEcosListener(this);
 
         Roster.instance().addPropertyChangeListener(this);
 
         EcosMessage m = new EcosMessage("request(10, view)");
-        boolean result = tc.sendWaitMessage(m, this);
+        tc.sendWaitMessage(m, this);
 
         m = new EcosMessage("queryObjects(10, addr, name, protocol)");
         tc.sendEcosMessage(m, this);
@@ -250,7 +250,6 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
         boolean hasTempEntries = false;
         //List<String> list = getEcosObjectList();
         Enumeration<String> en = _tecos.keys();
-        int i=0;
         _tdcc.clear();
         //This will remove/deregister non-temporary locos from the list.
         while (en.hasMoreElements()) {
@@ -265,7 +264,6 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
         
         final EcosPreferences p = EcosPreferences.instance();
 
-        boolean result;
         if(p.getAdhocLocoFromEcos()==0x01){
             disposefinal();
         } else if (!hasTempEntries) {
