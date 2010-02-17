@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.12 2010-02-15 08:11:14 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.13 2010-02-17 22:51:26 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -268,6 +268,10 @@ left stick button.
 
 <p>
 Kevin Dickerson improved how you set the protocol in the preferences.
+Now, you first pick a system manufacturer from a list, and then pick
+which connection type to use from another list.  This makes it easier
+to find the right one.  For example, if you pick "NCE" as the manufacturer,
+you can then pick from "Serial Interface", "Network Interface" and "NCE USB".
 
 <p>
 The 
@@ -293,6 +297,18 @@ some additional tweaking.
 <p>
 The buttons inside tables have been made smaller so that tables will fit
 better on smaller screens.
+
+<p>
+Fixed bug introduced in JMRI 2.9.1 that prevented clicking on 
+panels when using the Mini Web Server.
+
+<p>
+Dan Boudreau added a simulated connection to the NCE protocols, so 
+you can work on an NCE-based panel without the actual layout connected.
+
+<p>
+Andrew Crosland added support for the 
+<a href="http://www.bachrus.com/speedometer.php">Bachrus electronic speedometer</a>.
 
 <!--#include virtual="/Footer" -->
 
