@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 public class NceSensorManager extends jmri.managers.AbstractSensorManager
                             implements NceListener {
@@ -156,7 +156,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         NceMessage m = new NceMessage(2);
         m.setBinary(true);
         m.setReplyLen(4);
-        m.setElement(0, 0x8A);
+        m.setElement(0, NceBinaryCommand.READ_AUI4_CMD);
         m.setElement(1, aiuNo);
         m.setTimeout(pollTimeout);
         return m;

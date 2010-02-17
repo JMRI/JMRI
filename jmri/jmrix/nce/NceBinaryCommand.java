@@ -2,87 +2,95 @@
 
 package jmri.jmrix.nce;
 
-//
-//
-// From NCE System notes for version March 1, 2007
-//
-// New 0xAD command sends accessory or signal packets.
-// This command can also issue NCE macros
-// Command Format: 0xAD <addr_h> <addr_l> <op_1> <data_1>
-// Addr_h and Addr_l are the accessory/signal address as a
-// normal binary number (NOT in DCC format).
-// Ex: Accessory Address 1 = 0x00 0x01 (hi byte first)
-// Ex: Accessory Address 2 = 0x00 0x02 (hi byte first)
-// Ex: Accessory Address 513 = 0x02 0x01 (hi byte first)
-// NOTE: accy/signal address 0 is not a valid address
-//
-// Op_1 Data_1 		Operation description
-//	01 	0-255 		NCE macro number 0-255
-//	02 	0-255 		Duplicate of Op_1 command 01
-//	03 	0 			Accessory Normal direction (ON)
-//	04 	0 			Accessory Reverse direction (OFF)
-//	05 	0-1f 		Signal Aspect 0-31
-//	06-7f 			reserved reserved
-//
-//	Returns: ! = success
-//	1 = bad accy/signal address
-//
-// 0xA2 sends speed or function packets to a locomotive.
-//
-// Command Format: 0xA2 <addr_h> <addr_l> <op_1> <data_1>
-// Addr_h and Addr_l are the loco address in DCC format.
-// If a long address is in use, bits 6 and 7 of the high byte are set.
-// Example: Long address 3 = 0xc0 0x03
-// Short address 3 = 0x00 0x03
-// 
-// op_1 data_1 		Operation description
-//  01  0-7f 		Reverse 28 speed command
-//  02  0-7f 		Forward 28 speed command
-//  03  0-7f 		Reverse 128 speed command
-//  04  0-7f 		Forward 128 speed command
-//  05  0 			Estop reverse command
-//  06  0 			Estop forward command
-//  07  0-1f 		Function group 1 (same format as DCC packet for FG1
-//  08  0-0f 		Function group 2 (same format as DCC packet for FG2
-//  09  0-0f 		Function group 3 (same format as DCC packet for FG3
-//  0a  0-7f 		Set reverse consist address for lead loco
-//  0b  0-7f 		Set forward consist address for lead loco
-//  0c  0-7f 		Set reverse consist address for rear loco
-//  0d  0-7f 		Set forward consist address for rear loco
-//  0e  0-7f 		Set reverse consist address for additional loco
-//  0f  0-7f 		Set forward consist address for additional loco
-//  10  0 			Del loco from consist
-//  11  0 			Kill consist
-//  12  0-9 		Set momentum
-//  13  0-7f 		No action, always returns success
-//  14  0-7f 		No action, always returns success
-//  15  0-ff 		Functions 13-20 control (bit 0=F13, bit 7=F20)
-//  16  0-ff 		Functions 21-28 control (bit 0=F21, bit 7=F28)
-//  17  0-3f 		Assign this loco to cab number in data_1
-//  18-7f 			reserved reserved
-// 
-//  Returns: ! = success
-//  1 = bad loco address
-//  
+/*
+ 
+  From NCE System notes for version March 1, 2007
+ 
+  New 0xAD command sends accessory or signal packets.
+  This command can also issue NCE macros
+  Command Format: 0xAD <addr_h> <addr_l> <op_1> <data_1>
+  Addr_h and Addr_l are the accessory/signal address as a
+  normal binary number (NOT in DCC format).
+  Ex: Accessory Address 1 = 0x00 0x01 (hi byte first)
+  Ex: Accessory Address 2 = 0x00 0x02 (hi byte first)
+  Ex: Accessory Address 513 = 0x02 0x01 (hi byte first)
+  NOTE: accy/signal address 0 is not a valid address
+ 
+  Op_1 Data_1 		Operation description
+ 	01 	0-255 		NCE macro number 0-255
+ 	02 	0-255 		Duplicate of Op_1 command 01
+ 	03 	0 			Accessory Normal direction (ON)
+ 	04 	0 			Accessory Reverse direction (OFF)
+ 	05 	0-1f 		Signal Aspect 0-31
+ 	06-7f 			reserved reserved
+ 
+ 	Returns: ! = success
+ 	1 = bad accy/signal address
+ 
+  0xA2 sends speed or function packets to a locomotive.
+ 
+  Command Format: 0xA2 <addr_h> <addr_l> <op_1> <data_1>
+  Addr_h and Addr_l are the loco address in DCC format.
+  If a long address is in use, bits 6 and 7 of the high byte are set.
+  Example: Long address 3 = 0xc0 0x03
+  Short address 3 = 0x00 0x03
+  
+  op_1 data_1 		Operation description
+   01  0-7f 		Reverse 28 speed command
+   02  0-7f 		Forward 28 speed command
+   03  0-7f 		Reverse 128 speed command
+   04  0-7f 		Forward 128 speed command
+   05  0 			Estop reverse command
+   06  0 			Estop forward command
+   07  0-1f 		Function group 1 (same format as DCC packet for FG1
+   08  0-0f 		Function group 2 (same format as DCC packet for FG2
+   09  0-0f 		Function group 3 (same format as DCC packet for FG3
+   0a  0-7f 		Set reverse consist address for lead loco
+   0b  0-7f 		Set forward consist address for lead loco
+   0c  0-7f 		Set reverse consist address for rear loco
+   0d  0-7f 		Set forward consist address for rear loco
+   0e  0-7f 		Set reverse consist address for additional loco
+   0f  0-7f 		Set forward consist address for additional loco
+   10  0 			Del loco from consist
+   11  0 			Kill consist
+   12  0-9 		Set momentum
+   13  0-7f 		No action, always returns success
+   14  0-7f 		No action, always returns success
+   15  0-ff 		Functions 13-20 control (bit 0=F13, bit 7=F20)
+   16  0-ff 		Functions 21-28 control (bit 0=F21, bit 7=F28)
+   17  0-3f 		Assign this loco to cab number in data_1
+   18-7f 			reserved reserved
+  
+   Returns: ! = success
+   1 = bad loco address
+   
+ */
+
  /**
   * NCE Binary Commands
   * 
   * Also see NceMessage.java for additional commands
   * 
   * @author Daniel Boudreau (C) 2007
-  * @version     $Revision: 1.21 $
+  * @version     $Revision: 1.22 $
   */
 
 public class NceBinaryCommand {
     
 	// NOTE: NCE USB does not support any clock commands
 	
+	public static final int READ_CLOCK_CMD = 0x82;	//NCE read clock command
 	public static final int STOP_CLOCK_CMD = 0x83;	//NCE stop clock command
     public static final int START_CLOCK_CMD = 0x84;	//NCE start clock command
     public static final int SET_CLOCK_CMD = 0x85;	//NCE set clock command
     public static final int CLOCK_1224_CMD = 0x86;	//NCE change clock 12/24 command
     public static final int CLOCK_RATIO_CMD = 0x87;	//NCE set clock ratio command
 
+    // NOTE: NCE USB does not support AUI commands
+    
+    public static final int READ_AUI4_CMD = 0x8A;	//NCE read status of AUI yy
+    public static final int DUMMY_CMD = 0x8C;		//NCE Dummy instruction
+    
     // NOTE: NCE USB does not support any read or write memory commands
     
     public static final int WRITEn_CMD = 0x8E;		//NCE write up to 16 bytes of memory command
