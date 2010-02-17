@@ -55,13 +55,13 @@ import jmri.jmrix.nce.NceTrafficController;
  * mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007 2008
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		jmri.jmrix.nce.NceListener {
 
-	private static final int CS_CONSIST_MEM = 0xF500; 	// start of NCE CS Consist memory
+	public static final int CS_CONSIST_MEM = 0xF500; 	// start of NCE CS Consist memory
 	private static final int CS_CON_MEM_REAR = 0xF600; 	// start of rear consist locos
 	private static final int CS_CON_MEM_MID = 0xF700; 	// start of mid consist locos
 	private static final int CONSIST_MIN = 1; 			// NCE doesn't use consist 0

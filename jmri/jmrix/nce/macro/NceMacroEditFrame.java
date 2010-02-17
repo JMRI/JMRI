@@ -66,12 +66,12 @@ import jmri.jmrix.nce.NceTrafficController;
  * FF10 = link macro 16 
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class NceMacroEditFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
 
-	private static final int CS_MACRO_MEM = 0xC800;	// start of NCE CS Macro memory 
+	public static final int CS_MACRO_MEM = 0xC800;	// start of NCE CS Macro memory 
 	private static final int MAX_MACRO = 255;		// there are 256 possible macros
 	private int macroNum = 0;						// macro being worked
 	private static final int REPLY_1 = 1;			// reply length of 1 byte expected

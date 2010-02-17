@@ -28,13 +28,13 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 
 public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeListener {
 
     // scope constants
-    private static final int CS_ACCY_MEMORY = 0xEC00; 	// Address of start of CS accessory memory 
+    public static final int CS_ACCY_MEMORY = 0xEC00; 	// Address of start of CS accessory memory 
     private static final int NUM_BLOCK = 16;            // maximum number of memory blocks
     private static final int BLOCK_LEN = 16;            // number of bytes in a block
     private static final int REPLY_LEN = BLOCK_LEN;		// number of bytes read

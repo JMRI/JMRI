@@ -27,7 +27,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.72 $
+ * @version         $Revision: 1.73 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -505,6 +505,7 @@ abstract public class AbstractMRTrafficController {
                 while(m.getRetries()>=0) {
                     if(portReadyToSend(controller)) {
                         ostream.write(msg);
+                        ostream.flush();
                         log.debug("written");
                         break;
                     } else if(m.getRetries()>=0) {

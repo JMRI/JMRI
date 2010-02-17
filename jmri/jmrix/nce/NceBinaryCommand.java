@@ -72,7 +72,7 @@ package jmri.jmrix.nce;
   * Also see NceMessage.java for additional commands
   * 
   * @author Daniel Boudreau (C) 2007
-  * @version     $Revision: 1.22 $
+  * @version     $Revision: 1.23 $
   */
 
 public class NceBinaryCommand {
@@ -95,6 +95,8 @@ public class NceBinaryCommand {
     
     public static final int WRITEn_CMD = 0x8E;		//NCE write up to 16 bytes of memory command
     public static final int READ16_CMD = 0x8F;		//NCE read 16 bytes of memory command
+    public static final int WRITE1_CMD = 0x97;		//NCE write 1 bytes of memory command
+    public static final int WRITE2_CMD = 0x98;		//NCE write 2 bytes of memory command
     public static final int WRITE4_CMD = 0x99;		//NCE write 4 bytes of memory command
     public static final int WRITE8_CMD = 0x9A;		//NCE write 8 bytes of memory command
     public static final int READ1_CMD = 0x9D;		//NCE read 1 byte of memory command
@@ -158,67 +160,72 @@ public class NceBinaryCommand {
         return retVal;
         
     }
-    
-  public static byte[] accMemoryRead1(int address) {
-		// this command isn't supported by the NCE USB
-		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
-			log.error("attempt to send unsupported binary command to NCE USB");
-			return null;
-		}
-        
-        int addr_h = address/256;
-        int addr_l = address & 0xFF;
-        
-        byte []retVal = new byte [3];
-        retVal[0] = (byte) (READ1_CMD);	//read 1 byte command
-        retVal[1] = (byte) (addr_h);	//high address
-        retVal[2] = (byte) (addr_l);	//low address
-        
-        return retVal;
-        
+   
+    /**
+     * Read one byte from NCE command station memory
+     * @param address
+     * @return binary command to read one byte
+     */
+    public static byte[] accMemoryRead1(int address) {
+    	// this command isn't supported by the NCE USB
+    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
+    		log.error("attempt to send unsupported binary command to NCE USB");
+    		return null;
+    	}
+
+    	int addr_h = address/256;
+    	int addr_l = address & 0xFF;
+
+    	byte []retVal = new byte [3];
+    	retVal[0] = (byte) (READ1_CMD);	//read 1 byte command
+    	retVal[1] = (byte) (addr_h);	//high address
+    	retVal[2] = (byte) (addr_l);	//low address
+
+    	return retVal;
+
     }
 
-	public static byte[] accMemoryWriteN(int address, int num) {
-	   	// this command isn't supported by the NCE USB
+    public static byte[] accMemoryWriteN(int address, int num) {
+    	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
     		log.error("attempt to send unsupported binary command to NCE USB");
-			return null;
+    		return null;
     	}
 
-		int addr_h = address / 256;
-		int addr_l = address & 0xFF;
+    	int addr_h = address / 256;
+    	int addr_l = address & 0xFF;
 
-		byte[] retVal = new byte[4+16];
-		retVal[0] = (byte) (WRITEn_CMD);// write n bytes command
-		retVal[1] = (byte) (addr_h); 	// high address
-		retVal[2] = (byte) (addr_l); 	// low address
-		retVal[3] = (byte) num;			// number of bytes to write
+    	byte[] retVal = new byte[4+16];
+    	retVal[0] = (byte) (WRITEn_CMD);// write n bytes command
+    	retVal[1] = (byte) (addr_h); 	// high address
+    	retVal[2] = (byte) (addr_l); 	// low address
+    	retVal[3] = (byte) num;			// number of bytes to write
 
-		return retVal;
+    	return retVal;
 
-	}
-	
-	public static byte[] accMemoryWrite8(int address) {
-	   	// this command isn't supported by the NCE USB
+    }
+
+    public static byte[] accMemoryWrite8(int address) {
+    	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
     		log.error("attempt to send unsupported binary command to NCE USB");
-			return null;
+    		return null;
     	}
 
-		int addr_h = address / 256;
-		int addr_l = address & 0xFF;
+    	int addr_h = address / 256;
+    	int addr_l = address & 0xFF;
 
-		byte[] retVal = new byte[3+8];
-		retVal[0] = (byte) (WRITE8_CMD);// write 8 bytes command
-		retVal[1] = (byte) (addr_h); 	// high address
-		retVal[2] = (byte) (addr_l); 	// low address
+    	byte[] retVal = new byte[3+8];
+    	retVal[0] = (byte) (WRITE8_CMD);// write 8 bytes command
+    	retVal[1] = (byte) (addr_h); 	// high address
+    	retVal[2] = (byte) (addr_l); 	// low address
 
-		return retVal;
-    
-}
+    	return retVal;
 
-	public static byte[] accMemoryWrite4(int address) {
-	   	// this command isn't supported by the NCE USB
+    }
+
+    public static byte[] accMemoryWrite4(int address) {
+    	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
     		log.error("attempt to send unsupported binary command to NCE USB");
 			return null;
