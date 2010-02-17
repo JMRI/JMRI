@@ -35,12 +35,12 @@ import javax.servlet.ServletResponse;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class JmriJFrameServlet implements Servlet {
 
-    String clickRetryTime = "1.0";
+    String clickRetryTime = "0.3";
     String noclickRetryTime = "5.0";
     
     protected int maxRequestLines = 50;
@@ -176,7 +176,65 @@ public class JmriJFrameServlet implements Servlet {
         // log.debug("component is "+c);
         if (log.isDebugEnabled()) log.debug("Local click at "+x+","+y);
         
+        if (c.getClass().equals(JButton.class)) {
+            ((JButton)c).doClick();
+            return;
+        } else if (c instanceof MouseListener) {
+            if (log.isDebugEnabled()) log.debug("Invoke directly on MouseListener");
+            sendClick((MouseListener)c, c, x, y);
+            return;
+        } else if (c instanceof jmri.jmrit.display.Positionable) {
+            if (log.isDebugEnabled()) log.debug("Invoke directly on MouseListener");
+            MouseEvent e = new MouseEvent(c,
+                                          MouseEvent.MOUSE_PRESSED,
+                                          0,      // time
+                                          0,      // modifiers
+                                          x,y,    // x, y not in this component?
+                                          1,      // one click
+                                          false   // not a popup
+                                          );
+            ((jmri.jmrit.display.Positionable)c).doMousePressed(e);
+            e = new MouseEvent(c,
+                                          MouseEvent.MOUSE_RELEASED,
+                                          0,      // time
+                                          0,      // modifiers
+                                          x,y,    // x, y not in this component?
+                                          1,      // one click
+                                          false   // not a popup
+                                          );
+            ((jmri.jmrit.display.Positionable)c).doMouseReleased(e);
+            return;
+        } else {
+            MouseListener[] la = c.getMouseListeners();
+            if (log.isDebugEnabled()) log.debug("Invoke "+la.length+" contained mouse listeners");
+            log.debug("component is "+c);
+            for (int i = 0; i<la.length; i++) {
+                sendClick(la[i], c, x, y);
+            }
+            return;
+        }
+    }
+    
+    private void sendClick(MouseListener m, Component c, int x, int y) {
         MouseEvent e = new MouseEvent(c,
+                                      MouseEvent.MOUSE_PRESSED,
+                                      0,      // time
+                                      0,      // modifiers
+                                      x,y,    // x, y not in this component?
+                                      1,      // one click
+                                      false   // not a popup
+                                      );
+        m.mousePressed(e);
+        e = new MouseEvent(c,
+                                      MouseEvent.MOUSE_RELEASED,
+                                      0,      // time
+                                      0,      // modifiers
+                                      x,y,    // x, y not in this component?
+                                      1,      // one click
+                                      false   // not a popup
+                                      );
+        m.mouseReleased(e);
+        e = new MouseEvent(c,
                                       MouseEvent.MOUSE_CLICKED,
                                       0,      // time
                                       0,      // modifiers
@@ -184,26 +242,9 @@ public class JmriJFrameServlet implements Servlet {
                                       1,      // one click
                                       false   // not a popup
                                       );
-        if (c.getClass().equals(JButton.class)) {
-            ((JButton)c).doClick();
-            return;
-        } else if (c instanceof MouseListener) {
-            if (log.isDebugEnabled()) log.debug("Invoke mouseReleased, mouseclicked");
-            ((MouseListener)c).mouseReleased(e);
-            ((MouseListener)c).mouseClicked(e);
-            return;
-        } else {
-            MouseListener[] la = c.getMouseListeners();
-            if (log.isDebugEnabled()) log.debug("Invoke "+la.length+" mouse listeners");
-            log.debug("component is "+c);
-            for (int i = 0; i<la.length; i++) {
-                la[i].mouseReleased(e);
-                la[i].mouseClicked(e);
-            }
-            return;
-        }
-    }
+        m.mouseClicked(e);
     
+    }
     /**
      * Handle an error by returning an error message
      */
