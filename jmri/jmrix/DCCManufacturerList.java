@@ -7,7 +7,7 @@ package jmri.jmrix;
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  *
  */
 public class DCCManufacturerList {
@@ -15,6 +15,7 @@ public class DCCManufacturerList {
     public static final String NONE = "None";  // internal only
     public static final String LENZ = "Lenz";
     public static final String HORNBY = "Hornby";
+    public static final String BACHRUS = "Bachrus";
     public static final String ESU = "ESU";
     public static final String DIGITRAX = "Digitrax";
     public static final String ATLAS = "Atlas";
@@ -34,7 +35,7 @@ public class DCCManufacturerList {
     public static final String QSI = "QSI Solutions";
     public static final String RAIL = "RailDriver";
     public static final String ROCO = "Roco";
-    public static final String SPROG = "Sprog";
+    public static final String SPROG = "SPROG DCC";
     public static final String SRCP = "SRCP";
     public static final String TRACTRONICS = "TracTronics";
     public static final String UHLEN = "Uhlenbrock";
@@ -47,6 +48,7 @@ public class DCCManufacturerList {
           
           NONE,
           ATLAS,
+          BACHRUS,
           CMRI,
           CTI,
           DIGITRAX,
@@ -84,6 +86,7 @@ public class DCCManufacturerList {
         if(System.equals(NONE)) { return new jmri.jmrix.internal.ConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(LENZ)) { return new jmri.jmrix.lenz.ConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(HORNBY)) { return new jmri.jmrix.lenz.hornbyelite.ConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(BACHRUS)) { return new jmri.jmrix.bachrus.ConnectionTypeList().getAvailableProtocolClasses();  }
         if(System.equals(ESU)) { return new jmri.jmrix.ecos.ConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(DIGITRAX)) { return new jmri.jmrix.loconet.ConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(ATLAS)) { return new jmri.jmrix.lenz.ConnectionTypeList().getAvailableProtocolClasses(); }

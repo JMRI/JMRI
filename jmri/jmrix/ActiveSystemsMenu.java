@@ -19,7 +19,7 @@ import javax.swing.JMenuBar;
  * @see SystemsMenu
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.28 $
+ * @version     $Revision: 1.29 $
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
@@ -45,6 +45,8 @@ public class ActiveSystemsMenu extends JMenu {
 
         if (jmri.jmrix.acela.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.acela.AcelaMenu"));
+        if (jmri.jmrix.bachrus.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.bachrus.SpeedoMenu"));
         if (jmri.jmrix.can.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.can.CanMenu"));
         if (jmri.jmrix.can.cbus.ActiveFlag.isActive())
@@ -112,6 +114,9 @@ public class ActiveSystemsMenu extends JMenu {
 
         if (jmri.jmrix.acela.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.acela.AcelaMenu"));
+
+        if (jmri.jmrix.bachrus.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.bachrus.SpeedoMenu"));
 
         if (jmri.jmrix.cmri.serial.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.cmri.CMRIMenu"));
