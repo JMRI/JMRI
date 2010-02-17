@@ -610,35 +610,33 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
             log.info("Config file= "+file.getPath());
             boolean result = false;
-            if (file!=null) {
-                try {
-                    ConfigXmlManager configMgr = (ConfigXmlManager)InstanceManager.configureManagerInstance();
-                    Element root = configMgr.rootFromFile(file);
-                    List <Element> panels = root.getChildren("paneleditor");
-                    for (int i = 0; i<panels.size(); i++) {
-                        Element panel = panels.get(i);
+            try {
+                ConfigXmlManager configMgr = (ConfigXmlManager)InstanceManager.configureManagerInstance();
+                Element root = configMgr.rootFromFile(file);
+                List <Element> panels = root.getChildren("paneleditor");
+                for (int i = 0; i<panels.size(); i++) {
+                    Element panel = panels.get(i);
 
-                        String name = "";
-                        if (panel.getAttribute("name")!=null)
-                            name = panel.getAttribute("name").getValue();
-                        if (name.equals(getName())) {
-                            XmlAdapter adapter = (XmlAdapter)Class.forName(className).newInstance();
-                            //adapter.setConfigXmlManager(InstanceManager.configureManagerInstance());
-                            adapter.setConfigXmlManager(configMgr);
-                            boolean loadStatus = adapter.load(panel);
-                            log.debug("load status for "+className+" is "+loadStatus);
-                            result = true;
-                            break;
-                        }
+                    String name = "";
+                    if (panel.getAttribute("name")!=null)
+                        name = panel.getAttribute("name").getValue();
+                    if (name.equals(getName())) {
+                        XmlAdapter adapter = (XmlAdapter)Class.forName(className).newInstance();
+                        //adapter.setConfigXmlManager(InstanceManager.configureManagerInstance());
+                        adapter.setConfigXmlManager(configMgr);
+                        boolean loadStatus = adapter.load(panel);
+                        log.debug("load status for "+className+" is "+loadStatus);
+                        result = true;
+                        break;
                     }
-                    if (result) {
-                        dispose();
-                    } else {
-                        log.error("No panel name matching \""+getName()+"\" found in file: "+m.filename);
-                    }
-                } catch (Exception e) {
-                    log.error("Problem loading File: "+file.getPath()+", e= "+e);
                 }
+                if (result) {
+                    dispose();
+                } else {
+                    log.error("No panel name matching \""+getName()+"\" found in file: "+m.filename);
+                }
+            } catch (Exception e) {
+                log.error("Problem loading File: "+file.getPath()+", e= "+e);
             }
         } else {
             log.error("Cannot read file history");
