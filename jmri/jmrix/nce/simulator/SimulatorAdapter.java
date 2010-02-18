@@ -122,7 +122,7 @@ import java.io.IOException;
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
  * @author			Paul Bender, Copyright (C) 2009
  * @author 			Daniel Boudreau Copyright (C) 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SimulatorAdapter extends NcePortController implements
 		jmri.jmrix.SerialPortAdapter, Runnable {
@@ -199,6 +199,7 @@ public class SimulatorAdapter extends NcePortController implements
 
 		sourceThread = new Thread(this);
 		sourceThread.setName("Nce Simulator");
+		sourceThread.setPriority(Thread.MIN_PRIORITY);
 		sourceThread.start();
 	}
 
@@ -249,6 +250,11 @@ public class SimulatorAdapter extends NcePortController implements
 		if (log.isDebugEnabled())
 			log.debug("Nce Simulator Thread Started");
 		while (true) {
+			try{
+				wait(100);
+			}catch (Exception e){
+
+			}
 			NceMessage m = readMessage();
 			if (log.isDebugEnabled()) {
 				String f = "Nce Simulator Thread received message: ";
@@ -289,7 +295,7 @@ public class SimulatorAdapter extends NcePortController implements
 		byte[] rcvBuffer = new byte[32];
 
 		nchars = inpipe.read(rcvBuffer, 0, 32);
-		log.debug("new message received");
+		//log.debug("new message received");
 		NceMessage msg = new NceMessage(nchars);
 
 		for (int i = 0; i < nchars; i++) {
@@ -478,19 +484,25 @@ public class SimulatorAdapter extends NcePortController implements
 				operation = "throw";
 			int nceAccessoryAddress = getNceAddress(m);
 			log.debug("Accessory command "+operation+" NT"+nceAccessoryAddress);
+			if (nceAccessoryAddress > 2044){
+				log.error("Turnout address greater than 2044, address: "+nceAccessoryAddress );
+				return null;
+			}
 			int bit = (nceAccessoryAddress-1) & 0x07;
 			int setMask = 0x01;
 			for (int i=0; i<bit; i++){
 				setMask = setMask<<1;
 			}
-			int clearMask = 0xFFFF - setMask;
+			int clearMask = 0x0FFF - setMask;
+			//log.debug("setMask:"+Integer.toHexString(setMask)+" clearMask:"+Integer.toHexString(clearMask));
 			int offset = (nceAccessoryAddress-1)>>3;
 			int read = turnoutMemory[offset];
-			byte write = (byte)(read & clearMask);
+			byte write = (byte)(read & clearMask & 0xFF);
 
 			if (operation.equals("close"))
-				write = (byte)(read + setMask);	// set bit if closed
+				write = (byte)(write + setMask);	// set bit if closed
 			turnoutMemory[offset] = write;
+			//log.debug("wrote:"+Integer.toHexString(write)); 
 		}
 		reply.setElement(0, NCE_OKAY); 		// Nce okay reply!
 		return reply;
