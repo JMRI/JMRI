@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.XNetMessage class
  * @author			Bob Jacobsen
- * @version         $Revision: 2.3 $
+ * @version         $Revision: 2.4 $
  */
 public class XNetMessageTest extends TestCase {
 
@@ -26,6 +26,20 @@ public class XNetMessageTest extends TestCase {
         Assert.assertEquals("read=back op code", 4, m.getOpCode());
         Assert.assertEquals("stored op code", 0x43, m.getElement(0));
     }
+    // Test the string constructor.
+    public void testStringCtor(){
+        XNetMessage m = new XNetMessage("12 34 AB 3 19 6 B B1");
+        Assert.assertEquals("length",8,m.getNumDataElements());
+        Assert.assertEquals("0th byte",0x12,m.getElement(0)&0xFF);
+        Assert.assertEquals("1st byte",0x34,m.getElement(1)&0xFF);
+        Assert.assertEquals("2nd byte",0xAB,m.getElement(2)&0xFF);
+        Assert.assertEquals("3rd byte",0x03,m.getElement(3)&0xFF);
+        Assert.assertEquals("4th byte",0x19,m.getElement(4)&0xFF);
+        Assert.assertEquals("5th byte",0x06,m.getElement(5)&0xFF);
+        Assert.assertEquals("6th byte",0x0B,m.getElement(6)&0xFF);
+        Assert.assertEquals("7th byte",0xB1,m.getElement(7)&0xFF);
+    }
+
     // check parity operations
     public void testParity() {
         XNetMessage m;
@@ -69,6 +83,9 @@ public class XNetMessageTest extends TestCase {
         m.setElement(2,0x8e);
         Assert.assertEquals("parity check test 6", false, m.checkParity());
     }
+
+
+
 
 	// from here down is testing infrastructure
 
