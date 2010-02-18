@@ -10,7 +10,7 @@ package jmri.jmrix.lenz;
  * to the a Lenz Command Station, on an XPressNet network.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 2.12 $
+ * @version			$Revision: 2.13 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.CommandStation {
 
@@ -177,28 +177,10 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.Com
      */
     public void sendPacket(byte[] packet, int repeats) {
 
-	/* On Current (v3.5) Lenz command stations, the Operations Mode 
-           Programming Request is implemented by sending a packet directly 
-           to the rails.  This packet is not checked by the XPressNet 
-	   protocol, and is just the track packet with an added header
-	   byte.
-           NOTE: Lenz does not say this will work for anything but 5 
-           byte packets.
-         */
-	XNetMessage msg;
-        msg = new XNetMessage(packet.length+2);
-	msg.setOpCode((XNetConstants.OPS_MODE_PROG_REQ & 0xF0)>>4);
-	msg.setElement(1,0x30);
-	for(int i=0;i<packet.length;i++) {
-		msg.setElement((i+2),packet[i]&0xff);
-	}
-	msg.setParity();
+	XNetMessage msg=XNetMessage.getNMRAXNetMsg(packet);
         for(int i=0;i<repeats;i++)
 	   XNetTrafficController.instance().sendXNetMessage(msg,null);
     }
-
-
-
 
     /*
      * We need to register for logging

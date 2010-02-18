@@ -5,7 +5,7 @@
  * it uses the XPressNet specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2004-2010
- * @version                     $Revision: 2.17 $
+ * @version                     $Revision: 2.18 $
  */
 
 package jmri.jmrix.lenz;
@@ -451,40 +451,10 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 	 * direction
 	 */
 	private void sendDirection(XNetThrottle t,boolean isForward){
-	 XNetMessage msg=new XNetMessage(6);
-         msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
-         int element4value=0;   /* this is for holding the speed and
-                                 direction setting */
-         if(t.getSpeedIncrement()==XNetConstants.SPEED_STEP_128_INCREMENT) {
-                 // We're in 128 speed step mode
-                 msg.setElement(1,XNetConstants.LOCO_SPEED_128);
-         } else if(t.getSpeedIncrement()==XNetConstants.SPEED_STEP_28_INCREMENT) {
-                 // We're in 28 speed step mode
-                 msg.setElement(1,XNetConstants.LOCO_SPEED_28);
-         } else if(t.getSpeedIncrement()==XNetConstants.SPEED_STEP_27_INCREMENT) {
-                 // We're in 27 speed step mode
-                 msg.setElement(1,XNetConstants.LOCO_SPEED_27);
-         } else {
-                 // We're in 14 speed step mode
-                 msg.setElement(1,XNetConstants.LOCO_SPEED_14);
-	 }
-
-         msg.setElement(2,
-		LenzCommandStation.getDCCAddressHigh(t.getDccAddress()));
-						    // set to the upper
-                                                    // byte of the  DCC address
-         msg.setElement(3,
-		LenzCommandStation.getDCCAddressLow(t.getDccAddress())); 
-						    // set to the lower byte
-                                                    // of the DCC address
-         if(isForward)
-         {
-            /* the direction bit is always the most significant bit */
-            element4value+=128;
-         }
-        msg.setElement(4,element4value);
-        msg.setParity(); // Set the parity bit
-
+	 XNetMessage msg=XNetMessage.getSpeedAndDirectionMsg(t.getDccAddress(),
+                                                             t.getSpeedStepMode(),
+                                                             (float)0.0,
+                                                             isForward); 
         // now, we send the message to the command station
         XNetTrafficController.instance().sendXNetMessage(msg,this);
     }

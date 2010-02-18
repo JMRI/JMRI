@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XNetTrafficController;
 /**
  * Frame for user input of XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2001,2002
- * @version			$Revision: 2.5 $
+ * @version			$Revision: 2.6 $
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame {
 
@@ -61,11 +61,8 @@ public class PacketGenFrame extends jmri.util.JmriJFrame {
     }
     
     XNetMessage createPacket(String s) {
-        // gather bytes in result
-        byte b[] = StringUtil.bytesFromHexString(s);
-        if (b.length == 0) return null;  // no such thing as a zero-length message
-        XNetMessage m = new XNetMessage(b.length);
-        for (int i=0; i<b.length; i++) m.setElement(i, b[i]);
+        if(s.equals("")) return null; // message cannot be empty
+        XNetMessage m = new XNetMessage(s); 
         return m;
     }
     

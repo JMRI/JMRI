@@ -21,7 +21,7 @@ import jmri.jmrix.lenz.*;
  *
  * @author			Paul Bender  Copyright (C) 2003-2010
  * @author			Giorgio Terdina  Copyright (C) 2007
- * @version			$Revision: 2.10 $
+ * @version			$Revision: 2.11 $
  */
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -102,12 +102,10 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
 	XNetMessage msg=XNetMessage.getCSVersionRequestMessage();
         //Then send to the controller
         XNetTrafficController.instance().sendXNetMessage(msg,this);
-       	XNetMessage msg2=new XNetMessage(2);
-	/* Second, we send a request for the Interface hardware and
-	software version */
-	msg2.setElement(0,XNetConstants.LI_VERSION_REQUEST);
-        msg2.setParity(); // Set the parity bit
-        //Then send to the controller
+        /* Next, get the message to request the Computer Interface 
+           Hardware/Software Version */
+       	XNetMessage msg2=XNetMessage.getLIVersionRequestMessage();
+        // Then send it to the controller
         XNetTrafficController.instance().sendXNetMessage(msg2,this);
 	/* Finally, we send a request for the Command Station Status*/
 	XNetMessage msg3=XNetMessage.getCSStatusRequestMessage();

@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  * reset the command station.
  *
  * @author			Paul Bender  Copyright (C) 2005-2010
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XNetListener {
 
@@ -167,24 +167,12 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
 	  if(status.getText().equals(rb.getString("LZ100StatusSetMode")))
 		status.setText(rb.getString("LZ100StatusOK"));
 	  if(resetMode==OFFSENT) {
-            XNetMessage msgon=new XNetMessage(6);
-            msgon.setElement(0,XNetConstants.LOCO_OPER_REQ);
-            msgon.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP1);
-            msgon.setElement(2,0); // set to the upper byte of the DCC address
-      	    msgon.setElement(3,0);   // set to the lower byte of the DCC address
-      	    msgon.setElement(4,0x08);
-      	    msgon.setParity(); // Set the parity bit
+            XNetMessage msgon=XNetMessage.getFunctionGroup1OpsMsg(0,false,false,false,true,false);
 	    sendCount--;
 	    resetMode=ONSENT;
 	    XNetTrafficController.instance().sendXNetMessage(msgon,this);
 	  } else if(resetMode==ONSENT) {
-      	    XNetMessage msgoff=new XNetMessage(6);
-      	    msgoff.setElement(0,XNetConstants.LOCO_OPER_REQ);
-      	    msgoff.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP1);
-      	    msgoff.setElement(2,0); // set to the upper byte of the DCC address
-      	    msgoff.setElement(3,0); // set to the lower byte of the DCC address
-            msgoff.setElement(4,0x00);
-            msgoff.setParity(); // Set the parity bit
+            XNetMessage msgoff=XNetMessage.getFunctionGroup1OpsMsg(0,false,false,false,false,false);
 	    if(sendCount>=0)
 	    	resetMode=OFFSENT;
 	    else {
@@ -232,15 +220,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
       resetCSButton.setEnabled(false);
       status.setText(rb.getString("LZ100StatusReset"));
       // the Command station is reset by sending F4 25 times for address 00
-
-      XNetMessage msgon=new XNetMessage(6);
-      msgon.setElement(0,XNetConstants.LOCO_OPER_REQ);
-      msgon.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP1);
-      msgon.setElement(2,0);   // set to the upper byte of the DCC address
-      msgon.setElement(3,0);   // set to the lower byte of the DCC address
-      msgon.setElement(4,0x08);
-      msgon.setParity(); // Set the parity bit
-
+      XNetMessage msgon=XNetMessage.getFunctionGroup1OpsMsg(0,false,false,false,true,false);
       resetMode = ONSENT;
       sendCount = 25;
 

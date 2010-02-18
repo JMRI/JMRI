@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  * port speed used to communicate with the LIUSB.
  *
  * @author			Paul Bender  Copyright (C) 2009-2010
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -113,14 +113,9 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
     void writeLIUSBSettings() {
         if((String)addrBox.getSelectedItem()!="" &&
            (String)addrBox.getSelectedItem()!=null) {
-	   XNetMessage msg=new XNetMessage(4);
-           /* First, we take care of sending an address request */
-	   msg.setElement(0,XNetConstants.LI101_REQUEST);
-	   msg.setElement(1,XNetConstants.LI101_REQUEST_ADDRESS);
-           /* For element 2, we need to figure out what address to send based
-           on user selections */
-	   msg.setElement(2,addrBox.getSelectedIndex());
-           msg.setParity(); // Set the parity bit
+           /* we take care of generating an address request */
+           XNetMessage msg=XNetMessage.getLIAddressRequestMsg(
+                                                addrBox.getSelectedIndex());
            //Then send to the controller
            XNetTrafficController.instance().sendXNetMessage(msg,this);
         }
@@ -128,14 +123,9 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
 
     //Send Information request to LIUSB
     void readLIUSBSettings() {
-	XNetMessage msg=new XNetMessage(4);
-        /* First, we take care of sending an address request */
-	msg.setElement(0,XNetConstants.LI101_REQUEST);
-	msg.setElement(1,XNetConstants.LI101_REQUEST_ADDRESS);
-        /* For element 2, we need to send an out of range address to get
-        the correct information back*/
-	msg.setElement(2,32);
-        msg.setParity(); // Set the parity bit
+        /* we request setting an out of range address 
+           to get the current value. */
+        XNetMessage msg=XNetMessage.getLIAddressRequestMsg(32);
         //Then send to the controller
         XNetTrafficController.instance().sendXNetMessage(msg,this);
     }

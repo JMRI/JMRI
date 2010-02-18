@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003-2010
- * @version			$Revision: 2.19 $
+ * @version			$Revision: 2.20 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -60,6 +60,24 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
        		{
           	   setElement(i,message.getElement(i));
        		}
+    	}
+
+	/**
+	 * Create an XNetMessage from a String containing bytes.
+    	 */
+	public XNetMessage(String s) {
+             // gather bytes in result
+             byte b[] = jmri.util.StringUtil.bytesFromHexString(s);
+             if (b.length == 0) 
+             {
+                 // no such thing as a zero-length message
+                 _nDataChars=0;
+                 _dataChars = null;
+                 return;
+             }
+             _nDataChars = b.length;
+             _dataChars = new int[_nDataChars];
+             for (int i=0; i<b.length; i++) setElement(i, b[i]);
     	}
 
     // note that the opcode is part of the message, so we treat it
@@ -130,6 +148,30 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     // decode messages of a particular form
 
     // create messages of a particular form
+
+
+    /*
+     * Encapsilate an NMRA DCC packet in an XPressNet message.
+     * 
+     * On Current (v3.5) Lenz command stations, the Operations Mode
+     *     Programming Request is implemented by sending a packet directly
+     *     to the rails.  This packet is not checked by the XPressNet
+     *     protocol, and is just the track packet with an added header
+     *     byte.
+     *     NOTE: Lenz does not say this will work for anything but 5
+     *     byte packets.
+     */
+    public static XNetMessage getNMRAXNetMsg(byte[] packet)
+    {
+        XNetMessage msg= new XNetMessage(packet.length+2);
+        msg.setOpCode((XNetConstants.OPS_MODE_PROG_REQ & 0xF0)>>4);
+        msg.setElement(1,0x30);
+        for(int i=0;i<packet.length;i++) {
+                msg.setElement((i+2),packet[i]&0xff);
+        }
+        msg.setParity();
+        return(msg);
+    }
 
     /* 
      * The next group of routines are used by Feedback and/or turnout 
@@ -594,6 +636,655 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         msg.setParity();
         return(msg);
     }
+    
+
+   /*
+    * Generate an emergency stop for the specified address
+    * @param address is the locomotive address
+    */
+    public static XNetMessage getAddressedEmergencyStop(int address)
+    {
+       XNetMessage msg=new XNetMessage(4);
+       msg.setElement(0,XNetConstants.EMERGENCY_STOP);
+       msg.setElement(1,LenzCommandStation.getDCCAddressHigh(address));
+                                       // set to the upper
+                                       // byte of the  DCC address
+       msg.setElement(2,LenzCommandStation.getDCCAddressLow(address)); 
+                                       // set to the lower byte
+       //of the DCC address
+       msg.setParity(); // Set the parity bit
+       return msg;
+    }
+
+   /*
+    * Generate a Speed and Direction Request message
+    * @param address is the locomotive address
+    * @param speedStepMode is the speedstep mode see @jmri.DccThrottle 
+    *                       for possible values.
+    * @param speed a normalized speed value (a floating point number between 0 
+    *              and 1).  A negative value indicates emergency stop.
+    * @param isForward true for forward, false for reverse.
+    */
+   public static XNetMessage getSpeedAndDirectionMsg(int address,
+                                                      int speedStepMode,
+                                                      float speed,
+                                                      boolean isForward)
+    {
+        XNetMessage msg=new XNetMessage(6);
+         msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+         int element4value=0;   /* this is for holding the speed and
+                                 direction setting */
+         if(speedStepMode == jmri.DccThrottle.SpeedStepMode128) {
+                 // We're in 128 speed step mode
+                 msg.setElement(1,XNetConstants.LOCO_SPEED_128);
+                 // Now, we need to figure out what to send in element 4
+                 // Remember, the speed steps are identified as 0-127 (in
+                 // 128 step mode), not 1-128.
+                 int speedVal=java.lang.Math.round(speed*126);
+                 // speed step 1 is reserved to indicate emergency stop,
+                 // so we need to step over speed step 1
+                 if(speedVal>=1) { element4value=speedVal+1; }
+         } else if(speedStepMode == jmri.DccThrottle.SpeedStepMode28) {
+                 // We're in 28 speed step mode
+                 msg.setElement(1,XNetConstants.LOCO_SPEED_28);
+                 // Now, we need to figure out what to send in element 4
+                 int speedVal=java.lang.Math.round(speed*28);
+                 // The first speed step used is actually at 4 for 28
+                 // speed step mode.
+                 if(speedVal>=1) { speedVal+=3; }
+                 // We have to re-arange the bits, since bit 4 is the LSB,
+                 // but other bits are in order from 0-3
+                 element4value=((speedVal&0x1e)>>1) +
+                                   ((speedVal & 0x01) <<4);
+         } else if(speedStepMode == jmri.DccThrottle.SpeedStepMode27) {
+                 // We're in 27 speed step mode
+                 msg.setElement(1,XNetConstants.LOCO_SPEED_27);
+                 // Now, we need to figure out what to send in element 4
+                 int speedVal=java.lang.Math.round(speed*27);
+                 // The first speed step used is actually at 4 for 27
+                 // speed step mode.
+                 if(speedVal>=1) { speedVal+=3; }
+                 // We have to re-arange the bits, since bit 4 is the LSB,
+                 // but other bits are in order from 0-3
+                 element4value=((speedVal&0x1e)>>1) +
+                                   ((speedVal & 0x01) <<4);
+         } else {
+                 // We're in 14 speed step mode
+                 msg.setElement(1,XNetConstants.LOCO_SPEED_14);
+                 // Now, we need to figure out what to send in element 4
+                 element4value=(int)(speed*14);
+                 int speedVal=java.lang.Math.round(speed*14);
+                 // The first speed step used is actually at 2 for 14
+                 // speed step mode.
+                 if(element4value>=1) { speedVal+=1; }
+         }
+         msg.setElement(2,LenzCommandStation.getDCCAddressHigh(address));
+                                 // set to the upper byte of the  DCC address
+         msg.setElement(3,LenzCommandStation.getDCCAddressLow(address)); 
+                                                    // set to the lower byte
+                                                    //of the DCC address
+         if(isForward)
+         {
+            /* the direction bit is always the most significant bit */
+            element4value+=128;
+         }
+        msg.setElement(4,element4value);
+        msg.setParity(); // Set the parity bit
+        return msg;
+    }
+
+
+   /*
+    * Generate a Function Group One Operation Request message
+    * @param address is the locomotive address
+    * @param f0 is true if f0 is on, false if f0 is off
+    * @param f1 is true if f1 is on, false if f1 is off
+    * @param f2 is true if f2 is on, false if f2 is off
+    * @param f3 is true if f3 is on, false if f3 is off
+    * @param f4 is true if f4 is on, false if f4 is off
+    */
+   public static XNetMessage getFunctionGroup1OpsMsg(int address,
+                                                      boolean f0,
+                                                      boolean f1,
+                                                      boolean f2,
+                                                      boolean f3,
+                                                      boolean f4)
+    {
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP1);
+       msg.setElement(2,LenzCommandStation.getDCCAddressHigh(address));
+                        // set to the upper byte of the  DCC address
+       msg.setElement(3,LenzCommandStation.getDCCAddressLow(address)); 
+                        // set to the lower byte of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f0)
+        {
+          element4value += 16;
+        }
+       if(f1)
+        {
+          element4value += 1;
+        }
+       if(f2)
+        {
+          element4value += 2;
+        }
+       if(f3)
+        {
+          element4value += 4;
+        }
+       if(f4)
+        {
+          element4value += 8;
+        }
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       return msg;
+    }
+
+   /*
+    * Generate a Function Group One Set Momentary Functions message
+    * @param address is the locomotive address
+    * @param f0 is true if f0 is momentary
+    * @param f1 is true if f1 is momentary
+    * @param f2 is true if f2 is momentary
+    * @param f3 is true if f3 is momentary
+    * @param f4 is true if f4 is momentary
+    */
+   public static XNetMessage getFunctionGroup1SetMomMsg(int address,
+                                                      boolean f0,
+                                                      boolean f1,
+                                                      boolean f2,
+                                                      boolean f3,
+                                                      boolean f4)
+   {
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group1);
+       msg.setElement(2,LenzCommandStation.getDCCAddressHigh(address));
+                        // set to the upper byte of the  DCC address
+       msg.setElement(3,LenzCommandStation.getDCCAddressLow(address));
+                        // set to the lower byte of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f0)
+        {
+          element4value += 16;
+        }
+       if(f1)
+        {
+          element4value += 1;
+        }
+       if(f2)
+        {
+          element4value += 2;
+        }
+       if(f3)
+        {
+          element4value += 4;
+        }
+       if(f4)
+        {
+          element4value += 8;
+        }
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+      return msg;
+   }
+
+
+   /*
+    * Generate a Function Group Two Operation Request message
+    * @param address is the locomotive address
+    * @param f5 is true if f5 is on, false if f5 is off
+    * @param f6 is true if f6 is on, false if f6 is off
+    * @param f7 is true if f7 is on, false if f7 is off
+    * @param f8 is true if f8 is on, false if f8 is off
+    */
+   public static XNetMessage getFunctionGroup2OpsMsg(int address,
+                                                      boolean f5,
+                                                      boolean f6,
+                                                      boolean f7,
+                                                      boolean f8)
+    {
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP2);
+       msg.setElement(2,LenzCommandStation.getDCCAddressHigh(address));
+                                   // set to the upper byte of the  DCC address
+       msg.setElement(3,LenzCommandStation.getDCCAddressLow(address)); 
+                                   // set to the lower byte of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f5)
+        {
+          element4value += 1;
+        }
+       if(f6)
+        {
+          element4value += 2;
+        }
+       if(f7)
+        {
+          element4value += 4;
+        }
+       if(f8)
+        {
+         element4value += 8;
+        }
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       return msg;
+    }
+
+   /*
+    * Generate a Function Group Two Set Momentary Functions message
+    * @param address is the locomotive address
+    * @param f5 is true if f5 is momentary
+    * @param f6 is true if f6 is momentary
+    * @param f7 is true if f7 is momentary
+    * @param f8 is true if f8 is momentary
+    */
+   public static XNetMessage getFunctionGroup2SetMomMsg(int address,
+                                                      boolean f5,
+                                                      boolean f6,
+                                                      boolean f7,
+                                                      boolean f8)
+    {
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group2);
+       msg.setElement(2,LenzCommandStation.getDCCAddressHigh(address));
+                                   // set to the upper byte of the  DCC address
+       msg.setElement(3,LenzCommandStation.getDCCAddressLow(address)); 
+                                   // set to the lower byte of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f5)
+        {
+          element4value += 1;
+        }
+       if(f6)
+        {
+          element4value += 2;
+        }
+       if(f7)
+        {
+          element4value += 4;
+        }
+       if(f8)
+        {
+         element4value += 8;
+        }
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       return msg;
+    }
+
+
+   /*
+    * Generate a Function Group Three Operation Request message
+    * @param address is the locomotive address
+    * @param f9 is true if f9 is on, false if f9 is off
+    * @param f10 is true if f10 is on, false if f10 is off
+    * @param f11 is true if f11 is on, false if f11 is off
+    * @param f12 is true if f12 is on, false if f12 is off
+    */
+   public static XNetMessage getFunctionGroup3OpsMsg(int address,
+                                                      boolean f9,
+                                                      boolean f10,
+                                                      boolean f11,
+                                                      boolean f12)
+    {
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP3);
+       msg.setElement(2,LenzCommandStation.getDCCAddressHigh(address));
+                                   // set to the upper byte of the  DCC address
+       msg.setElement(3,LenzCommandStation.getDCCAddressLow(address)); 
+                                   // set to the lower byte of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f9)
+        {
+          element4value += 1;
+        }
+       if(f10)
+        {
+          element4value += 2;
+        }
+       if(f11)
+        {
+          element4value += 4;
+        }
+       if(f12)
+        {
+          element4value += 8;
+        }
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       return msg;
+   }
+
+   /*
+    * Generate a Function Group Three Set Momentary Functions message
+    * @param address is the locomotive address
+    * @param f9 is true if f9 is momentary
+    * @param f10 is true if f10 is momentary
+    * @param f11 is true if f11 is momentary
+    * @param f12 is true if f12 is momentary
+    */
+   public static XNetMessage getFunctionGroup3SetMomMsg(int address,
+                                                      boolean f9,
+                                                      boolean f10,
+                                                      boolean f11,
+                                                      boolean f12)
+    {
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group3);
+       msg.setElement(2,LenzCommandStation.getDCCAddressHigh(address));
+                                   // set to the upper byte of the  DCC address
+       msg.setElement(3,LenzCommandStation.getDCCAddressLow(address)); 
+                                   // set to the lower byte of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f9)
+        {
+          element4value += 1;
+        }
+       if(f10)
+        {
+          element4value += 2;
+        }
+       if(f11)
+        {
+          element4value += 4;
+        }
+       if(f12)
+        {
+          element4value += 8;
+        }
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       return msg;
+   }
+
+
+
+   /*
+    * Generate a Function Group Four Operation Request message
+    * @param address is the locomotive address
+    * @param f13 is true if f13 is on, false if f13 is off
+    * @param f14 is true if f14 is on, false if f14 is off
+    * @param f15 is true if f15 is on, false if f15 is off
+    * @param f16 is true if f18 is on, false if f16 is off
+    * @param f17 is true if f17 is on, false if f17 is off
+    * @param f18 is true if f18 is on, false if f18 is off
+    * @param f19 is true if f19 is on, false if f19 is off
+    * @param f20 is true if f20 is on, false if f20 is off
+    */
+   public static XNetMessage getFunctionGroup4OpsMsg(int address,
+                                                      boolean f13,
+                                                      boolean f14,
+                                                      boolean f15,
+                                                      boolean f16,
+                                                      boolean f17,
+                                                      boolean f18,
+                                                      boolean f19,
+                                                      boolean f20)
+    {
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP4);
+       msg.setElement(2,LenzCommandStation.getDCCAddressHigh(address));
+                                   // set to the upper byte of the  DCC address
+       msg.setElement(3,LenzCommandStation.getDCCAddressLow(address)); 
+                                   // set to the lower byte of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f13)
+        {
+          element4value += 1;
+        }
+       if(f14)
+        {
+          element4value += 2;
+        }
+       if(f15)
+        {
+          element4value += 4;
+        }
+       if(f16)
+        {
+          element4value += 8;
+        }
+       if(f17)
+        {
+          element4value += 16;
+        }
+       if(f18)
+        {
+          element4value += 32;
+        }
+       if(f19)
+        {
+          element4value += 64;
+        }
+       if(f20)
+        {
+          element4value += 128;
+        }
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       return msg;
+   } 
+
+   /*
+    * Generate a Function Group Four Set Momentary Function message
+    * @param address is the locomotive address
+    * @param f13 is true if f13 is Momentary
+    * @param f14 is true if f14 is Momentary
+    * @param f15 is true if f15 is Momentary
+    * @param f16 is true if f18 is Momentary
+    * @param f17 is true if f17 is Momentary
+    * @param f18 is true if f18 is Momentary
+    * @param f19 is true if f19 is Momentary
+    * @param f20 is true if f20 is Momentary
+    */
+   public static XNetMessage getFunctionGroup4SetMomMsg(int address,
+                                                      boolean f13,
+                                                      boolean f14,
+                                                      boolean f15,
+                                                      boolean f16,
+                                                      boolean f17,
+                                                      boolean f18,
+                                                      boolean f19,
+                                                      boolean f20)
+    {
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group4);
+       msg.setElement(2,LenzCommandStation.getDCCAddressHigh(address));
+                                   // set to the upper byte of the  DCC address
+       msg.setElement(3,LenzCommandStation.getDCCAddressLow(address)); 
+                                   // set to the lower byte of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f13)
+        {
+          element4value += 1;
+        }
+       if(f14)
+        {
+          element4value += 2;
+        }
+       if(f15)
+        {
+          element4value += 4;
+        }
+       if(f16)
+        {
+          element4value += 8;
+        }
+       if(f17)
+        {
+          element4value += 16;
+        }
+       if(f18)
+        {
+          element4value += 32;
+        }
+       if(f19)
+        {
+          element4value += 64;
+        }
+       if(f20)
+        {
+          element4value += 128;
+        }
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       return msg;
+   } 
+
+   /*
+    * Generate a Function Group Five Operation Request message
+    * @param address is the locomotive address
+    * @param f21 is true if f21 is on, false if f21 is off
+    * @param f22 is true if f22 is on, false if f22 is off
+    * @param f23 is true if f23 is on, false if f23 is off
+    * @param f24 is true if f24 is on, false if f24 is off
+    * @param f25 is true if f25 is on, false if f25 is off
+    * @param f26 is true if f26 is on, false if f26 is off
+    * @param f27 is true if f27 is on, false if f27 is off
+    * @param f28 is true if f28 is on, false if f28 is off
+    */
+   public static XNetMessage getFunctionGroup5OpsMsg(int address,
+                                                      boolean f21,
+                                                      boolean f22,
+                                                      boolean f23,
+                                                      boolean f24,
+                                                      boolean f25,
+                                                      boolean f26,
+                                                      boolean f27,
+                                                      boolean f28)
+    {
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_GROUP5);
+       msg.setElement(2,LenzCommandStation.getDCCAddressHigh(address));
+                                   // set to the upper byte of the  DCC address
+       msg.setElement(3,LenzCommandStation.getDCCAddressLow(address)); 
+                                   // set to the lower byte of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f21)
+        {
+          element4value += 1;
+        }
+       if(f22)
+        {
+          element4value += 2;
+        }
+       if(f23)
+        {
+          element4value += 4;
+        }
+       if(f24)
+        {
+          element4value += 8;
+        }
+       if(f25)
+        {
+          element4value += 16;
+        }
+       if(f26)
+        {
+          element4value += 32;
+        }
+       if(f27)
+        {
+          element4value += 64;
+        }
+       if(f28)
+        {
+          element4value += 128;
+        }
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       return msg;
+   } 
+ 
+  /*
+    * Generate a Function Group Five Set Momentary Function message
+    * @param address is the locomotive address
+    * @param f21 is true if f21 is momentary
+    * @param f22 is true if f22 is momentary
+    * @param f23 is true if f23 is momentary
+    * @param f24 is true if f24 is momentary
+    * @param f25 is true if f25 is momentary
+    * @param f26 is true if f26 is momentary
+    * @param f27 is true if f27 is momentary
+    * @param f28 is true if f28 is momentary
+    */
+   public static XNetMessage getFunctionGroup5SetMomMsg(int address,
+                                                      boolean f21,
+                                                      boolean f22,
+                                                      boolean f23,
+                                                      boolean f24,
+                                                      boolean f25,
+                                                      boolean f26,
+                                                      boolean f27,
+                                                      boolean f28)
+    {
+       XNetMessage msg=new XNetMessage(6);
+       msg.setElement(0,XNetConstants.LOCO_OPER_REQ);
+       msg.setElement(1,XNetConstants.LOCO_SET_FUNC_Group5);
+       msg.setElement(2,LenzCommandStation.getDCCAddressHigh(address));
+                                   // set to the upper byte of the  DCC address
+       msg.setElement(3,LenzCommandStation.getDCCAddressLow(address)); 
+                                   // set to the lower byte of the DCC address
+       // Now, we need to figure out what to send in element 3
+       int element4value=0;
+       if(f21)
+        {
+          element4value += 1;
+        }
+       if(f22)
+        {
+          element4value += 2;
+        }
+       if(f23)
+        {
+          element4value += 4;
+        }
+       if(f24)
+        {
+          element4value += 8;
+        }
+       if(f25)
+        {
+          element4value += 16;
+        }
+       if(f26)
+        {
+          element4value += 32;
+        }
+       if(f27)
+        {
+          element4value += 64;
+        }
+       if(f28)
+        {
+          element4value += 128;
+        }
+       msg.setElement(4,element4value);
+       msg.setParity(); // Set the parity bit
+       return msg;
+   }
 
    /*
     * Build a Resume operations Message
@@ -655,8 +1346,49 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return msg;
      }
 
-	// initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetMessage.class.getName());
+    /**
+     * Generate the message to request the Computer Interface
+     * Hardware/Software Version
+     **/
+     public static XNetMessage getLIVersionRequestMessage() {
+        XNetMessage msg=new XNetMessage(2);
+        msg.setElement(0,XNetConstants.LI_VERSION_REQUEST);
+        msg.setParity(); // Set the parity bit
+        return msg;
+     }
+
+    /**
+     * Generate the message to set or request the Computer
+     * Interface Address
+     * @param address Interface address (0-31).  Send invalid address 
+     * to request the address (32-255).
+     **/
+     public static XNetMessage getLIAddressRequestMsg(int address) {
+        XNetMessage msg=new XNetMessage(4);
+        msg.setElement(0,XNetConstants.LI101_REQUEST);
+        msg.setElement(1,XNetConstants.LI101_REQUEST_ADDRESS);
+        msg.setElement(2,address);
+        msg.setParity(); // Set the parity bit
+        return msg;
+     }
+
+    /**
+     * Generate the message to set or request the Computer
+     * Interface speed 
+     * @param speed 1 is 19,200bps, 2 is 38,400bps, 3 is 57,600bps, 4 is 
+     * 115,200bps.  Send invalid speed to request the current setting.
+     **/
+     public static XNetMessage getLISpeedRequestMsg(int speed) {
+        XNetMessage msg=new XNetMessage(4);
+        msg.setElement(0,XNetConstants.LI101_REQUEST);
+        msg.setElement(1,XNetConstants.LI101_REQUEST_BAUD);
+        msg.setElement(2,speed);
+        msg.setParity(); // Set the parity bit
+        return msg;
+     }
+
+     // initialize logging    
+     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetMessage.class.getName());
 
 }
 
