@@ -39,7 +39,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.104 $
+ * @version     $Revision: 1.105 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -89,12 +89,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         jmri.InstanceManager.store(new jmri.managers.DefaultUserMessagePreferences(), jmri.UserPreferencesManager.class);
         
         // find preference file and set location in configuration manager
-        if (configFilename != null) {
-            log.debug("configure from specified file "+configFilename);
-        } else {
-            configFilename = "jmriprefs.xml";
-            log.debug("configure from default file "+configFilename);
-        }
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         File file = new File(configFilename);
         // decide whether name is absolute or relative
@@ -405,20 +399,20 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     
     JLabel cs4 = new JLabel();
     protected void buildLine4(JPanel pane2){
-        ConnectionStatus.instance().addConnection(AppConfigPanel.getConnection1(), AppConfigPanel.getPort1());
+        ConnectionStatus.instance().addConnection(AppConfigPanel.getConnection(0), AppConfigPanel.getPort(0));
         cs4.setFont(pane2.getFont());
         updateLine4();
         pane2.add(cs4);
     }
     // Port 1 status line 4, upper case and red if connection is down
     protected void updateLine4() {
-    	if (ConnectionStatus.instance().isConnectionOk(AppConfigPanel.getPort1())){
+    	if (ConnectionStatus.instance().isConnectionOk(AppConfigPanel.getPort(0))){
     		cs4.setForeground(Color.black);
-			cs4.setText(getConnection1());
+			cs4.setText(AppConfigPanel.getConnection(0));
 		} else {
 			cs4.setForeground(Color.red);
 			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
-					new Object[] { AppConfigPanel.getConnection1(), AppConfigPanel.getPort1() });
+					new Object[] { AppConfigPanel.getConnection(0), AppConfigPanel.getPort(0) });
 			cf = cf.toUpperCase();
 			cs4.setText(cf);
 		}
@@ -427,11 +421,11 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     
     JLabel cs5 = new JLabel(); 
     protected void buildLine5(JPanel pane2){
-    	if (AppConfigPanel.getConnection2().equals("(none)")){
+    	if (AppConfigPanel.getConnection(1).equals("(none)")){
     		cs5.setText(" ");
     		return;
     	}
-        ConnectionStatus.instance().addConnection(AppConfigPanel.getConnection2(), AppConfigPanel.getPort2());
+        ConnectionStatus.instance().addConnection(AppConfigPanel.getConnection(1), AppConfigPanel.getPort(1));
         cs5.setFont(pane2.getFont());
         updateLine5();
         //pane2.add(new JLabel(" "));
@@ -439,15 +433,15 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
     // Port 2 status line 5, upper case and red if connection is down
     protected void updateLine5() {
-    	if (AppConfigPanel.getConnection2().equals("(none)"))
+    	if (AppConfigPanel.getConnection(1).equals("(none)"))
     		return;
-    	if (ConnectionStatus.instance().isConnectionOk(AppConfigPanel.getPort2())){
+    	if (ConnectionStatus.instance().isConnectionOk(AppConfigPanel.getPort(1))){
     		cs5.setForeground(Color.black);
-			cs5.setText(getConnection2());
+			cs5.setText(AppConfigPanel.getConnection(1));
 		} else {
 			cs5.setForeground(Color.red);
 			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
-					new Object[] { AppConfigPanel.getConnection2(), AppConfigPanel.getPort2() });
+					new Object[] { AppConfigPanel.getConnection(1), AppConfigPanel.getPort(1) });
 			cf = cf.toUpperCase();
 			cs5.setText(cf);
 		}
@@ -457,11 +451,11 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     // Port 3, optional connection
     JLabel cs5a = new JLabel(); 
     protected void buildLine5a(JPanel pane2){
-    	if (AppConfigPanel.getConnection3().equals("(none)")){
+    	if (AppConfigPanel.getConnection(2).equals("(none)")){
     		cs5a.setText(" ");
     		return;
     	}
-        ConnectionStatus.instance().addConnection(AppConfigPanel.getConnection3(), AppConfigPanel.getPort3());
+        ConnectionStatus.instance().addConnection(AppConfigPanel.getConnection(2), AppConfigPanel.getPort(2));
         cs5a.setFont(pane2.getFont());
         updateLine5a();
         //pane2.add(new JLabel(" "));
@@ -469,15 +463,15 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
     // Port 3 status line 5a, upper case and red if connection is down
     protected void updateLine5a() {
-    	if (AppConfigPanel.getConnection3().equals("(none)"))
+    	if (AppConfigPanel.getConnection(2).equals("(none)"))
     		return;
-    	if (ConnectionStatus.instance().isConnectionOk(AppConfigPanel.getPort3())){
+    	if (ConnectionStatus.instance().isConnectionOk(AppConfigPanel.getPort(2))){
     		cs5a.setForeground(Color.black);
-			cs5a.setText(getConnection3());
+			cs5a.setText(AppConfigPanel.getConnection(2));
 		} else {
 			cs5a.setForeground(Color.red);
 			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
-					new Object[] { AppConfigPanel.getConnection3(), AppConfigPanel.getPort3() });
+					new Object[] { AppConfigPanel.getConnection(2), AppConfigPanel.getPort(2) });
 			cf = cf.toUpperCase();
 			cs5a.setText(cf);
 		}
@@ -487,11 +481,11 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     // Port 4, optional connection
     JLabel cs5b = new JLabel(); 
     protected void buildLine5b(JPanel pane2){
-    	if (AppConfigPanel.getConnection4().equals("(none)")){
+    	if (AppConfigPanel.getConnection(3).equals("(none)")){
     		cs5b.setText(" ");
     		return;
     	}
-        ConnectionStatus.instance().addConnection(AppConfigPanel.getConnection4(), AppConfigPanel.getPort4());
+        ConnectionStatus.instance().addConnection(AppConfigPanel.getConnection(3), AppConfigPanel.getPort(3));
         cs5b.setFont(pane2.getFont());
         updateLine5b();
         //pane2.add(new JLabel(" "));
@@ -499,15 +493,15 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
     // Port 4 status line 5b, upper case and red if connection is down
     protected void updateLine5b() {
-    	if (AppConfigPanel.getConnection4().equals("(none)"))
+    	if (AppConfigPanel.getConnection(3).equals("(none)"))
     		return;
-    	if (ConnectionStatus.instance().isConnectionOk(AppConfigPanel.getPort4())){
+    	if (ConnectionStatus.instance().isConnectionOk(AppConfigPanel.getPort(3))){
     		cs5b.setForeground(Color.black);
-			cs5b.setText(getConnection4());
+			cs5b.setText(AppConfigPanel.getConnection(3));
 		} else {
 			cs5b.setForeground(Color.red);
 			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
-					new Object[] { AppConfigPanel.getConnection4(), AppConfigPanel.getPort4() });
+					new Object[] { AppConfigPanel.getConnection(3), AppConfigPanel.getPort(3) });
 			cf = cf.toUpperCase();
 			cs5b.setText(cf);
 		}
@@ -613,19 +607,19 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     
     static public String getConnection1() {
             return MessageFormat.format(rb.getString("ConnectionCredit"),
-                                new Object[]{AppConfigPanel.getConnection1(), AppConfigPanel.getPort1()});
+                                new Object[]{AppConfigPanel.getConnection(0), AppConfigPanel.getPort(0)});
     }
     static public String getConnection2() {
             return MessageFormat.format(rb.getString("ConnectionCredit"),
-                                new Object[]{AppConfigPanel.getConnection2(), AppConfigPanel.getPort2()});
+                                new Object[]{AppConfigPanel.getConnection(1), AppConfigPanel.getPort(1)});
     }
     static public String getConnection3() {
         return MessageFormat.format(rb.getString("ConnectionCredit"),
-                            new Object[]{AppConfigPanel.getConnection3(), AppConfigPanel.getPort3()});
+                            new Object[]{AppConfigPanel.getConnection(2), AppConfigPanel.getPort(2)});
     }
     static public String getConnection4() {
         return MessageFormat.format(rb.getString("ConnectionCredit"),
-                            new Object[]{AppConfigPanel.getConnection4(), AppConfigPanel.getPort4()});
+                            new Object[]{AppConfigPanel.getConnection(3), AppConfigPanel.getPort(3)});
     }
     
     static SplashWindow sp = null;
@@ -778,7 +772,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
     }
 
-    static protected String configFilename = null;
+    static protected String configFilename = "jmriconfig2.xml";  // usually overridden, this is default
     static protected boolean configOK;
 
     // GUI members

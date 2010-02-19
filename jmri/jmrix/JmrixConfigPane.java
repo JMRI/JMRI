@@ -17,9 +17,13 @@ import javax.swing.JSeparator;
 /**
  * Provide GUI to configure communications links.
  * <P>
- * This is
- * really just a catalog of connections to classes within
- * the systems. Reflection is used to reduce coupling.
+ * This is really just a catalog of connections to classes within the systems. 
+ * Reflection is used to reduce coupling at load time.
+ * <P>
+ * Objects of this class are based on an underlying ConnectionConfig implementation,
+ * which in turn is obtained from the InstanceManager.
+ * Those must be created at load time by the ConfigXml process, or in 
+ * some Application class.
  * <P>
  * To add a new system package, add entries
  * to the list in {@link #availableProtocolClasses}.
@@ -28,9 +32,10 @@ import javax.swing.JSeparator;
  * subclasses of {@link jmri.jmrix.AbstractConnectionConfig}
  * which provides the methods providing data to the 
  * configuration GUI, and responding to its changes.
+ * <p>
  *
- * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004
- * @version	$Revision: 1.58 $
+ * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
+ * @version	$Revision: 1.59 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -44,12 +49,20 @@ public class JmrixConfigPane extends JPanel {
      * @param index 1-N based index of the communications object to configure.
      */
     public static JmrixConfigPane instance(int index) {
+        JmrixConfigPane retval = configPaneTable.get(new Integer(index));
+        if (retval != null) return retval;
+        
         Object c = InstanceManager.configureManagerInstance()
                                 .findInstance(ConnectionConfig.class, index);
         log.debug("findInstance returned "+c);
-        return (new JmrixConfigPane((ConnectionConfig)c));
+        retval = new JmrixConfigPane((ConnectionConfig)c);
+        configPaneTable.put(new Integer(index), retval);
+        return retval;
     }
 
+    static final java.util.Hashtable<Integer, JmrixConfigPane> configPaneTable 
+                    = new java.util.Hashtable<Integer, JmrixConfigPane>();
+    
     static java.util.ResourceBundle rb = 
         java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
     
@@ -124,8 +137,11 @@ public class JmrixConfigPane extends JPanel {
 
 
     /**
-     * Use "instance" to get one of these.  That allows it
-     * to reconnect to existing information.
+     * Use "instance" to get one of these.  
+     * That allows it to reconnect to existing information in an existing ConnectionConfig
+     * object.
+     * It's permitted to call this with a null argument, e.g. for when 
+     * first configuring the system.
      */
     private JmrixConfigPane(ConnectionConfig original) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -285,8 +301,6 @@ public class JmrixConfigPane extends JPanel {
         return null;
     }
     
-    
-
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmrixConfigPane.class.getName());
 }
