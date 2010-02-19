@@ -23,27 +23,24 @@ import javax.swing.*;
  * There are a large number of missing features marked with TODO in comments
  * including code from the earlier implementation.
  * <P>
- * @author	Bob Jacobsen   Copyright 2009
- * @version $Revision: 1.5 $
+ * @author	Bob Jacobsen   Copyright 2009, 2010
+ * @version $Revision: 1.6 $
  */
-public abstract class Apps3 {
+public abstract class Apps3 extends apps.AppsBase {
+
 
     /**
      * Initial actions before 
-     * frame is created.
+     * frame is created, invoked in the 
+     * applications main() routine.
      */
     static public void preInit() {
+        nameString = "JMRI GUI3 Demo";
+
         // TODO Launch splash screen: splash(true)
-
-        jmri.util.Log4JUtil.initLog4J();
-        log.info(jmri.util.Log4JUtil.startupInfo("Gui3IDE"));
-
-        // TODO setConfigFilename("Demo3Config3.xml", args)
+        
+        apps.AppsBase.preInit();
     }
-
-    protected String nameString = "JMRI GUI3 Demo";
-    protected String configFilename = "jmriprefs3.xml";  // this appears multiple places, needs rationalization
-    boolean configOK;
     
     /**
      * Create and initialize the application object.
@@ -52,17 +49,13 @@ public abstract class Apps3 {
      */
     public Apps3() {
         // pre-GUI work
-        installConfigurationManager();
-        installShutDownManager();
-        addDefaultShutDownTasks();
-        installManagers();
-        initializeHelpSystem();
-        loadPreferenceFile();
+        super();
         
         // create test dummy objects
         createDemoScaffolding();
         
         // create GUI
+        initializeHelpSystem();
         createMainFrame();
         
         // set to min size for demo
@@ -105,75 +98,7 @@ public abstract class Apps3 {
     }
 
     abstract protected void createMainFrame();
-    
-    protected void installConfigurationManager() {
-        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
-        InstanceManager.setConfigureManager(cm);
-        log.debug("config manager installed");
-        // Install Config Manager error handler
-        jmri.configurexml.ConfigXmlManager.setErrorHandler(new jmri.configurexml.swing.DialogErrorHandler());
-
-    }
-    
-    protected void installManagers() {
-        // Install a history manager
-        jmri.InstanceManager.store(new jmri.jmrit.revhistory.FileHistory(), jmri.jmrit.revhistory.FileHistory.class);
-        // record startup
-        jmri.InstanceManager.getDefault(jmri.jmrit.revhistory.FileHistory.class).addOperation("app", nameString, null);
         
-        // Install a user preferences manager
-        jmri.InstanceManager.store(new jmri.managers.DefaultUserMessagePreferences(), jmri.UserPreferencesManager.class);        
-    }
-
-    protected void loadPreferenceFile() {
-        if (configFilename != null) {
-            log.debug("configure from specified file "+configFilename);
-        } else {
-            configFilename = "jmriprefs3.xml";
-            log.debug("configure from default file "+configFilename);
-        }
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        File file = new File(configFilename);
-        // decide whether name is absolute or relative
-        if (!file.isAbsolute()) {
-            // must be relative, but we want it to 
-            // be relative to the preferences directory
-            file = new File(XmlFile.prefsDir()+configFilename);
-        }
-        try {
-            configOK = InstanceManager.configureManagerInstance().load(file);
-            log.debug("end load config file, OK="+configOK);
-        } catch (Exception e) {
-            configOK = false;
-        }
-    }
-    
-    protected void installShutDownManager() {
-        InstanceManager.setShutDownManager(
-                new jmri.managers.DefaultShutDownManager());
-    }
-
-    protected void addDefaultShutDownTasks() {
-        // add the default shutdown task to save blocks
-        // as a special case, register a ShutDownTask to write out blocks
-        InstanceManager.shutDownManagerInstance().
-            register(new jmri.implementation.AbstractShutDownTask("Writing Blocks"){
-                public boolean execute() {
-                    // Save block values prior to exit, if necessary
-                    log.debug("Start writing block info");
-                    try {
-                        new jmri.jmrit.display.layoutEditor.BlockValueFile().writeBlockValues();
-                    } 
-                    //catch (org.jdom.JDOMException jde) { log.error("Exception writing blocks: "+jde); }                           
-                    catch (java.io.IOException ioe) { log.error("Exception writing blocks: "+ioe); }   
-                    
-                    // continue shutdown   
-                    return true;
-                }
-            });
-    }
-    
-    
     /**
      * Set a toolbar to be initially floating.
      * This doesn't quite work right.
@@ -253,8 +178,8 @@ public abstract class Apps3 {
      * Final actions before releasing control of app to user
      */
     protected void postInit() {
-        log.debug("main initialization done");
         // TODO: splash(false);
+        super.postInit();
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Apps3.class.getName());
