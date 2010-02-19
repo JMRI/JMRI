@@ -14,7 +14,7 @@ import java.util.List;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -204,9 +204,10 @@ public class SensorIconXml extends PositionableLabelXml {
     {
         NamedIcon icon = loadIcon(l,state, element);
         if (icon==null){
-            if (element.getAttribute(state) != null) {
-                String iconName;
-                iconName = element.getAttribute(state).getValue();
+            String iconName;
+            if (element.getAttribute(state) != null 
+                && !(iconName = element.getAttribute(state).getValue()).equals("")) {
+                
                 icon = NamedIcon.getIconByName(iconName);
                 icon.setRotation(rotation, l);
             }
