@@ -101,7 +101,7 @@ import jmri.jmrit.logix.WarrantTableAction;
  * for more details.
  * <P>
  *
- * @author	Pete Cressman (C) 2009
+ * @author	Pete Cressman (C) 2009, 2010
  */
 
 public class OBlockTableAction extends AbstractAction {
@@ -129,6 +129,7 @@ public class OBlockTableAction extends AbstractAction {
     PortalTableModel _portalModel;
     JScrollPane _portalTablePane;
     BlockPortalTableModel _blockPortalXRefModel;
+    boolean _showWarnings = true;
 
     static final int BLOCK_TABLE = 1;
     static final int PORTAL_TABLE = 2;
@@ -158,6 +159,7 @@ public class OBlockTableAction extends AbstractAction {
         JInternalFrame _portalTableFrame;
         JInternalFrame _blockPortalXRefFrame;
 
+        JMenuItem _showWarnItem;
         JMenu _openMenu;
         HashMap <String, JInternalFrame> _blockPathMap = new HashMap <String, JInternalFrame>();
         HashMap <String, JInternalFrame> _PathTurnoutMap = new HashMap <String, JInternalFrame>();
@@ -206,8 +208,20 @@ public class OBlockTableAction extends AbstractAction {
             editMenu.add(menuItem);
             menuBar.add(editMenu);
 
+            JMenu optionMenu = new JMenu(rbx.getString("MenuOptions"));
+            _showWarnItem = new JMenuItem(rbx.getString("SuppressWarning"));
+            _showWarnItem.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent event) {
+                        String cmd = event.getActionCommand();
+                        setShowWarnings(cmd);
+                    }
+                });
+            optionMenu.add(_showWarnItem);
+            setShowWarnings("ShowWarning");
+            menuBar.add(optionMenu);
+
             _openMenu = new JMenu(rbx.getString("OpenMenu"));
-            updateOpenMenu();
+            updateOpenMenu();   // replaces the last item with appropriate
             menuBar.add(_openMenu);
 
             setJMenuBar(menuBar);
@@ -235,6 +249,19 @@ public class OBlockTableAction extends AbstractAction {
             errorCheck();
         }
 
+        private void setShowWarnings(String cmd) {
+            if (cmd.equals("ShowWarning")) {
+                _showWarnings = true;
+                _showWarnItem.setActionCommand("SuppressWarning");
+                _showWarnItem.setText(rbx.getString("SuppressWarning"));
+            } else {
+                _showWarnings = false;
+                _showWarnItem.setActionCommand("ShowWarning"); 
+                _showWarnItem.setText(rbx.getString("ShowWarning"));
+            }
+            if (log.isDebugEnabled()) log.debug("setShowWarnings: _showWarnings= "+_showWarnings);
+        }
+
         /**
         * Add the cut/copy/paste actions to the action map.
         */
@@ -258,7 +285,7 @@ public class OBlockTableAction extends AbstractAction {
             for (int i = 0; i < sysNames.length; i++) {
                 WarrantTableAction.checkPathPortals(manager.getBySystemName(sysNames[i]));
             }
-            WarrantTableAction.showPathPortalErrors();
+            if (_showWarnings) WarrantTableAction.showPathPortalErrors();
         }
 
         void updateOpenMenu() {
@@ -666,7 +693,7 @@ public class OBlockTableAction extends AbstractAction {
                 WarrantTableAction.initPathPortalCheck();
                 WarrantTableAction.checkPathPortals(((BlockPathFrame)frame).getModel().getBlock());
                 ((BlockPathFrame)frame).getModel().removeListener();
-                WarrantTableAction.showPathPortalErrors();
+                if (_showWarnings) WarrantTableAction.showPathPortalErrors();
             } else {
                 _PathTurnoutMap.remove(name);
             }
@@ -688,7 +715,7 @@ public class OBlockTableAction extends AbstractAction {
             if (name!=null && name.startsWith("OB")){
                 WarrantTableAction.initPathPortalCheck();
                 WarrantTableAction.checkPathPortals(((BlockPathFrame)frame).getModel().getBlock());
-                WarrantTableAction.showPathPortalErrors();
+                if (_showWarnings) WarrantTableAction.showPathPortalErrors();
             }
         }
 
@@ -1385,7 +1412,7 @@ public class OBlockTableAction extends AbstractAction {
             return 5;
         }
 
-        private Portal getPortalByName(String name) {
+        protected Portal getPortalByName(String name) {
             for (int i=0; i<_portalList.size(); i++) {
                 if (_portalList.get(i).getName().equals(name) ) {
                     return _portalList.get(i);
@@ -1630,9 +1657,16 @@ public class OBlockTableAction extends AbstractAction {
                         if (toPortal!=null) { toName = toPortal.getName(); }
 
                         OPath path = new OPath((String)value, _block, fromName, 0, toName, 0);
-                        _block.addPath(path);
-                        initTempRow();
-                        _parent.updateOpenMenu();
+                        if (!_block.addPath(path)) {
+                            msg = java.text.MessageFormat.format(
+                                    rbx.getString("AddPathFailed"), (String)value);
+                            tempRow[col] = (String)value;
+                        } else {
+                            //if (fromPortal!=null) { fromPortal.addPath(path); }
+                            //if (toPortal!=null) { toPortal.addPath(path); }
+                            initTempRow();
+                            _parent.updateOpenMenu();
+                        }
                     }
                     fireTableDataChanged();
                 }
@@ -1652,7 +1686,7 @@ public class OBlockTableAction extends AbstractAction {
             switch(col) {
                 case FROM_PORTAL_COLUMN:
                     Portal portal = _block.getPortalByName((String)value);
-                    if (portal == null && !_portalList.contains(portal)) {
+                    if (portal == null || !_portalList.contains(portal)) {
                         int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
                             rbx.getString("BlockPortalConflict"), value, _block.getDisplayName()),
                             AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
@@ -1660,9 +1694,29 @@ public class OBlockTableAction extends AbstractAction {
                         if (response==JOptionPane.NO_OPTION) {
                             break;
                         }
-                        portal = new Portal(_block, (String)value, null);
+                        portal = _portalModel.getPortalByName((String)value);
+                        if (portal==null) {
+                            portal = new Portal(_block, (String)value, null);
+                        } else {
+                            if ( !portal.setFromBlock(_block, false)) {
+                                response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
+                                    rbx.getString("BlockPathsConflict"), value, portal.getFromBlockName()),
+                                    AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
+                                    JOptionPane.WARNING_MESSAGE);
+                                if (response==JOptionPane.NO_OPTION) {
+                                    break;
+                                }
+
+                            }
+                            portal.setFromBlock(_block, true);
+                            _portalModel.fireTableDataChanged();
+                        }
                     }
                     path.setFromPortalName((String)value);
+                    if (!portal.addPath(path)) {
+                        msg = java.text.MessageFormat.format(
+                                rbx.getString("AddPathFailed"), (String)value);
+                    }
                     fireTableRowsUpdated(row,row);
                     break;
                 case NAME_COLUMN:
@@ -1676,7 +1730,7 @@ public class OBlockTableAction extends AbstractAction {
                     break;
                 case TO_PORTAL_COLUMN:
                     portal = _block.getPortalByName((String)value);
-                    if (portal == null && !_portalList.contains(portal)) {
+                    if (portal == null || !_portalList.contains(portal)) {
                         int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
                             rbx.getString("BlockPortalConflict"), value, _block.getDisplayName()),
                             AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
@@ -1684,10 +1738,30 @@ public class OBlockTableAction extends AbstractAction {
                         if (response==JOptionPane.NO_OPTION) {
                             break;
                         }
-                        portal = new Portal(null, (String)value, _block);
+                        portal = _portalModel.getPortalByName((String)value);
+                        if (portal==null) {
+                            portal = new Portal(null, (String)value, _block);
+                        } else {
+                            if ( !portal.setToBlock(_block, false)) {
+                                response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
+                                    rbx.getString("BlockPathsConflict"), value, portal.getToBlockName()),
+                                    AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
+                                    JOptionPane.WARNING_MESSAGE);
+                                if (response==JOptionPane.NO_OPTION) {
+                                    break;
+                                }
+
+                            }
+                            portal.setToBlock(_block, true);
+                            _portalModel.fireTableDataChanged();
+                        }
                     }
                     path.setToPortalName((String)value);
                     fireTableRowsUpdated(row,row);
+                    if (!portal.addPath(path)) {
+                        msg = java.text.MessageFormat.format(
+                                rbx.getString("AddPathFailed"), (String)value);
+                    }
                     break;
                 case EDIT_COL:
                     _parent.openPathTurnoutFrame(_parent.makePathTurnoutName(
@@ -2024,21 +2098,21 @@ public class OBlockTableAction extends AbstractAction {
             if (col<0 || row<0) {
                 return null;
             }
-            if (log.isDebugEnabled()) log.debug("DnDHandler.createTransferable: at table "+
-                                                _type+" from ("+row+", "+col+") data= \""
-                                                +table.getModel().getValueAt(row, col)+"\"");
+            //if (log.isDebugEnabled()) log.debug("DnDHandler.createTransferable: at table "+
+            //                                    _type+" from ("+row+", "+col+") data= \""
+            //                                    +table.getModel().getValueAt(row, col)+"\"");
             TableCellSelection tcss = new TableCellSelection(
                                 (String)table.getModel().getValueAt(row, col), row, col, _type);
             return new TableCellTransferable(tcss);
         }
 
         public void exportDone(JComponent c, Transferable t, int action) {
-            if (log.isDebugEnabled()) log.debug("DnDHandler.exportDone at table "+_type);
+            //if (log.isDebugEnabled()) log.debug("DnDHandler.exportDone at table "+_type);
         }
 
         /////////////////////import
         public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
-            if (log.isDebugEnabled()) log.debug("DnDHandler.canImport ");
+            //if (log.isDebugEnabled()) log.debug("DnDHandler.canImport ");
 
             boolean canDoIt = false;
             for (int k=0; k<transferFlavors.length; k++){
@@ -2055,7 +2129,7 @@ public class OBlockTableAction extends AbstractAction {
         }
 
         public boolean importData(JComponent comp, Transferable tr) {
-            if (log.isDebugEnabled()) log.debug("DnDHandler.importData ");
+            //if (log.isDebugEnabled()) log.debug("DnDHandler.importData ");
             DataFlavor[] flavors = new DataFlavor[] {TABLECELL_FLAVOR, DataFlavor.stringFlavor};
 
             if (!canImport(comp, flavors)) {
@@ -2073,8 +2147,8 @@ public class OBlockTableAction extends AbstractAction {
                         String data = (String)tr.getTransferData(DataFlavor.stringFlavor);
                         model.setValueAt(data, row, col);
                         model.fireTableDataChanged();
-                        if (log.isDebugEnabled()) 
-                            log.debug("DnDHandler.canImport: data= "+data+" dropped at ("+row+", "+col+")");
+                        //if (log.isDebugEnabled()) 
+                        //    log.debug("DnDHandler.importData: data= "+data+" dropped at ("+row+", "+col+")");
                         return true;
                     }
                 }
@@ -2189,8 +2263,8 @@ public class OBlockTableAction extends AbstractAction {
                         data = (String)sel.getTransferData(DataFlavor.stringFlavor);
                         model.setValueAt(data, row, col);
                         model.fireTableDataChanged();
-                        if (log.isDebugEnabled()) 
-                            log.debug("DnDJTable.drop: data= "+data+" dropped at ("+row+", "+col+")");
+                        //if (log.isDebugEnabled()) 
+                        //    log.debug("DnDJTable.drop: data= "+data+" dropped at ("+row+", "+col+")");
                         evt.dropComplete(true);
                         return;
                     }
@@ -2208,13 +2282,13 @@ public class OBlockTableAction extends AbstractAction {
         }
         /**************** DragGestureListener ***************/
         public void dragGestureRecognized(DragGestureEvent e) {
-            if (log.isDebugEnabled()) log.debug("DnDJTable.dragGestureRecognized ");
+            //if (log.isDebugEnabled()) log.debug("DnDJTable.dragGestureRecognized ");
             //Transferable t = getTransferable(this);
             //e.startDrag(DragSource.DefaultCopyDrop, this, this); 
         }
         /**************** DragSourceListener ************/
         public void dragDropEnd(DragSourceDropEvent e) {
-            if (log.isDebugEnabled()) log.debug("DnDJTable.dragDropEnd ");
+            //if (log.isDebugEnabled()) log.debug("DnDJTable.dragDropEnd ");
             }
         public void dragEnter(DragSourceDragEvent e) {
             //if (log.isDebugEnabled()) log.debug("DnDJTable.DragSourceDragEvent ");
@@ -2238,7 +2312,7 @@ public class OBlockTableAction extends AbstractAction {
             return TABLECELL_FLAVOR.equals(flavor);
         }
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {
-            if (log.isDebugEnabled()) log.debug("DnDJTable.getTransferData ");
+            //if (log.isDebugEnabled()) log.debug("DnDJTable.getTransferData ");
             if (isDataFlavorSupported(TABLECELL_FLAVOR)) {
                 int row = getSelectedRow();
                 int col = getSelectedColumn();

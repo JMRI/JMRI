@@ -33,7 +33,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
@@ -119,9 +119,11 @@ public class OBlock extends jmri.Block {
             return;
         }
         String pName = portal.getName();
-        for (int i=0; i<_portals.size(); i++) {
-            if (pName.equals(_portals.get(i).getName())) {
-                return;
+        if (pName!=null) {  // pName may be null if called from Portal ctor
+            for (int i=0; i<_portals.size(); i++) {
+                if (pName.equals(_portals.get(i).getName())) {
+                    return;
+                }
             }
         }
         _portals.add(portal);
@@ -201,26 +203,28 @@ public class OBlock extends jmri.Block {
     /**
     * Enforce unique path names within block
     */
-    public void addPath(OPath path) {
+    public boolean addPath(OPath path) {
         String pName = path.getName();
+        if (log.isDebugEnabled()) log.debug("addPath \""+pName+"\" to OBlock "+getSystemName());
         List <Path> list = getPaths();
         for (int i=0; i<list.size(); i++) {
             if (pName.equals(((OPath)list.get(i)).getName())) {
-                return;
+                return false;
             }
         }
         path.setBlock(this);
         Portal portal = getPortalByName(path.getFromPortalName());
         if (portal!=null) {
-            portal.addPath(path);
+            if (!portal.addPath(path)) { return false; }
         }
         portal = getPortalByName(path.getToPortalName());
         if (portal!=null) {
-            portal.addPath(path);
+            if (!portal.addPath(path)) { return false; }
         }
         int oldSize = list.size();
         super.addPath(path);
         firePropertyChange("pathCount", new Integer(oldSize), new Integer(getPaths().size()));
+        return true;
     }
 
     public void removePath(Path path) {

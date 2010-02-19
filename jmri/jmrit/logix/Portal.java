@@ -55,6 +55,7 @@ public class Portal  {
             log.error("Path \""+path.getName()+"\" has no block.");
             return false;
         }
+        //if (log.isDebugEnabled()) log.debug("addPath: "+toString());
         if (!_portalName.equals(path.getFromPortalName()) &&
                 !_portalName.equals(path.getToPortalName()) ){
             log.error("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
@@ -82,7 +83,10 @@ public class Portal  {
     private boolean addPath(List <OPath> list, OPath path) {
         String pName =path.getName();
         for (int i=0; i<list.size(); i++) {
-            if (pName.equals(list.get(i).getName())) { return false; }
+            if (pName.equals(list.get(i).getName())) { log.error("Path \""+path.getName()+
+                "\" is duplicate name for another path in Portal \""+_portalName+"\".");
+                return false; 
+            }
         }
         list.add(path);
         return true;
@@ -160,7 +164,7 @@ public class Portal  {
     public List <OPath> getToPaths() { return _toPaths; }
 
     /**
-    * Set block name. Verify that all toPaths are contained in the block.
+    * Set block name. Verify that all fromPaths are contained in the block.
     * @return false if paths are not in the block
     */
     public boolean setFromBlock(OBlock block, boolean changePaths) {

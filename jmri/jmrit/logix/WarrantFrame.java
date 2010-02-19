@@ -60,12 +60,23 @@ import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
 /**
- * An WarrantAction contains the operating permissions and directives needed for
- * a train to proceed from an Origin to a Destination
+ * WarrantFame creates and edits Warrants
  * <P>
- * 
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ * <P>
  *
- * @author	Pete Cressman  Copyright (C) 2009
+ * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener, PropertyChangeListener {
 
@@ -848,7 +859,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
 
         /////////////////////import
         public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
-            if (log.isDebugEnabled()) log.debug("DnDImportHandler.canImport ");
+            //if (log.isDebugEnabled()) log.debug("DnDImportHandler.canImport ");
 
             for (int k=0; k<transferFlavors.length; k++){
                 if (transferFlavors[k].equals(DataFlavor.stringFlavor)) {
@@ -859,7 +870,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         }
 
         public boolean importData(JComponent comp, Transferable tr) {
-            if (log.isDebugEnabled()) log.debug("DnDImportHandler.importData ");
+            //if (log.isDebugEnabled()) log.debug("DnDImportHandler.importData ");
             DataFlavor[] flavors = new DataFlavor[] {DataFlavor.stringFlavor};
 
             if (!canImport(comp, flavors)) {
@@ -1079,45 +1090,60 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
 
     private boolean setOriginBlock() {
         OBlock block = getEndPointBlock(_originBlockBox);
+        boolean result = true;
         if (block == null) {
-            _originPathBox.removeAllItems();
-            _originPortalBox.removeAllItems();
-            return false;
+            result = false;
         } else {
             if (_originBlockOrder!= null && block==_originBlockOrder.getBlock() &&
                     pathIsValid(block, _originBlockOrder.getPathName())) {
                 return true; 
-            }
-            _originBlockOrder = new BlockOrder(block);
-            if (!setPathBox(_originPathBox, _originPortalBox, block)) {
-                _originPathBox.removeAllItems();
-                _originPortalBox.removeAllItems();
-                _originBlockBox.setText("");
-                return false;
+            } else {
+                if (pathsAreValid(block)) {
+                    _originBlockOrder = new BlockOrder(block);
+                    if (!setPathBox(_originPathBox, _originPortalBox, block)) {
+                        result = false;
+                        _originBlockBox.setText("");
+                    }
+                } else {
+                    _originBlockBox.setText("");
+                    result = false;
+                }
             }
         }
-        return true; 
+        if (!result) {
+            _originPathBox.removeAllItems();
+            _originPortalBox.removeAllItems();
+        }
+        return result; 
     }
 
     private boolean setDestinationBlock() {
         OBlock block = getEndPointBlock(_destBlockBox);
+        boolean result = true;
         if (block == null) {
-            _destPathBox.removeAllItems();
-            return false;
+            result = false;
         } else {
-            if (_destBlockOrder!=null && block==_destBlockOrder.getBlock() &&
+            if (_destBlockOrder!= null && block==_destBlockOrder.getBlock() &&
                     pathIsValid(block, _destBlockOrder.getPathName())) {
-                return true;
-            }
-            _destBlockOrder = new BlockOrder(block);
-            if (!setPathBox(_destPathBox, null, block)) {
-                _destPathBox.removeAllItems();
-                _destPortalBox.removeAllItems();
-                _destBlockBox.setText("");
-                return false;
+                return true; 
+            } else {
+                if (pathsAreValid(block)) {
+                    _destBlockOrder = new BlockOrder(block);
+                    if (!setPathBox(_destPathBox, _destPortalBox, block)) {
+                        result = false;
+                        _destBlockBox.setText("");
+                    }
+                } else {
+                    _destBlockBox.setText("");
+                    result = false;
+                }
             }
         }
-        return true;
+        if (!result) {
+            _originPathBox.removeAllItems();
+            _originPortalBox.removeAllItems();
+        }
+        return result; 
     }
 
     private boolean setViaBlock() {
@@ -1127,14 +1153,18 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             _viaBlockOrder = null;
             return true;
         } else {
-            if (_viaBlockOrder!=null && block==_viaBlockOrder.getBlock()) {
+            if (_viaBlockOrder!=null && block==_viaBlockOrder.getBlock() &&
+                    pathIsValid(block, _viaBlockOrder.getPathName())) {
                 return true;
-            }
-            _viaBlockOrder = new BlockOrder(block);
-            if (!setPathBox(_viaPathBox, null, block)) {
-                _viaPathBox.removeAllItems();
-                _viaBlockBox.setText("");
-                return false;
+            } else {
+                if (pathsAreValid(block)) {
+                    _viaBlockOrder = new BlockOrder(block);
+                    if (!setPathBox(_viaPathBox, null, block)) {
+                        _viaPathBox.removeAllItems();
+                        _viaBlockBox.setText("");
+                        return false;
+                    }
+                }
             }
         }
         return false;
@@ -1673,7 +1703,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         return true;
     }
 
-    private boolean pathIsValid(OBlock block, String pathName) {
+    private boolean pathsAreValid(OBlock block) {
         List <Path> list = block.getPaths();
         if (list.size()==0) {
             JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
@@ -1682,9 +1712,39 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             return false;
         }
         for (int i=0; i<list.size(); i++) {
-             if (pathName.equals(((OPath)list.get(i)).getName()) ){
-                 return true;
-             }
+            OPath path = (OPath)list.get(i);
+            if (path.getFromPortalName()==null && path.getToPortalName()==null) {
+                JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
+                        rb.getString("PathNeedsPortal"), path.getName(), block.getDisplayName()),
+                        rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean pathIsValid(OBlock block, String pathName) {
+        List <Path> list = block.getPaths();
+        if (list.size()==0) {
+            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
+                    rb.getString("NoPaths"), block.getDisplayName()),
+                    rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        if (pathName!=null) {
+            for (int i=0; i<list.size(); i++) {
+                OPath path = (OPath)list.get(i);
+                //if (log.isDebugEnabled()) log.debug("pathIsValid: pathName= "+pathName+", i= "+i+", path is "+path.getName());  
+                if (pathName.equals(path.getName()) ){
+                    if (path.getFromPortalName()==null && path.getToPortalName()==null) {
+                        JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
+                                rb.getString("PathNeedsPortal"), pathName, block.getDisplayName()),
+                                rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                        return false;
+                    }
+                    return true;
+                }
+            }
         }
         JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
                 rb.getString("PathInvalid"), pathName, block.getDisplayName()),
