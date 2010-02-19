@@ -124,6 +124,8 @@ public class ControlPanelEditor extends Editor {
                                                      Color.black, new Color(255, 250, 210), Color.black));
         // register the resulting panel for later configuration
         InstanceManager.configureManagerInstance().registerUser(this);
+        pack();
+        setVisible(true);
     }
 
     private void makeIconMenu() {

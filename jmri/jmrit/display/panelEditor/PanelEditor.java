@@ -345,6 +345,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
         // move this editor panel off the panel's position
         getTargetFrame().setLocationRelativeTo(this);
+        getTargetFrame().pack();
         getTargetFrame().setVisible(true);
         if (_debug) log.debug("PanelEditor ctor done.");
     }  // end ctor
@@ -477,7 +478,7 @@ public class PanelEditor extends Editor implements ItemListener {
      */
     public JmriJFrame makeFrame(String name) {
         JmriJFrame targetFrame = new JmriJFrame(name);
-
+        targetFrame.setVisible(false);
 
         //ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
         JMenuBar menuBar = new JMenuBar();
