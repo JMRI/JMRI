@@ -146,6 +146,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _positionableLevels[i] = true;
         }
         _defaultToolTip = new ToolTip(null, 0, 0);
+        setVisible(false);
     }
 
     public List <Positionable> getContents() {
@@ -186,7 +187,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         });
         _targetPanel.addMouseListener(this);
         _targetPanel.addMouseMotionListener(this);
-        _targetFrame.pack();
+        //_targetFrame.pack();
     }
 
     protected void setTargetPanelSize(int w, int h) {
@@ -194,7 +195,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _targetPanel.setSize(w, h);
         _targetPanel.invalidate();
         //_targetFrame.setSize(w, h);
-        _targetFrame.pack();
+        //_targetFrame.pack();
     }
 
     protected Dimension getTargetPanelSize() {
