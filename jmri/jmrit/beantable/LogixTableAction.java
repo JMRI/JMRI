@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.61 $
+ * @version $Revision: 1.62 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -502,20 +502,32 @@ public class LogixTableAction extends AbstractTableAction {
         addLogixFrame.setLocation(50, 30);
         Container contentPane = addLogixFrame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        JPanel panel1 = new JPanel();
-        panel1.setLayout(new FlowLayout());
-        JLabel systemNameLabel = new JLabel(rbx.getString("LogixSystemName"));
-        panel1.add(systemNameLabel);
-        panel1.add(_systemName);
-        _systemName.setToolTipText(rbx.getString("LogixSystemNameHint"));
-        contentPane.add(panel1);
-        JPanel panel2 = new JPanel();
-        panel2.setLayout(new FlowLayout());
-        JLabel userNameLabel = new JLabel(rbx.getString("LogixUserName"));
-        panel2.add(userNameLabel);
-        panel2.add(_addUserName);
+
+        JPanel p;
+        p = new JPanel(); 
+        p.setLayout(new FlowLayout());
+        p.setLayout(new java.awt.GridBagLayout());
+        java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
+        c.gridwidth  = 1;
+        c.gridheight = 1;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = java.awt.GridBagConstraints.EAST;
+        p.add(new JLabel(rbx.getString("LogixSystemName")), c);
+        c.gridy = 1;
+        p.add(new JLabel(rbx.getString("LogixUserName")), c);
+        c.gridx = 1;
+        c.gridy = 0;
+        c.anchor = java.awt.GridBagConstraints.WEST;
+        c.weightx = 1.0;
+        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
+        p.add(_systemName,c);
+        c.gridy = 1;
+        p.add(_addUserName,c);
         _addUserName.setToolTipText(rbx.getString("LogixUserNameHint"));
-        contentPane.add(panel2);
+        _systemName.setToolTipText(rbx.getString("LogixSystemNameHint"));
+        contentPane.add(p);
+
         // set up message
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
@@ -595,6 +607,9 @@ public class LogixTableAction extends AbstractTableAction {
 
 	void copyLogixPressed(ActionEvent e) {
 		String uName = _addUserName.getText().trim();
+        if (uName.length()==0) {
+            uName = null;
+        }
         if (!checkLogixSysName()) {
             return;
         }
@@ -689,7 +704,7 @@ public class LogixTableAction extends AbstractTableAction {
 
     boolean checkLogixUserName(String uName) {
 		// check if a Logix with the same user name exists
-		if (uName.length() > 0) {
+		if (uName!=null && uName.length() > 0) {
 			Logix x = _logixManager.getByUserName(uName);
 			if (x != null) {
 				// Logix with this user name already exists
@@ -764,6 +779,9 @@ public class LogixTableAction extends AbstractTableAction {
 		// possible change
 		_showReminder = true;
 		String uName = _addUserName.getText().trim();
+        if (uName.length()==0) {
+            uName = null;
+        }
         if (!checkLogixSysName()) {
             return;
         }

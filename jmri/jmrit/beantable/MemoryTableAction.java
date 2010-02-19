@@ -24,7 +24,7 @@ import jmri.util.JmriJFrame;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -119,24 +119,13 @@ public class MemoryTableAction extends AbstractTableAction {
             addFrame = new JmriJFrame(rb.getString("TitleAddMemory"));
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.MemoryAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
-            JPanel p;
-            p = new JPanel(); p.setLayout(new FlowLayout());
-            p.add(sysNameLabel);
-            p.add(sysName);
-            addFrame.getContentPane().add(p);
 
-            p = new JPanel(); p.setLayout(new FlowLayout());
-            p.add(userNameLabel);
-            p.add(userName);
-            addFrame.getContentPane().add(p);
-
-            JButton ok;
-            addFrame.getContentPane().add(ok = new JButton(rb.getString("ButtonOK")));
-            ok.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    okPressed(e);
-                }
-            });
+            ActionListener listener = new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        okPressed(e);
+                    }
+                };
+            addFrame.add(new AddNewDevicePanel(sysName, userName, "ButtonOK", listener));
         }
         addFrame.pack();
         addFrame.setVisible(true);

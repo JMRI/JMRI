@@ -41,7 +41,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.65 $
+ * @version     $Revision: 1.66 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -366,35 +366,13 @@ public class TurnoutTableAction extends AbstractTableAction {
             addFrame = new JmriJFrame(rb.getString("TitleAddTurnout"));
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.TurnoutAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
-            JPanel p;
-            p = new JPanel(); 
-            p.setLayout(new java.awt.GridBagLayout());
-            java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
-            c.gridwidth  = 1;
-            c.gridheight = 1;
-            c.gridx = 0;
-            c.gridy = 0;
-            c.anchor = java.awt.GridBagConstraints.EAST;
-            p.add(sysNameLabel,c);
-            c.gridy = 1;
-            p.add(userNameLabel,c);
-            c.gridx = 1;
-            c.gridy = 0;
-            c.anchor = java.awt.GridBagConstraints.WEST;
-            c.weightx = 1.0;
-            c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
-            p.add(sysName,c);
-            c.gridy = 1;
-            p.add(userName,c);
-            addFrame.getContentPane().add(p);
-            
-            JButton ok;
-            addFrame.getContentPane().add(ok = new JButton(rb.getString("ButtonOK")));
-            ok.addActionListener(new ActionListener() {
+
+            ActionListener listener = new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         okPressed(e);
                     }
-                });
+                };
+            addFrame.add(new AddNewDevicePanel(sysName, userName, "ButtonOK", listener));
         }
         addFrame.pack();
         addFrame.setVisible(true);
