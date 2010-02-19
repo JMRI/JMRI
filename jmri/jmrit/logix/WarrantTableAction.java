@@ -56,12 +56,29 @@ import jmri.util.table.ButtonRenderer;
 import jmri.jmrit.catalog.NamedIcon;
 
 /**
- * An WarrantAction contains the operating permissions and directives needed for
- * a train to proceed from an Origin to a Destination
+ * A WarrantAction contains the operating permissions and directives needed for
+ * a train to proceed from an Origin to a Destination.
+ * WarrantTableAction provides the menu for panels to List, Edit and Create
+ * Warrants.  It launched the appropiate frame for each action.
  * <P>
- * 
+ * It contains an internal class, TableFrame, that lists existing Warrants
+ * controls many of their functions.
+ * <P>
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ * <P>
  *
- * @author	Pete Cressman  Copyright (C) 2009
+ * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class WarrantTableAction extends AbstractAction {
 
@@ -177,7 +194,7 @@ public class WarrantTableAction extends AbstractAction {
             _textArea = new javax.swing.JTextArea(10, 50);
             _textArea.setEditable(false);
             _textArea.setTabSize(4);
-            _textArea.append("The following errors and warnings were found:");
+            _textArea.append(rb.getString("ErrWarnAreaMsg"));
             _textArea.append("\n\n");
         }
         List <Path> pathList = b.getPaths();
@@ -371,7 +388,7 @@ public class WarrantTableAction extends AbstractAction {
                 dispose();
                 return;
             }
-            if (userName.length()==0) {
+            if (userName.trim().length()==0) {
                 userName = null;
             }
             boolean failed = false;
