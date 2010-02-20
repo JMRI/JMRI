@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.48 $
+ * @version $Revision: 1.49 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -105,9 +105,12 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
 
         Element element = new Element(elemName);
         element.setAttribute("url", icon.getURL());        
-        element.setAttribute("rotate", String.valueOf(icon.getRotation()));
         element.setAttribute("degrees", String.valueOf(icon.getDegrees()));
         element.setAttribute("scale", String.valueOf(icon.getScale()));
+
+        // the "rotate" attribute was deprecated in 2.9.4, replaced by the "rotation" element
+        element.addContent(new Element("rotation").addContent(String.valueOf(icon.getRotation())));
+        
         return element;
     }
     
@@ -324,13 +327,19 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 }
                 icon.setLoad(deg, scale, l);
                 if ( deg==0) {
+                    // "rotate" attribute is JMRI 2.9.3 and before
                     a = elem.getAttribute("rotate");
                     if (a!=null) {
                         int rotation = a.getIntValue();
+                        // 2.9.3 and before, only unscaled icons rotate
+                        if (scale == 1.0) icon.setRotation(rotation, l);
+                    }
+                    // "rotation" element is JMRI 2.9.4 and after
+                    Element e = elem.getChild("rotation");
+                    if (e!=null) {
                         // ver 2.9.4 allows orthogonal rotations of scaled icons
-                        if (scale==1.0 || getVersion() > 20903) {
-                            icon.setRotation(rotation, l);
-                        }
+                        int rotation = Integer.parseInt(e.getText());
+                        icon.setRotation(rotation, l);
                     }
                 }
             } catch (org.jdom.DataConversionException dce) {}
