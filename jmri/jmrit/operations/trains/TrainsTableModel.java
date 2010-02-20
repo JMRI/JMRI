@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
@@ -22,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.27 $
+ * @version   $Revision: 1.28 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -275,9 +276,13 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	} else if (manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
        		if (log.isDebugEnabled()) log.debug("Move train ("+train.getName()+")");
      		train.move();
-    	} else {
+    	} else if (train.getBuilt()){
        		if (log.isDebugEnabled()) log.debug("Terminate train ("+train.getName()+")");
-       		train.terminate();
+			int status = JOptionPane.showConfirmDialog(null,
+					"Terminate Train ("+train.getName()+") "+train.getDescription()+"?",
+					"Do you want to terminate train ("+train.getName()+")?", JOptionPane.YES_NO_OPTION);
+			if (status == JOptionPane.YES_OPTION)
+				train.terminate();
     	}
     }
 

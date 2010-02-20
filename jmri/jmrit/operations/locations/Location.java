@@ -18,7 +18,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -395,7 +395,8 @@ public class Location implements java.beans.PropertyChangeListener {
     
 	/**
 	 * Get track location by name and type
-	 * @param name
+	 * @param name track's name
+	 * @param type track type
 	 * @return track location
 	 */
     

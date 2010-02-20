@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.GridBagLayout;
+import java.awt.Dimension;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -10,6 +11,7 @@ import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
@@ -30,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class CarSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -46,13 +48,13 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		
 	// labels
 	JLabel textCarRoad = new JLabel();
+	JLabel textCarType = new JLabel();
 	JLabel textName = new JLabel(rb.getString("Name"));
 	JLabel textTrack = new JLabel(rb.getString("Track"));
 	JLabel textName2 = new JLabel(rb.getString("Name"));
 	JLabel textTrack2 = new JLabel(rb.getString("Track"));
 
 	// major buttons
-	
 	JButton saveButton = new JButton(rb.getString("Save"));
 	
 	// combo boxes
@@ -61,6 +63,10 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 	JComboBox destinationBox = LocationManager.instance().getComboBox();
 	JComboBox trackDestinationBox = new JComboBox(); 
 	JComboBox trainBox = TrainManager.instance().getComboBox();
+	
+	// check boxes
+	JCheckBox autoTrackCheckBox = new JCheckBox(rb.getString("Auto"));
+	JCheckBox autoDestinationTrackCheckBox = new JCheckBox(rb.getString("Auto"));
 		
 	public CarSetFrame() {
 		super();
@@ -74,22 +80,33 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		
 		// Layout the panel by rows
 		// row 1
+		JPanel pRow1 = new JPanel();
+		pRow1.setLayout(new BoxLayout(pRow1,BoxLayout.X_AXIS));
+		// row 1a
 		JPanel pCar = new JPanel();
 		pCar.setLayout(new GridBagLayout());
 		pCar.setBorder(BorderFactory.createTitledBorder(rb.getString("Car")));
 		addItem(pCar, textCarRoad, 1, 0);
-		pPanel.add(pCar);
+		pRow1.add(pCar);
 		
+		// row 1b
+		JPanel pType = new JPanel();
+		pType.setLayout(new GridBagLayout());
+		pType.setBorder(BorderFactory.createTitledBorder(rb.getString("Type")));
+		addItem(pType, textCarType, 1, 0);
+		pRow1.add(pType);
+		
+		pPanel.add(pRow1);
+	
 		// row 2
 		JPanel pLocation = new JPanel();
 		pLocation.setLayout(new GridBagLayout());
 		pLocation.setBorder(BorderFactory.createTitledBorder(rb.getString("Location")));
 		addItem(pLocation, textName, 1, 0);
 		addItem(pLocation, textTrack, 2, 0);
-		
-		// row 3
 		addItem(pLocation, locationBox, 1, 1);
 		addItem(pLocation, trackLocationBox, 2, 1);
+		addItem(pLocation, autoTrackCheckBox, 3, 1);
 		pPanel.add(pLocation);
 		
 		// optional panel
@@ -105,6 +122,7 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		addItem(pDestination, textTrack2, 2, 0);
 		addItem(pDestination, destinationBox, 1, 1);
 		addItem(pDestination, trackDestinationBox, 2, 1);
+		addItem(pDestination, autoDestinationTrackCheckBox, 3, 1);
 		pOptional.add(pDestination);
 		
 		// row 8
@@ -131,6 +149,14 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		// setup combobox
 		addComboBoxAction(locationBox);
 		addComboBoxAction(destinationBox);
+		
+		// setup checkbox
+		addCheckBoxAction(autoTrackCheckBox);
+		addCheckBoxAction(autoDestinationTrackCheckBox);
+		
+		// add tool tips
+		autoTrackCheckBox.setToolTipText(rb.getString("TipAutoTrack"));
+		autoDestinationTrackCheckBox.setToolTipText(rb.getString("TipAutoTrack"));
 
 		// build menu
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
@@ -141,18 +167,15 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		trainManager.addPropertyChangeListener(this);
 		
 		// set frame size and location for display
-		pack();
-		if ( (getWidth()<400)) 
-			setSize(450, getHeight()+50);
-		else
-			setSize (getWidth()+50, getHeight()+50);
+		packFrame();
 		setLocation(Control.panelX, Control.panelY);
-		setVisible(true);
+		setMinimumSize(new Dimension(500, getHeight()));
 	}
 	
 	public void loadCar(Car car){
 		_car = car;
 		textCarRoad.setText(car.getRoad()+" "+car.getNumber());
+		textCarType.setText(car.getType());
 		updateComboBoxes();
 		if (_car.getRouteLocation() != null)
 			log.debug("car has a pickup location "+_car.getRouteLocation().getName());
@@ -189,26 +212,10 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 	// location combo box
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource()== locationBox){
-			if (locationBox.getSelectedItem() != null){
-				if (locationBox.getSelectedItem().equals("")){
-					trackLocationBox.removeAllItems();
-				}else{
-					log.debug("CarSetFrame sees location: "+ locationBox.getSelectedItem());
-					Location l = (Location)locationBox.getSelectedItem();
-					l.updateComboBox(trackLocationBox);
-				}
-			}
+			updateLocation();
 		}
 		if (ae.getSource()== destinationBox){
-			if (destinationBox.getSelectedItem() != null){
-				if (destinationBox.getSelectedItem().equals("")){
-					trackDestinationBox.removeAllItems();
-				}else{
-					log.debug("CarSetFrame sees destination: "+ destinationBox.getSelectedItem());
-					Location l = (Location)destinationBox.getSelectedItem();
-					l.updateComboBox(trackDestinationBox);
-				}
-			}
+			updateDestination();
 		}
 	}
 	
@@ -252,7 +259,7 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 				if (!status.equals(Car.OKAY)){
 					log.debug ("Can't set car's destination because of "+ status);
 					JOptionPane.showMessageDialog(this,
-							rb.getString("carCanNotLocMsg")+ status,
+							rb.getString("carCanNotDestMsg")+ status,
 							rb.getString("carCanNotDest"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
@@ -380,6 +387,73 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 			_car.setRouteDestination(null);
 			managerXml.writeOperationsCarFile();
 		}
+	}
+	
+	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		if (ae.getSource() == autoTrackCheckBox) 
+			updateLocation();
+		if (ae.getSource() == autoDestinationTrackCheckBox) 
+			updateDestination();
+	}
+	
+	protected void updateLocation(){
+		if (locationBox.getSelectedItem() != null){
+			if (locationBox.getSelectedItem().equals("")){
+				trackLocationBox.removeAllItems();
+			}else{
+				log.debug("CarSetFrame sees location: "+ locationBox.getSelectedItem());
+				Location l = (Location)locationBox.getSelectedItem();
+				l.updateComboBox(trackLocationBox);
+				findAvailableTracks(l, trackLocationBox, autoTrackCheckBox);
+				if (_car.getLocation() != null && _car.getLocation().equals(l) && _car.getTrack() != null)
+					trackLocationBox.setSelectedItem(_car.getTrack());
+				packFrame();
+			}
+		}
+	}
+	
+	protected void updateDestination(){
+		if (destinationBox.getSelectedItem() != null){
+			if (destinationBox.getSelectedItem().equals("")){
+				trackDestinationBox.removeAllItems();
+			}else{
+				log.debug("CarSetFrame sees destination: "+ destinationBox.getSelectedItem());
+				Location l = (Location)destinationBox.getSelectedItem();
+				l.updateComboBox(trackDestinationBox);
+				findAvailableTracks(l, trackDestinationBox, autoDestinationTrackCheckBox);
+				if (_car.getDestination() != null && _car.getDestination().equals(l) && _car.getDestinationTrack() != null)
+					trackDestinationBox.setSelectedItem(_car.getDestinationTrack());
+				packFrame();
+			}
+		}
+	}
+	
+	/**
+	 * Find the available tracks that will accept this car
+	 * @param l location
+	 */
+	protected void findAvailableTracks(Location l, JComboBox box, JCheckBox checkBox){
+		if(checkBox.isSelected() && l != null){
+			List<String> tracks = l.getTracksByNameList(null);
+			for (int i=0; i<tracks.size(); i++){
+				Track track = l.getTrackById(tracks.get(i));
+				if (_car.testDestination(l, track).equals(Car.OKAY)){
+					box.setSelectedItem(track);
+					log.debug("Available track: "+track.getName()+" for location: "+l.getName());
+				} else {
+					box.removeItem(track);
+				}
+			}
+		}
+	}
+	
+	protected void packFrame(){
+		pack();
+		if ((getWidth()<450)) 
+			setSize(500, getHeight()+50);
+		else
+			setSize (getWidth()+50, getHeight()+50);		
+		setVisible(true);
 	}
 
 	public void dispose(){
