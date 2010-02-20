@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: layout.xsd,v 1.5 2010-02-16 05:37:59 jacobsen Exp $ -->
+<!-- $Id: layout.xsd,v 1.6 2010-02-20 05:51:08 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
 <!--                                                                        -->
@@ -85,6 +85,25 @@ signals - obsolete, EMPTY, never used
   <xs:element name="layout-config">
     <xs:complexType>
       <xs:sequence minOccurs="0" maxOccurs="unbounded" >
+
+        <xs:element name="jmriversion" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+                <xs:documentation>
+                  Automatically added to contain JMRI version writing the file
+                </xs:documentation>
+                <xs:appinfo>
+                    <jmri:usingclass configurexml="yes">jmri.configurexml.ConfigXmlManager</jmri:usingclass>
+                </xs:appinfo>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="major" type="xs:int" minOccurs="1" maxOccurs="1" />
+                <xs:element name="minor" type="xs:int" minOccurs="1" maxOccurs="1" />
+                <xs:element name="test" type="xs:int" minOccurs="0" maxOccurs="1" />
+                <xs:element name="modifier" type="xs:string" minOccurs="0" maxOccurs="1" />
+              </xs:sequence>
+            </xs:complexType>
+        </xs:element>
 
         <xs:element name="gui" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
