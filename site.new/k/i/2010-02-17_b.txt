@@ -95,25 +95,31 @@ Sometimes, the best you can do is the best you can do.
 </ol>
 
 <p>
-This is not air-tight, in that it doesn't extend to e.g. future patent
-complaints about future patents, after the next 18 months. 
-We believe that we've still got a very strong position on those,
-as Katzer stated in Court that JMRI didn't infringe any of his
-existing patents, because Katzer's ongoing chain of
-patents actually document the same set of inventions,
-and because quite a few people have helped us accumulate
-several file drawers of strong prior art to defeat future patents.
+This is not air-tight, in that it doesn't extend to 
+e.g. future patent complaints about future patents, 
+after the next 18 months. 
+We believe that 
+we've still got a very strong position on those,
+as Katzer stated in Court that JMRI didn't infringe any of 
+his existing patents, 
+because Katzer's ongoing chain of patents 
+actually document the same set of claimed 
+inventions, and because quite a few people 
+have helped us accumulate several file drawers of 
+strong prior art to defeat future patents.
 
 <p>
 It's very hard to craft an agreement that constrains all
-possible future behavior, so in the end you have to 
+possible future behavior, 
+so in the end you have to 
 trust that the people making the agreement are going to live up to 
 the intent of it.
 As Henry Stimson said, "The only way to make a man trustworthy is to trust him", 
 and that's what we're doing here. 
 We believe that this agreement has the right structure to motivate everybody to 
 just work on their own stuff without getting into fights, and 
-that it's fair.  We're going to trust Katzer to approach it on that same basis.
+that it's fair.  
+We're going to trust Katzer to approach it on that same basis.
 
 <p>
 We could not have reached this point without the help of the
