@@ -22,7 +22,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.76 $
+ * @version $Revision: 1.77 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -223,6 +223,15 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
             doc.addContent(0,p);
             
+            // add version at front
+            root.addContent(0,
+                new Element("fileversion")
+                    .addContent(new Element("major").addContent(""+jmri.Version.major))
+                    .addContent(new Element("minor").addContent(""+jmri.Version.minor))
+                    .addContent(new Element("test").addContent(""+jmri.Version.test))
+                    .addContent(new Element("modifier").addContent(jmri.Version.modifier))
+            );
+
             writeXML(file, doc);
         } catch (java.io.FileNotFoundException ex3) {
             log.error("FileNotFound error writing file: "+ex3.getLocalizedMessage());

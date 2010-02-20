@@ -3,7 +3,7 @@ package jmri;
 /**
  * Defines a simple place to get the JMRI version string.
  *<P>
- * These JavaDocs are for Version 2.9.3 of JMRI.
+ * These JavaDocs are for Version 2.9.4 of JMRI.
  *
  * <hr>
  * This file is part of JMRI.
@@ -19,10 +19,16 @@ package jmri;
  * for more details.
  * <P>
  * @author  Bob Jacobsen   Copyright 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010
- * @version $Revision: 1.121 $
+ * @version $Revision: 1.122 $
  */
 
 public class Version {
+
+     static final public int major = 2;
+     static final public int minor = 9;
+     static final public int test = 4;
+     static final public String modifier = "";
+
     /**
      * Provide the current version string in I.J.K format.
      * <P>
@@ -31,5 +37,9 @@ public class Version {
      *
      * @return The current version string
      */
-     static public String name() { return "2.9.3"; }
+     static public String name() { 
+        return ""+major+"."+minor+"."+test
+                +( !modifier.equals("") ? " ("+modifier+")" :""); 
+     }
+     
 }
