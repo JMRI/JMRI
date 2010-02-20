@@ -4,7 +4,7 @@ package jmri.configurexml;
  * Abstract class to provide basic error handling for XmlAdapter
  *
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @see XmlAdapter
  */
 
@@ -42,5 +42,16 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
     public void setConfigXmlManager(ConfigXmlManager c) { this.c = c; }
     protected ConfigXmlManager getConfigXmlManager() { return c; }
     
+    private int majorRelease;
+    private int minorRelease;
+    private int testRelease;
+    public void setMajorRelease(int r) { majorRelease = r; }
+    public int getMajorRelease() { return majorRelease; }
+    public void setMinorRelease(int r) { minorRelease = r; }
+    public int getMinorRelease() { return minorRelease; }
+    public void setTestRelease(int r) { testRelease = r; }
+    public int getTestRelease() { return testRelease; }
+    public long getVersion() {return (long)(10000*majorRelease)+100*minorRelease+testRelease; }
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractXmlAdapter.class.getName());
 }

@@ -22,7 +22,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.78 $
+ * @version $Revision: 1.79 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -174,7 +174,21 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     "http://jmri.org/xml/schema/layout.xsd",
                     org.jdom.Namespace.getNamespace("xsi",
                       "http://www.w3.org/2001/XMLSchema-instance"));
+        addVersion(root);
         return root;
+    }
+    protected void addVersion(Element root) {
+        Element element = new Element("version");
+        Element e =  new Element("majorRelease");
+        e.setText(""+jmri.Version.majorRelease);
+        element.setContent(e);
+        e =  new Element("minorRelease");
+        e.setText(""+jmri.Version.minorRelease);
+        element.addContent(e);
+        e =  new Element("testRelease");
+        e.setText(""+jmri.Version.testRelease);
+        element.addContent(e);
+        root.setContent(element);
     }
     protected void addPrefsStore(Element root) {
         for (int i=0; i<plist.size(); i++) {
@@ -342,6 +356,19 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         Element root = null;
         try {
             root = super.rootFromFile(fi);
+            int majorRelease = 0;
+            int minorRelease = 0;
+            int testRelease = 0;
+            Element v = root.getChild("version");
+            if (v!=null) {
+                try {
+                    majorRelease = Integer.parseInt(v.getChild("majorRelease").getText());
+                    minorRelease = Integer.parseInt(v.getChild("minorRelease").getText());
+                    testRelease = Integer.parseInt(v.getChild("testRelease").getText());
+                } catch (NullPointerException npe) {
+                } catch ( NumberFormatException nfe) {
+                }
+            }
             // get the objects to load
             List<Element> items = root.getChildren();
             for (int i = 0; i<items.size(); i++) {
@@ -357,6 +384,9 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 try {
                     adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
                     adapter.setConfigXmlManager(this);
+                    adapter.setMajorRelease(majorRelease);
+                    adapter.setMinorRelease(minorRelease);
+                    adapter.setTestRelease(testRelease);
                     // and do it
                     boolean loadStatus = adapter.load(item);
                     log.debug("load status for "+adapterName+" is "+loadStatus);
