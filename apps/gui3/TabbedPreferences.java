@@ -16,7 +16,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -25,17 +25,33 @@ public class TabbedPreferences extends AppConfigBase {
     public TabbedPreferences() {
         super(4);
         
-        for (int i=0; i<getNConnections(); i++)
-            addItem(rb.getString("TabbedLayoutConnection")+(i+1), JmrixConfigPane.instance(i));
-        addItem(rb.getString("TabbedLayoutProgrammer"), new jmri.jmrit.symbolicprog.ProgrammerConfigPane());
-        addItem(rb.getString("TabbedLayoutGUI"), new jmri.GuiLafConfigPane());
-        addItem(rb.getString("TabbedLayoutStartupActions"), new apps.PerformActionPanel());
-        addItem(rb.getString("TabbedLayoutCreateButton"), new apps.CreateButtonPanel());
-        addItem(rb.getString("TabbedLayoutStartupFiles"), new apps.PerformFilePanel());
-        addItem(rb.getString("TabbedLayoutStartupScripts"), new apps.PerformScriptPanel());
-        addItem(rb.getString("TabbedLayoutRoster"), new jmri.jmrit.roster.RosterConfigPane());
+        for (int i=0; i<getNConnections(); i++) {
+            addItem(rb.getString("TabbedLayoutConnection")+(i+1), null, JmrixConfigPane.instance(i), true);
+        }
+        
+        jmri.GuiLafConfigPane gui;
+        
+        addItem(rb.getString("TabbedLayoutProgrammer"), 
+                    "LabelTabbedLayoutProgrammer", new jmri.jmrit.symbolicprog.ProgrammerConfigPane(), true);
+        addItem(rb.getString("TabbedLayoutStartupActions"), 
+                    "LabelTabbedLayoutCreateButton", new apps.PerformActionPanel(), true);
+        addItem(rb.getString("TabbedLayoutCreateButton"), 
+                    "LabelTabbedLayoutStartupActions", new apps.CreateButtonPanel(), true);
+        addItem(rb.getString("TabbedLayoutStartupFiles"), 
+                    "LabelTabbedLayoutStartupFiles", new apps.PerformFilePanel(), true);
+        addItem(rb.getString("TabbedLayoutStartupScripts"), 
+                    "LabelTabbedLayoutStartupScripts", new apps.PerformScriptPanel(), true);
+        addItem(rb.getString("TabbedLayoutGUI"), 
+                    "LabelTabbedLayoutGUI", gui = new jmri.GuiLafConfigPane(), true);
+        addItem(rb.getString("TabbedLayoutLocale"), 
+                    "LabelTabbedLayoutLocale", gui.doLocale(), false);
+        addItem(rb.getString("TabbedLayoutRoster"), 
+                    "LabelTabbedLayoutRoster", new jmri.jmrit.roster.RosterConfigPane(), true);
 
-        pane.add("Messages", new jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane());
+        addItem(rb.getString("TabbedLayoutMessages"),
+                    "LabelTabbedLayoutMessages",
+                    new jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane(),
+                    false);
         
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(pane);
@@ -48,9 +64,34 @@ public class TabbedPreferences extends AppConfigBase {
             });
     }
     
-    void addItem(String title, JComponent item) {
-        pane.add(title, item);
-        items.add(item);  
+    /**
+     * Create a new tab containing an item
+     *
+     * @param title Title of the tab
+     * @param labelKey Key in the resource bundle for a label, or null
+     * @param item The configuration item to display
+     * @param store Should this item be saved for later storage? false means somebody
+     *        else is handling the storage responsibility.
+     */
+    void addItem(String title, String labelKey, JComponent item, boolean store) {
+        JComponent p= new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
+
+        if (labelKey != null) {
+            // insert label at top
+            JTextArea t = new JTextArea(rb.getString(labelKey));
+            t.setEditable(false);
+            t.setAlignmentX(0.5f);
+            t.setPreferredSize(t.getMinimumSize());
+            t.setMaximumSize(t.getMinimumSize());
+            t.setOpaque(false);
+            p.add(t);
+        }
+        p.add(item);
+        p.add(Box.createVerticalGlue());
+
+        pane.add(title, p);
+        if (store) items.add(item);  
     }
         
     JTabbedPane pane = new JTabbedPane();
