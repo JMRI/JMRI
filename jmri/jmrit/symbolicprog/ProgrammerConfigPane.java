@@ -13,15 +13,18 @@ import javax.swing.JPanel;
  *
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class ProgrammerConfigPane extends JPanel {
 
     public ProgrammerConfigPane() {
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        add(new JLabel("Format:"));
-        add(programmerBox = new JComboBox(jmri.jmrit.symbolicprog.ProgDefault.findListOfProgFiles()));
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        JPanel p = new JPanel();
+        p.setLayout(new java.awt.FlowLayout());
+        p.add(new JLabel("Format:"));
+        p.add(programmerBox = new JComboBox(jmri.jmrit.symbolicprog.ProgDefault.findListOfProgFiles()));
         programmerBox.setSelectedItem(jmri.jmrit.symbolicprog.ProgDefault.getDefaultProgFile());
+        add(p);
 
         // also create the advanced panel
         advancedPanel = new JPanel();
@@ -31,6 +34,17 @@ public class ProgrammerConfigPane extends JPanel {
     }
     JComboBox programmerBox;
 
+    /**
+     * Combined ctor to get both parts in one pane
+     */
+    public ProgrammerConfigPane(boolean include) {
+        this();
+        if (include) {
+            this.add(advancedPanel);
+            this.add(javax.swing.Box.createVerticalGlue());
+        }
+    }
+    
     public String getSelectedItem() {
         return (String) programmerBox.getSelectedItem();
     }

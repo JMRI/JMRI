@@ -39,7 +39,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.106 $
+ * @version     $Revision: 1.107 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -239,7 +239,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
     protected void doPreferences() {
         if (prefsFrame == null) {
-            prefsFrame = new JmriJFrame(rb.getString("MenuItemPreferences"));
+            prefsFrame = new JmriJFrame(rb.getString("TitlePreferences"));
             prefsFrame.getContentPane().setLayout(new BoxLayout(prefsFrame.getContentPane(), BoxLayout.X_AXIS));
             prefs = new AppConfigPanel(2);
             prefsFrame.getContentPane().add(prefs);

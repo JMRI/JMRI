@@ -13,10 +13,13 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
+    public String getHelpTarget() { return "package.apps.TabbedPreferences"; }
+    public String getTitle() { return rb.getString("TitlePreferences"); }
+
     // All the following needs to be in a separate preferences frame
     // class! How about switching AppConfigPanel to tabbed?
     public TabbedPreferences() {
@@ -29,7 +32,7 @@ public class TabbedPreferences extends AppConfigBase {
         jmri.GuiLafConfigPane gui;
         
         addItem(rb.getString("TabbedLayoutProgrammer"), 
-                    "LabelTabbedLayoutProgrammer", new jmri.jmrit.symbolicprog.ProgrammerConfigPane(), true);
+                    "LabelTabbedLayoutProgrammer", new jmri.jmrit.symbolicprog.ProgrammerConfigPane(true), true);
         addItem(rb.getString("TabbedLayoutStartupActions"), 
                     "LabelTabbedLayoutStartupActions", new apps.PerformActionPanel(), true);
         addItem(rb.getString("TabbedLayoutCreateButton"), 
