@@ -11,7 +11,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
+//import javax.swing.JSeparator;
 
 /**
  * Provide GUI to configure communications links.
@@ -34,7 +34,7 @@ import javax.swing.JSeparator;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.60 $
+ * @version	$Revision: 1.61 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -219,7 +219,7 @@ public class JmrixConfigPane extends JPanel {
         add(connectionPanel);
         details.setBorder(BorderFactory.createTitledBorder("Settings:"));
         add(details);
-        add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+        //add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 
         //updateComboConnection();
         selection();  // first time through, pretend we've selected a value
