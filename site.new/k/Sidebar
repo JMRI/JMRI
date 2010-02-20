@@ -6,7 +6,7 @@
 
     <h2><A HREF="/k/index.shtml">Introduction</a></h2>
     <UL>
-    <LI><A HREF="/k/index.shtml">Quick Overview</a>
+    <LI><A HREF="/k/summary.shtml">Historical Summary</a>
     <LI><A HREF="/k/news.shtml">Articles By Others</a>
     </UL>
 
@@ -16,26 +16,26 @@
     <LI><A HREF="/k/priorart.shtml">Helping</a>
     </UL>
     
-    <h2>Documents</h2>
-	<ul>
-	<li><A href="/k/correspondence/index.shtml">Correspondence with Katzer and His Lawyers</a>
-	<li><A href="/k/docket/index.shtml">Court Papers (Docket)</a>
-    </UL>
-    
-    <H2><a href="/k/Recent.shtml">Recent Updates</a></H2>
+    <H2><a href="/k/Recent.shtml">Key News Items</a></H2>
         <ul>
+        <li><a href="/k/Recent.shtml#2010-02-17">Settlement Agreement</a>
         <li><a href="/k/Recent.shtml#2009-12-10">Summary Judgment Ruling</a>
-        <li><a href="/k/Recent.shtml#nexthearing">Next Hearing Date</a>
         </ul>
     <H2><a href="/k/History.shtml">Full History</a></H2>
     
 	</ul>
 
+    <h2>Documents</h2>
+	<ul>
+	<li><A href="/k/docket/index.shtml">Court Papers (Docket)</a>
+	<li><A href="/k/correspondence/index.shtml">Correspondence with Katzer and His Lawyers</a>
+    </UL>
+    
 
     <H2>Background</H2>
     <ul>
-    <LI><A HREF="/k/copycomparison.shtml">Evidence of Copyright Violations</a>
     <LI><A HREF="/k/UDRP/index.shtml">Recovering DecoderPro.com via UDRP</a>
+    <LI><A HREF="/k/copycomparison.shtml">Evidence of Copyright Violations</a>
     </UL>
 
  </div> <!-- closes #side --> 

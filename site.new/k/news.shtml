@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: news.shtml,v 1.1 2009-12-01 04:26:06 jacobsen Exp $ -->
+<!-- $Id: news.shtml,v 1.2 2010-02-20 21:56:42 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -28,17 +28,56 @@
  <!-- the content goes here -->
  
 This dispute has attracted attention, even outside the 
-model railroad community.  On October 1, 2008, for example,
-doing a Google search for "JMRI Katzer" found 2,790 pages.
+model railroad community.  On January 1, 2010, for example,
+doing a Google search for "JMRI Katzer" found 7,120 pages.
 <P>
 On this page, we list some of the 
 articles and other discussions found on the web.
 The list is by no means complete!
 
 <p>
-A <a href="http://itmanagement.earthweb.com/osrc/article.php/3775446/Bruce+Perens:+A+Big+Change+for+Open+Source.htm">recent article</a> in 
+An
+<a href="http://itmanagement.earthweb.com/osrc/article.php/3775446/Bruce+Perens:+A+Big+Change+for+Open+Source.htm">October 2008 article</a> in 
 <a href="http://itmanagement.earthweb.com/">Datamation</a>
-by Bruce Perens is particularly interesting.
+by Bruce Perens provides a particularly good view of the issues at stake.
+
+<h3>Settlement Coverage</h3>
+
+The case settled during February 2010.  
+<p>
+Early web coverage included
+an article titled
+"<a href="http://lawandlifesiliconvalley.com/blog/?p=405">Jacobsen and FOSS Community Win Big in Jacobsen v. Katzer Settlement</a>"
+by Mark Radcliffe on his 
+<a href="http://lawandlifesiliconvalley.com/blog/">Law &amp; Life: Silicon Valley</a> site.
+
+<p>
+<a href="http://www.linux.com/community/profile?userid=836">Andy Updegrove</a>
+also covered it with a brief article titled
+"<a href="http://www.linux.com/news/featured-blogs/181-andy-updegrove/288017-a-big-victory-for-foss-jacobsen-v-katzer-is-settled">A Big Victory for F/OSS: Jacobsen v. Katzer is Settled</a>"
+on <a href="http:linux.com">Linux.com</a>.
+
+<a href="images/Day-after-settlement.png"><img src="images/Day-after-settlement.png" height="175" width="325" align="right"></a>
+
+<p>
+Detailed articles appeared shortly after on the 
+<a href="http://www.consortiuminfo.org/standardsblog/article.php?story=201002190850472">ConsortiumInfo</a> standards web site, and 
+on the <a href="http://ostatic.com/blog/the-model-train-software-brouhaha-ends-open-source-wins">OStatic</a> web site.
+
+<p>
+Once it was posted to 
+<a href="http://yro.slashdot.org/story/10/02/19/1614216/Jacobsen-v-Katzer-Settled-mdash-Victory-For-FOSS">Slashdot</a>, 
+the JMRI web site took 10's of thousands of hits
+(although of course some people in the discussion got a few of the details wrong).
+
+<p>
+Secondary articles appeared on
+
+<a href="http://www.linuxtoday.com/news_story.php3?ltsn=2010-02-19-028-35-NW-LL">Linux Today</a>,
+<a href="http://www.itbusinessedge.com/cm/blogs/bentley/victory-for-model-trains-and-open-source-licensing/?cs=39561">IT Business Edge</a>,
+<a href="http://manushahalia.blogspot.com/2010/02/enforcing-freedom-to-be-free.html">Won't Get Fooled Again</a>,
+<a href="http://www.linuxplus.net/2010/02/21/a-big-victory-for-foss-jacobsen-v-katzer-is-settled-2/">Linux Plus</a>,
+and others.
 
 <h3>Software Patent Aspects</h3>
 
@@ -367,7 +406,9 @@ The
 <a href="http://en.wikipedia.org/wiki/Artistic_License">Wikipedia Article</a>
 on the Artistic License has been updated to include this case, and somebody
 created an
-<a href="http://en.wikipedia.org/wiki/Jacobsen_v._Katzer">article about the case itself</a>.
+<a href="http://en.wikipedia.org/wiki/Jacobsen_v._Katzer">article about the case itself</a>
+(though Matt Katzer's brother was later caught trying to semi-anonymously slant it by
+making it appear that the Court had said some things favorable to Katzer when it actually hadn't)
 
 <p>
 By mid-September 2008, the case had attracted enough interest that it 
