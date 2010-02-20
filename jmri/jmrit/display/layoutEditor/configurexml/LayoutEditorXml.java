@@ -15,7 +15,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LayoutEditorXml extends AbstractXmlAdapter {
 
@@ -330,6 +330,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             log.debug("load via "+adapterName);
             try {
                 XmlAdapter adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
+                adapter.setMajorRelease(getMajorRelease());
+                adapter.setMinorRelease(getMinorRelease());
+                adapter.setTestRelease(getTestRelease());
                 // and do it
                 adapter.load(item, panel);
             } catch (Exception e) {

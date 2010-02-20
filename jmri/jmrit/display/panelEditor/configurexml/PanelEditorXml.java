@@ -16,7 +16,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class PanelEditorXml extends AbstractXmlAdapter {
 
@@ -124,6 +124,9 @@ public class PanelEditorXml extends AbstractXmlAdapter {
             log.debug("load via "+adapterName);
             try {
                 XmlAdapter adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
+                adapter.setMajorRelease(getMajorRelease());
+                adapter.setMinorRelease(getMinorRelease());
+                adapter.setTestRelease(getTestRelease());
                 // and do it
                 adapter.load(item, panel);
             } catch (Exception e) {

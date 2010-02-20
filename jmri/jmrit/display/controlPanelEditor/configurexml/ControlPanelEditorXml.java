@@ -16,7 +16,7 @@ import org.jdom.*;
  * Handle configuration for {@link ControlPanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
@@ -122,6 +122,9 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             try {
                 XmlAdapter adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
                 // and do it
+                adapter.setMajorRelease(getMajorRelease());
+                adapter.setMinorRelease(getMinorRelease());
+                adapter.setTestRelease(getTestRelease());
                 adapter.load(item, panel);
             } catch (Exception e) {
                 log.error("Exception while loading "+item.getName()+":"+e);
