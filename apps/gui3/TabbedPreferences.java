@@ -3,12 +3,9 @@
 package apps.gui3;
 
 import apps.AppConfigBase;
-import jmri.*;
-import jmri.jmrit.XmlFile;
 import jmri.jmrix.JmrixConfigPane;
 
 import java.awt.event.*;
-import java.io.File;
 import javax.swing.*;
 
 /**
@@ -16,7 +13,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -34,9 +31,9 @@ public class TabbedPreferences extends AppConfigBase {
         addItem(rb.getString("TabbedLayoutProgrammer"), 
                     "LabelTabbedLayoutProgrammer", new jmri.jmrit.symbolicprog.ProgrammerConfigPane(), true);
         addItem(rb.getString("TabbedLayoutStartupActions"), 
-                    "LabelTabbedLayoutCreateButton", new apps.PerformActionPanel(), true);
+                    "LabelTabbedLayoutStartupActions", new apps.PerformActionPanel(), true);
         addItem(rb.getString("TabbedLayoutCreateButton"), 
-                    "LabelTabbedLayoutStartupActions", new apps.CreateButtonPanel(), true);
+                    "LabelTabbedLayoutCreateButton", new apps.CreateButtonPanel(), true);
         addItem(rb.getString("TabbedLayoutStartupFiles"), 
                     "LabelTabbedLayoutStartupFiles", new apps.PerformFilePanel(), true);
         addItem(rb.getString("TabbedLayoutStartupScripts"), 
