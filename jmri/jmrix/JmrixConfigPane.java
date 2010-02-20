@@ -5,13 +5,12 @@ package jmri.jmrix;
 import jmri.InstanceManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
 /**
@@ -35,7 +34,7 @@ import javax.swing.JSeparator;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.59 $
+ * @version	$Revision: 1.60 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -211,15 +210,14 @@ public class JmrixConfigPane extends JPanel {
             }
         });
         JPanel manufacturerPanel = new JPanel();
-        manufacturerPanel.setLayout(new GridLayout(2,2));
-        //JPanel manufacturerPanel = new JPanel();
-        manufacturerPanel.add(new JLabel("System Manufacturer : ", JLabel.RIGHT));
+        manufacturerPanel.setBorder(BorderFactory.createTitledBorder("System manufacturer:"));
         manufacturerPanel.add(manuBox);
-        //JPanel connectionPanel = new JPanel();
-        manufacturerPanel.add(new JLabel("System Connection : ",  JLabel.RIGHT));
-        manufacturerPanel.add(modeBox);
+        JPanel connectionPanel = new JPanel();
+        connectionPanel.setBorder(BorderFactory.createTitledBorder("System connection:"));
+        connectionPanel.add(modeBox);
         add(manufacturerPanel);
-        //add(connectionPanel);
+        add(connectionPanel);
+        details.setBorder(BorderFactory.createTitledBorder("Settings:"));
         add(details);
         add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
 
