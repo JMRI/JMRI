@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.13 2010-02-17 22:51:26 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.14 2010-02-20 05:48:41 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -74,10 +74,13 @@ pane where you selected the Lenz protocol.
 This version of JMRI uses the new communications libraries introduced in 
 <a href="jmri2.9.3.shtml">JMRI 2.9.3</a>.
 On Windows, the installer should take care of all installation and deinstallation 
-required.  On Mac, no actions are necessary, the new distribution directory
-should just work.  On Linux, you may have to install and/or uninstall 
+required.  On Linux, you may have to install and/or uninstall 
 various communications library parts, see the
 <a href="../install/Linux.html">JMRI Linux pages</a> for more info.
+On Mac, depending on which version you were previously using you
+may have to remove a communications library, see the
+<a href="../install/MacOSX.html">JMRI Mac OS X page</a>.
+
 <p>
 You may get some messages like:
 <code><pre>
@@ -309,6 +312,11 @@ you can work on an NCE-based panel without the actual layout connected.
 <p>
 Andrew Crosland added support for the 
 <a href="http://www.bachrus.com/speedometer.php">Bachrus electronic speedometer</a>.
+
+<p>
+Dan Boudreau added a new feature to operations: 
+When setting a car's location or destination, 
+the "auto" checkbox will only show valid tracks for that car.
 
 <!--#include virtual="/Footer" -->
 

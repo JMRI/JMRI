@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MacOSX.html,v 1.37 2010-01-17 22:51:39 jacobsen Exp $ -->
+<!-- $Id: MacOSX.html,v 1.38 2010-02-20 05:49:09 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -74,10 +74,9 @@
         
 		<LI>Determine if you have the needed hardware.
 		
-	    <P>
-	    	No Macintosh that runs Mac OS X has built-in serial ports,
-	    	so if your hardware needs a serial connection, 
-	    	you'll have to use a USB to serial adapter.
+	    <P>No Macintosh that runs Mac OS X has built-in serial ports,
+	    so if your hardware needs a serial connection, 
+	    you'll have to use a USB to serial adapter.
 
 	    <p>You will need Mac OS X drivers for the serial hardware you're using.
 	    If you're using MacOS X 10.4 or later, most hardware won't need a separate driver;
@@ -85,13 +84,13 @@
 	    so check the manufacturer's web site to make sure.
 	  
 	    <p>
-	      We test using a Keyspan PDA Adapter; those drivers are available at
-	      <a href="http://www.keyspan.com/downloads/">
-	      http://www.keyspan.com/downloads/</a>. Some device drivers will list
-	      each port under several names, e.g. starting with "/dev/tty" or
-	      "/dev/cu", for example "/dev/tty.KeyUSA19181.1". In that case, you
-	      must select the one that starts with "cu", e.g.
-	      "/dev/cu.KeyUSA19181.1".</p>
+	    We test using a Keyspan PDA Adapter; those drivers are available at
+	    <a href="http://www.keyspan.com/downloads/">
+	    http://www.keyspan.com/downloads/</a>. Some device drivers will list
+	    each port under several names, e.g. starting with "/dev/tty" or
+	    "/dev/cu", for example "/dev/tty.KeyUSA19181.1". In that case, you
+	    must select the one that starts with "cu", e.g.
+	    "/dev/cu.KeyUSA19181.1".</p>
 	      
 	    <p>There's a Mac OS X driver for USB-serial adapters
 	    based on the Prolific PL2303 chipset 
@@ -102,6 +101,9 @@
 	     
 	    <P>Note that because of baud rate limitations in Mac OS X itself,
 	    it's not possible to use a Digitrax MS100 currently.
+	    Use a 
+	    <a href="http://rrcirkits.com/">RR-CirKits LocoBuffer-USB</a> or 
+	    <a href="http://www.digitrax.com/prd_compint_pr3.php">Digitrax PR3</a> instead.
 	    <P>
 	    See our page on 
 	    <A HREF="/help/en/html/hardware/USBtoSerial.shtml">USB adapters</a>
@@ -109,9 +111,51 @@
       
 	<LI>Install the serial communications libraries</LI>
 
-     <em>This step is no longer needed if you are installing
-     JMRI 2.9.2 or later.  If you are installing JMRI 2.9.2 or later,
-     skip to the next step. </em>
+     Versions of JMRI before 2.9.2 required that you install
+     communications libraries on your computer.  If you are using
+     JMRI 2.9.2 or later, you do not need the libraries, and they
+     should be removed because they cause problems for some users.
+     
+     <p>
+     Do the steps in the sub-section below that corresponds to
+     your situation, then go to the next step.  You don't need to do all three!
+     
+     <p><b>If you're installing JMRI 2.9.2 or later, and have never
+     installed JMRI on this computer:</b>
+     
+     You shouldn't have to do anything special.  Just skip to
+     the next section below. 
+     
+     <p><b>If you're installing JMRI 2.9.2 or later, and you had installed
+     communications libraries for an earlier version:</b>
+
+     You need to remove the communications library files that were 
+     installed earlier.  To do this, locate and delete the
+     "/Library/Java/Extensions/librxtxSerial.jnilib" and
+     "~/Library/Java/Extensions/librxtxSerial.jnilib" files.
+     Using Finder, the sequence is:
+     <ul>
+     <li>Click on the icon for your computer's hard disk
+     <li>Click on the "Library" icon
+     <li>Click on the "Java" icon
+     <li>Click on the "Extensions" icon
+     <li>If there's a librxtxSerial.jnilib file, drag it to the Trash.
+     </ul>
+
+     and
+
+     <ul>
+     <li>Click on the icon for your home directory
+     <li>Click on the "Library" icon
+     <li>Click on the "Java" icon
+     <li>Click on the "Extensions" icon
+     <li>If there's a librxtxSerial.jnilib file, drag it to the Trash.
+     </ul>
+
+    If one of those files or directories isn't present, just skip this step.
+    
+     <p><b>If you're installing a version of JMRI older than JMRI
+     2.9.2, including the JMRI 2.8 production version, do this:</b>
      
 	 <p>Although Mac OS X comes with an up-to-date Java, it doesn't
 	 include the Java communications libraries.  These are needed to
