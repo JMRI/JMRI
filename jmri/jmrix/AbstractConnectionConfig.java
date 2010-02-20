@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.26 $
+ * @version	$Revision: 1.27 $
  */
 abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
@@ -43,22 +43,30 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
         if (init) return;
         portBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                adapter.setPort((String)portBox.getSelectedItem());
+               	String port = (String)portBox.getSelectedItem();
+            	if (port != null)
+            		adapter.setPort(port);
             }
         });
         baudBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                adapter.configureBaudRate((String)baudBox.getSelectedItem());
+              	String baud = (String)baudBox.getSelectedItem();
+            	if (baud != null)
+                adapter.configureBaudRate(baud);
             }
         });
         opt1Box.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                adapter.configureOption1((String)opt1Box.getSelectedItem());
+            	String opt1 = (String)opt1Box.getSelectedItem();
+            	if (opt1 != null)
+            		adapter.configureOption1(opt1);
             }
         });
         opt2Box.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                adapter.configureOption2((String)opt2Box.getSelectedItem());
+            	String opt2 = (String)opt2Box.getSelectedItem();
+            	if (opt2 != null)
+            		adapter.configureOption2(opt2);
             }
         });
         
