@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.15 2010-02-20 21:56:42 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.16 2010-02-20 22:03:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -323,6 +323,9 @@ A new preferences dialog is available for testing.  If people
 think it better, perhaps after some changes, we'll replace the current one
 with it.  To use it, select "New Tabbed Prefs" under the "Edit" menu.
 Please give feedback on the jmriusers list if you try it!
+
+<p>
+Dan Boudreau improved the appearance of the Turnout Control.
 
 <!--#include virtual="/Footer" -->
 
