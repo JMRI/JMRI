@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="http://www.jmri.org/xml/XSLT/panelfile.xsl" type="text/xsl"?>
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout.xsd">
+  <jmriversion>
+    <major>2</major>
+    <minor>9</minor>
+    <test>4</test>
+    <modifier>This line ignored</modifier>
+  </jmriversion>
   <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
       <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
@@ -84,6 +90,6 @@
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 2.7.8 on Tue Nov 24 23:12:54 PST 2009 $Id: LoadFileTestRef.xml,v 1.10 2010-02-03 06:33:34 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.8 on Tue Nov 24 23:12:54 PST 2009 $Id: LoadFileTestRef.xml,v 1.11 2010-02-20 05:50:08 jacobsen Exp $-->
 </layout-config>
 

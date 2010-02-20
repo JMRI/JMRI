@@ -22,7 +22,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.77 $
+ * @version $Revision: 1.78 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -225,7 +225,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             
             // add version at front
             root.addContent(0,
-                new Element("fileversion")
+                new Element("jmriversion")
                     .addContent(new Element("major").addContent(""+jmri.Version.major))
                     .addContent(new Element("minor").addContent(""+jmri.Version.minor))
                     .addContent(new Element("test").addContent(""+jmri.Version.test))
