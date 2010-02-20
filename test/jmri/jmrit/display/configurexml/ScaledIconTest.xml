@@ -5,21 +5,21 @@
     <major>2</major>
     <minor>9</minor>
     <test>4</test>
-    <modifier>This line ignored</modifier>
+    <modifier />
   </jmriversion>
   <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
     <sensor systemName="ISCLOCKRUNNING" inverted="false" />
   </sensors>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory systemName="IMCURRENTTIME" value="9:56 PM" />
+    <memory systemName="IMCURRENTTIME" value="11:43 PM" />
   </memories>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Nov 19 14:34:10 PST 2009" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
   <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
-  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Scaled Icon Test" x="565" y="159" height="412" width="358" editable="yes" positionable="yes" showcoordinates="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both">
-    <positionablelabel x="168" y="42" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Scaled to 150%" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="43" y="16" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Scaled to 75%" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Scaled Icon Test" x="468" y="398" height="412" width="358" editable="yes" positionable="yes" showcoordinates="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="both">
+    <positionablelabel x="168" y="42" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Scaled to 150%" size="14" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="43" y="16" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Scaled to 75%" size="14" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <positionablelabel x="242" y="98" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" rotate="1" degrees="0" scale="1.0" />
     </positionablelabel>
@@ -44,7 +44,9 @@
     <positionablelabel x="161" y="172" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/jmri48x48.gif" rotate="0" degrees="45" scale="1.5" />
     </positionablelabel>
+    <positionablelabel x="51" y="293" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Upsidedown" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="160" y="277" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Clockwise 45 degrees" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
   </paneleditor>
-  <!--Written by JMRI version 2.9.3-Pete#1 on Sun Feb 14 21:56:38 PST 2010 $Id: ScaledIconTest.xml,v 1.7 2010-02-20 05:50:09 jacobsen Exp $-->
+  <!--Written by JMRI version 2.9.4 on Fri Feb 19 23:43:04 PST 2010 $Id: ScaledIconTest.xml,v 1.8 2010-02-20 07:51:17 pete_cressman Exp $-->
 </layout-config>
 
