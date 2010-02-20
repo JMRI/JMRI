@@ -13,7 +13,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -50,6 +50,11 @@ public class TabbedPreferences extends AppConfigBase {
                     new jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane(),
                     false);
         
+        // horrible hack to make sure GUI is done first
+        items.remove(gui);
+        items.add(0, gui);
+
+        // finish layout
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(pane);
         JButton save = new JButton("Save");
