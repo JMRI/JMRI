@@ -422,7 +422,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             p.add(_sysNametext);
             _sysNametext.addKeyListener(new KeyAdapter() {
                     public void keyReleased(KeyEvent a){
-                        if (_sysNametext.getText().length() > 1) {
+                        if (_sysNametext.getText().length() > 0) {
                             _addTableButton.setEnabled(true);
                             _addTableButton.setToolTipText(null);
                             _table.clearSelection();
@@ -460,7 +460,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     
     void addToTable() {
         String name = _sysNametext.getText();
-        if (name != null && name .length() > 0) {
+        if (name != null && name.length() > 0) {
             NamedBean bean = _pickListModel.addBean(name);
             int setRow = _pickListModel.getIndexOf(bean);
             _table.setRowSelectionInterval(setRow, setRow);
