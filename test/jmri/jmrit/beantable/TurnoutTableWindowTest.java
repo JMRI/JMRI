@@ -16,7 +16,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the turnout table
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
 
@@ -73,7 +73,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {TurnoutTableWindowTest.class.getName()};
+		String[] testCaseName = {"-noloading", TurnoutTableWindowTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 

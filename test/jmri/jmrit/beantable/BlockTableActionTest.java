@@ -3,16 +3,18 @@
 package jmri.jmrit.beantable;
 
 import junit.framework.*;
+import junit.extensions.jfcunit.*;
 
 import jmri.Block;
 import jmri.InstanceManager;
+import jmri.util.*;
 
 /**
  * Tests for the jmri.jmrit.beantable.BlockTableAction class
  * @author	Bob Jacobsen  Copyright 2004, 2007, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
-public class BlockTableActionTest extends TestCase {
+public class BlockTableActionTest extends jmri.util.SwingTestCase {
 
     public void testCreate() {
         new BlockTableAction();
@@ -37,7 +39,7 @@ public class BlockTableActionTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {BlockTableActionTest.class.getName()};
+        String[] testCaseName = {"-noloading", BlockTableActionTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
@@ -48,8 +50,22 @@ public class BlockTableActionTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    // The minimal setup for log4J
+    protected void setUp() throws Exception { 
+        apps.tests.Log4JFixture.setUp(); 
+
+        super.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
+    }
+    protected void tearDown() throws Exception { 
+        JUnitUtil.resetInstanceManager();
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown();
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockTableActionTest.class.getName());
 }

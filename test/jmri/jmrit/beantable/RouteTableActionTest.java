@@ -9,7 +9,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrit.beantable.RouteTableAction class
  * @author	Bob Jacobsen  Copyright 2004, 2007
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class RouteTableActionTest extends TestCase {
 
@@ -30,7 +30,7 @@ public class RouteTableActionTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {RouteTableActionTest.class.getName()};
+        String[] testCaseName = {"-noloading", RouteTableActionTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

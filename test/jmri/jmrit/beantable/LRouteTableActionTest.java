@@ -94,7 +94,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {LRouteTableActionTest.class.getName()};
+        String[] testCaseName = {"-noloading", LRouteTableActionTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

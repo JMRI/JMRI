@@ -16,7 +16,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the sensor table
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class SensorTableWindowTest extends jmri.util.SwingTestCase {
 
@@ -73,7 +73,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {SensorTableWindowTest.class.getName()};
+		String[] testCaseName = {"-noloading", SensorTableWindowTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
