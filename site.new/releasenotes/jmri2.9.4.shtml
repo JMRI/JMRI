@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.17 2010-02-21 17:40:55 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.18 2010-02-21 23:08:52 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -50,6 +50,8 @@ many new features, including:
 
 <ul>
 <li>
+<li>
+<li>Much better control over warning messages and dialogs
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -149,7 +151,8 @@ Many decoder files got small fixes so that they were entirely in the proper
 format.
 
 <p>
-Lionel Jeanson updated the USBThrottle so it now supports browsing through rosters and selecting one.
+Lionel Jeanson updated the USBThrottle so it now supports browsing through 
+rosters and selecting one.
 
 <p>
 Lionel Jeanson provided a bug fix in wiimote throttle.
@@ -187,11 +190,12 @@ Dan Boudreau changed the check of operations train names to be case-independent,
 because Windows file names are case-indepedent: "First" and "first" conflict.
 
 <p>
-By suggestion of Jim Betz, locomotive roster entries now show the last date they were
-stored.
+By suggestion of Jim Betz, the roster now includes the date and time 
+that the entry was last saved, as reported
+by the computer on which it was saved. No checking of this value is done.
 
 <p>
-Kevin Dickerson made a number of changes to the way that JMRI works with the ecos, 
+Kevin Dickerson made a number of changes to the way that JMRI works with the eCos, 
 mainly in the handling of roster entries and the ecos database.
 
 <p>
@@ -200,24 +204,21 @@ intended that this cause any changes in how it appears to look to the user, but
 please let us know if you see any.
 
 <p>
-Bob Coleman updated the powerline insteon 2412s support.
-Catch reply message 50 (echo from a repeater) and clean up console output a bit
-Via an insteon 2412s an X10 device or a registered insteon device should turn on or off.
-Dim does not work yet.  Sensors do not work yet.  Just tested using Light table.
+Bob Coleman updated the powerline insteon 2412s support to 
+catch them reply message 50 (echo from a repeater) and clean up console output a bit.
+Via an insteon 2412s an X10 device or a registered insteon device should turn on or off,
+but dim and sensors are not yet available. 
 Sometimes first commands to an insteon device fail -- once they have been retried they work.
-Note that Insteon devices must be registered to work.
+Note that Insteon devices must be registered with the adapter to work.
 
 <p>
 Andrew Berridge made a small correction to the BLI Blueline decoder definition.
 
 <p>
 A problem that would occasionally cause a LocoNet-connected Double Output or Triple
-Output signal head to now show the most recent appearance.  The fix doesn't effect
-SE8c or non-LocoNet signal heads, so any problems with those should still be reported.
-
-<p>
-The roster now includes the date and time that the entry was last saved, as reported
-by the computer on which it was saved. No checking of this value is done.
+Output signal head to not show the most recent appearance has been fixed.  
+The fix doesn't effect SE8c or non-LocoNet signal heads, 
+so any problems with those should still be reported.
 
 <p>
 david zuhn updated the Linux start-up scripts.
@@ -240,7 +241,7 @@ display JMRI panel files.
 
 <p>
 The communications library issues that prevented JMRI 2.9.3 from being used
-on Mac OS X 1o.4 has been fixed.
+on Mac OS X 10.4 has been fixed.
 
 <p>
 The help system can now directly print help pages. See the new icons
@@ -264,7 +265,7 @@ Popup menu now always displays the "Throttle" option.
 "Throttle" is disabled if roster entry doesn't exist for the loco.
 
 <p>
-Improved how Conditionals convert Mmeory contents so they can be compared, etc.
+Improved how Conditionals convert Memory contents so they can be compared, etc.
 
 <p>
 Added default exception handlers so that uncaught exceptions will 
@@ -328,6 +329,8 @@ A new preferences dialog is available for testing.  If people
 think it better, perhaps after some changes, we'll replace the current one
 with it.  To use it, select "New Tabbed Prefs" under the "Edit" menu.
 Please give feedback on the jmriusers list if you try it!
+Note: you should only attempt to use one preference panel or the other
+during a single run of the program, don't switch back and forth.
 
 <p>
 Dan Boudreau improved the appearance of the Turnout Control.
