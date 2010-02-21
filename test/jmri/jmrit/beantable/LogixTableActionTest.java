@@ -125,9 +125,9 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase
         _logixTable.updateActionPressed();
 
         _logixTable.updateConditionalPressed(null);
-        // now close window
-        TestHelper.disposeWindow(_logixTable.editConditionalFrame,this);
 
+
+        // move on to another
         assertEquals("State Variable count", 15, _logixTable._curConditional.getCopyOfStateVariables().size());
         assertEquals("Action count", 2, _logixTable._curConditional.getCopyOfActions().size());
         _logixTable.newConditionalPressed(null);
@@ -161,7 +161,7 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {LogixTableActionTest.class.getName()};
+        String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
