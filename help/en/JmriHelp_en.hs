@@ -40,8 +40,8 @@
 
 <presentation default="true" displayviewimages="true">
     <name>main window</name>
-    <size width="700" height="500" />
-    <location x="100" y="100" />
+    <size height="500" width="700"/>
+    <location x="100" y="100"/>
     <title>JMRI Help</title>
     <image>toplevelfolder</image>
     <toolbar>
