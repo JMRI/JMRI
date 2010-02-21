@@ -19,7 +19,7 @@ import jmri.implementation.QuietShutDownTask;
 /**
  * Managers the Ecos Loco entries within JMRI.
  * @author Kevin Dickerson
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class EcosLocoAddressManager implements java.beans.PropertyChangeListener, EcosListener{
 
@@ -173,7 +173,7 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
     
     private void loadEcosData(){
 
-        final EcosLocoAddressManager ecosLocoMan = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+        //final EcosLocoAddressManager ecosLocoMan = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
         tc = EcosTrafficController.instance();
         tc.addEcosListener(this);
 

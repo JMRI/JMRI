@@ -2,14 +2,12 @@
 
 package apps;
 
-import jmri.GuiLafConfigPane;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.util.swing.JmriPanel;
 
 import java.awt.Component;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
@@ -20,7 +18,6 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import java.util.ArrayList;
 
 /**
  * Basic configuration infrastructure, to be 
@@ -28,7 +25,7 @@ import java.util.ArrayList;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class AppConfigBase extends JmriPanel {
 

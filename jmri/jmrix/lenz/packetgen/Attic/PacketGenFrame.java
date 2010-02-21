@@ -4,15 +4,13 @@ package jmri.jmrix.lenz.packetgen;
 
 import javax.swing.*;
 
-import jmri.util.StringUtil;
-
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetTrafficController;
 
 /**
  * Frame for user input of XpressNet messages
  * @author			Bob Jacobsen   Copyright (C) 2001,2002
- * @version			$Revision: 2.6 $
+ * @version			$Revision: 2.7 $
  */
 public class PacketGenFrame extends jmri.util.JmriJFrame {
 

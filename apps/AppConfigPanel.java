@@ -3,27 +3,21 @@
 package apps;
 
 import jmri.GuiLafConfigPane;
-import jmri.InstanceManager;
 import jmri.jmrix.JmrixConfigPane;
-import jmri.util.swing.JmriPanel;
 
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.MessageFormat;
-import java.util.ResourceBundle;
 
 import javax.swing.*;
-
-import java.util.ArrayList;
 
 /**
  * Basic configuration GUI infrastructure.
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.34 $
+ * @version	$Revision: 1.35 $
  */
 public class AppConfigPanel extends AppConfigBase {
 

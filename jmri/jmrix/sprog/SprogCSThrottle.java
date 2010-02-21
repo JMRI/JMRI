@@ -1,6 +1,5 @@
 package jmri.jmrix.sprog;
 
-import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
@@ -17,7 +16,7 @@ import jmri.jmrix.sprog.SprogCommandStation;
  * <P>
  *
  * @author	Andrew Crosland  Copyright (C) 2006
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class SprogCSThrottle extends AbstractThrottle
 {

@@ -98,6 +98,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         }
     }
     
+    /*
     private void storeDisplayMsg(Element messages, String attr, boolean value){
         Element userPref;
         if (!value){
@@ -105,6 +106,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
             messages.addContent(userPref);
         }
     }
+    */
     
     public void setStoreElementClass(Element messages) {
         messages.setAttribute("class","jmri.managers.configurexml.DefaultUserMessagePreferencesXml");
@@ -214,6 +216,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         return(0x00);
     }
     
+    /*
     @SuppressWarnings("unchecked")
     private boolean loadDisplayMsg(Element messages, String attr){
         List<Element> messageList = messages.getChildren(attr);
@@ -228,6 +231,8 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         }
         return (false);
     }
+    */
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultUserMessagePreferencesXml.class.getName());
 }
+    

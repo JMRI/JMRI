@@ -4,13 +4,9 @@ package jmri.jmris.srcp;
 
 import jmri.jmris.*;
 
-import java.net.*;
 import java.io.*;
-import java.lang.*;
-import java.util.Vector;
 
 // imports for ZeroConf.
-import javax.jmdns.*;
 import jmri.util.zeroconf.ZeroConfUtil;
 
 import jmri.InstanceManager;
@@ -18,7 +14,7 @@ import jmri.InstanceManager;
 /**
  * This is an implementaiton of SRCP for JMRI.
  * @author Paul Bender Copyright (C) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  *
  */
 public class JmriSRCPServer extends JmriServer{

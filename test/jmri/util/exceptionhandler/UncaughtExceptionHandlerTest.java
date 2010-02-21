@@ -3,15 +3,13 @@
 package jmri.util.exceptionhandler;
 
 import junit.framework.*;
-import junit.extensions.jfcunit.finder.*;
-import junit.extensions.jfcunit.eventdata.*;
 
 import jmri.util.*;
 
 /**
  * Tests for the jmri.util.UncaughtExceptionHandler class.
  * @author	Bob Jacobsen  Copyright 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class UncaughtExceptionHandlerTest extends SwingTestCase {
 

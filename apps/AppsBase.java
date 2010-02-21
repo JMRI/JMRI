@@ -4,10 +4,7 @@ package apps;
 
 import jmri.*;
 import jmri.jmrit.XmlFile;
-import jmri.util.JmriJFrame;
 
-import java.awt.*;
-import java.awt.event.*;
 import java.io.File;
 import javax.swing.*;
 
@@ -28,7 +25,7 @@ import javax.swing.*;
  * </dl>
  * <P>
  * @author	Bob Jacobsen   Copyright 2009, 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public abstract class AppsBase {
 

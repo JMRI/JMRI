@@ -3,14 +3,12 @@
 package jmri.util.swing.mdi;
 
 import junit.framework.*;
-import javax.swing.*;
 
-import jmri.util.swing.*;
 
 /**
  *
  * @author	    Bob Jacobsen  Copyright 2003, 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class PackageTest extends TestCase {
 

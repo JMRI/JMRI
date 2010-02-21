@@ -24,8 +24,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
-import org.python.modules.newmodule;
-
 import java.util.List;
 
 /**
@@ -33,7 +31,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
  * @author  Dennis Miller Copyright 2004, 2005
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 

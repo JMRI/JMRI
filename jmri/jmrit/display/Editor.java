@@ -1249,7 +1249,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     protected void addReporterEditor() {
         IconAdder editor = new IconAdder("ReporterEditor");
-        ActionListener addIconAction = new ActionListener() {
+        new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 addReporter();
             }

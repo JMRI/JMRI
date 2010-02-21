@@ -2,8 +2,6 @@
 
 package jmri.jmrit.beantable;
 
-import jmri.*;
-
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 
@@ -16,13 +14,10 @@ import java.util.ResourceBundle;
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
  * @author  Pete Cressman    Copyright (C) 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
-
-    private  AddNewDevicePanel() {
-    }
 
     public AddNewDevicePanel(JTextField sysName, JTextField userName,
                              String addButtonLabel, ActionListener listener) {

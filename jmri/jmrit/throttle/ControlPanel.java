@@ -25,7 +25,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.MouseInputAdapter;
 
 import jmri.DccThrottle;
-import jmri.jmrit.roster.RosterEntry;
 import jmri.util.MouseInputAdapterInstaller;
 import jmri.util.SwingUtil;
 
@@ -42,7 +41,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.76 $
+ * @version    $Revision: 1.77 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
@@ -257,7 +256,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         }
         _speedStepMode=speedStepMode;
         /* Set maximum speed based on the max speed stored in the roster as a percentage of the maximum */
-        maxSpeed = (int) ((float) intSpeedSteps*((float)maxSpeedPCT)/((float)100));
+        maxSpeed = (int) ((float) intSpeedSteps*((float)maxSpeedPCT)/100);
         
         // rescale the speed slider to match the new speed step mode
         internalAdjust=true;
@@ -736,7 +735,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.76 $
+     * @version    $Revision: 1.77 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -1031,7 +1030,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         int maxSpeedPCT = addressPanel.getRosterEntry().getMaxSpeedPCT();
 
 		/* Set a maximum speed */
-		maxSpeed = (int) ((float) intSpeedSteps*((float)maxSpeedPCT)/((float)100));
+		maxSpeed = (int) ((float) intSpeedSteps*((float)maxSpeedPCT)/100);
 		this.speedSlider.setMaximum(maxSpeed);
 		speedSpinnerModel.setMaximum(new Integer(maxSpeed));
 		

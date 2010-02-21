@@ -7,15 +7,13 @@ import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Reporter;
 
-import java.awt.FlowLayout;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import jmri.util.JmriJFrame;
@@ -25,7 +23,7 @@ import jmri.util.JmriJFrame;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {

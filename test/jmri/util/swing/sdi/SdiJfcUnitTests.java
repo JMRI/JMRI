@@ -4,9 +4,6 @@ package jmri.util.swing.sdi;
 
 import javax.swing.*;
 
-import java.util.*;
-
-import jmri.util.*;
 import jmri.util.swing.*;
 
 import junit.framework.*;
@@ -17,7 +14,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the SDI GUI 
  * @author			Bob Jacobsen  Copyright 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class SdiJfcUnitTests extends jmri.util.SwingTestCase {
 
