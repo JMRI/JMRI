@@ -12,7 +12,7 @@ import java.beans.PropertyChangeEvent;
  * Implements the jmri.Programmer interface via commands for the SRCP powerstation
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
 
@@ -193,31 +193,6 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
         }
     }
 
-/*
-
-  Removed method because it was only used in two call chains - from one place with
-  val = -1 which means read and from the othe with real val which means write. And
-  the method does really not do anything new. Besides adding to the confusion when
-  ignoring the mode parameter.
-
-    // internal method to create the SRCPMessage for programmer task start
-    protected SRCPMessage progTaskStart(int mode, int val, int cvnum) throws jmri.ProgrammerException {
-        // val = -1 for read command; mode is direct, etc
-        if (val < 0) {
-            // read
-            if (_mode == Programmer.PAGEMODE)
-                return SRCPMessage.getReadPagedCV(cvnum);
-            else
-                return SRCPMessage.getReadRegister(registerFromCV(cvnum));
-        } else {
-            // write
-            if (_mode == Programmer.PAGEMODE)
-                return SRCPMessage.getWritePagedCV(cvnum, val);
-            else
-                return SRCPMessage.getWriteRegister(registerFromCV(cvnum), val);
-        }
-    }
-*/
     public void message(SRCPMessage m) {
         log.error("message received unexpectedly: "+m.toString());
     }
