@@ -22,7 +22,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.81 $
+ * @version $Revision: 1.82 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -224,13 +224,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             doc.addContent(0,p);
             
             // add version at front
-            root.addContent(0,
-                new Element("jmriversion")
-                    .addContent(new Element("major").addContent(""+jmri.Version.major))
-                    .addContent(new Element("minor").addContent(""+jmri.Version.minor))
-                    .addContent(new Element("test").addContent(""+jmri.Version.test))
-                    .addContent(new Element("modifier").addContent(jmri.Version.modifier))
-            );
+            storeVersion(root);
 
             writeXML(file, doc);
         } catch (java.io.FileNotFoundException ex3) {
@@ -328,6 +322,37 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         }
     }
 
+    private void storeVersion(Element root) {
+        // add version at front
+        root.addContent(0,
+            new Element("jmriversion")
+                .addContent(new Element("major").addContent(""+jmri.Version.major))
+                .addContent(new Element("minor").addContent(""+jmri.Version.minor))
+                .addContent(new Element("test").addContent(""+jmri.Version.test))
+                .addContent(new Element("modifier").addContent(jmri.Version.modifier))
+        );
+    }
+
+//     private void loadVersion(Element root, XmlAdapter adapter) {
+//         int majorRelease = 0;
+//         int minorRelease = 0;
+//         int testRelease = 0;
+//         Element v = root.getChild("jmriversion");
+//         if (v!=null) {
+//             try {
+//                 majorRelease = Integer.parseInt(v.getChild("major").getText());
+//                 minorRelease = Integer.parseInt(v.getChild("minor").getText());
+//                 testRelease = Integer.parseInt(v.getChild("test").getText());
+//             } catch (NullPointerException npe) {
+//             } catch ( NumberFormatException nfe) {
+//             }
+//         }
+//         adapter.setConfigXmlManager(this);
+//         adapter.setMajorRelease(majorRelease);
+//         adapter.setMinorRelease(minorRelease);
+//         adapter.setTestRelease(testRelease);
+//     }
+    
     /** 
      * Load a file.
      * <p>
@@ -342,19 +367,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         Element root = null;
         try {
             root = super.rootFromFile(fi);
-            int majorRelease = 0;
-            int minorRelease = 0;
-            int testRelease = 0;
-            Element v = root.getChild("jmriversion");
-            if (v!=null) {
-                try {
-                    majorRelease = Integer.parseInt(v.getChild("major").getText());
-                    minorRelease = Integer.parseInt(v.getChild("minor").getText());
-                    testRelease = Integer.parseInt(v.getChild("test").getText());
-                } catch (NullPointerException npe) {
-                } catch ( NumberFormatException nfe) {
-                }
-            }
             // get the objects to load
             List<Element> items = root.getChildren();
             for (int i = 0; i<items.size(); i++) {
@@ -369,10 +381,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 XmlAdapter adapter = null;
                 try {
                     adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
-                    adapter.setConfigXmlManager(this);
-                    adapter.setMajorRelease(majorRelease);
-                    adapter.setMinorRelease(minorRelease);
-                    adapter.setTestRelease(testRelease);
+
+                    // get version info
+                    // loadVersion(root, adapter);
+                    
                     // and do it
                     boolean loadStatus = adapter.load(item);
                     log.debug("load status for "+adapterName+" is "+loadStatus);

@@ -6,7 +6,7 @@ import org.jdom.Element;
  * Interface assumed during configuration operations.
  *
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  * @see ConfigXmlManager
  */
 
@@ -68,12 +68,4 @@ public interface XmlAdapter {
                 Throwable exception) throws JmriConfigureXmlException;
                 
     public void setConfigXmlManager(ConfigXmlManager c);
-    
-    public void setMajorRelease(int r);
-    public int getMajorRelease();
-    public void setMinorRelease(int r);
-    public int getMinorRelease();
-    public void setTestRelease(int r);
-    public int getTestRelease();
-    public long getVersion();
 }
