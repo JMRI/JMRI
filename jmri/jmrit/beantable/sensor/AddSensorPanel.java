@@ -15,12 +15,16 @@ import java.util.ResourceBundle;
  * JPanel to create a new Sensor
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class AddSensorPanel extends jmri.util.swing.JmriPanel {
 
     public AddSensorPanel() {
+            // to make location for accessibility & testing easier
+            sysName.setName("sysName");
+            userName.setName("userName");
+            
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             JPanel p;
             p = new JPanel(); 

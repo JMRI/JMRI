@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.68 $
+ * @version     $Revision: 1.69 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -371,6 +371,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                         okPressed(e);
                     }
                 };
+            sysName.setName("sysName");
+            userName.setName("userName");
             addFrame.add(new AddNewDevicePanel(sysName, userName, "ButtonOK", listener));
         }
         addFrame.pack();
