@@ -10,7 +10,7 @@ package jmri.jmrix.srcp;
  * class handles the response from the command station.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2004, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -165,6 +165,14 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
+    static public SRCPMessage getConfirmPagedCV(int cv, int val) {
+	String msg = "VERIFY 1 SM -1 CV " + cv + " " + val + "\n";
+	SRCPMessage m = new SRCPMessage(msg);
+        m.setTimeout(LONG_TIMEOUT);
+        return m;
+    
+    }
+
     static public SRCPMessage getWritePagedCV(int cv, int val) {
 	String msg = "SET 1 SM -1 CV " + cv + " " + val + "\n";
 	SRCPMessage m = new SRCPMessage(msg);
@@ -172,7 +180,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public SRCPMessage getReadRegister(int reg) { //Vx
+    static public SRCPMessage getReadRegister(int reg) {
         if (reg>8) log.error("register number too large: "+reg);
 	String msg = "GET 1 SM -1 REG " + reg + "\n";
 	SRCPMessage m = new SRCPMessage(msg);
@@ -180,7 +188,15 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static public SRCPMessage getWriteRegister(int reg, int val) { //Sx xx
+    static public SRCPMessage getConfirmRegister(int reg, int val) {
+        if (reg>8) log.error("register number too large: "+reg);
+	String msg = "VERIFY 1 SM -1 REG " + reg + " " + val + "\n";
+	SRCPMessage m = new SRCPMessage(msg);
+        m.setTimeout(LONG_TIMEOUT);
+        return m;
+    }
+
+    static public SRCPMessage getWriteRegister(int reg, int val) {
         if (reg>8) log.error("register number too large: "+reg);
 	String msg = "SET 1 SM -1 REG " + reg + " " + val + "\n";
 	SRCPMessage m = new SRCPMessage(msg);

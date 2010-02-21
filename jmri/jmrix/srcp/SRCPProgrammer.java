@@ -12,7 +12,7 @@ import java.beans.PropertyChangeEvent;
  * Implements the jmri.Programmer interface via commands for the SRCP powerstation
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
 
@@ -85,6 +85,8 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     static final int NOTPROGRAMMING = 0;// is notProgramming
     static final int COMMANDSENT = 2; 	// read/write command sent, waiting reply
     boolean  _progRead = false;
+    boolean  _progConfirm = false;
+    int _confirmVal;  // remember the value to be confirmed for reply
     int _val;	// remember the value being read/written for confirmative reply
     int _cv;	// remember the cv being read/written
 
@@ -93,17 +95,24 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
         if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);
         useProgrammer(p);
         _progRead = false;
+	_progConfirm = false;
         // set commandPending state
         progState = COMMANDSENT;
         _val = val;
         _cv = CV;
 
         try {
+	    SRCPMessage m;
             // start the error timer
             startLongTimer();
 
+            // write
+            if (getMode() == Programmer.PAGEMODE)
+                m = SRCPMessage.getWritePagedCV(_cv, _val);
+            else
+                m = SRCPMessage.getWriteRegister(registerFromCV(_cv), _val);
             // format and send the write message
-            controller().sendSRCPMessage(progTaskStart(getMode(), _val, _cv), this);
+            controller().sendSRCPMessage(m, this);
         } catch (jmri.ProgrammerException e) {
             progState = NOTPROGRAMMING;
             throw e;
@@ -111,23 +120,57 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     }
 
     public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV(CV, p);
+        if (log.isDebugEnabled()) log.debug("confirmCV "+CV+" val "+val+" listens "+p);
+        useProgrammer(p);
+	_progRead = false;
+	_progConfirm = true;
+
+        progState = COMMANDSENT;
+        _cv = CV;
+        _confirmVal = val;
+
+        try {
+	    SRCPMessage m;
+            // start the error timer
+            startLongTimer();
+	    
+            if (getMode() == Programmer.PAGEMODE)
+                m = SRCPMessage.getConfirmPagedCV(_cv, _confirmVal);
+            else
+                m = SRCPMessage.getConfirmRegister(registerFromCV(_cv), _confirmVal);
+
+            // format and send the confirm message
+            controller().sendSRCPMessage(m, this);
+        } catch (jmri.ProgrammerException e) {
+            progState = NOTPROGRAMMING;
+            throw e;
+        }
+	
+        //readCV(CV, p);
     }
 
     public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
         useProgrammer(p);
         _progRead = true;
+	_progConfirm = false;
 
         progState = COMMANDSENT;
         _cv = CV;
 
         try {
+	    SRCPMessage m;
             // start the error timer
             startLongTimer();
 
             // format and send the write message
-            controller().sendSRCPMessage(progTaskStart(getMode(), -1, _cv), this);
+
+            if (getMode() == Programmer.PAGEMODE)
+                m = SRCPMessage.getReadPagedCV(_cv);
+            else
+                m = SRCPMessage.getReadRegister(registerFromCV(_cv));
+
+            controller().sendSRCPMessage(m, this);
         } catch (jmri.ProgrammerException e) {
             progState = NOTPROGRAMMING;
             throw e;
@@ -150,6 +193,13 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
         }
     }
 
+/*
+
+  Removed method because it was only used in two call chains - from one place with
+  val = -1 which means read and from the othe with real val which means write. And
+  the method does really not do anything new. Besides adding to the confusion when
+  ignoring the mode parameter.
+
     // internal method to create the SRCPMessage for programmer task start
     protected SRCPMessage progTaskStart(int mode, int val, int cvnum) throws jmri.ProgrammerException {
         // val = -1 for read command; mode is direct, etc
@@ -167,7 +217,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
                 return SRCPMessage.getWriteRegister(registerFromCV(cvnum), val);
         }
     }
-
+*/
     public void message(SRCPMessage m) {
         log.error("message received unexpectedly: "+m.toString());
     }
@@ -186,6 +236,11 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
             if (!m.isResponseOK()) {
                 if (log.isDebugEnabled()) log.debug("handle error reply "+m);
 		log.warn("Reply \""+m.toString()+"\"");
+		if (_progConfirm && m.getResponseCode().equals("412")) {
+		    // handle the Verify return message "412 ERROR wrong value"
+		    notifyProgListenerEnd(_val, jmri.ProgListener.ConfirmFailed);
+		    return;
+		}
                 // perhaps no loco present? Fail back to end of programming
                 notifyProgListenerEnd(-1, jmri.ProgListener.NoLocoDetected);
             } else {
@@ -194,8 +249,11 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
                 // read was in progress - get return value
                     _val = m.value();
                 }
-                // if this was a read, we retreived the value above.  If its a
-                // write, we're to return the original write value
+		if (_progConfirm) {
+		    _val = _confirmVal;
+		}
+                // If this was a read or verify, we retreived the value above. 
+                // If its a write, we're to return the original write value.
                 notifyProgListenerEnd(_val, jmri.ProgListener.OK);
             }
         }
