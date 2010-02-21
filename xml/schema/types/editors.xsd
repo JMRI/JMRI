@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: editors.xsd,v 1.6 2010-02-20 23:05:08 jacobsen Exp $ -->
+<!-- $Id: editors.xsd,v 1.7 2010-02-21 00:00:17 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                           -->
 <!--                                                                        -->
@@ -43,7 +43,7 @@
       <xs:sequence>
         <xs:element name="rotation" type="xs:integer" minOccurs="0" maxOccurs="1" >
           <xs:annotation><xs:documentation>
-            Rotation in 90-degree steps;
+            Rotation in 90-degree steps, including scaled icons;
             added in JMRI 2.9.4 as replacement for &amp;rotate&amp; attribute
           </xs:documentation></xs:annotation>
         </xs:element>
@@ -52,7 +52,7 @@
       <xs:attribute name="rotate" type="xs:string" >
         <xs:annotation><xs:documentation>        
           Deprecated in JMRI 2.9.4 in favor of &amp;rotation&amp; element;
-          was rotation in 90-degree steps.
+          was rotation in 90-degree steps, but skipped rotating scaled icons.
         </xs:documentation></xs:annotation>
       </xs:attribute>
       <xs:attribute name="degrees" type="xs:float" />
