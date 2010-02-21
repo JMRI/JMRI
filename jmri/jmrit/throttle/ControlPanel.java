@@ -41,7 +41,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.77 $
+ * @version    $Revision: 1.78 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
@@ -218,11 +218,16 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     
     /**
      *  Set the GUI to match the speed steps of the current address.
+     *  Initialises the speed slider and spinner - including setting their
+     *  maximums based on the speed step setting and the max speed for the
+     *  particular loco
      *
-     * @param  speedStepMode Desired speed step mode. One of 14,27,28,or 128.  Defaults to 128 
+     * @param  speedStepMode Desired speed step mode. One of:
+     * DccThrottle.SpeedStepMode128, DccThrottle.SpeedStepMode28,
+     * DccThrottle.SpeedStepMode27, DccThrottle.SpeedStepMode14 
      * step mode
      */
-    public void setSpeedSteps(int speedStepMode)
+    public void setSpeedStepsMode(int speedStepMode)
     {
         int maxSpeedPCT = addressPanel.getRosterEntry().getMaxSpeedPCT();
    
@@ -358,16 +363,20 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     /**
      *  Set the GUI to match that the loco speed.
      *
-     * @param  speedIncrement  : TODO
+     * @param  speedIncrement  : TODO - is this still TODO as of Feb 2010?
      * @param  speed           The speed value of the loco.
      */
     public void setSpeedValues(int speedIncrement, int speed)
     {
         //this.speedIncrement = speedIncrement;
-        speedSlider.setValue(speed * speedIncrement);
+    	int tempSpeed = speed * speedIncrement;
+        
+    	//Translate the speed sent in to the max allowed by any set speed limit
+    	speedSlider.setValue((int)
+    			((float)tempSpeed/intSpeedSteps) * maxSpeed);
         // Spinner Speed should be the raw integer speed value
         if(speedSpinner!=null)
-            speedSpinnerModel.setValue(new Integer(speed));
+            speedSpinnerModel.setValue(new Integer(speedSlider.getValue()));
     }
     
     public JSlider getSpeedSlider() { return speedSlider; }
@@ -498,7 +507,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                             {
                                                 public void actionPerformed(ActionEvent e)
                                                 {
-                                                    setSpeedSteps(DccThrottle.SpeedStepMode14);
+                                                    setSpeedStepsMode(DccThrottle.SpeedStepMode14);
                                                     throttle.setSpeedStepMode(DccThrottle.SpeedStepMode14);
                                                 }
                                             });
@@ -508,7 +517,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                             {
                                                 public void actionPerformed(ActionEvent e)
                                                 {
-                                                    setSpeedSteps(DccThrottle.SpeedStepMode27);
+                                                    setSpeedStepsMode(DccThrottle.SpeedStepMode27);
                                                     throttle.setSpeedStepMode(DccThrottle.SpeedStepMode27);
                                                 }
                                             });
@@ -518,7 +527,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                             {
                                                 public void actionPerformed(ActionEvent e)
                                                 {
-                                                    setSpeedSteps(DccThrottle.SpeedStepMode28);
+                                                    setSpeedStepsMode(DccThrottle.SpeedStepMode28);
                                                     throttle.setSpeedStepMode(DccThrottle.SpeedStepMode28);
                                                 }
                                             });
@@ -528,7 +537,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                                              {
                                                  public void actionPerformed(ActionEvent e)
                                                  {
-                                                     setSpeedSteps(DccThrottle.SpeedStepMode128);
+                                                     setSpeedStepsMode(DccThrottle.SpeedStepMode128);
                                                      throttle.setSpeedStepMode(DccThrottle.SpeedStepMode128);
                                                  }
                                              });
@@ -735,7 +744,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.77 $
+     * @version    $Revision: 1.78 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -797,7 +806,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 speedSpinner.setValue(new Integer(newSliderSetting));
         } else if (e.getPropertyName().equals("SpeedSteps")) {
             int steps=((Integer) e.getNewValue()).intValue();
-            setSpeedSteps(steps);
+            setSpeedStepsMode(steps);
         } else if (e.getPropertyName().equals("IsForward")) {
             boolean Forward=((Boolean) e.getNewValue()).booleanValue();
             setIsForward(Forward);
@@ -955,7 +964,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
         try {
             // Set the speed steps in the GUI from the xml
-            setSpeedSteps(e.getAttribute("speedMode").getIntValue());
+            setSpeedStepsMode(e.getAttribute("speedMode").getIntValue());
             // Try to set the throttle speed steps
             if(throttle!=null) {
                 throttle.setSpeedStepMode(e.getAttribute("speedMode").getIntValue());
@@ -969,7 +978,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             } catch (Exception em)
             {
                 // in this case, recover by defaulting to 128 speed step mode.
-                setSpeedSteps(DccThrottle.SpeedStepMode128);
+                setSpeedStepsMode(DccThrottle.SpeedStepMode128);
                 if(throttle!=null)
                     throttle.setSpeedStepMode(DccThrottle.SpeedStepMode128);
             }
@@ -1024,16 +1033,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             this.throttle.setSpeedStepMode(_speedStepModeForLater);
             _speedStepModeForLater = 0;
         }
-        // Set speed steps in the GUI from the throttle
-        this.setSpeedSteps(throttle.getSpeedStepMode());
 
-        int maxSpeedPCT = addressPanel.getRosterEntry().getMaxSpeedPCT();
+        // Set speed steps
+        this.setSpeedStepsMode(throttle.getSpeedStepMode());
 
-		/* Set a maximum speed */
-		maxSpeed = (int) ((float) intSpeedSteps*((float)maxSpeedPCT)/100);
-		this.speedSlider.setMaximum(maxSpeed);
-		speedSpinnerModel.setMaximum(new Integer(maxSpeed));
-		
         this.throttle.addPropertyChangeListener(this);
         if(log.isDebugEnabled()) {
            jmri.DccLocoAddress Address=(jmri.DccLocoAddress)throttle.getLocoAddress();
