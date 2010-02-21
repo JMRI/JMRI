@@ -608,6 +608,16 @@ public class PanelEditor extends Editor implements ItemListener {
         popup.show((Component)p, p.getWidth()/2, p.getHeight()/2);
     }
 	
+    public void showToolTip(Positionable selection, MouseEvent event) {
+        ToolTip tip = selection.getTooltip();
+        String txt = tip.getText();
+        if (txt==null) {
+            tip.setText(selection.getNameString());
+        }
+        tip.setLocation(selection.getX()+selection.getWidth()/2, selection.getY()+selection.getHeight());
+        setToolTip(tip);
+    }
+
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PanelEditor.class.getName());
 }
