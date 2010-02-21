@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.62 $
+ * @version $Revision: 1.63 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -3482,7 +3482,7 @@ public class LogixTableAction extends AbstractTableAction {
         _curAction.setActionString("");
         _curAction.setActionData(-1);
         boolean referenceByMemory = false;
-        if (name.charAt(0)== '@') {
+        if (name.length() > 0 && name.charAt(0)== '@') {
             String mName = name.substring(1);
             if (!_suppressIndirectRef)
             {
