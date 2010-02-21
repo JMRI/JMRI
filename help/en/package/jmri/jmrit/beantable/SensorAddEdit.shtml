@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SensorAddEdit.shtml,v 1.6 2008-11-01 16:40:03 jacobsen Exp $ -->
+<!-- $Id: SensorAddEdit.shtml,v 1.7 2010-02-21 06:47:31 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Sensors</TITLE>
@@ -44,7 +44,8 @@ specific sensor input.
 <P>For example: The AIU cab address is set to 50 and one of the
 BD20s is connected to pin 2. Therefore the Sensor ID would be:</P>
 <P>Sensor ID = (50 - 1) * 16 + (2) -1</P>
-<P>Sensor ID = 785 <!--#include virtual="/Footer" --></P>
+<P>Sensor ID = 785 
+<!--#include virtual="/Footer" --></P></P>
 
 <H3>Grapevine Sensor to JMRI Sensor Mapping</H3>
 
@@ -75,6 +76,7 @@ If the optional second bank of serial sensors are present,
 they appear as sensors 109 to 116 on the node.
 </dd>
 </dl>
+<!--#include virtual="/Footer" -->
 </BODY>
 </HTML>
 
