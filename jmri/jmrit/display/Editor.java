@@ -1249,7 +1249,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     protected void addReporterEditor() {
         IconAdder editor = new IconAdder("ReporterEditor");
-        new ActionListener() {
+        ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 addReporter();
             }
@@ -1258,7 +1258,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _iconEditorFrame.put("ReporterEditor", frame);
         editor.setPickList(PickListModel.reporterPickModelInstance());
         editor.makeIconPanel();
-        editor.complete(null, null, true, false);
+        editor.complete(addIconAction, null, true, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
 
