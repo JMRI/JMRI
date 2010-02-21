@@ -19,18 +19,35 @@ package jmri;
  * for more details.
  * <P>
  * @author  Bob Jacobsen   Copyright 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010
- * @version $Revision: 1.122 $
+ * @version $Revision: 1.123 $
  */
 
 public class Version {
 
+    /**
+     * Major number changes with large incompatible
+     * changes in requirements or API.
+     */
      static final public int major = 2;
+     
+    /**
+     * Minor number changes with each production release.
+     * Odd is development, even is production.
+     */
      static final public int minor = 9;
+     
+    /* Test number changes with individual releases,
+     * general fastest for test releases.
+     */
      static final public int test = 4;
+     
+    /**
+     * Modifier is used to denote specific builds
+     */
      static final public String modifier = "";
 
     /**
-     * Provide the current version string in I.J.K format.
+     * Provide the current version string in I.J.K-mod format.
      * <P>
      * This is manually maintained by updating it before each
      * release is built.
@@ -39,7 +56,7 @@ public class Version {
      */
      static public String name() { 
         return ""+major+"."+minor+"."+test
-                +( !modifier.equals("") ? " ("+modifier+")" :""); 
+                +( !modifier.equals("") ? "-"+modifier :""); 
      }
      
 }
