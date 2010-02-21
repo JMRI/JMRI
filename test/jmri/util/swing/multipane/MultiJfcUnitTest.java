@@ -4,9 +4,6 @@ package jmri.util.swing.multipane;
 
 import javax.swing.*;
 
-import java.util.*;
-
-import jmri.util.*;
 import jmri.util.swing.*;
 
 import junit.framework.*;
@@ -17,7 +14,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the Multipane (IDE) GUI 
  * @author			Bob Jacobsen  Copyright 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class MultiJfcUnitTest extends jmri.util.SwingTestCase {
 
@@ -26,7 +23,7 @@ public class MultiJfcUnitTest extends jmri.util.SwingTestCase {
         JFrame f1 = new MultiPaneWindow("test", "test");
         f1.setVisible(true);
         
-        Assert.assertTrue("found main frame", f1 != null);
+        Assert.assertNotNull("found main frame", f1);
         
         // Find the button that loads the license
         AbstractButtonFinder finder = new AbstractButtonFinder("License" );

@@ -14,7 +14,7 @@ import jmri.util.JmriJFrame;
  * Frame for Speedo Console
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
     
@@ -229,7 +229,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
                 speedTextField.setText("Out of Range!");
             } else {
                 speedTextField.setText(MessageFormat.format("{0,number,###.##}", speed));
-                speedTextField.setHorizontalAlignment(JTextField.RIGHT);;
+                speedTextField.setHorizontalAlignment(JTextField.RIGHT);
             }
         }
     }   
