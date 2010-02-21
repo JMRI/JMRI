@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2004 All rights reserved -->
-<!-- $Id: Hornby8249.xml,v 1.3 2010-02-03 06:44:44 jacobsen Exp $ -->
+<!-- $Id: Hornby8249.xml,v 1.4 2010-02-21 06:29:28 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -19,19 +19,16 @@
 		<version author="Bob Jacobsen rgj1927@pacbell.net"
 			version="1" lastUpdated="20080821" />
 		<!-- Decoder used in Hornby engines -->
-		<version
-			author="Andrew Berridge" lastUpdated="200100202" version="1.1"
-			comment="Added correct version id (13)" />
 
-	<decoder>
-	<family name="R8249" mfg="Hornby" lowVersionID="13">
-
-		<model model="R8249" numOuts="4" numFns="4" nmraWarrant="yes"
-			nmraWarrantStart="200808" maxTotalCurrent="0.5A"
-			maxMotorCurrent="0.5A">
-			<size length="17" width="10" height="3.5" units="mm" />
-		</model>
-		<!-- don't know version id, maybe lowVersionID="13"?  -->
+<decoder>
+	<family name="R8249" mfg="Hornby">
+			
+		<model model="R8249" numOuts="4" numFns="4" 
+		    nmraWarrant="yes" nmraWarrantStart="200808" 
+		    maxTotalCurrent="0.5A" maxMotorCurrent="0.5A" >
+		    <size length="17" width="10" height="3.5" units="mm"/>
+        </model>
+		    <!-- don't know version id, maybe lowVersionID="13"?  -->
 
 	</family>
 
@@ -66,10 +63,10 @@
 			<decVal/>
 			</variable>
 
-
-		<variable label="Manufacturer ID - Reset" CV="8" default="99">
-			<decVal/>
-			</variable>
+		<variable label="EMF Feedback Cutout" CV="10" 
+				item="EMF Feedback Cutout" default="128">
+			<decVal max="128"/>
+			</variable>	
 
 		<variable label="Normal direction of motion" CV="29"
 				mask="XXXXXXXV"
@@ -124,3 +121,5 @@
 
 
 
+
+ 	  	 
