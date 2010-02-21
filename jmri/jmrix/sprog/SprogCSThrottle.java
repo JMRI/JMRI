@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog;
 
+import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
@@ -16,7 +17,7 @@ import jmri.jmrix.sprog.SprogCommandStation;
  * <P>
  *
  * @author	Andrew Crosland  Copyright (C) 2006
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SprogCSThrottle extends AbstractThrottle
 {
@@ -44,6 +45,10 @@ public class SprogCSThrottle extends AbstractThrottle
         this.f12           = false;
         this.address      = ((DccLocoAddress)address).getNumber();
         this.isForward    = true;
+        
+        //@TODO - this needs a little work. Current implementation looks like it
+        //should support other modes, but doesn't in practice.  
+        //@see AbstractThrottleManager.supportedSpeedModes()
 
         // Find our command station
         commandStation = (SprogCommandStation) jmri.InstanceManager.commandStationInstance();

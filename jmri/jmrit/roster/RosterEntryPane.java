@@ -14,12 +14,17 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ResourceBundle;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+
+import org.python.modules.newmodule;
 
 import java.util.List;
 
@@ -28,7 +33,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
  * @author  Dennis Miller Copyright 2004, 2005
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 
@@ -36,6 +41,9 @@ public class RosterEntryPane extends javax.swing.JPanel  {
 // fields and allow for more text to be displayed
     JTextField id 		= new JTextField(30);
     JTextField roadName 	= new JTextField(30);
+    JTextField maxSpeed		= new JTextField(3);
+    JSpinner maxSpeedSpinner		= new JSpinner(new SpinnerNumberModel(100, 1, 100, 1));
+ 
     JTextField roadNumber 	= new JTextField(30);
     JTextField mfg 		= new JTextField(30);
     JTextField model		= new JTextField(30);
@@ -43,7 +51,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
     DccLocoAddressSelector addrSel = new DccLocoAddressSelector();
     
     JTextArea comment		= new JTextArea(3,30);
-    //JScrollPanes are defined with scroll bars on always to avoid undesireable resizing behavior
+    //JScrollPanes are defined with scroll bars on always to avoid undesirable resizing behavior
     //Without this the field will shrink to minimum size any time the scroll bars become needed and
     //the scroll bars are inside, not outside the field area, obscuring their contents.
     //This way the shrinking does not happen and the scroll bars are outside the field area,
@@ -189,61 +197,76 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         add(selPanel);
 
         cL.gridy = 7;
-        JLabel row7Label = new JLabel(rb.getString("FieldComment"));
+        JLabel row7Label = new JLabel(rb.getString("FieldSpeedLimit"));
         gbLayout.setConstraints(row7Label,cL);
         add(row7Label);
 
         cR.gridy = 7;
-        commentScroller.setMinimumSize(minScrollerDim);
-        gbLayout.setConstraints(commentScroller,cR);
-        add(commentScroller);
-
+        maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "#"));
+        /*
+         * Code below can disables editing of field (commented out for now)
+         JSpinner.DefaultEditor editor = ((JSpinner.DefaultEditor)maxSpeedSpinner.getEditor());
+         editor.getTextField().setEditable(false);
+        */
+        gbLayout.setConstraints(maxSpeedSpinner,cR);
+        add(maxSpeedSpinner);
+        
         cL.gridy = 8;
-        JLabel row8Label = new JLabel(rb.getString("FieldDecoderFamily"));
+        JLabel row8Label = new JLabel(rb.getString("FieldComment"));
         gbLayout.setConstraints(row8Label,cL);
         add(row8Label);
 
         cR.gridy = 8;
-        decoderFamily.setMinimumSize(minFieldDim);
-        gbLayout.setConstraints(decoderFamily,cR);
-        add(decoderFamily);
+        commentScroller.setMinimumSize(minScrollerDim);
+        gbLayout.setConstraints(commentScroller,cR);
+        add(commentScroller);
 
         cL.gridy = 9;
-        JLabel row9Label = new JLabel(rb.getString("FieldDecoderModel"));
+        JLabel row9Label = new JLabel(rb.getString("FieldDecoderFamily"));
         gbLayout.setConstraints(row9Label,cL);
         add(row9Label);
 
         cR.gridy = 9;
-        decoderModel.setMinimumSize(minFieldDim);
-        gbLayout.setConstraints(decoderModel,cR);
-        add(decoderModel);
+        decoderFamily.setMinimumSize(minFieldDim);
+        gbLayout.setConstraints(decoderFamily,cR);
+        add(decoderFamily);
 
         cL.gridy = 10;
-        JLabel row10Label = new JLabel(rb.getString("FieldDecoderComment"));
+        JLabel row10Label = new JLabel(rb.getString("FieldDecoderModel"));
         gbLayout.setConstraints(row10Label,cL);
         add(row10Label);
 
         cR.gridy = 10;
-        decoderCommentScroller.setMinimumSize(minScrollerDim);
-        gbLayout.setConstraints(decoderCommentScroller,cR);
-        add(decoderCommentScroller);
+        decoderModel.setMinimumSize(minFieldDim);
+        gbLayout.setConstraints(decoderModel,cR);
+        add(decoderModel);
 
         cL.gridy = 11;
-        JLabel row11Label = new JLabel(rb.getString("FieldFilename"));
+        JLabel row11Label = new JLabel(rb.getString("FieldDecoderComment"));
         gbLayout.setConstraints(row11Label,cL);
         add(row11Label);
 
         cR.gridy = 11;
-        filename.setMinimumSize(minFieldDim);
-        gbLayout.setConstraints(filename,cR);
-        add(filename);
+        decoderCommentScroller.setMinimumSize(minScrollerDim);
+        gbLayout.setConstraints(decoderCommentScroller,cR);
+        add(decoderCommentScroller);
 
         cL.gridy = 12;
-        JLabel row12Label = new JLabel(rb.getString("FieldDateUpdated"));
+        JLabel row12Label = new JLabel(rb.getString("FieldFilename"));
         gbLayout.setConstraints(row12Label,cL);
         add(row12Label);
 
         cR.gridy = 12;
+        filename.setMinimumSize(minFieldDim);
+        gbLayout.setConstraints(filename,cR);
+        add(filename);
+
+        cL.gridy = 13;
+        JLabel row13Label = new JLabel(rb.getString("FieldDateUpdated"));
+        gbLayout.setConstraints(row13Label,cL);
+        add(row13Label);
+
+        cR.gridy = 13;
         filename.setMinimumSize(minFieldDim);
         gbLayout.setConstraints(dateUpdated,cR);
         add(dateUpdated);
@@ -263,6 +286,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         if (!r.getDecoderModel().equals(decoderModel.getText()) ) return true;
         if (!r.getDecoderComment().equals(decoderComment.getText()) ) return true;
         if (!r.getId().equals(id.getText()) ) return true;
+        if (r.getMaxSpeedPCT() != ((Integer) maxSpeedSpinner.getValue()).intValue()) return true;
 
         DccLocoAddress a = addrSel.getAddress();
         if (a==null) {
@@ -305,6 +329,9 @@ public class RosterEntryPane extends javax.swing.JPanel  {
             r.setLongAddress(a.isLongAddress());
         }
         r.setComment(comment.getText());
+        
+        JComponent editor = maxSpeedSpinner.getEditor();
+        r.setMaxSpeedPCT(Integer.parseInt(((JSpinner.DefaultEditor)editor).getTextField().getText()));
         r.setDecoderFamily(decoderFamily.getText());
         r.setDecoderModel(decoderModel.getText());
         r.setDecoderComment(decoderComment.getText());
@@ -324,6 +351,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         decoderFamily.setText(r.getDecoderFamily());
         decoderComment.setText(r.getDecoderComment());
         dateUpdated.setText(r.getDateUpdated());
+        maxSpeedSpinner.setValue(new Integer(r.getMaxSpeedPCT()));
     }
     
     public void setDccAddress(String a) {

@@ -40,7 +40,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.45 $
+ * @version   $Revision: 1.46 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -81,6 +81,7 @@ public class RosterEntry {
         _imageFilePath = pEntry._imageFilePath;
         _iconFilePath = pEntry._iconFilePath;
         _URL = pEntry._URL;
+        _maxSpeedPCT = pEntry._maxSpeedPCT;
     }
 
     public void setId(String s) {
@@ -196,6 +197,8 @@ public class RosterEntry {
         if ((a = e.getAttribute("imageFilePath")) != null )  _imageFilePath = _resourcesBasePath+a.getValue();
         if ((a = e.getAttribute("iconFilePath")) != null )  _iconFilePath = _resourcesBasePath+a.getValue();
         if ((a = e.getAttribute("URL")) != null )  _URL = a.getValue();
+        if ((a = e.getAttribute("maxSpeed")) != null )  
+        	_maxSpeedPCT = Integer.parseInt(a.getValue());     
         org.jdom.Element e3;
         if ((e3 = e.getChild("dateUpdated")) != null )  {
             _dateUpdated = e3.getText();
@@ -364,7 +367,15 @@ public class RosterEntry {
         return attributePairs.keySet().toArray(new String[attributePairs.size()]);
     }
 
-    /**
+    public int getMaxSpeedPCT() {
+		return _maxSpeedPCT;
+	}
+
+	public void setMaxSpeedPCT(int maxSpeedPCT) {
+		_maxSpeedPCT = maxSpeedPCT;
+	}
+
+	/**
      * Warn user that the roster entry needs to be resaved.
      */
     protected void warnShortLong(String id) {
@@ -387,6 +398,7 @@ public class RosterEntry {
         e.setAttribute("model",getModel());
         e.setAttribute("dccAddress",getDccAddress());
         e.setAttribute("comment",getComment());
+        e.setAttribute("maxSpeed", (new Integer(getMaxSpeedPCT()).toString()));
         // file path are saved without default xml config path
         try {
         	e.setAttribute("imageFilePath", getImagePath().substring( _resourcesBasePath.length() ));
@@ -794,6 +806,7 @@ public class RosterEntry {
     protected String _decoderFamily = "";
     protected String _decoderComment = "";
     protected String _dateUpdated = "";
+    protected int _maxSpeedPCT = 100;
     
     public static String getDefaultOwner() { return _defaultOwner; }
     public static void setDefaultOwner(String n) { _defaultOwner = n; }

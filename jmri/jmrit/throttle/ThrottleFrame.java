@@ -44,7 +44,7 @@ import org.jdom.Element;
  * and don't want to break dependencies (particularly in Jython code)
  * @author Glen Oberhauser
  * @author Andrew Berridge  Copyright 2010
- * @version $Revision: 1.66 $
+ * @version $Revision: 1.67 $
  */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
@@ -274,6 +274,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         addressPanel.setVisible(true);
         addressPanel.addInternalFrameListener(frameListener);
         functionPanel.setAddressPanel(addressPanel); // so the function panel can get access to the roster
+        controlPanel.setAddressPanel(addressPanel);
         
         if (controlPanel.getHeight() < functionPanel.getHeight() + addressPanel.getHeight())
             {controlPanel.setSize(controlPanel.getWidth(),functionPanel.getHeight() + addressPanel.getHeight());}
@@ -286,7 +287,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         addressPanel.addAddressListener(functionPanel);
         addressPanel.addAddressListener(this);
         addressPanel.addAddressListener(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesListPanel());
-
+        
         add(controlPanel, PANEL_LAYER);
         add(functionPanel, PANEL_LAYER);
         add(addressPanel, PANEL_LAYER);

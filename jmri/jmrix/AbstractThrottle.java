@@ -17,12 +17,15 @@ import java.util.Vector;
  * it has some DCC-specific content.
  *
  * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
     protected float speedIncrement;
-    protected int speedStepMode;
+    /**
+     * Question: should we set a default speed step mode so it's never zero?
+     */
+    protected int speedStepMode; 
     protected boolean isForward;
     protected boolean f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12;
     protected boolean f13, f14, f15, f16, f17, f18, f19, f20, f21, f22, f23,

@@ -27,7 +27,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
@@ -155,6 +155,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 			if (l.size()>0)
 				rosterEntry = l.get(0);
 		}
+		
 		// update GUI
 		setButton.setEnabled(false);
 		addrSelector.setEnabled(false);
@@ -398,7 +399,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 				log.debug("Notify address listener of address change " + l.getClass());			
 			l.notifyAddressChosen(currentAddress.getNumber(), currentAddress.isLongAddress());
 		}
-		
+
     	boolean requestOK =
     		InstanceManager.throttleManagerInstance().requestThrottle(currentAddress.getNumber(), currentAddress.isLongAddress(), this);
     	if (!requestOK)
