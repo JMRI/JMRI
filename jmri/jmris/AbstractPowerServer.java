@@ -3,7 +3,6 @@
 package jmri.jmris;
 
 import java.io.*;
-import java.lang.*;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -13,7 +12,7 @@ import jmri.PowerManager;
  * Abstract interface between the JMRI power manager and a 
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 
 abstract public class AbstractPowerServer implements java.beans.PropertyChangeListener {

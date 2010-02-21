@@ -4,10 +4,7 @@ package jmri.jmris.simpleserver;
 
 import jmri.jmris.*;
 
-import java.net.*;
 import java.io.*;
-import java.lang.*;
-import java.util.Vector;
 
 import jmri.InstanceManager;
 
@@ -16,7 +13,7 @@ import jmri.InstanceManager;
  * There is currently no handshaking in this server.  You may just start 
  * sending commands.
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  *
  */
 public class simpleServer extends JmriServer{

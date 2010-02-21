@@ -2,7 +2,6 @@
 
 package jmri.jmris.simpleserver;
 
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -10,7 +9,7 @@ import javax.swing.*;
  * Frame displaying start/stop buttons for the JMRI server.
  *
  * @author			Paul Bender  Copyright (C) 2009
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class simpleServerFrame extends jmri.util.JmriJFrame {
 

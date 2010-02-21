@@ -3,17 +3,15 @@
 package jmri.jmris;
 
 import java.io.*;
-import java.lang.*;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.Turnout;
 
 /**
  * Abstract interface between the a JMRI turnout and a 
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 
 abstract public class AbstractTurnoutServer implements java.beans.PropertyChangeListener {

@@ -3,10 +3,7 @@
 package jmri.jmris.simpleserver;
 
 import java.io.*;
-import java.lang.*;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.Turnout;
 
 import jmri.jmris.AbstractTurnoutServer;
@@ -15,7 +12,7 @@ import jmri.jmris.AbstractTurnoutServer;
  * Simple Server interface between the JMRI power manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 
 public class simpleTurnoutServer extends AbstractTurnoutServer {

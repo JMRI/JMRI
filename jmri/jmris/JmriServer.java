@@ -4,7 +4,7 @@ package jmri.jmris;
 
 import java.net.*;
 import java.io.*;
-import java.lang.*;
+//import java.lang.*;
 import java.util.Vector;
 
 // imports for ZeroConf.
