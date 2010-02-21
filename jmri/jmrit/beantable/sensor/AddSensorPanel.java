@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
  * JPanel to create a new Sensor
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class AddSensorPanel extends jmri.util.swing.JmriPanel {
@@ -61,8 +61,8 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
 
     void okPressed(ActionEvent e) {
         String user = userName.getText();
-        if (user.equals("")) user=null;
-        InstanceManager.sensorManagerInstance().newSensor(sysName.getText().toUpperCase(), user);
+        Sensor s = InstanceManager.sensorManagerInstance().provideSensor(sysName.getText());
+        if (user!= null && !user.equals("")) s.setUserName(user);
     }
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");

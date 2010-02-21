@@ -41,7 +41,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.66 $
+ * @version     $Revision: 1.67 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -682,8 +682,9 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
         else {
             // Create the new turnout
-            Turnout t = InstanceManager.turnoutManagerInstance().newTurnout(sName, user);
-            if (t!=null) {
+            Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(sName);
+            if (t != null) {
+                if (user != null && !user.equals("")) t.setUserName(user);
                 t.setNumberOutputBits(iNum);
                 int iType = 0;
                 // Ask about the type of turnout control if appropriate
