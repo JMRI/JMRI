@@ -3,7 +3,7 @@
 
 <!-- Schema for JMRI roster support.          -->
 
-<!-- $Id: roster.xsd,v 1.5 2010-02-21 15:33:12 r5gordini Exp $ -->
+<!-- $Id: roster.xsd,v 1.6 2010-02-21 17:37:05 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
@@ -119,7 +119,11 @@
                   <xs:attribute name="owner" type="xs:string"/>
                   <xs:attribute name="model" type="xs:string"/>
                   <xs:attribute name="comment" type="xs:string"/>
-                  <xs:attribute name="maxSpeed" type="xs:string"/> <!-- experimental max speed -->
+                  <xs:attribute name="maxSpeed" type="xs:float">
+                    <xs:annotation><xs:documentation>
+                     maximum speed as a fraction from 0 to 1.0
+                    </xs:documentation></xs:annotation>
+                  </xs:attribute>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
