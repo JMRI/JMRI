@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2008 All rights reserved -->
-<!-- $Id: SoundTraxx_Tsu_Diesel.xml,v 1.4 2010-01-26 04:15:11 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Diesel.xml,v 1.5 2010-02-21 06:55:42 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -21,6 +21,7 @@
 	<version author="Jack Shall lcrr@bellsouth.net" version="2" lastUpdated="20090723"/>
 	<version author="Jack Shall lcrr@bellsouth.net" version="3" lastUpdated="20090925"/>
 	<version author="Jack Shall lcrr@bellsouth.net" version="4" lastUpdated="20100111"/>
+	<version author="Jack Shall lcrr@bellsouth.net" version="5" lastUpdated="20100218"/>
 
 	<!-- This file contains the Tsunami definitions for ALL of the internal combustion engine locomotives	-->
 
@@ -38,6 +39,7 @@
 	<!-- version 4	Added Kato loco specific models 828060,828061,828062,828063,828064,828065.			-->
 	<!--			Thanks to Michael Mosher and Jarrette Ireland for providing horn info.				-->
 	<!--			Removed default="3" from CV17 to solve bug found by M. Fournier.					-->
+	<!-- version 5	Added Baldwin VO (model 827111), 608NA (model 827112) and 608A (model 827113).		-->
 
 
 <!-- Decoder Model information follows -->
@@ -175,6 +177,54 @@
 		</model>
 		<model model="TSU-1000 Alco 251 (V16)" numOuts="4" numFns="14" connector="9pin"
 			productID="827106" comment="Model 827106">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-1000 Baldwin VO" numOuts="4" numFns="14" connector="9pin"
+			productID="827111" comment="Model 827111">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-1000 Baldwin 608NA (Non-Turbo)" numOuts="4" numFns="14" connector="9pin"
+			productID="827112" comment="Model 827112">
+			<versionCV lowVersionID="64"/>
+			<output name="Air Horn"/>
+			<output name="Bell"/>
+			<output name="3" label="  FX5  "/>
+			<output name="4" label="  FX6  "/>
+			<output name="Dynamics"/>
+			<output name="Short Horn"/>
+			<output name="Fans(+)"/>
+			<output name="Dimming"/>
+			<output name="Mute"/>
+			<output name="Comp(-)"/>
+			<output name="Brakes"/>
+			<output name="Coupler"/>
+		</model>
+		<model model="TSU-1000 Baldwin 608A (Turbo)" numOuts="4" numFns="14" connector="9pin"
+			productID="827113" comment="Model 827113">
 			<versionCV lowVersionID="64"/>
 			<output name="Air Horn"/>
 			<output name="Bell"/>
@@ -1989,7 +2039,7 @@
 		<variable label="Airhorn Select" CV="115" mask="XXXXVVVV"
 			item="Sound Option 9" default="9"
 			comment="Show these horns for the models (productID) listed below"
-			include="827001,827004,827008,827011,827012,827101,827104,827106,827108,828040,828043,828045,828047,828049,828050,828065"
+			include="827001,827004,827008,827011,827012,827101,827104,827106,827108,827111,827112,827113,828040,828043,828045,828047,828049,828050,828065"
 			tooltip="Selects which airhorn to use">
 			<enumVal>
 				<enumChoice choice="Wabco A2"/>
@@ -2014,7 +2064,7 @@
 		<variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX"
 			item="Sound Option 10" default="0"
 			comment="Show these horns for the models (productID) listed below"
-			include="827001,827004,827008,827011,827012,827101,827104,827106,827108,828040,828043,828045,828047,828049,828050,828065"
+			include="827001,827004,827008,827011,827012,827101,827104,827106,827108,827111,827112,827113,828040,828043,828045,828047,828049,828050,828065"
 			tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
 			<enumVal>
 				<enumChoice choice="Short horn blast"/>
@@ -2795,6 +2845,8 @@
 </pane>
 
 </decoder-config>
+
+ 	  	 
 
  	  	 
 
