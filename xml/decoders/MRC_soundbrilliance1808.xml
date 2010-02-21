@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2006, 2007,2008 All rights reserved                  -->
-<!-- $Id: MRC_soundbrilliance1808.xml,v 1.1 2010-02-21 06:50:24 jacobsen Exp $ -->
+<!-- $Id: MRC_soundbrilliance1808.xml,v 1.2 2010-02-21 07:27:33 jacobsen Exp $ -->
 <!--                                                                         -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under   -->
 <!-- the terms of version 2 of the GNU General Public License as published   -->
@@ -35,8 +35,7 @@
    		direct="yes" 
 		paged="yes" 
       		register="yes" 
-		ops="yes">
-	</programming>
+		ops="yes" />
 
 	<variables>
 
