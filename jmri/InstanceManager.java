@@ -43,7 +43,7 @@ import jmri.managers.DefaultRouteManager;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.60 $
+ * @version			$Revision: 1.61 $
  */
 public class InstanceManager {
 
@@ -62,6 +62,10 @@ public class InstanceManager {
         return managerLists.get(type);
     }
     
+    static public <T> void reset(Class<T> type) {
+        managerLists.put(type, null);
+    }
+
     /**
      * Get the first object of type T that was
      * store(d). 
@@ -163,11 +167,13 @@ public class InstanceManager {
     }
 
     static public BlockManager blockManagerInstance()  {
-        if (instance().blockManager != null) return instance().blockManager;
+        BlockManager o = getDefault(BlockManager.class);
+        if (o != null) return o;
         // As a convenience, we create a default object if none was provided explicitly.
         // This must be replaced when we start registering specific implementations
-        instance().blockManager = new BlockManager();
-        return instance().blockManager;
+        o = new BlockManager();
+        store(o, BlockManager.class);
+        return o;
     }
 
     static public OBlockManager oBlockManagerInstance()  {
@@ -370,8 +376,6 @@ public class InstanceManager {
         signalHeadManager = p;
     }
 
-    private BlockManager blockManager = null;
-	
     private OBlockManager oBlockManager = null;
     private WarrantManager warrantManager = null;
 	

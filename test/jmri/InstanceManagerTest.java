@@ -12,7 +12,7 @@ import junit.framework.Assert;
  * Test InstanceManager
  *
  * @author			Bob Jacobsen
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class InstanceManagerTest extends TestCase {
 
@@ -91,6 +91,21 @@ public class InstanceManagerTest extends TestCase {
 
         Assert.assertEquals("retrieved same PowerManager", m1, m2);
         Assert.assertEquals("retrieved same TurnoutManager", t1, t2);
+    }
+    
+
+    public void testGenericStoreAndReset() {
+        PowerManager m1 = new PowerManagerScaffold();
+        PowerManager m2 = null;
+        
+        InstanceManager.store(m1, PowerManager.class);
+        InstanceManager.reset(PowerManager.class);
+        m1 = new PowerManagerScaffold();
+        InstanceManager.store(m1, PowerManager.class);
+        
+        m2 = InstanceManager.getDefault(PowerManager.class);
+
+        Assert.assertEquals("retrieved second PowerManager", m1, m2);
     }
     
 	// from here down is testing infrastructure
