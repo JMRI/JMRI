@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.103 2010-02-14 06:26:28 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.104 2010-02-21 17:40:55 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -197,6 +197,7 @@
 	putting the 
 	<a href="http://model-railroad-hobbyist.com/mrht_decoderpro">JMRI clinics from the NMRA 2008 Anaheim convention</a> on the web.
 <a name="G"></A>
+    <LI>William C Gage provided an MRC decoder definition
 	<LI>Simon Ginsburg has helped with advanced consisting, provided some Digitrax 
 	definition files, and translated much of DecoderPro into German
 	<LI>Joseph Goldstone, who put together the javax.comm implementation for Mac OS X
@@ -212,6 +213,8 @@
 	<LI>Mark Gurries, who provided loaner equipment and great ideas. He's currently
 	working on decoder definitions for DecoderPro
 <a name="H"></A>
+    <LI>Victoria K. Hall led the legal action that held Matt Katzer responsible 
+    for his depradations against JMRI
 	<LI>Rob Hamerling, who got the demo to run on OS/2, contributed his scripts and
 	has been patiently testing
 	<LI>Jim Hanna, who helped with instructions for NCE units
@@ -275,6 +278,7 @@
     <li>David McDowell of the North Raleigh Model Railroad Club created
     a <a href="http://www.trainweb.org/nrmrc/pubs/NRMRC_Test_Division_with_JMRI.pdf">clinic</a> covering Block Occupancy, Transponding and Simple Signal Logic.
 	<LI>John McAleely, who contributed Hornby and Bachmann decoder definitions
+    <LI>David McGowan, who handled many aspects of JMRI legal defense against Matt Katzer
     <LI>Randy McKenzie, who contributed some CTC panel background images
 	<LI>Ron McKinnon, who fixed some problems with the lighting options in the SoundTraxx Tsunami Steam definitions
 	<LI>Larry Meaney provided decoder ID for the Digitrax DN163K0b decoder

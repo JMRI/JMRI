@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.16 2010-02-20 22:03:14 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.17 2010-02-21 17:40:55 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -68,6 +68,11 @@ see our
 If you're using a Lenz XPressNet connection, please
 uncheck the "Check Buffer Status" box in the preference
 pane where you selected the Lenz protocol.
+
+<p>
+The Layout Editor and Panel Editor have received a large
+amount of work.  Please let us know if you notice any
+new problems.
 
 <h3>Older warnings</h3>
 
@@ -326,6 +331,33 @@ Please give feedback on the jmriusers list if you try it!
 
 <p>
 Dan Boudreau improved the appearance of the Turnout Control.
+
+<p>
+Fixed a bug preventing playing sounds in Logix Conditional Actions.
+
+<p>
+Peter Ulvestad updated the Hornby 8249 definition.
+
+<p>
+Harald Barth improved the CV programming in the SRCP support.
+
+<p>
+William C Gage provided a decoder definition for the MRC Sound Brilliance 1808.
+
+<p>
+Marc Fournier provided a decoder definition for the Trix 66838 decoder.
+
+<p>
+The way the program version number is stored in the program and 
+output files has been made easier to parse.
+
+<p>
+Jack Shall updated the Tsunami Diesel definition.
+
+<p>
+Andrew Berridge added an optional "speed limit", which can be set by locomotive in the roster,
+when using JMRI throttles. Great for running with grand kids!
+
 
 <!--#include virtual="/Footer" -->
 
