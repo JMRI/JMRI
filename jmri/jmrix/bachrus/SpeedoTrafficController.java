@@ -23,14 +23,13 @@ import gnu.io.SerialPortEventListener;
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Andrew Crosland  Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SpeedoTrafficController implements SpeedoInterface, SerialPortEventListener  {
 
 	private SpeedoReply reply = new SpeedoReply();
 	
 	public SpeedoTrafficController() {
-		if (log.isDebugEnabled()) log.debug("setting instance: "+this);
 		self=this;
 	}
 
@@ -71,9 +70,6 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
         int cnt = v.size();
         for (int i = 0; i < cnt; i++) {
             SpeedoListener client = v.elementAt(i);
-            if (log.isDebugEnabled()) {
-                log.debug("notify client: " + client);
-            }
             try {
                 // skip forwarding to the last sender for now, we'll get them later
                 if (lastSender != client) {
@@ -126,7 +122,6 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
 	 */
 	static public SpeedoTrafficController instance() {
 		if (self == null) {
-			if (log.isDebugEnabled()) log.debug("creating a new SpeedoTrafficController object");
 			self = new SpeedoTrafficController();
 		}
 		return self;
@@ -205,13 +200,9 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
      */
     private void sendreply() {
         //send the reply
-        if (log.isDebugEnabled()) {
-            log.debug("dispatch reply of length " + this.reply.getNumDataElements());
-        }
         {
             final SpeedoReply thisReply = this.reply;
             if (unsolicited) {
-                log.debug("Unsolicited Reply");
                 thisReply.setUnsolicited();
             }
             final SpeedoTrafficController thisTC = this;
@@ -222,7 +213,6 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
                 SpeedoTrafficController myTC = thisTC;
 
                 public void run() {
-                    log.debug("Delayed notify starts");
                     myTC.notifyReply(msgForLater);
                 }
             };

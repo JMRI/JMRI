@@ -14,7 +14,7 @@ import jmri.util.JmriJFrame;
  * Frame for Speedo Console
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
     
@@ -58,11 +58,14 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
         43,
         -1};
 
+    protected static final int defaultScale = 6;
+
     protected int selectedScale = 0;
     protected int series = 0;
     protected double speed = 0;
     protected double circ = 0;
-    protected int count = 1;
+    protected double count = 1;
+    protected double f;
 
     //Create the combo box, select item at index 4.
     //Indices start at 0, so 4 specifies british N.
@@ -96,8 +99,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
         scalePanel.setLayout(new FlowLayout());
         
         scaleList.setToolTipText("Select the scale");
-        selectedScale = 4;
-        scaleList.setSelectedIndex(selectedScale);
+        scaleList.setSelectedIndex(defaultScale);
+        selectedScale = scales[defaultScale];
 
         // Listen to selection of scale
         scaleList.addActionListener(new java.awt.event.ActionListener() {
@@ -188,7 +191,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
         log.debug("Speedo reply " + l.toString());
         count = l.getCount();
         series = l.getSeries();
-        log.debug("Series: " + series + " Count: " + count);
         switch (series) {
             case 4:
                 circ = 12.5664;
@@ -216,7 +218,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
         if (series > 0) {
             // Scale the data and calculate kph
             try {
-                speed = (250000/(count*24))*circ*selectedScale*3600/1000000;
+//                speed = (1000000/(count*24))*circ*selectedScale*3600/1000000;
+                f = 1000000/count;
+                speed = (f/24)*circ*selectedScale*3600/1000000;
                 // Convert to mph?
                 if (mphButton.isSelected()) {
                     speed = speed/1.609344;
@@ -228,9 +232,13 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
                 log.error("Calculated speed out of range: " + speed);
                 speedTextField.setText("Out of Range!");
             } else {
-                speedTextField.setText(MessageFormat.format("{0,number,###.##}", speed));
+                speedTextField.setText(MessageFormat.format("{0,number,###}", speed));
                 speedTextField.setHorizontalAlignment(JTextField.RIGHT);
             }
+//            log.debug("Count " + count);
+//            log.debug("Frequency " + MessageFormat.format("{0,number,####.##}", f));
+//            log.debug("Scale " + selectedScale);
+//            log.debug("Calculated speed " + MessageFormat.format("{0,number,###}", speed));
         }
     }   
     

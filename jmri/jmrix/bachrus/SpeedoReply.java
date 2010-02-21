@@ -8,7 +8,7 @@ package jmri.jmrix.bachrus;
  * Description:		Carries the reply to an SprogMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Andrew Crosland  Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SpeedoReply {
 	// This should be an extension af AbstractMRReply and needs re-factoring
@@ -61,7 +61,7 @@ public class SpeedoReply {
         // don't return 0 as it will cause an exception
         if (_nDataChars < 9) { return -1; }
         try {
-            return Integer.valueOf(this.toString().substring(2, 7), 16);
+            return Integer.valueOf(this.toString().substring(2, 8), 16);
         }
         catch (NumberFormatException ex) {
             return 0;
