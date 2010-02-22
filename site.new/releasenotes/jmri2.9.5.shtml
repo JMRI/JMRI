@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.5.shtml,v 1.1 2010-02-22 01:21:27 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.5.shtml,v 1.2 2010-02-22 06:32:53 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -121,6 +121,7 @@ To make these stop, just store the file again so that it's rewritten in the most
 
 <h3>Changes since test version 2.9.4</h3>
 
+Pete Cressman fixed a small problem with the pop-up menu on locomotive icons.
 
 <!--#include virtual="/Footer" -->
 
