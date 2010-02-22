@@ -41,7 +41,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.78 $
+ * @version    $Revision: 1.79 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
@@ -373,7 +373,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         
     	//Translate the speed sent in to the max allowed by any set speed limit
     	speedSlider.setValue((int)
-    			((float)tempSpeed/intSpeedSteps) * maxSpeed);
+    			(((float)tempSpeed/intSpeedSteps) * maxSpeed));
+        if (log.isDebugEnabled()) log.debug("SpeedSlider value: "+speedSlider.getValue());
         // Spinner Speed should be the raw integer speed value
         if(speedSpinner!=null)
             speedSpinnerModel.setValue(new Integer(speedSlider.getValue()));
@@ -744,7 +745,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.78 $
+     * @version    $Revision: 1.79 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
