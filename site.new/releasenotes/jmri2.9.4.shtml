@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.20 2010-02-22 04:26:34 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.21 2010-02-22 06:20:55 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -33,7 +33,9 @@
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.9.4 of JMRI/DecoderPro is available for download.
 
+<!-- 
 <br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
 
 <h3>Notes:</h3>
 
@@ -76,12 +78,6 @@ pane where you selected the Lenz protocol.
 The Layout Editor and Panel Editor have received a large
 amount of work.  Please let us know if you notice any
 new problems.
-
-<p>
-This version contains a bug which causes the 
-marker and train icon popup menus to be controlled by the panel editor
-popup menu checkbox.  Previously these icons had popup
-menus that were always enabled. This will be fixed in the next version.
 
 <h3>Older warnings</h3>
 
