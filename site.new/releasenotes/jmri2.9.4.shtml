@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.18 2010-02-21 23:08:52 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.19 2010-02-22 03:43:52 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,11 +29,13 @@
       Release Notes for JMRI 2.9.4 release
       </h2>
 
-	<p>Date: MMM NN, 2010</p>
+	<p>Date: Feb 21, 2010</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.9.4 of JMRI/DecoderPro is available for download.
 
+<!-- 
 <br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
 
 <h3>Notes:</h3>
 
@@ -49,8 +51,9 @@ It contains
 many new features, including:
 
 <ul>
-<li>
-<li>
+<li>A new "virtual" connection preference, so you can try the programs
+without selecting any particular type of layout hardware.
+<li>Many improvements to the aspect signaling
 <li>Much better control over warning messages and dialogs
 </ul>
 along with lots of other changes.  See the complete list below.
@@ -75,6 +78,12 @@ pane where you selected the Lenz protocol.
 The Layout Editor and Panel Editor have received a large
 amount of work.  Please let us know if you notice any
 new problems.
+
+<p>
+This version contains a bug which causes the 
+marker and train icon popup menus to be controlled by the panel editor
+popup menu checkbox.  Previously these icons had popup
+menus that were always enabled. This will be fixed in the next version.
 
 <h3>Older warnings</h3>
 
@@ -102,7 +111,7 @@ removed before the next production release.
 The JInput USB library was updated to the current version in 
 <a href="jmri2.9.1.shtml">JMRI 2.9.1</a>, which (should) 
 have fixed problems on
-Windows Visata, Intel Macs and some Linux machines.  We don't have a way to check this with all possible
+Windows Vista, Intel Macs and some Linux machines.  We don't have a way to check this with all possible
 input devices, so please check to make sure that your USB-attached devices still work.
 
 <p>
@@ -205,14 +214,14 @@ please let us know if you see any.
 
 <p>
 Bob Coleman updated the powerline insteon 2412s support to 
-catch them reply message 50 (echo from a repeater) and clean up console output a bit.
+catch reply message 50 (echo from a repeater) and clean up console output a bit.
 Via an insteon 2412s an X10 device or a registered insteon device should turn on or off,
 but dim and sensors are not yet available. 
 Sometimes first commands to an insteon device fail -- once they have been retried they work.
 Note that Insteon devices must be registered with the adapter to work.
 
 <p>
-Andrew Berridge made a small correction to the BLI Blueline decoder definition.
+Peter Ulvestad made a small correction to the BLI Blueline decoder definition.
 
 <p>
 A problem that would occasionally cause a LocoNet-connected Double Output or Triple
@@ -224,7 +233,7 @@ so any problems with those should still be reported.
 david zuhn updated the Linux start-up scripts.
 
 <p>
-Fixed a bug in the way Roster populates the various selected combo boxes.
+Fixed a bug in the way the roster populates the various selected combo boxes.
 
 <p>
 Kevin Dickerson added "invert" to SPROG-driven turnouts.
@@ -269,7 +278,7 @@ Improved how Conditionals convert Memory contents so they can be compared, etc.
 
 <p>
 Added default exception handlers so that uncaught exceptions will 
-now put information into the log files.
+now put information into the log file.
 
 <p>
 Andrew Berridge added an "estop" to the XBox throttle on the
@@ -339,7 +348,7 @@ Dan Boudreau improved the appearance of the Turnout Control.
 Fixed a bug preventing playing sounds in Logix Conditional Actions.
 
 <p>
-Peter Ulvestad updated the Hornby 8249 definition.
+Andrew Berridge updated the Hornby 8249 definition.
 
 <p>
 Harald Barth improved the CV programming in the SRCP support.
