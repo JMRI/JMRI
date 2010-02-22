@@ -6,7 +6,7 @@ import jmri.jmrit.roster.RosterEntry;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
+//import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
@@ -20,7 +20,7 @@ import javax.swing.JRadioButtonMenuItem;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class LocoIcon extends PositionableLabel {
@@ -45,10 +45,19 @@ public class LocoIcon extends PositionableLabel {
     public void setPositionable(boolean enabled) {super.setPositionable(true);}
     
     // Markers always have a popup menu
-    public void setEditable(boolean enabled) {super.setEditable(true);}
+    public void setEditable(boolean enabled) {
+    	super.setEditable(true);
+    	doPopupMenu = enabled;
+    }
+    
+    private boolean doPopupMenu = false;
+    public boolean doPopupMenu() {
+        return doPopupMenu;
+    }
     
     jmri.jmrit.throttle.ThrottleFrame tf = null;
     
+    /*
     public void doMouseReleased(MouseEvent e) {
     	if (e.isPopupTrigger()){
     		if(log.isDebugEnabled())
@@ -59,13 +68,12 @@ public class LocoIcon extends PositionableLabel {
             popup.show(this, this.getWidth()/2, this.getHeight()/2);
     	}  	
     }
+    */
     
     /**
      * Pop-up only if right click and not dragged 
      */
     public void showPopUp(JPopupMenu popup) {
-        super.showPopUp(popup);
-
         if (entry != null) {
             popup.add(new AbstractAction("Throttle") {
                 public void actionPerformed(ActionEvent e) {
@@ -76,6 +84,7 @@ public class LocoIcon extends PositionableLabel {
             });
         }
         popup.add(makeLocoIconMenu());
+        setRemoveMenu(popup);
 	}
     
     ButtonGroup locoButtonGroup = null;
@@ -148,7 +157,9 @@ public class LocoIcon extends PositionableLabel {
     	return colors;
     }
     
-    private void setRemoveMenu(JPopupMenu popup) {
+    protected void setRemoveMenu(JPopupMenu popup) {
+        if (doPopupMenu)
+        	return;
     	popup.add(new AbstractAction(rb.getString("Remove")) {
     		public void actionPerformed(ActionEvent e) { 
     			remove();
