@@ -21,7 +21,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class TrainIcon extends LocoIcon {
@@ -31,6 +31,9 @@ public class TrainIcon extends LocoIcon {
         // super ctor call to make sure this is an icon label
     	super(editor); 
     }
+	
+	// train icon tool tips are always enabled
+	public void setShowTooltip(boolean set){super.setShowTooltip(true);}
  
     /**
      * Pop-up only if right click and not dragged 
