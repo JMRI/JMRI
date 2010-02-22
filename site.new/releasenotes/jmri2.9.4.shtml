@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.19 2010-02-22 03:43:52 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.20 2010-02-22 04:26:34 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -33,9 +33,7 @@
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.9.4 of JMRI/DecoderPro is available for download.
 
-<!-- 
 <br><b>This is a draft release note only; the download links do not yet work</b>
- -->
 
 <h3>Notes:</h3>
 
@@ -221,7 +219,7 @@ Sometimes first commands to an insteon device fail -- once they have been retrie
 Note that Insteon devices must be registered with the adapter to work.
 
 <p>
-Peter Ulvestad made a small correction to the BLI Blueline decoder definition.
+A small correction was made to the BLI Blueline decoder definition.
 
 <p>
 A problem that would occasionally cause a LocoNet-connected Double Output or Triple
@@ -348,7 +346,7 @@ Dan Boudreau improved the appearance of the Turnout Control.
 Fixed a bug preventing playing sounds in Logix Conditional Actions.
 
 <p>
-Andrew Berridge updated the Hornby 8249 definition.
+Andrew Berridge and Peter Ulvestad updated the Hornby 8249 definition.
 
 <p>
 Harald Barth improved the CV programming in the SRCP support.
