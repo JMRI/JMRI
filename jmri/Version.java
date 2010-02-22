@@ -19,7 +19,7 @@ package jmri;
  * for more details.
  * <P>
  * @author  Bob Jacobsen   Copyright 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010
- * @version $Revision: 1.123 $
+ * @version $Revision: 1.124 $
  */
 
 public class Version {
@@ -42,12 +42,13 @@ public class Version {
      static final public int test = 4;
      
     /**
-     * Modifier is used to denote specific builds
+     * Modifier is used to denote specific builds.
+     * It should be the empty string "" for released versions.
      */
-     static final public String modifier = "";
+     static final public String modifier = "+dev";
 
     /**
-     * Provide the current version string in I.J.K-mod format.
+     * Provide the current version string in I.J.Kmod format.
      * <P>
      * This is manually maintained by updating it before each
      * release is built.
@@ -55,8 +56,7 @@ public class Version {
      * @return The current version string
      */
      static public String name() { 
-        return ""+major+"."+minor+"."+test
-                +( !modifier.equals("") ? "-"+modifier :""); 
+        return ""+major+"."+minor+"."+test+modifier); 
      }
      
 }
