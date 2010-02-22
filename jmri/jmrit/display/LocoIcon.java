@@ -20,7 +20,7 @@ import javax.swing.JRadioButtonMenuItem;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class LocoIcon extends PositionableLabel {
@@ -40,6 +40,9 @@ public class LocoIcon extends PositionableLabel {
         setShowTooltip(false);
         _text = true;	//Markers are an icon with text
     }
+	
+	// Marker tool tips are always disabled
+	public void setShowTooltip(boolean set){super.setShowTooltip(false);}
 
     // Markers are always positionable 
     public void setPositionable(boolean enabled) {super.setPositionable(true);}

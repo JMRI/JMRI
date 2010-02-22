@@ -1020,7 +1020,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     protected void addTextEditor() {
         String newLabel = JOptionPane.showInputDialog(this, rb.getString("PromptNewLabel"));
-        if (newLabel==null) return;  // cancelled
+        if (newLabel==null) return;  // canceled
         PositionableLabel l = addLabel(newLabel);
         // always allow new items to be moved
         l.setPositionable(true);
@@ -2092,8 +2092,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 selection = selections.get(0); 
             }
         }
-        if (selection!=null && selection.getDisplayLevel()>BKG &&
-                                (_showTooltip || selection.showTooltip())) {
+        if (selection!=null && selection.getDisplayLevel()>BKG && selection.showTooltip()) {
             showToolTip(selection, event);
         } else {
             setToolTip(null);
