@@ -21,7 +21,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class TrainIcon extends LocoIcon {
@@ -39,8 +39,6 @@ public class TrainIcon extends LocoIcon {
      * Pop-up only if right click and not dragged 
      */
 	public void showPopUp(JPopupMenu popup) {
-		//super.showPopUp(popup);
-
 		if (train != null){
 			popup.add(new AbstractAction("Move") {
 				public void actionPerformed(ActionEvent e) {
@@ -59,6 +57,7 @@ public class TrainIcon extends LocoIcon {
 		}
 		popup.add(new ThrottleAction("Throttle")); 
 		popup.add(makeLocoIconMenu());
+		setRemoveMenu(popup);
 	}
 
 	Train train = null;

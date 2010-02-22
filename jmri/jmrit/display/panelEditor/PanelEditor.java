@@ -552,7 +552,7 @@ public class PanelEditor extends Editor implements ItemListener {
     * types.
     */
     protected void showPopUp(Positionable p, MouseEvent event) {
-        if (!isEditable()) { return; }
+        if (!p.isEditable()) { return; }
 
         JPopupMenu popup = new JPopupMenu();
 
