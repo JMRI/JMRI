@@ -2,6 +2,8 @@ package jmri.util;
 
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.image.BufferedImage;
+
 import jmri.util.iharder.dnd.*;
 
 import java.io.*;
@@ -29,8 +31,8 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
 	private static final long serialVersionUID = 4576214324220842001L;
 	private String _imagePath;
     protected JLabel bgImg = null;
-    private Image image = null;
-    private Image scaledImage = null;
+    private BufferedImage image = null;
+    private BufferedImage scaledImage = null;
     private boolean _resizeContainer = false;
     private boolean _respectAspectRatio = true;
     static private Color BackGroundColor = Color.BLACK ;
@@ -220,34 +222,42 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
 
 	//override paintComponent
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if (scaledImage != null) {
-        	if ( _respectAspectRatio )
-        	{
-        		g.drawImage(scaledImage, (int)( getSize().getWidth() / 2 ) - ( scaledImage.getWidth(null)/2 ), 
-        								 (int)( getSize().getHeight() / 2 ) - ( scaledImage.getHeight(null)/2 ), this);
-        	}
-        	else
-        		g.drawImage(scaledImage, 0, 0, this);
-        }
+    	super.paintComponent(g);
+    	if (scaledImage != null)
+    		g.drawImage(scaledImage, 0, 0, this);       
     }
 
     private void setScaledImage() {
-        if (image != null) {
-            if ((getSize().getWidth() != 0) && (getSize().getHeight() != 0) && 
-            		((getSize().getWidth() != image.getWidth(null)) || (getSize().getHeight() != image.getHeight(null)))) {
-            	if (log.isDebugEnabled()) log.debug("Actually resizing image "+this.getImagePath());
-            	if ( _respectAspectRatio )
-            		if (  (getSize().getWidth() / getSize().getHeight()) > ((double)image.getWidth(null) / (double)image.getHeight(null)) )
-            			scaledImage = image.getScaledInstance( -1, (int)getSize().getHeight(), java.awt.Image.SCALE_SMOOTH );
-            		else
-            			scaledImage = image.getScaledInstance((int) getSize().getWidth(), -1, java.awt.Image.SCALE_SMOOTH );
-            	else
-            		scaledImage = image.getScaledInstance((int) getSize().getWidth(), (int) getSize().getHeight(), java.awt.Image.SCALE_SMOOTH );
-            } else {
-                scaledImage = image;
-            }
-        }
+    	if (image != null) {
+    		if ((getSize().getWidth() != 0) && (getSize().getHeight() != 0) && 
+    				((getSize().getWidth() != image.getWidth(null)) || (getSize().getHeight() != image.getHeight(null)))) {
+    			int newW = (int)getSize().getWidth();
+    			int newH = (int)getSize().getHeight();
+    			int new0x = 0;
+    			int new0y = 0;
+    			if (log.isDebugEnabled()) log.debug("Actually resizing image "+this.getImagePath()+" to "+newW+"x"+newH);
+    			scaledImage = new BufferedImage(newW, newH, image.getType());  
+    			Graphics2D g = scaledImage.createGraphics();
+    			g.setBackground(getBackground());
+    			g.clearRect(0, 0, newW, newH);
+    			g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);  
+    			if ( _respectAspectRatio )
+    				if (  (getSize().getWidth() / getSize().getHeight()) > ((double)image.getWidth(null) / (double)image.getHeight(null)) )
+    				{ // Fill on height
+    					newW = image.getWidth(null)*newH/image.getHeight(null);
+    					new0x = (int)(getSize().getWidth()-newW)/2;
+    				}
+    				else
+    				{ // Fill on width
+    					newH = image.getHeight(null)*newW/image.getWidth(null);
+    					new0y = (int)(getSize().getHeight()-newH)/2;
+    				}
+    			g.drawImage(image, new0x, new0y, new0x+newW, new0y+newH, 0, 0, image.getWidth(), image.getHeight(), null);              
+    			g.dispose();  
+    		} else {
+    			scaledImage = image;
+    		}
+    	}
     }
 
     private static void copyFile(File in, File out) throws Exception {
