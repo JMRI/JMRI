@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
  * for more details.
  * <P>
  * @author	Kevin Dickerson  Copyright (C) 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
   */
 public class DeleteRosterGroupAction extends AbstractAction {
 
@@ -61,7 +61,7 @@ public class DeleteRosterGroupAction extends AbstractAction {
                   +selections.getSelectedItem());
         if (retval != 1) return;
         String entry = (String) selections.getSelectedItem();
-        if(entry.equals("Global")){
+        if(entry == null || entry.equals("Global")){
             return;
         }
         // prompt for one last chance
