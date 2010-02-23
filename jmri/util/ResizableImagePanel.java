@@ -236,7 +236,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     			int new0x = 0;
     			int new0y = 0;
     			if (log.isDebugEnabled()) log.debug("Actually resizing image "+this.getImagePath()+" to "+newW+"x"+newH);
-    			scaledImage = new BufferedImage(newW, newH, image.getType());  
+    			scaledImage = new BufferedImage(newW, newH,  image.getType() == 0? BufferedImage.TYPE_INT_ARGB : image.getType());  
     			Graphics2D g = scaledImage.createGraphics();
     			g.setBackground(getBackground());
     			g.clearRect(0, 0, newW, newH);
