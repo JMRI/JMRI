@@ -30,9 +30,9 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
 		}
 		else {
 			if ( t.getLocoAddress().toString().compareTo("3(S)") == 0 )  // default DCC address
-				setImagePath(jmri.util.FileUtil.getExternalFilename("resources/icons/throttles/DCCImage.jpg"));
+				setImagePath(jmri.util.FileUtil.getExternalFilename("resources/icons/throttles/DCCImage.png"));
 			if ( t.getLocoAddress().toString().compareTo("0(S)") == 0 )  // default DC address
-				setImagePath(jmri.util.FileUtil.getExternalFilename("resources/icons/throttles/DCImage.jpg"));
+				setImagePath(jmri.util.FileUtil.getExternalFilename("resources/icons/throttles/DCImage.png"));
 		}
 	}
 
