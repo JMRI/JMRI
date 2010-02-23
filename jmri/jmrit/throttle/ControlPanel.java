@@ -41,7 +41,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.79 $
+ * @version    $Revision: 1.80 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
@@ -229,7 +229,9 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      */
     public void setSpeedStepsMode(int speedStepMode)
     {
-        int maxSpeedPCT = addressPanel.getRosterEntry().getMaxSpeedPCT();
+       	int maxSpeedPCT = 100;
+    	if (addressPanel.getRosterEntry() != null)
+    		maxSpeedPCT = addressPanel.getRosterEntry().getMaxSpeedPCT();
    
         // Save the old speed as a float
         float oldSpeed = (speedSlider.getValue() / ( maxSpeed * 1.0f ) ) ;
@@ -745,7 +747,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.79 $
+     * @version    $Revision: 1.80 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
