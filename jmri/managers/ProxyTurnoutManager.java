@@ -17,7 +17,7 @@ import jmri.TurnoutOperationManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -36,7 +36,9 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
         if (mgrs.size() == 0) { 
             log.debug("initial addmanager");
             mgrs.add(m);
-            mgrs.add(new InternalTurnoutManager());
+            //Only add internal manager if it hasn't already been added.
+            if (!m.getClass().getName().contains("InternalTurnoutManager"))
+                mgrs.add(new InternalTurnoutManager());
         } else {
             mgrs.add(m);
         }
