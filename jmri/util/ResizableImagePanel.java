@@ -185,6 +185,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
         if (isResizingContainer())
         	resizeContainer();       
         setScaledImage();
+        setVisible(true);
         return true;
     }
 	
@@ -230,44 +231,23 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
         		g.drawImage(scaledImage, 0, 0, this);
         }
     }
-    
-    private scaleImageThread rszThrd = null;
 
-    @SuppressWarnings("deprecation")
-	private void setScaledImage() {
+    private void setScaledImage() {
         if (image != null) {
             if ((getSize().getWidth() != 0) && (getSize().getHeight() != 0) && 
             		((getSize().getWidth() != image.getWidth(null)) || (getSize().getHeight() != image.getHeight(null)))) {
-            	if (log.isDebugEnabled()) log.debug("Actually resizing image "+this.getImagePath()+" to "+getSize());
-            	if ((rszThrd != null) && (rszThrd.isAlive()))
-            		rszThrd.stop(); // deprecated but simplest solution actually
-            	rszThrd = new scaleImageThread();
-            	rszThrd.setName("Image scaling thread for "+this.getImagePath());
-            	rszThrd.setDaemon(true);
-            	rszThrd.setPriority(Thread.MIN_PRIORITY );
-            	rszThrd.start();
+            	if (log.isDebugEnabled()) log.debug("Actually resizing image "+this.getImagePath());
+            	if ( _respectAspectRatio )
+            		if (  (getSize().getWidth() / getSize().getHeight()) > ((double)image.getWidth(null) / (double)image.getHeight(null)) )
+            			scaledImage = image.getScaledInstance( -1, (int)getSize().getHeight(), java.awt.Image.SCALE_FAST );
+            		else
+            			scaledImage = image.getScaledInstance((int) getSize().getWidth(), -1, java.awt.Image.SCALE_FAST );
+            	else
+            		scaledImage = image.getScaledInstance((int) getSize().getWidth(), (int) getSize().getHeight(), java.awt.Image.SCALE_FAST );
             } else {
                 scaledImage = image;
             }
         }
-    }
-    
-    class scaleImageThread extends Thread  {
-		public void run() { // let's assume '=' is atomic for image (to be checked)
-			Image img = image;
-			Image tmp;
-			Dimension sz = getSize();
-			setVisible(false);
-        	if ( _respectAspectRatio )
-        		if (  (sz.getWidth() / sz.getHeight()) > ((double)img.getWidth(null) / (double)img.getHeight(null)) )
-        			tmp = img.getScaledInstance( -1, (int)sz.getHeight(), java.awt.Image.SCALE_SMOOTH );
-        		else
-        			tmp = img.getScaledInstance((int)sz.getWidth(), -1, java.awt.Image.SCALE_SMOOTH );
-        	else
-        		tmp = img.getScaledInstance((int)sz.getWidth(), (int)sz.getHeight(), java.awt.Image.SCALE_SMOOTH );
-        	scaledImage = tmp;
-			setVisible(true);
-		}   	
     }
 
     private static void copyFile(File in, File out) throws Exception {
