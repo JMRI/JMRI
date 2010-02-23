@@ -30,6 +30,9 @@ public class ThrottlesPreferences {
    		Element root;
 		try {
 			root = prefs.rootFromFile(file);
+        } catch (java.io.FileNotFoundException e2) {
+            log.info("Did not find throttle preferences file.  This is normal if you haven't save the preferences before");
+            root = null;
 		} catch (Exception e) {
 			log.error("Exception while loading throttles preferences: " + e);
 			root = null;
