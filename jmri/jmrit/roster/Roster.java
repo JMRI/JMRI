@@ -46,7 +46,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.52 $
+ * @version	$Revision: 1.53 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -569,12 +569,10 @@ public class Roster extends XmlFile {
             log.error("Unrecognized roster file contents in file: "+name);
         }
         if (root.getChild("rosterGroup") != null) {
-            List<Element> g = root.getChild("rosterGroup").getChildren("group");
-//            if (g.size()>=1){
-                for (int i=0; i<g.size(); i++) {
-                    addRosterGroupList(g.get(i).getText().toString());
-                }
-//            }
+        	List<Element> g = root.getChild("rosterGroup").getChildren("group");
+        	for (int i=0; i<g.size(); i++) {
+        		addRosterGroupList(g.get(i).getText().toString());
+        	}
         }
     }
 
@@ -725,7 +723,6 @@ public class Roster extends XmlFile {
                 return;
         }
         _rosterGroupList.add(str);
-        writeRosterFile();
     }
     
     public void delRosterGroupList(String str) {
