@@ -185,7 +185,6 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
         if (isResizingContainer())
         	resizeContainer();       
         setScaledImage();
-        setVisible(true);
         return true;
     }
 	
@@ -241,8 +240,11 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
             		((getSize().getWidth() != image.getWidth(null)) || (getSize().getHeight() != image.getHeight(null)))) {
             	if (log.isDebugEnabled()) log.debug("Actually resizing image "+this.getImagePath()+" to "+getSize());
             	if ((rszThrd != null) && (rszThrd.isAlive()))
-            		rszThrd.stop();
+            		rszThrd.stop(); // deprecated but simplest solution actually
             	rszThrd = new scaleImageThread();
+            	rszThrd.setName("Image scaling thread for "+this.getImagePath());
+            	rszThrd.setDaemon(true);
+            	rszThrd.setPriority(Thread.MIN_PRIORITY );
             	rszThrd.start();
             } else {
                 scaledImage = image;
@@ -251,16 +253,20 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     }
     
     class scaleImageThread extends Thread  {
-		public void run() { // should protect scaledImage, let's assume '=' is atomic for image (to be checked)
+		public void run() { // let's assume '=' is atomic for image (to be checked)
 			Image img = image;
+			Image tmp;
 			Dimension sz = getSize();
+			setVisible(false);
         	if ( _respectAspectRatio )
         		if (  (sz.getWidth() / sz.getHeight()) > ((double)img.getWidth(null) / (double)img.getHeight(null)) )
-        			scaledImage = img.getScaledInstance( -1, (int)sz.getHeight(), java.awt.Image.SCALE_SMOOTH );
+        			tmp = img.getScaledInstance( -1, (int)sz.getHeight(), java.awt.Image.SCALE_SMOOTH );
         		else
-        			scaledImage = img.getScaledInstance((int)sz.getWidth(), -1, java.awt.Image.SCALE_SMOOTH );
+        			tmp = img.getScaledInstance((int)sz.getWidth(), -1, java.awt.Image.SCALE_SMOOTH );
         	else
-        		scaledImage = img.getScaledInstance((int)sz.getWidth(), (int)sz.getHeight(), java.awt.Image.SCALE_SMOOTH );			
+        		tmp = img.getScaledInstance((int)sz.getWidth(), (int)sz.getHeight(), java.awt.Image.SCALE_SMOOTH );
+        	scaledImage = tmp;
+			setVisible(true);
 		}   	
     }
 
