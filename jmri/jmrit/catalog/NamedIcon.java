@@ -26,7 +26,7 @@ import javax.swing.ImageIcon;
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
  * @author  Pete Cressman Copyright: Copyright (c) 2009, 2010
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -114,6 +114,9 @@ public class NamedIcon extends ImageIcon {
      * display this icon
      */
     public void setRotation(int pRotation, Component comp) {
+    	// don't transform a blinking icon, it will no longer blink!
+    	if (pRotation == 0)	
+    		return;
         if (pRotation>3) pRotation = 0;
         if (pRotation<0) pRotation = 3;
         mRotation = pRotation;
