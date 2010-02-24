@@ -48,6 +48,19 @@ import jmri.configurexml.*;
  * The title of the target and the editor panel are kept
  * consistent via the {#setTitle} method.
  *
+ * <p>
+ * Mouse events are initially handled here, rather than in the 
+ * individual displayed objects, so that selection boxes for 
+ * moving multiple objects can be provided. 
+ *
+ * <p>
+ * This class also implements an effective ToolTipManager replacement,
+ * because the standard Swing one can't deal with the coordinate 
+ * changes used to zoom a panel.  It works by controlling the contents 
+ * of the _tooltip instance variable, and triggering repaint of the 
+ * target window when the tooltip changes.  The window painting then
+ * explicitly draws the tooltip for the underlying object.
+ *
  * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
@@ -235,14 +248,17 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
 
         } else if (_tooltip==null && _tooltipTimer==null) {
-            _tooltipTimer = new ToolTipTimer(1000, this, tt);
+            _tooltipTimer = new ToolTipTimer(TOOLTIPSHOWDELAY, this, tt);
             _tooltipTimer.setRepeats(false);
             _tooltipTimer.start();
         }
     }
 
+    static public int TOOLTIPSHOWDELAY = 1000; // msec
+    static public int TOOLTIPDISMISSDELAY = 4000;  // msec
+
     /**
-    * Wait 1 sec then show tooltip.  Wait another 4 sec and disaappear
+    * Wait TOOLTIPSHOWDELAY then show tooltip.  Wait TOOLTIPDISMISSDELAY and disaappear
     */
     public void actionPerformed(ActionEvent event) {
         //if (_debug) log.debug("_tooltipTimer actionPerformed: Timer on= "+(_tooltipTimer!=null));
@@ -251,7 +267,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _tooltipTimer.stop();
         }
         if (_tooltip!=null) {
-            _tooltipTimer = new ToolTipTimer(4000, this, null);
+            _tooltipTimer = new ToolTipTimer(TOOLTIPDISMISSDELAY, this, null);
             _tooltipTimer.setRepeats(false);
             _tooltipTimer.start();
         } else {
@@ -1963,7 +1979,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     */
 
     public void mousePressed(MouseEvent event) {
-        setToolTip(null);
+        setToolTip(null); // ends tooltip if displayed
         if (_debug) log.debug("mousePressed at ("+event.getX()+","+event.getY()+") _dragging="+_dragging);
         _anchorX = event.getX();
         _anchorY = event.getY();
@@ -1981,6 +1997,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 _currentSelection = selections.get(0); 
             }
             if (event.isPopupTrigger()) {
+                if (_debug) log.debug("mousePressed calls showPopUp");
                 showPopUp(_currentSelection, event);
             } else {
                 _currentSelection.doMousePressed(event);
@@ -1998,11 +2015,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _selectRect = null;
             _selectionGroup = null;
         }
-        _targetPanel.repaint();
+        _targetPanel.repaint(); // needed for ToolTip
     }
 
     public void mouseReleased(MouseEvent event) {
-        setToolTip(null);
+        setToolTip(null); // ends tooltip if displayed
         if (_debug) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+") dragging= "+_dragging
                               +" selectRect is "+(_selectRect==null? "null":"not null"));
         List <Positionable> selections = getSelectedItems(event);
@@ -2035,14 +2052,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
         }
         _dragging = false;
-        _targetPanel.repaint();
-    }
-
-    public void mouseClicked(MouseEvent event) {
+        _targetPanel.repaint(); // needed for ToolTip
     }
 
     public void mouseDragged(MouseEvent event) {
-        setToolTip(null);
+        setToolTip(null); // ends tooltip if displayed
         if (event.isPopupTrigger() || (!event.isMetaDown() && !event.isAltDown())) {
             if (_currentSelection!=null) {
                 List <Positionable> selections = getSelectedItems(event);
@@ -2076,7 +2090,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _dragging = true;
         _lastX = event.getX();
         _lastY = event.getY();
-        _targetPanel.repaint();
+        _targetPanel.repaint(); // needed for ToolTip
     }
 
     public void mouseMoved(MouseEvent event) {
@@ -2094,10 +2108,45 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         if (selection!=null && selection.getDisplayLevel()>BKG && selection.showTooltip()) {
             showToolTip(selection, event);
+            _targetPanel.repaint();
         } else {
             setToolTip(null);
+            _targetPanel.repaint();
         }
-        _targetPanel.repaint();
+    }
+
+    public void mouseClicked(MouseEvent event) {
+        System.err.println("click "+this);
+        setToolTip(null); // ends tooltip if displayed
+        if (_debug) log.debug("mouseClicked at ("+event.getX()+","+event.getY()+") dragging= "+_dragging
+                              +" selectRect is "+(_selectRect==null? "null":"not null"));
+        List <Positionable> selections = getSelectedItems(event);
+
+        if (selections.size() > 0) {
+            if (event.isShiftDown() && selections.size() > 1) {
+                _currentSelection = selections.get(1); 
+            } else {
+                _currentSelection = selections.get(0); 
+            }
+        } else {
+            _currentSelection = null;
+        }
+        if (event.isPopupTrigger() && _currentSelection != null && !_dragging) {
+            showPopUp(_currentSelection, event);
+        } else {
+            if (_currentSelection != null && !_dragging) {
+                _currentSelection.doMouseClicked(event);
+            }
+            if (allPositionable() && _selectRect!=null) {
+                if (_selectionGroup==null && _dragging) {
+                    makeSelectionGroup();
+                }
+                if (_selectionGroup==null) {
+                    _selectRect = null;
+                }
+            }
+        }
+        _targetPanel.repaint(); // needed for ToolTip
     }
 
     public void mouseEntered(MouseEvent event) {
@@ -2105,6 +2154,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     public void mouseExited(MouseEvent event) {
         setToolTip(null);
+        _targetPanel.repaint();  // needed for ToolTip
     }
 
     /*********************** Abstract Methods ************************/
