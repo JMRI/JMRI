@@ -35,6 +35,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
     private javax.swing.JCheckBox cbEnableAutoLoad;
     private javax.swing.JCheckBox cbHideUndefinedButtons;
     private javax.swing.JCheckBox cbIgnoreThrottlePosition;
+    private javax.swing.JLabel	labelApplyWarning;
     private javax.swing.JButton jbApply;
     private javax.swing.JButton jbCancel;
     private javax.swing.JButton jbSave;
@@ -53,6 +54,13 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
 
     private void initComponents() {
 
+    	GridBagConstraints gridBagConstraints13 = new GridBagConstraints();
+    	gridBagConstraints13.gridx = 0;
+        gridBagConstraints13.insets = new Insets(2, 23, 2, 2);
+        gridBagConstraints13.ipady = 16;
+        gridBagConstraints13.anchor = GridBagConstraints.WEST;
+        gridBagConstraints13.gridy = 99;
+        
     	GridBagConstraints gridBagConstraints12 = new GridBagConstraints();
     	gridBagConstraints12.gridx = 0;
         gridBagConstraints12.insets = new Insets(2, 23, 2, 2);
@@ -104,16 +112,16 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
         // last line: buttons
         GridBagConstraints gridBagConstraints9 = new GridBagConstraints();
         gridBagConstraints9.insets = new Insets(5, 3, 5, 5);
-        gridBagConstraints9.gridy = 9;
+        gridBagConstraints9.gridy = 100;
         gridBagConstraints9.gridx = 1;
         GridBagConstraints gridBagConstraints8 = new GridBagConstraints();
         gridBagConstraints8.insets = new Insets(5, 3, 5, 2);
-        gridBagConstraints8.gridy = 9;
+        gridBagConstraints8.gridy = 100;
         gridBagConstraints8.anchor = GridBagConstraints.WEST;
         gridBagConstraints8.gridx = 0;
         GridBagConstraints gridBagConstraints7 = new GridBagConstraints();
         gridBagConstraints7.insets = new Insets(5, 3, 5, 2);
-        gridBagConstraints7.gridy = 9;
+        gridBagConstraints7.gridy = 100;
         gridBagConstraints7.gridx = 8;
         
         jbCancel = new javax.swing.JButton();
@@ -131,6 +139,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
         cbHideUndefinedButtons = new javax.swing.JCheckBox();
         cbIgnoreThrottlePosition = new javax.swing.JCheckBox();
 
+        labelApplyWarning = new javax.swing.JLabel();
         
         cbUseExThrottle.setText(throttleBundle.getString("UseExThrottle"));
         cbUseTransparentCtl.setText(throttleBundle.getString("ExThrottleTransparence"));
@@ -141,8 +150,9 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
         cbEnableRosterSearch.setText(throttleBundle.getString("ExThrottleEnableRosterSearch"));
         cbEnableAutoLoad.setText(throttleBundle.getString("ExThrottleEnableAutoSave"));
         cbHideUndefinedButtons.setText(throttleBundle.getString("ExThrottleHideUndefinedFunctionButtons")); 
-        cbIgnoreThrottlePosition.setText(throttleBundle.getString("ExThrottleIgnoreThrottlePosition"));
-                
+        cbIgnoreThrottlePosition.setText(throttleBundle.getString("ExThrottleIgnoreThrottlePosition"));         
+        labelApplyWarning.setText(throttleBundle.getString("ExThrottleLabelApplyWarning"));
+
         java.awt.event.ActionListener al = new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	checkConsistancy();
@@ -188,6 +198,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
         this.add(cbHideUndefinedButtons, gridBagConstraints11);
         this.add(cbIgnoreThrottlePosition, gridBagConstraints10);
         this.add(cb1Win4all, gridBagConstraints12);
+        this.add(labelApplyWarning, gridBagConstraints13);
      // TODO       add(cbUseAdvTransition, gridBagConstraints);
     }
 
