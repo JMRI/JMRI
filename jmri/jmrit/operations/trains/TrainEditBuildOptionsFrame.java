@@ -32,7 +32,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of a train's build options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -134,8 +134,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 				
 		// Layout the panel by rows
 	   	JPanel p1 = new JPanel();
-    	p1.setLayout(new GridBagLayout());
-    	//p1.setPreferredSize(new Dimension(550, 100)); // this sets the minimum panel width
+    	p1.setLayout(new BoxLayout(p1,BoxLayout.X_AXIS));
 				
 		// Layout the panel by rows
 		// row 1a
@@ -150,9 +149,9 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     	pDesc.setBorder(BorderFactory.createTitledBorder(rb.getString("Description")));
     	addItem(pDesc, trainDescription, 0, 0);
 		
-		addItem(p1, pName, 0, 0);
-		addItem(p1, pDesc, 1, 0);
-	   			
+    	p1.add(pName);
+    	p1.add(pDesc);
+    		
 		// row 7
 		panelRoadNames.setLayout(new GridBagLayout());
 		roadGroup.add(roadNameAll);
@@ -215,14 +214,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		
 		
 		if (_train != null){
-			String name = _train.getName();
-			if (name.length()<6)
-				name += "       ";// pad out the name
-			trainName.setText(name);
-			name = _train.getDescription();
-			if (name.length()<20)
-				name += "                     ";// pad out the description
-			trainDescription.setText(name);
+			trainName.setText(_train.getName());
+			trainDescription.setText(_train.getDescription());
 			builtAfterTextField.setText(_train.getBuiltStartYear());
 			builtBeforeTextField.setText(_train.getBuiltEndYear());
 			setBuiltRadioButton();
@@ -232,20 +225,10 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		} else {
 			enableButtons(false);
 		}
-
-		//	build menu
-		//JMenuBar menuBar = new JMenuBar();
-		//JMenu toolMenu = new JMenu(rb.getString("Tools"));
-		//toolMenu.add(new PrintTrainAction(rb.getString("MenuItemPrint"), new Frame(), false, _train));
-		//toolMenu.add(new PrintTrainAction(rb.getString("MenuItemPreview"), new Frame(), true, _train));
-		//menuBar.add(toolMenu);
-		//setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
 		updateRoadNames();
 		updateOwnerNames();
 		updateBuilt();
-		
-		//	 get notified if combo box gets modified
 
 		// get notified if car roads gets modified
 		CarRoads.instance().addPropertyChangeListener(this);
@@ -263,18 +246,22 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			if (ae.getSource() == addRoadButton){
 				if(_train.addRoadName((String) roadBox.getSelectedItem()))
 					updateRoadNames();
+				selectNextItemComboBox(roadBox);
 			}
 			if (ae.getSource() == deleteRoadButton){
 				if(_train.deleteRoadName((String) roadBox.getSelectedItem()))
 					updateRoadNames();
+				selectNextItemComboBox(roadBox);
 			}
 			if (ae.getSource() == addOwnerButton){
 				if(_train.addOwnerName((String) ownerBox.getSelectedItem()))
 					updateOwnerNames();
+				selectNextItemComboBox(ownerBox);
 			}
 			if (ae.getSource() == deleteOwnerButton){
 				if(_train.deleteOwnerName((String) ownerBox.getSelectedItem()))
 					updateOwnerNames();
+				selectNextItemComboBox(ownerBox);
 			}
 		}
 	}
@@ -481,8 +468,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     private void packFrame(){
     	setVisible(false);
  		pack();
- 		if(getWidth()<400)
- 			setSize(400, getHeight());
+ 		if(getWidth()<300)
+ 			setSize(300, getHeight());
  		else
  			setSize(getWidth()+50, getHeight());
 		setVisible(true);

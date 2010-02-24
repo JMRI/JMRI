@@ -50,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.57 $
+ * @version $Revision: 1.58 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -122,7 +122,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	// for padding out panel
 	JLabel space1 = new JLabel("       ");
-	JLabel space2 = new JLabel("       ");
+	JLabel space2 = new JLabel("       ");	// between hour and minute
 	JLabel space3 = new JLabel("       ");
 	JLabel space4 = new JLabel("       ");
 	JLabel space5 = new JLabel("       ");
@@ -169,8 +169,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 	    //      Set up the panels
     	JPanel p1 = new JPanel();
-    	p1.setLayout(new GridBagLayout());
-    	//p1.setPreferredSize(new Dimension(550, 100)); // this sets the minimum panel width
+    	p1.setLayout(new BoxLayout(p1,BoxLayout.X_AXIS));
 				
 		// Layout the panel by rows
 		// row 1a
@@ -185,12 +184,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     	pDesc.setBorder(BorderFactory.createTitledBorder(rb.getString("Description")));
 		addItem(pDesc, trainDescriptionTextField, 0, 0);
 		
-		addItem(p1, pName, 0, 0);
-		addItem(p1, pDesc, 1, 0);
+		p1.add(pName);
+		p1.add(pDesc);
 		
 		// row 2a
 		JPanel p2 = new JPanel();
-		p2.setLayout(new GridBagLayout());
+		p2.setLayout(new BoxLayout(p2,BoxLayout.X_AXIS));
 		// row 3 right		
 	   	JPanel pdt = new JPanel();
 	   	pdt.setLayout(new GridBagLayout());
@@ -227,8 +226,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		addItem(pr, space5, 3, 5);
 		addItem(pr, textRouteStatus, 4, 5);
 		
-		addItem(p1, pr, 1, 1);
-		addItem(p1, pdt, 0, 1);
+		p2.add(pdt);
+		p2.add(pr);
 
 		// row 5
 	   	locationPanelCheckBoxes.setLayout(new GridBagLayout());

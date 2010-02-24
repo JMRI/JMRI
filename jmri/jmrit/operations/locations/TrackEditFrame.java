@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -41,6 +41,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JScrollPane paneCheckBoxes = new JScrollPane(panelCheckBoxes);
 	JPanel panelTrainDir = new JPanel();
 	JPanel panelRoadNames = new JPanel();
+	JScrollPane paneRoadNames = new JScrollPane(panelRoadNames);
 	
 	// major buttons
 	JButton clearButton = new JButton(rb.getString("Clear"));
@@ -131,7 +132,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		
 		// row 5
 		panelRoadNames.setLayout(new GridBagLayout());
-		panelRoadNames.setBorder(BorderFactory.createTitledBorder(rb.getString("RoadsTrack")));
+		paneRoadNames.setBorder(BorderFactory.createTitledBorder(rb.getString("RoadsTrack")));
 		roadGroup.add(roadNameAll);
 		roadGroup.add(roadNameInclude);
 		roadGroup.add(roadNameExclude);
@@ -158,7 +159,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		getContentPane().add(pLength);
 		getContentPane().add(panelTrainDir);
 		getContentPane().add(paneCheckBoxes);
-		getContentPane().add(panelRoadNames);
+		getContentPane().add(paneRoadNames);
 		
 		// add optional panels
 		getContentPane().add(panelOpt1);
@@ -245,10 +246,12 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == addRoadButton){
 			_track.addRoadName((String) comboBoxRoads.getSelectedItem());
 			updateRoadNames();
+			selectNextItemComboBox(comboBoxRoads);
 		}
 		if (ae.getSource() == deleteRoadButton){
 			_track.deleteRoadName((String) comboBoxRoads.getSelectedItem());
 			updateRoadNames();
+			selectNextItemComboBox(comboBoxRoads);
 		}
 		if (ae.getSource() == setButton){
 			selectCheckboxes(true);

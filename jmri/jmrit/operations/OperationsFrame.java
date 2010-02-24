@@ -17,7 +17,7 @@ import javax.swing.JRadioButton;
  * Frame for operations
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class OperationsFrame extends jmri.util.JmriJFrame {
@@ -135,9 +135,14 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		});
 	}
 	
-	// location combo box
 	protected void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("combo box action not overridden");
+	}
+	
+	protected void selectNextItemComboBox(JComboBox b){
+		int newIndex = b.getSelectedIndex()+1;
+		if (newIndex<b.getItemCount())
+			b.setSelectedIndex(newIndex);
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
