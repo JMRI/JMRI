@@ -16,7 +16,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
@@ -104,10 +104,13 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     }
     
     // overide where used - e.g. momentary
-    public void doMousePressed(MouseEvent event) {
-    }
-    public void doMouseReleased(MouseEvent event) {
-    }
+    public void doMousePressed(MouseEvent event) {}
+    public void doMouseReleased(MouseEvent event) {}
+    public void doMouseClicked(MouseEvent event) {}
+    public void doMouseDragged(MouseEvent event) {}
+    public void doMouseMoved(MouseEvent event) {}
+    public void doMouseEntered(MouseEvent event) {}
+    public void doMouseExited(MouseEvent event) {}
 
     public boolean storeItem() {
         return true;

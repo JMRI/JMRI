@@ -14,7 +14,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 
@@ -107,10 +107,13 @@ public class PositionableJComponent extends JComponent implements Positionable {
     }
     
     // overide where used - e.g. momentary
-    public void doMousePressed(MouseEvent event) {
-    }
-    public void doMouseReleased(MouseEvent event) {
-    }
+    public void doMousePressed(MouseEvent event) {}
+    public void doMouseReleased(MouseEvent event) {}
+    public void doMouseClicked(MouseEvent event) {}
+    public void doMouseDragged(MouseEvent event) {}
+    public void doMouseMoved(MouseEvent event) {}
+    public void doMouseEntered(MouseEvent event) {}
+    public void doMouseExited(MouseEvent event) {}
 
     public boolean storeItem() {
         return true;

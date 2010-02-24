@@ -20,10 +20,17 @@ import javax.swing.JPopupMenu;
  * They are generally not stored
  * directly as part of the state of the object, though they
  * could be, but as part of the state of the external control.
+ *<p>
+ * Instead of the usual MouseEvent handling methods, e.g mouseClicked(...),
+ * Positionables have similar methods called doMouseClicked 
+ * invoked by the {@link Editor} subclass that contains
+ * them, so the Editor can handle e.g. box selection, etc.
  *
+ * @see PositionableJComponent
+ * @see PositionableLabel
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public interface Positionable  {
     public void setPositionable(boolean enabled);
@@ -60,13 +67,7 @@ public interface Positionable  {
     public void setScaleMenu(JPopupMenu popup);
     public void setEditIconMenu(JPopupMenu popup);
     public void setDisableControlMenu(JPopupMenu popup);
-    /*
-    public void setFixedTextMenu(JPopupMenu popup);
-    public void setTextMarginMenu(JPopupMenu popup);
-    public void setBackgroundFontColorMenu(JPopupMenu popup);
-    public void setTextBorderMenu(JPopupMenu popup);
-    public void setTextEditMenu(JPopupMenu popup, String menuTitle);
-    */
+
     public void showPopUp(JPopupMenu popup);
 
     public void setScale(double s);
@@ -91,8 +92,15 @@ public interface Positionable  {
     */
     public boolean doPopupMenu();
 
+    // Mouse-handling events.  See
+    // Editor class for more information on how these are used.
     public void doMousePressed(MouseEvent event);
     public void doMouseReleased(MouseEvent event);
+    public void doMouseClicked(MouseEvent event);
+    public void doMouseDragged(MouseEvent event);
+    public void doMouseMoved(MouseEvent event);
+    public void doMouseEntered(MouseEvent event);
+    public void doMouseExited(MouseEvent event);
 
     // The following are common for all JComponents
     public Rectangle getBounds(Rectangle r);

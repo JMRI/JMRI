@@ -36,7 +36,7 @@ import javax.swing.border.LineBorder;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.85 $
+ * @version $Revision: 1.86 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -159,10 +159,13 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     // overide where used - e.g. momentary
-    public void doMousePressed(MouseEvent event) {
-    }
-    public void doMouseReleased(MouseEvent event) {
-    }
+    public void doMousePressed(MouseEvent event) {}
+    public void doMouseReleased(MouseEvent event) {}
+    public void doMouseClicked(MouseEvent event) {}
+    public void doMouseDragged(MouseEvent event) {}
+    public void doMouseMoved(MouseEvent event) {}
+    public void doMouseEntered(MouseEvent event) {}
+    public void doMouseExited(MouseEvent event) {}
 
     public boolean storeItem() {
         return true;
@@ -170,6 +173,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     public boolean doPopupMenu() {
         return true;
     }
+    
     /**************** end Positionable methods **********************/
     
     /**
@@ -275,7 +279,8 @@ public class PositionableLabel extends JLabel implements Positionable {
                 max = MIN_SIZE;
             }
         } else {
-            if(_text && getText()!=null && !getText().equals("  ")) {
+            if(_text && getText()!=null 
+                && !(getText().equals("  ") || getText().equals("")) ) {
 
                 max = getFontMetrics(getFont()).stringWidth(getText());
             }
