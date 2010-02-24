@@ -2116,7 +2116,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     public void mouseClicked(MouseEvent event) {
-        System.err.println("click "+this);
         setToolTip(null); // ends tooltip if displayed
         if (_debug) log.debug("mouseClicked at ("+event.getX()+","+event.getY()+") dragging= "+_dragging
                               +" selectRect is "+(_selectRect==null? "null":"not null"));
