@@ -16,7 +16,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the SensorIcon
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class SensorIconWindowTest extends jmri.util.SwingTestCase {
 
@@ -27,22 +27,17 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         
         JComponent jf = panel.getTargetPanel();
         
-        SensorIcon to = new SensorIcon(panel);
-        panel.putItem(to);
+        SensorIcon icon = new SensorIcon(panel);
+        panel.putItem(icon);
         
         Sensor sn = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
-        to.setSensor("IS1");
+        icon.setSensor("IS1");
         
         panel.setVisible(true);
         //jf.setVisible(true);
 
         Assert.assertEquals("initial state", Sensor.UNKNOWN, sn.getState());
         
-        // Find the sensor
-        NamedComponentFinder finder = new NamedComponentFinder(SensorIcon.class, "IS1");
-        SensorIcon icon = ( SensorIcon ) finder.find( jf, 0);
-        Assert.assertNotNull(icon);   
-         
         // Click icon change state to Active
         java.awt.Point location = new java.awt.Point(
                                     icon.getLocation().x+icon.getSize().width/2,
