@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class LayoutEditor extends Editor {
@@ -2837,22 +2837,19 @@ public class LayoutEditor extends Editor {
                     p.getHeight()/2+(int)((getPaintScale()-1.0)*p.getY()));
     }
 
-	private long whenReleased = 0;
+	private long whenReleased = 0;  // used to identify event that was popup trigger
 	private boolean awaitingIconChange = false;
     public void mouseClicked(MouseEvent event)
 	{
-		if (whenReleased == event.getWhen()) {
-			return;
-		}
 		if ( (!event.isMetaDown()) && (!event.isPopupTrigger()) && (!event.isAltDown()) &&
 					(!awaitingIconChange) && (!event.isShiftDown()) && (!event.isControlDown()) ) {
 			calcLocation(event, 0, 0);
             List <Positionable> selections = getSelectedItems(event);
             if (selections.size() > 0) {
-                selections.get(0).doMouseReleased(event);
+                selections.get(0).doMouseClicked(event);
             }
 		}
-		else if ( event.isPopupTrigger() ) {
+		else if ( event.isPopupTrigger() && whenReleased != event.getWhen()) {
 			calcLocation(event, 0, 0);
 			if (isEditable()) {
 				selectedObject = null;
