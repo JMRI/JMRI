@@ -1838,7 +1838,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 boolean added =false;
                 int level = p.getDisplayLevel();
                 for (int k=0; k<selections.size(); k++) {
-                    if (level > selections.get(k).getDisplayLevel()) {
+                    if (level < selections.get(k).getDisplayLevel()) {
                         selections.add(k, p);
                         added = true;
                         break;
@@ -1849,14 +1849,14 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
             }
         }
-        //if (_debug) {
-        //    log.debug("getSelectedItems at ("+x+","+y+") "+selections.size()+" found,");
+        if (_debug) {
+            log.debug("getSelectedItems at ("+x+","+y+") "+selections.size()+" found,");
           /*  for (int i=0; i<selections.size(); i++) {
                 Positionable comp = selections.get(i);
                 log.debug("getSelectedItems: selection: "+ comp.getNameString()+
                             ", class= "+comp.getClass().getName());
             } */
-        //}
+        }
         return selections;
     }
 
