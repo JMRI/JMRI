@@ -23,7 +23,7 @@ import jmri.util.JmriJFrame;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -131,9 +131,23 @@ public class ReporterTableAction extends AbstractTableAction {
         String user = userName.getText();
         if (user.equals("")) user=null;
         String sName = sysName.getText().toUpperCase();
-        InstanceManager.reporterManagerInstance().newReporter(sName, user);
+        try {
+            InstanceManager.reporterManagerInstance().newReporter(sName, user);
+        } catch (IllegalArgumentException ex) {
+            // user input no good
+            handleCreateException(sysName.getText());
+            return; // without creating       
+        }
     }
-    //private boolean noWarn = false;
+
+    void handleCreateException(String sysName) {
+        javax.swing.JOptionPane.showMessageDialog(addFrame,
+                java.text.MessageFormat.format(
+                    rb.getString("ErrorReporterAddFailed"),  
+                    new Object[] {sysName}),
+                rb.getString("ErrorTitle"),
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ReporterTableAction.class.getName());
 }

@@ -16,7 +16,7 @@ import org.jdom.*;
  * JPanel to create a new SignalMast
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class AddSignalMastPanel extends JPanel {
@@ -131,9 +131,25 @@ public class AddSignalMastPanel extends JPanel {
             name += ":"+head5.getText();
             
         log.debug("add signal: "+name);
-        SignalMast m = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
+        SignalMast m;
+        try {
+            m = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
+        } catch (IllegalArgumentException ex) {
+            // user input no good
+            handleCreateException(name);
+            return; // without creating       
+        }
         String user = userName.getText();
         if (!user.equals("")) m.setUserName(user);
+    }
+
+    void handleCreateException(String sysName) {
+        javax.swing.JOptionPane.showMessageDialog(AddSignalMastPanel.this,
+                java.text.MessageFormat.format(
+                    rb.getString("ErrorSignalMastAddFailed"),  
+                    new Object[] {sysName}),
+                rb.getString("ErrorTitle"),
+                javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");

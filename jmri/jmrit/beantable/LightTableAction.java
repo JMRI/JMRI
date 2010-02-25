@@ -36,7 +36,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.39 $
+ * @version     $Revision: 1.40 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -669,11 +669,12 @@ public class LightTableAction extends AbstractTableAction {
             warnMsg = true;
         }
         // Create the new Light
-        g = InstanceManager.lightManagerInstance().newLight(sName,uName);
-        if (g==null) {
-            // should never get here unless there is an assignment conflict
-            log.error("Failure to create Light with System Name: "+sName);
-            return;
+        try {
+            g = InstanceManager.lightManagerInstance().newLight(sName,uName);
+        } catch (IllegalArgumentException ex) {
+            // user input no good
+            handleCreateException(sName);
+            return; // without creating       
         }
 		// update the system name since it may have changed
 		systemName.setText(g.getSystemName());
@@ -816,6 +817,15 @@ public class LightTableAction extends AbstractTableAction {
         status2.setText( "" );
     }
 
+    void handleCreateException(String sysName) {
+        javax.swing.JOptionPane.showMessageDialog(addFrame,
+                java.text.MessageFormat.format(
+                    rb.getString("ErrorLightAddFailed"),  
+                    new Object[] {sysName}),
+                rb.getString("ErrorTitle"),
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    
     /**
      * Responds to the Update button
      */

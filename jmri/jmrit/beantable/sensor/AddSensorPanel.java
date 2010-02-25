@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
  * JPanel to create a new Sensor
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class AddSensorPanel extends jmri.util.swing.JmriPanel {
@@ -65,10 +65,26 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
 
     void okPressed(ActionEvent e) {
         String user = userName.getText();
-        Sensor s = InstanceManager.sensorManagerInstance().provideSensor(sysName.getText());
+        Sensor s = null;
+        try {
+            s = InstanceManager.sensorManagerInstance().provideSensor(sysName.getText());
+        } catch (IllegalArgumentException ex) {
+            // user input no good
+            handleCreateException(sysName.getText());
+            return; // without creating       
+        }
         if (user!= null && !user.equals("")) s.setUserName(user);
     }
 
+    void handleCreateException(String sysName) {
+        javax.swing.JOptionPane.showMessageDialog(AddSensorPanel.this,
+                java.text.MessageFormat.format(
+                    rb.getString("ErrorSensorAddFailed"),  
+                    new Object[] {sysName}),
+                rb.getString("ErrorTitle"),
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AddSensorPanel.class.getName());
 }

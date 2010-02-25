@@ -22,7 +22,7 @@ import jmri.util.JmriJFrame;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -132,11 +132,26 @@ public class MemoryTableAction extends AbstractTableAction {
     void okPressed(ActionEvent e) {
         String user = userName.getText();
         if (user.equals("")) user=null;
-        String sName = sysName.getText().toUpperCase();
-        InstanceManager.memoryManagerInstance().newMemory(sName, user);
+        String sName = sysName.getText();
+        try {
+            InstanceManager.memoryManagerInstance().newMemory(sName, user);
+        } catch (IllegalArgumentException ex) {
+            // user input no good
+            handleCreateException(sName);
+            return; // without creating       
+        }
     }
     //private boolean noWarn = false;
 
+    void handleCreateException(String sysName) {
+        javax.swing.JOptionPane.showMessageDialog(addFrame,
+                java.text.MessageFormat.format(
+                    rb.getString("ErrorMemoryAddFailed"),  
+                    new Object[] {sysName}),
+                rb.getString("ErrorTitle"),
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryTableAction.class.getName());
 }
 

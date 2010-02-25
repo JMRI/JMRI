@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.69 $
+ * @version     $Revision: 1.70 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -683,7 +683,15 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
         else {
             // Create the new turnout
-            Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(sName);
+            Turnout t;
+            try {
+                t = InstanceManager.turnoutManagerInstance().provideTurnout(sName);
+            } catch (IllegalArgumentException ex) {
+                // user input no good
+                handleCreateException(sysName.getText());
+                return; // without creating       
+            }
+            
             if (t != null) {
                 if (user != null && !user.equals("")) t.setUserName(user);
                 t.setNumberOutputBits(iNum);
@@ -694,6 +702,16 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
         }
     }
+
+    void handleCreateException(String sysName) {
+        javax.swing.JOptionPane.showMessageDialog(addFrame,
+                java.text.MessageFormat.format(
+                    rb.getString("ErrorTurnoutAddFailed"),  
+                    new Object[] {sysName}),
+                rb.getString("ErrorTitle"),
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    
     private boolean noWarn = false;
     
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutTableAction.class.getName());
