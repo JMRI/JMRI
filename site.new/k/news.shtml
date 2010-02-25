@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: news.shtml,v 1.2 2010-02-20 21:56:42 jacobsen Exp $ -->
+<!-- $Id: news.shtml,v 1.3 2010-02-25 19:08:21 jacobsen Exp $ -->
 <html lang="en">
 
 <head>
@@ -39,7 +39,9 @@ The list is by no means complete!
 An
 <a href="http://itmanagement.earthweb.com/osrc/article.php/3775446/Bruce+Perens:+A+Big+Change+for+Open+Source.htm">October 2008 article</a> in 
 <a href="http://itmanagement.earthweb.com/">Datamation</a>
-by Bruce Perens provides a particularly good view of the issues at stake.
+by Bruce Perens provided a particularly good view of the issues at stake at that point, and a 
+<a href="http://itmanagement.earthweb.com/features/article.php/3866316/Bruce-Perens-Inside-Open-Sources-Historic-Victory">February 2010 article</a>
+by him discussed how it turned out.
 
 <h3>Settlement Coverage</h3>
 
@@ -71,13 +73,52 @@ the JMRI web site took 10's of thousands of hits
 (although of course some people in the discussion got a few of the details wrong).
 
 <p>
+Bruce Perens wrote a
+<a href="http://itmanagement.earthweb.com/features/article.php/3866316/Bruce-Perens-Inside-Open-Sources-Historic-Victory">detailed article</a> for
+<a href="http://itmanagement.earthweb.com/">Datamation</a>.
+
+<p>
+<a href="http://blogs.zdnet.com/bio.php#blankenhorn">Dana Blankenhorn</a> of
+<a href="http://www.zdnet.com/">ZDnet</a> wrote an 
+<a href="http://blogs.zdnet.com/open-source/?p=5917&utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+zdnet%2Fopen-source+%28ZDNet+Open+Source%29&alertspromo">article</a>
+that generated a lot of traffic to the JMRI web servers.
+
+<p>
+Katherine Noyes wrote a good 
+<a href="http://www.linuxinsider.com/rsstory/69401.html">article for LinuxInsider</a>.
+Ars Technica
+<a href="http://arstechnica.com/open-source/news/2010/02/ruling-foss-devs-can-collect-damages-from-license-violators.ars?utm_source=rss&utm_medium=rss&utm_campaign=rss">covered it in some detail</a>.
+There was a shorter article on 
+<a href="http://java.dzone.com/articles/us-federal-judge-affirms-key?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+javalobby%2Ffrontpage+(Javalobby+%2F+Java+Zone)">Java Zone</a>.
+
+
+<p>
 Secondary articles appeared on
 
 <a href="http://www.linuxtoday.com/news_story.php3?ltsn=2010-02-19-028-35-NW-LL">Linux Today</a>,
 <a href="http://www.itbusinessedge.com/cm/blogs/bentley/victory-for-model-trains-and-open-source-licensing/?cs=39561">IT Business Edge</a>,
 <a href="http://manushahalia.blogspot.com/2010/02/enforcing-freedom-to-be-free.html">Won't Get Fooled Again</a>,
 <a href="http://www.linuxplus.net/2010/02/21/a-big-victory-for-foss-jacobsen-v-katzer-is-settled-2/">Linux Plus</a>,
+<a href="http://www.h-online.com/open/news/item/Major-legal-victory-for-open-source-in-US-936089.html">H-online</a>,
+<a href="http://www.dwheeler.com/blog/2010/02/22/">David Wheeler's blog</a>,
+<a href="http://dasublogbyprashanth.blogspot.com/2010/02/victory-for-openness-and-against.html">das-u blog</a>,
+<a href="http://www.wsgr.com/WSGR/Display.aspx?SectionName=publications/PDFSearch/wsgralert_jacobsen_katzer.htm">the Wilson Sosini Goodrich and Rosati law firm site</a> 
 and others.
+
+<p>
+Of course, not everybody agreed the result was a good thing.  One advocate thought that 
+it would
+<a href="http://www.opensourceconnections.com/2010/02/23/will-foss-damages-finding-spook-government-agencies/">"spook" government agencies</a>
+away from using Open Source.  If it "spooks" them into complying with the license terms, just like any other license, it's not 
+clear what the problem is.  One the other hand, 
+<a href="http://blogofbile.com/tag/jmri/">"blog of bile"</a> thinks that any use of intellectual property law is a bad thing,
+and that people should be able to use the work of others in conflict with their wishes.  Having enemies like this is
+almost as good as having friends.  Finally, 
+<a href="http://blog.internetnews.com/skerner/2010/02/open-sources-big-model-train-w.html">one commentator</a>
+doesn't understand why this is a win, because Open Source all along "falls under U.S. Copyright Law". Well, he
+may have thought so, but apparently others didn't.  The big deal is that now the Courts have said that's true, 
+and deniers have one fewer tool for FUD.
+
 
 <h3>Software Patent Aspects</h3>
 
