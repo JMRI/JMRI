@@ -10,7 +10,7 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -83,10 +83,12 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 
         // doesn't exist, make a new one
         s = createNewTurnout(systemName, userName);
-		if (s != null) {
-			// save in the maps if successful
-			register(s);
-		}
+
+        // if that failed, blame it on the input arguements
+        if (s == null) throw new IllegalArgumentException();
+
+        // save in the maps if successful
+        register(s);
 
         return s;
     }

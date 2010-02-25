@@ -20,7 +20,7 @@ import java.util.ArrayList;
  *
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class DefaultSignalGroupManager extends AbstractManager
     implements SignalGroupManager, java.beans.PropertyChangeListener {
@@ -65,9 +65,8 @@ public class DefaultSignalGroupManager extends AbstractManager
         if (r!=null) return r;
         r = getBySystemName(systemName);
         if (r!=null) return r;
-        // Route does not exist, create a new route
-		String sName = systemName.toUpperCase();
-		r = new DefaultSignalGroup(sName,userName);
+        // Route does not exist, create a new group
+		r = new DefaultSignalGroup(systemName,userName);
 		// save in the maps
 		register(r);
 		return r;

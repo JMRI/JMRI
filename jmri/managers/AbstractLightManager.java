@@ -11,7 +11,7 @@ import jmri.managers.AbstractManager;
  * Based on AbstractSignalHeadManager.java and AbstractSensorManager.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public abstract class AbstractLightManager extends AbstractManager
     implements LightManager, java.beans.PropertyChangeListener {
@@ -132,10 +132,12 @@ public abstract class AbstractLightManager extends AbstractManager
 
         // doesn't exist, make a new one
         s = createNewLight(systemName, userName);
-        if (s!=null) {
-            // save in the maps
-            register(s);
-        }
+
+        // if that failed, blame it on the input arguements
+        if (s == null) throw new IllegalArgumentException("cannot create new light "+sysName);
+
+        // save in the maps
+        register(s);
 
         return s;
     }

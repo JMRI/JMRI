@@ -9,17 +9,16 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a MemoryManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public abstract class AbstractMemoryManager extends AbstractManager
     implements MemoryManager {
 
     public char typeLetter() { return 'M'; }
 
-    public Memory provideMemory(String name) {
-        Memory t = getMemory(name);
+    public Memory provideMemory(String sName) {
+        Memory t = getMemory(sName);
         if (t!=null) return t;
-		String sName = name.toUpperCase();
         if (sName.startsWith(""+systemLetter()+typeLetter()))
             return newMemory(sName, null);
         else
@@ -33,8 +32,7 @@ public abstract class AbstractMemoryManager extends AbstractManager
         return getBySystemName(name);
     }
 
-    public Memory getBySystemName(String key) {
-		String name = key.toUpperCase();
+    public Memory getBySystemName(String name) {
         return (Memory)_tsys.get(name);
     }
 
@@ -42,23 +40,10 @@ public abstract class AbstractMemoryManager extends AbstractManager
         return (Memory)_tuser.get(key);
     }
 
-	public Memory newMemory(String sysName, String userName) {
-		String systemName = sysName.toUpperCase();
+	public Memory newMemory(String systemName, String userName) {
         if (log.isDebugEnabled()) log.debug("new Memory:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));
-        if (systemName == null){ 
-        	log.error("SystemName cannot be null. UserName was "
-        			+( (userName==null) ? "null" : userName));
-        	return null;
-        }
-        // is system name in correct format?
-        if (!systemName.startsWith(""+systemLetter()+typeLetter())) {
-            log.error("Invalid system name for Memory: "+systemName
-                            +" needed "+systemLetter()+typeLetter());
-            return null;
-        }
-
         // return existing if there is one
         Memory s;
         if ( (userName!=null) && ((s = getByUserName(userName)) != null)) {
@@ -76,6 +61,9 @@ public abstract class AbstractMemoryManager extends AbstractManager
 
         // doesn't exist, make a new one
         s = createNewMemory(systemName, userName);
+
+        // if that failed, blame it on the input arguements
+        if (s == null) throw new IllegalArgumentException();
 
         // save in the maps
         register(s);

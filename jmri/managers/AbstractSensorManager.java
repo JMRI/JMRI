@@ -8,7 +8,7 @@ import jmri.managers.AbstractManager;
 /**
  * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -85,6 +85,9 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
 
         // doesn't exist, make a new one
         s = createNewSensor(systemName, userName);
+
+        // if that failed, blame it on the input arguements
+        if (s == null) throw new IllegalArgumentException();
 
         // save in the maps
         register(s);

@@ -12,7 +12,7 @@ import jmri.ReporterManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class ProxyReporterManager extends AbstractProxyManager implements ReporterManager {
     /**
@@ -27,11 +27,10 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
         return getBySystemName(name);
     }
 
-    public Reporter provideReporter(String name) {
-        Reporter t = getReporter(name);
+    public Reporter provideReporter(String sName) {
+        Reporter t = getReporter(sName);
         if (t!=null) return t;
         // if the systemName is specified, find that system
-		String sName = name.toUpperCase();
         for (int i=0; i<mgrs.size(); i++) {
             if ( ( (ReporterManager)mgrs.get(i)).systemLetter() == sName.charAt(0) )
                 return ((ReporterManager)mgrs.get(i)).newReporter(sName, null);
@@ -53,9 +52,8 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      * instance already exists.
      * @return requested Reporter object or null if none exists
      */
-    public Reporter getBySystemName(String systemName) {
+    public Reporter getBySystemName(String sName) {
         Reporter t = null;
-		String sName = systemName.toUpperCase();
         for (int i=0; i<mgrs.size(); i++) {
             t = ( (ReporterManager)mgrs.get(i)).getBySystemName(sName);
             if (t!=null) return t;
@@ -105,8 +103,7 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      * be looking them up.
      * @return requested Sensor object (never null)
      */
-    public Reporter newReporter(String sysName, String userName) {
-		String systemName = sysName.toUpperCase();
+    public Reporter newReporter(String systemName, String userName) {
         // if the systemName is specified, find that system
         if (systemName != null) {
             for (int i=0; i<mgrs.size(); i++) {
