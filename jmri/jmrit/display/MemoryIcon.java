@@ -20,7 +20,7 @@ import jmri.util.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -204,10 +204,12 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 Object val = key;
                 if (val instanceof String) {
                     String str = (String)val;
+                    /*  MemoryIconTest says empty strings should show blank
                     if (str.trim().length()==0) {
                         setText(str);
                         setIcon(defaultIcon);
-                    } else {
+                    } else */
+                    {
                         setText(str);
                         setIcon(null);
                     }
