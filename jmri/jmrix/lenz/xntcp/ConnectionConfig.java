@@ -21,7 +21,7 @@ import javax.swing.JTextField;
  * connection.
  *
  * @author	Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  *
  * @see XnTcpAdapter
@@ -166,6 +166,13 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
 			adapter.configureOption2("");
 		}
 	}
+
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
+
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
+
+
 
 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfig.class.getName());
 
