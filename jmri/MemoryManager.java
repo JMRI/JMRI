@@ -39,7 +39,7 @@ import java.util.List;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  * @see             jmri.Memory
  * @see             jmri.managers.AbstractMemoryManager
  * @see             jmri.InstanceManager
@@ -53,8 +53,12 @@ public interface MemoryManager extends Manager {
      * Memory.  Otherwise, the makeSystemName method
      * will attempt to turn it into a valid system name.
      *
-     * @param name
-     * @return Never null under normal circumstances
+     * @param name User name, system name, or address which 
+     *      can be promoted to system name
+     * @return Never null
+     * @throws IllegalArgumentException if Memory doesn't
+     * already exist and the manager cannot create the Memory
+     * due to e.g. an illegal name or name that can't be parsed.
      */
     public Memory provideMemory(String name);
 
@@ -103,6 +107,8 @@ public interface MemoryManager extends Manager {
      * This will mostly happen if you're creating Memory objects when you should
      * be looking them up.
      * @return requested Memory object (never null)
+     * @throws IllegalArgumentException if cannot create the Memory
+     * due to e.g. an illegal name or name that can't be parsed.
      */
     public Memory newMemory(String systemName, String userName);
 

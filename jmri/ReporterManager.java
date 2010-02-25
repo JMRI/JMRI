@@ -37,7 +37,7 @@ import java.util.List;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  * @see             jmri.Reporter
  * @see             jmri.InstanceManager
  */
@@ -50,8 +50,12 @@ public interface ReporterManager extends Manager {
      * Reporter.  Otherwise, the makeSystemName method
      * will attempt to turn it into a valid system name.
      *
-     * @param name
-     * @return Never null under normal circumstances
+     * @param name User name, system name, or address which 
+     *      can be promoted to system name
+     * @return Never null
+     * @throws IllegalArgumentException if Reporter doesn't
+     * already exist and the manager cannot create the Reporter
+     * due to e.g. an illegal name or name that can't be parsed.
      */
     public Reporter provideReporter(String name);
 
@@ -100,6 +104,8 @@ public interface ReporterManager extends Manager {
      * This will mostly happen if you're creating Reporters when you should
      * be looking them up.
      * @return requested Reporter object (never null)
+     * @throws IllegalArgumentException if cannot create the Reporter
+     * due to e.g. an illegal name or name that can't be parsed.
      */
     public Reporter newReporter(String systemName, String userName);
 

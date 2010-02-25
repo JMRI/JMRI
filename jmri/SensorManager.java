@@ -21,7 +21,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public interface SensorManager extends Manager {
 
@@ -32,8 +32,12 @@ public interface SensorManager extends Manager {
      * sensor.  Otherwise, the makeSystemName method
      * will attempt to turn it into a valid system name.
      *
-     * @param name
-     * @return Never null under normal circumstances
+     * @param name User name, system name, or address which 
+     *      can be promoted to system name
+     * @return Never null
+     * @throws IllegalArgumentException if Sensor doesn't
+     * already exist and the manager cannot create the Sensor
+     * due to e.g. an illegal name or name that can't be parsed.
      */
     public Sensor provideSensor(String name);
 
@@ -71,6 +75,8 @@ public interface SensorManager extends Manager {
      * This will mostly happen if you're creating Turnouts when you should
      * be looking them up.
      * @return requested Sensor object (never null)
+     * @throws IllegalArgumentException if cannot create the Sensor
+     * due to e.g. an illegal name or name that can't be parsed.
      */
     public Sensor newSensor(String systemName, String userName);
 

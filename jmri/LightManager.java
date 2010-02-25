@@ -26,7 +26,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public interface LightManager extends Manager {
 
@@ -49,8 +49,12 @@ public interface LightManager extends Manager {
      * Locate via user name, then system name if needed.
      * Does not create a new one if nothing found
      *
-     * @param name
-     * @return null if no match found
+     * @param name User name, system name, or address which 
+     *      can be promoted to system name
+     * @return Never null
+     * @throws IllegalArgumentException if Light doesn't
+     * already exist and the manager cannot create the Light
+     * due to e.g. an illegal name or name that can't be parsed.
      */
     public Light getLight(String name);
 
@@ -76,6 +80,8 @@ public interface LightManager extends Manager {
      * This will mostly happen if you're creating Lights when you should
      * be looking them up.
      * @return requested Light object (never null)
+     * @throws IllegalArgumentException if cannot create the Light
+     * due to e.g. an illegal name or name that can't be parsed.
      */
     public Light newLight(String systemName, String userName);
 

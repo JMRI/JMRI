@@ -25,7 +25,7 @@ import java.util.List;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public interface SignalMastManager extends Manager {
 
@@ -45,7 +45,12 @@ public interface SignalMastManager extends Manager {
      * Locate via user name, then system name if needed.
      * Create new one from system name if needed
      *
-     * @param name
+     * @param name User name, system name, or address which 
+     *      can be promoted to system name
+     * @return Never null
+     * @throws IllegalArgumentException if SignalMast doesn't
+     * already exist and the manager cannot create the SignalMast
+     * due to e.g. an illegal name or name that can't be parsed.
      */
     public SignalMast provideSignalMast(String name);
 

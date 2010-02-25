@@ -40,7 +40,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  * @see             jmri.Turnout
  * @see             jmri.InstanceManager
  * @see             jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
@@ -54,8 +54,12 @@ public interface TurnoutManager extends Manager {
      * turnout.  Otherwise, the makeSystemName method
      * will attempt to turn it into a valid system name.
      *
-     * @param name
-     * @return Never null under normal circumstances
+     * @param name User name, system name, or address which 
+     *      can be promoted to system name
+     * @return Never null
+     * @throws IllegalArgumentException if Turnout doesn't
+     * already exist and the manager cannot create the Turnout
+     * due to e.g. an illegal name or name that can't be parsed.
      */
     public Turnout provideTurnout(String name);
 
@@ -104,6 +108,8 @@ public interface TurnoutManager extends Manager {
      * This will mostly happen if you're creating Turnouts when you should
      * be looking them up.
      * @return requested Turnout object (never null)
+     * @throws IllegalArgumentException if cannot create the Turnout
+     * due to e.g. an illegal name or name that can't be parsed.
      */
     public Turnout newTurnout(String systemName, String userName);
 
