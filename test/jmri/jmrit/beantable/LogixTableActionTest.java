@@ -147,6 +147,9 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase
         _logixTable.calculatePressed(null);
         _logixTable.donePressed(null);
 
+        // now close window
+        TestHelper.disposeWindow(_logixTable.editConditionalFrame,this);
+
         } catch (Exception ex) {
             ex.printStackTrace();
             throw ex;
@@ -207,6 +210,11 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase
         }
     }
     protected void tearDown() throws Exception { 
+        // now close logix window
+        TestHelper.disposeWindow(_logixTable.editLogixFrame,this);
+        // now close logix actin window
+        TestHelper.disposeWindow(_logixTable.f,this);
+
         JUnitUtil.resetInstanceManager();
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();

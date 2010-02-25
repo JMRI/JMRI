@@ -4,8 +4,7 @@
 package jmri.jmrit.beantable;
 
 import junit.framework.*;
-
-//import junit.extensions.jfcunit.*;
+import junit.extensions.jfcunit.*;
 //import junit.extensions.jfcunit.finder.*;
 
 import java.util.ResourceBundle;
@@ -50,7 +49,12 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
         _lRouteTable.m.setValueAt(rbx.getString("ButtonEdit"), 0, 
                                   LRouteTableAction.LBeanTableDataModel.EDITCOL);
         // now close window
-        //TestHelper.disposeWindow(_lRouteTable._addFrame,this);
+        // now close action window
+        java.awt.event.WindowListener[] listeners = _lRouteTable._addFrame.getWindowListeners();
+        for (int i=0; i<listeners.length; i++) {
+            _lRouteTable._addFrame.removeWindowListener(listeners[i]);
+        }
+        TestHelper.disposeWindow(_lRouteTable._addFrame,this);
     }
 /*
     @SuppressWarnings("unchecked")
@@ -140,6 +144,8 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
         }
     }
     protected void tearDown() throws Exception { 
+        // now close action window
+        TestHelper.disposeWindow(_lRouteTable.f, this);
         super.tearDown();
         JUnitUtil.resetInstanceManager();
     }
