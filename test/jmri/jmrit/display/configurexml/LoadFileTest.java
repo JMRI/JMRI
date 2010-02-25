@@ -16,7 +16,7 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
 
@@ -66,10 +66,17 @@ public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
         }
     }
 
+    public void testLoadStoreOld() throws Exception {
+        // load manager
+        java.io.File inFile = new java.io.File("java/test/jmri/jmrit/display/configurexml/OldScaledIconTest.xml");
+        
+        // load file
+        InstanceManager.configureManagerInstance().load(inFile);
+    }
+
     public void testValidateOne() {
         validate(new java.io.File("java/test/jmri/jmrit/display/configurexml/ScaledIconTest.xml"));
     }
-
 
     // from here down is testing infrastructure
 
