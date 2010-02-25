@@ -2,8 +2,7 @@
 
 package jmri.jmrix.loconet.locobuffer;
 
-import jmri.jmrix.loconet.LnPacketizer;
-import jmri.jmrix.loconet.LnPortController;
+import jmri.jmrix.loconet.*;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -21,8 +20,8 @@ import gnu.io.SerialPortEventListener;
  * Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
  * <P>
  * Normally controlled by the LocoBufferFrame class.
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.40 $
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2008, 2010
+ * @version			$Revision: 1.41 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -196,9 +195,13 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         LnPacketizer packets = new LnPacketizer();
         packets.connectPort(this);
 
+        // create memo
+        LocoNetSystemConnectionMemo memo 
+            = new LocoNetSystemConnectionMemo(packets, SlotManager.instance());
+
         // do the common manager config
-        configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-        configureManagers(packets);
+        memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+        memo.configureManagers(packets);
 
         // start operation
         packets.startThreads();

@@ -3,6 +3,7 @@
 package jmri.jmrix.loconet.Intellibox;
 
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
+import jmri.jmrix.loconet.*;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it
@@ -13,7 +14,7 @@ import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author          Bob Jacobsen    Copyright (C) 2005
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class IntelliboxAdapter extends LocoBufferAdapter {
 
@@ -34,9 +35,13 @@ public void configure() {
     IBLnPacketizer packets = new IBLnPacketizer();
     packets.connectPort(this);
 
+    // create memo
+    LocoNetSystemConnectionMemo memo 
+        = new LocoNetSystemConnectionMemo(packets, SlotManager.instance());
+
     // do the common manager config
-    configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-    configureManagers(packets);
+    memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+    memo.configureManagers(packets);
 
     // start operation
     packets.startThreads();

@@ -19,7 +19,7 @@ import jmri.util.SystemNameComparator;
  * be added is the "Primary", used if a system letter is not provided.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class AbstractProxyManager implements Manager {
 
@@ -78,6 +78,14 @@ public class AbstractProxyManager implements Manager {
           return (mgrs.get(0)).systemLetter();
         } catch(IndexOutOfBoundsException ie) {
           return '\0';
+        }
+    }
+
+    public String getSystemPrefix() { 
+	try {
+          return (mgrs.get(0)).getSystemPrefix();
+        } catch(IndexOutOfBoundsException ie) {
+          return "\0";
         }
     }
 

@@ -21,7 +21,7 @@ import jmri.*;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class TurnoutManagerScaffold implements TurnoutManager {
 
@@ -51,6 +51,7 @@ public class TurnoutManagerScaffold implements TurnoutManager {
 
     public char systemLetter() { return ' '; }
 
+    public String getSystemPrefix() { return " "; }
     public char typeLetter() { return ' '; }
 
     public String makeSystemName(String s)  { return null; }

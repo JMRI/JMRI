@@ -17,7 +17,7 @@ import jmri.TurnoutOperationManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -58,14 +58,15 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
         return getBySystemName(name);
     }
 
-    public Turnout provideTurnout(String name) {
-        Turnout t = getTurnout(name);
+    public Turnout provideTurnout(String sName) {
+        Turnout t = getTurnout(sName);
         if (t!=null) return t;
         // if the systemName is specified, find that system
-		String sName = name.toUpperCase();
         for (int i=0; i<mgrs.size(); i++) {
-            if (sName.length()>0 && ((TurnoutManager)mgrs.get(i)).systemLetter() == sName.charAt(0))
+            if ( sName.startsWith( 
+                        ((TurnoutManager)mgrs.get(i)).getSystemPrefix()+((TurnoutManager)mgrs.get(i)).typeLetter() ) ) {
                 return ((TurnoutManager)mgrs.get(i)).newTurnout(sName, null);
+            }
         }
         // did not find a manager, allow it to default to the primary, if there is one
         log.debug("Did not find manager for name "+sName+", assume it's a number");
@@ -142,13 +143,14 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
      * be looking them up.
      * @return requested Sensor object (never null)
      */
-    public Turnout newTurnout(String sysName, String userName) {
+    public Turnout newTurnout(String systemName, String userName) {
         // if the systemName is specified, find that system
-		String systemName = sysName.toUpperCase();
         if (systemName != null && systemName.length()>0) {
             for (int i=0; i<mgrs.size(); i++) {
-                if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
+                if ( systemName.startsWith( 
+                         ((TurnoutManager)mgrs.get(i)).getSystemPrefix()+((TurnoutManager)mgrs.get(i)).typeLetter() ) ) {
                     return ( (TurnoutManager)mgrs.get(i)).newTurnout(systemName, userName);
+                }
             }
             // did not find a manager, allow it to default to the primary, if there is one
             log.debug("Did not find manager for system name "+systemName+", assume it's a number");
@@ -214,8 +216,10 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 		String systemName = sysName.toUpperCase();
         if (systemName != null && systemName.length()>0) {
             for (int i=0; i<mgrs.size(); i++) {
-                if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
+                if ( systemName.startsWith( 
+                        ((TurnoutManager)mgrs.get(i)).getSystemPrefix()+((TurnoutManager)mgrs.get(i)).typeLetter() ) ) {
                     return ((TurnoutManager)mgrs.get(i)).askNumControlBits(systemName);
+                }
             }
             // did not find a manager, allow it to default to the primary, if there is one
             log.debug("Did not find manager for system name "+systemName+", assume it's a number");
@@ -250,8 +254,10 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 		String systemName = sysName.toUpperCase();
         if (systemName != null) {
             for (int i=0; i<mgrs.size(); i++) {
-                if ( ( (TurnoutManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
+                if ( systemName.startsWith( 
+                        ((TurnoutManager)mgrs.get(i)).getSystemPrefix()+((TurnoutManager)mgrs.get(i)).typeLetter() ) ) {
                     return ((TurnoutManager)mgrs.get(i)).askControlType(systemName);
+                }
             }
             // did not find a manager, allow it to default to the primary, if there is one
             log.debug("Did not find manager for system name "+systemName+", assume it's a number");

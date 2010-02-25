@@ -7,7 +7,7 @@ import junit.framework.*;
 /**
  * Tests for the jmri.jmrix.loconet.LnTurnout class
  * @author			Bob Jacobsen
- * @version         $Revision: 1.13 $
+ * @version         $Revision: 1.14 $
  */
 public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
@@ -20,7 +20,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 	    catch (InterruptedException e) {}
 	    
         // create object under test
-		t = new LnTurnout(21, lnis);
+		t = new LnTurnout("L", 21, lnis);
 	}
 
 	public int numListeners() {
@@ -108,7 +108,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
     // test that only one message is sent when binaryOutput is set
 	public void testBasicSet() throws InterruptedException {
-	    t = new LnTurnout(121, lnis);
+	    t = new LnTurnout("L", 121, lnis);
 	    t.setBinaryOutput(true);
 	    t.setCommandedState(jmri.Turnout.THROWN);
 

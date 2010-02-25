@@ -3,10 +3,7 @@
 package jmri.jmrix.loconet.pr3;
 
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
-import jmri.jmrix.loconet.LnPacketizer;
-import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.LocoNetThrottledTransmitter;
+import jmri.jmrix.loconet.*;
 
 import gnu.io.SerialPort;
 
@@ -15,7 +12,7 @@ import gnu.io.SerialPort;
  * refers to the switch settings on the new Digitrax PR3
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006, 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class PR3Adapter extends LocoBufferAdapter {
 
@@ -66,9 +63,13 @@ public class PR3Adapter extends LocoBufferAdapter {
             jmri.jmrix.loconet.pr2.LnPacketizer packets = new jmri.jmrix.loconet.pr2.LnPacketizer();
             packets.connectPort(this);
     
+            // create memo
+            PR3SystemConnectionMemo memo 
+                = new PR3SystemConnectionMemo(packets, SlotManager.instance());
+
             // do the common manager config
-            configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-            configureManagersPR2();
+            memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+            memo.configureManagersPR2();
     
             // start operation
             packets.startThreads();
@@ -89,9 +90,13 @@ public class PR3Adapter extends LocoBufferAdapter {
             LnPacketizer packets = new LnPacketizer();
             packets.connectPort(this);
     
+            // create memo
+            PR3SystemConnectionMemo memo 
+                = new PR3SystemConnectionMemo(packets, SlotManager.instance());
+
             // do the common manager config
-            configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-            configureManagersMS100(packets);
+            memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+            memo.configureManagersMS100(packets);
     
             // start operation
             packets.startThreads();
@@ -108,41 +113,6 @@ public class PR3Adapter extends LocoBufferAdapter {
             msg.setElement( 4, 0 );
             LnTrafficController.instance().sendLocoNetMessage(msg);
         }
-    }
-
-   /**
-     * Configure the subset of LocoNet managers valid for the PR3 in PR2 mode.
-     * This is used instead of the method in LnPortController, which is more general.
-     */
-    static public void configureManagersPR2() {
-        
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.pr2.LnPr2PowerManager());
-
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnPr2ThrottleManager());
-    }
-
-   /**
-     * Configure the subset of LocoNet managers valid for the PR3 in MS100 mode.
-     * This is used instead of the method in LnPortController, which is more general.
-     */
-    static public void configureManagersMS100(LnTrafficController controller) {
-        
-        LocoNetThrottledTransmitter tm = new LocoNetThrottledTransmitter(controller);
-
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager());
-
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager(controller, tm));
-
-        jmri.InstanceManager.setLightManager(new jmri.jmrix.loconet.LnLightManager());
-
-        jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager());
-
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnThrottleManager());
-
-        jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager());
-
-        jmri.InstanceManager.addClockControl(new jmri.jmrix.loconet.LnClockControl());
-
     }
 
     /**

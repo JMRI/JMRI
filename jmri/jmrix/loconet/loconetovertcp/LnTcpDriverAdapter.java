@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet.loconetovertcp;
 
-import jmri.jmrix.loconet.LnPortController;
+import jmri.jmrix.loconet.*;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -17,7 +17,7 @@ import java.util.Vector;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2002, 2003
  * @author      Alex Shepherd Copyright (C) 2003, 2006
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 public class LnTcpDriverAdapter extends LnPortController {
@@ -31,9 +31,13 @@ public class LnTcpDriverAdapter extends LnPortController {
         LnOverTcpPacketizer packets = new LnOverTcpPacketizer();
         packets.connectPort(this);
 
+        // create memo
+        LocoNetSystemConnectionMemo memo 
+            = new LocoNetSystemConnectionMemo(packets, SlotManager.instance());
+        
         // do the common manager config
-        configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-        configureManagers(packets);
+        memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+        memo.configureManagers(packets);
 
         // start operation
         packets.startThreads();

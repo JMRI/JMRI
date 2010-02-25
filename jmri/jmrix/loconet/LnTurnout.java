@@ -36,14 +36,14 @@ import jmri.implementation.AbstractTurnout;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
  
  public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
-    public LnTurnout(int number, LocoNetInterface controller) {
+    public LnTurnout(String prefix, int number, LocoNetInterface controller) {
         // a human-readable turnout number must be specified!
-        super("LT"+number);  // can't use prefix here, as still in construction
+        super(prefix+"T"+number);  // can't use prefix here, as still in construction
         log.debug("new turnout "+number);
 
         this.controller = controller;

@@ -3,6 +3,8 @@
 package jmri.jmrix.loconet.pr2;
 
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
+import jmri.jmrix.loconet.*;
+
 import gnu.io.SerialPort;
 
 /**
@@ -10,7 +12,7 @@ import gnu.io.SerialPort;
  * refers to the switch settings on the new Digitrax PR2
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class PR2Adapter extends LocoBufferAdapter {
 
@@ -58,32 +60,17 @@ public class PR2Adapter extends LocoBufferAdapter {
         jmri.jmrix.loconet.pr2.LnPacketizer packets = new jmri.jmrix.loconet.pr2.LnPacketizer();
         packets.connectPort(this);
 
+        // create memo
+        PR2SystemConnectionMemo memo 
+            = new PR2SystemConnectionMemo(packets, SlotManager.instance());
+
         // do the common manager config
-        configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-        configureManagers();
+        memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+        memo.configureManagers(packets);
 
         // start operation
         packets.startThreads();
         jmri.jmrix.loconet.ActiveFlag.setActive();
-
-    }
-
-   /**
-     * Configure the subset of LocoNet managers valid for the PR2.
-     * This overrides the method in LnPortController, which is more general.
-     */
-    static public void configureManagers() {
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.pr2.LnPr2PowerManager());
-
-        /* jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager()); */
-
-        /* jmri.InstanceManager.setLightManager(new jmri.jmrix.loconet.LnLightManager()); */
-
-        /* jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager()); */
-
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnPr2ThrottleManager());
-
-        /* jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager()); */
 
     }
 

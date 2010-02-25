@@ -8,7 +8,7 @@ import java.io.DataOutputStream;
 /**
  * Base for classes representing a LocoNet communications port
  * @author		Bob Jacobsen    Copyright (C) 2001, 2002
- * @version             $Revision: 1.17 $
+ * @version             $Revision: 1.18 $
  */
 public abstract class LnPortController extends jmri.jmrix.AbstractPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -71,53 +71,6 @@ public abstract class LnPortController extends jmri.jmrix.AbstractPortController
         commandStationName = value;
     }
                                     
-    /**
-     * Configure the programming manager and "command station" objects
-     * @param mCanRead
-     * @param mProgPowersOff
-     * @param name Command station type name
-     */
-    static public void configureCommandStation(boolean mCanRead, boolean mProgPowersOff, String name) {
-
-        // loconet.SlotManager to do programming (the Programmer instance is registered
-        // when the SlotManager is created)
-        jmri.jmrix.loconet.SlotManager.instance();
-        // set slot manager's read capability
-        jmri.jmrix.loconet.SlotManager.instance().setCanRead(mCanRead);
-        jmri.jmrix.loconet.SlotManager.instance().setProgPowersOff(mProgPowersOff);
-        jmri.jmrix.loconet.SlotManager.instance().setCommandStationType(name);
-        
-        // store as CommandStation object
-        jmri.InstanceManager.setCommandStation(jmri.jmrix.loconet.SlotManager.instance());
-
-    }
-
-    /**
-     * Configure the common managers for LocoNet connections.
-     * This puts the common manager config in one
-     * place.  This method is static so that it can be referenced
-     * from classes that don't inherit, including hexfile.HexFileFrame
-     * and locormi.LnMessageClient
-     */
-    static public void configureManagers(LnTrafficController controller) {
-    
-        LocoNetThrottledTransmitter tm = new LocoNetThrottledTransmitter(controller);
-        
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager());
-
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager(controller, tm));
-
-        jmri.InstanceManager.setLightManager(new jmri.jmrix.loconet.LnLightManager());
-
-        jmri.InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager());
-
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnThrottleManager());
-
-        jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager());
-
-        jmri.InstanceManager.addClockControl(new jmri.jmrix.loconet.LnClockControl());
-
-    }
 }
 
 

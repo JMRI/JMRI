@@ -1,8 +1,6 @@
 package jmri.jmrix.loconet.locormi;
 
-import jmri.jmrix.loconet.LnTrafficRouter;
-import jmri.jmrix.loconet.LocoNetException;
-import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.*;
 
 /**
  * Client for the RMI LocoNet server.
@@ -24,7 +22,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  *
  * @author Alex Shepherd  Copyright (c) 2002
  * @author Bob Jacobsen
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
@@ -104,9 +102,13 @@ public class LnMessageClient extends LnTrafficRouter {
         if (jmri.InstanceManager.programmerManagerInstance() == null)
             jmri.jmrix.loconet.SlotManager.instance();
 
+        // create memo
+        LocoNetSystemConnectionMemo memo 
+            = new LocoNetSystemConnectionMemo(this, SlotManager.instance());
+
         // do the common manager config
-        jmri.jmrix.loconet.LnPortController.configureCommandStation(true, false,"<unknown>");  // for now, assume full capability
-        jmri.jmrix.loconet.LnPortController.configureManagers(this);
+        memo.configureCommandStation(true, false,"<unknown>");  // for now, assume full capability
+        memo.configureManagers(this);
 
         // the serial connections (LocoBuffer et al) start
         // various threads here.

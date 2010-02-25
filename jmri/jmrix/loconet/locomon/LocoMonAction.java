@@ -13,18 +13,23 @@ package jmri.jmrix.loconet.locomon;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
+import jmri.jmrix.loconet.LnTrafficController;
+
 public class LocoMonAction 			extends AbstractAction {
 
-	public LocoMonAction(String s) { super(s);}
+	public LocoMonAction(String s, LnTrafficController tc) { 
+	    super(s);
+	    this.tc = tc;
+	}
 
-    public LocoMonAction() {
-        this("LocoNet monitor");
+    private LocoMonAction() {
+        //this("LocoNet monitor");
     }
 
     public void actionPerformed(ActionEvent e) {
 		// create a LocoMonFrame
                 log.debug("starting LocoMon frame creation");
-		LocoMonFrame f = new LocoMonFrame();
+		LocoMonFrame f = new LocoMonFrame(tc);
 		try {
 			f.initComponents();
 			}
@@ -35,6 +40,8 @@ public class LocoMonAction 			extends AbstractAction {
 
 	}
 
+    LnTrafficController tc;
+    
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoMonAction.class.getName());
 
 }

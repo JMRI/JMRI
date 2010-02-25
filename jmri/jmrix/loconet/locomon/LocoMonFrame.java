@@ -7,26 +7,33 @@ import jmri.jmrix.loconet.*;
 /**
  * LocoNet Monitor Frame displaying (and logging) LocoNet messages
  * @author	   Bob Jacobsen   Copyright (C) 2001, 2008
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  */
 public class LocoMonFrame extends jmri.jmrix.AbstractMonFrame implements LocoNetListener {
 
-    public LocoMonFrame() {
+    public LocoMonFrame(LnTrafficController tc) {
         super();
+        this.tc = tc;
     }
 
+    public LocoMonFrame() {
+        this(LnTrafficController.instance());
+    }
+
+    LnTrafficController tc;
+    
     protected String title() { return "LocoNet Traffic"; }
 
     public void dispose() {
         // disconnect from the LnTrafficController
-        LnTrafficController.instance().removeLocoNetListener(~0,this);
+        tc.removeLocoNetListener(~0,this);
         // and unwind swing
         super.dispose();
     }
 
     protected void init() {
         // connect to the LnTrafficController
-        LnTrafficController.instance().addLocoNetListener(~0, this);
+        tc.addLocoNetListener(~0, this);
     }
 
     // provide customized help

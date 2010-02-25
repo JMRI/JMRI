@@ -2,8 +2,7 @@
 
 package jmri.jmrix.loconet.ms100;
 
-import jmri.jmrix.loconet.LnPacketizer;
-import jmri.jmrix.loconet.LnPortController;
+import jmri.jmrix.loconet.*;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -29,7 +28,7 @@ import Serialio.SerialPortLocal;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.34 $
+ * @version			$Revision: 1.35 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -242,9 +241,13 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         // that also sets the LnTrafficController.instance()
         packets.connectPort(this);
 
+        // create memo
+        LocoNetSystemConnectionMemo memo 
+            = new LocoNetSystemConnectionMemo(packets, SlotManager.instance());
+
         // do the common manager config
-        configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-        configureManagers(packets);
+        memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+        memo.configureManagers(packets);
 
         // start operation
         packets.startThreads();

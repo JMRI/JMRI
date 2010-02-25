@@ -37,15 +37,16 @@ import jmri.Turnout;
  * <P>
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version         $Revision: 1.25 $
+ * @version         $Revision: 1.26 $
  */
 
 public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager implements LocoNetListener {
 
     // ctor has to register for LocoNet events
-    public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller) {
+    public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller, String prefix) {
         this.fastcontroller = fastcontroller;
         this.throttledcontroller = throttledcontroller;
+        this.prefix = prefix;
         
         if (fastcontroller != null)
             fastcontroller.addLocoNetListener(~0, this);
@@ -56,8 +57,12 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     LocoNetInterface fastcontroller;
     LocoNetInterface throttledcontroller;
     
+    String prefix;
+    
     public char systemLetter() { return 'L'; }
 
+    public String getSystemPrefix() { return prefix; }
+    
     public void dispose() {
         if (fastcontroller != null)
             fastcontroller.removeLocoNetListener(~0, this);
@@ -66,8 +71,8 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
 
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
-        int addr = Integer.valueOf(systemName.substring(2)).intValue();
-        t = new LnTurnout(addr, throttledcontroller);
+        int addr = Integer.valueOf(systemName.substring(getSystemPrefix().length()+1)).intValue();
+        t = new LnTurnout(getSystemPrefix(), addr, throttledcontroller);
         t.setUserName(userName);
         t.addPropertyChangeListener(this);
 
@@ -124,7 +129,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
             return;
         }
         // reach here for loconet switch command; make sure we know about this one
-        String s = "LT"+addr;
+        String s = prefix+"T"+addr;
         if (getBySystemName(s) == null) {
 			// no turnout with this address, is there a light
 			String sx = "LL"+addr;

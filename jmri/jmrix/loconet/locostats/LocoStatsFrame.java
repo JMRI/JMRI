@@ -29,7 +29,7 @@ import javax.swing.*;
  *
  * @author			Alex Shepherd   Copyright (C) 2003
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @since 2.1.5
  */
 public class LocoStatsFrame extends jmri.util.JmriJFrame implements LocoNetListener {
@@ -41,8 +41,11 @@ public class LocoStatsFrame extends jmri.util.JmriJFrame implements LocoNetListe
     JPanel pr2Panel;
     JPanel ms100Panel;
 
-    public LocoStatsFrame() {
+    public LocoStatsFrame(LnTrafficController lt) {
         super((rb = ResourceBundle.getBundle("jmri.jmrix.loconet.locostats.LocoStatsBundle")).getString("Title"));
+
+        this.lt = lt;
+        
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // add GUI items
@@ -113,8 +116,8 @@ public class LocoStatsFrame extends jmri.util.JmriJFrame implements LocoNetListe
         addHelpMenu("package.jmri.jmrix.loconet.locostats.LocoStatsFrame", true);
 
         // listen for LocoNet messages
-        if (LnTrafficController.instance()!=null)
-            LnTrafficController.instance().addLocoNetListener(~0, this);
+        if (lt != null)
+            lt.addLocoNetListener(~0, this);
         else
             report("No LocoNet connection available, can't function");
 
@@ -130,6 +133,8 @@ public class LocoStatsFrame extends jmri.util.JmriJFrame implements LocoNetListe
 
     }
 
+    LnTrafficController lt; 
+    
     void report(String msg) {
         log.error(msg);
     }
@@ -223,12 +228,12 @@ public class LocoStatsFrame extends jmri.util.JmriJFrame implements LocoNetListe
         LocoNetMessage msg = new LocoNetMessage( 2 ) ;
         msg.setOpCode( LnConstants.OPC_GPBUSY );
         updatePending = true ;
-        LnTrafficController.instance().sendLocoNetMessage(msg);
+        lt.sendLocoNetMessage(msg);
     }
 
     public void dispose() {
         // disconnect from the LnTrafficController
-        LnTrafficController.instance().removeLocoNetListener(~0,this);
+        lt.removeLocoNetListener(~0,this);
 
         // take apart the JFrame
         super.dispose();

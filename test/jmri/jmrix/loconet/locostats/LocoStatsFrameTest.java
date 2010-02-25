@@ -7,14 +7,14 @@ import jmri.jmrix.loconet.LnConstants;
 
 /**
  * Tests for the LocoStatsFrame class
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
- * @version     $Revision: 1.2 $
+ * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2010
+ * @version     $Revision: 1.3 $
  */
 public class LocoStatsFrameTest extends TestCase {
 
 
     public void testDefaultFormat() {
-        LocoStatsFrame f = new LocoStatsFrame(){
+        LocoStatsFrame f = new LocoStatsFrame(null){
             public void requestUpdate() {  // replace actual transmit
                 updatePending = true;
             }
@@ -25,7 +25,7 @@ public class LocoStatsFrameTest extends TestCase {
     }
     
     public void testLocoBufferFormat() {
-        LocoStatsFrame f = new LocoStatsFrame(){
+        LocoStatsFrame f = new LocoStatsFrame(null){
             public void requestUpdate() {  // replace actual transmit
                 updatePending = true;
             }
@@ -42,7 +42,7 @@ public class LocoStatsFrameTest extends TestCase {
     }
     
     public void testPR2Format() {
-        LocoStatsFrame f = new LocoStatsFrame(){
+        LocoStatsFrame f = new LocoStatsFrame(null){
             public void requestUpdate() {  // replace actual transmit
                 updatePending = true;
             }
@@ -61,7 +61,7 @@ public class LocoStatsFrameTest extends TestCase {
     }
     
     public void testMS100Format() {
-        LocoStatsFrame f = new LocoStatsFrame(){
+        LocoStatsFrame f = new LocoStatsFrame(null){
             public void requestUpdate() {  // replace actual transmit
                 updatePending = true;
             }

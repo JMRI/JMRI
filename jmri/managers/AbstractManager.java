@@ -17,7 +17,7 @@ import jmri.*;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
@@ -41,6 +41,12 @@ abstract public class AbstractManager
     public String makeSystemName(String s) {
         return ""+systemLetter()+typeLetter()+s;
     }
+
+    /**
+     * Provides access to the system prefix string.
+     * This was previously called the "System letter"
+     */
+    public String getSystemPrefix() { return ""+systemLetter(); }
 
     // abstract methods to be extended by subclasses
     // to free resources when no longer used

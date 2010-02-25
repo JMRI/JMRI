@@ -43,7 +43,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public interface Manager {
 
@@ -51,6 +51,12 @@ public interface Manager {
      * @return The system-specific prefix letter for a specific implementation
      */
     public char systemLetter();
+
+    /**
+     * Provides access to the system prefix string.
+     * This was previously called the "System letter"
+     */
+    public String getSystemPrefix();
 
     /**
      * @return The type letter for a specific implementation

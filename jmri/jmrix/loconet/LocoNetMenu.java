@@ -10,26 +10,27 @@ import javax.swing.JMenu;
  * Create a "Systems" menu containing the Jmri LocoNet-specific tools.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 public class LocoNetMenu extends JMenu {
-    public LocoNetMenu(String name) {
-        this();
-        setText(name);
-    }
 
-    public LocoNetMenu() {
-
+    /**
+     * Create a LocoNet menu.
+     * Preloads the TrafficController to certain actions
+     */
+    public LocoNetMenu(LocoNetSystemConnectionMemo memo) {
         super();
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.LocoNetBundle");
 
-        setText(rb.getString("MenuLocoNet"));
+        setText(memo.getUserName());
 
-        add(new jmri.jmrix.loconet.locomon.LocoMonAction(rb.getString("MenuItemLocoNetMonitor")));
+        add(new jmri.jmrix.loconet.locomon.LocoMonAction(rb.getString("MenuItemLocoNetMonitor"), 
+                memo.getLnTrafficController()));
         add(new jmri.jmrix.loconet.slotmon.SlotMonAction(rb.getString("MenuItemSlotMonitor")));
         add(new jmri.jmrix.loconet.clockmon.ClockMonAction( rb.getString("MenuItemClockMon")));
-        add(new jmri.jmrix.loconet.locostats.LocoStatsAction( rb.getString("MenuItemLocoStats")));
+        add(new jmri.jmrix.loconet.locostats.LocoStatsAction( rb.getString("MenuItemLocoStats"),
+                memo.getLnTrafficController()));
         
 
         add(new javax.swing.JSeparator());
@@ -60,7 +61,6 @@ public class LocoNetMenu extends JMenu {
         add(new jmri.jmrix.loconet.pr3.swing.Pr3SelectAction( rb.getString("MenuItemPr3ModeSelect")));
 
     }
-
 }
 
 
