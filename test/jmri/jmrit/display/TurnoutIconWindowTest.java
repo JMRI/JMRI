@@ -1,8 +1,8 @@
-// SensorIconWindowTest.java
+// TurnoutIconWindowTest.java
 
 package jmri.jmrit.display;
 
-import jmri.Sensor;
+import jmri.Turnout;
 
 import javax.swing.*;
 
@@ -14,11 +14,11 @@ import junit.extensions.jfcunit.finder.*;
 import junit.extensions.jfcunit.eventdata.*;
 
 /**
- * Swing jfcUnit tests for the SensorIcon
+ * Swing jfcUnit tests for the TurnoutIcon
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.1 $
  */
-public class SensorIconWindowTest extends jmri.util.SwingTestCase {
+public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
 
 	public void testPanelEditor() throws Exception {
 	    
@@ -27,16 +27,16 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         
         JComponent jf = panel.getTargetPanel();
         
-        SensorIcon icon = new SensorIcon(panel);
+        TurnoutIcon icon = new TurnoutIcon(panel);
         panel.putItem(icon);
         
-        Sensor sn = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
-        icon.setSensor("IS1");
+        Turnout sn = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        icon.setTurnout("IT1");
         
         panel.setVisible(true);
         //jf.setVisible(true);
 
-        Assert.assertEquals("initial state", Sensor.UNKNOWN, sn.getState());
+        Assert.assertEquals("initial state", Turnout.UNKNOWN, sn.getState());
         
         // Click icon change state to Active
         java.awt.Point location = new java.awt.Point(
@@ -54,12 +54,12 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
                     location
                 ) );
         
-        Assert.assertEquals("state after one click", Sensor.INACTIVE, sn.getState());
+        Assert.assertEquals("state after one click", Turnout.CLOSED, sn.getState());
 
         // Click icon change state to inactive
         getHelper().enterClickAndLeave( new MouseEventData( this, icon ) );
         
-        Assert.assertEquals("state after two clicks", Sensor.ACTIVE, sn.getState());
+        Assert.assertEquals("state after two clicks", Turnout.THROWN, sn.getState());
     
         // if OK to here, close window
         TestHelper.disposeWindow(panel.getTargetFrame(), this);
@@ -97,16 +97,16 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         
         JComponent jf = panel.getTargetPanel();
         
-        SensorIcon icon = new SensorIcon(panel);
+        TurnoutIcon icon = new TurnoutIcon(panel);
         panel.putItem(icon);
         
-        Sensor sn = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
-        icon.setSensor("IS1");
+        Turnout sn = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        icon.setTurnout("IT1");
         
         panel.setVisible(true);
         //jf.setVisible(true);
 
-        Assert.assertEquals("initial state", Sensor.UNKNOWN, sn.getState());
+        Assert.assertEquals("initial state", Turnout.UNKNOWN, sn.getState());
         
         // Click icon change state to Active
         java.awt.Point location = new java.awt.Point(
@@ -124,12 +124,12 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
                     location
                 ) );
         
-        Assert.assertEquals("state after one click", Sensor.INACTIVE, sn.getState());
+        Assert.assertEquals("state after one click", Turnout.CLOSED, sn.getState());
 
         // Click icon change state to inactive
         getHelper().enterClickAndLeave( new MouseEventData( this, icon ) );
         
-        Assert.assertEquals("state after two clicks", Sensor.ACTIVE, sn.getState());
+        Assert.assertEquals("state after two clicks", Turnout.THROWN, sn.getState());
     
         // if OK to here, close window
         TestHelper.disposeWindow(panel.getTargetFrame(), this);
@@ -162,19 +162,19 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
 
     
 	// from here down is testing infrastructure
-	public SensorIconWindowTest(String s) {
+	public TurnoutIconWindowTest(String s) {
 		super(s);
 	}
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {SensorIconWindowTest.class.getName()};
+		String[] testCaseName = {TurnoutIconWindowTest.class.getName()};
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
 	// test suite from all defined tests
 	public static Test suite() {
-		TestSuite suite = new TestSuite(SensorIconWindowTest.class);  
+		TestSuite suite = new TestSuite(TurnoutIconWindowTest.class);  
 		return suite;
 	}
 
