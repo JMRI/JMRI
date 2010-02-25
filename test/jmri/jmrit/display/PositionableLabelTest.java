@@ -11,13 +11,13 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
-public class PositionableLabelTest extends TestCase {
+public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
-    JLabel to = null;
+    PositionableLabel to = null;
     jmri.jmrit.display.panelEditor.PanelEditor panel = 
-            new jmri.jmrit.display.panelEditor.PanelEditor("Test Panel");
+            new jmri.jmrit.display.panelEditor.PanelEditor("PositionableLabel Test Panel");
 
 	public void testShow() {
         JFrame jf = new JFrame();
@@ -38,11 +38,15 @@ public class PositionableLabelTest extends TestCase {
 
         to = new PositionableLabel("here", panel);
         to.setBounds(80,80,40,40);
+        panel.putItem(to);
+        to.setDisplayLevel(panel.LABELS);
+        assertEquals("Display Level ", to.getDisplayLevel(),panel.LABELS);
+
         p.add(to);
+        panel.addLabel("There");
 
         jf.pack();
         jf.setVisible(true);
-
 	}
 
     // animate the visible frame
@@ -68,8 +72,15 @@ public class PositionableLabelTest extends TestCase {
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void tearDown() { 
+       // now close panel window
+        java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
+        for (int i=0; i<listeners.length; i++) {
+            panel.getTargetFrame().removeWindowListener(listeners[i]);
+        }
+        junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
+        apps.tests.Log4JFixture.tearDown(); 
+    }
 
 	// static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutIconTest.class.getName());
-
 }

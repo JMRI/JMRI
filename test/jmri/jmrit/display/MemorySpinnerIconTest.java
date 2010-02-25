@@ -12,9 +12,9 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2009
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
-public class MemorySpinnerIconTest extends TestCase {
+public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
 
     MemorySpinnerIcon tos1 = null;
     MemorySpinnerIcon tos2 = null;
@@ -24,7 +24,7 @@ public class MemorySpinnerIconTest extends TestCase {
     MemorySpinnerIcon toi3 = null;
 
     jmri.jmrit.display.panelEditor.PanelEditor panel = 
-            new jmri.jmrit.display.panelEditor.PanelEditor("Test Panel");
+            new jmri.jmrit.display.panelEditor.PanelEditor("Test MemorySpinnerIcon Panel");
 
 	public void testShow() {
         JmriJFrame jf = new JmriJFrame();
@@ -92,7 +92,15 @@ public class MemorySpinnerIconTest extends TestCase {
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void tearDown() { 
+       // now close panel window
+        java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
+        for (int i=0; i<listeners.length; i++) {
+            panel.getTargetFrame().removeWindowListener(listeners[i]);
+        }
+        junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
+        apps.tests.Log4JFixture.tearDown(); 
+    }
 
 	// static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutIconTest.class.getName());
 

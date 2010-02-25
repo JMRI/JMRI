@@ -15,13 +15,13 @@ import jmri.jmrix.rps.*;
  * Tests for the RpsIcon class.
  *
  * @author			Bob Jacobsen Copyright 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
-public class RpsPositionIconTest extends TestCase {
+public class RpsPositionIconTest extends jmri.util.SwingTestCase {
 
     RpsPositionIcon rpsIcon;
     jmri.jmrit.display.panelEditor.PanelEditor panel = 
-            new jmri.jmrit.display.panelEditor.PanelEditor("Test Panel");
+            new jmri.jmrit.display.panelEditor.PanelEditor("Test RpsPositionIcon Panel");
 
 	public void testShow() {
         JFrame jf = new JFrame("RpsPositionIcon Test");
@@ -117,7 +117,15 @@ public class RpsPositionIconTest extends TestCase {
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void tearDown() { 
+       // now close panel window
+        java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
+        for (int i=0; i<listeners.length; i++) {
+            panel.getTargetFrame().removeWindowListener(listeners[i]);
+        }
+        junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
+        apps.tests.Log4JFixture.tearDown(); 
+    }
 
 	// static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsPositionIconTest.class.getName());
 

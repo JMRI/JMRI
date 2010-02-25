@@ -13,13 +13,13 @@ import java.beans.PropertyChangeEvent;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
-public class TurnoutIconTest extends TestCase {
+public class TurnoutIconTest extends jmri.util.SwingTestCase {
 
     TurnoutIcon to = null;
     jmri.jmrit.display.panelEditor.PanelEditor panel = 
-            new jmri.jmrit.display.panelEditor.PanelEditor("Test Panel");
+            new jmri.jmrit.display.panelEditor.PanelEditor("Test TurnoutIcon Panel");
 
 	public void testShow() {
         JFrame jf = new JFrame();
@@ -115,7 +115,15 @@ public class TurnoutIconTest extends TestCase {
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void tearDown() { 
+       // now close panel window
+        java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
+        for (int i=0; i<listeners.length; i++) {
+            panel.getTargetFrame().removeWindowListener(listeners[i]);
+        }
+        junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
+        apps.tests.Log4JFixture.tearDown(); 
+    }
 
 	// static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutIconTest.class.getName());
 

@@ -14,14 +14,14 @@ import jmri.util.JUnitUtil;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2007
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
-public class MemoryIconTest extends TestCase {
+public class MemoryIconTest extends jmri.util.SwingTestCase {
 
     MemoryIcon to = null;
 
     jmri.jmrit.display.panelEditor.PanelEditor panel = 
-            new jmri.jmrit.display.panelEditor.PanelEditor("Test Panel");
+            new jmri.jmrit.display.panelEditor.PanelEditor("Test MemoryIcon Panel");
 
 	public void testShowContent() {
         JFrame jf = new JFrame();
@@ -123,6 +123,12 @@ public class MemoryIconTest extends TestCase {
     }
     
     protected void tearDown() throws Exception { 
+       // now close panel window
+        java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
+        for (int i=0; i<listeners.length; i++) {
+            panel.getTargetFrame().removeWindowListener(listeners[i]);
+        }
+        junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
         JUnitUtil.resetInstanceManager();
