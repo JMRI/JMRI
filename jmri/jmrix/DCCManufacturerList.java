@@ -7,7 +7,7 @@ package jmri.jmrix;
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  *
  */
 public class DCCManufacturerList {
@@ -115,11 +115,54 @@ public class DCCManufacturerList {
         return new jmri.jmrix.lenz.ConnectionTypeList().getAvailableProtocolClasses();
     }
     
-    public String getDCCSystemFromType(char a) {
+    public static String getDCCSystemFromType(char a) {
         if (a=='I') return "Internal";
-        else if (a=='X') return "XPressNet";
+        else if (a=='A') return "Acela";
+        else if (a=='C') return "C/MRI";
+        else if (a=='D') return "SRCP";
+        else if (a=='E') return "EasyDCC";
+        else if (a=='G') return "Grapevine";
+        else if (a=='K') return "Maple";
+        else if (a=='L') return "LocoNet";
+        else if (a=='M') return "MERG";
+        else if (a=='N') return "NCE";
+        else if (a=='O') return "Oak Tree";
+        else if (a=='P') return "PowerLine";
+        else if (a=='Q') return "QSI";
+        else if (a=='R') return "RPS";
         else if (a=='S') return "Sprog";
+        else if (a=='T') return "Lionel TMCC";
+        else if (a=='U') return "ECoS";
+        else if (a=='V') return "SECSI";
+        else if (a=='W') return "Wangrow";
+        else if (a=='X') return "XpressNet";
+        else if (a=='Z') return "Zimo";
         return "Unknown";
+    }
+    
+    public static char getTypeFromDCCSystem(String a){
+        if (a.equals("Internal")) return 'I';
+        else if (a.equals("Acela")) return 'A';
+        else if (a.equals("C/MRI")) return 'C';
+        else if (a.equals("SRCP")) return 'D';
+        else if (a.equals("EasyDCC")) return 'E';
+        else if (a.equals("Grapevine")) return 'G';
+        else if (a.equals("Maple")) return 'K';
+        else if (a.equals("LocoNet")) return 'L';
+        else if (a.equals("MERG")) return 'M';
+        else if (a.equals("NCE")) return 'N';
+        else if (a.equals("Oak Tree")) return 'O';
+        else if (a.equals("PowerLine")) return 'P';
+        else if (a.equals("QSI")) return 'Q';
+        else if (a.equals("RPS")) return 'R';
+        else if (a.equals("Sprog")) return 'S';
+        else if (a.equals("Lionel TMCC")) return 'T';
+        else if (a.equals("ECoS")) return 'U';
+        else if (a.equals("SECSI")) return 'V';
+        else if (a.equals("Wangrow")) return 'W';
+        else if (a.equals("XpressNet")) return 'X';
+        else if (a.equals("Zimo")) return 'Z';
+        return '\0';
     }
 }
 
