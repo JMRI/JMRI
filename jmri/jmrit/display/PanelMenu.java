@@ -22,7 +22,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * @author	Bob Jacobsen   Copyright 2003, 2004
  * @author  Dave Duchamp   Copyright 2007
  * @author  Pete Cressman   Copyright 2010
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 public class PanelMenu extends JMenu {
     public PanelMenu() {
@@ -44,6 +44,10 @@ public class PanelMenu extends JMenu {
         add(new jmri.jmrit.revhistory.swing.FileHistoryAction(rb.getString("MenuItemShowHistory")));
         add(new JSeparator());
 		panelsSubMenu = new JMenu(rb.getString("MenuShowPanel"));
+                // Add the 'No Panels' item to the sub-menu
+                noPanelsItem = new JMenuItem(rb.getString("MenuItemNoPanels"));
+                noPanelsItem.setEnabled(false);
+                panelsSubMenu.add(noPanelsItem);
 		add(panelsSubMenu);
         add(new JSeparator());
         add(new jmri.jmrit.jython.RunJythonScript(rb.getString("MenuItemScript")));
@@ -55,7 +59,8 @@ public class PanelMenu extends JMenu {
 	
 	// operational variables
 	private JMenu panelsSubMenu	= null;
-	static private PanelMenu thisMenu = null;
+        private JMenuItem noPanelsItem  = null;
+        static private PanelMenu thisMenu = null;
     private ArrayList<Editor> panelsList = new ArrayList<Editor>();  
 		
 	/** 
@@ -86,6 +91,11 @@ public class PanelMenu extends JMenu {
                 }
                 panelsList.remove(panel);
 				panelsSubMenu.remove(i);
+                // If there are no panels on the list,
+                // replace the 'No Panels' menu item
+                if (panelsList.size()==0) {
+                    panelsSubMenu.add(noPanelsItem);
+                }
                 return;
 			}
 		}
@@ -95,6 +105,10 @@ public class PanelMenu extends JMenu {
 	 * Add an Editor panel to Show Panels sub menu
 	 */
     public void addEditorPanel(final Editor panel) {
+        // If this is the first panel, remove the 'No Panels' menu item
+        if (panelsList.size()==0) {
+            panelsSubMenu.remove(noPanelsItem);
+        }
 		panelsList.add(panel);
         ActionListener a = new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
