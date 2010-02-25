@@ -16,7 +16,7 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LoadFileTestBase extends TestCase {
 
@@ -45,12 +45,11 @@ public class LoadFileTestBase extends TestCase {
         super.setUp();
         apps.tests.Log4JFixture.setUp(); 
         JUnitUtil.resetInstanceManager();
-        InstanceManager.setConfigureManager(new ConfigXmlManager());
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
-        InstanceManager.configureManagerInstance().registerConfig(
-                InstanceManager.memoryManagerInstance());
+        JUnitUtil.initMemoryManager();
     }
     
     protected void tearDown() throws Exception { 
