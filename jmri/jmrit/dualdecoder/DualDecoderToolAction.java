@@ -4,13 +4,14 @@ package jmri.jmrit.dualdecoder;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 
 /**
  * Swing action to create and register a
  * DualDecoderTool
  *
  * @author    Bob Jacobsen    Copyright (C) 2001
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 
 public class DualDecoderToolAction extends AbstractAction {
@@ -26,7 +27,8 @@ public class DualDecoderToolAction extends AbstractAction {
     }
 
     public DualDecoderToolAction() {
-        this("Multi-Decoder Control");
+
+        this(ResourceBundle.getBundle("jmri.jmrit.JmritToolsBundle").getString("MenuItemMultiDecoderControl"));
     }
 
     public void actionPerformed(ActionEvent e) {

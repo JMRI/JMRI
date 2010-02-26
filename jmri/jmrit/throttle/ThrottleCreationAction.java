@@ -1,6 +1,7 @@
 package jmri.jmrit.throttle;
 
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 
@@ -8,7 +9,7 @@ import javax.swing.AbstractAction;
  * Create a new throttle.
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class ThrottleCreationAction extends AbstractAction {
 
@@ -25,7 +26,7 @@ public class ThrottleCreationAction extends AbstractAction {
     }
 
     public ThrottleCreationAction() {
-        this("New Throttle...");
+        this(ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle").getString("MenuItemNewThrottle"));
     }
 
     /**
