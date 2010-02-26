@@ -4,6 +4,7 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.OutputStream;
+import java.util.Calendar;
 import java.util.Vector;
 
 import java.util.LinkedList;
@@ -27,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.74 $
+ * @version         $Revision: 1.75 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -311,13 +312,18 @@ abstract public class AbstractMRTrafficController {
                 if (mCurrentState!=IDLESTATE) log.debug("Setting IDLESTATE");
                 mCurrentState =IDLESTATE;
                 // wait for something to send
-                try {
-                    synchronized(xmtRunnable) {
-                        xmtRunnable.wait(mWaitBeforePoll);
-                    }
-                } catch (InterruptedException e) { 
-                    Thread.currentThread().interrupt(); // retain if needed later
-                    log.error("transmitLoop interrupted");
+                if (mWaitBeforePoll > waitTimePoll || mCurrentMode == PROGRAMINGMODE){
+                	try {
+                		long startTime = Calendar.getInstance().getTimeInMillis();
+                		synchronized(xmtRunnable) {
+                			xmtRunnable.wait(mWaitBeforePoll);
+                		}
+                		long endTime = Calendar.getInstance().getTimeInMillis();
+                		waitTimePoll = waitTimePoll + endTime - startTime;
+                	} catch (InterruptedException e) { 
+                		Thread.currentThread().interrupt(); // retain if needed later
+                		log.error("transmitLoop interrupted");
+                	}
                 }
                 if (mCurrentState!=NOTIFIEDSTATE && mCurrentState!=IDLESTATE)
                     log.error("left timeout in unexpected state: "+mCurrentState);
@@ -353,7 +359,7 @@ abstract public class AbstractMRTrafficController {
                         AbstractMRMessage msg = pollMessage();
                         if (msg != null) {
                             // yes, send that
-                            log.debug("Sending poll");
+                            log.debug("Sending poll, wait time "+Long.toString(waitTimePoll));
                             mCurrentState = WAITMSGREPLYSTATE;
                             forwardToPort(msg, pollReplyHandler());
                             // wait for reply
@@ -375,6 +381,7 @@ abstract public class AbstractMRTrafficController {
                         } else {
                             // no, just wait
                         }
+                        waitTimePoll = 0;
                     }
                 }
             }
@@ -443,6 +450,7 @@ abstract public class AbstractMRTrafficController {
     }
     
     protected int mWaitBeforePoll = 100;
+    protected long waitTimePoll = 0;
 
     /**
      * Add trailer to the outgoing byte stream.
