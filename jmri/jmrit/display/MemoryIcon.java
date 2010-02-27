@@ -20,7 +20,7 @@ import jmri.util.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -279,9 +279,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         super.dispose();
     }
     
-    public void doMouseReleased(java.awt.event.MouseEvent e) {
+    public void doMouseClicked(java.awt.event.MouseEvent e) {
         //if (log.isDebugEnabled()) log.debug("doMouseReleased");
-        if (e.getClickCount() == 2){ 
+        if (e.getClickCount() == 2) { // double click?
             editMemoryValue();
         }
     }    

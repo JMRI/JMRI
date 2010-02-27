@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -337,7 +337,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         return true;        
     }
 
-    public void doMouseReleased(MouseEvent e) {
+    public void doMouseClicked(MouseEvent e) {
         if ( !e.isAltDown() &&  !e.isMetaDown() ) {
             performMouseClicked(e, e.getX(), e.getY() );
         }
