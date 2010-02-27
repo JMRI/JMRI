@@ -25,7 +25,7 @@ import javax.swing.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class AppConfigBase extends JmriPanel {
 
@@ -35,7 +35,7 @@ public class AppConfigBase extends JmriPanel {
      * Number of layout connections to 
      * support.  By default, this is 4.
      */
-    static NCONNECTIONSDEFAULT = 4;
+    static int NCONNECTIONSDEFAULT = 4;
     /**
      * Remember items to persist
      */
