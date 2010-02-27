@@ -25,11 +25,17 @@ import javax.swing.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class AppConfigBase extends JmriPanel {
 
     static protected ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+
+    /**
+     * Number of layout connections to 
+     * support.  By default, this is 4.
+     */
+    static NCONNECTIONSDEFAULT = 4;
     /**
      * Remember items to persist
      */
@@ -37,7 +43,14 @@ public class AppConfigBase extends JmriPanel {
 
     /**
      * Construct a configuration panel for inclusion in a preferences
-     * or configuration dialog.
+     * or configuration dialog with default number of connections.
+     */
+    public AppConfigBase() {
+        this.nConnections = NCONNECTIONSDEFAULT;
+    }
+    /**
+     * Construct a configuration panel for inclusion in a preferences
+     * or configuration dialog with custom number of connections.
      */
     public AppConfigBase(int nConnections) {
         this.nConnections = nConnections;

@@ -17,7 +17,7 @@ import javax.swing.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.35 $
+ * @version	$Revision: 1.36 $
  */
 public class AppConfigPanel extends AppConfigBase {
 
@@ -28,7 +28,7 @@ public class AppConfigPanel extends AppConfigBase {
      *      sub-panels included
      */
     public AppConfigPanel(int nConnections) {
-        super(4);  // by default, four connection slots
+        super();  // by default number of connection slots
         log.debug("start app");
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

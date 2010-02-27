@@ -13,7 +13,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -23,7 +23,7 @@ public class TabbedPreferences extends AppConfigBase {
     // All the following needs to be in a separate preferences frame
     // class! How about switching AppConfigPanel to tabbed?
     public TabbedPreferences() {
-        super(4);
+        super();
         
         for (int i=0; i<getNConnections(); i++) {
             addItem(rb.getString("TabbedLayoutConnection")+(i+1), null, JmrixConfigPane.instance(i), true);
