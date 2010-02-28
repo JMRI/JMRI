@@ -16,7 +16,7 @@ import jmri.*;
  * it works through the identification progress.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
@@ -35,7 +35,7 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
         // than register, so remember where we are now
         originalMode = p.getMode();
         // request contents of CV 29
-        statusUpdate("Read CV 29");
+        statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("READ CV 29"));
         readCV(29);
         return false;
     }
@@ -63,16 +63,16 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
                 // failed, as couldn't set a useful mode!
                 log.error("can't set programming mode, long address fails");
                 address = -1;
-                statusUpdate("Long address - read CV 17");
+                statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("LONG ADDRESS - READ CV 17"));
                 return true;  // Indicates done
             }
             // mode OK, continue operation
-            statusUpdate("Long address - read CV 17");
+            statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("LONG ADDRESS - READ CV 17"));
             readCV(17);
         } else {
             // short - read address
             shortAddr = true;
-            statusUpdate("Short address - read CV 1");
+            statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("SHORT ADDRESS - READ CV 1"));
             readCV(1);
         }
         return false;
@@ -87,7 +87,7 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
         } else {
             // long - need CV18 also
             cv17val = value;
-            statusUpdate("Long address - read CV 18");
+            statusUpdate(java.util.ResourceBundle.getBundle("jmri/jmrit/roster/JmritRosterBundle").getString("LONG ADDRESS - READ CV 18"));
             readCV(18);
             return false;
         }

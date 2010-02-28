@@ -43,14 +43,14 @@ import jmri.Programmer;
  * <P>
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class ProgDeferredServiceModePane extends ProgModeSelector implements java.beans.PropertyChangeListener {
 
     ProgServiceModePane servicePane;
     JFrame setFrame;
     JLabel currentMode = new JLabel();
-    protected JButton setButton = new JButton("Set...");
+    protected JButton setButton = new JButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("SET..."));
 
     /**
      * Enable/Disable the "set" button in GUI

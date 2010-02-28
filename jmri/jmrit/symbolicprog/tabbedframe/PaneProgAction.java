@@ -34,7 +34,7 @@ import javax.swing.JSeparator;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.35 $
+ * @version			$Revision: 1.36 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -81,7 +81,7 @@ public class PaneProgAction 			extends AbstractAction {
         // add the Roster menu
         JMenuBar menuBar = new JMenuBar();
         // menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
-        JMenu j = new JMenu("File");
+        JMenu j = new JMenu(rbt.getString("MenuFile"));
         j.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rbt.getString("MenuPrintDecoderDefinitions"), f, false));
         j.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rbt.getString("MenuPrintPreviewDecoderDefinitions"), f, true));
         menuBar.add(j);

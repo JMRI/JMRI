@@ -14,7 +14,7 @@ import jmri.ProgListener;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007
  * @author  Giorgio Terdina Copyright (C) 2007
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgListener {
 
@@ -36,11 +36,11 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         super();
         
         // configure items for GUI
-        readButton.setText("Read CV");
-        readButton.setToolTipText("Read the value from the selected CV");
+        readButton.setText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("READ CV"));
+        readButton.setToolTipText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("READ THE VALUE FROM THE SELECTED CV"));
 
-        writeButton.setText("Write CV");
-        writeButton.setToolTipText("Write the value to the selected CV");
+        writeButton.setText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("WRITE CV"));
+        writeButton.setToolTipText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("WRITE THE VALUE TO THE SELECTED CV"));
 
         hexButton.setText("Hexadecimal");
         decButton.setText("Decimal");
@@ -72,7 +72,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         resultsField.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 
         // general GUI config
-        setTitle("Simple Programmer");
+        setTitle(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("SIMPLE PROGRAMMER"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // install items in GUI
@@ -87,9 +87,9 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
 
         tPane = new JPanel();
         tPane.setLayout(new GridLayout(2,2));
-        tPane.add(new JLabel("CV Number:"));
+        tPane.add(new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("CV NUMBER:")));
         tPane.add(addrField);
-        tPane.add(new JLabel("Value:"));
+        tPane.add(new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("VALUE:")));
         tPane.add(valField);
         getContentPane().add(tPane);
 
@@ -106,7 +106,7 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         tPane2.setLayout(new BoxLayout(tPane2, BoxLayout.Y_AXIS));
         radixGroup.add(decButton);
         radixGroup.add(hexButton);
-        tPane2.add(new JLabel("Value is:"));
+        tPane2.add(new JLabel(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("VALUE IS:")));
         tPane2.add(decButton);
         tPane2.add(hexButton);
         tPane.add(tPane2);

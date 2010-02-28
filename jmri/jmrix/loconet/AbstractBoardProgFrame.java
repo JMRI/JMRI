@@ -33,7 +33,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2004, 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 abstract public class AbstractBoardProgFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
@@ -68,8 +68,8 @@ abstract public class AbstractBoardProgFrame extends jmri.util.JmriJFrame implem
             pane0.add(addrField);
             pane0.add(readAllButton);
             pane0.add(writeAllButton);
-            readAllButton.setText("Read from "+type);
-            writeAllButton.setText("Write to "+type);
+            readAllButton.setText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("READ FROM ")+type);
+            writeAllButton.setText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("WRITE TO ")+type);
         // install read all, write all button handlers
         readAllButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -277,7 +277,7 @@ abstract public class AbstractBoardProgFrame extends jmri.util.JmriJFrame implem
             // done
             readAllButton.setSelected(false);
             writeAllButton.setSelected(false);
-            status.setText("Done");
+            status.setText(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("DONE"));
             return;
         } else {
             // create next
