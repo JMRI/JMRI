@@ -25,7 +25,7 @@ import java.net.URL;
  * It assumes that Java Help 1.1.8 is in use
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class HelpUtil {
@@ -95,6 +95,10 @@ public class HelpUtil {
     }
     
     static public void displayHelpRef(String ref) {
+        if (globalHelpBroker == null) {
+            log.debug("can't display "+ref+" help page because help system reference is null");
+            return;
+        }
         try {
             globalHelpBroker.setCurrentID(ref);
             globalHelpBroker.setDisplayed(true);
