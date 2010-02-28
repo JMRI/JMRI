@@ -18,7 +18,7 @@ import org.jdom.Element;
  * and the default Locale.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  * @see jmri.GuiLafConfigPane
  */
 public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -43,6 +43,9 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         e.setAttribute("LocaleLanguage",l.getLanguage());
         e.setAttribute("LocaleCountry",l.getCountry());
         e.setAttribute("LocaleVariant",l.getVariant());
+        
+        e.setAttribute("nonStandardMouseEvent", 
+                (g.mouseEvent.isSelected() ?"yes":"no"));
         return e;
     }
 
@@ -80,6 +83,11 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         if (countryAttr!=null && langAttr!=null && varAttr!=null)
             Locale.setDefault(new Locale(langAttr.getValue(),countryAttr.getValue(),
                                 varAttr.getValue()));
+
+        Attribute clickAttr = e.getAttribute("nonStandardMouseEvent");
+        if (clickAttr != null)
+            jmri.util.swing.SwingSettings.setNonStandardMouseEvent(clickAttr.getValue().equals("yes"));
+               
         return result;
     }
 

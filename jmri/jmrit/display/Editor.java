@@ -2053,6 +2053,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         _dragging = false;
         _targetPanel.repaint(); // needed for ToolTip
+        
+        // if not sending MouseClicked, do it here
+        if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent())
+            mouseClicked(event);
     }
 
     public void mouseDragged(MouseEvent event) {

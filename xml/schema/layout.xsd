@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: layout.xsd,v 1.6 2010-02-20 05:51:08 jacobsen Exp $ -->
+<!-- $Id: layout.xsd,v 1.7 2010-02-28 06:23:53 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
 <!--                                                                        -->
@@ -120,6 +120,7 @@ signals - obsolete, EMPTY, never used
                 <xs:attribute name="LocaleLanguage" type="xs:string"/>
                 <xs:attribute name="LocaleCountry" type="xs:string"/>
                 <xs:attribute name="LocaleVariant" type="xs:string"/>
+                <xs:attribute name="nonStandardMouseEvent" type="yesNoType"/>
             </xs:complexType>
         </xs:element>
             

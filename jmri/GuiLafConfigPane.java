@@ -8,12 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.Enumeration;
 import java.util.Locale;
 
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.UIManager;
+import javax.swing.*;
 
 /**
  * Provide GUI to configure Swing GUI LAF defaults
@@ -27,7 +22,7 @@ import javax.swing.UIManager;
  * GUI (and perhaps LAF) configuration item.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class GuiLafConfigPane extends JPanel {
 
@@ -40,7 +35,18 @@ public class GuiLafConfigPane extends JPanel {
         JPanel p;
         doLAF(p = new JPanel());
         add(p);
+        doClickSelection(p = new JPanel());
+        add(p);
     }
+
+    void doClickSelection(JPanel panel) {
+        panel.setLayout(new FlowLayout());
+        mouseEvent = new JCheckBox("Use non-standard release event for mouse click?");
+        mouseEvent.setSelected(jmri.util.swing.SwingSettings.getNonStandardMouseEvent());
+        panel.add(mouseEvent);
+    }
+
+    public JCheckBox mouseEvent;
 
     void doLAF(JPanel panel) {
         // find L&F definitions
@@ -70,6 +76,7 @@ public class GuiLafConfigPane extends JPanel {
             }
         }
 
+        
     }
 
     /**
