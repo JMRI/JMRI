@@ -10,7 +10,7 @@ package jmri.util.swing;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class JmriPanel extends javax.swing.JPanel {
@@ -18,11 +18,11 @@ public class JmriPanel extends javax.swing.JPanel {
     public String getHelpTarget() { return null; }
     public String getTitle() { return null; }
     
-    protected WindowInterface getWindowInterface() {
+    public WindowInterface getWindowInterface() {
         return wi;
     }
     private WindowInterface wi = null;
-    protected void setWindowInterface(WindowInterface w) {
+    public void setWindowInterface(WindowInterface w) {
         wi = w;
     }
     
