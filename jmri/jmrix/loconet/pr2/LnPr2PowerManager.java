@@ -24,13 +24,16 @@ import jmri.jmrix.loconet.LnPr2ThrottleManager;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class LnPr2PowerManager extends LnPowerManager {
 
-	public LnPr2PowerManager() {
+	public LnPr2PowerManager(SlotManager sm) {
+	    this.sm = sm;
 	}
 
+    SlotManager sm;
+	
 	public void setPower(int v) throws JmriException {
 		power = UNKNOWN;
 		
@@ -40,7 +43,7 @@ public class LnPr2PowerManager extends LnPowerManager {
             // get current active address
             DccLocoAddress activeAddress = ((LnPr2ThrottleManager) InstanceManager.throttleManagerInstance()).getActiveAddress();
             if (activeAddress != null) {
-                pm = new LnOpsModeProgrammer(SlotManager.instance(), activeAddress.getNumber(), activeAddress.isLongAddress());
+                pm = new LnOpsModeProgrammer(sm, activeAddress.getNumber(), activeAddress.isLongAddress());
                 checkOpsProg();
     
                 // set bit 1 in CV 128
@@ -65,7 +68,7 @@ public class LnPr2PowerManager extends LnPowerManager {
             // get current active address
             DccLocoAddress activeAddress = ((LnPr2ThrottleManager) InstanceManager.throttleManagerInstance()).getActiveAddress();
             if (activeAddress != null) {
-                pm = new LnOpsModeProgrammer(SlotManager.instance(), activeAddress.getNumber(), activeAddress.isLongAddress());
+                pm = new LnOpsModeProgrammer(sm, activeAddress.getNumber(), activeAddress.isLongAddress());
                 checkOpsProg();
     
                 // reset bit 1 in CV 128

@@ -1,11 +1,11 @@
-// BDL16Frame.java
+// BDL16Panel.java
 
 package jmri.jmrix.loconet.bdl16;
 
 import javax.swing.JCheckBox;
 
 /**
- * Frame displaying and programming a BDL16 configuration.
+ * Panel displaying and programming a BDL16 configuration.
  * <P>
  * The read and write require a sequence of operations, which
  * we handle with a state variable.
@@ -20,13 +20,13 @@ import javax.swing.JCheckBox;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  *
- * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2007
- * @version			$Revision: 1.17 $
+ * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2007, 2010
+ * @version			$Revision: 1.1 $
  */
-public class BDL16Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
+public class BDL16Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
-    public BDL16Frame() {
-        super("BDL16 programmer");
+    public BDL16Panel() {
+        super();
 
         appendLine(provideAddressing("BDL16"));  // add read/write buttons, address
 
@@ -56,15 +56,14 @@ public class BDL16Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
         setStatus("The BDL16 should be in normal mode (Don't push the buttons on the BDL16!)");
 
         setTypeWord(0x71);  // configure BDL16 message type
-        
-        // add help menu to window
-    	addHelpMenu("package.jmri.jmrix.loconet.bdl16.BDL16Frame", true);
-
-        // and prep for display
-        pack();
 
     }
 
+    public String getHelpTarget() { return "package.jmri.jmrix.loconet.bdl16.BDL16Frame"; }
+    public String getTitle() { 
+        return jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemBDL16Programmer"); 
+    }
+    
     /**
      * Copy from the GUI to the opsw array. 
      * <p>
@@ -171,6 +170,6 @@ public class BDL16Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
     JCheckBox antichatsens          = new JCheckBox("OpSw 44: Anti-chatter filter sensitivity (BDL168 only)");  // opsw 44
     JCheckBox setdefault            = new JCheckBox("OpSw 40: Restore factory default, including address");  // opsw 40
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BDL16Frame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BDL16Panel.class.getName());
 
 }

@@ -10,12 +10,14 @@ import jmri.jmrix.loconet.spjfile.SpjFile;
 
 import java.io.*;
 
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.9 $
+ * @version	    $Revision: 1.10 $
  */
-public class LoaderPane extends javax.swing.JPanel {
+public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
     // GUI member declarations
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Loader");
@@ -33,6 +35,11 @@ public class LoaderPane extends javax.swing.JPanel {
     
     SpjFile file;
     LoaderEngine engine;
+    
+    public String getHelpTarget() { return "package.jmri.jmrix.loconet.soundloader.LoaderFrame"; }
+    public String getTitle() { 
+        return jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemSoundload"); 
+    }
     
     public LoaderPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -121,7 +128,7 @@ public class LoaderPane extends javax.swing.JPanel {
     }
 
     JFileChooser chooser;
-    
+
     void selectInputFile() {
         String name = inputFileName.getText();
         if (name.equals("")) {
@@ -186,7 +193,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
         // Create a loader to run in a separate thread
         // Override notify() method to do a swing-thread update of status field
-        if (engine == null) engine = new LoaderEngine(){
+        if (engine == null) engine = new LoaderEngine(memo){
             public void notify(String s) {
                 javax.swing.SwingUtilities.invokeLater(new Notifier(s));
             }
@@ -216,7 +223,7 @@ public class LoaderPane extends javax.swing.JPanel {
     /**
      * Get rid of any held resources
      */
-    void dispose() {
+    public void dispose() {
         if (file!=null) file.dispose();
         file = null;  // not for GC, this flags need to reinit
         

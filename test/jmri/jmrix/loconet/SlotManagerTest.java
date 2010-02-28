@@ -17,7 +17,7 @@ public class SlotManagerTest extends TestCase {
     private LocoNetSlot testSlot;
 
     public void testGetDirectFunctionAddressOK() {
-        SlotManager slotmanager = new SlotManager();
+        SlotManager slotmanager = new SlotManager(lnis);
         LocoNetMessage m1;
         
         m1 = new LocoNetMessage(11);
@@ -52,7 +52,7 @@ public class SlotManagerTest extends TestCase {
     }
     
     public void testGetDirectDccPacketOK() {
-        SlotManager slotmanager = new SlotManager();
+        SlotManager slotmanager = new SlotManager(lnis);
         LocoNetMessage m1;
         
         m1 = new LocoNetMessage(11);
@@ -87,7 +87,7 @@ public class SlotManagerTest extends TestCase {
     }
     
     public void testGetSlotSend()  {
-        SlotManager slotmanager = new SlotManager();
+        SlotManager slotmanager = new SlotManager(lnis);
         testSlot = null;
         SlotListener p2=  new SlotListener(){
             public void notifyChangedSlot(LocoNetSlot l) {
@@ -106,7 +106,7 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testGetSlotRcv() {
-        SlotManager slotmanager = new SlotManager();
+        SlotManager slotmanager = new SlotManager(lnis);
         testSlot = null;
         SlotListener p2=  new SlotListener(){
             public void notifyChangedSlot(LocoNetSlot l) {
@@ -146,7 +146,7 @@ public class SlotManagerTest extends TestCase {
      }
 
     public void testReadCVPaged() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager();
+        SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  12;
         ProgListener p2=  null;
         slotmanager.setMode(Programmer.PAGEMODE);
@@ -157,7 +157,7 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testReadCVRegister() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager();
+        SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  2;
         ProgListener p2=  null;
         slotmanager.setMode(Programmer.REGISTERMODE);
@@ -168,7 +168,7 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testReadCVDirect() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager();
+        SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  12;
         ProgListener p2=  null;
         slotmanager.setMode(Programmer.DIRECTBYTEMODE);
@@ -179,7 +179,7 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testReadCVOpsModeLong() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager();
+        SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  12;
         ProgListener p2=  null;
         slotmanager.readCVOpsMode(CV1, p2, 4*128+0x23, true);
@@ -189,7 +189,7 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testReadCVOpsModeShort() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager();
+        SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  12;
         ProgListener p2=  null;
         slotmanager.readCVOpsMode(CV1, p2, 22, false);
@@ -199,7 +199,7 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testWriteCVPaged() throws jmri.ProgrammerException {
-	SlotManager slotmanager = new SlotManager();
+	SlotManager slotmanager = new SlotManager(lnis);
 	int CV1=  12;
 	int val2=  34;
         ProgListener p3=  null;
@@ -211,7 +211,7 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testWriteCVRegister() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager();
+        SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  2;
         int val2=  34;
         ProgListener p3=  null;
@@ -223,7 +223,7 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testWriteCVDirect() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager();
+        SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  12;
         int val2=  34;
         ProgListener p3=  null;
@@ -235,7 +235,7 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testWriteCVOpsLongAddr() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager();
+        SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  12;
         int val2=  34;
         ProgListener p3=  null;
@@ -246,7 +246,7 @@ public class SlotManagerTest extends TestCase {
     }
 
     public void testWriteCVOpsShortAddr() throws jmri.ProgrammerException {
-        SlotManager slotmanager = new SlotManager();
+        SlotManager slotmanager = new SlotManager(lnis);
         int CV1=  12;
         int val2=  34;
         ProgListener p3=  null;
@@ -271,6 +271,7 @@ public class SlotManagerTest extends TestCase {
     // The minimal setup for log4J
     LocoNetInterfaceScaffold lnis;
     protected void setUp() {
+        jmri.util.JUnitUtil.resetInstanceManager();
         // prepare an interface
         lnis = new LocoNetInterfaceScaffold();
         apps.tests.Log4JFixture.setUp(); 

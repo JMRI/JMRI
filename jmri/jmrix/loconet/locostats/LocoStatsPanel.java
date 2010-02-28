@@ -3,6 +3,7 @@
 package jmri.jmrix.loconet.locostats;
 
 import jmri.jmrix.loconet.*;
+import jmri.jmrix.loconet.swing.*;
 import jmri.util.StringUtil;
 
 import java.util.ResourceBundle;
@@ -11,7 +12,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * Frame displaying LocoNet interface status information.
+ * Panel displaying LocoNet interface status information.
  * <P>
  * The LocoBuffer family from RR-CirKits and the PRn family from Digitrax use
  * different formats for the status message.  This class detects this
@@ -28,25 +29,30 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Alex Shepherd   Copyright (C) 2003
- * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @author			Bob Jacobsen   Copyright (C) 2008, 2010
+ * @version			$Revision: 1.1 $
  * @since 2.1.5
  */
-public class LocoStatsFrame extends jmri.util.JmriJFrame implements LocoNetListener {
+public class LocoStatsPanel extends LnPanel implements LocoNetListener {
 
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.LocoNetBundle");
-    
     JPanel lb2Panel;
     JPanel rawPanel;
     JPanel pr2Panel;
     JPanel ms100Panel;
 
-    public LocoStatsFrame(LnTrafficController lt) {
-        super((rb = ResourceBundle.getBundle("jmri.jmrix.loconet.locostats.LocoStatsBundle")).getString("Title"));
+    public String getHelpTarget() { return "package.jmri.jmrix.loconet.locostats.LocoStatsFrame"; }
+    public String getTitle() { 
+        return LocoNetBundle.bundle().getString("MenuItemLocoStats"); 
+    }
 
-        this.lt = lt;
-        
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+    public LocoStatsPanel() {
+        super();
+    }
+    
+    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.locostats.LocoStatsBundle");
+
+    public void initComponents() {
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // add GUI items
         rawPanel = new JPanel();
@@ -94,15 +100,15 @@ public class LocoStatsFrame extends jmri.util.JmriJFrame implements LocoNetListe
         ms100Panel.add(new JLabel(rb.getString("LabelMS100Status")));
         ms100Panel.add(ms100status);
         
-        getContentPane().add(rawPanel);
-        getContentPane().add(lb2Panel);
-        getContentPane().add(pr2Panel);
-        getContentPane().add(ms100Panel);
+        add(rawPanel);
+        add(lb2Panel);
+        add(pr2Panel);
+        add(ms100Panel);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        getContentPane().add(updateButton);
-        getContentPane().add(panel);
+        add(updateButton);
+        add(panel);
 
         // install "update" button handler
         updateButton.addActionListener( new ActionListener() {
@@ -112,28 +118,28 @@ public class LocoStatsFrame extends jmri.util.JmriJFrame implements LocoNetListe
             }
         );
 
-        // add window help
-        addHelpMenu("package.jmri.jmrix.loconet.locostats.LocoStatsFrame", true);
+        // and prep for display
+        lb2Panel.setVisible(false);
+        rawPanel.setVisible(true);
+        pr2Panel.setVisible(false);
+        ms100Panel.setVisible(false);
+        revalidate();
+
+        // will connect when memo is available
+    }
+
+    public void initComponents(LocoNetSystemConnectionMemo memo) {
+        super.initComponents(memo);
 
         // listen for LocoNet messages
-        if (lt != null)
-            lt.addLocoNetListener(~0, this);
+        if (memo.getLnTrafficController() != null)
+            memo.getLnTrafficController().addLocoNetListener(~0, this);
         else
             report("No LocoNet connection available, can't function");
 
-        // and prep for display
-        pack();
-        lb2Panel.setVisible(false);
-        rawPanel.setVisible(false);
-        pr2Panel.setVisible(false);
-        ms100Panel.setVisible(false);
-
-        // finally, request data
+        // request data
         requestUpdate();
-
-    }
-
-    LnTrafficController lt; 
+    }   
     
     void report(String msg) {
         log.error(msg);
@@ -159,7 +165,7 @@ public class LocoStatsFrame extends jmri.util.JmriJFrame implements LocoNetListe
             rawPanel.setVisible(false);
             pr2Panel.setVisible(false);
             ms100Panel.setVisible(false);
-            pack();
+            revalidate();
 
             updatePending = false ;
 
@@ -192,8 +198,8 @@ public class LocoStatsFrame extends jmri.util.JmriJFrame implements LocoNetListe
             }
             lb2Panel.setVisible(false);
             rawPanel.setVisible(false);
-            pack();
 
+            revalidate();
             updatePending = false ;
 
         } else if (updatePending &&
@@ -213,7 +219,7 @@ public class LocoStatsFrame extends jmri.util.JmriJFrame implements LocoNetListe
                 rawPanel.setVisible(true);
                 pr2Panel.setVisible(false);
                 ms100Panel.setVisible(false);
-                pack();
+                revalidate();
 
                 updatePending = false ;
             } catch ( Exception e ) {
@@ -228,25 +234,25 @@ public class LocoStatsFrame extends jmri.util.JmriJFrame implements LocoNetListe
         LocoNetMessage msg = new LocoNetMessage( 2 ) ;
         msg.setOpCode( LnConstants.OPC_GPBUSY );
         updatePending = true ;
-        lt.sendLocoNetMessage(msg);
+        memo.getLnTrafficController().sendLocoNetMessage(msg);
     }
 
     public void dispose() {
         // disconnect from the LnTrafficController
-        lt.removeLocoNetListener(~0,this);
+        memo.getLnTrafficController().removeLocoNetListener(~0,this);
 
         // take apart the JFrame
         super.dispose();
     }
 
-    JTextField r1 = new JTextField(3);
-    JTextField r2 = new JTextField(3);
-    JTextField r3 = new JTextField(3);
-    JTextField r4 = new JTextField(3);
-    JTextField r5 = new JTextField(3);
-    JTextField r6 = new JTextField(3);
-    JTextField r7 = new JTextField(3);
-    JTextField r8 = new JTextField(3);
+    JTextField r1 = new JTextField(5);
+    JTextField r2 = new JTextField(5);
+    JTextField r3 = new JTextField(5);
+    JTextField r4 = new JTextField(5);
+    JTextField r5 = new JTextField(5);
+    JTextField r6 = new JTextField(5);
+    JTextField r7 = new JTextField(5);
+    JTextField r8 = new JTextField(5);
 
     JTextField serial = new JTextField(6);
     JTextField status = new JTextField(5);
@@ -266,5 +272,5 @@ public class LocoStatsFrame extends jmri.util.JmriJFrame implements LocoNetListe
 
     JButton updateButton = new JButton("Update");
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoStatsFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoStatsPanel.class.getName());
 }

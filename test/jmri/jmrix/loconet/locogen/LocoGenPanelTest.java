@@ -1,4 +1,4 @@
-// LocoGenFrameTest.java
+// LocoGenPanelTest.java
 
 package jmri.jmrix.loconet.locogen;
 
@@ -10,24 +10,20 @@ import junit.framework.TestSuite;
 import jmri.jmrix.loconet.*;
 
 /**
- * Tests for the jmri.jmrix.loconet.locogen.LocoGenFrame class
+ * Tests for the jmri.jmrix.loconet.locogen.LocoGenPanel class
  * @author   Bob Jacobsen Copyright 2001, 2003
- * @version  $Revision: 1.5 $
+ * @version  $Revision: 1.1 $
  */
-public class LocoGenFrameTest extends TestCase {
-
-    public void testFrameCreate() {
-        new LocoGenFrame();
-    }
+public class LocoGenPanelTest extends TestCase {
 
     public void testPacketNull() {
-        LocoGenFrame t = new LocoGenFrame();
+        LocoGenPanel t = new LocoGenPanel();
         LocoNetMessage m = t.createPacket("");
         Assert.assertEquals("null pointer",null,m);
     }
 
     public void testPacketCreate() {
-        LocoGenFrame t = new LocoGenFrame();
+        LocoGenPanel t = new LocoGenPanel();
         LocoNetMessage m = t.createPacket("12 34 AB 3 19 6 B B1");
         Assert.assertEquals("length",8,m.getNumDataElements());
         Assert.assertEquals("0th byte",0x12,m.getElement(0)&0xFF);
@@ -44,22 +40,22 @@ public class LocoGenFrameTest extends TestCase {
 
     // from here down is testing infrastructure
 
-    public LocoGenFrameTest(String s) {
+    public LocoGenPanelTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {LocoGenFrameTest.class.getName()};
+        String[] testCaseName = {LocoGenPanelTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(LocoGenFrameTest.class);
+        TestSuite suite = new TestSuite(LocoGenPanelTest.class);
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoGenFrameTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoGenPanelTest.class.getName());
 
 }

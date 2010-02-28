@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @see SlotManager
  * @author		Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.22 $
+ * @version 		$Revision: 1.23 $
  */
 public class LnThrottleManager extends AbstractThrottleManager implements ThrottleManager, SlotListener {
     private SlotManager slotManager;
@@ -24,9 +24,9 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     /**
      * Constructor. Gets a reference to the LocoNet SlotManager.
      */
-    public LnThrottleManager() {
+    public LnThrottleManager(SlotManager slotManager) {
     	super();
-        slotManager = SlotManager.instance();
+        this.slotManager = slotManager;
     }
 
 	/**

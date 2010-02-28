@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
 /**
  * Table data model for display of slot manager contents
  * @author      Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -49,13 +49,17 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     static public final int F8COLUMN   = 18;
 
     static public final int NUMCOLUMN = 19;
-    SlotMonDataModel(int row, int column) {
-
+    
+    jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo;
+    
+    SlotMonDataModel(int row, int column, jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo) {
+        this.memo = memo;
+        
         // connect to SlotManager for updates
-        SlotManager.instance().addSlotListener(this);
+        memo.getSlotManager().addSlotListener(this);
 
         // start update process
-        SlotManager.instance().update();
+        memo.getSlotManager().update();
     }
 
     /**
@@ -83,7 +87,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             nMax = 128;
         }
         for (int i=nMin; i<nMax; i++) {
-            LocoNetSlot s = SlotManager.instance().slot(i);
+            LocoNetSlot s = memo.getSlotManager().slot(i);
             if (s.slotStatus() != LnConstants.LOCO_FREE ||
                 i ==0 || i >= 120) n++;    // always show system slots if requested
         }
@@ -163,7 +167,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 
     @SuppressWarnings("null")
 	public Object getValueAt(int row, int col) {
-        LocoNetSlot s = SlotManager.instance().slot(slotNum(row));
+        LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
         String      t;
         if (s == null) log.error("slot pointer was null for slot row: "+row+" col: "+col);
 
@@ -291,7 +295,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         if (col == ESTOPCOLUMN) {
             log.debug("Start estop in slot "+row);
             // check for in use
-            LocoNetSlot s = SlotManager.instance().slot(slotNum(row));
+            LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
             if (s == null) {
                 log.error("slot pointer was null for slot row: "+row+" col: "+col);
                 return;
@@ -312,13 +316,13 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             msg.setOpCode(LnConstants.OPC_LOCO_SPD);
             msg.setElement(1, s.getSlot());
             msg.setElement(2, 1);       // 1 here is estop
-            LnTrafficController.instance().sendLocoNetMessage(msg);
+            memo.getLnTrafficController().sendLocoNetMessage(msg);
             fireTableRowsUpdated(row,row);
         }
         else if (col == DISPCOLUMN) {
             log.debug("Start freeing slot "+row);
             // check for in use
-            LocoNetSlot s = SlotManager.instance().slot(slotNum(row));
+            LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
             if (s == null) {
                 log.error("slot pointer was null for slot row: "+row+" col: "+col);
                 return;
@@ -342,10 +346,9 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                     if (result == 1) return;
                 }
                 // send status to free
-                LnTrafficController.instance().sendLocoNetMessage(
+                memo.getLnTrafficController().sendLocoNetMessage(
                         s.writeStatus(LnConstants.LOCO_FREE
                     ));
-                // LnTrafficController.instance().sendLocoNetMessage(s.dispatchSlot());
             } else {
                 log.debug("Slot not in use");
             }
@@ -467,7 +470,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             nMax = 128;
         }
         for (slotNum=nMin; slotNum<nMax; slotNum++) {
-            LocoNetSlot s = SlotManager.instance().slot(slotNum);
+            LocoNetSlot s = memo.getSlotManager().slot(slotNum);
             if (_allSlots || s.slotStatus() != LnConstants.LOCO_FREE
                 || slotNum ==0 || slotNum >= 120) n++;    // always show system slots if requested
             if (n == row) break;
@@ -481,7 +484,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
      */
     public void estopAll() {
         for (int slotNum=0; slotNum<120; slotNum++) {
-            LocoNetSlot s = SlotManager.instance().slot(slotNum);
+            LocoNetSlot s = memo.getSlotManager().slot(slotNum);
             if (s.slotStatus() != LnConstants.LOCO_FREE &&
                 (s.consistStatus() == LnConstants.CONSIST_NO ||
                  s.consistStatus() == LnConstants.CONSIST_TOP) &&
@@ -491,13 +494,13 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 msg.setOpCode(LnConstants.OPC_LOCO_SPD);
                 msg.setElement(1, s.getSlot());
                 msg.setElement(2, 1);  // emergency stop
-                LnTrafficController.instance().sendLocoNetMessage(msg);
+                memo.getLnTrafficController().sendLocoNetMessage(msg);
             }
         }
     }
 
     public void dispose() {
-        SlotManager.instance().removeSlotListener(this);
+        memo.getSlotManager().removeSlotListener(this);
         // table.removeAllElements();
         // table = null;
     }

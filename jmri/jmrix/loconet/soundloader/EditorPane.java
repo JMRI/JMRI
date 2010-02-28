@@ -2,91 +2,130 @@
 
 package jmri.jmrix.loconet.soundloader;
 
-
-import javax.swing.*;
 import java.util.ResourceBundle;
 import java.io.IOException;
 import java.io.File;
 
-import jmri.jmrix.loconet.spjfile.SpjFile;
+import javax.swing.*;
+import java.awt.*;
 
-import jmri.util.JTableUtil;
-import jmri.util.com.sun.TableSorter;
+import jmri.util.JmriJFrame;
 
+import jmri.jmrix.loconet.*;
 
 /**
- * Pane for editing Digitrax SPJ files
- * @author	    Bob Jacobsen   Copyright (C) 2006
- * @version	    $Revision: 1.5 $
+ * Frame for editing Digitrax SPJ files.
+ *
+ * This is just an enclosure for the EditorPane, which does the real work.
+ * 
+ * This handles file read/write.
+ *
+ * @author		Bob Jacobsen   Copyright (C) 2006, 2007, 2008, 2010
+ * @version             $Revision: 1.6 $
  */
-public class EditorPane extends javax.swing.JPanel {
+public class EditorPane extends jmri.jmrix.loconet.swing.LnPanel {
 
     // GUI member declarations
-    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Editor");
+    EditorFilePane pane;
+
+    ResourceBundle res;
+    JButton open;
+    JButton save;
+    LocoNetSystemConnectionMemo memo;
     
-    SpjFile file;
-    EditorTableDataModel dataModel;
+    public String getHelpTarget() { return "package.jmri.jmrix.loconet.soundloader.EditorFrame"; }
+    public String getTitle() { 
+        return LocoNetBundle.bundle().getString("MenuItemSoundEditor"); 
+    }
+
+    public EditorPane() {
+        super();
+                
+        // Its unfortunate that we have to read that bundle twice, but it's due to Java init order
+        res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Editor");
+
+        // general GUI config
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        
+        // add file button
+        open = new JButton(res.getString("ButtonOpen"));
+        open.addActionListener(new AbstractAction() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                selectInputFile();
+            }
+        });
+
+        save = new JButton(res.getString("ButtonSave"));
+        save.addActionListener(new AbstractAction() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                selectSaveFile();
+            }
+        });
+        add(save);
+        save.setEnabled(false);
+
+        JPanel p = new JPanel();
+        p.setLayout(new FlowLayout());
+        p.add(open);
+        p.add(save);
+        add(p);
+        
+        // for now, for debugging, load the file
+        // from a fixed name
+        // pane = new EditorPane("ac4400.spj");
+        // pane = new EditorPane("ac4400-silence.spj");
+        // pane = new EditorPane("java/test/jmri/jmrix/loconet/spjfile/sd38_2.spj");
+        //add(pane);
+
+    }
+
+    static JFileChooser chooser;  // shared across all of these
     
-    public EditorPane(File name) {
-        // open and save file
+    void selectInputFile() {
+        if (chooser == null) chooser = jmri.jmrit.XmlFile.userFileChooser();
+        chooser.rescanCurrentDirectory();
+        int retVal = chooser.showOpenDialog(this);
+        if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
+        
+        // success, open the file
+        addFile(chooser.getSelectedFile());
+    }
+
+    void selectSaveFile() {
+        if (chooser == null) chooser = new JFileChooser(System.getProperty("user.dir"));
+        int retVal = chooser.showSaveDialog(this);
+        if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
+        
+        // success, open the file
         try {
-            file = new SpjFile(name);
-            file.read();
+            saveFile(chooser.getSelectedFile().getPath());
         } catch (IOException e) {
-            log.error("Exception reading file: "+e);
-            e.printStackTrace();
+            // failed, warn user
+            JOptionPane.showMessageDialog(this, "Error during save: "+e, 
+                                    "Save failed!", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    void addFile(File name) {
+        if (pane != null) {
+            // already defined
             return;
         }
-
-        // start to configure GUI
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        // create and include table
-        dataModel = new EditorTableDataModel(file);
-        
-        JTable dataTable	= JTableUtil.sortableDataModel(dataModel);
-        JScrollPane dataScroll	= new JScrollPane(dataTable);
-
-        // give system name column a smarter sorter and use it initially
-        try {
-            TableSorter tmodel = ((TableSorter)dataTable.getModel());
-            tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-            tmodel.setSortingStatus(EditorTableDataModel.HEADERCOL, TableSorter.ASCENDING);
-        } catch (java.lang.ClassCastException e) {}  // happens if not sortable table
-        
-        // configure items for GUI
-        dataModel.configureTable(dataTable);
-
-        add(dataScroll);
-        
-        // some stuff at bottom for now       
-        add(new JSeparator());
-        JPanel bottom = new JPanel();
-        bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
-        
-        JPanel p1 = new JPanel();
-        p1.add(new JLabel(res.getString("LabelSize")));
-        JTextField t1 = new JTextField(12);
-        t1.setEditable(false);
-        p1.add(t1);
-        
-        bottom.add(p1);
-        add(bottom);
+        pane = new EditorFilePane(name);
+        add(pane);
+        open.setEnabled(false);
+        save.setEnabled(true);
+        revalidate();
+        // major resize, repack
+        ((JFrame)getTopLevelAncestor()).pack();
     }
     
-    public void saveFile(String name) throws java.io.IOException {
-        file.save(name);
+    void saveFile(String name) throws IOException {
+        pane.saveFile(name);
     }
     
-    /**
-     * Get rid of any held resources
-     */
-    void dispose() {
-        file.dispose();
-        file = null;  // not for GC, this flags need to reinit
+    public void dispose() {
+        if (pane!=null) pane.dispose();
+        super.dispose();
     }
-
-
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EditorPane.class.getName());
-
 }

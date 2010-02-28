@@ -1,4 +1,4 @@
-// LocoIOFrame.java
+// LocoIOPanel.java
 
 package jmri.jmrix.loconet.locoio;
 
@@ -16,19 +16,19 @@ import javax.swing.table.TableColumnModel;
 import java.beans.*;
 
 /**
- * Frame displaying and programming a LocoIO configuration.
+ * Panel displaying and programming a LocoIO configuration.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.1 $
  */
 
-public class LocoIOFrame extends jmri.util.JmriJFrame
+public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements java.beans.PropertyChangeListener {
 
-        public LocoIOFrame() {
+        public LocoIOPanel() {
 
-        super("LocoIO programmer");
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        super();
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // creating the table (done here to ensure order OK)
         data        = new LocoIOData(Integer.valueOf(addrField.getText(),16).intValue(),
@@ -137,8 +137,8 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
         p3.add(table);
 
 
-        getContentPane().add(p3);
-        getContentPane().add(p2);
+        add(p3);
+        add(p2);
 
         // updating the Board address needs to be conveyed to the table
 
@@ -174,16 +174,16 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
         try {
             data.setUnitAddress(0x51,0x00);
         } catch (NullPointerException e) {
-            System.err.println("Caught NullPointerException: " + e.getMessage());
+            log.error("Caught NullPointerException: " + e.getMessage());
         }
 
-        // add help menu to window
-    	addHelpMenu("package.jmri.jmrix.loconet.locoio.LocoIOFrame", true);
-
-        // and prep for display
-        pack();
     }
 
+    public String getHelpTarget() { return "package.jmri.jmrix.loconet.locoio.LocoIOFrame"; }
+    public String getTitle() { 
+        return jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemLocoIOProgrammer"); 
+    }
+    
     /**
      * the SET LOCOIO ADDRESS button was pressed
      * Since this does a broadcast program-all to every
@@ -285,6 +285,6 @@ public class LocoIOFrame extends jmri.util.JmriJFrame
         openButton     = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIOFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIOPanel.class.getName());
 
 }

@@ -1,4 +1,4 @@
-// PM4Frame.java
+// PM4Panel.java
 
 package jmri.jmrix.loconet.pm4;
 
@@ -22,13 +22,13 @@ import javax.swing.*;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  *
- * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2007
- * @version			$Revision: 1.12 $
+ * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2007, 2010
+ * @version			$Revision: 1.1 $
  */
-public class PM4Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
+public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
-    public PM4Frame() {
-        super("PM4 programmer");
+    public PM4Panel() {
+        super();
 
         appendLine(provideAddressing("PM4"));  // add read/write buttons, address
 
@@ -83,12 +83,12 @@ public class PM4Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
         setStatus("The PM4 should be in normal mode. (Don't push the buttons on the PM4)");
         
         setTypeWord(0x70);  // configure PM4 message type
-        
-        // add help menu to window
-    	addHelpMenu("package.jmri.jmrix.loconet.pm4.PM4Frame", true);
+       
+    }
 
-        // and prep for display
-        pack();
+    public String getHelpTarget() { return "package.jmri.jmrix.loconet.pm4.PM4Frame"; }
+    public String getTitle() { 
+        return jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemPM4Programmer"); 
     }
 
     void setSpeedFromDisplay(int offset, JComboBox box) {
@@ -205,6 +205,6 @@ public class PM4Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
                                             "Faster (PM42 only)", "Fastest (PM42 only)"});
     JCheckBox rev4  = new JCheckBox();
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PM4Frame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PM4Panel.class.getName());
 
 }

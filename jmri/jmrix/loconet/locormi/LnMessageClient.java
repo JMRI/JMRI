@@ -22,7 +22,7 @@ import jmri.jmrix.loconet.*;
  *
  * @author Alex Shepherd  Copyright (c) 2002
  * @author Bob Jacobsen
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
@@ -97,15 +97,10 @@ public class LnMessageClient extends LnTrafficRouter {
         // This is invoked on the LnMessageClient after it is
         // ready to go, connection running, etc.
 
-        // If a jmri.Programmer instance doesn't exist, create a
-        // loconet.SlotManager to do that
-        if (jmri.InstanceManager.programmerManagerInstance() == null)
-            jmri.jmrix.loconet.SlotManager.instance();
-
-        // create memo
+        // create SlotManager (includes programmer) and connection memo
         LocoNetSystemConnectionMemo memo 
-            = new LocoNetSystemConnectionMemo(this, SlotManager.instance());
-
+            = new LocoNetSystemConnectionMemo(this, new SlotManager(this));
+       
         // do the common manager config
         memo.configureCommandStation(true, false,"<unknown>");  // for now, assume full capability
         memo.configureManagers(this);

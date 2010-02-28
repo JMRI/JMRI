@@ -42,7 +42,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class LnClockControl extends DefaultClockControl implements SlotListener
 {
@@ -50,12 +50,13 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
     /**
      * Create a ClockControl object for a Loconet clock
      */
-    public LnClockControl() {
+    public LnClockControl(SlotManager sm) {
         super();
 		
+		this.sm = sm;
 		// listen for updated slot contents
-        if (SlotManager.instance()!=null)
-            SlotManager.instance().addSlotListener(this);
+        if (sm!=null)
+            sm.addSlotListener(this);
         else
             log.error("No LocoNet connection available, LnClockControl can't function");
 			
@@ -69,6 +70,8 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 			};
 		clock.addMinuteChangeListener(minuteChangeListener);
     }
+	
+	SlotManager sm;
 	
 	/* Operational variables */
     jmri.Timebase clock = null;
@@ -175,7 +178,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 	 */
 	public void initiateRead() {
 		if (!readInProgress) {
-			SlotManager.instance().sendReadSlot(LnConstants.FC_SLOT);
+			sm.sendReadSlot(LnConstants.FC_SLOT);
 			readInProgress = true;
 		}
 	}
@@ -277,7 +280,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
     private void setClock() {
 		if (setInternal || synchronizeWithInternalClock || correctFastClock) {
 			// we are allowed to send commands to the fast clock
-			LocoNetSlot s = SlotManager.instance().slot(LnConstants.FC_SLOT);
+			LocoNetSlot s = sm.slot(LnConstants.FC_SLOT);
 			s.setFcDays(curDays);
 			s.setFcHours(curHours);
 			s.setFcMinutes(curMinutes);
@@ -289,8 +292,8 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 
     public void dispose() {
         // Drop loconet connection
-        if (SlotManager.instance()!=null)
-            SlotManager.instance().removeSlotListener(this);
+        if (sm!=null)
+            sm.removeSlotListener(this);
 
 		// Remove ourselves from the Timebase minute rollover event
 		if (minuteChangeListener!=null) {

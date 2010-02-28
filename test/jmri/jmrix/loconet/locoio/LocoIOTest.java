@@ -6,8 +6,8 @@ import junit.framework.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.locoio package
- * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.9 $
+ * @author	Bob Jacobsen Copyright (C) 2002, 2010
+ * @version     $Revision: 1.10 $
  */
 public class LocoIOTest extends TestCase {
 
@@ -26,7 +26,7 @@ public class LocoIOTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.locoio.LocoIOTest");  // no tests in this class itself
-        suite.addTest(LocoIOFrameTest.suite());
+        suite.addTest(LocoIOPanelTest.suite());
         suite.addTest(LocoIOTableModelTest.suite());
         return suite;
     }

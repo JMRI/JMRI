@@ -1,4 +1,4 @@
-// LocoIOFrameTest.java
+// LocoIOPanelTest.java
 
 package jmri.jmrix.loconet.locoio;
 
@@ -13,20 +13,13 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.locoio.LocoIOFrame class
  * @author	    Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.12 $
+ * @version         $Revision: 1.1 $
  */
-public class LocoIOFrameTest extends TestCase {
+public class LocoIOPanelTest extends TestCase {
 
     public void testFrameCreate() {
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-        new LocoIOFrame();
-        Assert.assertNotNull("exists", lnis );
-    }
-
-    public void testDispose() {
-        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-        LocoIOFrame f = new LocoIOFrame();
-        f.dispose();
+        new LocoIOPanel();
         Assert.assertNotNull("exists", lnis );
     }
 
@@ -34,7 +27,7 @@ public class LocoIOFrameTest extends TestCase {
         // prepare an interface
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
-        LocoIOFrame f = new LocoIOFrame();
+        LocoIOPanel f = new LocoIOPanel();
 
         // click button
         f.readAllButton.doClick();
@@ -56,7 +49,7 @@ public class LocoIOFrameTest extends TestCase {
         // prepare an interface
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
-        LocoIOFrame f = new LocoIOFrame();
+        LocoIOPanel f = new LocoIOPanel();
 
         f.addrField.setText("1234");
         f.addrField.postActionEvent();
@@ -80,7 +73,7 @@ public class LocoIOFrameTest extends TestCase {
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
         // skip the warning dialog box
-        LocoIOFrame f = new LocoIOFrame(){
+        LocoIOPanel f = new LocoIOPanel(){
             protected int cautionAddrSet() { return 1;}
         };
 
@@ -102,19 +95,19 @@ public class LocoIOFrameTest extends TestCase {
 
     // from here down is testing infrastructure
 
-    public LocoIOFrameTest(String s) {
+    public LocoIOPanelTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {LocoIOFrameTest.class.getName()};
+        String[] testCaseName = {LocoIOPanelTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(LocoIOFrameTest.class);
+        TestSuite suite = new TestSuite(LocoIOPanelTest.class);
         return suite;
     }
 

@@ -1,4 +1,4 @@
-// AbstractBoardProgFrame.java
+// AbstractBoardProgPanel.java
 
 package jmri.jmrix.loconet;
 
@@ -33,24 +33,19 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2004, 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.1 $
  */
-abstract public class AbstractBoardProgFrame extends jmri.util.JmriJFrame implements LocoNetListener {
+abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.LnPanel 
+        implements LocoNetListener {
 
-    protected AbstractBoardProgFrame(String title) {
-        super(title);
+    protected AbstractBoardProgPanel() {
+        super();
 
         // basic formatting: Create pane to hold contents
         // within a scroll box
         contents.setLayout(new BoxLayout(contents, BoxLayout.Y_AXIS));
         JScrollPane  scroll = new JScrollPane(contents);
-        getContentPane().add(scroll);
-
-        // listen for message traffic
-        if (LnTrafficController.instance()!=null)
-            LnTrafficController.instance().addLocoNetListener(~0, this);
-        else
-            log.error("No LocoNet connection available, can't function");
+        add(scroll);
 
         // and prep for display
         addrField.setText("1");
@@ -58,6 +53,18 @@ abstract public class AbstractBoardProgFrame extends jmri.util.JmriJFrame implem
 
     JPanel contents = new JPanel();
     
+    public void initComponents(LocoNetSystemConnectionMemo memo) {
+        this.memo = memo;
+
+        // listen for message traffic
+        if (memo.getLnTrafficController()!=null)
+            memo.getLnTrafficController().addLocoNetListener(~0, this);
+        else
+            log.error("No LocoNet connection available, can't function");
+    }
+    
+    LocoNetSystemConnectionMemo memo;
+
     /**
      * Provide read, write buttons and address
      */
@@ -159,7 +166,7 @@ abstract public class AbstractBoardProgFrame extends jmri.util.JmriJFrame implem
             int loc = (state-1)/8;
             int bit = (state-1)-loc*8;
             l.setElement(4, loc*16+bit*2);
-            LnTrafficController.instance().sendLocoNetMessage(l);
+            memo.getLnTrafficController().sendLocoNetMessage(l);
         } else {
             //write op
             status.setText("Writing opsw "+state);
@@ -173,7 +180,7 @@ abstract public class AbstractBoardProgFrame extends jmri.util.JmriJFrame implem
             int loc = (state-1)/8;
             int bit = (state-1)-loc*8;
             l.setElement(4, loc*16+bit*2+(opsw[state]?1:0));
-            LnTrafficController.instance().sendLocoNetMessage(l);
+            memo.getLnTrafficController().sendLocoNetMessage(l);
         }
     }
 
@@ -286,14 +293,16 @@ abstract public class AbstractBoardProgFrame extends jmri.util.JmriJFrame implem
         }
     }
 
+    public void initComponents() {
+    }
+    
     public void dispose() {
         // Drop loconet connection
-        if (LnTrafficController.instance()!=null)
-            LnTrafficController.instance().removeLocoNetListener(~0, this);
-        // take apart the JFrame
+        if (memo.getLnTrafficController()!=null)
+            memo.getLnTrafficController().removeLocoNetListener(~0, this);
         super.dispose();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractBoardProgFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractBoardProgPanel.class.getName());
 
 }

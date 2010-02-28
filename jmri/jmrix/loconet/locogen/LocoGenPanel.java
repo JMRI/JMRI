@@ -1,11 +1,9 @@
-// LocoGenFrame.java
+// LocoGenPanel.java
 
 package jmri.jmrix.loconet.locogen;
 
 import jmri.util.StringUtil;
-import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetListener;
-import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.*;
 
 import java.awt.GridLayout;
 
@@ -20,20 +18,21 @@ import javax.swing.*;
  * <LI>Wait until you hear the echo, then start a timer
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.12 $
+ * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2010
+ * @version			$Revision: 1.1 $
  */
-public class LocoGenFrame extends jmri.util.JmriJFrame implements LocoNetListener {
+public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
+                    implements LocoNetListener {
 
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
-    public LocoGenFrame() {
+    public LocoGenPanel() {
         super();
     }
-
+        
     // internal members to hold sequence widgets
     static final int MAXSEQUENCE = 4;
     JTextField mPacketField[]   = new JTextField[MAXSEQUENCE];
@@ -41,13 +40,17 @@ public class LocoGenFrame extends jmri.util.JmriJFrame implements LocoNetListene
     JTextField mDelayField[]    = new JTextField[MAXSEQUENCE];
     JToggleButton    mRunButton = new JToggleButton("Go");
 
+    public String getHelpTarget() { return "package.jmri.jmrix.loconet.locogen.LocoGenFrame"; }
+    public String getTitle() { 
+        return LocoNetBundle.bundle().getString("MenuItemSendPacket"); 
+    }
+    
     public void initComponents() throws Exception {
 
-        setTitle("Send LocoNet Packet");
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // handle single-packet part
-        getContentPane().add(new JLabel("Send one packet:"));
+        add(new JLabel("Send one packet:"));
         {
             JPanel pane1 = new JPanel();
             pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
@@ -73,13 +76,13 @@ public class LocoGenFrame extends jmri.util.JmriJFrame implements LocoNetListene
                     }
                 });
 
-            getContentPane().add(pane1);
+            add(pane1);
         }
 
-        getContentPane().add(new JSeparator());
+        add(new JSeparator());
 
         // Configure the sequence
-        getContentPane().add(new JLabel("Send sequence of packets:"));
+        add(new JLabel("Send sequence of packets:"));
         JPanel pane2 = new JPanel();
         pane2.setLayout(new GridLayout(MAXSEQUENCE+2, 4));
         pane2.add(new JLabel(""));
@@ -96,22 +99,23 @@ public class LocoGenFrame extends jmri.util.JmriJFrame implements LocoNetListene
             pane2.add(mDelayField[i]);
         }
         pane2.add(mRunButton); // starts a new row in layout
-        getContentPane().add(pane2);
+        add(pane2);
 
         mRunButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     runButtonActionPerformed(e);
                 }
             });
-
-        addHelpMenu("package.jmri.jmrix.loconet.locogen.LocoGenFrame", true);
-        
-        // pack to cause display
-        pack();
     }
 
+    public void initComponents(LocoNetSystemConnectionMemo memo) {
+        super.initComponents(memo);
+        
+        memo.getLnTrafficController().addLocoNetListener(~0, this);
+    }
+    
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        tc.sendLocoNetMessage(createPacket(packetTextField.getText()));
+        memo.getLnTrafficController().sendLocoNetMessage(createPacket(packetTextField.getText()));
     }
 
     // control sequence operation
@@ -200,7 +204,7 @@ public class LocoGenFrame extends jmri.util.JmriJFrame implements LocoNetListene
             LocoNetMessage m = createPacket(mPacketField[mNextSequenceElement].getText());
             // send it
             mNextEcho = m;
-            tc.sendLocoNetMessage(m);
+            memo.getLnTrafficController().sendLocoNetMessage(m);
         } else {
             // ask for the next one
             mNextSequenceElement++;
@@ -221,14 +225,7 @@ public class LocoGenFrame extends jmri.util.JmriJFrame implements LocoNetListene
         for (int i=0; i<b.length; i++) m.setElement(i, b[i]);
         return m;
     }
-
-    // connect to the LnTrafficController
-    public void connect(LnTrafficController t) {
-        tc = t;
-        tc.addLocoNetListener(~0, this);
-    }
-
-
+    
     /**
      * When the window closes, 
      * stop any sequences running
@@ -237,8 +234,5 @@ public class LocoGenFrame extends jmri.util.JmriJFrame implements LocoNetListene
         mRunButton.setSelected(false);
         super.dispose();
     }
-    
-    // private data
-    private LnTrafficController tc = null;
 
 }

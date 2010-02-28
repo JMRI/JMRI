@@ -3,6 +3,7 @@ package jmri.jmrix.loconet.cmdstnconfig;
 import java.awt.*;
 import javax.swing.*;
 import jmri.jmrix.loconet.*;
+import jmri.jmrix.loconet.swing.LnPanel;
 
 import java.util.ResourceBundle;
 
@@ -30,9 +31,9 @@ import java.util.ResourceBundle;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author			Bob Jacobsen  Copyright (C) 2006
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.1 $
  */
-public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetListener {
+public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
 
   int CONFIG_SLOT = 127 ;
   int MIN_OPTION = 1 ;
@@ -48,8 +49,8 @@ public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetLi
 
   JCheckBox optionBox;
   
-  public CmdStnConfigFrame() {
-    super("Command Station Options Programmer");
+  public CmdStnConfigPane() {
+    super();
   }
 
   ResourceBundle rb;
@@ -62,12 +63,18 @@ public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetLi
   JLabel[] labels = new JLabel[MAX_OPTION];
   boolean[] isReserved = new boolean[MAX_OPTION];
   
-  public void initComponents() {
+    public String getHelpTarget() { return "package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame"; }
+    public String getTitle() { 
+        return LocoNetBundle.bundle().getString("MenuItemCmdStnConfig"); 
+    }
+
+  public void initComponents(LocoNetSystemConnectionMemo memo) {
+    super.initComponents(memo);
 
     // set up constants from properties file, if possible
     String name = "<unchanged>";
     try {
-        name = SlotManager.instance().getCommandStationType();
+        name = memo.getSlotManager().getCommandStationType();
         // get first token
         name = name.substring(0, name.indexOf(' '));
         log.debug("match /"+name+"/");
@@ -92,9 +99,7 @@ public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetLi
 
     log.debug("Constants: "+CONFIG_SLOT+" "+MIN_OPTION+" "+MAX_OPTION);
 
-    setTitle(LabelTop);
-
-    getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+    setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
     {
       // section holding buttons buttons
@@ -105,13 +110,13 @@ public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetLi
       pane.setLayout(new FlowLayout());
       pane.add(readButton);
       pane.add(writeButton);
-      getContentPane().add(pane);
+      add(pane);
       
       optionBox = new JCheckBox(rb.getString("CheckBoxReserved"));
-      getContentPane().add(optionBox);
+      add(optionBox);
 
       // heading
-      getContentPane().add(new JLabel(rb.getString("HeadingText")));
+      add(new JLabel(rb.getString("HeadingText")));
       
       // section holding options
       JPanel options = new JPanel();
@@ -160,7 +165,7 @@ public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetLi
       JScrollPane js = new JScrollPane(options);
       js.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
       js.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-      getContentPane().add(js);
+      add(js);
       
     }
 
@@ -182,11 +187,11 @@ public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetLi
 
     updateVisibility(optionBox.isSelected());
     
-    // add help menu to window
-    addHelpMenu("package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame", true);
-
-    // pack to prepare for display
-    pack();
+    // connect to the LnTrafficController
+    memo.getLnTrafficController().addLocoNetListener(~0, this);
+    
+    // and start
+    start();
   }
 
   void updateVisibility(boolean show) {
@@ -197,7 +202,7 @@ public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetLi
             labels[i-MIN_OPTION].setVisible(show);
         }
     }
-    pack();
+    revalidate();
   }
   
   public void readButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -234,7 +239,7 @@ public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetLi
     }
 
     // send message
-    LnTrafficController.instance().sendLocoNetMessage(msg);
+    memo.getLnTrafficController().sendLocoNetMessage(msg);
     return;
   }
 
@@ -249,7 +254,7 @@ public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetLi
     l.setElement(1, CONFIG_SLOT );
     l.setElement(2, 0);
     l.setElement(3, 0);
-    LnTrafficController.instance().sendLocoNetMessage(l);
+    memo.getLnTrafficController().sendLocoNetMessage(l);
   }
 
   /**
@@ -290,24 +295,10 @@ public class CmdStnConfigFrame extends jmri.util.JmriJFrame implements LocoNetLi
 
   public void dispose() {
     // disconnect from LnTrafficController
-    tc.removeLocoNetListener(~0, this);
+    memo.getLnTrafficController().removeLocoNetListener(~0, this);
     super.dispose();
   }
 
-  // connect to the LnTrafficController
-  public void connect(LnTrafficController t) {
-    tc = t;
-    tc.addLocoNetListener(~0, this);
-  }
-
-  // private data
-  private LnTrafficController tc = null;
-
   // initialize logging
-  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger( CmdStnConfigFrame.class.getName());
-
-  public static void main(String args[]) {
-
-  }
-
+  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger( CmdStnConfigPane.class.getName());
 }

@@ -5,13 +5,14 @@ package jmri.jmrix.loconet.soundloader;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.spjfile.SpjFile;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
  * Controls the actual LocoNet transfers to download sounds
  * into a Digitrax SFX decoder.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2006
- * @version	    $Revision: 1.9 $
+ * @version	    $Revision: 1.10 $
  */
 public class LoaderEngine {
     static java.util.ResourceBundle res = java.util.ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Loader");
@@ -26,6 +27,10 @@ public class LoaderEngine {
     static final int SENDDATASIZE = 128;
 
     SpjFile spjFile;
+    
+    public LoaderEngine(LocoNetSystemConnectionMemo memo) {
+        this.memo = memo;
+    }
     
     /**
      * Send the complete sequence to download to a decoder.
@@ -322,8 +327,10 @@ public class LoaderEngine {
         return m;
     }
     
+    LocoNetSystemConnectionMemo memo;
+    
     void initController() {
-        if (controller == null) controller = LnTrafficController.instance();
+        if (controller == null) controller = memo.getLnTrafficController();
     }
     
     LnTrafficController controller = null;

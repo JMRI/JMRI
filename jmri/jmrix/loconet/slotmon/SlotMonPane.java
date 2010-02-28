@@ -1,20 +1,14 @@
-// SlotMonFrame.java
+// SlotMonPane.java
 
 package jmri.jmrix.loconet.slotmon;
 
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 
 import jmri.util.JTableUtil;
+import jmri.jmrix.loconet.*;
 
 /**
  * Frame provinging a command station slot manager.
@@ -23,9 +17,9 @@ import jmri.util.JTableUtil;
  * so are shown separately.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.1 $
  */
-public class SlotMonFrame extends jmri.util.JmriJFrame {
+public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
     /**
      * Controls whether not-in-use slots are shown
@@ -37,13 +31,18 @@ public class SlotMonFrame extends jmri.util.JmriJFrame {
     javax.swing.JCheckBox 	showSystemCheckBox = new javax.swing.JCheckBox();
 
     JButton                     estopAllButton  = new JButton("estop all");
-    SlotMonDataModel	slotModel 	= new SlotMonDataModel(128,16);
+    SlotMonDataModel	slotModel;
     JTable				slotTable;
     JScrollPane 		slotScroll;
 
-    public SlotMonFrame() {
+    public SlotMonPane() {
         super();
+    }
+
+    public void initComponents(jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo) {
+        super.initComponents(memo);
         
+        slotModel 	= new SlotMonDataModel(128,16, memo);
     	slotTable	= JTableUtil.sortableDataModel(slotModel);
     	slotScroll	= new JScrollPane(slotTable);
 
@@ -95,8 +94,7 @@ public class SlotMonFrame extends jmri.util.JmriJFrame {
         slotModel.showSystemSlots(showSystemCheckBox.isSelected());
 
         // general GUI config
-        setTitle("Slot Monitor");
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // install items in GUI
         JPanel pane1 = new JPanel();
@@ -106,19 +104,19 @@ public class SlotMonFrame extends jmri.util.JmriJFrame {
         pane1.add(showSystemCheckBox);
         pane1.add(estopAllButton);
 
-        getContentPane().add(pane1);
-        getContentPane().add(slotScroll);
+        add(pane1);
+        add(slotScroll);
 
-        // add help menu to window
-    	addHelpMenu("package.jmri.jmrix.loconet.slotmon.SlotMonFrame", true);
-
-       // pack & set scroll size
-        pack();
-        pane1.setMaximumSize(pane1.getSize());
-        pack();
+       // set scroll size
+       //pane1.setMaximumSize(new java.awt.Dimension(100,300));
 
     }
 
+    public String getHelpTarget() { return "package.jmri.jmrix.loconet.slotmon.SlotMonFrame"; }
+    public String getTitle() { 
+        return LocoNetBundle.bundle().getString("MenuItemSlotMonitor"); 
+    }
+    
     public void dispose() {
         slotModel.dispose();
         slotModel = null;

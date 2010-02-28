@@ -1,11 +1,11 @@
-// DS64Frame.java
+// DS64Panel.java
 
 package jmri.jmrix.loconet.ds64;
 
 import javax.swing.JCheckBox;
 
 /**
- * Frame displaying and programming a DS64 configuration.
+ * Panel displaying and programming a DS64 configuration.
  * <P>
  * The read and write require a sequence of operations, which
  * we handle with a state variable.
@@ -20,13 +20,13 @@ import javax.swing.JCheckBox;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  *
- * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2005, 2007
- * @version			$Revision: 1.6 $
+ * @author			Bob Jacobsen   Copyright (C) 2002, 2004, 2005, 2007, 2010
+ * @version			$Revision: 1.1 $
  */
-public class DS64Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
+public class DS64Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
-    public DS64Frame() {
-        super("DS64 programmer");
+    public DS64Panel() {
+        super();
 
         appendLine(provideAddressing("DS64"));  // add read/write buttons, address
 
@@ -58,13 +58,11 @@ public class DS64Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
         appendLine(provideStatusLine());
 
         setTypeWord(0x73);  // configure DS64 message type
-        
-        // add help menu to window
-    	addHelpMenu("package.jmri.jmrix.loconet.ds64.DS64Frame", true);
+    }
 
-        // and prep for display
-        pack();
-
+    public String getHelpTarget() { return "package.jmri.jmrix.loconet.ds64.DS64Frame"; }
+    public String getTitle() { 
+        return jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemDS64Programmer"); 
     }
 
     /**
@@ -173,6 +171,6 @@ public class DS64Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
     JCheckBox opsw20    = new JCheckBox("OpSw 20: Output 4 is crossing gate");
     JCheckBox opsw21    = new JCheckBox("OpSw 21: Send turnout sensor messages (general sensor messages if off)");
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DS64Frame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DS64Panel.class.getName());
 
 }

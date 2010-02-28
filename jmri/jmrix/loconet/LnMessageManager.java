@@ -14,14 +14,14 @@ import jmri.jmrix.loconet.LnConstants;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class LnMessageManager implements LocoNetListener {
 
-    public LnMessageManager() {
+    public LnMessageManager(LnTrafficController tc) {
         // connect to the TrafficManager
-        tc = LnTrafficController.instance();
-        tc.addLocoNetListener(~0, this);
+        this.tc = tc;
+        this.tc.addLocoNetListener(~0, this);
     }
 
     public void sendMessage(String text) {
@@ -67,12 +67,6 @@ public class LnMessageManager implements LocoNetListener {
      */
     public void message(LocoNetMessage m) {
     }
-
-    static public LnMessageManager instance() {
-        if (mInstance == null) mInstance = new LnMessageManager();
-        return mInstance;
-    }
-    static LnMessageManager mInstance = null;
 }
 
 

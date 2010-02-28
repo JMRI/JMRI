@@ -44,15 +44,13 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.47 $
+ * @version     $Revision: 1.48 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
-    public SlotManager() {
-        // error if more than one constructed?
-        if (self != null)
-            log.debug("Creating too many SlotManager objects");
-
+    public SlotManager(LnTrafficController tc) {
+        this.tc = tc;
+        
         // need a longer LONG_TIMEOUT for Fleischman command stations
         LONG_TIMEOUT=180000;
         
@@ -60,11 +58,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         for (int i=0; i<=127; i++) _slots[i] = new LocoNetSlot(i);
 
         // register this as the default, register as the Programmer
-        self = this;
         jmri.InstanceManager.setProgrammerManager(new LnProgrammerManager(this));
 
         // listen to the LocoNet
-        LnTrafficController.instance().addLocoNetListener(~0, this);
+        tc.addLocoNetListener(~0, this);
 
           // We will scan the slot table every 10 s for in-use slots that are stale
         staleSlotCheckTimer = new javax.swing.Timer(10000, new java.awt.event.ActionListener() {
@@ -79,6 +76,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
       staleSlotCheckTimer.start();
     }
 
+    LnTrafficController tc;
+    
     /**
      * Send a DCC packet to the rails. This implements the CommandStation interface.
      * @param packet
@@ -112,7 +111,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         m.setElement(9,0);
         for (int i=0; i<packet.length-1; i++) m.setElement(5+i, packet[i]&0x7F);
 
-        LnTrafficController.instance().sendLocoNetMessage(m);
+        tc.sendLocoNetMessage(m);
     }
 
     /**
@@ -159,7 +158,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         m.setOpCode(LnConstants.OPC_LOCO_ADR);  // OPC_LOCO_ADR
         m.setElement(1, (i/128)&0x7F);
         m.setElement(2, i&0x7F);
-        LnTrafficController.instance().sendLocoNetMessage(m);
+        tc.sendLocoNetMessage(m);
     }
 
     /**
@@ -191,15 +190,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * SlotListener that's interested in them
      */
     Hashtable<Integer,SlotListener> mLocoAddrHash = new Hashtable<Integer,SlotListener>();
-
-    /**
-     * method to find the existing SlotManager object, if need be creating one
-     */
-    static public final SlotManager instance() {
-        if (self == null) self = new SlotManager();
-        return self;
-    }
-    static private SlotManager self = null;
 
     // data members to hold contact with the slot listeners
     final private Vector<SlotListener> slotListeners = new Vector<SlotListener>();
@@ -285,7 +275,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 mo.setOpCode(LnConstants.OPC_LOCO_ADR);  // OPC_LOCO_ADR
                 mo.setElement(1, (addr/128)&0x7F);
                 mo.setElement(2, addr&0x7F);
-                LnTrafficController.instance().sendLocoNetMessage(mo);             
+                tc.sendLocoNetMessage(mo);             
             }
         }
         
@@ -756,7 +746,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // format and send message
         startShortTimer();
-        LnTrafficController.instance().sendLocoNetMessage(progTaskStart(pcmd, val, CV, true));
+        tc.sendLocoNetMessage(progTaskStart(pcmd, val, CV, true));
     }
 
     public void confirmCVOpsMode(int CV, int val, jmri.ProgListener p,
@@ -796,7 +786,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // format and send message
         startShortTimer();
-        LnTrafficController.instance().sendLocoNetMessage(progTaskStart(pcmd, -1, CV, false));
+        tc.sendLocoNetMessage(progTaskStart(pcmd, -1, CV, false));
     }
 
     int hopsa; // high address for CV read/write
@@ -842,7 +832,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // format and send message
         startShortTimer();
-        LnTrafficController.instance().sendLocoNetMessage(progTaskStart(progByte, -1, CV, false));
+        tc.sendLocoNetMessage(progTaskStart(progByte, -1, CV, false));
     }
 
     private jmri.ProgListener _usingProgrammer = null;
@@ -1040,7 +1030,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         m.setOpCode(LnConstants.OPC_RQ_SL_DATA);
         m.setElement(1, slot&0x7F);
         m.setElement(2, 0);
-        LnTrafficController.instance().sendLocoNetMessage(m);
+        tc.sendLocoNetMessage(m);
     }
 
     protected int nextReadSlot = 0;

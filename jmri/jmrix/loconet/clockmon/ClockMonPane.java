@@ -1,8 +1,9 @@
-// ClockMonFrame.java
+// ClockMonPane.java
 
 package jmri.jmrix.loconet.clockmon;
 
 import jmri.jmrix.loconet.*;
+import jmri.jmrix.loconet.swing.LnPanel;
 
 import java.awt.FlowLayout;
 import java.awt.event.*;
@@ -10,7 +11,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * Frame displaying a LocoNet clock monitor.
+ * Pane displaying a LocoNet clock monitor.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project.  That permission
@@ -21,14 +22,24 @@ import javax.swing.*;
  * The original module has been converted to a clock monitor by removing all active 
  * items (Dave Duchamp 2007-2008).
  *
- * @author			Bob Jacobsen   Copyright (C) 2003, 2004
- * @version			$Revision: 1.10 $
+ * @author			Bob Jacobsen   Copyright (C) 2003, 2004, 2010
+ * @version			$Revision: 1.1 $
  */
-public class ClockMonFrame extends jmri.util.JmriJFrame implements SlotListener {
+public class ClockMonPane extends LnPanel implements SlotListener {
 
-    public ClockMonFrame() {
-        super("LocoNet clock monitor");
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+    public String getHelpTarget() { return "package.jmri.jmrix.loconet.clockmon.ClockMonFrame"; }
+    public String getTitle() { 
+        return LocoNetBundle.bundle().getString("MenuItemClockMon"); 
+    }
+
+    public ClockMonPane() {
+        super();
+    }
+    
+    public void initComponents(final LocoNetSystemConnectionMemo memo) {
+        super.initComponents(memo);
+        
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // add GUI items
 		JPanel panel1 = new JPanel();
@@ -41,37 +52,34 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements SlotListener 
         panel1.add(minutes);
         panel1.add(new JLabel("."));
         panel1.add(frac_mins);
-        getContentPane().add(panel1);
+        add(panel1);
 
         JPanel panel2 = new JPanel();
 		panel2.setLayout(new FlowLayout());
         panel2.add(new JLabel(" Rate:"));
         panel2.add(rate);
-        getContentPane().add(panel2);
+        add(panel2);
 
         JPanel panel3 = new JPanel();
 		panel3.setLayout(new FlowLayout());
 		panel3.add(readButton);
-        getContentPane().add(panel3);
+        add(panel3);
         // Load GUI element contents with current slot contents
-        notifyChangedSlot(SlotManager.instance().slot(LnConstants.FC_SLOT));
-        // add help menu to window - commented out because help file is not correct
-//    	addHelpMenu("package.jmri.jmrix.loconet.clockmon.ClockMonFrame", true);
+        notifyChangedSlot(memo.getSlotManager().slot(LnConstants.FC_SLOT));
+
         // install "read" button handler
         readButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                	SlotManager.instance().sendReadSlot(LnConstants.FC_SLOT);
+                	memo.getSlotManager().sendReadSlot(LnConstants.FC_SLOT);
                 }
             }
         );
         // listen for updated slot contents
-        if (SlotManager.instance()!=null)
-            SlotManager.instance().addSlotListener(this);
+        if (memo.getSlotManager()!=null)
+            memo.getSlotManager().addSlotListener(this);
         else
             log.error("No LocoNet connection available, can't function");
 
-        // and prep for display
-        pack();
     }
 
     /**
@@ -92,8 +100,8 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements SlotListener 
 
     public void dispose() {
         // Drop loconet connection
-        if (SlotManager.instance()!=null)
-            SlotManager.instance().removeSlotListener(this);
+        if (memo.getSlotManager()!=null)
+            memo.getSlotManager().removeSlotListener(this);
 
         // take apart the JFrame
         super.dispose();
@@ -108,6 +116,6 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements SlotListener 
 
     JButton readButton = new JButton("Read");
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ClockMonFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ClockMonPane.class.getName());
 
 }

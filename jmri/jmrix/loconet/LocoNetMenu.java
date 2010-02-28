@@ -5,12 +5,13 @@ package jmri.jmrix.loconet;
 import java.util.ResourceBundle;
 
 import javax.swing.JMenu;
+import jmri.jmrix.loconet.swing.LnNamedPaneAction;
 
 /**
  * Create a "Systems" menu containing the Jmri LocoNet-specific tools.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class LocoNetMenu extends JMenu {
 
@@ -21,45 +22,54 @@ public class LocoNetMenu extends JMenu {
     public LocoNetMenu(LocoNetSystemConnectionMemo memo) {
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.LocoNetBundle");
+        ResourceBundle rb = LocoNetBundle.bundle();
 
         setText(memo.getUserName());
 
-        add(new jmri.jmrix.loconet.locomon.LocoMonAction(rb.getString("MenuItemLocoNetMonitor"), 
-                memo.getLnTrafficController()));
-        add(new jmri.jmrix.loconet.slotmon.SlotMonAction(rb.getString("MenuItemSlotMonitor")));
-        add(new jmri.jmrix.loconet.clockmon.ClockMonAction( rb.getString("MenuItemClockMon")));
-        add(new jmri.jmrix.loconet.locostats.LocoStatsAction( rb.getString("MenuItemLocoStats"),
-                memo.getLnTrafficController()));
+        jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
         
-
-        add(new javax.swing.JSeparator());
-        
-        add(new jmri.jmrix.loconet.bdl16.BDL16Action(rb.getString("MenuItemBDL16Programmer")));
-        add(new jmri.jmrix.loconet.locoio.LocoIOAction(rb.getString("MenuItemLocoIOProgrammer")));
-        add(new jmri.jmrix.loconet.pm4.PM4Action(rb.getString("MenuItemPM4Programmer")));
-        add(new jmri.jmrix.loconet.se8.SE8Action(rb.getString("MenuItemSE8cProgrammer")));
-        add(new jmri.jmrix.loconet.ds64.DS64Action(rb.getString("MenuItemDS64Programmer")));
-        add(new jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigAction( rb.getString("MenuItemCmdStnConfig")));
-        add(new jmri.jmrix.loconet.locoid.LocoIdAction( rb.getString("MenuItemSetID")));
-        
-        add(new javax.swing.JSeparator());
-        
-
-        add(new jmri.jmrix.loconet.locormi.LnMessageServerAction( rb.getString("MenuItemStartLocoNetServer")));
-        add(new jmri.jmrix.loconet.loconetovertcp.ServerAction( rb.getString("MenuItemLocoNetOverTCPServer"))) ;
-
-        add(new javax.swing.JSeparator());
-        
-        add(new jmri.jmrix.loconet.swing.throttlemsg.MessageFrameAction( rb.getString("MenuItemThrottleMessages")));
-        add(new jmri.jmrix.loconet.locogen.LocoGenAction(rb.getString("MenuItemSendPacket")));
-        add(new jmri.jmrix.loconet.downloader.LoaderPanelAction( rb.getString("MenuItemDownload")));
-        add(new jmri.jmrix.loconet.soundloader.LoaderPanelAction( rb.getString("MenuItemSoundload")));
-        add(new jmri.jmrix.loconet.soundloader.EditorFrameAction( rb.getString("MenuItemSoundEditor")));
-
-        add(new javax.swing.JSeparator());
-        add(new jmri.jmrix.loconet.pr3.swing.Pr3SelectAction( rb.getString("MenuItemPr3ModeSelect")));
-
+        for (Item item : panelItems) {
+            if (item == null) {
+                add(new javax.swing.JSeparator());
+            } else {
+                add(new LnNamedPaneAction( rb.getString(item.name), wi, item.load, memo));
+            }
+        }
+    }
+    
+    Item[] panelItems = new Item[] {
+        new Item("MenuItemLocoNetMonitor",      "jmri.jmrix.loconet.locomon.LocoMonPane"),
+        new Item("MenuItemSlotMonitor",         "jmri.jmrix.loconet.slotmon.SlotMonPane"),
+        new Item("MenuItemClockMon",            "jmri.jmrix.loconet.clockmon.ClockMonPane"),
+        new Item("MenuItemLocoStats",           "jmri.jmrix.loconet.locostats.LocoStatsPanel"),
+        null,
+        new Item("MenuItemBDL16Programmer",     "jmri.jmrix.loconet.bdl16.BDL16Panel"),
+        new Item("MenuItemLocoIOProgrammer",    "jmri.jmrix.loconet.locoio.LocoIOPanel"),
+        new Item("MenuItemPM4Programmer",       "jmri.jmrix.loconet.pm4.PM4Panel"),
+        new Item("MenuItemSE8cProgrammer",      "jmri.jmrix.loconet.se8.SE8Panel"),
+        new Item("MenuItemDS64Programmer",      "jmri.jmrix.loconet.ds64.DS64Panel"),
+        new Item("MenuItemCmdStnConfig",        "jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigPane"),
+        new Item("MenuItemSetID",               "jmri.jmrix.loconet.locoid.LocoIdPanel"),
+        null,
+        new Item("MenuItemStartLocoNetServer",  "jmri.jmrix.loconet.locormi.LnMessageServerPanel"),
+        new Item("MenuItemLocoNetOverTCPServer","jmri.jmrix.loconet.loconetovertcp.ServerPanel"),
+        null,
+        new Item("MenuItemThrottleMessages",    "jmri.jmrix.loconet.swing.throttlemsg.MessagePanel"),
+        new Item("MenuItemSendPacket",          "jmri.jmrix.loconet.locogen.LocoGenPanel"),
+        new Item("MenuItemPr3ModeSelect",       "jmri.jmrix.loconet.pr3.swing.Pr3SelectPane"),
+        null,
+        new Item("MenuItemDownload",            "jmri.jmrix.loconet.downloader.LoaderPane"),
+        new Item("MenuItemSoundload",           "jmri.jmrix.loconet.soundloader.LoaderPane"),
+        new Item("MenuItemSoundEditor",         "jmri.jmrix.loconet.soundloader.EditorPane")
+    };
+    
+    class Item {
+        Item(String name, String load) {
+            this.name = name;
+            this.load = load;
+        }
+        String name;
+        String load;
     }
 }
 

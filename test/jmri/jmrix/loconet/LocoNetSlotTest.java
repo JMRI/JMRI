@@ -10,7 +10,7 @@ public class LocoNetSlotTest extends TestCase {
     }
 
     public void testGetSlotSend()  {
-        SlotManager slotmanager = new SlotManager();
+        SlotManager slotmanager = new SlotManager(lnis);
         SlotListener p2=  new SlotListener(){
                 public void notifyChangedSlot(LocoNetSlot l) {}
         };

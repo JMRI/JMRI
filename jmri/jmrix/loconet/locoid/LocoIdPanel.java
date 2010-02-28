@@ -1,10 +1,10 @@
-// LocoIdFrame.java
+// LocoIdPanel.java
 
 package jmri.jmrix.loconet.locoid;
 
-import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetListener;
-import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.*;
+import jmri.jmrix.loconet.swing.LnPanel;
+
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -12,23 +12,19 @@ import javax.swing.*;
 /**
  * User interface for setting the LocoNet ID
  *
- * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.7 $
+ * @author			Bob Jacobsen   Copyright (C) 2006, 2010
+ * @version			$Revision: 1.1 $
  */
-public class LocoIdFrame extends jmri.util.JmriJFrame implements LocoNetListener {
+public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel
+                    implements LocoNetListener {
 
     // member declarations
     javax.swing.JButton readButton;
     javax.swing.JButton setButton;
     javax.swing.JTextField value;
 
-    public LocoIdFrame() {
+    public LocoIdPanel() {
         super();
-        setTitle(ResourceBundle.getBundle("jmri.jmrix.loconet.locoid.LocoId").getString("Title"));
-    }
-
-    public LocoIdFrame(String arg) {
-        super(arg);
     }
 
     public void initComponents() throws Exception {
@@ -38,21 +34,21 @@ public class LocoIdFrame extends jmri.util.JmriJFrame implements LocoNetListener
         readButton = new javax.swing.JButton(rb.getString("ButtonRead"));
         value = new javax.swing.JTextField(2);
 
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JPanel p = new JPanel();
         p.setLayout(new java.awt.FlowLayout());
         p.add(readButton);
         p.add(setButton);
 
-        getContentPane().add(p);
+        add(p);
 
         p = new JPanel();
         p.setLayout(new java.awt.FlowLayout());
         p.add(new JLabel(rb.getString("LabelValue")));
         p.add(value);
 
-        getContentPane().add(p);
+        add(p);
 
         setButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -64,25 +60,28 @@ public class LocoIdFrame extends jmri.util.JmriJFrame implements LocoNetListener
                     readButtonActionPerformed();
                 }
             });
+    }
 
-        // add help menu to window
-    	addHelpMenu("package.jmri.jmrix.loconet.locoid.LocoIdFrame", true);
+    public String getHelpTarget() { return "package.jmri.jmrix.loconet.locoid.LocoIdFrame"; }
+    public String getTitle() { 
+        return LocoNetBundle.bundle().getString("MenuItemSetID"); 
+    }
 
-        // pack to format display
-        pack();
+    public void initComponents(LocoNetSystemConnectionMemo memo) {
+        super.initComponents(memo);
 
         // connect to the LnTrafficController
-        connect(LnTrafficController.instance());
+        connect(memo.getLnTrafficController());
 
         // prompt for an update
         readButtonActionPerformed();
     }
-
+    
     public void setButtonActionPerformed() {
-        tc.sendLocoNetMessage(createSetPacket(value.getText()));
+        memo.getLnTrafficController().sendLocoNetMessage(createSetPacket(value.getText()));
     }
     public void readButtonActionPerformed() {
-        tc.sendLocoNetMessage(createReadPacket());
+        memo.getLnTrafficController().sendLocoNetMessage(createReadPacket());
     }
 
     /**
@@ -133,16 +132,12 @@ public class LocoIdFrame extends jmri.util.JmriJFrame implements LocoNetListener
 
     // connect to the LnTrafficController
     public void connect(LnTrafficController t) {
-        tc = t;
-        tc.addLocoNetListener(~0, this);
+        t.addLocoNetListener(~0, this);
     }
 
     public void dispose() {
-        tc.removeLocoNetListener(~0, this);
+        memo.getLnTrafficController().removeLocoNetListener(~0, this);
         super.dispose();
     }
-
-    // private data
-    private LnTrafficController tc = null;
 
 }

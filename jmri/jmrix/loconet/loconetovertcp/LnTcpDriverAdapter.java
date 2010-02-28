@@ -17,7 +17,7 @@ import java.util.Vector;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2002, 2003
  * @author      Alex Shepherd Copyright (C) 2003, 2006
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 
 public class LnTcpDriverAdapter extends LnPortController {
@@ -33,7 +33,7 @@ public class LnTcpDriverAdapter extends LnPortController {
 
         // create memo
         LocoNetSystemConnectionMemo memo 
-            = new LocoNetSystemConnectionMemo(packets, SlotManager.instance());
+            = new LocoNetSystemConnectionMemo(packets, new SlotManager(packets));
         
         // do the common manager config
         memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);

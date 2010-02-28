@@ -14,9 +14,9 @@ import jmri.jmrit.MemoryContents;
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.15 $
+ * @version	    $Revision: 1.16 $
  */
-public class LoaderPane extends javax.swing.JPanel {
+public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 
     // GUI member declarations
     static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.downloader.Loader");
@@ -61,7 +61,14 @@ public class LoaderPane extends javax.swing.JPanel {
     static int PXCT2VERIFYDATA   = 0x30;
     static int PXCT2ENDOPERATION = 0x40;
 
-    public LoaderPane() {
+    public LoaderPane() { }
+    
+    public String getHelpTarget() { return "package.jmri.jmrix.loconet.downloader.LoaderFrame"; }
+    public String getTitle() { return res.getString("TitleLoader"); }
+
+    public void initComponents(LocoNetSystemConnectionMemo memo) {
+        super.initComponents(memo);
+    
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         {
@@ -459,7 +466,7 @@ public class LoaderPane extends javax.swing.JPanel {
         m.setElement(13, d7&0x7F);  // D7
         m.setElement(14, d8&0x7F);  // D8
 
-        LnTrafficController.instance().sendLocoNetMessage(m);
+        memo.getLnTrafficController().sendLocoNetMessage(m);
 
     }
 
@@ -467,13 +474,7 @@ public class LoaderPane extends javax.swing.JPanel {
     int endaddr;
     int delayval;
     int eestartval;
-
-    /**
-     * get rid of any held resources
-     */
-    void dispose() {
-    }
-
+        
     class Sender implements Runnable {
         int totalmsgs;
         int sentmsgs;

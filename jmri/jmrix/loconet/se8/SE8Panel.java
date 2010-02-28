@@ -1,4 +1,4 @@
-// SE8Frame.java
+// SE8Panel.java
 
 package jmri.jmrix.loconet.se8;
 
@@ -25,13 +25,13 @@ import javax.swing.*;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  *
- * @author  Bob Jacobsen   Copyright (C) 2003, 2004, 2007
- * @version $Revision: 1.10 $
+ * @author  Bob Jacobsen   Copyright (C) 2003, 2004, 2007, 2010
+ * @version $Revision: 1.1 $
  */
-public class SE8Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
+public class SE8Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
 
-    public SE8Frame() {
-        super("SE8 programmer");
+    public SE8Panel() {
+        super();
 
         appendLine(provideAddressing("SE8"));  // add read/write buttons, address
 
@@ -68,16 +68,14 @@ public class SE8Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
         setStatus("The SE8 should be in normal mode (Don't push the buttons on the SE8!)");
 
         setTypeWord(0x72);  // configure SE8 message type
-        
-        // add help menu to window
-    	addHelpMenu("package.jmri.jmrix.loconet.se8.SE8Frame", true);
-
-        // and prep for display
-        pack();
-        setVisible(true);
     }
 
     
+    public String getHelpTarget() { return "package.jmri.jmrix.loconet.se8.SE8Frame"; }
+    public String getTitle() { 
+        return jmri.jmrix.loconet.LocoNetBundle.bundle().getString("MenuItemSE8cProgrammer"); 
+    }
+
     /**
      * Copy from the GUI to the opsw array. 
      * <p>
@@ -215,6 +213,6 @@ public class SE8Frame extends jmri.jmrix.loconet.AbstractBoardProgFrame {
     JCheckBox setdefault          = new JCheckBox("Restore factory default, including address");  // opsw 20
     JCheckBox exercise            = new JCheckBox("Show LED exercise pattern");  // opsw 21
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SE8Frame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SE8Panel.class.getName());
 
 }

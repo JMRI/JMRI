@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -44,6 +44,14 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     public LnTrafficController getLnTrafficController() { return lt; }
     private LnTrafficController lt;
     
+    public LnMessageManager getLnMessageManager() {
+        // create when needed
+        if (lnm == null) 
+            lnm = new LnMessageManager(getLnTrafficController());
+        return lnm;
+    }
+    private LnMessageManager lnm = null;
+    
     /**
      * Provide a menu with all items attached to this system connection
      */
@@ -63,14 +71,13 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         // loconet.SlotManager to do programming (the Programmer instance is registered
         // when the SlotManager is created)
-        jmri.jmrix.loconet.SlotManager.instance();
         // set slot manager's read capability
-        jmri.jmrix.loconet.SlotManager.instance().setCanRead(mCanRead);
-        jmri.jmrix.loconet.SlotManager.instance().setProgPowersOff(mProgPowersOff);
-        jmri.jmrix.loconet.SlotManager.instance().setCommandStationType(name);
+        sm.setCanRead(mCanRead);
+        sm.setProgPowersOff(mProgPowersOff);
+        sm.setCommandStationType(name);
         
         // store as CommandStation object
-        jmri.InstanceManager.setCommandStation(jmri.jmrix.loconet.SlotManager.instance());
+        jmri.InstanceManager.setCommandStation(sm);
 
     }
 
@@ -93,11 +100,11 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager());
 
-        InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnThrottleManager());
+        InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnThrottleManager(getSlotManager()));
 
         InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager());
 
-        InstanceManager.addClockControl(new jmri.jmrix.loconet.LnClockControl());
+        InstanceManager.addClockControl(new jmri.jmrix.loconet.LnClockControl(getSlotManager()));
 
     }
 }

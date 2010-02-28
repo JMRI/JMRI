@@ -28,7 +28,7 @@ import Serialio.SerialPortLocal;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.35 $
+ * @version			$Revision: 1.36 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -243,7 +243,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 
         // create memo
         LocoNetSystemConnectionMemo memo 
-            = new LocoNetSystemConnectionMemo(packets, SlotManager.instance());
+            = new LocoNetSystemConnectionMemo(packets, new SlotManager(packets));
 
         // do the common manager config
         memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
