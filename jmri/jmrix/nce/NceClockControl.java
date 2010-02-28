@@ -38,7 +38,7 @@ import java.util.ResourceBundle;
  * @author      Ken Cameron Copyright (C) 2007
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class NceClockControl extends DefaultClockControl implements NceListener
 {
@@ -523,4 +523,4 @@ public class NceClockControl extends DefaultClockControl implements NceListener
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceClockControl.class.getName());
 }
 
-/* @(#)LnClockControl.java */
+/* @(#)NceClockControl.java */
