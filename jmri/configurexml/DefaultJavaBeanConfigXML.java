@@ -14,7 +14,7 @@ import org.jdom.Attribute;
  * using reflection.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @since 2.3.1
  */
 public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapter {
@@ -32,8 +32,8 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
     Object unpack(Element e) throws Exception {
         String classname = e.getAttributeValue("beanClass");
         
-        Class cl = Class.forName(classname);
-        Constructor ctor = cl.getConstructor(new Class[] {});
+        Class<?> cl = Class.forName(classname);
+        Constructor<?> ctor = cl.getConstructor(new Class<?>[] {});
 
         Object o = ctor.newInstance(new Object[] {});
         
