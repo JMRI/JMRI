@@ -16,7 +16,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
@@ -199,12 +199,12 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
                                              e.getClickCount(), e.isPopupTrigger())); 
     }
     public void mouseExited(MouseEvent e) {
-        _editor.mouseClicked(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(), 
+        _editor.mouseExited(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(), 
                                              e.getX()+this.getX(), e.getY()+this.getY(), 
                                              e.getClickCount(), e.isPopupTrigger())); 
     }
     public void mouseEntered(MouseEvent e) {
-        _editor.mouseExited(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(), 
+        _editor.mouseEntered(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(), 
                                              e.getX()+this.getX(), e.getY()+this.getY(), 
                                              e.getClickCount(), e.isPopupTrigger())); 
     }
