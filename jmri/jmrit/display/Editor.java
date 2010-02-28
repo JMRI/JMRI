@@ -1838,7 +1838,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 boolean added =false;
                 int level = p.getDisplayLevel();
                 for (int k=0; k<selections.size(); k++) {
-                    if (level < selections.get(k).getDisplayLevel()) {
+                    if (level > selections.get(k).getDisplayLevel()) {
                         selections.add(k, p);
                         added = true;
                         break;
