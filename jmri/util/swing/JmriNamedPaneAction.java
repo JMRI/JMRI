@@ -1,6 +1,6 @@
 // JmriNamedPaneAction.java
 
- package jmri.util.swing;
+package jmri.util.swing;
 
 import javax.swing.*;
 
@@ -8,7 +8,7 @@ import javax.swing.*;
  * Action to create and load a JmriPanel from just its name.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  */
  
 public class JmriNamedPaneAction extends JmriAbstractAction {
@@ -35,7 +35,7 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
     	this(s, new jmri.util.swing.sdi.JmriJFrameInterface(), p);
     }
      
-    String paneClass;
+    protected String paneClass;
     
     public jmri.util.swing.JmriPanel makePanel() {
         try {

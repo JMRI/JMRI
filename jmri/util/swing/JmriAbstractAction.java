@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  * multiple JMRI GUIs
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
  
 abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
@@ -57,19 +57,23 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
         return this;
     }
 
-    WindowInterface wi;
+    protected WindowInterface wi;
      
     public void actionPerformed(ActionEvent e) {
-        JmriPanel p;
-        if (wi.multipleInstances()) {
-            p = makePanel();
-        } else {
-            if (cache == null)
+        if (wi.multipleInstances() || cache == null ) {
+            try {
                 cache = makePanel();
-            p = cache;
+            } catch (Exception ex) {
+                log.error("Exception creating panel: "+ex);
+                return;
+            }
+            if (cache == null) {
+                log.error("Unable to make panel");
+                return;
+            }
         }
          
-        wi.show(p, this, hint);  // no real context, this is new content
+        wi.show(cache, this, hint);  // no real context, this is new content
     }
     
     public void dispose() {
@@ -82,6 +86,7 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
     
     abstract public JmriPanel makePanel();
 
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriAbstractAction.class.getName());
 }
 
 /* @(#)JmriAbstractAction.java */
