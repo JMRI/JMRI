@@ -12,7 +12,7 @@ import junit.framework.Assert;
  * Test InstanceManager
  *
  * @author			Bob Jacobsen
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class InstanceManagerTest extends TestCase {
 
@@ -106,6 +106,37 @@ public class InstanceManagerTest extends TestCase {
         m2 = InstanceManager.getDefault(PowerManager.class);
 
         Assert.assertEquals("retrieved second PowerManager", m1, m2);
+    }
+    
+    /**
+     * Test of types that have defaults, even with
+     * no system attached.
+     */
+    public void testAllDefaults() {
+        Assert.assertNotNull(InstanceManager.sensorManagerInstance() );
+        Assert.assertNotNull(InstanceManager.turnoutManagerInstance() );
+        Assert.assertNotNull(InstanceManager.lightManagerInstance() );
+        Assert.assertNotNull(InstanceManager.signalHeadManagerInstance() );
+        Assert.assertNotNull(InstanceManager.signalMastManagerInstance() );
+        Assert.assertNotNull(InstanceManager.signalSystemManagerInstance() );
+        Assert.assertNotNull(InstanceManager.signalGroupManagerInstance() );
+        Assert.assertNotNull(InstanceManager.blockManagerInstance() );
+        Assert.assertNotNull(InstanceManager.oBlockManagerInstance() );
+        Assert.assertNotNull(InstanceManager.warrantManagerInstance() );
+        Assert.assertNotNull(InstanceManager.sectionManagerInstance() );
+        Assert.assertNotNull(InstanceManager.transitManagerInstance() );
+        Assert.assertNotNull(InstanceManager.routeManagerInstance() );
+        Assert.assertNotNull(InstanceManager.layoutBlockManagerInstance() );
+        Assert.assertNotNull(InstanceManager.conditionalManagerInstance() );
+        Assert.assertNotNull(InstanceManager.logixManagerInstance() );
+        Assert.assertNotNull(InstanceManager.timebaseInstance() );
+        Assert.assertNotNull(InstanceManager.clockControlInstance() );
+        Assert.assertNotNull(InstanceManager.signalGroupManagerInstance() );
+        Assert.assertNotNull(InstanceManager.reporterManagerInstance() );
+        Assert.assertNotNull(InstanceManager.catalogTreeManagerInstance() );
+        Assert.assertNotNull(InstanceManager.memoryManagerInstance() );
+        Assert.assertNotNull(InstanceManager.audioManagerInstance() );
+        Assert.assertNotNull(InstanceManager.rosterIconFactoryInstance() ); 
     }
     
 	// from here down is testing infrastructure
