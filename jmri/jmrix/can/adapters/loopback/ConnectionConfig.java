@@ -7,9 +7,9 @@ package jmri.jmrix.can.adapters.loopback;
  * via a LocoNet hexfile emulator
  *
  * @author      Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;

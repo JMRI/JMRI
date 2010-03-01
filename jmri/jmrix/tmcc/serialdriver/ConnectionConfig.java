@@ -6,9 +6,9 @@ package jmri.jmrix.tmcc.serialdriver;
  * Definition of objects to handle configuring a TMCC layout connection
  *
  * @author      Bob Jacobsen   Copyright (C) 2003, 2006
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;

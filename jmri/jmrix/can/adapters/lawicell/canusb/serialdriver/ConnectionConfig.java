@@ -8,9 +8,9 @@ package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2008
  * @author      Andrew Crosland 2008
- * @version	    $Revision: 1.2 $
+ * @version	    $Revision: 1.3 $
  */
-public class ConnectionConfig extends jmri.jmrix.AbstractConnectionConfig {
+public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;

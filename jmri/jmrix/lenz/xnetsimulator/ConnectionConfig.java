@@ -14,11 +14,11 @@ import javax.swing.JPanel;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author      Paul Bender    Copyright (C) 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  *
  * @see XNetSimulatorAdapter
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;

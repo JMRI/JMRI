@@ -8,11 +8,11 @@ import java.io.DataOutputStream;
 /**
  * Abstract base for classes representing a MX-1 communications port
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  */
-public abstract class Mx1PortController extends jmri.jmrix.AbstractPortController {
+public abstract class Mx1PortController extends jmri.jmrix.AbstractSerialPortController {
 	// base class. Implementations will provide InputStream and OutputStream
 	// objects to Mx1TrafficController classes, who in turn will deal in messages.
 

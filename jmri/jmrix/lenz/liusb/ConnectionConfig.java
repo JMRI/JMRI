@@ -11,11 +11,11 @@ package jmri.jmrix.lenz.liusb;
  * connection.
  *
  * @author      Paul Bender  Copyright (C) 2005
- * @version	$Revision: 1.0 $
+ * @version	$Revision: 1.1 $
  *
  * @see LIUSBAdapter
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;

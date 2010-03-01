@@ -2,7 +2,7 @@
 
 package jmri.jmrix.sprog.serialdriver;
 
-import jmri.jmrix.AbstractPortController;
+import jmri.jmrix.AbstractSerialPortController;
 import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogProgrammer;
 import jmri.jmrix.sprog.SprogProgrammerManager;
@@ -33,9 +33,9 @@ import gnu.io.SerialPort;
  * "AJB" indicate changes or observations by me
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.26 $
+ * @version	$Revision: 1.27 $
  */
-public class SerialDriverAdapter extends AbstractPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends AbstractSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
     SerialPort activeSerialPort = null;
 

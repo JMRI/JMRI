@@ -8,9 +8,9 @@ import javax.swing.*;
  * Definition of objects to handle configuring a layout connection
  *
  * @author      Bob Jacobsen   Copyright (C) 2003, 2006, 2007, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;

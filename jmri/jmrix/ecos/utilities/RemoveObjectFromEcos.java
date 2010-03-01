@@ -71,7 +71,6 @@ public class RemoveObjectFromEcos implements EcosListener{
     }
     
     public void message(EcosMessage m) {
-        System.out.println("Ecos message - "+ m);
         // messages are ignored
     }
     

@@ -5,7 +5,7 @@ package jmri.jmrix.serialsensor;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
-import jmri.jmrix.AbstractPortController;
+import jmri.jmrix.AbstractSerialPortController;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -22,9 +22,9 @@ import gnu.io.SerialPortEventListener;
  * serial port.  Sensor "1" will be via DCD, and sensor "2" via DSR
  *
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
-public class SerialSensorAdapter extends AbstractPortController
+public class SerialSensorAdapter extends AbstractSerialPortController
                 implements jmri.jmrix.SerialPortAdapter  {
 
     SerialPort activeSerialPort = null;

@@ -24,7 +24,7 @@ import java.io.*;
  * into service mode. 
  *
  * @author			Paul Bender (C) 2009
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 public class LIUSBServerAdapter extends XNetPortController {
@@ -215,7 +215,7 @@ public class LIUSBServerAdapter extends XNetPortController {
     }
  
         //Internal class for broadcast port connection
-        private static class BroadCastPortAdapter extends jmri.jmrix.NetworkPortAdapter {
+        private static class BroadCastPortAdapter extends jmri.jmrix.AbstractNetworkPortAdapter {
 		 public BroadCastPortAdapter(){
           		super();
           		setHostName(DEFAULT_IP_ADDRESS);
@@ -229,7 +229,7 @@ public class LIUSBServerAdapter extends XNetPortController {
         }
 
         // Internal class for communication port connection
-        private static class CommunicationPortAdapter extends jmri.jmrix.NetworkPortAdapter{
+        private static class CommunicationPortAdapter extends jmri.jmrix.AbstractNetworkPortAdapter{
 		 public CommunicationPortAdapter(){
           		super();
           		setHostName(DEFAULT_IP_ADDRESS);

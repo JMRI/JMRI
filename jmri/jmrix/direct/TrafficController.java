@@ -2,7 +2,7 @@
 
 package jmri.jmrix.direct;
 
-import jmri.jmrix.AbstractPortController;
+import jmri.jmrix.AbstractSerialPortController;
 
 import java.io.DataInputStream;
 import java.io.OutputStream;
@@ -22,7 +22,7 @@ import java.io.OutputStream;
  * In particular, note that transmission is not a threaded operation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class TrafficController implements jmri.CommandStation {
 
@@ -94,8 +94,8 @@ public class TrafficController implements jmri.CommandStation {
 
     }
 
-    // methods to connect/disconnect to a source of data in a AbstractPortController
-    private AbstractPortController controller = null;
+    // methods to connect/disconnect to a source of data in a AbstractSerialPortController
+    private AbstractSerialPortController controller = null;
 
     public boolean status() {
     	return (ostream != null & istream != null);
@@ -104,7 +104,7 @@ public class TrafficController implements jmri.CommandStation {
     /**
      * Make connection to existing PortController object.
      */
-    public void connectPort(AbstractPortController p) {
+    public void connectPort(AbstractSerialPortController p) {
         istream = p.getInputStream();
         ostream = p.getOutputStream();
         if (controller != null)
@@ -118,7 +118,7 @@ public class TrafficController implements jmri.CommandStation {
      * Break connection to existing PortController object. Once broken,
      * attempts to send via "message" member will fail.
      */
-    public void disconnectPort(AbstractPortController p) {
+    public void disconnectPort(AbstractSerialPortController p) {
         istream = null;
         ostream = null;
         if (controller != p)

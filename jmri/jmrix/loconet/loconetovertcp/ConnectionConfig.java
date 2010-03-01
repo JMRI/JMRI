@@ -15,9 +15,9 @@ import javax.swing.JComboBox;
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author      Stephen Williams Copyright (C) 2008
  *
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;

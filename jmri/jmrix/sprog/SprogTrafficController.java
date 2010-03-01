@@ -6,7 +6,7 @@ import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 
-import jmri.jmrix.AbstractPortController;
+import jmri.jmrix.AbstractSerialPortController;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
 
@@ -27,7 +27,7 @@ import gnu.io.SerialPortEventListener;
  * Removed Runnable implementation and methods for it
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener  {
 
@@ -177,12 +177,12 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
 
         // methods to connect/disconnect to a source of data in a LnPortController
-	private AbstractPortController controller = null;
+	private AbstractSerialPortController controller = null;
 
 	/**
 	 * Make connection to existing PortController object.
 	 */
-	public void connectPort(AbstractPortController  p) {
+	public void connectPort(AbstractSerialPortController  p) {
 			istream = p.getInputStream();
 			ostream = p.getOutputStream();
 			if (controller != null)
@@ -194,7 +194,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 	 * Break connection to existing SprogPortController object. Once broken,
 	 * attempts to send via "message" member will fail.
 	 */
-	public void disconnectPort(AbstractPortController p) {
+	public void disconnectPort(AbstractSerialPortController p) {
 			istream = null;
 			ostream = null;
 			if (controller != p)

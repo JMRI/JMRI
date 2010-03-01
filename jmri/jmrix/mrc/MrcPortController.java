@@ -8,9 +8,9 @@ import java.io.DataOutputStream;
 /**
  * Abstract base for classes representing a MRC communications port
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
-public abstract class MrcPortController extends jmri.jmrix.AbstractPortController {
+public abstract class MrcPortController extends jmri.jmrix.AbstractSerialPortController {
 	// base class. Implementations will provide InputStream and OutputStream
 	// objects to MrcTrafficController classes, who in turn will deal in messages.
 

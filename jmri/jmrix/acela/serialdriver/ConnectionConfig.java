@@ -12,13 +12,13 @@ import jmri.jmrix.acela.nodeconfig.NodeConfigAction;
  * via an NCE SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
  *              Based on MRC example, modified to establish Acela support. 
  */
 
-public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;

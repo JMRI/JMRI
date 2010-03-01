@@ -25,19 +25,7 @@ public class RosterToEcos implements EcosListener{
         tc = EcosTrafficController.instance();
         ep = EcosPreferences.instance();
         _re = re;
-//<<<<<<< RosterToEcos.java
-
-        //objEcosLocoManager = jmri.jmrix.ecos.EcosLocoAddressManager.instance();
 		objEcosLocoManager = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
-/*=======
-        
-        //We go on a hunt to find an object with the dccaddress sent by our controller.
-        
-    
-        objEcosLoco = objEcosLocoManager.provideByDccAddress(Integer.valueOf(re.getDccAddress()).intValue());
-        List<DecoderFile> decoder = decoderind.matchingDecoderList(null, re.getDecoderFamily(), null, null, null, re.getDecoderModel());
-        System.out.println(decoder);
->>>>>>> 1.3*/
     
         tc = EcosTrafficController.instance();
 

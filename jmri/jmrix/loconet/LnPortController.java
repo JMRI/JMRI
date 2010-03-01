@@ -8,9 +8,9 @@ import java.io.DataOutputStream;
 /**
  * Base for classes representing a LocoNet communications port
  * @author		Bob Jacobsen    Copyright (C) 2001, 2002
- * @version             $Revision: 1.18 $
+ * @version             $Revision: 1.19 $
  */
-public abstract class LnPortController extends jmri.jmrix.AbstractPortController {
+public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream
     // objects to LnTrafficController classes, who in turn will deal in messages.
 

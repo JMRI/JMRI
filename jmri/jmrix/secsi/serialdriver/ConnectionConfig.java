@@ -9,9 +9,9 @@ import jmri.jmrix.secsi.nodeconfig.*;
  * Definition of objects to handle configuring a SECSI layout connection
  *
  * @author      Bob Jacobsen   Copyright (C) 2003, 2006, 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;

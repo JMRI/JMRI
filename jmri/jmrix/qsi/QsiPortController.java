@@ -8,8 +8,8 @@ import java.io.DataOutputStream;
 /**
  * Abstract base for classes representing a QSI communications port
  * @author			Bob Jacobsen    Copyright (C) 2007
- * @version			$Revision: 1.1 $
- */public abstract class QsiPortController extends jmri.jmrix.AbstractPortController {
+ * @version			$Revision: 1.2 $
+ */public abstract class QsiPortController extends jmri.jmrix.AbstractSerialPortController {
 	// base class. Implementations will provide InputStream and OutputStream
 	// objects to QsiTrafficController classes, who in turn will deal in messages.
 

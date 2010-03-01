@@ -13,9 +13,9 @@ import jmri.util.SystemType;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  * @author			Paul Bender    Copyright (C) 2004
- * @version			$Revision: 2.5 $
+ * @version			$Revision: 2.6 $
  */
-public abstract class XNetPortController extends jmri.jmrix.AbstractPortController {
+public abstract class XNetPortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream
     // objects to XNetTrafficController classes, who in turn will deal in messages.
     

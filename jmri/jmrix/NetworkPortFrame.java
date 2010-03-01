@@ -13,7 +13,7 @@ import java.awt.event.KeyListener;
  * Abstract base Frame to open and configure a NetworkPortAdapeter 
  * @author			Paul Bender Copyright (C) 2009,
  * @author                      Bob Jacobsen Copyright (C) 2001-2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 abstract public class NetworkPortFrame extends jmri.util.JmriJFrame {
 
@@ -125,7 +125,7 @@ abstract public class NetworkPortFrame extends jmri.util.JmriJFrame {
 	abstract public void openPortButtonActionPerformed(java.awt.event.ActionEvent e) throws jmri.jmrix.NetworkConfigException;
 
 // Data members
-	protected NetworkPortAdapter adapter = null;
+	protected AbstractNetworkPortAdapter adapter = null;
 
         static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetworkPortFrame.class.getName());
 

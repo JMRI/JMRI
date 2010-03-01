@@ -10,9 +10,9 @@ import java.io.DataOutputStream;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  * @author          Andrew Crosland 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
-public abstract class PortController extends jmri.jmrix.AbstractPortController {
+public abstract class PortController extends jmri.jmrix.AbstractSerialPortController {
 	// base class. Implementations will provide InputStream and OutputStream
 	// objects to TrafficController classes, who in turn will deal in messages.
 

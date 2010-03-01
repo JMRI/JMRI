@@ -34,7 +34,7 @@ import javax.swing.JPanel;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.61 $
+ * @version	$Revision: 1.62 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -167,7 +167,7 @@ public class JmrixConfigPane extends JPanel {
 
         
         // get the list of ConnectionConfig items into a selection box
-        String[] classConnectionNameList = jmri.jmrix.DCCManufacturerList.getConnectionList((String)manuBox.getSelectedItem());
+        classConnectionNameList = jmri.jmrix.DCCManufacturerList.getConnectionList((String)manuBox.getSelectedItem());
         classConnectionList = new jmri.jmrix.ConnectionConfig[classConnectionNameList.length+1];
         modeBox.addItem(NONE_SELECTED);
         if(manuBox.getSelectedIndex()!=0){
@@ -229,7 +229,7 @@ public class JmrixConfigPane extends JPanel {
     public void updateComboConnection() {
         modeBox.removeAllItems();
         modeBox.addItem(NONE_SELECTED);
-        String[] classConnectionNameList = jmri.jmrix.DCCManufacturerList.getConnectionList((String)manuBox.getSelectedItem());
+        classConnectionNameList = jmri.jmrix.DCCManufacturerList.getConnectionList((String)manuBox.getSelectedItem());
         classConnectionList = new jmri.jmrix.ConnectionConfig[classConnectionNameList.length+1];
         
         if(manuBox.getSelectedIndex()!=0){
@@ -279,6 +279,7 @@ public class JmrixConfigPane extends JPanel {
     public String getCurrentManufacturerName() {
         int current = modeBox.getSelectedIndex();
         if (current==0) return "(none)";
+        System.out.println(classConnectionList[current].getManufacturer());
         return classConnectionList[current].getManufacturer();
     }
 

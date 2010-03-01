@@ -8,9 +8,9 @@ package jmri.jmrix.xpa.serialdriver;
  * via an XPA+Modem SerialDriverAdapter object.
  *
  * @author      Paul Bender   Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;

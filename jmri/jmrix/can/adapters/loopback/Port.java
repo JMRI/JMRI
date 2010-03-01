@@ -2,7 +2,7 @@
 
 package jmri.jmrix.can.adapters.loopback;
 
-import jmri.jmrix.AbstractPortController;
+import jmri.jmrix.AbstractSerialPortController;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -24,9 +24,9 @@ import java.io.DataOutputStream;
  *	and separated by a space. Variable whitespace is not (yet) supported
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
-public class Port extends AbstractPortController {
+public class Port extends AbstractSerialPortController {
 
 
     public Port() {

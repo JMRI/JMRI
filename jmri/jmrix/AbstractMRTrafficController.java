@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.76 $
+ * @version         $Revision: 1.77 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -550,8 +550,8 @@ abstract public class AbstractMRTrafficController {
         log.warn("sendMessage: Exception: "+e.toString());
     }
     
-    // methods to connect/disconnect to a source of data in a AbstractPortController
-    public AbstractPortController controller = null;
+    // methods to connect/disconnect to a source of data in a AbstractSerialPortController
+    public AbstractSerialPortController controller = null;
     
     public boolean status() { 
         return (ostream != null & istream != null);
@@ -564,7 +564,7 @@ abstract public class AbstractMRTrafficController {
     /**
      * Make connection to existing PortController object.
      */
-    public void connectPort(AbstractPortController p) {
+    public void connectPort(AbstractSerialPortController p) {
         try {
             istream = p.getInputStream();
             ostream = p.getOutputStream();
@@ -609,7 +609,7 @@ abstract public class AbstractMRTrafficController {
      * Break connection to existing PortController object. Once broken,
      * attempts to send via "message" member will fail.
      */
-    public void disconnectPort(AbstractPortController p) {
+    public void disconnectPort(AbstractSerialPortController p) {
         istream = null;
         ostream = null;
         if (controller != p)
@@ -622,7 +622,7 @@ abstract public class AbstractMRTrafficController {
      * returns true if ready, false otherwise
      * May throw an Exception.
      */
-    public boolean portReadyToSend(AbstractPortController p) throws Exception {
+    public boolean portReadyToSend(AbstractSerialPortController p) throws Exception {
     	if(p!=null && !xmtException) return true;
     	else return false;
     }
