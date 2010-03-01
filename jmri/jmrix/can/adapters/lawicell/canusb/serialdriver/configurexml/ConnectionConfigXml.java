@@ -1,7 +1,7 @@
 package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.ConnectionConfig;
 import jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.SerialDriverAdapter;
 
@@ -17,9 +17,9 @@ import jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.SerialDriverAdapter;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Andrew Crosland 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
-public class ConnectionConfigXml extends AbstractConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();

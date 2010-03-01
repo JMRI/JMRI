@@ -1,7 +1,7 @@
 package jmri.jmrix.internal.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.internal.ConnectionConfig;
 
 import org.jdom.*;
@@ -14,9 +14,9 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class ConnectionConfigXml extends AbstractConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();

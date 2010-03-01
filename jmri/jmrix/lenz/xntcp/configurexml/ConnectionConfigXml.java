@@ -1,7 +1,7 @@
 package jmri.jmrix.lenz.xntcp.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.lenz.xntcp.ConnectionConfig;
 import jmri.jmrix.lenz.xntcp.XnTcpAdapter;
 
@@ -16,9 +16,9 @@ import jmri.jmrix.lenz.xntcp.XnTcpAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author	Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class ConnectionConfigXml extends AbstractConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();

@@ -3,7 +3,7 @@
 package jmri.jmrix.acela.serialdriver.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.acela.serialdriver.ConnectionConfig;
 import jmri.jmrix.acela.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.acela.AcelaNode;
@@ -23,12 +23,12 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author      Bob Jacobsen Copyright: Copyright (c) 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  *
  * @author      Bob Coleman, Copyright (c) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
  */
-public class ConnectionConfigXml extends AbstractConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();

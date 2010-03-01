@@ -1,7 +1,7 @@
 package jmri.jmrix.bachrus.serialdriver.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.bachrus.serialdriver.ConnectionConfig;
 import jmri.jmrix.bachrus.serialdriver.SerialDriverAdapter;
 
@@ -16,9 +16,9 @@ import jmri.jmrix.bachrus.serialdriver.SerialDriverAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
-public class ConnectionConfigXml extends AbstractConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();

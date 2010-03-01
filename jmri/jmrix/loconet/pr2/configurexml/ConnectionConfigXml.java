@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet.pr2.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.loconet.pr2.ConnectionConfig;
 import jmri.jmrix.loconet.pr2.PR2Adapter;
 
@@ -16,9 +16,9 @@ import jmri.jmrix.loconet.pr2.PR2Adapter;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005, 2006
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class ConnectionConfigXml extends AbstractConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();

@@ -1,7 +1,7 @@
 package jmri.jmrix.maple.serialdriver.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.maple.serialdriver.ConnectionConfig;
 import jmri.jmrix.maple.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.maple.*;
@@ -22,9 +22,9 @@ import org.jdom.*;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Bob Jacobsen, Dave Duchamp Copyright (c) 2009 - Maple modifications
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
-public class ConnectionConfigXml extends AbstractConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();

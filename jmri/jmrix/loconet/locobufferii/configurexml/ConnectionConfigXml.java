@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet.locobufferii.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.loconet.locobufferii.ConnectionConfig;
 import jmri.jmrix.loconet.locobufferii.LocoBufferIIAdapter;
 
@@ -16,9 +16,9 @@ import jmri.jmrix.loconet.locobufferii.LocoBufferIIAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class ConnectionConfigXml extends AbstractConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();

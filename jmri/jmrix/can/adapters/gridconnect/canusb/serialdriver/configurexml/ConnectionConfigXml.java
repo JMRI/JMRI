@@ -1,7 +1,7 @@
 package jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver.ConnectionConfig;
 import jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver.SerialDriverAdapter;
 
@@ -17,9 +17,9 @@ import jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver.SerialDriverAdapt
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Andrew Crosland 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class ConnectionConfigXml extends AbstractConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();

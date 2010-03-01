@@ -1,7 +1,7 @@
 package jmri.jmrix.ecos.networkdriver.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.ecos.networkdriver.ConnectionConfig;
 import jmri.jmrix.ecos.networkdriver.NetworkDriverAdapter;
 import jmri.jmrix.ecos.EcosPreferences;
@@ -23,9 +23,9 @@ import javax.swing.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 208
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
-public class ConnectionConfigXml extends AbstractConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();

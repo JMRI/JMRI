@@ -2,7 +2,7 @@ package jmri.jmrix.can.adapters.loopback.configurexml;
 
 import jmri.jmrix.can.adapters.loopback.Port;
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 
 import jmri.jmrix.can.adapters.loopback.ConnectionConfig;
 
@@ -17,9 +17,9 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
-public class ConnectionConfigXml extends AbstractConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();

@@ -1,7 +1,7 @@
 package jmri.jmrix.lenz.liusb.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.lenz.liusb.ConnectionConfig;
 import jmri.jmrix.lenz.liusb.LIUSBAdapter;
 
@@ -16,9 +16,9 @@ import jmri.jmrix.lenz.liusb.LIUSBAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author Paul Bender Copyright: Copyright (c) 2005
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
-public class ConnectionConfigXml extends AbstractConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();
