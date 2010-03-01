@@ -36,7 +36,7 @@ import java.awt.event.ItemEvent;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.83 $
+ * @version   $Revision: 1.84 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -598,11 +598,11 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
 
         // add the Info tab
-        tabPane.addTab("Roster Entry", makeInfoPane(r));
+        tabPane.addTab(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("ROSTER ENTRY"), makeInfoPane(r));
 
         // add the Function Label tab
         if (root.getChild("programmer").getAttribute("showFnLanelPane").getValue().equals("yes")) {
-            tabPane.addTab("Function Labels", makeFunctionLabelPane(r));
+            tabPane.addTab(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("FUNCTION LABELS"), makeFunctionLabelPane(r));
         } else {
             // make it, just don't make it visible
             makeFunctionLabelPane(r);
@@ -610,7 +610,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         
         // add the Media tab
         if (root.getChild("programmer").getAttribute("showRosterMediaPane").getValue().equals("yes")) {
-            tabPane.addTab("Roster Media", makeMediaPane(r));
+            tabPane.addTab(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("ROSTER MEDIA"), makeMediaPane(r));
         } else {
             // make it, just don't make it visible
             makeMediaPane(r);
