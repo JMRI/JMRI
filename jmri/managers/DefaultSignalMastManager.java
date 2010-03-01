@@ -13,7 +13,7 @@ import jmri.managers.AbstractManager;
  * at the present time.  They're just names...
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class DefaultSignalMastManager extends AbstractManager
     implements SignalMastManager, java.beans.PropertyChangeListener {
@@ -37,8 +37,6 @@ public class DefaultSignalMastManager extends AbstractManager
         SignalMast m = getSignalMast(name);
         if (m == null) {
             m = new jmri.implementation.SignalHeadSignalMast(name);
-            // if that failed, blame it on the input arguements
-            if (m == null) throw new IllegalArgumentException();
 
             register(m);
         }
