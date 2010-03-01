@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.75 $
+ * @version         $Revision: 1.76 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -662,6 +662,7 @@ abstract public class AbstractMRTrafficController {
      */
     protected void reportReceiveLoopException(Exception e) {
         log.error("run: Exception: "+e.toString());
+        jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
     }
     abstract protected AbstractMRReply newReply();
     abstract protected boolean endOfMessage(AbstractMRReply r);
@@ -787,7 +788,7 @@ abstract public class AbstractMRTrafficController {
                 // message, otherwise go on to the next message
                 if(msg.isRetransmittableErrorMsg()){
                   if(log.isDebugEnabled())
-                        log.debug("Automatic Recovery from Error Message");
+                        log.debug("Automatic Recovery from Error Message: +msg.toString()");
                    synchronized (xmtRunnable) {
                        mCurrentState = AUTORETRYSTATE;
                        replyInDispatch = false;
