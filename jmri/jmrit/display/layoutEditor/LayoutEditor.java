@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class LayoutEditor extends Editor {
@@ -2894,11 +2894,6 @@ public class LayoutEditor extends Editor {
             xLabel.setText(Integer.toString(xLoc));
             yLabel.setText(Integer.toString(yLoc));
 		}
-        if (event.isPopupTrigger() || (!event.isMetaDown() && !event.isAltDown())) {
-            if (selectedObject!=null) {
-                ((Positionable)selectedObject).doMouseReleased(event);
-            }
-        }
 		Point2D newPos = new Point2D.Double(dLoc.getX() + startDel.getX(),
 						dLoc.getY() + startDel.getY());
 		if ((selectedObject!=null) && (event.isMetaDown() || event.isAltDown()) && (selectedPointType==MARKER)) {
