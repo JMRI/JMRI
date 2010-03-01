@@ -7,17 +7,11 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.roster.RosterIconFactory;
+import jmri.jmrit.audio.DefaultAudioManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import jmri.managers.AbstractSignalHeadManager;
-import jmri.jmrit.catalog.DefaultCatalogTreeManager;
-import jmri.jmrit.audio.DefaultAudioManager;
-import jmri.managers.DefaultConditionalManager;
-import jmri.managers.DefaultLogixManager;
-import jmri.managers.DefaultMemoryManager;
-import jmri.managers.DefaultRouteManager;
 
 /**
  * Provides static members for locating various interface implementations.
@@ -43,7 +37,7 @@ import jmri.managers.DefaultRouteManager;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.61 $
+ * @version			$Revision: 1.62 $
  */
 public class InstanceManager {
 
@@ -80,6 +74,8 @@ public class InstanceManager {
         if (l.size()<1) return null;
         return (T)l.get(l.size()-1);
     }
+    
+    static InstanceInitializer initializer = new jmri.managers.DefaultInstanceInitializer();
     
     static public PowerManager powerManagerInstance()  { 
         return getDefault(PowerManager.class);
@@ -118,17 +114,14 @@ public class InstanceManager {
         if (instance().signalHeadManager != null) return instance().signalHeadManager;
         // As a convenience, we create a default object if none was provided explicitly.
         // This must be replaced when we start registering specific implementations
-        instance().signalHeadManager = new AbstractSignalHeadManager();
+        instance().signalHeadManager = (SignalHeadManager)initializer.getDefault(SignalHeadManager.class);
         return instance().signalHeadManager;
     }
 
     static public SignalMastManager signalMastManagerInstance()  { 
         SignalMastManager m = getDefault(SignalMastManager.class);
         if (m == null) {
-            // ensure signal head manager exists first
-            signalHeadManagerInstance();
-            // then create a new signal mast manager and store
-            m = new jmri.managers.DefaultSignalMastManager();
+            m = (SignalMastManager)initializer.getDefault(SignalMastManager.class);
             setSignalMastManager(m);
         }
         return m;
@@ -140,7 +133,7 @@ public class InstanceManager {
     static public SignalSystemManager signalSystemManagerInstance()  { 
         SignalSystemManager m = getDefault(SignalSystemManager.class);
         if (m == null) {
-            m = new jmri.managers.DefaultSignalSystemManager();
+            m = (SignalSystemManager)initializer.getDefault(SignalSystemManager.class);
             setSignalSystemManager(m);
         }
         return m;
@@ -153,10 +146,7 @@ public class InstanceManager {
     static public SignalGroupManager signalGroupManagerInstance()  {
         SignalGroupManager m = getDefault(SignalGroupManager.class);
         if (m == null) {
-            // ensure signal group manager exists first
-            signalMastManagerInstance();
-            // then create a new signal group manager and store
-            m = new jmri.managers.DefaultSignalGroupManager();
+            m = (SignalGroupManager)initializer.getDefault(SignalGroupManager.class);
             setSignalGroupManager(m);
         }
         return m;
@@ -169,71 +159,56 @@ public class InstanceManager {
     static public BlockManager blockManagerInstance()  {
         BlockManager o = getDefault(BlockManager.class);
         if (o != null) return o;
-        // As a convenience, we create a default object if none was provided explicitly.
-        // This must be replaced when we start registering specific implementations
-        o = new BlockManager();
+        o = (BlockManager)initializer.getDefault(BlockManager.class);
         store(o, BlockManager.class);
         return o;
     }
 
     static public OBlockManager oBlockManagerInstance()  {
         if (instance().oBlockManager != null) return instance().oBlockManager;
-        // As a convenience, we create a default object if none was provided explicitly.
-        // This must be replaced when we start registering specific implementations
-        instance().oBlockManager = new OBlockManager();
+        instance().oBlockManager = (OBlockManager)initializer.getDefault(OBlockManager.class);
         return instance().oBlockManager;
     }
 
     static public WarrantManager warrantManagerInstance()  {
         if (instance().warrantManager != null) return instance().warrantManager;
-        // As a convenience, we create a default object if none was provided explicitly.
-        // This must be replaced when we start registering specific implementations
-        instance().warrantManager = new WarrantManager();
+        instance().warrantManager = (WarrantManager)initializer.getDefault(WarrantManager.class);
         return instance().warrantManager;
     }
 
     static public SectionManager sectionManagerInstance()  {
         if (instance().sectionManager != null) return instance().sectionManager;
-        // As a convenience, we create a default object if none was provided explicitly.
-        // This must be replaced when we start registering specific implementations
-        instance().sectionManager = new SectionManager();
+        instance().sectionManager = (SectionManager)initializer.getDefault(SectionManager.class);
         return instance().sectionManager;
     }
 
     static public TransitManager transitManagerInstance()  {
         if (instance().transitManager != null) return instance().transitManager;
-        // As a convenience, we create a default object if none was provided explicitly.
-        // This must be replaced when we start registering specific implementations
-        instance().transitManager = new TransitManager();
+        instance().transitManager = (TransitManager)initializer.getDefault(TransitManager.class);
         return instance().transitManager;
     }
 
     static public RouteManager routeManagerInstance()  {
         if (instance().routeManager != null) return instance().routeManager;
-        // As a convenience, we create a default object if none was provided explicitly.
-        // This must be replaced when we start registering specific implementations
-        instance().routeManager = new DefaultRouteManager();
+        instance().routeManager = (RouteManager)initializer.getDefault(RouteManager.class);
         return instance().routeManager;
     }
 
     static public LayoutBlockManager layoutBlockManagerInstance()  {
         if (instance().layoutBlockManager != null) return instance().layoutBlockManager;
-        // As a convenience, we create a default object if none was provided explicitly.
-        instance().layoutBlockManager = new LayoutBlockManager();
+        instance().layoutBlockManager = (LayoutBlockManager)initializer.getDefault(LayoutBlockManager.class);
         return instance().layoutBlockManager;
     }
 
     static public ConditionalManager conditionalManagerInstance()  {
         if (instance().conditionalManager != null) return instance().conditionalManager;
-        // As a convenience, we create a default object if none was provided explicitly.
-        instance().conditionalManager = new DefaultConditionalManager();
+        instance().conditionalManager = (ConditionalManager)initializer.getDefault(ConditionalManager.class);
         return instance().conditionalManager;
     }
 
     static public LogixManager logixManagerInstance()  {
         if (instance().logixManager != null) return instance().logixManager;
-        // As a convenience, we create a default object if none was provided explicitly.
-        instance().logixManager = new DefaultLogixManager();
+        instance().logixManager = (LogixManager)initializer.getDefault(LogixManager.class);
         return instance().logixManager;
     }
 
@@ -243,33 +218,19 @@ public class InstanceManager {
 
     static public Timebase timebaseInstance()  {
         if (instance().timebase != null) return instance().timebase;
-        // As a convenience, we create a default object if none was provided explicitly.
-        // This must be replaced when we start registering specific implementations
-        instance().timebase = new jmri.jmrit.simpleclock.SimpleTimebase();
-        if (InstanceManager.configureManagerInstance() != null)
-            InstanceManager.configureManagerInstance().registerConfig(instance().timebase);        
+        instance().timebase = (Timebase)initializer.getDefault(Timebase.class);
         return instance().timebase;
     }
 
     static public ClockControl clockControlInstance()  {
         if (instance().clockControl != null) return instance().clockControl;
-        // As a convenience, we create a default object if none was registered explicitly.
-        instance().clockControl = new DefaultClockControl();
+        instance().clockControl = (ClockControl)initializer.getDefault(ClockControl.class);
         return instance().clockControl;
     }
 	static public void addClockControl(ClockControl cc) {
 		instance().clockControl = cc;
 	}
     
-    /*static public SignalGroupManager signalGroupManagerInstance()  {
-        if (instance().signalGroupManager != null) return instance().signalGroupManager;
-        // As a convenience, we create a default object if none was provided explicitly.
-        // This must be replaced when we start registering specific implementations
-        instance().signalGroupManager = new DefaultSignalGroupManager();
-        return instance().signalGroupManager;
-    }*/
-    
-
     static public ConsistManager consistManagerInstance() { return instance().consistManager; }
 
     static public CommandStation commandStationInstance()  { return instance().commandStation; }
@@ -277,12 +238,12 @@ public class InstanceManager {
     static public ReporterManager reporterManagerInstance()  { return instance().reporterManager; }
 
     static public CatalogTreeManager catalogTreeManagerInstance()  {
-        if (instance().catalogTreeManager == null) instance().catalogTreeManager = new DefaultCatalogTreeManager();        
+        if (instance().catalogTreeManager == null) instance().catalogTreeManager = (CatalogTreeManager)initializer.getDefault(CatalogTreeManager.class);        
         return instance().catalogTreeManager;
     }
 
     static public MemoryManager memoryManagerInstance()  { 
-    	if (instance().memoryManager == null) instance().memoryManager = new DefaultMemoryManager();
+    	if (instance().memoryManager == null) instance().memoryManager = (MemoryManager)initializer.getDefault(MemoryManager.class);
     	return instance().memoryManager; 
     }
 
