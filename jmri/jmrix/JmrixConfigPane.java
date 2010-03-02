@@ -28,13 +28,13 @@ import javax.swing.JPanel;
  * to the list in {@link #availableProtocolClasses}.
  * <P>
  * The classes referenced are the specific
- * subclasses of {@link jmri.jmrix.AbstractConnectionConfig}
+ * subclasses of {@link jmri.jmrix.ConnectionConfig}
  * which provides the methods providing data to the 
  * configuration GUI, and responding to its changes.
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.62 $
+ * @version	$Revision: 1.63 $
  */
 public class JmrixConfigPane extends JPanel {
 

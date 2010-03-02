@@ -15,8 +15,8 @@ import java.net.*;
  *
  * @author      Kevin Dickerson  Copyright (C) 2010
  * @author      Based upon work originally done by Paul Bender  Copyright (C) 2009
- * @version	$Revision: 1.1 $
- * @see         jmri.jmrix.AbstractNetworkConfigException
+ * @version	$Revision: 1.2 $
+ * @see         jmri.jmrix.NetworkConfigException
  */
 abstract public class AbstractNetworkPortController extends AbstractPortController implements NetworkPortAdapter{
 
