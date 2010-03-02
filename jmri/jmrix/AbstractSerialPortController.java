@@ -24,18 +24,18 @@ import javax.swing.JOptionPane;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
-abstract public class AbstractSerialPortController implements SerialPortAdapter {
+abstract public class AbstractSerialPortController extends AbstractPortController implements SerialPortAdapter {
 
     // returns the InputStream from the port
-    public abstract DataInputStream getInputStream();
+    //public abstract DataInputStream getInputStream();
 
     // returns the outputStream to the port
-    public abstract DataOutputStream getOutputStream();
+    //public abstract DataOutputStream getOutputStream();
 
     // check that this object is ready to operate
-    public abstract boolean status();
+    //public abstract boolean status();
 
     /**
      * Standard error handling for port-busy case
@@ -152,93 +152,50 @@ abstract public class AbstractSerialPortController implements SerialPortAdapter 
          return portNameVector;
     }
     
-    
-  	/*
-  	 *  // Boudreau: 1/8/2010 Now using RXTX with Windows, eliminate the reload since
-    	// it isn't needed.
-    public void reloadDriver() {
-        // For now, just run this under Windows
-        // until such time as differences between
-        // RXTX and Sun can be fully reconciled.
-        if (SystemType.getType() == SystemType.WINDOWS) {
-            try // try reloading the driver
-            {
-                // first, reset the current list of ports
-                Field masterIdList_Field = CommPortIdentifier.class
-                        .getDeclaredField("masterIdList");
-                masterIdList_Field.setAccessible(true);
-                masterIdList_Field.set(null, null);
-
-                // next, allow access to the field storing properties file path
-                Field propfilename_Field = CommPortIdentifier.class
-                        .getDeclaredField("propfilename");
-                propfilename_Field.setAccessible(true);
-
-                // finally, reinitialise the list of ports
-                Method loadDriver_Method = CommPortIdentifier.class
-                        .getDeclaredMethod("loadDriver",
-                                new Class[] { String.class });
-                loadDriver_Method.setAccessible(true);
-                loadDriver_Method.invoke(null, propfilename_Field.get(null));
-            } catch (Exception e) {
-                log.error("exception when reloading driver " + e);
-            }
-        }
-	}
-	*/
-    
     /**
      * Get an array of valid values for "option 1"; used to display valid options.
      * May not be null, but may have zero entries
      */
-    public String[] validOption1() { return new String[]{""}; }
+    //public String[] validOption1() { return new String[]{""}; }
 
     /**
      * Get a String that says what Option 1 represents
      * May be an empty string, but will not be null
      */
-    public String option1Name() { return ""; }
+    //public String option1Name() { return ""; }
 
     /**
      * Set the second port option.
      */
-    public void configureOption1(String value) { mOpt1 = value; }
+    /*public void configureOption1(String value) { mOpt1 = value; }
     protected String mOpt1 = null;
     public String getCurrentOption1Setting() {
         if (mOpt1 == null) return validOption1()[0];
         return mOpt1;
-    }
+    }*/
 
     /**
      * Get an array of valid values for "option 2"; used to display valid options.
      * May not be null, but may have zero entries
      */
-    public String[] validOption2() { return new String[]{""}; }
+    //public String[] validOption2() { return new String[]{""}; }
 
     /**
      * Get a String that says what Option 2 represents
      * May be an empty string, but will not be null
      */
-    public String option2Name() { return ""; }
+    //public String option2Name() { return ""; }
 
     /**
      * Set the second port option.
      */
-    public void configureOption2(String value) { mOpt2 = value; }
+    /*public void configureOption2(String value) { mOpt2 = value; }
     protected String mOpt2  = null;
     public String getCurrentOption2Setting() {
         if (mOpt2 == null) return validOption2()[0];
         return mOpt2;
-    }
+    }*/
     
-    /**
-    * Get and set of the Manufacturer for network (TCP/IP) based
-    * connections is handled by the ConnectionConfig code in each
-    * connector.  this is here as we implement the serialdriveradpter.
-    */
-    public String getManufacturer() { return null; }
-    public void setManufacturer(String Manufacturer) {}
-
     static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSerialPortController.class.getName());
 
 }

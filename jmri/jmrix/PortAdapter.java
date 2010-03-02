@@ -12,7 +12,7 @@ import java.io.DataOutputStream;
  * This has no e.g. serial-specific information.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2008, 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @see         jmri.jmrix.SerialConfigException
  * @since 2.3.1
  */
@@ -28,56 +28,68 @@ public interface PortAdapter  {
 	 * as far as is known, return true 
 	 */
 	public boolean status();
+    
+    public String getCurrentPortName();
 
 	// returns the InputStream from the port
 	public DataInputStream getInputStream();
-        // returns the outputStream to the port
-        public DataOutputStream getOutputStream();
+    // returns the outputStream to the port
+    public DataOutputStream getOutputStream();
 
-        /**         
-         * Get an array of valid values for "option 1"; 
-         * used to display valid options.
-         * May not be null, but may have zero entries
-         */
-        public String[] validOption1();
+    /**         
+     * Get an array of valid values for "option 1"; 
+     * used to display valid options.
+     * May not be null, but may have zero entries
+     */
+    public String[] validOption1();
 
-       /**
-        * Get a String that says what Option 1 represents
-        * May be an empty string, but will not be null
-        */
-        public String option1Name();
+   /**
+    * Get a String that says what Option 1 represents
+    * May be an empty string, but will not be null
+    */
+    public String option1Name();
 
-        /**
-         * Set the first port option.  Only to be used after construction, but
-         * before the openPort call
-         */
-        public void configureOption1(String value);
-   
-        public String getCurrentOption1Setting();
+    /**
+     * Set the first port option.  Only to be used after construction, but
+     * before the openPort call
+     */
+    public void configureOption1(String value);
 
-        /**         
-        * Get an array of valid values for "option 2"; 
-        * used to display valid options.         
-        * May not be null, but may have zero entries
-        */
-        public String[] validOption2();
+    public String getCurrentOption1Setting();
 
-        /**
-         * Get a String that says what Option 2 represents
-         * May be an empty string, but will not be null
-        */
-        public String option2Name();
+    /**         
+    * Get an array of valid values for "option 2"; 
+    * used to display valid options.         
+    * May not be null, but may have zero entries
+    */
+    public String[] validOption2();
 
-        /**
-        * Set the second port option.  Only to be used after construction, but
-        * before the openPort call
-        */
-        public void configureOption2(String value);
+    /**
+     * Get a String that says what Option 2 represents
+     * May be an empty string, but will not be null
+    */
+    public String option2Name();
 
-        /**
-        * Get current option 2 value
-        */
-        public String getCurrentOption2Setting();
+    /**
+    * Set the second port option.  Only to be used after construction, but
+    * before the openPort call
+    */
+    public void configureOption2(String value);
+
+    /**
+    * Get current option 2 value
+    */
+    public String getCurrentOption2Setting();
+        
+     /**
+     * Return the System Manufacturers Name
+     */
+    public String getManufacturer();
+    
+    /**
+    * Set the System Manufacturers Name
+    */
+    public void setManufacturer(String Manufacturer);
 
 
 }
