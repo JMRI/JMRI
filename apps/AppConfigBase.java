@@ -25,7 +25,7 @@ import javax.swing.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class AppConfigBase extends JmriPanel {
 
@@ -229,6 +229,8 @@ public class AppConfigBase extends JmriPanel {
         for (int i = 0; i < items.size(); i++) {
             InstanceManager.configureManagerInstance().registerPref(items.get(i));
         }
+        //Need to register the userpreferencesmanager, otherwise all the settings get lost.
+        InstanceManager.configureManagerInstance().registerPref(jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class));
         InstanceManager.configureManagerInstance().storePrefs();
     }
 

@@ -20,48 +20,13 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         jmri.UserPreferencesManager p = (jmri.UserPreferencesManager) o;
 
         Element messages = new Element("UserMessagePreferences");
-        setStoreElementClass(messages);
-
-        //Element userPref;
-        
-        //storeDisplayMsg(messages, "displayRememberMsg", p.getDisplayRememberMsg());
-        /*if (!p.getDisplayRememberMsg()){
-            userPref = new Element("displayRememberMsg").setAttribute("display", "no");
-            messages.addContent(userPref);
-        }*/
-        
-        //storeDisplayMsg(messages, "routeSaveMsg", p.getRouteSaveMsg());
-        /*if (!p.getRouteSaveMsg()){
-            userPref = new Element("routeSaveMsg").setAttribute("display", "no");
-            messages.addContent(userPref);
-        }*/
-        
+        setStoreElementClass(messages);     
+      
         storeQuestion(messages, "warnRouteDelete", p.getWarnDeleteRoute());
-        /*if (p.getWarnRouteDelete()!=0x00){
-            if (p.getWarnRouteDelete()==0x01)
-                userPref = new Element("warnRouteDelete").setAttribute("action", "no");
-            else
-                userPref = new Element("warnRouteDelete").setAttribute("action", "yes");
-            messages.addContent(userPref);
-        }*/
         
         storeQuestion(messages, "quitAfterSave", p.getQuitAfterSave());
-        /*if (p.getQuitAfterSave()!=0x00){
-            if (p.getQuitAfterSave()==0x01)
-                userPref = new Element("quitAfterSave").setAttribute("action", "no");
-            else
-                userPref = new Element("quitAfterSave").setAttribute("action", "yes");
-            messages.addContent(userPref);
-        }*/
         
         storeQuestion(messages, "warnTurnoutInUse", p.getWarnTurnoutInUse());
-        /*if (p.getWarnTurnoutInUse()!=0x00){
-            if (p.getWarnTurnoutInUse()==0x01)
-                userPref = new Element("warnTurnoutInUse").setAttribute("action", "no");
-            else
-                userPref = new Element("warnTurnoutInUse").setAttribute("action", "yes");
-            messages.addContent(userPref);
-        }*/
         
         java.util.ArrayList<String> preferenceList = ((jmri.managers.DefaultUserMessagePreferences)p).getPreferenceStateList();
         for (int i = 0; i < preferenceList.size(); i++) {
@@ -97,16 +62,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
             messages.addContent(userPref);
         }
     }
-    
-    /*
-    private void storeDisplayMsg(Element messages, String attr, boolean value){
-        Element userPref;
-        if (!value){
-            userPref = new Element(attr).setAttribute("display", "no");
-            messages.addContent(userPref);
-        }
-    }
-    */
+
     
     public void setStoreElementClass(Element messages) {
         messages.setAttribute("class","jmri.managers.configurexml.DefaultUserMessagePreferencesXml");
@@ -126,54 +82,10 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         // ensure the master object exists
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         p.setLoading();
-        
-        //p.setDisplayRememberMsg(loadDisplayMsg(messages, "displayRememberMsg"));
-        /*List<Element> messageList = messages.getChildren("displayRememberMsg");
-        for (int i=0; i<messageList.size();i++){
-            if (messageList.get(i).getAttribute("display")!=null) {
-                String yesno = messageList.get(i).getAttribute("display").getValue();
-                if ( (yesno!=null) && (!yesno.equals("")) ) {
-                    if (yesno.equals("yes")) p.setDisplayRememberMsg(true);
-                    else if (yesno.equals("no")) p.setDisplayRememberMsg(false);
-                }
-            }
-        }*/
-        
-        //p.setRouteSaveMsg(loadDisplayMsg(messages, "routeSaveMsg"));
-        /*messageList = messages.getChildren("routeSaveMsg");
-        for (int i=0; i<messageList.size();i++){
-            if (messageList.get(i).getAttribute("display")!=null) {
-                String yesno = messageList.get(i).getAttribute("display").getValue();
-                if ( (yesno!=null) && (!yesno.equals("")) ) {
-                    if (yesno.equals("yes")) p.setRouteSaveMsg(true);
-                    else if (yesno.equals("no")) p.setRouteSaveMsg(false);
-                }
-            }
-        }*/
-        
+                
         p.setQuitAfterSave(loadQuestion(messages, "quitAfterSave"));
-        /*messageList = messages.getChildren("quitAfterSave");
-        for (int i=0; i<messageList.size();i++){
-            if (messageList.get(i).getAttribute("action")!=null) {
-                String yesno = messageList.get(i).getAttribute("action").getValue();
-                if ( (yesno!=null) && (!yesno.equals("")) ) {
-                    if (yesno.equals("yes")) p.setQuitAfterSave(0x02);
-                    else if (yesno.equals("no")) p.setQuitAfterSave(0x01);
-                }
-            }
-        }*/
         
         p.setWarnTurnoutInUse(loadQuestion(messages, "warnTurnoutInUse"));
-        /*messageList = messages.getChildren("warnTurnoutInUse");
-        for (int i=0; i<messageList.size();i++){
-            if (messageList.get(i).getAttribute("action")!=null) {
-                String yesno = messageList.get(i).getAttribute("action").getValue();
-                if ( (yesno!=null) && (!yesno.equals("")) ) {
-                    if (yesno.equals("yes")) p.setWarnTurnoutInUse(0x02);
-                    else if (yesno.equals("no")) p.setWarnTurnoutInUse(0x01);
-                }
-            }
-         }*/
        
         @SuppressWarnings("unchecked")
         List<Element> settingList = messages.getChildren("setting");
@@ -215,23 +127,6 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         }
         return(0x00);
     }
-    
-    /*
-    @SuppressWarnings("unchecked")
-    private boolean loadDisplayMsg(Element messages, String attr){
-        List<Element> messageList = messages.getChildren(attr);
-        for (int i=0; i<messageList.size();i++){
-            if (messageList.get(i).getAttribute("display")!=null) {
-                String yesno = messageList.get(i).getAttribute("display").getValue();
-                if ( (yesno!=null) && (!yesno.equals("")) ) {
-                    if (yesno.equals("yes")) return(true);
-                    else if (yesno.equals("no")) return(false);
-                }
-            }
-        }
-        return (false);
-    }
-    */
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultUserMessagePreferencesXml.class.getName());
 }

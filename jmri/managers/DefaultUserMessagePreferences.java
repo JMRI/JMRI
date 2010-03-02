@@ -21,7 +21,7 @@ import javax.swing.UIManager;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
  
 public class DefaultUserMessagePreferences implements UserPreferencesManager {
@@ -33,7 +33,6 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         // register this object to be stored as part of preferences
         if (jmri.InstanceManager.configureManagerInstance() != null)
             jmri.InstanceManager.configureManagerInstance().registerPref(this);
-        
         // register a shutdown task to fore storing of preferences at shutdown
         if (userPreferencesShutDownTask==null) {
             userPreferencesShutDownTask = new QuietShutDownTask("User Preferences Shutdown") {
@@ -72,6 +71,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
             if (!preferenceList.contains(name)){
                 preferenceList.add(name);
                 displayRememberMsg();
+                _changeMade = true;
             }
         } else {
             preferenceList.remove(name);
@@ -329,59 +329,12 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         _changeMade = true;
         displayRememberMsg();
     }
-    
-    
-    /*protected static boolean displayRememberMsg = DISPLAY;
-    public boolean getDisplayRememberMsg() { return displayRememberMsg; }
-    public void setDisplayRememberMsg(boolean boo) { 
-        displayRememberMsg = boo; 
-        _changeMade = true;
-    }*/
+
 
 
     public void displayRememberMsg(){
         if (_loading) return;
-        showInfoMessage("Reminder", "You can re-display this message from 'Edit|Message Options' Menu.", "DefaultUserMessagePreferences.reminder");
-        /*if (displayRememberMsg){
-            final JDialog dialog = new JDialog();
-            dialog.setTitle("Reminder");
-            dialog.setLocationRelativeTo(null);
-            dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-            JPanel container = new JPanel();
-            container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-            container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-            
-            JLabel question = new JLabel("You can re-display this message from 'Edit|Message Options' Menu.", JLabel.CENTER);
-            question.setAlignmentX(Component.CENTER_ALIGNMENT);
-            container.add(question);
-            
-            JButton okButton = new JButton("Okay");
-            JPanel button = new JPanel();
-            button.setAlignmentX(Component.CENTER_ALIGNMENT);
-            button.add(okButton);
-            container.add(button);
-            
-            final JCheckBox remember = new JCheckBox("Do not remind me again");
-            remember.setAlignmentX(Component.CENTER_ALIGNMENT);
-            remember.setFont(remember.getFont().deriveFont(10f));
-            container.add(remember);
-            
-            okButton.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e) {
-                    if(remember.isSelected()){
-                        setDisplayRememberMsg(false);
-                    }
-                    dialog.dispose();
-                }
-            });
-            
-            
-            dialog.getContentPane().add(container);
-            dialog.pack();
-            dialog.setModal(true);
-            dialog.setVisible(true);
-        }*/
-    
+        showInfoMessage("Reminder", "You can re-display this message from 'Edit|Message Options' Menu.", "DefaultUserMessagePreferences.reminder");   
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultUserMessagePreferences.class.getName());
