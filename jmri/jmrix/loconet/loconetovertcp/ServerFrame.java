@@ -4,7 +4,6 @@ package jmri.jmrix.loconet.loconetovertcp;
 
 import java.awt.event.*;
 import javax.swing.*;
-import jmri.util.SwingUtil;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.SpinnerNumberModel;
@@ -20,7 +19,7 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2004
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 
 public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
@@ -34,7 +33,7 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
     portNumberModel = new SpinnerNumberModel(65535,1,65535,1);
     portNumber.setModel(portNumberModel);
 
-    SwingUtil.setFocusable(portNumber,false);
+    portNumber.setFocusable(false);
     
     // add GUI items
     JPanel panel = new JPanel();

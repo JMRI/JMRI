@@ -22,7 +22,7 @@ import javax.swing.*;
  * GUI (and perhaps LAF) configuration item.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class GuiLafConfigPane extends JPanel {
 
@@ -100,7 +100,7 @@ public class GuiLafConfigPane extends JPanel {
         // create object to find locales in new Thread
         Runnable r  = new Runnable() {
             public void run() {
-                locales = jmri.util.LocaleUtil.getAvailableLocales();
+                locales = java.util.Locale.getAvailableLocales();
                 localeNames = new String[locales.length];
                 for (int i = 0; i<locales.length; i++) {
                     localeNames[i] = locales[i].getDisplayName();
