@@ -1,7 +1,6 @@
 package jmri.jmrit.logix;
 
 import jmri.DccThrottle;
-import jmri.util.SwingUtil;
 import java.util.ResourceBundle;
 
 import java.awt.BorderLayout;
@@ -36,7 +35,7 @@ import javax.swing.event.ChangeListener;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.5 $
+ * @version    $Revision: 1.6 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {
@@ -80,7 +79,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         _throttleFrame = ltf;
         speedSlider = new JSlider(0, MAX_SPEED);
         speedSlider.setValue(0);
-        SwingUtil.setFocusable(speedSlider,false);
+        speedSlider.setFocusable(false);
 	
 	    // add mouse-wheel support
         speedSlider.addMouseWheelListener(new MouseWheelListener() {
@@ -96,7 +95,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
         speedSpinnerModel = new SpinnerNumberModel(0, 0, MAX_SPEED, 1);
         speedSpinner.setModel(speedSpinnerModel);
-        SwingUtil.setFocusable(speedSpinner,false);
+        speedSpinner.setFocusable(false);
 
         SpeedStep128Button = new JRadioButton(rb.getString("Button128SS"));
         SpeedStep28Button = new JRadioButton(rb.getString("Button28SS"));

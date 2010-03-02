@@ -26,7 +26,6 @@ import javax.swing.event.MouseInputAdapter;
 
 import jmri.DccThrottle;
 import jmri.util.MouseInputAdapterInstaller;
-import jmri.util.SwingUtil;
 
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -41,7 +40,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.80 $
+ * @version    $Revision: 1.81 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
@@ -118,7 +117,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     {
         speedSlider = new JSlider(0, intSpeedSteps);
         speedSlider.setValue(0);
-        SwingUtil.setFocusable(speedSlider,false);
+        speedSlider.setFocusable(false);
 	
 	    // add mouse-wheel support
         speedSlider.addMouseWheelListener(new MouseWheelListener() {
@@ -135,7 +134,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
         speedSpinnerModel = new SpinnerNumberModel(0, 0, intSpeedSteps, 1);
         speedSpinner.setModel(speedSpinnerModel);
-        SwingUtil.setFocusable(speedSpinner,false);
+        speedSpinner.setFocusable(false);
 
         SpeedStep128Button = new JRadioButton(rb.getString("Button128SS"));
         SpeedStep28Button = new JRadioButton(rb.getString("Button28SS"));
@@ -747,7 +746,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.80 $
+     * @version    $Revision: 1.81 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
