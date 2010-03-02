@@ -36,7 +36,7 @@ import java.awt.event.ItemEvent;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.84 $
+ * @version   $Revision: 1.85 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -860,8 +860,8 @@ abstract public class PaneProgFrame extends JmriJFrame
             tabPane.addTab(name, p);
             int index = tabPane.indexOfTab(name);
             tabPane.setEnabledAt(index, false);
-            jmri.util.JTabbedPaneUtil.setToolTipTextAt(tabPane, index,
-                    rbt.getString("TipTabDisabledNoCategory"));
+            tabPane.setToolTipTextAt(index, 
+                rbt.getString("TipTabDisabledNoCategory"));
         } else {
             // here not showing tab at all
         }
