@@ -3,7 +3,7 @@
 
 <!-- Schema for JMRI decoder definitions       -->
 
-<!-- $Id: decoder.xsd,v 1.6 2010-02-01 04:59:22 jacobsen Exp $ -->
+<!-- $Id: decoder.xsd,v 1.7 2010-03-02 07:15:10 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
@@ -119,8 +119,148 @@
 
   <xs:complexType name="VariablesType">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="constant" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="variable" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="constant" minOccurs="0" maxOccurs="unbounded" >
+        <xs:complexType>
+          <xs:attribute name="label" type="xs:string" use="required"/>
+          <xs:attribute name="default" type="xs:int"/>
+          <xs:attribute name="comment" type="xs:string"/>
+          <xs:attribute name="item" type="xs:string"/>
+          <xs:attribute name="minFn" type="xs:int"/>
+          <xs:attribute name="minOut" type="xs:int"/>
+          <xs:attribute name="inOptions" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+      
+      <xs:element name="iconstant" minOccurs="0" maxOccurs="unbounded" >
+        <xs:complexType>
+          <xs:attribute name="label" type="xs:string" use="required"/>
+          <xs:attribute name="default" type="xs:int"/>
+          <xs:attribute name="comment" type="xs:string"/>
+          <xs:attribute name="item" type="xs:string"/>
+          <xs:attribute name="minFn" type="xs:int"/>
+          <xs:attribute name="minOut" type="xs:int"/>
+          <xs:attribute name="inOptions" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+      
+      <xs:element name="variable" minOccurs="0" maxOccurs="unbounded" >
+        <xs:complexType>
+          <xs:choice>
+            <xs:element name="enumVal" >
+              <xs:complexType>
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="enumChoice" >
+                    <xs:complexType>
+                      <xs:attribute name="choice" type="xs:string" use="required"/>
+                      <xs:attribute name="value" type="xs:int" />
+                      <xs:attribute name="comment" type="xs:string"/>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                <xs:attribute name="comment" type="xs:string"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="decVal" >
+              <xs:complexType>
+                <xs:attribute name="min" type="xs:int" default="0"/>
+                <xs:attribute name="max" type="xs:int" default="255"/>
+                <xs:attribute name="comment" type="xs:string"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="hexVal" >
+              <xs:complexType>
+                <xs:attribute name="min" type="xs:string" default="0"/>
+                <xs:attribute name="max" type="xs:string" default="ff"/>
+                <xs:attribute name="comment" type="xs:string"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="speedTableVal" >
+              <xs:complexType>
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="speedTableEntry" >
+                    <xs:complexType>
+                      <xs:attribute name="step" type="xs:int" use="required" />
+                      <xs:attribute name="value" type="xs:int" use="required"  />
+                      <xs:attribute name="comment" type="xs:string"/>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                <xs:attribute name="entries" type="xs:int" default="28" />
+                <xs:attribute name="min" type="xs:int" default="0"/>
+                <xs:attribute name="max" type="xs:int" default="255"/>
+                <xs:attribute name="comment" type="xs:string"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="longAddressVal" >
+              <xs:complexType>
+                <xs:attribute name="comment" type="xs:string"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="shortAddressVal" >
+              <xs:complexType>
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="shortAddressChanges" >
+                    <xs:complexType>
+                      <xs:attribute name="cv" type="xs:int" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                <xs:attribute name="comment" type="xs:string"/>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="splitVal" >
+              <xs:complexType>
+                <xs:attribute name="highCV" type="xs:int"/>
+                <xs:attribute name="min" type="xs:int" default="0"/>
+                <xs:attribute name="max" type="xs:int" default="255"/>
+                <xs:attribute name="default" type="xs:int"/>
+                <xs:attribute name="factor" type="xs:int" default="1"/>
+                <xs:attribute name="offset" type="xs:int" default="0"/>
+                <xs:attribute name="comment" type="xs:string"/>
+                <xs:attribute name="upperMask" type="xs:string" default="VVVVVVVV" />
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="compositeVal" >
+              <xs:complexType>
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="compositeChoice" >
+                    <xs:complexType>
+                      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:element name="compositeSetting" >
+                          <xs:complexType>
+                            <xs:attribute name="label" type="xs:string" use="required"/>
+                            <xs:attribute name="value" type="xs:int" use="required" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                      <xs:attribute name="choice" type="xs:string" use="required"/>
+                      <xs:attribute name="comment" type="xs:string"/>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                <xs:attribute name="comment" type="xs:string"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:choice>
+          <xs:attribute name="label" type="xs:string" use="required"/>
+          <xs:attribute name="CV" type="xs:int"/>
+          <xs:attribute name="mask" type="xs:string" default="VVVVVVVV" />
+          <xs:attribute name="readOnly" type="yesNoType" default="no" />
+          <xs:attribute name="infoOnly" type="yesNoType" default="no" />
+          <xs:attribute name="opsOnly" type="yesNoType" default="no" />
+          <xs:attribute name="writeOnly" type="yesNoType" default="no" />
+          <xs:attribute name="default" type="xs:string"/>
+          <xs:attribute name="comment" type="xs:string"/>
+          <xs:attribute name="item" type="xs:string"/>
+          <xs:attribute name="minFn" type="xs:int"/>
+          <xs:attribute name="minOut" type="xs:int"/>
+          <xs:attribute name="inOptions" type="xs:string"/>
+          <xs:attribute name="tooltip" type="xs:string"/>
+          <xs:attribute name="include" type="xs:string"/>
+          <xs:attribute name="exclude" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+      
       <xs:element name="ivariable" minOccurs="0" maxOccurs="unbounded" >
         <xs:complexType>
           <xs:sequence minOccurs="0" maxOccurs="1">
