@@ -3,7 +3,7 @@
 
 <!-- Schema for JMRI decoder definitions       -->
 
-<!-- $Id: decoder.xsd,v 1.7 2010-03-02 07:15:10 jacobsen Exp $ -->
+<!-- $Id: decoder.xsd,v 1.8 2010-03-02 07:29:49 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
@@ -147,6 +147,9 @@
         <xs:complexType>
           <xs:choice>
             <xs:element name="enumVal" >
+              <xs:annotation><xs:documentation>
+              A fixed set of choices is defined, each corresponding to a specific value
+              </xs:documentation></xs:annotation>
               <xs:complexType>
                 <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:element name="enumChoice" >
@@ -161,6 +164,9 @@
               </xs:complexType>
             </xs:element>
             <xs:element name="decVal" >
+              <xs:annotation><xs:documentation>
+              A decimal value is used, subject to mask and limit requirements
+              </xs:documentation></xs:annotation>
               <xs:complexType>
                 <xs:attribute name="min" type="xs:int" default="0"/>
                 <xs:attribute name="max" type="xs:int" default="255"/>
@@ -168,6 +174,9 @@
               </xs:complexType>
             </xs:element>
             <xs:element name="hexVal" >
+              <xs:annotation><xs:documentation>
+              A hexadecimal value is used, subject to mask and limit requirements
+              </xs:documentation></xs:annotation>
               <xs:complexType>
                 <xs:attribute name="min" type="xs:string" default="0"/>
                 <xs:attribute name="max" type="xs:string" default="ff"/>
@@ -175,6 +184,9 @@
               </xs:complexType>
             </xs:element>
             <xs:element name="speedTableVal" >
+              <xs:annotation><xs:documentation>
+              NMRA speed table
+              </xs:documentation></xs:annotation>
               <xs:complexType>
                 <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:element name="speedTableEntry" >
@@ -192,11 +204,17 @@
               </xs:complexType>
             </xs:element>
             <xs:element name="longAddressVal" >
+              <xs:annotation><xs:documentation>
+              NMRA long address, including its unique behaviors
+              </xs:documentation></xs:annotation>
               <xs:complexType>
                 <xs:attribute name="comment" type="xs:string"/>
               </xs:complexType>
             </xs:element>
             <xs:element name="shortAddressVal" >
+              <xs:annotation><xs:documentation>
+              NMRA short address, including its unique behaviors
+              </xs:documentation></xs:annotation>
               <xs:complexType>
                 <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:element name="shortAddressChanges" >
@@ -209,6 +227,9 @@
               </xs:complexType>
             </xs:element>
             <xs:element name="splitVal" >
+              <xs:annotation><xs:documentation>
+              A decimal value, but stored across two CVs using some simple calculations
+              </xs:documentation></xs:annotation>
               <xs:complexType>
                 <xs:attribute name="highCV" type="xs:int"/>
                 <xs:attribute name="min" type="xs:int" default="0"/>
@@ -221,6 +242,9 @@
               </xs:complexType>
             </xs:element>
             <xs:element name="compositeVal" >
+              <xs:annotation><xs:documentation>
+              A value made up of references to others
+              </xs:documentation></xs:annotation>
               <xs:complexType>
                 <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:element name="compositeChoice" >
