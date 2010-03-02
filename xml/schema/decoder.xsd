@@ -3,7 +3,7 @@
 
 <!-- Schema for JMRI decoder definitions       -->
 
-<!-- $Id: decoder.xsd,v 1.8 2010-03-02 07:29:49 jacobsen Exp $ -->
+<!-- $Id: decoder.xsd,v 1.9 2010-03-02 07:43:38 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
@@ -323,7 +323,12 @@
                   </xs:complexType>
                 </xs:element>
               </xs:choice>
-              <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="1" >
+                <xs:annotation><xs:documentation>
+                Qualifies whether this variable will appear in the interface, depending
+                on the value in other variables.
+                </xs:documentation></xs:annotation>
+              </xs:element>
           </xs:sequence>
           <xs:attribute name="label" type="xs:string"/>
           <xs:attribute name="CVname" type="xs:string"/>
