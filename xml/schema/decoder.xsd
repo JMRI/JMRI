@@ -3,7 +3,7 @@
 
 <!-- Schema for JMRI decoder definitions       -->
 
-<!-- $Id: decoder.xsd,v 1.9 2010-03-02 07:43:38 jacobsen Exp $ -->
+<!-- $Id: decoder.xsd,v 1.10 2010-03-02 07:58:02 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
@@ -51,16 +51,6 @@
     </xs:appinfo>
 </xs:annotation>
 
-  <xs:element name="decoder-config">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="version" type="VersionType" minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="decoder" type="DecoderType" minOccurs="1" maxOccurs="1"/>
-        <xs:element name="pane"    type="PaneType" minOccurs="0" maxOccurs="unbounded"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
   <xs:complexType name="VersionType">
       <xs:attribute name="author" />
       <xs:attribute name="version" />
@@ -87,6 +77,17 @@
 
     </xs:sequence>
   </xs:complexType>
+
+  <xs:element name="decoder-config">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="version" type="VersionType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="decoder" type="DecoderType" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="pane"    type="PaneType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
 
   <xs:complexType name="FamilyType">
     <xs:sequence>
