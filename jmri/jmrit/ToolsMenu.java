@@ -15,7 +15,7 @@ import java.util.*;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2008
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.39 $
+ * @version     $Revision: 1.40 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -71,6 +71,8 @@ public class ToolsMenu extends JMenu {
         throttleMenu.add(new jmri.jmrit.throttle.LoadDefaultXmlThrottlesLayoutAction(rb.getString("MenuItemLoadDefaultThrottleLayout" )));
         throttleMenu.addSeparator();
         throttleMenu.add(new jmri.jmrit.throttle.ThrottlesPreferencesAction(rb.getString("MenuItemThrottlesPreferences")));
+        throttleMenu.add(new JSeparator());
+        throttleMenu.add(new jmri.jmrit.withrottle.WiThrottleCreationAction(rb.getString("MenuItemStartWiThrottle")));
         add(throttleMenu);
 
 	// disable the throttle menu if there is no throttle Manager
