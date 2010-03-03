@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -251,7 +251,19 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	 * @return "okay" if successful, "type" if the rolling stock's type isn't 
 	 * acceptable, or "length" if the rolling stock length didn't fit.
 	 */
-	public String setLocation(Location location, Track track) {
+	public String setLocation(Location location, Track track){
+		return setLocation(location, track, false);
+	}
+	
+	/**
+	 * Sets rolling stock location on the layout
+	 * @param location
+	 * @param track (yard, siding, staging, or interchange track)
+	 * @param force when true place rolling stock ignore track length
+	 * @return "okay" if successful, "type" if the rolling stock's type isn't 
+	 * acceptable, or "length" if the rolling stock length didn't fit.
+	 */
+	protected String setLocation(Location location, Track track, boolean force) {
 		// first determine if rolling stock can be move to the new location
 		if (location != null && track != null && !location.acceptsTypeName(getType())){
 			log.debug("Can't set (" + getId() + ") type (" +getType()+ ") at location: "+ location.getName() + " wrong type");
@@ -271,7 +283,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		} catch (Exception e){
 			return LENGTH;
 		}
-		if (location != null && track != null && _trackLocation != track &&
+		if (!force && location != null && track != null && _trackLocation != track &&
 				(track.getUsedLength() + track.getReserved() + Integer.parseInt(getLength()) + COUPLER) > track.getLength()){
 			log.debug("Can't set (" + getId() + ") at track location ("+ location.getName() + ", " + track.getName() + ") no room!");
 			return LENGTH;	
@@ -633,14 +645,18 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			location = locationManager.getLocationById(a.getValue());
 		if ((a = e.getAttribute("secLocationId")) != null && location != null)
 			track = location.getTrackById(a.getValue());
-		setLocation(location, track);
+		String status = setLocation(location, track, true);
+		if (!status.equals(OKAY) && location!=null && track!=null)
+			log.error("Could not place ("+getRoad()+" "+getNumber()+") at location ("+location.getName()+") track ("+track.getName()+")");
 		Location destination = null;
 		Track trackDestination = null;
 		if ((a = e.getAttribute("destinationId")) != null)
 			destination = locationManager.getLocationById(a.getValue());
 		if ((a = e.getAttribute("secDestinationId")) != null  && destination != null)
 			trackDestination = destination.getTrackById(a.getValue());
-		setDestination(destination, trackDestination);
+		status = setDestination(destination, trackDestination);
+		if (!status.equals(OKAY) && destination!=null && trackDestination!=null)
+			log.error("Could not set destination for rolling stock ("+getRoad()+" "+getNumber()+") destination ("+destination.getName()+") track ("+trackDestination.getName()+")");
 		if ((a = e.getAttribute("moves")) != null)
 			_moves = Integer.parseInt(a.getValue());
 		if ((a = e.getAttribute("train")) != null){
