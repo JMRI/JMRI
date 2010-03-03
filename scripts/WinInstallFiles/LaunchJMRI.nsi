@@ -23,6 +23,11 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.8.0
+; - Correction of the sort-order for native libraries - is now architecture
+; - specific first, followed by generic
+; - Improved initial memory checks
+; -------------------------------------------------------------------------
 ; - Version 0.1.7.0
 ; - Update to correctly identify JRE architecture on x64 systems and set
 ; - path to appropriate native libraries
@@ -61,15 +66,15 @@
 ; - Basic information
 ; - These should be edited to suit the application
 ; -------------------------------------------------------------------------
-!define AUTHOR   "Matt Harris for JMRI"         ; Author name
-!define APP      "LaunchJMRI"                   ; Application name
-!define COPYRIGHT "© 1997-2010 JMRI Community"  ; Copyright string
-!define VER      "0.1.7.0"                      ; Launcher version
-!define PNAME    "${APP}"                       ; Name of launcher
+!define AUTHOR     "Matt Harris for JMRI"         ; Author name
+!define APP        "LaunchJMRI"                   ; Application name
+!define COPYRIGHT  "© 1997-2010 JMRI Community"   ; Copyright string
+!define VER        "0.1.8.0"                      ; Launcher version
+!define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
-!define ICON     "decpro5.ico"                  ; Launcher icon
-!define MINMEM   10                             ; Minimum memory in Mbyte
-!define MAXMEM   200                            ; Maximum memory in Mbyte
+!define ICON       "decpro5.ico"                  ; Launcher icon
+!define MINMEM     20                             ; Minimum memory in Mbyte
+!define MAXMEM     640                            ; Maximum memory in Mbyte
 
 ; -------------------------------------------------------------------------
 ; - End of basic information
@@ -196,16 +201,23 @@ Section "Main"
   CalcFreeMem:
   System::Int64Op $4 / 1048576
   Pop $4
+  DetailPrint "FreeMemory: $4m"
   StrCpy $CALCMAXMEM $4
-  IntCmp $CALCMAXMEM ${MAXMEM} cmp_eq cmp_lt cmp_gt
-  cmp_eq:
+  IntCmp $CALCMAXMEM ${MAXMEM} cmp_done cmp_max_lt cmp_max_gt
+  cmp_max_lt:
+    ; -- Check that the free memory is >= MINMEM
+    IntCmp $CALCMAXMEM ${MINMEM} cmp_done cmp_min_lt cmp_done
     Goto cmp_done
-  cmp_lt:
-    Goto cmp_done
-  cmp_gt:
+  cmp_min_lt:
+    ; -- If insufficient free memory, stop with an error
+    MessageBox MB_OK|MB_ICONSTOP "Not enough free memory to start. JMRI requires at least ${MINMEM} MBytes free memory."
+    Goto Exit
+  cmp_max_gt:
+    ; -- If free memory greater than MAXMEM, set to MAXMEM
     StrCpy $CALCMAXMEM ${MAXMEM}
     Goto cmp_done
   cmp_done:
+  DetailPrint "MinMemory: ${MINMEM}m"
   DetailPrint "MaxMemory: $CALCMAXMEMm"
 
   ; -- Build options string
@@ -216,17 +228,17 @@ Section "Main"
   StrCmp 1 $x64JRE x64Libs x86Libs
   x86Libs:
     ; -- 32-bit libraries
-    StrCpy $OPTIONS "$OPTIONS -Djava.library.path=.;lib;lib\x86"
+    StrCpy $OPTIONS "$OPTIONS -Djava.library.path=.;lib\x86;lib"
     Goto LibsDone
   x64Libs:
     ; -- 64-bit libraries
-    StrCpy $OPTIONS "$OPTIONS -Djava.library.path=.;lib;lib\x64"
+    StrCpy $OPTIONS "$OPTIONS -Djava.library.path=.;lib\x64;lib"
   LibsDone:
   StrCpy $OPTIONS "$OPTIONS -Djava.rmi.server.codebase=file:java/classes/"
   ; -- ddraw is disabled to get around Swing performance problems in Java 1.5.0
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.noddraw"
   ; -- memory start and max limits
-  StrCpy $OPTIONS "$OPTIONS -Xms10m"
+  StrCpy $OPTIONS "$OPTIONS -Xms${MINMEM}m"
   StrCpy $OPTIONS "$OPTIONS -Xmx$CALCMAXMEMm"
   ; -- set paths for Jython and message log
   ; -- Creates the necessary directory if not existing
