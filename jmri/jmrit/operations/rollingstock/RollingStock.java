@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -647,7 +647,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			track = location.getTrackById(a.getValue());
 		String status = setLocation(location, track, true);
 		if (!status.equals(OKAY) && location!=null && track!=null)
-			log.error("Could not place ("+getRoad()+" "+getNumber()+") at location ("+location.getName()+") track ("+track.getName()+")");
+			log.warn("Could not place ("+getRoad()+" "+getNumber()+") at location ("+location.getName()+") track ("+track.getName()
+					+") because of ("+status+")");
 		Location destination = null;
 		Track trackDestination = null;
 		if ((a = e.getAttribute("destinationId")) != null)
@@ -656,7 +657,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			trackDestination = destination.getTrackById(a.getValue());
 		status = setDestination(destination, trackDestination);
 		if (!status.equals(OKAY) && destination!=null && trackDestination!=null)
-			log.error("Could not set destination for rolling stock ("+getRoad()+" "+getNumber()+") destination ("+destination.getName()+") track ("+trackDestination.getName()+")");
+			log.warn("Could not set destination for rolling stock ("+getRoad()+" "+getNumber()+") destination ("+destination.getName()
+					+") track ("+trackDestination.getName()+") because of ("+status+")");
 		if ((a = e.getAttribute("moves")) != null)
 			_moves = Integer.parseInt(a.getValue());
 		if ((a = e.getAttribute("train")) != null){
