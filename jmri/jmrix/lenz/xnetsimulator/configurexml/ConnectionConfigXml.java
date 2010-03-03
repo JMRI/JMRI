@@ -19,7 +19,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Paul Bender  Copyright: Copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -52,16 +52,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     public boolean load(Element e) {
     	boolean result = true;
         // start the "connection"
-        jmri.jmrix.lenz.xnetsimulator.XNetSimulatorFrame f
-                = new jmri.jmrix.lenz.xnetsimulator.XNetSimulatorFrame();
-        try {
-            f.initComponents();
-        } catch (Exception ex) {
-            //log.error("starting XNetSimulatorFrame exception: "+ex.toString());
-        }
-        f.pack();
-        f.setVisible(true);
-
+        jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter adapter
+                = new jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter();
+        adapter.configure();
         // register, so can be picked up
         getInstance();
         register();
