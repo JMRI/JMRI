@@ -24,7 +24,7 @@ import junit.framework.TestSuite;
  *   Backup, Control, Demo
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class OperationsSetupTest extends TestCase {
 
@@ -528,6 +528,23 @@ public class OperationsSetupTest extends TestCase {
 		TrainManagerXml.setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 		
 		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+OperationsXml.getOperationsDirectoryName());
+		
+		// delete files
+		File file = new File(RouteManagerXml.defaultOperationsFilename());
+		if (file.exists())
+			file.delete();
+		file = new File(EngineManagerXml.defaultOperationsFilename());
+		if (file.exists())
+			file.delete();
+		file = new File(CarManagerXml.defaultOperationsFilename());
+		if (file.exists())
+			file.delete();
+		file = new File(LocationManagerXml.defaultOperationsFilename());
+		if (file.exists())
+			file.delete();
+		file = new File(TrainManagerXml.defaultOperationsFilename());
+		if (file.exists())
+			file.delete();
 	}
 
 	public OperationsSetupTest(String s) {
