@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.11.0
+; - Update to remove WiThrottle plug-in if previously installed
+; -------------------------------------------------------------------------
 ; - Version 0.1.10.0
 ; - Update to correctly identify JRE architecture when installing on 64-bit
 ; - systems.
@@ -146,7 +149,7 @@
 !define COPYRIGHT "© 1997-2010 JMRI Community"  ; Copyright string
 !define JMRI_VER  "2.9.4"                       ; Application version
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.10.0"                    ; Installer version
+!define INST_VER  "0.1.11.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -352,6 +355,9 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\vecmath.jar"
     Delete "$OUTDIR\win32com.dll"
     Delete "$OUTDIR\xercesImpl.jar"
+
+    ; -- Delete old plug-ins from program folder
+    Delete "$OUTDIR\WiThrottle.jar"
 
     ; -- Delete .dll files from previous x64/x86 layout
     Delete "$OUTDIR\lib\jinput-raw_64.dll"
