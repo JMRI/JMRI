@@ -4,13 +4,12 @@ package apps;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.util.JmriJFrame;
-import jmri.jmrit.XmlFile;
 import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrit.throttle.ThrottleFrame;
+import jmri.jmrit.XmlFile;
 import jmri.jmrix.ConnectionStatus;
-
+import jmri.util.JmriJFrame;
 import jmri.util.WindowMenu;
 import jmri.util.iharder.dnd.FileDrop;
 import jmri.util.iharder.dnd.FileDrop.Listener;
@@ -19,18 +18,17 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.*;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.text.MessageFormat;
+import java.util.Enumeration;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
 
-import java.awt.event.WindowEvent;
-
-import java.util.Enumeration;
 import net.roydesign.mac.MRJAdapter;
 
 /**
@@ -39,7 +37,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.107 $
+ * @version     $Revision: 1.108 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -236,17 +234,10 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         }
     }
 
-
+    Action prefsAction;
+    
     protected void doPreferences() {
-        if (prefsFrame == null) {
-            prefsFrame = new JmriJFrame(rb.getString("TitlePreferences"));
-            prefsFrame.getContentPane().setLayout(new BoxLayout(prefsFrame.getContentPane(), BoxLayout.X_AXIS));
-            prefs = new AppConfigPanel(2);
-            prefsFrame.getContentPane().add(prefs);
-            setPrefsFrameHelp(prefsFrame, "package.apps.AppConfigPanel");
-            prefsFrame.pack();
-        }
-        prefsFrame.setVisible(true);
+            prefsAction.actionPerformed(null);
     }
 
     /**
@@ -260,11 +251,10 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
     
     protected void editMenu(JMenuBar menuBar, JFrame frame) {
-        AbstractAction prefsAction = new AbstractAction(rb.getString("MenuItemPreferences")) {
-            public void actionPerformed(ActionEvent e) {
-                doPreferences();
-            }
-        };
+        prefsAction = new jmri.util.swing.JmriNamedPaneAction(
+                        rb.getString("MenuItemPreferences"),
+                        new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                        "apps.gui3.TabbedPreferences");
 
         JMenu editMenu = new JMenu(rb.getString("MenuEdit"));
         menuBar.add(editMenu);
@@ -283,10 +273,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
         // prefs
         editMenu.add(prefsAction); // argument is filename, not action name
-
-        editMenu.add(new jmri.util.swing.JmriNamedPaneAction(
-                        "New Tabbed Prefs...",new jmri.util.swing.sdi.JmriJFrameInterface(), 
-                        "apps.gui3.TabbedPreferences"));
 
         editMenu.add(new jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesFrameAction("Message Options"));
     }
@@ -604,7 +590,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
     static JComponent _buttonSpace = null;
     
-    static protected JmriJFrame prefsFrame = null;
     static protected ResourceBundle rb;
 
     static protected AppConfigPanel prefs;
