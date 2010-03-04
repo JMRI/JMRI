@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.5.shtml,v 1.3 2010-02-28 06:23:25 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.5.shtml,v 1.4 2010-03-04 01:40:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -173,6 +173,9 @@ Matt Harris added a "(No Panels Available)" message to the Windows menu when the
 
 <p>
 Pete Cressman added an edit menu to Memory icons in the editors.
+
+<p>
+Several problems with allocation of addresses in the JMRI throttle were fixed.
 
 <p>
 Rodolphe Braud updated the French translation with help from Dan Boudreau and Marc Fournier.
