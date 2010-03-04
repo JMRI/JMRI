@@ -17,7 +17,7 @@ import jmri.jmrix.loconet.*;
  * so are shown separately.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
@@ -124,4 +124,16 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         slotScroll = null;
         super.dispose();
     }
+    /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
+        public Default() {
+            super("test", 
+                new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                SlotMonPane.class.getName(), 
+                (LocoNetSystemConnectionMemo)jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
+        }
+    }
+    
 }

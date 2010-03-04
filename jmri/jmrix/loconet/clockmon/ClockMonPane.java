@@ -23,7 +23,7 @@ import javax.swing.*;
  * items (Dave Duchamp 2007-2008).
  *
  * @author			Bob Jacobsen   Copyright (C) 2003, 2004, 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class ClockMonPane extends LnPanel implements SlotListener {
 
@@ -116,6 +116,18 @@ public class ClockMonPane extends LnPanel implements SlotListener {
 
     JButton readButton = new JButton("Read");
 
+    /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
+        public Default() {
+            super("test", 
+                new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                ClockMonPane.class.getName(), 
+                (LocoNetSystemConnectionMemo)jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
+        }
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ClockMonPane.class.getName());
 
 }

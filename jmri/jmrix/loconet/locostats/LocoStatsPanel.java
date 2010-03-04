@@ -30,7 +30,7 @@ import javax.swing.*;
  *
  * @author			Alex Shepherd   Copyright (C) 2003
  * @author			Bob Jacobsen   Copyright (C) 2008, 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  * @since 2.1.5
  */
 public class LocoStatsPanel extends LnPanel implements LocoNetListener {
@@ -272,5 +272,17 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
 
     JButton updateButton = new JButton("Update");
 
+    /**
+     * Nested class to create one of these using old-style defaults
+     */
+    static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
+        public Default() {
+            super("test", 
+                new jmri.util.swing.sdi.JmriJFrameInterface(), 
+                LocoStatsPanel.class.getName(), 
+                (LocoNetSystemConnectionMemo)jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
+        }
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoStatsPanel.class.getName());
 }

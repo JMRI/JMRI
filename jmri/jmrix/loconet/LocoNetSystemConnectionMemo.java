@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -23,7 +23,8 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         this.lt = lt;
         this.sm = sm;
         count = instanceCount++;
-        register();
+        register(); // registers general type
+        InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
     }
     
     private static int instanceCount = 1;
