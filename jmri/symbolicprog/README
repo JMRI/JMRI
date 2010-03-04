@@ -1,8 +1,0 @@
-DO NOT ADD ANY NEW FILES TO THIS DIRECTORY.
-
-The jmri.symbolicprog package been moved
-to the jmri.jmrit.symbolicprog package.
-
-Due to CVS limitations, jmri/symbolicprog directory 
-cannot be removed. We have therefore left it here, empty
-except for this file.
