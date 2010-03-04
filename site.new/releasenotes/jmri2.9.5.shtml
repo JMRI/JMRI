@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.5.shtml,v 1.4 2010-03-04 01:40:49 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.5.shtml,v 1.5 2010-03-04 01:42:26 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -184,6 +184,9 @@ Rodolphe Braud updated the French translation with help from Dan Boudreau and Ma
 Some HP touch-panel displays don't properly general "mouse clicked" events, but only
 "more pressed" and "mouse released".  To let them be used, a configuration option
 has been added on the GUI preferences pane to "use non-standard mouse events".
+
+<p>
+Matt Harris set the default backup option in the Windows installer.
 
 <!--#include virtual="/Footer" -->
 
