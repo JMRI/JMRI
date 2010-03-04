@@ -14,7 +14,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -40,12 +40,14 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
       */
     public boolean load(Element e) {
     	boolean result = true;
+        jmri.jmrix.internal.InternalSystemConnectionMemo memo = new jmri.jmrix.internal.InternalSystemConnectionMemo();
+        memo.configureManagers();
         // configure the other instance objects
         jmri.InstanceManager.setPowerManager(new jmri.managers.DefaultPowerManager());
 
-        jmri.InstanceManager.setTurnoutManager(new jmri.managers.InternalTurnoutManager());
+        //jmri.InstanceManager.setTurnoutManager(new jmri.managers.InternalTurnoutManager());
 
-        jmri.InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
+        //jmri.InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
 
        // Install a debug programmer
         jmri.InstanceManager.setProgrammerManager(
