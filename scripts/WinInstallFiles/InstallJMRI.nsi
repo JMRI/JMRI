@@ -52,6 +52,11 @@
 ; -------------------------------------------------------------------------
 ; - Version 0.1.11.0
 ; - Update to remove WiThrottle plug-in if previously installed
+; - Modify backup check to default to off when installing over newer or
+; - identical version
+; - Changed backup behaviour to keep two backups:
+; -  - JMRI_backup
+; -  - JMRI_backup_old
 ; -------------------------------------------------------------------------
 ; - Version 0.1.10.0
 ; - Update to correctly identify JRE architecture when installing on 64-bit
@@ -992,6 +997,7 @@ Function nsDialogRemoveOldJMRI
   Push $1
   Push $2
   Push $3
+  Push $4
   
   ; -- Default to not upgrading
   StrCpy $UPGRADING 0
@@ -1014,10 +1020,10 @@ Function nsDialogRemoveOldJMRI
     ; -- Now check if installed via old InstallVise installer
     ; -- by checking if the 'DisplayVersion' registry key exists
     ; -- (this key is not created by the old installer)
-    ReadRegStr $0 HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "DisplayVersion"
-    StrCmp $0 "" 0 Backup
-    ReadRegStr $0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "DisplayVersion"
-    StrCmp $0 "" Remove Backup
+    ReadRegStr $4 HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "DisplayVersion"
+    StrCmp $4 "" 0 Backup
+    ReadRegStr $4 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" "DisplayVersion"
+    StrCmp $4 "" Remove Backup
   
   Backup:
     ; -- If we get to here, we've been previously installed by the new installer
@@ -1058,20 +1064,29 @@ Function nsDialogRemoveOldJMRI
     Pop $0
     ; -- Check Windows version
     StrCmp $PROFILE "" 0 +3 ; -- prior to Win2k this is blank
-    StrCpy $0 "$WINDIR"     ; -- for pre-Win2k
+    StrCpy $1 "$WINDIR"     ; -- for pre-Win2k
     Goto +2
-    StrCpy $0 "$PROFILE"    ; -- for Win2k and later
-    ${NSD_CreateText} 0 50u 100% 12u "$0\JMRI_backup"
+    StrCpy $1 "$PROFILE"    ; -- for Win2k and later
+    ${NSD_CreateText} 0u 50u 100% 12u "$1\JMRI_backup"
+    Pop $0
+    SendMessage $0 ${EM_SETREADONLY} 1 0
+    
+    ${NSD_CreateLabel} 0u 70u 100% 12u "Any existing backup will be moved to the following location:"
+    Pop $0
+    ${NSD_CreateText} 0u 84u 100% 12u "$1\JMRI_backup_old"
     Pop $0
     SendMessage $0 ${EM_SETREADONLY} 1 0
 
-    ${NSD_CreateCheckBox} 0u 100u 100% 8u "$3"
+    ${NSD_CreateCheckBox} 0u 120u 100% 8u "$3"
     Pop $REMOVEOLDJMRI.CHECKBOX
     ${NSD_OnClick} $REMOVEOLDJMRI.CHECKBOX RemoveOldJMRICheckboxChange
-    ; -- If this is a backup only install, select the checkbox
-    StrCmp $REMOVEOLDJMRI.BACKUPONLY "0" +2
+    ; -- If this is a backup only install, select the checkbox if installed version is older
+    StrCmp $REMOVEOLDJMRI.BACKUPONLY "0" ShowDialog
+      ${VersionCompare} "${JMRI_VER}" "$4" $0
+      StrCmp $0 "1" 0 ShowDialog
       ${NSD_SetState} $REMOVEOLDJMRI.CHECKBOX ${BST_CHECKED}
 
+  ShowDialog:
     Call RemoveOldJMRICheckboxChange
 
     ; -- Show the dialog
@@ -1079,6 +1094,7 @@ Function nsDialogRemoveOldJMRI
 
   Done:
     ; -- Restore variables from the stack
+    Pop $4
     Pop $3
     Pop $2
     Pop $1
@@ -1148,6 +1164,8 @@ Function RemoveOldJMRI
   StrCpy $0 "$PROFILE"    ; -- for Win2k and later
 
   ; -- Perform backup
+  RMDir /r "$0\JMRI_backup_old"
+  Rename "$0\JMRI_backup" "$0\JMRI_backup_old"
   CreateDirectory "$0\JMRI_backup"
   CopyFiles "$0\JMRI\*.*" "$0\JMRI_backup"
   
