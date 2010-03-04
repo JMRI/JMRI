@@ -6,9 +6,10 @@ package jmri.jmrix.lenz.xnetsimulator;
 /**
  * Frame to control and connect XPressNet via XNetSimulator interface and comm port
  * @author			Paul Bender    Copyright (C) 2009
- * @version			$Revision: 1.5 $
- * @Deprecated
+ * @version			$Revision: 1.6 $
+ * @deprecated      2.9.5
  */
+@Deprecated
 public class XNetSimulatorFrame extends jmri.util.JmriJFrame{
 
         private XNetSimulatorAdapter adapter = null;
