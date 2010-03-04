@@ -19,7 +19,7 @@ import jmri.util.SystemNameComparator;
  * be added is the "Primary", used if a system letter is not provided.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class AbstractProxyManager implements Manager {
 
@@ -133,6 +133,10 @@ public class AbstractProxyManager implements Manager {
     public void addManager(Manager m) {
         mgrs.add(m);
         log.debug("added manager");
+    }
+
+    public List<jmri.Manager> getManagerList(){
+        return mgrs;
     }
 
     // initialize logging
