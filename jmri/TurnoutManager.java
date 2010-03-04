@@ -40,7 +40,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  * @see             jmri.Turnout
  * @see             jmri.InstanceManager
  * @see             jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
@@ -162,6 +162,21 @@ public interface TurnoutManager extends Manager {
 	 * specifies the duration of the pulse (normally in seconds).  
 	 */
 	 public int askControlType(String systemName);
+     
+    /**
+    * A temporary method that determines if it is possible to add a range
+    * of turnouts in numerical order eg 10 to 30 will return true.  
+    * where as if the address format is 1b23 this will return false.
+    **/
+     
+     public boolean allowMultipleAdditions();
+     
+    /**
+    * A method that creates an array of systems names to allow bulk
+    * creation of turnouts.
+    */
+     
+    public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix);
 
 }
 

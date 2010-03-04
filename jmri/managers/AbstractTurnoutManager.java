@@ -10,7 +10,7 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -150,6 +150,32 @@ public abstract class AbstractTurnoutManager extends AbstractManager
        } else {
        	    return new String[]{"Sensor", "NoFeedback"};
        }
+    }
+    
+    /**
+    * A temporary method that determines if it is possible to add a range
+    * of turnouts in numerical order eg 10 to 30
+    **/
+    
+    public boolean allowMultipleAdditions() { return true;  }
+    
+    /**
+    * A method that creates an array of systems names to allow bulk
+    * creation of turnouts.
+    */
+    public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix){
+        int iName = 0;
+        String range[] = new String[numberToAdd];
+        try {
+            iName = Integer.parseInt(start);
+        } catch (NumberFormatException ex) {
+            log.error("Unable to convert Hardware Address to a number");
+            return null;
+        }
+        for (int x = 0; x < numberToAdd; x++){
+            range[x] = prefix+"T"+(iName+x);
+        }
+        return range;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractTurnoutManager.class.getName());

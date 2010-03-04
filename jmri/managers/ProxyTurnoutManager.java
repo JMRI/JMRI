@@ -17,7 +17,7 @@ import jmri.TurnoutOperationManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -36,10 +36,22 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
         if (mgrs.size() == 0) { 
             log.debug("initial addmanager");
             mgrs.add(m);
-            //Only add internal manager if it hasn't already been added.
+            /*Only add internal manager if it hasn't already been added.
+            It should be possible to remove adding the internal turnout manager
+            once all of the systems use the systemConnectionMemo method*/
             if (!m.getClass().getName().contains("InternalTurnoutManager"))
                 mgrs.add(new InternalTurnoutManager());
         } else {
+            /*This next if statement can be removed once all systems use the 
+            systemConnectionMemo method, all this does is prevent two
+            internalTurnoutManagers from being registered*/
+            if (m.getClass().getName().contains("InternalTurnoutManager")){
+                List<Manager> managerList = getManagerList();
+                for(int x = 0; x<managerList.size(); x++){
+                    if (managerList.get(x).getClass().getName().contains("InternalTurnoutManager"))
+                        return;
+                }
+            }
             mgrs.add(m);
         }
         log.debug("added manager");
@@ -289,7 +301,18 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 		}
 		return TurnoutOperationManager.concatenateTypeLists(typeList.toArray(new String[0]));
 	}
-	
+
+    public boolean allowMultipleAdditions() { return false; }
+    
+    public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix){
+        for (int i=0; i<mgrs.size(); i++) {
+            if ( prefix.startsWith( 
+                    ((TurnoutManager)mgrs.get(i)).getSystemPrefix()) ) {
+                return ((TurnoutManager)mgrs.get(i)).formatRangeOfAddresses(start, numberToAdd, prefix);
+            }
+        }
+        return null;
+    }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProxyTurnoutManager.class.getName());

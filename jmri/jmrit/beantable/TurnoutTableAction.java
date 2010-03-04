@@ -12,11 +12,13 @@ import jmri.TurnoutOperation;
 import jmri.Sensor;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
+import jmri.jmrix.DCCManufacturerList;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.util.Vector;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.Box;
@@ -40,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.70 $
+ * @version     $Revision: 1.71 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -355,12 +357,19 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
     
     JmriJFrame addFrame = null;
-    JTextField sysName = new JTextField(8);
-    JTextField userName = new JTextField(8);
-    JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
+    JTextField sysName = new JTextField(10);
+    JTextField userName = new JTextField(20);
+    JComboBox prefixBox = new JComboBox();
+    JTextField numberToAdd = new JTextField(10);
+    JCheckBox range = new JCheckBox("Add a range");
+    JLabel sysNameLabel = new JLabel("Hardware Address");
     JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
+    String systemSelectionCombo = this.getClass().getName()+".SystemSelected";
+    jmri.UserPreferencesManager p;
     
     void addPressed(ActionEvent e) {
+        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        
         if (addFrame==null) {
             addFrame = new JmriJFrame(rb.getString("TitleAddTurnout"));
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.TurnoutAddEdit", true);
@@ -371,12 +380,45 @@ public class TurnoutTableAction extends AbstractTableAction {
                         okPressed(e);
                     }
                 };
+                
+            ActionListener rangeListener = new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        canAddRange(e);
+                    }
+                };
+            if (jmri.InstanceManager.turnoutManagerInstance().getClass().getName().contains("ProxyTurnoutManager")){
+                jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) jmri.InstanceManager.turnoutManagerInstance();
+                List<Manager> managerList = proxy.getManagerList();
+                for(int x = 0; x<managerList.size(); x++){
+                    String manuName = provideConnectionNameFromPrefix(managerList.get(x).getSystemPrefix());
+                    prefixBox.addItem(manuName);                      
+                }
+                prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
+            }
+            else {
+                prefixBox.addItem(provideConnectionNameFromPrefix(jmri.InstanceManager.turnoutManagerInstance().getSystemPrefix()));
+            }
+                       
             sysName.setName("sysName");
             userName.setName("userName");
-            addFrame.add(new AddNewDevicePanel(sysName, userName, "ButtonOK", listener));
+            addFrame.add(new AddNewHardwareDevicePanel(sysName, userName, prefixBox, numberToAdd, range, "ButtonOK", listener, rangeListener));
+            canAddRange(null);
         }
         addFrame.pack();
         addFrame.setVisible(true);
+    }
+    
+    private String provideConnectionNameFromPrefix(String prefix){
+        java.util.List<Object> list 
+            = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
+        if (list != null) {
+            for (Object memo : list) {
+                if (((jmri.jmrix.SystemConnectionMemo)memo).getSystemPrefix().equals(prefix))
+                    return ((jmri.jmrix.SystemConnectionMemo)memo).getUserName();
+            }
+        }
+        //Fall through if the system isn't using the new SystemConnectionMemo registration
+        return DCCManufacturerList.getDCCSystemFromType(prefix.charAt(0));
     }
     
     boolean showFeedback = false;
@@ -650,57 +692,130 @@ public class TurnoutTableAction extends AbstractTableAction {
         String user = userName.getText();
         if (user.equals("")) user=null;
         // Test if bit already in use as a light
-        String sName = sysName.getText().toUpperCase();
-        if (sName.length()>2 && sName.charAt(1)=='T') {
-            // probably standard format turnout system name
-            String testSN = sName.substring(0,1)+"L"+sName.substring(2,sName.length());
-            jmri.Light testLight = InstanceManager.lightManagerInstance().
-                getBySystemName(testSN);
-            if (testLight != null) {
-                // Address is already used as a Light
-                log.warn("Requested Turnout "+sName+" uses same address as Light "+testSN);
-                if (!noWarn) {
-                    int selectedValue = JOptionPane.showOptionDialog(addFrame,
-                                                                     rb.getString("TurnoutWarn1")+" "+sName+" "+rb.getString("TurnoutWarn2")+" "+
-                                                                     testSN+".\n   "+rb.getString("TurnoutWarn3"),rb.getString("WarningTitle"),
-                                                                     JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
-                                                                     new Object[]{rb.getString("ButtonYes"),rb.getString("ButtonNo"),
-                                                                                  rb.getString("ButtonYesPlus")},rb.getString("ButtonNo"));
-                    if (selectedValue == 1) return;   // return without creating if "No" response
-                    if (selectedValue == 2) {
-                        // Suppress future warnings, and continue
-                        noWarn = true;
+        //int iName=0;
+        int numberOfTurnouts = 1;
+
+        if(range.isSelected()){
+            /*try {
+                iName = Integer.parseInt(sysName.getText());
+            } catch (NumberFormatException ex) {
+                log.error("Unable to convert Hardware Address to a number");
+                return;
+            }*/
+        
+            try {
+                numberOfTurnouts = Integer.parseInt(numberToAdd.getText());
+            } catch (NumberFormatException ex) {
+                log.error("Unable to convert the end Hardware Address to a number");
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Number to Add must be a number!",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                return;
+            }
+        } 
+        if (numberOfTurnouts>=65){
+            if(JOptionPane.showConfirmDialog(addFrame,
+                                                 "You are about to add " + numberOfTurnouts + " Turnouts into the configuration\nAre you sure?","Warning",
+                                                 JOptionPane.YES_NO_OPTION)==1)
+                return;
+        }
+        //String turnoutPrefix = getTurnoutPrefixFromName()+"T";
+        String sName = null;
+        String[] turnoutList = InstanceManager.turnoutManagerInstance().formatRangeOfAddresses(sysName.getText(), numberOfTurnouts, getTurnoutPrefixFromName());
+
+        for (int x = 0; x < turnoutList.length; x++){
+            sName = turnoutList[x];
+            if (sName.length()>2 && sName.charAt(1)=='T') {
+                // probably standard format turnout system name
+                String testSN = sName.substring(0,1)+"L"+sName.substring(2,sName.length());
+                jmri.Light testLight = InstanceManager.lightManagerInstance().
+                    getBySystemName(testSN);
+                if (testLight != null) {
+                    // Address is already used as a Light
+                    log.warn("Requested Turnout "+sName+" uses same address as Light "+testSN);
+                    if (!noWarn) {
+                        int selectedValue = JOptionPane.showOptionDialog(addFrame,
+                                                                         rb.getString("TurnoutWarn1")+" "+sName+" "+rb.getString("TurnoutWarn2")+" "+
+                                                                         testSN+".\n   "+rb.getString("TurnoutWarn3"),rb.getString("WarningTitle"),
+                                                                         JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
+                                                                         new Object[]{rb.getString("ButtonYes"),rb.getString("ButtonNo"),
+                                                                                      rb.getString("ButtonYesPlus")},rb.getString("ButtonNo"));
+                        if (selectedValue == 1) return;   // return without creating if "No" response
+                        if (selectedValue == 2) {
+                            // Suppress future warnings, and continue
+                            noWarn = true;
+                        }
                     }
                 }
             }
-        }
-        // Ask about two bit turnout control if appropriate
-        int iNum;
-        iNum = InstanceManager.turnoutManagerInstance().askNumControlBits(sName);
-        if (iNum==0) {
-            // User specified more bits, but bits are not available - return without creating
-            return;
-        }
-        else {
-            // Create the new turnout
-            Turnout t;
-            try {
-                t = InstanceManager.turnoutManagerInstance().provideTurnout(sName);
-            } catch (IllegalArgumentException ex) {
-                // user input no good
-                handleCreateException(sysName.getText());
-                return; // without creating       
+            // Ask about two bit turnout control if appropriate
+            int iNum;
+            iNum = InstanceManager.turnoutManagerInstance().askNumControlBits(sName);
+            if (iNum==0) {
+                // User specified more bits, but bits are not available - return without creating
+                return;
             }
-            
-            if (t != null) {
-                if (user != null && !user.equals("")) t.setUserName(user);
-                t.setNumberOutputBits(iNum);
-                int iType = 0;
-                // Ask about the type of turnout control if appropriate
-                iType = InstanceManager.turnoutManagerInstance().askControlType(sName);
-                t.setControlType(iType);
+            else {
+                // Create the new turnout
+                Turnout t;
+                try {
+                    t = InstanceManager.turnoutManagerInstance().provideTurnout(sName);
+                } catch (IllegalArgumentException ex) {
+                    // user input no good
+                    handleCreateException(sysName.getText());
+                    return; // without creating       
+                }
+                
+                if (t != null) {
+                    String userName = user;
+                    if ((x!=0) && user != null && !user.equals(""))
+                        userName = user+":"+x;
+                    if (userName != null && !userName.equals("")) t.setUserName(userName);
+                    t.setNumberOutputBits(iNum);
+                    int iType = 0;
+                    // Ask about the type of turnout control if appropriate
+                    iType = InstanceManager.turnoutManagerInstance().askControlType(sName);
+                    t.setControlType(iType);
+                }
             }
         }
+        p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
+    }
+    
+    private void canAddRange(ActionEvent e){
+        range.setEnabled(false);
+        range.setSelected(false);
+        if (jmri.InstanceManager.turnoutManagerInstance().getClass().getName().contains("ProxyTurnoutManager")){
+            jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) jmri.InstanceManager.turnoutManagerInstance();
+            List<Manager> managerList = proxy.getManagerList();
+            String systemPrefix = getTurnoutPrefixFromName();
+            for(int x = 0; x<managerList.size(); x++){
+                jmri.TurnoutManager mgr = (jmri.TurnoutManager) managerList.get(x);
+                if (mgr.getSystemPrefix().equals(systemPrefix) && mgr.allowMultipleAdditions()){
+                    range.setEnabled(true);
+                    return;
+                }
+            }
+        }
+        else if (jmri.InstanceManager.turnoutManagerInstance().allowMultipleAdditions()){
+            range.setEnabled(true);
+        }
+    }
+    
+    String getTurnoutPrefixFromName(){
+        if (((String) prefixBox.getSelectedItem())==null)
+            return null;
+        java.util.List<Object> list 
+            = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
+        if (list != null) {
+            for (Object memo : list) {
+                if (((jmri.jmrix.SystemConnectionMemo)memo).getUserName().equals((String) prefixBox.getSelectedItem())){
+                    return ((jmri.jmrix.SystemConnectionMemo)memo).getSystemPrefix();
+                }
+            }
+        }
+        //Fall through if the system isn't using the new SystemConnectionMemo registration
+        return DCCManufacturerList.getTypeFromDCCSystem((String) prefixBox.getSelectedItem())+"";
+    
     }
 
     void handleCreateException(String sysName) {

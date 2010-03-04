@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "GTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -55,6 +55,23 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return _instance;
     }
     static SerialTurnoutManager _instance = null;
+    
+    //Turnout address format is more than a simple number.
+    public boolean allowMultipleAdditions() { return false;  }
+    
+    /**
+    * A method that creates an array of systems names to allow bulk
+    * creation of turnouts.
+    */
+    //further work needs to be done on how to format a number of CMRI turnout, therefore this method will only return one entry.
+    public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix){
+        numberToAdd = 1;
+        String range[] = new String[numberToAdd];
+        for (int x = 0; x < numberToAdd; x++){
+            range[x] = prefix+"T"+start;
+        }
+        return range;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnoutManager.class.getName());
 
