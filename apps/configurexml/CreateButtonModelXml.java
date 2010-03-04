@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle XML persistance of CreateButtonModel objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  * @see apps.CreateButtonPanel
  */
 public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -57,16 +57,13 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
             log.error("Could not find specified class: "+className);
             result = false;
         } catch (IllegalAccessException ex2) {
-            log.error("Unexpected access exception: "+ex2);
+            log.error("Unexpected access exception",ex2);
             result = false;
         } catch (InstantiationException ex3) {
-            log.error("Could not instantiate specified class: "+className);
-            ex3.printStackTrace();
-            System.out.println(ex3);
+            log.error("Could not instantiate specified class: "+className, ex3);
             result = false;
         } catch (Exception ex4) {
-            log.error("Error while performing startup action: "+ex4);
-            ex4.printStackTrace();
+            log.error("Exception while performing startup action", ex4);
             result = false;
         }
         CreateButtonModel m = new CreateButtonModel();
