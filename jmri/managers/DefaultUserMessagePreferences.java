@@ -13,6 +13,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.UIManager;
+import java.util.ArrayList;
 
 /**
  * Basic Implementation of the User Preferences Manager.
@@ -21,7 +22,7 @@ import javax.swing.UIManager;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
  
 public class DefaultUserMessagePreferences implements UserPreferencesManager {
@@ -171,7 +172,71 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
             dialog.setVisible(true);
         }
     }
+    
+    public void addComboBoxLastSelection(String comboBoxName, String lastValue){
+        if (getComboBoxLastSelection(comboBoxName)==null) {
+            ComboBoxLastSelection combo = new ComboBoxLastSelection(comboBoxName, lastValue);
+            _comboBoxLastSelection.add(combo);
+        } else {
+            setComboBoxLastSelection(comboBoxName, lastValue);
+        }
+        _changeMade = true;
+    }
+    
+    public String getComboBoxLastSelection(String comboBoxName){
+        for (int i=0; i<_comboBoxLastSelection.size(); i++) {
+            if( _comboBoxLastSelection.get(i).getComboBoxName().equals(comboBoxName)) {
+                return _comboBoxLastSelection.get(i).getLastValue();
+            }
+        }
+        return null;
+    }
+    
+    public void setComboBoxLastSelection(String comboBoxName, String lastValue){
+        for (int i=0; i<_comboBoxLastSelection.size(); i++) {
+            if( _comboBoxLastSelection.get(i).getComboBoxName().equals(comboBoxName)) {
+                _comboBoxLastSelection.get(i).setLastValue(lastValue);
+            }
+        }
+        _changeMade = true;
+    }
+    
+    public int getComboBoxSelectionSize() { return _comboBoxLastSelection.size(); }
+    
+    public String getComboBoxName(int n){
+        try{
+            return _comboBoxLastSelection.get(n).getComboBoxName();
+        } catch (IndexOutOfBoundsException ioob) {
+            return null;
+        }
+    }
+    public String getComboBoxLastSelection(int n) {
+        try{
+            return _comboBoxLastSelection.get(n).getLastValue();
+        } catch (IndexOutOfBoundsException ioob) {
+            return null;
+        }
+    }
 
+    ArrayList <ComboBoxLastSelection> _comboBoxLastSelection = new ArrayList<ComboBoxLastSelection>();
+    
+    private class ComboBoxLastSelection {
+        
+        String comboBoxName = null;
+        String lastValue = null;
+        
+        ComboBoxLastSelection(String comboBoxName, String lastValue){
+            this.comboBoxName = comboBoxName;
+            this.lastValue = lastValue;
+        }
+        
+        String getLastValue(){ return lastValue; }
+        
+        void setLastValue(String lastValue){ this.lastValue = lastValue; }
+        
+        String getComboBoxName() {return comboBoxName; }
+    
+    }
 
     ShutDownTask userPreferencesShutDownTask = null;
     

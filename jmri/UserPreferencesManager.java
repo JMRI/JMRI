@@ -13,7 +13,7 @@ import java.awt.Dimension;
  * @see jmri.managers.DefaultUserMessagePreferences
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
  
 public interface UserPreferencesManager {
@@ -92,7 +92,7 @@ public interface UserPreferencesManager {
      */
     public void showInfoMessage(String title, String message, String preference);
     
-        /**
+    /**
      * Show an info message ("don't forget ...")
      * with a given dialog title and
      * user message.
@@ -110,6 +110,45 @@ public interface UserPreferencesManager {
     public int getQuitAfterSave();
     public void setQuitAfterSave(int boo);
 
+    /**
+     * Adds the last selection of a combo box.
+     * <p>
+     * The name is free-form, but to avoid ambiguity it should
+     * start with the package name (package.Class) for the
+     * primary using class, followed by an identifier for the combobox
+     */
+    public void addComboBoxLastSelection(String comboBoxName, String lastValue);
+    
+    /**
+    * returns the last selected value in a given combobox
+    *
+    **/
+    public String getComboBoxLastSelection(String comboBoxName);
+    
+    /**
+    * sets the last selected value in a given combobox
+    *
+    **/
+    public void setComboBoxLastSelection(String comboBoxName, String lastValue);
+    
+    /**
+    * returns the number of comboBox options saved
+    *
+    **/
+    public int getComboBoxSelectionSize();
+    
+    /**
+    * returns the ComboBox Name at position n
+    *
+    **/
+    public String getComboBoxName(int n);
+
+    /**
+    * returns the ComboBox Value at position n
+    *
+    **/
+    public String getComboBoxLastSelection(int n);
+    
      /**
      * The following method determines if we should confirm we the
      * user the deletion of a Turnout.

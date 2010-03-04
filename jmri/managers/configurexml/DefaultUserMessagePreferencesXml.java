@@ -35,6 +35,19 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
             messages.addContent(pref);
         }
         
+        int comboBoxSize = p.getComboBoxSelectionSize();
+        
+        if (comboBoxSize >0){
+            Element comboList = new Element("comboBoxLastValue");
+                for(int i = 0; i<comboBoxSize; i++){
+                    Element combo = new Element("comboBox");
+                    combo.setAttribute("name", p.getComboBoxName(i));
+                    combo.setAttribute("lastSelected", p.getComboBoxLastSelection(i));
+                    comboList.addContent(combo);
+                }
+            messages.addContent(comboList);
+        }
+        
         storeQuestion(messages, "warnSensorInUse", p.getWarnSensorInUse());
         storeQuestion(messages, "warnSignalHeadInUse", p.getWarnSignalHeadInUse());
         storeQuestion(messages, "warnTransitInUse", p.getWarnTransitInUse());
@@ -93,6 +106,18 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         for (int i = 0; i < settingList.size(); i++) {
             String name = settingList.get(i).getText();
             p.setPreferenceState(name, true);
+        }
+        @SuppressWarnings("unchecked")
+        List<Element> comboList = messages.getChildren("comboBoxLastValue");
+        
+        for (int i = 0; i < comboList.size(); i++) {    
+            @SuppressWarnings("unchecked")
+            List<Element> comboItem = comboList.get(i).getChildren("comboBox");
+            for (int x = 0; x<comboItem.size(); x++){
+                String combo = comboItem.get(x).getAttribute("name").getValue();
+                String setting = comboItem.get(x).getAttribute("lastSelected").getValue();                
+                p.addComboBoxLastSelection(combo, setting);
+            }
         }
         
         p.setWarnSensorInUse(loadQuestion(messages, "warnSensorInUse"));
