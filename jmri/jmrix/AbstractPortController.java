@@ -6,12 +6,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
-//import java.lang.reflect.Field;
-//import java.lang.reflect.Method;
-
 import gnu.io.CommPortIdentifier;
 import javax.swing.JOptionPane;
-//import jmri.util.SystemType;
 
 /**
  * Provide an abstract base for *PortController classes.
@@ -24,7 +20,7 @@ import javax.swing.JOptionPane;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  */
 abstract public class AbstractPortController implements PortAdapter {
 
