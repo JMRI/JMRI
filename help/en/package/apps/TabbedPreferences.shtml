@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TabbedPreferences.shtml,v 1.2 2010-03-05 00:05:12 jacobsen Exp $ -->
+<!-- $Id: TabbedPreferences.shtml,v 1.3 2010-03-05 06:33:41 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -23,7 +23,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>JMRI: Tabbed Preferences Window</H1>
+<H1>JMRI: Preferences Window</H1>
 
 <a href="images/PrefsCommPane.png">
 <img src="images/PrefsCommPane.png" height="236" width="260" align="right"></a>
@@ -32,6 +32,11 @@ The preferences window is where you
 configure the basic operation of your JMRI application.
 It has a series of tabs on which you can set 
 the various kinds of options.
+
+<p>
+This page describes the preferences window for JMRI 2.9.4 and later.
+For earlier versions, see the 
+<a href="AppConfigPanel.shtml">older page</a>.
 
 <p>
 Perhaps the most important control is at the bottom of the window:
