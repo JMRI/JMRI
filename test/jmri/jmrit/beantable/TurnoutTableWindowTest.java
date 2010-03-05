@@ -16,7 +16,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the turnout table
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
 
@@ -40,13 +40,19 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         // Find add window by name
         JmriJFrame fa = JmriJFrame.getFrame("Add New Turnout");
         
-        // Find system name field
+        // Find hardware number field
         NamedComponentFinder ncfinder = new NamedComponentFinder(JComponent.class, "sysName" );
         JTextField sysNameField = (JTextField) ncfinder.find(fa, 0);
         Assert.assertNotNull(sysNameField);
-        
         // set to "1"
         getHelper().sendString( new StringEventData( this, sysNameField, "1" ) );
+        
+        // Find system combobox
+        ncfinder = new NamedComponentFinder(JComponent.class, "prefixBox" );
+        JComboBox prefixBox = (JComboBox) ncfinder.find(fa, 0);
+        Assert.assertNotNull(prefixBox);
+        // set to "Internal"
+        prefixBox.setSelectedItem("Internal");
         
         // Find the OK button
         abfinder = new AbstractButtonFinder("OK" );
