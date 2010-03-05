@@ -16,7 +16,7 @@ import javax.servlet.ServletContext;
  * we can move to servlets later on.
  *
  * @author  Bob Jacobsen Copyright 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @since       2.9.4
  */
 
@@ -24,7 +24,6 @@ public class MiniServletContext implements javax.servlet.ServletContext {
     public MiniServletContext() {
     }
     
-
     public Object getAttribute(java.lang.String name) { return null; }
     public java.util.Enumeration getAttributeNames() { return null; }
     public ServletContext getContext(java.lang.String uripath) { return null; }

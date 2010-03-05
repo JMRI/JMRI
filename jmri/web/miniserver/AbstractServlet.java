@@ -15,7 +15,7 @@ import java.io.BufferedReader;
  * Implement some useful tools for a Servlet.
  *
  * @author  Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public abstract class AbstractServlet implements Servlet, ServletConfig {
@@ -97,7 +97,9 @@ public abstract class AbstractServlet implements Servlet, ServletConfig {
     // End dummy ServletConfig methods
     // *********************************
     
-    ServletContext context = null;
+    // there is only one of these because the MiniServer only
+    // implements one application context.
+    static ServletContext context = null;
     
     // Normal Web page requests use GET, so this can simply
     // read a line at a time. However, HTML forms can also use 
