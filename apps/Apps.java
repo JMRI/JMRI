@@ -37,7 +37,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.108 $
+ * @version     $Revision: 1.109 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -272,9 +272,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         editMenu.add(a);
 
         // prefs
-        editMenu.add(prefsAction); // argument is filename, not action name
-
-        editMenu.add(new jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesFrameAction("Message Options"));
+        editMenu.add(prefsAction); // Preferences item via action
     }
 
     protected void toolsMenu(JMenuBar menuBar, JFrame frame) {
