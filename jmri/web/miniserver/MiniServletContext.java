@@ -16,7 +16,7 @@ import javax.servlet.ServletContext;
  * we can move to servlets later on.
  *
  * @author  Bob Jacobsen Copyright 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * @since       2.9.4
  */
 
@@ -24,24 +24,37 @@ public class MiniServletContext implements javax.servlet.ServletContext {
     public MiniServletContext() {
     }
     
-    public Object getAttribute(java.lang.String name) { return null; }
+    public Object getAttribute(String name) { 
+        return attributes.get(name);
+    }
+    public void removeAttribute(String name)  {
+        attributes.remove(name);
+    }
+    
+    public void setAttribute(String name, Object object) {
+        attributes.put(name, object);
+    }
+
+    java.util.HashMap<String, Object> attributes = new java.util.HashMap<String, Object>();
+    
+    // following here are dummy/minimal implementations
     public java.util.Enumeration getAttributeNames() { return null; }
-    public ServletContext getContext(java.lang.String uripath) { return null; }
-    public String getInitParameter(java.lang.String name) { return null; }
+    public ServletContext getContext(String uripath) { return null; }
+    public String getInitParameter(String name) { return null; }
     public java.util.Enumeration getInitParameterNames() { return null; }
     public int getMajorVersion() { return -1; }
-    public String getMimeType(java.lang.String file) { return null; }
+    public String getMimeType(String file) { return null; }
     public int getMinorVersion() { return -1; }
-    public RequestDispatcher getNamedDispatcher(java.lang.String name) { return null; }
-    public String getRealPath(java.lang.String path) { return null; }
-    public RequestDispatcher getRequestDispatcher(java.lang.String path) { return null; }
-    public java.net.URL getResource(java.lang.String path) { return null; }
-    public java.io.InputStream getResourceAsStream(java.lang.String path) { return null; }
-    public java.util.Set getResourcePaths(java.lang.String path) { return null; }
+    public RequestDispatcher getNamedDispatcher(String name) { return null; }
+    public String getRealPath(String path) { return null; }
+    public RequestDispatcher getRequestDispatcher(String path) { return null; }
+    public java.net.URL getResource(String path) { return null; }
+    public java.io.InputStream getResourceAsStream(String path) { return null; }
+    public java.util.Set getResourcePaths(String path) { return null; }
     public String getServerInfo() { return null; }
 
     @Deprecated
-    public Servlet getServlet(java.lang.String name) { return null; }
+    public Servlet getServlet(String name) { return null; }
 
     public String getServletContextName() { return null; }
 
@@ -56,7 +69,5 @@ public class MiniServletContext implements javax.servlet.ServletContext {
 
     public void log(java.lang.String msg)  {}
     public void log(java.lang.String message, java.lang.Throwable throwable)  {}
-    public void removeAttribute(java.lang.String name)  {}
-    public void setAttribute(java.lang.String name, java.lang.Object object) {}
           
 }

@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.web.miniserver tree
  *
  * @author	    Bob Jacobsen  Copyright 2008
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class MiniServerTest extends TestCase {
 
@@ -27,6 +27,7 @@ public class MiniServerTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.web.miniserver.MiniServerTest");   // no tests in this class itself
         suite.addTest(jmri.web.miniserver.servlet.ServletTest.suite());
+        suite.addTest(MiniServletContextTest.suite());
         return suite;
     }
 
