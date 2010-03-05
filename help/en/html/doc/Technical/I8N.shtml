@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: I8N.shtml,v 1.8 2008-12-06 19:09:15 jacobsen Exp $ -->
+<!-- $Id: I8N.shtml,v 1.9 2010-03-05 00:05:12 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -63,7 +63,7 @@ And if that fails, it goes to the defaults with no suffix:  foo.properties.
 <P>
 By installing appropriate files and allowing the user to select 
 a default locale (as part of the 
-<a href="../../../package/apps/AppConfigPanel.shtml#locale">advanced preferences</a>), 
+<a href="../../../package/apps/TabbedPreferences.shtml#locale">advanced preferences</a>), 
 we can
 customize the program to different countries and languages.
 

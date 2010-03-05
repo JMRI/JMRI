@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TabbedPreferences.shtml,v 1.1 2010-02-20 23:56:33 jacobsen Exp $ -->
+<!-- $Id: TabbedPreferences.shtml,v 1.2 2010-03-05 00:05:12 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -25,19 +25,14 @@
 
 <H1>JMRI: Tabbed Preferences Window</H1>
 
+<a href="images/PrefsCommPane.png">
+<img src="images/PrefsCommPane.png" height="236" width="260" align="right"></a>
+
 The preferences window is where you 
 configure the basic operation of your JMRI application.
 It has a series of tabs on which you can set 
 the various kinds of options.
 
-<p>
-<img src="../../images/bangdesk.gif" align="right" height="45" width="45" alt="Cute image of work">
-This page is under construction.
-The images are from another version of the preferences window,
-and don't reflect the current tabbed structure.
-In the meantime, there's some more information on preferences
-on some 
-<a href="../../manual/Getting_Started.shtml#Preferences">tutorial pages</a>.
 <p>
 Perhaps the most important control is at the bottom of the window:
 The "Save" button!  
@@ -46,30 +41,37 @@ Be sure to click "Save" when leaving this window.  Your changes to the preferenc
 don't take effect until the program is stopped and restarted, so the
 program will prompt you to do that after saving the preferences.
 
-<a name="basic">
+<a name="comm">
 <h2>Communications Preferences</h2></a>
 <p>
 When the window first opens, it displays the 
 panel for configuring a connection to the layout.
 There are four of these, so you can configure up to four connections.
 <p>
-<a href="../../manual/images/Preferences.png">
-<img src="../../manual/images/Preferences.png" height="156" width="256" align="right"></a>
 You can select any of the various JMRI layout connections here.
 For more information on how to configure this for your particular hardware,
 see the <a href="../../html/hardware/index.shtml">hardware pages</a>.
 
 <h2>Programmer Defaults</h2>
-<dd>The DecoderPro programmer allows you to select how much or how little
+<a href="images/PrefsProgPane.png">
+<img src="images/PrefsProgPane.png" height="225" width="255" align="right"></a>
+Next, there's a "Programmer" pane.
+The DecoderPro programmer allows you to select how much or how little
 to display of the decoder content using configurable "Programmers". You 
 can select one at the same time you 
 <a href="../../manual/Basic_Programming.shtml">select your locomotive decoder</a>,
 but this provides a convenient place to set a default so you don't
 have to select it each time you open a decoder.
+<p>
+There's also a checkbox whether you want empty panes (tabs that don't 
+contain any information for your particular decoder) to be listed.
 
 <a name="actions">
 <h2>Actions</h2>
-<dd>
+
+<a href="images/PrefsActPane.png">
+<img src="images/PrefsActPane.png" height="225" width="255" align="right"></a>
+
 This section lets you have the program automatically
 execute various menu selections at startup.  For example,
 you can have the Turnout Table automatically open, or 
@@ -82,6 +84,7 @@ Don't forget
 to save your updated preferences with the button at the bottom of the screen!
 
 <h2>Buttons</h2>
+
 This allows you to add extra buttons to the main JMRI window
 that are connected to specific menu choices.
 <P>
@@ -95,6 +98,7 @@ to save your updated preferences with the button at the bottom of the screen!
 The button will appear when you next start the program.
 
 <h2>Files</h2>
+
 This section lets you automatically load panel files when the program
 starts up.  The previous sections will have already executed, so any actions
 they're configured for will have taken place.  You can load
@@ -106,6 +110,7 @@ desired file.  If you later want to stop loading the file at startup,
 click the "Remove" button next to the filename.
 
 <h2>Scripts</h2>
+
 This section lets you automatically run a script file when the program
 starts up.  The previous sections will have already executed, so any actions
 they're configured for will have taken place
@@ -119,6 +124,8 @@ desired file.  If you later want to stop executing a particular script at startu
 click the "Remove" button next to the filename.
 
 <h2>GUI Style</h2>
+<a href="images/PrefsGuiPane.png">
+<img src="images/PrefsGuiPane.png" height="225" width="255" align="right"></a>
 These radio boxes allow you to select how the program looks.
 The available choices depend on what kind of computer you have, and not 
 all of the following may be available:
@@ -135,6 +142,8 @@ all of the following may be available:
 
 <a name="locale">
 <h2>Locale</h2>
+<a href="images/PrefsLocalePane.png">
+<img src="images/PrefsLocalePane.png" height="225" width="255" align="right"></a>
 <a href="../../Acknowledgements.shtml">Many people</a> have contributed "internationalizations"
 of JMRI.  This converts (much) of the text on the screen to a language
 other thank English.  If you select your country or region and language here,
@@ -165,7 +174,15 @@ roster entries here.  This fills in the value for new entries, which
 can save you a little bit of typing. It has no effect on 
 existing entries, even if changed.
 
-</dl>
+<a id="messages">
+<h2>Messages</h2>
+<a href="images/PrefsMsgPane.png">
+<img src="images/PrefsMsgPane.png" height="225" width="255" align="right"></a>
+
+The message pane lets you control the various warnings and dialog box options
+that JMRI displays.
+<p>
+Within it are separate panes for different situations...
 
 <!--#include virtual="/Footer" -->
 </body>

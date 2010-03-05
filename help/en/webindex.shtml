@@ -806,17 +806,10 @@
 
  
 <li>
-<a href="package/apps/AppConfigPanel.shtml">Preferences </a>
-<ul>
-  
-<li>
-<a href="">Advanced </a>
+<a href="package/apps/TabbedPreferences.shtml">Preferences </a>
 <ul></ul>
 </li>
 
- 
-</ul>
-</li>
  
 <li>Programmers <ul>
   

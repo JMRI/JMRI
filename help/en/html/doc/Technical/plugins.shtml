@@ -1,6 +1,6 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: plugins.shtml,v 1.5 2009-04-26 18:44:27 jacobsen Exp $ -->
+<!-- $Id: plugins.shtml,v 1.6 2010-03-05 00:05:12 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -99,7 +99,7 @@ to add new formats.
 
 It's also possible to customize your version of JMRI using 
 scripts, and by using the 
-<a href="../../../package/apps/AppConfigPanel.shtml">advanced preferences</a>.
+<a href="../../../package/apps/TabbedPreferences.shtml">advanced preferences</a>.
 
 <p>
 Scripts can locate and access any open window, for example.

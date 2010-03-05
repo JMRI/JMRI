@@ -264,10 +264,8 @@
 
  <indexitem text="PR3 " target="html.hardware.loconet.PR3"/>
 
- <indexitem text="Preferences " target="package.apps.AppConfigPanel">
-  <indexitem text="Advanced " target="package.apps.AppConfigPanel_advanced"/>
+ <indexitem text="Preferences " target="package.apps.TabbedPreferences"/>
 
- </indexitem>
  <indexitem text="Programmers ">
   <indexitem text="DecoderPro programmer " target="manual.Basic_Programming_Basic Programmer"/>
 

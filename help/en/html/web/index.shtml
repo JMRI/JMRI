@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: index.shtml,v 1.10 2010-02-14 19:33:53 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.11 2010-03-05 00:05:12 jacobsen Exp $ -->
 <title>JMRI: Web Access</title>
 
 <!-- Style -->
@@ -104,7 +104,7 @@ Click the "On" button to turn layout power on.
 <h2>Configuring</h2>
 
 You can use the 
-"<a href="../../package/apps/AppConfigPanel.shtml">Advanced Preferences</a>"
+"<a href="../../package/apps/TabbedPreferences.shtml">Advanced Preferences</a>"
 to set JMRI to 
 start the server each time you start the program.
 <p>

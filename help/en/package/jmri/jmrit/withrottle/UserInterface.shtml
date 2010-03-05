@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: UserInterface.shtml,v 1.8 2010-01-23 21:10:56 jacobsen Exp $ -->
+<!-- $Id: UserInterface.shtml,v 1.9 2010-03-05 00:05:13 jacobsen Exp $ -->
 <title>JMRI: WiFi Throttle</title>
 
 <!-- Style -->
@@ -34,8 +34,8 @@ e.g. an iPhone, iPod Touch, or Android Phone, and JMRI.
 
 <p>
 It can be set to start automatically with the 
-"<a href="../../../apps/AppConfigPanel.shtml#actions">Action at Startup</a>" section in the 
-"<a href="../../../apps/AppConfigPanel.shtml">Show Advanced Preferences</a>"
+"<a href="../../../apps/TabbedPreferences.shtml#actions">Action at Startup</a>" section in the 
+"<a href="../../../apps/TabbedPreferences.shtml">Show Advanced Preferences</a>"
 section of JMRI Preferences.
 
 <p>
