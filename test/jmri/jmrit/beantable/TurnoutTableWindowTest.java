@@ -16,11 +16,13 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the turnout table
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
 
 	public void testShowAndClose() throws Exception {
+        jmri.InstanceManager.store(new jmri.managers.DefaultUserMessagePreferences(), jmri.UserPreferencesManager.class);
+
         TurnoutTableAction a = new TurnoutTableAction();
         a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
         
