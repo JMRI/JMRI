@@ -13,7 +13,7 @@ import jmri.util.JmriJFrame;
  *  confused with ThrottleManager
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.19 $
+ * @version    $Revision: 1.20 $
  */
 public class ThrottleFrameManager
 {
@@ -42,7 +42,9 @@ public class ThrottleFrameManager
 	{
 		throttleCycler = new ThrottleCyclingKeyListener();
 		throttleWindows = new ArrayList<ThrottleWindow>(0);
-		throttlesPref = new ThrottlesPreferences(XmlFile.prefsDir()+ "throttle" +File.separator+ "ThrottlesPreferences.xml");
+		String dirname = XmlFile.prefsDir()+ "throttle" +File.separator;
+		XmlFile.ensurePrefsPresent(dirname);
+		throttlesPref = new ThrottlesPreferences(dirname+ "ThrottlesPreferences.xml");
 		
 		throttlesListFrame = new JmriJFrame("Throttles list");
 		throttlesListPanel = new ThrottlesListPanel();
