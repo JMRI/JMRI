@@ -5,6 +5,8 @@ import java.io.*;
 
 import java.util.StringTokenizer;
 
+import jmri.web.miniserver.AbstractServlet;
+
 import org.jdom.*;
 import org.jdom.input.*;
 import org.jdom.output.*;
@@ -36,10 +38,10 @@ import jmri.web.xmlio.*;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
-public class XMLIOServlet implements Servlet, XmlIORequestor {
+public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
 
     String clickRetryTime = "1.0";
     String noclickRetryTime = "5.0";
@@ -56,6 +58,9 @@ public class XMLIOServlet implements Servlet, XmlIORequestor {
     public javax.servlet.ServletConfig getServletConfig() { return null; }
 
     public void service(ServletRequest req, ServletResponse res) throws java.io.IOException {
+        // get the context
+        getServletConfig();
+        getServletContext();
         
         // get the reader from the request
         BufferedReader in = req.getReader();

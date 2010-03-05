@@ -1,8 +1,10 @@
 package jmri.web.miniserver;
 
+import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.Servlet;
 
 import java.util.StringTokenizer;
 
@@ -13,10 +15,10 @@ import java.io.BufferedReader;
  * Implement some useful tools for a Servlet.
  *
  * @author  Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
-public abstract class AbstractServlet implements Servlet {
+public abstract class AbstractServlet implements Servlet, ServletConfig {
 
     abstract public void service(ServletRequest req, ServletResponse res)
         throws java.io.IOException;
@@ -78,7 +80,25 @@ public abstract class AbstractServlet implements Servlet {
     
     public javax.servlet.ServletConfig getServletConfig() { return null; }
 
-
+    // *********************************
+    // Start dummy ServletConfig methods
+    
+    public String getInitParameter(String name) { return null; }
+    
+    public java.util.Enumeration getInitParameterNames() { return null; }
+    
+    public ServletContext getServletContext() {
+        if (context == null) context = new MiniServletContext();
+        return context; 
+    }
+  
+    public String getServletName() { return null; }
+    
+    // End dummy ServletConfig methods
+    // *********************************
+    
+    ServletContext context = null;
+    
     // Normal Web page requests use GET, so this can simply
     // read a line at a time. However, HTML forms can also use 
     // POST, in which case we have to determine the number of POST

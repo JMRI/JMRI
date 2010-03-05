@@ -14,7 +14,7 @@ import javax.servlet.ServletResponse;
  * Tests for the AbstractService class.
  *
  * @author	    Bob Jacobsen  Copyright 2008
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class AbstractServletTest extends TestCase {
 
@@ -56,6 +56,18 @@ public class AbstractServletTest extends TestCase {
         Assert.assertEquals("result", "/jmri/help/en/html/hardware/images/jmriMainPageOk.jpg", result);        
     }
 
+    public void testGetContext() throws java.io.IOException {
+        AbstractServlet as = new AbstractServlet(){
+            public void service(ServletRequest req, ServletResponse res) {}
+         };
+        Assert.assertNotNull(as.getServletContext());
+        
+        javax.servlet.ServletContext c1 = as.getServletContext();
+        javax.servlet.ServletContext c2 = as.getServletContext();
+        Assert.assertEquals(c1, c2);
+        
+    }
+    
     // from here down is testing infrastructure
     
     public AbstractServletTest(String s) {
