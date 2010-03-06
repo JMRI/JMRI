@@ -40,7 +40,7 @@ import jmri.managers.AbstractSignalHeadManager;
  * internal, and will be reset when you reset the instance manager.
  *
  * @author Bob Jacobsen  Copyright 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  * @since 2.5.3
  */
 
@@ -54,8 +54,7 @@ public class JUnitUtil {
      */
 	public static void releaseThread(Object self, int delay) {
 	    if (javax.swing.SwingUtilities.isEventDispatchThread()) {
-	        System.err.println("ERROR: Cannot use releaseThread on Swing thread");
-	        new Exception().printStackTrace();
+	        log.error("Cannot use releaseThread on Swing thread", new Exception());
 	        return;
 	    }
 	    synchronized (self) {
@@ -125,4 +124,5 @@ public class JUnitUtil {
             InstanceManager.configureManagerInstance().registerConfig(m);
     }
 
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JUnitUtil.class.getName());
 }

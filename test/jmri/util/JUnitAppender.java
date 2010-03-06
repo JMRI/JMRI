@@ -10,7 +10,7 @@ import junit.framework.Assert;
  * Log4J Appender that just publishes what it sees
  *
  * @author	Bob Jacobsen - Copyright 2007
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
  
 public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
@@ -34,7 +34,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      */
     public void activateOptions() {
         if (JUnitAppender.instance != null)
-            System.err.println("JUnitAppender initialized more than once");
+            System.err.println("JUnitAppender initialized more than once"); // can't count on logging here
         else
             JUnitAppender.instance = this;
         super.activateOptions();

@@ -93,7 +93,7 @@ implements  java.awt.dnd.DropTargetListener,
     {
         dropTarget = new java.awt.dnd.DropTarget (this, this);
         if (dropTarget == null)
-            System.err.println("Failed to create DropTarget");
+            log.error("Failed to create DropTarget");
         dragSource = new java.awt.dnd.DragSource();
         dragSource.createDefaultDragGestureRecognizer( this, java.awt.dnd.DnDConstants.ACTION_MOVE, this);
     }   // end initComponents
@@ -233,6 +233,6 @@ implements  java.awt.dnd.DropTargetListener,
         else evt.rejectDrop();
     }   // end drop
 
-
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DnDList.class.getName());
   
 }   // end class DnDList

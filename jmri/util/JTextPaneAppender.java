@@ -149,7 +149,7 @@ public class JTextPaneAppender extends AppenderSkeleton
         }
         catch ( BadLocationException badex )
         {
-            System.err.println( badex );
+            System.err.println( badex );  // can't log this, as it would be recursive error
         }
         
         myTextPane.setCaretPosition( myDoc.getLength() );

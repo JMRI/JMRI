@@ -19,7 +19,7 @@ import java.beans.*;
  * Panel displaying and programming a LocoIO configuration.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 
 public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
@@ -149,7 +149,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
                             Integer.valueOf(addrField.getText(),16).intValue(),
                             Integer.valueOf(subAddrField.getText(),16).intValue());
                 } catch (NullPointerException e) {
-                    System.err.println("Caught NullPointerException: " + e.getMessage());
+                    log.error("Caught NullPointerException", e);
                 }
             }
         };
@@ -161,7 +161,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
                             Integer.valueOf(addrField.getText(),16).intValue(),
                             Integer.valueOf(subAddrField.getText(),16).intValue());
                 } catch (NullPointerException e) {
-                    System.err.println("Caught NullPointerException: " + e.getMessage());
+                    log.error("Caught NullPointerException", e);
                 }
             }
         };
@@ -174,7 +174,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         try {
             data.setUnitAddress(0x51,0x00);
         } catch (NullPointerException e) {
-            log.error("Caught NullPointerException: " + e.getMessage());
+            log.error("Caught NullPointerException", e);
         }
 
     }

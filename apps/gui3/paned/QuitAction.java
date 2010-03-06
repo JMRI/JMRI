@@ -13,7 +13,7 @@ import jmri.util.swing.*;
  * Ignores WindowInterface.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
  
 public class QuitAction extends jmri.util.swing.JmriAbstractAction {
@@ -30,7 +30,7 @@ public class QuitAction extends jmri.util.swing.JmriAbstractAction {
         try {
             jmri.InstanceManager.shutDownManagerInstance().shutdown();
         } catch (Exception ex) {
-            System.err.println("Continuing after error in handleQuit: "+ex);
+            System.err.println("Continuing after error in handleQuit: "+ex); // can't count on logging here
         }
     }
     
