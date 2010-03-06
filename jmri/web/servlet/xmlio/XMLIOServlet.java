@@ -38,7 +38,7 @@ import jmri.web.xmlio.*;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
@@ -113,8 +113,8 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
         if (factory == null) factory = new XmlIOFactory();
         XmlIOServer srv = factory.getServer();
 
-        // if list elements present, do immediate operation
-        if (root.getChild("list") != null) {
+        // if list or throttle elements present, do immediate operation
+        if (root.getChild("list") != null || root.getChild("throttle") != null) {
             log.debug("immediate reply");
             try {
                 srv.immediateRequest(root);  // modifies 'doc' in place
