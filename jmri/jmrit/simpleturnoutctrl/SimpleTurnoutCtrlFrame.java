@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 /**
  * Frame controlling a single turnout
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 	
@@ -190,8 +190,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 				turnout.setCommandedState(Turnout.CLOSED);
 			}
 		} catch (Exception ex) {
-			log.error("closeButtonActionPerformed, exception: "
-							+ ex.toString());
+			log.error("exception during closeButtonActionPerformed", ex);
 			nowStateLabel.setText("ERROR");
 			nowFeedbackLabel.setText("<unknown>");
 		}
@@ -221,8 +220,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 				turnout.setCommandedState(Turnout.THROWN);
 			}
 		} catch (Exception ex) {
-			log.error("throwButtonActionPerformed, exception: "
-							+ ex.toString());
+			log.error("exception during throwButtonActionPerformed", ex);
 			nowStateLabel.setText("ERROR");
 			nowFeedbackLabel.setText("<unknown>");
 		}
@@ -250,8 +248,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 				}
 			}
 		} catch (Exception ex) {
-			log.error("LockButtonActionPerformed, exception: "
-							+ ex.toString());
+			log.error("exception during lockButtonActionPerformed", ex);
 			nowStateLabel.setText("ERROR");
 			nowFeedbackLabel.setText("<unknown>");
 		}
@@ -280,8 +277,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 				
 			}
 		} catch (Exception ex) {
-			log.error("LockPushButtonActionPerformed, exception: "
-							+ ex.toString());
+			log.error("exception during lockPushButtonActionPerformed", ex);
 			nowStateLabel.setText("ERROR");
 			nowFeedbackLabel.setText("<unknown>");
 		}
