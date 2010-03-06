@@ -9,7 +9,7 @@ import junit.framework.*;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class PanelEditorTest extends TestCase {
 
@@ -23,14 +23,7 @@ public class PanelEditorTest extends TestCase {
 	    File f = new File("java"+File.separator+"test"+File.separator+"jmri"+File.separator+"jmrit"+File.separator+"display"+File.separator+"PanelEditorTest1.xml");
         cm.load(f);
         
-        // check some errors were displayed
-        jmri.util.JUnitAppender.assertErrorMessage("Turnout 'IT1' not available, icon won't see changes");
-        jmri.util.JUnitAppender.assertErrorMessage("Sensor 'IS1' not available, icon won't see changes");
-        jmri.util.JUnitAppender.assertErrorMessage("Turnout 'IT1' not available, icon won't see changes");
-        jmri.util.JUnitAppender.assertErrorMessage("Sensor 'IS1' not available, icon won't see changes");
-
 	}
-
 
 	// from here down is testing infrastructure
 
@@ -54,6 +47,8 @@ public class PanelEditorTest extends TestCase {
     protected void setUp() { 
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
