@@ -4,37 +4,38 @@ package jmri.util.swing;
 
 /**
  * Interface for an object that can arrange for a 
- * JComponent to be displayed.
+ * {@link JmriPanel} to be displayed.
  * <p>
  * Typically used by some component that wants to display
- * a pane (e.g. in a JmriJFrame) to do some more stuff.
+ * a pane (e.g. in an independent JmriJFrame
+ * or as part of a paned interface) to do some more stuff.
  * Rather than have the component build it's own window, etc
  * it invokes one of these, so that the position and 
  * display of that component can controlled.
  * <p>
- * Any JmriAbstractActiont that uses the show() method
+ * Any {@link JmriAbstractAction} that uses the show() method
  * will have its dispose() invoked when the associated frame
  * goes away.  It should dispose() any cached panes at that time.
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public interface WindowInterface {
 
     /**
      * Show, in whatever way is appropriate, 
-     * a specific JComponent
-     * @param child new JComponent to show
+     * a specific JmriPanel
+     * @param child new JmriPanel to show
      * @param action JmriAbstractAction making the request
      */
     public void show(jmri.util.swing.JmriPanel child, JmriAbstractAction action );
     
     /**
      * Show, in whatever way is appropriate, 
-     * a specific JComponent
-     * @param child new JComponent to show
+     * a specific JmriPanel
+     * @param child new JmriPanel to show
      * @param action JmriAbstractAction making the request
      * @param hint suggestion on where to put the content
      */
@@ -49,6 +50,9 @@ public interface WindowInterface {
      */
     public boolean multipleInstances();
     
+    /**
+     * Suggested location for subsequent panels
+     */
     public enum Hint {
         DEFAULT,   // let the interface pick
         REPLACE,   // replace the current content with new
