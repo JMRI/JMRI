@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: Roster.shtml,v 1.2 2008-09-21 02:27:30 jacobsen Exp $ -->
+<!-- $Id: Roster.shtml,v 1.3 2010-03-06 20:36:50 jacobsen Exp $ -->
 <title>JMRI: DecoderPro Rosters</title>
 
 <!-- Style -->
@@ -22,7 +22,7 @@
 
 <!-- Page Body -->
 <H2>
-DecoderPro Rosters
+JMRI Rosters
 </H2>
 
 <P>Reading the contents of a decoder generally takes a long time, and with
@@ -39,12 +39,11 @@ You can use anything you want for this:  Road number, type, even
 "That crummy old model I need to repaint".</p>
 
 <p>
-You can edit the contents of a roster entry with the DecoderPro
-programmer panes.</p>
+You can edit the contents of a roster entry with the programmer panes.</p>
 
 <H3>Roster Entry</H3>
 
-<p>When you first open a DecoderPro programmer, you'll see a "Roster
+<p>When you first open a JMRI programmer, you'll see a "Roster
 Entry" pane.  On it is displayed:</p>
 
 <dl>
@@ -98,7 +97,7 @@ will still be used.
 <h3>Roster Menu</h3>
 
 <a href="images/RosterMenu.jpg"><img src="images/RosterMenu.jpg" width="108" height="92" align="right"/></a>
-Both the main DecoderPro window and the "start programmer" window
+The JMRI application main windows and the "start programmer" windows
 have a "Roster" menu available.  That menu allows you to
 manage the entries in your roster with commands:
 
