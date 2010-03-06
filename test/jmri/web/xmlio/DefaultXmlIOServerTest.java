@@ -13,7 +13,7 @@ import org.jdom.*;
  * Invokes complete set of tests of the jmri.web.xmlio.DefaultXmlIOServerTest class
  *
  * @author	    Bob Jacobsen  Copyright 2008, 2009, 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class DefaultXmlIOServerTest extends TestCase {
 
@@ -40,7 +40,7 @@ public class DefaultXmlIOServerTest extends TestCase {
         Element e2 = new Element("item");
         e2.addContent(new Element("type").addContent("turnout"));
         e2.addContent(new Element("name").addContent("IT2"));
-        e2.addContent(new Element("value").addContent(""+Turnout.THROWN));
+        e2.addContent(new Element("set").addContent(""+Turnout.THROWN));
         e1.addContent(e2);
 
         return e1;
