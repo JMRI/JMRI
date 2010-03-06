@@ -17,7 +17,7 @@ package jmri.util.javamail;
  * Check for //! comments
  *
  * @author Bob Jacobsen    Copyright 2008, 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * 
  */
 
@@ -218,7 +218,7 @@ public class MailMessage {
                 	msgs[0] = msg;
                 	folder.appendMessages(msgs);
 
-                	System.out.println("Mail was recorded successfully.");
+                	log.info("Mail was recorded successfully.");
                 }
             }
             
