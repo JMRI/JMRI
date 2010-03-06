@@ -141,10 +141,15 @@
 	</xsl:when>
 	<xsl:otherwise>
 		<xsl:for-each select="$Main">
-			<xsl:if test="key('type',$type)">
+			<xsl:choose>
+			<xsl:when test="key('type',$type)">
 			<xsl:text> </xsl:text>
 			<a href="#{generate-id(key('type',$type))}">{<xsl:value-of select="$type"/>}</a>
-			</xsl:if>
+			</xsl:when>
+			<xsl:otherwise> <!-- if the look-up fails due to being on another machine -->
+			    {<xsl:value-of select="$type"/>}
+			</xsl:otherwise>
+			</xsl:choose>
 		</xsl:for-each>
 	</xsl:otherwise>
 </xsl:choose>
