@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SignalAddEdit.shtml,v 1.19 2010-01-18 16:58:16 kevin-dickerson Exp $ -->
+<!-- $Id: SignalAddEdit.shtml,v 1.20 2010-03-06 20:41:38 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -90,6 +90,7 @@ choices for how the signal head is connected:
   the turnout on the "green" connection Thrown should light the
   green lamp.
   </dd>
+  
 <dt>Quadruple Output</dt>
   <dd>
   This type controls a signal head via four electrical connections.
@@ -148,8 +149,9 @@ choices for how the signal head is connected:
   do this by going to the 
   <a href="TurnoutTable.shtml">Turnout Table</a> and changing the output setting
   there.
- 
+  <p>
   Appearance Closed - The appearance given when the connection is in the Closed State.
+  <p>
   Appearance Thrown - The appearance given when the connection is in the Thrown State.
   </dd>
 <dt>Virtual</dt>
