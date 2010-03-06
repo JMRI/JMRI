@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: index.shtml,v 1.11 2010-03-05 00:05:12 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.12 2010-03-06 06:56:40 jacobsen Exp $ -->
 <title>JMRI: Web Access</title>
 
 <!-- Style -->
@@ -123,7 +123,9 @@ display whatever you want; JMRI won't modify it once
 you've changed it. 
 You can include links to web pages outside JMRI, and 
 links to various JMRI-served pages, see below.
-
+On the other hand, we periodically improve the 
+page, you you might want to delete the old one
+and let JMRI replace it with the newest version.
 
 <a id="URLs">
 <h2>Access URLs</h2>
@@ -205,13 +207,15 @@ JMRI provides XML and Ajax access via a
 <a href="http://jmri.org/JavaDoc/doc/jmri/web/servlet/xmlio/package-summary.html">XML IO custom servlet</a>.
 
 <p>
-There are two sample pages that show how this can be used:
+There are three sample pages that show how this can be used:
 <dl>
-<dt><a href="http://localhost:12080/web/request.xml">web/request.xml</a>
+<dt><a href="http://localhost:12080/web/request.html">web/request.html</a>
 <dd>Makes a single XML request for all available sensors, and shows their status in a table.
-<dt><a href="http://localhost:12080/web/monitor.xml">web/monitor.xml</a>
+<dt><a href="http://localhost:12080/web/monitor.html">web/monitor.html</a>
 <dd>Uses delayed requests to monitor the status of all sensors, 
 updating a table when any change.
+<dt><a href="http://localhost:12080/web/throttle.html">web/throttle.html</a>
+<dd>Sends a speed command to a DCC locomotive on the layout when a button is pressed.
 </dl>
 
 <p>
