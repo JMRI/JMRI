@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
 public class NceSensorManager extends jmri.managers.AbstractSensorManager
                             implements NceListener {
@@ -40,7 +40,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     }
     static private NceSensorManager mInstance = null;
 
-    public char systemLetter() { return 'N'; }
+    public String getSystemPrefix() { return "N"; }
 
     // to free resources when no longer used
     public void dispose() {

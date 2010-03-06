@@ -11,7 +11,7 @@ import jmri.Sensor;
  * CSV representation of the region.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2007
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
 
@@ -19,7 +19,7 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
         super();
     }
 
-    public char systemLetter() { return 'R'; }
+    public String getSystemPrefix() { return "R"; }
 
     // to free resources when no longer used
     public void dispose() {

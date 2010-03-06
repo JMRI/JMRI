@@ -17,7 +17,7 @@ import jmri.managers.AbstractManager;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class AbstractSignalHeadManager extends AbstractManager
     implements SignalHeadManager, java.beans.PropertyChangeListener {
@@ -26,7 +26,7 @@ public class AbstractSignalHeadManager extends AbstractManager
         super();
     }
 
-    public char systemLetter() { return 'I'; }
+    public String getSystemPrefix() { return "I"; }
     public char typeLetter() { return 'H'; }
 
     public SignalHead getSignalHead(String name) {
@@ -37,8 +37,7 @@ public class AbstractSignalHeadManager extends AbstractManager
         return getBySystemName(name);
     }
 
-    public SignalHead getBySystemName(String key) {
-		String name = key.toUpperCase();
+    public SignalHead getBySystemName(String name) {
         return (SignalHead)_tsys.get(name);
     }
 

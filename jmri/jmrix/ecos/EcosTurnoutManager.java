@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * System names are "UTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                 implements EcosListener {
@@ -48,8 +48,8 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     //The hash table simply holds the object number against the EcosTurnout ref.
     protected static Hashtable <Integer, EcosTurnout> _tecos = new Hashtable<Integer, EcosTurnout>();   // stores known Ecos Object ids to DCC
     
-    public char systemLetter() { return 'U'; }
-    final String prefix = ""+systemLetter()+typeLetter();
+    public String getSystemPrefix() { return "U"; }
+    final String prefix = getSystemPrefix()+typeLetter();
 
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr;
@@ -298,7 +298,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                         et = (EcosTurnout)provideTurnout(prefix+addr2);
                         et.setMasterObjectNumber(false);
                         et.setObjectNumber(object);
-                        et.setComment("Extended address linked with turnout " + systemLetter()+"T"+straddr[0]);
+                        et.setComment("Extended address linked with turnout " + getSystemPrefix()+"T"+straddr[0]);
                     }
                 }
             }

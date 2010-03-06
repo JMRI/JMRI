@@ -27,7 +27,7 @@ import jmri.jmrit.sensorgroup.SensorGroupFrame;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author      Pete Cresman Copyright (C) 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class DefaultConditionalManager extends AbstractManager
     implements ConditionalManager, java.beans.PropertyChangeListener {
@@ -36,7 +36,7 @@ public class DefaultConditionalManager extends AbstractManager
         super();
     }
 
-    public char systemLetter() { return 'I'; }
+    public String getSystemPrefix() { return "I"; }
     public char typeLetter() { return 'X'; }
     
     /**

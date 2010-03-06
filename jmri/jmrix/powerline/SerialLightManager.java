@@ -12,7 +12,7 @@ import jmri.Light;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 abstract public class SerialLightManager extends AbstractLightManager {
 
@@ -23,7 +23,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
     /**
      *  Returns the system letter
      */
-    public char systemLetter() { return 'P'; }
+    public String getSystemPrefix() { return "P"; }
     
     /**
      * Method to create a new Light based on the system name

@@ -10,7 +10,7 @@ import jmri.Turnout;
  * System names are "DTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 
 public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
@@ -19,7 +19,7 @@ public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         _instance = this;
     }
 
-    public char systemLetter() { return 'D'; }
+    public String getSystemPrefix() { return "D"; }
 
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;

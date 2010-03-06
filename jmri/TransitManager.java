@@ -29,7 +29,7 @@ import jmri.managers.AbstractManager;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class TransitManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -38,7 +38,7 @@ public class TransitManager extends AbstractManager
         super();
     }
 
-    public char systemLetter() { return 'I'; }
+    public String getSystemPrefix() { return "I"; }
     public char typeLetter() { return 'Z'; }
     
     /**

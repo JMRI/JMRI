@@ -12,7 +12,7 @@ import jmri.Sensor;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 abstract public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {
@@ -26,7 +26,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     /**
      * Return the system letter
      */
-    public char systemLetter() { return 'P'; }
+    public String getSystemPrefix() { return "P"; }
 
     // to free resources when no longer used
     public void dispose() {

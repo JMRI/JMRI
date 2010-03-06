@@ -22,7 +22,7 @@ import org.jdom.Element;
  *
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class DefaultSignalSystemManager extends AbstractManager
     implements SignalSystemManager, java.beans.PropertyChangeListener {
@@ -41,7 +41,7 @@ public class DefaultSignalSystemManager extends AbstractManager
     @Override
     protected void registerSelf() {}
     
-    public char systemLetter() { return 'I'; }
+    public String getSystemPrefix() { return "I"; }
     public char typeLetter() { return 'F'; }
     
     public SignalSystem getSystem(String name) {

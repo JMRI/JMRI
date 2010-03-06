@@ -40,7 +40,7 @@ package jmri;
  * Also note that CVP decoder's use the old legacy format for ops mode programming. 
  *
  * @author      Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  * 
  */
 public class PushbuttonPacket {
@@ -92,7 +92,6 @@ public class PushbuttonPacket {
 	// exist, assume single button operation.
 	private static int CVPturnoutLockout(String prefix, int turnoutNum) {
 
-		//char sysLetter = InstanceManager.turnoutManagerInstance().systemLetter();
 		int CVdata = 0;
 		int oneButton = 1;							// one pushbutton enable
 		int twoButton = 3;							// two pushbutton enable

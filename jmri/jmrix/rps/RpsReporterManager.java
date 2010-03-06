@@ -9,12 +9,12 @@ import jmri.managers.AbstractReporterManager;
  * RPS implementation of a ReporterManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  * @since 2.3.1
  */
 public class RpsReporterManager extends AbstractReporterManager {
 
-    public char systemLetter() { return 'R'; }
+    public String getSystemPrefix() { return "R"; }
 
     protected Reporter createNewReporter(String systemName, String userName) {
         RpsReporter r = new RpsReporter(systemName, userName);

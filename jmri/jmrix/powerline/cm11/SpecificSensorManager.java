@@ -18,7 +18,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorManager {
 
@@ -75,12 +75,8 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
             			}
             		} else {
     	            	if (newCmdCode != -1 && newHouseCode != null && newAddrCode > 0) {
-		            		String sysName = systemLetter() + "S" + newHouseCode + newAddrCode;
+		            		String sysName = getSystemPrefix() + "S" + newHouseCode + newAddrCode;
 		            		sensor = provideSensor(sysName);
-		            		// see if sensor exists, comment out for production, I'm using it for testing
-//		            		if (sensor == null) {
-//		                    	sensor = newSensor(sysName.toUpperCase(), null); 
-//		            		}
 		            		if (sensor != null) {
 		            			if (newCmdCode == X10Sequence.FUNCTION_ON || newCmdCode == X10Sequence.FUNCTION_BRIGHT || newCmdCode == X10Sequence.FUNCTION_STATUS_ON) {
 		            				try {				

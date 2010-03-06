@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -28,10 +28,7 @@ public class SensorTableAction extends AbstractTableAction {
         super(actionName);
 
         // disable ourself if there is no primary sensor manager available
-        if (jmri.InstanceManager.sensorManagerInstance()==null ||
-            (((jmri.managers.AbstractProxyManager)jmri.InstanceManager
-                                                 .sensorManagerInstance())
-                                                 .systemLetter()=='\0')) {
+        if (jmri.InstanceManager.sensorManagerInstance()==null) {
             setEnabled(false);
         }
     }

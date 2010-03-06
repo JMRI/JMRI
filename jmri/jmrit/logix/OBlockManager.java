@@ -29,7 +29,7 @@ import jmri.managers.AbstractManager;
  *
  * @author      Bob Jacobsen Copyright (C) 2006
  * @author      Pete Cressman Copyright (C) 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class OBlockManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -38,7 +38,7 @@ public class OBlockManager extends AbstractManager
         super();
     }
 
-    public char systemLetter() { return 'O'; }
+    public String getSystemPrefix() { return "O"; }
     public char typeLetter() { return 'B'; }
     
     /**

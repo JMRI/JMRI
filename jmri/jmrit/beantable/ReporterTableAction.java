@@ -23,7 +23,7 @@ import jmri.util.JmriJFrame;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -39,10 +39,7 @@ public class ReporterTableAction extends AbstractTableAction {
 	super(actionName);
 
         // disable ourself if there is no primary Reporter manager available
-        if (jmri.InstanceManager.reporterManagerInstance()==null ||
-            (((jmri.managers.AbstractProxyManager)jmri.InstanceManager
-                                                 .reporterManagerInstance())
-                                                 .systemLetter()=='\0')) {
+        if (jmri.InstanceManager.reporterManagerInstance()==null) {
             setEnabled(false);
         }
 

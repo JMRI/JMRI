@@ -17,7 +17,7 @@ import jmri.Sensor;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author                      Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {
@@ -42,7 +42,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Return the system letter
      */
-    public char systemLetter() { return 'K'; }
+    public String getSystemPrefix() { return "K"; }
 
     /**
      * Create a new sensor if all checks are passed

@@ -19,10 +19,7 @@ public class SimpleLightCtrlAction 			extends AbstractAction {
 	super(s);
 
 	// disable ourself if there is no primary light manager available
-        if (jmri.InstanceManager.lightManagerInstance()==null ||
-            (((jmri.managers.AbstractProxyManager)jmri.InstanceManager
-                                                 .lightManagerInstance())
-                                                 .systemLetter()=='\0')) {
+        if (jmri.InstanceManager.lightManagerInstance()==null) {
             setEnabled(false);
         }
 

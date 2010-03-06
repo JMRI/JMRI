@@ -10,7 +10,7 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -26,11 +26,10 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     public Turnout provideTurnout(String name) {
         Turnout t = getTurnout(name);
         if (t!=null) return t;
-		String sName = name.toUpperCase();
-        if (sName.startsWith(""+getSystemPrefix()+typeLetter()))
-            return newTurnout(sName, null);
+        if (name.startsWith(getSystemPrefix()+typeLetter()))
+            return newTurnout(name, null);
         else
-            return newTurnout(makeSystemName(sName), null);
+            return newTurnout(makeSystemName(name), null);
     }
 
     public Turnout getTurnout(String name) {
@@ -40,8 +39,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         return getBySystemName(name);
     }
 
-    public Turnout getBySystemName(String key) {
-		String name = key.toUpperCase();
+    public Turnout getBySystemName(String name) {
         return (Turnout)_tsys.get(name);
     }
 
@@ -59,7 +57,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         	return null;
         }
         // is system name in correct format?
-        if (!systemName.startsWith(""+getSystemPrefix()+typeLetter())) {
+        if (!systemName.startsWith(getSystemPrefix()+typeLetter())) {
             log.error("Invalid system name for turnout: "+systemName
                             +" needed "+getSystemPrefix()+typeLetter());
             return null;

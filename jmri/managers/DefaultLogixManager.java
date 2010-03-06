@@ -18,7 +18,7 @@ import jmri.implementation.DefaultLogix;
  * Logix's system name, then there is a capital C and a number.  
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class DefaultLogixManager extends AbstractManager
     implements LogixManager, java.beans.PropertyChangeListener {
@@ -27,7 +27,7 @@ public class DefaultLogixManager extends AbstractManager
         super();
     }
 
-    public char systemLetter() { return 'I'; }
+    public String getSystemPrefix() { return "I"; }
     public char typeLetter() { return 'X'; }
     
     /**

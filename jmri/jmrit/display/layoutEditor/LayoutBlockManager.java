@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -33,7 +33,7 @@ public class LayoutBlockManager extends AbstractManager {
         super();
     }
 
-    public char systemLetter() { return 'I'; }
+    public String getSystemPrefix() { return "I"; }
     public char typeLetter() { return 'B'; }
 	private int blkNum = 1;
     

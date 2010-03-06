@@ -25,7 +25,7 @@ import jmri.managers.AbstractManager;
  * <P>
  *
  * @author      Pete Cressman Copyright (C) 2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class WarrantManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -34,7 +34,7 @@ public class WarrantManager extends AbstractManager
         super();
     }
 
-    public char systemLetter() { return 'I'; }
+    public String getSystemPrefix() { return "I"; }
     public char typeLetter() { return 'W'; }
     
     /**

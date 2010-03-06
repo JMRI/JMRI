@@ -95,8 +95,8 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 		Assert.assertNotNull("real object returned ", a);
 		
 		Turnout t = l.provideTurnout(""+getNumToTest2());
-		String name = t.getSystemName();
-		Assert.assertTrue(t.equals(l.getTurnout(name.toLowerCase())));
+		
+		Assert.assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
 	}
 
 	public void testRename() {

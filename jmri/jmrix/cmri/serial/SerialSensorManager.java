@@ -18,7 +18,7 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2007
  * @author                      Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {
@@ -43,7 +43,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Return the C/MRI system letter
      */
-    public char systemLetter() { return 'C'; }
+    public String getSystemPrefix() { return "C"; }
 
     /**
      * Create a new sensor if all checks are passed

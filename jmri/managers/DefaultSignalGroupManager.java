@@ -20,7 +20,7 @@ import java.util.ArrayList;
  *
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class DefaultSignalGroupManager extends AbstractManager
     implements SignalGroupManager, java.beans.PropertyChangeListener {
@@ -33,7 +33,7 @@ public class DefaultSignalGroupManager extends AbstractManager
         //load();
     }
 
-    public char systemLetter() { return 'I'; }
+    public String getSystemPrefix() { return "I"; }
     public char typeLetter() { return 'F'; }
     
     public SignalGroup getSignalGroup(String name) {

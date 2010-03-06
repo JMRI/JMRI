@@ -35,7 +35,7 @@ import jmri.managers.AbstractManager;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class SectionManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -44,7 +44,7 @@ public class SectionManager extends AbstractManager
         super();
     }
 
-    public char systemLetter() { return 'I'; }
+    public String getSystemPrefix() { return "I"; }
     public char typeLetter() { return 'Y'; }
     
     /**

@@ -9,7 +9,7 @@ import jmri.Sensor;
 /**
  * Implementation of the InternalSensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003, 2006
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class InternalSensorManager extends AbstractSensorManager {
 
@@ -23,7 +23,7 @@ public class InternalSensorManager extends AbstractSensorManager {
         };
     }
 	
-	public char systemLetter() { return 'I'; }
+	public String getSystemPrefix() { return "I"; }
 	
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InternalSensorManager.class.getName());
 }

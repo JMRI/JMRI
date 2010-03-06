@@ -25,7 +25,7 @@ import jmri.managers.AbstractManager;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public abstract class AbstractAudioManager extends AbstractManager
     implements AudioManager {
@@ -36,7 +36,7 @@ public abstract class AbstractAudioManager extends AbstractManager
         Audio t = getAudio(name);
         if (t!=null) return t;
 		String sName = name.toUpperCase();
-        if (sName.startsWith(""+systemLetter()+typeLetter()))
+        if (sName.startsWith(getSystemPrefix()+typeLetter()))
             return newAudio(sName, null);
         else
             return newAudio(makeSystemName(sName), null);
@@ -69,18 +69,18 @@ public abstract class AbstractAudioManager extends AbstractManager
         	return null;
         }
         // is system name in correct format?
-        if ((!systemName.startsWith(""+systemLetter()+typeLetter()+Audio.BUFFER))
-           &&(!systemName.startsWith(""+systemLetter()+typeLetter()+Audio.SOURCE))
-           &&(!systemName.startsWith(""+systemLetter()+typeLetter()+Audio.LISTENER))
+        if ((!systemName.startsWith(""+getSystemPrefix()+typeLetter()+Audio.BUFFER))
+           &&(!systemName.startsWith(""+getSystemPrefix()+typeLetter()+Audio.SOURCE))
+           &&(!systemName.startsWith(""+getSystemPrefix()+typeLetter()+Audio.LISTENER))
             ){
             log.error("Invalid system name for Audio: "+systemName
-                            +" needed either "+systemLetter()+typeLetter()+Audio.BUFFER
-                            +" or "+systemLetter()+typeLetter()+Audio.SOURCE
-                            +" or "+systemLetter()+typeLetter()+Audio.LISTENER);
+                            +" needed either "+getSystemPrefix()+typeLetter()+Audio.BUFFER
+                            +" or "+getSystemPrefix()+typeLetter()+Audio.SOURCE
+                            +" or "+getSystemPrefix()+typeLetter()+Audio.LISTENER);
             throw new AudioException("Invalid system name for Audio: "+systemName
-                            +" needed either "+systemLetter()+typeLetter()+Audio.BUFFER
-                            +" or "+systemLetter()+typeLetter()+Audio.SOURCE
-                            +" or "+systemLetter()+typeLetter()+Audio.LISTENER);
+                            +" needed either "+getSystemPrefix()+typeLetter()+Audio.BUFFER
+                            +" or "+getSystemPrefix()+typeLetter()+Audio.SOURCE
+                            +" or "+getSystemPrefix()+typeLetter()+Audio.LISTENER);
         }
 
         // return existing if there is one

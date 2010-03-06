@@ -17,7 +17,7 @@ import jmri.TurnoutOperationManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -104,10 +104,9 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
      * @return requested Turnout object or null if none exists
      */
     public Turnout getBySystemName(String systemName) {
-		String sName = systemName.toUpperCase();
         Turnout t = null;
         for (int i=0; i<mgrs.size(); i++) {
-            t = ( (TurnoutManager)mgrs.get(i)).getBySystemName(sName);
+            t = ( (TurnoutManager)mgrs.get(i)).getBySystemName(systemName);
             if (t!=null) return t;
         }
         return null;
@@ -223,9 +222,8 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 	 * If the bits are not available, this method should return 0 for number of 
 	 * control bits, after informing the user of the problem.
 	 */
-	 public int askNumControlBits(String sysName) {
+	 public int askNumControlBits(String systemName) {
         // if the systemName is specified, find that system
-		String systemName = sysName.toUpperCase();
         if (systemName != null && systemName.length()>0) {
             for (int i=0; i<mgrs.size(); i++) {
                 if ( systemName.startsWith( 
@@ -261,9 +259,8 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 	 * return 0 for 'steady state' control, or n for 'pulsed' control, where n
 	 * specifies the duration of the pulse (normally in seconds).  
 	 */
-	 public int askControlType(String sysName) {
+	 public int askControlType(String systemName) {
         // if the systemName is specified, find that system
-		String systemName = sysName.toUpperCase();
         if (systemName != null) {
             for (int i=0; i<mgrs.size(); i++) {
                 if ( systemName.startsWith( 

@@ -17,7 +17,7 @@ import jmri.Reporter;
  * <P>
  * Description:		Implement Reporter manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 
 public class LnReporterManager extends jmri.managers.AbstractReporterManager implements LocoNetListener {
@@ -31,7 +31,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
             log.error("No layout connection, Reporter manager can't function");
     }
 
-    public char systemLetter() { return 'L'; }
+    public String getSystemPrefix() { return "L"; }
 
     public void dispose() {
         if (LnTrafficController.instance() != null)

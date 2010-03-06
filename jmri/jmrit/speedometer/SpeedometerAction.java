@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  * SpeedometerFrame
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 
 public class SpeedometerAction 			extends AbstractAction {
@@ -19,10 +19,7 @@ public class SpeedometerAction 			extends AbstractAction {
         super(s);
 
 	// disable ourself if there is no primary sensor manager available
-        if (jmri.InstanceManager.sensorManagerInstance()==null ||
-            (((jmri.managers.AbstractProxyManager)jmri.InstanceManager
-                                                 .sensorManagerInstance())
-                                                 .systemLetter()=='\0')) {
+        if (jmri.InstanceManager.sensorManagerInstance()==null) {
             setEnabled(false);
         }
     }

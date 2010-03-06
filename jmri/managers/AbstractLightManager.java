@@ -11,7 +11,7 @@ import jmri.managers.AbstractManager;
  * Based on AbstractSignalHeadManager.java and AbstractSensorManager.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public abstract class AbstractLightManager extends AbstractManager
     implements LightManager, java.beans.PropertyChangeListener {
@@ -39,11 +39,10 @@ public abstract class AbstractLightManager extends AbstractManager
     public Light provideLight(String name) {
         Light t = getLight(name);
         if (t!=null) return t;
-		String sName = name.toUpperCase();
-        if (sName.startsWith(""+systemLetter()+typeLetter()))
-            return newLight(sName, null);
+        if (name.startsWith(getSystemPrefix()+typeLetter()))
+            return newLight(name, null);
         else
-            return newLight(makeSystemName(sName), null);
+            return newLight(makeSystemName(name), null);
     }
 
     /**
@@ -64,8 +63,7 @@ public abstract class AbstractLightManager extends AbstractManager
      * Locate a Light by its system name
      */
     public Light getBySystemName(String name) {
-		String key = name.toUpperCase();
-        return (Light)_tsys.get(key);
+        return (Light)_tsys.get(name);
     }
 
     /**
@@ -98,8 +96,7 @@ public abstract class AbstractLightManager extends AbstractManager
      * be looking them up.
      * @return requested Light object (never null)
      */
-    public Light newLight(String sysName, String userName) {
-		String systemName = sysName.toUpperCase();
+    public Light newLight(String systemName, String userName) {
         if (log.isDebugEnabled()) log.debug("newLight:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));
@@ -134,7 +131,7 @@ public abstract class AbstractLightManager extends AbstractManager
         s = createNewLight(systemName, userName);
 
         // if that failed, blame it on the input arguements
-        if (s == null) throw new IllegalArgumentException("cannot create new light "+sysName);
+        if (s == null) throw new IllegalArgumentException("cannot create new light "+systemName);
 
         // save in the maps
         register(s);

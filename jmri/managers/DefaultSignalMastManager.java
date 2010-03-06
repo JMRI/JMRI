@@ -13,7 +13,7 @@ import jmri.managers.AbstractManager;
  * at the present time.  They're just names...
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class DefaultSignalMastManager extends AbstractManager
     implements SignalMastManager, java.beans.PropertyChangeListener {
@@ -22,7 +22,7 @@ public class DefaultSignalMastManager extends AbstractManager
         super();
     }
 
-    public char systemLetter() { return 'I'; }
+    public String getSystemPrefix() { return "I"; }
     public char typeLetter() { return 'F'; }
 
     public SignalMast getSignalMast(String name) {

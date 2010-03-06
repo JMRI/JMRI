@@ -13,7 +13,7 @@ import jmri.Light;
  * Based in part on SerialTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SerialLightManager extends AbstractLightManager {
 
@@ -24,7 +24,7 @@ public class SerialLightManager extends AbstractLightManager {
     /**
      *  Returns the system letter for CMRI
      */
-    public char systemLetter() { return 'C'; }
+    public String getSystemPrefix() { return "C"; }
     
     /**
      * Method to create a new Light based on the system name

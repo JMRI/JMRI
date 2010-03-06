@@ -19,7 +19,7 @@ import jmri.util.SystemNameComparator;
  * be added is the "Primary", used if a system letter is not provided.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class AbstractProxyManager implements Manager {
 
@@ -36,10 +36,9 @@ public class AbstractProxyManager implements Manager {
      */
     public void register(NamedBean s) {
         String systemName = s.getSystemName();
-        char systemLetter = systemName.charAt(0);
 
         for (int i = 0; i<mgrs.size(); i++)
-             if ( systemLetter == (mgrs.get(i)).systemLetter()) {
+             if ( systemName.startsWith((mgrs.get(i)).getSystemPrefix()+(mgrs.get(i)).typeLetter())) {
                 (mgrs.get(i)).register(s);
                 return;
             }
@@ -52,10 +51,9 @@ public class AbstractProxyManager implements Manager {
      */
     public void deregister(NamedBean s) {
         String systemName = s.getSystemName();
-        char systemLetter = systemName.charAt(0);
 
         for (int i = 0; i<mgrs.size(); i++)
-             if ( systemLetter == (mgrs.get(i)).systemLetter()) {
+             if ( systemName.startsWith((mgrs.get(i)).getSystemPrefix()+(mgrs.get(i)).typeLetter())) {
                 (mgrs.get(i)).deregister(s);
                 return;
             }
@@ -73,22 +71,23 @@ public class AbstractProxyManager implements Manager {
     /**
      * @return The system-specific prefix letter for the primary implementation
      */
+    public String getSystemPrefix() {
+	try {
+          return mgrs.get(0).getSystemPrefix();
+        } catch(IndexOutOfBoundsException ie) {
+          return "?";
+        }
+    }
+    
+    /**
+     * Provide 1st char of systemPrefix for now
+     * @deprecated
+     */
+    @Deprecated
     public char systemLetter() {
-	try {
-          return (mgrs.get(0)).systemLetter();
-        } catch(IndexOutOfBoundsException ie) {
-          return '\0';
-        }
+        return getSystemPrefix().charAt(0);
     }
-
-    public String getSystemPrefix() { 
-	try {
-          return (mgrs.get(0)).getSystemPrefix();
-        } catch(IndexOutOfBoundsException ie) {
-          return "\0";
-        }
-    }
-
+    
     /**
      * @return The type letter for turnouts
      */

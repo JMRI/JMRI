@@ -8,7 +8,7 @@ import jmri.managers.AbstractManager;
 /**
  * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -17,11 +17,10 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
     public Sensor provideSensor(String name) {
         Sensor t = getSensor(name);
         if (t!=null) return t;
-		String sName = name.toUpperCase();
         if (isNumber(name))
-            return newSensor(makeSystemName(sName), null);
+            return newSensor(makeSystemName(name), null);
         else
-            return newSensor(sName, null);
+            return newSensor(name, null);
     }
 
     public Sensor getSensor(String name) {
@@ -62,9 +61,9 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         	return null;
         }
         // is system name in correct format?
-        if (!systemName.startsWith(""+systemLetter()+typeLetter())) {
+        if (!systemName.startsWith(getSystemPrefix()+typeLetter())) {
             log.error("Invalid system name for sensor: "+systemName
-                            +" needed "+systemLetter()+typeLetter());
+                            +" needed "+getSystemPrefix()+typeLetter());
             return null;
         }
 

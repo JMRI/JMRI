@@ -12,7 +12,7 @@ import jmri.ReporterManager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class ProxyReporterManager extends AbstractProxyManager implements ReporterManager {
     /**
@@ -32,8 +32,10 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
         if (t!=null) return t;
         // if the systemName is specified, find that system
         for (int i=0; i<mgrs.size(); i++) {
-            if ( ( (ReporterManager)mgrs.get(i)).systemLetter() == sName.charAt(0) )
+            if ( sName.startsWith( 
+                        ((ReporterManager)mgrs.get(i)).getSystemPrefix()+((ReporterManager)mgrs.get(i)).typeLetter() ) ) {
                 return ((ReporterManager)mgrs.get(i)).newReporter(sName, null);
+            }
         }
         // did not find a manager, allow it to default to the primary, if there is one
         log.debug("Did not find manager for name "+sName+", assume it's a number");
@@ -107,8 +109,10 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
         // if the systemName is specified, find that system
         if (systemName != null) {
             for (int i=0; i<mgrs.size(); i++) {
-                if ( ( (ReporterManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
-                    return ( (ReporterManager)mgrs.get(i)).newReporter(systemName, userName);
+                if ( systemName.startsWith( 
+                            ((ReporterManager)mgrs.get(i)).getSystemPrefix()+((ReporterManager)mgrs.get(i)).typeLetter() ) ) {
+                    return ((ReporterManager)mgrs.get(i)).newReporter(systemName, userName);
+                }
             }
             // did not find a manager, allow it to default to the primary, if there is one
             log.debug("Did not find manager for system name "+systemName+", assume it's a number");

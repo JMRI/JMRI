@@ -19,14 +19,14 @@ import jmri.implementation.QuietShutDownTask;
 /**
  * Managers the Ecos Loco entries within JMRI.
  * @author Kevin Dickerson
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class EcosLocoAddressManager implements java.beans.PropertyChangeListener, EcosListener{
 
     protected static Hashtable <String, EcosLocoAddress> _tecos = new Hashtable<String, EcosLocoAddress>();   // stores known Ecos Object ids to DCC
     protected static Hashtable <Integer, EcosLocoAddress> _tdcc = new Hashtable<Integer, EcosLocoAddress>();  // stores known DCC Address to Ecos Object ids
 
-    public char systemLetter() { return 'U'; }
+    public String getSystemPrefix() { return "U"; }
     public char typeLetter() { return 'Z'; }
 
     private static RosterEntry _re;

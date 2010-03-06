@@ -13,7 +13,7 @@ import jmri.Turnout;
  * Based in part on AcelaTurnoutManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  *
  * @author	Bob Coleman Copyright (C) 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -27,9 +27,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     /**
      *  Returns the system letter for Acela
      */
-    public char systemLetter() { 
-    	return 'A'; 
-    	}
+    public String getSystemPrefix() { return "A"; }
     
     /**
      * Method to create a new Light based on the system name

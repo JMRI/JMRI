@@ -9,7 +9,7 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a MemoryManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public abstract class AbstractMemoryManager extends AbstractManager
     implements MemoryManager {
@@ -19,7 +19,7 @@ public abstract class AbstractMemoryManager extends AbstractManager
     public Memory provideMemory(String sName) {
         Memory t = getMemory(sName);
         if (t!=null) return t;
-        if (sName.startsWith(""+systemLetter()+typeLetter()))
+        if (sName.startsWith(""+getSystemPrefix()+typeLetter()))
             return newMemory(sName, null);
         else
             return newMemory(makeSystemName(sName), null);

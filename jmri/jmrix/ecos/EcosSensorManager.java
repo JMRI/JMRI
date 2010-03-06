@@ -13,7 +13,7 @@ import jmri.Sensor;
  * s88 Bus Module and yy is the port on that module.
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                 implements EcosListener {
@@ -41,7 +41,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
     protected static Hashtable <Integer, EcosSensor> _tecos = new Hashtable<Integer, EcosSensor>();   // stores known Ecos Object ids to DCC
     protected static Hashtable <Integer, Integer> _sport = new Hashtable<Integer, Integer>();   // stores known Ecos Object ids to DCC
     
-    public char systemLetter() { return 'U'; }
+    public String getSystemPrefix() { return "U"; }
     
     final static String prefix = "US";
 

@@ -37,7 +37,7 @@ import jmri.Turnout;
  * <P>
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version         $Revision: 1.26 $
+ * @version         $Revision: 1.27 $
  */
 
 public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager implements LocoNetListener {
@@ -59,10 +59,8 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     
     String prefix;
     
-    public char systemLetter() { return 'L'; }
-
     public String getSystemPrefix() { return prefix; }
-    
+
     public void dispose() {
         if (fastcontroller != null)
             fastcontroller.removeLocoNetListener(~0, this);

@@ -30,7 +30,7 @@ import jmri.managers.AbstractAudioManager;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class DefaultAudioManager extends AbstractAudioManager {
 
@@ -47,7 +47,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
     ShutDownTask audioShutDownTask;
 
-    public char systemLetter() { return 'I'; }
+    public String getSystemPrefix() { return "I"; }
 
     protected Audio createNewAudio(String systemName, String userName) throws AudioException {
 

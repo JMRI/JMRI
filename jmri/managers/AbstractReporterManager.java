@@ -9,7 +9,7 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a ReporterManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public abstract class AbstractReporterManager extends AbstractManager
     implements ReporterManager {
@@ -19,7 +19,7 @@ public abstract class AbstractReporterManager extends AbstractManager
     public Reporter provideReporter(String sName) {
         Reporter t = getReporter(sName);
         if (t!=null) return t;
-        if (sName.startsWith(""+systemLetter()+typeLetter()))
+        if (sName.startsWith(getSystemPrefix()+typeLetter()))
             return newReporter(sName, null);
         else
             return newReporter(makeSystemName(sName), null);

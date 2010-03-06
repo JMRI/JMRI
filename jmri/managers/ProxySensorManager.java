@@ -12,7 +12,7 @@ import jmri.Manager;
  * be added is the "Primary".
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class ProxySensorManager extends AbstractProxyManager
                             implements SensorManager {
@@ -50,17 +50,18 @@ public class ProxySensorManager extends AbstractProxyManager
         return getBySystemName(name);
     }
 
-    public Sensor provideSensor(String name) {
-        if (name == null || name.length() == 0) {
+    public Sensor provideSensor(String sName) {
+        if (sName == null || sName.length() == 0) {
             return null;
         }
-        Sensor t = getSensor(name);
+        Sensor t = getSensor(sName);
         if (t!=null) return t;
         // if the systemName is specified, find that system
-		String sName = name.toUpperCase();
         for (int i=0; i<mgrs.size(); i++) {
-            if ( ( (SensorManager)mgrs.get(i)).systemLetter() == sName.charAt(0) )
+            if ( sName.startsWith( 
+                        ((SensorManager)mgrs.get(i)).getSystemPrefix()+((SensorManager)mgrs.get(i)).typeLetter() ) ) {
                 return ((SensorManager)mgrs.get(i)).newSensor(sName, null);
+            }
         }
         // did not find a manager, allow it to default to the primary, if there is one
         log.debug("Did not find manager for name "+sName+", assume it's a number");
@@ -80,8 +81,7 @@ public class ProxySensorManager extends AbstractProxyManager
      * instance already exists.
      * @return requested Turnout object or null if none exists
      */
-    public Sensor getBySystemName(String systemName) {
-		String sName = systemName.toUpperCase();
+    public Sensor getBySystemName(String sName) {
         Sensor t = null;
         for (int i=0; i<mgrs.size(); i++) {
             t = ( (SensorManager)mgrs.get(i)).getBySystemName(sName);
@@ -132,13 +132,14 @@ public class ProxySensorManager extends AbstractProxyManager
      * be looking them up.
      * @return requested Sensor object (never null)
      */
-    public Sensor newSensor(String sysName, String userName) {
-		String systemName = sysName.toUpperCase();
+    public Sensor newSensor(String systemName, String userName) {
         // if the systemName is specified, find that system
         if (systemName != null && systemName.length()>0) {
             for (int i=0; i<mgrs.size(); i++) {
-                if ( ( (SensorManager)mgrs.get(i)).systemLetter() == systemName.charAt(0) )
-                    return ( (SensorManager)mgrs.get(i)).newSensor(systemName, userName);
+                if ( systemName.startsWith( 
+                            ((SensorManager)mgrs.get(i)).getSystemPrefix()+((SensorManager)mgrs.get(i)).typeLetter() ) ) {
+                    return ((SensorManager)mgrs.get(i)).newSensor(systemName, userName);
+                }
             }
             // did not find a manager, allow it to default to the primary, if there is one
             log.debug("Did not find manager for system name "+systemName+", assume it's a number");

@@ -19,10 +19,7 @@ public class SimpleTurnoutCtrlAction 			extends AbstractAction {
 	super(s);
 
 	// disable ourself if there is no primary turnout manager available
-        if (jmri.InstanceManager.turnoutManagerInstance()==null ||
-            (((jmri.managers.AbstractProxyManager)jmri.InstanceManager
-                                                 .turnoutManagerInstance())
-                                                 .systemLetter()=='\0')) {
+        if (jmri.InstanceManager.turnoutManagerInstance()==null ) {
             setEnabled(false);
         }
 

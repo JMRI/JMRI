@@ -11,12 +11,12 @@ import jmri.managers.AbstractTurnoutManager;
  * Turnouts must be manually created.
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  * @since 2.3.1
  */
 public class CbusTurnoutManager extends AbstractTurnoutManager {
 	
-    public char systemLetter() { return 'M'; }
+    public String getSystemPrefix() { return "M"; }
 
     /**
      * Internal method to invoke the factory, after all the

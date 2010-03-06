@@ -43,13 +43,15 @@ import java.util.List;
  * for more details.
  * <P>
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public interface Manager {
 
     /**
      * @return The system-specific prefix letter for a specific implementation
+     * @deprecated 2.9.5 Use getSystemPrefix
      */
+    @Deprecated
     public char systemLetter();
 
     /**

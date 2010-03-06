@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "TTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -19,7 +19,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         _instance = this;
     }
 
-    public char systemLetter() { return 'T'; }
+    public String getSystemPrefix() { return "T"; }
 
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it

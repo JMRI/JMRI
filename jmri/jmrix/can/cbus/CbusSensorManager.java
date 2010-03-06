@@ -15,11 +15,11 @@ import jmri.jmrix.can.TrafficController;
  * System names are "MSnnn", where nnn is the sensor number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class CbusSensorManager extends jmri.managers.AbstractSensorManager implements CanListener {
 
-    public char systemLetter() { return 'M'; }
+    public String getSystemPrefix() { return "M"; }
 
     static public CbusSensorManager instance() {
         if (mInstance == null) new CbusSensorManager();

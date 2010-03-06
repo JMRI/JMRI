@@ -27,10 +27,10 @@ public class DefaultCatalogTreeManager extends jmri.managers.AbstractManager
     }
 
     /**
-    * This is a bogus systemLetter.  Naming is inforced in method
+    * This is a bogus systemPrefix.  Naming is enforced in method
     * createNewCatalogTree below.
     */
-    public char systemLetter() { return '0'; }
+    public String getSystemPrefix() { return "0"; }
 
     /**
     *  Bogus typeLetter 

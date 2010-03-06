@@ -27,7 +27,7 @@ import jmri.managers.AbstractManager;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2006
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class BlockManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -36,7 +36,7 @@ public class BlockManager extends AbstractManager
         super();
     }
 
-    public char systemLetter() { return 'I'; }
+    public String getSystemPrefix() { return "I"; }
     public char typeLetter() { return 'B'; }
     
     /**

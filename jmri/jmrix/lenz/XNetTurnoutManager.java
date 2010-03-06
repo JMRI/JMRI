@@ -11,7 +11,7 @@ import jmri.Turnout;
  *
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version			$Revision: 2.11 $
+ * @version			$Revision: 2.12 $
  */
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 
@@ -23,7 +23,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         XNetTrafficController.instance().addXNetListener(XNetInterface.FEEDBACK, this);
     }
 
-    public char systemLetter() { return 'X'; }
+    public String getSystemPrefix() { return "X"; }
 
     // XNet-specific methods
 

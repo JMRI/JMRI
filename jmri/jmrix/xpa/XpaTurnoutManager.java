@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "PTnnn", where nnn is the turnout number without padding.
  *
  * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
@@ -19,7 +19,7 @@ public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         _instance = this;
     }
 
-    public char systemLetter() { return 'P'; }
+    public String getSystemPrefix() { return "P"; }
 
     // Xpa-specific methods
 

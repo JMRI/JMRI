@@ -14,7 +14,7 @@ import jmri.Light;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006, 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialLightManager extends AbstractLightManager {
 
@@ -25,7 +25,7 @@ public class SerialLightManager extends AbstractLightManager {
     /**
      *  Returns the system letter for SECSI
      */
-    public char systemLetter() { return 'V'; }
+    public String getSystemPrefix() { return "V"; }
     
     /**
      * Method to create a new Light based on the system name

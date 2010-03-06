@@ -13,7 +13,7 @@ import jmri.Light;
  * Based in part on SerialLightManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class LnLightManager extends AbstractLightManager {
 
@@ -24,7 +24,7 @@ public class LnLightManager extends AbstractLightManager {
     /**
      *  Returns the system letter for Loconet
      */
-    public char systemLetter() { return 'L'; }
+    public String getSystemPrefix() { return "L"; }
     
     /**
      * Method to create a new Light based on the system name

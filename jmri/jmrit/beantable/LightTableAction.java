@@ -36,7 +36,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.40 $
+ * @version     $Revision: 1.41 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -51,10 +51,7 @@ public class LightTableAction extends AbstractTableAction {
     public LightTableAction(String s) {
         super(s);
         // disable ourself if there is no primary Light manager available
-        if (jmri.InstanceManager.lightManagerInstance()==null ||
-            (((jmri.managers.AbstractProxyManager)jmri.InstanceManager
-                                                 .lightManagerInstance())
-                                                 .systemLetter()=='\0')) {
+        if (jmri.InstanceManager.lightManagerInstance()==null) {
             setEnabled(false);
         }
     }

@@ -18,7 +18,7 @@ import junit.framework.TestCase;
  * This is not itself a test class, e.g. should not be added to a suite.  Instead,
  * this forms the base for test classes, including providing some common tests
  * @author			Bob Jacobsen    2003, 2006, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 
 public abstract class AbstractLightMgrTest extends TestCase {
@@ -90,7 +90,7 @@ public abstract class AbstractLightMgrTest extends TestCase {
 	public void testUpperLower() {
 		Light t = l.provideLight(""+getNumToTest2());
 		String name = t.getSystemName();
-		Assert.assertTrue(t.equals(l.getLight(name.toLowerCase())));
+		Assert.assertNull(l.getLight(name.toLowerCase()));
 	}
 
 	public void testRename() {
