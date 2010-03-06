@@ -3,7 +3,7 @@
 <head>
 <!--
 
-  $Id: package.html,v 1.1 2010-01-25 00:59:55 jacobsen Exp $
+  $Id: package.html,v 1.2 2010-03-06 02:46:03 jacobsen Exp $
 
   Made with permission from the Sun version at
   http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
@@ -26,15 +26,21 @@ Both synchronous reads and writes, and asynchronous
 read and monitor operations are available.
 
 <p>
-The {@link jmri.web.xmlio.XmlIOFactory} class provides {@link jmri.web.xmlio.XmlIOServer} objects, which 
-handle the interactions.  Each XmlIOServer is independent and
-thread safe.
+The {@link jmri.web.xmlio.XmlIOFactory} class provides 
+{@link jmri.web.xmlio.XmlIOServer} objects, which 
+handle the interactions.  
+Each XmlIOServer is independent and thread safe.
 
 <p>
 The XML schema is defined in the xmlio.xsd schema document.
 A typical message is 
 <code><pre>
 &lt;xmlio&gt;
+    &lt;item&gt;
+        &lt;type&gt;turnout&lt;/type&gt;
+        &lt;name&gt;Turnout 12&lt;/name&gt;
+        &lt;set&gt;4&lt;/set&gt;
+    &lt;/item&gt;
     &lt;item&gt;
         &lt;type&gt;turnout&lt;/type&gt;
         &lt;name&gt;Turnout 12&lt;/name&gt;
@@ -48,10 +54,7 @@ A typical message is
 </pre></code>
 
 <p>
-A synchronous request completes immediately, having made
-any changes needed and returning current values.
-<p>
-The presence of a &lt;value&gt; element indicates a write;
+The presence of a &lt;set&gt; element indicates a write;
 the returned element will have the current value inserted
 and new value elements created as needed.
 <p>
@@ -60,8 +63,11 @@ but there is no guarantee that the consequences of the writes
 have propagated completely.
 
 <p>
-An asynchronous request does not do a write.
-Instead, it returns immediately iff 
+A synchronous request completes immediately, having made
+any changes needed and returning current values.
+
+<p>
+An asynchronous request returns immediately iff 
 any object has a value different from its value element.  
 Otherwise,
 it returns when any values for any of the items 
@@ -73,8 +79,10 @@ By sending an Element back and forth as an asynchronous request,
 a client may reliably get <em>all</em> changing values
 without risk of losing changes that occur while elements are
 in transmission.  Just send an element containing references to, but
-not values for, all interesting objects, and then keep turning it
-around as an asynchronous request.
+not set requests for, all interesting objects, and then keep turning it
+around as an asynchronous request. The first reply will be
+immediate, returning the initial values.  Later iterations will 
+only return when changes have been made.
 
 <p>
 A &lt;list&gt; element returns all existing objects of a 
@@ -90,6 +98,27 @@ around to start a sequence of read and monitor operations.
 &lt;/xmlio&gt;
 
 </pre></code>
+
+<p>
+A &lt;throttle&gt; element
+can be used to control a DCC Throttle via the
+default ThrottleManager.  The first use 
+allocates the throttle, and all later ones
+set any attributes present:
+
+<code><pre>
+&lt;xmlio&gt;
+    &lt;throttle&gt;
+        &lt;address&gt;1234&lt;/address&gt;
+        &lt;speed&gt;0.75&lt;/speed&gt;
+        &lt;forward&gt;true&lt;/forward&gt;
+        &lt;F3&gt;false&lt;/F3&gt;
+    &lt;/throttle&gt;
+&lt;/xmlio&gt;
+
+</pre></code>
+
+A throttle element is returned unchanged.
 
 <h2>Related Documentation</h2>
 
