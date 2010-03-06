@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 /**
  * Frame controlling a single turnout
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 	
@@ -189,8 +189,10 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 				// and set commanded state to CLOSED
 				turnout.setCommandedState(Turnout.CLOSED);
 			}
-		} catch (Exception ex) {
-			log.error("exception during closeButtonActionPerformed", ex);
+		} catch (IllegalArgumentException ex1) {
+		    invalidTurnout(adrTextField.getText(), ex1);
+		} catch (Exception ex2) {
+			log.error("exception during closeButtonActionPerformed", ex2);
 			nowStateLabel.setText("ERROR");
 			nowFeedbackLabel.setText("<unknown>");
 		}
@@ -219,8 +221,10 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 				// and set commanded state to THROWN
 				turnout.setCommandedState(Turnout.THROWN);
 			}
-		} catch (Exception ex) {
-			log.error("exception during throwButtonActionPerformed", ex);
+		} catch (IllegalArgumentException ex1) {
+		    invalidTurnout(adrTextField.getText(), ex1);
+		} catch (Exception ex2) {
+			log.error("exception during throwButtonActionPerformed", ex2);
 			nowStateLabel.setText("ERROR");
 			nowFeedbackLabel.setText("<unknown>");
 		}
@@ -247,8 +251,10 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 					turnout.setLocked(Turnout.CABLOCKOUT, true);
 				}
 			}
-		} catch (Exception ex) {
-			log.error("exception during lockButtonActionPerformed", ex);
+		} catch (IllegalArgumentException ex1) {
+		    invalidTurnout(adrTextField.getText(), ex1);
+		} catch (Exception ex2) {
+			log.error("exception during lockButtonActionPerformed", ex2);
 			nowStateLabel.setText("ERROR");
 			nowFeedbackLabel.setText("<unknown>");
 		}
@@ -276,8 +282,10 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 				}
 				
 			}
-		} catch (Exception ex) {
-			log.error("exception during lockPushButtonActionPerformed", ex);
+		} catch (IllegalArgumentException ex1) {
+		    invalidTurnout(adrTextField.getText(), ex1);
+		} catch (Exception ex2) {
+			log.error("exception during lockPushButtonActionPerformed", ex2);
 			nowStateLabel.setText("ERROR");
 			nowFeedbackLabel.setText("<unknown>");
 		}
@@ -346,7 +354,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 				lockButton.setText(UNLOCKED);
 			}
 			lockButton.setEnabled(true);
-		}else{
+		} else {
 			lockButton.setText(UNLOCKED);
 			lockButton.setEnabled(false);
 		}
@@ -357,7 +365,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 				lockPushButton.setText(UNLOCKED);
 			}
 			lockPushButton.setEnabled(true);
-		}else{
+		} else {
 			lockPushButton.setText(UNLOCKED);
 			lockPushButton.setEnabled(false);
 		}
@@ -378,6 +386,14 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
         }
       }
 
+    void invalidTurnout(String name, Exception ex) {
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class)
+                .showInfoMessage("Error",
+                                 "Unable to convert \"" + name + "\" to a valid hardware address",
+                                 ex.toString(), true, false, 
+                                 org.apache.log4j.Level.ERROR);
+    }
+    
     Turnout turnout = null;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleTurnoutCtrlFrame.class.getName());

@@ -37,7 +37,7 @@ import jmri.Turnout;
  * <P>
  * Description:		Implement turnout manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version         $Revision: 1.27 $
+ * @version         $Revision: 1.28 $
  */
 
 public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager implements LocoNetListener {
@@ -68,9 +68,13 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     }
 
     public Turnout createNewTurnout(String systemName, String userName) {
-        Turnout t;
-        int addr = Integer.valueOf(systemName.substring(getSystemPrefix().length()+1)).intValue();
-        t = new LnTurnout(getSystemPrefix(), addr, throttledcontroller);
+        int addr;
+        try {
+            addr = Integer.valueOf(systemName.substring(getSystemPrefix().length()+1)).intValue();
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Can't convert "+systemName.substring(getSystemPrefix().length()+1)+" to LocoNet turnout address");
+        }
+        Turnout t = new LnTurnout(getSystemPrefix(), addr, throttledcontroller);
         t.setUserName(userName);
         t.addPropertyChangeListener(this);
 
