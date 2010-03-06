@@ -3,7 +3,7 @@
 
 <!-- Schema for JMRI decoder definitions       -->
 
-<!-- $Id: decoder.xsd,v 1.10 2010-03-02 07:58:02 jacobsen Exp $ -->
+<!-- $Id: decoder.xsd,v 1.11 2010-03-06 23:25:05 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
@@ -52,9 +52,9 @@
 </xs:annotation>
 
   <xs:complexType name="VersionType">
-      <xs:attribute name="author" />
-      <xs:attribute name="version" />
-      <xs:attribute name="lastUpdated" />
+      <xs:attribute name="author" type="xs:string" />
+      <xs:attribute name="version" type="xs:string" />
+      <xs:attribute name="lastUpdated" type="xs:string" />
   </xs:complexType>
 
   <xs:complexType name="DecoderType">
@@ -64,10 +64,19 @@
 
       <xs:element name="programming" minOccurs="1" maxOccurs="1" >
         <xs:complexType>
-          <xs:attribute name="direct" />
-          <xs:attribute name="paged" />
-          <xs:attribute name="register" />
-          <xs:attribute name="ops" />
+          <xs:attribute name="direct" default="no" >
+            <xs:simpleType>
+              <xs:restriction base="xs:token">
+                <xs:enumeration value="yes"/>
+                <xs:enumeration value="no"/>
+                <xs:enumeration value="bitOnly"/>
+                <xs:enumeration value="byteOnly"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="paged" type="yesNoType" default="no" />
+          <xs:attribute name="register" type="yesNoType" default="no" />
+          <xs:attribute name="ops" type="yesNoType" default="no" />
         </xs:complexType>
       </xs:element>
 
@@ -92,8 +101,86 @@
   <xs:complexType name="FamilyType">
     <xs:sequence>
 
-      <xs:element name="model" minOccurs="0" maxOccurs="unbounded" />
-
+      <xs:element name="model" minOccurs="0" maxOccurs="unbounded" >
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="versionCV" minOccurs="0" maxOccurs="unbounded" >
+              <xs:complexType>
+                <xs:attribute name="lowVersionID" type="xs:int" />
+                <xs:attribute name="highVersionID" type="xs:int" />
+                <xs:attribute name="comment" type="xs:string" />
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="output" minOccurs="0" maxOccurs="unbounded" >
+              <xs:complexType>
+                <xs:attribute name="name" type="xs:string" use="required"/>
+                <xs:attribute name="label" type="xs:string" />
+                <xs:attribute name="comment" type="xs:string" />
+                <xs:attribute name="maxcurrent" type="xs:string" />
+                <xs:attribute name="connection" default="unspecified" >
+                  <xs:simpleType>
+                    <xs:restriction base="xs:token" >
+                      <xs:enumeration value="unspecified"/>
+                      <xs:enumeration value="plug"/>
+                      <xs:enumeration value="wire"/>
+                      <xs:enumeration value="solder"/>
+                      <xs:enumeration value="other"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="size" minOccurs="0" maxOccurs="1" >
+              <xs:complexType>
+                <xs:attribute name="length" type="xs:string" />
+                <xs:attribute name="width" type="xs:string" />
+                <xs:attribute name="height" type="xs:string" />
+                <xs:attribute name="units" use="required" >
+                  <xs:simpleType>
+                    <xs:restriction base="xs:token" >
+                      <xs:enumeration value="inches"/>
+                      <xs:enumeration value="mm"/>
+                      <xs:enumeration value="cm"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:attribute>
+                <xs:attribute name="comment" type="xs:string" />
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="model" type="xs:string" use="required"/>
+          <xs:attribute name="options" type="xs:string" />
+          <xs:attribute name="comment" type="xs:string" />
+          <xs:attribute name="numFns" type="xs:int" />
+          <xs:attribute name="numOuts" type="xs:int" />
+          <xs:attribute name="lowVersionID" type="xs:int" />
+          <xs:attribute name="highVersionID" type="xs:int" />
+          <xs:attribute name="productID" type="xs:int" />
+          <xs:attribute name="maxInputVolts" type="xs:string" />
+          <xs:attribute name="maxMotorCurrent" type="xs:string" />
+          <xs:attribute name="maxTotalCurrent" type="xs:string" />
+          <xs:attribute name="formFactor" type="xs:string" />
+          <xs:attribute name="nmraWarrant" type="yesNoType" default="no" />
+          <xs:attribute name="nmraWarrantStart" type="xs:string" />
+          <xs:attribute name="nmraWarrantEnd" type="xs:string" />
+          <xs:attribute name="connector" default="unspecified" >
+            <xs:simpleType>
+              <xs:restriction base="xs:token"  >
+                <xs:enumeration value="unspecified"/>
+                <xs:enumeration value="NMRAsmall"/>
+                <xs:enumeration value="NMRAmedium"/>
+                <xs:enumeration value="NMRAlarge"/>
+                <xs:enumeration value="9pin"/>
+                <xs:enumeration value="other"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="extFnsNmraF13" type="yesNoType" />
+          <xs:attribute name="extFnsNmraBSC" type="yesNoType" />
+          <xs:attribute name="extFnsMRC" type="yesNoType" />
+        </xs:complexType>
+      </xs:element>
+      
       <xs:element name="functionlabels" minOccurs="0" maxOccurs="1">
         <xs:complexType><xs:sequence>
           <xs:element name="functionlabel" minOccurs="0" maxOccurs="unbounded">
@@ -110,12 +197,12 @@
       </xs:element>
 
     </xs:sequence>
-    <xs:attribute name="name" />
-    <xs:attribute name="mfg" />
-    <xs:attribute name="lowVersionID" />
-    <xs:attribute name="highVersionID" />
-    <xs:attribute name="type" />
-    <xs:attribute name="comment" />
+    <xs:attribute name="name" type="xs:string" />
+    <xs:attribute name="mfg" type="xs:string" />
+    <xs:attribute name="lowVersionID" type="xs:int" />
+    <xs:attribute name="highVersionID" type="xs:int" />
+    <xs:attribute name="type" type="xs:string" />
+    <xs:attribute name="comment" type="xs:string" />
   </xs:complexType>
 
   <xs:complexType name="VariablesType">
