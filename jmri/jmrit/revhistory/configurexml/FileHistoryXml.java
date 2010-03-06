@@ -14,7 +14,7 @@ import jmri.jmrit.revhistory.FileHistory;
  * here.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -43,7 +43,6 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
         FileHistory rmain = jmri.InstanceManager.getDefault(FileHistory.class);
         
         FileHistory r = loadFileHistory(e);
-        System.out.println(r);
         rmain.addOperation("Load","", r);
         
         return true;
