@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SoundPro.shtml,v 1.3 2010-01-06 00:12:03 jacobsen Exp $ -->
+<!-- $Id: SoundPro.shtml,v 1.4 2010-03-06 20:08:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -32,16 +32,26 @@ capabilities of JMRI.
 <p>
 Help on specific menus:
 <ul>
-<li>Edit - (<a href="../AppConfigPanel.shtml">Preferences</a>)
+<li>Edit - (<a href="TabbedPreferences.shtml">Preferences</a>)
 <li><a href="../../jmri/jmrit/ToolsMenu.shtml">Tools</a>
 <li><a href="../../../html/apps/DecoderPro/Roster.shtml#menu">Roster</a>
-<li><a href="../../../html/tools/Audio.shtml">Audio</a>
 <li><a href="../../jmri/jmrit/display/PanelMenuHelp.shtml">Panels</a>
-<li>Hardware selected  options
-<li>Other Hardware selected options
-<li>Debug
-<li>Window
+<li>(Menus specific to your layout connection will appear here)
+<li><a href="../../../package/jmri/jmrit/DebugMenu.shtml">Debug</a>
+<li>Window - Shows the currently available windows
+    <ul>
+    <li>Minimize - minimize the current window, hides it.
+</ul>
 <li>Help
+  <ul>
+  <li>Window Help - Opens a help page specific to the current window. For the main window, that's this page.
+  <li>General Help - Opens the main JMRI help page
+  <li>License - Displays the JMRI license.
+  <li>Locations - Show where the JMRI program and preferences directories are located
+  <li>Context - Displays information about your setup of JMRI that might be useful 
+            when somebody is trying to help with a problem.
+  <li>Upload Debugging Info - Opens a window for uploading debugging info.
+  </ul>
 </ul>
 
 <p>
