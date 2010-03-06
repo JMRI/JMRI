@@ -6,7 +6,8 @@
  *       		LIUSB Server 
  *
  * @author	        Paul Bender Copyright (C) 2009
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
+ * @deprecated 2.9.5
  */
 
 package jmri.jmrix.lenz.liusbserver;
@@ -14,6 +15,7 @@ package jmri.jmrix.lenz.liusbserver;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
+@Deprecated
 public class LIUSBServerAction extends AbstractAction {
 
     public LIUSBServerAction(String s) { super(s);}

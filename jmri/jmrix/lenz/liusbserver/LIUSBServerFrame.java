@@ -7,8 +7,10 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect XPressNet via the LIUSB Server interface
  * @author			Paul Bender (C) 2009
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
+ * @deprecated 2.9.5
  */
+@Deprecated
 public class LIUSBServerFrame extends jmri.jmrix.NetworkPortFrame {
 
         private LIUSBServerAdapter adapter = null;

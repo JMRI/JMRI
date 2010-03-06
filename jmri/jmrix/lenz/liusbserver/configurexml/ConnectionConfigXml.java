@@ -21,7 +21,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author   Paul Bender Copyright (C) 2009	
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -54,17 +54,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     public boolean load(Element e) throws Exception {
         boolean result = true;
         // start the "connection"
-        jmri.jmrix.lenz.liusbserver.LIUSBServerFrame f
-                = new jmri.jmrix.lenz.liusbserver.LIUSBServerFrame();
-        //try {
-            f.initComponents();
-        //} catch (Exception ex) {
-            //log.error("starting LIUSBServerFrame exception: "+ex.toString());
-        //    throw ex;
-        //}
-        f.pack();
-        f.setVisible(true);
-
+        jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter adapter = 
+                        new jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter();
+                        String errCode = adapter.openPort("localhost","LIUSBServer");
+                        if (errCode == null)    {
+                                adapter.configure();
+                }
         // register, so can be picked up
         getInstance();
         register();

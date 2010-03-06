@@ -6,7 +6,8 @@
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
  * @author			Paul Bender Copyright (C) 2009
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
+ * @deprecated 2.9.5
  */
 
 package jmri.jmrix.lenz.xnetsimulator;
@@ -14,6 +15,7 @@ package jmri.jmrix.lenz.xnetsimulator;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
+@Deprecated
 public class XNetSimulatorAction 			extends AbstractAction {
 
 	public XNetSimulatorAction(String s) { super(s);}
