@@ -20,7 +20,7 @@ import jmri.web.miniserver.AbstractServlet;
  *  may be freely used or adapted. 
  *
  * @author  Bob Jacobsen  Copyright 2005, 2006
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class EchoServlet extends AbstractServlet {
@@ -35,21 +35,18 @@ public class EchoServlet extends AbstractServlet {
         // read in the info
         String[] inputLines = new String[maxRequestLines];
         int i=0;
-        try {
-            for (i=0; i<maxRequestLines; i++) {
-                inputLines[i] = in.readLine();
-                if (inputLines[i] == null) // Client closed connection.
-                    break;
-                if (inputLines[i].length() == 0) { // Blank line.
-                    if (usingPost(inputLines)) {
-                        readPostData(inputLines, i, in);
-                        i = i + 2;
-                    }
-                    break;
+
+        for (i=0; i<maxRequestLines; i++) {
+            inputLines[i] = in.readLine();
+            if (inputLines[i] == null) // Client closed connection.
+                break;
+            if (inputLines[i].length() == 0) { // Blank line.
+                if (usingPost(inputLines)) {
+                    readPostData(inputLines, i, in);
+                    i = i + 2;
                 }
+                break;
             }
-        } catch (IOException e) {
-            System.out.println("IO Exception reading request: "+e);
         }
         
         // get the writer from the response

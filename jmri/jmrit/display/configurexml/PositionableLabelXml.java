@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.49 $
+ * @version $Revision: 1.50 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -162,16 +162,16 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         	log.error("PositionableLabel is null!");
             if (log.isDebugEnabled()) {
                 java.util.List <Attribute> attrs = element.getAttributes();
-                System.out.println("\tElement Has "+attrs.size()+" Attributes:");
+                log.debug("\tElement Has "+attrs.size()+" Attributes:");
                 for (int i=0; i<attrs.size(); i++) {
                     Attribute a = attrs.get(i);
-                    System.out.println("\t\t"+a.getName()+" = "+a.getValue());
+                    log.debug("\t\t"+a.getName()+" = "+a.getValue());
                 }
                 java.util.List <Element> kids = element.getChildren();
-                System.out.println("\tElementHas "+kids.size()+" children:");
+                log.debug("\tElementHas "+kids.size()+" children:");
                 for (int i=0; i<kids.size(); i++) {
                     Element e = kids.get(i);
-                    System.out.println("\t\t"+e.getName()+" = \""+e.getValue()+"\"");
+                    log.debug("\t\t"+e.getName()+" = \""+e.getValue()+"\"");
                 }
             }
         	return;

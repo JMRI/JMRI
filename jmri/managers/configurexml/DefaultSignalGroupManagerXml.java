@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle XML configuration for a DefaultSignalGroupManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class DefaultSignalGroupManagerXml 
             extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -32,7 +32,7 @@ public class DefaultSignalGroupManagerXml
 
         Element element = new Element("signalgroups");
         element.setAttribute("class", this.getClass().getName());
-        //System.out.println("group Save" + names.size());
+
         // include contents
         List<String> names = m.getSystemNameList();
         for (int i = 0; i < names.size(); i++) {

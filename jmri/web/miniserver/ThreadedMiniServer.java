@@ -12,7 +12,7 @@ import java.io.*;
  *  may be freely used or adapted.
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2009, 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class ThreadedMiniServer extends MiniServer
@@ -38,13 +38,12 @@ public class ThreadedMiniServer extends MiniServer
   }
     
   public void run() {
-    Connection currentThread =
-      (Connection)Thread.currentThread();
     try {
-      super.handleConnection(currentThread.getSocket());
-    } catch(IOException ioe) {
-      System.out.println("IOException: " + ioe);
-      ioe.printStackTrace();
+        Connection currentThread =
+            (Connection)Thread.currentThread();
+        super.handleConnection(currentThread.getSocket());
+    } catch (Exception e) {
+        log.error("Exception in the server thread", e);
     }
   }
 }
@@ -66,4 +65,7 @@ class Connection extends Thread {
   public Socket getSocket() {
     return serverSocket;
   }
+
+  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThreadedMiniServer.class.getName());
+
 }

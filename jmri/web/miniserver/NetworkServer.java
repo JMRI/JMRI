@@ -15,7 +15,7 @@ import java.io.*;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class NetworkServer {
@@ -52,8 +52,7 @@ public class NetworkServer {
         handleConnection(server);
       }
     } catch (IOException ioe) {
-      System.out.println("IOException: " + ioe);
-      ioe.printStackTrace();
+      log.error("IOException", ioe);
     }
   }
 
@@ -71,7 +70,7 @@ public class NetworkServer {
       throws IOException{
     BufferedReader in = SocketUtil.getReader(server);
     PrintWriter out = SocketUtil.getWriter(server);
-    System.out.println
+    log.info
       ("Generic Network Server: got connection from " +
        server.getInetAddress().getHostName() + "\n" +
        "with first line '" + in.readLine() + "'");

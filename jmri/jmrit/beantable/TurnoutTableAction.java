@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.75 $
+ * @version     $Revision: 1.76 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -390,7 +390,6 @@ public class TurnoutTableAction extends AbstractTableAction {
                     String manuName = provideConnectionNameFromPrefix(managerList.get(x).getSystemPrefix());
                     prefixBox.addItem(manuName);                      
                 }
-                System.out.println(p);
                 if(p.getComboBoxLastSelection(systemSelectionCombo)!=null)
                     prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
             }

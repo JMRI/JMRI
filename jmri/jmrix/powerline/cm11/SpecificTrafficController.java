@@ -23,7 +23,7 @@ import jmri.jmrix.powerline.SerialMessage;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -112,7 +112,6 @@ public class SpecificTrafficController extends SerialTrafficController {
             return false; // wait for one more
         }
         // check for data available
-        //System.out.println(" got "+(msg.getElement(0)&0xFF));
         if ((msg.getElement(0)&0xFF)==Constants.POLL_REQ) {
             // get message
             SerialMessage m = new SpecificMessage(1);

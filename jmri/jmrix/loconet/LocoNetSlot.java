@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Stephen Williams  Copyright (C) 2008
- * @version         $Revision: 1.22 $
+ * @version         $Revision: 1.23 $
  */
 public class LocoNetSlot {
 
@@ -206,7 +206,6 @@ public class LocoNetSlot {
      * message.
      */
     public void functionMessage(long pkt) {
-        System.out.println("slot "+getSlot()+" msg "+pkt);
         // parse for which set of functions
         if ( (pkt&0xFFFFFF0) == 0xA0) {
             // F9-12

@@ -27,7 +27,7 @@ import gnu.io.SerialPortEventListener;
  * Removed Runnable implementation and methods for it
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener  {
 
@@ -138,7 +138,6 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 			// stream to port in single write, as that's needed by serial
 			try {
 				if (ostream != null) {
-				   //System.out.println("message: " + m.toString());
 				   if (log.isDebugEnabled()) log.debug("write message: "+m.getFormattedMessage(sprogState));
 				   ostream.write(m.getFormattedMessage(sprogState));
 				}
