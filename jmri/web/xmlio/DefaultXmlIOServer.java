@@ -24,7 +24,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -281,14 +281,12 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 });
 
         } else {
-            System.out.println("set");
             // set speed, etc, as needed
             DccThrottle t = tc.throttle;
             Element e;
             
             if ( (e = item.getChild("speed")) != null) {
                 t.setSpeedSetting(Float.parseFloat(e.getText()));
-                System.out.println("set speed "+Float.parseFloat(e.getText()));
             }
             
             if ( (e = item.getChild("forward")) != null) {

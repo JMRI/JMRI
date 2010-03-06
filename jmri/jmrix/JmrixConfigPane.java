@@ -34,7 +34,7 @@ import javax.swing.JPanel;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.63 $
+ * @version	$Revision: 1.64 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -279,7 +279,6 @@ public class JmrixConfigPane extends JPanel {
     public String getCurrentManufacturerName() {
         int current = modeBox.getSelectedIndex();
         if (current==0) return "(none)";
-        System.out.println(classConnectionList[current].getManufacturer());
         return classConnectionList[current].getManufacturer();
     }
 
