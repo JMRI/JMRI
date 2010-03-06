@@ -24,7 +24,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -64,6 +64,13 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     e.addContent(n);
                 }            
             } else log.warn("Unexpected type in list element: "+type);
+        }
+        
+        // then process "throttle" elements
+        @SuppressWarnings("unchecked")
+        List<Element> throttles = e.getChildren("throttle");
+        for (Element throttle : throttles) {
+            immediateSetThrottle(throttle);
         }
         
         // then handle the specific items elements.
@@ -253,6 +260,90 @@ public class DefaultXmlIOServer implements XmlIOServer {
         v.setText(""+b.getState());
     }
     
+    static HashMap<Integer, ThrottleContext> map = new HashMap<Integer, ThrottleContext>();
+    
+    void immediateSetThrottle(Element item) {
+        Integer address = Integer.parseInt(item.getChild("address").getText());
+        ThrottleContext tc = map.get(address);
+        if (tc == null) {
+            // first request does the allocation
+            boolean ok = InstanceManager.throttleManagerInstance()
+                .requestThrottle(address,new ThrottleListener() {
+                    public void notifyThrottleFound(DccThrottle t) {
+                        // store back into context
+                        ThrottleContext tc = new ThrottleContext();
+                        tc.throttle = t;
+                        Integer address = new Integer( ((DccLocoAddress)t.getLocoAddress()).getNumber());
+                        map.put(address, tc);
+                    }
+                });
+
+        } else {
+            System.out.println("set");
+            // set speed, etc, as needed
+            DccThrottle t = tc.throttle;
+            Element e;
+            
+            if ( (e = item.getChild("speed")) != null) {
+                t.setSpeedSetting(Float.parseFloat(e.getText()));
+                System.out.println("set speed "+Float.parseFloat(e.getText()));
+            }
+            
+            if ( (e = item.getChild("forward")) != null) {
+                if (e.getText().equals("false")) t.setIsForward(false);
+                else t.setIsForward(true);
+            }
+
+            if ( (e = item.getChild("F0")) != null)  
+                if (e.getText().equals("false")) t.setF0(false);
+                else t.setF0(true);
+            if ( (e = item.getChild("F1")) != null)  
+                if (e.getText().equals("false")) t.setF1(false);
+                else t.setF1(true);
+            if ( (e = item.getChild("F2")) != null)  
+                if (e.getText().equals("false")) t.setF2(false);
+                else t.setF2(true);
+            if ( (e = item.getChild("F3")) != null)  
+                if (e.getText().equals("false")) t.setF3(false);
+                else t.setF3(true);
+            if ( (e = item.getChild("F4")) != null)  
+                if (e.getText().equals("false")) t.setF4(false);
+                else t.setF4(true);
+            if ( (e = item.getChild("F5")) != null)  
+                if (e.getText().equals("false")) t.setF5(false);
+                else t.setF5(true);
+            if ( (e = item.getChild("F6")) != null)  
+                if (e.getText().equals("false")) t.setF6(false);
+                else t.setF6(true);
+            if ( (e = item.getChild("F7")) != null)  
+                if (e.getText().equals("false")) t.setF7(false);
+                else t.setF7(true);
+            if ( (e = item.getChild("F8")) != null)  
+                if (e.getText().equals("false")) t.setF8(false);
+                else t.setF8(true);
+            if ( (e = item.getChild("F9")) != null)  
+                if (e.getText().equals("false")) t.setF9(false);
+                else t.setF9(true);
+            if ( (e = item.getChild("F10")) != null)  
+                if (e.getText().equals("false")) t.setF10(false);
+                else t.setF10(true);
+            if ( (e = item.getChild("F11")) != null)  
+                if (e.getText().equals("false")) t.setF11(false);
+                else t.setF11(true);
+            if ( (e = item.getChild("F12")) != null)  
+                if (e.getText().equals("false")) t.setF12(false);
+                else t.setF12(true);
+
+        }
+    }
+
+    // class to persist (from one usage to another)
+    // throttle information
+    class ThrottleContext {
+        DccThrottle throttle;
+    }
+    
+    // class for firing off requests to handle a deferred read
     class DeferredRead implements java.beans.PropertyChangeListener {
         Element request;
         XmlIORequestor requestor;
