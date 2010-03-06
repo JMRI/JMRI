@@ -10,7 +10,7 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -167,7 +167,9 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         try {
             iName = Integer.parseInt(start);
         } catch (NumberFormatException ex) {
-            log.error("Unable to convert Hardware Address to a number");
+            log.error("Unable to convert " + start + " Hardware Address to a number");
+            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Unable to convert " + start + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
             return null;
         }
         for (int x = 0; x < numberToAdd; x++){

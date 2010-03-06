@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.74 $
+ * @version     $Revision: 1.75 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -390,7 +390,9 @@ public class TurnoutTableAction extends AbstractTableAction {
                     String manuName = provideConnectionNameFromPrefix(managerList.get(x).getSystemPrefix());
                     prefixBox.addItem(manuName);                      
                 }
-                prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
+                System.out.println(p);
+                if(p.getComboBoxLastSelection(systemSelectionCombo)!=null)
+                    prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
             }
             else {
                 prefixBox.addItem(provideConnectionNameFromPrefix(jmri.InstanceManager.turnoutManagerInstance().getSystemPrefix()));
@@ -704,9 +706,9 @@ public class TurnoutTableAction extends AbstractTableAction {
             try {
                 numberOfTurnouts = Integer.parseInt(numberToAdd.getText());
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert the end Hardware Address to a number");
+                log.error("Unable to convert " + numberToAdd.getText() + " to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Number to Add must be a number!",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Number to turnouts to Add must be a number!",""+ex,true, false, org.apache.log4j.Level.ERROR);
                 return;
             }
         } 
@@ -719,7 +721,8 @@ public class TurnoutTableAction extends AbstractTableAction {
         //String turnoutPrefix = getTurnoutPrefixFromName()+"T";
         String sName = null;
         String[] turnoutList = InstanceManager.turnoutManagerInstance().formatRangeOfAddresses(sysName.getText(), numberOfTurnouts, getTurnoutPrefixFromName());
-
+        if (turnoutList == null)
+            return;
         for (int x = 0; x < turnoutList.length; x++){
             sName = turnoutList[x];
             if (sName.length()>2 && sName.charAt(1)=='T') {
