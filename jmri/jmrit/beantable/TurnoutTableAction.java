@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.73 $
+ * @version     $Revision: 1.74 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -806,7 +806,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
         if (list != null) {
             for (Object memo : list) {
-                if (((jmri.jmrix.SystemConnectionMemo)memo).getUserName().equals((String) prefixBox.getSelectedItem())){
+                if (((jmri.jmrix.SystemConnectionMemo)memo).getUserName().equals(prefixBox.getSelectedItem())){
                     return ((jmri.jmrix.SystemConnectionMemo)memo).getSystemPrefix();
                 }
             }

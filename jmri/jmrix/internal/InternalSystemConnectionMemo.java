@@ -11,9 +11,12 @@ import jmri.InstanceManager;
  * Objects of specific subtypes are registered
  * in the instance manager to activate their
  * particular system.
+ * <p>
+ * This contains no support for multiple internal systems, as
+ * they wouldn't do anything useful.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -21,12 +24,6 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         super("I", "Internal");
         register();
     }
-    
-    private static int instanceCount = 1;
-    
-    private int count;
-
-    String suffix() { return count>1?""+count:""; }
     
     /**
      * Configure the common managers for Internal connections.

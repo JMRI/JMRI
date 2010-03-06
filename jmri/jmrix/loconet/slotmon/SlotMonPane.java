@@ -17,7 +17,7 @@ import jmri.jmrix.loconet.*;
  * so are shown separately.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
@@ -132,7 +132,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
             super("test", 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 SlotMonPane.class.getName(), 
-                (LocoNetSystemConnectionMemo)jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
+                jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
         }
     }
     
