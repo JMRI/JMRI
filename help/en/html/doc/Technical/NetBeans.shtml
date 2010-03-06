@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NetBeans.shtml,v 1.8 2010-02-04 23:34:53 plocher Exp $ -->
+<!-- $Id: NetBeans.shtml,v 1.9 2010-03-06 19:26:43 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -52,7 +52,7 @@
 
     <h2> Getting and installing Netbeans</h2>
     <ul>
-        <li> Download Netbeans 6.8 (The Java SE version is fine) from <a href="www.netbeans.org"> netneans.org </a></li>
+        <li> Download Netbeans 6.8 (The Java SE version is fine) from <a href="www.netbeans.org">netbeans.org</a></li>
         <li> Run the netbeans package installer</li>
     </ul>
     <h2>Checking out code</h2>
