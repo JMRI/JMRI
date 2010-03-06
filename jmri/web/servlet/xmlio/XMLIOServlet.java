@@ -18,45 +18,21 @@ import javax.servlet.ServletResponse;
 import jmri.web.xmlio.*;
 
 /** 
- * A simple servlet that returns a JMRI window as
- * a PNG image or enclosing HTML file.
- * <p>
- * The suffix of the request determines which.
- * <dl>
- * <dt>.html<dd>Returns a HTML file that displays the panel enabled for 
- *      clicking via server side image map; see the .properties file for the content
- * <dt>.png<dd>Just return the image
- * </dl>
- *<P>
- * The associated .properties file contains the HTML fragments used to 
- * form replies.
- *<P>
- *  Parts taken from Core Web Programming from 
- *  Prentice Hall and Sun Microsystems Press,
- *  http://www.corewebprogramming.com/.
- *  &copy; 2001 Marty Hall and Larry Brown;
- *  may be freely used or adapted. 
+ * A simple servlet that uses the 
+ * {@link jmri.web.xmlio} package to do XML I/O to and 
+ * from JMRI using AJAX.  See the examples in the web
+ * directory.
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
-
-    String clickRetryTime = "1.0";
-    String noclickRetryTime = "5.0";
     
     protected int maxRequestLines = 50;
-    protected String serverName = "JFrameServer";
+        
+    public String getServletInfo() { return "XMLIO Servlet"; }
     
-    public void destroy() {}
-    
-    public void init(javax.servlet.ServletConfig config) {}
-    
-    public String getServletInfo() { return ""; }
-    
-    public javax.servlet.ServletConfig getServletConfig() { return null; }
-
     public void service(ServletRequest req, ServletResponse res) throws java.io.IOException {
         // get the context
         getServletConfig();

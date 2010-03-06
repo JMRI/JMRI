@@ -3,7 +3,7 @@
 <head>
 <!--
 
-  $Id: package.html,v 1.2 2010-03-06 02:46:03 jacobsen Exp $
+  $Id: package.html,v 1.3 2010-03-06 04:10:15 jacobsen Exp $
 
   Made with permission from the Sun version at
   http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
@@ -18,8 +18,9 @@ The JMRI XML I/O package allows communications to and from a
 running JMRI program through the exchange of XML-format information.
 
 <p>
-Serialization of the XML is done elsewhere, as this package
-works via the exchange of JDOM Element objects.
+Serialization of the XML is done elsewhere, 
+for example in the {@link jmri.web.servlet.xmlio} Servlet package, 
+as this package works via the exchange of JDOM Element objects.
 
 <p>
 Both synchronous reads and writes, and asynchronous 
@@ -55,8 +56,9 @@ A typical message is
 
 <p>
 The presence of a &lt;set&gt; element indicates a write;
-the returned element will have the current value inserted
-and new value elements created as needed.
+the returned element will have the &lt;set&gt; element deleted,
+but the item will remain present.
+
 <p>
 All writes are done before the values are collected for any reads,
 but there is no guarantee that the consequences of the writes

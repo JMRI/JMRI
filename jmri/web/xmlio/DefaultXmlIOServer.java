@@ -24,7 +24,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -214,11 +214,12 @@ public class DefaultXmlIOServer implements XmlIOServer {
         // get turnout
         Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
 
-        // check for value element, which means write
-        Element v = item.getChild("value");
+        // check for set element, which means write
+        Element v = item.getChild("set");
         if (v!=null) {
             int state = Integer.parseInt(v.getText());
             b.setCommandedState(state);
+            item.removeContent(v);
         }
     }
     
@@ -226,11 +227,12 @@ public class DefaultXmlIOServer implements XmlIOServer {
         // get turnout
         Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
 
-        // check for value element, which means write
-        Element v = item.getChild("value");
+        // check for set element, which means write
+        Element v = item.getChild("set");
         if (v!=null) {
             int state = Integer.parseInt(v.getText());
             b.setState(state);
+            item.removeContent(v);
         }
     }
     
