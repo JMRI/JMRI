@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: PaneProgFrame.shtml,v 1.1 2009-02-02 01:39:55 jacobsen Exp $ -->
+<!-- $Id: PaneProgFrame.shtml,v 1.2 2010-03-06 20:33:49 jacobsen Exp $ -->
 <title>JMRI: DecoderPro Service Mode Programmer</title>
 
 <!-- Style -->
@@ -28,6 +28,8 @@ JMRI: DecoderPro Service Mode Programmer
 (This will have lots of links to manual pages
 once the new manual is done)
 
+<a href="ProgramRosterEntryPane.png">
+<img src="ProgramRosterEntryPane.png" height="168" width="230" align="right"/></a>
 <p>
 This is the package.jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame page. 
 
