@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NewSystem.shtml,v 1.4 2008-05-15 14:08:36 jacobsen Exp $ -->
+<!-- $Id: NewSystem.shtml,v 1.5 2010-03-06 19:28:05 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -62,7 +62,7 @@
 
 		    <dt>Clean out the CVS directories</dt>
 		    <dd>
-			<p>It is absolutely critical that you remove the CVS 
+			<p>It is absolutely <u>critical</u> that you remove the CVS 
 			subdirectories from the duplicate directory tree you just created.
 			If you don't do this, you will have difficult-to-diagnose problems
 			when you try to commit this to CVS.</p>
@@ -77,7 +77,8 @@
 			that was a bulk replace of "jmri.jmrix.secsi" with "jmri.jmrix.powerline".
 		    </dd>
 
-		    <P>At this point, make sure you can compile.</P>
+		    <P>At this point, make sure you can compile. This code
+		    isn't consistent yet, but it should compile.</P>
 
 		    <dt>Check copyright dates</dt>
 		    <dd>
@@ -126,7 +127,7 @@
             <p>Following the steps above, duplicate 
             the directory for the previous systems tests, creating
             a new directory in test/jmri/jmrix to contain the 
-            tests.  Remove the CVS subdirectories, 
+            tests.  <u>Remove the CVS subdirectories</u>, 
             change the package names, 
             check the copyright dates, 
             create the CVS structure,
@@ -183,15 +184,12 @@
             and see it and the response in the "Monitor" window.
             </dd>
 
-
-
 		<h3>Make It Easy to Use</h3>
 
 		    <dt>Add Possible Startup Items</dt>
 		    <dd>
 			<p>Edit src/apps/ActionListBundle.properties to add appropriate items.</p>
 		    </dd>
-
 
 		<h3>Complete the documentation</h3>
 
