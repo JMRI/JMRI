@@ -24,7 +24,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -269,7 +269,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
         ThrottleContext tc = map.get(address);
         if (tc == null) {
             // first request does the allocation
-            boolean ok = InstanceManager.throttleManagerInstance()
+            InstanceManager.throttleManagerInstance()
                 .requestThrottle(address,new ThrottleListener() {
                     public void notifyThrottleFound(DccThrottle t) {
                         // store back into context
