@@ -12,7 +12,7 @@ import javax.swing.AbstractAction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class EnginesTableAction extends AbstractAction {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
@@ -27,8 +27,7 @@ public class EnginesTableAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         // create a engine table frame
-        EnginesTableFrame f = new EnginesTableFrame();
-        f.setVisible(true);
+        new EnginesTableFrame();
     }
 }
 

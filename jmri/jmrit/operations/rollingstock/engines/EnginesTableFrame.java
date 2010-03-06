@@ -28,7 +28,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -166,8 +166,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Engines", true);
     	
     	pack();
-    	if ((getWidth()<Control.panelWidth)) setSize(Control.panelWidth, getHeight());
-    	
+    	if ((getWidth()<Control.panelWidth)) 
+    		setSize(Control.panelWidth, getHeight());
+    	setVisible(true);
     }
     
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {

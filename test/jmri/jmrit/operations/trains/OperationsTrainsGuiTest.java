@@ -22,7 +22,7 @@ import java.util.List;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 
@@ -105,6 +105,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 	 * the train fields.
 	 */
 	public void testTrainEditFrame(){
+		
 		TrainEditFrame trainEditFrame = new TrainEditFrame();
 		trainEditFrame.setTitle("Test Add Train Frame");
 		trainEditFrame.initComponents(null);
@@ -153,7 +154,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("engine road", "", t.getEngineRoad());
 		// now change them
 		trainEditFrame.numEnginesBox.setSelectedItem("3");
-		trainEditFrame.modelEngineBox.setSelectedItem("GP40");
+		trainEditFrame.modelEngineBox.setSelectedItem("FT");
 		trainEditFrame.roadEngineBox.setSelectedItem("UP");
 		// shouldn't change until Save
 		Assert.assertEquals("number of engines 1", "0", t.getNumberEngines());
@@ -161,7 +162,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("engine road 1", "", t.getEngineRoad());
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.saveTrainButton ) );
 		Assert.assertEquals("number of engines 2", "3", t.getNumberEngines());
-		Assert.assertEquals("engine model 2", "GP40", t.getEngineModel());
+		Assert.assertEquals("engine model 2", "FT", t.getEngineModel());
 		Assert.assertEquals("engine road 2", "UP", t.getEngineRoad());
 		
 		// test caboose and FRED buttons and fields
@@ -275,7 +276,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("train depart minute", "45", f.minuteBox.getSelectedItem());
 		Assert.assertEquals("train route", t.getRoute(), f.routeBox.getSelectedItem());
 		Assert.assertEquals("number of engines", "3", f.numEnginesBox.getSelectedItem());
-		Assert.assertEquals("engine model", "GP40", f.modelEngineBox.getSelectedItem());
+		Assert.assertEquals("engine model", "FT", f.modelEngineBox.getSelectedItem());
 		Assert.assertEquals("engine road", "UP", f.roadEngineBox.getSelectedItem());
 		Assert.assertEquals("caboose road", "CP", f.roadCabooseBox.getSelectedItem());
 		// check radio buttons	
