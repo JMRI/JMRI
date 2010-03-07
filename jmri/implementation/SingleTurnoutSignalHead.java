@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * Based Upon DoubleTurnoutSignalHead by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SingleTurnoutSignalHead extends DefaultSignalHead {
 
@@ -98,19 +98,19 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
             validStates = new int[3];
         }
         else {
-            validStates = new int [4];
+            validStates = new int [2];
         }
         int x = 0;
         validStates[x] = mOnAppearance;
         x++;
-        if (mOnAppearance != DARK){
-            validStates[x] = (mOnAppearance * 2);
+        if (mOffAppearance == DARK){
+            validStates[x] = (mOnAppearance * 2);  // makes flashing
             x++;
         }
         validStates[x] = mOffAppearance;
         x++;
-        if (mOffAppearance != DARK){
-            validStates[x] = (mOffAppearance * 2);
+        if (mOnAppearance == DARK){
+            validStates[x] = (mOffAppearance * 2);  // makes flashing
         }
 //        int [] validStates = new int[] { mOnAppearance, mOffAppearance};
         return validStates;
