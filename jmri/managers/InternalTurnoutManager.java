@@ -10,7 +10,7 @@ import jmri.managers.AbstractTurnoutManager;
  * Implement a turnout manager for "Internal" (virtual) turnouts.
  *
  * @author			Bob Jacobsen Copyright (C) 2006
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class InternalTurnoutManager extends AbstractTurnoutManager {
 
@@ -31,8 +31,6 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
      */
     
     public String[] getValidOperationTypes() { return new String[]{"NoFeedback"}; }
-
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InternalTurnoutManager.class.getName());
 }
 
 /* @(#)InternalTurnoutManager.java */
