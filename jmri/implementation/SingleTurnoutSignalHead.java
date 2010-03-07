@@ -24,10 +24,14 @@ import jmri.util.NamedBeanHandle;
  * Based Upon DoubleTurnoutSignalHead by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SingleTurnoutSignalHead extends DefaultSignalHead {
 
+    /**
+     * @param on Appearance constant from {@link jmri.SignalHead} for the output on (Turnout thrown) appearance
+     * @param off Appearance constant from {@link jmri.SignalHead} for the signal off (Turnout closed) appearance
+     */
     public SingleTurnoutSignalHead(String sys, String user, NamedBeanHandle<Turnout> lit, int on, int off) {
         super(sys, user);
         mOutput = lit;
@@ -36,6 +40,10 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
         setAppearance(off);
     }
 
+    /**
+     * @param on Appearance constant from {@link jmri.SignalHead} for the output on (Turnout thrown) appearance
+     * @param off Appearance constant from {@link jmri.SignalHead} for the signal off (Turnout closed) appearance
+     */
     public SingleTurnoutSignalHead(String sys, NamedBeanHandle<Turnout> lit, int on, int off) {
         super(sys);
         mOutput = lit;
@@ -122,27 +130,25 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
             validStateName = new String[3];
         }
         else {
-            validStateName = new String[4];
+            validStateName = new String[2];
         }
         int x = 0;
         validStateName[x] = getSignalColour(mOnAppearance);
         x++;
-        if (mOnAppearance != DARK){
-            validStateName[x] = getSignalColour((mOnAppearance * 2));
+        if (mOffAppearance == DARK){
+            validStateName[x] = getSignalColour((mOnAppearance * 2));  // makes flashing
             x++;
         }
         validStateName[x] = getSignalColour(mOffAppearance);
         x++;
-        if (mOffAppearance != DARK){
-            validStateName[x] = getSignalColour((mOffAppearance * 2));
+        if (mOnAppearance == DARK){
+            validStateName[x] = getSignalColour((mOffAppearance * 2));  // makes flashing
         }
-//        int [] validStates = new int[] { mOnAppearance, mOffAppearance};
         return validStateName;
-        
-        //String[] validStateNames = new String[] { getSignalColour(mOnAppearance), getSignalColour(mOffAppearance)};
-        //return validStateNames;
     }
+
     final static private java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
+
     @SuppressWarnings("fallthrough")
     private String getSignalColour(int mAppearance){
         switch(mAppearance){
