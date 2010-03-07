@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutTable.shtml,v 1.13 2008-11-01 16:40:03 jacobsen Exp $ -->
+<!-- $Id: TurnoutTable.shtml,v 1.14 2010-03-07 08:15:37 kevin-dickerson Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Turnout Table Help</TITLE>
@@ -35,9 +35,10 @@ feedback mode, enter sensors for feedback, invert, lock, and delete it.
 	<DT>System Name</DT>
 	<DD>The System Name cannot be changed once entered into the table.
 	The "Add" button located in the lower left corner of the table allows
-	you to add a new turnout to the table. You must use a valid System Name
-	for a turnout. See <A HREF="../../../../html/doc/Technical/Names.shtml">Names</A>
-	for more info.</DD>
+	you to add a new turnout to the table. The System Name is automatically
+    generated when using the "Add" button.
+    <br>See <A HREF="../../../../html/doc/Technical/Names.shtml">Names</A>
+	for more info about the format.</DD>
 
 	<DT>User Name</DT>
 	<DD>You can directly enter or change the "User Name" for an

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutAddEdit.shtml,v 1.5 2008-12-30 19:44:15 dan_boudreau Exp $ -->
+<!-- $Id: TurnoutAddEdit.shtml,v 1.6 2010-03-07 08:15:37 kevin-dickerson Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Turnouts</TITLE>
@@ -23,12 +23,22 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H2>Adding/Editing Turnouts</H2>
+<H1>Adding/Editing Turnouts</H1>
 
-Enter the system name for the turnout you wish to add. For example, a
-valid turnout system name for NCE could be NT456. Another example, a
-valid internal turnout system name could be IT123. The optional user
-name can be anything you wish to describe the turnout. See
+<p>When adding a Turnout, you select from the drop down list the system to which the
+turnout is attached to.</p>
+<img src="AddTurnout.png" >
+<p>Enter in a valid address for that turnout and if desired enter in a user name.</p>
+
+<H2>Creating A Number of Turnouts</H2>
+<p>It is also possible to create a number of turnouts in go.<br>
+Where supported the "Add Range" check box will be enabled.</p>
+<img src="AddTurnoutNumber.png">
+<p>When checking the "Add Range" box, this will then enable the "Number To Add" field.  
+Here enter in the number of turnouts that you wish to add, this will then create that 
+number of sequential turnouts.</p>
+If a username has been entered a number will be added to the end of the name to keep 
+each username unique.<br>
 "<A HREF="../../../../html/doc/Technical/Names.shtml">Names</A>"
 under general help for more information.
 
