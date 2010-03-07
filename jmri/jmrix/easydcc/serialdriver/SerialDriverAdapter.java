@@ -24,7 +24,7 @@ import gnu.io.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.26 $
+ * @version	$Revision: 1.27 $
  */
 public class SerialDriverAdapter extends EasyDccPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -114,8 +114,6 @@ public class SerialDriverAdapter extends EasyDccPortController  implements jmri.
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.easydcc.EasyDccPowerManager());
 
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.easydcc.EasyDccTurnoutManager());
-
-        jmri.InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
 
 		// KSL 20040409 - Create an instance of EasyDccThrottleManager 
 		jmri.InstanceManager.setThrottleManager(new jmri.jmrix.easydcc.EasyDccThrottleManager());

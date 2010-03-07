@@ -16,12 +16,12 @@ import jmri.InstanceManager;
  * they wouldn't do anything useful.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public InternalSystemConnectionMemo() {
-        super("I", "Internal");
+        super("I", "Internal");  // !! conflicts with auto internal, see package.html
         register();
     }
     
@@ -34,9 +34,12 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
      */
     public void configureManagers() {
       
-        InstanceManager.setTurnoutManager(new jmri.managers.InternalTurnoutManager());
+        // these can't be created here until they've been modified
+        // to use a different system letter.
+        
+        //InstanceManager.setTurnoutManager(new jmri.managers.InternalTurnoutManager());
 
-        InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
+        //InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
 
     }
 }

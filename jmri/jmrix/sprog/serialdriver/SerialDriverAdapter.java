@@ -33,7 +33,7 @@ import gnu.io.SerialPort;
  * "AJB" indicate changes or observations by me
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.27 $
+ * @version	$Revision: 1.28 $
  */
 public class SerialDriverAdapter extends AbstractSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -207,8 +207,6 @@ public class SerialDriverAdapter extends AbstractSerialPortController implements
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.sprog.SprogTurnoutManager());
 
         jmri.InstanceManager.setCommandStation(new jmri.jmrix.sprog.SprogCommandStation());
-
-        jmri.InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
 
         jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogThrottleManager());
 

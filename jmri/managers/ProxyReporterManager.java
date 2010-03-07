@@ -2,19 +2,30 @@
 
 package jmri.managers;
 
-//import jmri.Sensor;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.NamedBean;
+
+import jmri.managers.AbstractManager;
 
 /**
  * Implementation of a ReporterManager that can serves as a proxy
- * for multiple system-specific implementations.  The first to
- * be added is the "Primary".
+ * for multiple system-specific implementations.  
  *
- * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.7 $
+ * @author	Bob Jacobsen Copyright (C) 2003, 2010
+ * @version	$Revision: 1.8 $
  */
 public class ProxyReporterManager extends AbstractProxyManager implements ReporterManager {
+
+
+    public ProxyReporterManager() {
+    	super();
+    }
+
+    protected AbstractManager makeInternalManager() {
+        return new InternalReporterManager();
+    }
+
     /**
      * Locate via user name, then system name if needed.
      *
@@ -22,32 +33,16 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      * @return Null if nothing by that name exists
      */
     public Reporter getReporter(String name) {
-        Reporter t = getByUserName(name);
-        if (t != null) return t;
-        return getBySystemName(name);
+        return (Reporter)super.getNamedBean(name);
+    }
+
+    protected NamedBean makeBean(int i, String systemName, String userName) {
+        return ((ReporterManager)getMgr(i)).newReporter(systemName, userName);
     }
 
     public Reporter provideReporter(String sName) {
-        Reporter t = getReporter(sName);
-        if (t!=null) return t;
-        // if the systemName is specified, find that system
-        for (int i=0; i<mgrs.size(); i++) {
-            if ( sName.startsWith( 
-                        ((ReporterManager)mgrs.get(i)).getSystemPrefix()+((ReporterManager)mgrs.get(i)).typeLetter() ) ) {
-                return ((ReporterManager)mgrs.get(i)).newReporter(sName, null);
-            }
-        }
-        // did not find a manager, allow it to default to the primary, if there is one
-        log.debug("Did not find manager for name "+sName+", assume it's a number");
-		if (mgrs.size()>0) {
-			return ((ReporterManager)mgrs.get(0)).newReporter(
-                    ((ReporterManager)mgrs.get(0)).makeSystemName(sName), null);
-		} else {
-			log.debug("Did not find a primary reporter manager for name "+sName);
-			return (null);
-		}		
+        return (Reporter) super.provideNamedBean(sName);
     }
-
 
     /**
      * Locate an instance based on a system name.  Returns null if no
@@ -55,12 +50,7 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      * @return requested Reporter object or null if none exists
      */
     public Reporter getBySystemName(String sName) {
-        Reporter t = null;
-        for (int i=0; i<mgrs.size(); i++) {
-            t = ( (ReporterManager)mgrs.get(i)).getBySystemName(sName);
-            if (t!=null) return t;
-        }
-        return null;
+        return (Reporter) super.getBeanBySystemName(sName);
     }
 
     /**
@@ -69,12 +59,7 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      * @return requested Reporter object or null if none exists
      */
     public Reporter getByUserName(String userName) {
-        Reporter t = null;
-        for (int i=0; i<mgrs.size(); i++) {
-            t = ( (ReporterManager)mgrs.get(i)).getByUserName(userName);
-            if (t!=null) return t;
-        }
-        return null;
+        return (Reporter) super.getBeanByUserName(userName);
     }
 
     /**
@@ -106,30 +91,7 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      * @return requested Sensor object (never null)
      */
     public Reporter newReporter(String systemName, String userName) {
-        // if the systemName is specified, find that system
-        if (systemName != null) {
-            for (int i=0; i<mgrs.size(); i++) {
-                if ( systemName.startsWith( 
-                            ((ReporterManager)mgrs.get(i)).getSystemPrefix()+((ReporterManager)mgrs.get(i)).typeLetter() ) ) {
-                    return ((ReporterManager)mgrs.get(i)).newReporter(systemName, userName);
-                }
-            }
-            // did not find a manager, allow it to default to the primary, if there is one
-            log.debug("Did not find manager for system name "+systemName+", assume it's a number");
-			if (mgrs.size()>0) {
-				return ( (ReporterManager)mgrs.get(0)).newReporter(systemName, userName);
-			} else {
-				log.debug("Did not find a primary reporter manager for system name "+systemName);
-				return (null);
-			}
-        } else {  // no systemName specified, use primary manager, if there is one
-			if (mgrs.size()>0) {
-				return ( (ReporterManager)mgrs.get(0)).newReporter(systemName, userName);
-			} else {
-				log.debug("Did not find a primary reporter manager");
-				return (null);
-			}			
-        }
+        return (Reporter) newNamedBean(systemName, userName);
     }
 
     // initialize logging

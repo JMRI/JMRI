@@ -25,7 +25,7 @@ import javax.swing.*;
  * </dl>
  * <P>
  * @author	Bob Jacobsen   Copyright 2009, 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public abstract class AppsBase {
 
@@ -66,8 +66,6 @@ public abstract class AppsBase {
     }
         
     protected void createDemoScaffolding() {
-        jmri.managers.InternalSensorManager m = new jmri.managers.InternalSensorManager();
-        InstanceManager.setSensorManager(m);
         InstanceManager.sensorManagerInstance().provideSensor("IS1");
         InstanceManager.sensorManagerInstance().provideSensor("IS2");
         InstanceManager.sensorManagerInstance().provideSensor("IS3");

@@ -5,33 +5,28 @@ package jmri.managers;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.Manager;
+import jmri.NamedBean;
+
+import jmri.managers.AbstractManager;
 
 /**
  * Implementation of a LightManager that can serves as a proxy
- * for multiple system-specific implementations.  The first to
- * be added is the "Primary".
- * <P>
- * Based on ProxySensorManager
+ * for multiple system-specific implementations. 
  *
+ * @author	Bob Jacobsen Copyright (C) 2010
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class ProxyLightManager extends AbstractProxyManager
                             implements LightManager {
 
-    /**
-     * Override super-class behaviour to include internal 
-     * manager.
-     */
-    public void addManager(Manager m) {
-        if (mgrs.size() == 0) { 
-            log.debug("initial addmanager "+m);
-            mgrs.add(m);
-            mgrs.add(new InternalLightManager());
-        } else {
-            mgrs.add(m);
-        }
-        log.debug("added manager "+m);
+
+    public ProxyLightManager() {
+    	super();
+    }
+
+    protected AbstractManager makeInternalManager() {
+        return new InternalLightManager();
     }
 
     /**
@@ -41,9 +36,11 @@ public class ProxyLightManager extends AbstractProxyManager
      * @return Null if nothing by that name exists
      */
     public Light getLight(String name) {
-        Light t = getByUserName(name);
-        if (t != null) return t;
-        return getBySystemName(name);
+        return (Light)super.getNamedBean(name);
+    }
+
+    protected NamedBean makeBean(int i, String systemName, String userName) {
+        return ((LightManager)getMgr(i)).newLight(systemName, userName);
     }
 
     /**
@@ -57,25 +54,7 @@ public class ProxyLightManager extends AbstractProxyManager
      * @return Never null under normal circumstances
      */
     public Light provideLight(String name) {
-        Light t = getLight(name);
-        if (t!=null) return t;
-        // if the systemName is specified, find that system
-        for (int i=0; i<mgrs.size(); i++) {
-            if ( name.startsWith( 
-                        ((LightManager)mgrs.get(i)).getSystemPrefix()+((LightManager)mgrs.get(i)).typeLetter() ) ) {
-                return ((LightManager)mgrs.get(i)).newLight(name, null);
-            }
-        }
-        // did not find a manager, allow it to default to the primary. if there is one
-        log.debug("Did not find manager for name "+name+", defer to default");
-		if (mgrs.size()>0) {
-			return ((LightManager)mgrs.get(0)).newLight(
-                    ((LightManager)mgrs.get(0)).makeSystemName(name), null);
-		}
-		else {
-			log.debug("Did not find a primary light manager for system name "+name);
-			return (null);
-		}
+        return (Light) super.provideNamedBean(name);
     }
 
     /**
@@ -84,12 +63,7 @@ public class ProxyLightManager extends AbstractProxyManager
      * @return requested Light object or null if none exists
      */
     public Light getBySystemName(String systemName) {
-        Light t = null;
-        for (int i=0; i<mgrs.size(); i++) {
-            t = ( (LightManager)mgrs.get(i)).getBySystemName(systemName);
-            if (t!=null) return t;
-        }
-        return null;
+        return (Light) super.getBeanBySystemName(systemName);
     }
 
     /**
@@ -98,12 +72,7 @@ public class ProxyLightManager extends AbstractProxyManager
      * @return requested Turnout object or null if none exists
      */
     public Light getByUserName(String userName) {
-        Light t = null;
-        for (int i=0; i<mgrs.size(); i++) {
-            t = ( (LightManager)mgrs.get(i)).getByUserName(userName);
-            if (t!=null) return t;
-        }
-        return null;
+        return (Light) super.getBeanByUserName(userName);
     }
 
     /**
@@ -135,30 +104,7 @@ public class ProxyLightManager extends AbstractProxyManager
      * @return requested Light object (never null)
      */
     public Light newLight(String systemName, String userName) {
-        // if the systemName is specified, find that system
-        if (systemName != null) {
-            for (int i=0; i<mgrs.size(); i++) {
-                if ( systemName.startsWith( 
-                        ((LightManager)mgrs.get(i)).getSystemPrefix()+((LightManager)mgrs.get(i)).typeLetter() ) ) {
-                    return ( (LightManager)mgrs.get(i)).newLight(systemName, userName);
-                }
-            }
-            // did not find a manager, allow it to default to the primary if there is one
-			if (mgrs.size()>0) {
-				log.debug("Did not find manager for system name "+systemName+", assume it's a number");
-				return ( (LightManager)mgrs.get(0)).newLight(systemName, userName);
-			} else {
-				log.debug("Did not find manager for system name "+systemName+", and there is no primary");
-				return (null);
-			}
-        } else {  // no systemName specified, use primary if there is one
-			if (mgrs.size()>0) {
-				return ( (LightManager)mgrs.get(0)).newLight(systemName, userName);
-			} else {
-				log.debug("Did not find a primary light manager for user name "+userName);
-				return (null);
-			}
-        }
+        return (Light) newNamedBean(systemName, userName);
     }
 
     /**
@@ -168,12 +114,9 @@ public class ProxyLightManager extends AbstractProxyManager
      * If a manager is found, return its determination of validity of system name format
      */
     public boolean validSystemNameFormat(String systemName) {
-        for (int i=0; i<mgrs.size(); i++) {
-                if ( systemName.startsWith( 
-                        ((LightManager)mgrs.get(i)).getSystemPrefix()+((LightManager)mgrs.get(i)).typeLetter() ) ) {
-                return ( (LightManager)mgrs.get(i)).validSystemNameFormat(systemName);
-            }
-        }
+        int i = matchTentative(systemName);
+        if (i >= 0)
+            return ( (LightManager)getMgr(i)).validSystemNameFormat(systemName);
         return false;
     }
 
@@ -185,12 +128,9 @@ public class ProxyLightManager extends AbstractProxyManager
      *      to the hardware configuration
      */
     public boolean validSystemNameConfig(String systemName) {
-        for (int i=0; i<mgrs.size(); i++) {
-            if ( systemName.startsWith( 
-                        ((LightManager)mgrs.get(i)).getSystemPrefix()+((LightManager)mgrs.get(i)).typeLetter() ) ) {
-                return ( (LightManager)mgrs.get(i)).validSystemNameConfig(systemName);
-            }
-        }
+        int i = matchTentative(systemName);
+        if (i >= 0)
+            return ( (LightManager)getMgr(i)).validSystemNameConfig(systemName);
         return false;
     }
 
@@ -201,12 +141,9 @@ public class ProxyLightManager extends AbstractProxyManager
      * If a manager is found, return its determination of a normalized system name
      */
     public String normalizeSystemName(String systemName) {
-        for (int i=0; i<mgrs.size(); i++) {
-            if ( systemName.startsWith( 
-                        ((LightManager)mgrs.get(i)).getSystemPrefix()+((LightManager)mgrs.get(i)).typeLetter() ) ) {
-                return ( (LightManager)mgrs.get(i)).normalizeSystemName(systemName);
-            }
-        }
+        int i = matchTentative(systemName);
+        if (i >= 0)
+            return ( (LightManager)getMgr(i)).normalizeSystemName(systemName);
         return "";
     }
 
@@ -217,12 +154,9 @@ public class ProxyLightManager extends AbstractProxyManager
      * If a manager is found, return its determination of an alternate system name
      */
     public String convertSystemNameToAlternate(String systemName) {
-        for (int i=0; i<mgrs.size(); i++) {
-            if ( systemName.startsWith( 
-                        ((LightManager)mgrs.get(i)).getSystemPrefix()+((LightManager)mgrs.get(i)).typeLetter() ) ) {
-                return ( (LightManager)mgrs.get(i)).convertSystemNameToAlternate(systemName);
-            }
-        }
+        int i = matchTentative(systemName);
+        if (i >= 0)
+            return ( (LightManager)getMgr(i)).convertSystemNameToAlternate(systemName);
         return "";
     }
 
@@ -232,8 +166,8 @@ public class ProxyLightManager extends AbstractProxyManager
      * Relay this call to all LightManagers.
      */
     public void activateAllLights() {
-        for (int i=0; i<mgrs.size(); i++) {
-            ((LightManager)mgrs.get(i)).activateAllLights();
+        for (int i=0; i<nMgrs(); i++) {
+            ((LightManager)getMgr(i)).activateAllLights();
         }
     }
 

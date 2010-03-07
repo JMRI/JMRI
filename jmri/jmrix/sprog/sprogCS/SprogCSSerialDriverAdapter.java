@@ -23,7 +23,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
  * not use any other options at configuration time.
  *
  * @author	Andrew Crosland   Copyright (C) 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SprogCSSerialDriverAdapter 
 extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
@@ -42,8 +42,6 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.sprog.SprogPowerManager());
 
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.sprog.SprogTurnoutManager());
-
-        jmri.InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
 
 //        jmri.InstanceManager.setCommandStation(new jmri.jmrix.sprog.SprogSoftCommandStation());
         // Start the command station queuing thread

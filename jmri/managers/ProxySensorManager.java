@@ -4,15 +4,16 @@ package jmri.managers;
 
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.Manager;
+import jmri.NamedBean;
+
+import jmri.managers.AbstractManager;
 
 /**
  * Implementation of a SensorManager that can serves as a proxy
- * for multiple system-specific implementations.  The first to
- * be added is the "Primary".
+ * for multiple system-specific implementations. 
  *
- * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.17 $
+ * @author	Bob Jacobsen Copyright (C) 2003, 2010
+ * @version	$Revision: 1.18 $
  */
 public class ProxySensorManager extends AbstractProxyManager
                             implements SensorManager {
@@ -21,21 +22,8 @@ public class ProxySensorManager extends AbstractProxyManager
         super();
     }
     
-    /**
-     * Override super-class behaviour to include internal 
-     * manager.
-     */
-    public void addManager(Manager m) {
-        if (mgrs.size() == 0) { 
-            log.debug("initial addmanager "+m);
-            mgrs.add(m);
-            //Only add internal manager if it hasn't already been added.
-            if (!m.getClass().getName().contains("InternalSensorManager"))
-                mgrs.add(new InternalSensorManager());
-        } else {
-            mgrs.add(m);
-        }
-        log.debug("added manager "+m);
+    protected AbstractManager makeInternalManager() {
+        return new InternalSensorManager();
     }
 
     /**
@@ -45,35 +33,17 @@ public class ProxySensorManager extends AbstractProxyManager
      * @return Null if nothing by that name exists
      */
     public Sensor getSensor(String name) {
-        Sensor t = getByUserName(name);
-        if (t != null) return t;
-        return getBySystemName(name);
+        return (Sensor)super.getNamedBean(name);
+    }
+
+    protected Sensor makeBean(int i, String systemName, String userName) {
+        return ((SensorManager)getMgr(i)).newSensor(systemName, userName);
     }
 
     public Sensor provideSensor(String sName) {
-        if (sName == null || sName.length() == 0) {
-            return null;
-        }
-        Sensor t = getSensor(sName);
-        if (t!=null) return t;
-        // if the systemName is specified, find that system
-        for (int i=0; i<mgrs.size(); i++) {
-            if ( sName.startsWith( 
-                        ((SensorManager)mgrs.get(i)).getSystemPrefix()+((SensorManager)mgrs.get(i)).typeLetter() ) ) {
-                return ((SensorManager)mgrs.get(i)).newSensor(sName, null);
-            }
-        }
-        // did not find a manager, allow it to default to the primary, if there is one
-        log.debug("Did not find manager for name "+sName+", assume it's a number");
-		if (mgrs.size()>0) {
-			return ((SensorManager)mgrs.get(0)).provideSensor(
-                    ((SensorManager)mgrs.get(0)).makeSystemName(sName));
-		}
-		else {
-			log.debug("Did not find a primary sensor manager for name "+sName);
-			return (null);
-		}		
+        return (Sensor) super.provideNamedBean(sName);
     }
+
 
 
     /**
@@ -82,12 +52,7 @@ public class ProxySensorManager extends AbstractProxyManager
      * @return requested Turnout object or null if none exists
      */
     public Sensor getBySystemName(String sName) {
-        Sensor t = null;
-        for (int i=0; i<mgrs.size(); i++) {
-            t = ( (SensorManager)mgrs.get(i)).getBySystemName(sName);
-            if (t!=null) return t;
-        }
-        return null;
+        return (Sensor) super.getBeanBySystemName(sName);
     }
 
     /**
@@ -96,13 +61,9 @@ public class ProxySensorManager extends AbstractProxyManager
      * @return requested Turnout object or null if none exists
      */
     public Sensor getByUserName(String userName) {
-        Sensor t = null;
-        for (int i=0; i<mgrs.size(); i++) {
-            t = ( (SensorManager)mgrs.get(i)).getByUserName(userName);
-            if (t!=null) return t;
-        }
-        return null;
+        return (Sensor) super.getBeanByUserName(userName);
     }
+
 
     /**
      * Return an instance with the specified system and user names.
@@ -133,30 +94,7 @@ public class ProxySensorManager extends AbstractProxyManager
      * @return requested Sensor object (never null)
      */
     public Sensor newSensor(String systemName, String userName) {
-        // if the systemName is specified, find that system
-        if (systemName != null && systemName.length()>0) {
-            for (int i=0; i<mgrs.size(); i++) {
-                if ( systemName.startsWith( 
-                            ((SensorManager)mgrs.get(i)).getSystemPrefix()+((SensorManager)mgrs.get(i)).typeLetter() ) ) {
-                    return ((SensorManager)mgrs.get(i)).newSensor(systemName, userName);
-                }
-            }
-            // did not find a manager, allow it to default to the primary, if there is one
-            log.debug("Did not find manager for system name "+systemName+", assume it's a number");
-			if (mgrs.size()>0) {
-				return ( (SensorManager)mgrs.get(0)).newSensor(systemName, userName);
-			} else {
-				log.debug("Did not find a primary sensor manager for system name "+systemName);
-				return (null);
-			}	
-        } else {  // no systemName specified, use primary, if there is one
-			if (mgrs.size()>0) {
-				return ( (SensorManager)mgrs.get(0)).newSensor(systemName, userName);
-			} else {
-				log.debug("Did not find a primary sensor manager");
-				return (null);
-			}	
-        }
+        return (Sensor) newNamedBean(systemName, userName);
     }
 
 	// null implementation to satisfy the SensorManager interface

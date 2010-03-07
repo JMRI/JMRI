@@ -6,18 +6,19 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import jmri.Manager;
+import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;
 
+import jmri.managers.AbstractManager;
+
 /**
  * Implementation of a TurnoutManager that can serves as a proxy
- * for multiple system-specific implementations.  The first to
- * be added is the "Primary".
+ * for multiple system-specific implementations. 
  *
- * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.24 $
+ * @author	Bob Jacobsen Copyright (C) 2003, 2010
+ * @version	$Revision: 1.25 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -27,34 +28,15 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     	super();
     }
     
+    protected AbstractManager makeInternalManager() {
+        return new InternalTurnoutManager();
+    }
+
 	/**
-	 * Revise superclass behavior: Added managers mean that the
-	 * default internal manager is not the primary. 
-	 * Also support TurnoutOperations
+	 * Revise superclass behavior: support TurnoutOperations
 	 */
-    public void addManager(Manager m) {
-        if (mgrs.size() == 0) { 
-            log.debug("initial addmanager");
-            mgrs.add(m);
-            /*Only add internal manager if it hasn't already been added.
-            It should be possible to remove adding the internal turnout manager
-            once all of the systems use the systemConnectionMemo method*/
-            if (!m.getClass().getName().contains("InternalTurnoutManager"))
-                mgrs.add(new InternalTurnoutManager());
-        } else {
-            /*This next if statement can be removed once all systems use the 
-            systemConnectionMemo method, all this does is prevent two
-            internalTurnoutManagers from being registered*/
-            if (m.getClass().getName().contains("InternalTurnoutManager")){
-                List<Manager> managerList = getManagerList();
-                for(int x = 0; x<managerList.size(); x++){
-                    if (managerList.get(x).getClass().getName().contains("InternalTurnoutManager"))
-                        return;
-                }
-            }
-            mgrs.add(m);
-        }
-        log.debug("added manager");
+    public void addManager(AbstractManager m) {
+        super.addManager(m);
         TurnoutOperationManager.getInstance().loadOperationTypes();
     }
 
@@ -65,36 +47,17 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
      * @return Null if nothing by that name exists
      */
     public Turnout getTurnout(String name) {
-        Turnout t = getByUserName(name);
-        if (t != null) return t;
-        return getBySystemName(name);
+        return (Turnout)super.getNamedBean(name);
     }
 
-    public Turnout provideTurnout(String sName) {
-        Turnout t = getTurnout(sName);
-        if (t!=null) return t;
-        // if the systemName is specified, find that system
-        for (int i=0; i<mgrs.size(); i++) {
-            if ( sName.startsWith( 
-                        ((TurnoutManager)mgrs.get(i)).getSystemPrefix()+((TurnoutManager)mgrs.get(i)).typeLetter() ) ) {
-                return ((TurnoutManager)mgrs.get(i)).newTurnout(sName, null);
-            }
-        }
-        // did not find a manager, allow it to default to the primary, if there is one
-        log.debug("Did not find manager for name "+sName+", delegate to primary");
-        try{
-            if (mgrs.size()>0) {		
-                return ((TurnoutManager)mgrs.get(0)).newTurnout(
-                        ((TurnoutManager)mgrs.get(0)).makeSystemName(sName), null);
-            } else {
-                log.error("Did not find a primary turnout manager for name "+sName);
-                throw new IllegalArgumentException("Did not find a primary turnout manager for name "+sName);
-            }
-        } catch (IllegalArgumentException e){
-        	log.error("Name "+sName+" could not be made into turnout address");
-        	throw e;
-        }
+    protected NamedBean makeBean(int i, String systemName, String userName) {
+        return ((TurnoutManager)getMgr(i)).newTurnout(systemName, userName);
     }
+
+    public Turnout provideTurnout(String name) {
+        return (Turnout) super.provideNamedBean(name);
+    }
+
 
     /**
      * Locate an instance based on a system name.  Returns null if no
@@ -102,12 +65,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
      * @return requested Turnout object or null if none exists
      */
     public Turnout getBySystemName(String systemName) {
-        Turnout t = null;
-        for (int i=0; i<mgrs.size(); i++) {
-            t = ( (TurnoutManager)mgrs.get(i)).getBySystemName(systemName);
-            if (t!=null) return t;
-        }
-        return null;
+        return (Turnout) super.getBeanBySystemName(systemName);
     }
 
     /**
@@ -116,12 +74,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
      * @return requested Turnout object or null if none exists
      */
     public Turnout getByUserName(String userName) {
-        Turnout t = null;
-        for (int i=0; i<mgrs.size(); i++) {
-            t = ( (TurnoutManager)mgrs.get(i)).getByUserName(userName);
-            if (t!=null) return t;
-        }
-        return null;
+        return (Turnout) super.getBeanByUserName(userName);
     }
 
     /**
@@ -153,30 +106,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
      * @return requested Sensor object (never null)
      */
     public Turnout newTurnout(String systemName, String userName) {
-        // if the systemName is specified, find that system
-        if (systemName != null && systemName.length()>0) {
-            for (int i=0; i<mgrs.size(); i++) {
-                if ( systemName.startsWith( 
-                         ((TurnoutManager)mgrs.get(i)).getSystemPrefix()+((TurnoutManager)mgrs.get(i)).typeLetter() ) ) {
-                    return ( (TurnoutManager)mgrs.get(i)).newTurnout(systemName, userName);
-                }
-            }
-            // did not find a manager, allow it to default to the primary, if there is one
-            log.debug("Did not find manager for system name "+systemName+", assume it's a number");
-			if (mgrs.size()>0) {
-				return ( (TurnoutManager)mgrs.get(0)).newTurnout(systemName, userName);
-			} else {
-				log.debug("Did not find a primary turnout manager for system name "+systemName);
-				return (null);
-			}
-        } else {  // no systemName specified, use primary, if there is one
-      		if (mgrs.size()>0) {
-				return ( (TurnoutManager)mgrs.get(0)).newTurnout(systemName, userName);
-			} else {
-				log.debug("Did not find a primary turnout manager");
-				return (null);
-			}
-        }
+        return (Turnout) newNamedBean(systemName, userName);
     }
     	
 	/**
@@ -188,10 +118,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 	 * "CLOSED" is the desired terminology.
 	 */
 	public String getClosedText() { 
-		if (mgrs.size()>0)
-			return ( (TurnoutManager)mgrs.get(0)).getClosedText(); 
-		else 
-			return rbt.getString("TurnoutStateClosed");
+		return ((TurnoutManager)getMgr(0)).getClosedText(); 
 	}
 	
 	/**
@@ -203,10 +130,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 	 * "THROWN" is the desired terminology.
 	 */
 	public String getThrownText() { 
-		if (mgrs.size()>0)
-			return ( (TurnoutManager)mgrs.get(0)).getThrownText(); 
-		else 
-			return rbt.getString("TurnoutStateThrown");
+		return ((TurnoutManager)getMgr(0)).getThrownText(); 
 	}
 
 	/**
@@ -221,30 +145,10 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 	 * control bits, after informing the user of the problem.
 	 */
 	 public int askNumControlBits(String systemName) {
-        // if the systemName is specified, find that system
-        if (systemName != null && systemName.length()>0) {
-            for (int i=0; i<mgrs.size(); i++) {
-                if ( systemName.startsWith( 
-                        ((TurnoutManager)mgrs.get(i)).getSystemPrefix()+((TurnoutManager)mgrs.get(i)).typeLetter() ) ) {
-                    return ((TurnoutManager)mgrs.get(i)).askNumControlBits(systemName);
-                }
-            }
-            // did not find a manager, allow it to default to the primary, if there is one
-            log.debug("Did not find manager for system name "+systemName+", assume it's a number");
-			if (mgrs.size()>0) {
-				return ((TurnoutManager)mgrs.get(0)).askNumControlBits(systemName);
-			} else {
-				log.debug("Did not find a primary turnout manager for system name "+systemName);
-				return (1);
-			}
-        } else {  // no systemName specified, use primary, if there is one
-      		if (mgrs.size()>0) {
-				return ((TurnoutManager)mgrs.get(0)).askNumControlBits(systemName);
-			} else {
-				log.debug("Did not find a primary turnout manager");
-				return (1);
-			}
-        }
+        int i = matchTentative(systemName);
+        if (i >= 0)
+            return ((TurnoutManager)getMgr(i)).askNumControlBits(systemName);
+        return ((TurnoutManager)getMgr(0)).askNumControlBits(systemName);
     }
 
 	/**
@@ -258,30 +162,10 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 	 * specifies the duration of the pulse (normally in seconds).  
 	 */
 	 public int askControlType(String systemName) {
-        // if the systemName is specified, find that system
-        if (systemName != null) {
-            for (int i=0; i<mgrs.size(); i++) {
-                if ( systemName.startsWith( 
-                        ((TurnoutManager)mgrs.get(i)).getSystemPrefix()+((TurnoutManager)mgrs.get(i)).typeLetter() ) ) {
-                    return ((TurnoutManager)mgrs.get(i)).askControlType(systemName);
-                }
-            }
-            // did not find a manager, allow it to default to the primary, if there is one
-            log.debug("Did not find manager for system name "+systemName+", assume it's a number");
-			if (mgrs.size()>0) {
-				return ((TurnoutManager)mgrs.get(0)).askControlType(systemName);
-			} else {
-				log.debug("Did not find a primary turnout manager for system name "+systemName);
-				return (0);
-			}
-        } else {  // no systemName specified, use primary, if there is one
-      		if (mgrs.size()>0) {
-				return ((TurnoutManager)mgrs.get(0)).askControlType(systemName);
-			} else {
-				log.debug("Did not find a primary turnout manager");
-				return (0);
-			}
-        }
+        int i = matchTentative(systemName);
+        if (i >= 0)
+            return ((TurnoutManager)getMgr(i)).askControlType(systemName);
+        return ((TurnoutManager)getMgr(0)).askControlType(systemName);
     }
 
 	/**
@@ -290,8 +174,8 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 	 */
 	public String[] getValidOperationTypes() {
 		List<String> typeList = new LinkedList<String>();
-		for (int i=0; i<mgrs.size(); ++i) {
-			String[] thisTypes = ((TurnoutManager)mgrs.get(i)).getValidOperationTypes();
+		for (int i=0; i<nMgrs(); ++i) {
+			String[] thisTypes = ((TurnoutManager)getMgr(i)).getValidOperationTypes();
 			typeList.addAll(Arrays.asList(thisTypes));
 		}
 		return TurnoutOperationManager.concatenateTypeLists(typeList.toArray(new String[0]));
@@ -299,11 +183,13 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 
     public boolean allowMultipleAdditions() { return false; }
     
+    // TODO:  This doesn't work right with multiple systems, because the test
+    // doesn't properly distinguish e.g. LT1 from L2T1
     public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix){
-        for (int i=0; i<mgrs.size(); i++) {
+        for (int i=0; i<nMgrs(); i++) {
             if ( prefix.startsWith( 
-                    ((TurnoutManager)mgrs.get(i)).getSystemPrefix()) ) {
-                return ((TurnoutManager)mgrs.get(i)).formatRangeOfAddresses(start, numberToAdd, prefix);
+                    ((TurnoutManager)getMgr(i)).getSystemPrefix()) ) {
+                return ((TurnoutManager)getMgr(i)).formatRangeOfAddresses(start, numberToAdd, prefix);
             }
         }
         return null;

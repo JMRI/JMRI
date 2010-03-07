@@ -16,7 +16,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class NetworkDriverAdapter extends EcosPortController {
 
@@ -49,8 +49,6 @@ public class NetworkDriverAdapter extends EcosPortController {
 
 
         jmri.InstanceManager.setThrottleManager(new jmri.jmrix.ecos.EcosDccThrottleManager());
-
-        jmri.InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
 
         jmri.InstanceManager.setSensorManager(new jmri.jmrix.ecos.EcosSensorManager());
 

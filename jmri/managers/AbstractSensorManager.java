@@ -8,7 +8,7 @@ import jmri.managers.AbstractManager;
 /**
  * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -42,12 +42,16 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         return (Sensor)_tsys.get(name);
     }
 
+    protected Object getInstanceBySystemName(String systemName) {
+        return getBySystemName(systemName);
+    }
+
     public Sensor getByUserName(String key) {
         return (Sensor)_tuser.get(key);
     }
 
     protected String normalizeSystemName(String sysName) {
-        return sysName.toUpperCase();
+        return sysName;
     }
     
     public Sensor newSensor(String sysName, String userName) {
