@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MacOSX.html,v 1.38 2010-02-20 05:49:09 jacobsen Exp $ -->
+<!-- $Id: MacOSX.html,v 1.39 2010-03-07 00:04:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -121,43 +121,57 @@
      your situation, then go to the next step.  You don't need to do all three!
      
      <p><b>If you're installing JMRI 2.9.2 or later, and have never
-     installed JMRI on this computer:</b>
+     installed JMRI on this computer:</b><br>
      
      You shouldn't have to do anything special.  Just skip to
      the next section below. 
      
      <p><b>If you're installing JMRI 2.9.2 or later, and you had installed
-     communications libraries for an earlier version:</b>
+     communications libraries for an earlier version:</b><br>
 
      You need to remove the communications library files that were 
-     installed earlier.  To do this, locate and delete the
-     "/Library/Java/Extensions/librxtxSerial.jnilib" and
-     "~/Library/Java/Extensions/librxtxSerial.jnilib" files.
-     Using Finder, the sequence is:
+     installed earlier.  To do this, locate and delete these files:<br><br>
+/Library/Java/Extensions/RXTXcomm.jar<br>
+/Library/Java/Extensions/comm.jar<br>
+/Library/Java/Extensions/librxtxSerial.jnilib<br>
+<br>
+/System/Library/Frameworks/JavaVM.framework/Versions/1.4/Home/lib/javax.comm.properties<br>
+<br>
+/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home/lib/javax.comm.properties<br>    
+<p>
+    Using Finder, the sequence is:
      <ul>
      <li>Click on the icon for your computer's hard disk
      <li>Click on the "Library" icon
      <li>Click on the "Java" icon
      <li>Click on the "Extensions" icon
-     <li>If there's a librxtxSerial.jnilib file, drag it to the Trash.
+     <li>If there's an RXTXcomm.jar, comm.jar, or librxtxSerial.jnilib
+        file, drag it to the Trash.
      </ul>
 
      and
 
      <ul>
-     <li>Click on the icon for your home directory
+     <li>Click on the icon for your computer's hard disk
+     <li>Click on the "System" icon
      <li>Click on the "Library" icon
-     <li>Click on the "Java" icon
-     <li>Click on the "Extensions" icon
-     <li>If there's a librxtxSerial.jnilib file, drag it to the Trash.
+     <li>Click on the "Frameworks" icon
+     <li>Click on the "JavaVM.framework" icon
+     <li>Click on the "Versions" icon
+     <li>Click on the "1.4" icon
+     <li>Click on the "Home" icon
+     <li>Click on the "lib" icon
+     <li>If there's a javax.comm.properties file, drag it to the Trash.
      </ul>
 
-    If one of those files or directories isn't present, just skip this step.
+     then just repeat that last sequence with "CurrentJDK" in place of "1.4".
+     <p>
+     If one of those files or directories isn't present, just skip the step.
     
      <p><b>If you're installing a version of JMRI older than JMRI
-     2.9.2, including the JMRI 2.8 production version, do this:</b>
+     2.9.2, including the JMRI 2.8 production version, do this:</b><br>
      
-	 <p>Although Mac OS X comes with an up-to-date Java, it doesn't
+	 Although Mac OS X comes with an up-to-date Java, it doesn't
 	 include the Java communications libraries.  These are needed to
 	 talk to a command station, so we provide an installer.
 	 
