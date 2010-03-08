@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.5.shtml,v 1.5 2010-03-04 01:42:26 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.5.shtml,v 1.6 2010-03-08 03:18:17 pbender Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -187,6 +187,9 @@ has been added on the GUI preferences pane to "use non-standard mouse events".
 
 <p>
 Matt Harris set the default backup option in the Windows installer.
+
+<p>
+Paul Bender fixed an error when starting with the LIUSBServer option configured.  The LIUSBServer option works again after several releases where it did not.
 
 <!--#include virtual="/Footer" -->
 
