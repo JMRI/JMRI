@@ -13,7 +13,7 @@ import jmri.util.swing.*;
  * Ignores WindowInterface.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
  
 public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
@@ -49,4 +49,4 @@ public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
 
 }
 
-/* @(#)PanelProAction.java */
+/* @(#)DecoderProAction.java */
