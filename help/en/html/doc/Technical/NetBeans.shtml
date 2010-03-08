@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NetBeans.shtml,v 1.9 2010-03-06 19:26:43 jacobsen Exp $ -->
+<!-- $Id: NetBeans.shtml,v 1.10 2010-03-08 02:59:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -61,20 +61,23 @@
     directly check it out using Netbean's integrated CVS.  Once you've done that,
     NetBeans will automatically use it.
     </p>
-    <p>Start netbeans and do the following:<br />
+    <p>Start netbeans and do the following steps. Text in brackets [] are menu items to be selected
+    or buttons to be pressed.
+    Text in <strong>this font</strong> should be typed into NetBeans exactly as written.
+    <em>This font</em> denotes explanations and stage directions to follow.</strong><br />
     </p>
-        <strong> [Team]-&gt;[CVS]-&gt;[Checkout]</strong>
+        [Team]-&gt;[CVS]-&gt;[Checkout]
         <ul>
             <li> CVS Root: <strong>:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri</strong>
             <li> Password: <em>leave empty</em>
             <li> [Next]
-            <li> Module: <strong>all</strong>    
+            <li> Module: <strong>all</strong> <em>(We really do mean to type "all" in the field. <u>Don't</u> leave the field blank!)</em>
             <li> Branch:  <em> leave empty</em>
             <li> Local Folder: <em>pick somplace on your hard drive...</em>
             <li> [Finish]
         </ul>
     <br />
-    <strong>[Window]-&gt;[Output]-&gt;[Output]</strong>     <em>shows cvs activity log window...</em>
+    [Window]-&gt;[Output]-&gt;[Output]     <em>shows cvs activity log window...</em>
         <blockquote>
             <em>wait a few minutes for the CVS checkout to complete<br />
                 A popup will display asking if you want to open the project
