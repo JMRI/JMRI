@@ -185,7 +185,15 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSignalHeadManager();
 
-        _logixTable = new LogixTableAction();
+        _logixTable = new LogixTableAction() {
+            // skip dialog box if in edit mode, just assume OK pressed
+            boolean checkEditConditional() {
+                if (inEditConditionalMode) {
+                    return true;
+                }
+                return false;
+            }
+        };
         assertNotNull("LogixTableAction is null!", _logixTable);        // test has begun
         _logixTable._suppressReminder = true;
 
