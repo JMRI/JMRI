@@ -13,7 +13,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -87,6 +87,7 @@ public class TabbedPreferences extends AppConfigBase {
             JTextArea t = new JTextArea(rb.getString(labelKey));
             t.setEditable(false);
             t.setAlignmentX(0.5f);
+            t.setFont((new JLabel()).getFont());
             t.setPreferredSize(t.getMinimumSize());
             t.setMaximumSize(t.getMinimumSize());
             t.setOpaque(false);
