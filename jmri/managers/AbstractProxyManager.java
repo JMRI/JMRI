@@ -26,7 +26,7 @@ import jmri.util.SystemNameComparator;
  * internal manager.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 abstract public class AbstractProxyManager implements Manager {
 
@@ -196,7 +196,7 @@ abstract public class AbstractProxyManager implements Manager {
      * here considered to be an error that must be reported.
      */
     protected int match(String systemname) {
-        int index = match(systemname);
+        int index = matchTentative(systemname);
         if (index < 0) throw new IllegalArgumentException("System name "+systemname+" failed to match");
         return index;
     }
