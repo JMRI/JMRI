@@ -17,25 +17,27 @@ import jmri.Reporter;
  * <P>
  * Description:		Implement Reporter manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 
 public class LnReporterManager extends jmri.managers.AbstractReporterManager implements LocoNetListener {
 
     // ctor has to register for LocoNet events
-    public LnReporterManager() {
-        _instance = this;
-        if (LnTrafficController.instance() != null)
-            LnTrafficController.instance().addLocoNetListener(~0, this);
+    public LnReporterManager(LnTrafficController tc) {
+        this.tc = tc;
+        if (tc != null)
+            tc.addLocoNetListener(~0, this);
         else
             log.error("No layout connection, Reporter manager can't function");
     }
 
+    LnTrafficController tc;
+    
     public String getSystemPrefix() { return "L"; }
 
     public void dispose() {
-        if (LnTrafficController.instance() != null)
-            LnTrafficController.instance().removeLocoNetListener(~0, this);
+        if (tc != null)
+            tc.removeLocoNetListener(~0, this);
         super.dispose();
     }
 
@@ -61,12 +63,6 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
 		LnReporter r = (LnReporter) provideReporter("LR"+addr);
 		r.message(l);	// make sure it got the message
     }
-
-    static public LnReporterManager instance() {
-        if (_instance == null) _instance = new LnReporterManager();
-        return _instance;
-    }
-    static LnReporterManager _instance = null;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnReporterManager.class.getName());
 }

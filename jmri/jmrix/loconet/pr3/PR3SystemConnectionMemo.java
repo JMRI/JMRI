@@ -9,7 +9,7 @@ import jmri.jmrix.loconet.*;
  * Lightweight class to denote that a PR3 is active
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
 
@@ -45,7 +45,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
 
         InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnThrottleManager(getSlotManager()));
 
-        InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager());
+        InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager(controller));
 
         InstanceManager.addClockControl(new jmri.jmrix.loconet.LnClockControl(getSlotManager(), controller));
 

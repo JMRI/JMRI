@@ -12,7 +12,7 @@ import gnu.io.SerialPort;
  * refers to the switch settings on the new Digitrax PR3
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006, 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class PR3Adapter extends LocoBufferAdapter {
 
@@ -82,7 +82,7 @@ public class PR3Adapter extends LocoBufferAdapter {
             msg.setElement( 2, 1 );  // set PR2
             msg.setElement( 3, 0 );
             msg.setElement( 4, 0 );
-            LnTrafficController.instance().sendLocoNetMessage(msg);
+            packets.sendLocoNetMessage(msg);
             
         } else {
             // MS100 modes
@@ -111,7 +111,7 @@ public class PR3Adapter extends LocoBufferAdapter {
                 msg.setElement( 2, 3 );  // set MS100, with power
             msg.setElement( 3, 0 );
             msg.setElement( 4, 0 );
-            LnTrafficController.instance().sendLocoNetMessage(msg);
+            packets.sendLocoNetMessage(msg);
         }
     }
 

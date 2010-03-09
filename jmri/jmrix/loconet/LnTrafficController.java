@@ -12,7 +12,7 @@ import java.util.Vector;
  * statistics support.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.14 $
+ * @version 		$Revision: 1.15 $
  *
  */
 public abstract class LnTrafficController implements LocoNetInterface {
@@ -21,7 +21,9 @@ public abstract class LnTrafficController implements LocoNetInterface {
      * static function returning the LnTrafficController instance to use.
      * @return The registered LnTrafficController instance for general use,
      *         if need be creating one.
+     * @deprecated 2.9.5
      */
+    @Deprecated
     static public LnTrafficController instance() {
         return self;
     }
