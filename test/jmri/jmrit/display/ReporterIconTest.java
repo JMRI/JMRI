@@ -15,7 +15,7 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2007
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class ReporterIconTest extends jmri.util.SwingTestCase {
 
@@ -40,10 +40,10 @@ public class ReporterIconTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull("Instance exists", i );
         // reset the LocoNet instances, so this behaves independent of 
         // any layout connection
-        new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold tc = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
 
         // create objects to test
-        jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager());
+        jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager(tc));
         to.setReporter("1");
         jmri.InstanceManager.reporterManagerInstance().provideReporter("1").setReport("data");
 
