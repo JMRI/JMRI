@@ -24,15 +24,18 @@ import jmri.jmrix.loconet.LnPr2ThrottleManager;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class LnPr2PowerManager extends LnPowerManager {
 
-	public LnPr2PowerManager(SlotManager sm) {
+	public LnPr2PowerManager(SlotManager sm, LnTrafficController tc) {
+	    super(tc);
 	    this.sm = sm;
+	    this.tc = tc;
 	}
 
     SlotManager sm;
+	LnTrafficController tc;
 	
 	public void setPower(int v) throws JmriException {
 		power = UNKNOWN;
@@ -84,7 +87,7 @@ public class LnPr2PowerManager extends LnPowerManager {
         // send inquiry message to keep power alive
         LocoNetMessage msg = new LocoNetMessage( 2 ) ;
         msg.setOpCode( LnConstants.OPC_GPBUSY );
-        LnTrafficController.instance().sendLocoNetMessage(msg);
+        tc.sendLocoNetMessage(msg);
     }
     
 	// to free resources when no longer used

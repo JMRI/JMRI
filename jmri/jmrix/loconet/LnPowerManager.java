@@ -15,13 +15,13 @@ import jmri.JmriException;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class LnPowerManager implements PowerManager, LocoNetListener {
 
-	public LnPowerManager() {
+	public LnPowerManager(LnTrafficController tc) {
 	    // standard LocoNet - connect
-		tc = LnTrafficController.instance();
+		this.tc = tc;
 		tc.addLocoNetListener(~0, this);
 	}
 

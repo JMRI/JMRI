@@ -9,7 +9,7 @@ import jmri.jmrix.loconet.*;
  * Lightweight class to denote that a PR3 is active
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
 
@@ -21,9 +21,9 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
    /**
      * Configure the subset of LocoNet managers valid for the PR3 in PR2 mode.
      */
-    public void configureManagersPR2() {
+    public void configureManagersPR2(LnTrafficController controller) {
         
-        InstanceManager.setPowerManager(new jmri.jmrix.loconet.pr2.LnPr2PowerManager(getSlotManager()));
+        InstanceManager.setPowerManager(new jmri.jmrix.loconet.pr2.LnPr2PowerManager(getSlotManager(), controller));
 
         InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnPr2ThrottleManager());
     }
@@ -35,7 +35,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
         
         LocoNetThrottledTransmitter tm = new LocoNetThrottledTransmitter(controller);
 
-        InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager());
+        InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager(controller));
 
         InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager(controller, tm, getSystemPrefix()));
 
@@ -47,7 +47,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
 
         InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager());
 
-        InstanceManager.addClockControl(new jmri.jmrix.loconet.LnClockControl(getSlotManager()));
+        InstanceManager.addClockControl(new jmri.jmrix.loconet.LnClockControl(getSlotManager(), controller));
 
     }
 

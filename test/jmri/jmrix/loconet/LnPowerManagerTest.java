@@ -8,7 +8,7 @@ import junit.framework.*;
 /**
  * tests for the Jmri package LnPowerManager
  * @author	Bob Jacobsen   Copyright 2001
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class LnPowerManagerTest extends AbstractPowerManagerTest {
 
@@ -48,7 +48,7 @@ public class LnPowerManagerTest extends AbstractPowerManagerTest {
 	// setup a default interface
 	public void setUp() {
 		controller = new LocoNetInterfaceScaffold();
-		p = new LnPowerManager();
+		p = new LnPowerManager(controller);
 	}
 
 

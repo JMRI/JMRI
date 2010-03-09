@@ -42,7 +42,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class LnClockControl extends DefaultClockControl implements SlotListener
 {
@@ -50,10 +50,11 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
     /**
      * Create a ClockControl object for a Loconet clock
      */
-    public LnClockControl(SlotManager sm) {
+    public LnClockControl(SlotManager sm, LnTrafficController tc) {
         super();
 		
 		this.sm = sm;
+		this.tc = tc;
 		// listen for updated slot contents
         if (sm!=null)
             sm.addSlotListener(this);
@@ -72,6 +73,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
     }
 	
 	SlotManager sm;
+	LnTrafficController tc;
 	
 	/* Operational variables */
     jmri.Timebase clock = null;
@@ -286,7 +288,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 			s.setFcMinutes(curMinutes);
 			s.setFcRate(curRate);
 			s.setFcFracMins(curFractionalMinutes);
-			LnTrafficController.instance().sendLocoNetMessage(s.writeSlot());
+			tc.sendLocoNetMessage(s.writeSlot());
 		}
     }
 
