@@ -21,7 +21,7 @@ import jmri.*;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class TurnoutManagerScaffold implements TurnoutManager {
 
@@ -66,9 +66,13 @@ public class TurnoutManagerScaffold implements TurnoutManager {
 
     public void deregister(NamedBean n) {}
 
-    public boolean allowMultipleAdditions() { return true;  }
+    public String getNextValidAddress(String curAddress, String prefix) { return curAddress; }
 
-    public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix) { return null; }
+    public boolean isControlTypeSupported(String systemName) {return false;}
+
+    public boolean isNumControlBitsSupported(String systemName) {return false;}
+
+    public boolean allowMultipleAdditions(String systemName) {return false;}
 
 }
 
