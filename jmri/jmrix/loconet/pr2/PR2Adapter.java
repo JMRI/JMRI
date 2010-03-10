@@ -12,7 +12,7 @@ import gnu.io.SerialPort;
  * refers to the switch settings on the new Digitrax PR2
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class PR2Adapter extends LocoBufferAdapter {
 
@@ -108,7 +108,6 @@ public class PR2Adapter extends LocoBufferAdapter {
     }
 
 
-    static public boolean hasInstance() { return (null!=m2Instance); }
     static public LocoBufferAdapter instance() {
         if (m2Instance == null) {
         	m2Instance = new PR2Adapter();
