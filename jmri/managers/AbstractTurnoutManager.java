@@ -10,7 +10,7 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a TurnoutManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public abstract class AbstractTurnoutManager extends AbstractManager
     implements TurnoutManager {
@@ -118,6 +118,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 	 * control bits, after informing the user of the problem.
 	 */
 	 public int askNumControlBits(String systemName) {return 1; }
+     
+     public boolean isNumControlBitsSupported(String systemName) { return false; }
 
 	/**
 	 * Get from the user, the type of output to be used bits to control a turnout. 
@@ -130,6 +132,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 	 * specifies the duration of the pulse (normally in seconds).  
 	 */
 	 public int askControlType(String systemName) {return 0; }
+     
+     public boolean isControlTypeSupported(String systemName) { return false; }
 
     /**
      * Internal method to invoke the factory, after all the
@@ -157,29 +161,45 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     * of turnouts in numerical order eg 10 to 30
     **/
     
-    public boolean allowMultipleAdditions() { return true;  }
+    public boolean allowMultipleAdditions(String systemName) { return true;  }
     
-    /**
-    * A method that creates an array of systems names to allow bulk
-    * creation of turnouts.
-    */
-    public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix){
+    public String getNextValidAddress(String curAddress, String prefix){
+        //If the hardware address past does not already exist then this can
+        //be considered the next valid address.
+        Turnout t = getBySystemName(prefix+typeLetter()+curAddress);
+        if(t==null){
+            return curAddress;
+        }
+        
+        // This bit deals with handling the curAddress, and how to get the next address.
         int iName = 0;
-        String range[] = new String[numberToAdd];
         try {
-            iName = Integer.parseInt(start);
+            iName = Integer.parseInt(curAddress);
         } catch (NumberFormatException ex) {
-            log.error("Unable to convert " + start + " Hardware Address to a number");
+            log.error("Unable to convert " + curAddress + " Hardware Address to a number");
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + start + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
             return null;
         }
-        for (int x = 0; x < numberToAdd; x++){
-            range[x] = prefix+"T"+(iName+x);
+        //The Number of Output Bits of the previous turnout will help determine the next
+        //valid address.
+        iName = iName + t.getNumberOutputBits();
+        //Check to determine if the systemName is in use, return null if it is,
+        //otherwise return the next valid address.
+        t = getBySystemName(prefix+typeLetter()+iName);
+        if(t!=null){
+            for(int x = 1; x<10; x++){
+                iName = iName + t.getNumberOutputBits();
+                t = getBySystemName(prefix+typeLetter()+iName);
+                if(t==null)
+                    return Integer.toString(iName);
+            }
+            return null;
+        } else {
+            return Integer.toString(iName);
         }
-        return range;
     }
-
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractTurnoutManager.class.getName());
 }
 

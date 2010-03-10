@@ -40,7 +40,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  * @see             jmri.Turnout
  * @see             jmri.InstanceManager
  * @see             jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
@@ -150,6 +150,12 @@ public interface TurnoutManager extends Manager {
 	 * control bits, after informing the user of the problem.
 	 */
 	 public int askNumControlBits(String systemName);
+
+     /**
+      * Determines if the manager supports multiple control bits, as the
+      * askNumControlBits will always return a value even if it is not supported
+      */
+     public boolean isNumControlBitsSupported(String systemName);
 	
 	/**
 	 * Get from the user, the type of output to be used bits to control a turnout. 
@@ -162,21 +168,31 @@ public interface TurnoutManager extends Manager {
 	 * specifies the duration of the pulse (normally in seconds).  
 	 */
 	 public int askControlType(String systemName);
+
+     /**
+      * Determines if the manager supports the handling of pulsed and steady state
+      * control as the askControlType will always return a value even if it is
+      * not supported
+      */
+     public boolean isControlTypeSupported(String systemName);
      
     /**
-    * A temporary method that determines if it is possible to add a range
+    * A method that determines if it is possible to add a range
     * of turnouts in numerical order eg 10 to 30 will return true.  
     * where as if the address format is 1b23 this will return false.
     **/
      
-     public boolean allowMultipleAdditions();
-     
-    /**
-    * A method that creates an array of systems names to allow bulk
-    * creation of turnouts.
+     public boolean allowMultipleAdditions(String systemName);
+
+   /**
+    * Determine if the address supplied is valid and free, if not then it shall
+    * return the next free valid address up to a maximum of 10 address away from
+    * the initial address.
+    * @param prefix - The System Prefix used to make up the systemName
+    * @param curAddress - The hardware address of the turnout we which to check.
     */
      
-    public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix);
+    public String getNextValidAddress(String curAddress, String prefix);
 
 }
 

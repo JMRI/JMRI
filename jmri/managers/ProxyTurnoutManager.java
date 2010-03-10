@@ -18,7 +18,7 @@ import jmri.managers.AbstractManager;
  * for multiple system-specific implementations. 
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision: 1.25 $
+ * @version	$Revision: 1.26 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -35,6 +35,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 	/**
 	 * Revise superclass behavior: support TurnoutOperations
 	 */
+
     public void addManager(AbstractManager m) {
         super.addManager(m);
         TurnoutOperationManager.getInstance().loadOperationTypes();
@@ -167,6 +168,20 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
             return ((TurnoutManager)getMgr(i)).askControlType(systemName);
         return ((TurnoutManager)getMgr(0)).askControlType(systemName);
     }
+    
+    public boolean isControlTypeSupported(String systemName) { 
+        int i = matchTentative(systemName);
+        if (i >= 0)
+            return ((TurnoutManager)getMgr(i)).isControlTypeSupported(systemName);
+        return ((TurnoutManager)getMgr(0)).isControlTypeSupported(systemName);    
+    }
+    
+    public boolean isNumControlBitsSupported(String systemName) {
+        int i = matchTentative(systemName);
+        if (i >= 0)
+            return ((TurnoutManager)getMgr(i)).isNumControlBitsSupported(systemName);
+        return ((TurnoutManager)getMgr(0)).isNumControlBitsSupported(systemName);    
+    }
 
 	/**
 	 * TurnoutOperation support. Return a list which is just the concatenation of
@@ -181,15 +196,19 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 		return TurnoutOperationManager.concatenateTypeLists(typeList.toArray(new String[0]));
 	}
 
-    public boolean allowMultipleAdditions() { return false; }
+    public boolean allowMultipleAdditions(String systemName) {
+        int i = matchTentative(systemName);
+        if (i >= 0)
+            return ((TurnoutManager)getMgr(i)).allowMultipleAdditions(systemName);
+        return ((TurnoutManager)getMgr(0)).allowMultipleAdditions(systemName);
+        }
     
-    // TODO:  This doesn't work right with multiple systems, because the test
-    // doesn't properly distinguish e.g. LT1 from L2T1
-    public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix){
+    public String getNextValidAddress(String curAddress, String prefix){
         for (int i=0; i<nMgrs(); i++) {
-            if ( prefix.startsWith( 
+            if ( prefix.equals( 
                     ((TurnoutManager)getMgr(i)).getSystemPrefix()) ) {
-                return ((TurnoutManager)getMgr(i)).formatRangeOfAddresses(start, numberToAdd, prefix);
+                //System.out.println((TurnoutManager)getMgr(i))
+                return ((TurnoutManager)getMgr(i)).getNextValidAddress(curAddress, prefix);
             }
         }
         return null;

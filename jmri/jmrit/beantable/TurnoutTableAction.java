@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.77 $
+ * @version     $Revision: 1.78 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -396,7 +396,6 @@ public class TurnoutTableAction extends AbstractTableAction {
             else {
                 prefixBox.addItem(provideConnectionNameFromPrefix(jmri.InstanceManager.turnoutManagerInstance().getSystemPrefix()));
             }
-                       
             sysName.setName("sysName");
             userName.setName("userName");
             prefixBox.setName("prefixBox");
@@ -697,13 +696,6 @@ public class TurnoutTableAction extends AbstractTableAction {
         int numberOfTurnouts = 1;
 
         if(range.isSelected()){
-            /*try {
-                iName = Integer.parseInt(sysName.getText());
-            } catch (NumberFormatException ex) {
-                log.error("Unable to convert Hardware Address to a number");
-                return;
-            }*/
-        
             try {
                 numberOfTurnouts = Integer.parseInt(numberToAdd.getText());
             } catch (NumberFormatException ex) {
@@ -719,13 +711,25 @@ public class TurnoutTableAction extends AbstractTableAction {
                                                  JOptionPane.YES_NO_OPTION)==1)
                 return;
         }
+        String turnoutPrefix = getTurnoutPrefixFromName()+InstanceManager.turnoutManagerInstance().typeLetter();
         //String turnoutPrefix = getTurnoutPrefixFromName()+"T";
         String sName = null;
-        String[] turnoutList = InstanceManager.turnoutManagerInstance().formatRangeOfAddresses(sysName.getText(), numberOfTurnouts, getTurnoutPrefixFromName());
-        if (turnoutList == null)
-            return;
-        for (int x = 0; x < turnoutList.length; x++){
-            sName = turnoutList[x];
+        String curAddress = sysName.getText();
+        //String[] turnoutList = InstanceManager.turnoutManagerInstance().formatRangeOfAddresses(sysName.getText(), numberOfTurnouts, getTurnoutPrefixFromName());
+        //if (turnoutList == null)
+        //    return;
+        int iType = 0;
+        int iNum=1;
+        boolean useLastBit = false;
+        boolean useLastType = false;
+        for (int x = 0; x < numberOfTurnouts; x++){
+            curAddress = InstanceManager.turnoutManagerInstance().getNextValidAddress(curAddress, getTurnoutPrefixFromName());
+            if (curAddress==null){
+                //The next address is already in use, therefore we stop.
+                break;
+            }
+            //We have found another turnout with the same address, therefore we need to go onto the next address.
+            sName=turnoutPrefix+curAddress;
             if (sName.length()>2 && sName.charAt(1)=='T') {
                 // probably standard format turnout system name
                 String testSN = sName.substring(0,1)+"L"+sName.substring(2,sName.length());
@@ -750,20 +754,33 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }
             }
             // Ask about two bit turnout control if appropriate
-            int iNum;
-            iNum = InstanceManager.turnoutManagerInstance().askNumControlBits(sName);
+            
+            if(!useLastBit){
+                iNum = InstanceManager.turnoutManagerInstance().askNumControlBits(sName);
+                if((InstanceManager.turnoutManagerInstance().isNumControlBitsSupported(sName)) && (range.isSelected())){
+                    if(JOptionPane.showConfirmDialog(addFrame,
+                                                 "Do you want to use the last setting for all turnouts in this range? ","Use Setting",
+                                                 JOptionPane.YES_NO_OPTION)==0)
+                        useLastBit=true;
+                    // Add a pop up here asking if the user wishes to use the same value for all
+                } else {
+                //as isNumControlBits is not supported, then we will always use the same value.
+                    useLastBit=true;
+                }
+            }
             if (iNum==0) {
                 // User specified more bits, but bits are not available - return without creating
                 return;
             }
             else {
+                
                 // Create the new turnout
                 Turnout t;
                 try {
                     t = InstanceManager.turnoutManagerInstance().provideTurnout(sName);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
-                    handleCreateException(sysName.getText());
+                    handleCreateException(sName);
                     return; // without creating       
                 }
                 
@@ -773,9 +790,18 @@ public class TurnoutTableAction extends AbstractTableAction {
                         userName = user+":"+x;
                     if (userName != null && !userName.equals("")) t.setUserName(userName);
                     t.setNumberOutputBits(iNum);
-                    int iType = 0;
                     // Ask about the type of turnout control if appropriate
-                    iType = InstanceManager.turnoutManagerInstance().askControlType(sName);
+                    if(!useLastType){
+                        iType = InstanceManager.turnoutManagerInstance().askControlType(sName);
+                        if((InstanceManager.turnoutManagerInstance().isControlTypeSupported(sName)) && (range.isSelected())){
+                            if (JOptionPane.showConfirmDialog(addFrame,
+                                                 "Do you want to use the last setting for all turnouts in this range? ","Use Setting",
+                                                 JOptionPane.YES_NO_OPTION)==0)// Add a pop up here asking if the user wishes to use the same value for all
+                                useLastType=true;
+                        } else {
+                            useLastType = true;
+                        }
+                    }
                     t.setControlType(iType);
                 }
             }
@@ -792,13 +818,13 @@ public class TurnoutTableAction extends AbstractTableAction {
             String systemPrefix = getTurnoutPrefixFromName();
             for(int x = 0; x<managerList.size(); x++){
                 jmri.TurnoutManager mgr = (jmri.TurnoutManager) managerList.get(x);
-                if (mgr.getSystemPrefix().equals(systemPrefix) && mgr.allowMultipleAdditions()){
+                if (mgr.getSystemPrefix().equals(systemPrefix) && mgr.allowMultipleAdditions(systemPrefix)){
                     range.setEnabled(true);
                     return;
                 }
             }
         }
-        else if (jmri.InstanceManager.turnoutManagerInstance().allowMultipleAdditions()){
+        else if (jmri.InstanceManager.turnoutManagerInstance().allowMultipleAdditions(getTurnoutPrefixFromName())){
             range.setEnabled(true);
         }
     }

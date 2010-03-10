@@ -24,12 +24,64 @@ package jmri.jmrix.tmcc;
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SerialAddress {
 
     public SerialAddress() {
     }
+    
+        /**
+     * Public static method to parse a C/MRI system name and return the Serial Node Address
+     *  Note:  Returns '-1' if illegal systemName format or if the node is not found.
+	 *         Nodes are numbered from 0 - 127.
+     */
+    public static int getNodeAddressFromSystemName(String systemName) {
+        // validate the system Name leader characters
+        if ( (systemName.charAt(0) != 'T') || ( (systemName.charAt(1) != 'L') &&
+                (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T') ) ) {
+            // here if an illegal format 
+            log.error("illegal character in header field of system name: "+systemName);
+            return (-1);
+        }
+        String s = "";
+        boolean noB = true;
+        for (int i = 2; (i<systemName.length()) && noB; i++) {
+            if (systemName.charAt(i) == 'B') {
+                s = systemName.substring(2,i);
+                noB = false;
+            }
+        }
+        int ua;
+        if (noB) {
+            // This is a CLnnxxx address
+            int num = Integer.valueOf(systemName.substring(2)).intValue();
+            if (num>0) {
+                ua = num/1000;
+            }
+            else {
+                log.error("invalid TMCC system name: "+systemName);
+                return (-1);
+            }
+        }
+        else {
+            if (s.length()==0) {
+                log.error("no node address before 'B' in TMCC system name: "+systemName);
+                return (-1);
+            }
+            else {
+                try {
+                    ua = Integer.parseInt(s);
+                }
+                catch (Exception e) {
+                    log.error("illegal character in TMCC system name: "+systemName);
+                    return (-1);
+                }
+            }
+        }
+		
+		return (ua);
+	}
     
     /**
      * Public static method to parse a TMCC system name and return the bit number
@@ -274,6 +326,52 @@ public class SerialAddress {
         }        
         return nName;
     }
+
+       /**
+     * Public static method to construct a C/MRI system name from type character, 
+	 *		node address, and bit number
+     * <P>
+     * This routine returns a system name in the CLnnnxxx, CTnnnxxx, or CSnnnxxx
+     *      format if the bit number is 1 - 999.  If the bit number is 1000 - 2048,
+	 *      the system name is returned in the CLnnnBxxxx, CTnnnBxxxx, or CSnnnBxxxx
+	 *      format. The returned name is normalized.
+     * <P>
+     * If the supplied character is not valid, or the node address is out of the 0 - 127 
+	 *		range, or the bit number is out of the 1 - 2048 range, an error message is
+	 *      logged and the null string "" is returned.
+	 */
+    public static String makeSystemName(String type,int nAddress, int bitNum) {
+		String nName = "";
+		// check the type character
+        if ( (type != "S") && (type != "L") && (type != "T") ) {
+            // here if an illegal type character 
+            log.error("illegal type character proposed for system name");
+            return (nName);
+        }
+		// check the node address
+        if ( (nAddress < 0) || (nAddress > 127) ) {
+            // here if an illegal node address 
+            log.error("illegal node adddress proposed for system name");
+            return (nName);
+        }
+		// check the bit number
+        if ( (bitNum < 1) || (bitNum > 2048) ) {
+            // here if an illegal bit number 
+            log.error("illegal bit number proposed for system name");
+            return (nName);
+        }
+		// construct the address
+		if (bitNum<1000) {
+			nName = "T"+type+Integer.toString((nAddress*1000)+bitNum);
+		}
+		else {
+			// must use other address format
+			nName = "T"+type+Integer.toString(nAddress)+"B"+
+											Integer.toString(bitNum);
+		}
+	
+		return (nName);
+	}
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialAddress.class.getName());
 }

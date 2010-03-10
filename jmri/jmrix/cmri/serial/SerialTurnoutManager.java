@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -195,20 +195,68 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     static SerialTurnoutManager _instance = null;
     
     //Turnout format is more than a simple format.
-    public boolean allowMultipleAdditions() { return false;  }
+    public boolean allowMultipleAdditions(String systemName) { return true;  }
+    
+    public boolean isNumControlBitsSupported(String systemName) {return true;}
+    
+    public boolean isControlTypeSupported(String systemName) {return true;}
     
     /**
     * A method that creates an array of systems names to allow bulk
     * creation of turnouts.
     */
-    //further work needs to be done on how to format a number of CMRI turnout, therefore this method will only return one entry.
-    public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix){
-        numberToAdd = 1;
-        String range[] = new String[numberToAdd];
-        for (int x = 0; x < numberToAdd; x++){
-            range[x] = prefix+"T"+start;
+
+    public String getNextValidAddress(String curAddress, String prefix){
+        int nAddress = 0;
+        int bitNum = 0;
+        int seperator=0;
+        String tmpSName;
+        
+        if(curAddress.contains(":")){
+            //Address format passed is in the form node:address
+            seperator = curAddress.indexOf(":");
+            nAddress = Integer.valueOf(curAddress.substring(0,seperator)).intValue();
+            bitNum = Integer.valueOf(curAddress.substring(seperator+1)).intValue();
+            tmpSName = SerialAddress.makeSystemName("T", nAddress, bitNum);
+        } else {
+            tmpSName = prefix+"T"+curAddress;
+            bitNum = SerialAddress.getBitFromSystemName(tmpSName);
+            nAddress = SerialAddress.getNodeAddressFromSystemName(tmpSName);
         }
-        return range;
+
+        //If the hardware address past does not already exist then this can
+        //be considered the next valid address.
+        Turnout t = getBySystemName(tmpSName);
+        if(t==null){
+            seperator = tmpSName.indexOf("T")+1;
+            curAddress = tmpSName.substring(seperator);
+            return curAddress;
+        }
+        
+        //The Number of Output Bits of the previous turnout will help determine the next
+        //valid address.
+        bitNum = bitNum + t.getNumberOutputBits();
+        //Check to determine if the systemName is in use, return null if it is,
+        //otherwise return the next valid address.
+         tmpSName = SerialAddress.makeSystemName("T", nAddress, bitNum);
+        t = getBySystemName(tmpSName);
+        if(t!=null){
+            for(int x = 1; x<10; x++){
+                bitNum = bitNum + t.getNumberOutputBits();
+                System.out.println("This should increment " + bitNum);
+                tmpSName = SerialAddress.makeSystemName("T", nAddress, bitNum);
+                t = getBySystemName(tmpSName);
+                if(t==null)
+                    seperator = tmpSName.indexOf("T")+1;
+                    curAddress = tmpSName.substring(seperator);
+                    return curAddress;
+            }
+            return null;
+        } else {
+            seperator = tmpSName.indexOf("T")+1;
+            curAddress = tmpSName.substring(seperator);
+            return curAddress;
+        }
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnoutManager.class.getName());

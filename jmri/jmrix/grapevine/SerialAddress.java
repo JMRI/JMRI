@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SerialAddress {
 
@@ -227,6 +227,39 @@ public class SerialAddress {
         }
         return (n);
     }
+    
+    /**
+     * Public static method to parse a system name and return the node number
+     *   Notes: Nodes are numbered from 1.
+     *          If an error is found, -1 is returned.
+     */
+    public static int getNodeAddressFromSystemName(String systemName) {
+       // validate the System Name leader characters
+        Matcher matcher = getAllPattern().matcher(systemName);
+        if (!matcher.matches()) {
+            // here if an illegal format 
+            log.error("illegal system name format: "+systemName);
+            return (-1);
+        }
+
+        // start decode
+        int ua;
+        if (matcher.group(7)!=null) {
+            // This is a Gtnnxxx address
+            int num = Integer.valueOf(matcher.group(7)).intValue();
+            if (num>0) {
+                ua = num/1000;
+            }
+            else {
+                log.error("invalid value in system name: "+systemName);
+                return (-1);
+            }
+        }
+        else {
+            ua = Integer.valueOf(matcher.group(4)).intValue();
+        }
+        return ua;
+    }
 
     /**
      * Public static method to validate system name format
@@ -343,6 +376,8 @@ public class SerialAddress {
         // finally, return true
         return true;
     }
+    
+    
 
     /**
      * Public static method to validate system name for configuration

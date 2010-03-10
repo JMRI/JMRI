@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "GTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -60,17 +60,64 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     public boolean allowMultipleAdditions() { return false;  }
     
     /**
-    * A method that creates an array of systems names to allow bulk
-    * creation of turnouts.
+    * A method that returns the next valid free turnout hardware address
     */
-    //further work needs to be done on how to format a number of CMRI turnout, therefore this method will only return one entry.
-    public String[] formatRangeOfAddresses(String start, int numberToAdd, String prefix){
-        numberToAdd = 1;
-        String range[] = new String[numberToAdd];
-        for (int x = 0; x < numberToAdd; x++){
-            range[x] = prefix+"T"+start;
+    
+    public String getNextValidAddress(String curAddress, String prefix){
+        int nCard = 0;
+        int nNode = 0;
+        int bitNum = 0;
+        String tmpSName = prefix+"T"+curAddress;
+        
+        
+        if(curAddress.contains(":")){
+            //Address format passed is in the form of node:cardOutput or node:card:address
+            int seperator = curAddress.indexOf(":");
+            nNode = Integer.valueOf(curAddress.substring(0,seperator)).intValue();
+            int nxSeperator = curAddress.indexOf(":", seperator+1);
+            if (nxSeperator == -1){
+                //Address has been entered in the format node:cardOutput
+                bitNum = Integer.valueOf(curAddress.substring(seperator+1)).intValue();
+            } else {
+                //Address has been entered in the format node:card:output
+                nCard = Integer.valueOf(curAddress.substring(seperator+1,nxSeperator)).intValue()*100;
+                bitNum = Integer.valueOf(curAddress.substring(nxSeperator+1)).intValue();
+            }
+            tmpSName = prefix+"T"+nNode+(nCard+bitNum);
+        } else {
+            bitNum = SerialAddress.getBitFromSystemName(tmpSName);
+            nNode = SerialAddress.getNodeAddressFromSystemName(tmpSName);
+            tmpSName = prefix+"T"+nNode+bitNum;
         }
-        return range;
+
+        //If the hardware address past does not already exist then this can
+        //be considered the next valid address.
+        Turnout t = getBySystemName(tmpSName);
+        if(t==null){
+            return Integer.toString(nNode)+Integer.toString((nCard+bitNum));
+            //return ""+nNode+(nCard+bitNum);
+        }
+        
+        //The Number of Output Bits of the previous turnout will help determine the next
+        //valid address.
+        bitNum = bitNum + t.getNumberOutputBits();
+        //Check to determine if the systemName is in use, return null if it is,
+        //otherwise return the next valid address.
+        tmpSName = prefix+"T"+nNode+(nCard+bitNum);
+        t = getBySystemName(tmpSName);
+        if(t!=null){
+            for(int x = 1; x<10; x++){
+                bitNum = bitNum + t.getNumberOutputBits();
+                tmpSName = prefix+"T"+nNode+(nCard+bitNum);
+                t = getBySystemName(tmpSName);
+                if(t==null)
+                    return Integer.toString(nNode)+Integer.toString((nCard+bitNum));
+                    //return ""+nNode+(nCard+bitNum);
+            }
+            return null;
+        } else {
+            return Integer.toString(nNode)+Integer.toString((nCard+bitNum));
+        }
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnoutManager.class.getName());
