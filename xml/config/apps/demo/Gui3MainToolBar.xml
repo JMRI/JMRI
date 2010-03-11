@@ -17,18 +17,7 @@
   <node><icon>resources/icons/throttles/PowerRed24.png</icon>
     <adapter>jmri.jmrit.powerpanel.PowerPanelAction</adapter>
   </node>
-  <node><name>Power</name>
-    <adapter>jmri.jmrit.powerpanel.PowerPanelAction</adapter>
-  </node>
   <node><name>Preferences</name>
-    <panel>apps.gui3.TabbedPreferences</panel>
-  </node>
-  <node><name>Preferences</name>
-    <icon>resources/icons/misc/Question-black.gif</icon>
-    <panel>apps.gui3.TabbedPreferences</panel>
-  </node>
-  <node><!-- no name -->
-    <icon>resources/icons/misc/Question-black.gif</icon>
     <panel>apps.gui3.TabbedPreferences</panel>
   </node>
   <node><name>License</name>
