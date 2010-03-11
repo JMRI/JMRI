@@ -3,38 +3,25 @@
 package jmri.util.swing.mdi;
 
 import junit.framework.*;
-
+import java.io.File;
 
 /**
  *
  * @author	    Bob Jacobsen  Copyright 2003, 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class PackageTest extends TestCase {
 
     public void testShow() {
-        new MdiMainFrame("test", "apps/demo").setVisible(true);
+        MdiMainFrame f = new MdiMainFrame("Test of MDI Frame", 
+                new File("java/test/jmri/util/swing/xml/Gui3LeftTree.xml"), 
+    	        new File("java/test/jmri/util/swing/xml/Gui3Menus.xml"), 
+    	        new File("java/test/jmri/util/swing/xml/Gui3MainToolBar.xml")
+        );
+        f.setSize(new java.awt.Dimension(400,400));
+        f.setVisible(true);
     }
-    
-    public void XtestAction() {
-        MdiMainFrame m = new MdiMainFrame("test", "apps/decoderpro");
-        {
-            //JButton b = new JButton(new ButtonTestAction(
-            //                          "Open new frame", new jmri.util.swing.sdi.JmriJFrameInterface()));
-            //m.getUpperRight().add(b);
-        }
-        {
-            //JButton b = new JButton(new ButtonTestAction(
-            //                          "Open in upper panel", new PanedInterface(m)));
-            //m.getLowerRight().add(b);
-            //
-            //b = new JButton(new jmri.jmrit.powerpanel.PowerPanelAction(
-            //                          "power", new PanedInterface(m)));
-            //m.getLowerRight().add(b);            
-        }
-        m.setVisible(true);
-    }
-    
+        
     // from here down is testing infrastructure
     public PackageTest(String s) {
         super(s);
@@ -60,7 +47,14 @@ public class PackageTest extends TestCase {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
+        jmri.InstanceManager.setShutDownManager(
+                new jmri.managers.DefaultShutDownManager());
+        jmri.InstanceManager.store(
+                new jmri.managers.DefaultUserMessagePreferences(), 
+                jmri.UserPreferencesManager.class);
     }
+    
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

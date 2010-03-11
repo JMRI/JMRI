@@ -3,6 +3,7 @@
 package jmri.util.swing.multipane;
 
 import javax.swing.*;
+import java.io.File;
 
 import jmri.util.swing.*;
 
@@ -14,13 +15,18 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the Multipane (IDE) GUI 
  * @author			Bob Jacobsen  Copyright 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class MultiJfcUnitTest extends jmri.util.SwingTestCase {
 
     public void testShow() throws Exception {
         // show the window
-        JFrame f1 = new MultiPaneWindow("test", "test");
+        JFrame f1 = new MultiPaneWindow("test",
+                new File("java/test/jmri/util/swing/xml/Gui3LeftTree.xml"), 
+    	        new File("java/test/jmri/util/swing/xml/Gui3Menus.xml"), 
+    	        new File("java/test/jmri/util/swing/xml/Gui3MainToolBar.xml")
+        );
+        f1.setSize(new java.awt.Dimension(500,500));
         f1.setVisible(true);
         
         Assert.assertNotNull("found main frame", f1);

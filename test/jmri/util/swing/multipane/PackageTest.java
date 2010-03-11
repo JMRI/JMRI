@@ -3,6 +3,7 @@
 package jmri.util.swing.multipane;
 
 import junit.framework.*;
+import java.io.File;
 import javax.swing.*;
 
 import jmri.util.swing.*;
@@ -11,16 +12,24 @@ import jmri.util.swing.*;
  * Invokes complete set of tests in the jmri.util tree
  *
  * @author	    Bob Jacobsen  Copyright 2003
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class PackageTest extends TestCase {
 
     public void testShow() {
-        new MultiPaneWindow("test", "apps/panelpro").setVisible(true);
+        new MultiPaneWindow("Test of empty Multi Pane Window", 
+                new File("xml/config/apps/panelpro/Gui3LeftTree.xml"), 
+    	        new File("xml/config/apps/panelpro/Gui3Menus.xml"), 
+    	        new File("xml/config/apps/panelpro/Gui3MainToolBar.xml")
+        ).setVisible(true);
     }
     
     public void testAction() {
-        MultiPaneWindow m = new MultiPaneWindow("test", "apps/decoderpro");
+        MultiPaneWindow m =         new MultiPaneWindow("Test of Multi Pane Window function", 
+                new File("xml/config/apps/panelpro/Gui3LeftTree.xml"), 
+    	        new File("xml/config/apps/panelpro/Gui3Menus.xml"), 
+    	        new File("xml/config/apps/panelpro/Gui3MainToolBar.xml")
+        );
         {
             JButton b = new JButton(new ButtonTestAction(
                                       "Open new frame", new jmri.util.swing.sdi.JmriJFrameInterface()));
