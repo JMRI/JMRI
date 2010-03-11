@@ -4,6 +4,8 @@ package jmri.jmrit.beantable.usermessagepreferences;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Component;
+import java.awt.Color;
 
 import javax.swing.*;
 
@@ -11,7 +13,7 @@ import javax.swing.*;
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
 
@@ -19,17 +21,20 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
     
     public UserMessagePreferencesPane() {
         super();
+        JComponent component = new JPanel();
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JPanel buttonPanel = new JPanel();
-        JButton updateButton = new JButton("Update");
         
+        JButton updateButton = new JButton("Apply");
+        updateButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         updateButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 updateButtonPressed();
             }
         });
-        buttonPanel.add(updateButton);
+        
+        component.add(updateButton);
+        component.setAlignmentX(Component.LEFT_ALIGNMENT);
         
         //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JTabbedPane tab = new JTabbedPane();
@@ -39,7 +44,9 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         tab.add(applicationTab(), "Application");
         tab.add(tableDeleteTab(), "Deleting Table Entries");
         add(tab);
-        add(buttonPanel);
+        add(component);
+        //setAlignmentX(Component.RIGHT_ALIGNMENT);
+        //add(buttonPanel);
     }
 
     JCheckBox _routeSaveMsg;
