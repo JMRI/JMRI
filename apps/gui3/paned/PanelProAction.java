@@ -13,7 +13,7 @@ import jmri.util.swing.*;
  * Ignores WindowInterface.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
  
 public class PanelProAction extends jmri.util.swing.JmriAbstractAction {
@@ -32,7 +32,7 @@ public class PanelProAction extends jmri.util.swing.JmriAbstractAction {
        
     public void actionPerformed(ActionEvent e) {
         jmri.util.swing.multipane.MultiPaneWindow mainFrame 
-            = new jmri.util.swing.multipane.MultiPaneWindow("PanelPro", "apps/panelpro");
+            = new PanelProFrame("PanelPro");
         mainFrame.setSize(mainFrame.getMaximumSize());
         mainFrame.setVisible(true);
     }

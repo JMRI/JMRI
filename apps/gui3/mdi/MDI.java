@@ -3,6 +3,7 @@
 package apps.gui3.mdi;
 
 import jmri.util.swing.mdi.MdiMainFrame;
+import java.io.File;
 
 /**
  * The JMRI application for developing the 3rd GUI
@@ -22,13 +23,16 @@ import jmri.util.swing.mdi.MdiMainFrame;
  * for more details.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004, 2007, 2009, 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class MDI extends apps.gui3.Apps3 {
 
     protected void createMainFrame() {
         // create and populate main window
-        mainFrame = new MdiMainFrame(nameString, "apps/demo");
+        mainFrame = new MdiMainFrame(nameString, 
+                new File("xml/config/apps/demo/Gui3LeftTree.xml"), 
+    	        new File("xml/config/apps/demo/Gui3Menus.xml"), 
+    	        new File("xml/config/apps/demo/Gui3MainToolBar.xml"));
     }
     
     // Main entry point

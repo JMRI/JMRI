@@ -4,6 +4,7 @@
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
 
 import jmri.util.swing.*;
 
@@ -13,7 +14,7 @@ import jmri.util.swing.*;
  * Ignores WindowInterface.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
  
 public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
@@ -32,7 +33,10 @@ public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
        
     public void actionPerformed(ActionEvent e) {
         jmri.util.swing.multipane.MultiPaneWindow mainFrame 
-            = new jmri.util.swing.multipane.MultiPaneWindow("DecoderPro", "apps/decoderpro");
+            = new jmri.util.swing.multipane.MultiPaneWindow("DecoderPro", 
+                new File("xml/config/apps/panelpro/Gui3LeftTree.xml"), 
+    	        new File("xml/config/apps/panelpro/Gui3Menus.xml"), 
+    	        new File("xml/config/apps/panelpro/Gui3MainToolBar.xml"));
         mainFrame.setSize(mainFrame.getMaximumSize());
         mainFrame.setVisible(true);
     }

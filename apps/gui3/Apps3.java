@@ -24,7 +24,7 @@ import javax.swing.*;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen   Copyright 2009, 2010
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public abstract class Apps3 extends apps.AppsBase {
 
@@ -59,7 +59,7 @@ public abstract class Apps3 extends apps.AppsBase {
         createMainFrame();
         
         // set to min size for demo
-        displayMainFrame( new Dimension(800, 600));  // or mainFrame.getMaximumSize()
+        displayMainFrame(mainFrame.getMaximumSize());  // or new Dimension(800, 600));
     }
         
     protected JmriJFrame mainFrame;
