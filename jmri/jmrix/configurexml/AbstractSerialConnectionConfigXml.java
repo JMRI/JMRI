@@ -10,7 +10,7 @@ import org.jdom.Element;
  * classes persisting the status of serial port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapter {
 
@@ -29,7 +29,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
     
     /**
      * Default implementation for storing the static contents of the serial port implementation
-     * @param o Object to store, of type PositionableLabel
+     * @param object Object to store, of type PositionableLabel
      * @return Element containing the complete info
      */
     public Element store(Object object) {
