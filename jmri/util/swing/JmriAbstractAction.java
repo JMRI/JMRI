@@ -8,9 +8,12 @@ import java.awt.event.ActionEvent;
 /**
  * Abstract base for actions that will work with
  * multiple JMRI GUIs
+ *<p>
+ * An opaque Object can be passed as a context,
+ * but null is also possible.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  */
  
 abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
@@ -29,7 +32,15 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
     	super(s, i);
     	this.wi = wi;
     }
-     
+    
+    /**
+     * @since 2.9.4
+     */
+    public void setContext(Object context) {
+        this.context = context;
+    }
+    protected Object context = null;
+    
     /**
      * Original constructor for compatibility with
      * older menus. Assumes SDI GUI.
