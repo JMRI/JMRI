@@ -21,7 +21,7 @@ import jmri.jmrix.swing.ComponentFactory;
  * @see SystemsMenu
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.31 $
+ * @version     $Revision: 1.32 $
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
@@ -46,7 +46,7 @@ public class ActiveSystemsMenu extends JMenu {
      */
     static public void addItems(JMenuBar m) {
 
-        // get SystemConnectionMemo and create menus
+        // get ComponentFactory objects and create menus
         java.util.List<Object> list 
                 = jmri.InstanceManager.getList(ComponentFactory.class);
         if (list != null) {
