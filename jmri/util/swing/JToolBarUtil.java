@@ -3,6 +3,7 @@
 package jmri.util.swing;
 
 import javax.swing.*;
+import java.io.File;
 import org.jdom.*;
 
 /**
@@ -10,31 +11,26 @@ import org.jdom.*;
  * <P>
  * Chief among these is the loadToolBar method, for
  * creating a JToolBar from an XML definition
+ * <p>
+ * Only parses top level of XML file, since ToolBars have only level.
  *
  * @author Bob Jacobsen  Copyright 2003, 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class JToolBarUtil extends GuiUtilBase {
 
-    static public JToolBar loadToolBar(String filename) {
-        return loadToolBar(filename, null);
+    static public JToolBar loadToolBar(File file) {
+        return loadToolBar(file, null, null);  // tool bar without window or context
     }
 
-    static public JToolBar loadToolBar(String filename, WindowInterface wi) {
-        Element root;
-        
-        try {
-            root = new jmri.jmrit.XmlFile(){}.rootFromName(filename);
-        } catch (Exception e) {
-            log.error("Could not parse JMenu file \""+filename+"\" due to: "+e);
-            return null;
-        }
-        
+    static public JToolBar loadToolBar(File file, WindowInterface wi, Object context) {
+        Element root = rootFromFile(file);
+                
         JToolBar retval = new JToolBar(root.getChild("name").getText());
         
         for (Object item : root.getChildren("node")) {
-            Action act = actionFromNode((Element)item, wi);
+            Action act = actionFromNode((Element)item, wi, context);
             if (act == null) continue;
             if (act.getValue(javax.swing.Action.SMALL_ICON) != null) {
                 // icon present, add explicitly

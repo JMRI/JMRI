@@ -3,18 +3,19 @@
 package jmri.util.swing;
 
 import javax.swing.*;
+import java.io.File;
 import org.jdom.*;
 
 /**
  * Common utility methods for working with GUI items
  *
  * @author Bob Jacobsen  Copyright 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class GuiUtilBase {
 
-    static Action actionFromNode(Element child, WindowInterface wi) {
+    static Action actionFromNode(Element child, WindowInterface wi, Object context) {
         String name = null;
         Icon icon = null;
         
@@ -44,6 +45,7 @@ public class GuiUtilBase {
                         // found it!
                         a = (JmriAbstractAction) ct.newInstance(new Object[]{name, wi});
                         a.setName(name);
+                        a.setContext(context);
                         return a;
                     } else {
                         Class[] parms = ct.getParameterTypes();
@@ -54,6 +56,7 @@ public class GuiUtilBase {
                         // found it!
                         a = (JmriAbstractAction) ct.newInstance(new Object[]{name, icon, wi});
                         a.setName(name);
+                        a.setContext(context);
                         return a;
                     }
                 }
@@ -70,6 +73,7 @@ public class GuiUtilBase {
                      act = new JmriNamedPaneAction(name, wi, child.getChild("panel").getText());
                 else
                      act = new JmriNamedPaneAction(name, icon, wi, child.getChild("panel").getText());
+                act.setContext(context);
                 return act;
             } catch (Exception ex) {
                 log.warn("could not load toolbar adapter class: "+child.getChild("panel").getText()
@@ -79,19 +83,38 @@ public class GuiUtilBase {
         } else if ( child.getChild("help") != null) {
             String reference = child.getChild("help").getText();
             return jmri.util.HelpUtil.getHelpAction(name,icon, reference);
-        } else { // make from icon or text
-            if (icon != null) 
-                return new AbstractAction(name, icon){
+        } else { // make from icon or text without associated function
+            if (icon != null) {
+                AbstractAction act = new AbstractAction(name, icon){
                     public void actionPerformed(java.awt.event.ActionEvent e) {}
                     public String toString() { return (String) getValue(javax.swing.Action.NAME); }
                 };
-            else // then name must be present
-                return new AbstractAction(name){
+                act.setEnabled(false);
+                return act;
+            } else { // then name must be present
+                AbstractAction act = new AbstractAction(name){
                     public void actionPerformed(java.awt.event.ActionEvent e) {}
                     public String toString() { return (String) getValue(javax.swing.Action.NAME); }
                 };
+                act.setEnabled(false);
+                return act;
+            }
         }
     }
     
+
+    /**
+     * Get root element from XML file, handling errors locally.
+     *
+     */
+    static protected Element rootFromFile(File file) {
+        try {
+            return new jmri.jmrit.XmlFile(){}.rootFromFile(file);
+        } catch (Exception e) {
+            log.error("Could not parse file \""+file.getName()+"\" due to: "+e);
+            return null;
+        }
+    }
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GuiUtilBase.class.getName());
 }

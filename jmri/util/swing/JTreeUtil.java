@@ -3,6 +3,7 @@
 package jmri.util.swing;
 
 import javax.swing.tree.*;
+import java.io.File;
 import org.jdom.*;
 
 /**
@@ -12,33 +13,37 @@ import org.jdom.*;
  * creating a tree from an XML definition
  *
  * @author Bob Jacobsen  Copyright 2003, 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class JTreeUtil extends GuiUtilBase {
 
-    static public TreeNode loadTree(String filename, WindowInterface wi) {
-        Element root;
-        
-        try {
-            root = new jmri.jmrit.XmlFile(){}.rootFromName(filename);
-        } catch (Exception e) {
-            log.error("Could not parse JTree file \""+filename+"\" due to: "+e);
-            return null;
-        }
-        return treeFromElement(root, wi);
+    /**
+     * @param filename Name of the XML file to be read and processed
+     * @param wi WindowInterface to be passed to the nodes in the tree
+     * @param context Blind context Object passed to the nodes in the tree
+     */
+    static public DefaultMutableTreeNode loadTree(File file, WindowInterface wi, Object context) {
+        Element root = rootFromFile(file);
+
+        return treeFromElement(root, wi, context);
     }
     
-    static DefaultMutableTreeNode treeFromElement(Element main, WindowInterface wi) {
+    /**
+     * @param main Element to be processed
+     * @param wi WindowInterface to be passed to the nodes in the tree
+     * @param context Blind context Object passed to the nodes in the tree
+     */
+    static DefaultMutableTreeNode treeFromElement(Element main, WindowInterface wi, Object context) {
         String name = "<none>";
         Element e = main.getChild("name");
         if (e != null) name = e.getText();
 
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(name);
-        node.setUserObject(actionFromNode(main, wi));
+        node.setUserObject(actionFromNode(main, wi, context));
 
         for (Object child : main.getChildren("node")) {
-            node.add(treeFromElement((Element)child, wi));
+            node.add(treeFromElement((Element)child, wi, context));
         }
         return node;
     }
