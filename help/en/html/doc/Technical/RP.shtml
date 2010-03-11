@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: RP.shtml,v 1.3 2010-01-31 20:54:11 zoo Exp $ -->
+<!-- $Id: RP.shtml,v 1.4 2010-03-11 03:28:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -31,16 +31,17 @@
 
 	    <H1>JMRI: Recommended Practices</H1>
 
+This is page of miscellaneous info and pointers for JMRI developers.
 
-<h2>Libraries to use</h2>
+<h2>Class Library Preferences</h2>
 
 <ul>
 
 <LI>
 We use Java Swing for our GUI development.  It's a lot more powerful
-than the original AWT, and the price is right. In particular, we
-try to use the "Bean format" of setting and getting members, call-backs to
-notify of changes, etc, to make it easier to build applications from JMRI components.
+than the original AWT, and the price is right. We have a recommended
+organization and usage pattern that's documented on 
+<a href="Swing.shtml">another page</a>.
 
 <LI>JMRI uses the RXTX libraries to support serial communications on Macintosh,
 Linux and Windows.  On Windows only, the Serialio package from
@@ -52,11 +53,28 @@ available; on other systems, it uses RXTX.
 Note that our license for Serialio limits it to this use only;
 we are not permitted to distribute the libraries for other purposes.
 
-<LI>The Java collections (List, etc) are available in JMRI, because
-we need them for various other packages.  Use them if you'd like; there 
-are often better approaches than to make everything a Vector.
-Originally we used the Java 1.1 version of this, but that restriction
-no longer applies; use the complete API if you'd like.
+<LI>Take a few moments to learn about the the different types of
+<a href="http://java.sun.com/j2se/1.5.0/docs/guide/collections/overview.html">Java collections</a>
+that are available
+(<a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/List.html">List</a>, 
+<a href=""http://java.sun.com/j2se/1.5.0/docs/api/java/util/HashMap.html>HashMap</a>, 
+etc)
+in the
+<a href="">java.util package</a>.
+Not everything needs to be a Vector or an array!
+
+<LI>
+JMRI uses 
+<a href="http://java.sun.com/docs/books/tutorial/java/generics/index.html">Java generics</a>
+extensively to 
+<href="http://java.sun.com/docs/books/tutorial/java/generics/generics.html">reduce errors and improve understanding</a>.  
+With lots of people writing and sharing code, using 
+generics instead of casts makes it much easier to understand the code, 
+and allows the compiler to catch many misunderstandings about how things
+should be used. Most of the important information on them can be 
+found on 
+<a href="http://java.sun.com/docs/books/tutorial/java/generics/gentypes.html">this page</a>
+from the Java Tutorial.
 
 <LI>
 If you need to use comma-separated variable (CSV) files, 
