@@ -3,6 +3,7 @@
 package jmri.util.swing.mdi;
 
 import java.awt.*;
+import java.io.File;
 
 import javax.swing.*;
 import javax.swing.tree.*;
@@ -14,21 +15,20 @@ import jmri.util.swing.*;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class MdiMainFrame extends jmri.util.JmriJFrame {
 
     /**
      * Create and initialize a multi-pane GUI window.
-     * @param typeName location within the xml/config directory
-     *                 for the configuration files
+     * @param typeLocation locationfor the configuration files
      */
-    public MdiMainFrame(String name, String typeName) {
+    public MdiMainFrame(String name, File treeFile, File menubarFile, File toolbarFile) {
         super(name);
-        configureFrame("config/"+typeName+"/Gui3LeftTree.xml");
-        addMainMenuBar("config/"+typeName+"/Gui3Menus.xml");
-        addMainToolBar("config/"+typeName+"/Gui3MainToolBar.xml");
+        configureFrame(treeFile);
+        addMainMenuBar(menubarFile);
+        addMainToolBar(toolbarFile);
         pack();
     }
     
@@ -38,24 +38,24 @@ public class MdiMainFrame extends jmri.util.JmriJFrame {
 
     JmriJInternalFrameInterface rightWI;
     
-    protected void configureFrame(String treeFileName) {
+    protected void configureFrame(File treeFile) {
         desktop = new JDesktopPane();                
         desktop.setBorder(BorderFactory.createLineBorder(Color.black));
         
-        leftRightSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, makeLeftTree(treeFileName), desktop);
+        leftRightSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, makeLeftTree(treeFile), desktop);
         leftRightSplitPane.setOneTouchExpandable(true);
         leftRightSplitPane.setResizeWeight(0.0);  // emphasize right part
         
         add(leftRightSplitPane, BorderLayout.CENTER);
     }
         
-    protected JScrollPane makeLeftTree(String treeFileName) {
+    protected JScrollPane makeLeftTree(File treeFile) {
         final JTree tree;
         TreeNode topNode;
         
         rightWI = new JmriJInternalFrameInterface(this, desktop);
         
-        topNode = JTreeUtil.loadTree(treeFileName, rightWI);
+        topNode = JTreeUtil.loadTree(treeFile, rightWI, null);  // no context object
         
         tree = new JTree(topNode);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -85,19 +85,19 @@ public class MdiMainFrame extends jmri.util.JmriJFrame {
         return treeView;
     }
         
-    protected void addMainMenuBar(String menuFileName) {
+    protected void addMainMenuBar(File menuFile) {
         JMenuBar menuBar = new JMenuBar();
         
-        JMenu[] menus = JMenuUtil.loadMenu(menuFileName, rightWI);
+        JMenu[] menus = JMenuUtil.loadMenu(menuFile, rightWI, null); // no central context
         for (JMenu j : menus) 
             menuBar.add(j);
 
         setJMenuBar(menuBar);
     }
 
-    protected void addMainToolBar(String toolBarFileName) {
+    protected void addMainToolBar(File toolBarFile) {
           
-        JToolBar toolBar = JToolBarUtil.loadToolBar(toolBarFileName, rightWI);
+        JToolBar toolBar = JToolBarUtil.loadToolBar(toolBarFile, rightWI, null);  // no context
 
         // this takes up space at the top until pulled to floating
         add(toolBar, BorderLayout.NORTH);

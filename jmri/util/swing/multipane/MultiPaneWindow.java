@@ -3,6 +3,7 @@
 package jmri.util.swing.multipane;
 
 import java.awt.*;
+import java.io.File;
 
 import javax.swing.*;
 import javax.swing.tree.*;
@@ -14,21 +15,18 @@ import jmri.util.swing.*;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class MultiPaneWindow extends jmri.util.JmriJFrame {
 
     /**
      * Create and initialize a multi-pane GUI window.
-     * @param typeName location within the xml/config directory
-     *                 for the configuration files
+     * @param typeLocation locationfor the configuration files
      */
-    public MultiPaneWindow(String name, String typeName) {
+    public MultiPaneWindow(String name, File treeFile, File menubarFile, File toolbarFile) {
         super(name);
-        configureFrame("config/"+typeName+"/Gui3LeftTree.xml");
-        addMainMenuBar("config/"+typeName+"/Gui3Menus.xml");
-        addMainToolBar("config/"+typeName+"/Gui3MainToolBar.xml");
+        buildGUI(treeFile, menubarFile, toolbarFile);
         pack();
     }
     
@@ -49,34 +47,44 @@ public class MultiPaneWindow extends jmri.util.JmriJFrame {
     
     PanedInterface rightTopWI;
     
-    protected void configureFrame(String treeFileName) {
-        
-        left.add(new JLabel("Left"));
-                
+    protected void buildGUI(File treeFile, File menubarFile, File toolbarFile) {
+        configureFrame();
+        configureNavTreePane(treeFile);
+        addMainMenuBar(menubarFile);
+        addMainToolBar(toolbarFile);
+    }
+    
+    protected void configureFrame() {
+                       
         rightTop.setBorder(BorderFactory.createLineBorder(Color.black));
-        rightTop.setLayout(new BoxLayout(rightTop, BoxLayout.Y_AXIS));
-        rightTop.add(new JLabel("(Need some default content here)"));
+        rightTop.setLayout(new FlowLayout());            // new BoxLayout(rightTop, BoxLayout.Y_AXIS));
         
-        rightBottom.setLayout(new BoxLayout(rightBottom, BoxLayout.Y_AXIS));
+        rightBottom.setLayout(new FlowLayout());            // new BoxLayout(rightBottom, BoxLayout.Y_AXIS));
 
         rightUpDownSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, rightTop, rightBottom);
         rightUpDownSplitPane.setOneTouchExpandable(true);
         rightUpDownSplitPane.setResizeWeight(1.0);  // emphasize top part
         
-        leftRightSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, makeLeftTree(treeFileName), rightUpDownSplitPane);
+        leftRightSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, 
+                                    new JPanel(), // placeholder
+                                    rightUpDownSplitPane);
         leftRightSplitPane.setOneTouchExpandable(true);
         leftRightSplitPane.setResizeWeight(0.0);  // emphasize right part
         
         add(leftRightSplitPane, BorderLayout.CENTER);
     }
+    
+    protected void configureNavTreePane(File treeFile) {
+        leftRightSplitPane.setLeftComponent(makeNavTreePane(treeFile));
+    }
         
-    protected JScrollPane makeLeftTree(String treeFileName) {
+    protected JScrollPane makeNavTreePane(File treeFile) {
         final JTree tree;
         TreeNode topNode;
         
         rightTopWI = new PanedInterface(this);
         
-        topNode = JTreeUtil.loadTree(treeFileName, rightTopWI);
+        topNode = makeNavTreeTopNode(treeFile, rightTopWI);
         
         tree = new JTree(topNode);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -106,21 +114,25 @@ public class MultiPaneWindow extends jmri.util.JmriJFrame {
         return treeView;
     }
     
+    protected TreeNode makeNavTreeTopNode(File treeFile, PanedInterface rightTopWI) {
+        return JTreeUtil.loadTree(treeFile, rightTopWI, null);  // no context
+    }
+    
     public void resetRightToPreferredSizes() { rightUpDownSplitPane.resetToPreferredSizes(); }
     
-    protected void addMainMenuBar(String menuFileName) {
+    protected void addMainMenuBar(File menuFile) {
         JMenuBar menuBar = new JMenuBar();
         
-        JMenu[] menus = JMenuUtil.loadMenu(menuFileName, rightTopWI);
+        JMenu[] menus = JMenuUtil.loadMenu(menuFile, rightTopWI, null);
         for (JMenu j : menus) 
             menuBar.add(j);
 
         setJMenuBar(menuBar);
     }
 
-    protected void addMainToolBar(String toolBarFileName) {
+    protected void addMainToolBar(File toolBarFile) {
           
-        JToolBar toolBar = JToolBarUtil.loadToolBar(toolBarFileName, rightTopWI);
+        JToolBar toolBar = JToolBarUtil.loadToolBar(toolBarFile, rightTopWI, null);
 
         // this takes up space at the top until pulled to floating
         add(toolBar, BorderLayout.NORTH);
@@ -135,13 +147,4 @@ public class MultiPaneWindow extends jmri.util.JmriJFrame {
         super.dispose();
     }
     
-    /**
-     * Set a toolbar to be initially floating.
-     * This doesn't quite work right.
-     */
-    protected void setFloating(JToolBar toolBar) {
-        //((javax.swing.plaf.basic.BasicToolBarUI) toolBar.getUI()).setFloatingLocation(100,100);
-        ((javax.swing.plaf.basic.BasicToolBarUI) toolBar.getUI()).setFloating(true, new Point(500,500));
-    }
-
 }
