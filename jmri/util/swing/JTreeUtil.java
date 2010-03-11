@@ -13,13 +13,13 @@ import org.jdom.*;
  * creating a tree from an XML definition
  *
  * @author Bob Jacobsen  Copyright 2003, 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class JTreeUtil extends GuiUtilBase {
 
     /**
-     * @param filename Name of the XML file to be read and processed
+     * @param file XML file to be read and processed
      * @param wi WindowInterface to be passed to the nodes in the tree
      * @param context Blind context Object passed to the nodes in the tree
      */
