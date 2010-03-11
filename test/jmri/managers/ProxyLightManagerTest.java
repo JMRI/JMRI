@@ -10,7 +10,7 @@ import junit.framework.*;
 /**
  * Test the ProxyLightManager
  * @author			Bob Jacobsen    2003, 2006, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 
 public class ProxyLightManagerTest extends TestCase {
@@ -114,7 +114,6 @@ public class ProxyLightManagerTest extends TestCase {
         
         Light l4 = l.getLight("JLuser 1");
         Assert.assertNull(l4);
-        System.out.println(l.getSystemNameList());
 	}
     
 	/**
