@@ -9,6 +9,8 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 
+import jmri.jmrix.swing.ComponentFactory;
+
 /**
  * Create a "Systems" menu containing as submenus the
  * JMRI system-specific menus for available systems.
@@ -19,7 +21,7 @@ import javax.swing.JMenuBar;
  * @see SystemsMenu
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.30 $
+ * @version     $Revision: 1.31 $
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
@@ -46,10 +48,10 @@ public class ActiveSystemsMenu extends JMenu {
 
         // get SystemConnectionMemo and create menus
         java.util.List<Object> list 
-                = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+                = jmri.InstanceManager.getList(ComponentFactory.class);
         if (list != null) {
             for (Object memo : list) {
-                JMenu menu = ((SystemConnectionMemo)memo).getMenu();
+                JMenu menu = ((ComponentFactory)memo).getMenu();
                 if (menu != null) m.add(menu);
             }
         }

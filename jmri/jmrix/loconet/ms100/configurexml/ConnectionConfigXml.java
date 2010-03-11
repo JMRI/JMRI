@@ -16,7 +16,7 @@ import jmri.jmrix.loconet.ms100.MS100Adapter;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -25,7 +25,10 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     protected void getInstance() {
-        adapter = MS100Adapter.instance();
+        adapter = new MS100Adapter();
+    }
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
     }
 
     protected void register() {

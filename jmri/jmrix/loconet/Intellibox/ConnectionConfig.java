@@ -9,7 +9,7 @@ package jmri.jmrix.loconet.Intellibox;
  * via an IntelliboxAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -29,6 +29,9 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
     public String name() { return "LocoNet Intellibox Serial Port"; }
 
-    protected void setInstance() { adapter = jmri.jmrix.loconet.Intellibox.IntelliboxAdapter.instance(); }
+    protected void setInstance() { 
+        if (adapter == null)
+            adapter = jmri.jmrix.loconet.Intellibox.IntelliboxAdapter.instance(); 
+    }
 }
 

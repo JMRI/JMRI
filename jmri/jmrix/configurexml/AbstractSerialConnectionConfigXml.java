@@ -10,7 +10,7 @@ import org.jdom.Element;
  * classes persisting the status of serial port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapter {
 
@@ -23,14 +23,17 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
     protected SerialPortAdapter adapter;
     abstract protected void getInstance();
     abstract protected void register();
-
+    protected void getInstance(Object object) {
+        getInstance(); // over-ridden during migration
+    }
+    
     /**
      * Default implementation for storing the static contents of the serial port implementation
      * @param o Object to store, of type PositionableLabel
      * @return Element containing the complete info
      */
-    public Element store(Object o) {
-        getInstance();
+    public Element store(Object object) {
+        getInstance(object);
 
         Element e = new Element("connection");
         // many of the following are required by the DTD; failing to include

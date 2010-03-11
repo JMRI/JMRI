@@ -12,14 +12,13 @@ import gnu.io.SerialPort;
  * refers to the switch settings on the new Digitrax PR3
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006, 2008
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class PR3Adapter extends LocoBufferAdapter {
 
 
     public PR3Adapter() {
         super();
-        m2Instance = this;
     }
 
     /**
@@ -145,18 +144,6 @@ public class PR3Adapter extends LocoBufferAdapter {
         retval[retval.length-1] = "Stand-alone LocoNet";
         return retval;
     }
-
-
-    static public LocoBufferAdapter instance() {
-        new Exception("Debug: instance invoked").printStackTrace();
-        if (m2Instance == null) {
-        	m2Instance = new PR3Adapter();
-        	log.debug("new default instance in PR3Adapter");
-        }
-        log.debug("PR3Adapter.instance returns object of class "+m2Instance.getClass().getName());
-        return m2Instance;
-    }
-    static private PR3Adapter m2Instance = null;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PR3Adapter.class.getName());
 }

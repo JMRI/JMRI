@@ -11,7 +11,7 @@ package jmri.jmrix;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 abstract public class SystemConnectionMemo {
 
@@ -59,12 +59,7 @@ abstract public class SystemConnectionMemo {
      */
     public String getUserName() { return userName; }
     private String userName;
-    
-    /**
-     * Provide the system menu
-     */
-     public javax.swing.JMenu getMenu() { return null; }
-    
+        
 }
 
 

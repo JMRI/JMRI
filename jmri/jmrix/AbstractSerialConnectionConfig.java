@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 abstract public class AbstractSerialConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
@@ -29,6 +29,9 @@ abstract public class AbstractSerialConnectionConfig implements jmri.jmrix.Conne
     public AbstractSerialConnectionConfig(jmri.jmrix.SerialPortAdapter p){
         adapter = p;
     }
+
+    public jmri.jmrix.SerialPortAdapter getAdapter() { return adapter; }
+    
     /**
      * Ctor for a functional object with no prexisting adapter.
      * Expect that the subclass setInstance() will fill the adapter member.

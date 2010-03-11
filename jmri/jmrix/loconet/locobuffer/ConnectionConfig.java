@@ -7,7 +7,7 @@ package jmri.jmrix.loconet.locobuffer;
  * via a LocoBufferAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2010
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -29,6 +29,9 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
     public String name() { return "LocoNet LocoBuffer"; }
 
-    protected void setInstance() { adapter = LocoBufferAdapter.instance(); }
+    protected void setInstance() { 
+        if (adapter == null)
+            adapter = LocoBufferAdapter.instance();
+    }
 }
 

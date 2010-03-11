@@ -18,7 +18,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -69,8 +69,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
 
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
+    }
+
     protected void getInstance() {
-        adapter = LnHexFilePort.instance();
+        adapter = new LnHexFilePort();
     }
 
     protected void register() {

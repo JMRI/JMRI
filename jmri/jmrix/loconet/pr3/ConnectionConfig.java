@@ -7,7 +7,7 @@ package jmri.jmrix.loconet.pr3;
  * via a PR2Adapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2008, 2010
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -18,6 +18,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p){
         super(p);
     }
+        
     /**
      * Ctor for a functional Swing object with no prexisting adapter
      */
@@ -29,6 +30,9 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     
     public boolean isOptList2Advanced() { return false; }
 
-    protected void setInstance() { adapter = jmri.jmrix.loconet.pr3.PR3Adapter.instance(); }
+    protected void setInstance() { 
+        if (adapter == null)
+            adapter = new PR3Adapter();
+    }
 }
 

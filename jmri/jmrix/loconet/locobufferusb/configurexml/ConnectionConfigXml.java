@@ -16,7 +16,7 @@ import jmri.jmrix.loconet.locobufferusb.LocoBufferUsbAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005, 2006
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -25,7 +25,10 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     protected void getInstance() {
-        adapter = LocoBufferUsbAdapter.instance();
+        adapter = new LocoBufferUsbAdapter();
+    }
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
     }
 
     protected void register() {

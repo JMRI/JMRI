@@ -16,7 +16,7 @@ import jmri.jmrix.loconet.Intellibox.IntelliboxAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -25,7 +25,10 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     protected void getInstance() {
-        adapter = IntelliboxAdapter.instance();
+        adapter = new IntelliboxAdapter();
+    }
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
     }
 
     protected void register() {
