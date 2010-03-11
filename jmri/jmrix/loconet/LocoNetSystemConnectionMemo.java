@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -53,13 +53,6 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
     private LnMessageManager lnm = null;
     
-    /**
-     * Provide a menu with all items attached to this system connection
-     */
-    public javax.swing.JMenu getMenu() {
-        return new LocoNetMenu(this);
-    }
-
     String suffix() { return count>1?""+count:""; }
     
     /**

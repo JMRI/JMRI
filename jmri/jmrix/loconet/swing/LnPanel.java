@@ -14,7 +14,7 @@ import jmri.util.swing.WindowInterface;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 abstract public class LnPanel extends jmri.util.swing.JmriPanel implements LnPanelInterface {
@@ -27,6 +27,12 @@ abstract public class LnPanel extends jmri.util.swing.JmriPanel implements LnPan
     
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         this.memo = memo;
+    }
+    
+    public void initContext(Object context) {
+        if (context instanceof LocoNetSystemConnectionMemo ) {
+            initComponents((LocoNetSystemConnectionMemo) context);
+        }
     }
     
 }

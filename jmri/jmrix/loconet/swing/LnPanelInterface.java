@@ -12,7 +12,7 @@ import jmri.util.swing.WindowInterface;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public interface LnPanelInterface  {
@@ -20,6 +20,10 @@ public interface LnPanelInterface  {
     /**
      * 2nd stage of initialization, invoked after
      * the constuctor is complete.
+     * <p>
+     * This needs to be connected to the 
+     * initContext() method in implementing classes.
      */
     public void initComponents(LocoNetSystemConnectionMemo memo) throws Exception;
+
 }
