@@ -16,6 +16,8 @@ package jmri.util.swing;
  *    installing any listeners, etc.
  *<li>initComponents() is called, which initializes
  *    Swing components and can make other external references.
+ *<li>initContext(Object context) is called, which can
+ *    make outside connections
  *<li>Optionally, other usage-specific initialization
  *    methods can be called to e.g. connect to 
  *    protocol handlers.
@@ -27,7 +29,7 @@ package jmri.util.swing;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class JmriPanel extends javax.swing.JPanel {
@@ -56,6 +58,12 @@ public class JmriPanel extends javax.swing.JPanel {
      * the constuctor is complete.
      */
     public void initComponents() throws Exception {}
+    
+    /**
+     * 3rd stage of initialization, invoked after
+     * Swing components exist.
+     */
+    public void initContext(Object context) throws Exception {}
     
     public void dispose() {}
 }
