@@ -12,7 +12,7 @@ import java.io.DataOutputStream;
  * This has no e.g. serial-specific information.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2008, 2010
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  * @see         jmri.jmrix.SerialConfigException
  * @since 2.3.1
  */
@@ -90,6 +90,8 @@ public interface PortAdapter  {
     * Set the System Manufacturers Name
     */
     public void setManufacturer(String Manufacturer);
-
+    
+    public SystemConnectionMemo getSystemConnectionMemo();
+    
 
 }

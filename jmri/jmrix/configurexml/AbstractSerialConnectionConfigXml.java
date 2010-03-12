@@ -10,7 +10,7 @@ import org.jdom.Element;
  * classes persisting the status of serial port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapter {
 
@@ -39,6 +39,10 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
         // many of the following are required by the DTD; failing to include
         // them makes the XML file unreadable, but at least the next
         // invocation of the program can then continue.
+        if (adapter.getSystemConnectionMemo()!=null){
+            e.setAttribute("userName", adapter.getSystemConnectionMemo().getUserName());
+            e.setAttribute("systemPrefix", adapter.getSystemConnectionMemo().getSystemPrefix());
+        }
         if (adapter.getManufacturer()!=null)
             e.setAttribute("manufacturer", adapter.getManufacturer());
         if (adapter.getCurrentPortName()!=null)
@@ -118,6 +122,15 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
         
         // if successful so far, go ahead and configure
         adapter.configure();
+        
+        //We can only set the userName and systemPrefix, after the configure has been done.
+        if (e.getAttribute("userName")!=null) {
+            adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
+        }
+        
+        if (e.getAttribute("systemPrefix")!=null) {
+            adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
+        }
 
         // once all the configure processing has happened, do any
         // extra config

@@ -11,7 +11,7 @@ package jmri.jmrix;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 abstract public class SystemConnectionMemo {
 
@@ -52,6 +52,7 @@ abstract public class SystemConnectionMemo {
      */
     public String getSystemPrefix() { return prefix; }
     private String prefix;
+    public void setSystemPrefix(String prefix) { this.prefix = prefix; }
     
     /**
      * Provides access to the system user name string.
@@ -59,6 +60,7 @@ abstract public class SystemConnectionMemo {
      */
     public String getUserName() { return userName; }
     private String userName;
+    public void setUserName(String name) { this.userName = name; }
         
 }
 
