@@ -24,9 +24,6 @@ import javax.swing.JPanel;
  * Those must be created at load time by the ConfigXml process, or in 
  * some Application class.
  * <P>
- * To add a new system package, add entries
- * to the list in {@link #availableProtocolClasses}.
- * <P>
  * The classes referenced are the specific
  * subclasses of {@link jmri.jmrix.ConnectionConfig}
  * which provides the methods providing data to the 
@@ -34,7 +31,7 @@ import javax.swing.JPanel;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.65 $
+ * @version	$Revision: 1.66 $
  */
 public class JmrixConfigPane extends JPanel {
 
