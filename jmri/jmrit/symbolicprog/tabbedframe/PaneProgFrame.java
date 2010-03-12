@@ -36,7 +36,7 @@ import java.awt.event.ItemEvent;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.85 $
+ * @version   $Revision: 1.86 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -89,7 +89,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * Abstract method to provide a JPanel setting the programming
      * mode, if appropriate. A null value is ignored.
      */
-    abstract JPanel getModePane();
+    abstract protected JPanel getModePane();
 
     protected void installComponents() {
 

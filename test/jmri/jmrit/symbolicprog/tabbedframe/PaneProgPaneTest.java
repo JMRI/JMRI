@@ -16,7 +16,7 @@ import jmri.jmrit.roster.*;
 
 /**
  * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
- * @version         $Revision: 1.19 $
+ * @version         $Revision: 1.20 $
  */
 public class PaneProgPaneTest extends TestCase {
 
@@ -29,7 +29,7 @@ public class PaneProgPaneTest extends TestCase {
                                                  "test frame", "programmers/Basic.xml",
                                                  p, false) {
             // dummy implementations
-            JPanel getModePane() { return null; }
+            protected JPanel getModePane() { return null; }
         };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
@@ -54,7 +54,7 @@ public class PaneProgPaneTest extends TestCase {
                                                  "test frame", "programmers/Basic.xml",
                                                  p, false) {
             // dummy implementations
-            JPanel getModePane() { return null; }
+            protected JPanel getModePane() { return null; }
         };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
@@ -79,7 +79,7 @@ public class PaneProgPaneTest extends TestCase {
                                                  "test frame", "programmers/Basic.xml",
                                                  p, false) {
             // dummy implementations
-            JPanel getModePane() { return null; }
+            protected JPanel getModePane() { return null; }
         };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
@@ -123,7 +123,7 @@ public class PaneProgPaneTest extends TestCase {
                                                  "test frame", "programmers/Basic.xml",
                                                  p, false) {
             // dummy implementations
-            JPanel getModePane() { return null; }
+            protected JPanel getModePane() { return null; }
         };
 
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
@@ -182,7 +182,7 @@ public class PaneProgPaneTest extends TestCase {
                                                  "test frame", "programmers/Basic.xml",
                                                  p, false) {
             // dummy implementations
-            JPanel getModePane() { return null; }
+            protected JPanel getModePane() { return null; }
         };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
@@ -245,7 +245,7 @@ public class PaneProgPaneTest extends TestCase {
                                                  "test frame", "programmers/Basic.xml",
                                                  p, false) {
             // dummy implementations
-            JPanel getModePane() { return null; }
+            protected JPanel getModePane() { return null; }
         };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);

@@ -15,7 +15,7 @@ import junit.framework.*;
  * Test PaneProg with qualified variables
  *
  * @author			Bob Jacobsen    Copyright 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class QualifiedVarTest extends TestCase {
 
@@ -27,7 +27,7 @@ public class QualifiedVarTest extends TestCase {
                                             "test qualified var", "programmers/Basic.xml",
                                             new jmri.progdebugger.ProgDebugger(), false) {
                 // dummy implementations
-                JPanel getModePane() { return null; }
+                protected JPanel getModePane() { return null; }
             };
 
         // get the sample info

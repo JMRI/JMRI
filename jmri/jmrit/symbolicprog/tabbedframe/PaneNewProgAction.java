@@ -28,7 +28,7 @@ import javax.swing.JPanel;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class PaneNewProgAction extends AbstractAction {
 
@@ -71,7 +71,7 @@ public class PaneNewProgAction extends AbstractAction {
                     JFrame p = new PaneProgFrame(decoderFile, re,
                                                  title, "programmers"+File.separator+filename+".xml",
                                                  null, false){
-                        JPanel getModePane() { return null; }
+                        protected JPanel getModePane() { return null; }
                     };
                     p.pack();
                     p.setVisible(true);

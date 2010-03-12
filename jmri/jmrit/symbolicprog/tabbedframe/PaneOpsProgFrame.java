@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  * Extend the PaneProgFrame to handle ops mode operations
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class PaneOpsProgFrame extends PaneProgFrame
                  implements java.beans.PropertyChangeListener  {
@@ -25,7 +25,7 @@ public class PaneOpsProgFrame extends PaneProgFrame
      * presently don't want a selection GUI to be
      * present when in ops mode.
      */
-    JPanel getModePane() { 
+    protected JPanel getModePane() { 
         if (modePane == null) 
             modePane = new JPanel();
         return modePane;

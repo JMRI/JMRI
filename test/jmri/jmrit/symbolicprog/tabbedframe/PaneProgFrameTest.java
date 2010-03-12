@@ -18,7 +18,7 @@ import junit.framework.TestSuite;
  * Test PaneProgFrame
  *
  * @author			Bob Jacobsen
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class PaneProgFrameTest extends TestCase {
 
@@ -33,7 +33,7 @@ public class PaneProgFrameTest extends TestCase {
                                             "test frame", "programmers/Basic.xml",
                                             new jmri.progdebugger.ProgDebugger(), false) {
                 // dummy implementations
-                JPanel getModePane() { return new JPanel(); }
+                protected JPanel getModePane() { return new JPanel(); }
             };
 
         // invoke
@@ -51,7 +51,7 @@ public class PaneProgFrameTest extends TestCase {
                                             "test frame", "programmers/Basic.xml",
                                             new jmri.progdebugger.ProgDebugger(), false) {
                 // dummy implementations
-                JPanel getModePane() { return null; }
+                protected JPanel getModePane() { return null; }
             };
 
         // ugly, temporary way to load the decoder info

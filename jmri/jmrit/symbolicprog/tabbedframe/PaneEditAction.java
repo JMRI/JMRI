@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  *
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class PaneEditAction 	extends AbstractAction {
 
@@ -67,7 +67,7 @@ public class PaneEditAction 	extends AbstractAction {
                     JFrame p = new PaneProgFrame(decoderFile, re,
                                                  title, "programmers"+File.separator+filename+".xml",
                                                  null, false){
-                        JPanel getModePane() { return null; }
+                        protected JPanel getModePane() { return null; }
                     };
                     p.pack();
                     p.setVisible(true);
