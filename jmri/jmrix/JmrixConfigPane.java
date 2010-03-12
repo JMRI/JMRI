@@ -34,7 +34,7 @@ import javax.swing.JPanel;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.64 $
+ * @version	$Revision: 1.65 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -58,6 +58,8 @@ public class JmrixConfigPane extends JPanel {
         configPaneTable.put(new Integer(index), retval);
         return retval;
     }
+    
+    public static int getNumberOfInstances() { return configPaneTable.size(); }
 
     static final java.util.Hashtable<Integer, JmrixConfigPane> configPaneTable 
                     = new java.util.Hashtable<Integer, JmrixConfigPane>();
@@ -68,64 +70,6 @@ public class JmrixConfigPane extends JPanel {
     public static final String NONE_SELECTED = rb.getString("noneSelected");
     public static final String NO_PORTS_FOUND = rb.getString("noPortsFound");
     
-    public String[] availableProtocolClasses() {
-        return  new String[] {
-
-                              "jmri.jmrix.internal.ConnectionConfig",
-                              "jmri.jmrix.acela.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.bachrus.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.cmri.serial.sim.ConnectionConfig",
-                              "jmri.jmrix.easydcc.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.easydcc.networkdriver.ConnectionConfig",  
-                              "jmri.jmrix.grapevine.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.lenz.hornbyelite.ConnectionConfig",
-                              "jmri.jmrix.lenz.li100.ConnectionConfig",
-                              "jmri.jmrix.lenz.li100f.ConnectionConfig",
-                              "jmri.jmrix.lenz.li101.ConnectionConfig",
-                              "jmri.jmrix.lenz.liusb.ConnectionConfig",
-                              "jmri.jmrix.loconet.locobufferusb.ConnectionConfig",
-                              "jmri.jmrix.loconet.pr2.ConnectionConfig",
-                              "jmri.jmrix.loconet.pr3.ConnectionConfig",
-                              "jmri.jmrix.loconet.hexfile.ConnectionConfig",
-                              "jmri.jmrix.loconet.Intellibox.ConnectionConfig",
-                              "jmri.jmrix.loconet.locormi.ConnectionConfig",
-                              "jmri.jmrix.loconet.loconetovertcp.ConnectionConfig",
-                              "jmri.jmrix.loconet.locobufferii.ConnectionConfig",
-                              "jmri.jmrix.loconet.locobuffer.ConnectionConfig",
-                              "jmri.jmrix.loconet.ms100.ConnectionConfig",
-                              "jmri.jmrix.nce.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.nce.networkdriver.ConnectionConfig",
-                              "jmri.jmrix.nce.usbdriver.ConnectionConfig",
-                              "jmri.jmrix.oaktree.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.powerline.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.qsi.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.rps.serial.ConnectionConfig",
-                              "jmri.jmrix.secsi.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.sprog.sprog.ConnectionConfig",
-                              "jmri.jmrix.sprog.sprogCS.ConnectionConfig",
-                              "jmri.jmrix.tmcc.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.wangrow.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.lenz.xntcp.ConnectionConfig",
-                              "jmri.jmrix.xpa.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.zimo.mx1.ConnectionConfig",
-                              "jmri.jmrix.lenz.ztc640.ConnectionConfig",
-                              // "jmri.jmrix.mrc.serialdriver.ConnectionConfig",     // experimental
-                              "jmri.jmrix.srcp.networkdriver.ConnectionConfig",
-                              "jmri.jmrix.direct.serial.ConnectionConfig",            // experimental
-
-                              "jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.can.adapters.loopback.ConnectionConfig",
-
-                              "jmri.jmrix.ecos.networkdriver.ConnectionConfig",
-                              "jmri.jmrix.maple.serialdriver.ConnectionConfig",
-                              "jmri.jmrix.lenz.xnetsimulator.ConnectionConfig", // experimental
-                              "jmri.jmrix.lenz.liusbserver.ConnectionConfig" // experimental
-        };
-    }
-
     JComboBox modeBox = new JComboBox();
     JComboBox manuBox = new JComboBox();
 
@@ -193,6 +137,7 @@ public class JmrixConfigPane extends JPanel {
                     } else {
                         Class<?> cl = Class.forName(classConnectionNameList[i]);
                         config = (ConnectionConfig)cl.newInstance();
+                        
                         modeBox.addItem(config.name());
                     }
                     classConnectionList[n++] = config;

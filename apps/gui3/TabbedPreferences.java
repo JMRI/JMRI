@@ -6,6 +6,8 @@ import apps.AppConfigBase;
 import jmri.jmrix.JmrixConfigPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -15,11 +17,11 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
-    public String getHelpTarget() { return "package.apps.TabbedPreferences"; }
+    public String getHelpTarget() { return "package.apps.AppConfigPanel"; }
     public String getTitle() { return rb.getString("TitlePreferences"); }
 
     String choices[] = {"Connections", "Start Up", "Display", "Messages", "Roster"/*, "Throttle"*/};
@@ -62,9 +64,30 @@ public class TabbedPreferences extends AppConfigBase {
         buttonpanel.add(save);
         
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        for (int i=0; i<getNConnections(); i++) {
-            addItem(connectionPanel, rb.getString("TabbedLayoutConnection")+(i+1), null, JmrixConfigPane.instance(i), true);
+
+        int count = 0;
+        while (null != jmri.InstanceManager.configureManagerInstance()
+                                 .findInstance(jmri.jmrix.ConnectionConfig.class, count)){
+            addItem(connectionPanel, rb.getString("TabbedLayoutConnection")+(count+1), null, JmrixConfigPane.instance(count), true, JmrixConfigPane.instance(count).getCurrentProtocolName());
+            count++;
         }
+        if (count == 0){
+            addItem(connectionPanel, rb.getString("TabbedLayoutConnection"), null, JmrixConfigPane.instance(0), true, null);
+        }
+        addItem(connectionPanel, "+", null, newConnectionTab(), false, "Add New Connection");
+        connectionPanel.addChangeListener(new ChangeListener() { 
+            // This method is called whenever the selected tab changes 
+            public void stateChanged(ChangeEvent evt) { 
+            JTabbedPane pane = (JTabbedPane)evt.getSource(); 
+            // Get current tab 
+            int sel = pane.getSelectedIndex();
+            String paneTitle = pane.getTitleAt(sel);
+            //System.out.println("selected tab " + paneTitle);
+            if (paneTitle.equals("+")){
+                addConnectionTab(sel);
+            }
+            } 
+        }); 
         detailpanel.setLayout(new CardLayout());
         detailpanel.setBorder(BorderFactory.createEmptyBorder(6, 3, 6, 6));
         detailpanel.add(connectionPanel, "CONNECTION");
@@ -80,21 +103,21 @@ public class TabbedPreferences extends AppConfigBase {
         detailpanel.add(new jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane(), "MESSAGES");
 
         addItem(rosterPanel, rb.getString("TabbedLayoutProgrammer"),
-                    "LabelTabbedLayoutProgrammer", new jmri.jmrit.symbolicprog.ProgrammerConfigPane(true), true);
+                    "LabelTabbedLayoutProgrammer", new jmri.jmrit.symbolicprog.ProgrammerConfigPane(true), true, null);
         addItem(startupPanel, rb.getString("TabbedLayoutStartupActions"),
-                    "LabelTabbedLayoutStartupActions", new apps.PerformActionPanel(), true);
+                    "LabelTabbedLayoutStartupActions", new apps.PerformActionPanel(), true, null);
         addItem(startupPanel, rb.getString("TabbedLayoutCreateButton"),
-                    "LabelTabbedLayoutCreateButton", new apps.CreateButtonPanel(), true);
+                    "LabelTabbedLayoutCreateButton", new apps.CreateButtonPanel(), true, null);
         addItem(startupPanel, rb.getString("TabbedLayoutStartupFiles"),
-                    "LabelTabbedLayoutStartupFiles", new apps.PerformFilePanel(), true);
+                    "LabelTabbedLayoutStartupFiles", new apps.PerformFilePanel(), true, null);
         addItem(startupPanel, rb.getString("TabbedLayoutStartupScripts"),
-                    "LabelTabbedLayoutStartupScripts", new apps.PerformScriptPanel(), true);
+                    "LabelTabbedLayoutStartupScripts", new apps.PerformScriptPanel(), true, null);
         addItem(displayPanel, rb.getString("TabbedLayoutGUI"),
-                    "LabelTabbedLayoutGUI", gui = new jmri.GuiLafConfigPane(), true);
+                    "LabelTabbedLayoutGUI", gui = new jmri.GuiLafConfigPane(), true, null);
         addItem(displayPanel, rb.getString("TabbedLayoutLocale"),
-                    "LabelTabbedLayoutLocale", gui.doLocale(), false);
+                    "LabelTabbedLayoutLocale", gui.doLocale(), false, null);
         addItem(rosterPanel, rb.getString("TabbedLayoutRoster"),
-                    "LabelTabbedLayoutRoster", new jmri.jmrit.roster.RosterConfigPane(), true);
+                    "LabelTabbedLayoutRoster", new jmri.jmrit.roster.RosterConfigPane(), true, null);
 
         // horrible hack to make sure GUI is done first
         items.remove(gui);
@@ -125,7 +148,7 @@ public class TabbedPreferences extends AppConfigBase {
      * @param store Should this item be saved for later storage? false means somebody
      *        else is handling the storage responsibility.
      */
-    void addItem(JTabbedPane panel, String title, String labelKey, JComponent item, boolean store) {
+    void addItem(JTabbedPane panel, String title, String labelKey, JComponent item, boolean store, String tooltip) {
         JComponent p= new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
 
@@ -134,7 +157,6 @@ public class TabbedPreferences extends AppConfigBase {
             JTextArea t = new JTextArea(rb.getString(labelKey));
             t.setEditable(false);
             t.setAlignmentX(0.5f);
-            t.setFont((new JLabel()).getFont());
             t.setPreferredSize(t.getMinimumSize());
             t.setMaximumSize(t.getMinimumSize());
             t.setOpaque(false);
@@ -143,10 +165,22 @@ public class TabbedPreferences extends AppConfigBase {
         p.add(item);
         p.add(Box.createVerticalGlue());
 
-        panel.add(title, p);
+        panel.addTab(title, null, p, tooltip);
         if (store) items.add(item);  
     }
     
+    void addConnectionTab(int x){
+        connectionPanel.remove(x);
+        addItem(connectionPanel, rb.getString("TabbedLayoutConnection")+(x+1), null, JmrixConfigPane.instance(x), true, null);
+        addItem(connectionPanel, "+", null, newConnectionTab(), false, "Add new Connection");
+        connectionPanel.setSelectedIndex(x);
+    }
+    
+    JComponent newConnectionTab(){
+        JComponent p = new JPanel();
+        p.add(Box.createVerticalGlue());
+        return p;
+    }
     jmri.jmrix.JmrixConfigPane comm1;
     jmri.GuiLafConfigPane guiPrefs;
         

@@ -25,17 +25,12 @@ import javax.swing.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class AppConfigBase extends JmriPanel {
 
     static protected ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
-    /**
-     * Number of layout connections to 
-     * support.  By default, this is 4.
-     */
-    static int NCONNECTIONSDEFAULT = 4;
     /**
      * Remember items to persist
      */
@@ -46,22 +41,12 @@ public class AppConfigBase extends JmriPanel {
      * or configuration dialog with default number of connections.
      */
     public AppConfigBase() {
-        this.nConnections = NCONNECTIONSDEFAULT;
     }
-    /**
-     * Construct a configuration panel for inclusion in a preferences
-     * or configuration dialog with custom number of connections.
-     */
-    public AppConfigBase(int nConnections) {
-        this.nConnections = nConnections;
-    }
-    int nConnections;
-    protected int getNConnections() { return nConnections; }
-
+    
     public static String getConnection(int index) {
         return JmrixConfigPane.instance(index).getCurrentProtocolName();
     }
-
+    
     public static String getPort(int index) {
         return JmrixConfigPane.instance(index).getCurrentProtocolInfo();
     }
@@ -73,9 +58,6 @@ public class AppConfigBase extends JmriPanel {
      * Detect duplicate connection types
      * It depends on all connections have the first word be the same
      * if they share the same type. So LocoNet ... is a fine example.
-     * <P>
-     * This implementation is specific to 4 connections, and that
-     * has to change; there's an assert to catch the problem if it doesn't
      * <p>
      * This also was broken when the names for systems were updated before
      * JMRI 2.9.4, so it should be revisited.
@@ -83,124 +65,40 @@ public class AppConfigBase extends JmriPanel {
      * @return true if OK, false if duplicates present.
      */
     private boolean checkDups() {
-        if (getNConnections() != 4) {
-            throw new IllegalArgumentException("this code can only handle exactly four connections");
-        }
-        String c1 = AppConfigPanel.getConnection(0);
-        int x = c1.indexOf(" ");
-        if (x > 0) {
-            c1 = c1.substring(0, x);
-        }
-        String p1 = getPort(0);
-        
-        String c2 = AppConfigPanel.getConnection(1);
-        x = c2.indexOf(" ");
-        if (x > 0) {
-            c2 = c2.substring(0, x);
-        }
-        String p2 = getPort(1);
-        
-        String c3 = AppConfigPanel.getConnection(2);
-        x = c3.indexOf(" ");
-        if (x > 0) {
-            c3 = c3.substring(0, x);
-        }
-        String p3 = getPort(2);
-        
-        String c4 = AppConfigPanel.getConnection(3);
-        x = c4.indexOf(" ");
-        if (x > 0) {
-            c4 = c4.substring(0, x);
-        }
-        String p4 = getPort(3);
-        
-        if (c1.compareToIgnoreCase(none) != 0) {
-            if (c1.compareToIgnoreCase(c2) == 0) {
-                return false;
+    
+        List<String> ports = new ArrayList<String>();
+        List<String> connections = new ArrayList<String>();
+        for (int count = 0; count <JmrixConfigPane.getNumberOfInstances(); count++){
+            
+            String port = getPort(count);
+            /*We need to test to make sure that the connection port is not set to (none)
+            If it is set to none, then it is likely that the connection has been removed
+            and therefore we should not be checking against it.*/
+            if(!port.equals("(none)")){
+                if (ports.contains(port)){
+                    return false;
+                }
             }
-            if (c1.compareToIgnoreCase(c3) == 0) {
-                return false;
+            ports.add(port);
+            
+            /*Using to upper method as the original test, used ignorecase when doing the
+            comparison, so putting all in upper case will do the equivalent. This is
+            only temporary until all systems have been updated to allow multiple connections
+            of the same type*/
+            String c = AppConfigPanel.getConnection(count).toUpperCase();
+            int x = c.indexOf(" ");
+            /*We need to test to make sure that the connection is not set to (NONE)
+            If it is set to NONE, then it is likely that the connection has been removed
+            and therefore we should not be checking against it.*/
+            if(!c.equals("(NONE)")){
+                if (x > 0) {
+                    c = c.substring(0, x);
+                }
+                if (connections.contains(c)) {
+                    return false;
+                }
             }
-            if (c1.compareToIgnoreCase(c4) == 0) {
-                return false;
-            }
-        }
-        if (p1.compareToIgnoreCase(none) != 0) {
-            if (p1.compareToIgnoreCase(p2) == 0) {
-                return false;
-            }
-            if (p1.compareToIgnoreCase(p3) == 0) {
-                return false;
-            }
-            if (p1.compareToIgnoreCase(p4) == 0) {
-                return false;
-            }
-        }
-        if (c2.compareToIgnoreCase(none) != 0) {
-            if (c2.compareToIgnoreCase(c1) == 0) {
-                return false;
-            }
-            if (c2.compareToIgnoreCase(c3) == 0) {
-                return false;
-            }
-            if (c2.compareToIgnoreCase(c4) == 0) {
-                return false;
-            }
-        }
-        if (p2.compareToIgnoreCase(none) != 0) {
-            if (p2.compareToIgnoreCase(p1) == 0) {
-                return false;
-            }
-            if (p2.compareToIgnoreCase(p3) == 0) {
-                return false;
-            }
-            if (p2.compareToIgnoreCase(p4) == 0) {
-                return false;
-            }
-        }
-        if (c3.compareToIgnoreCase(none) != 0) {
-            if (c3.compareToIgnoreCase(c1) == 0) {
-                return false;
-            }
-            if (c3.compareToIgnoreCase(c2) == 0) {
-                return false;
-            }
-            if (c3.compareToIgnoreCase(c4) == 0) {
-                return false;
-            }
-        }
-        if (p3.compareToIgnoreCase(none) != 0) {
-            if (p3.compareToIgnoreCase(p1) == 0) {
-                return false;
-            }
-            if (p3.compareToIgnoreCase(p2) == 0) {
-                return false;
-            }
-            if (p3.compareToIgnoreCase(p4) == 0) {
-                return false;
-            }
-        }
-        if (c4.compareToIgnoreCase(none) != 0) {
-            if (c4.compareToIgnoreCase(c1) == 0) {
-                return false;
-            }
-            if (c4.compareToIgnoreCase(c2) == 0) {
-                return false;
-            }
-            if (c4.compareToIgnoreCase(c3) == 0) {
-                return false;
-            }
-        }
-        if (p4.compareToIgnoreCase(none) != 0) {
-            if (p4.compareToIgnoreCase(p1) == 0) {
-                return false;
-            }
-            if (p4.compareToIgnoreCase(p2) == 0) {
-                return false;
-            }
-            if (p4.compareToIgnoreCase(p3) == 0) {
-                return false;
-            }
+            connections.add(c);
         }
         return true;
     }
