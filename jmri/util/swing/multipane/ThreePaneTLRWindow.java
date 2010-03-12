@@ -17,7 +17,7 @@ import jmri.util.swing.*;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class ThreePaneTLRWindow extends jmri.util.JmriJFrame {
@@ -82,6 +82,7 @@ public class ThreePaneTLRWindow extends jmri.util.JmriJFrame {
     public void resetRightToPreferredSizes() { leftRightSplitPane.resetToPreferredSizes(); }
     
     protected void addMainMenuBar(File menuFile) {
+        if (menuFile == null) return;
         JMenuBar menuBar = new JMenuBar();
         
         JMenu[] menus = JMenuUtil.loadMenu(menuFile, rightTopWI, null);
@@ -92,6 +93,7 @@ public class ThreePaneTLRWindow extends jmri.util.JmriJFrame {
     }
 
     protected void addMainToolBar(File toolBarFile) {
+        if (toolBarFile == null) return;
           
         JToolBar toolBar = JToolBarUtil.loadToolBar(toolBarFile, rightTopWI, null);
 
