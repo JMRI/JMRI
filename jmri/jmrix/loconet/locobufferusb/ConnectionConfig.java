@@ -8,7 +8,7 @@ package jmri.jmrix.loconet.locobufferusb;
  * via a LocoBufferIIAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -32,7 +32,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
     protected void setInstance() { 
         if (adapter == null)
-            adapter = jmri.jmrix.loconet.locobufferusb.LocoBufferUsbAdapter.instance();
+            adapter = new LocoBufferUsbAdapter();
     }
 }
 

@@ -8,7 +8,7 @@ package jmri.jmrix.loconet.ms100;
  * via an LocoNet MS100Adapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -42,7 +42,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
     protected void setInstance() { 
         if (adapter == null)
-            adapter = MS100Adapter.instance();
+            adapter = new MS100Adapter();
     }
 }
 

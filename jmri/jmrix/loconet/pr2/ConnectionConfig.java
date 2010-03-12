@@ -8,7 +8,7 @@ package jmri.jmrix.loconet.pr2;
  * via a PR2Adapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -30,7 +30,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
     protected void setInstance() { 
         if (adapter == null)
-            adapter = jmri.jmrix.loconet.pr2.PR2Adapter.instance();
+            adapter = new PR2Adapter();
     }
 }
 
