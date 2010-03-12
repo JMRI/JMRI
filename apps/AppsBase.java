@@ -25,7 +25,7 @@ import javax.swing.*;
  * </dl>
  * <P>
  * @author	Bob Jacobsen   Copyright 2009, 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public abstract class AppsBase {
 
@@ -108,6 +108,11 @@ public abstract class AppsBase {
             // must be relative, but we want it to 
             // be relative to the preferences directory
             file = new File(XmlFile.prefsDir()+configFilename);
+        }
+        // don't try to load if doesn't exist, but mark as not OK
+        if (!file.exists()) {
+            configOK = false;
+            return;
         }
         try {
             ((jmri.configurexml.ConfigXmlManager)InstanceManager.configureManagerInstance())
