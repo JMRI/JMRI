@@ -15,7 +15,7 @@ import org.jdom.*;
  * Tests for the roster.swing.RosterTableModel class.
  *
  * @author	Bob Jacobsen     Copyright (C) 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class RosterTableModelTest extends TestCase {
 
@@ -29,30 +29,29 @@ public class RosterTableModelTest extends TestCase {
         RosterTableModel t = new RosterTableModel();
         
         // hard-coded value is number of columns expected
-        Assert.assertEquals(4, t.getColumnCount());
+        Assert.assertEquals(8, t.getColumnCount());
     }
 
     public void testColumnName() throws Exception {
         RosterTableModel t = new RosterTableModel();
         
-        Assert.assertEquals("Road Number", t.getColumnName(1));
+        Assert.assertEquals("DCC Address", t.getColumnName(1));
     }
 
     public void testGetValueAt() {
         RosterTableModel t = new RosterTableModel();
         
         Assert.assertEquals("id 1", t.getValueAt(0,0));    
-        Assert.assertEquals("431", t.getValueAt(0,1));    
-        Assert.assertEquals("SP", t.getValueAt(0,2));    
-        Assert.assertEquals("Athearn", t.getValueAt(0,3));    
+        Assert.assertEquals(new Integer(12), t.getValueAt(0,1));    
+        Assert.assertEquals("33", t.getValueAt(0,2));    
+        
         Assert.assertEquals("id 2", t.getValueAt(1,0));    
-        Assert.assertEquals("431", t.getValueAt(1,1));    
-        Assert.assertEquals("SP", t.getValueAt(1,2));    
-        Assert.assertEquals("Athearn", t.getValueAt(1,3));    
+        Assert.assertEquals(new Integer(13), t.getValueAt(1,1));    
+        Assert.assertEquals("34", t.getValueAt(1,2));    
+
         Assert.assertEquals("id 3", t.getValueAt(2,0));    
-        Assert.assertEquals("431", t.getValueAt(2,1));    
-        Assert.assertEquals("SP", t.getValueAt(2,2));    
-        Assert.assertEquals("Athearn", t.getValueAt(2,3));    
+        Assert.assertEquals(new Integer(14), t.getValueAt(2,1));    
+        Assert.assertEquals("35", t.getValueAt(2,2));    
     }
     
     // create a standard test roster
@@ -106,11 +105,11 @@ public class RosterTableModelTest extends TestCase {
             .setAttribute("mfg","Athearn")
             .addContent(new org.jdom.Element("decoder")
                         .setAttribute("family","91")
-                        .setAttribute("model","33")
+                        .setAttribute("model","34")
                         )
             .addContent(new org.jdom.Element("locoaddress")
                 .addContent(new org.jdom.Element("dcclocoaddress")
-                        .setAttribute("number","12")
+                        .setAttribute("number","13")
                         .setAttribute("longaddress","yes")
                         )
                 )
@@ -133,11 +132,11 @@ public class RosterTableModelTest extends TestCase {
             .setAttribute("mfg","Athearn")
             .addContent(new org.jdom.Element("decoder")
                         .setAttribute("family","91")
-                        .setAttribute("model","33")
+                        .setAttribute("model","35")
                         )
             .addContent(new org.jdom.Element("locoaddress")
                 .addContent(new org.jdom.Element("dcclocoaddress")
-                        .setAttribute("number","12")
+                        .setAttribute("number","14")
                         .setAttribute("longaddress","yes")
                         )
                 )
