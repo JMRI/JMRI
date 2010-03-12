@@ -14,7 +14,7 @@ import jmri.util.swing.*;
  * Ignores WindowInterface.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  */
  
 public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
@@ -93,6 +93,13 @@ public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
         p.add(new JButton("Write These"));
         p.add(new JButton("Write These Changes"));
         retval.add(p);
+        
+        // toolbar too
+        JToolBar bar = JToolBarUtil.loadToolBar(
+            new java.io.File("xml/config/apps/decoderpro/ProgramingButtons.xml"),
+            wi, null);
+        retval.add(bar);
+        
         return retval;
     }
     
