@@ -17,11 +17,11 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
-    public String getHelpTarget() { return "package.apps.AppConfigPanel"; }
+    public String getHelpTarget() { return "package.apps.TabbedPreferences"; }
     public String getTitle() { return rb.getString("TitlePreferences"); }
 
     String choices[] = {"Connections", "Start Up", "Display", "Messages", "Roster"/*, "Throttle"*/};
