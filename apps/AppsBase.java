@@ -25,7 +25,7 @@ import javax.swing.*;
  * </dl>
  * <P>
  * @author	Bob Jacobsen   Copyright 2009, 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public abstract class AppsBase {
 
@@ -112,6 +112,7 @@ public abstract class AppsBase {
         // don't try to load if doesn't exist, but mark as not OK
         if (!file.exists()) {
             configOK = false;
+            log.info("No pre-existing preferences settings");
             return;
         }
         try {
