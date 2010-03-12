@@ -8,11 +8,15 @@
 >
 
   <node><name>File</name>
-    <node><name>Load...</name>
+    <node><name>New Locomotive</name>
     </node>
-    <node><name>Store...</name>
+    <node><name>Save</name>
     </node>
     <node><name>Print...</name>
+    </node>
+    <node><name>Print Summary...</name>
+    </node>
+    <node><name>Print All...</name>
     </node>
     <node><name>Quit</name>
         <adapter>apps.gui3.paned.QuitAction</adapter>
