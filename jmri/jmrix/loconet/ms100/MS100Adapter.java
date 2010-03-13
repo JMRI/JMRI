@@ -28,7 +28,7 @@ import Serialio.SerialPortLocal;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.37 $
+ * @version			$Revision: 1.38 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -318,12 +318,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     private boolean opened = false;
     InputStream serialInStream = null;
     OutputStream serialOutStream = null;
-
-    static public MS100Adapter instance() {
-        if (mInstance == null) mInstance = new MS100Adapter();
-        return mInstance;
-    }
-    static MS100Adapter mInstance = null;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MS100Frame.class.getName());
 

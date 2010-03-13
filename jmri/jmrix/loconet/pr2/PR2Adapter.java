@@ -12,7 +12,7 @@ import gnu.io.SerialPort;
  * refers to the switch settings on the new Digitrax PR2
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class PR2Adapter extends LocoBufferAdapter {
 
@@ -106,17 +106,6 @@ public class PR2Adapter extends LocoBufferAdapter {
         String[] retval = {"PR2"}; 
         return retval;
     }
-
-
-    static public LocoBufferAdapter instance() {
-        if (m2Instance == null) {
-        	m2Instance = new PR2Adapter();
-        	log.debug("new default instance in Pr2Adapter");
-        }
-        log.debug("PR2Adapter.instance returns object of class "+m2Instance.getClass().getName());
-        return m2Instance;
-    }
-    static private PR2Adapter m2Instance = null;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PR2Adapter.class.getName());
 }

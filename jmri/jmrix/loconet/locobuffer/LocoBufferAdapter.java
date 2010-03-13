@@ -21,7 +21,7 @@ import gnu.io.SerialPortEventListener;
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001, 2008, 2010
- * @version			$Revision: 1.44 $
+ * @version			$Revision: 1.45 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -307,16 +307,6 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-
-    static public LocoBufferAdapter instance() {
-        if (mInstance == null) {
-        	mInstance = new LocoBufferAdapter();
-        	log.debug("new default instance in LocoBufferAdapter");
-        }
-        log.debug("LocoBufferAdapter.instance returns object of class "+mInstance.getClass().getName());
-        return mInstance;
-    }
-    static private LocoBufferAdapter mInstance = null;
     
     String manufacturerName = jmri.jmrix.DCCManufacturerList.DIGITRAX;
     
