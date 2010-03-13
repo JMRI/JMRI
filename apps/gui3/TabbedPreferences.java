@@ -17,7 +17,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -82,7 +82,7 @@ public class TabbedPreferences extends AppConfigBase {
             // Get current tab 
             int sel = pane.getSelectedIndex();
             String paneTitle = pane.getTitleAt(sel);
-            //System.out.println("selected tab " + paneTitle);
+
             if (paneTitle.equals("+")){
                 addConnectionTab(sel);
             }
