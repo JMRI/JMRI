@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.5.shtml,v 1.6 2010-03-08 03:18:17 pbender Exp $ -->
+<!-- $Id: jmri2.9.5.shtml,v 1.7 2010-03-13 00:22:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -66,7 +66,17 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-(none yet)
+JMRI system names start with two capital letters, e.g. LT10 or NS23 or PLA5.
+Past versions have tried to cope when people enter lower cases letters,
+e.g. lt10 or Ns23 or pLA5, with various degrees of success. 
+Unfortunately, this code isn't compatible with some new systems that are
+being working on, and we have to remove it.  Starting with this version,
+JMRI requires that you enter correct system names, including using the right case.
+If you use system names, and haven't been using upper case letters, you'll
+probably have to practice a little to get in the habit. If you have any problems
+reading old files, etc, please post a note on the 
+<a href="http://groups.yahoo.com/group/jmriusers/">jmriusers list</a>
+and somebody will help you.
 
 <h3>Older warnings</h3>
 
@@ -74,6 +84,7 @@ If you're using a Lenz XPressNet connection, please
 uncheck the "Check Buffer Status" box in the preference
 pane where you selected the Lenz protocol.
 
+<p>
 This version of JMRI uses the new communications libraries introduced in 
 <a href="jmri2.9.3.shtml">JMRI 2.9.3</a>.
 On Windows, the installer should take care of all installation and deinstallation 
@@ -190,6 +201,9 @@ Matt Harris set the default backup option in the Windows installer.
 
 <p>
 Paul Bender fixed an error when starting with the LIUSBServer option configured.  The LIUSBServer option works again after several releases where it did not.
+
+<p>
+Many improvements to the preferences window to make it more usable.
 
 <!--#include virtual="/Footer" -->
 
