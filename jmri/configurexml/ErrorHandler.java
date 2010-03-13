@@ -4,7 +4,7 @@ package jmri.configurexml;
  * Default operation for reporting errors while loading.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
     
 public class ErrorHandler {
@@ -17,11 +17,11 @@ public class ErrorHandler {
 
     public void handle(ErrorMemo e) {
         String m = e.description;
-        if (e.systemName!=null) m += ";\n System name \""+e.systemName+"\"";
-        if (e.userName!=null && !e.userName.equals("")) m += ";\n User name \""+e.userName+"\"";
-        if (e.operation!=null) m += ";\n while "+e.operation;
-        if (e.adapter!=null) m += ";\n in adaptor of type "+e.adapter.getClass().getName();
-        if (e.exception!=null) m += ";\n Exception: "+e.exception.toString();
+        if (e.systemName!=null) m += " System name \""+e.systemName+"\"";
+        if (e.userName!=null && !e.userName.equals("")) m += " User name \""+e.userName+"\"";
+        if (e.operation!=null) m += " while "+e.operation;
+        if (e.adapter!=null) m += " in adaptor of type "+e.adapter.getClass().getName();
+        if (e.exception!=null) m += " Exception: "+e.exception.toString();
         
         if (e.exception != null) log.log(e.level, m, e.exception);
         else log.log(e.level, m);
