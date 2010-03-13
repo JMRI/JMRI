@@ -7,17 +7,15 @@ import jmri.jmrix.loconet.*;
 /**
  * LocoNet Monitor Frame displaying (and logging) LocoNet messages
  * @author	   Bob Jacobsen   Copyright (C) 2001, 2008
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
+ * @deprecated 2.9.5
  */
+@Deprecated
 public class LocoMonFrame extends jmri.jmrix.AbstractMonFrame implements LocoNetListener {
 
     public LocoMonFrame(LnTrafficController tc) {
         super();
         this.tc = tc;
-    }
-
-    public LocoMonFrame() {
-        this(LnTrafficController.instance());
     }
 
     LnTrafficController tc;
