@@ -24,7 +24,7 @@ import jmri.jmrit.catalog.NamedIcon;
 
 
 public class ThrottlesListPanel extends JPanel implements AddressListener {
-	private static final ResourceBundle throttleBundle = ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle");
+	private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
 
 	private DefaultListModel throttleFramesLM;
 	

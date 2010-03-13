@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
  */
 public class FunctionButtonPropertyEditor extends JDialog
 {
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
+    static final ResourceBundle rb = ThrottleBundle.bundle();
     private FunctionButton button;
 
     private JTextField textField;

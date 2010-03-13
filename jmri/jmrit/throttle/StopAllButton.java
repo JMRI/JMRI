@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import jmri.jmrit.catalog.NamedIcon;
 
 public class StopAllButton extends JButton {
-	private static final ResourceBundle throttleBundle = ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle");
+	private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
 
 	public StopAllButton() {
 		//   	stop.setText(throttleBundle.getString("ThrottleToolBarStopAll"));

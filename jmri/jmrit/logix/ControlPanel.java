@@ -35,11 +35,11 @@ import javax.swing.event.ChangeListener;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.6 $
+ * @version    $Revision: 1.7 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
+    static final ResourceBundle rb = jmri.jmrit.throttle.ThrottleBundle.bundle();
     
     private LearnThrottleFrame _throttleFrame;
     

@@ -38,7 +38,7 @@ import org.jdom.Element;
 
 // Should be named ThrottleFrame, but ThrottleFrame already exit, hence ThrottleWindow
 public class ThrottleWindow extends JmriJFrame {
-	private static final ResourceBundle throttleBundle = ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle");
+	private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
 
     private JPanel throttlesPanel;
     private ThrottleFrame curentThrottleFrame;

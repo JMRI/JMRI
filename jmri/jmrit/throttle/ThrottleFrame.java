@@ -44,11 +44,11 @@ import org.jdom.Element;
  * and don't want to break dependencies (particularly in Jython code)
  * @author Glen Oberhauser
  * @author Andrew Berridge  Copyright 2010
- * @version $Revision: 1.68 $
+ * @version $Revision: 1.69 $
  */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
-	private static final ResourceBundle rb = ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle");
+	private static final ResourceBundle rb = ThrottleBundle.bundle();
 
     private final Integer BACKPANEL_LAYER = new Integer(Integer.MIN_VALUE);
     private final Integer PANEL_LAYER = new Integer(1);

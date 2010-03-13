@@ -22,7 +22,7 @@ import jmri.jmrit.throttle.KeyListenerInstaller;
  */
 public class FunctionPanel extends JInternalFrame implements FunctionListener, java.beans.PropertyChangeListener
 {
-	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
+	static final ResourceBundle rb = jmri.jmrit.throttle.ThrottleBundle.bundle();
 	
 	public static final int NUM_FUNCTION_BUTTONS = 29;
     public static final int NUM_FUNC_BUTTONS_INIT = 16;	//only show 16 function buttons at start
@@ -328,7 +328,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.5 $
+	 * @version $Revision: 1.6 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{

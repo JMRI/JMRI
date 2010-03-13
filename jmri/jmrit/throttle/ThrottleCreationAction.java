@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
  * Create a new throttle.
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 public class ThrottleCreationAction extends AbstractAction {
 
@@ -26,7 +26,7 @@ public class ThrottleCreationAction extends AbstractAction {
     }
 
     public ThrottleCreationAction() {
-        this(ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle").getString("MenuItemNewThrottle"));
+        this(ThrottleBundle.bundle().getString("MenuItemNewThrottle"));
     }
 
     /**

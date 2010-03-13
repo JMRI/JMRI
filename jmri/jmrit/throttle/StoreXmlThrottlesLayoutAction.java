@@ -17,11 +17,11 @@ import org.jdom.output.*;
  *
  * @author			Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 
-	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
+	static final ResourceBundle rb = ThrottleBundle.bundle();
 
 	/**
 	 * Constructor

@@ -54,12 +54,12 @@ import jmri.util.JmriJFrame;
  * @author     Bob Jacobsen    Copyright 2008
  
  * @author     Pete Cressman   Copyright 2009
- * @version    $Revision: 1.8 $
+ * @version    $Revision: 1.9 $
  */
 
 public class LearnThrottleFrame extends JmriJFrame implements java.beans.PropertyChangeListener
 {
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
+    static final ResourceBundle rb = jmri.jmrit.throttle.ThrottleBundle.bundle();
     static int STRUT_SIZE = 10;
     
     public int accelerateKey = 107; // numpad +;
@@ -372,7 +372,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.8 $
+     * @version    $Revision: 1.9 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {

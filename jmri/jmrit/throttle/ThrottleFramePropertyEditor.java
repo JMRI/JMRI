@@ -12,11 +12,11 @@ import javax.swing.JInternalFrame;
  * object.
  * @author		Original Unknown
  * @author		Ken Cameron, copyright 2008
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class ThrottleFramePropertyEditor extends JDialog
 {
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
+    static final ResourceBundle rb = ThrottleBundle.bundle();
     
     private ThrottleWindow frame;
 	

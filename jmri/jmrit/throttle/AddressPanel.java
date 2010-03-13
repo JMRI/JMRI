@@ -27,11 +27,11 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.56 $
+ * @version $Revision: 1.57 $
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
+    static final ResourceBundle rb = ThrottleBundle.bundle();
 	private DccThrottle throttle;
 	private DccThrottle consistThrottle;
 

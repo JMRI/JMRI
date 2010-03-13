@@ -40,11 +40,11 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.81 $
+ * @version    $Revision: 1.82 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
+    static final ResourceBundle rb = ThrottleBundle.bundle();
     
     private DccThrottle throttle;
     
@@ -746,7 +746,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.81 $
+     * @version    $Revision: 1.82 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {

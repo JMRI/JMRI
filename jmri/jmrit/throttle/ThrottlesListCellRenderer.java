@@ -14,7 +14,7 @@ import javax.swing.border.BevelBorder;
 import jmri.jmrit.roster.RosterIconFactory;
 
 public class ThrottlesListCellRenderer extends JLabel implements ListCellRenderer {
-	private static final ResourceBundle throttleBundle = ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle");
+	private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
 	private static final int height = 30;
 	private static RosterIconFactory rosterIconFactory = new RosterIconFactory(height);
 	

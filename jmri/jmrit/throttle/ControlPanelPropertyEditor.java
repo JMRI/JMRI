@@ -10,11 +10,11 @@ import java.util.ResourceBundle;
  * object.
  *
  * @author Paul Bender Copyright (C) 2005
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class ControlPanelPropertyEditor extends JDialog
 {
-	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
+	static final ResourceBundle rb = ThrottleBundle.bundle();
 	private ControlPanel control;
 
 	private JRadioButton displaySlider;

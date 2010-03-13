@@ -10,11 +10,11 @@ import javax.swing.AbstractAction;
  * Save throttles to XML
  *
  *  @author		Lionel Jeanson      Copyright 2009
- *  @version $Revision: 1.2 $
+ *  @version $Revision: 1.3 $
  */
 public class StoreDefaultXmlThrottlesLayoutAction extends AbstractAction {
 
-	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
+	static ResourceBundle rb = ThrottleBundle.bundle();
 
 	/**
 	 * Constructor

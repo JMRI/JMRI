@@ -17,10 +17,10 @@ import org.jdom.Element;
  *  Load throttles from XML
  *
  * @author     Glen Oberhauser 2004
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class LoadXmlThrottlesLayoutAction extends AbstractAction {
-	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
+	static final ResourceBundle rb = ThrottleBundle.bundle();
 
 	/**
 	 *  Constructor
@@ -121,7 +121,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
 	 * An extension of the abstract XmlFile. No changes made to that class.
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.3 $
+	 * @version $Revision: 1.4 $
 	 */
 	class ThrottlePrefs extends XmlFile {}
 

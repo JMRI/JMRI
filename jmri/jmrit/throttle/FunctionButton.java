@@ -35,7 +35,7 @@ import org.jdom.Element;
  */
 public class FunctionButton extends JToggleButton implements ActionListener
 {
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.throttle.ThrottleBundle");
+    static final ResourceBundle rb = ThrottleBundle.bundle();
     private ArrayList<FunctionListener> listeners = new ArrayList<FunctionListener>();
     private int identity; // F0, F1, etc?
     private boolean isOn;

@@ -24,7 +24,7 @@ import java.awt.GridBagLayout;
 public class ThrottlesPreferencesPane extends javax.swing.JPanel {
 	private static final long serialVersionUID = -5473594799045080011L;
 	
-	private static final ResourceBundle throttleBundle = ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle");
+	private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
     private javax.swing.JCheckBox cb1Win4all;
     private javax.swing.JCheckBox cbResizeWinImg;
     private javax.swing.JCheckBox cbUseAdvTransition;
