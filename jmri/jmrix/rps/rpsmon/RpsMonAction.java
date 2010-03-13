@@ -22,8 +22,6 @@ public class RpsMonAction 			extends AbstractAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-		// create a LocoMonFrame
-                log.debug("starting frame creation");
 		RpsMonFrame f = new RpsMonFrame();
 		try {
 			f.initComponents();
@@ -34,8 +32,6 @@ public class RpsMonAction 			extends AbstractAction {
 		f.setVisible(true);
 
 	}
-
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsMonAction.class.getName());
 
 }
 
