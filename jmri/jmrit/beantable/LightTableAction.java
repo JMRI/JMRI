@@ -36,7 +36,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.41 $
+ * @version     $Revision: 1.42 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -584,7 +584,7 @@ public class LightTableAction extends AbstractTableAction {
      * Responds to the Create button
      */
     void createPressed(ActionEvent e) {
-        String suName = (systemName.getText().toUpperCase()).trim();
+        String suName = systemName.getText().trim();
         String uName = userName.getText();
         if (uName.equals("")) uName=null;   // a blank field means no user name
 
