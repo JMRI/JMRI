@@ -16,7 +16,7 @@ import jmri.Turnout;
  *  Based in part on SerialLight.java
  *
  * @author      Dave Duchamp Copyright (C) 2006
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class LnLight extends AbstractLight {
 
@@ -25,8 +25,10 @@ public class LnLight extends AbstractLight {
      * <P>
      * 'systemName' was previously validated in LnLightManager
      */
-    public LnLight(String systemName) {
+    public LnLight(String systemName, LnTrafficController tc, LnLightManager mgr) {
         super(systemName);
+        this.tc = tc;
+        this.mgr = mgr;
         // Initialize the Light
         initializeLight(systemName);
     }
@@ -35,11 +37,16 @@ public class LnLight extends AbstractLight {
      * <P>
      * 'systemName' was previously validated in LnLightManager
      */
-    public LnLight(String systemName, String userName) {
+    public LnLight(String systemName, String userName, LnTrafficController tc, LnLightManager mgr) {
         super(systemName, userName);
+        this.tc = tc;
+        this.mgr = mgr;
         initializeLight(systemName);
     }
         
+    LnTrafficController tc;
+    LnLightManager mgr;
+    
     /**
      * Sets up system dependent instance variables and sets system
      *    independent instance variables to default values
@@ -47,7 +54,7 @@ public class LnLight extends AbstractLight {
      */
     private void initializeLight(String systemName) {
         // Extract the Bit from the name
-        mBit = LnLightManager.instance().getBitFromSystemName(systemName);
+        mBit = mgr.getBitFromSystemName(systemName);
         // Set initial state
         setState( OFF );
         // Set defaults for all other instance variables
@@ -88,7 +95,7 @@ public class LnLight extends AbstractLight {
 		// store and send
 		l.setElement(1,loadr);
 		l.setElement(2,hiadr);
-		LnTrafficController.instance().sendLocoNetMessage(l);
+		tc.sendLocoNetMessage(l);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnLight.class.getName());
