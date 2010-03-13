@@ -15,7 +15,7 @@ import org.jdom.*;
  * Tests for the roster.swing.RosterTableModel class.
  *
  * @author	Bob Jacobsen     Copyright (C) 2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class RosterTableModelTest extends TestCase {
 
@@ -29,29 +29,29 @@ public class RosterTableModelTest extends TestCase {
         RosterTableModel t = new RosterTableModel();
         
         // hard-coded value is number of columns expected
-        Assert.assertEquals(8, t.getColumnCount());
+        Assert.assertEquals(RosterTableModel.NUMCOL, t.getColumnCount());
     }
 
     public void testColumnName() throws Exception {
         RosterTableModel t = new RosterTableModel();
         
-        Assert.assertEquals("DCC Address", t.getColumnName(1));
+        Assert.assertEquals("DCC Address", t.getColumnName(RosterTableModel.ADDRESSCOL));
     }
 
     public void testGetValueAt() {
         RosterTableModel t = new RosterTableModel();
         
-        Assert.assertEquals("id 1", t.getValueAt(0,0));    
-        Assert.assertEquals(new Integer(12), t.getValueAt(0,1));    
-        Assert.assertEquals("33", t.getValueAt(0,2));    
+        Assert.assertEquals("id 1", t.getValueAt(0,RosterTableModel.IDCOL));    
+        Assert.assertEquals(new Integer(12), t.getValueAt(0,RosterTableModel.ADDRESSCOL));    
+        Assert.assertEquals("33", t.getValueAt(0,RosterTableModel.DECODERCOL));    
         
-        Assert.assertEquals("id 2", t.getValueAt(1,0));    
-        Assert.assertEquals(new Integer(13), t.getValueAt(1,1));    
-        Assert.assertEquals("34", t.getValueAt(1,2));    
+        Assert.assertEquals("id 2", t.getValueAt(1,RosterTableModel.IDCOL));    
+        Assert.assertEquals(new Integer(13), t.getValueAt(1,RosterTableModel.ADDRESSCOL));    
+        Assert.assertEquals("34", t.getValueAt(1,RosterTableModel.DECODERCOL));    
 
-        Assert.assertEquals("id 3", t.getValueAt(2,0));    
-        Assert.assertEquals(new Integer(14), t.getValueAt(2,1));    
-        Assert.assertEquals("35", t.getValueAt(2,2));    
+        Assert.assertEquals("id 3", t.getValueAt(2,RosterTableModel.IDCOL));    
+        Assert.assertEquals(new Integer(14), t.getValueAt(2,RosterTableModel.ADDRESSCOL));    
+        Assert.assertEquals("35", t.getValueAt(2,RosterTableModel.DECODERCOL));    
     }
     
     // create a standard test roster
