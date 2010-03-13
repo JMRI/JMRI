@@ -12,14 +12,13 @@ import gnu.io.SerialPort;
  * refers to the switch settings on the new Digitrax PR2
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class PR2Adapter extends LocoBufferAdapter {
 
 
     public PR2Adapter() {
         super();
-        m2Instance = this;
     }
 
     /**

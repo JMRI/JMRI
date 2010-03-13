@@ -27,7 +27,6 @@ public class RpsMonAction 			extends AbstractAction {
 			f.initComponents();
 			}
 		catch (Exception ex) {
-			log.warn("starting frame: Exception: "+ex.toString());
 			}
 		f.setVisible(true);
 
