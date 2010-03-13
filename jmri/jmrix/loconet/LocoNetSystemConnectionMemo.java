@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -94,7 +94,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager(controller, tm, getSystemPrefix()));
 
-        InstanceManager.setLightManager(new jmri.jmrix.loconet.LnLightManager());
+        InstanceManager.setLightManager(new jmri.jmrix.loconet.LnLightManager(controller, getSystemPrefix()));
 
         InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager());
 

@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.*;
  * provides a load method here.
  * <P>
  * @author Dave Duchamp Copyright (c) 2006
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class LnLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
@@ -30,8 +30,6 @@ public class LnLightManagerXml extends jmri.managers.configurexml.AbstractLightM
     }
 
     public boolean load(Element lights) {
-        // create the master object
-        LnLightManager.instance();
         // load individual lights
         return loadLights(lights);
     }

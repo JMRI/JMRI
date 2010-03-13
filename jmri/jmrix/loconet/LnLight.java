@@ -16,7 +16,7 @@ import jmri.Turnout;
  *  Based in part on SerialLight.java
  *
  * @author      Dave Duchamp Copyright (C) 2006
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class LnLight extends AbstractLight {
 
@@ -47,17 +47,12 @@ public class LnLight extends AbstractLight {
     LnTrafficController tc;
     LnLightManager mgr;
     
-    /**
-     * Sets up system dependent instance variables and sets system
-     *    independent instance variables to default values
-     * Note: most instance variables are in AbstractLight.java
-     */
     private void initializeLight(String systemName) {
         // Extract the Bit from the name
         mBit = mgr.getBitFromSystemName(systemName);
         // Set initial state
         setState( OFF );
-        // Set defaults for all other instance variables
+        // Set defaults
         setControlType( NO_CONTROL );
         setControlSensor( null );
         setControlSensorSense(Sensor.ACTIVE);
@@ -66,9 +61,6 @@ public class LnLight extends AbstractLight {
         setControlTurnoutState( Turnout.CLOSED );
     }
 
-    /**
-     *  System dependent instance variables
-     */
     int mBit = 0;                // address bit
 
     /**

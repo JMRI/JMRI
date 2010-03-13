@@ -13,18 +13,22 @@ import jmri.Light;
  * Based in part on SerialLightManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class LnLightManager extends AbstractLightManager {
 
-    public LnLightManager() {
-        _instance = this;
+    public LnLightManager(LnTrafficController tc, String prefix) {
+        _trafficController = tc;
+        this.prefix = prefix;
     }
 
+    LnTrafficController _trafficController;
+    String prefix;
+    
     /**
      *  Returns the system letter for Loconet
      */
-    public String getSystemPrefix() { return "L"; }
+    public String getSystemPrefix() { return prefix; }
     
     /**
      * Method to create a new Light based on the system name
@@ -38,9 +42,9 @@ public class LnLightManager extends AbstractLightManager {
 		int bitNum = getBitFromSystemName(systemName);
 		if (bitNum == 0) return (null);
         // Normalize the systemName
-		String sName = "LL"+bitNum;   // removes any leading zeros
+		String sName = getSystemPrefix()+"L"+bitNum;   // removes any leading zeros
 		// make the new Light object
-		lgt = new LnLight(sName,userName); 
+		lgt = new LnLight(sName,userName, _trafficController, this); 
         return lgt;
     }    
 	
@@ -49,7 +53,7 @@ public class LnLightManager extends AbstractLightManager {
 	 */
 	public int getBitFromSystemName (String systemName) {
         // validate the system Name leader characters
-        if ( (systemName.charAt(0) != 'L') || (systemName.charAt(1) != 'L') ) {
+        if ( (!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix()+"L")) ) {
             // here if an illegal loconet light system name 
             log.error("illegal character in header field of loconet light system name: "+systemName);
             return (0);
@@ -57,7 +61,9 @@ public class LnLightManager extends AbstractLightManager {
 		// name must be in the LLnnnnn format
         int num = 0;
 		try {
-			num = Integer.valueOf(systemName.substring(2)).intValue();
+			num = Integer.valueOf(systemName.substring(
+			        getSystemPrefix().length()+1, systemName.length())
+			        ).intValue();
 		}
 		catch (Exception e) {
 			log.error("illegal character in number field of system name: "+systemName);
@@ -92,15 +98,6 @@ public class LnLightManager extends AbstractLightManager {
         return (true);
     }
     
-    /** 
-     * Allow access to LnLightManager
-     */
-    static public LnLightManager instance() {
-        if (_instance == null) _instance = new LnLightManager();
-        return _instance;
-    }
-    static LnLightManager _instance = null;
-
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnLightManager.class.getName());
 
 }
