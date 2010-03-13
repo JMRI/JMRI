@@ -5,9 +5,13 @@ package jmri.jmrix.loconet;
 /**
  * Extend the Automat support to include convenient access to LocoNet messages.
  *
- * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.2 $
+ * Deprecated because it can't do multiple connections
+ *
+ * @author	Bob Jacobsen    Copyright (C) 2003, 2010
+ * @version     $Revision: 1.3 $
+ * @deprecated 2.9.4
  */
+@Deprecated
 abstract public class LocoNetAutomaton extends jmri.jmrit.automat.AbstractAutomaton {
 
     public LocoNetAutomaton() {}
