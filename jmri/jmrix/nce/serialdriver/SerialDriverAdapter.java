@@ -27,7 +27,7 @@ import gnu.io.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.41 $
+ * @version			$Revision: 1.42 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -82,18 +82,10 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
                 count = serialStream.available();
             }
 
-            // report status?
-            if (log.isInfoEnabled()) {
-                log.info(portName+" port opened at "
-                         +activeSerialPort.getBaudRate()+" baud, sees "
-                         +" DTR: "+activeSerialPort.isDTR()
-                         +" RTS: "+activeSerialPort.isRTS()
-						+" DSR: "+activeSerialPort.isDSR()
-                         +" CTS: "+activeSerialPort.isCTS()
-                         +"  CD: "+activeSerialPort.isCD()
-                         );
-            }
-
+            // report status
+            if (log.isInfoEnabled()) 
+                log.info("NCE "+portName+" port opened at "
+                		+activeSerialPort.getBaudRate()+" baud");
             opened = true;
 
         } catch (gnu.io.NoSuchPortException p) {

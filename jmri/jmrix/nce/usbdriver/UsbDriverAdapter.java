@@ -29,7 +29,7 @@ import gnu.io.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class UsbDriverAdapter extends NcePortController {
 
@@ -84,18 +84,10 @@ public class UsbDriverAdapter extends NcePortController {
                 count = serialStream.available();
             }
 
-            // report status?
-            if (log.isInfoEnabled()) {
-                log.info(portName+" USB port opened at "
-                         +activeSerialPort.getBaudRate()+" baud, sees "
-                         +" DTR: "+activeSerialPort.isDTR()
-                         +" RTS: "+activeSerialPort.isRTS()
-						 +" DSR: "+activeSerialPort.isDSR()
-                         +" CTS: "+activeSerialPort.isCTS()
-                         +"  CD: "+activeSerialPort.isCD()
-                         );
-            }
-
+            // report status
+            if (log.isInfoEnabled()) 
+                log.info("NCE USB "+portName+" port opened at "
+                		+activeSerialPort.getBaudRate()+" baud");
             opened = true;
 
         } catch (gnu.io.NoSuchPortException p) {
