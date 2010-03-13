@@ -122,7 +122,7 @@ import java.io.IOException;
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
  * @author			Paul Bender, Copyright (C) 2009
  * @author 			Daniel Boudreau Copyright (C) 2010
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SimulatorAdapter extends NcePortController implements
 		jmri.jmrix.SerialPortAdapter, Runnable {
@@ -247,8 +247,9 @@ public class SimulatorAdapter extends NcePortController implements
 		// this thread has one task.  It repeatedly reads from the input pipe
 		// and writes an appropriate response to the output pipe.  This is the heart
 		// of the NCE command station simulation.
-		if (log.isDebugEnabled())
-			log.debug("Nce Simulator Thread Started");
+        // report status?
+        if (log.isInfoEnabled()) 
+            log.info("NCE Simulator Started");     
 		while (true) {
 			try{
 				wait(100);
