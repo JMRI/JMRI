@@ -22,7 +22,7 @@ import org.jdom.*;
  * Ignores WindowInterface.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
  
 public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
@@ -122,7 +122,7 @@ public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
         bar = new JToolBar("Panes");
         bar.setOrientation(JToolBar.VERTICAL);
         bar.setAlignmentX(defaultXAlignment);
-        bar.add(new JList(new String[]{
+        JList list = new JList(new String[]{
                 "Roster", 
                 "Function Keys", 
                 "Images", 
@@ -133,7 +133,9 @@ public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
                 "Function Mapping", 
                 "Lighting", 
                 "CVs" 
-            }));
+            });
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        bar.add(list);
         retval.add(bar);
         
         retval.add(new JSeparator());
