@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -42,11 +42,11 @@ public class DefaultConditional extends AbstractNamedBean
 			.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     public DefaultConditional(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     public DefaultConditional(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     // boolean expression of state variables
@@ -196,7 +196,7 @@ public class DefaultConditional extends AbstractNamedBean
                     }
                 }
                 try {
-                    DataPair dp = parseCalculate(new String(ch, 0, n).toUpperCase(), _variableList);
+                    DataPair dp = parseCalculate(new String(ch, 0, n), _variableList);
                     result = dp.result;
                 } catch ( NumberFormatException nfe) {
                     result = false;
@@ -291,7 +291,7 @@ public class DefaultConditional extends AbstractNamedBean
                             rbx.getString("ParseError7"), new Object[] { '(' });
         }
         try {
-            DataPair dp = parseCalculate(new String(ch, 0, n).toUpperCase(), variableList);
+            DataPair dp = parseCalculate(new String(ch, 0, n), variableList);
             if (n != dp.indexCount) {
                 return java.text.MessageFormat.format(
                             rbx.getString("ParseError4"), new Object[] { ch[dp.indexCount-1] });                
@@ -314,17 +314,24 @@ public class DefaultConditional extends AbstractNamedBean
     }
 
     /**
-    * parses and computes one parenthsis level of a boolean statement.
-    * returns a data pair consisting of the truth value of the level
-    * a count of the indices consumed to parse the level and a
-    * bitmap of the variable indices used.
+    * Parses and computes one parenthesis level of a boolean statement.
+    * <p>
     * Recursively calls inner parentheses levels.
     * Note that all logic operators are dectected by the parsing, therefore the
     * internal negation of a variable is washed.
+    * @param s The expression to be parsed
+    * @param variableList ConditionalVariables for R1, R2, etc
+    * @return a data pair consisting of the truth value of the level
+    * a count of the indices consumed to parse the level and a
+    * bitmap of the variable indices used.
     */
     DataPair parseCalculate(String s, ArrayList <ConditionalVariable> variableList) 
             throws JmriException
     {
+    
+        // for simplicity, we force the string to upper case before scanning
+        s = s.toUpperCase();
+        
         BitSet argsUsed = new BitSet(_variableList.size());
         DataPair dp = null;
         boolean leftArg = false;

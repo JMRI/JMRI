@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.63 $
+ * @version $Revision: 1.64 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -613,7 +613,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (!checkLogixSysName()) {
             return;
         }
-		String sName = _systemName.getText().toUpperCase().trim();
+		String sName = _systemName.getText().trim();
 		// check if a Logix with this name already exists
         boolean createLogix = true;
 		Logix targetLogix = _logixManager.getBySystemName(sName);
@@ -719,7 +719,7 @@ public class LogixTableAction extends AbstractTableAction {
 
     boolean checkLogixSysName() {
 		// check validity of Logix system name
-		String sName = _systemName.getText().toUpperCase().trim();
+		String sName = _systemName.getText().trim();
 		if ( (sName.length() < 1)) {
 			// Entered system name is blank or too short
 			javax.swing.JOptionPane.showMessageDialog(addLogixFrame,
@@ -785,7 +785,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (!checkLogixSysName()) {
             return;
         }
-		String sName = _systemName.getText().toUpperCase().trim();
+		String sName = _systemName.getText().trim();
 		// check if a Logix with this name already exists
 		Logix x = _logixManager.getBySystemName(sName);
 		if (x != null) {
@@ -2629,7 +2629,7 @@ public class LogixTableAction extends AbstractTableAction {
     }       /* initializeStateVariables */
 
     String getConditionalUserName(String name) {
-        Conditional c = _conditionalManager.getBySystemName(name.toUpperCase());
+        Conditional c = _conditionalManager.getBySystemName(name);
         if (c != null) {
             return c.getUserName();
         }
@@ -3953,7 +3953,6 @@ public class LogixTableAction extends AbstractTableAction {
                 return name;
             }
             // check memory system name
-            name = name.toUpperCase().trim();
             m = InstanceManager.memoryManagerInstance().getBySystemName(name);
         }
         if (m == null) {
@@ -3975,7 +3974,6 @@ public class LogixTableAction extends AbstractTableAction {
                 //return t.getSystemName();
                 return name;
             }
-            name = name.toUpperCase().trim();
             t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
         }
         if (t == null) {
@@ -3997,7 +3995,6 @@ public class LogixTableAction extends AbstractTableAction {
                 //return h.getSystemName();
                 return name;
             }
-            name = name.toUpperCase().trim();
             h = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
         }
         if (h == null) {
@@ -4035,7 +4032,6 @@ public class LogixTableAction extends AbstractTableAction {
                 //return h.getSystemName();
                 return name;
             }
-            name = name.toUpperCase().trim();
             w = InstanceManager.warrantManagerInstance().getBySystemName(name);
         }
         if (w == null) {
@@ -4057,7 +4053,6 @@ public class LogixTableAction extends AbstractTableAction {
                 //return s.getSystemName();
                 return name;
             }
-            name = name.toUpperCase().trim();
             s = InstanceManager.sensorManagerInstance().getBySystemName(name);
         }
         if (s == null) {
@@ -4079,7 +4074,6 @@ public class LogixTableAction extends AbstractTableAction {
                 //return l.getSystemName();
                 return name;
             }
-            name = name.toUpperCase().trim();
             l = InstanceManager.lightManagerInstance().getBySystemName(name);
         }
         if (l == null) {
@@ -4105,7 +4099,6 @@ public class LogixTableAction extends AbstractTableAction {
             if (c != null) {
                 return c.getSystemName();
             }
-            name = name.toUpperCase().trim();
             c = _conditionalManager.getBySystemName(name);
         }
         if (c == null) {
@@ -4127,7 +4120,6 @@ public class LogixTableAction extends AbstractTableAction {
                 return name;
             }
             // check memory system name
-            name = name.toUpperCase().trim();
             l = _logixManager.getBySystemName(name);
         }
         if (l == null) {
@@ -4148,7 +4140,6 @@ public class LogixTableAction extends AbstractTableAction {
                 return name;
             }
             // check memory system name
-            name = name.toUpperCase().trim();
             r = InstanceManager.routeManagerInstance().getBySystemName(name);
         }
         if (r == null) {
@@ -4167,7 +4158,6 @@ public class LogixTableAction extends AbstractTableAction {
                 return name;
             }
             // check memory system name
-            name = name.toUpperCase().trim();
             a = InstanceManager.audioManagerInstance().getBySystemName(name);
         }
         if (a == null || ( a.getSubType()!=Audio.SOURCE && a.getSubType()!=Audio.LISTENER) ) {
@@ -4193,7 +4183,6 @@ public class LogixTableAction extends AbstractTableAction {
             if (c != null) {
                 return c;
             }
-            name = name.toUpperCase().trim();
             c = _conditionalManager.getBySystemName(name);
         }
         if (c == null) {
@@ -4214,7 +4203,6 @@ public class LogixTableAction extends AbstractTableAction {
                 return m;
             }
             // check memory system name
-            name = name.toUpperCase().trim();
             m = InstanceManager.memoryManagerInstance().getBySystemName(name);
         }
         if (m == null) {
@@ -4234,7 +4222,6 @@ public class LogixTableAction extends AbstractTableAction {
             if (l != null) {
                 return l;
             }
-            name = name.toUpperCase().trim();
             l = InstanceManager.lightManagerInstance().getBySystemName(name);
         }
         if (l == null) {
@@ -4254,7 +4241,6 @@ public class LogixTableAction extends AbstractTableAction {
             if (s != null) {
                 return s;
             }
-            name = name.toUpperCase().trim();
             s = InstanceManager.sensorManagerInstance().getBySystemName(name);
         }
         if (s == null) {
@@ -4274,7 +4260,6 @@ public class LogixTableAction extends AbstractTableAction {
             if (t != null) {
                 return t;
             }
-            name = name.toUpperCase().trim();
             t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
         }
         if (t == null) {
@@ -4294,7 +4279,6 @@ public class LogixTableAction extends AbstractTableAction {
             if (h != null) {
                 return h;
             }
-            name = name.toUpperCase().trim();
             h = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
         }
         if (h == null) {
@@ -4806,7 +4790,7 @@ public class LogixTableAction extends AbstractTableAction {
                     variableNegationChanged(r, (String)value);
                     break;
                 case STATE_COLUMN:
-                    String state = ((String)value).toUpperCase().trim();
+                    String state = ((String)value);
                     if ( state.equals(rbx.getString("True").toUpperCase().trim()) ) {
                         variable.setState(Conditional.TRUE);
                     } else  if ( state.equals(rbx.getString("False").toUpperCase().trim()) )  {

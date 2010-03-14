@@ -27,7 +27,7 @@ import jmri.jmrit.sensorgroup.SensorGroupFrame;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author      Pete Cresman Copyright (C) 2009
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class DefaultConditionalManager extends AbstractManager
     implements ConditionalManager, java.beans.PropertyChangeListener {
@@ -50,7 +50,6 @@ public class DefaultConditionalManager extends AbstractManager
     @SuppressWarnings("null")
 	public Conditional createNewConditional(String systemName, String userName) {
 		// check that Conditional with same system name does not already exist
-        systemName = systemName.toUpperCase().trim();
         Conditional c = getBySystemName(systemName);
         if (c!=null) {
             return null;
@@ -64,9 +63,8 @@ public class DefaultConditionalManager extends AbstractManager
             }
         }
         if (userName == null) log.error("User name is null!");
-        String sName = userName.toUpperCase().trim();
-        if (sName != null && sName.length() > 0) {
-            c = getBySystemName(sName);
+        if (systemName != null && systemName.length() > 0) {
+            c = getBySystemName(systemName);
             if (c!=null) {
                 return null;
             }
@@ -176,8 +174,7 @@ public class DefaultConditionalManager extends AbstractManager
 
     public Conditional getBySystemName(String name) {
 		if (name == null) return null;
-		String key = name.toUpperCase();
-        return (Conditional)_tsys.get(key);
+        return (Conditional)_tsys.get(name);
     }
 
 	/**

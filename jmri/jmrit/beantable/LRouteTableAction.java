@@ -547,8 +547,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 String name = action.getDeviceName();
                 String key = type+name;
                 RouteOutputElement elt = _outputUserMap.get(key);
-                if (elt == null) {
-                    key = key.toUpperCase();
+                if (elt == null) { // try in system name map
                     elt = _outputMap.get(key);
                 }
                 if (elt == null) {
@@ -629,8 +628,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 String name = variable.getName();
                 String key = type+name;
                 RouteInputElement elt = _inputUserMap.get(key);
-                if (elt == null) {
-                    key = key.toUpperCase();
+                if (elt == null) { // try in system name map
                     elt = _inputMap.get(key);
                 }
                 if (elt == null) {
@@ -666,8 +664,7 @@ public class LRouteTableAction extends AbstractTableAction {
                     name = action.getDeviceName();
                     String key = SENSOR_TYPE+name;
                     element = _alignUserMap.get(key);
-                    if (element == null) {
-                        key = key.toUpperCase();
+                    if (element == null) { // try in system name map
                         element = _alignMap.get(key);
                     } 
                     if (element == null) {
@@ -1271,7 +1268,7 @@ public class LRouteTableAction extends AbstractTableAction {
 
     boolean checkNewNamesOK() {
         // Get system name and user name
-        String sName = _systemName.getText().toUpperCase();
+        String sName = _systemName.getText();
         if (sName.length()==0 || sName.equals(LOGIX_SYS_NAME))  {
             showMessage("EnterNames");
             _status1.setText(rbx.getString("EnterNames"));
@@ -1312,7 +1309,7 @@ public class LRouteTableAction extends AbstractTableAction {
 
     Logix checkNamesOK() {
         // Get system name and user name
-        String sName = _systemName.getText().toUpperCase();
+        String sName = _systemName.getText();
         if (sName.length()==0)  {
             showMessage("EnterNames");
             _status1.setText(rbx.getString("EnterNames"));

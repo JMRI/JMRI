@@ -12,7 +12,7 @@ import jmri.implementation.DefaultRoute;
  * Note that this does not enforce any particular system naming convention
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class DefaultRouteManager extends AbstractManager
     implements RouteManager, java.beans.PropertyChangeListener {
@@ -35,8 +35,7 @@ public class DefaultRouteManager extends AbstractManager
         r = getBySystemName(systemName);
         if (r!=null) return r;
         // Route does not exist, create a new route
-		String sName = systemName.toUpperCase();
-		r = new DefaultRoute(sName,userName);
+		r = new DefaultRoute(systemName,userName);
 		// save in the maps
 		register(r);
 		return r;
@@ -62,8 +61,7 @@ public class DefaultRouteManager extends AbstractManager
     }
 
     public Route getBySystemName(String name) {
-		String key = name.toUpperCase();
-        return (Route)_tsys.get(key);
+        return (Route)_tsys.get(name);
     }
 
     public Route getByUserName(String key) {

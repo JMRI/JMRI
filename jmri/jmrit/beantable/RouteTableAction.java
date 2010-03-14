@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.59 $
+ * @version     $Revision: 1.60 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -750,7 +750,7 @@ public class RouteTableAction extends AbstractTableAction {
 
     boolean checkNewNamesOK() {
         // Get system name and user name
-        String sName = _systemName.getText().toUpperCase();
+        String sName = _systemName.getText();
         String uName = _userName.getText();
         if (sName.length()==0) {
             status1.setText("Please enter a system name and user name.");
@@ -782,7 +782,7 @@ public class RouteTableAction extends AbstractTableAction {
     @SuppressWarnings("null")
 	Route checkNamesOK() {
         // Get system name and user name
-        String sName = _systemName.getText().toUpperCase();
+        String sName = _systemName.getText();
         String uName = _userName.getText();
         if (sName.length()==0) {
             status1.setText("Please enter a system name and user name.");
@@ -973,7 +973,7 @@ public class RouteTableAction extends AbstractTableAction {
      */
     void editPressed(ActionEvent e) {
         // identify the Route with this name if it already exists
-        String sName = _systemName.getText().toUpperCase();
+        String sName = _systemName.getText();
         Route g = jmri.InstanceManager.routeManagerInstance().getBySystemName(sName);
         if (g==null) {
             // Route does not exist, so cannot be edited
@@ -1096,7 +1096,7 @@ public class RouteTableAction extends AbstractTableAction {
     void updatePressed(ActionEvent e, boolean newRoute ) {
         // Check if the User Name has been changed
         String uName = _userName.getText();
-        //String sName = _systemName.getText().toUpperCase();
+        //String sName = _systemName.getText();
         Route g = checkNamesOK();
         if (g == null) {
             return;
@@ -1176,7 +1176,7 @@ public class RouteTableAction extends AbstractTableAction {
      */
     void exportPressed(ActionEvent e) {
         curRoute = checkNamesOK();
-        String sName = _systemName.getText().toUpperCase();
+        String sName = _systemName.getText();
         if (sName.length()==0) {
             sName = fixedSystemName.getText(); 
         }
@@ -1305,7 +1305,6 @@ public class RouteTableAction extends AbstractTableAction {
             // verify name (logix doesn't use "provideXXX") 
             Sensor s = InstanceManager.sensorManagerInstance().getByUserName(sensorSystemName);
             if (s == null) {
-                sensorSystemName = sensorSystemName.toUpperCase();
                 s = InstanceManager.sensorManagerInstance().getBySystemName(sensorSystemName);
             }
             if (s != null) {
@@ -1351,7 +1350,6 @@ public class RouteTableAction extends AbstractTableAction {
             // verify name (logix doesn't use "provideXXX") 
             Turnout t = InstanceManager.turnoutManagerInstance().getByUserName(turnoutLockSystemName);
             if (t == null) {
-                turnoutLockSystemName = turnoutLockSystemName.toUpperCase();
                 t = InstanceManager.turnoutManagerInstance().getBySystemName(turnoutLockSystemName);
             }
             if (t != null) {
@@ -1507,7 +1505,6 @@ public class RouteTableAction extends AbstractTableAction {
             // verify name (logix doesn't use "provideXXX") 
             Sensor s = InstanceManager.sensorManagerInstance().getByUserName(devName);
             if (s == null) {
-                devName = devName.toUpperCase();
                 s = InstanceManager.sensorManagerInstance().getBySystemName(devName);
                 if (s == null) {
                     return null;
@@ -1572,7 +1569,6 @@ public class RouteTableAction extends AbstractTableAction {
         if (devName != null && devName.length()>0) {
             Turnout t = InstanceManager.turnoutManagerInstance().getByUserName(devName);
             if (t == null) {
-                devName = devName.toUpperCase();
                 t = InstanceManager.turnoutManagerInstance().getBySystemName(devName);
                 if (t == null) {
                     return null;

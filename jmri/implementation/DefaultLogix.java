@@ -9,18 +9,18 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
     implements Logix, java.io.Serializable {
 
     public DefaultLogix(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     public DefaultLogix(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     /**
@@ -850,7 +850,7 @@ public class DefaultLogix extends AbstractNamedBean
             log.error("Bad name for listener on \""+listener.getDevName()+"\": "+t);
         }
         log.error("Bad name for "+msg+" listener on \""+listener.getDevName()+
-                        "\"when removing");
+                        "\" when removing");
 	}
 	
 	/** 

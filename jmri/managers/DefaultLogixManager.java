@@ -18,7 +18,7 @@ import jmri.implementation.DefaultLogix;
  * Logix's system name, then there is a capital C and a number.  
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class DefaultLogixManager extends AbstractManager
     implements LogixManager, java.beans.PropertyChangeListener {
@@ -42,12 +42,11 @@ public class DefaultLogixManager extends AbstractManager
             x = getByUserName(userName);
             if (x!=null) return null;
         }
-		String sName = systemName.toUpperCase();
         x = getBySystemName(systemName);
-		if (x==null) getBySystemName(sName);
+		if (x==null) x = getBySystemName(systemName.toUpperCase());   // for compatibility?
         if (x!=null) return null;
         // Logix does not exist, create a new Logix
-        x = new DefaultLogix(sName,userName);
+        x = new DefaultLogix(systemName,userName);
         // save in the maps
         register(x);
         return x;
@@ -117,8 +116,7 @@ public class DefaultLogixManager extends AbstractManager
     }
 
     public Logix getBySystemName(String name) {
-		String key = name.toUpperCase();
-        return (Logix)_tsys.get(key);
+        return (Logix)_tsys.get(name);
     }
 
     public Logix getByUserName(String key) {
