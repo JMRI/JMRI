@@ -3,6 +3,7 @@
 package jmri.util.swing.mdi;
 
 import javax.swing.*;
+import java.util.List;
 
 /**
  * Display a JmriPanel in a JInternalFrame of its own.
@@ -12,7 +13,7 @@ import javax.swing.*;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class JmriJInternalFrameInterface implements jmri.util.swing.WindowInterface {
@@ -40,10 +41,24 @@ public class JmriJInternalFrameInterface implements jmri.util.swing.WindowInterf
             // add gui object, responsible for own layout
             frame.add(child);
             
-            // add help menu if needed
-            //if (child.getHelpTarget() != null)
-                //frame.addHelpMenu(child.getHelpTarget(), true);
-
+            // add menus if requested
+            JMenuBar bar = frame.getJMenuBar();
+            if (bar == null) bar = new JMenuBar();
+            List<JMenu> list = child.getMenus();
+            if (list != null) {
+                for (JMenu menu : list) {
+                    bar.add(menu);
+                }
+            }
+            
+            // add help menu if requested; this is similar
+            // to code in JmriJFrame
+            if (child.getHelpTarget() != null) {
+                // add Help menu
+                jmri.util.HelpUtil.helpMenu(bar, child.getHelpTarget(), true);
+            }
+            frame.setJMenuBar(bar);
+            
             // set title if available
             if (child.getTitle() != null)
                 frame.setTitle(child.getTitle());
