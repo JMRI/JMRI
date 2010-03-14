@@ -14,11 +14,11 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the SDI GUI 
  * @author			Bob Jacobsen  Copyright 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class SdiJfcUnitTests extends jmri.util.SwingTestCase {
 
-    public void testShow() throws Exception {
+    public void testShowAndClose() throws Exception {
         JmriNamedPaneAction a = new JmriNamedPaneAction("Action",
                                 new JmriJFrameInterface(),
                                 jmri.util.swing.SamplePane.class.getName());
@@ -44,6 +44,19 @@ public class SdiJfcUnitTests extends jmri.util.SwingTestCase {
         Assert.assertEquals("one pane disposed", 1, SamplePane.disposed.size() );
         Assert.assertEquals("pane 2 disposed", new Integer(2), SamplePane.disposed.get(0) );
 
+        // Close 1 directly
+        TestHelper.disposeWindow(f1, this);
+        Assert.assertEquals("one pane disposed", 2, SamplePane.disposed.size() );
+        Assert.assertEquals("pane 1 disposed", new Integer(1), SamplePane.disposed.get(1) );
+
+    }
+            
+    public void testMenu() throws Exception {
+        JmriNamedPaneAction a = new JmriNamedPaneAction("Action",
+                                new JmriJFrameInterface(),
+                                jmri.util.swing.SamplePane.class.getName());
+
+        a.actionPerformed(null);
     }
             
 	// from here down is testing infrastructure

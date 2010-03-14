@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * Sample Pane class for tests
  * @author			Bob Jacobsen  Copyright 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 
 // sample class
@@ -36,8 +36,24 @@ public class SamplePane extends jmri.util.swing.JmriPanel {
         b = new JButton("Close"+num);
         add(b);        
     }
+
+    public String getHelpTarget() { return null; }
+
     public String getTitle() { return "SamplePane "+num; }
     
+    public List<JMenu> getMenus() { 
+        java.util.ArrayList<JMenu> list = new java.util.ArrayList<JMenu>();
+        JMenu m = new JMenu("test 1");
+        m.add(new JButton("sub 1"));
+        m.add(new JButton("sub 2"));
+        list.add(m);
+        m = new JMenu("test 2");
+        m.add(new JButton("sub a"));
+        m.add(new JButton("sub b"));
+        list.add(m);
+        return list;
+    }
+
     public void dispose() {
         disposed.add(new Integer(num));
         super.dispose();

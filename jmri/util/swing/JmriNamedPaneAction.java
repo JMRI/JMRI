@@ -4,11 +4,13 @@ package jmri.util.swing;
 
 import javax.swing.*;
 
+import java.util.List;
+
 /**
  * Action to create and load a JmriPanel from just its name.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
  
 public class JmriNamedPaneAction extends JmriAbstractAction {
@@ -43,6 +45,7 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
             p.setWindowInterface(wi);
             p.initComponents();
             p.initContext(context);
+            
             return p;
         } catch (Exception ex) {
             log.warn("could not load pane class: "+paneClass+" due to:"+ex);

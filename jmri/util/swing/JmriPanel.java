@@ -2,6 +2,10 @@
 
 package jmri.util.swing;
 
+import java.util.List;
+import javax.swing.JMenu;
+import javax.swing.JPanel;
+
 /**
  * JPanel extension to handle automatic creation
  * of window title and help reference.
@@ -29,21 +33,26 @@ package jmri.util.swing;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
-public class JmriPanel extends javax.swing.JPanel {
+public class JmriPanel extends JPanel {
 
     /**
      * Provide a help target string which an enclosing
      * frame can provide as a help reference.
      */
-    public String getHelpTarget() { return null; }
+    public String getHelpTarget() { return "Acknowledgements.shtml"; }
 
     /**
      * Provide a recommended title for an enclosing frame.
      */
     public String getTitle() { return null; }
+    
+    /**
+     * Provide menu items
+     */
+    public List<JMenu> getMenus() { return null; }
     
     public WindowInterface getWindowInterface() {
         return wi;
