@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.28 $
+ * @version			$Revision: 1.29 $
  */
 abstract public class AbstractPortController implements PortAdapter {
 
@@ -90,8 +90,8 @@ abstract public class AbstractPortController implements PortAdapter {
     public void setManufacturer(String Manufacturer) { mManufacturer = Manufacturer; }
     protected String mManufacturer = null;
     
-    protected SystemConnectionMemo adaptermemo = null;
-    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
+    //protected SystemConnectionMemo adaptermemo = null;
+    abstract public SystemConnectionMemo getSystemConnectionMemo();
 
     static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractPortController.class.getName());
 
