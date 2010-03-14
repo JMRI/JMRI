@@ -9,14 +9,13 @@ import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
  * refers to the switch settings on the new LocoBuffer II
  
  * @author			Bob Jacobsen   Copyright (C) 2004
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class LocoBufferIIAdapter extends LocoBufferAdapter {
 
 
     public LocoBufferIIAdapter() {
         super();
-        m2Instance = this;
     }
 
     /**
@@ -32,16 +31,6 @@ public class LocoBufferIIAdapter extends LocoBufferAdapter {
     											"57,600 baud (Sw1 on, Sw3 off)"};
 
     public String option1Name() { return "LocoBuffer-II connection uses "; }
-
-    static public LocoBufferAdapter instance() {
-        if (m2Instance == null) {
-        	m2Instance = new LocoBufferIIAdapter();
-        	log.debug("new default instance in LocoBufferIIAdapter");
-        }
-        log.debug("LocoBufferIIAdapter.instance returns object of class "+m2Instance.getClass().getName());
-        return m2Instance;
-    }
-    static private LocoBufferIIAdapter m2Instance = null;
     
     String manufacturerName = jmri.jmrix.DCCManufacturerList.DIGITRAX;
     

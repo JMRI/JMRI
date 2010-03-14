@@ -10,14 +10,13 @@ import gnu.io.SerialPort;
  * refers to the switch settings on the new LocoBuffer-USB
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class LocoBufferUsbAdapter extends LocoBufferAdapter {
 
 
     public LocoBufferUsbAdapter() {
         super();
-        m2Instance = this;
     }
 
     /**
@@ -69,17 +68,6 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
      * Option 1 not used, so return a null string.
      */
     public String option1Name() { return ""; }
-
-
-    static public LocoBufferAdapter instance() {
-        if (m2Instance == null) {
-        	m2Instance = new LocoBufferUsbAdapter();
-        	log.debug("new default instance in LocoBufferUsbAdapter");
-        }
-        log.debug("LocoBufferUsbAdapter.instance returns object of class "+m2Instance.getClass().getName());
-        return m2Instance;
-    }
-    static private LocoBufferUsbAdapter m2Instance = null;
     
     String manufacturerName = jmri.jmrix.DCCManufacturerList.DIGITRAX;
     

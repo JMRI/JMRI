@@ -17,13 +17,14 @@ import jmri.Reporter;
  * <P>
  * Description:		Implement Reporter manager for loconet
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 
 public class LnReporterManager extends jmri.managers.AbstractReporterManager implements LocoNetListener {
 
     // ctor has to register for LocoNet events
-    public LnReporterManager(LnTrafficController tc) {
+    public LnReporterManager(LnTrafficController tc, String prefix) {
+        this.prefix = prefix;
         this.tc = tc;
         if (tc != null)
             tc.addLocoNetListener(~0, this);
@@ -32,8 +33,9 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     }
 
     LnTrafficController tc;
+    String prefix;
     
-    public String getSystemPrefix() { return "L"; }
+    public String getSystemPrefix() { return prefix; }
 
     public void dispose() {
         if (tc != null)
@@ -43,8 +45,8 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
 
     public Reporter createNewReporter(String systemName, String userName) {
         Reporter t;
-        int addr = Integer.valueOf(systemName.substring(2)).intValue();
-        t = new LnReporter(addr);
+        int addr = Integer.valueOf(systemName.substring(prefix.length()+1)).intValue();
+        t = new LnReporter(addr, tc, prefix);
         t.setUserName(userName);
         t.addPropertyChangeListener(this);
 

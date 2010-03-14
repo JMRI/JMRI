@@ -10,34 +10,37 @@ import jmri.Sensor;
  * System names are "LSnnn", where nnn is the sensor number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class LnSensorManager extends jmri.managers.AbstractSensorManager implements LocoNetListener {
 
-    public String getSystemPrefix() { return "L"; }
-
-    static public LnSensorManager instance() {
-        if (mInstance == null) new LnSensorManager();
-        return mInstance;
+    public LnSensorManager(LnTrafficController tc, String prefix) {
+        this.prefix = prefix;
+        this.tc = tc;
+        // ctor has to register for LocoNet events
+        tc.addLocoNetListener(~0, this);
+        
+        // start the update sequence.  Until JMRI 2.9.4, this waited
+        // until files have been read, but was stated automatically 
+        // in 2.9.5 for multi-system support.
+        updateAll();
     }
-    static private LnSensorManager mInstance = null;
+    
+    LnTrafficController tc;
+    String prefix = "L";
+    
+    public String getSystemPrefix() { return prefix; }
 
     // to free resources when no longer used
     public void dispose() {
-        LnTrafficController.instance().removeLocoNetListener(~0, this);
+        tc.removeLocoNetListener(~0, this);
         super.dispose();
     }
 
     // LocoNet-specific methods
 
     public Sensor createNewSensor(String systemName, String userName) {
-        return new LnSensor(systemName, userName);
-    }
-
-    // ctor has to register for LocoNet events
-    public LnSensorManager() {
-        LnTrafficController.instance().addLocoNetListener(~0, this);
-        mInstance = this;
+        return new LnSensor(systemName, userName, tc, prefix);
     }
 
     // listen for sensors, creating them as needed
@@ -45,15 +48,14 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         // parse message type
         LnSensorAddress a;
         switch (l.getOpCode()) {
-        case LnConstants.OPC_INPUT_REP: {               /* page 9 of Loconet PE */
-            int sw1 = l.getElement(1);
-            int sw2 = l.getElement(2);
-            a = new LnSensorAddress(sw1, sw2);
-            if (log.isDebugEnabled()) log.debug("INPUT_REP received with address "+a);
-            break;
-        }
-        default:  // here we didn't find an interesting command
-            return;
+            case LnConstants.OPC_INPUT_REP:                /* page 9 of Loconet PE */
+                int sw1 = l.getElement(1);
+                int sw2 = l.getElement(2);
+                a = new LnSensorAddress(sw1, sw2, prefix);
+                if (log.isDebugEnabled()) log.debug("INPUT_REP received with address "+a);
+                break;
+            default:  // here we didn't find an interesting command
+                return;
         }
         // reach here for loconet sensor input command; make sure we know about this one
         String s = a.getNumericAddress();
@@ -77,7 +79,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
 	public void updateAll() {
 		if (!busy) {
 			setUpdateBusy();
-			LnSensorUpdateThread thread = new LnSensorUpdateThread(this);
+			LnSensorUpdateThread thread = new LnSensorUpdateThread(this, tc);
 			thread.start();
 		}
 	}
@@ -112,17 +114,18 @@ class LnSensorUpdateThread extends Thread
 	/**
 	 * Constructs the thread
 	 */
-	public LnSensorUpdateThread (LnSensorManager sensorManager) {
-		sm = sensorManager;
-		tc = LnTrafficController.instance();
+	public LnSensorUpdateThread (LnSensorManager sm, LnTrafficController tc) {
+		this.sm = sm;
+		this.tc = tc;
 	}
 	
 	/** 
 	 * Runs the thread - sends 8 commands to query status of all stationary sensors
 	 *     per LocoNet PE Specs, page 12-13
-	 * Thread waits 500 msec between commands after a 2 sec initial wait.
+	 * Thread waits 500 msec between commands.
 	 */
 	public void run () {
+	    sm.setUpdateBusy();
 		byte sw1[] = {0x78,0x79,0x7a,0x7b,0x78,0x79,0x7a,0x7b};
 		byte sw2[] = {0x27,0x27,0x27,0x27,0x07,0x07,0x07,0x07};
 		// create and initialize loconet message
@@ -130,7 +133,7 @@ class LnSensorUpdateThread extends Thread
         m.setOpCode(LnConstants.OPC_SW_REQ);
 		for (int k = 0; k < 8; k++) {
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(500);
 			}
 			catch (InterruptedException e) {
 			    Thread.currentThread().interrupt(); // retain if needed later

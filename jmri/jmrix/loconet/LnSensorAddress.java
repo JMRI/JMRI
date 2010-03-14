@@ -26,40 +26,43 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class LnSensorAddress {
 
     int _low;
     int _high;
     int _as;
-
+    String prefix;
+    
     boolean _valid;
 
-    public LnSensorAddress(int sw1, int sw2) {
+    public LnSensorAddress(int sw1, int sw2, String prefix) {
         _as = sw2&0x20;		// should be a LocoNet constant?
         _high = sw2&0x0F;
         _low = sw1&0x7F;
         _valid = true;
+        this.prefix = prefix;
     }
 
-    public LnSensorAddress(String s) {
+    public LnSensorAddress(String s, String prefix) {
         _valid = false;
-
+        this.prefix = prefix;
+        
         // check valid
-        if (s.substring(0,2).equals("LS")) {
+        if (s.startsWith(prefix+"S")) {
             // parse out and decode the name
             if (s.charAt(s.length()-1)=='A') {
                 // DS54 addressing, Aux input
                 _as = 0x20;
-                int n = Integer.parseInt(s.substring(2, s.length()-1));
+                int n = Integer.parseInt(s.substring(prefix.length()+1, s.length()-1));
                 _high = n/128;
                 _low = n&0x7F;
                 _valid = true;
             } else if (s.charAt(s.length()-1)=='S') {
                 // DS54 addressing, Switch input
                 _as = 0x00;
-                int n = Integer.parseInt(s.substring(2, s.length()-1));
+                int n = Integer.parseInt(s.substring(prefix.length()+1, s.length()-1));
                 _high = n/128;
                 _low = n&0x7F;
                 _valid = true;
@@ -75,7 +78,7 @@ public class LnSensorAddress {
                         case 'C': d = 2; break;
                         case 'D': d = 3; break;
                     }
-                    int n = Integer.parseInt(s.substring(2, s.length()-2))*16+d*4
+                    int n = Integer.parseInt(s.substring(prefix.length()+1, s.length()-2))*16+d*4
                             +Integer.parseInt(s.substring(s.length()-1, s.length()));
                     _high = n/128;
                     _low = (n&0x7F)/2;
@@ -83,7 +86,7 @@ public class LnSensorAddress {
                     _valid = true;
                 } else {
                     // assume that its LSnnn style
-                    int n = Integer.parseInt(s.substring(2, s.length()))-1;
+                    int n = Integer.parseInt(s.substring(prefix.length()+1, s.length()))-1;
                     _high = n/256;
                     _low = (n&0xFE)/2;
                     _as = (n&0x01)*0x20;
@@ -146,7 +149,7 @@ public class LnSensorAddress {
      * @return LSnnn
      */
     public String getNumericAddress() {
-        return "LS"+(asInt()+1);
+        return prefix+"S"+(asInt()+1);
     }
 
     /**
@@ -155,9 +158,9 @@ public class LnSensorAddress {
      */
     public String getDS54Address() {
         if (_as != 0 )
-            return "LS"+(_high*128+_low)+"A";
+            return prefix+"S"+(_high*128+_low)+"A";
         else
-            return "LS"+(_high*128+_low)+"S";
+            return prefix+"S"+(_high*128+_low)+"S";
     }
 
     /**
@@ -183,7 +186,7 @@ public class LnSensorAddress {
             case 3: letter = "D"; break;
             default: letter = "X"; log.error("Unexpected letter value: "+asInt());
         }
-        return "LS"+(asInt()/16)+letter+digit;
+        return prefix+"S"+(asInt()/16)+letter+digit;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensorAddress.class.getName());

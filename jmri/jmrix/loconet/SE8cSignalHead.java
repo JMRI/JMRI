@@ -14,6 +14,14 @@ import jmri.implementation.DefaultSignalHead;
  * SE8C board has been configured such that the 4th aspect is "dark".
  * We then do flashing aspects by commanding the lit appearance to change.
  *
+ * <p>
+ * This is a grandfathered implementation that is specific to 
+ * loconet systems.  A more general implementation, which can work
+ * with any system(s), is available in {@link jmri.implementation.SE8cSignalHead}.
+ * This package is maintained so that existing XML files can continue
+ * to be read.  In particular, it only works with the first LocoNet 
+ * connection (names LHnnn, not L2Hnnn etc).
+ *
  * <P>The algorithms in this class are a collaborative effort of Digitrax, Inc
  * and Bob Jacobsen.
  * <P>
@@ -24,7 +32,7 @@ import jmri.implementation.DefaultSignalHead;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener {
 
@@ -41,15 +49,15 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
     }
     
     void init(int pNumber) {
+        tc = jmri.InstanceManager.getDefault(LnTrafficController.class);
         mNumber = pNumber;
         mAppearance = DARK;  // start turned off
         // At construction, register for messages
-        if (LnTrafficController.instance()!=null) {
-            LnTrafficController.instance().addLocoNetListener(~0, this);
-            updateOutput();
-        } else
-            log.warn("No LocoNet connection, signal head won't update");
+        tc.addLocoNetListener(~0, this);
+        updateOutput();
     }
+    
+    LnTrafficController tc;
     
     public int getNumber() { return mNumber; }
     public String getSystemName() { return "LH"+getNumber(); }
@@ -111,7 +119,7 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
         // store and send
         l.setElement(1,loadr);
         l.setElement(2,hiadr);
-        LnTrafficController.instance().sendLocoNetMessage(l);
+        tc.sendLocoNetMessage(l);
     }
     
     // implementing classes will typically have a function/listener to get
@@ -201,7 +209,7 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
     }
     
     public void dispose() {
-        LnTrafficController.instance().removeLocoNetListener(~0, this);
+        tc.removeLocoNetListener(~0, this);
     }
     
     // data members

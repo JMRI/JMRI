@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensor class.
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 public class LnSensorTest extends TestCase {
 
@@ -17,7 +17,7 @@ public class LnSensorTest extends TestCase {
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         Assert.assertNotNull("exists", lnis );
 
-        LnSensor t = new LnSensor("LS042");
+        LnSensor t = new LnSensor("LS042", lnis, "L");
 
         // created in UNKNOWN state
         Assert.assertTrue(t.getKnownState() == jmri.Sensor.UNKNOWN);
@@ -28,7 +28,7 @@ public class LnSensorTest extends TestCase {
         // prepare an interface
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
-        LnSensor t = new LnSensor("LS044");
+        LnSensor t = new LnSensor("LS044", lnis, "L");
         LocoNetMessage m;
 
         // notify the Ln that somebody else changed it...
@@ -58,7 +58,7 @@ public class LnSensorTest extends TestCase {
         Assert.assertNotNull("exists", lnis );
         
 
-        LnSensor t = new LnSensor("LS043");
+        LnSensor t = new LnSensor("LS043", lnis, "L");
 
         t.setKnownState(jmri.Sensor.ACTIVE);
         t.setKnownState(jmri.Sensor.INACTIVE);
@@ -70,7 +70,7 @@ public class LnSensorTest extends TestCase {
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         Assert.assertNotNull("exists", lnis );
         
-        LnSensor t = new LnSensor("LS042");
+        LnSensor t = new LnSensor("LS042", lnis, "L");
 
         t.requestUpdateFromLayout();
         // doesn't send a message right now, pending figuring out what

@@ -10,15 +10,15 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorAddress class.
  * @author	Bob Jacobsen Copyright 2001, 2002
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class LnSensorAddressTest extends TestCase {
 
     public void testLnSensorAddressCreate() {
-        LnSensorAddress a1 = new LnSensorAddress("LS001");
-        LnSensorAddress a2 = new LnSensorAddress("LS001A");
-        LnSensorAddress a3 = new LnSensorAddress("LS001C3");
-        LnSensorAddress a4 = new LnSensorAddress(0x15, 0x60); // LS043
+        LnSensorAddress a1 = new LnSensorAddress("LS001", "L");
+        LnSensorAddress a2 = new LnSensorAddress("LS001A", "L");
+        LnSensorAddress a3 = new LnSensorAddress("LS001C3", "L");
+        LnSensorAddress a4 = new LnSensorAddress(0x15, 0x60, "L"); // LS043
         Assert.assertNotNull("exists", a1 );
         Assert.assertNotNull("exists", a2 );
         Assert.assertNotNull("exists", a3 );
@@ -27,7 +27,7 @@ public class LnSensorAddressTest extends TestCase {
 
     public void testLnSensorInvalid() {
         LnSensorAddress a;
-        a = new LnSensorAddress("foo"){
+        a = new LnSensorAddress("foo", "L"){
             void reportParseError(String s) {}
         };
         assertTrue(!a.isValid());
@@ -36,13 +36,13 @@ public class LnSensorAddressTest extends TestCase {
     public void testLnSensorAddressASmode() {
     	LnSensorAddress a;
 
-        a = new LnSensorAddress("LS130A");
+        a = new LnSensorAddress("LS130A", "L");
         assertTrue(a.getLowBits() == 2);
         assertTrue(a.getHighBits() == 1);
         assertEquals("AS bit from LS130A", 0x20, a.getASBit());
         assertTrue(a.isValid());
 
-        a = new LnSensorAddress("LS257S");
+        a = new LnSensorAddress("LS257S", "L");
         assertTrue(a.getLowBits() == 1);
         assertTrue(a.getHighBits() == 2);
         assertTrue(a.getASBit() == 0x00);
@@ -53,13 +53,13 @@ public class LnSensorAddressTest extends TestCase {
     public void testLnSensorAddressNumericMode() {
         LnSensorAddress a;
 
-        a = new LnSensorAddress("LS130A2"); // 0x0822
+        a = new LnSensorAddress("LS130A2", "L"); // 0x0822
         assertTrue(a.getLowBits() == 17);
         assertTrue(a.getHighBits() == 16);
         assertTrue(a.getASBit() == 0x00);
         assertTrue(a.isValid());
 
-        a = new LnSensorAddress("LS257D3");  // 0x101F
+        a = new LnSensorAddress("LS257D3","L");  // 0x101F
         Assert.assertTrue(a.getLowBits() == 15);
         Assert.assertTrue(a.getHighBits() == 32);
         assertEquals("AS bit from LS257D3", 0x20, a.getASBit());
@@ -70,13 +70,13 @@ public class LnSensorAddressTest extends TestCase {
     public void testLnSensorAddressBDL16Mode() {
     	LnSensorAddress a;
 
-        a = new LnSensorAddress("LS131");
+        a = new LnSensorAddress("LS131", "L");
         Assert.assertTrue(a.getLowBits() == 65);
         Assert.assertTrue(a.getHighBits() == 0);
         Assert.assertTrue(a.getASBit() == 0x00);
         Assert.assertTrue(a.isValid());
 
-        a = new LnSensorAddress("LS258");
+        a = new LnSensorAddress("LS258", "L");
         Assert.assertTrue(a.getLowBits() == 0);
         Assert.assertTrue(a.getHighBits() == 1);
         assertEquals("AS bit from LS258", 0x20, a.getASBit());
@@ -87,7 +87,7 @@ public class LnSensorAddressTest extends TestCase {
     public void testLnSensorAddressFromPacket() {
     	LnSensorAddress a;
 
-        a = new LnSensorAddress(0x15, 0x60); // LS044
+        a = new LnSensorAddress(0x15, 0x60, "L"); // LS044
         log.debug("0x15, 0x60 shows as "+a.getNumericAddress()+" "+
                             a.getDS54Address()+" "+a.getBDL16Address());
         Assert.assertTrue(a.getNumericAddress().equals("LS44"));

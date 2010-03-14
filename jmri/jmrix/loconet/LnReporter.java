@@ -30,23 +30,22 @@ import jmri.implementation.AbstractReporter;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
  
  public class LnReporter extends AbstractReporter implements LocoNetListener {
 
-    public LnReporter(int number) {  // a human-readable Reporter number must be specified!
-        super("LR"+number);  // can't use prefix here, as still in construction
+    public LnReporter(int number, LnTrafficController tc, String prefix) {  // a human-readable Reporter number must be specified!
+        super(prefix+"R"+number);  // can't use prefix here, as still in construction
         log.debug("new Reporter "+number);
          _number = number;
          // At construction, register for messages
-         if (LnTrafficController.instance()!=null)
-            LnTrafficController.instance().addLocoNetListener(~0, this);
-        else
-            log.warn("No LocoNet connection, Reporter won't update");
+         tc.addLocoNetListener(~0, this);
      }
 
-     public int getNumber() { return _number; }
+    LnTrafficController tc;
+    
+    public int getNumber() { return _number; }
 
      // implementing classes will typically have a function/listener to get
      // updates from the layout, which will then call
@@ -54,14 +53,14 @@ import jmri.implementation.AbstractReporter;
      //					      	Object oldValue,
      //						Object newValue)
      // _once_ if anything has changed state (or set the commanded state directly)
-     public void message(LocoNetMessage l) {
+    public void message(LocoNetMessage l) {
          // check message type
 		if ( (l.getOpCode() == 0xD0) && ( (l.getElement(1) & 0xC0) == 0) ) 
 		    transpondingReport(l);
 		if ( (l.getOpCode() == 0xE4) && ( l.getElement(1) == 0x08) ) 
 		    lissyReport(l);
         else return; // nothing
-     }
+    }
 
     /**
      * Handle transponding message
@@ -111,29 +110,30 @@ import jmri.implementation.AbstractReporter;
 	 * other locomotive in the transponding zone!
 	 * @return -1 if the last message specified exiting
 	 */
-	 public int getState() {
+	public int getState() {
 	 	return lastLoco;
-	 }
+	}
 
-	 public void setState(int s) {
+	public void setState(int s) {
 	 	lastLoco = s;
-	 }	 
-	 int lastLoco = -1;
+	}	 
+	int lastLoco = -1;
 	 
-     public void dispose() {
-         LnTrafficController.instance().removeLocoNetListener(~0, this);
+    public void dispose() {
+         tc.removeLocoNetListener(~0, this);
          super.dispose();
-     }
+    }
 
-     // data members
-     int _number;   // loconet Reporter number
+    // data members
+    int _number;   // loconet Reporter number
 
-     @SuppressWarnings("unused")
+    @SuppressWarnings("unused")
 	private boolean myAddress(int a1, int a2) {
          // the "+ 1" in the following converts to throttle-visible numbering
          return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1) == _number;
-     }
-     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnReporter.class.getName());
+    }
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnReporter.class.getName());
 
  }
 

@@ -12,7 +12,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class LnSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -29,23 +29,9 @@ public class LnSensorManagerXml extends jmri.managers.configurexml.AbstractSenso
     }
 
     public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
-    	boolean result = true;
-        // create the master object
-        LnSensorManager mgr = null;
-        try { 
-            mgr = LnSensorManager.instance();
-        } catch (Exception e) {
-            creationErrorEncountered (org.apache.log4j.Level.ERROR,
-                                      "Could not create LocoNet Sensor Manager",
-                                      null,null,null);
-            
-            return false;
-        }
         // load individual sensors
-        result = loadSensors(sensors);
-		// Request the status of these sensors from the layout, if appropriate.
-		mgr.updateAll();
-		return result;
+        loadSensors(sensors);
+		return true;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensorManagerXml.class.getName());

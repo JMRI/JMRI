@@ -15,32 +15,36 @@ import jmri.Sensor;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.17 $
+ * @version         $Revision: 1.18 $
  */
 public class LnSensor extends AbstractSensor implements LocoNetListener {
 
     private LnSensorAddress a;
 
-    public LnSensor(String systemName, String userName) {
+    public LnSensor(String systemName, String userName, LnTrafficController tc, String prefix) {
         super(systemName, userName);
-        init(systemName);
+        this.tc = tc;
+        init(systemName, prefix);
     }
 
-    public LnSensor(String systemName) {
+    public LnSensor(String systemName, LnTrafficController tc, String prefix) {
         super(systemName);
-        init(systemName);
+        this.tc = tc;
+        init(systemName, prefix);
     }
 
+    LnTrafficController tc;
+    
     /**
      * Common initialization for both constructors
      */
-    private void init(String id) {
+    private void init(String systemName, String prefix) {
         // store address forms
-        a = new LnSensorAddress(id);
+        a = new LnSensorAddress(systemName, prefix);
         if (log.isDebugEnabled()) log.debug("create address "+a);
 
         // At construction, register for messages
-        LnTrafficController.instance().addLocoNetListener(~0, this);
+        tc.addLocoNetListener(~0, this);
     }
 
     /**
@@ -73,7 +77,7 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
         } // otherwise is already OK
         l.setElement(2, l.getElement(2)|0x40);
         // send
-        LnTrafficController.instance().sendLocoNetMessage(l);
+        tc.sendLocoNetMessage(l);
     }
 
     /**
@@ -114,13 +118,12 @@ public class LnSensor extends AbstractSensor implements LocoNetListener {
     }
 
     public void dispose() {
-        LnTrafficController.instance().removeLocoNetListener(~0, this);
+        tc.removeLocoNetListener(~0, this);
         super.dispose();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensor.class.getName());
 
 }
-
 
 /* @(#)LnSensor.java */

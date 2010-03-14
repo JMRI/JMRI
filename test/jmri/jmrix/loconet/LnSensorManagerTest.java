@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorManagerTurnout class.
  * @author	Bob Jacobsen  Copyright 2001
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class LnSensorManagerTest extends TestCase  {
 
@@ -22,7 +22,7 @@ public class LnSensorManagerTest extends TestCase  {
         Assert.assertNotNull("exists", lnis );
         
         // create and register the manager object
-        LnSensorManager l = new LnSensorManager();
+        LnSensorManager l = new LnSensorManager(lnis, "L");
         jmri.InstanceManager.setSensorManager(l);
 
     }
@@ -36,7 +36,7 @@ public class LnSensorManagerTest extends TestCase  {
 		new jmri.InstanceManager() {
 		    protected void init() { super.init(); root = null; }
 		};
-        LnSensorManager l = new LnSensorManager();
+        LnSensorManager l = new LnSensorManager(lnis, "L");
 
         // sample turnout object
         Sensor t = l.newSensor("LS22", "test");
@@ -51,7 +51,7 @@ public class LnSensorManagerTest extends TestCase  {
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         Assert.assertNotNull("exists", lnis );
 		// create and register the manager object
-		LnSensorManager l = new LnSensorManager();
+		LnSensorManager l = new LnSensorManager(lnis, "L");
 
 		// sample turnout object
 		Sensor t = l.newSensor("LS22", "test");
@@ -67,7 +67,7 @@ public class LnSensorManagerTest extends TestCase  {
 		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
 
 		// create and register the manager object
-		LnSensorManager l = new LnSensorManager();
+		LnSensorManager l = new LnSensorManager(lnis, "L");
 
 		// send messages for 21, 22
 		// notify the Ln that somebody else changed it...
@@ -83,11 +83,14 @@ public class LnSensorManagerTest extends TestCase  {
 	}
 
 	public void testAsAbstractFactory () {
+		// prepare an interface, register
+		LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+
 		// create and register the manager object in a new instance manager
 		new jmri.InstanceManager() {
 		    protected void init() { super.init(); root = null; }
 		};
-		LnSensorManager l = new LnSensorManager();
+		LnSensorManager l = new LnSensorManager(lnis, "L");
 		jmri.InstanceManager.setSensorManager(l);
 
 		// ask for a Sensor, and check type
