@@ -8,7 +8,7 @@ import java.io.DataOutputStream;
 /**
  * Base for classes representing a LocoNet communications port
  * @author		Bob Jacobsen    Copyright (C) 2001, 2002
- * @version             $Revision: 1.19 $
+ * @version             $Revision: 1.20 $
  */
 public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -38,6 +38,8 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     public boolean okToSend() {
         return true;
     }
+
+    protected LocoNetSystemConnectionMemo adaptermemo = null;
 
     protected boolean mCanRead = true;
     protected boolean mProgPowersOff = false;

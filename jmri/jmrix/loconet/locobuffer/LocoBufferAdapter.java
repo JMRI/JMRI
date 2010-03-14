@@ -3,6 +3,7 @@
 package jmri.jmrix.loconet.locobuffer;
 
 import jmri.jmrix.loconet.*;
+import jmri.jmrix.SystemConnectionMemo;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -21,12 +22,13 @@ import gnu.io.SerialPortEventListener;
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001, 2008, 2010
- * @version			$Revision: 1.46 $
+ * @version			$Revision: 1.47 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
     public LocoBufferAdapter() {
         super();
+        adaptermemo = new LocoNetSystemConnectionMemo();
     }
 
     Vector<String> portNameVector = null;
@@ -196,12 +198,14 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         packets.connectPort(this);
 
         // create memo
-        LocoNetSystemConnectionMemo memo 
-         = new LocoNetSystemConnectionMemo(packets, new SlotManager(packets));
-        adaptermemo = memo;
+        /*LocoNetSystemConnectionMemo memo
+         = new LocoNetSystemConnectionMemo(packets, new SlotManager(packets));*/
+         adaptermemo.setSlotManager(new SlotManager(packets));
+         adaptermemo.setLnTrafficController(packets);
         // do the common manager config
-        memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-        memo.configureManagers();
+
+        adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+        adaptermemo.configureManagers();
 
         // start operation
         packets.startThreads();
@@ -312,6 +316,8 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
+
+    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
     
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoBufferAdapter.class.getName());

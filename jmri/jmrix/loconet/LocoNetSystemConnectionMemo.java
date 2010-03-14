@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -31,6 +31,19 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
                                 jmri.jmrix.swing.ComponentFactory.class);
     }
     
+    public LocoNetSystemConnectionMemo() {
+        super("L"+(instanceCount>1?""+instanceCount:""), "LocoNet"+(instanceCount>1?""+instanceCount:""));
+        count = instanceCount++;
+        register(); // registers general type
+        InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
+        
+        // create and register the ComponentFactory
+        InstanceManager.store(new jmri.jmrix.loconet.swing.ComponentFactory(this), 
+                                jmri.jmrix.swing.ComponentFactory.class);
+    }
+
+
+    
     private static int instanceCount = 1;
     
     private int count;
@@ -41,6 +54,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      */
     public SlotManager getSlotManager() { return sm; }
     private SlotManager sm;
+    public void setSlotManager(SlotManager sm){ this.sm = sm;}
     
     /**
      * Provides access to the TrafficController for this
@@ -48,7 +62,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      */
     public LnTrafficController getLnTrafficController() { return lt; }
     private LnTrafficController lt;
-    
+    public void setLnTrafficController(LnTrafficController lt) { this.lt = lt; }
     public LnMessageManager getLnMessageManager() {
         // create when needed
         if (lnm == null) 
