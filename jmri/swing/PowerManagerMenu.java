@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.swing.Action;
-import javax.swing.JMenu;
+import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.PowerManager;
@@ -16,10 +15,10 @@ import jmri.PowerManager;
  * Create a menu for selecting the Power Manager to use
  *
  * @author	Bob Jacobsen   Copyright 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  * @since 2.9.5
  */
-public class PowerManagerMenu extends JMenu {
+abstract public class PowerManagerMenu extends JMenu {
 
     /**
      * Get the currently selected manager
@@ -28,25 +27,68 @@ public class PowerManagerMenu extends JMenu {
         return null;
     }
     
+    abstract protected void choiceChanged();
+    
     /**
      * Create a PowerManager menu.
      */
     public PowerManagerMenu() {
         super();
 
-        //ResourceBundle rb = LocoNetBundle.bundle();
-
-        //setText(memo.getUserName());
-        setText("test");
+        ButtonGroup group = new ButtonGroup();
         
-        //jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
-
+        // label this menu
+        setText("Connection");
+        
+        // now add an item for each available manager
         List<Object> managers = InstanceManager.getList(PowerManager.class);
-        List<Action> actions = new ArrayList<Action>();
-        
-            add("foo");
-            //add(new LnNamedPaneAction( rb.getString(item.name), wi, item.load, memo));
+        for (Object obj : managers) {
+            PowerManager mgr = (PowerManager) obj;
+            JMenuItem item = new JRadioButtonMenuItem(mgr.getUserName());
+            add(item);
+            group.add(item);
+            items.add(item);
+            item.addActionListener(new java.awt.event.ActionListener(){
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    choiceChanged();
+                }
+            });
+        }
 
+        setDefault();
+    }
+    
+    List<JMenuItem> items = new java.util.ArrayList<JMenuItem>(); 
+    
+    void setDefault() {
+        // name of default
+        String defaultMgr = InstanceManager.powerManagerInstance().getUserName();
+        for (JMenuItem item : items) {
+            if (defaultMgr.equals(item.getActionCommand())) {
+                item.setSelected(true);
+            }
+        }
+    }
+    
+    public PowerManager getManager() {
+        // start with default
+        String name = InstanceManager.powerManagerInstance().getUserName();
+        
+        // find active name
+        for (JMenuItem item : items) {
+            if (item.isSelected()) {
+                name = item.getActionCommand();
+                break;
+            }
+        }
+        // find PowerManager and return
+        List<Object> managers = InstanceManager.getList(PowerManager.class);
+        for (Object obj : managers) {
+            PowerManager mgr = (PowerManager) obj;
+            if (name.equals(mgr.getUserName())) return mgr;
+        }
+        // should not happen
+        return null;
     }
 }
 

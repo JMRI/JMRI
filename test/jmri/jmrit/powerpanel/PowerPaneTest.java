@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 /**
  * Tests for the Jmri package
  * @author	Bob Jacobsen
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class PowerPaneTest extends TestCase {
 
@@ -32,6 +32,7 @@ public class PowerPaneTest extends TestCase {
 				public void addPropertyChangeListener(PropertyChangeListener p) { prop = p; }
 				public void removePropertyChangeListener(PropertyChangeListener p) {}
 				void tell() { prop.propertyChange(null);}
+                public String getUserName() { return "test"; }
 			}; // end of anonymous PowerManager class new()
 		// store dummy power manager object for retrieval
 		InstanceManager.setPowerManager(manager);

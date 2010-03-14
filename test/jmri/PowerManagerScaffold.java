@@ -21,12 +21,13 @@ import java.beans.PropertyChangeListener;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class PowerManagerScaffold implements PowerManager {
 
 	public void 	setPower(int v) {}
 	public int	 	getPower()  { return 0; }
+	public String   getUserName() { return "none"; }
 
 	public void dispose() {}
 
