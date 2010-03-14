@@ -10,7 +10,7 @@ import org.jdom.Element;
  * classes persisting the status of Network port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 abstract public class AbstractNetworkConnectionConfigXml extends AbstractXmlAdapter {
 
@@ -80,6 +80,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractXmlAdap
     	boolean result = true;
         getInstance();
         // configure port name
+
         String hostName=null;
         try {
             hostName = e.getAttribute("address").getValue();
@@ -95,7 +96,15 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractXmlAdap
         } catch ( NullPointerException ex) {  // considered normal if the attributes are not present
         }
         
+        if (adapter.getSystemConnectionMemo()!=null){
+            if (e.getAttribute("userName")!=null){
+                adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
+            }
 
+            if (e.getAttribute("systemPrefix")!=null) {
+                adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
+            }
+        }
         if (e.getAttribute("option1")!=null) {
             String option1Setting = e.getAttribute("option1").getValue();
             adapter.configureOption1(option1Setting);
@@ -117,15 +126,6 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractXmlAdap
         adapter.connect();
         // if successful so far, go ahead and configure
         adapter.configure();
-
-        //We can only set the userName and systemPrefix, after the configure has been done.
-        if (e.getAttribute("userName")!=null) {
-            adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
-        }
-
-        if (e.getAttribute("systemPrefix")!=null) {
-            adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
-        }
 
         // once all the configure processing has happened, do any
         // extra config

@@ -10,7 +10,7 @@ import org.jdom.Element;
  * classes persisting the status of serial port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapter {
 
@@ -87,7 +87,16 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
         adapter.setPort(portName);
         String baudRate = e.getAttribute("speed").getValue();
         adapter.configureBaudRate(baudRate);
+                //We can only set the userName and systemPrefix, after the configure has been done.
+        if (adapter.getSystemConnectionMemo()!=null){
+            if (e.getAttribute("userName")!=null){
+                adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
+            }
 
+            if (e.getAttribute("systemPrefix")!=null) {
+                adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
+            }
+        }
         if (e.getAttribute("option1")!=null) {
             String option1Setting = e.getAttribute("option1").getValue();
             adapter.configureOption1(option1Setting);
@@ -122,15 +131,6 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
         
         // if successful so far, go ahead and configure
         adapter.configure();
-        
-        //We can only set the userName and systemPrefix, after the configure has been done.
-        if (e.getAttribute("userName")!=null) {
-            adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
-        }
-        
-        if (e.getAttribute("systemPrefix")!=null) {
-            adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
-        }
 
         // once all the configure processing has happened, do any
         // extra config
