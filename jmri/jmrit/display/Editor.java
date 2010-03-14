@@ -150,6 +150,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     // map of icon editor frames (incl, icon editor) keyed by name
     HashMap <String, JFrameItem> _iconEditorFrame = new HashMap <String, JFrameItem>();
 
+    public Editor() {}
+
     public Editor(String name) {
         super(name);
         setName(name);
@@ -591,7 +593,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     break;
                 case 1:
                     if (deletePanel() ) { // disposes everything
-                        dispose();
+                        dispose(true);
                     }
                     break;
                 case 2:
@@ -610,52 +612,44 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
     }
 
-    @SuppressWarnings("unchecked")
     protected void changeView(String className) {
-        FileHistory r = InstanceManager.getDefault(FileHistory.class);
-        if (r!=null) {
-            List<FileHistory.OperationMemo> list = r.getList();
-            FileHistory.OperationMemo m = list.get(list.size()-1);
-            java.io.File dir = LoadStoreBaseAction.userFileChooser.getCurrentDirectory();
-            java.io.File file = new java.io.File(dir, m.filename);
-            if (!file.exists()) {
-                JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(rb.getString("CantFindFile"),
-                                              file.getPath()), rb.getString("errorTitle"),JOptionPane.ERROR_MESSAGE);
-                file = LoadXmlConfigAction.getFile(LoadStoreBaseAction.userFileChooser);
-            }
-            log.info("Config file= "+file.getPath());
-            boolean result = false;
-            try {
-                ConfigXmlManager configMgr = (ConfigXmlManager)InstanceManager.configureManagerInstance();
-                Element root = configMgr.rootFromFile(file);
-                List <Element> panels = root.getChildren("paneleditor");
-                for (int i = 0; i<panels.size(); i++) {
-                    Element panel = panels.get(i);
 
-                    String name = "";
-                    if (panel.getAttribute("name")!=null)
-                        name = panel.getAttribute("name").getValue();
-                    if (name.equals(getName())) {
-                        XmlAdapter adapter = (XmlAdapter)Class.forName(className).newInstance();
-                        //adapter.setConfigXmlManager(InstanceManager.configureManagerInstance());
-                        adapter.setConfigXmlManager(configMgr);
-                        boolean loadStatus = adapter.load(panel);
-                        log.debug("load status for "+className+" is "+loadStatus);
-                        result = true;
-                        break;
-                    }
-                }
-                if (result) {
-                    dispose();
-                } else {
-                    log.error("No panel name matching \""+getName()+"\" found in file: "+m.filename);
-                }
-            } catch (Exception e) {
-                log.error("Problem loading File: "+file.getPath()+", e= "+e);
+        JFrame frame = getTargetFrame();
+        Dimension size = frame.getSize();
+        Point posn = frame.getLocation();
+
+        try {
+            Editor ed = (Editor)Class.forName(className).newInstance();
+            //ed.setEditable(false);
+            ed.setName(getName());
+            ed.init(getName());
+            //ed.getTargetFrame().setTitle(frame.getTitle());
+            ed.getTargetFrame().setLocation(posn.x,posn.y);
+            ed.getTargetFrame().setSize(size.width,size.height);
+            ed.setAllEditable(isEditable());
+            ed.setAllPositionable(allPositionable());
+            ed.setShowCoordinates(showCoordinates());
+            ed.setAllShowTooltip(showTooltip());
+            ed.setAllControlling(allControlling());
+            ed.setShowHidden(isVisible());
+            ed.setPanelMenu(frame.getJMenuBar().isVisible());
+            ed.setScroll(getScrollable());
+            ed.setTitle();
+            ed._contents = _contents;
+            for (int i = 0; i<_contents.size(); i++) {
+                ed.addToTarget(_contents.get(i));
             }
-        } else {
-            log.error("Cannot read file history");
+            ed.pack();
+            ed.setVisible(true);
+            jmri.jmrit.display.PanelMenu.instance().addEditorPanel(ed);
+        } catch (ClassNotFoundException cnfe) {
+            log.error("changeView exception "+cnfe.toString());
+        } catch (InstantiationException ie) {
+            log.error("changeView exception "+ie.toString());
+        } catch (IllegalAccessException iae) {
+            log.error("changeView exception "+iae.toString());
         }
+        dispose(false);
     }
 
     /************************* Popup Item Methods ***********************/
@@ -982,7 +976,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _contents.add(l);
     }
     
-    private void addToTarget(Positionable l) {
+    protected void addToTarget(Positionable l) {
         JComponent c = (JComponent)l;
         c.invalidate();
     	_targetPanel.remove(c);
@@ -996,7 +990,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     static final public String[] ICON_EDITORS = {"SensorEditor", "RightTOEditor", "LeftTOEditor",
                         "SignalHeadEditor", "SignalMastEditor", "MemoryEditor", "ReporterEditor",
-                        "LightEditor", "BackgroundEditor", "MultiSensorEditor", "IconEditor"};
+                        "BackgroundEditor", "MultiSensorEditor", "IconEditor"};
     /**
     * @param name Icon editor's name
     */
@@ -1673,6 +1667,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             JFrameItem frame = iter.next();
             frame.setTitle(frame.getName()+" ("+name+")");
         }
+        setName(name);
     }
 
     protected JFrameItem makeAddIconFrame(String title, String select1, String select2, 
@@ -1775,7 +1770,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 		return (selectedValue == JOptionPane.YES_OPTION);
     }
 
-    public void dispose() {		
+    public void dispose(boolean clear) {		
         if (_debug) log.debug("Editor delete and dispose done.");
         Iterator <JFrameItem> iter = _iconEditorFrame.values().iterator();
         while (iter.hasNext()) {
@@ -1786,8 +1781,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 		// delete panel - deregister the panel for saving 
         InstanceManager.configureManagerInstance().deregister(this);
 		jmri.jmrit.display.PanelMenu.instance().deletePanel(this);
-		setVisible(false);		
-        _contents.clear();
+		setVisible(false);
+        if (clear) {
+            _contents.clear();
+        }
         removeAll();
         super.dispose();
     }
@@ -2178,6 +2175,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     /*********************** Abstract Methods ************************/
+
+    /*
+     * set up target panel, frame etc.
+     */
+    abstract protected void init(String name);
     /*
      * Closing of Target frame window.
      */

@@ -72,8 +72,14 @@ public class PanelEditor extends Editor implements ItemListener {
 
     JComboBox _addIconBox;
 
+    public PanelEditor() {}
+
     public PanelEditor(String name) {
         super(name);
+        init(name);
+    }
+
+    protected void init(String name) {
         _debug = log.isDebugEnabled();
         java.awt.Container contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -133,7 +139,7 @@ public class PanelEditor extends Editor implements ItemListener {
         fileMenu.add(editItem);
         editItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
-					changeView("jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml");
+					changeView("jmri.jmrit.display.controlPanelEditor.ControlPanelEditor");
                 }
             });
 
@@ -143,7 +149,7 @@ public class PanelEditor extends Editor implements ItemListener {
         deleteItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
 					if (deletePanel() ) {
-                        dispose();
+                        dispose(true);
                     }
                 }
             });
@@ -493,7 +499,7 @@ public class PanelEditor extends Editor implements ItemListener {
         editMenu.add(new AbstractAction(rb.getString("DeletePanel")){
                 public void actionPerformed(ActionEvent e) {
                     if (deletePanel()) {
-                        dispose();
+                        dispose(true);
                     }
                 }
             });
