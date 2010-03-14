@@ -9,7 +9,7 @@ import junit.framework.*;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class PanelEditorTest extends TestCase {
 
@@ -21,6 +21,16 @@ public class PanelEditorTest extends TestCase {
 	    
 	    // load and display
 	    File f = new File("java"+File.separator+"test"+File.separator+"jmri"+File.separator+"jmrit"+File.separator+"display"+File.separator+"PanelEditorTest1.xml");
+        cm.load(f);
+        
+	}
+
+	public void testShow2() throws Exception {
+	    jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager(){
+	    };
+	    
+	    // load and display
+	    File f = new File("java/test/jmri/jmrit/display/configurexml/OneOfEach.xml");
         cm.load(f);
         
 	}

@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -200,7 +200,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         if (log.isDebugEnabled()) log.debug("loadTextInfo");
         jmri.jmrit.display.PositionablePopupUtil util = l.getPopupUtility();
         if (util==null) {
-            log.warn("PositionablePopupUtil is null!");
+            log.warn("PositionablePopupUtil is null! "+element.toString());
             return;
         }
         Attribute a = element.getAttribute("size");
