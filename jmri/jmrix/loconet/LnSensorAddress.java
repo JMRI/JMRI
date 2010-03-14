@@ -26,7 +26,7 @@ package jmri.jmrix.loconet;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class LnSensorAddress {
 
@@ -45,6 +45,16 @@ public class LnSensorAddress {
         this.prefix = prefix;
     }
 
+    /**
+     * Old style ctor for e.g. CATS migration.
+     * Cannot handle multiple system connections.
+     * @deprecated 2.9.4
+     */
+    @Deprecated
+    public LnSensorAddress(int sw1, int sw2) {
+        this(sw1, sw2, "L");
+    }
+    
     public LnSensorAddress(String s, String prefix) {
         _valid = false;
         this.prefix = prefix;
