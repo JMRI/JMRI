@@ -17,7 +17,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -96,7 +96,7 @@ public class TabbedPreferences extends AppConfigBase {
         JTabbedPane startupPanel = new JTabbedPane();
         JTabbedPane displayPanel = new JTabbedPane();
         JTabbedPane rosterPanel = new JTabbedPane();
-        JTabbedPane messagesPanel = new JTabbedPane();
+
         detailpanel.add(startupPanel, "STARTUP");
         detailpanel.add(displayPanel, "DISPLAY");
         detailpanel.add(rosterPanel, "ROSTER");
