@@ -12,6 +12,7 @@ import java.util.Vector;*/
 
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
+import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -19,7 +20,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.29 $
+ * @version	$Revision: 1.30 $
  */
 abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
@@ -43,6 +44,12 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
     protected JCheckBox showAdvanced = new JCheckBox("Additional Connection Settings");
     protected String[] opt1List;
     protected String[] opt2List;
+    protected JLabel systemPrefixLabel = new JLabel("Connection Prefix");
+    protected JLabel connectionNameLabel = new JLabel("Connection Name");
+    protected JTextField systemPrefixField = new JTextField();
+    protected JTextField connectionNameField = new JTextField();
+    protected String systemPrefix;
+    protected String connectionName;
     
     protected JPanel _details;
     //protected jmri.jmrix.PortAdapter adapter = null;
@@ -59,7 +66,6 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
     
 	abstract public void loadDetails(final JPanel details) ;
 
-    
     protected int NUMOPTIONS = 2;
     
     abstract void showAdvancedItems();

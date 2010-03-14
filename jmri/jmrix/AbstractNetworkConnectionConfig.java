@@ -22,7 +22,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 abstract public class AbstractNetworkConnectionConfig extends AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
@@ -49,7 +49,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                 adapter.setHostName(hostNameField.getText());
             }
         });
-            hostNameField.addKeyListener( new KeyListener() {
+        hostNameField.addKeyListener( new KeyListener() {
             public void keyPressed(KeyEvent keyEvent) {
             }
             public void keyReleased(KeyEvent keyEvent) {
@@ -91,7 +91,37 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                 adapter.configureOption2((String)opt2Box.getSelectedItem());
             }
         });
-        
+
+        if(adapter.getSystemConnectionMemo()!=null){
+            systemPrefixField.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText());
+                }
+            });
+                systemPrefixField.addKeyListener( new KeyListener() {
+                public void keyPressed(KeyEvent keyEvent) {
+                }
+                public void keyReleased(KeyEvent keyEvent) {
+                   adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText());
+                }
+                public void keyTyped(KeyEvent keyEvent) {
+                }
+            });
+            connectionNameField.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText());
+                }
+            });
+            connectionNameField.addKeyListener( new KeyListener() {
+                public void keyPressed(KeyEvent keyEvent) {
+                }
+                public void keyReleased(KeyEvent keyEvent) {
+                   adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText());
+                }
+                public void keyTyped(KeyEvent keyEvent) {
+                }
+            });
+        }
         init = true;
     }
 
@@ -129,6 +159,11 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         if(hostNameField.getActionListeners().length >0)
         	hostNameField.removeActionListener(hostNameField.getActionListeners()[0]);
 
+        if(adapter.getSystemConnectionMemo()!=null){
+            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+            connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
+            NUMOPTIONS=NUMOPTIONS+2;
+        }
         opt1List = adapter.validOption1();
         opt1Box.removeAllItems();
         // need to remove ActionListener before addItem() or action event will occur
@@ -197,6 +232,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         if(!isHostNameAdvanced()) stdrows++;
         if ((!isOptList1Advanced())&&(opt1List.length>1)) stdrows++;
         if ((!isOptList2Advanced())&&(opt2List.length>1)) stdrows++;
+        if(adapter.getSystemConnectionMemo()!=null) stdrows=stdrows+2;
         if (stdrows == NUMOPTIONS){
             incAdvancedOptions=false;
         } else{
@@ -256,6 +292,12 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         if ((!isOptList2Advanced())&&(opt2List.length>1)) {
             _details.add(opt2BoxLabel);
             _details.add(opt2Box);
+        }
+        if(adapter.getSystemConnectionMemo()!=null){
+            _details.add(systemPrefixLabel);
+            _details.add(systemPrefixField);
+            _details.add(connectionNameLabel);
+            _details.add(connectionNameField);
         }
         if (incAdvanced){
             _details.add(new JLabel(" "));
