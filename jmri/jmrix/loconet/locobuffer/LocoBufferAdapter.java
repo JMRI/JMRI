@@ -21,7 +21,7 @@ import gnu.io.SerialPortEventListener;
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001, 2008, 2010
- * @version			$Revision: 1.45 $
+ * @version			$Revision: 1.46 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -201,7 +201,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         adaptermemo = memo;
         // do the common manager config
         memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-        memo.configureManagers(packets);
+        memo.configureManagers();
 
         // start operation
         packets.startThreads();

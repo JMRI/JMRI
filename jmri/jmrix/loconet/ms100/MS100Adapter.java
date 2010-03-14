@@ -28,7 +28,7 @@ import Serialio.SerialPortLocal;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.38 $
+ * @version			$Revision: 1.39 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -246,7 +246,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
 
         // do the common manager config
         memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-        memo.configureManagers(packets);
+        memo.configureManagers();
 
         // start operation
         packets.startThreads();

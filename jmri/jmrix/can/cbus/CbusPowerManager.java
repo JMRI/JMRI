@@ -14,7 +14,7 @@ import jmri.jmrix.can.CanMessage;
  *
  * @author	Bob Jacobsen    Copyright (C) 2001
  * @author	Andrew CRosland Copyright (C) 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class CbusPowerManager implements PowerManager, CanListener {
 
@@ -24,6 +24,8 @@ public class CbusPowerManager implements PowerManager, CanListener {
         tc = TrafficController.instance();
         tc.addCanListener(this);
     }
+
+    public String getUserName() { return "CBus"; }
 
     int power = ON;
 

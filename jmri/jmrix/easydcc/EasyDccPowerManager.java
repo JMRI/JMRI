@@ -8,7 +8,7 @@ import jmri.PowerManager;
 /**
  * PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class EasyDccPowerManager implements PowerManager, EasyDccListener {
 
@@ -17,6 +17,8 @@ public class EasyDccPowerManager implements PowerManager, EasyDccListener {
 		tc = EasyDccTrafficController.instance();
 		tc.addEasyDccListener(this);
 	}
+
+    public String getUserName() { return "EasyDcc"; }
 
 	int power = UNKNOWN;
 

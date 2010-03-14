@@ -9,7 +9,7 @@ import jmri.PowerManager;
  * PowerManager implementation for controlling layout power.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class EcosPowerManager implements PowerManager, EcosListener {
 
@@ -27,6 +27,8 @@ public class EcosPowerManager implements PowerManager, EcosListener {
         tc.sendEcosMessage(m, this);
         
     }
+
+    public String getUserName() { return "Ecos"; }
 
     int power = UNKNOWN;
 

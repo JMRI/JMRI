@@ -9,7 +9,7 @@ import jmri.PowerManager;
  * PowerManager implementation for controlling layout power.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class NcePowerManager implements PowerManager, NceListener {
 
@@ -18,6 +18,8 @@ public class NcePowerManager implements PowerManager, NceListener {
         tc = NceTrafficController.instance();
         tc.addNceListener(this);
     }
+
+    public String getUserName() { return "NCE"; }
 
     int power = UNKNOWN;
 

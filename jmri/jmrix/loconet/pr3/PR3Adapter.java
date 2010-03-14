@@ -12,7 +12,7 @@ import gnu.io.SerialPort;
  * refers to the switch settings on the new Digitrax PR3
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006, 2008
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class PR3Adapter extends LocoBufferAdapter {
 
@@ -68,7 +68,7 @@ public class PR3Adapter extends LocoBufferAdapter {
 
             // do the common manager config
             memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-            memo.configureManagersPR2(packets);
+            memo.configureManagersPR2();
     
             // start operation
             packets.startThreads();
@@ -95,7 +95,7 @@ public class PR3Adapter extends LocoBufferAdapter {
 
             // do the common manager config
             memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-            memo.configureManagersMS100(packets);
+            memo.configureManagersMS100();
     
             // start operation
             packets.startThreads();

@@ -14,7 +14,7 @@ import jmri.jmrix.loconet.*;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author          Bob Jacobsen    Copyright (C) 2005
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class IntelliboxAdapter extends LocoBufferAdapter {
 
@@ -41,7 +41,7 @@ public void configure() {
 
     // do the common manager config
     memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-    memo.configureManagers(packets);
+    memo.configureManagers();
 
     // start operation
     packets.startThreads();

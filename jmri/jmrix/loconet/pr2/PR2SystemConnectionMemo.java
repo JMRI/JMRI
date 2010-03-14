@@ -9,7 +9,7 @@ import jmri.jmrix.loconet.*;
  * Lightweight class to denote that a PR2 is active
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
 
@@ -21,8 +21,8 @@ public class PR2SystemConnectionMemo extends LocoNetSystemConnectionMemo  {
    /**
      * Configure the subset of LocoNet managers valid for the PR2.
      */
-    public void configureManagers(jmri.jmrix.loconet.pr2.LnPacketizer packets) {
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.pr2.LnPr2PowerManager(getSlotManager(), packets));
+    public void configureManagers() {
+        jmri.InstanceManager.setPowerManager(new jmri.jmrix.loconet.pr2.LnPr2PowerManager(this));
 
         /* jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager()); */
 

@@ -22,7 +22,7 @@ import jmri.jmrix.loconet.*;
  *
  * @author Alex Shepherd  Copyright (c) 2002
  * @author Bob Jacobsen
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
@@ -103,7 +103,7 @@ public class LnMessageClient extends LnTrafficRouter {
        
         // do the common manager config
         memo.configureCommandStation(true, false,"<unknown>");  // for now, assume full capability
-        memo.configureManagers(this);
+        memo.configureManagers();
 
         // the serial connections (LocoBuffer et al) start
         // various threads here.

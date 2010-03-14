@@ -15,13 +15,16 @@ import jmri.JmriException;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
-public class LnPowerManager implements PowerManager, LocoNetListener {
+public class LnPowerManager 
+        extends jmri.managers.AbstractPowerManager
+        implements PowerManager, LocoNetListener {
 
-	public LnPowerManager(LnTrafficController tc) {
+	public LnPowerManager(LocoNetSystemConnectionMemo memo) {
+	    super(memo);
 	    // standard LocoNet - connect
-		this.tc = tc;
+		this.tc = memo.getLnTrafficController();
 		tc.addLocoNetListener(~0, this);
 	}
 
@@ -55,20 +58,10 @@ public class LnPowerManager implements PowerManager, LocoNetListener {
 	}
 
 	LnTrafficController tc = null;
+	
 	private void checkTC() throws JmriException {
 		if (tc == null) throw new JmriException("Use power manager after dispose");
 	}
-
-	// to hear of changes
-	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-	public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-		pcs.addPropertyChangeListener(l);
-	}
-	protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
-	public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-		pcs.removePropertyChangeListener(l);
-	}
-
 
 	// to listen for status changes from LocoNet
 	public void message(LocoNetMessage m) {
@@ -83,6 +76,5 @@ public class LnPowerManager implements PowerManager, LocoNetListener {
 	}
 
 }
-
 
 /* @(#)LnPowerManager.java */

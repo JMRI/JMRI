@@ -4,7 +4,7 @@
  * Description:		PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version			$Revision: 2.7 $
+ * @version			$Revision: 2.8 $
  */
 
 package jmri.jmrix.lenz;
@@ -21,6 +21,8 @@ public class XNetPowerManager implements PowerManager, XNetListener {
 		// request the current command station status
 		tc.sendXNetMessage(XNetMessage.getCSStatusRequestMessage(),this);
 	}
+
+    public String getUserName() { return "XPressNet"; }
 
 	int power = UNKNOWN;
 

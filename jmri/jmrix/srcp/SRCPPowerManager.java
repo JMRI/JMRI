@@ -8,7 +8,7 @@ import jmri.PowerManager;
 /**
  * PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SRCPPowerManager implements PowerManager, SRCPListener {
 
@@ -17,6 +17,8 @@ public class SRCPPowerManager implements PowerManager, SRCPListener {
 		tc = SRCPTrafficController.instance();
 		tc.addSRCPListener(this);
 	}
+
+    public String getUserName() { return "SRCP"; }
 
 	int power = UNKNOWN;
 

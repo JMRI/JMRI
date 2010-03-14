@@ -10,7 +10,7 @@ import jmri.PowerManager;
  * XPA+modem connected to an XPressNet based system.
  *
  * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  **/
 public class XpaPowerManager implements PowerManager, XpaListener {
 
@@ -19,6 +19,8 @@ public class XpaPowerManager implements PowerManager, XpaListener {
         tc = XpaTrafficController.instance();
         tc.addXpaListener(this);
     }
+
+    public String getUserName() { return "XPA"; }
 
     int power = UNKNOWN;
 

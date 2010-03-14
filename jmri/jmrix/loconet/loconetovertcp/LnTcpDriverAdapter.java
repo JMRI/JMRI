@@ -17,7 +17,7 @@ import java.util.Vector;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2002, 2003
  * @author      Alex Shepherd Copyright (C) 2003, 2006
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 
 public class LnTcpDriverAdapter extends LnPortController {
@@ -37,7 +37,7 @@ public class LnTcpDriverAdapter extends LnPortController {
         
         // do the common manager config
         memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-        memo.configureManagers(packets);
+        memo.configureManagers();
 
         // start operation
         packets.startThreads();

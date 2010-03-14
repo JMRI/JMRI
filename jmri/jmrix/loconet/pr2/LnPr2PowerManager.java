@@ -6,13 +6,7 @@ import jmri.JmriException;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 
-import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LnOpsModeProgrammer;
-import jmri.jmrix.loconet.LnPowerManager;
-import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.SlotManager;
-import jmri.jmrix.loconet.LnPr2ThrottleManager;
+import jmri.jmrix.loconet.*;
 
 /**
  * PowerManager implementation for controlling layout power via PR2
@@ -24,19 +18,19 @@ import jmri.jmrix.loconet.LnPr2ThrottleManager;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class LnPr2PowerManager extends LnPowerManager {
 
-	public LnPr2PowerManager(SlotManager sm, LnTrafficController tc) {
-	    super(tc);
-	    this.sm = sm;
-	    this.tc = tc;
+	public LnPr2PowerManager(LocoNetSystemConnectionMemo memo) {
+	    super(memo);
+	    this.sm = memo.getSlotManager();
+	    this.tc = memo.getLnTrafficController();
 	}
 
     SlotManager sm;
 	LnTrafficController tc;
-	
+		
 	public void setPower(int v) throws JmriException {
 		power = UNKNOWN;
 		

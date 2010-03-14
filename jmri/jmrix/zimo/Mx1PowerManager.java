@@ -9,7 +9,7 @@ import jmri.PowerManager;
  * PowerManager implementation for controlling layout power.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -21,6 +21,8 @@ public class Mx1PowerManager implements PowerManager, Mx1Listener {
 		tc = Mx1TrafficController.instance();
 		tc.addMx1Listener(~0, this);
         }
+
+    public String getUserName() { return "Mx1"; }
 
 	int power = UNKNOWN;
 

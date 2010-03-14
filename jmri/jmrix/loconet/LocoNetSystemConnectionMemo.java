@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -86,23 +86,30 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      * from classes that don't inherit, including hexfile.HexFileFrame
      * and locormi.LnMessageClient
      */
-    public void configureManagers(LnTrafficController controller) {
+    public void configureManagers() {
     
-        LocoNetThrottledTransmitter tm = new LocoNetThrottledTransmitter(controller);
+        LocoNetThrottledTransmitter tm = new LocoNetThrottledTransmitter(getLnTrafficController());
         
-        InstanceManager.setPowerManager(new jmri.jmrix.loconet.LnPowerManager(controller));
+        InstanceManager.setPowerManager(
+            new jmri.jmrix.loconet.LnPowerManager(this));
 
-        InstanceManager.setTurnoutManager(new jmri.jmrix.loconet.LnTurnoutManager(controller, tm, getSystemPrefix()));
+        InstanceManager.setTurnoutManager(
+            new jmri.jmrix.loconet.LnTurnoutManager(getLnTrafficController(), tm, getSystemPrefix()));
 
-        InstanceManager.setLightManager(new jmri.jmrix.loconet.LnLightManager(controller, getSystemPrefix()));
+        InstanceManager.setLightManager(
+            new jmri.jmrix.loconet.LnLightManager(getLnTrafficController(), getSystemPrefix()));
 
-        InstanceManager.setSensorManager(new jmri.jmrix.loconet.LnSensorManager(controller,getSystemPrefix()));
+        InstanceManager.setSensorManager(
+            new jmri.jmrix.loconet.LnSensorManager(getLnTrafficController(),getSystemPrefix()));
 
-        InstanceManager.setThrottleManager(new jmri.jmrix.loconet.LnThrottleManager(getSlotManager()));
+        InstanceManager.setThrottleManager(
+            new jmri.jmrix.loconet.LnThrottleManager(getSlotManager()));
 
-        InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager(controller, getSystemPrefix()));
+        InstanceManager.setReporterManager(
+            new jmri.jmrix.loconet.LnReporterManager(getLnTrafficController(), getSystemPrefix()));
 
-        InstanceManager.addClockControl(new jmri.jmrix.loconet.LnClockControl(getSlotManager(), controller));
+        InstanceManager.addClockControl(
+            new jmri.jmrix.loconet.LnClockControl(getSlotManager(), getLnTrafficController()));
 
     }
 }

@@ -6,7 +6,7 @@
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
  * @author			Paul Bender Copyright (C) 2009
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  * @deprecated 2.9.5
  */
 
@@ -19,6 +19,8 @@ import java.awt.event.ActionEvent;
 public class XNetSimulatorAction 			extends AbstractAction {
 
 	public XNetSimulatorAction(String s) { super(s);}
+
+    public String getUserName() { return "XPressNet"; }
 
     public void actionPerformed(ActionEvent e) {
 		// create a XNetSimulatorFrame
