@@ -42,7 +42,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class LnClockControl extends DefaultClockControl implements SlotListener
 {
@@ -61,7 +61,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
         else
             log.error("No LocoNet connection available, LnClockControl can't function");
 			
-		// Get an instance of the internal timebase
+		// Get internal timebase
         clock = jmri.InstanceManager.timebaseInstance();
 		// Create a Timebase listener for Minute change events from the internal clock
         minuteChangeListener = new java.beans.PropertyChangeListener() {
