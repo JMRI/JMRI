@@ -25,7 +25,7 @@ import java.net.URL;
  * It assumes that Java Help 1.1.8 is in use
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class HelpUtil {
@@ -35,20 +35,23 @@ public class HelpUtil {
      * by adding the general help
      * @return new Help menu, in case user wants to add more items
      */
-    static public JMenu helpMenu(JMenuBar menuBar, final JFrame frame, String ref, boolean direct) {
-        JMenu helpMenu = makeHelpMenu(frame, ref, direct);
+    static public JMenu helpMenu(JMenuBar menuBar, String ref, boolean direct) {
+        JMenu helpMenu = makeHelpMenu(ref, direct);
         menuBar.add(helpMenu);
         return helpMenu;
     }
     
     static java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("apps.AppsBundle");
     
-    static public JMenu makeHelpMenu(final JFrame frame, String ref, boolean direct) {
-        if (!initOK()) return null;  // initialization failed
+    static public JMenu makeHelpMenu(String ref, boolean direct) {
+        if (!initOK()) {
+            log.warn("help initialization not completed");
+            return null;  // initialization failed
+        }
         JMenu helpMenu = new JMenu(java.util.ResourceBundle.getBundle("jmri/util/UtilBundle").getString("HELP"));
         JMenuItem item = makeHelpMenuItem(ref);
         if (item == null) {
-            log.error("Can't make help menu item for "+frame.getTitle());
+            log.error("Can't make help menu item for "+ref);
             return null;
         }
         helpMenu.add(item);

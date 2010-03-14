@@ -37,7 +37,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.111 $
+ * @version     $Revision: 1.112 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -358,7 +358,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         try {
 
             // create menu and standard items
-            JMenu helpMenu = jmri.util.HelpUtil.makeHelpMenu(frame, mainWindowHelpID(), true);
+            JMenu helpMenu = jmri.util.HelpUtil.makeHelpMenu(mainWindowHelpID(), true);
             
             // tell help to use default browser for external types
             javax.help.SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
