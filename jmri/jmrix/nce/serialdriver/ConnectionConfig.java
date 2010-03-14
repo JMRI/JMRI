@@ -8,11 +8,11 @@ package jmri.jmrix.nce.serialdriver;
  * via an NCE SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
-	public final static String NAME = "Serial Interface";
+	public final static String NAME = "Serial";
 	
     /**
      * Ctor for an object being created during load process;

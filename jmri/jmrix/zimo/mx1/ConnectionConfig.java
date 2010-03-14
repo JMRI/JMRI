@@ -5,10 +5,10 @@ package jmri.jmrix.zimo.mx1;
 
 /**
  * Definition of objects to handle configuring an LocoBuffer layout connection
- * via a zimo MX-1 SerialDriverAdapter object.
+ * via a Zimo MX-1 SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -26,7 +26,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super();
     }
 
-    public String name() { return "Zimo MX-1"; }
+    public String name() { return "MX-1"; }
 
     protected void setInstance() { adapter = Mx1Adapter.instance(); }
 }

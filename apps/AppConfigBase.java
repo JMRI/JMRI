@@ -25,7 +25,7 @@ import javax.swing.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class AppConfigBase extends JmriPanel {
 
@@ -41,6 +41,10 @@ public class AppConfigBase extends JmriPanel {
      * or configuration dialog with default number of connections.
      */
     public AppConfigBase() {
+    }
+    
+    public static String getManufacturerName(int index) {
+        return JmrixConfigPane.instance(index).getCurrentManufacturerName();
     }
     
     public static String getConnection(int index) {
@@ -103,7 +107,7 @@ public class AppConfigBase extends JmriPanel {
         return true;
     }
 
-    private final static String none = "(none)";  // for later I8N?
+    //private final static String none = "(none)";  // for later I8N?
 
     /**
      * Checks to see if user selected a valid serial port

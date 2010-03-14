@@ -9,7 +9,7 @@ import javax.swing.*;
  * via a NetworkDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -34,7 +34,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public JTextField port;
     String portNumber ="";
 
-    public String name() { return "SRCP Connection"; }
+    public String name() { return "Network Connection"; }
 
     public void loadDetails(JPanel details) {
         JPanel temp = new JPanel();

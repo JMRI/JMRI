@@ -10,7 +10,7 @@ import jmri.jmrix.maple.nodeconfig.NodeConfigAction;
  * via an SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -48,7 +48,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
 	JFrame frame;
 	
-    public String name() { return "Maple serial"; }
+    public String name() { return "Serial"; }
 
     protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }

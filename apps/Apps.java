@@ -37,7 +37,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.110 $
+ * @version     $Revision: 1.111 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -390,121 +390,59 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         return " ";
     }
     
+    // line 4
     JLabel cs4 = new JLabel();
-    protected void buildLine4(JPanel pane2){
-        ConnectionStatus.instance().addConnection(AppConfigPanel.getConnection(0), AppConfigPanel.getPort(0));
-        cs4.setFont(pane2.getFont());
-        updateLine4();
-        pane2.add(cs4);
+    protected void buildLine4(JPanel pane){
+    	buildLine (0, cs4, pane);
     }
-    // Port 1 status line 4, upper case and red if connection is down
-    protected void updateLine4() {
-    	if (ConnectionStatus.instance().isConnectionOk(AppConfigPanel.getPort(0))){
-    		cs4.setForeground(Color.black);
-			cs4.setText(AppConfigPanel.getConnection(0));
-		} else {
-			cs4.setForeground(Color.red);
-			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
-					new Object[] { AppConfigPanel.getConnection(0), AppConfigPanel.getPort(0) });
-			cf = cf.toUpperCase();
-			cs4.setText(cf);
-		}
-		this.revalidate();
-	}
-    
+   
+    // line 5 optional
     JLabel cs5 = new JLabel(); 
-    protected void buildLine5(JPanel pane2){
-    	if (AppConfigPanel.getConnection(1).equals("(none)")){
-    		cs5.setText(" ");
-    		return;
-    	}
-        ConnectionStatus.instance().addConnection(AppConfigPanel.getConnection(1), AppConfigPanel.getPort(1));
-        cs5.setFont(pane2.getFont());
-        updateLine5();
-        //pane2.add(new JLabel(" "));
-        pane2.add(cs5);
+    protected void buildLine5(JPanel pane){
+    	buildLine (1, cs5, pane);
     }
-    // Port 2 status line 5, upper case and red if connection is down
-    protected void updateLine5() {
-    	if (AppConfigPanel.getConnection(1).equals("(none)"))
-    		return;
-    	if (ConnectionStatus.instance().isConnectionOk(AppConfigPanel.getPort(1))){
-    		cs5.setForeground(Color.black);
-			cs5.setText(AppConfigPanel.getConnection(1));
-		} else {
-			cs5.setForeground(Color.red);
-			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
-					new Object[] { AppConfigPanel.getConnection(1), AppConfigPanel.getPort(1) });
-			cf = cf.toUpperCase();
-			cs5.setText(cf);
-		}
-		this.revalidate();
-	}
-
-    // Port 3, optional connection
-    JLabel cs5a = new JLabel(); 
-    protected void buildLine5a(JPanel pane2){
-    	if (AppConfigPanel.getConnection(2).equals("(none)")){
-    		cs5a.setText(" ");
-    		return;
-    	}
-        ConnectionStatus.instance().addConnection(AppConfigPanel.getConnection(2), AppConfigPanel.getPort(2));
-        cs5a.setFont(pane2.getFont());
-        updateLine5a();
-        //pane2.add(new JLabel(" "));
-        pane2.add(cs5a);
-    }
-    // Port 3 status line 5a, upper case and red if connection is down
-    protected void updateLine5a() {
-    	if (AppConfigPanel.getConnection(2).equals("(none)"))
-    		return;
-    	if (ConnectionStatus.instance().isConnectionOk(AppConfigPanel.getPort(2))){
-    		cs5a.setForeground(Color.black);
-			cs5a.setText(AppConfigPanel.getConnection(2));
-		} else {
-			cs5a.setForeground(Color.red);
-			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
-					new Object[] { AppConfigPanel.getConnection(2), AppConfigPanel.getPort(2) });
-			cf = cf.toUpperCase();
-			cs5a.setText(cf);
-		}
-		this.revalidate();
-	}
     
-    // Port 4, optional connection
-    JLabel cs5b = new JLabel(); 
-    protected void buildLine5b(JPanel pane2){
-    	if (AppConfigPanel.getConnection(3).equals("(none)")){
-    		cs5b.setText(" ");
+    // line 6 optional
+    JLabel cs6 = new JLabel(); 
+    protected void buildLine6(JPanel pane){
+    	buildLine (2, cs6, pane);
+    }
+    
+    // line 7 optional
+    JLabel cs7 = new JLabel(); 
+    protected void buildLine7(JPanel pane){
+    	buildLine (3, cs7, pane);
+    }
+    
+    protected void buildLine(int number, JLabel cs, JPanel pane){
+    	if (AppConfigPanel.getConnection(number).equals("(none)")){
+    		cs.setText(" ");
     		return;
     	}
-        ConnectionStatus.instance().addConnection(AppConfigPanel.getConnection(3), AppConfigPanel.getPort(3));
-        cs5b.setFont(pane2.getFont());
-        updateLine5b();
-        //pane2.add(new JLabel(" "));
-        pane2.add(cs5b);
+        ConnectionStatus.instance().addConnection(AppConfigPanel.getConnection(number), AppConfigPanel.getPort(number));
+        cs.setFont(pane.getFont());
+        updateLine(number, cs);
+        pane.add(cs);
     }
-    // Port 4 status line 5b, upper case and red if connection is down
-    protected void updateLine5b() {
-    	if (AppConfigPanel.getConnection(3).equals("(none)"))
-    		return;
-    	if (ConnectionStatus.instance().isConnectionOk(AppConfigPanel.getPort(3))){
-    		cs5b.setForeground(Color.black);
-			cs5b.setText(AppConfigPanel.getConnection(3));
+    
+    protected void updateLine(int number, JLabel cs) {
+    	if (ConnectionStatus.instance().isConnectionOk(AppConfigPanel.getPort(number))){
+    		cs.setForeground(Color.black);
+			cs.setText(AppConfigPanel.getManufacturerName(number)+" "+ AppConfigPanel.getConnection(number));
 		} else {
-			cs5b.setForeground(Color.red);
+			cs.setForeground(Color.red);
 			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
-					new Object[] { AppConfigPanel.getConnection(3), AppConfigPanel.getPort(3) });
+					new Object[] {AppConfigPanel.getManufacturerName(number), AppConfigPanel.getConnection(number), AppConfigPanel.getPort(number)});
 			cf = cf.toUpperCase();
-			cs5b.setText(cf);
+			cs.setText(cf);
 		}
 		this.revalidate();
 	}
  
-    protected String line6() {
+    protected String line8() {
         return " ";
     }
-    protected String line7() {
+    protected String line9() {
         return MessageFormat.format(rb.getString("JavaVersionCredit"),
                                 new Object[]{System.getProperty("java.version","<unknown>"),
                                             Locale.getDefault().toString()});
@@ -537,11 +475,11 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         ConnectionStatus.instance().addPropertyChangeListener(this);
         buildLine4(pane2);
         buildLine5(pane2);
-        buildLine5a(pane2);
-        buildLine5b(pane2);
+        buildLine6(pane2);
+        buildLine7(pane2);
 
-        pane2.add(new JLabel(line6()));
-        pane2.add(new JLabel(line7()));
+        pane2.add(new JLabel(line8()));
+        pane2.add(new JLabel(line9()));
         pane1.add(pane2);
         return pane1;
     }
@@ -781,10 +719,10 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     
     public void propertyChange(PropertyChangeEvent ev){
 //   	log.info("property change: comm port status update");
-        updateLine4();
-        updateLine5();
-        updateLine5a();
-        updateLine5b();
+    	updateLine(0, cs4);
+    	updateLine(1, cs5);
+    	updateLine(2, cs6);
+    	updateLine(3, cs7);
     }
     
     static protected String jmriLog ="****** JMRI log *******";

@@ -8,7 +8,7 @@ package jmri.jmrix.easydcc.serialdriver;
  * via an NCE SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -26,7 +26,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super();
     }
 
-    public String name() { return "EasyDCC"; }
+    public String name() { return "Serial"; }
 
     protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }

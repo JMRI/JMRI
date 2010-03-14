@@ -6,7 +6,7 @@ package jmri.jmrix.tmcc.serialdriver;
  * Definition of objects to handle configuring a TMCC layout connection
  *
  * @author      Bob Jacobsen   Copyright (C) 2003, 2006
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -24,7 +24,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super();
     }
 	
-    public String name() { return "TMCC (Lionel)"; }
+    public String name() { return "Serial"; }
 
     protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }
