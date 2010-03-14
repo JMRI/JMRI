@@ -36,29 +36,16 @@ import javax.swing.border.LineBorder;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.86 $
+ * @version $Revision: 1.87 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
 
     public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
-    static final protected int FONT_COLOR =             0x00;
-    static final protected int BACKGROUND_COLOR =       0x01;
-    static final protected int BORDER_COLOR =           0x02;
-    static final protected int UNKOWN_FONT_COLOR =      0x03;
-    static final protected int UNKOWN_BACKGROUND_COLOR =    0x04;
-    static final protected int ACTIVE_FONT_COLOR =          0x05;
-    static final protected int ACTIVE_BACKGROUND_COLOR =    0x06;
-    static final protected int INACTIVE_FONT_COLOR =        0x07;
-    static final protected int INACTIVE_BACKGROUND_COLOR =  0x09;
-    static final protected int INCONSISTENT_FONT_COLOR =        0x0A;
-    static final protected int INCONSISTENT_BACKGROUND_COLOR =  0x0B;
-
-    static final protected int MIN_SIZE = 5;
 
     protected Editor _editor;
 
-    protected boolean debug = false; 
+    private boolean debug = false; 
     protected boolean _icon = false;
     protected boolean _text = false;
     protected boolean _control = false;
@@ -75,20 +62,22 @@ public class PositionableLabel extends JLabel implements Positionable {
     
     public PositionableLabel(String s, Editor editor) {
         super(s);
-        if (log.isDebugEnabled()) log.debug("PositionableLabel ctor (text) "+s);
         _editor = editor;
         _text = true;
         debug = log.isDebugEnabled();
+        if (debug) log.debug("PositionableLabel ctor (text) "+s);
         setHorizontalAlignment(JLabel.CENTER);
         setVerticalAlignment(JLabel.CENTER);
+        setPopupUtility(new PositionablePopupUtil(this, this));
     }
     public PositionableLabel(NamedIcon s, Editor editor) {
         super(s);
-        if (log.isDebugEnabled()) log.debug("PositionableLabel ctor (icon) "+s.getName());
         _editor = editor;
         _icon = true;
         _namedIcon = s;
         debug = log.isDebugEnabled();
+        if (debug) log.debug("PositionableLabel ctor (icon) "+s.getName());
+        setPopupUtility(new PositionablePopupUtil(this, this));
         updateSize();
     }
 
@@ -133,7 +122,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     	int oldDisplayLevel = _displayLevel;
     	_displayLevel = l;
     	if (oldDisplayLevel!=l){
-    		if (log.isDebugEnabled()) log.debug("Changing label display level from "+oldDisplayLevel+" to "+_displayLevel);
+    		if (debug) log.debug("Changing label display level from "+oldDisplayLevel+" to "+_displayLevel);
     		_editor.displayLevelChange(this);
     	}
     }
@@ -153,9 +142,9 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     public String getNameString() {
-        if (_icon) return "Icon";
-        else if (_text) return "Text";
-        else return "None!";
+        if (_icon && _displayLevel > Editor.BKG) return "Icon";
+        else if (_text) return "Text Label";
+        else return "Background";
     }
 
     // overide where used - e.g. momentary
@@ -175,82 +164,14 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
     
     /**************** end Positionable methods **********************/
-    
-    /**
-     * This deals with the formating of the JLabel and text boxes.
-     *
-     */
-    private int borderSize=0;
+    /****************************************************************/
 
-    public void setBorderSize(int border){
-        borderSize = border;
-        if(borderColor!=null){
-            setBorder(new LineBorder(borderColor, borderSize));
-            setSize(maxWidth(), maxHeight());
-            this.setHorizontalAlignment(JLabel.CENTER);
-        }
+    PositionablePopupUtil _popupUtil;
+    public void setPopupUtility(PositionablePopupUtil tu) {
+        _popupUtil = tu;
     }
-
-    public int getBorderSize(){
-        return borderSize;
-    }
-
-    private Color borderColor=null;
-
-    public void setBorderColor(Color border){
-        borderColor = border;
-        if(borderSize!=0){
-            setBorder(new LineBorder(borderColor, borderSize));
-            setSize(maxWidth(), maxHeight());
-            this.setHorizontalAlignment(JLabel.CENTER);
-        }
-    }
-
-    public Color getBorderColor(){
-        return borderColor;
-    }
-
-    private int margin=0;
-
-    public void setMargin(int mar){
-        margin = mar;
-        this.setHorizontalAlignment(JLabel.CENTER);
-        updateSize();
-    }
-
-    public int getMargin(){
-        return margin;
-    }
-    
-    private int fixedWidth=0;
-    private int fixedHeight=0;
-
-    public int getFixedWidth(){
-        return fixedWidth;
-    }
-
-    public int getFixedHeight(){
-        return fixedHeight;
-    }
-
-    public void setFixedSize(int width, int height){
-        //System.out.println("fixed width " + width + ", " + height);
-        fixedWidth=width;
-        fixedHeight=height;
-        updateSize();
-    }
-
-    public void setBackgroundColor(Color color){
-        if (_text){
-            // We consider that if the value passed is null, then the background is clear.
-            if(color==null){
-                setOpaque(false);
-            }
-            else {
-                setOpaque(true);
-                setBackground(color);
-            }
-        }
+    public PositionablePopupUtil getPopupUtility() {
+        return _popupUtil;
     }
 
     /**
@@ -265,57 +186,62 @@ public class PositionableLabel extends JLabel implements Positionable {
             //we have a combined icon/text therefore the icon is central to the text.
             setIconTextGap (-(_namedIcon.getIconWidth()+maxWidth())/2);
         }
+        if (debug) {
+            log.debug("updateSize: "+_popupUtil.toString()+"\nicon: "+
+                      ((_icon && _namedIcon!=null)?("w="+_namedIcon.getIconWidth()+", h="+_namedIcon.getIconHeight()):"null")+
+                      ", text: "+(getText()!=null?("w="+getFontMetrics(getFont()).stringWidth(getText())+
+                                                                                              "h="+getFontMetrics(getFont()).getHeight()):"null"));
+        }
     }
     
     public int maxWidth() {
         int max = 0;
-        if (fixedWidth!=0) {
-            max = fixedWidth;
-            if (margin!=0) {
-                max -= margin*2;
-            }
-            if (max < MIN_SIZE) {  // don't let item disappear
-                fixedWidth += MIN_SIZE-max;
-                max = MIN_SIZE;
+        if (_popupUtil!=null && _popupUtil.getFixedWidth()!=0) {
+            max = _popupUtil.getFixedWidth();
+            max += _popupUtil.getMargin()*2;
+            if (max < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
+                _popupUtil.setFixedWidth(PositionablePopupUtil.MIN_SIZE);
+                max = PositionablePopupUtil.MIN_SIZE;
             }
         } else {
-            if(_text && getText()!=null 
-                && !(getText().equals("  ") || getText().equals("")) ) {
-
+            if(_text && getText()!=null && getText().trim().length()>0 ) {
                 max = getFontMetrics(getFont()).stringWidth(getText());
             }
             if(_icon && _namedIcon!=null) {
                 max = Math.max(_namedIcon.getIconWidth(), max);
             }
-            if (margin!=0) {
-                max += margin*2;
+            if (_popupUtil!=null) {
+                max += _popupUtil.getMargin()*2;
+            }
+            if (max < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
+                max = PositionablePopupUtil.MIN_SIZE;
             }
         }
         if (debug) log.debug("maxWidth= "+max+" preferred width= "+getPreferredSize().width);
         return max;
     }
 
-    public int maxHeight(){
+    public int maxHeight() {
         int max = 0;
-        if (fixedHeight!=0) {
-            max = fixedHeight;
-            if (margin!=0) {
-                max -= margin*2;
-            }
-            if (max < MIN_SIZE) {   // don't let item disappear
-                fixedHeight += MIN_SIZE-max;
-                max = MIN_SIZE;
+        if (_popupUtil!=null && _popupUtil.getFixedHeight()!=0) {
+            max = _popupUtil.getFixedHeight();
+            max += _popupUtil.getMargin()*2;
+            if (max < PositionablePopupUtil.MIN_SIZE) {   // don't let item disappear
+                _popupUtil.setFixedHeight(PositionablePopupUtil.MIN_SIZE);
             }
         } else {
             //if(_text) {
-            if(_text && getText()!=null && !getText().equals("  ")) {
+            if(_text && getText()!=null && getText().trim().length()>0) {
                 max = getFontMetrics(getFont()).getHeight();
             }
             if(_icon && _namedIcon!=null) {
                 max = Math.max(_namedIcon.getIconHeight(), max);
             }
-            if (margin!=0) {
-                max += margin*2;
+            if (_popupUtil!=null) {
+                max += _popupUtil.getMargin()*2;
+            }
+            if (max < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
+                max = PositionablePopupUtil.MIN_SIZE;
             }
         }
         if (debug) log.debug("maxHeight= "+max+" preferred height= "+getPreferredSize().height);
@@ -337,17 +263,25 @@ public class PositionableLabel extends JLabel implements Positionable {
     *  Call to a Positionable that has unique requirements
     * - e.g. RpsPositionIcon, SecurityElementIcon
     */
-    public void showPopUp(JPopupMenu popup) {}
+    public boolean showPopUp(JPopupMenu popup) {
+        return false;
+    }
 
     /**
     * Rotate othogonally
+    * return true if popup is set
     */
-    public void setRotateOrthogonalMenu(JPopupMenu popup) {
-        popup.add(new AbstractAction(rb.getString("Rotate")) {
-            public void actionPerformed(ActionEvent e) {
-                rotateOrthogonal();
-            }
-        });
+    public boolean setRotateOrthogonalMenu(JPopupMenu popup) {
+
+        if (isIcon() && _displayLevel > Editor.BKG) {
+            popup.add(new AbstractAction(rb.getString("Rotate")) {
+                public void actionPerformed(ActionEvent e) {
+                    rotateOrthogonal();
+                }
+            });
+            return true;
+        }
+        return false;
     }
     protected void rotateOrthogonal() {
         _namedIcon.setRotation(_namedIcon.getRotation()+1, this);
@@ -358,12 +292,16 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     JFrame _iconEditorFrame;
     IconAdder _iconEditor;
-    public void setEditIconMenu(JPopupMenu popup) {
-        popup.add(new AbstractAction(rb.getString("EditIcon")) {
-                public void actionPerformed(ActionEvent e) {
-                    edit();
-                }
-            });
+    public boolean setEditIconMenu(JPopupMenu popup) {
+        if (_icon && !_text) {
+            popup.add(new AbstractAction(rb.getString("EditIcon")) {
+                    public void actionPerformed(ActionEvent e) {
+                        edit();
+                    }
+                });
+            return true;
+        }
+        return false;
     }
 
     protected boolean showIconEditorFrame(Container pos) {
@@ -415,142 +353,53 @@ public class PositionableLabel extends JLabel implements Positionable {
         invalidate();
     }
 
-    public void setRotateMenu(JPopupMenu popup) {
-        popup.add(CoordinateEdit.getRotateEditAction(this));
-    }
-
-    public void setScaleMenu(JPopupMenu popup) {
-        popup.add(CoordinateEdit.getScaleEditAction(this));
-    }
-
-    public void setFixedTextMenu(JPopupMenu popup) {
-        if (fixedWidth==0)
-            popup.add("Width= Auto");
-        else
-            popup.add("Width= " + this.maxWidth());
-
-        if (fixedHeight==0)
-            popup.add("Height= Auto");
-        else
-            popup.add("Height= " + this.maxHeight());
-
-        popup.add(CoordinateEdit.getFixedSizeEditAction(this));
-    }
-
-    public void setTextMarginMenu(JPopupMenu popup) {
-        if((fixedHeight==0)||(fixedWidth==0)) {
-            popup.add("Margin= " + this.getMargin());
-            popup.add(CoordinateEdit.getMarginEditAction(this));
+    /**
+    * Rotate degrees
+    * return true if popup is set
+    */
+    public boolean setRotateMenu(JPopupMenu popup) {
+        if (isIcon() && _displayLevel > Editor.BKG) {
+            popup.add(CoordinateEdit.getRotateEditAction(this));
+            return true;
         }
+        return false;
     }
 
-    public void setTextBorderMenu(JPopupMenu popup) {
-        popup.add("Border Size= " + borderSize);
-        popup.add(CoordinateEdit.getBorderEditAction(this));
-        JMenu colorMenu = new JMenu(rb.getString("BorderColorMenu"));
-        makeColorMenu(colorMenu, BORDER_COLOR);
-        popup.add(colorMenu);
+    /**
+    * Scale percentage
+    * return true if popup is set
+    */
+    public boolean setScaleMenu(JPopupMenu popup) {
+        if (isIcon() && _displayLevel > Editor.BKG) {
+            popup.add(CoordinateEdit.getScaleEditAction(this));
+            return true;
+        }
+        return false;
     }
 
-    protected JMenu makeFontSizeMenu() {
-        JMenu sizeMenu = new JMenu("Font Size");
-        ButtonGroup buttonGrp = new ButtonGroup();
-        addFontMenuEntry(sizeMenu, buttonGrp, 6);
-        addFontMenuEntry(sizeMenu, buttonGrp, 8);
-        addFontMenuEntry(sizeMenu, buttonGrp, 10);
-        addFontMenuEntry(sizeMenu, buttonGrp, 11);
-        addFontMenuEntry(sizeMenu, buttonGrp, 12);
-        addFontMenuEntry(sizeMenu, buttonGrp, 14);
-        addFontMenuEntry(sizeMenu, buttonGrp, 16);
-        addFontMenuEntry(sizeMenu, buttonGrp, 20);
-        addFontMenuEntry(sizeMenu, buttonGrp, 24);
-        addFontMenuEntry(sizeMenu, buttonGrp, 28);
-        addFontMenuEntry(sizeMenu, buttonGrp, 32);
-        addFontMenuEntry(sizeMenu, buttonGrp, 36);
-        return sizeMenu;
+
+    public boolean setTextEditMenu(JPopupMenu popup) {
+        if (isText()) {
+            popup.add(CoordinateEdit.getTextEditAction(this, "EditText"));
+            return true;
+        }
+        return false;
     }
     
-    void addFontMenuEntry(JMenu menu, ButtonGroup fontButtonGroup, final int size) {
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(""+size);
-        r.addActionListener(new ActionListener() {
-            final float desiredSize = size+0.f;
-            public void actionPerformed(ActionEvent e) { setFontSize(desiredSize); }
-        });
-        fontButtonGroup.add(r);
-        if (getFont().getSize() == size) r.setSelected(true);
-        else r.setSelected(false);
-        menu.add(r);
-    }
-
-    public void setFontSize(float newSize) {
-        setFont(jmri.util.FontUtil.deriveFont(getFont(), newSize));
-        //setSize(getPreferredSize().width, getPreferredSize().height);
-        updateSize();
-    }
-
-    void setItalic() {
-        if (log.isDebugEnabled())
-            log.debug("When style item selected italic state is "+italic.isSelected());
-        if (italic.isSelected()) setFontStyle(Font.ITALIC, 0);
-        else setFontStyle(0, Font.ITALIC);
-    }
-    void setBold() {
-        if (log.isDebugEnabled())
-            log.debug("When style item selected bold state is "+bold.isSelected());
-        if (bold.isSelected()) setFontStyle(Font.BOLD, 0);
-        else setFontStyle(0, Font.BOLD);
-    }
-
-    protected JMenu makeFontStyleMenu() {
-        JMenu styleMenu = new JMenu(rb.getString("FontStyle"));
-        styleMenu.add(italic = newStyleMenuItem(new AbstractAction(rb.getString("Italic")) {
-            public void actionPerformed(ActionEvent e) {
-                if (log.isDebugEnabled())
-                    log.debug("When style item selected "+((String)getValue(NAME))
-                                +" italic state is "+italic.isSelected());
-                if (italic.isSelected()) setFontStyle(Font.ITALIC, 0);
-                else setFontStyle(0, Font.ITALIC);
-            }
-          }, Font.ITALIC));
-
-        styleMenu.add(bold = newStyleMenuItem(new AbstractAction(rb.getString("Bold")) {
-            public void actionPerformed(ActionEvent e) {
-                if (log.isDebugEnabled())
-                    log.debug("When style item selected "+((String)getValue(NAME))
-                                +" bold state is "+bold.isSelected());
-                if (bold.isSelected()) setFontStyle(Font.BOLD, 0);
-                else setFontStyle(0, Font.BOLD);
-            }
-          }, Font.BOLD));
-         return styleMenu;
-    }
-    
-    protected JMenuItem newStyleMenuItem(AbstractAction a, int mask) {
-        // next two lines needed because JCheckBoxMenuItem(AbstractAction) not in 1.1.8
-        JCheckBoxMenuItem c = new JCheckBoxMenuItem((String)a.getValue(AbstractAction.NAME));
-        c.addActionListener(a);
-        if (log.isDebugEnabled()) log.debug("When creating style item "+((String)a.getValue(AbstractAction.NAME))
-                                            +" mask was "+mask+" state was "+getFont().getStyle());
-        if ( (mask & getFont().getStyle()) == mask ) c.setSelected(true);
-        return c;
-    }
-
-    public void setBackgroundFontColorMenu(JPopupMenu popup) {
-        JMenu colorMenu = new JMenu(rb.getString("FontBackgroundColor"));
-        makeColorMenu(colorMenu, BACKGROUND_COLOR);
-        popup.add(colorMenu);
-    }
-
     JCheckBoxMenuItem disableItem = null;
-    public void setDisableControlMenu(JPopupMenu popup) {
-        disableItem = new JCheckBoxMenuItem(rb.getString("Disable"));
-        disableItem.setSelected(getForceControlOff());
-        popup.add(disableItem);
-        disableItem.addActionListener(new ActionListener(){
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                setForceControlOff(disableItem.isSelected());
-            }
-        });
+    public boolean setDisableControlMenu(JPopupMenu popup) {
+        if (_control) {
+            disableItem = new JCheckBoxMenuItem(rb.getString("Disable"));
+            disableItem.setSelected(!_controlling);
+            popup.add(disableItem);
+            disableItem.addActionListener(new ActionListener(){
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    setControlling(!disableItem.isSelected());
+                }
+            });
+            return true;
+        }
+        return false;
     }
 
     public void setScale(double s) {
@@ -568,246 +417,11 @@ public class PositionableLabel extends JLabel implements Positionable {
         updateSize();
     }
     
-    JCheckBoxMenuItem tristateItem = null;
-    void addTristateEntry(JPopupMenu popup) {
-    	tristateItem = new JCheckBoxMenuItem(rb.getString("Tristate"));
-    	tristateItem.setSelected(getTristate());
-        popup.add(tristateItem);
-        tristateItem.addActionListener(new ActionListener(){
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                setTristate(tristateItem.isSelected());
-            }
-        });
-    }
-
-    public void setTextFontMenu(JPopupMenu popup) {
-        JMenu edit = new JMenu(rb.getString("EditFont"));
-        edit.add(makeFontSizeMenu());
-        edit.add(makeFontStyleMenu());
-        JMenu colorMenu = new JMenu(rb.getString("FontColor"));
-        makeColorMenu(colorMenu, FONT_COLOR);
-        edit.add(colorMenu);
-        popup.add(edit);
-    }
-
-    /************************ Popup Color utilities *************************/
-
-    protected void makeColorMenu(JMenu colorMenu, int type) {
-        ButtonGroup buttonGrp = new ButtonGroup();
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Black"), Color.black, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("DarkGray"),Color.darkGray, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Gray"),Color.gray, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("LightGray"),Color.lightGray, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("White"),Color.white, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Red"),Color.red, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Orange"),Color.orange, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Yellow"),Color.yellow, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Green"),Color.green, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Blue"),Color.blue, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Magenta"),Color.magenta, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Clear"), null, type);
-    }
-
-    protected void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,
-                           final String name, final Color color, final int colorType) {
-        ActionListener a = new ActionListener() {
-            //final String desiredName = name;
-            final Color desiredColor = color;
-            public void actionPerformed(ActionEvent e) {
-                switch (colorType){
-                    case FONT_COLOR : 
-                        setForeground(desiredColor); 
-                        break;
-                    case BACKGROUND_COLOR : 
-                        if(color==null){
-                            setOpaque(false);
-                            //We need to force a redisplay when going to clear as the area
-                            //doesn't always go transparent on the first click.
-                            Point p = getLocation();
-                            int w = getWidth();
-                            int h = getHeight();
-                            Container parent = getParent();
-                            // force redisplay
-                            parent.validate();
-                            parent.repaint(p.x,p.y,w,h);
-                        }
-                        else
-                            setBackgroundColor(desiredColor);
-                        break;
-                    case BORDER_COLOR : 
-                        setBorderColor(desiredColor); 
-                        break;
-                }
-            }
-        };
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
-        r.addActionListener(a);
-
-        switch (colorType) {
-            case FONT_COLOR:
-                setColorButton(getForeground(), color, r);
-                break;
-            case BACKGROUND_COLOR:
-                setColorButton(getBackground(), color, r);
-                break;
-            case BORDER_COLOR:
-                setColorButton(getBorderColor(), color, r);
-        }
-        colorButtonGroup.add(r);
-        menu.add(r);
-    }
-                
-    protected void setColorButton(Color buttonColor, Color color, JRadioButtonMenuItem r) {
-        if (buttonColor!=null){
-            if (color!=null && buttonColor.getRGB() == color.getRGB()) {
-                 r.setSelected(true);
-            } else r.setSelected(false);
-        } else {
-            if (color==null)  r.setSelected(true);
-            else  r.setSelected(false);
-        }
-    }
-
-    public void setTextEditMenu(JPopupMenu popup) {
-        setTextEditMenu(popup, "EditText");
-    }
-    public void setTextEditMenu(JPopupMenu popup, String menuTitle) {
-        popup.add(CoordinateEdit.getTextEditAction(this, menuTitle));
-    }
-
-    public void setTextJustificationMenu(JPopupMenu popup) {
-        JMenu justMenu = new JMenu("Justification");
-        addJustificationMenuEntry(justMenu, LEFT);
-        addJustificationMenuEntry(justMenu, RIGHT);
-        addJustificationMenuEntry(justMenu, CENTRE);
-        popup.add(justMenu);
-    }
-
-    private int originalX=0;
-    private int originalY=0;
-    
-    static final int LEFT   = 0x00;
-    static final int RIGHT  = 0x02;
-    static final int CENTRE = 0x04;
-    
-    private int justification=LEFT; //Default is always left    
-    
-    public void setJustification(int just){
-        justification=just;
-        setJustification();
-    }
-        
-    public void setJustification(String just){
-        if (just.equals("right"))
-            justification=RIGHT;
-        else if (just.equals("centre"))
-            justification=CENTRE;
-        else
-            justification=LEFT;
-        setJustification();
-    }
-    
-    private void setJustification(){
-        if (getFixedWidth()==0){
-            switch (justification){
-                case RIGHT :    setOriginalLocation(this.getX()+this.maxWidth(), this.getY());
-                                break;
-                case CENTRE :   setOriginalLocation(this.getX()+(this.maxWidth()/2), this.getY());
-                                break;
-            }
-            this.setHorizontalAlignment(JLabel.CENTER);
-            updateSize();
-        }
-        else{
-            switch (justification){
-                case LEFT :     this.setHorizontalAlignment(JLabel.LEFT);
-                                break;
-                case RIGHT :    this.setHorizontalAlignment(JLabel.RIGHT);
-                                break;
-                case CENTRE :   this.setHorizontalAlignment(JLabel.CENTER);
-                                break;
-                default     :   this.setHorizontalAlignment(JLabel.CENTER);
-            }
-        }
-    }
-    
-    public void setOriginalLocation(int x, int y){
-        originalX=x;
-        originalY=y;
-        updateSize();
-    }
-    
-    public int getJustification(){
-        return justification;
-    }
-    
-    public int getOriginalX(){
-        return originalX;
-    }
-    
-    public int getOriginalY(){
-        return originalY;
-    }
-    void addJustificationMenuEntry(JMenu menu, final int just) {
-        ButtonGroup justButtonGroup = new ButtonGroup();
-        JRadioButtonMenuItem r;
-        switch(just){
-            case LEFT :     r = new JRadioButtonMenuItem("LEFT");
-                            break;
-            case RIGHT:     r = new JRadioButtonMenuItem("RIGHT");
-                            break;
-            case CENTRE:    r = new JRadioButtonMenuItem("CENTRE");
-                            break;
-            default :       r = new JRadioButtonMenuItem("LEFT");
-        }
-        r.addActionListener(new ActionListener() {
-            //final int justification = just;
-            public void actionPerformed(ActionEvent e) { setJustification(just); }
-        });
-        justButtonGroup.add(r);
-        if (justification == just) r.setSelected(true);
-        else r.setSelected(false);
-        menu.add(r);
-    }
-    
-    JCheckBoxMenuItem lock = null;
-    JCheckBoxMenuItem showTooltipItem = null;
-    JMenuItem italic = null;
-    JMenuItem bold = null;
-
-    public void setFontStyle(int addStyle, int dropStyle) {
-        int styleValue = (getFont().getStyle() & ~dropStyle) | addStyle;
-        if (log.isDebugEnabled())
-            log.debug("setFontStyle: addStyle="+addStyle+", dropStyle= "+dropStyle
-                        +", net styleValue is "+styleValue);
-        if (bold != null) bold.setSelected( (styleValue & Font.BOLD) != 0);
-        if (italic != null) italic.setSelected( (styleValue & Font.ITALIC) != 0);
-        setFont(jmri.util.FontUtil.deriveFont(getFont(),styleValue));
-
-        //setSize(getPreferredSize().width, getPreferredSize().height);
-		updateSize();
-    }
-
-    public void setForceControlOff(boolean set) {
-        forceControlOff = set;
-        if (disableItem!=null) disableItem.setSelected(getForceControlOff());
-    }
-    public boolean getForceControlOff() { return forceControlOff; }
-    private boolean forceControlOff = false;
-    
-    public void setTristate(boolean set) {
-    	tristate = set;
-    }    
-    public boolean getTristate() { return tristate; }
-    private boolean tristate = false;
-
     /**
      * Clean up when this object is no longer needed.  Should not
      * be called while the object is still displayed; see remove()
      */
     public void dispose() {
-        italic = null;
-        bold = null;
     }
 
     /**
@@ -860,7 +474,6 @@ public class PositionableLabel extends JLabel implements Positionable {
         return frame;
     }
     
-
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableLabel.class.getName());
 
 }

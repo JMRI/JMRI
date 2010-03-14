@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.61 $
+ * @version $Revision: 1.62 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -33,32 +33,10 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/smallschematics/searchlights/left-red-short.gif",
                             "resources/icons/smallschematics/searchlights/left-red-short.gif"), editor);
-        //Set the default signal heads for the layout editor
-        /*redName = "resources/icons/smallschematics/searchlights/left-red-short.gif";
-        flashRedName = "resources/icons/smallschematics/searchlights/left-flashred-short.gif";
-        yellowName = "resources/icons/smallschematics/searchlights/left-yellow-short.gif";
-        flashYellowName = "resources/icons/smallschematics/searchlights/left-flashyellow-short.gif";
-        greenName = "resources/icons/smallschematics/searchlights/left-green-short.gif";
-        flashGreenName = "resources/icons/smallschematics/searchlights/left-flashgreen-short.gif";
-        darkName = "resources/icons/smallschematics/searchlights/left-dark-short.gif";
-        heldName = "resources/icons/smallschematics/searchlights/left-held-short.gif";
-        lunarName = "resources/icons/smallschematics/searchlights/left-lunar-short-marker.gif";
-        flashLunarName = "resources/icons/smallschematics/searchlights/left-flashlunar-short-marker.gif";
-        
-        red = new NamedIcon(redName, redName);
-        flashRed = new NamedIcon(flashRedName, flashRedName);
-        yellow = new NamedIcon(yellowName, yellowName);
-        flashYellow = new NamedIcon(flashYellowName, flashYellowName);
-        green = new NamedIcon(greenName, greenName);
-        flashGreen = new NamedIcon(flashGreenName, flashGreenName);
-        lunar = new NamedIcon(lunarName, lunarName);
-        flashLunar = new NamedIcon(flashLunarName, flashLunarName);
-        dark = new NamedIcon(darkName, darkName);
-        held = new NamedIcon(heldName, heldName);*/
-
         setDisplayLevel(Editor.SIGNALS);
         _control = true;
         displayState(SignalHead.RED);
+        setPopupUtility(null);
     }
 
 //    private SignalHead mHead;
@@ -254,7 +232,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     /**
      * Pop-up just displays the name
      */
-    public void showPopUp(JPopupMenu popup) {
+    public boolean showPopUp(JPopupMenu popup) {
         // add menu to select action on click
         JMenu clickMenu = new JMenu(rb.getString("WhenClicked"));
         clickButtonGroup = new ButtonGroup();
@@ -327,6 +305,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                 f.setVisible(true);
             }
         });
+        return true;
     }
     
     /*************** popup AbstractAction.actionPerformed method overrides ************/
@@ -549,7 +528,6 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     */
     public void performMouseClicked(java.awt.event.MouseEvent e){
         if (!isControlling()) return;
-        if (getForceControlOff()) return;
         if (e.isMetaDown() || e.isAltDown() ) return;
         if (getSignalHead()==null) {
             log.error("No turnout connection, can't process click");

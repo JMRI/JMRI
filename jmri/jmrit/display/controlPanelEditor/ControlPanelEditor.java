@@ -74,8 +74,9 @@ public class ControlPanelEditor extends Editor {
     private JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(rb.getString("ScrollHorizontal"));
     private JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(rb.getString("ScrollVertical"));
 
-    private Positionable _waitingToAdd;     // newly created item to be placed
-    private boolean _newItem = false;       // item newly created
+    private Positionable _newPositonable;   // newly created item to be placed
+    private boolean _newItemAdded = true;
+    private boolean _newItem = false;       // item newly created in this session
 //    private String _name;
 
     public ControlPanelEditor(String name) {
@@ -510,7 +511,7 @@ public class ControlPanelEditor extends Editor {
                 scrollVertical.setSelected(true);
                 break;
         }
-        // all items put into
+        // all stored items have been put into _contents
         _newItem = true;
     }
 
@@ -518,38 +519,39 @@ public class ControlPanelEditor extends Editor {
 
     public void putItem(Positionable l) {
         if (_newItem && l.getDisplayLevel()>BKG) {
-            _waitingToAdd = l;
+            _newPositonable = l;
+            _newItemAdded = false;
         } else {
             super.putItem(l);
         }
     }
     
     public void mousePressed(MouseEvent event) {
-        if (_waitingToAdd==null) {
+        if (_newPositonable==null) {
             super.mousePressed(event);
         }
     }
     public void mouseReleased(MouseEvent event) {
-        if (_waitingToAdd==null) {
+        if (_newPositonable==null) {
             super.mouseReleased(event);
         } else {
             if (_debug) log.debug("mouseReleased DROP at pt: ("+event.getX()+", "+event.getY()+")");
-            _waitingToAdd = null;       // drop
+            _newPositonable = null;       // drop
             getTargetPanel().repaint();
         }
     }
     public void mouseDragged(MouseEvent event) {
-        if (_waitingToAdd==null) {
+        if (_newPositonable==null) {
             super.mouseDragged(event);
         }
     }
     public void mouseMoved(MouseEvent event) {
-        if (_waitingToAdd==null) {
+        if (_newPositonable==null) {
             super.mouseMoved(event);
         } else {
             int deltaX = event.getX() - _lastX;
             int deltaY = event.getY() - _lastY;
-            moveItem(_waitingToAdd, deltaX, deltaY);
+            moveItem(_newPositonable, deltaX, deltaY);
             _lastX = event.getX();
             _lastY = event.getY();
             getTargetPanel().repaint();
@@ -557,16 +559,18 @@ public class ControlPanelEditor extends Editor {
     }
     public void mouseEntered(MouseEvent event) {
         //if (_debug) log.debug("mouseEntered pt: ("+event.getX()+", "+event.getY()+")");
-        if (_waitingToAdd==null) {
+        if (_newPositonable==null) {
             super.mouseEntered(event);
         } else {
             if (_debug) log.debug("mouseEntered pt: ("+event.getX()+", "+event.getY()+")");
             _lastX = event.getX();
             _lastY = event.getY();
-            _waitingToAdd.setLocation((int)(_lastX/getPaintScale()), 
-                                      (int)((_lastY-_waitingToAdd.getHeight())/getPaintScale()) );
-            //_waitingToAdd.setLocation(_lastX, _lastY-_waitingToAdd.getHeight());
-            super.putItem(_waitingToAdd);
+            _newPositonable.setLocation((int)(_lastX/getPaintScale()), 
+                                      (int)((_lastY-_newPositonable.getHeight())/getPaintScale()) );
+            if (!_newItemAdded) {
+                super.putItem(_newPositonable);
+                _newItemAdded = true;
+            }
             getTargetPanel().repaint();
         }
     }
@@ -603,53 +607,51 @@ public class ControlPanelEditor extends Editor {
     * types.
     */
     protected void showPopUp(Positionable p, MouseEvent event) {
+        if (!p.doPopupMenu()) { return; }
         JPopupMenu popup = new JPopupMenu();
 
-        if (p.doPopupMenu()) {
+        if (p.isEditable()) {
+            // items common to all
             popup.add(p.getNameString());
-
             setPositionableMenu(p, popup);
-
             if (p.isPositionable()) {
                 setShowCoordinatesMenu(p, popup);
                 setShowAlignmentMenu(p, popup);
             }
             setDisplayLevelMenu(p, popup);
             setHiddenMenu(p, popup);
+            popup.addSeparator();
 
-                 // items not common to all, but common to type
-            if (p instanceof PositionableLabel ) {
-                PositionableLabel pl = (PositionableLabel)p;
-                if (pl.isIcon()) {
-                    popup.addSeparator();
-                    pl.setRotateOrthogonalMenu(popup);        
-                    pl.setRotateMenu(popup);        
-                    pl.setScaleMenu(popup);        
-                    popup.addSeparator();
-                    pl.setEditIconMenu(popup);        
-                }
-                if (pl.isText()) {
-                    popup.addSeparator();
-                    pl.setFixedTextMenu(popup);        
-                    popup.addSeparator();
-                    pl.setTextMarginMenu(popup);        
-                    pl.setBackgroundFontColorMenu(popup);        
-                    popup.addSeparator();
-                    pl.setTextBorderMenu(popup);        
-                    popup.addSeparator();
-                    pl.setTextFontMenu(popup);
-                    pl.setTextEditMenu(popup);
-                    pl.setTextJustificationMenu(popup);
-                    popup.addSeparator();
-                }
-                if (pl.isControl()) {
-                    pl.setDisableControlMenu(popup);
-                }
-            } else if (p instanceof PositionableJComponent ) {
-                p.setScaleMenu(popup);        
-            } else if (p instanceof PositionableJPanel ) {
-                p.setEditIconMenu(popup);        
+            // items with defaults or using overrides
+            boolean popupSet =false;
+            popupSet = p.setRotateOrthogonalMenu(popup);        
+            popupSet = p.setRotateMenu(popup);        
+            popupSet = p.setScaleMenu(popup);        
+            if (popupSet) { 
+                popup.addSeparator();
+                popupSet = false;
             }
+            popupSet = p.setEditIconMenu(popup);        
+            if (popupSet) { 
+                popup.addSeparator();
+                popupSet = false;
+            }
+            popupSet = p.setTextEditMenu(popup);
+            PositionablePopupUtil util = p.getPopupUtility();
+            if (util!=null) {
+                util.setFixedTextMenu(popup);        
+                util.setTextMarginMenu(popup);        
+                util.setTextBorderMenu(popup);        
+                util.setTextFontMenu(popup);
+                util.setTextJustificationMenu(popup);
+                popupSet = true;
+            }
+            if (popupSet) { 
+                popup.addSeparator();
+                popupSet = false;
+            }
+            p.setDisableControlMenu(popup);
+
             // for Positionables with unique settings
             p.showPopUp(popup);
 

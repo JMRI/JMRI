@@ -3,6 +3,7 @@ package jmri.jmrit.display.configurexml;
 import jmri.configurexml.*;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import java.awt.Color;
 
@@ -14,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.50 $
+ * @version $Revision: 1.51 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -57,45 +58,58 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
      * back and forth between icon and text, and want to remember their
      * formatting.
      */
-    protected void storeTextInfo(PositionableLabel p, Element element) {
+    protected void storeTextInfo(Positionable p, Element element) {
         //if (p.getText()!=null) element.setAttribute("text", p.getText());
-        element.setAttribute("size", ""+p.getFont().getSize());
-        element.setAttribute("style", ""+p.getFont().getStyle());
-        if (!p.getForeground().equals(Color.black)) {
-            element.setAttribute("red", ""+p.getForeground().getRed());
-            element.setAttribute("green", ""+p.getForeground().getGreen());
-            element.setAttribute("blue", ""+p.getForeground().getBlue());
+        jmri.jmrit.display.PositionablePopupUtil util = p.getPopupUtility();
+        element.setAttribute("size", ""+util.getFontSize());
+        element.setAttribute("style", ""+util.getFontStyle());
+        if (!util.getForeground().equals(Color.black)) {
+            element.setAttribute("red", ""+util.getForeground().getRed());
+            element.setAttribute("green", ""+util.getForeground().getGreen());
+            element.setAttribute("blue", ""+util.getForeground().getBlue());
         }
         if(p.isOpaque()){
-            element.setAttribute("redBack", ""+p.getBackground().getRed());
-            element.setAttribute("greenBack", ""+p.getBackground().getGreen());
-            element.setAttribute("blueBack", ""+p.getBackground().getBlue());
+            element.setAttribute("redBack", ""+util.setBackground().getRed());
+            element.setAttribute("greenBack", ""+util.setBackground().getGreen());
+            element.setAttribute("blueBack", ""+util.setBackground().getBlue());
         }
-        if (p.getMargin()!=0)
-            element.setAttribute("margin", ""+p.getMargin());
-        if (p.getBorderSize()!=0){
-            element.setAttribute("borderSize", ""+p.getBorderSize());
-            element.setAttribute("redBorder", ""+p.getBorderColor().getRed());
-            element.setAttribute("greenBorder", ""+p.getBorderColor().getGreen());
-            element.setAttribute("blueBorder", ""+p.getBorderColor().getBlue());
+        if (util.getMargin()!=0)
+            element.setAttribute("margin", ""+util.getMargin());
+        if (util.getBorderSize()!=0){
+            element.setAttribute("borderSize", ""+util.getBorderSize());
+            element.setAttribute("redBorder", ""+util.getBorderColor().getRed());
+            element.setAttribute("greenBorder", ""+util.getBorderColor().getGreen());
+            element.setAttribute("blueBorder", ""+util.getBorderColor().getBlue());
         } 
-        if (p.getFixedWidth()!=0)
-            element.setAttribute("fixedWidth", ""+p.getFixedWidth());
-        if (p.getFixedHeight()!=0)
-            element.setAttribute("fixedHeight", ""+p.getFixedHeight());
+        if (util.getFixedWidth()!=0)
+            element.setAttribute("fixedWidth", ""+util.getFixedWidth());
+        if (util.getFixedHeight()!=0)
+            element.setAttribute("fixedHeight", ""+util.getFixedHeight());
 
+        if(util.getJustification()!=0x00){
+            String just;
+            switch (util.getJustification()){
+                case 0x02 : just="right";
+                            break;
+                case 0x04 : just ="centre";
+                            break;
+                default :   just="left";
+                            break;
+                }
+            element.setAttribute("justification", just);
+        }
         //return element;
     }
     /**
      * Default implementation for storing the common contents of an Icon
      * @param element Element in which contents are stored
      */
-    public void storeCommonAttributes(PositionableLabel p, Element element) {
+    public void storeCommonAttributes(Positionable p, Element element) {
 
         element.setAttribute("x", ""+p.getX());
         element.setAttribute("y", ""+p.getY());
         element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
-        element.setAttribute("forcecontroloff", p.getForceControlOff()?"true":"false");
+        element.setAttribute("forcecontroloff", !p.isControlling()?"true":"false");
         element.setAttribute("hidden", p.isHidden()?"yes":"no");
         element.setAttribute("positionable", p.isPositionable()?"true":"false");
         element.setAttribute("showtooltip", p.showTooltip()?"true":"false");        
@@ -140,6 +154,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         		icon = NamedIcon.getIconByName(name);
         	}
             l = new PositionableLabel(icon, editor);
+            l.setPopupUtility(null);        // no text 
             try {
                 Attribute a = element.getAttribute("rotate");
                 if (a!=null) {
@@ -149,6 +164,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             } catch (org.jdom.DataConversionException e) {}
 
             NamedIcon nIcon = loadIcon(l,"icon", element);
+            loadCommonAttributes(l, Editor.LABELS, element);
 
             if (nIcon!=null) {
                 l.updateIcon(nIcon);
@@ -156,6 +172,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             //l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         } else if (element.getAttribute("text")!=null) {
             l = new PositionableLabel(element.getAttribute("text").getValue(), editor);
+            loadCommonAttributes(l, Editor.LABELS, element);
             loadTextInfo(l, element);
         
         } else {
@@ -176,14 +193,19 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             }
         	return;
         }
-        loadCommonAttributes(l, Editor.LABELS, element);
         editor.putItem(l);
     }
 
-    protected void loadTextInfo(PositionableLabel l, Element element) {
+    protected void loadTextInfo(Positionable l, Element element) {
+        if (log.isDebugEnabled()) log.debug("loadTextInfo");
+        jmri.jmrit.display.PositionablePopupUtil util = l.getPopupUtility();
+        if (util==null) {
+            log.warn("PositionablePopupUtil is null!");
+            return;
+        }
         Attribute a = element.getAttribute("size");
         try {
-            if (a!=null) l.setFontSize(a.getFloatValue());
+            if (a!=null) util.setFontSize(a.getFloatValue());
         } catch (DataConversionException ex) {
             log.warn("invalid size attribute value");
         }
@@ -198,7 +220,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                     case 2: drop = 1; //italic
                             break;
                 }
-                l.setFontStyle(style, drop);
+                util.setFontStyle(style, drop);
             }
         } catch (DataConversionException ex) {
             log.warn("invalid style attribute value");
@@ -209,7 +231,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             int red = element.getAttribute("red").getIntValue();
             int blue = element.getAttribute("blue").getIntValue();
             int green = element.getAttribute("green").getIntValue();
-            l.setForeground(new Color(red, green, blue));
+            util.setForeground(new Color(red, green, blue));
         } catch ( org.jdom.DataConversionException e) {
             log.warn("Could not parse color attributes!");
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
@@ -219,11 +241,11 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             int red = element.getAttribute("redBack").getIntValue();
             int blue = element.getAttribute("blueBack").getIntValue();
             int green = element.getAttribute("greenBack").getIntValue();
-            l.setBackgroundColor(new Color(red, green, blue));
+            util.setBackgroundColor(new Color(red, green, blue));
          } catch ( org.jdom.DataConversionException e) {
             log.warn("Could not parse background color attributes!");
         } catch ( NullPointerException e) {  
-            l.setBackgroundColor(null);// if the attributes are not listed, we consider the background as clear.
+            util.setBackgroundColor(null);// if the attributes are not listed, we consider the background as clear.
         }
         
         int fixedWidth=0;
@@ -242,34 +264,39 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
         if (!(fixedWidth==0 && fixedHeight==0))
-            l.setFixedSize(fixedWidth, fixedHeight);
+            util.setFixedSize(fixedWidth, fixedHeight);
         int margin=0;
-        if ((l.getFixedWidth()==0) || (l.getFixedHeight()==0)){
+        if ((util.getFixedWidth()==0) || (util.getFixedHeight()==0)){
             try {
                 margin=element.getAttribute("margin").getIntValue();
-                l.setMargin(margin);
+                util.setMargin(margin);
             } catch ( org.jdom.DataConversionException e) {
                 log.warn("Could not parse margin attribute!");
             } catch ( NullPointerException e) {  // considered normal if the attributes are not present
             }
         }
         try {
-            l.setBorderSize(element.getAttribute("borderSize").getIntValue());
+            util.setBorderSize(element.getAttribute("borderSize").getIntValue());
             int red = element.getAttribute("redBorder").getIntValue();
             int blue = element.getAttribute("blueBorder").getIntValue();
             int green = element.getAttribute("greenBorder").getIntValue();
-            l.setBorderColor(new Color(red, green, blue));
+            util.setBorderColor(new Color(red, green, blue));
         } catch ( org.jdom.DataConversionException e) {
             log.warn("Could not parse border attributes!");
         } catch ( NullPointerException e) {  // considered normal if the attribute not present
         }
+
+        a = element.getAttribute("justification");
+        if(a!=null)
+            util.setJustification(a.getValue());
     }
-	public void loadCommonAttributes(PositionableLabel l, int defaultLevel, Element element) {
+
+	public void loadCommonAttributes(Positionable l, int defaultLevel, Element element) {
         Attribute a = element.getAttribute("forcecontroloff");
         if ( (a!=null) && a.getValue().equals("true"))
-            l.setForceControlOff(true);
+            l.setControlling(false);
         else
-            l.setForceControlOff(false);
+            l.setControlling(true);
             
         // find coordinates
         int x = 0;

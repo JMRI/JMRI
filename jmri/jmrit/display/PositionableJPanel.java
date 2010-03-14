@@ -5,6 +5,11 @@ package jmri.jmrit.display;
 import java.util.ResourceBundle;
 
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.border.LineBorder;
+
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
@@ -16,7 +21,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
@@ -121,25 +126,34 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     /**
      * For over-riding in the using classes: add item specific menu choices
      */
-    public void setRotateOrthogonalMenu(JPopupMenu popup){
+    public boolean setRotateOrthogonalMenu(JPopupMenu popup){
+        return false;
     }
-    public void setRotateMenu(JPopupMenu popup){
+    public boolean setRotateMenu(JPopupMenu popup){
+        return false;
     }
-    public void setScaleMenu(JPopupMenu popup){
+    public boolean setScaleMenu(JPopupMenu popup){
+        return false;
     }
-    public void setDisableControlMenu(JPopupMenu popup) {
+    public boolean setDisableControlMenu(JPopupMenu popup) {
+        return false;
     }
-    public void showPopUp(JPopupMenu popup) {
+    public boolean setTextEditMenu(JPopupMenu popup) {
+        return false;
+    }
+    public boolean showPopUp(JPopupMenu popup) {
+        return false;
     }
 
     JFrame _iconEditorFrame;
     IconAdder _iconEditor;
-    public void setEditIconMenu(JPopupMenu popup) {
+    public boolean setEditIconMenu(JPopupMenu popup) {
         popup.add(new AbstractAction(rb.getString("EditIcon")) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
                 }
             });
+        return true;
     }
 
     /**
@@ -218,6 +232,89 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         _editor.mouseDragged(new MouseEvent(this, e.getID(), e.getWhen(), e.getModifiersEx(), 
                                              e.getX()+this.getX(), e.getY()+this.getY(), 
                                              e.getClickCount(), e.isPopupTrigger())); 
+    }
+
+    /***************************************************************/
+
+    PositionablePopupUtil _popupUtil;
+    protected void setPopupUtility(PositionablePopupUtil tu) {
+        _popupUtil = tu;
+    }
+    public PositionablePopupUtil getPopupUtility() {
+        return _popupUtil;
+    }
+
+    /**
+     * Update the AWT and Swing size information due to change in internal
+     * state, e.g. if one or more of the icons that might be displayed
+     * is changed
+     */
+    public void updateSize() {
+        invalidate();
+        setSize(maxWidth(), maxHeight());
+        if (debug) {
+//            javax.swing.JTextField text = (javax.swing.JTextField)_popupUtil._textComponent;
+            log.debug("updateSize: "+_popupUtil.toString()+
+                      ", text: w="+getFontMetrics(_popupUtil.getFont()).stringWidth(_popupUtil.getText())+
+                      "h="+getFontMetrics(_popupUtil.getFont()).getHeight());
+        }
+        validate();
+        repaint();
+    }    
+    
+    public int maxWidth() {
+        int max = 0;
+        if (_popupUtil!=null) {
+            if (_popupUtil.getFixedWidth()!=0) {
+                max = _popupUtil.getFixedWidth();
+                max += _popupUtil.getMargin()*2;
+                if (max < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
+                    _popupUtil.setFixedWidth(PositionablePopupUtil.MIN_SIZE);
+                    max = PositionablePopupUtil.MIN_SIZE;
+                }
+            } else {
+                max = getPreferredSize().width;
+                /*
+                if(_popupUtil._textComponent instanceof javax.swing.JTextField) {
+                    javax.swing.JTextField text = (javax.swing.JTextField)_popupUtil._textComponent;
+                    max = getFontMetrics(text.getFont()).stringWidth(text.getText());
+                } */
+                max += _popupUtil.getMargin()*2;
+                if (max < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
+                    max = PositionablePopupUtil.MIN_SIZE;
+                }
+            }
+        }
+        if (debug) log.debug("maxWidth= "+max+" preferred width= "+getPreferredSize().width);
+        return max;
+    }
+
+    public int maxHeight() {
+        int max = 0;
+        if (_popupUtil!=null) {
+            if (_popupUtil.getFixedHeight()!=0) {
+                max = _popupUtil.getFixedHeight();
+                max += _popupUtil.getMargin()*2;
+                if (max < PositionablePopupUtil.MIN_SIZE) {   // don't let item disappear
+                    _popupUtil.setFixedHeight(PositionablePopupUtil.MIN_SIZE);
+                    max = PositionablePopupUtil.MIN_SIZE;
+                }
+            } else {
+                max = getPreferredSize().height;
+                /*
+                if(_popupUtil._textComponent!=null) {
+                    max = getFontMetrics(_popupUtil._textComponent.getFont()).getHeight();
+                }  */
+                if (_popupUtil!=null) {
+                    max += _popupUtil.getMargin()*2;
+                }
+                if (max < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
+                    max = PositionablePopupUtil.MIN_SIZE;
+                }
+            }
+        }
+        if (debug) log.debug("maxHeight= "+max+" preferred height= "+getPreferredSize().height);
+        return max;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableJPanel.class.getName());

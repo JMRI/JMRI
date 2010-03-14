@@ -12,7 +12,7 @@ import org.jdom.Attribute;
  * Handle configuration for display.MemorySpinnerIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class MemoryInputIconXml extends PositionableLabelXml {
 
@@ -34,9 +34,8 @@ public class MemoryInputIconXml extends PositionableLabelXml {
         // include attributes
         element.setAttribute("colWidth", ""+p.getNumColumns());
         element.setAttribute("memory", p.getMemory().getName());
-        element.setAttribute("x", ""+p.getX());
-        element.setAttribute("y", ""+p.getY());
-        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
+        storeCommonAttributes(p, element);
+        storeTextInfo(p, element);
         
         element.setAttribute("class", "jmri.jmrit.display.configurexml.MemoryInputIconXml");
         return element;
@@ -67,6 +66,7 @@ public class MemoryInputIconXml extends PositionableLabelXml {
 
         MemoryInputIcon l = new MemoryInputIcon(nCol, p);
 
+        loadTextInfo(l, element);
         String name;
         Attribute attr = element.getAttribute("memory"); 
         if (attr == null) {
@@ -85,27 +85,8 @@ public class MemoryInputIconXml extends PositionableLabelXml {
             return;
         }
         
-        // find coordinates
-        int x = 0;
-        int y = 0;
-        try {
-            x = element.getAttribute("x").getIntValue();
-            y = element.getAttribute("y").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.error("failed to convert positional attribute");
-        }
-        l.setLocation(x,y);
- 
-         // find display level
-        int level = Editor.MEMORIES;
-        try {
-            level = element.getAttribute("level").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse level attribute!");
-        } catch ( NullPointerException e) {  // considered normal if the attribute not present
-        }
-        l.setDisplayLevel(level);
-        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        loadCommonAttributes(l, Editor.MEMORIES, element);
+//        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         p.putItem(l);
     }
 

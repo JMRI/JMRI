@@ -20,7 +20,7 @@ import javax.swing.JRadioButtonMenuItem;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class LocoIcon extends PositionableLabel {
@@ -39,6 +39,7 @@ public class LocoIcon extends PositionableLabel {
         setDisplayLevel(Editor.MARKERS);
         setShowTooltip(false);
         _text = true;	//Markers are an icon with text
+        setPopupUtility(null);
     }
 	
 	// Marker tool tips are always disabled
@@ -48,14 +49,8 @@ public class LocoIcon extends PositionableLabel {
     public void setPositionable(boolean enabled) {super.setPositionable(true);}
     
     // Markers always have a popup menu
-    public void setEditable(boolean enabled) {
-    	super.setEditable(true);
-    	doPopupMenu = enabled;
-    }
-    
-    private boolean doPopupMenu = false;
     public boolean doPopupMenu() {
-        return doPopupMenu;
+        return true;
     }
     
     jmri.jmrit.throttle.ThrottleFrame tf = null;
@@ -76,7 +71,7 @@ public class LocoIcon extends PositionableLabel {
     /**
      * Pop-up only if right click and not dragged 
      */
-    public void showPopUp(JPopupMenu popup) {
+    public boolean showPopUp(JPopupMenu popup) {
         if (entry != null) {
             popup.add(new AbstractAction("Throttle") {
                 public void actionPerformed(ActionEvent e) {
@@ -88,6 +83,7 @@ public class LocoIcon extends PositionableLabel {
         }
         popup.add(makeLocoIconMenu());
         setRemoveMenu(popup);
+        return true;
 	}
     
     ButtonGroup locoButtonGroup = null;
@@ -159,9 +155,9 @@ public class LocoIcon extends PositionableLabel {
     	String[] colors = {WHITE,GREEN,GRAY,RED,BLUE,YELLOW};
     	return colors;
     }
-    
+                  
     protected void setRemoveMenu(JPopupMenu popup) {
-        if (doPopupMenu)
+        if (isEditable())
         	return;
     	popup.add(new AbstractAction(rb.getString("Remove")) {
     		public void actionPerformed(ActionEvent e) { 

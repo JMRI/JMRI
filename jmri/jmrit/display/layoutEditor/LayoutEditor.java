@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class LayoutEditor extends Editor {
@@ -2789,7 +2789,7 @@ public class LayoutEditor extends Editor {
     protected void showPopUp(Positionable p, MouseEvent event) {
         JPopupMenu popup = new JPopupMenu();
 
-        if (p.doPopupMenu()) {
+        if (p.isEditable()) {
             popup.add(p.getNameString());
 
             if (p.isPositionable()) {
@@ -2798,32 +2798,29 @@ public class LayoutEditor extends Editor {
             setDisplayLevelMenu(p, popup);
             setPositionableMenu(p, popup);
 
-              // items not common to all
-            if (p instanceof PositionableLabel ) {
-                PositionableLabel pl = (PositionableLabel)p;
-                if (pl.isIcon()) {
-                    popup.addSeparator();
-                    pl.setRotateOrthogonalMenu(popup);        
-                    popup.addSeparator();
-                    pl.setEditIconMenu(popup);        
-                } else if (pl.isText()) {
-                    popup.addSeparator();
-                    pl.setFixedTextMenu(popup);        
-                    pl.setTextMarginMenu(popup);        
-                    popup.addSeparator();
-                    pl.setBackgroundFontColorMenu(popup);        
-                    pl.setTextBorderMenu(popup);        
-                    popup.addSeparator();
-                    pl.setTextFontMenu(popup);
-                    pl.setTextEditMenu(popup);
-                    pl.setTextJustificationMenu(popup);
-                }
-                if (pl.isControl()) {
-                    pl.setDisableControlMenu(popup);
-                }
-            } else if (p instanceof PositionableJComponent ) {
-                ((PositionableJComponent)p).setScaleMenu(popup);        
+            boolean popupSet =false;
+            popupSet = p.setRotateOrthogonalMenu(popup);        
+            popupSet = p.setEditIconMenu(popup);        
+            if (popupSet) { 
+                popup.addSeparator();
+                popupSet = false;
             }
+            popupSet = p.setTextEditMenu(popup);
+
+            PositionablePopupUtil util = p.getPopupUtility();
+            if (util!=null) {
+                util.setFixedTextMenu(popup);        
+                util.setTextMarginMenu(popup);        
+                util.setTextBorderMenu(popup);        
+                util.setTextFontMenu(popup);
+                util.setTextJustificationMenu(popup);
+                popupSet = true;
+            }
+            if (popupSet) { 
+                popup.addSeparator();
+                popupSet = false;
+            }
+            p.setDisableControlMenu(popup);
 
             // for Positionables with unique settings
             p.showPopUp(popup);

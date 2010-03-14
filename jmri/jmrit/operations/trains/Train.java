@@ -41,7 +41,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.66 $
+ * @version $Revision: 1.67 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1183,7 +1183,7 @@ public class Train implements java.beans.PropertyChangeListener {
             trainIcon = editor.addTrainIcon(getIconName());
 			trainIcon.setTrain(this);
 			if (getIconName().length() > 9) {
-				trainIcon.setFontSize(8.f);
+				trainIcon.setFont(jmri.util.FontUtil.deriveFont(trainIcon.getFont(), 8.f));
 			}
 			// add throttle if there's a throttle manager
 			if (jmri.InstanceManager.throttleManagerInstance()!=null) {

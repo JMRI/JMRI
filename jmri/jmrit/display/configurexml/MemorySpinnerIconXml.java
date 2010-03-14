@@ -8,7 +8,7 @@ import org.jdom.Element;
  * Handle configuration for display.MemorySpinnerIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class MemorySpinnerIconXml extends PositionableLabelXml {
 
@@ -28,10 +28,9 @@ public class MemorySpinnerIconXml extends PositionableLabelXml {
         Element element = new Element("memoryicon");
 
         // include attributes
-        element.setAttribute("memory", p.getNamedMemory().getName());
-        element.setAttribute("x", ""+p.getX());
-        element.setAttribute("y", ""+p.getY());
-        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
+        element.setAttribute("memory", p.getMemory().getName());
+        storeCommonAttributes(p, element);
+        storeTextInfo(p, element);
         
         element.setAttribute("class", "jmri.jmrit.display.configurexml.MemorySpinnerIconXml");
         return element;
@@ -56,27 +55,9 @@ public class MemorySpinnerIconXml extends PositionableLabelXml {
 
         l.setMemory(element.getAttribute("memory").getValue());
         
-        // find coordinates
-        int x = 0;
-        int y = 0;
-        try {
-            x = element.getAttribute("x").getIntValue();
-            y = element.getAttribute("y").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.error("failed to convert positional attribute");
-        }
-        l.setLocation(x,y);
- 
-         // find display level
-        int level = Editor.MEMORIES;
-        try {
-            level = element.getAttribute("level").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse level attribute!");
-        } catch ( NullPointerException e) {  // considered normal if the attribute not present
-        }
-        l.setDisplayLevel(level);
-        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        loadTextInfo(l, element);
+        loadCommonAttributes(l, Editor.MEMORIES, element);
+//        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         p.putItem(l);
     }
 

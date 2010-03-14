@@ -11,7 +11,7 @@ import org.jdom.Element;
  * Handle configuration for display.LocoIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class LocoIconXml extends PositionableLabelXml {
 
@@ -34,7 +34,6 @@ public class LocoIconXml extends PositionableLabelXml {
 
         // include contents
         element.setAttribute("text", p.getText());
-        storeTextInfo(p, element);
         element.setAttribute("icon", "yes");
         element.addContent(storeIcon("icon", (NamedIcon)p.getIcon()));
         RosterEntry entry = p.getRosterEntry();

@@ -10,7 +10,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.FlowLayout;
 
-import javax.swing.BoxLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  * @since 2.7.2
  */
 
@@ -44,8 +43,8 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         _nCols = nCols;
         setDisplayLevel(Editor.LABELS);
         
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(_textBox);
+        setLayout(new java.awt.GridBagLayout());
+        add(_textBox, new java.awt.GridBagConstraints());
         _textBox.addKeyListener(new KeyAdapter() {
                 public void keyReleased(KeyEvent e){
                     int key = e.getKeyCode();
@@ -57,6 +56,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         _textBox.setColumns(_nCols);
         _textBox.addMouseMotionListener(this);
         _textBox.addMouseListener(this);
+        setPopupUtility(new PositionablePopupUtil(this, _textBox));
     }
 
     public void mouseExited(java.awt.event.MouseEvent e) {
@@ -69,9 +69,9 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
       * @param pName Used as a system/user name to lookup the Memory object
      */
      public void setMemory(String pName) {
+         if (debug) log.debug("setMemory for memory= "+pName);
          if (InstanceManager.memoryManagerInstance()!=null) {
-             memory = InstanceManager.memoryManagerInstance().
-                 provideMemory(pName);
+             memory = InstanceManager.memoryManagerInstance().provideMemory(pName);
              if (memory != null) {
                  setMemory(new NamedBeanHandle<Memory>(pName, memory));
              } else {
@@ -156,7 +156,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
                 editMemory();
             }
         };
-        _iconEditorFrame = PositionableLabel.makeAddIconFrame("EditInputBox", "addMemValueToPanel", 
+        _iconEditorFrame = PositionableLabel.makeAddIconFrame("ChangeMemory", "addMemValueToPanel", 
                                              "SelectMemory", _iconEditor, this);
         _iconEditor.setPickList(PickListModel.memoryPickModelInstance());
         _iconEditor.complete(addIconAction, null, true, true);
@@ -177,8 +177,8 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
      * Drive the current state of the display from the state of the
      * Memory.
      */
-    void displayState() {
-        log.debug("displayState");
+    public void displayState() {
+        if (debug) log.debug("displayState");
     	if (memory == null) {  // leave alone if not connected yet
     		return;
     	}
@@ -190,7 +190,9 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     }
 
     void cleanup() {
-        memory.removePropertyChangeListener(this);
+        if (memory!=null) {
+            memory.removePropertyChangeListener(this);
+        }
         _textBox.removeMouseMotionListener(this);
         _textBox.removeMouseListener(this);
         _textBox = null;

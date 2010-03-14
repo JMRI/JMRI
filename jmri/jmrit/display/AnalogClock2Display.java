@@ -18,7 +18,7 @@ import jmri.jmrit.catalog.*;
  * <p>Time code copied in part from code for the Nixie clock by Bob Jacobsen </p>
  *
  * @author  Howard G. Penny - Copyright (C) 2005
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class AnalogClock2Display extends PositionableJComponent {
 
@@ -121,7 +121,7 @@ public class AnalogClock2Display extends PositionableJComponent {
     public int getFaceWidth() {return faceSize;}
 	public int getFaceHeight() {return faceSize;}
 
-    public void setScaleMenu(JPopupMenu popup){
+    public boolean setScaleMenu(JPopupMenu popup){
 
         popup.add(new JMenuItem("Fast Clock"));
         JMenu rateMenu = new JMenu("Clock rate");
@@ -140,6 +140,8 @@ public class AnalogClock2Display extends PositionableJComponent {
         });
         popup.add(runMenu);
         popup.add(CoordinateEdit.getScaleEditAction(this));
+
+        return true;
     }
 
     public String getNameString() {

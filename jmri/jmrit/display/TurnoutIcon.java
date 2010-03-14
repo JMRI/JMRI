@@ -21,7 +21,7 @@ import jmri.util.NamedBeanHandle;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -32,6 +32,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
                             "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"), editor);
         _control = true;
         displayState(turnoutState());
+        setPopupUtility(null);
     }
 
     // the associated Turnout object
@@ -141,7 +142,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 
 		// when there's feedback, transition through inconsistent icon for better
 		// animation
-		if (super.getTristate()
+		if (getTristate()
 				&& (getTurnout().getFeedbackMode() != Turnout.DIRECT)
 				&& (e.getPropertyName().equals("CommandedState"))) {
 			if (getTurnout().getCommandedState() != getTurnout().getKnownState()) {
@@ -172,16 +173,35 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         return name;
     }
 
+    public void setTristate(boolean set) {
+    	tristate = set;
+    }    
+    public boolean getTristate() { return tristate; }
+    private boolean tristate = false;
 
     /**
-     * Pop-up displays the turnout name, allows you to rotate the icons
+     * Pop-up displays unique attributes of turnouts
      */
-    public void showPopUp(JPopupMenu popup) {
+    public boolean showPopUp(JPopupMenu popup) {
 		// add tristate option if turnout has feedback
 		if (namedTurnout != null && getTurnout().getFeedbackMode() != Turnout.DIRECT) {
 			addTristateEntry(popup);
+            return true;
 		}
+        return false;
 	}
+
+    javax.swing.JCheckBoxMenuItem tristateItem = null;
+    void addTristateEntry(JPopupMenu popup) {
+    	tristateItem = new javax.swing.JCheckBoxMenuItem(rb.getString("Tristate"));
+    	tristateItem.setSelected(getTristate());
+        popup.add(tristateItem);
+        tristateItem.addActionListener(new ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                setTristate(tristateItem.isSelected());
+            }
+        });
+    }
 
     /******** popup AbstractAction.actionPerformed method overrides *********/
 
@@ -285,7 +305,6 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
      */
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         if (!isControlling()) return;
-        if (getForceControlOff()) return;
         if (e.isMetaDown() || e.isAltDown() ) return;
         if (namedTurnout==null) {
             log.error("No turnout connection, can't process click");

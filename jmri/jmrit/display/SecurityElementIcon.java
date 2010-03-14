@@ -26,7 +26,7 @@ import javax.swing.JSeparator;
  * if you move this.
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 
 public class SecurityElementIcon extends PositionableJPanel
@@ -61,6 +61,7 @@ public class SecurityElementIcon extends PositionableJPanel
         rlspeed.setFont(f);
         lrspeed.setFont(f);
         dir.setFont(f);
+        setPopupUtility(null);
     }
 
     // the associated SecurityElement object
@@ -123,7 +124,7 @@ public class SecurityElementIcon extends PositionableJPanel
     /**
      * Pop-up displays the config
      */
-    public void showPopUp(JPopupMenu popup) {
+    public boolean showPopUp(JPopupMenu popup) {
 
         popup.add(new JMenuItem("SE "+element.getNumber()));
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -434,6 +435,7 @@ public class SecurityElementIcon extends PositionableJPanel
         popup.add(new JLabel(" Speed input: "+element.showInputSpeeds()));
         popup.add(new JLabel(" Reservations: "+element.showReservations()));
 
+        return true;
     }
 
     String where(MouseEvent e) {
@@ -463,26 +465,6 @@ public class SecurityElementIcon extends PositionableJPanel
         active = false;
         dispose();
     }
-/*
-    public void setPositionable(boolean enabled) {positionable = enabled;}
-    public boolean getPositionable() { return positionable; }
-    private boolean positionable = true;
-    
-    public void setViewCoordinates(boolean enabled) { viewCoordinates = enabled; }
-    public boolean getViewCoordinates() { return viewCoordinates; }
-    private boolean viewCoordinates = false;
-
-    public void setEditable(boolean enabled) {editable = enabled;}
-    public boolean getEditable() { return editable; }
-    private boolean editable = true;
-
-    public void setControlling(boolean enabled) {controlling = enabled;}
-    public boolean getControlling() { return controlling; }
-    private boolean controlling = true;
-
-    public void setDisplayLevel(Integer l) { }
-    public Integer getDisplayLevel() {return null; }
-*/
     boolean active = true;
     /**
      * "active" means that the object is still displayed, and should be stored.

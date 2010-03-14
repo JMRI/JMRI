@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -34,6 +34,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         setDisplayLevel(Editor.SENSORS);
         _control = true;
         displayState();
+        setPopupUtility(null);
     }
 
     boolean updown = false;
@@ -333,7 +334,6 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
 
     boolean buttonLive() {
         if (!isControlling()) return false;
-        if (getForceControlOff()) return false;
         return true;        
     }
 

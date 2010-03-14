@@ -14,7 +14,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 
@@ -124,20 +124,39 @@ public class PositionableJComponent extends JComponent implements Positionable {
     /**
      * For over-riding in the using classes: add item specific menu choices
      */
-    public void setRotateOrthogonalMenu(JPopupMenu popup){
+    public boolean setRotateOrthogonalMenu(JPopupMenu popup){
+        return false;
     }
-    public void setRotateMenu(JPopupMenu popup){
+    public boolean setRotateMenu(JPopupMenu popup){
+        return false;
     }
-    public void setScaleMenu(JPopupMenu popup){
+    public boolean setScaleMenu(JPopupMenu popup){
+        return false;
     }
-    public void setDisableControlMenu(JPopupMenu popup) {
+    public boolean setDisableControlMenu(JPopupMenu popup) {
+        return false;
     }
-    public void showPopUp(JPopupMenu popup) {
+    public boolean setTextEditMenu(JPopupMenu popup) {
+        return false;
+    }
+    public boolean showPopUp(JPopupMenu popup) {
+        return false;
+    }
+    public boolean setEditIconMenu(JPopupMenu popup) {
+        return false;
     }
 
-    JFrame _iconEditorFrame;
-    IconAdder _iconEditor;
-    public void setEditIconMenu(JPopupMenu popup) {
+    public PositionablePopupUtil getPopupUtility() {
+         return null;
+    }
+
+    public void updateSize() {
+    }
+    public int maxWidth() {
+        return getWidth();
+    }
+    public int maxHeight() {
+        return getHeight();
     }
 
     /**************** end Positionable methods **********************/

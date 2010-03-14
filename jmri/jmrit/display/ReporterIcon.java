@@ -5,13 +5,15 @@ import jmri.Reporter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JPopupMenu;
+import javax.swing.JMenu;
 
 
 /**
  * An icon to display info from a Reporter, e.g. transponder or RFID reader.<P>
  *
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class ReporterIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -21,8 +23,22 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         super("???", editor);
         setDisplayLevel(Editor.LABELS);
         setText("???");
+        setPopupUtility(new ReporterPopupUtil(this, this));
     }
 
+    // suppress inappropriate menu items
+    class ReporterPopupUtil extends PositionablePopupUtil {
+        ReporterPopupUtil(Positionable parent, javax.swing.JComponent textComp) {
+            super(parent, textComp);
+        }
+        public void setTextJustificationMenu(JPopupMenu popup) {}
+        public void setFixedTextMenu(JPopupMenu popup) {}
+        public void setTextMarginMenu(JPopupMenu popup) {
+            JMenu colorMenu = new JMenu(rb.getString("FontBackgroundColor"));
+            makeColorMenu(colorMenu, BACKGROUND_COLOR);
+            popup.add(colorMenu);
+        }
+    }
     // the associated Reporter object
     Reporter reporter = null;
 

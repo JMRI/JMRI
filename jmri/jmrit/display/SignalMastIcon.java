@@ -19,7 +19,7 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class SignalMastIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -113,7 +113,7 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
     /**
      * Pop-up just displays the name
      */
-    public void showPopUp(JPopupMenu popup) {
+    public boolean showPopUp(JPopupMenu popup) {
 
         popup.add(new AbstractAction(rb.getString("EditLogic")) {
             public void actionPerformed(ActionEvent e) {
@@ -128,6 +128,7 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
                 f.setVisible(true);
             }
         });
+        return true;
     }
     
     /**

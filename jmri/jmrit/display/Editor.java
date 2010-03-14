@@ -94,7 +94,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     final public static int SCROLL_VERTICAL   = 3;
 
     static final public ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
-    public boolean _debug = false;
+    private boolean _debug = false;
 
     boolean showCloseInfoMessage = true;	//display info message when closing panel
     
@@ -189,8 +189,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         _targetFrame.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         _panelScrollPane = new JScrollPane(_targetPanel);
-        //_panelScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        //_panelScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         Container contentPane = _targetFrame.getContentPane();
         contentPane.add(_panelScrollPane);
         _targetFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -689,31 +687,39 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     * Display the X & Y coordinates of the Positionable item and provide a
     * dialog memu item to edit them.
     */
-    public void setShowCoordinatesMenu(Positionable p, JPopupMenu popup) {
+    public boolean setShowCoordinatesMenu(Positionable p, JPopupMenu popup) {
         if (showCoordinates()) {
-            popup.add("x= " + p.getX());
-            popup.add("y= " + p.getY());
-            popup.add(CoordinateEdit.getCoordinateEditAction(p));
+            JMenu edit = new JMenu(rb.getString("EditLocation"));
+            edit.add("x= " + p.getX());
+            edit.add("y= " + p.getY());
+            edit.add(CoordinateEdit.getCoordinateEditAction(p));
+            popup.add(edit);
+           return true;
         }
+        return false;
     }
 
     /**
     * Offer actions to align the selected Positionable items either
     * Horizontally (at avearage y coord) or Vertically (at avearage x coord).
     */
-    public void setShowAlignmentMenu(Positionable p, JPopupMenu popup) {
+    public boolean setShowAlignmentMenu(Positionable p, JPopupMenu popup) {
         if (showAlignPopup(p)) {
-            popup.add(new AbstractAction(rb.getString("AlignX")) {
+            JMenu edit = new JMenu(rb.getString("EditAlignment"));
+            edit.add(new AbstractAction(rb.getString("AlignX")) {
                 public void actionPerformed(ActionEvent e) {
                     alignGroup(true);
                 }
             });
-            popup.add(new AbstractAction(rb.getString("AlignY")) {
+            edit.add(new AbstractAction(rb.getString("AlignY")) {
                 public void actionPerformed(ActionEvent e) {
                     alignGroup(false);
                 }
             });
+            popup.add(edit);
+            return true;
         }
+        return false;
     }
         
     /**
@@ -721,14 +727,22 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     * dialog memu item to edit it.
     */
     public void setDisplayLevelMenu(Positionable p, JPopupMenu popup) {
-        popup.add("level= " + p.getDisplayLevel());
-        popup.add(CoordinateEdit.getLevelEditAction(p));
+        if (p.getDisplayLevel() == BKG) {
+            return;
+        }
+        JMenu edit = new JMenu(rb.getString("EditLevel"));
+        edit.add("level= " + p.getDisplayLevel());
+        edit.add(CoordinateEdit.getLevelEditAction(p));
+        popup.add(edit);
     }
 
     /**
     * Add a checkbox to set visibility of the Positionable item
     */
     public void setHiddenMenu(Positionable p, JPopupMenu popup) {
+        if (p.getDisplayLevel() == BKG) {
+            return;
+        }
         JCheckBoxMenuItem hideItem = new JCheckBoxMenuItem(rb.getString("SetHidden"));
         hideItem.setSelected(p.isHidden());
         hideItem.addActionListener(new ActionListener(){
@@ -751,26 +765,27 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     * if showable, provide a dialog menu to edit it.
     */
     public void setShowTooltipMenu(Positionable p, JPopupMenu popup) {
-        //if (showTooltip()) {
-            JCheckBoxMenuItem showTooltipItem = new JCheckBoxMenuItem(rb.getString("ShowTooltip"));
-            showTooltipItem.setSelected(p.showTooltip());
-            showTooltipItem.addActionListener(new ActionListener(){
-                Positionable comp;
-                JCheckBoxMenuItem checkBox;
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    comp.setShowTooltip(checkBox.isSelected());
-                }
-                ActionListener init(Positionable pos, JCheckBoxMenuItem cb) {
-                    comp = pos;
-                    checkBox = cb; 
-                    return this;
-                }
-            }.init(p, showTooltipItem));
-            popup.add(showTooltipItem);
-            if (p.showTooltip()) {
-                popup.add(CoordinateEdit.getTooltipEditAction(p));
+        if (p.getDisplayLevel() == BKG) {
+            return;
+        }
+        JMenu edit = new JMenu(rb.getString("EditTooltip"));
+        JCheckBoxMenuItem showTooltipItem = new JCheckBoxMenuItem(rb.getString("ShowTooltip"));
+        showTooltipItem.setSelected(p.showTooltip());
+        showTooltipItem.addActionListener(new ActionListener(){
+            Positionable comp;
+            JCheckBoxMenuItem checkBox;
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                comp.setShowTooltip(checkBox.isSelected());
             }
-        //}
+            ActionListener init(Positionable pos, JCheckBoxMenuItem cb) {
+                comp = pos;
+                checkBox = cb; 
+                return this;
+            }
+        }.init(p, showTooltipItem));
+        edit.add(showTooltipItem);
+        edit.add(CoordinateEdit.getTooltipEditAction(p));
+        popup.add(edit);
     }
         
     /**
@@ -887,6 +902,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public PositionableLabel setUpBackground(String name) {
         NamedIcon icon = NamedIcon.getIconByName(name);									   
         PositionableLabel l = new PositionableLabel(icon, this);
+        l.setPopupUtility(null);        // no text
         l.setPositionable(false);
         l.setShowTooltip(false);
         l.setSize(icon.getIconWidth(), icon.getIconHeight());
@@ -1015,17 +1031,17 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
             // frame added in the above switch 
             frame = _iconEditorFrame.get(name);
-            //frame.setLocation(frameLocationX, frameLocationY);
-            frame.setLocationRelativeTo(this);
-            //frameLocationX += DELTA;
-            //frameLocationY += DELTA;
+            //frame.setLocationRelativeTo(this);
+            frame.setLocation(frameLocationX, frameLocationY);
+            frameLocationX += DELTA;
+            frameLocationY += DELTA;
         }
         frame.setVisible(true);
         return frame;
     }
-    //public int frameLocationX = 0;
-    //public int frameLocationY = 0;
-    //static final int DELTA = 20; 
+    public int frameLocationX = 0;
+    public int frameLocationY = 0;
+    static final int DELTA = 20; 
 
     public IconAdder getIconEditor(String name) {
         return _iconEditorFrame.get(name).getEditor();
@@ -1301,7 +1317,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         };
         ActionListener changeIconAction = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    JFrameItem frame = _iconEditorFrame.get("SensorEditor");
+                    JFrameItem frame = _iconEditorFrame.get("LightEditor");
                     frame.getEditor().addCatalog();
                     frame.pack();
                 }
@@ -1554,6 +1570,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         String url = iconEditor.getIcon("plainIcon").getURL();
         NamedIcon icon = NamedIcon.getIconByName(url);
         PositionableLabel l = new PositionableLabel(icon, this);
+        l.setPopupUtility(null);        // no text 
         l.setDisplayLevel(ICONS);
         setNextLocation(l);
         putItem(l);

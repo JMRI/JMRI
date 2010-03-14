@@ -14,7 +14,7 @@ import java.util.List;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -52,21 +52,22 @@ public class SensorIconXml extends PositionableLabelXml {
         if (p.getText()==null) {
             return;
         }
+        jmri.jmrit.display.PositionablePopupUtil util = p.getPopupUtility();
         element.setAttribute("text", p.getText());
         element.setAttribute("size", ""+p.getFont().getSize());
         element.setAttribute("style", ""+p.getFont().getStyle());
-        if (p.getMargin()!=0)
-            element.setAttribute("margin", ""+p.getMargin());
-        if (p.getBorderSize()!=0){
-            element.setAttribute("borderSize", ""+p.getBorderSize());
-            element.setAttribute("redBorder", ""+p.getBorderColor().getRed());
-            element.setAttribute("greenBorder", ""+p.getBorderColor().getGreen());
-            element.setAttribute("blueBorder", ""+p.getBorderColor().getBlue());
+        if (util.getMargin()!=0)
+            element.setAttribute("margin", ""+util.getMargin());
+        if (util.getBorderSize()!=0){
+            element.setAttribute("borderSize", ""+util.getBorderSize());
+            element.setAttribute("redBorder", ""+util.getBorderColor().getRed());
+            element.setAttribute("greenBorder", ""+util.getBorderColor().getGreen());
+            element.setAttribute("blueBorder", ""+util.getBorderColor().getBlue());
         } 
-        if (p.getFixedWidth()!=0)
-            element.setAttribute("fixedWidth", ""+p.getFixedWidth());
-        if (p.getFixedHeight()!=0)
-            element.setAttribute("fixedHeight", ""+p.getFixedHeight());
+        if (util.getFixedWidth()!=0)
+            element.setAttribute("fixedWidth", ""+util.getFixedWidth());
+        if (util.getFixedHeight()!=0)
+            element.setAttribute("fixedHeight", ""+util.getFixedHeight());
         if (p.getText()!=null)
             element.setAttribute("text", p.getText());
         if (!p.isIcon()){
@@ -222,10 +223,11 @@ public class SensorIconXml extends PositionableLabelXml {
     }
     
     void loadTextInfo(SensorIcon l, Element element){
+        jmri.jmrit.display.PositionablePopupUtil util = l.getPopupUtility();
         Attribute a = element.getAttribute("size");
         try {
             if (a!=null){ 
-                l.setFontSize(a.getFloatValue());
+                util.setFontSize(a.getFloatValue());
             }
         } catch (DataConversionException ex) {
             log.warn("invalid size attribute value");
@@ -242,7 +244,7 @@ public class SensorIconXml extends PositionableLabelXml {
                     case 2: drop = 1; //italic
                             break;
                 }
-                l.setFontStyle(style, drop);
+                util.setFontStyle(style, drop);
             }
         } catch (DataConversionException ex) {
             log.warn("invalid style attribute value");
@@ -256,7 +258,7 @@ public class SensorIconXml extends PositionableLabelXml {
             int margin=0;
             try {
                 margin=element.getAttribute("margin").getIntValue();
-                l.setMargin(margin);
+                util.setMargin(margin);
             } catch ( org.jdom.DataConversionException e) {
                 log.warn("Could not parse color attributes!");
             } catch ( NullPointerException e) {  // considered normal if the attributes are not present
@@ -276,13 +278,13 @@ public class SensorIconXml extends PositionableLabelXml {
             } catch ( NullPointerException e) {  // considered normal if the attributes are not present
             }
             if (!(fixedWidth==0 && fixedHeight==0))
-                l.setFixedSize(fixedWidth, fixedHeight);
+                util.setFixedSize(fixedWidth, fixedHeight);
             try {
-                l.setBorderSize(element.getAttribute("borderSize").getIntValue());
+                util.setBorderSize(element.getAttribute("borderSize").getIntValue());
                 int red = element.getAttribute("redBorder").getIntValue();
                 int blue = element.getAttribute("blueBorder").getIntValue();
                 int green = element.getAttribute("greenBorder").getIntValue();
-                l.setBorderColor(new Color(red, green, blue));
+                util.setBorderColor(new Color(red, green, blue));
             } catch ( org.jdom.DataConversionException e) {
                 log.warn("Could not parse level attribute!");
             } catch ( NullPointerException e) {  // considered normal if the attribute not present

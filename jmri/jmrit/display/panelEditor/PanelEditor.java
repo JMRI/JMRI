@@ -552,55 +552,53 @@ public class PanelEditor extends Editor implements ItemListener {
     * types.
     */
     protected void showPopUp(Positionable p, MouseEvent event) {
-        if (!p.isEditable()) { return; }
+        if (!p.doPopupMenu()) { return; }
 
         JPopupMenu popup = new JPopupMenu();
 
-        if (p.doPopupMenu()) {
+        if (p.isEditable()) {
+            // items for all Positionables
             popup.add(p.getNameString());
-
             setPositionableMenu(p, popup);
-
             if (p.isPositionable()) {
                 setShowCoordinatesMenu(p, popup);
                 setShowAlignmentMenu(p, popup);
             }
             setDisplayLevelMenu(p, popup);
+            setHiddenMenu(p, popup);
+            popup.addSeparator();
 
-                 // items not common to all, but common to type
-            if (p instanceof PositionableLabel ) {
-                setHiddenMenu(p, popup);
-                PositionableLabel pl = (PositionableLabel)p;
-                if (pl.isIcon()) {
-                    popup.addSeparator();
-                    pl.setRotateOrthogonalMenu(popup);        
-                    pl.setRotateMenu(popup);        
-                    pl.setScaleMenu(popup);        
-                    popup.addSeparator();
-                    pl.setEditIconMenu(popup);        
-                }
-                if (pl.isText()) {
-                    popup.addSeparator();
-                    pl.setFixedTextMenu(popup);        
-                    pl.setTextMarginMenu(popup);        
-                    pl.setBackgroundFontColorMenu(popup);        
-                    popup.addSeparator();
-                    pl.setTextBorderMenu(popup);        
-                    popup.addSeparator();
-                    pl.setTextFontMenu(popup);
-                    pl.setTextEditMenu(popup);
-                    pl.setTextJustificationMenu(popup);
-                }
-                if (pl.isControl()) {
-                    pl.setDisableControlMenu(popup);
-                }
-                setShowTooltipMenu(p, popup);
-            } else if (p instanceof PositionableJComponent ) {
-                p.setScaleMenu(popup);        
-            } else if (p instanceof PositionableJPanel ) {
-                p.setEditIconMenu(popup);        
+            // Positionable items with defaults or using overrides
+            boolean popupSet =false;
+            popupSet = p.setRotateOrthogonalMenu(popup);        
+            popupSet = p.setRotateMenu(popup);        
+            popupSet = p.setScaleMenu(popup);        
+            if (popupSet) { 
+                popup.addSeparator();
+                popupSet = false;
             }
-            // for Positionables with unique settings
+            popupSet = p.setEditIconMenu(popup);        
+            if (popupSet) { 
+                popup.addSeparator();
+                popupSet = false;
+            }
+            popupSet = p.setTextEditMenu(popup);
+            PositionablePopupUtil util = p.getPopupUtility();
+            if (util!=null) {
+                util.setFixedTextMenu(popup);        
+                util.setTextMarginMenu(popup);        
+                util.setTextBorderMenu(popup);        
+                util.setTextFontMenu(popup);
+                util.setTextJustificationMenu(popup);
+                popupSet = true;
+            }
+            if (popupSet) { 
+                popup.addSeparator();
+                popupSet = false;
+            }
+            p.setDisableControlMenu(popup);
+
+            // for Positionables with unique item settings
             p.showPopUp(popup);
 
             setRemoveMenu(p, popup);

@@ -30,7 +30,7 @@ import javax.swing.JPopupMenu;
  * @see PositionableLabel
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public interface Positionable  {
     public void setPositionable(boolean enabled);
@@ -58,17 +58,22 @@ public interface Positionable  {
     public void setDisplayLevel(int l);
 
     public Editor getEditor();
+    public void updateSize();
+    public int maxWidth();
+    public int maxHeight();
 
     /** Methods to add popup menu items
+    * return true if a popup item is set
     */
     public String getNameString();
-    public void setRotateOrthogonalMenu(JPopupMenu popup);
-    public void setRotateMenu(JPopupMenu popup);
-    public void setScaleMenu(JPopupMenu popup);
-    public void setEditIconMenu(JPopupMenu popup);
-    public void setDisableControlMenu(JPopupMenu popup);
+    public boolean setRotateOrthogonalMenu(JPopupMenu popup);
+    public boolean setRotateMenu(JPopupMenu popup);
+    public boolean setScaleMenu(JPopupMenu popup);
+    public boolean setEditIconMenu(JPopupMenu popup);
+    public boolean setDisableControlMenu(JPopupMenu popup);
+    public boolean setTextEditMenu(JPopupMenu popup);
 
-    public void showPopUp(JPopupMenu popup);
+    public boolean showPopUp(JPopupMenu popup);
 
     public void setScale(double s);
     public double getScale();
@@ -91,6 +96,11 @@ public interface Positionable  {
      * @return false if this Positionable will do all the popup menu items
     */
     public boolean doPopupMenu();
+    /*
+    * Utility to handle Margins, Borders and other common popup items
+    * @return null if these item do not apply
+    */
+    public PositionablePopupUtil getPopupUtility();
 
     // Mouse-handling events.  See
     // Editor class for more information on how these are used.
@@ -110,9 +120,20 @@ public interface Positionable  {
     public Point getLocation();
     public void setLocation(int x, int y);
     public void setLocation(Point p);
+    public void setSize(int width, int height);
     public void setVisible(boolean b);
     public int getWidth();
     public int getHeight();
+    public java.awt.Container getParent();
+    public void setOpaque(boolean isOpaque);
+    public boolean isOpaque();
+    public void setBackground(java.awt.Color bg);
+    public java.awt.Color getBackground();
+    public void setForeground(java.awt.Color bg);
+    public java.awt.Color getForeground();
+    public java.awt.Font getFont();
+    public void setBorder(javax.swing.border.Border border);
+    public java.awt.Dimension getPreferredSize();
     public void invalidate();
     public void repaint();
 }

@@ -15,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -36,27 +36,8 @@ public class MemoryIconXml extends PositionableLabelXml {
 
         // include attributes
         element.setAttribute("memory", p.getMemory().getName());
-        if (p.getOriginalX()!=0)
-            element.setAttribute("x", ""+p.getOriginalX());
-        else
-            element.setAttribute("x", ""+p.getX());
-        //element.setAttribute("x", ""+p.getX());
-        element.setAttribute("y", ""+p.getY());
-        element.setAttribute("level", String.valueOf(p.getDisplayLevel()));
-
+        storeCommonAttributes(p, element);
         storeTextInfo(p, element);
-        if(p.getJustification()!=0x00){
-            String just;
-            switch (p.getJustification()){
-                case 0x02 : just="right";
-                            break;
-                case 0x04 : just ="centre";
-                            break;
-                default :   just="left";
-                            break;
-                }
-            element.setAttribute("justification", just);
-        }
         
         element.setAttribute("selectable", (p.isSelectable()?"yes":"no"));
 
@@ -94,7 +75,16 @@ public class MemoryIconXml extends PositionableLabelXml {
      */
     @SuppressWarnings("unchecked")
 	public void load(Element element, Object o) {
-        // get object class and determine editor being used
+
+        String name;
+        Attribute attr = element.getAttribute("memory"); 
+        if (attr == null) {
+            log.error("incorrect information for a memory location; must use memory name");
+            return;
+        } else {
+            name = attr.getValue();
+        }
+
 		Editor ed = null;
         MemoryIcon l;
 		if (o instanceof LayoutEditor) {
@@ -110,35 +100,18 @@ public class MemoryIconXml extends PositionableLabelXml {
 			log.error("Unrecognizable class - "+o.getClass().getName());
             return;
 		}
-        loadTextInfo(l, element);
-        String name;
-        Attribute attr = element.getAttribute("memory"); 
-        if (attr == null) {
-            log.error("incorrect information for a memory location; must use memory name");
-            return;
-        } else {
-            name = attr.getValue();
-        }
-        
+
         Memory m = jmri.InstanceManager.memoryManagerInstance().getMemory(name);
-        
         if (m!=null) {
             l.setMemory(new NamedBeanHandle<Memory>(name, m));
         } else {
             log.error("Memory named '"+attr.getValue()+"' not found.");
             return;
         }
-        //l.setMemory(jmri.InstanceManager.memoryManagerInstance().getMemory(
-            //element.getAttribute("memory").getValue()));
         
-         // find display level
-        try {
-            int level = element.getAttribute("level").getIntValue();
-            l.setDisplayLevel(level);
-        } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse level attribute!");
-        } catch ( NullPointerException e) {  // considered normal if the attribute not present
-        }
+
+        loadCommonAttributes(l, Editor.MEMORIES, element);
+        loadTextInfo(l, element);
         
         Attribute a = element.getAttribute("selectable");
         if (a!=null && a.getValue().equals("yes")) l.setSelectable(true);
@@ -153,33 +126,6 @@ public class MemoryIconXml extends PositionableLabelXml {
             String keyValue = item.getAttribute("value").getValue();
         	l.addKeyAndIcon(NamedIcon.getIconByName(icon), keyValue);
 		}
-        a = element.getAttribute("justification");
-        if(a!=null)
-            l.setJustification(a.getValue());
-        
-        // find coordinates
-        int x = 0;
-        int y = 0;
-        try {
-            x = element.getAttribute("x").getIntValue();
-            y = element.getAttribute("y").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.error("failed to convert positional attribute");
-        }
-        if ((l.getJustification()==0x00) || (l.getFixedWidth()!=0))
-            l.setLocation(x,y);
-        else
-            l.setOriginalLocation(x,y);
- 
-         // find display level
-        int level = Editor.MEMORIES;
-        try {
-            level = element.getAttribute("level").getIntValue();
-        } catch ( org.jdom.DataConversionException e) {
-            log.warn("Could not parse level attribute!");
-        } catch ( NullPointerException e) {  // considered normal if the attribute not present
-        }
-        l.setDisplayLevel(level);
         ed.putItem(l);
     }
 

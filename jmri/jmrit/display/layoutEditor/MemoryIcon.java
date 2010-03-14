@@ -19,7 +19,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         }
     }
 
-    public void displayState() {
+    public void displayState(int state) {
         setDefaultIcon(null);
         super.displayState();
         if (getMemory() != null && getMemory().getBean()!=null && getMemory().getBean().getValue()==null) {
