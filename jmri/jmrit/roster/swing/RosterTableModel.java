@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
  * and only shows some of the fields.  But it's a start....
  *
  * @author              Bob Jacobsen   Copyright (C) 2009, 2010
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  * @since 2.7.5
  */
 public class RosterTableModel extends javax.swing.table.AbstractTableModel {
@@ -66,6 +66,15 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel {
         return false;
     }
     
+    jmri.jmrit.roster.RosterIconFactory iconFactory = null;
+    
+    ImageIcon getIcon(RosterEntry re) {
+        // defer image handling to RosterIconFactory
+        if (iconFactory == null)
+            iconFactory = new jmri.jmrit.roster.RosterIconFactory(Math.max(19, new javax.swing.JLabel(getColumnName(0)).getPreferredSize().height));
+        return iconFactory.getIcon(re);
+    }
+    
     /**
      * Provides the empty String if attribute doesn't exist.
      */
@@ -83,7 +92,7 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel {
         case ROADNAMECOL:   return re.getRoadName();
         case ROADNUMBERCOL: return re.getRoadNumber();
         case MFGCOL:        return re.getMfg();
-        case ICONCOL:       return new ImageIcon(re.getIconPath());
+        case ICONCOL:       return getIcon(re);
         case OWNERCOL:      return re.getOwner();
         case DATEUPDATECOL: return re.getDateUpdated();
         default:            return "<UNKNOWN>";
