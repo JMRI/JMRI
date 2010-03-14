@@ -30,7 +30,7 @@ import java.beans.PropertyChangeListener;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public interface PowerManager {
 
@@ -48,6 +48,7 @@ public interface PowerManager {
 	public void addPropertyChangeListener(PropertyChangeListener p);
 	public void removePropertyChangeListener(PropertyChangeListener p);
 
+    public String getUserName();
 }
 
 
