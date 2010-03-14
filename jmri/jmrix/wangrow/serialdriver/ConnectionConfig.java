@@ -4,13 +4,15 @@ package jmri.jmrix.wangrow.serialdriver;
 
 /**
  * Definition of objects to handle configuring a layout connection
- * via an Wagnrow SerialDriverAdapter object.
+ * via an Wangrow SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
+	public final static String NAME = "Serial Interface";
+	
     /**
      * Ctor for an object being created during load process;
      * Swing init is deferred.
@@ -25,7 +27,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super();
     }
 
-    public String name() { return "Wangrow"; }
+    public String name() { return NAME; }
 
     protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }
