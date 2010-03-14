@@ -15,7 +15,7 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2007
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class ReporterIconTest extends jmri.util.SwingTestCase {
 
@@ -23,7 +23,7 @@ public class ReporterIconTest extends jmri.util.SwingTestCase {
     jmri.jmrit.display.panelEditor.PanelEditor panel = 
             new jmri.jmrit.display.panelEditor.PanelEditor("Test ReporterIcon Panel");
 
-	public void testShow() {
+	public void testShowSysName() {
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
@@ -43,7 +43,38 @@ public class ReporterIconTest extends jmri.util.SwingTestCase {
         jmri.jmrix.loconet.LocoNetInterfaceScaffold tc = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
 
         // create objects to test
-        jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager(tc));
+        jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager(tc,"L"));
+        jmri.InstanceManager.reporterManagerInstance().provideReporter("LR1");
+        to.setReporter("LR1");
+        jmri.InstanceManager.reporterManagerInstance().provideReporter("LR1").setReport("data");
+
+        jf.pack();
+        jf.setVisible(true);
+
+	}
+
+	public void testShowNumericAddress() {
+        JFrame jf = new JFrame();
+        jf.getContentPane().setLayout(new java.awt.FlowLayout());
+
+        to = new ReporterIcon(panel);
+        jf.getContentPane().add(to);
+        
+        // reset instance manager
+        jmri.InstanceManager i = new jmri.InstanceManager(){
+            protected void init() {
+                super.init();
+                root = this;
+            }
+        };
+        Assert.assertNotNull("Instance exists", i );
+        // reset the LocoNet instances, so this behaves independent of 
+        // any layout connection
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold tc = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
+
+        // create objects to test
+        jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager(tc,"L"));
+        jmri.InstanceManager.reporterManagerInstance().provideReporter("1");
         to.setReporter("1");
         jmri.InstanceManager.reporterManagerInstance().provideReporter("1").setReport("data");
 
