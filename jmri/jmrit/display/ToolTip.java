@@ -116,7 +116,7 @@ public class ToolTip {
         g2d.setColor(_borderColor);
         g2d.draw(bds);
         g2d.setColor(_fontColor);
-        tl.draw(g2d, (float)(x0+3), (float)(_ty+bds.getHeight()-4));
+        tl.draw(g2d, x0+3f, (float)(_ty+bds.getHeight()-4));
         g2d.setColor(color);
         g2d.setFont(font);
     }

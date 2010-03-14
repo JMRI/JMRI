@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.78 $
+ * @version     $Revision: 1.79 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -559,8 +559,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     	if (op != null) {
             if (!op.isNonce()) op = op.makeNonce(t);
             TurnoutOperationEditor dialog = new TurnoutOperationEditor(this, f, op, t, box);
-            if(dialog == null)
-               log.error("Error Creating Turnout Operation Editor Dialog.");
     	} else {
             JOptionPane.showMessageDialog(f, new String("There is no operation type suitable for this turnout"),
                                           "No operation type", JOptionPane.ERROR_MESSAGE);

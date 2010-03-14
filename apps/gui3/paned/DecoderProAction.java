@@ -22,7 +22,7 @@ import org.jdom.*;
  * Ignores WindowInterface.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.7 $
+ * @version		$Revision: 1.8 $
  */
  
 public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
@@ -163,8 +163,6 @@ public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
         // create a JDOM tree with just some elements
         Element root = null;
         Element pane1 = null;
-        Element pane2 = null;
-        Element pane3 = null;
         Document doc = null;
 
         root = new Element("programmer-config");
@@ -203,13 +201,13 @@ public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
                         )
                     )
                 )
-            .addContent(pane2 = new Element("pane")
+            .addContent(new Element("pane")
                 .setAttribute("name", "CV")
                 .addContent(new Element("column")
                     .addContent(new Element("cvtable"))
                     )
                 )
-            .addContent(pane3 = new Element("pane")
+            .addContent(new Element("pane")
                 .setAttribute("name", "Other")
                 .addContent(new Element("column")
                     .addContent(new Element("display")
