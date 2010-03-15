@@ -22,7 +22,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.82 $
+ * @version $Revision: 1.83 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -49,19 +49,23 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     /**
      * Common check routine to confirm 
      * an adapter is available as part of
-     * registration process.
+     * registration process. Only enabled when
+     * Log4J DEBUG level is selected, to load fewer
+     * classes at startup.
      */
     void confirmAdapterAvailable(Object o) {
-        String adapter = adapterName(o);
-        if (log.isDebugEnabled()) log.debug("register "+o+" adapter "+adapter);
-        if (adapter!=null)
-            try {
-                Class.forName(adapter);
-            } catch (java.lang.ClassNotFoundException ex) {
-                locateClassFailed(ex, adapter, o);
-            } catch (java.lang.NoClassDefFoundError ex) {
-                locateClassFailed(ex, adapter, o);
-            }
+        if (log.isDebugEnabled()) {
+            String adapter = adapterName(o);
+            if (log.isDebugEnabled()) log.debug("register "+o+" adapter "+adapter);
+            if (adapter!=null)
+                try {
+                    Class.forName(adapter);
+                } catch (java.lang.ClassNotFoundException ex) {
+                    locateClassFailed(ex, adapter, o);
+                } catch (java.lang.NoClassDefFoundError ex) {
+                    locateClassFailed(ex, adapter, o);
+                }
+        }
     }
     
     /**
