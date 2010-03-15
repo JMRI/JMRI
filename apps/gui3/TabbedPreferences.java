@@ -17,7 +17,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -72,6 +72,13 @@ public class TabbedPreferences extends AppConfigBase {
             count++;
         }
         if (count == 0){
+            while (null != jmri.InstanceManager.configureManagerInstance()
+                                 .findInstance(jmri.jmrix.JmrixConfigPane.class, count)){
+            addItem(connectionPanel, rb.getString("TabbedLayoutConnection")+(count+1), null, JmrixConfigPane.instance(count), true, JmrixConfigPane.instance(count).getCurrentProtocolName());
+            count++;
+            }
+        }
+        if (count == 0) {
             addItem(connectionPanel, rb.getString("TabbedLayoutConnection"), null, JmrixConfigPane.instance(0), true, null);
         }
         addItem(connectionPanel, "+", null, newConnectionTab(), false, "Add New Connection");
