@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
  * <P>
  * Uses the local preferences for test files.
  * @author Bob Jacobsen Copyright 2003
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class ConfigXmlManagerTest extends TestCase {
 
@@ -29,29 +29,14 @@ public class ConfigXmlManagerTest extends TestCase {
 
     boolean innerFlag;
 
-    public void testRegisterFail() {
-        ConfigXmlManager configxmlmanager = new ConfigXmlManager(){
-                void locateClassFailed(Throwable ex, String adapterName, Object o) {
-                    innerFlag=true;
-                }
-            };
-        Object o1=  "";
-        innerFlag=false;
-        configxmlmanager.registerConfig(o1);
-        Assert.assertTrue("register didn't find class", innerFlag);
-    }
-
     public void testRegisterOK() {
         ConfigXmlManager configxmlmanager = new ConfigXmlManager(){
                 @SuppressWarnings("unused")
 				void locateFailed(Throwable ex, String adapterName, Object o) {
-                    innerFlag=true;
                 }
             };
         Object o1=  new jmri.implementation.TripleTurnoutSignalHead("","", null, null, null);
-        innerFlag=false;
         configxmlmanager.registerConfig(o1);
-        Assert.assertTrue("register found class", !innerFlag);
         Assert.assertTrue("stored in clist", configxmlmanager.clist.size() == 1);
         configxmlmanager.deregister(o1);
         Assert.assertTrue("removed from clist", configxmlmanager.clist.size() == 0);
