@@ -7,6 +7,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -58,21 +59,11 @@ import jmri.jmrit.operations.routes.RouteManager;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.50 $
+ * @version $Revision: 1.51 $
  */
 public class OperationsTrainsTest extends TestCase {
 
 	private final int DIRECTION_ALL = Location.EAST+Location.WEST+Location.NORTH+Location.SOUTH;
-
-	synchronized void releaseThread() {
-		try {
-			Thread.sleep(20);
-			// super.wait(100);
-		}
-		catch (InterruptedException e) {
-			Assert.fail("failed due to InterruptedException");
-		}
-	}
 	
 	// test train manager
 	public void testTrainManager(){
@@ -141,6 +132,12 @@ public class OperationsTrainsTest extends TestCase {
 		TrainIcon trainicon1 = editor.addTrainIcon("TestName");
 		trainicon1.setTrain(train1);
 		Assert.assertEquals("TrainIcon set train", "TESTNAME", trainicon1.getTrain().getName());
+		
+		// test color change
+		String[] colors = TrainIcon.getLocoColors();
+		for (int i=0; i<colors.length; i++){
+			trainicon1.setLocoColor(colors[i]);
+		}
 	}
 
 	// test Train attributes
@@ -316,6 +313,15 @@ public class OperationsTrainsTest extends TestCase {
 		CarManager cmanager = CarManager.instance();
 		CarTypes ct = CarTypes.instance();
 		EngineTypes et = EngineTypes.instance();
+		
+		// create and register a panel
+		jmri.jmrit.display.panelEditor.PanelEditor editor = new jmri.jmrit.display.panelEditor.PanelEditor("Train Test Panel");
+		PanelMenu.instance().addEditorPanel(editor);
+		
+		// Place train icons on panel
+		Setup.setPanelName("Train Test Panel");
+		// Set terminate color to yellow
+		Setup.setTrainIconColorTerminate(TrainIcon.YELLOW);
 
 		// register the car and engine types used
 		ct.addName("Boxcar");

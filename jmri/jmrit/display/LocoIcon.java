@@ -20,17 +20,17 @@ import javax.swing.JRadioButtonMenuItem;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class LocoIcon extends PositionableLabel {
 
-    private static final String WHITE = "White";		//loco background colors
-    private static final String GREEN = "Green";
-    private static final String GRAY = "Gray";
-    private static final String RED = "Red";
-    private static final String BLUE = "Blue";
-    private static final String YELLOW = "Yellow";
+    public static final String WHITE = "White";		//loco background colors
+    public static final String GREEN = "Green";
+    public static final String GRAY = "Gray";
+    public static final String RED = "Red";
+    public static final String BLUE = "Blue";
+    public static final String YELLOW = "Yellow";
 	
 	public LocoIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
