@@ -30,7 +30,7 @@ import javax.swing.*;
  *		may be hidden when the panel is not in EditMode. 
  *
  * @author Dave Duchamp Copyright (c) 2004-2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class TrackSegment 
@@ -60,6 +60,7 @@ public class TrackSegment
     private boolean flip = false;
     private double angle =0.0D;
     private boolean circle=false;
+    private boolean changed=false;
 	
     public TrackSegment(String id, Object c1, int t1, Object c2, int t2, boolean dash,
 							boolean main, LayoutEditor myPanel) {
@@ -124,11 +125,20 @@ public class TrackSegment
 	public boolean getMainline() {return mainline;}
 	public void setMainline(boolean main) {mainline = main;} 
     public boolean getArc() {return arc;}
-	public void setArc(boolean boo) {arc = boo;} 
+	public void setArc(boolean boo) {
+        arc = boo;
+        changed=true;
+    }
     public boolean getCircle() {return circle;}
-	public void setCircle(boolean boo) {circle = boo;} 
+	public void setCircle(boolean boo) {
+        circle = boo;
+        changed=true;
+    }
     public boolean getFlip() {return flip;}
-	public void setFlip(boolean boo) {flip = boo;}
+	public void setFlip(boolean boo) {
+        flip = boo;
+        changed=true;
+    }
     //public int getStartAngle() {return startangle;}
 	//public void setStartAngle(int x) {startangle = x;} 
     public double getAngle() {return angle;}
@@ -141,7 +151,12 @@ public class TrackSegment
 			x = 0.0D;
 // GT 8-OCT-2009 ==== Changed arcs maths : End
         angle = x;
+        changed=true;
     }
+    //This method is used to determine if we need to redraw a curved piece of track
+    //It saves having to recalculate the circle details each time.
+    public boolean trackNeedsRedraw() { return changed; }
+    public void trackRedrawn() { changed = false; }
     //public int getRadius() {return radius;}
 	//public void setRadius(int x) {radius = x;} 
     
@@ -584,9 +599,11 @@ public class TrackSegment
     
     public void setTmpPt1(Point2D Pt1){
         pt1 = Pt1;
+        changed= true;
     }
     public void setTmpPt2(Point2D Pt2){
         pt2 = Pt2;
+        changed= true;
     }
     
     //private int startadj;
