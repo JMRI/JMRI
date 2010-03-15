@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class LayoutEditor extends Editor {
@@ -540,6 +540,8 @@ public class LayoutEditor extends Editor {
 		auxTools = new LayoutEditorAuxTools(thisPanel);
 		if (auxTools==null) log.error("Unable to create link to LayoutEditorAuxTools"); 
     }
+
+    protected void init(String name) {}
 
     public void initView() {
         editModeItem.setSelected(isEditable());
