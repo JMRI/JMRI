@@ -5,13 +5,12 @@ package jmri.jmrix;
 import jmri.InstanceManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.Enumeration;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-//import javax.swing.JSeparator;
 
 /**
  * Provide GUI to configure communications links.
@@ -31,7 +30,7 @@ import javax.swing.JPanel;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.66 $
+ * @version	$Revision: 1.67 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -47,16 +46,45 @@ public class JmrixConfigPane extends JPanel {
     public static JmrixConfigPane instance(int index) {
         JmrixConfigPane retval = configPaneTable.get(new Integer(index));
         if (retval != null) return retval;
-        
         Object c = InstanceManager.configureManagerInstance()
                                 .findInstance(ConnectionConfig.class, index);
         log.debug("findInstance returned "+c);
         retval = new JmrixConfigPane((ConnectionConfig)c);
+        InstanceManager.configureManagerInstance().registerPref(retval);
         configPaneTable.put(new Integer(index), retval);
+        
         return retval;
     }
     
     public static int getNumberOfInstances() { return configPaneTable.size(); }
+    
+    public static void dispose(int index){
+        JmrixConfigPane retval = configPaneTable.get(new Integer(index));
+        if (retval == null){
+            log.debug("no instance found therefore can not dispose of it!");
+            return;
+        }
+        Object c = InstanceManager.configureManagerInstance()
+                                .findInstance(ConnectionConfig.class, index);
+        if (c!=null) {
+            ConnectionConfig co = (ConnectionConfig) c;
+            co.dispose();
+        }
+        InstanceManager.configureManagerInstance().deregister(c);
+        InstanceManager.configureManagerInstance().deregister(retval);
+        configPaneTable.remove(new Integer(index));
+    }
+    
+    public static int getInstanceNumber(JmrixConfigPane confPane){
+        Enumeration e = configPaneTable.keys();
+        int keyValue;
+        while(e.hasMoreElements()){
+            keyValue = (Integer) e.nextElement();
+            if(configPaneTable.get(keyValue).equals(confPane))
+                return keyValue;
+        }
+        return -1;
+    }
 
     static final java.util.Hashtable<Integer, JmrixConfigPane> configPaneTable 
                     = new java.util.Hashtable<Integer, JmrixConfigPane>();
@@ -75,7 +103,7 @@ public class JmrixConfigPane extends JPanel {
     ConnectionConfig[] classConnectionList;
     String[] manufactureNameList;
 
-
+    ConnectionConfig ccCurrent = null;
     /**
      * Use "instance" to get one of these.  
      * That allows it to reconnect to existing information in an existing ConnectionConfig
@@ -84,6 +112,9 @@ public class JmrixConfigPane extends JPanel {
      * first configuring the system.
      */
     private JmrixConfigPane(ConnectionConfig original) {
+    
+        ccCurrent = original;
+    
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         manuBox.addItem(NONE_SELECTED);
@@ -210,11 +241,16 @@ public class JmrixConfigPane extends JPanel {
         if (log.isDebugEnabled()) log.debug("new selection is "+current
         							+" "+modeBox.getSelectedItem());
         if ((current!=0)&&(current!=-1)){
+            if((ccCurrent!=null) && (ccCurrent!=classConnectionList[current])){
+                ccCurrent.dispose();
+            }
+            ccCurrent = classConnectionList[current];
             classConnectionList[current].loadDetails(details);
             classConnectionList[current].setManufacturer((String) manuBox.getSelectedItem());
         }
         validate();
         if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
+        
         repaint();
     }
     
