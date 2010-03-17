@@ -13,7 +13,7 @@ import java.net.*;
  *
  *
  * @author      Paul Bender  Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  * @see         jmri.jmrix.NetworkConfigException
  */
 abstract public class AbstractNetworkPortAdapter extends AbstractSerialPortController{
@@ -114,6 +114,11 @@ abstract public class AbstractNetworkPortAdapter extends AbstractSerialPortContr
     public String[] validBaudRates() {
         log.error("Unexpected call to validBaudRates()");
         return null;
+    }
+    
+    public SystemConnectionMemo getSystemConnectionMemo() { return null; }
+    
+    public void dispose(){
     }
    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractNetworkPortAdapter.class.getName());
