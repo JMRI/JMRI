@@ -19,7 +19,7 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class SignalMastIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -28,10 +28,12 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/misc/X-red.gif","resources/icons/misc/X-red.gif"), editor);
         _control = true;
+        debug = log.isDebugEnabled();
     }
     
     private SignalMast mMast;
     private NamedBeanHandle<SignalMast> namedMast;
+    private boolean debug;
 
     public void setShowAutoText(boolean state) {
         _text = state;
@@ -89,7 +91,7 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
 
     // update icon as state of turnout changes
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) log.debug("property change: "+e.getPropertyName()
+        if (debug) log.debug("property change: "+e.getPropertyName()
                                             +" current state: "+mastState());
         displayState(mastState());
         _editor.getTargetPanel().repaint(); 
@@ -106,9 +108,6 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
             name = mMast.getUserName()+" ("+mMast.getSystemName()+")";
         return name;
     }
-
-    ButtonGroup clickButtonGroup = null;
-    ButtonGroup litButtonGroup = null;
 
     /**
      * Pop-up just displays the name
@@ -130,6 +129,20 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
         });
         return true;
     }
+
+    /**
+     * Change the SignalMast aspect when the icon is clicked.
+     * @param e
+     */
+    public void doMouseClicked(java.awt.event.MouseEvent e) {
+        java.util.Vector <String> aspects = mMast.getValidAspects();
+        int idx = aspects.indexOf(mMast.getAspect()) + 1;
+        if (idx >= aspects.size()) {
+            idx = 0;
+        }
+        mMast.setAspect(aspects.elementAt(idx));
+    }
+    
     
     /**
      * Drive the current state of the display from the state of the
@@ -137,10 +150,12 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
      */
     public void displayState(String state) {
         updateSize();
-        if (mMast == null) {
-            log.debug("Display state "+state+", disconnected");
-        } else {
-            log.debug("Display state "+state+" for "+mMast.getSystemName());
+        if (debug) {
+            if (mMast == null) {
+                log.debug("Display state "+state+", disconnected");
+            } else {
+                log.debug("Display state "+state+" for "+mMast.getSystemName());
+            }
         }
         
         if (isText())
