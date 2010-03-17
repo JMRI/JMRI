@@ -20,7 +20,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -217,7 +217,8 @@ public class TabbedPreferences extends AppConfigBase {
         connectionPanel.add(title, p);
         connectionPanel.setTitleAt(tabPosition, title);
         connectionPanel.setToolTipTextAt(tabPosition, JmrixConfigPane.instance(instance).getCurrentProtocolName());
-        connectionPanel.setTabComponentAt(tabPosition, new ButtonTabComponent(connectionPanel));
+        //The following is not supported in 1.5, but is in 1.6 left here for future use.
+//        connectionPanel.setTabComponentAt(tabPosition, new ButtonTabComponent(connectionPanel));
         items.add(JmrixConfigPane.instance(instance));
     }
     
@@ -235,7 +236,8 @@ public class TabbedPreferences extends AppConfigBase {
         p.add(Box.createVerticalGlue());
         p.setToolTipText("Add New Connection");
         connectionPanel.add("+", p);
-        connectionPanel.setTabComponentAt(connectionPanel.getTabCount()-1, null);
+        //The following is not supported in 1.5, but is in 1.6 left here for future use.
+        //connectionPanel.setTabComponentAt(connectionPanel.getTabCount()-1, null);
         connectionPanel.setSelectedIndex(connectionPanel.getTabCount()-2);
     }
     
@@ -243,8 +245,9 @@ public class TabbedPreferences extends AppConfigBase {
     jmri.GuiLafConfigPane guiPrefs;
         
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TabbedPreferences.class.getName());
-    
-    private void removeTab(ActionEvent e, JComponent c, int x){
+    //Unable to do remove tab, via a component in 1.5 but is supported in 1.6
+    //left here until a move is made to 1.6 or an alternative method is used.
+    /*private void removeTab(ActionEvent e, JComponent c, int x){
 
         int i = connectionPanel.indexOfTabComponent(c);
         if (i != -1) {
@@ -287,7 +290,7 @@ public class TabbedPreferences extends AppConfigBase {
         }        
     }
     
-    private class ButtonTabComponent extends JPanel {
+        private class ButtonTabComponent extends JPanel {
         private final JTabbedPane pane;
 
         public ButtonTabComponent(final JTabbedPane pane) {
@@ -386,5 +389,5 @@ public class TabbedPreferences extends AppConfigBase {
                 }
             }
         };
-    }
+    }*/
 }
