@@ -317,55 +317,7 @@ public class OBlockManagerXml // extends XmlFile
     public void load(Element element, Object o) throws Exception {
         log.error("load called. Invalid method.");
     }
-/*
-    @SuppressWarnings("unchecked")
-    Portal loadPortal(Element elem) {
-        String portalName = elem.getAttribute("portalName").getValue();
-        Portal portal = getPortal(portalName);
-        List<Element> eBlocks = elem.getChildren("fromBlock");
-        if (eBlocks.size()>1) log.error("More than one fromBlock present: "+eBlocks.size());
-        if (eBlocks.size()>0) {
-            Element eBlk = eBlocks.get(0); 
-            String blockName = eBlk.getAttribute("blockName").getValue();
-            OBlock block = getBlock(blockName);
-            portal.setFromBlock(block, true);
-            block.addPortal(portal);
-            List<Element> ePaths = eBlk.getChildren("path");
-            for (int i=0; i<ePaths.size(); i++) {
-                portal.addPath(loadPath(ePaths.get(i), block));
-            }
-        }
-        List<Element> eSignals = elem.getChildren("fromSignal");
-        if (eSignals.size()>1) log.error("More than one fromSignal present: "+eSignals.size());
-        if (eSignals.size()>0) {
-            Element eSig = eSignals.get(0); 
-            String signalName = eSig.getAttribute("signalName").getValue();
-            portal.setFromSignal(InstanceManager.signalHeadManagerInstance().getSignalHead(signalName));
-        }
-        eBlocks = elem.getChildren("toBlock");
-        if (eBlocks.size()>1) log.error("More than one toBlock present: "+eBlocks.size());
-        if (eBlocks.size()>0) {
-            Element eBlk = eBlocks.get(0); 
-            String blockName = eBlk.getAttribute("blockName").getValue();
-            OBlock block = getBlock(blockName);
-            portal.setToBlock(block, true);
-            block.addPortal(portal);
-            List<Element> ePaths = eBlk.getChildren("path");
-            for (int i=0; i<ePaths.size(); i++) {
-                portal.addPath(loadPath(ePaths.get(i), block));
-            }
-        }
-        eSignals = elem.getChildren("toSignal");
-        if (eSignals.size()>1) log.error("More than one toSignal present: "+eSignals.size());
-        if (eSignals.size()>0) {
-            Element eSig = eSignals.get(0); 
-            String signalName = eSig.getAttribute("signalName").getValue();
-            portal.setToSignal(InstanceManager.signalHeadManagerInstance().getSignalHead(signalName));
-        }
-        if (log.isDebugEnabled()) log.debug("Load portal "+portalName);
-        return portal;
-    }
-*/
+    
     @SuppressWarnings("unchecked")
     Portal loadPortal(Element elem) {
         String portalName = elem.getAttribute("portalName").getValue();
