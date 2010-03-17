@@ -3,6 +3,7 @@
 package jmri;
 
 import java.io.File;
+import java.util.ArrayList;
 
 
 /**
@@ -44,7 +45,7 @@ import java.io.File;
  * for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  * @see jmri.InstanceManager
  * @see jmri.configurexml.ConfigXmlManager
  */
@@ -75,6 +76,14 @@ public interface ConfigureManager {
      * @return an object of class c or null
      */
     public Object findInstance(Class<?> c, int index);
+    
+    /**
+     * Returns a list of instances stored for a given class.
+     *
+     * @param c Class of the desired objects
+     * @return an ArrayList of objects of class c or null
+     */
+    public ArrayList<Object> getInstanceList(Class<?> c);
 
     /**
      * Stores prefs, config, tools and user information.

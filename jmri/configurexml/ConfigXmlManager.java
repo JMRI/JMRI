@@ -22,7 +22,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.83 $
+ * @version $Revision: 1.84 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -89,6 +89,24 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             }
         }
         return null;
+    }
+    
+    public ArrayList<Object> getInstanceList(Class<?> c){
+        ArrayList<Object> temp = new ArrayList<Object>(plist);
+        ArrayList<Object> returnlist = new ArrayList<Object>();
+        temp.addAll(clist);
+        temp.addAll(tlist);
+        temp.addAll(ulist);
+        for (int i=0; i<temp.size(); i++) {
+            if (c.isInstance(temp.get(i))) {
+                returnlist.add(temp.get(i));
+                //if (index-- == 0) return temp.get(i);
+            }
+        }
+        if(returnlist.isEmpty())
+            return null;
+        return returnlist;
+    
     }
 
     public void registerConfig(Object o) {
