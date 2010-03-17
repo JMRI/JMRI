@@ -30,7 +30,7 @@ import javax.swing.JPopupMenu;
  * @see PositionableLabel
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public interface Positionable  {
     public void setPositionable(boolean enabled);
@@ -58,6 +58,7 @@ public interface Positionable  {
     public void setDisplayLevel(int l);
 
     public Editor getEditor();
+    public void setEditor(Editor ed);
     public void updateSize();
     public int maxWidth();
     public int maxHeight();

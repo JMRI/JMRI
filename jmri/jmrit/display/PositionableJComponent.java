@@ -14,7 +14,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 
@@ -105,6 +105,10 @@ public class PositionableJComponent extends JComponent implements Positionable {
     public Editor getEditor(){
         return _editor;
     }
+    public void setEditor(Editor ed) {
+        _editor = ed;
+    }
+    
     
     // overide where used - e.g. momentary
     public void doMousePressed(MouseEvent event) {}

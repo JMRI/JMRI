@@ -36,7 +36,7 @@ import javax.swing.border.LineBorder;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.88 $
+ * @version $Revision: 1.89 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -87,6 +87,10 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     public Editor getEditor(){
         return _editor;
+    }
+
+    public void setEditor(Editor ed) {
+        _editor = ed;
     }
     
     /***************** Positionable methods **********************/
@@ -184,7 +188,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         setSize(maxWidth(), maxHeight());
         if ( _namedIcon!=null && _text) {
             //we have a combined icon/text therefore the icon is central to the text.
-            setIconTextGap (-(_namedIcon.getIconWidth()+maxWidth())/2);
+            setHorizontalTextPosition(CENTER);
         }
     }
     
