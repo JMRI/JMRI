@@ -37,7 +37,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.62 $
+ * @version			$Revision: 1.63 $
  */
 public class InstanceManager {
 
@@ -58,6 +58,12 @@ public class InstanceManager {
     
     static public <T> void reset(Class<T> type) {
         managerLists.put(type, null);
+    }
+    
+    static public <T> void deregister(T val, Class<T> type){
+        ArrayList<Object> l = managerLists.get(type);
+        if(l!=null)
+            l.remove(val);
     }
 
     /**
