@@ -33,7 +33,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
@@ -43,6 +43,8 @@ public class OBlock extends jmri.Block {
     static final public int ALLOCATED = 0x10;   // reserve the block for subsequent use by a train
     static final public int SHORTED = 0x08;     // duplicate of INCONSISTENT = 0x08
     static final public int DARK = 0x20;        // Block has no Sensor
+
+    private Warrant _warrant;       // when not null, block is allocateds to this warrant
     
     public OBlock(String systemName) {
         super(systemName);
@@ -58,6 +60,14 @@ public class OBlock extends jmri.Block {
         }
     }
 
+    protected Warrant getWarrant() { return _warrant; }
+
+    protected void setWarrant(Warrant warrant) {
+        Warrant old = _warrant;
+        _warrant = warrant; 
+        firePropertyChange("value", old, _warrant);
+    }
+
     /**
     *  Test that block is not occupied and and not allocated 
     */
@@ -71,19 +81,15 @@ public class OBlock extends jmri.Block {
     * Note the block may be OCCUPIED by a non-warranted train.
     * @return false if block is already allocated to another warrant
     */
-    public String allocate(Object value) {
-        if (value==null) {
+    public String allocate(Warrant warrant) {
+        if (warrant==null) {
             return "Error";
-        } else if (getValue()!=null && !value.equals(getValue())) {
+        } else if (_warrant!=null && !_warrant.equals(warrant)) {
             // allocated to another warrant
-            if (getValue() instanceof jmri.implementation.AbstractNamedBean) {
-                return ((jmri.implementation.AbstractNamedBean)getValue()).getDisplayName();
-            } else {
-                return getValue().getClass().getName();
-            }
+            return _warrant.getDisplayName();
         }
         setState(getState() | ALLOCATED);
-        setValue(value);
+        _warrant = warrant;
         // firePropertyChange signaled in super.setState()
         return null;
     }
@@ -92,15 +98,15 @@ public class OBlock extends jmri.Block {
     * Remove allocation state
     * Remove listener regardless of ownership
     */
-    public void deAllocate(Object value) {
-        if (value!=null) {
+    public void deAllocate(Warrant warrant) {
+        if (warrant!=null) {
             Sensor sensor = getSensor();
             if (sensor != null ) {
-                sensor.removePropertyChangeListener((PropertyChangeListener)value);
+                sensor.removePropertyChangeListener((PropertyChangeListener)warrant);
             }
-            if (value.equals(getValue())) {  // allocated to caller, so deallocate
-                setValue(null);
-                // firePropertyChange signaled in super.setValue()
+            if (_warrant.equals(warrant)) {  // allocated to caller, so deallocate
+                _warrant = null;
+                firePropertyChange("value", warrant, _warrant);
                 if (sensor != null)  {
                     setState(sensor.getState());  // unset allocated bit
                 }
@@ -255,12 +261,11 @@ public class OBlock extends jmri.Block {
      * Called by handleSensorChange
      */
     public void goingInactive() {
-        if (!(getValue() instanceof Warrant)) {
+        if (_warrant == null) {
             // this block is not under warrant, comply with old Block code.
             super.goingInactive();
             return;
         }
-        //int state = ((Warrant)getValue()).goingInactive(this);
         if (log.isDebugEnabled()) log.debug("Allocated OBlock "+getSystemName()+" goes UNOCCUPIED");
         setState(getState() & ~OCCUPIED);
     }
@@ -270,12 +275,11 @@ public class OBlock extends jmri.Block {
      * figure out from who and copy their value. Called by handleSensorChange
      */
 	public void goingActive() {
-        if (!(getValue() instanceof Warrant)) {
+        if (_warrant == null) {
             // this block is not under warrant, comply with old Block code.
             super.goingActive();
             return;
         }
-        //((Warrant)getValue()).goingActive(this);
         int state = getState();
         super.setState(OCCUPIED | state);
         if (log.isDebugEnabled()) {

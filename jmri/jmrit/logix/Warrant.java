@@ -20,7 +20,7 @@ import jmri.jmrit.roster.RosterEntry;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -676,8 +676,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (idx < _idxCurrentOrder) {
             // block is behind train
             _idxTrailingOrder = idx;
-            if (this.equals(block.getValue())) {
-                block.setValue(null);       // "fleet" not implemented
+            if (this.equals(block.getWarrant())) {
+                block.setWarrant(null);       // "fleet" not implemented
             }
             return OBlock.UNOCCUPIED;
         }
