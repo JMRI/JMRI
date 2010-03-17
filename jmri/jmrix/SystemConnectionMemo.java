@@ -1,7 +1,7 @@
 // SystemConnectionMemo.java
 
 package jmri.jmrix;
-
+import java.util.ArrayList;
 /**
  * Lightweight abstract class to denote that a system is active,
  * and provide general information.
@@ -11,13 +11,27 @@ package jmri.jmrix;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 abstract public class SystemConnectionMemo {
 
     protected SystemConnectionMemo(String prefix, String userName) {
-        this.prefix = prefix;
-        this.userName = userName;
+        
+        if(!setSystemPrefix(prefix)){
+            for (int x = 2; x<50; x++){
+                if(setSystemPrefix(prefix+x)){
+                    break;
+                }
+            }
+        }
+
+        if(!setUserName(userName)){
+            for (int x = 2; x<50; x++){
+                if(setUserName(userName+x)){
+                    break;
+                }
+            }
+        }
         //Adds and registered an internal connection to the system.
         if (!this.getClass().getName().equals("jmri.jmrix.internal.InternalSystemConnectionMemo")){
             java.util.List<Object> list 
@@ -37,6 +51,47 @@ abstract public class SystemConnectionMemo {
         }
     }
     
+    private static ArrayList<String> userNames = new ArrayList<String>();
+    private static ArrayList<String> sysPrefixes = new ArrayList<String>();
+    
+    //This should probably throwing an exception
+    private static boolean addUserName(String userName){
+        if(userNames!=null){
+            if (userNames.contains(userName))
+                return false;
+        }
+        userNames.add(userName);
+        return true;
+    }
+    
+    //This should probably throwing an exception
+    private static boolean addSystemPrefix(String systemPrefix){
+        if(sysPrefixes!=null){
+            if (sysPrefixes.contains(systemPrefix))
+                return false;
+        }
+        sysPrefixes.add(systemPrefix);
+        return true;
+    }
+    
+    private static void removeUserName(String userName){
+        if(userNames!=null){
+            if (userNames.contains(userName)){
+                int index = userNames.indexOf(userName);
+                userNames.remove(index);
+            }
+        }
+    }
+    
+    private static void removeSystemPrefix(String systemPrefix){
+        if(sysPrefixes!=null){
+            if (sysPrefixes.contains(systemPrefix)){
+                int index = sysPrefixes.indexOf(systemPrefix);
+                sysPrefixes.remove(index);
+            }
+        }
+    }
+
     /**
      * Store in InstanceManager with 
      * proper ID for later retrieval as a 
@@ -52,7 +107,20 @@ abstract public class SystemConnectionMemo {
      */
     public String getSystemPrefix() { return prefix; }
     private String prefix;
-    public void setSystemPrefix(String prefix) { this.prefix = prefix; }
+    //This should probably throwing an exception
+    public boolean setSystemPrefix(String systemPrefix) {
+        if (systemPrefix.equals(this.prefix)) {
+            return true;
+        }
+        String oldPrefix = this.prefix;
+        if(addSystemPrefix(systemPrefix)){
+            this.prefix = systemPrefix;
+            removeSystemPrefix(oldPrefix);
+            return true;
+        }
+        return false;
+        //this.prefix = prefix;
+    }
     
     /**
      * Provides access to the system user name string.
@@ -60,7 +128,24 @@ abstract public class SystemConnectionMemo {
      */
     public String getUserName() { return userName; }
     private String userName;
-    public void setUserName(String name) { this.userName = name; }
+    //This should probably throwing an exception
+    public boolean setUserName(String name) {
+        if (name.equals(userName))
+            return true;
+        String oldUserName = this.userName;
+        if(addUserName(name)){
+            this.userName = name;
+            removeUserName(oldUserName);
+            return true;
+        }
+        return false;
+    }
+    
+    public void dispose(){
+        removeUserName(userName);
+        removeSystemPrefix(prefix);
+        jmri.InstanceManager.deregister(this, SystemConnectionMemo.class);
+    }
         
 }
 

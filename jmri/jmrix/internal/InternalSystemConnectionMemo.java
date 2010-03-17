@@ -11,17 +11,14 @@ import jmri.InstanceManager;
  * Objects of specific subtypes are registered
  * in the instance manager to activate their
  * particular system.
- * <p>
- * This contains no support for multiple internal systems, as
- * they wouldn't do anything useful.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public InternalSystemConnectionMemo() {
-        super("I", "Internal");  // !! conflicts with auto internal, see package.html
+        super("I", "Internal");
         register();
     }
     
@@ -34,14 +31,13 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
      */
     public void configureManagers() {
       
-        // these can't be created here until they've been modified
-        // to use a different system letter.
-        
-        //InstanceManager.setTurnoutManager(new jmri.managers.InternalTurnoutManager());
+        InstanceManager.setTurnoutManager(new jmri.managers.InternalTurnoutManager());
 
-        //InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
+        InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
 
     }
+    
+    public void dispose() { return; }
 }
 
 

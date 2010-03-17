@@ -13,16 +13,15 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public LocoNetSystemConnectionMemo(LnTrafficController lt,
                                         SlotManager sm) {
-        super("L"+(instanceCount>1?""+instanceCount:""), "LocoNet"+(instanceCount>1?""+instanceCount:""));
+        super("L", "LocoNet");
         this.lt = lt;
         this.sm = sm;
-        count = instanceCount++;
         register(); // registers general type
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
         
@@ -32,8 +31,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
     
     public LocoNetSystemConnectionMemo() {
-        super("L"+(instanceCount>1?""+instanceCount:""), "LocoNet"+(instanceCount>1?""+instanceCount:""));
-        count = instanceCount++;
+        super("L", "LocoNet");
         register(); // registers general type
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
         
@@ -41,12 +39,6 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         InstanceManager.store(new jmri.jmrix.loconet.swing.ComponentFactory(this), 
                                 jmri.jmrix.swing.ComponentFactory.class);
     }
-
-
-    
-    private static int instanceCount = 1;
-    
-    private int count;
     
     /**
      * Provides access to the SlotManager for this
@@ -70,8 +62,6 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         return lnm;
     }
     private LnMessageManager lnm = null;
-    
-    String suffix() { return count>1?""+count:""; }
     
     /**
      * Configure the programming manager and "command station" objects
@@ -126,6 +116,14 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             new jmri.jmrix.loconet.LnClockControl(getSlotManager(), getLnTrafficController()));
 
     }
+    
+    public void dispose() {
+        lt = null;
+        sm = null;
+        InstanceManager.deregister(this, LocoNetSystemConnectionMemo.class);
+        super.dispose();
+    }
+    
 }
 
 
