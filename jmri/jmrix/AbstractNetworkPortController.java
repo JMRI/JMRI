@@ -15,7 +15,7 @@ import java.net.*;
  *
  * @author      Kevin Dickerson  Copyright (C) 2010
  * @author      Based upon work originally done by Paul Bender  Copyright (C) 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @see         jmri.jmrix.NetworkConfigException
  */
 abstract public class AbstractNetworkPortController extends AbstractPortController implements NetworkPortAdapter{
@@ -111,8 +111,13 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      	}
      	return null;
     }
-    //This in place here untill all systems are converted over to the systemconnection memo
-    public SystemConnectionMemo getSystemConnectionMemo() { return null; };
+    /*This in place here until all systems are converted over to the systemconnection memo
+    this will then become abstract, once all the code has been refactored*/
+    public SystemConnectionMemo getSystemConnectionMemo() { return null; }
+    
+    /*Dispose should be handled by the port adapters and this should be abstract
+    However this is in place until all the other code has been refactored */
+    public void dispose(){ return; }
    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractNetworkPortController.class.getName());
     

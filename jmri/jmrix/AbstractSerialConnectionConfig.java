@@ -5,10 +5,14 @@ package jmri.jmrix;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import javax.swing.JOptionPane;
+
+
 import java.awt.Color;
 import java.util.Vector;
 
@@ -22,7 +26,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 
 //
@@ -42,6 +46,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
      * Expect that the subclass setInstance() will fill the adapter member.
      */
     public AbstractSerialConnectionConfig() {
+        adapter = null;
     }
 
     boolean init = false;
@@ -72,31 +77,37 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         if(adapter.getSystemConnectionMemo()!=null){
             systemPrefixField.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText());
+                    if(!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())){
+                        JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
+                        systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+                    }
                 }
             });
-                systemPrefixField.addKeyListener( new KeyListener() {
-                public void keyPressed(KeyEvent keyEvent) {
+            systemPrefixField.addFocusListener( new FocusListener() {
+                public void focusLost(FocusEvent e){
+                    if(!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())){
+                        JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
+                        systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+                    }
                 }
-                public void keyReleased(KeyEvent keyEvent) {
-                   adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText());
-                }
-                public void keyTyped(KeyEvent keyEvent) {
-                }
+                public void focusGained(FocusEvent e){ }
             });
             connectionNameField.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText());
+                    if(!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())){
+                        JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
+                        connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
+                    }
                 }
             });
-            connectionNameField.addKeyListener( new KeyListener() {
-                public void keyPressed(KeyEvent keyEvent) {
+            connectionNameField.addFocusListener( new FocusListener() {
+                public void focusLost(FocusEvent e){
+                    if(!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())){
+                        JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
+                        connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
+                    }
                 }
-                public void keyReleased(KeyEvent keyEvent) {
-                   adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText());
-                }
-                public void keyTyped(KeyEvent keyEvent) {
-                }
+                public void focusGained(FocusEvent e){ }
             });
         }
         init = true;
@@ -346,6 +357,13 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     
     public String getManufacturer() { return adapter.getManufacturer(); }
     public void setManufacturer(String manufacturer) { adapter.setManufacturer(manufacturer); }
+    
+    public void dispose(){
+        if (adapter!=null){
+            adapter.dispose();
+            adapter=null;
+        }
+    }
 
     static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSerialConnectionConfig.class.getName());
 }
