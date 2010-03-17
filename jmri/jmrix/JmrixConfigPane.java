@@ -30,7 +30,7 @@ import javax.swing.JPanel;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.67 $
+ * @version	$Revision: 1.68 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -231,6 +231,10 @@ public class JmrixConfigPane extends JPanel {
                     log.debug("Attempt to load "+classConnectionNameList[i]+" failed: "+e);
                 }
             }
+        } else {
+            if(ccCurrent!=null){
+                ccCurrent.dispose();
+            }
         }
     }
     
@@ -247,6 +251,10 @@ public class JmrixConfigPane extends JPanel {
             ccCurrent = classConnectionList[current];
             classConnectionList[current].loadDetails(details);
             classConnectionList[current].setManufacturer((String) manuBox.getSelectedItem());
+        } else {
+            if(ccCurrent!=null){
+                ccCurrent.dispose();
+            }
         }
         validate();
         if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
