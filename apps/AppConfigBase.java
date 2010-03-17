@@ -25,7 +25,7 @@ import javax.swing.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class AppConfigBase extends JmriPanel {
 
@@ -89,7 +89,7 @@ public class AppConfigBase extends JmriPanel {
             comparison, so putting all in upper case will do the equivalent. This is
             only temporary until all systems have been updated to allow multiple connections
             of the same type*/
-            String c = AppConfigPanel.getConnection(count).toUpperCase();
+            String c = getConnection(count).toUpperCase();
             int x = c.indexOf(" ");
             /*We need to test to make sure that the connection is not set to (NONE)
             If it is set to NONE, then it is likely that the connection has been removed
