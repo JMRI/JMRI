@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -243,7 +243,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         if(t!=null){
             for(int x = 1; x<10; x++){
                 bitNum = bitNum + t.getNumberOutputBits();
-                System.out.println("This should increment " + bitNum);
+                //System.out.println("This should increment " + bitNum);
                 tmpSName = SerialAddress.makeSystemName("T", nAddress, bitNum);
                 t = getBySystemName(tmpSName);
                 if(t==null)
