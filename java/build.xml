@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009, 2010 -->
-<!-- Revision $Revision: 1.68 $ -->
+<!-- Revision $Revision: 1.69 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -37,7 +37,7 @@
   
     <!-- JRE version (1.5 as of JMRI 2.5.1) -->
     <property name="jre_version" value="1.5" />
-		
+
 		<!-- Set this to the directory where Findbugs is installed if you don't 
 		want to use the command line arguments -->
               <!--property name="findbugs.home" value="C:/findbugs-1.3.8" /-->
@@ -51,6 +51,8 @@
   <property name="target" value="classes"/>
   <property name="jartarget" value=".."/>
   <property name="doctarget" value="doc"/>
+  <property name="tmptarget" value="tmp"/>
+  <property name="javacctarget" value="${tmptarget}/jmri/jmris/srcp/parser"/>
   
   <path id="project.class.path">
     <pathelement location=".." />
@@ -118,12 +120,21 @@
     <!-- Create the build directory structure used by compile -->
     <mkdir dir="${target}"/>
     <mkdir dir="${target}/resources" />
+    <mkdir dir="${javacctarget}" />
   </target>
 
   <target name="clean" description="remove compilation results to force rebuild">
     <mkdir dir="${target}"/>
     <delete includeEmptyDirs="true">
       <fileset dir="${target}"/>
+    </delete>
+    <mkdir dir="${doctarget}"/>
+    <delete includeEmptyDirs="true">
+      <fileset dir="${doctarget}"/>
+    </delete>
+    <mkdir dir="${javacctarget}"/>
+    <delete includeEmptyDirs="true">
+      <fileset dir="${javacctarget}"/>
     </delete>
   </target>
 
@@ -140,7 +151,41 @@
     </copy>
   </target>
 
-  <target name="compile" depends="init, copyfiles" description="compile source, omitting tests">
+  <target name="jjtree" depends="init" description="Run JJTree related actions">
+  <!-- Run JJTree -->
+  <jjtree
+     target="${source}/jmri/jmris/srcp/SRCPParser.jjt"
+     outputdirectory="${javacctarget}"
+     javacchome="lib/"
+  />
+  </target>
+
+  <target name="javacc" depends="jjtree" description="JavaCC related actions">
+  <!-- Run JavaCC -->
+  <javacc
+     target="${javacctarget}/SRCPParser.jj"
+     outputdirectory="${javacctarget}"
+     javacchome="lib/"
+  />
+  </target>
+
+  <target name="javacc-compile" depends="init, javacc" description="compile javacc output">
+    <!-- Compile the java code from ${javacctarget} into ${target} -->
+    <javac srcdir="${javacctarget}" 
+           destdir="${target}"
+           source="${source_version}" 
+           target="${jre_version}" 
+ 	       includeantruntime="false"
+           fork="true"
+           memoryinitialsize="256m"
+           memorymaximumsize="256m"
+           deprecation="${deprecation}"
+           debug="no" >
+       <classpath refid="project.class.path"    />
+    </javac>
+  </target>
+
+  <target name="compile" depends="init, copyfiles, javacc-compile" description="compile source, omitting tests">
     <!-- Compile the java code from ${source} into ${target} -->
     <javac srcdir="${source}" 
            destdir="${target}"
@@ -160,7 +205,7 @@
 
   <!-- Note if modifying the debug target, please be sure to up date the -->
   <!-- NetBeans IDE debug target in nbproject/ide-targets.xml -->
-  <target name="debug" depends="init, copyfiles" description="compile source with debugging on, omitting tests">
+  <target name="debug" depends="init, copyfiles, javacc-compile" description="compile source with debugging on, omitting tests">
     <!-- Compile the java code from ${source} into ${target} -->
     <javac srcdir="${source}" 
            destdir="${target}" 
@@ -186,7 +231,7 @@
 <!-- By default, we set them explicitly, so that new ones will show up -->
 <!-- See http://help.eclipse.org/galileo/index.jsp?topic=/org.eclipse.jdt.doc.isv/guide/jdt_api_compile.htm -->
 <!--                                        -->
-  <target name="warnings" depends="clean, init, copyfiles" 
+  <target name="warnings" depends="clean, init, copyfiles, javacc-compile" 
 	  description="compile source with warning generation on, omitting tests; requires Ant 1.8 and ecj.jar">
     <!-- Compile the java code from ${source} into ${target} -->
     <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
