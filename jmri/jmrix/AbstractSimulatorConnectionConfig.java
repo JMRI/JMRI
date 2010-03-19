@@ -27,7 +27,7 @@ import javax.swing.JPanel;
  * in due course.
  *
  * @author      Kevin Dickerson   Copyright (C) 2001, 2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 
 //
@@ -228,7 +228,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         }
         _details.validate();
         if (_details.getTopLevelAncestor()!=null)
-            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).repaint();
+            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).getPreferredSize());
         _details.repaint();
     }
     
