@@ -15,7 +15,7 @@ import javax.swing.JComboBox;
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author      Stephen Williams Copyright (C) 2008
  *
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -35,7 +35,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public ConnectionConfig() {
         super();
     }
-
+    
     public JTextField host;
     String hostName ="localhost";
     public JTextField port;
@@ -76,7 +76,21 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         temp.add(commandStation);
         
         details.add(temp);
-
+        if(adapter.getSystemConnectionMemo()!=null){
+            temp = new JPanel();
+            temp.setLayout(new BoxLayout(temp, BoxLayout.X_AXIS));
+            temp.add(new JLabel("Connection Prefix"));
+            systemPrefixField = new JTextField(adapter.getSystemConnectionMemo().getSystemPrefix());
+            temp.add(systemPrefixField);
+            details.add(temp);
+            
+            temp = new JPanel();
+            temp.setLayout(new BoxLayout(temp, BoxLayout.X_AXIS));
+            temp.add(new JLabel("Connection Prefix"));
+            connectionNameField = new JTextField(adapter.getSystemConnectionMemo().getUserName());
+            temp.add(connectionNameField);
+            details.add(temp);
+        }
     }
 
     /**

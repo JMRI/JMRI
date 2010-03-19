@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.pr2;
 
+import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import jmri.jmrix.loconet.*;
 
@@ -12,13 +13,20 @@ import gnu.io.SerialPort;
  * refers to the switch settings on the new Digitrax PR2
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class PR2Adapter extends LocoBufferAdapter {
 
 
     public PR2Adapter() {
         super();
+        /*As this extends the locobuffer, we need to remove the SystemConnectionMemo,
+        that it has created and replace it with our own. dispose has to be done to
+        the registered connection details.*/
+        if (adaptermemo!=null){
+            adaptermemo.dispose();
+        }
+        adaptermemo = new PR2SystemConnectionMemo();
     }
 
     /**
@@ -60,12 +68,13 @@ public class PR2Adapter extends LocoBufferAdapter {
         packets.connectPort(this);
 
         // create memo
-        PR2SystemConnectionMemo memo 
-            = new PR2SystemConnectionMemo(packets, new SlotManager(packets));
-
+        /*PR2SystemConnectionMemo memo 
+            = new PR2SystemConnectionMemo(packets, new SlotManager(packets));*/
+        adaptermemo.setSlotManager(new SlotManager(packets));
+        adaptermemo.setLnTrafficController(packets);
         // do the common manager config
-        memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-        memo.configureManagers();
+        adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+        adaptermemo.configureManagers();
 
         // start operation
         packets.startThreads();
@@ -104,6 +113,13 @@ public class PR2Adapter extends LocoBufferAdapter {
     public String[] validOption2() { 
         String[] retval = {"PR2"}; 
         return retval;
+    }
+    
+    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
+    
+    public void dispose(){
+        adaptermemo.dispose();
+        adaptermemo = null;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PR2Adapter.class.getName());

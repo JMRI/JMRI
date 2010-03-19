@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.pr3;
 
+import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import jmri.jmrix.loconet.*;
 
@@ -12,13 +13,20 @@ import gnu.io.SerialPort;
  * refers to the switch settings on the new Digitrax PR3
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006, 2008
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class PR3Adapter extends LocoBufferAdapter {
 
 
     public PR3Adapter() {
         super();
+        /*As this extends the locobuffer, we need to remove the SystemConnectionMemo,
+        that it has created and replace it with our own. dispose has to be done to
+        the registered connection details.*/
+        if (adaptermemo!=null){
+            adaptermemo.dispose();
+        }
+        adaptermemo = new PR3SystemConnectionMemo();
     }
 
     /**
@@ -63,11 +71,13 @@ public class PR3Adapter extends LocoBufferAdapter {
             packets.connectPort(this);
     
             // create memo
-            PR3SystemConnectionMemo memo 
-                = new PR3SystemConnectionMemo(packets, new SlotManager(packets));
-
+            /*PR3SystemConnectionMemo memo 
+                = new PR3SystemConnectionMemo(packets, new SlotManager(packets));*/
+            adaptermemo.setSlotManager(new SlotManager(packets));
+            adaptermemo.setLnTrafficController(packets);
             // do the common manager config
-            memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+            adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+            PR3SystemConnectionMemo memo = (PR3SystemConnectionMemo)adaptermemo;
             memo.configureManagersPR2();
     
             // start operation
@@ -90,11 +100,14 @@ public class PR3Adapter extends LocoBufferAdapter {
             packets.connectPort(this);
     
             // create memo
-            PR3SystemConnectionMemo memo 
-                = new PR3SystemConnectionMemo(packets, new SlotManager(packets));
-
+            /*PR3SystemConnectionMemo memo 
+                = new PR3SystemConnectionMemo(packets, new SlotManager(packets));*/
+            adaptermemo.setSlotManager(new SlotManager(packets));
+            adaptermemo.setLnTrafficController(packets);
             // do the common manager config
-            memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+            adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+            
+            PR3SystemConnectionMemo memo = (PR3SystemConnectionMemo)adaptermemo;
             memo.configureManagersMS100();
     
             // start operation
@@ -143,6 +156,13 @@ public class PR3Adapter extends LocoBufferAdapter {
         }
         retval[retval.length-1] = "Stand-alone LocoNet";
         return retval;
+    }
+    
+    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
+    
+    public void dispose(){
+        adaptermemo.dispose();
+        adaptermemo = null;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PR3Adapter.class.getName());

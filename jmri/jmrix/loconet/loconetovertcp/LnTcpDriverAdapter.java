@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.loconetovertcp;
 
+import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.loconet.*;
 
 import java.io.DataInputStream;
@@ -17,11 +18,14 @@ import java.util.Vector;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2002, 2003
  * @author      Alex Shepherd Copyright (C) 2003, 2006
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 
 public class LnTcpDriverAdapter extends LnPortController {
 
+    public LnTcpDriverAdapter() {
+        adaptermemo = new LocoNetSystemConnectionMemo();
+    }
     /**
      * set up all of the other objects to operate with a LocoNet
      * connected via this class.
@@ -32,12 +36,13 @@ public class LnTcpDriverAdapter extends LnPortController {
         packets.connectPort(this);
 
         // create memo
-        LocoNetSystemConnectionMemo memo 
-            = new LocoNetSystemConnectionMemo(packets, new SlotManager(packets));
-        
+        /*LocoNetSystemConnectionMemo adaptermemo 
+            = new LocoNetSystemConnectionMemo(packets, new SlotManager(packets));*/
+        //adaptermemo.setSlotManager(new SlotManager(packets));
+        //adaptermemo.setLnTrafficController(packets);        
         // do the common manager config
-        memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-        memo.configureManagers();
+        adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+        adaptermemo.configureManagers();
 
         // start operation
         packets.startThreads();
@@ -86,7 +91,9 @@ public class LnTcpDriverAdapter extends LnPortController {
 
     static private LnTcpDriverAdapter mInstance = null;
     static public synchronized LnTcpDriverAdapter instance() {
-        if (mInstance == null) mInstance = new LnTcpDriverAdapter();
+        if (mInstance == null){
+            mInstance = new LnTcpDriverAdapter();
+        }
         return mInstance;
     }
 
@@ -105,6 +112,13 @@ public class LnTcpDriverAdapter extends LnPortController {
 
     public String[] getCommandStationNames() { return commandStationNames; }
     public String   getCurrentCommandStation() { return commandStationName; }
+    
+    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
+    
+    public void dispose(){
+        adaptermemo.dispose();
+        adaptermemo = null;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnTcpDriverAdapter.class.getName());
 

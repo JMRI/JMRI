@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.Intellibox;
 
+import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import jmri.jmrix.loconet.*;
 
@@ -14,7 +15,7 @@ import jmri.jmrix.loconet.*;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author          Bob Jacobsen    Copyright (C) 2005
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class IntelliboxAdapter extends LocoBufferAdapter {
 
@@ -36,12 +37,13 @@ public void configure() {
     packets.connectPort(this);
 
     // create memo
-    LocoNetSystemConnectionMemo memo 
-        = new LocoNetSystemConnectionMemo(packets, new SlotManager(packets));
-
+    /*LocoNetSystemConnectionMemo memo 
+        = new LocoNetSystemConnectionMemo(packets, new SlotManager(packets));*/
+    adaptermemo.setSlotManager(new SlotManager(packets));
+    adaptermemo.setLnTrafficController(packets);
     // do the common manager config
-    memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-    memo.configureManagers();
+    adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+    adaptermemo.configureManagers();
 
     // start operation
     packets.startThreads();
@@ -81,5 +83,12 @@ public void configure() {
     
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
+    
+    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
+    
+    public void dispose(){
+        adaptermemo.dispose();
+        adaptermemo = null;
+    }
 
 }

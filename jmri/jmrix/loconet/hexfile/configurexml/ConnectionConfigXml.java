@@ -18,7 +18,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -34,9 +34,15 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * @return Formatted element containing no attributes except the class name
      */
     public Element store(Object o) {
-        getInstance();
+        getInstance(o);
 
         Element e = new Element("connection");
+        if (adapter.getSystemConnectionMemo()!=null){
+            e.setAttribute("userName", adapter.getSystemConnectionMemo().getUserName());
+            e.setAttribute("systemPrefix", adapter.getSystemConnectionMemo().getSystemPrefix());
+        }
+        if (adapter.getManufacturer()!=null)
+            e.setAttribute("manufacturer", adapter.getManufacturer());
 
         e.setAttribute("class", this.getClass().getName());
 
@@ -49,6 +55,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * @return true if successful
       */
     public boolean load(Element e) {
+        getInstance();
         // hex file has no options in the XML
 
         // start the "connection"
@@ -61,9 +68,25 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         }
         f.pack();
         f.setVisible(true);
+        adapter = f.getAdapter();
+        String manufacturer;
+        try { 
+            manufacturer = e.getAttribute("manufacturer").getValue();
+            adapter.setManufacturer(manufacturer);
+        } catch ( NullPointerException ex) { //Considered normal if not present
+            
+        }
+        if (adapter.getSystemConnectionMemo()!=null){
+            if (e.getAttribute("userName")!=null) {
+                adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
+            }
+            
+            if (e.getAttribute("systemPrefix")!=null) {
+                adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
+            }
+        }
 
         // register, so can be picked up
-        getInstance();
         register();
         return true;
     }
@@ -74,7 +97,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     protected void getInstance() {
-        adapter = new LnHexFilePort();
+        //adapter = new LnHexFilePort();
     }
 
     protected void register() {

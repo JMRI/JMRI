@@ -23,7 +23,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -35,10 +35,24 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         log.error("unexpected call to getInstance");
         new Exception().printStackTrace();
     }
+    
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
+    }
 
     public Element store(Object o) {
+        getInstance(o);
         ConnectionConfig c = (ConnectionConfig)o;
         Element e = new Element("connection");
+        if(adapter!=null){
+            if (adapter.getSystemConnectionMemo()!=null){
+                e.setAttribute("userName", adapter.getSystemConnectionMemo().getUserName());
+                e.setAttribute("systemPrefix", adapter.getSystemConnectionMemo().getSystemPrefix());
+            }
+            if (adapter.getManufacturer()!=null)
+                e.setAttribute("manufacturer", adapter.getManufacturer());
+        }
+
         e.setAttribute("manufacturer", c.getManufacturer());
         e.setAttribute("class", this.getClass().getName());
         e.setAttribute("hostname",c.host.getText());
@@ -68,11 +82,27 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         f.getContentPane().add(new JLabel("Connecting to "+hostName+":"+portNumber));
         f.pack();
         f.setVisible(true);
-
         // slightly different, as not based on a serial port...
         // create the adapter
         LnTcpDriverAdapter client = LnTcpDriverAdapter.instance();
-
+        //adapter = f.getAdapter();
+        if(adapter!=null){
+            try { 
+                manufacturer = e.getAttribute("manufacturer").getValue();
+                client.setManufacturer(manufacturer);
+            } catch ( NullPointerException ex) { //Considered normal if not present
+                
+            }
+            if (adapter.getSystemConnectionMemo()!=null){
+                if (e.getAttribute("userName")!=null) {
+                    client.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
+                }
+                
+                if (e.getAttribute("systemPrefix")!=null) {
+                    client.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
+                }
+            }
+        }
         // start the connection
         try {
             client.connect(hostName, Integer.parseInt(portNumber));
