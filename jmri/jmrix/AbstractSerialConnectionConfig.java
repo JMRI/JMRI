@@ -12,7 +12,6 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import javax.swing.JOptionPane;
 
-
 import java.awt.Color;
 import java.util.Vector;
 
@@ -26,7 +25,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 
 //
@@ -154,7 +153,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     protected int NUMOPTIONS = 2;
     
 	public void loadDetails(final JPanel details) {
-    	_details = details;
+        _details = details;
         setInstance();
 
         Vector<String> v;
@@ -173,7 +172,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             javax.swing.JOptionPane.showMessageDialog(null, "Failed to load comm library.\nYou have to fix that before setting preferences.");
             return;
         }
-
+        
         if(adapter.getSystemConnectionMemo()!=null){
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
@@ -266,7 +265,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 }
             });
         showAdvancedItems();
-
         init = false;		// need to reload action listeners
         checkInitDone();
     }
@@ -357,6 +355,12 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     
     public String getManufacturer() { return adapter.getManufacturer(); }
     public void setManufacturer(String manufacturer) { adapter.setManufacturer(manufacturer); }
+    
+    public String getConnectionName() { 
+        if((adapter!=null) && (adapter.getSystemConnectionMemo()!=null))
+            return adapter.getSystemConnectionMemo().getUserName();
+        else return null;
+    }
     
     public void dispose(){
         if (adapter!=null){

@@ -20,7 +20,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -202,16 +202,38 @@ public class TabbedPreferences extends AppConfigBase {
         if (store) items.add(item);  
     }
     
-    void addConnection(int tabPosition, int instance){
+    void addConnection(final int tabPosition, int instance){
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
         
         p.add(JmrixConfigPane.instance(instance));
         p.add(Box.createVerticalGlue());
         p.setToolTipText(JmrixConfigPane.instance(instance).getCurrentProtocolName());
-        String title = rb.getString("TabbedLayoutConnection")+(instance+1);
-        if(JmrixConfigPane.instance(instance).getCurrentProtocolName()!=null){
+        JPanel b = new JPanel();
+        b.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+        JButton deleteButton = new JButton("Delete Connection");
+        deleteButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                removeTab(e, null, tabPosition);
+            }
+        
+        });
+        b.add(deleteButton);
+        p.add(b);
+        String title;
+        if (JmrixConfigPane.instance(instance).getConnectionName()!=null){
+            title=JmrixConfigPane.instance(instance).getConnectionName();
+        } else if((JmrixConfigPane.instance(instance).getCurrentProtocolName()!=null) && (!JmrixConfigPane.instance(instance).getCurrentProtocolName().equals("(none)"))){
             title = JmrixConfigPane.instance(instance).getCurrentProtocolName();
+        } else {
+            title = rb.getString("TabbedLayoutConnection")+(tabPosition+1);
+            if (connectionPanel.indexOfTab(title)!=-1){
+                for (int x=2; x<12;x++){
+                    title = rb.getString("TabbedLayoutConnection")+(tabPosition+2);
+                    if (connectionPanel.indexOfTab(title)!=-1)
+                        break;
+                }
+            }
         }
         connectionTabInstance.add(instance);
         connectionPanel.add(title, p);
@@ -234,6 +256,7 @@ public class TabbedPreferences extends AppConfigBase {
     void newConnectionTab(){
         JComponent p = new JPanel();
         p.add(Box.createVerticalGlue());
+
         p.setToolTipText("Add New Connection");
         connectionPanel.add("+", p);
         //The following is not supported in 1.5, but is in 1.6 left here for future use.
@@ -247,9 +270,12 @@ public class TabbedPreferences extends AppConfigBase {
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TabbedPreferences.class.getName());
     //Unable to do remove tab, via a component in 1.5 but is supported in 1.6
     //left here until a move is made to 1.6 or an alternative method is used.
-    /*private void removeTab(ActionEvent e, JComponent c, int x){
+    private void removeTab(ActionEvent e, JComponent c, int x){
+        int i;
+        // indexOfTabComponent is not supported in java 1.5
+        //i = connectionPanel.indexOfTabComponent(c);
+        i = x;
 
-        int i = connectionPanel.indexOfTabComponent(c);
         if (i != -1) {
             int n = JOptionPane.showConfirmDialog(
                 null,
@@ -289,7 +315,9 @@ public class TabbedPreferences extends AppConfigBase {
             });
         }        
     }
-    
+    /*Unable to do remove tab, via a component in 1.5 but is supported in 1.6
+    left here until a move is made to 1.6 or an alternative method is used.*/
+    /*
         private class ButtonTabComponent extends JPanel {
         private final JTabbedPane pane;
 

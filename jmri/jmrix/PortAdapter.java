@@ -12,7 +12,7 @@ import java.io.DataOutputStream;
  * This has no e.g. serial-specific information.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2008, 2010
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  * @see         jmri.jmrix.SerialConfigException
  * @since 2.3.1
  */
@@ -94,6 +94,5 @@ public interface PortAdapter  {
     public SystemConnectionMemo getSystemConnectionMemo();
 
     public void dispose();
-    
 
 }

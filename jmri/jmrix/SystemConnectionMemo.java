@@ -11,12 +11,11 @@ import java.util.ArrayList;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 abstract public class SystemConnectionMemo {
 
     protected SystemConnectionMemo(String prefix, String userName) {
-        
         if(!setSystemPrefix(prefix)){
             for (int x = 2; x<50; x++){
                 if(setSystemPrefix(prefix+x)){
@@ -51,11 +50,10 @@ abstract public class SystemConnectionMemo {
         }
     }
     
-    private static ArrayList<String> userNames = new ArrayList<String>();
-    private static ArrayList<String> sysPrefixes = new ArrayList<String>();
+    final protected static ArrayList<String> userNames = new ArrayList<String>();
+    final protected static ArrayList<String> sysPrefixes = new ArrayList<String>();
     
-    //This should probably throwing an exception
-    private static boolean addUserName(String userName){
+    private synchronized static boolean addUserName(String userName){      
         if(userNames!=null){
             if (userNames.contains(userName))
                 return false;
@@ -65,7 +63,7 @@ abstract public class SystemConnectionMemo {
     }
     
     //This should probably throwing an exception
-    private static boolean addSystemPrefix(String systemPrefix){
+    private synchronized static boolean addSystemPrefix(String systemPrefix){
         if(sysPrefixes!=null){
             if (sysPrefixes.contains(systemPrefix))
                 return false;
@@ -74,7 +72,7 @@ abstract public class SystemConnectionMemo {
         return true;
     }
     
-    private static void removeUserName(String userName){
+    private synchronized static void removeUserName(String userName){
         if(userNames!=null){
             if (userNames.contains(userName)){
                 int index = userNames.indexOf(userName);
@@ -83,7 +81,7 @@ abstract public class SystemConnectionMemo {
         }
     }
     
-    private static void removeSystemPrefix(String systemPrefix){
+    private synchronized static void removeSystemPrefix(String systemPrefix){
         if(sysPrefixes!=null){
             if (sysPrefixes.contains(systemPrefix)){
                 int index = sysPrefixes.indexOf(systemPrefix);
@@ -109,12 +107,12 @@ abstract public class SystemConnectionMemo {
     private String prefix;
     //This should probably throwing an exception
     public boolean setSystemPrefix(String systemPrefix) {
-        if (systemPrefix.equals(this.prefix)) {
+        if (systemPrefix.equals(prefix)) {
             return true;
         }
-        String oldPrefix = this.prefix;
+        String oldPrefix = prefix;
         if(addSystemPrefix(systemPrefix)){
-            this.prefix = systemPrefix;
+            prefix = systemPrefix;
             removeSystemPrefix(oldPrefix);
             return true;
         }

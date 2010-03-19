@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 abstract public class AbstractSerialPortController extends AbstractPortController implements SerialPortAdapter {
 
@@ -36,8 +36,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                             String portName,
                             org.apache.log4j.Logger log) {
 				log.error(portName+" port is in use: "+p.getMessage());
-                JOptionPane.showMessageDialog(null, "Port is in use",
-                                                "Error", JOptionPane.ERROR_MESSAGE);
+                /*JOptionPane.showMessageDialog(null, "Port is in use",
+                                                "Error", JOptionPane.ERROR_MESSAGE);*/
     			ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_DOWN);
                 return portName+" port is in use";
     }
@@ -49,8 +49,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                             String portName,
                             org.apache.log4j.Logger log) {
 				log.error("Serial port "+portName+" not found");
-                JOptionPane.showMessageDialog(null, "Serial port "+portName+" not found",
-                                                "Error", JOptionPane.ERROR_MESSAGE);
+                /*JOptionPane.showMessageDialog(null, "Serial port "+portName+" not found",
+                                                "Error", JOptionPane.ERROR_MESSAGE);*/
     			ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_DOWN);
                 return portName+" not found";
     }
