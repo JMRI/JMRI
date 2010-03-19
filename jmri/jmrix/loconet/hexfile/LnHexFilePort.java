@@ -3,6 +3,7 @@
 package jmri.jmrix.loconet.hexfile;
 
 import jmri.jmrix.loconet.LnPortController;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -29,9 +30,9 @@ import java.io.InputStreamReader;
  *	and separated by a space. Variable whitespace is not (yet) supported
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
-public class LnHexFilePort 			extends LnPortController implements Runnable {
+public class LnHexFilePort extends LnPortController implements Runnable, jmri.jmrix.SerialPortAdapter {
 
     BufferedReader sFile = null;
 
@@ -45,7 +46,11 @@ public class LnHexFilePort 			extends LnPortController implements Runnable {
         catch (java.io.IOException e) {
             log.error("init (pipe): Exception: "+e.toString());
         }
+        adaptermemo = new LocoNetSystemConnectionMemo();
+        //System.out.println(adaptermemo.getUserName());
     }
+    
+    LocoNetSystemConnectionMemo adaptermemo = null;
 
     /* load(File) fills the contents from a file */
     public void load(File file) {
@@ -162,11 +167,24 @@ public class LnHexFilePort 			extends LnPortController implements Runnable {
         return null;
     }
 
-    static public LnHexFilePort instance() {
+    /*static public LnHexFilePort instance() {
         if (mInstance == null) mInstance = new LnHexFilePort();
         return mInstance;
     }
-    static LnHexFilePort mInstance = null;
+    static LnHexFilePort mInstance = null;*/
+    
+    public void dispose() {
+        // leaves the LocoNet Packetizer (e.g. the simulated connection)
+        // running.
+        if(adaptermemo!=null)
+            adaptermemo.dispose();
+        adaptermemo = null;
+        super.dispose();
+
+    }
+    
+    public LocoNetSystemConnectionMemo getAdapterMemo() { return adaptermemo; }
+    public LocoNetSystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnHexFilePort.class.getName());
 }

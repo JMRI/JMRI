@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * a .hex file, feeding the information to a LocoMonFrame (monitor) and
  * connecting to a LocoGenFrame (for sending a few commands).
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version                     $Revision: 1.29 $
+ * @version                     $Revision: 1.30 $
  */
 public class HexFileFrame extends JmriJFrame {
 
@@ -32,7 +32,10 @@ public class HexFileFrame extends JmriJFrame {
 
     public HexFileFrame() {
         super();
+        //adaptermemo = new LocoNetSystemConnectionMemo();
     }
+    
+    //LocoNetSystemConnectionMemo adaptermemo = null;
 
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
@@ -113,8 +116,11 @@ public class HexFileFrame extends JmriJFrame {
     public void dispose() {
         // leaves the LocoNet Packetizer (e.g. the simulated connection)
         // running.
-
+        port.dispose();
         super.dispose();
+        
+        //adaptermemo.dispose();
+        //adaptermemo = null;
     }
     
     LnPacketizer packets = null;
@@ -146,12 +152,12 @@ public class HexFileFrame extends JmriJFrame {
         connected = true;
 
         // create memo
-        LocoNetSystemConnectionMemo memo 
-            = new LocoNetSystemConnectionMemo(packets, new SlotManager(packets));
+        port.getAdapterMemo().setSlotManager(new SlotManager(packets));
+        port.getAdapterMemo().setLnTrafficController(packets);
 
         // do the common manager config
-        memo.configureCommandStation(true, false, "<unknown>");   // full featured by default
-        memo.configureManagers();
+        port.getAdapterMemo().configureCommandStation(true, false, "<unknown>");   // full featured by default
+        port.getAdapterMemo().configureManagers();
 
         // Install a debug programmer, replacing the existing LocoNet one
         jmri.InstanceManager.setProgrammerManager(
@@ -191,6 +197,8 @@ public class HexFileFrame extends JmriJFrame {
 
     private Thread sourceThread;
     //private Thread sinkThread;
+    
+    public LnHexFilePort getAdapter() { return port; }
     private LnHexFilePort port = null;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(HexFileFrame.class.getName());

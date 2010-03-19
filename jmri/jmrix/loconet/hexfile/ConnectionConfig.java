@@ -10,9 +10,9 @@ import javax.swing.JPanel;
  * via a LocoNet hexfile emulator
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;
@@ -30,13 +30,16 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
     public String name() { return "LocoNet Simulator"; }
 
-    public void loadDetails(JPanel details) {
-        details.add(new JLabel("No options"));
-    }
-
     protected void setInstance() {
-        log.error("Unexpected call to setInstance");
-        new Exception().printStackTrace();
+        if (adapter == null){
+            adapter = new LnHexFilePort();
+        }
+    }
+    
+    public void dispose() {
+        if (adapter != null)
+            adapter.dispose();
+        super.dispose();
     }
     
     String manufacturerName = jmri.jmrix.DCCManufacturerList.DIGITRAX;
