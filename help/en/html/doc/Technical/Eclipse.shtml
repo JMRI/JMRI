@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Eclipse.shtml,v 1.6 2010-01-31 20:54:11 zoo Exp $ -->
+<!-- $Id: Eclipse.shtml,v 1.7 2010-03-19 16:43:29 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -93,7 +93,7 @@
         expand the CVS folder and select "Projects from CVS". Click "Next"
     <LI>Select "Use existing repository location", and highlight the 
         repository entry you just created that refers to JMRI. Click "Next"
-    <LI>Select "Use specified module name" and enter "eclipse" (all lower case).
+    <LI>Select "Use specified module name" and enter "all" (all lower case).
         Click "Finish"
     <LI>If all is well, you'll see a "Checking out..." window while the files
         are pulled from CVS.  This will take a while. When it's done,
