@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Eclipse.shtml,v 1.7 2010-03-19 16:43:29 jacobsen Exp $ -->
+<!-- $Id: Eclipse.shtml,v 1.8 2010-03-19 19:30:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -10,7 +10,7 @@
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
     <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
+    <!-- easily replace the common header/footer code for Stu req letter grade Psych 199. Letter from instructor in favor; confirmed with instructor. Approved.Stu req letter grade Psych 199. Letter from instructor in favor; confirmed with instructor. Approved.Stu req letter grade Psych 199. Letter from instructor in favor; confirmed with instructor. Approved. the web pages -->
 
     <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
     <!-- or change them to reflect your alternative logo -->
@@ -93,7 +93,9 @@
         expand the CVS folder and select "Projects from CVS". Click "Next"
     <LI>Select "Use existing repository location", and highlight the 
         repository entry you just created that refers to JMRI. Click "Next"
-    <LI>Select "Use specified module name" and enter "all" (all lower case).
+        
+    <LI><a href="images/EclipseCvsModules.png"><img src="images/EclipseCvsModules.png" align="right" height="150" width="150"></a>
+        Select "Use specified module name" and enter "all" (all lower case).
         Click "Finish"
     <LI>If all is well, you'll see a "Checking out..." window while the files
         are pulled from CVS.  This will take a while. When it's done,
