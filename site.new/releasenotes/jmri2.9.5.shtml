@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.5.shtml,v 1.7 2010-03-13 00:22:28 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.5.shtml,v 1.8 2010-03-19 19:17:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -71,12 +71,17 @@ Past versions have tried to cope when people enter lower cases letters,
 e.g. lt10 or Ns23 or pLA5, with various degrees of success. 
 Unfortunately, this code isn't compatible with some new systems that are
 being working on, and we have to remove it.  Starting with this version,
-JMRI requires that you enter correct system names, including using the right case.
-If you use system names, and haven't been using upper case letters, you'll
+JMRI requires that you enter consistent system names, including using the right case.
+If you use system names, and haven't been using consistent names, you'll
 probably have to practice a little to get in the habit. If you have any problems
 reading old files, etc, please post a note on the 
 <a href="http://groups.yahoo.com/group/jmriusers/">jmriusers list</a>
 and somebody will help you.
+
+<p>
+The preferences have been significantly reworked. In some cases,
+preferences to add a button or do an action at startup may have to be 
+deleted and re-entered before they will work.
 
 <h3>Older warnings</h3>
 
@@ -203,7 +208,14 @@ Matt Harris set the default backup option in the Windows installer.
 Paul Bender fixed an error when starting with the LIUSBServer option configured.  The LIUSBServer option works again after several releases where it did not.
 
 <p>
-Many improvements to the preferences window to make it more usable.
+Many improvements to the preferences window to make it more usable. The "tabbed" form
+that was optional in JMRI 2.9.4 is now the default.
+
+<p>
+If you have multiple connections defined, the Power Control tool now lets you
+select which one you want to operate under a "Connection" menu.
+
+
 
 <!--#include virtual="/Footer" -->
 
