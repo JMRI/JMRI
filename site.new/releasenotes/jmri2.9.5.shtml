@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.5.shtml,v 1.9 2010-03-20 04:59:40 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.5.shtml,v 1.10 2010-03-20 19:53:13 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -83,6 +83,17 @@ The preferences have been significantly reworked. In some cases,
 preferences to add a button or do an action at startup may have to be 
 deleted and re-entered before they will work.
 
+<p>
+The communications libraries for Mac OS X have been updated.  
+We've tested these extensively, but there may be combinations of 
+hardware and software versions that still aren't right.  If the program
+can't see your layout connection, please post to the 
+<a href="http://groups.yahoo.com/group/jmriusers/">jmriusers list</a>
+with what type of Mac you're using (PowerBook, PowerMac, MacBook, etc), 
+processor type (PPC G3, G4, G5 or Intel) and Mac OS X version (10.4, 10.5, 
+etc; names like Leopard are OK) too.  We've got several library versions 
+and most likely have one that will work, we just have to figure out which.
+
 <h3>Older warnings</h3>
 
 If you're using a Lenz XPressNet connection, please
@@ -108,7 +119,7 @@ WARNING:  RXTX Version mismatch
         native lib Version = RXTX-2.2pre2
 </pre></code>
 For now, this should be considered normal.  We'll try to get it
-removed before the next production release.
+removed before the next production release. 
 
 <p>
 The JInput USB library was updated to the current version in 
@@ -218,7 +229,20 @@ that was optional in JMRI 2.9.4 is now the default.
 If you have multiple connections defined, the Power Control tool now lets you
 select which one you want to operate under a "Connection" menu.
 
+<p>
+New versions of the RXTX library for MacOS X is being provided, along with a 
+special case for PowerPC processors.
 
+<p>
+Team Digital updated the definition for their SRC16 board.
+
+<p>
+Nigel Cliffe provided
+<a href="http://jmri.org/jython/Zimo_function_programmer.py">Zimo_function_programmer.py</a>,
+a script for setting Zimo function options.
+
+<p>
+Walter Thompson improved many help pages.
 
 <!--#include virtual="/Footer" -->
 

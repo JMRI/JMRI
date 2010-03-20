@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.106 2010-03-20 19:51:17 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.107 2010-03-20 19:53:13 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -131,7 +131,8 @@
 	<LI>Bill Chown, who did a lot of work on the MRC decoder definitions
 	<li>Nigel Cliffe, who updated the CT Elektronic decoder definitions,
 	    provided sample scripts,
-	    and provided new Zimo MX620 and ZTC 471 definitions.
+	    provided new Zimo MX620 and ZTC 471 definitions,
+	    and created a script tool for setting Zimo function options.
 	<LI>Normal Clymer, who contribed a TCS definition file
 	<LI>Seth Cohen, who helped get serial sensors and NCE AIUs to work, and
 	wrote the speedometer web page
@@ -392,7 +393,8 @@
    	<LI>Walter Thompson, who provided the ID information for the Lionel
 	    Challenger decoder and DS54 accessory decoder,
 	    updated lots of decoder definitions,
-	    and is a jmriusers moderator.
+	    improved many help pages,
+	    and is an active jmriusers moderator.
     <li>Dale Tripp, who co-wrote the 2009 version of the DecoderPro manual.
 <a name="U"></A>
     <li>Peter Ulvestad, who created some nice 
