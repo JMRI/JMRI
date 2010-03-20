@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.4.shtml,v 1.21 2010-02-22 06:20:55 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.4.shtml,v 1.22 2010-03-20 04:59:40 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -78,6 +78,13 @@ pane where you selected the Lenz protocol.
 The Layout Editor and Panel Editor have received a large
 amount of work.  Please let us know if you notice any
 new problems.
+
+<p>
+There appears to be several problems with the throttles in this
+release.
+The most significant causes the function buttons to not work in certain circumstances.
+There are also problems with the default address 3, and when using an address that
+doesn't match a roster address.
 
 <h3>Older warnings</h3>
 
