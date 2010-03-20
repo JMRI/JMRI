@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: PowerPanelFrame.shtml,v 1.4 2008-11-01 17:33:00 jacobsen Exp $ -->
+<!-- $Id: PowerPanelFrame.shtml,v 1.5 2010-03-20 19:38:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -24,10 +24,17 @@
     <div id="mainContent">
 
 <H1>Power Control</H1>
-    
+
+<p>
+The On/Off buttons on this pane do the same thing the Power On/Off buttons do 
+on your hand held throttle.  It turns the DCC Rail A/B voltage On/Off.
+
+<p>  
 This is the package/jmri/jmrit/powerpanel/PowerPanelFrame help page
 
 <!--#include virtual="/Footer" -->
 </body>
 </html>
 
+
+ 	  	 
