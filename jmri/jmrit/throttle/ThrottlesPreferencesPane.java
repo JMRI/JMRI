@@ -39,11 +39,14 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
     private javax.swing.JButton jbApply;
     private javax.swing.JButton jbCancel;
     private javax.swing.JButton jbSave;
-    private JFrame m_container;
+    private JFrame m_container = null;
+    
+    private ThrottlesPreferences orig;
     
     /** Creates new form ThrottlesPreferencesPane */
     public ThrottlesPreferencesPane(ThrottlesPreferences tp) {
         initComponents();
+        orig = tp;
         setComponents(tp);
         checkConsistancy();
     }
@@ -203,6 +206,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
     }
 
     private void setComponents(ThrottlesPreferences tp) {
+    	if (tp==null) return;
         cbUseTransparentCtl.setSelected( tp.isUsingTransparentCtl() );
         cbUseAdvTransition.setSelected( tp.isUsingAdvTransition() );
         cbResizeWinImg.setSelected( tp.isResizingWindow() );
@@ -252,18 +256,26 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
 
     private void jbApplyActionPerformed(java.awt.event.ActionEvent evt) {
     	jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().set(getThrottlesPreferences());
+    	orig = getThrottlesPreferences();
     }
 
     private void jbSaveActionPerformed(java.awt.event.ActionEvent evt) {
     	jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().set(getThrottlesPreferences());
     	jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().save();
-    	m_container.setVisible(false); // should do with events...
-    	m_container.dispose();
+    	orig = getThrottlesPreferences();
+    	if (m_container != null) {
+    		m_container.setVisible(false); // should do with events...
+    		m_container.dispose();
+    	}
     }
 
     private void jbCancelActionPerformed(java.awt.event.ActionEvent evt) {
-    	m_container.setVisible(false); // should do with events...
-    	m_container.dispose();
+        setComponents(orig);
+        checkConsistancy();
+    	if (m_container != null) {
+    		m_container.setVisible(false); // should do with events...
+    		m_container.dispose();
+    	}
     }
 
 	public void setContainer(JFrame f) {
