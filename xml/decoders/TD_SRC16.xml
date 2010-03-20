@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id: TD_SRC16.xml,v 1.2 2008-09-18 13:59:50 jacobsen Exp $ -->
+<!-- $Id: TD_SRC16.xml,v 1.3 2010-03-20 19:27:22 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,6 +16,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config showEmptyPanes="no">
+		<version author="td@teamdigital1.com" version="1.6" lastUpdated="20100305"/>
 		<version author="td@teamdigital1.com" version="1.4" lastUpdated="20080906"/>
         <version author="td@teamdigital1.com" version="1.3" lastUpdated="20080808"/>
 					
@@ -24,6 +25,8 @@
 		<!-- Version 1.2 corrected output 16 effect-->
 		<!-- Version 1.3 removed dynamic flash selection-->
 		<!-- Version 1.4 reversed "t" and "c" in routes-->
+		<!-- Version 1.5 corrected output 8 reciprocal-->
+		<!-- Version 1.6 added input lockout and CV10 option 5-->
 
 <decoder>
 	<family name="Stationary Decoder" mfg="Team Digital" type="stationary">
@@ -78,6 +81,10 @@
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		 <variable label="Interrogate output" CV="10" mask="XXXXVXXX"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>	
+		<variable label="Power On Send 16" CV="10" mask="XXXVXXXX"> <enumVal> 
+			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>	
+
+			
 
 		<variable label="Route send delay" CV="11" mask="XVVVVVVV">
 				<decVal min ="0" max="127" />
@@ -110,6 +117,9 @@
 			<enumVal> <enumChoice choice="n" value="0"/> <enumChoice choice="t" value="1"/> <enumChoice choice="c" value="2"/> </enumVal>
 			</variable>	
 			
+		<!-- Input Lockout variable definition -->
+		<variable label="Address" CV="14" mask="VVVVVVVV" item="Lockout">
+			<splitVal highCV="15" max="7" upperMask="XXXXVVVV"/> </variable>
 
 		<!-- Begin inputs 1-8 variable definition -->
 
@@ -660,7 +670,7 @@
 				<enumChoice choice="Phase 2" value="3"/> </enumVal> </variable>
 		<variable label="Invert State" CV="87" mask="VXXXXXXX" item="Inv o8">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
-		<variable label="Reciprocal" CV="8" mask="XXXXXVXX" item="Recip8"> <enumVal> 
+		<variable label="Reciprocal" CV="87" mask="XXXXXVXX" item="Recip8"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		<variable label="Effect" CV="87" mask="XXXVVXXX" item="Eff8">
 			<enumVal> <enumChoice choice="None"/> <enumChoice choice="Delay"/>
@@ -1269,64 +1279,77 @@
 <pane name="Options">
 	<column>
 			<row>
+					<column>
 			<label label="Note: Changes to Option CVs are not recognized until SRC16 power is cycled."/>
 			<label label=" "/>
+			<label label=" "/>
+				</column>
 			</row>
+			
 			<row>
 			<column>
-			<label label="------  Communication Options  ------ "/>
+			<label label="------ Decoder Configuration CV9  ------ "/>
+			<label label="------    Communication Options    ------ "/>
 			<label label=" "/>
 			<display item="DCC gateway" />
-			<label label="Enable gateway for DCC commands from track to bus" />
+			<label label="Opt4 Enable gateway for DCC commands from track to bus" />
 			<label label="- Requires bus interface and DCC control to be enabled" />
 			<label label=" "/>
 			<display item="Bus interface" />
-			<label label="Enable transmit and receive on bus"/>
+			<label label="Opt5 Enable transmit and receive on bus"/>
 			<label label=" "/>
 			<display item="DCC control" />
-			<label label="Enable receiving DCC commands from track"/>
+			<label label="Opt6 Enable receiving DCC commands from track"/>
 			<label label="- When disabled, DCC gateway is disabled"/>
 			<label label=" "/>
 			<label label="Note: In a Digirax system the bus is called LocoNet"/>
 			<label label=" "/>
 			<label label=" "/>
-				</column>
-			<column>
-			<label label=" "/>
-			<label label="------  Status Options  ------ "/>
-			<label label=" "/>
-			<display item="Power On Send Input State" />
-			<label label="Send input state at power on"/>
-			<label label="- Only sensor type inputs"/>
-			<label label=" "/>
-			<display item="Power On Send Output State" />
-			<label label="Send output state at power on"/>
-			<label label="- Switch type messages"/>
-			<label label=" "/>
-			<display item="Interrogate input" />
-			<label label="Send primary input state at Digitrax interrogation request"/>
-			<label label="- Only sensor type inputs"/>
-			<label label=" "/>
-			<display item="Interrogate output" />
-			<label label="Send output state at Digitrax interrogation request"/>
-			<label label=" "/>
-				</column>
-			</row>
-			<row>
-			<column>
 			<label label=" "/>
 			<label label="------  Special Options  ------ "/>
 			<label label=" "/>
 			<display item="Op1" tooltip="Required for ops mode" />
+			<label label="Opt3 Enable operations mode programming"/>
 			<label label=" "/>
 			<display item="Ops Mode Address" tooltip="Sets the Ops Mode address" />
 			<label label="This is the same as a Loco address"/>
 			<label label=" "/>
-			<display item="Output Lockout" tooltip="Output disabled when corresponding input grounded" />
+			<display item="Output Lockout"/>
+			<label label="Opt7 Output disabled when corresponding input grounded"/>
 			<label label=" "/>
-			<display item="Common Cathode" tooltip="Inverts all the output drive" />
-			</column>
+			<display item="Common Cathode" tooltip="" />
+			<label label="Opt8 Enable to invert the drive for all outputs"/>
+
+				</column>
+				
+			
+			<column>
+				
+
+			<label label="------  Status Report CV10  ------ "/>
+			<label label="------        Options              ------ "/>
+			<label label=" "/>
+			<display item="Power On Send Input State" />
+			<label label="Opt1 Send input state at power on"/>
+			<label label="- Only sensor type inputs"/>
+			<label label=" "/>
+			<display item="Power On Send Output State" />
+			<label label="Opt2 Send output state at power on"/>
+			<label label="- Switch type messages"/>
+			<label label=" "/>
+			<display item="Interrogate input" />
+			<label label="Opt5 Send primary input state at Digitrax interrogation request"/>
+			<label label="- Only sensor type inputs"/>
+			<label label=" "/>
+			<display item="Interrogate output" />
+			<label label="Opt4 Send output state at Digitrax interrogation request"/>
+			<label label=" "/>
+			<display item="Power On Send 16" />
+			<label label="Opt5 Send 16 output state at power on"/>
+			<label label="- Requires Opt2"/>
+				</column>	
 			</row>
+
 	</column>
 </pane>
 
@@ -1605,6 +1628,18 @@
 		<display item="STr8" tooltip="Configures the input simulas" />
 		<display item="Rte Num S8" tooltip="number of the route" />
 
+	</column>
+</pane>
+
+<pane name="Input Lockout">
+	<column>
+		<label label="When a switch (turnout) throw command is issued that matches this address the SRC16 inputs are disabled."/>
+		<label label="When a close command is issued with this address the inputs are enabled."/>
+		<label label="This feature is useful for dispatcher control when the SRC16 inputs are used for local turnout control. "/>
+		<label label=" "/>
+		<label label="Input lockout address"/>
+		<label label=" "/>
+		<display item="Lockout"/>
 	</column>
 </pane>
 
@@ -2387,6 +2422,8 @@
  </pane>
 </decoder-config>
 
+
+ 	  	 
 
  	  	 
 
