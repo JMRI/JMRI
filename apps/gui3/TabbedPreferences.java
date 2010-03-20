@@ -20,15 +20,15 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
     public String getHelpTarget() { return "package.apps.AppConfigPanel"; }
     public String getTitle() { return rb.getString("TitlePreferences"); }
 
-    String choices[] = {"Connections", "Start Up", "Display", "Messages", "Roster"/*, "Throttle"*/};
-    String listRefValues[] = { "CONNECTION", "STARTUP", "DISPLAY", "MESSAGES", "ROSTER"/*, "THROTTLE"*/};
+    String choices[] = {"Connections", "Start Up", "Display", "Messages", "Roster", "Throttle"};
+    String listRefValues[] = { "CONNECTION", "STARTUP", "DISPLAY", "MESSAGES", "ROSTER", "THROTTLE"};
 
     // All the following needs to be in a separate preferences frame
     // class! How about switching AppConfigPanel to tabbed?
@@ -131,8 +131,10 @@ public class TabbedPreferences extends AppConfigBase {
 
         detailpanel.add(startupPanel, "STARTUP");
         detailpanel.add(displayPanel, "DISPLAY");
+        detailpanel.add(new jmri.jmrit.throttle.ThrottlesPreferencesPane(), "THROTTLE");
         detailpanel.add(rosterPanel, "ROSTER");
         detailpanel.add(new jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane(), "MESSAGES");
+
 
         addItem(rosterPanel, rb.getString("TabbedLayoutProgrammer"),
                     "LabelTabbedLayoutProgrammer", new jmri.jmrit.symbolicprog.ProgrammerConfigPane(true), true, null);
