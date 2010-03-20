@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: CmdStnConfigFrame.shtml,v 1.2 2008-11-01 17:33:01 jacobsen Exp $ -->
+<!-- $Id: CmdStnConfigFrame.shtml,v 1.3 2010-03-20 19:35:33 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -23,12 +23,26 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Configure Digitax Command Station
-</H1>
-    
-This is the help/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame help page
+<H1>Configure Digitax Command Station</H1>
+
+<p>
+This tool Configures the Digitax MASTER DCS OpSw's. You do not 
+need to set any of the switches on the DCS to use this tool. 
+<p>
+To configure DBs and DCSs set as Boosters you need to follow Digitax instructions.<p>
+
+OpSw2 being set to Thrown allows this tool to access Slot 127 which contains the OpSw settings.
+DB do not have OpSw and can not be set with this tool, DCS's that have OpSw2 set to Closed 
+are not prograned by this tool.
+<p>
+To configure DB and DCS's set as Boosters you need to follow Digitax instructions.
+
+<p> 
+This is the help/en/package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml
 
 <!--#include virtual="/Footer" -->
 </body>
 </html>
 
+
+ 	  	 
