@@ -1,7 +1,7 @@
 // MS100Adapter.java
 
 package jmri.jmrix.loconet.ms100;
-
+import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.loconet.*;
 
 import java.io.DataInputStream;
@@ -28,9 +28,13 @@ import Serialio.SerialPortLocal;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.39 $
+ * @version			$Revision: 1.40 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
+
+    public MS100Adapter() {
+        adaptermemo = new LocoNetSystemConnectionMemo();
+    }
 
     Vector<String> portNameVector = null;
 
@@ -241,12 +245,13 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         packets.connectPort(this);
 
         // create memo
-        LocoNetSystemConnectionMemo memo 
-            = new LocoNetSystemConnectionMemo(packets, new SlotManager(packets));
-
+        adaptermemo.setSlotManager(new SlotManager(packets));
+        adaptermemo.setLnTrafficController(packets);
         // do the common manager config
-        memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
-        memo.configureManagers();
+        adaptermemo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+        adaptermemo.configureManagers();
+        //memo.configureCommandStation(mCanRead, mProgPowersOff, commandStationName);
+        //memo.configureManagers();
 
         // start operation
         packets.startThreads();
@@ -318,6 +323,14 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     private boolean opened = false;
     InputStream serialInStream = null;
     OutputStream serialOutStream = null;
+
+    public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
+
+    public void dispose(){
+        if (adaptermemo!=null)
+            adaptermemo.dispose();
+        adaptermemo = null;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MS100Frame.class.getName());
 
