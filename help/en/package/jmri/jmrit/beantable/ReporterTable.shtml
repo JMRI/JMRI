@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ReporterTable.shtml,v 1.4 2010-03-21 22:24:18 jacobsen Exp $ -->
+<!-- $Id: ReporterTable.shtml,v 1.5 2010-03-21 22:28:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -25,10 +25,16 @@
 
 <H1>The Reporter Table</H1>
 <p>
-The first implementation of Reporter is Digitrax transponding hardware http://www.digitrax.com/menu_transponding.php. By adding the appropriate 
-elements to your panel files, you can show decoder ID information on your panels.
+JMRI "Reporters" show status information received from your layout.
+For example, 
+<a href="http://www.digitrax.com/menu_transponding.php">Digitrax transponding</a>
+provides information via JMRI reporter objects.
+The Reporter Table shows all the existing reporters and their most recent
+information.
 <p>
-    
+For more information on Reporters and their use, see the
+<a href="../../../../html/tools/Reporters.shtml">main Reporter page</a>.
+<p>
 This is the package/jmri/jmrit/beantable/ReporterTable help page
 
 <!--#include virtual="/Footer" -->
