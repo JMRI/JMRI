@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: index.shtml,v 1.1 2010-03-21 05:24:39 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2010-03-21 05:39:28 jacobsen Exp $ -->
 <title>JMRI: xAP Support</title>
 
 <!-- Style -->
@@ -56,13 +56,19 @@ form of the
 
 <p>
 When JMRI sees a new BSC device, it creates the necessary Sensor or Turnout.
-The full source name is used to create the system name, and the xPA-defined 
+The full source name is used to create the system name, for example:
+<code><pre>
+ IS:xPA:xAPBSC:mi4.homeseer.scafell.91:VIOMBoard.Input14GJDRFXEnable
+</pre></code>
+The xPA-defined 
 user defined name
-fills in the JMRI user name.  You can later change the JMRI user name via the 
+fills in the JMRI user name, for example:
+<code><pre>
+ Input 14 GJD RFX Enable
+</pre></code>
+You can later change the JMRI user name 
+to anything you'd like via the 
 usual tables if desired.
-
-
-
     
 <!--#include virtual="/Footer" -->
 </body>
