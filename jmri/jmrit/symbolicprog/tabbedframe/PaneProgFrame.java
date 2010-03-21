@@ -36,7 +36,7 @@ import java.awt.event.ItemEvent;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.86 $
+ * @version   $Revision: 1.87 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener  {
@@ -1247,25 +1247,6 @@ abstract public class PaneProgFrame extends JmriJFrame
                                 new Object[]{filename}));
         return true;
     }
-
-     /**
-     *
-     * @return true if the value in the id JTextField
-     * is a duplicate of some other RosterEntry in the roster
-     */
-    /*boolean checkDuplicate() {
-        // check its not a duplicate
-        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, _rPane.getEnteredId());
-        System.out.println(_rPane.getEnteredId());
-        boolean oops = false;
-        System.out.println("our new roster entry " + _rosterEntry);
-        for (int i=0; i<l.size(); i++) {
-            System.out.println("Matching Roster Entries" + l.get(i));
-            if (_rosterEntry!=l.get(i)) oops =true;
-            //if (id.getText().equals(l.get(i).getId())) oops = true;
-        }
-        return oops;
-    }*/
 
     /**
      * local dispose, which also invokes parent. Note that
