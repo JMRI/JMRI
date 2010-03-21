@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.5.shtml,v 1.10 2010-03-20 19:53:13 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.5.shtml,v 1.11 2010-03-21 05:25:30 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -242,7 +242,18 @@ Nigel Cliffe provided
 a script for setting Zimo function options.
 
 <p>
+JMRI now has initial support for home automation devices that use the
+<a href="http://jmri.org/help/en/html/hardware/xap/index.shtml">xAP protocol</a>. 
+Input sensors are available as JMRI sensors, 
+and output devices are JMRI turnouts.
+
+<p>
 Walter Thompson improved many help pages.
+
+<p>
+Kevin Dickerson did a huge amount of work on the preferences to improve their 
+usability and completeness.  The throttle and notification preferences are now
+available via the common preferences dialog under the "Edit" menu.  
 
 <!--#include virtual="/Footer" -->
 
