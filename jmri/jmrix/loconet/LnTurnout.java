@@ -36,7 +36,7 @@ import jmri.implementation.AbstractTurnout;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
  
  public class LnTurnout extends AbstractTurnout implements LocoNetListener {
@@ -88,13 +88,10 @@ import jmri.implementation.AbstractTurnout;
      public int getNumber() { return _number; }
 
      // Handle a request to change state by sending a LocoNet command
-     protected void forwardCommandChangeToLayout(int s) {
+     protected void forwardCommandChangeToLayout(final int newstate) {
          
-         //deal with inversion
-         final int newstate = adjustStateForInversion(s);
-
          // send SWREQ for close/thrown ON
-         sendOpcSwReqMessage(newstate, true);
+         sendOpcSwReqMessage(adjustStateForInversion(newstate), true);
          // schedule SWREQ for closed/thrown off, unless in basic mode
          if (!binaryOutput) {
              meterTimer.schedule(new java.util.TimerTask(){
