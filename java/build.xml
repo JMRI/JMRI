@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009, 2010 -->
-<!-- Revision $Revision: 1.70 $ -->
+<!-- Revision $Revision: 1.71 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -585,18 +585,88 @@
     <!-- </exec>                                    -->
   </target>
 
-  <target name="javadoc-uml" depends="init" description="create JavaDocs with UML">
+  <target name="jjdoc" depends="init, javacc" description="create JJDoc BNF documentation">
+    <mkdir dir="${doctarget}/jmri/jmris/srcp/"/>
+    <!-- Run JJDoc -->
+    <jjdoc
+      target="${javacctarget}/SRCPParser.jj"
+      javacchome="lib/"
+      outputfile="${doctarget}/jmri/jmris/srcp/SRCPParser.html"
+    />
+  </target>
+
+  <target name="javadoc" depends="init, jjdoc" description="create JavaDocs">
     <javadoc packagenames="jmri.*, apps.*"
            maxmemory="512m"
-           sourcepath="${source}"
            overview="src/jmri/overview.html"
-           defaultexcludes="yes"
            destdir="${doctarget}"
            additionalparam="-breakiterator"
            author="true"
            version="false"
            use="true"
            windowtitle="JMRI API">
+      <packageset dir="${source}" defaultexcludes="yes">
+        <include name="jmri/**"/>  
+        <include name="apps/**"/>  
+      </packageset>
+      <packageset dir="${tmptarget}" defaultexcludes="yes">
+        <include name="jmri/**"/>  
+      </packageset>
+
+      <group title="Core" packages="jmri"/>
+      <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
+      <group title="Applications" packages="apps:apps.*"/>
+      <group title="Implementations" packages="jmri.implementation:jmri.implementation.*:jmri.managers:jmri.managers.*:jmri.progdebugger:jmri.layout"/>
+      <group title="Utilities" packages="jmri.util:jmri.util.*"/>
+      <group title="XML persistance" packages="jmri.configurexml:jmri.configurexml.*:apps.configurexml:apps.configurexml.*"/>
+      <group title="Web Services" packages="jmri.web:jmri.web.*"/>
+      <group title="Interface Server Support" packages="jmri.jmris:jmri.jmris.*"/>
+      <!-- Layout Connections last because so large -->
+      <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
+	  
+      <classpath refid="project.class.path"    />
+      <doctitle><![CDATA[<h1>JMRI Library API</h1>]]></doctitle>
+      <bottom><![CDATA[<i>Copyright &copy; 1997 - 2010 JMRI Community. 
+                    <br>JMRI, DecoderPro, PanelPro, SoundPro, DispatcherPro and associated logos are our trademarks.</i>
+                       <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
+                       <br>Site hosted by: 
+                       <a href="http://sourceforge.net/projects/jmri">
+                       <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
+                ]]></bottom>
+      <link href="http://java.sun.com/j2se/1.5.0/docs/api/" />
+      <link href="http://java.sun.com/products/javacomm/reference/api/" />
+      <link href="http://users.frii.com/jarvi/rxtx/doc/" />
+      <link href="http://www.jdom.org/docs/apidocs/" />
+      <link href="http://javacsv.sourceforge.net/" />
+      <link href="http://logging.apache.org/log4j/1.2/apidocs/" />
+      <link href="http://java.sun.com/javase/technologies/desktop/java3d/forDevelopers/j3dapi/" />
+      <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public" />
+      <link href="http://java.sun.com/javase/6/docs/api/" />
+      <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public" />
+    </javadoc>
+  </target>
+
+  <!-- The structure of the following should closely follow the  -->
+  <!-- main 'javadoc' target directly above. The only difference -->
+  <!-- is the doclet clause referencing the UML generator and    -->
+  <!-- the execution of "dot" at the bottom.                     -->
+  <target name="javadoc-uml" depends="init, jjdoc" description="create JavaDocs with UML; requires java 1.6">
+    <javadoc packagenames="jmri.*, apps.*"
+           maxmemory="512m"
+           overview="src/jmri/overview.html"
+           destdir="${doctarget}"
+           additionalparam="-breakiterator"
+           author="true"
+           version="false"
+           use="true"
+           windowtitle="JMRI API">
+      <packageset dir="${source}" defaultexcludes="yes">
+        <include name="jmri/**"/>  
+        <include name="apps/**"/>  
+      </packageset>
+      <packageset dir="${tmptarget}" defaultexcludes="yes">
+        <include name="jmri/**"/>  
+      </packageset>
       <doclet name="org.umlgraph.doclet.UmlGraphDoc"
 	        		  path="../lib/UmlGraph-5.2.jar">
 	        	        <param name="-attributes" />
@@ -604,13 +674,17 @@
 	        	        <param name="-qualify" />
 	        	        <param name="-types" />
 	        	        <param name="-visibility" />
+	        	        <param name="-collapsible" />  <!-- hide images at first on web pages -->
+	        	        <param name="-inferdepvis" value="public" /> <!-- only show public -->
       </doclet>
       <group title="Core" packages="jmri"/>
       <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
       <group title="Applications" packages="apps:apps.*"/>
-      <group title="Implementations" packages="jmri.implementation:jmri.managers:jmri.progdebugger:jmri.layout"/>
+      <group title="Implementations" packages="jmri.implementation:jmri.implementation.*:jmri.managers:jmri.managers.*:jmri.progdebugger:jmri.layout"/>
       <group title="Utilities" packages="jmri.util:jmri.util.*"/>
-      <group title="XML persistance" packages="jmri.configurexml:apps.configurexml"/>
+      <group title="XML persistance" packages="jmri.configurexml:jmri.configurexml.*:apps.configurexml:apps.configurexml.*"/>
+      <group title="Web Services" packages="jmri.web:jmri.web.*"/>
+      <group title="Interface Server Support" packages="jmri.jmris:jmri.jmris.*"/>
       <!-- Layout Connections last because so large -->
       <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
 	  
@@ -634,60 +708,17 @@
       <link href="http://java.sun.com/javase/6/docs/api/" />
       <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public" />
     </javadoc>
-		<apply executable="dot" dest="${doctarget}" parallel="false">
-		    <arg value="-Tpng"/>
-		    <arg value="-o"/>
-		     <targetfile/>
-		     <srcfile/>
-		     <fileset dir="${doctarget}" includes="*.dot"/>
-		     <mapper type="glob" from="*.dot" to="*.png"/>
-		  </apply>
+    <apply executable="dot" dest="${doctarget}" parallel="false">
+      <arg value="-Tpng"/>
+      <arg value="-o"/>
+      <targetfile/>
+      <srcfile/>
+      <fileset dir="${doctarget}" includes="*.dot"/>
+      <mapper type="glob" from="*.dot" to="*.png"/>
+    </apply>
   </target>
 
-  <target name="javadoc" depends="init" description="create JavaDocs">
-    <javadoc packagenames="jmri.*, apps.*"
-           maxmemory="512m"
-           sourcepath="${source}"
-           overview="src/jmri/overview.html"
-           defaultexcludes="yes"
-           destdir="${doctarget}"
-           additionalparam="-breakiterator"
-           author="true"
-           version="false"
-           use="true"
-           windowtitle="JMRI API">
-      <group title="Core" packages="jmri"/>
-      <group title="Cross-system Tools" packages="jmri.jmrit:jmri.jmrit.*"/>
-      <group title="Applications" packages="apps:apps.*"/>
-      <group title="Implementations" packages="jmri.implementation:jmri.managers:jmri.progdebugger:jmri.layout"/>
-      <group title="Utilities" packages="jmri.util:jmri.util.*"/>
-      <group title="XML persistance" packages="jmri.configurexml:apps.configurexml"/>
-      <!-- Layout Connections last because so large -->
-      <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
-	  
-      <classpath refid="project.class.path"    />
-      <doctitle><![CDATA[<h1>JMRI Library API</h1>]]></doctitle>
-      <bottom><![CDATA[<i>Copyright &copy; 1997 - 2010 JMRI Community. 
-                    <br>JMRI, DecoderPro, PanelPro, SoundPro, DispatcherPro and associated logos are our trademarks.</i>
-                       <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-                       <br>Site hosted by: 
-                       <a href="http://sourceforge.net/projects/jmri">
-                       <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
-                ]]></bottom>
-      <link href="http://java.sun.com/j2se/1.5.0/docs/api/" />
-      <link href="http://java.sun.com/products/javacomm/reference/api/" />
-      <link href="http://users.frii.com/jarvi/rxtx/doc/" />
-      <link href="http://www.jdom.org/docs/apidocs/" />
-      <link href="http://javacsv.sourceforge.net/" />
-      <link href="http://logging.apache.org/log4j/1.2/apidocs/" />
-      <link href="http://java.sun.com/javase/technologies/desktop/java3d/forDevelopers/j3dapi/" />
-      <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public" />
-      <link href="http://java.sun.com/javase/6/docs/api/" />
-      <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public" />
-    </javadoc>
-  </target>
-
-  <target name="uploadjavadoc" depends="javadoc" description="create and upload JavaDocs">
+  <target name="uploadjavadoc" depends="javadoc" description="upload existing JavaDocs to jmri.org without recreating">
     <exec executable="rsync">
       <arg value="-avz"/>
       <arg value="--delete"/>
