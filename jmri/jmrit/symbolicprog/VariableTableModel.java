@@ -21,7 +21,7 @@ import org.jdom.Element;
  * @author      Bob Jacobsen        Copyright (C) 2001, 2006, 2010
  * @author      Howard G. Penny     Copyright (C) 2005
  * @author      Daniel Boudreau     Copyright (C) 2007
- * @version     $Revision: 1.44 $
+ * @version     $Revision: 1.45 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -304,8 +304,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         if (index >= 0) {
             // found, attach the qualifier object by creating it
             AbstractQualifier qual = new ValueQualifier(v, rowVector.get(index), Integer.parseInt(value), relation);
-            VariableValue alt = (VariableValue)rowVector.get(index);
-            qual.update(alt.getIntValue());    
+            qual.update(rowVector.get(index).getIntValue());    
         } else {
             log.error("didn't find variable referenced: "+variableRef);
         }
