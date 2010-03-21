@@ -15,7 +15,7 @@ import jmri.PowerManager;
  * Create a menu for selecting the Power Manager to use
  *
  * @author	Bob Jacobsen   Copyright 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  * @since 2.9.5
  */
 abstract public class PowerManagerMenu extends JMenu {
@@ -42,19 +42,21 @@ abstract public class PowerManagerMenu extends JMenu {
         
         // now add an item for each available manager
         List<Object> managers = InstanceManager.getList(PowerManager.class);
-        for (Object obj : managers) {
-            PowerManager mgr = (PowerManager) obj;
-            JMenuItem item = new JRadioButtonMenuItem(mgr.getUserName());
-            add(item);
-            group.add(item);
-            items.add(item);
-            item.addActionListener(new java.awt.event.ActionListener(){
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    choiceChanged();
-                }
-            });
+        if (managers != null) {
+            for (Object obj : managers) {
+                PowerManager mgr = (PowerManager) obj;
+                JMenuItem item = new JRadioButtonMenuItem(mgr.getUserName());
+                add(item);
+                group.add(item);
+                items.add(item);
+                item.addActionListener(new java.awt.event.ActionListener(){
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        choiceChanged();
+                    }
+                });
+            }
         }
-
+        
         setDefault();
     }
     
@@ -62,7 +64,11 @@ abstract public class PowerManagerMenu extends JMenu {
     
     void setDefault() {
         // name of default
-        String defaultMgr = InstanceManager.powerManagerInstance().getUserName();
+        PowerManager manager = InstanceManager.powerManagerInstance();
+        if (manager == null) return;
+        String defaultMgr = manager.getUserName();
+        if (defaultMgr == null) return;
+        
         for (JMenuItem item : items) {
             if (defaultMgr.equals(item.getActionCommand())) {
                 item.setSelected(true);
@@ -72,7 +78,9 @@ abstract public class PowerManagerMenu extends JMenu {
     
     public PowerManager getManager() {
         // start with default
-        String name = InstanceManager.powerManagerInstance().getUserName();
+        PowerManager manager = InstanceManager.powerManagerInstance();
+        if (manager == null) return null;
+        String name = manager.getUserName();
         
         // find active name
         for (JMenuItem item : items) {
