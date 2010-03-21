@@ -42,15 +42,6 @@
 			</ul>
 		</dd>
 
-		<dt>Functional Info</dt>
-		<dd>
-			<ul>
-			<LI><a href="TurnoutFeedback.shtml">Turnout Feedback</a>
-			<LI><a href="Networking.shtml">Network Connections</a>
-			<LI><a href="StartUpScripts.shtml">How the startup scripts work</a>
-			</ul>
-		</dd>
-
 		<dt>Techniques and Standards</dt>
 		<dd>
 			<ul>
@@ -58,6 +49,7 @@
 			<LI><a href="I8N.shtml">Internationalization</a>
 			<LI><a href="Logging.shtml">Logging &amp; Error Handling</a>
 			<LI><a href="JUnit.shtml">Unit testing with JUnit</a>
+			<LI><a href="JavaDoc.shtml">Documentation with JavaDoc and UML</a>
 			<LI><a href="FindBugs.shtml">Run the FindBugs static analysis tool</a>
 			<LI><a href="Help.shtml">Providing help with JavaHelp</a>
 			<LI><a href="FileNames.shtml">Portable Filename Method</a>
@@ -71,6 +63,15 @@
 			<LI><a href="plugins.shtml">Extend with Plugins</a>
 			<LI><a href="NewType.shtml">Add a New Type</a>
 			<LI><a href="NewSystem.shtml">Add a New System</a>
+			</ul>
+		</dd>
+
+		<dt>Functional Info</dt>
+		<dd>
+			<ul>
+			<LI><a href="TurnoutFeedback.shtml">Turnout Feedback</a>
+			<LI><a href="Networking.shtml">Network Connections</a>
+			<LI><a href="StartUpScripts.shtml">How the startup scripts work</a>
 			</ul>
 		</dd>
 
