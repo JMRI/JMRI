@@ -11,13 +11,22 @@ import jmri.util.JmriJFrame;
 
 
 /**
- * Frame for Speedo Console
+ * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
-    
+
+    /***
+     * TODO:
+     *  Complete the help file
+     *  Allow selection of arbitrary scale
+     *  Smooth readings
+     *
+     */
+
+
     // member declarations
     protected javax.swing.JLabel scaleLabel = new javax.swing.JLabel();
     protected javax.swing.JLabel speedLabel = new javax.swing.JLabel();
@@ -35,37 +44,44 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
         "N Fine - 2mm - 1:152",
         "Japanese N - 2.03mm - 1:150",
         "British N - 2.0625mm - 1:148",
+        "3mm - 1:120",
+        "Triang TT - 3mm - 1:101.6",
         "00/EM/S4 - 4mm - 1:76",
         "HO - 3.5mm - 1:87",
         "S - 3/16inch - 1:64",
         "O - 1/4inch - 1:48",
         "O - 6.77mm - 1:45",
-        "O - 7mm - 1:43",
-        "Other..."
+        "O - 7mm - 1:43"/*,
+        "Other..."*/
         };
 
-    protected int[] scales = new int[] {
+    protected double[] scales = new double[] {
         220,
         160,
         152,
         150,
         148,
+        120,
+        101.6,
         76,
         87,
         64,
         48,
         45,
-        43,
-        -1};
+        43/*,
+        -1*/
+        };
 
-    protected static final int defaultScale = 6;
+    protected static final int defaultScale = 8;
 
-    protected int selectedScale = 0;
+    protected double selectedScale = 0;
     protected int series = 0;
     protected double speed = 0;
     protected double circ = 0;
     protected double count = 1;
     protected double f;
+
+    protected boolean timerRunning = false;
 
     //Create the combo box, select item at index 4.
     //Indices start at 0, so 4 specifies british N.
@@ -107,7 +123,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 JComboBox cb = (JComboBox)e.getSource();
                 selectedScale = scales[cb.getSelectedIndex()];
-                showSpeed(speed);
+                calcSpeed();
                 // *** check if -1 and enable text entry box
             }
         });
@@ -151,12 +167,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
         // Listen to change of units
         mphButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                showSpeed(speed);
+                calcSpeed();
             }
         });
         kphButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                showSpeed(speed);
+                calcSpeed();
             }
         });
 
@@ -165,6 +181,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
         // connect to TrafficController
         tc = SpeedoTrafficController.instance();
         tc.addSpeedoListener(this);
+
+        // add help menu to window
+    	addHelpMenu("package.jmri.jmrix.bachrus.SpeedoConsoleFrame", true);
 
         // pack for display
         pack();
@@ -210,16 +229,27 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
                 break;
         }
 
-        // Update speed display
-        showSpeed(speed);
+        // Update speed 
+        calcSpeed();
+
+        if (timerRunning == false) {
+            // first reply starts the timer
+            startTimer();
+            timerRunning = true;
+        } else {
+            // subsequnet replies restart it
+            replyTimer.restart();
+        }
     }
-    
-    protected void showSpeed(double speed) {
+
+    /*
+     * Calculate the scale speed
+     */
+    protected void calcSpeed() {
         if (series > 0) {
             // Scale the data and calculate kph
             try {
-//                speed = (1000000/(count*24))*circ*selectedScale*3600/1000000;
-                f = 1000000/count;
+                f = 1500000/count;
                 speed = (f/24)*circ*selectedScale*3600/1000000;
                 // Convert to mph?
                 if (mphButton.isSelected()) {
@@ -228,6 +258,15 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
             } catch (ArithmeticException ae) {
                 log.error("Exception calculating speed " + ae);
             }
+            showSpeed(speed);
+        }
+    }
+
+    /*
+     * Display the speed
+     */
+    protected void showSpeed(double speed) {
+        if (series > 0) {
             if ((speed < 0) || (speed > 999)) {
                 log.error("Calculated speed out of range: " + speed);
                 speedTextField.setText("Out of Range!");
@@ -235,13 +274,32 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
                 speedTextField.setText(MessageFormat.format("{0,number,###}", speed));
                 speedTextField.setHorizontalAlignment(JTextField.RIGHT);
             }
-//            log.debug("Count " + count);
-//            log.debug("Frequency " + MessageFormat.format("{0,number,####.##}", f));
-//            log.debug("Scale " + selectedScale);
-//            log.debug("Calculated speed " + MessageFormat.format("{0,number,###}", speed));
         }
-    }   
-    
+    }
+
+    javax.swing.Timer replyTimer = null;
+
+	// Once we receive a speedoReply we expect them regularly, at
+    // least once every 4 seconds
+    protected void startTimer() {
+        replyTimer = new javax.swing.Timer(4000, new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                replyTimeout();
+            }
+        });
+        replyTimer.setRepeats(true);     // refresh until stopped by dispose
+        replyTimer.start();
+    }
+
+    /**
+     * Internal routine to resend the speed on a timeout
+     */
+    synchronized protected void replyTimeout() {
+        log.debug("Timed out - display speed zero");
+        speed = 0;
+        showSpeed(speed);
+    }
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedoConsoleFrame.class.getName());
     
 }
