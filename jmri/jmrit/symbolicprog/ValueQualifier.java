@@ -6,7 +6,7 @@ package jmri.jmrit.symbolicprog;
  * Qualify a variable on greater than or equal a number
  *
  * @author			Bob Jacobsen   Copyright (C) 2010
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  *
  */
 public class ValueQualifier extends AbstractQualifier {
@@ -41,8 +41,12 @@ public class ValueQualifier extends AbstractQualifier {
         this.value = value;
     }
 
-    public boolean availableStateFromInputValue(java.beans.PropertyChangeEvent e) {
+    protected boolean availableStateFromEvent(java.beans.PropertyChangeEvent e) {
         int now = ((Integer)e.getNewValue()).intValue();
+        return availableStateFromValue(now);
+    }
+    
+    protected boolean availableStateFromValue(int now) {
         switch (test) {
             case GE: 
                 return now >= value;
