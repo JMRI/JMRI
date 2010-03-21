@@ -16,7 +16,7 @@ import javax.swing.text.Document;
  *
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author    Bob Jacobsen   Copyright (C) 2010
- * @version   $Revision: 1.18 $
+ * @version   $Revision: 1.19 $
  */
 public class IndexedVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
@@ -148,6 +148,7 @@ public class IndexedVariableValue extends VariableValue
             b.setOrientation(JSlider.VERTICAL);
             sliders.add(b);
             updateRepresentation(b);
+            if (!getAvailable()) b.setVisible(false);
             return b;
         }
         else if (format.equals("hslider")) {
@@ -176,6 +177,7 @@ public class IndexedVariableValue extends VariableValue
             b.setPaintLabels(true);
             sliders.add(b);
             updateRepresentation(b);
+            if (!getAvailable()) b.setVisible(false);
             return b;
         }
         else {
@@ -183,8 +185,9 @@ public class IndexedVariableValue extends VariableValue
             if (getReadOnly() || getInfoOnly()) {
                 value.setEditable(false);
             }
-            updateRepresentation(value);
             valuereps.add(value);
+            updateRepresentation(value);
+            if (!getAvailable()) value.setVisible(false);
             return value;
         }
     }
@@ -477,7 +480,7 @@ public class IndexedVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.18 $
+     * @version     $Revision: 1.19 $
      */
     public class VarTextField extends JTextField {
 
