@@ -172,8 +172,9 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
                 jbSaveActionPerformed(evt);
             }
         });
+        jbSave.setVisible(false);
         
-        jbCancel.setText(throttleBundle.getString("ThrottlesPrefsCancel"));
+        jbCancel.setText(throttleBundle.getString("ThrottlesPrefsReset"));
         jbCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbCancelActionPerformed(evt);
@@ -259,7 +260,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
     	orig = getThrottlesPreferences();
     }
 
-    private void jbSaveActionPerformed(java.awt.event.ActionEvent evt) {
+    public void jbSaveActionPerformed(java.awt.event.ActionEvent evt) {
     	jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().set(getThrottlesPreferences());
     	jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().save();
     	orig = getThrottlesPreferences();
@@ -280,6 +281,8 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
 
 	public void setContainer(JFrame f) {
 		m_container = f;
+        jbSave.setVisible(true);
+        jbCancel.setText(throttleBundle.getString("ThrottlesPrefsCancel"));
 	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottlesPreferencesPane.class.getName());
