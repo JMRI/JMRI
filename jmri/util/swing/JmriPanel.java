@@ -33,7 +33,7 @@ import javax.swing.JPanel;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class JmriPanel extends JPanel {
@@ -48,6 +48,12 @@ public class JmriPanel extends JPanel {
      * Provide a recommended title for an enclosing frame.
      */
     public String getTitle() { return null; }
+    
+    /**
+     * Can multiple instances of a specific
+     * pane subclass exist?
+     */
+    public boolean isMultipleInstances() { return true; }
     
     /**
      * Provide menu items

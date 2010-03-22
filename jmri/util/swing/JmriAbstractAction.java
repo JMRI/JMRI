@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
  * but null is also possible.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  */
  
 abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
@@ -71,7 +71,13 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
     protected WindowInterface wi;
      
     public void actionPerformed(ActionEvent e) {
-        if (wi.multipleInstances() || cache == null ) {
+        // we have to make a new panel if we don't have one yet
+        // we don't make a new panel if the window interface is
+        //      single instance (not multiple instance), 
+        // of if the existing panel is single instance (not multiple instance)
+        if ( cache == null || 
+                    (wi.multipleInstances() && cache.isMultipleInstances())
+            ) {
             try {
                 cache = makePanel();
             } catch (Exception ex) {
