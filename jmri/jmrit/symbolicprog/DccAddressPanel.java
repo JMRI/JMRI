@@ -10,7 +10,7 @@ import javax.swing.*;
  * Provide a graphical representation of the DCC address, either long or short
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class DccAddressPanel extends JPanel {
 
@@ -82,14 +82,14 @@ public class DccAddressPanel extends JPanel {
                     if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
                         if (primaryAddr!=null) {
                             // short address mode
-                            ((DecVariableValue)primaryAddr).updatedTextField();
+                            ((VariableValue)primaryAddr).updatedTextField();
                             val.setBackground(primaryAddr.getValue().getBackground());
                             if (log.isDebugEnabled()) log.debug("set color: "+primaryAddr.getValue().getBackground());
                         }
                     }
                     else {
                         // long address
-                        ((LongAddrVariableValue)extendAddr).updatedTextField();
+                        ((VariableValue)extendAddr).updatedTextField();
                         val.setBackground(extendAddr.getValue().getBackground());
                         if (log.isDebugEnabled()) log.debug("set color: "+extendAddr.getValue().getBackground());
                     }
@@ -127,14 +127,14 @@ public class DccAddressPanel extends JPanel {
             if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
                 if (primaryAddr!=null) {
                     // short address mode
-                    ((DecVariableValue)primaryAddr).updatedTextField();
+                    ((VariableValue)primaryAddr).updatedTextField();
                     val.setBackground(primaryAddr.getValue().getBackground());
                     if (log.isDebugEnabled()) log.debug("set color: "+primaryAddr.getValue().getBackground());
                 }
             }
             else {
                 // long address
-                ((LongAddrVariableValue)extendAddr).updatedTextField();
+                ((VariableValue)extendAddr).updatedTextField();
                 val.setBackground(extendAddr.getValue().getBackground());
                 if (log.isDebugEnabled()) log.debug("set color: "+extendAddr.getValue().getBackground());
             }
