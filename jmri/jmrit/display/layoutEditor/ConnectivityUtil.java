@@ -32,7 +32,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *   method. 
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class ConnectivityUtil 
@@ -595,16 +595,18 @@ public class ConnectivityUtil
 	/** 
 	 * Returns a list of all anchor point boundaries involving the specified Block
 	 */
-	public ArrayList<PositionablePoint> getAnchorBoundariesThisBlock(Block block) {	
+	public ArrayList<PositionablePoint> getAnchorBoundariesThisBlock(Block block) {
 		ArrayList<PositionablePoint> list = new ArrayList<PositionablePoint>();
 		LayoutBlock lBlock = layoutBlockManager.getByUserName(block.getUserName());
 		for (int i = 0; i<layoutEditor.pointList.size(); i++) {
-			PositionablePoint p = layoutEditor.pointList.get(i);
-			if (p.getConnect2()!=null) {
-				if ( (((p.getConnect1()).getLayoutBlock()==lBlock) && ((p.getConnect2()).getLayoutBlock()!=lBlock)) ||
-					(((p.getConnect1()).getLayoutBlock()!=lBlock) && ((p.getConnect2()).getLayoutBlock()==lBlock)) ) {
-					list.add(p);
-				}
+			PositionablePoint p = layoutEditor.pointList.get(i);                     
+			if ((p.getConnect2()!=null) && (p.getConnect1()!=null)) {
+                                if ((p.getConnect2().getLayoutBlock()!=null) && (p.getConnect1().getLayoutBlock()!=null)) {
+                                    if ( (((p.getConnect1()).getLayoutBlock()==lBlock) && ((p.getConnect2()).getLayoutBlock()!=lBlock)) ||
+                                            (((p.getConnect1()).getLayoutBlock()!=lBlock) && ((p.getConnect2()).getLayoutBlock()==lBlock)) ) {
+                                            list.add(p);
+                                    }
+                                }
 			}
 		}
 		return list;
