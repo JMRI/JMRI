@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
  * @author   Howard G. Penny Copyright (C) 2005
- * @version  $Revision: 1.35 $
+ * @version  $Revision: 1.36 $
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 
@@ -64,6 +64,10 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      */
     abstract public int getIntValue();
 
+    void updatedTextField() {
+        log.error("unexpected use of updatedTextField()", new Exception("traceback"));
+    }
+    
     /**
      * Always read the contents of this Variable
      */
