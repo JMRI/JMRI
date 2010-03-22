@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009, 2010 -->
-<!-- Revision $Revision: 1.72 $ -->
+<!-- Revision $Revision: 1.73 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -675,7 +675,7 @@
 	        	        <param name="-operations" />
 	        	        <param name="-qualify" />
 	        	        <param name="-types" />
-	        	        <param name="-visibility" />
+	        	        <!-- <param name="-visibility" /> not used, as only showing public visibility -->
 	        	        <param name="-collapsible" />  <!-- hide images at first on web pages -->
 	        	        <param name="-inferdepvis" value="public" /> <!-- only show public -->
       </doclet>
@@ -720,7 +720,7 @@
     </apply>
   </target>
 
-  <target name="uploadjavadoc" depends="javadoc" description="upload existing JavaDocs to jmri.org without recreating">
+  <target name="uploadjavadoc" description="upload existing JavaDocs to jmri.org without recreating">
     <exec executable="rsync">
       <arg value="-avz"/>
       <arg value="--delete"/>
