@@ -20,7 +20,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -207,7 +207,7 @@ public class TabbedPreferences extends AppConfigBase {
         if (store) items.add(item);  
     }
     
-    void addConnection(final int tabPosition, int instance){
+    void addConnection(int tabPosition, int instance){
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
         
@@ -219,7 +219,7 @@ public class TabbedPreferences extends AppConfigBase {
         JButton deleteButton = new JButton("Delete Connection");
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
-                removeTab(e, null, tabPosition);
+                removeTab(e, null, connectionPanel.getSelectedIndex());
             }
         
         });
