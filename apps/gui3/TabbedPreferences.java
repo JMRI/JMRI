@@ -20,7 +20,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -36,6 +36,7 @@ public class TabbedPreferences extends AppConfigBase {
 
     JPanel detailpanel = new JPanel();
     final JTabbedPane connectionPanel = new JTabbedPane();
+    final jmri.jmrit.throttle.ThrottlesPreferencesPane throttlePreferences = new jmri.jmrit.throttle.ThrottlesPreferencesPane();
     
     ArrayList<Integer> connectionTabInstance = new ArrayList<Integer>();
     
@@ -65,6 +66,7 @@ public class TabbedPreferences extends AppConfigBase {
         JButton save = new JButton("Save");
         save.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    throttlePreferences.jbSaveActionPerformed(e);
                     savePressed();
                 }
             });
@@ -132,7 +134,7 @@ public class TabbedPreferences extends AppConfigBase {
 
         detailpanel.add(startupPanel, "STARTUP");
         detailpanel.add(displayPanel, "DISPLAY");
-        detailpanel.add(new jmri.jmrit.throttle.ThrottlesPreferencesPane(), "THROTTLE");
+        detailpanel.add(throttlePreferences, "THROTTLE");
         detailpanel.add(rosterPanel, "ROSTER");
         detailpanel.add(new jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane(), "MESSAGES");
 
@@ -249,9 +251,12 @@ public class TabbedPreferences extends AppConfigBase {
     
     
     void addConnectionTab(){
-        if(connectionPanel.indexOfTab("+")>0)
-            connectionPanel.removeTabAt(connectionPanel.indexOfTab("+"));
-        int newinstance = connectionTabInstance.get(connectionTabInstance.size()-1)+1;
+        connectionPanel.removeTabAt(connectionPanel.indexOfTab("+"));
+        int newinstance;
+        if (connectionTabInstance.isEmpty())
+            newinstance = 0;
+        else
+            newinstance = connectionTabInstance.get(connectionTabInstance.size()-1)+1;
         addConnection(connectionTabInstance.size(), newinstance);
         newConnectionTab();
     }
