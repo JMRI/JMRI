@@ -10,7 +10,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 
 import java
 import javax.swing
@@ -19,10 +19,10 @@ import javax.swing
 b = javax.swing.JCheckBox("Local Control Disabled")
 def whenMyButtonClicked(event) :
         if (event.getSource().isSelected()) :
-            programmer = programmers.getOpsModeProgrammer(True, 2041)
+            programmer = programmers.getAddressedProgrammer(True, 2041)
             programmer.writeCV(514, 0, None)  
         else :
-            programmer = programmers.getOpsModeProgrammer(True, 2041)
+            programmer = programmers.getAddressedProgrammer(True, 2041)
             programmer.writeCV(514, 85, None)  
         return
 b.actionPerformed = whenMyButtonClicked
