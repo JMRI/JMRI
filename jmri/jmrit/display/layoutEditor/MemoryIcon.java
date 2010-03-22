@@ -5,8 +5,6 @@ package jmri.jmrit.display.layoutEditor;
 
 public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
-    String defaultText = "   ";
-
     public MemoryIcon(String s, LayoutEditor panel) {
         super(s, panel);
     }
@@ -19,14 +17,19 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         }
     }
 
-    public void displayState(int state) {
+    public void displayState() {
         setDefaultIcon(null);
-        super.displayState();
-        if (getMemory() != null && getMemory().getBean()!=null && getMemory().getBean().getValue()==null) {
+        if (getMemory() == null || getMemory().getBean()==null || getMemory().getBean().getValue()==null
+            || getMemory().getBean().getValue().toString().trim().length()==0) {
+            if (log.isDebugEnabled()) log.debug("displayState: no value");
             setIcon(null);
             setText(defaultText);
             _text = true;
             _icon = false;
+            updateSize();
+        } else {
+            if (log.isDebugEnabled()) log.debug("displayState: value= \""+getMemory().getBean().getValue().toString()+"\"");
+            super.displayState();
         }
     }
 
