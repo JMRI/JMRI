@@ -26,7 +26,7 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -178,11 +178,14 @@ public class SplitVariableValue extends VariableValue
     // to complete this class, fill in the routines to handle "Value" parameter
     // and to read/write/hear parameter changes.
     public String getValueString() {
-        int newVal = ((Integer.valueOf(_value.getText()).intValue())-mOffset)/mFactor;
-        return String.valueOf(newVal);
+        // until 2.9.5, this was just the 1st CV value
+        //int newVal = ((Integer.valueOf(_value.getText()).intValue())-mOffset)/mFactor;
+        return _value.getText();
     }
     public void setIntValue(int i) {
-        setValue((i-mOffset)/mFactor);
+        // until 2.9.5, this was just the 1st CV value
+        //setValue((i-mOffset)/mFactor);
+        setValue(i);
     }
 
     public int getIntValue() {
@@ -364,7 +367,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.23 $
+     * @version     $Revision: 1.24 $
      */
     public class VarTextField extends JTextField {
 
