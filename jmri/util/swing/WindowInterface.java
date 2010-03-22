@@ -19,7 +19,7 @@ package jmri.util.swing;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public interface WindowInterface {
@@ -44,7 +44,14 @@ public interface WindowInterface {
     /**
      * Should 2nd and subsequent requests
      * for a panel (e.g. in an Action) create a
-     * new instance, or provide the 1st one?
+     * new instance, or provide the 1st one
+     * for reuse? 
+     *
+     * This would be true e.g. if separate windows
+     * were being provided, or false if there
+     * was only one window which is being populated
+     * with one pane after another.
+     *
      *@return true if multiple instances should be provided,
      *         false if only one should be provided.
      */
