@@ -2,7 +2,6 @@
 
 package jmri.jmrit.powerpanel;
 
-import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
 
@@ -15,7 +14,7 @@ import java.util.List;
 /**
  * Pane for power control
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2010
- * @version	    $Revision: 1.8 $
+ * @version	    $Revision: 1.9 $
  */
 public class PowerPane extends jmri.util.swing.JmriPanel 
             implements java.beans.PropertyChangeListener {
@@ -101,7 +100,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         if (listening == null) {
             listening = selectMenu.getManager();
             if (listening == null) {
-                log.error("No power manager instance found, panel not active");
+                log.warn("No power manager instance found, panel not active");
                 return false;
             } else {
                 listening.addPropertyChangeListener(this);
