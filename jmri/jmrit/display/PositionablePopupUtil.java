@@ -37,6 +37,10 @@ public class PositionablePopupUtil {
     protected int _textType;                // JComponent does not have text, used for casting
     protected Positionable _parent;
 
+    private Color defaultForeground;
+    private Color defaultBackground;
+    private Color defaultBorderColor;
+
     protected final int LABEL = 1;
     protected final int TEXTFIELD = 2;
 
@@ -53,6 +57,9 @@ public class PositionablePopupUtil {
         }
         _textComponent = textComp;
         debug = log.isDebugEnabled();
+        defaultForeground = _textComponent.getForeground();
+        defaultBackground = _textComponent.getBackground();
+        defaultBorderColor = _parent.getBackground();
     }
 
     public String toString() {
@@ -65,7 +72,7 @@ public class PositionablePopupUtil {
     static final public int FONT_COLOR =             0x00;
     static final public int BACKGROUND_COLOR =       0x01;
     static final public int BORDER_COLOR =           0x02;
-    static final public int MIN_SIZE = 5;
+    static final public int MIN_SIZE = 10;
 
     private int fixedWidth=0;
     private int fixedHeight=0;
@@ -250,13 +257,13 @@ public class PositionablePopupUtil {
     }
 
     void setItalic() {
-        if (log.isDebugEnabled())
+        if (debug)
             log.debug("When style item selected italic state is "+italic.isSelected());
         if (italic.isSelected()) setFontStyle(Font.ITALIC, 0);
         else setFontStyle(0, Font.ITALIC);
     }
     void setBold() {
-        if (log.isDebugEnabled())
+        if (debug)
             log.debug("When style item selected bold state is "+bold.isSelected());
         if (bold.isSelected()) setFontStyle(Font.BOLD, 0);
         else setFontStyle(0, Font.BOLD);
@@ -266,7 +273,7 @@ public class PositionablePopupUtil {
         JMenu styleMenu = new JMenu(rb.getString("FontStyle"));
         styleMenu.add(italic = newStyleMenuItem(new AbstractAction(rb.getString("Italic")) {
             public void actionPerformed(ActionEvent e) {
-                if (log.isDebugEnabled())
+                if (debug)
                     log.debug("When style item selected "+((String)getValue(NAME))
                                 +" italic state is "+italic.isSelected());
                 if (italic.isSelected()) setFontStyle(Font.ITALIC, 0);
@@ -276,7 +283,7 @@ public class PositionablePopupUtil {
 
         styleMenu.add(bold = newStyleMenuItem(new AbstractAction(rb.getString("Bold")) {
             public void actionPerformed(ActionEvent e) {
-                if (log.isDebugEnabled())
+                if (debug)
                     log.debug("When style item selected "+((String)getValue(NAME))
                                 +" bold state is "+bold.isSelected());
                 if (bold.isSelected()) setFontStyle(Font.BOLD, 0);
@@ -288,7 +295,7 @@ public class PositionablePopupUtil {
 
     public void setFontStyle(int addStyle, int dropStyle) {
         int styleValue = (_textComponent.getFont().getStyle() & ~dropStyle) | addStyle;
-        if (log.isDebugEnabled())
+        if (debug)
             log.debug("setFontStyle: addStyle="+addStyle+", dropStyle= "+dropStyle
                         +", net styleValue is "+styleValue);
         if (bold != null) bold.setSelected( (styleValue & Font.BOLD) != 0);
@@ -307,7 +314,7 @@ public class PositionablePopupUtil {
         // next two lines needed because JCheckBoxMenuItem(AbstractAction) not in 1.1.8
         JCheckBoxMenuItem c = new JCheckBoxMenuItem((String)a.getValue(AbstractAction.NAME));
         c.addActionListener(a);
-        if (log.isDebugEnabled()) log.debug("When creating style item "+((String)a.getValue(AbstractAction.NAME))
+        if (debug) log.debug("When creating style item "+((String)a.getValue(AbstractAction.NAME))
                                             +" mask was "+mask+" state was "+_textComponent.getFont().getStyle());
         if ( (mask & _textComponent.getFont().getStyle()) == mask ) c.setSelected(true);
         return c;
@@ -330,17 +337,17 @@ public class PositionablePopupUtil {
     }
 
     protected void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,
-                           final String name, final Color color, final int colorType) {
+                           final String name, Color color, final int colorType) {
         ActionListener a = new ActionListener() {
             //final String desiredName = name;
-            final Color desiredColor = color;
+            Color desiredColor;
             public void actionPerformed(ActionEvent e) {
                 switch (colorType){
                     case FONT_COLOR : 
                         _textComponent.setForeground(desiredColor); 
                         break;
                     case BACKGROUND_COLOR : 
-                        if(color==null){
+                        if(desiredColor==null){
                             _textComponent.setOpaque(false);
                             _parent.setOpaque(false);
                             //We need to force a redisplay when going to clear as the area
@@ -361,26 +368,37 @@ public class PositionablePopupUtil {
                         break;
                 }
             }
-        };
+            ActionListener init (Color c) {
+                desiredColor = c;
+                return this;
+            }
+        }.init(color);
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
         r.addActionListener(a);
 
+        if (debug) log.debug("setColorButton: colorType="+colorType);
         switch (colorType) {
             case FONT_COLOR:
+                if (color==null) { color = defaultForeground; }
                 setColorButton(_textComponent.getForeground(), color, r);
                 break;
             case BACKGROUND_COLOR:
+                if (color==null) { color = defaultBackground; }
                 setColorButton(_textComponent.getBackground(), color, r);
                 break;
             case BORDER_COLOR:
+                if (color==null) { color = defaultBorderColor; }
                 setColorButton(getBorderColor(), color, r);
         }
         colorButtonGroup.add(r);
         menu.add(r);
     }
                 
-    protected void setColorButton(Color buttonColor, Color color, JRadioButtonMenuItem r) {
-        if (buttonColor!=null){
+    protected void setColorButton(Color color, Color buttonColor, JRadioButtonMenuItem r) {
+        if (debug)
+            log.debug("setColorButton: color="+color+" (RGB= "+(color==null?"":color.getRGB())+
+                      ") buttonColor= "+buttonColor+" (RGB= "+(buttonColor==null?"":buttonColor.getRGB())+")");
+        if (buttonColor!=null) {
             if (color!=null && buttonColor.getRGB() == color.getRGB()) {
                  r.setSelected(true);
             } else r.setSelected(false);

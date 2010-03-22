@@ -36,7 +36,7 @@ import javax.swing.border.LineBorder;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.89 $
+ * @version $Revision: 1.90 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -229,7 +229,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             }
         } else {
             //if(_text) {
-            if(_text && getText()!=null && getText().trim().length()>0) {
+            if(_text && getText()!=null && getText().trim().length()>0 ) {
                 max = getFontMetrics(getFont()).getHeight();
             }
             if(_icon && _namedIcon!=null) {
@@ -238,8 +238,8 @@ public class PositionableLabel extends JLabel implements Positionable {
             if (_popupUtil!=null) {
                 max += _popupUtil.getMargin()*2;
             }
-            if (max < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
-                max = PositionablePopupUtil.MIN_SIZE;
+            if (max < 2*PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
+                max = 2*PositionablePopupUtil.MIN_SIZE;
             }
         }
         if (debug) log.debug("maxHeight= "+max+" preferred height= "+getPreferredSize().height);
