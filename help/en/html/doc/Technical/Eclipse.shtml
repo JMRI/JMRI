@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Eclipse.shtml,v 1.8 2010-03-19 19:30:19 jacobsen Exp $ -->
+<!-- $Id: Eclipse.shtml,v 1.9 2010-03-22 00:55:27 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -152,6 +152,32 @@
         
     </ol>
     
+    <H2>JavaCC</H2>
+
+In March of 2010 JMRI developers started using JavaCC (Java Complier
+Complier) to generate code. Currently the complier places the output
+files in the "tmp" directory under "java". The easiest way to create and
+populate the "tmp" directory is to use the ant build.
+
+<H2>Installing JavaCC</H2>
+
+Instead of using the ant build to populate the "tmp" directory, you can install the
+JavaCC plug-in.  Here's the steps:
+<P>
+1) Download the Eclipse JavaCC plugin following the instructions found here:
+<A HREF="http://eclipse-javacc.sourceforge.net">http://eclipse-javacc.sourceforge.net</A>
+<p>
+2) After restarting Eclipse, right click on the java directory in the Project Explorer or Navigator and select
+   JavaCC Options.  
+<p>
+3) On the JavaCC Options tab, enter the output directory to be
+   java/tmp/jmri/jmris/srcp/parser
+<p>
+4) On the JJTree options page, enter the output directory to be
+   java/tmp/jmri/jmris/srcp/parser
+<p>
+5) Confirm that the "Java Build Path" includes the tmp directory (see Project Properties).
+
 
     <a name="older">
     <h1>Older version of instructions</h1></a>
