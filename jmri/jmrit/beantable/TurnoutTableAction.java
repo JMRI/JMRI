@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.79 $
+ * @version     $Revision: 1.80 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -558,7 +558,9 @@ public class TurnoutTableAction extends AbstractTableAction {
     	}
     	if (op != null) {
             if (!op.isNonce()) op = op.makeNonce(t);
+            // make and show edit dialog
             TurnoutOperationEditor dialog = new TurnoutOperationEditor(this, f, op, t, box);
+            dialog.setVisible(true);
     	} else {
             JOptionPane.showMessageDialog(f, new String("There is no operation type suitable for this turnout"),
                                           "No operation type", JOptionPane.ERROR_MESSAGE);
@@ -583,7 +585,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     		});
             myTurnout = t;
             config = TurnoutOperationConfig.getConfigPanel(op);
-            setSize(300,150);
             setTitle();
             if (config != null) {
                 Box outerBox = Box.createVerticalBox();
@@ -630,8 +631,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                 buttonBox.add(cancelButton);
                 outerBox.add(buttonBox);
                 getContentPane().add(outerBox);
-                setVisible(true);
             }
+            pack();
     	}    
     	private void setTitle() {
             String title = "Turnout Operation \"" + myOp.getName() + "\"";
