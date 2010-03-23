@@ -20,7 +20,7 @@ import jmri.util.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -180,6 +180,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         return true;
     }
 
+    protected String defaultText = "   ";
+
     /**
      * Drive the current state of the display from the state of the
      * Memory.
@@ -198,29 +200,28 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 Object val = key;
                 if (val instanceof String) {
                     String str = (String)val;
+                    setText(str);
+                    if (log.isDebugEnabled()) log.debug("String str= \""+str+"\" str.trim().length()= "+str.trim().length());
                     /*  MemoryIconTest says empty strings should show blank */
                     // use a temp border to keep item visible
                     if (str.trim().length()==0) {
-                        setText(" ");
-                        if (getPopupUtility().getBorderColor()==null) {
-                            _tmpBorder = true;
-                            getPopupUtility().setBorderSize(1);
-                            getPopupUtility().setBorderColor(java.awt.Color.black);
+                        if (getPopupUtility().getMargin()==0) {
+                           _tmpBorder = true;
+                           getPopupUtility().setMargin(1);
+                           getPopupUtility().setBorderSize(1);
+                           getPopupUtility().setBorderColor(java.awt.Color.black);
                         }
-                        //setIcon(defaultIcon);
-                    } else
-                    {
-                        setText(str);
+                       setIcon(defaultIcon);
+                    } else {
                         if (_tmpBorder) {
                             _tmpBorder = false;
                             getPopupUtility().setBorderSize(0);
-                            getPopupUtility().setBorderColor(null);
+                            getPopupUtility().setMargin(0);
                         }
                     }
                     setIcon(null);
                     _icon = false;
                     _text = true;
-                    if (log.isDebugEnabled()) log.debug("String str= \""+str+"\"");
                 } else if (val instanceof javax.swing.ImageIcon) {
                     setIcon((javax.swing.ImageIcon) val);
                     setText(null);
