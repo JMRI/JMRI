@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.5.shtml,v 1.11 2010-03-21 05:25:30 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.5.shtml,v 1.12 2010-03-23 03:42:16 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -248,12 +248,39 @@ Input sensors are available as JMRI sensors,
 and output devices are JMRI turnouts.
 
 <p>
+JMRI can now provide two LocoNet connections at the same time. You can configure two
+in the preferences, and the second one will have system names that start with
+"L2" instead of "L", e.g. "L2T1", "L2S1", etc.  Note that you'll still get a warning
+about "duplicate connections" when saving the preferences, but you can ignore this. We'll
+make this part of the code smarter eventually.
+
+<p>
 Walter Thompson improved many help pages.
 
 <p>
 Kevin Dickerson did a huge amount of work on the preferences to improve their 
 usability and completeness.  The throttle and notification preferences are now
 available via the common preferences dialog under the "Edit" menu.  
+
+<p>
+Michael Mosher provided a definition for the ESU LokSound Select decoder.
+
+<p>
+A problem when inverting LocoNet turnouts that are used for signal drivers was fixed.
+
+<p>
+Peter Ulvestad provided a decoder definition for the MRC Sound Brilliance 1812 decoder.
+
+<P>
+Michael Mosher and Jim Betz combined to update the TCS BEMF decoder definition.
+
+<p>
+Michael Mosher provided an MTH decoder definition.
+
+<p>
+First support for internationalization of decoder definitions is in place.
+In future releases, we expect to be able to provide DecoderPro in 
+multiple languages, but we'll need a lot of help doing the needed translations.
 
 <!--#include virtual="/Footer" -->
 
