@@ -8,15 +8,10 @@ import org.jdom.*;
 /**
  * Tests for the jmri.util.LocaleSelector class.
  * @author	Bob Jacobsen  Copyright 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class LocaleSelectorTest extends TestCase {
 
-    public void testInit() {
-        System.out.println(LocaleSelector.suffixes[0]);
-        System.out.println(LocaleSelector.suffixes[1]);
-    }
-    
     public void testFindDefault() {
         LocaleSelector.suffixes = 
             new String[] {
