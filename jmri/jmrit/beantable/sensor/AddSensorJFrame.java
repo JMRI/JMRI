@@ -11,9 +11,10 @@ import java.util.ResourceBundle;
  * JFrame to create a new Sensor
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
+ * @deprecated  Replaced by {@link jmri.jmrit.beantable.AddNewHardwareDevice.java}
  */
-
+@Deprecated
 public class AddSensorJFrame extends JmriJFrame {
 
     public AddSensorJFrame() {
