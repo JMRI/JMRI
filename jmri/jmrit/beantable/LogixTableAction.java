@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.64 $
+ * @version $Revision: 1.65 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -704,7 +704,7 @@ public class LogixTableAction extends AbstractTableAction {
 
     boolean checkLogixUserName(String uName) {
 		// check if a Logix with the same user name exists
-		if (uName!=null && uName.length() > 0) {
+		if (uName!=null && uName.trim().length() > 0) {
 			Logix x = _logixManager.getByUserName(uName);
 			if (x != null) {
 				// Logix with this user name already exists
@@ -1090,64 +1090,26 @@ public class LogixTableAction extends AbstractTableAction {
 			return;
         }
         // Check if the User Name has been changed
-        String uName = editUserName.getText();
+        String uName = editUserName.getText().trim();
         if (!(uName.equals(_curLogix.getUserName()))) {
             // user name has changed - check if already in use
-            Logix p = _logixManager.getByUserName(uName);
-            if (p != null) {
-                // Logix with this user name already exists
-                log.error("Failure to update Logix with Duplicate User Name: "
-                                + uName);
-                javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
-                        rbx.getString("Error6"), rbx
-                                .getString("ErrorTitle"),
-                        javax.swing.JOptionPane.ERROR_MESSAGE);
-
-            } else {
-                // user name is unique, change it
-                _curLogix.setUserName(uName);
-                m.fireTableDataChanged();
+            if (uName.length()>0) {
+                Logix p = _logixManager.getByUserName(uName);
+                if (p != null) {
+                    // Logix with this user name already exists
+                    log.error("Failure to update Logix with Duplicate User Name: "
+                                    + uName);
+                    javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
+                            rbx.getString("Error6"), rbx
+                                    .getString("ErrorTitle"),
+                            javax.swing.JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
             }
+            // user name is unique, change it
+            _curLogix.setUserName(uName);
+            m.fireTableDataChanged();
         }
-        /* check for possible loop situation
-        THIS RAISES MORE FALSE ALARMS THAN ACTUAL HAZARDS
-        if (!_suppressDisable)  {
-            // user does not want any change to enabling -REGARDLESS!
-            boolean disabled = _curLogix.checkLoopCondition();
-            int response = 0;
-            if (disabled && !_suppressReminder) {
-                // loop condition is present - warn user and give options
-                ArrayList <String[]> list = _curLogix.getLoopGremlins();
-                String msg = "";
-                int k = 0;
-                for (int i=0; i<list.size(); i++) {
-                    String[] str = list.get(i);
-                    if (k==7) {
-                        msg = msg + "\n";
-                        k=0;
-                    } else if (i>0) {
-                        msg = msg + ", ";
-                    }
-                    k++;
-                    msg = msg + rbx.getString(str[0]) +": "+ str[1];
-                }
-                response = JOptionPane.showOptionDialog(editLogixFrame, rbx.getString("Warn9")
-                        +msg, rbx.getString("WarnTitle"),
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, 
-                        null, new Object[] {rbx.getString("ButtonDisabled"),
-                                rbx.getString("ButtonEnabled") }, rbx.getString("ButtonDisabled"));
-            }
-            if (disabled && response == 0) {
-                if (!_suppressReminder) {
-                    // user elected to disable the Logix
-                    JOptionPane.showMessageDialog(editLogixFrame, rbx.getString("Logix")
-                            + " " + _curLogix.getSystemName() + "( "+ _curLogix.getUserName()
-                            + " ) " + rbx.getString("Warn10"), "", JOptionPane.INFORMATION_MESSAGE);
-                }
-                _curLogix.setEnabled(false);
-            }
-
-        } */
         // complete update and activate Logix
         finishDone();
 	}  /* donePressed */
