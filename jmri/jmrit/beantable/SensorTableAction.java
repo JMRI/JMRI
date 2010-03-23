@@ -26,7 +26,7 @@ import javax.swing.JComboBox;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.28 $
+ * @version     $Revision: 1.29 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -79,7 +79,7 @@ public class SensorTableAction extends AbstractTableAction {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         
         if (addFrame==null) {
-            addFrame = new JmriJFrame("Add Sensor");
+            addFrame = new JmriJFrame(f.rb.getString("TitleAddSensor"));
             //addFrame.addHelpMenu("package.jmri.jmrit.beantable.SensorAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
