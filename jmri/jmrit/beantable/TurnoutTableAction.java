@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.81 $
+ * @version     $Revision: 1.82 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -688,8 +688,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     
     
     void okPressed(ActionEvent e) {
-        //String user = userName.getText();
-        if (user.equals("")) user=null;
         // Test if bit already in use as a light
         //int iName=0;
         int numberOfTurnouts = 1;
