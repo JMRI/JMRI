@@ -16,11 +16,14 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the sensor table
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class SensorTableWindowTest extends jmri.util.SwingTestCase {
 
 	public void testShowAndClose() throws Exception {
+        jmri.InstanceManager.store(new jmri.managers.DefaultUserMessagePreferences(), jmri.UserPreferencesManager.class);
+        jmri.util.JUnitAppender.assertWarnMessage("Won't protect preferences at shutdown without registered ShutDownManager");
+
         SensorTableAction a = new SensorTableAction();
         a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
         
@@ -45,11 +48,18 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         
         // set to "1"
         getHelper().sendString( new StringEventData( this, sysNameField, "1" ) );
-        
+
+        // Find system combobox
+        ncfinder = new NamedComponentFinder(JComponent.class, "prefixBox" );
+        JComboBox prefixBox = (JComboBox) ncfinder.find(fa, 0);
+        Assert.assertNotNull(prefixBox);
+        // set to "Internal"
+        prefixBox.setSelectedItem("Internal");
+
         // Find the OK button
-        abfinder = new AbstractButtonFinder("Add New Sensor" );
+        abfinder = new AbstractButtonFinder("OK" );
         button = ( JButton ) abfinder.find( fa, 0);
-        Assert.assertNotNull(button);   
+        Assert.assertNotNull(button);
 
         // Click button to add sensor
         getHelper().enterClickAndLeave( new MouseEventData( this, button ) );
