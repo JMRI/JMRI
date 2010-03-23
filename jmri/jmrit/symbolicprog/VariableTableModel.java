@@ -14,6 +14,8 @@ import javax.swing.table.AbstractTableModel;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
+import jmri.util.jdom.LocaleSelector;
+
 /**
  * Table data model for display of variables in symbolic programmer.
  * Also responsible for loading from the XML file...
@@ -21,7 +23,7 @@ import org.jdom.Element;
  * @author      Bob Jacobsen        Copyright (C) 2001, 2006, 2010
  * @author      Howard G. Penny     Copyright (C) 2005
  * @author      Daniel Boudreau     Copyright (C) 2007
- * @version     $Revision: 1.45 $
+ * @version     $Revision: 1.46 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -182,7 +184,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      */
 	public void setRow(int row, Element e) {
         // get the values for the VariableValue ctor
-        String name = e.getAttribute("label").getValue(); 	// Note the name variable is actually the label attribute
+        String name = LocaleSelector.getAttribute(e, "label"); 	// Note the name variable is actually the label attribute
         if (log.isDebugEnabled()) log.debug("Starting to setRow \""+name+"\"");
         String item = ( e.getAttribute("item")!=null ?
                         e.getAttribute("item").getValue() :
@@ -363,7 +365,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
 
         // get the values for the VariableValue ctor
-        String name = e.getAttribute("label").getValue(); 	// Note the name variable is actually the label attribute
+        String name = LocaleSelector.getAttribute(e, "label"); 	// Note the name variable is actually the label attribute
         if (log.isDebugEnabled()) log.debug("Starting to setIndexedRow \""+name+"\"");
         String cvName = e.getAttributeValue("CVname");
         String item = ( e.getAttribute("item")!=null ?
@@ -459,14 +461,14 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         for (int k = 0; k < lChoice.size(); k++) {
             // Create the choice
             Element choiceElement = lChoice.get(k);
-            String choice = choiceElement.getAttribute("choice").getValue();
+            String choice = LocaleSelector.getAttribute(choiceElement, "choice");
             v1.addChoice(choice);
             // for each choice, capture the settings
             @SuppressWarnings("unchecked")
             List<Element> lSetting = choiceElement.getChildren("compositeSetting");
             for (int n = 0; n < lSetting.size(); n++) {
                 Element settingElement = lSetting.get(n);
-                String varName = settingElement.getAttribute("label").getValue();
+                String varName = LocaleSelector.getAttribute(settingElement, "label");
                 String value = settingElement.getAttribute("value").getValue();
                 v1.addSetting(choice, varName, findVar(varName), value);
             }
@@ -502,9 +504,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             Element enumChElement = l.get(k);
             Attribute valAttr = enumChElement.getAttribute("value");
             if (valAttr == null) {
-                v1.addItem(enumChElement.getAttribute("choice").getValue());
+                v1.addItem(LocaleSelector.getAttribute(enumChElement, "choice"));
             } else {
-                v1.addItem(enumChElement.getAttribute("choice").getValue(), Integer.parseInt(valAttr.getValue()));
+                v1.addItem(LocaleSelector.getAttribute(enumChElement, "choice"), 
+                            Integer.parseInt(valAttr.getValue()));
             }
         }
         v1.lastItem();
@@ -545,9 +548,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             // is a value specified?
             Attribute valAttr = enumChElement.getAttribute("value");
             if (valAttr == null) {
-                v1.addItem(enumChElement.getAttribute("choice").getValue());
+                v1.addItem(LocaleSelector.getAttribute(enumChElement, "choice"));
             } else {
-                v1.addItem(enumChElement.getAttribute("choice").getValue(), Integer.parseInt(valAttr.getValue()));
+                v1.addItem(LocaleSelector.getAttribute(enumChElement, "choice"), 
+                            Integer.parseInt(valAttr.getValue()));
             }
         }
         v1.lastItem();
@@ -751,7 +755,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      */
     public void setConstant(Element e) {
         // get the values for the VariableValue ctor
-        String name = e.getAttribute("label").getValue();
+        String name = LocaleSelector.getAttribute(e, "label");
         if (log.isDebugEnabled()) log.debug("Starting to setConstant \""+name+"\"");
         String stdname = ( e.getAttribute("item")!=null ?
                            e.getAttribute("item").getValue() :
