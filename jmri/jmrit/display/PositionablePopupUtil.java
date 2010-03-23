@@ -44,8 +44,6 @@ public class PositionablePopupUtil {
     protected final int LABEL = 1;
     protected final int TEXTFIELD = 2;
 
-    private PositionablePopupUtil() {}
-
     public PositionablePopupUtil(Positionable parent, JComponent textComp) {
         _parent = parent;
         if (textComp instanceof JLabel) {
@@ -418,9 +416,6 @@ public class PositionablePopupUtil {
         popup.add(justMenu);
     }
 
-    private int originalX=0;
-    private int originalY=0;
-    
     static final int LEFT   = 0x00;
     static final int RIGHT  = 0x02;
     static final int CENTRE = 0x04;

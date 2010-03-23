@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
@@ -39,8 +39,8 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         to = new PositionableLabel("here", panel);
         to.setBounds(80,80,40,40);
         panel.putItem(to);
-        to.setDisplayLevel(panel.LABELS);
-        assertEquals("Display Level ", to.getDisplayLevel(),panel.LABELS);
+        to.setDisplayLevel(jmri.jmrit.display.Editor.LABELS);
+        assertEquals("Display Level ", to.getDisplayLevel(),jmri.jmrit.display.Editor.LABELS);
 
         p.add(to);
         panel.addLabel("There");
