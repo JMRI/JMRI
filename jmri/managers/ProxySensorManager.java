@@ -13,7 +13,7 @@ import jmri.managers.AbstractManager;
  * for multiple system-specific implementations. 
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public class ProxySensorManager extends AbstractProxyManager
                             implements SensorManager {
@@ -99,6 +99,24 @@ public class ProxySensorManager extends AbstractProxyManager
 
 	// null implementation to satisfy the SensorManager interface
 	public void updateAll() {  }
+    
+    public boolean allowMultipleAdditions(String systemName) {
+        int i = matchTentative(systemName);
+        if (i >= 0)
+            return ((SensorManager)getMgr(i)).allowMultipleAdditions(systemName);
+        return ((SensorManager)getMgr(0)).allowMultipleAdditions(systemName);
+        }
+    
+    public String getNextValidAddress(String curAddress, String prefix){
+        for (int i=0; i<nMgrs(); i++) {
+            if ( prefix.equals( 
+                    ((SensorManager)getMgr(i)).getSystemPrefix()) ) {
+                //System.out.println((TurnoutManager)getMgr(i))
+                return ((SensorManager)getMgr(i)).getNextValidAddress(curAddress, prefix);
+            }
+        }
+        return null;
+    }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProxySensorManager.class.getName());

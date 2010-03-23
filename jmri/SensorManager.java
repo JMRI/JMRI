@@ -21,7 +21,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public interface SensorManager extends Manager {
 
@@ -95,6 +95,24 @@ public interface SensorManager extends Manager {
 	 */
 	public void updateAll();
 
+    /**
+    * A method that determines if it is possible to add a range
+    * of sensors in numerical order eg 10 to 30 will return true.  
+    * where as if the address format is 1b23 this will return false.
+    **/
+     
+
+     public boolean allowMultipleAdditions(String systemName);
+
+   /**
+    * Determine if the address supplied is valid and free, if not then it shall
+    * return the next free valid address up to a maximum of 10 address away from
+    * the initial address.
+    * @param prefix - The System Prefix used to make up the systemName
+    * @param curAddress - The hardware address of the turnout we which to check.
+    */
+     
+    public String getNextValidAddress(String curAddress, String prefix);
 }
 
 
