@@ -6,26 +6,43 @@
 
 # OK checks
 
-# apps should not be referenced in the main jmri directory
+echo '==== The apps package should not be referenced in the main jmri directory ===='
 grep 'apps\.' src/jmri/*
+echo
 
 # next should really check for whitespace not just one blank,
-#grep 'import\[:punct:\]*jmri' src/jmri/*
+echo '==== The jmri package should not refer to lower jmri.* packages ===='
+grep 'import\[:punct:\]*jmri' src/jmri/*
+echo
 
-# no Swing in base interfaces
-#grep 'javax.swing\.' src/jmri/*
+echo '==== No Swing in base interfaces ===='
+grep 'javax.swing\.' src/jmri/*
+echo
 
-#apps should not be referenced outside it's own tree
+echo '==== The jmri.jmrix package should not reference jmri.jmrit ===='
+grep -r 'jmri\.jmrit\.' src/jmri/jmrix
+echo
+
+echo '==== The apps package should not be referenced outside its own tree ===='
 grep -r 'apps\.' src/jmri
+echo
+
+#
+# below here is currently helpless, but we hope to get to it eventually
+#
 
 # and needs to look for non-imports
 #grep jmri. src/jmri/* | grep -v package | grep -v @
+echo
 
 #grep -r 'jmri\.jmrit\.' src/jmri/jmrix
+echo
 
 #grep -r 'jmri\.j' src/jmri/util/
+echo
 
 # checks to add:  jdom, swing, awt in places they shouldn't be
 
 # This one will need lots of exceptions:
 #grep -r 'org\.jdom' src/ | grep -v configurexml
+#echo
