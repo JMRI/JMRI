@@ -14,7 +14,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 import jarray
 import jmri
@@ -51,10 +51,10 @@ class InputListener(xAPlib.xAPRxEventListener):
     print "uid:    ", fmtMsg.getUID()
     if (fmtMsg.getClassName() == "xAPBSC.info" or fmtMsg.getClassName() == "xAPBSC.event") :
         print "    --- Acting on "+fmtMsg.getClassName()+" ---"
-        if (fmtMsg.getNameValuePair("output.state","Name") != None) :
+        if (fmtMsg.getNameValuePair("output.state","State") != None) :
             print "        --- Acting on output.state ---"
             self.processTurnout(fmtMsg, message)
-        if (fmtMsg.getNameValuePair("input.state","Name") != None) :
+        if (fmtMsg.getNameValuePair("input.state","State") != None) :
             print "        --- Acting on input.state ---"
             self.processSensor(fmtMsg, message)
     print "=============="
@@ -63,21 +63,23 @@ class InputListener(xAPlib.xAPRxEventListener):
   def processTurnout(self, fmtMsg, message) :
     pair = fmtMsg.getNameValuePair("output.state","Name")
     if (pair == None) :
-        print "no Name"
-        return
-    name = pair.getValue()
-    print "        Name:", name
+        print "No Name"
+        name = None
+    else :
+        name = pair.getValue()
+        print "        Name:", name
     pair = fmtMsg.getNameValuePair("output.state","Location")
     if (pair == None) :
-        print "no Location"
-        return
-    location = pair.getValue()
-    print "        Location: ", location
+        print "No Location"
+        location = None
+    else :
+        location = pair.getValue()
+        print "        Location: ", location
     pair = fmtMsg.getNameValuePair("output.state","State")
     if (pair == None) :
-        print "no State"
+        print "No State, ending"
         return
-    state = pair.getValue()
+    state = pair.getValue().upper()
     print "        State: ", state
     # now create a Turnout and set
     value = CLOSED
@@ -87,7 +89,8 @@ class InputListener(xAPlib.xAPRxEventListener):
     if (turnout == None) :
         print "    create turnout IT:xPA:xAPBSC:"+fmtMsg.getSource()
         turnout = turnouts.provideTurnout("IT:xPA:xAPBSC:"+fmtMsg.getSource())
-        turnout.setUserName(name)
+        if (name != None) :
+            turnout.setUserName(name)
     turnout.setCommandedState(value)
     print "    set turnout IT:xPA:xAPBSC:"+fmtMsg.getSource()+" to", value
     return
@@ -109,7 +112,7 @@ class InputListener(xAPlib.xAPRxEventListener):
     if (pair == None) :
         print "no State"
         return
-    state = pair.getValue()
+    state = pair.getValue().upper()
     print "        State: ", state
     # now create a Turnout and set
     value = INACTIVE
