@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -222,13 +222,7 @@ public class DefaultConditional extends AbstractNamedBean
             if (enabled) {
                 if (evt != null) {
                     // check if the current listener wants to (NOT) trigger actions
-                    String listener = "";
-                    try {
-                        listener = ((NamedBean)evt.getSource()).getSystemName();
-                    } catch ( ClassCastException e) {
-                        log.error("PropertyChangeEvent source of unexpected type: "+ evt);
-                    }
-                    enabled = wantsToTrigger(listener);
+                    enabled = wantsToTrigger(evt);
                 }
                 if (enabled) {
                     takeActionIfNeeded();
@@ -241,11 +235,19 @@ public class DefaultConditional extends AbstractNamedBean
     /**
     * Find out if the state variable is willing to cause the actions to execute
     */
-    boolean wantsToTrigger(String varName) {
-        for (int i=0; i<_variableList.size(); i++) {
-            if (varName.equals(_variableList.get(i).getName())) {
-                return _variableList.get(i).doTriggerActions();
+    boolean wantsToTrigger(PropertyChangeEvent evt) {
+        String listener = "";
+        try {
+            String sysName = ((NamedBean)evt.getSource()).getSystemName();
+            String userName = ((NamedBean)evt.getSource()).getUserName();
+            for (int i=0; i<_variableList.size(); i++) {
+                if (sysName.equals(_variableList.get(i).getName()) || 
+                            userName.equals(_variableList.get(i).getName())) {
+                    return _variableList.get(i).doTriggerActions();
+                }
             }
+        } catch ( ClassCastException e) {
+            log.error("PropertyChangeEvent source of unexpected type: "+ evt);
         }
         return true;
     }
