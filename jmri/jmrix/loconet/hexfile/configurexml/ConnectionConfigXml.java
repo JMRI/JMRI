@@ -18,7 +18,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -50,7 +50,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     /**
-     * Update static data from XML file
+     * Update instance data from XML file
      * @param e Top level Element to unpack.
      * @return true if successful
       */

@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -86,9 +86,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     /**
      * Configure the common managers for LocoNet connections.
      * This puts the common manager config in one
-     * place.  This method is static so that it can be referenced
-     * from classes that don't inherit, including hexfile.HexFileFrame
-     * and locormi.LnMessageClient
+     * place.  
      */
     public void configureManagers() {
     
