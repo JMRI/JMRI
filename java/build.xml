@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009, 2010 -->
-<!-- Revision $Revision: 1.73 $ -->
+<!-- Revision $Revision: 1.74 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -77,6 +77,7 @@
     <pathelement location="../lib/activation.jar" />
     <pathelement location="../lib/mailapi.jar" />
     <pathelement location="../lib/smtp.jar" />
+    <pathelement location="../lib/xAPlib.jar" />
     <pathelement location="../lib/ExternalLinkContentViewerUI.jar" />
     <pathelement location="/System/Library/Java" /> <!-- MacOS X -->
     <pathelement location="../lib/junit.jar" />
