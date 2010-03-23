@@ -30,7 +30,7 @@ import javax.swing.JPanel;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.69 $
+ * @version	$Revision: 1.70 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -50,7 +50,6 @@ public class JmrixConfigPane extends JPanel {
                                 .findInstance(ConnectionConfig.class, index);
         log.debug("findInstance returned "+c);
         retval = new JmrixConfigPane((ConnectionConfig)c);
-        InstanceManager.configureManagerInstance().registerPref(retval);
         configPaneTable.put(new Integer(index), retval);
         
         return retval;
