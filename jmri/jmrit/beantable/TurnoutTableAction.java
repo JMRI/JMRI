@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.80 $
+ * @version     $Revision: 1.81 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -688,7 +688,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     
     
     void okPressed(ActionEvent e) {
-        String user = userName.getText();
+        //String user = userName.getText();
         if (user.equals("")) user=null;
         // Test if bit already in use as a light
         //int iName=0;
@@ -784,10 +784,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }
                 
                 if (t != null) {
-                    String userName = user;
+                    String user = userName.getText();
                     if ((x!=0) && user != null && !user.equals(""))
-                        userName = user+":"+x;
-                    if (userName != null && !userName.equals("")) t.setUserName(userName);
+                        user = user+":"+x;
+                    if (user != null && !user.equals("") && (InstanceManager.turnoutManagerInstance().getByUserName(user)==null)) t.setUserName(user);
                     t.setNumberOutputBits(iNum);
                     // Ask about the type of turnout control if appropriate
                     if(!useLastType){
